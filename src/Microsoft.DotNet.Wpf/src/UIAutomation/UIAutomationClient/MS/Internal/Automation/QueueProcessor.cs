@@ -1,21 +1,14 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
 // Description: Class to create a queue on its own thread.
 
-// PRESHARP: In order to avoid generating warnings about unkown message numbers and unknown pragmas.
-#pragma warning disable 1634, 1691
-
-using System.Windows.Automation;
-using System.Windows.Automation.Provider;
 using System;
 using System.Threading;
 using System.Collections;
 using System.Diagnostics;
-using MS.Internal.Automation;
 using MS.Win32;
-using System.Runtime.InteropServices;
 using Microsoft.Win32.SafeHandles;
 
 namespace MS.Internal.Automation
@@ -71,8 +64,10 @@ namespace MS.Internal.Automation
             // create and start a background thread for this worker window to run on
             // (background threads will exit if the main and foreground threads exit)
             ThreadStart threadStart = new ThreadStart(WaitForWork);
-            _thread = new Thread(threadStart);
-            _thread.IsBackground = true;
+            _thread = new Thread(threadStart)
+            {
+                IsBackground = true
+            };
             _thread.Start();
         }
 
@@ -132,7 +127,6 @@ namespace MS.Internal.Automation
                     // The return value specifies the value returned by the window procedure.
                     // Although its meaning depends on the message being dispatched, the return
                     // value generally is ignored.
-#pragma warning suppress 6031, 6523
                     UnsafeNativeMethods.DispatchMessage(ref msg);
                 }
 

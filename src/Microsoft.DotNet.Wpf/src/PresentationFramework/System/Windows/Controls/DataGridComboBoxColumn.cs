@@ -3,11 +3,7 @@
 // See the LICENSE file in the project root for more information.
 
 
-using System;
 using System.Collections;
-using System.ComponentModel;
-using System.Diagnostics;
-using System.Windows;
 using System.Windows.Data;
 using System.Windows.Input;
 
@@ -410,12 +406,11 @@ namespace System.Windows.Controls
 
         protected internal override void RefreshCellContent(FrameworkElement element, string propertyName)
         {
-            DataGridCell cell = element as DataGridCell;
-            if (cell != null)
+            if (element is DataGridCell cell)
             {
                 bool isCellEditing = cell.IsEditing;
-                if ((string.Compare(propertyName, "ElementStyle", StringComparison.Ordinal) == 0 && !isCellEditing) ||
-                    (string.Compare(propertyName, "EditingElementStyle", StringComparison.Ordinal) == 0 && isCellEditing))
+                if ((string.Equals(propertyName, "ElementStyle", StringComparison.Ordinal) && !isCellEditing) ||
+                    (string.Equals(propertyName, "EditingElementStyle", StringComparison.Ordinal) && isCellEditing))
                 {
                     cell.BuildVisualTree();
                 }

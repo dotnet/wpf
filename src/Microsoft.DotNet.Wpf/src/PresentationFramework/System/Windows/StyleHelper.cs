@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -12,28 +12,16 @@
 using MS.Internal;                      // Helper
 using MS.Utility;                       // ItemStructList<ChildValueLookup>
 using System.Collections;               // Hashtable
-using System.Collections.Generic;       // List<T>
 using System.Collections.Specialized;   // HybridDictionary
 using System.ComponentModel;            // TypeConverter, TypeDescriptor
-using System.Diagnostics;               // Debug.Assert
 using System.Runtime.CompilerServices;  // ConditionalWeakTable
 using System.Windows.Controls;          // Control, ContentPresenter
 using System.Windows.Data;              // BindingExpression
-using System.Windows.Documents;         // TableRowGroup,TableRow
 using System.Windows.Media;             // VisualCollection
 using System.Windows.Media.Animation;   // Storyboard
 using System.Windows.Markup;            // MarkupExtension
-using System.Windows.Threading;         // DispatcherObject
 using System.Threading;                 // Interlocked
 using MS.Internal.Data;                 // BindingValueChangedEventArgs
-using System.Globalization;
-using System.Reflection;
-
-// Disabling 1634 and 1691:
-// In order to avoid generating warnings about unknown message numbers and
-// unknown pragmas when compiling C# source code with the C# compiler,
-// you need to disable warnings 1634 and 1691. (Presharp Documentation)
-#pragma warning disable 1634, 1691
 
 namespace System.Windows
 {
@@ -115,7 +103,6 @@ namespace System.Windows
                 newThemeStyle.CheckTargetType(d);
                 newThemeStyle.Seal();
 
-#pragma warning disable 6503
                 // Check if the theme style has the OverridesDefaultStyle  property set on the target tag or any of its
                 // visual triggers. It is an error to specify the OverridesDefaultStyle  in your own ThemeStyle.
                 if (StyleHelper.IsSetOnContainer(FrameworkElement.OverridesDefaultStyleProperty, ref newThemeStyle.ContainerDependents, true))
@@ -128,7 +115,6 @@ namespace System.Windows
                 {
                     throw new InvalidOperationException(SR.CannotHaveEventHandlersInThemeStyle);
                 }
-#pragma warning restore 6503
             }
 
             themeStyleCache = newThemeStyle;
@@ -527,11 +513,13 @@ namespace System.Windows
 
             int mapIndex = childRecord.ValueLookupListFromProperty.EnsureEntry(propertyValue.Property.GlobalIndex);
 
-            ChildValueLookup valueLookup = new ChildValueLookup();
-            valueLookup.LookupType = (ValueLookupType)propertyValue.ValueType; // Maps directly to ValueLookupType for applicable values
-            valueLookup.Conditions = propertyValue.Conditions;
-            valueLookup.Property = propertyValue.Property;
-            valueLookup.Value = propertyValue.ValueInternal;
+            ChildValueLookup valueLookup = new ChildValueLookup
+            {
+                LookupType = (ValueLookupType)propertyValue.ValueType, // Maps directly to ValueLookupType for applicable values
+                Conditions = propertyValue.Conditions,
+                Property = propertyValue.Property,
+                Value = propertyValue.ValueInternal
+            };
 
             childRecord.ValueLookupListFromProperty.Entries[mapIndex].Value.Add(ref valueLookup);
 
@@ -755,9 +743,11 @@ namespace System.Windows
                 }
             }
 
-            dependent = new ContainerDependent();
-            dependent.Property = dp;
-            dependent.FromVisualTrigger = fromVisualTrigger;
+            dependent = new ContainerDependent
+            {
+                Property = dp,
+                FromVisualTrigger = fromVisualTrigger
+            };
             containerDependents.Add(dependent);
         }
 
@@ -778,9 +768,11 @@ namespace System.Windows
             {
                 Debug.Assert(childIndex >= 0);
 
-                ChildEventDependent dependent = new ChildEventDependent();
-                dependent.ChildIndex = childIndex;
-                dependent.EventHandlersStore = eventHandlersStore;
+                ChildEventDependent dependent = new ChildEventDependent
+                {
+                    ChildIndex = childIndex,
+                    EventHandlersStore = eventHandlersStore
+                };
 
                 eventDependents.Add(ref dependent);
             }
@@ -799,9 +791,11 @@ namespace System.Windows
             DependencyProperty                              dp,
             ref FrugalStructList<ChildPropertyDependent>    propertyDependents)
         {
-            ChildPropertyDependent dependent = new ChildPropertyDependent();
-            dependent.ChildIndex = childIndex;
-            dependent.Property = dp;
+            ChildPropertyDependent dependent = new ChildPropertyDependent
+            {
+                ChildIndex = childIndex,
+                Property = dp
+            };
 
             propertyDependents.Add(dependent);
         }
@@ -837,10 +831,12 @@ namespace System.Windows
             {
                 // Since there isn't a duplicate entry,
                 // create and add a new one
-                ChildPropertyDependent resourceDependent = new ChildPropertyDependent();
-                resourceDependent.ChildIndex = childIndex;
-                resourceDependent.Property = dp;
-                resourceDependent.Name = name;
+                ChildPropertyDependent resourceDependent = new ChildPropertyDependent
+                {
+                    ChildIndex = childIndex,
+                    Property = dp,
+                    Name = name
+                };
 
                 resourceDependents.Add(resourceDependent);
             }
@@ -3693,8 +3689,10 @@ namespace System.Windows
                 DependencyProperty              dp,
                 FrameworkElementFactory         templateRoot)
         {
-            EffectiveValueEntry newEntry = new EffectiveValueEntry(dp);
-            newEntry.Value = DependencyProperty.UnsetValue;
+            EffectiveValueEntry newEntry = new EffectiveValueEntry(dp)
+            {
+                Value = DependencyProperty.UnsetValue
+            };
             if (GetValueFromTemplatedParent(
                     container,
                     childIndex,
@@ -3839,8 +3837,10 @@ namespace System.Windows
                 FrameworkObject fo,
                 DependencyProperty dp)
         {
-            EffectiveValueEntry newEntry = new EffectiveValueEntry(dp);
-            newEntry.Value = DependencyProperty.UnsetValue;
+            EffectiveValueEntry newEntry = new EffectiveValueEntry(dp)
+            {
+                Value = DependencyProperty.UnsetValue
+            };
             if (GetValueFromStyleOrTemplate(fo, dp, ref newEntry))
             {
                 DependencyObject target = fo.DO;
@@ -5769,35 +5769,33 @@ namespace System.Windows
         //  Trading off an object boxing cost in exchange for avoiding reflection cost.
         public override bool Equals( object value )
         {
-            if( value is ChildValueLookup )
+            if (value is ChildValueLookup other)
             {
-                ChildValueLookup other = (ChildValueLookup)value;
-
-                if( LookupType      == other.LookupType &&
-                    Property        == other.Property &&
-                    Value           == other.Value )
+                if (LookupType == other.LookupType &&
+                    Property == other.Property &&
+                    Value == other.Value)
                 {
-                    if( Conditions == null &&
-                        other.Conditions == null )
+                    if (Conditions == null &&
+                        other.Conditions == null)
                     {
                         // Both condition arrays are null
                         return true;
                     }
 
-                    if( Conditions == null ||
-                        other.Conditions == null )
+                    if (Conditions == null ||
+                        other.Conditions == null)
                     {
                         // One condition array is null, but not other
                         return false;
                     }
 
                     // Both condition array non-null, see if they're the same length..
-                    if( Conditions.Length == other.Conditions.Length )
+                    if (Conditions.Length == other.Conditions.Length)
                     {
                         // Same length.  Walk the list and compare.
-                        for( int i = 0; i < Conditions.Length; i++ )
+                        for (int i = 0; i < Conditions.Length; i++)
                         {
-                            if( !Conditions[i].TypeSpecificEquals(other.Conditions[i]) )
+                            if (!Conditions[i].TypeSpecificEquals(other.Conditions[i]))
                             {
                                 return false;
                             }
@@ -5914,14 +5912,6 @@ namespace System.Windows
                     TypeConverter typeConverter = DefaultValueConverter.GetConverter(stateType);
                     if (typeConverter != null && typeConverter.CanConvertFrom(typeof(String)))
                     {
-                        // PreSharp uses message numbers that the C# compiler doesn't know about.
-                        // Disable the C# complaints, per the PreSharp documentation.
-                        #pragma warning disable 1634, 1691
-
-                        // PreSharp complains about catching NullReference (and other) exceptions.
-                        // It doesn't recognize that IsCritical[Application]Exception() handles these correctly.
-                        #pragma warning disable 56500
-
                         try
                         {
                             cachedValue = typeConverter.ConvertFromString(null, System.Windows.Markup.TypeConverterHelper.InvariantEnglishUS, referenceString);
@@ -5936,9 +5926,6 @@ namespace System.Windows
                         {
                             // if the conversion failed, just use the unconverted value
                         }
-
-                        #pragma warning restore 56500
-                        #pragma warning restore 1634, 1691
                     }
 
                     // cache the converted value

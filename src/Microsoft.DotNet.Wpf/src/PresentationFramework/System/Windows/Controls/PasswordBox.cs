@@ -1,32 +1,18 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-//
-// Description: The stock password control.
-//
-
-using System.Diagnostics;
-using System.Collections;
 using System.ComponentModel;
-using System.Globalization;
 using System.Security;
-using System.Text;
 using System.Windows.Media;
-using System.Windows.Data;
 using System.Windows.Documents;
-using System.Windows.Automation;
 using System.Windows.Automation.Peers;
 using System.Windows.Input;
 using System.Windows.Navigation;
-using System.Windows.Shapes;
-using System.Windows.Threading;
 using MS.Internal;
 using MS.Internal.KnownBoxes;
 using MS.Internal.Telemetry.PresentationFramework;
 using System.Windows.Controls.Primitives;
-
-#pragma warning disable 1634, 1691  // suppressing PreSharp warnings
 
 namespace System.Windows.Controls
 {
@@ -193,7 +179,6 @@ namespace System.Windows.Controls
 
                 using (SecureString securePassword = new SecureString())
                 {
-                    #pragma warning suppress 6506 // value is set to String.Empty if it was null.
                     for (int i = 0; i < value.Length; i++)
                     {
                         securePassword.AppendChar(value[i]);
@@ -952,9 +937,8 @@ namespace System.Windows.Controls
 
             // Add renderScope as a child of ContentHostTemplateName
             _renderScope = renderScope;
-            if (_passwordBoxContentHost is ScrollViewer)
+            if (_passwordBoxContentHost is ScrollViewer scrollViewer)
             {
-                ScrollViewer scrollViewer = (ScrollViewer)_passwordBoxContentHost;
                 if (scrollViewer.Content != null)
                 {
                     throw new NotSupportedException(SR.TextBoxScrollViewerMarkedAsTextBoxContentMustHaveNoContent);
@@ -964,9 +948,8 @@ namespace System.Windows.Controls
                     scrollViewer.Content = _renderScope;
                 }
             }
-            else if (_passwordBoxContentHost is Decorator)
+            else if (_passwordBoxContentHost is Decorator decorator)
             {
-                Decorator decorator = (Decorator)_passwordBoxContentHost;
                 if (decorator.Child != null)
                 {
                     throw new NotSupportedException(SR.TextBoxDecoratorMarkedAsTextBoxContentMustHaveNoContent);

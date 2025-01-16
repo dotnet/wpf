@@ -1,14 +1,10 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
 
-using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Diagnostics;
 using System.Globalization;
-using System.Windows;
 using System.Windows.Automation.Peers;
 using System.Windows.Controls.Primitives;
 using System.Windows.Data;
@@ -1095,8 +1091,10 @@ namespace System.Windows.Controls
 
         private BindingBase GetDatePickerBinding(DependencyProperty property)
         {
-            Binding binding = new Binding(property.Name);
-            binding.Source = this;
+            Binding binding = new Binding(property.Name)
+            {
+                Source = this
+            };
             return binding;
         }
 
@@ -1201,7 +1199,7 @@ namespace System.Windows.Controls
                         // ex: SelectedDate = DateTime(1008,12,19) but when "12/19/08" is parsed it is interpreted as DateTime(2008,12,19)
                         string selectedDate = DateTimeToString(this.SelectedDate.Value);
 
-                        if (string.Compare(selectedDate, s, StringComparison.Ordinal) == 0)
+                        if (string.Equals(selectedDate, s, StringComparison.Ordinal))
                         {
                             return;
                         }
@@ -1237,7 +1235,7 @@ namespace System.Windows.Controls
         /// </summary>
         private void SafeSetText(string s)
         {
-            if (string.Compare(Text, s, StringComparison.Ordinal) != 0)
+            if (!string.Equals(Text, s, StringComparison.Ordinal))
             {
                 SetCurrentValueInternal(TextProperty, s);
             }

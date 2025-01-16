@@ -3,17 +3,8 @@
 // See the LICENSE file in the project root for more information.
 
 
-using System;
-using System.Collections;
-using System.Collections.ObjectModel;
-using System.Security;
-using System.Windows;
-using System.Windows.Input;
 using System.Windows.Input.StylusPlugIns;
-using System.Windows.Interop;
 using System.Windows.Media;
-using System.Windows.Threading;
-using SR = MS.Internal.PresentationCore.SR;
 
 namespace System.Windows.Input.StylusPointer
 {

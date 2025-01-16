@@ -1,14 +1,9 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
 // Description: Provides functionality that Win32/Avalon servers need (non-Avalon specific)
 
-// PRESHARP: In order to avoid generating warnings about unkown message numbers and unknown pragmas.
-#pragma warning disable 1634, 1691
-
-using System;
-using System.Windows.Automation;
 using MS.Internal.Automation;
 
 namespace System.Windows.Automation.Provider
@@ -102,9 +97,6 @@ namespace System.Windows.Automation.Provider
             ArgumentNullException.ThrowIfNull(element);
             ArgumentNullException.ThrowIfNull(e);
 
-            // PRESHARP will flag this as warning 56506/6506:Parameter 'e' to this public method must be validated: A null-dereference can occur here.
-            // False positive, e is checked, see above
-#pragma warning suppress 6506
             UiaCoreProviderApi.UiaRaiseAutomationPropertyChangedEvent(element, e.Property.Id, e.OldValue, e.NewValue);
         }
 
@@ -121,9 +113,6 @@ namespace System.Windows.Automation.Provider
             ArgumentNullException.ThrowIfNull(provider);
             ArgumentNullException.ThrowIfNull(e);
 
-            // PRESHARP will flag this as warning 56506/6506:Parameter 'e' to this public method must be validated: A null-dereference can occur here.
-            // False positive, e is checked, see above
-#pragma warning suppress 6506
             if (e.EventId == AutomationElementIdentifiers.AsyncContentLoadedEvent)
             {
                 AsyncContentLoadedEventArgs asyncArgs = e as AsyncContentLoadedEventArgs;
@@ -134,9 +123,6 @@ namespace System.Windows.Automation.Provider
                 return;
             }
 
-            // PRESHARP will flag this as warning 56506/6506:Parameter 'e' to this public method must be validated: A null-dereference can occur here.
-            // False positive, e is checked, see above
-#pragma warning suppress 6506
             if (e.EventId == AutomationElementIdentifiers.NotificationEvent)
             {
                 NotificationEventArgs notificationArgs = e as NotificationEventArgs;
@@ -151,9 +137,6 @@ namespace System.Windows.Automation.Provider
                 return;
             }
 
-            // PRESHARP will flag this as warning 56506/6506:Parameter 'e' to this public method must be validated: A null-dereference can occur here.
-            // False positive, e is checked, see above
-#pragma warning suppress 6506
             if (e.EventId == AutomationElementIdentifiers.ActiveTextPositionChangedEvent)
             {
                 ActiveTextPositionChangedEventArgs activeTextPositionChangedArgs = e as ActiveTextPositionChangedEventArgs;
@@ -164,16 +147,10 @@ namespace System.Windows.Automation.Provider
                 return;
             }
 
-            // PRESHARP will flag this as warning 56506/6506:Parameter 'e' to this public method must be validated: A null-dereference can occur here.
-            // False positive, e is checked, see above
-#pragma warning suppress 6506
             if (e.EventId == WindowPatternIdentifiers.WindowClosedEvent && !(e is WindowClosedEventArgs))
                 ThrowInvalidArgument("e");
 
             // fire to all clients
-            // PRESHARP will flag this as warning 56506/6506:Parameter 'eventId' to this public method must be validated: A null-dereference can occur here.
-            // False positive, eventId is checked, see above
-#pragma warning suppress 6506
             UiaCoreProviderApi.UiaRaiseAutomationEvent(provider, eventId.Id);
         }
 
@@ -187,9 +164,6 @@ namespace System.Windows.Automation.Provider
             ArgumentNullException.ThrowIfNull(provider);
             ArgumentNullException.ThrowIfNull(e);
 
-            // PRESHARP will flag this as warning 56506/6506:Parameter 'e' to this public method must be validated: A null-dereference can occur here.
-            // False positive, e is checked, see above
-#pragma warning suppress 6506
             UiaCoreProviderApi.UiaRaiseStructureChangedEvent(provider, e.StructureChangeType, e.GetRuntimeId());
         }
         #endregion Public Methods

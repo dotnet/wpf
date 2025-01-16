@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -12,14 +12,9 @@
 using System;
 using System.IO;
 using System.Collections;
-using System.Security;
 using System.Text;
 
 using System.Globalization;
-using System.Diagnostics;
-using System.Reflection;
-using System.Resources;
-using System.Runtime.InteropServices;
 
 using Microsoft.Build.Framework;
 using Microsoft.Build.Utilities;
@@ -27,11 +22,6 @@ using Microsoft.Build.Utilities;
 using MS.Utility;
 using MS.Internal;
 using MS.Internal.Tasks;
-using MS.Internal.Markup;
-
-// Since we disable PreSharp warnings in this file, PreSharp warning is unknown to C# compiler.
-// We first need to disable warnings about unknown message numbers and unknown pragmas.
-#pragma warning disable 1634, 1691
 
 namespace Microsoft.Build.Tasks.Windows
 {
@@ -139,7 +129,6 @@ namespace Microsoft.Build.Tasks.Windows
                     Log.LogMessageFromResources(MessageImportance.Low, nameof(SR.CompilationDone));
                 }
             }
-#pragma warning disable 6500
             catch (Exception e)
             {
                 string message;
@@ -164,7 +153,6 @@ namespace Microsoft.Build.Tasks.Windows
 
                 _nErrors++;
             }
-#pragma warning restore 6500
 
             if (_nErrors > 0)
             {
@@ -796,8 +784,10 @@ namespace Microsoft.Build.Tasks.Windows
                 // Generate a TaskItem for it.
                 //
 
-                bamlItem = new TaskItem();
-                bamlItem.ItemSpec = bamlFile;
+                bamlItem = new TaskItem
+                {
+                    ItemSpec = bamlFile
+                };
 
                 // Transfer the metadata value from source item to the generated baml item.
                 bamlItem.SetMetadata(SharedStrings.Localizable, localizable ?  "True" : "False");

@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -6,9 +6,6 @@
 
 using System;
 using System.Runtime.InteropServices;
-using System.ComponentModel;
-using System.Text;
-using System.Collections;
 using System.Windows.Automation;
 using System.Windows.Automation.Provider;
 using System.Windows;
@@ -388,13 +385,14 @@ namespace MS.Internal.AutomationProxies
             // Send the link an LM_SETITEM message.
             //
             // Allocate a local LITEM struct.
-            UnsafeNativeMethods.LITEM linkItem = new UnsafeNativeMethods.LITEM();
-
-            // Fill in the coordinates about which we care.
-            linkItem.mask = NativeMethods.LIF_ITEMINDEX | NativeMethods.LIF_STATE;
-            linkItem.iLink = _item;
-            linkItem.stateMask = NativeMethods.LIS_FOCUSED;
-            linkItem.state = NativeMethods.LIS_FOCUSED;
+            UnsafeNativeMethods.LITEM linkItem = new UnsafeNativeMethods.LITEM
+            {
+                // Fill in the coordinates about which we care.
+                mask = NativeMethods.LIF_ITEMINDEX | NativeMethods.LIF_STATE,
+                iLink = _item,
+                stateMask = NativeMethods.LIS_FOCUSED,
+                state = NativeMethods.LIS_FOCUSED
+            };
 
             unsafe
             {

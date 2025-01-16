@@ -4,8 +4,6 @@
 
 // Description: 
 //    SignatureStatus enum for status of applied signatures.
-using System;
-
 namespace MS.Internal.Documents
 {
     /// <summary>

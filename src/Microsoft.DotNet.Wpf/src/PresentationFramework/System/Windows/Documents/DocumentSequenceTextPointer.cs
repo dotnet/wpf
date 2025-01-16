@@ -1,6 +1,8 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
+
+using MS.Internal;
 
 //
 // Description:
@@ -9,18 +11,8 @@
 //      DocumentSequenceTextPointer.
 //
 
-#pragma warning disable 1634, 1691 // To enable presharp warning disables (#pragma suppress) below.
-
 namespace System.Windows.Documents
 {
-    using MS.Internal.Documents;
-    using MS.Utility;
-    using MS.Internal;
-    using System.Windows;
-    using System;
-    using System.Diagnostics;
-
-
     /// <summary>
     /// DocumentSequenceTextPointer is an implementation of ITextPointer for FixedDocumentSequence
     /// </summary>
@@ -418,7 +410,6 @@ namespace System.Windows.Documents
         {
             get
             {
-                #pragma warning suppress 56503
                 throw new NotImplementedException();
             }
         }

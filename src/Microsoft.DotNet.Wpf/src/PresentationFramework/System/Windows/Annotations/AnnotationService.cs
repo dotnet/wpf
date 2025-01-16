@@ -1,39 +1,26 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-#pragma warning disable 1634, 1691
 //
 // Description:
 //      AnnotationService provides DynamicProperties and API for configuring
 //      and invoking the annotation framework.
 //
 
-using System;
 using System.Collections;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.ComponentModel;
 using System.Windows.Threading;
-using System.IO;
-using System.Windows;
 using System.Windows.Annotations.Storage;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Markup;
-using System.Xml;
 using MS.Internal;
 using MS.Internal.Annotations;
 using MS.Internal.Annotations.Anchoring;
 using MS.Internal.Annotations.Component;
-using MS.Internal.Documents;
 using MS.Utility;
-using System.Reflection;        // for BindingFlags
-using System.Globalization;     // for CultureInfo
-using System.Threading;
 
 namespace System.Windows.Annotations
 {
@@ -543,7 +530,6 @@ namespace System.Windows.Annotations
         /// out of box annotation component.  If the DP is set to AnnotationComponentChooser.None, no annotation components will be choosen
         /// for this subtree, in essence disabling the mechanism for the subtree.
         /// </summary>
-#pragma warning suppress 7009
         internal static readonly DependencyProperty ChooserProperty = DependencyProperty.RegisterAttached("Chooser", typeof(AnnotationComponentChooser), typeof(AnnotationService), new FrameworkPropertyMetadata(new AnnotationComponentChooser(), FrameworkPropertyMetadataOptions.Inherits | FrameworkPropertyMetadataOptions.OverridesInheritanceBehavior));
 
         /// <summary>
@@ -567,7 +553,6 @@ namespace System.Windows.Annotations
         ///     processed, you should set this property and call LoadAnnotations/
         ///     UnloadAnnotations on the service.
         /// </summary>
-#pragma warning suppress 7009
         internal static readonly DependencyProperty SubTreeProcessorIdProperty = LocatorManager.SubTreeProcessorIdProperty.AddOwner(typeof(AnnotationService));
 
         /// <summary>
@@ -606,7 +591,6 @@ namespace System.Windows.Annotations
         ///     logical tree node.  Attach this property to the element with a
         ///     unique value.
         /// </summary>
-#pragma warning suppress 7009
         internal static readonly DependencyProperty DataIdProperty = DataIdProcessor.DataIdProperty.AddOwner(typeof(AnnotationService));
 
         /// <summary>
@@ -705,7 +689,6 @@ namespace System.Windows.Annotations
         ///     in order to make direct calls such as CreateAnnotation.  Kept internal because
         ///     PathNode uses it to short-circuit the path building when there is a service set.
         /// </summary>
-#pragma warning suppress 7009
         internal static readonly DependencyProperty ServiceProperty = DependencyProperty.RegisterAttached("Service", typeof(AnnotationService), typeof(AnnotationService), new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.Inherits | FrameworkPropertyMetadataOptions.OverridesInheritanceBehavior));
 
         #endregion Internal Fields
@@ -1742,7 +1725,6 @@ namespace System.Windows.Annotations
         ///     Private DynamicProperty used to attach lists of AttachedAnnotations to
         ///     Elements in the tree.
         /// </summary>
-#pragma warning suppress 7009
         private static readonly DependencyProperty AttachedAnnotationsProperty = DependencyProperty.RegisterAttached("AttachedAnnotations", typeof(IList<IAttachedAnnotation>), typeof(AnnotationService));
 
         // The root of the subtree for which this AnnotationService is managing annotations.

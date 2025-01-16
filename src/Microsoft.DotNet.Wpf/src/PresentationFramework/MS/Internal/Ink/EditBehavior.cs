@@ -10,20 +10,8 @@
 //
 
 
-using System;
-using System.ComponentModel;
-using System.ComponentModel.Design;
-using System.Collections;
-using System.Collections.Generic;
-using System.Diagnostics;
 using System.Windows.Input;
-using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Controls.Primitives;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Interop;
-using System.Windows.Navigation;
 using System.Windows.Media;
 
 namespace MS.Internal.Ink

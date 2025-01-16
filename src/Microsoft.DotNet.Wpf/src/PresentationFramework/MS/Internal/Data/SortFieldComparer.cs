@@ -8,14 +8,10 @@
 // See spec at IDataCollection.mht
 //
 
-using System;
 using System.ComponentModel;
 
 using System.Collections;
-using System.Collections.Generic;
-using System.Reflection;
 using System.Globalization;
-using MS.Utility;
 using System.Windows;
 
 namespace MS.Internal.Data

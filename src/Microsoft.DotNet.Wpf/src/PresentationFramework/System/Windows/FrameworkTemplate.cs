@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -13,22 +13,13 @@ using MS.Internal;                      // Helper
 using MS.Utility;                       // ChildValueLookupList
 using System.ComponentModel;            // DesignerSerializationVisibility, DefaultValueAttribute
 using System.Collections;               // Hashtable
-using System.Collections.Generic;       // List<T>
 using System.Collections.Specialized;   // HybridDictionary
-using System.Diagnostics;               // Debug
 using System.Runtime.CompilerServices;  // ConditionalWeakTable
-using System.Security;                  // SecurityCriticalAttribute, SecurityTreatAsSafe
-using System.Threading;                 // Interlocked
-using System.Windows.Media.Animation;   // Timeline
 using System.Windows.Markup;     // XamlTemplateSerializer, ContentPropertyAttribute
 using System.Windows.Diagnostics;
-using System.Windows.Media;
-using System.Windows.Controls;
-using System.Windows.Documents;
 using System.Windows.Threading; // DispatcherObject
 using System.Xaml;
 using System.Windows.Data;
-using System.Globalization;
 using MS.Internal.Xaml.Context;
 
 
@@ -226,10 +217,11 @@ namespace System.Windows
 
                 if ( _resources == null )
                 {
-                    _resources = new ResourceDictionary();
-
-                    // A Template ResourceDictionary can be accessed across threads
-                    _resources.CanBeAccessedAcrossThreads = true;
+                    _resources = new ResourceDictionary
+                    {
+                        // A Template ResourceDictionary can be accessed across threads
+                        CanBeAccessedAcrossThreads = true
+                    };
                 }
 
                 if ( IsSealed )
@@ -824,12 +816,14 @@ namespace System.Windows
 
                     // Create a Binding equivalent to the TemplateBindingExtension
 
-                    Binding binding = new Binding();
-                    binding.Mode = BindingMode.OneWay;
-                    binding.RelativeSource = RelativeSource.TemplatedParent;
-                    binding.Path = new PropertyPath(templateBindingExtension.Property);
-                    binding.Converter = templateBindingExtension.Converter;
-                    binding.ConverterParameter = templateBindingExtension.ConverterParameter;
+                    Binding binding = new Binding
+                    {
+                        Mode = BindingMode.OneWay,
+                        RelativeSource = RelativeSource.TemplatedParent,
+                        Path = new PropertyPath(templateBindingExtension.Property),
+                        Converter = templateBindingExtension.Converter,
+                        ConverterParameter = templateBindingExtension.ConverterParameter
+                    };
 
                     value = binding;
 
@@ -854,9 +848,11 @@ namespace System.Windows
 
             dependencyObject.ProvideSelfAsInheritanceContext(value, dependencyProperty);
 
-            EffectiveValueEntry entry = new EffectiveValueEntry(dependencyProperty);
-            entry.BaseValueSourceInternal = BaseValueSourceInternal.ParentTemplate;
-            entry.Value = value;
+            EffectiveValueEntry entry = new EffectiveValueEntry(dependencyProperty)
+            {
+                BaseValueSourceInternal = BaseValueSourceInternal.ParentTemplate,
+                Value = value
+            };
 
             if (isMarkupExtension)
             {

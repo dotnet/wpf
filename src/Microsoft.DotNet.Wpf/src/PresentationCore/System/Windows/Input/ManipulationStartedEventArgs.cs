@@ -5,13 +5,6 @@
 //
 //
 
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Security;
-using System.Windows;
-using System.Windows.Media;
-
 namespace System.Windows.Input
 {
     /// <summary>

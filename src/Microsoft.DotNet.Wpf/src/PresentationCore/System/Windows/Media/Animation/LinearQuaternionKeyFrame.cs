@@ -5,8 +5,6 @@
 //
 // 
 
-using System;
-using System.Windows;
 using MS.Internal.KnownBoxes;
 
 namespace System.Windows.Media.Animation

@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -13,17 +13,10 @@ Abstract:
 
 --*/
 
-using System;
-using System.IO;
 using System.Xml;
-using System.Collections;
 using System.Collections.ObjectModel;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Globalization;
 
 using System.Printing;
-using MS.Internal.Printing.Configuration;
 
 namespace MS.Internal.Printing.Configuration
 {
@@ -216,8 +209,10 @@ namespace MS.Internal.Printing.Configuration
 
         internal static PrintCapabilityFeature NewFeatureCallback(InternalPrintCapabilities printCap)
         {
-            JobInputBinCapability cap = new JobInputBinCapability(printCap);
-            cap._inputBins = new Collection<InputBinOption>();
+            JobInputBinCapability cap = new JobInputBinCapability(printCap)
+            {
+                _inputBins = new Collection<InputBinOption>()
+            };
 
             return cap;
         }
@@ -255,8 +250,10 @@ namespace MS.Internal.Printing.Configuration
 
         internal static PrintCapabilityFeature NewFeatureCallback(InternalPrintCapabilities printCap)
         {
-            DocumentInputBinCapability cap = new DocumentInputBinCapability(printCap);
-            cap._inputBins = new Collection<InputBinOption>();
+            DocumentInputBinCapability cap = new DocumentInputBinCapability(printCap)
+            {
+                _inputBins = new Collection<InputBinOption>()
+            };
 
             return cap;
         }
@@ -294,8 +291,10 @@ namespace MS.Internal.Printing.Configuration
 
         internal static PrintCapabilityFeature NewFeatureCallback(InternalPrintCapabilities printCap)
         {
-            PageInputBinCapability cap = new PageInputBinCapability(printCap);
-            cap._inputBins = new Collection<InputBinOption>();
+            PageInputBinCapability cap = new PageInputBinCapability(printCap)
+            {
+                _inputBins = new Collection<InputBinOption>()
+            };
 
             return cap;
         }

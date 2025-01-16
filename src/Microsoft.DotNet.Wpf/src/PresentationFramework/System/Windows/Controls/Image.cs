@@ -7,23 +7,15 @@
 //              Layout Spec at Image.xml
 //
 
-using MS.Internal;
 using MS.Internal.PresentationFramework;
 using MS.Internal.Telemetry.PresentationFramework;
-using MS.Utility;
-using System.Diagnostics;
-using System.ComponentModel;
 #if OLD_AUTOMATION
 using System.Windows.Automation.Provider;
 #endif
-using System.Windows.Threading;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Documents;
 using System.Windows.Markup;
 using System.Windows.Navigation;
-
-using System;
 
 namespace System.Windows.Controls
 {

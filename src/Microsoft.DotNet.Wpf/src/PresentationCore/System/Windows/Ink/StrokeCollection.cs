@@ -1,26 +1,14 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-
-using MS.Utility;
-using System;
 using System.ComponentModel;
 using System.Collections;
 using System.Collections.Specialized;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Diagnostics;
 using System.Windows.Media;
-using System.Windows.Ink;
-using System.Windows.Input;
-using System.Runtime.Serialization;
 using System.IO;
-using System.Reflection;
 using MS.Internal.Ink.InkSerializedFormat;
-using MS.Internal.Ink;
-
-using SR = MS.Internal.PresentationCore.SR;
 
 // Primary root namespace for TabletPC/Ink/Handwriting/Recognition in .NET
 
@@ -111,8 +99,10 @@ namespace System.Windows.Ink
         /// </summary>
         internal void SaveIsf(Stream stream, bool compress)
         {
-            StrokeCollectionSerializer serializer = new StrokeCollectionSerializer(this);
-            serializer.CurrentCompressionMode = compress ? CompressionMode.Compressed : CompressionMode.NoCompression;
+            StrokeCollectionSerializer serializer = new StrokeCollectionSerializer(this)
+            {
+                CurrentCompressionMode = compress ? CompressionMode.Compressed : CompressionMode.NoCompression
+            };
             serializer.EncodeISF(stream);
         }
 
@@ -245,14 +235,10 @@ namespace System.Windows.Ink
             // Apply the transform to each strokes
             foreach ( Stroke stroke in this )
             {
-                // samgeo - Presharp issue
                 // Presharp gives a warning when get methods might deref a null.  It's complaining
                 // here that 'stroke'' could be null, but StrokeCollection never allows nulls to be added
                 // so this is not possible
-#pragma warning disable 1634, 1691
-#pragma warning suppress 6506
                 stroke.Transform(transformMatrix, applyToStylusTip);
-#pragma warning restore 1634, 1691
             }
         }
 
@@ -264,14 +250,10 @@ namespace System.Windows.Ink
             StrokeCollection clone = new StrokeCollection();
             foreach ( Stroke s in this )
             {
-                // samgeo - Presharp issue
                 // Presharp gives a warning when get methods might deref a null.  It's complaining
                 // here that s could be null, but StrokeCollection never allows nulls to be added
                 // so this is not possible
-#pragma warning disable 1634, 1691
-#pragma warning suppress 6506
                 clone.Add(s.Clone());
-#pragma warning restore 1634, 1691
             }
 
             //

@@ -13,9 +13,6 @@
 //
 //
 
-using System;
-using System.Windows.Input;
-using System.Windows;
 using System.Windows.Markup;
 using System.ComponentModel;
 

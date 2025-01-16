@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -8,9 +8,7 @@
 
 using System;
 using System.Diagnostics;
-using System.IO;
 using System.Text;
-using System.Text.RegularExpressions;
 using System.Collections.Generic;
 
 #if !PBTCOMPILER
@@ -18,12 +16,6 @@ using System.Windows;
 #endif
 
 using MS.Utility;
-
-// Disabling 1634 and 1691:
-// In order to avoid generating warnings about unknown message numbers and
-// unknown pragmas when compiling C# source code with the C# compiler,
-// you need to disable warnings 1634 and 1691. (Presharp Documentation)
-#pragma warning disable 1634, 1691
 
 namespace MS.Internal.Globalization
 {
@@ -368,7 +360,7 @@ namespace MS.Internal.Globalization
 
                 for (int i = 0; i < _enumNames.Length; i++)
                 {
-                    if (string.Compare(enumName, _enumNames[i], StringComparison.Ordinal) == 0)
+                    if (string.Equals(enumName, _enumNames[i], StringComparison.Ordinal))
                     {
                         enumIndex = i;
                         return true;
@@ -443,9 +435,11 @@ namespace MS.Internal.Globalization
 
             if (overridden)
             {
-                attribute = new LocalizabilityAttribute(category);
-                attribute.Modifiability = modifiability;
-                attribute.Readability = readability;
+                attribute = new LocalizabilityAttribute(category)
+                {
+                    Modifiability = modifiability,
+                    Readability = readability
+                };
             }
 
             return attribute;

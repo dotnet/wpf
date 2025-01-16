@@ -1,21 +1,15 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
-        
 
-using System.Collections;
-using System.Collections.Specialized;
-using System.Windows.Controls;
-using System.Windows;
+
 #if RIBBON_IN_FRAMEWORK
 using System.Windows.Controls.Ribbon.Primitives;
 #else
 using Microsoft.Windows.Controls.Ribbon.Primitives;
 #endif
 using MS.Internal;
-using System;
 using System.Runtime.InteropServices;
-using System.Windows.Media;
 using System.Windows.Controls.Primitives;
 
 #if RIBBON_IN_FRAMEWORK
@@ -174,9 +168,10 @@ namespace Microsoft.Windows.Controls.Ribbon
                 IntPtr monitor = NativeMethods.MonitorFromRect(ref nativeBounds, NativeMethods.MONITOR_DEFAULTTONEAREST);
                 if (monitor != IntPtr.Zero)
                 {
-                    NativeMethods.MONITORINFOEX monitorInfo = new NativeMethods.MONITORINFOEX();
-
-                    monitorInfo.cbSize = Marshal.SizeOf(typeof(NativeMethods.MONITORINFOEX));
+                    NativeMethods.MONITORINFOEX monitorInfo = new NativeMethods.MONITORINFOEX
+                    {
+                        cbSize = Marshal.SizeOf(typeof(NativeMethods.MONITORINFOEX))
+                    };
                     NativeMethods.GetMonitorInfo(new HandleRef(null, monitor), monitorInfo);
 
                     // WPF Popup special cases MenuItem to be restricted to work area

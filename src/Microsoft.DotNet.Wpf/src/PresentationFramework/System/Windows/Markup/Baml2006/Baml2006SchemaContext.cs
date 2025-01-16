@@ -1,23 +1,10 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-using System;
-using System.Collections.Generic;
-using System.IO;
 using System.Reflection;
-using System.Diagnostics;
 using System.Xaml;
 using System.Xaml.Schema;
-using System.ComponentModel;
-using System.Reflection.Emit;
-using System.Windows.Markup;
-using System.Windows.Media.Media3D;
-using System.Windows.Media;
-using System.Runtime.Serialization;
-using KnownTypesV3 = System.Windows.Markup.KnownTypes;
-using System.Threading;
-using MS.Internal.WindowsBase;
 
 namespace System.Windows.Baml2006
 {
@@ -380,8 +367,10 @@ namespace System.Windows.Baml2006
             {
                 if (typeId == _bamlType.Count)
                 {
-                    BamlType type = new BamlType(assemblyId, typeName);
-                    type.Flags = flags;
+                    BamlType type = new BamlType(assemblyId, typeName)
+                    {
+                        Flags = flags
+                    };
                     _bamlType.Add(type);
                 }
                 else if (typeId > _bamlType.Count)

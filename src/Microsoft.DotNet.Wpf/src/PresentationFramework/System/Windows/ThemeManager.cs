@@ -1,12 +1,5 @@
-using Standard;
 using Microsoft.Win32;
-using System.Collections;
-using System.Collections.ObjectModel; 
-using System.Collections.Generic;
-using System.Windows.Interop;
-using System.Windows.Media;
 using System.Windows.Appearance;
-using System.Diagnostics;
 
 
 namespace System.Windows;
@@ -28,13 +21,11 @@ internal static class ThemeManager
 
                 FluentThemeState newFluentThemeState = new FluentThemeState(Application.Current.ThemeMode.Value, useLightColors);
 
-                if (s_currentFluentThemeState == newFluentThemeState)
+                if (s_currentFluentThemeState != newFluentThemeState)
                 {
-                    return;
+                    AddOrUpdateThemeResources(Application.Current.Resources, GetThemeDictionary(Application.Current.ThemeMode));
                 }
-
-                AddOrUpdateThemeResources(Application.Current.Resources, GetThemeDictionary(Application.Current.ThemeMode));
-
+                
                 foreach (Window window in Application.Current.Windows)
                 {
                     if (window.ThemeMode == ThemeMode.None)
@@ -204,6 +195,11 @@ internal static class ThemeManager
         return rd;
     }
 
+    internal static bool IsFluentThemeDictionaryIncluded()
+    {
+        return Application.Current != null && LastIndexOfFluentThemeDictionary(Application.Current.Resources) != -1;
+    }
+
     #endregion
 
 
@@ -323,7 +319,7 @@ internal static class ThemeManager
 
     internal static bool IgnoreWindowResourcesChange { get; set; } = false;
 
-    internal static double DefaultFluentThemeFontSize => 14;
+    internal const double DefaultFluentFontSizeFactor = 14.0 / 12.0 ;
 
     internal static WindowCollection FluentEnabledWindows { get; set; } = new WindowCollection();
 

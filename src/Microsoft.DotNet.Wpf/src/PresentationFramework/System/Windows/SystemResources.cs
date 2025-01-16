@@ -1,22 +1,18 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
 //
 //
 
-using System;
-using System.Diagnostics;
 using System.IO;
 using System.Reflection;
 using System.Resources;
 using System.Runtime.InteropServices;
 using System.Collections;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Globalization;
 using System.Linq;
-using System.Security;
 using System.Windows.Threading;
 using System.Text;
 using MS.Utility;
@@ -24,11 +20,8 @@ using System.Windows.Controls.Primitives;
 using System.Windows.Markup;
 using System.Windows.Diagnostics;
 using System.Windows.Documents;
-using System.Windows.Media;
 using System.Windows.Input;
 using System.Windows.Interop;
-using System.Windows.Resources;
-using System.Windows.Appearance;
 using MS.Win32;
 using MS.Internal;
 using MS.Internal.Ink;
@@ -36,9 +29,7 @@ using MS.Internal.Interop;
 using MS.Internal.PresentationFramework;                   // SafeSecurityHelper
 using System.Windows.Baml2006;
 using System.Xaml.Permissions;
-
-// Disable pragma warnings to enable PREsharp pragmas
-#pragma warning disable 1634, 1691
+using System.Runtime.CompilerServices;
 
 namespace System.Windows
 {
@@ -805,7 +796,6 @@ namespace System.Windows
                 // There is no Assembly.Exists API to determine if an Assembly exists.
                 // There is also no way to determine if an Assembly's format is good prior to loading it.
                 // So, the exception must be caught. assembly will continue to be null and returned.
-#pragma warning disable 6502
                 catch (FileNotFoundException)
                 {
                 }
@@ -819,10 +809,9 @@ namespace System.Windows
                     Type knownTypeHelper = assembly.GetType("Microsoft.Windows.Themes.KnownTypeHelper");
                     if (knownTypeHelper != null)
                     {
-                        MS.Internal.WindowsBase.SecurityHelper.RunClassConstructor(knownTypeHelper);
+                        RuntimeHelpers.RunClassConstructor(knownTypeHelper.TypeHandle);
                     }
                 }
-#pragma warning restore 6502
             }
 
             /// <summary>
@@ -921,8 +910,6 @@ namespace System.Windows
                 // There is no ResourceManager.HasManifest in order to detect this case before an exception is thrown.
                 // Likewise, there is no way to know if loading a resource will fail prior to loading it.
                 // So, the exceptions must be caught. stream will continue to be null and handled accordingly later.
-#pragma warning disable 6502
-
                 catch (MissingManifestResourceException)
                 {
                     // No usable resources in the assembly
@@ -938,13 +925,13 @@ namespace System.Windows
                 }
 #endif
 
-#pragma warning restore 6502
-
                 if (stream != null)
                 {
-                    Baml2006ReaderSettings settings = new Baml2006ReaderSettings();
-                    settings.OwnsStream = true;
-                    settings.LocalAssembly = assembly;
+                    Baml2006ReaderSettings settings = new Baml2006ReaderSettings
+                    {
+                        OwnsStream = true,
+                        LocalAssembly = assembly
+                    };
 
                     // For system themes, we don't seem to be passing the BAML Uri to the Baml2006Reader
                     Baml2006Reader bamlReader = new Baml2006ReaderInternal(stream, new Baml2006SchemaContext(settings.LocalAssembly), settings);
@@ -1014,10 +1001,6 @@ namespace System.Windows
 
         #region Value Changes
 
-        // The hwndNotify is referenced by the _hwndNotify static field, but
-        // PreSharp will think that the hwndNotify is local and should be disposed.
-#pragma warning disable 6518
-
         /// <summary>
         /// Ensures that a a notify-window is created corresponding to <see cref="ProcessDpiAwarenessContextValue"/>
         /// This is the default HWND used to listen for theme-change messages.
@@ -1045,7 +1028,7 @@ namespace System.Windows
                 _hwndNotify.Count == 0 ||
                 _hwndNotify.Keys.FirstOrDefault((hwndDpiContext) => hwndDpiContext.DpiAwarenessContextValue == ProcessDpiAwarenessContextValue) == null)
             {
-                _hwndNotify = new Dictionary<DpiUtil.HwndDpiInfo, SecurityCriticalDataClass<HwndWrapper>>();
+                _hwndNotify = new Dictionary<DpiUtil.HwndDpiInfo, HwndWrapper>();
                 _hwndNotifyHook = new Dictionary<DpiUtil.HwndDpiInfo, HwndWrapperHook>();
                 _dpiAwarenessContextAndDpis = new List<DpiUtil.HwndDpiInfo>();
 
@@ -1139,10 +1122,10 @@ namespace System.Windows
                 Debug.Assert(!_hwndNotify.ContainsKey(hwndDpiInfo));
                 Debug.Assert(hwndDpiInfo.DpiAwarenessContextValue == dpiContextValue);
 
-                _hwndNotify[hwndDpiInfo] = new SecurityCriticalDataClass<HwndWrapper>(hwndNotify);
-                _hwndNotify[hwndDpiInfo].Value.Dispatcher.ShutdownFinished += OnShutdownFinished;
+                _hwndNotify[hwndDpiInfo] = hwndNotify;
+                _hwndNotify[hwndDpiInfo].Dispatcher.ShutdownFinished += OnShutdownFinished;
                 _hwndNotifyHook[hwndDpiInfo] = new HwndWrapperHook(SystemThemeFilterMessage);
-                _hwndNotify[hwndDpiInfo].Value.AddHook(_hwndNotifyHook[hwndDpiInfo]);
+                _hwndNotify[hwndDpiInfo].AddHook(_hwndNotifyHook[hwndDpiInfo]);
 
                 return hwndDpiInfo;
             }
@@ -1154,7 +1137,7 @@ namespace System.Windows
             {
                 foreach (var hwndDpiInfo in _dpiAwarenessContextAndDpis)
                 {
-                    _hwndNotify[hwndDpiInfo].Value.Dispose();
+                    _hwndNotify[hwndDpiInfo].Dispose();
                     _hwndNotifyHook[hwndDpiInfo] = null;
                 }
             }
@@ -1190,8 +1173,6 @@ namespace System.Windows
 
             return dpiScale;
         }
-
-#pragma warning restore 6518
 
     private static void OnThemeChanged()
         {
@@ -1570,7 +1551,7 @@ namespace System.Windows
                 Debug.Assert(hwndDpiInfo != null);
 
                 // will throw when a match is not found, which should never happen because we just called Ensure...()
-                return _hwndNotify[hwndDpiInfo].Value;
+                return _hwndNotify[hwndDpiInfo];
             }
         }
 
@@ -1653,7 +1634,7 @@ namespace System.Windows
 
             if (EnsureResourceChangeListener(hwndDpiInfo))
             {
-                return _hwndNotify[hwndDpiInfo].Value;
+                return _hwndNotify[hwndDpiInfo];
             }
 
             return null;
@@ -1684,7 +1665,7 @@ namespace System.Windows
         /// </summary>
         [ThreadStatic] private static List<DpiUtil.HwndDpiInfo> _dpiAwarenessContextAndDpis;
 
-        [ThreadStatic] private static Dictionary<DpiUtil.HwndDpiInfo, SecurityCriticalDataClass<HwndWrapper>> _hwndNotify;
+        [ThreadStatic] private static Dictionary<DpiUtil.HwndDpiInfo, HwndWrapper> _hwndNotify;
         [ThreadStatic]  private static Dictionary<DpiUtil.HwndDpiInfo, HwndWrapperHook> _hwndNotifyHook;
 
         private static Hashtable _resourceCache = new Hashtable();

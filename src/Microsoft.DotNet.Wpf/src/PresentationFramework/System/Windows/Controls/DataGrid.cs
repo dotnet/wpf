@@ -1,16 +1,13 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
 
 using System.Collections;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.ComponentModel;
-using System.Diagnostics;
 using System.Runtime.InteropServices;
-using System.Security;
 using System.Text;
 using System.Windows.Automation;
 using System.Windows.Automation.Peers;
@@ -1714,8 +1711,10 @@ namespace System.Windows.Controls
 
                 // Same priority as ListBox. Currently choosing SystemIdle over ApplicationIdle since the layout
                 // manger will do some work (sometimes) at ApplicationIdle.
-                _autoScrollTimer = new DispatcherTimer(DispatcherPriority.SystemIdle);
-                _autoScrollTimer.Interval = AutoScrollTimeout;
+                _autoScrollTimer = new DispatcherTimer(DispatcherPriority.SystemIdle)
+                {
+                    Interval = AutoScrollTimeout
+                };
                 _autoScrollTimer.Tick += new EventHandler(OnAutoScrollTimeout);
                 _autoScrollTimer.Start();
             }
@@ -1934,8 +1933,10 @@ namespace System.Windows.Controls
                 }
                 if (_internalScrollHost != null)
                 {
-                    Binding horizontalOffsetBinding = new Binding("ContentHorizontalOffset");
-                    horizontalOffsetBinding.Source = _internalScrollHost;
+                    Binding horizontalOffsetBinding = new Binding("ContentHorizontalOffset")
+                    {
+                        Source = _internalScrollHost
+                    };
                     SetBinding(HorizontalScrollOffsetProperty, horizontalOffsetBinding);
                 }
             }
@@ -6935,8 +6936,10 @@ namespace System.Windows.Controls
                     else
                     {
                         // lacking a cell, bind a dummy element directly to the data item
-                        target = new FrameworkElement();
-                        target.DataContext = _item;
+                        target = new FrameworkElement
+                        {
+                            DataContext = _item
+                        };
                     }
 
                     BindingOperations.SetBinding(target, CellContentProperty, _column.ClipboardContentBinding);
@@ -6971,8 +6974,10 @@ namespace System.Windows.Controls
                     else
                     {
                         // lacking a cell, bind a dummy element directly to the data item
-                        target = new FrameworkElement();
-                        target.DataContext = _item;
+                        target = new FrameworkElement
+                        {
+                            DataContext = _item
+                        };
                     }
 
                     BindingOperations.SetBinding(target, CellClipboardProperty, _column.ClipboardContentBinding);
@@ -7220,7 +7225,7 @@ namespace System.Windows.Controls
                             // get the index of existing descriptor to replace it
                             for (int i = 0; i < Items.SortDescriptions.Count; i++)
                             {
-                                if (string.Compare(Items.SortDescriptions[i].PropertyName, sortPropertyName, StringComparison.Ordinal) == 0 &&
+                                if (string.Equals(Items.SortDescriptions[i].PropertyName, sortPropertyName, StringComparison.Ordinal) &&
                                     (GroupingSortDescriptionIndices == null ||
                                     !GroupingSortDescriptionIndices.Contains(i)))
                                 {

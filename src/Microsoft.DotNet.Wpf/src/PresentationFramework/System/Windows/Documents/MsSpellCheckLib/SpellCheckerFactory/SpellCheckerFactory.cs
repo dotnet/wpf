@@ -11,22 +11,18 @@
 //              COM types to .NET types. 
 //
 
-using System.Collections.Generic;
 using System.Runtime.InteropServices;
-using System.Reflection;
-using System.Security;
 
 using MS.Internal;
+using ISpellChecker = System.Windows.Documents.MsSpellCheckLib.RCW.ISpellChecker;
+using ISpellCheckerFactory = System.Windows.Documents.MsSpellCheckLib.RCW.ISpellCheckerFactory;
+using IUserDictionariesRegistrar = System.Windows.Documents.MsSpellCheckLib.RCW.IUserDictionariesRegistrar;
+using SpellCheckerFactoryClass = System.Windows.Documents.MsSpellCheckLib.RCW.SpellCheckerFactoryClass;
 
 namespace System.Windows.Documents
 {
     namespace MsSpellCheckLib
     {
-        using ISpellChecker = RCW.ISpellChecker;
-        using ISpellCheckerFactory = RCW.ISpellCheckerFactory;
-        using IUserDictionariesRegistrar = RCW.IUserDictionariesRegistrar;
-        using SpellCheckerFactoryClass = RCW.SpellCheckerFactoryClass;
-
         /// <summary>
         /// Encapsulation of RCW.ISpellCheckerFactory and RCW.IUserDictionariesRegistrar funcionalities
         /// and provides a resilient (to out-of-proc COM server failures) interface to callers.

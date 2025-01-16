@@ -7,18 +7,7 @@
 //   Class that serializes and deserializes Templates.
 //
 
-using System;
-using System.ComponentModel;
-
-using System.ComponentModel.Design.Serialization;
-using System.Diagnostics;
-using System.Collections;
 using System.Globalization;
-using System.IO;
-using System.Reflection;
-using System.Text;
-using System.Xml;
-using MS.Utility;
 
 #if !PBTCOMPILER
 using System.Windows.Data;
@@ -68,9 +57,11 @@ namespace System.Windows.Markup
             BamlRecordWriter       bamlWriter)
         {
 
-            TemplateXamlParser templateParser = new TemplateXamlParser(tokenReader, context);
-            templateParser.ParserHooks = _parserHooks;
-            templateParser.BamlRecordWriter = bamlWriter;
+            TemplateXamlParser templateParser = new TemplateXamlParser(tokenReader, context)
+            {
+                ParserHooks = _parserHooks,
+                BamlRecordWriter = bamlWriter
+            };
 
             // Process the xamlNode that is passed in so that the <Template> element is written to baml
             templateParser.WriteElementStart((XamlElementStartNode)xamlNode);

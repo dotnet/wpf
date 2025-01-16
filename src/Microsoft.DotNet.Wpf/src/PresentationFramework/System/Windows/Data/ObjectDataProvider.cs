@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -8,18 +8,13 @@
 // Specs:       Avalon DataProviders.mht
 //
 
-using System;
 using System.Collections;
 using System.ComponentModel;
-using System.Diagnostics;
 using System.Reflection;
 using System.Windows.Threading;
 using System.Threading;
-using System.Windows;
-using System.Windows.Data;
 using MS.Internal;
 using MS.Internal.Data; // ParameterCollection
-using System.Windows.Markup;
 
 //---------------------------------------------------------------------------
 // Design notes:
@@ -147,7 +142,7 @@ namespace System.Windows.Data
         {
             get
             {
-                 return (_instanceProvider != null) ? _instanceProvider : _objectInstance;
+                 return _instanceProvider ?? _objectInstance;
             }
             set
             {
@@ -441,14 +436,6 @@ namespace System.Windows.Data
             string  error   = null; // string that describes known error
             e = null;
 
-            // PreSharp uses message numbers that the C# compiler doesn't know about.
-            // Disable the C# complaints, per the PreSharp documentation.
-            #pragma warning disable 1634, 1691
-
-            // PreSharp complains about catching NullReference (and other) exceptions.
-            // It doesn't recognize that IsCritical[Application]Exception() handles these correctly.
-            #pragma warning disable 56500
-
             Debug.Assert(_objectType != null);
 
             try
@@ -494,9 +481,6 @@ namespace System.Windows.Data
                 e = new InvalidOperationException(SR.Format(SR.ObjectDataProviderNonCLSException, _objectType.Name));
             }
 
-            #pragma warning restore 56500
-            #pragma warning restore 1634, 1691
-
             if (e != null || error != null)
             {
                 // report known errors through TraceData (instead of throwing exceptions)
@@ -526,14 +510,6 @@ namespace System.Windows.Data
 
             object[] parameters = new object[_methodParameters.Count];
             _methodParameters.CopyTo(parameters, 0);
-
-            // PreSharp uses message numbers that the C# compiler doesn't know about.
-            // Disable the C# complaints, per the PreSharp documentation.
-            #pragma warning disable 1634, 1691
-
-            // PreSharp complains about catching NullReference (and other) exceptions.
-            // It doesn't recognize that IsCritical[Application]Exception() handles these correctly.
-            #pragma warning disable 56500
 
             try
             {
@@ -583,9 +559,6 @@ namespace System.Windows.Data
                 error = null;   // indicate unknown error
                 e = new InvalidOperationException(SR.Format(SR.ObjectDataProviderNonCLSExceptionInvoke, MethodName, _objectType.Name));
             }
-
-            #pragma warning restore 56500
-            #pragma warning restore 1634, 1691
 
             if (e != null || error != null)
             {

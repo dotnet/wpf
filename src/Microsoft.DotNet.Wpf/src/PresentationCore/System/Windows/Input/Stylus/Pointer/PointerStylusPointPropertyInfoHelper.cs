@@ -3,16 +3,7 @@
 // See the LICENSE file in the project root for more information.
 
 
-using System;
-using System.Windows;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.ComponentModel;
-using MS.Utility;
 using MS.Win32.Pointer;
-using SR = MS.Internal.PresentationCore.SR;
 
 namespace System.Windows.Input.StylusPointer
 {

@@ -1,50 +1,23 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-// In order to disable Presharp warning 6507 - Prefer 'string.IsNullOrEmpty(value)' over checks for null and/or emptiness,
-// we have to disable warnings 1634 and 1691 to make the compiler happy first.
-#pragma warning disable 1634, 1691
-
-//
-// Description: Implementation of StickyNoteControl control.
-//
-//              See spec at StickyNoteControlSpec.mht
-//
-
-using System;
-using System.ComponentModel;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Collections.Specialized;
-using System.Diagnostics;                           // Assert
 using System.Globalization;
-using System.IO;
-using System.Reflection;
 using System.Xml;
-using System.Xml.Serialization;
-using Microsoft.Win32;              // SystemEvents
 using MS.Internal;
 using MS.Internal.Annotations.Component;
 using MS.Internal.Controls.StickyNote;
 using MS.Internal.Commands;
 using MS.Internal.KnownBoxes;
 using System.Windows.Threading;
-using System.Windows;
 using System.Windows.Data;
 using System.Windows.Annotations;
-using System.Windows.Automation;
 using System.Windows.Controls.Primitives;
 using System.Windows.Documents;
 using System.Windows.Ink;
 using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Animation;
-using System.Windows.Shapes;
-using System.Text;
-using System.Text.RegularExpressions;
 using MS.Utility;
-
 
 namespace System.Windows.Controls
 {
@@ -1483,20 +1456,26 @@ namespace System.Windows.Controls
                 // both StickyNoteControl.InkEditingMode and StickyNoteControl.IsKeyboardFocusWithin
                 // If StickyNoteControl.IsKeyboardFocusWithin is false, the InkCanvas.EditingMode should be none.
                 // Otherwise InkCanvas.EditingMode is same as the StickyNoteControl.InkEditingMode.
-                MultiBinding inkCanvasEditingMode = new MultiBinding();
-                inkCanvasEditingMode.Mode = BindingMode.TwoWay;
-                inkCanvasEditingMode.Converter = new InkEditingModeIsKeyboardFocusWithin2EditingMode();
+                MultiBinding inkCanvasEditingMode = new MultiBinding
+                {
+                    Mode = BindingMode.TwoWay,
+                    Converter = new InkEditingModeIsKeyboardFocusWithin2EditingMode()
+                };
 
-                Binding stickyNoteInkEditingMode = new Binding();
-                stickyNoteInkEditingMode.Mode = BindingMode.TwoWay;
-                stickyNoteInkEditingMode.Path = new PropertyPath(StickyNoteControl.InkEditingModeProperty);
-                stickyNoteInkEditingMode.Source = this;
+                Binding stickyNoteInkEditingMode = new Binding
+                {
+                    Mode = BindingMode.TwoWay,
+                    Path = new PropertyPath(StickyNoteControl.InkEditingModeProperty),
+                    Source = this
+                };
 
                 inkCanvasEditingMode.Bindings.Add(stickyNoteInkEditingMode);
 
-                Binding stickyNoteIsKeyboardFocusWithin = new Binding();
-                stickyNoteIsKeyboardFocusWithin.Path = new PropertyPath(UIElement.IsKeyboardFocusWithinProperty);
-                stickyNoteIsKeyboardFocusWithin.Source = this;
+                Binding stickyNoteIsKeyboardFocusWithin = new Binding
+                {
+                    Path = new PropertyPath(UIElement.IsKeyboardFocusWithinProperty),
+                    Source = this
+                };
 
                 inkCanvasEditingMode.Bindings.Add(stickyNoteIsKeyboardFocusWithin);
 
@@ -1649,11 +1628,13 @@ namespace System.Windows.Controls
             if (inkMenuItem != null)
             {
                 // Bind the EditingMode to item's IsChecked DP.
-                Binding checkedBind = new Binding("InkEditingMode");
-                checkedBind.Mode = BindingMode.OneWay;
-                checkedBind.RelativeSource = RelativeSource.TemplatedParent;
-                checkedBind.Converter = new InkEditingModeConverter();
-                checkedBind.ConverterParameter = InkCanvasEditingMode.Ink;
+                Binding checkedBind = new Binding("InkEditingMode")
+                {
+                    Mode = BindingMode.OneWay,
+                    RelativeSource = RelativeSource.TemplatedParent,
+                    Converter = new InkEditingModeConverter(),
+                    ConverterParameter = InkCanvasEditingMode.Ink
+                };
                 inkMenuItem.SetBinding(MenuItem.IsCheckedProperty, checkedBind);
             }
 
@@ -1661,11 +1642,13 @@ namespace System.Windows.Controls
             if (selectMenuItem != null)
             {
                 // Bind the EditingMode to item's IsChecked DP.
-                Binding checkedBind = new Binding("InkEditingMode");
-                checkedBind.Mode = BindingMode.OneWay;
-                checkedBind.RelativeSource = RelativeSource.TemplatedParent;
-                checkedBind.Converter = new InkEditingModeConverter();
-                checkedBind.ConverterParameter = InkCanvasEditingMode.Select;
+                Binding checkedBind = new Binding("InkEditingMode")
+                {
+                    Mode = BindingMode.OneWay,
+                    RelativeSource = RelativeSource.TemplatedParent,
+                    Converter = new InkEditingModeConverter(),
+                    ConverterParameter = InkCanvasEditingMode.Select
+                };
                 selectMenuItem.SetBinding(MenuItem.IsCheckedProperty, checkedBind);
             }
 
@@ -1673,11 +1656,13 @@ namespace System.Windows.Controls
             if (eraseMenuItem != null)
             {
                 // Bind the EditingMode to item's IsChecked DP.
-                Binding checkedBind = new Binding("InkEditingMode");
-                checkedBind.Mode = BindingMode.OneWay;
-                checkedBind.RelativeSource = RelativeSource.TemplatedParent;
-                checkedBind.Converter = new InkEditingModeConverter();
-                checkedBind.ConverterParameter = InkCanvasEditingMode.EraseByStroke;
+                Binding checkedBind = new Binding("InkEditingMode")
+                {
+                    Mode = BindingMode.OneWay,
+                    RelativeSource = RelativeSource.TemplatedParent,
+                    Converter = new InkEditingModeConverter(),
+                    ConverterParameter = InkCanvasEditingMode.EraseByStroke
+                };
                 eraseMenuItem.SetBinding(MenuItem.IsCheckedProperty, checkedBind);
             }
 

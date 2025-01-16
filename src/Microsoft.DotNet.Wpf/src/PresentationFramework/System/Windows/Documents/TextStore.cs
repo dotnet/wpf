@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -7,30 +7,19 @@
 //
 
 
-using System;
 using System.Runtime.InteropServices;
-using System.Runtime.InteropServices.ComTypes;
 using System.Windows.Threading;
 using System.Threading;
 using System.Globalization;
 using System.Collections;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Diagnostics;
 using System.IO;
 using MS.Internal;
-using System.Windows.Controls;
 using System.Windows.Markup;        // for XmlLanguage
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
 using System.Windows.Input;
 using System.Windows.Interop;
-using System.Windows.Documents;
 using MS.Internal.Documents;
-using System.Security;
 using MS.Win32;
-
-using IComDataObject = System.Runtime.InteropServices.ComTypes.IDataObject;
 
 namespace System.Windows.Documents
 {
@@ -2113,17 +2102,8 @@ namespace System.Windows.Documents
         // The pointer to ITfDocumentMgr.
         internal UnsafeNativeMethods.ITfDocumentMgr DocumentManager
         {
-            get
-            {
-                if (_documentmanager == null)
-                {
-                    return null;
-                }
-
-                return _documentmanager.Value;
-            }
-
-            set { _documentmanager = new SecurityCriticalDataClass<UnsafeNativeMethods.ITfDocumentMgr>(value); }
+            get => _documentmanager;
+            set => _documentmanager = value;
         }
 
         // Cookie for ITfThreadFocusSink.
@@ -2808,10 +2788,12 @@ namespace System.Windows.Documents
                         continue;
                 }
 
-                UnsafeNativeMethods.TS_ATTRVAL attrval = new UnsafeNativeMethods.TS_ATTRVAL();
-                attrval.attributeId = _supportingattributes[i].Guid;
-                attrval.overlappedId = (int)_supportingattributes[i].Style;
-                attrval.val = new NativeMethods.VARIANT();
+                UnsafeNativeMethods.TS_ATTRVAL attrval = new UnsafeNativeMethods.TS_ATTRVAL
+                {
+                    attributeId = _supportingattributes[i].Guid,
+                    overlappedId = (int)_supportingattributes[i].Style,
+                    val = new NativeMethods.VARIANT()
+                };
 
                 // This VARIANT is returned to the caller, which supposed to call VariantClear().
                 // GC does not have to clear it.
@@ -2822,13 +2804,13 @@ namespace System.Windows.Documents
                     case AttributeStyle.InputScope:
                         object obj = new InputScopeAttribute(inputScope);
                         attrval.val.vt = (short)NativeMethods.tagVT.VT_UNKNOWN;
-                        attrval.val.data1.Value = Marshal.GetIUnknownForObject(obj);
+                        attrval.val.data1 = Marshal.GetIUnknownForObject(obj);
                         break;
 
                     case AttributeStyle.Font_Style_Height:
                         // We always evaluate the font size and returns a value.
                         attrval.val.vt = (short)NativeMethods.tagVT.VT_I4;
-                        attrval.val.data1.Value = (IntPtr)(int)fontSize;
+                        attrval.val.data1 = (IntPtr)(int)fontSize;
                         break;
 
                     case AttributeStyle.Font_FaceName:
@@ -2837,24 +2819,24 @@ namespace System.Windows.Documents
                             if (familyName != null)
                             {
                                 attrval.val.vt = (short)NativeMethods.tagVT.VT_BSTR;
-                                attrval.val.data1.Value = Marshal.StringToBSTR(familyName);
+                                attrval.val.data1 = Marshal.StringToBSTR(familyName);
                             }
                         }
                         break;
 
                     case AttributeStyle.Font_SizePts:
                         attrval.val.vt = (short)NativeMethods.tagVT.VT_I4;
-                        attrval.val.data1.Value = (IntPtr)(int)(fontSize / 96.0 * 72.0);
+                        attrval.val.data1 = (IntPtr)(int)(fontSize / 96.0 * 72.0);
                         break;
 
                     case AttributeStyle.Text_ReadOnly:
                         attrval.val.vt = (short)NativeMethods.tagVT.VT_BOOL;
-                        attrval.val.data1.Value = IsReadOnly ? (IntPtr)1 : (IntPtr)0;
+                        attrval.val.data1 = IsReadOnly ? (IntPtr)1 : (IntPtr)0;
                         break;
 
                     case AttributeStyle.Text_Orientation:
                         attrval.val.vt = (short)NativeMethods.tagVT.VT_I4;
-                        attrval.val.data1.Value = (IntPtr)0;
+                        attrval.val.data1 = (IntPtr)0;
 
                         // Get the transformation that is relative from source.
                         PresentationSource source = null;
@@ -2889,7 +2871,7 @@ namespace System.Windows.Documents
                                         else
                                             angle = 360 - angleCos;
 
-                                        attrval.val.data1.Value = (IntPtr)((int)angle * 10);
+                                        attrval.val.data1 = (IntPtr)((int)angle * 10);
                                     }
                                 }
                             }
@@ -2901,7 +2883,7 @@ namespace System.Windows.Documents
                         //     the vertical writing is not supported yet
                         //
                         attrval.val.vt = (short)NativeMethods.tagVT.VT_BOOL;
-                        attrval.val.data1.Value = (IntPtr)0;
+                        attrval.val.data1 = (IntPtr)0;
                         break;
                 }
 
@@ -4272,8 +4254,8 @@ namespace System.Windows.Documents
         {
             internal MouseSink(UnsafeNativeMethods.ITfRangeACP range, UnsafeNativeMethods.ITfMouseSink sink, int cookie)
             {
-                _range = new SecurityCriticalDataClass<UnsafeNativeMethods.ITfRangeACP>(range);
-                _sink = new SecurityCriticalDataClass<UnsafeNativeMethods.ITfMouseSink>(sink);
+                _range = range;
+                _sink = sink;
                 _cookie = cookie;
             }
 
@@ -4282,16 +4264,18 @@ namespace System.Windows.Documents
                 Invariant.Assert(!_locked);
 
                 // In case Dispose comes twice.
-                if (_range != null)
+                if (_range is not null)
                 {
-                    Marshal.ReleaseComObject(_range.Value);
+                    Marshal.ReleaseComObject(_range);
                     _range = null;
                 }
-                if (_sink != null)
+
+                if (_sink is not null)
                 {
-                    Marshal.ReleaseComObject(_sink.Value);
+                    Marshal.ReleaseComObject(_sink);
                     _sink = null;
                 }
+
                 _cookie = UnsafeNativeMethods.TF_INVALID_COOKIE;
                 GC.SuppressFinalize(this);
             }
@@ -4333,21 +4317,15 @@ namespace System.Windows.Documents
                 }
             }
 
-            internal UnsafeNativeMethods.ITfRangeACP Range
-            {
-                get {return _range.Value;}
-            }
+            internal UnsafeNativeMethods.ITfRangeACP Range => _range;
 
-            internal UnsafeNativeMethods.ITfMouseSink Sink
-            {
-                get {return _sink.Value;}
-            }
+            internal UnsafeNativeMethods.ITfMouseSink Sink => _sink;
 
             internal int Cookie {get{return _cookie;}}
 
-            private SecurityCriticalDataClass<UnsafeNativeMethods.ITfRangeACP> _range;
+            private UnsafeNativeMethods.ITfRangeACP _range;
 
-            private SecurityCriticalDataClass<UnsafeNativeMethods.ITfMouseSink> _sink;
+            private UnsafeNativeMethods.ITfMouseSink _sink;
 
             private int _cookie;
 
@@ -4589,7 +4567,7 @@ namespace System.Windows.Documents
         private const int _viewCookie = 0;
 
         // The TSF document object.  This is a native resource.
-        private SecurityCriticalDataClass<UnsafeNativeMethods.ITfDocumentMgr> _documentmanager;
+        private UnsafeNativeMethods.ITfDocumentMgr _documentmanager;
 
         // The ITfThreadFocusSink cookie.
         private int _threadFocusCookie;
@@ -4777,7 +4755,7 @@ namespace System.Windows.Documents
             }
 
             // for use from VS Immediate window
-            internal static void Mark(params object[] args)
+            internal static void Mark(params ReadOnlySpan<object> args)
             {
                 IMECompositionTraceRecord record = new IMECompositionTraceRecord(IMECompositionTraceOp.Mark, BuildDetail(args));
                 lock (s_TargetToTraceListMap)
@@ -4829,7 +4807,7 @@ namespace System.Windows.Documents
                 return (cti != null && cti.IMECompositionTracer != null);
             }
 
-            internal static void Trace(TextStore textStore, IMECompositionTraceOp op, params object[] args)
+            internal static void Trace(TextStore textStore, IMECompositionTraceOp op, params ReadOnlySpan<object> args)
             {
                 IMECompositionTracingInfo cti = IMECompositionTracingInfoField.GetValue(textStore.UiScope);
                 IMECompositionTracer tracer = cti.IMECompositionTracer;
@@ -4872,16 +4850,12 @@ namespace System.Windows.Documents
                 return sb.ToString();
             }
 
-            private static string BuildDetail(object[] args)
+            private static string BuildDetail(ReadOnlySpan<object> args)
             {
-                int length = (args != null) ? args.Length : 0;
-                if (length == 0)
-                    return String.Empty;
-                else
-                    return String.Format(CultureInfo.InvariantCulture, s_format[length], args);
+                return args.IsEmpty ? string.Empty : string.Format(CultureInfo.InvariantCulture, s_format[args.Length], args);
             }
 
-            private static string[] s_format = new string[] {
+            private static readonly string[] s_format = new string[] {
                 "",
                 "{0}",
                 "{0} {1}",
@@ -4946,7 +4920,7 @@ namespace System.Windows.Documents
                 AddTrace(textStore, IMECompositionTraceOp.ID, _nullInfo, DisplayType(uiScope));
             }
 
-            private void AddTrace(TextStore textStore, IMECompositionTraceOp op, IMECompositionTracingInfo cti, params object[] args)
+            private void AddTrace(TextStore textStore, IMECompositionTraceOp op, IMECompositionTracingInfo cti, params ReadOnlySpan<object> args)
             {
                 // pop a E* op from the stack
                 if (IMECompositionTraceOp.FirstEndOp <= op && _opStack.Count > 0)

@@ -6,9 +6,7 @@
 // Description: Convert between index and a list of values.
 //
 
-using System;
 using System.Collections;
-using System.Collections.Generic;
 using System.Globalization;
 using System.Windows.Data;
 using System.Windows.Markup;

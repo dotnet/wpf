@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -14,23 +14,15 @@
 // BindingExpression.GetReference correctly
 //#define USE_ITEM_REFERENCE
 
-using System;
-using System.Collections.Generic;   // List<T>
 using System.Collections.ObjectModel;   // Collection<T>
 using System.ComponentModel;        // TypeConverter
-using System.Diagnostics;           // StackTrace
 using System.Globalization;         // CultureInfo
 using System.Threading;             // Thread
-
-using System.Windows;               // FrameworkElement
 using System.Windows.Controls;      // Validation
 using System.Windows.Markup;        // XmlLanguage
 using System.Windows.Threading;     // Dispatcher
 using MS.Internal;                  // Invariant.Assert
-using MS.Internal.Controls;         // ValidationErrorCollection
 using MS.Internal.Data;             // DataBindEngine
-using MS.Internal.KnownBoxes;       // BooleanBoxes
-using MS.Internal.Utility;          // TraceLog
 
 namespace System.Windows.Data
 {
@@ -2197,14 +2189,6 @@ namespace System.Windows.Data
                 TypeConverter converter = DefaultValueConverter.GetConverter(dp.PropertyType);
                 if (converter != null && converter.CanConvertFrom(value.GetType()))
                 {
-                    // PreSharp uses message numbers that the C# compiler doesn't know about.
-                    // Disable the C# complaints, per the PreSharp documentation.
-                    #pragma warning disable 1634, 1691
-
-                    // PreSharp complains about catching NullReference (and other) exceptions.
-                    // It doesn't recognize that IsCriticalException() handles these correctly.
-                    #pragma warning disable 56500
-
                     try
                     {
                         result = converter.ConvertFrom(null, CultureInfo.InvariantCulture, value);
@@ -2222,9 +2206,6 @@ namespace System.Windows.Data
                     catch // non CLS compliant exception
                     {
                     }
-
-                    #pragma warning restore 56500
-                    #pragma warning restore 1634, 1691
                 }
 
                 if (!success)

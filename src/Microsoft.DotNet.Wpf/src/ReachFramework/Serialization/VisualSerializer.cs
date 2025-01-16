@@ -1,28 +1,20 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
 
-using System;
-using System.Diagnostics;
 using System.Collections;
-using System.Collections.Specialized;
-using System.Collections.Generic;
 using System.Globalization;
 using System.Text;
 using System.IO;
 using System.Xml;
 using System.ComponentModel;
-
-using System.Windows;
 using System.Windows.Automation;
 using System.Windows.Markup;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Xps.Packaging;
 using Microsoft.Internal.AlphaFlattener;
-
-using System.Security;
 using MS.Utility;
 
 namespace System.Windows.Xps.Serialization
@@ -681,10 +673,11 @@ namespace System.Windows.Xps.Serialization
         protected StringBuilder BrushToString(Brush brush, Rect bounds)
         {
             StringWriter swriter = new StringWriter(CultureInfo.InvariantCulture);
-            XmlTextWriter xwriter = new XmlTextWriter(swriter);
-
-            xwriter.Formatting  = System.Xml.Formatting.Indented;
-            xwriter.Indentation = 4;
+            XmlTextWriter xwriter = new XmlTextWriter(swriter)
+            {
+                Formatting = System.Xml.Formatting.Indented,
+                Indentation = 4
+            };
 
             XmlWriter oldwriter = _writer;
 

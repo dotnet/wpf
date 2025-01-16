@@ -333,7 +333,7 @@ configuration:
       - requestReview:
           reviewer: dotnet/wpf-developers
       - requestReview:
-          reviewer: SamBent
+          reviewer: Kuldeep-MS
       description: Add PR Label to new Pull Requests
     - if:
       - payloadType: Issues

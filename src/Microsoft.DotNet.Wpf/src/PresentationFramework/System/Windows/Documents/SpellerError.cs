@@ -2,17 +2,15 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
+using System.Windows.Documents;
+using MS.Internal;
+
 //
 // Description: A misspelled word in a TextBox or RichTextBox.
 //
 
 namespace System.Windows.Controls
 {
-    using System.Collections;
-    using System.Collections.Generic;
-    using System.Windows.Documents;
-    using MS.Internal;
-
     /// <summary>
     /// A misspelled word in a TextBox or RichTextBox.
     /// </summary>
@@ -94,15 +92,7 @@ namespace System.Windows.Controls
         /// </remarks>
         public IEnumerable<string> Suggestions
         {
-            get
-            {
-                IList suggestions = _speller.GetSuggestionsForError(this);
-
-                for (int i=0; i<suggestions.Count; i++)
-                {
-                    yield return (string)suggestions[i];
-                }
-            }
+            get => _speller.GetSuggestionsForError(this);
         }
 
         #endregion Public Properties

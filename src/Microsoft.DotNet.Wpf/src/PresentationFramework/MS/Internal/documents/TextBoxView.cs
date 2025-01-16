@@ -1,6 +1,17 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
+
+using System.Windows.Documents;
+using System.Windows.Controls.Primitives;
+using System.Windows.Media;
+using System.Windows.Threading;
+using System.Collections.ObjectModel;
+using MS.Internal;
+using MS.Internal.Text;
+using MS.Internal.Documents;
+using MS.Internal.PtsHost;
+using System.Windows.Media.TextFormatting;
 
 //
 // Description: Content presenter for the TextBox.
@@ -8,19 +19,6 @@
 
 namespace System.Windows.Controls
 {
-    using System.Windows.Documents;
-    using System.Windows.Controls.Primitives;
-    using System.Windows.Media;
-    using System.Windows.Threading;
-    using System.Collections.Generic;
-    using System.Collections.ObjectModel;
-    using MS.Internal;
-    using MS.Internal.Telemetry.PresentationFramework;
-    using MS.Internal.Text;
-    using MS.Internal.Documents;
-    using MS.Internal.PtsHost;
-    using System.Windows.Media.TextFormatting;
-
     // Content presenter for the TextBox.
     internal class TextBoxView : FrameworkElement, ITextView, IScrollInfo, IServiceProvider
     {
@@ -1135,8 +1133,10 @@ namespace System.Windows.Controls
                 // Start up a timer.  Until the timer fires, we'll disable
                 // all background layout.  This leaves the TextBox responsive
                 // to user input.
-                _throttleBackgroundTimer = new DispatcherTimer(DispatcherPriority.Background);
-                _throttleBackgroundTimer.Interval = new TimeSpan(0, 0, _throttleBackgroundSeconds);
+                _throttleBackgroundTimer = new DispatcherTimer(DispatcherPriority.Background)
+                {
+                    Interval = new TimeSpan(0, 0, _throttleBackgroundSeconds)
+                };
                 _throttleBackgroundTimer.Tick += new EventHandler(OnThrottleBackgroundTimeout);
             }
             else

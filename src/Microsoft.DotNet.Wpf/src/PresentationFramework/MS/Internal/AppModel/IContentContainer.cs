@@ -6,10 +6,6 @@
 //    Description:    BindProduct. Abstract representation of the product of a bind
 //
 
-using System;
-using System.IO;
-using MS.Internal.Utility;
-
 namespace MS.Internal.AppModel
 {
     // Interface that's required to be implemented by all classes that

@@ -6,8 +6,6 @@
 // Description: Access to calculated information of a line of text. 
 //
 
-using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Documents;

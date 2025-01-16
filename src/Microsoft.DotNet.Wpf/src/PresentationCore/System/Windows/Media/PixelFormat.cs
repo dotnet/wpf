@@ -1,27 +1,12 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-//
-//
-#pragma warning disable 1634, 1691 // Allow suppression of certain presharp messages
-
-using System;
-using System.Security;
-using System.Collections;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.ComponentModel.Design.Serialization;
-using System.Reflection;
 using MS.Internal;
-using MS.Win32;
-using System.Diagnostics;
-using System.Windows.Media;
-using System.Globalization;
-using System.Runtime.InteropServices;
 
-using SR=MS.Internal.PresentationCore.SR;
-using UnsafeNativeMethods=MS.Win32.PresentationCore.UnsafeNativeMethods;
+using UnsafeNativeMethods = MS.Win32.PresentationCore.UnsafeNativeMethods;
+using System.Runtime.CompilerServices;
 
 namespace System.Windows.Media
 {
@@ -169,7 +154,7 @@ namespace System.Windows.Media
                 // Compare only the first 15 bytes of the GUID.  If the first
                 // 15 bytes match the WIC pixel formats, then the 16th byte
                 // will be the format enum value.
-                Debug.Assert(Marshal.SizeOf(typeof(Guid)) == 16);
+                Debug.Assert(Unsafe.SizeOf<Guid>() == 16);
                 int compareCount = 15;
                 
                 bool fBuiltIn = true;
@@ -196,7 +181,7 @@ namespace System.Windows.Media
 
             _flags = GetPixelFormatFlagsFromEnum(_format) | GetPixelFormatFlagsFromGuid(guidPixelFormat);
             _bitsPerPixel = GetBitsPerPixelFromEnum(_format);
-            _guidFormat = new SecurityCriticalDataForSet<Guid> (guidPixelFormat);
+            _guidFormat = guidPixelFormat;
         }
 
         internal PixelFormat(PixelFormatEnum format)
@@ -205,7 +190,7 @@ namespace System.Windows.Media
 
             _flags = GetPixelFormatFlagsFromEnum(format);
             _bitsPerPixel = GetBitsPerPixelFromEnum(format);
-            _guidFormat = new SecurityCriticalDataForSet<Guid> (PixelFormat.GetGuidFromFormat(format));
+            _guidFormat = PixelFormat.GetGuidFromFormat(format);
         }
 
         /// <summary>
@@ -341,7 +326,7 @@ namespace System.Windows.Media
 
             _flags = GetPixelFormatFlagsFromEnum(format);
             _bitsPerPixel = GetBitsPerPixelFromEnum(format);
-            _guidFormat = new SecurityCriticalDataForSet<Guid> (PixelFormat.GetGuidFromFormat(format));
+            _guidFormat = PixelFormat.GetGuidFromFormat(format);
         }
 
         static private Guid GetGuidFromFormat(PixelFormatEnum format)
@@ -666,7 +651,7 @@ namespace System.Windows.Media
         {
             get
             {
-                return _guidFormat.Value;
+                return _guidFormat;
             }
         }
 
@@ -1087,7 +1072,7 @@ namespace System.Windows.Media
         private UInt32 _bitsPerPixel;
 
         [NonSerialized]
-        private SecurityCriticalDataForSet<Guid> _guidFormat;
+        private Guid _guidFormat;
 
         [NonSerialized]
         private static readonly Guid WICPixelFormatPhotonFirst = new Guid(0x6fddc324, 0x4e03, 0x4bfe, 0xb1, 0x85, 0x3d, 0x77, 0x76, 0x8d, 0xc9, 0x1d);

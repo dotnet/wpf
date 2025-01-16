@@ -7,11 +7,8 @@
 //  controls from the Content view of the Automation Tree.
 
 using System;
-using System.Collections;
-using System.Windows;
 using System.Windows.Automation;
 using System.Windows.Automation.Provider;
-using MS.Win32;
 
 namespace MS.Internal.AutomationProxies
 {

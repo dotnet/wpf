@@ -67,8 +67,6 @@ namespace MS.Internal.MilCodeGen.Generators
                             using System.Windows.Input;
                             using System.Windows.Media.Animation;
 
-                            #pragma warning disable 1634, 1691  // suppressing PreSharp warnings
-
                             namespace [[e.Namespace]]
                             {
                                 partial class [[e.Name]] [[(e.ImplementsIAnimatable ? ": IAnimatable" : "")]]
@@ -595,7 +593,6 @@ namespace MS.Internal.MilCodeGen.Generators
                     /// </remarks>
                     internal EventHandlersStore EventHandlersStore
                     {
-                        [FriendAccessAllowed] // Built into Core, also used by Framework.
                         get
                         {
                             if(!ReadFlag(CoreFlags.ExistsEventHandlersStore))
@@ -610,7 +607,6 @@ namespace MS.Internal.MilCodeGen.Generators
                     ///     Ensures that EventHandlersStore will return
                     ///     non-null when it is called.
                     /// </summary>
-                    [FriendAccessAllowed] // Built into Core, also used by Framework.
                     internal void EnsureEventHandlersStore()
                     {
                         if (EventHandlersStore == null)

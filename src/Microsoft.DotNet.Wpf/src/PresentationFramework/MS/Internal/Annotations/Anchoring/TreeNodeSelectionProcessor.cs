@@ -10,17 +10,10 @@
 //     Spec: Anchoring Namespace Spec.doc
 //
 
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Globalization;
 using System.Windows;
 using System.Windows.Annotations;
-using System.Windows.Annotations.Storage;
-using System.Windows.Documents;
 using System.Windows.Media;
 using System.Xml;
-using MS.Utility;
 
 namespace MS.Internal.Annotations.Anchoring
 {

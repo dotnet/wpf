@@ -8,17 +8,11 @@
 //
 
 using MS.Internal;
-using MS.Utility;
 using MS.Internal.Controls;
 using MS.Internal.Telemetry.PresentationFramework;
-using System.Diagnostics;
 using System.Collections;
-using System.Windows.Threading;
 
 using System.Windows.Media;
-using System.Windows.Documents;
-
-using System;
 
 namespace System.Windows.Controls
 {

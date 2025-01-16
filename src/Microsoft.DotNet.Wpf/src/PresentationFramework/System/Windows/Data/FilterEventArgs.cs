@@ -8,8 +8,6 @@
 // Specs:       CollectionViewSource.mht
 //
 
-using System;
-
 namespace System.Windows.Data
 {
     /// <summary>

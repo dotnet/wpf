@@ -6,12 +6,8 @@
 // Description: Contains the UIElementCollection base class.
 //
 
-using MS.Internal;
-using System;
 using System.Collections;
 using System.Windows.Media;
-using System.Windows.Threading;
-using System.Windows.Markup;
 
 namespace System.Windows.Controls
 {

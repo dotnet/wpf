@@ -35,7 +35,7 @@ namespace System.Xaml.MS.Impl
         public const string DefaultPrefix = "p";
 
         public const string ReferenceName = "__ReferenceID";
-        public static ReadOnlySpan<char> WhitespaceChars => [' ', '\t', '\n', '\r', '\f'];
+        public static readonly char[] WhitespaceChars = [' ', '\t', '\n', '\r', '\f'];
         public const char SpaceChar = ' ';
         public const char TabChar = '\t';
         public const char NewlineChar = '\n';
@@ -93,11 +93,6 @@ namespace System.Xaml.MS.Impl
         public static bool StartsWith(string src, string target)
         {
             return src.StartsWith(target, StringComparison.Ordinal);
-        }
-
-        public static string Fmt(string formatString, params object[] otherArgs)
-        {
-            return string.Format(TypeConverterHelper.InvariantEnglishUS, formatString, otherArgs);
         }
     }
 }

@@ -1,25 +1,12 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
 
-using System;
-using System.Diagnostics;
 using System.ComponentModel;
-
-using System.Collections;
-using System.Collections.Specialized;
 using System.Windows.Threading;
-
-using System.Windows;
-using System.Windows.Media;
-using System.Windows.Input;
-using System.Windows.Data;
 using System.Windows.Automation.Peers;
 using System.Windows.Controls.Primitives;
-using System.Windows.Markup;
-using System.Windows.Shapes;
-using MS.Utility;
 using MS.Internal.KnownBoxes;
 
 namespace System.Windows.Controls
@@ -513,13 +500,14 @@ namespace System.Windows.Controls
         {
             Debug.Assert(_parentPopup == null, "_parentPopup should be null");
 
-            _parentPopup = new Popup();
+            _parentPopup = new Popup
+            {
+                AllowsTransparency = true,
 
-            _parentPopup.AllowsTransparency = true;
-
-            // When StaysOpen is true (default), make the popup window WS_EX_Transparent
-            // to allow mouse input to go through the tooltip
-            _parentPopup.HitTestable = !StaysOpen;
+                // When StaysOpen is true (default), make the popup window WS_EX_Transparent
+                // to allow mouse input to go through the tooltip
+                HitTestable = !StaysOpen
+            };
 
             // Coerce HasDropShadow property in case popup can't be transparent
             CoerceValue(HasDropShadowProperty);

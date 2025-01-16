@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -12,25 +12,14 @@
 //
 
 
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Globalization;
-using System.Diagnostics;
 using System.IO;
-using System.Windows;
-using System.Windows.Annotations;
 using System.Xml;
-using System.Xml.Schema;
 using System.Xml.XPath;
-using System.Xml.Serialization;
 using MS.Internal;
 using MS.Internal.Annotations;
 using MS.Internal.Annotations.Storage;
 using MS.Utility;
 using System.Windows.Markup;
-using MS.Internal.Controls.StickyNote;
-using System.Windows.Controls;
 
 namespace System.Windows.Annotations.Storage
 {
@@ -735,8 +724,10 @@ namespace System.Windows.Annotations.Storage
 
             lock (SyncRoot)
             {
-                _document = new XmlDocument();
-                _document.PreserveWhitespace = false;
+                _document = new XmlDocument
+                {
+                    PreserveWhitespace = false
+                };
                 if (_stream.Length == 0)
                 {
                     _document.LoadXml(

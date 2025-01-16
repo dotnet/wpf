@@ -4,10 +4,6 @@
 
 
 using MS.Internal;
-using MS.Internal.PresentationCore;
-using System.Security;
-using System.Windows.Input;
-using System.Windows.Interop;
 using System.Windows.Media;
 
 namespace System.Windows.Input.StylusPointer

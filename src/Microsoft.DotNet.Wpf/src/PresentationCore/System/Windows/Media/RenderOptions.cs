@@ -10,10 +10,6 @@
 //
 
 using MS.Win32.PresentationCore;
-
-using System;
-using System.Diagnostics;
-using System.Security;
 using System.Windows.Interop;
 
 namespace System.Windows.Media

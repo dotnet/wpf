@@ -1,33 +1,27 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 // Description: 
 //    DocumentSignatureManager is an internal API for Mongoose to deal with Digital Signatures.
 
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.IO.Packaging;
 using System.Reflection;
-using System.Security;
 using System.Security.Cryptography;
 using System.Security.Cryptography.X509Certificates;
 using System.Threading;
 using System.Windows.TrustUI;
 using System.Windows.Forms;
-using System.Windows.Interop;
 using System.Windows.Threading;
 
 using MS.Internal.Documents.Application;
-using MS.Internal.PresentationUI;
 
 namespace MS.Internal.Documents
 {
     /// <summary>
     /// DocumentSignatureManager is a internal Avalon class used to expose the DigSig Document API 
     /// </summary>
-    [FriendAccessAllowed]
     internal sealed class DocumentSignatureManager
     {
         #region Constructors
@@ -193,7 +187,7 @@ namespace MS.Internal.Documents
 
             //Fire the events.
             OnSignatureStatusChange(calcSigStatus);
-            _signaturePolicy.Value = calcSigPolicy;
+            _signaturePolicy = calcSigPolicy;
         }
 
         /// <summary>
@@ -792,14 +786,15 @@ namespace MS.Internal.Documents
         internal void OnAddRequestSignature(SignatureResources sigResources, DateTime dateTime)
         {
             //Use the SignatureResource to create Request Digitalsignature.
-            DigitalSignature digSigRequest = new DigitalSignature();
-
-            //Assign fields.
-            digSigRequest.SignatureState = SignatureStatus.NotSigned;
-            digSigRequest.SubjectName = sigResources._subjectName;
-            digSigRequest.Reason = sigResources._reason;
-            digSigRequest.Location = sigResources._location;
-            digSigRequest.SignedOn = dateTime;
+            DigitalSignature digSigRequest = new DigitalSignature
+            {
+                //Assign fields.
+                SignatureState = SignatureStatus.NotSigned,
+                SubjectName = sigResources._subjectName,
+                Reason = sigResources._reason,
+                Location = sigResources._location,
+                SignedOn = dateTime
+            };
 
             Guid spotId = DigitalSignatureProvider.AddRequestSignature(digSigRequest);
 
@@ -1031,10 +1026,11 @@ namespace MS.Internal.Documents
                 null);
 
             CertificateValidationThreadInfo threadInfo =
-                new CertificateValidationThreadInfo();
-
-            threadInfo.CertificateList = certificateList;
-            threadInfo.Operation = dispatcherOperation;
+                new CertificateValidationThreadInfo
+                {
+                    CertificateList = certificateList,
+                    Operation = dispatcherOperation
+                };
 
             Trace.SafeWrite(
                 Trace.Signatures,
@@ -1162,11 +1158,11 @@ namespace MS.Internal.Documents
 
             if ((args.RMPolicy & RightsManagementPolicy.AllowSign) == RightsManagementPolicy.AllowSign)
             {
-                _allowSign.Value = true;
+                _allowSign = true;
             }
             else
             {
-                _allowSign.Value = false;
+                _allowSign = false;
             }
         }
 
@@ -1297,12 +1293,12 @@ namespace MS.Internal.Documents
         {
             get
             {
-                return _digitalSignatureProvider.Value;
+                return _digitalSignatureProvider;
             }
 
             set
             {
-                _digitalSignatureProvider.Value = value;
+                _digitalSignatureProvider = value;
             }
         }
         
@@ -1315,7 +1311,7 @@ namespace MS.Internal.Documents
         {
             get
             {
-                return _allowSign.Value;
+                return _allowSign;
             }
         }
 
@@ -1327,7 +1323,7 @@ namespace MS.Internal.Documents
         {
             get
             {
-                return IsAllowedByPolicy(_signaturePolicy.Value, SignaturePolicy.AllowSigning);
+                return IsAllowedByPolicy(_signaturePolicy, SignaturePolicy.AllowSigning);
             }
         }
 
@@ -1346,12 +1342,12 @@ namespace MS.Internal.Documents
         /// The IDigitalSignatureProvider associated with this instance of the
         /// digital signature manager.
         /// </summary>
-        private SecurityCriticalDataForSet<IDigitalSignatureProvider> _digitalSignatureProvider;
+        private IDigitalSignatureProvider _digitalSignatureProvider;
 
         private IDictionary<SignatureResources, DigitalSignature> _digSigSigResources;
-        private SecurityCriticalDataForSet<bool> _allowSign;
+        private bool _allowSign;
 
-        private SecurityCriticalDataForSet<SignaturePolicy> _signaturePolicy;
+        private SignaturePolicy _signaturePolicy;
 
         /// <summary>
         /// The change log that is used to roll back signatures on failure.

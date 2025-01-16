@@ -1,0 +1,39 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  
+  <PropertyGroup>
+    <AssemblyName>System.Windows.Primitives</AssemblyName>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <CLSCompliant>false</CLSCompliant>
+    <Nullable>enable</Nullable>
+    <ChecksumAlgorithm>SHA256</ChecksumAlgorithm>
+    <Platforms>x86;x64;arm64</Platforms>
+
+    <!--
+      We align casing and naming with Win32 API. As such some types have all lower case names, which
+      in theory may conflict with new C# keywords in the future. Our types here are internal so end
+      users won't be impacted. If some name becomes difficult to adapt to with the @ symbol we can
+      cross that bridge when we hit it (if ever).
+    -->
+    <NoWarn>$(NoWarn);CS8981;CS3016</NoWarn>
+
+    <Deterministic>true</Deterministic>
+    <UsePublicApiAnalyzers>true</UsePublicApiAnalyzers>
+    <RootNamespace />
+    <DefaultItemExcludes>$(DefaultItemExcludes);ref\**</DefaultItemExcludes>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <MicrosoftPrivateWinFormsReference Include="System.Private.Windows.Core" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Windows.CsWin32" Version="$(MicrosoftWindowsCsWin32PackageVersion)" PrivateAssets="all" />
+    <PackageReference Include="System.Runtime.CompilerServices.Unsafe" Version="$(SystemRuntimeCompilerServicesUnsafePackageVersion)" />
+
+    <ProjectReference Include="$(WpfSourceDir)System.Windows.Primitives\ref\System.Windows.Primitives-ref.csproj">
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+    </ProjectReference>
+  </ItemGroup>
+
+</Project>

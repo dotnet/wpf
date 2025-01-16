@@ -6,7 +6,6 @@
 // Description: A table for storing up to 32 uncommon values.
 //
 
-using System;
 using System.Windows;
 
 namespace MS.Internal

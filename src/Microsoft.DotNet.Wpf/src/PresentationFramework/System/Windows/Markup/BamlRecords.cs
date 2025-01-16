@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -9,17 +9,13 @@
 \***************************************************************************/
 
 using System;
-using System.Xml;
 using System.IO;
-using System.Text;
-using System.Collections.Generic;
 using System.Collections;
 using System.Globalization;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Reflection;
 using System.Collections.Specialized;
-using MS.Internal.IO.Packaging.CompoundFile;
 
 #if !PBTCOMPILER
 using System.Windows;
@@ -29,15 +25,7 @@ using System.Windows.Threading;
 using MS.Internal.PresentationFramework; // SafeSecurityHelper
 #endif
 
-using System.Runtime.InteropServices;
 using MS.Utility;
-using MS.Internal;
-
-// Disabling 1634 and 1691:
-// In order to avoid generating warnings about unknown message numbers and
-// unknown pragmas when compiling C# source code with the C# compiler,
-// you need to disable warnings 1634 and 1691. (Presharp Documentation)
-#pragma warning disable 1634, 1691
 
 #if PBTCOMPILER
 namespace MS.Internal.Markup
@@ -4716,8 +4704,7 @@ namespace System.Windows.Markup
             else
             {
                 // Cache a additional MemberInfo for the given attribute
-                object[] arr = PropertyMember as object[];
-                if (arr == null)
+                if (PropertyMember is not object[] arr)
                 {
                     arr = new object[3];
                     arr[0] = PropertyMember;

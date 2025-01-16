@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -9,21 +9,15 @@
 //              XmlDataSource.mht
 //
 
-using System;
 using System.IO;                    // Stream
-using System.Collections;
 using System.ComponentModel;        // ISupportInitialize, AsyncCompletedEventHandler, [DesignerSerialization*], [DefaultValue]
-using System.Diagnostics;
 using System.IO.Packaging;          // PackUriHelper
-using System.Globalization;         // CultureInfo
 using System.Net;                   // WebRequest, IWebRequestCreate
 using System.Threading;             // ThreadPool, WaitCallback
 using System.Xml;
 using System.Xml.Schema;
 using System.Xml.Serialization;     // IXmlSerializable
 using System.Xml.XPath;
-using System.Windows;
-using System.Windows.Data;
 using System.Windows.Threading;     // Dispatcher*
 using System.Windows.Markup; // IUriContext, [XamlDesignerSerializer]
 using MS.Internal;                  // CriticalExceptions
@@ -358,7 +352,7 @@ namespace System.Windows.Data
             Uri sourceUri = this.Source;
             if (sourceUri.IsAbsoluteUri == false)
             {
-                Uri baseUri = (_baseUri != null) ? _baseUri : BindUriHelper.BaseUri;
+                Uri baseUri = _baseUri ?? BindUriHelper.BaseUri;
                 sourceUri = BindUriHelper.GetResolvedUri(baseUri, sourceUri);
             }
 

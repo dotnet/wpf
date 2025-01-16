@@ -1,39 +1,11 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-//
-// Description: Table row group implementation
-//
-//              See spec at WPP TableOM.doc
-//
-
-//In order to avoid generating warnings about unknown message numbers and
-//unknown pragmas when compiling your C# source code with the actual C# compiler,
-//you need to disable warnings 1634 and 1691. (Presharp Documentation)
-#pragma warning disable 1634, 1691
-
-using MS.Internal.PtsHost;
 using MS.Internal.PtsTable;
-using MS.Utility;
-
-using System;
-using System.Collections;
-using System.Collections.Specialized;
 using System.ComponentModel;
-using System.Diagnostics;
-using System.Windows.Threading;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Media;
 using System.Windows.Markup;
-using System.Collections.Generic;
 using MS.Internal.Documents;
-
-using MS.Internal;
-using MS.Internal.Data;
-using MS.Internal.PtsHost.UnsafeNativeMethods;
 
 namespace System.Windows.Documents
 {
@@ -360,6 +332,3 @@ namespace System.Windows.Documents
         //------------------------------------------------------
     }
 }
-
-#pragma warning restore 1634, 1691
-

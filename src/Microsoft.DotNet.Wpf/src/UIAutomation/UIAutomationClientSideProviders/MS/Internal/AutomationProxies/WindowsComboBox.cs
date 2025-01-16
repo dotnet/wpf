@@ -5,13 +5,9 @@
 // Description: Win32 Combobox proxy
 
 using System;
-using System.Globalization;
-using System.Text;
-using System.ComponentModel;
 using System.Windows.Automation;
 using System.Windows.Automation.Provider;
 using System.Windows;
-using System.Runtime.InteropServices;
 using MS.Win32;
 using NativeMethodsSetLastError = MS.Internal.UIAutomationClientSideProviders.NativeMethodsSetLastError;
 
@@ -678,7 +674,7 @@ namespace MS.Internal.AutomationProxies
                 return false;
             }
 
-            return (0 == String.Compare(Misc.GetClassName(hwndEx), ComboboxEx32, StringComparison.OrdinalIgnoreCase));
+            return string.Equals(Misc.GetClassName(hwndEx), ComboboxEx32, StringComparison.OrdinalIgnoreCase);
         }
 
         private bool IsEditableCombo()

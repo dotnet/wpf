@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -37,16 +37,10 @@
 #define TRACE
 #endif
 
-using System;
 using System.IO;
 using System.Net;
-using System.Runtime.InteropServices;
 using System.Threading;
 using System.Collections;               // for IComparer
-using System.Diagnostics;               // for Debug.Assert
-using System.Security;                  // SecurityCritical, SecurityTreatAsSafe
-using System.IO.IsolatedStorage;        // for IsolatedStorageFileStream
-using MS.Internal.IO.Packaging;         // ByteRangeDownloader
 using MS.Internal.PresentationCore;     // for ExceptionStringTable
 
 namespace MS.Internal.IO.Packaging
@@ -597,12 +591,13 @@ namespace MS.Internal.IO.Packaging
                 _byteRangeDownloader = new ByteRangeDownloader(_uri,
                                                                _tempFileStream,
                                                                _readEventHandles[(int)ReadEvent.ByteRangeReadEvent].SafeWaitHandle,
-                                                               _tempFileMutex);
+                                                               _tempFileMutex)
+                {
+                    Proxy = _originalRequest.Proxy,
 
-                _byteRangeDownloader.Proxy = _originalRequest.Proxy;
-
-                _byteRangeDownloader.Credentials = _originalRequest.Credentials;
-                _byteRangeDownloader.CachePolicy = _originalRequest.CachePolicy;
+                    Credentials = _originalRequest.Credentials,
+                    CachePolicy = _originalRequest.CachePolicy
+                };
 
                 _byteRangesAvailable = new ArrayList(); // byte ranges that are downloaded
             }

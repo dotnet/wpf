@@ -1,21 +1,11 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-//
-
-using System;
 using System.ComponentModel;
-using System.IO;
 using System.Runtime.InteropServices;
 using System.Text;
-using System.Windows.Media.Imaging;
 using MS.Internal;
-using MS.Internal.PresentationCore;
-
-using SR=MS.Internal.PresentationCore.SR;
-
-#pragma warning disable 1634, 1691  // suppressing PreSharp warnings
 
 namespace System.Windows.Media
 {
@@ -43,9 +33,10 @@ namespace System.Windows.Media
         ///</summary>
         private static Color FromProfile(Uri profileUri)
         {
-            Color c1 = new Color();
-
-            c1.context = new ColorContext(profileUri);
+            Color c1 = new Color
+            {
+                context = new ColorContext(profileUri)
+            };
             c1.scRgbColor.a = 1.0f;
             c1.scRgbColor.r = 0.0f;
             c1.scRgbColor.g = 0.0f;
@@ -57,7 +48,7 @@ namespace System.Windows.Media
             if (c1.context != null)
             {
                 c1.nativeColorValue = new float[c1.context.NumChannels];
-                for (int i = 0; i < c1.nativeColorValue.GetLength(0); i++)
+                for (int i = 0; i < c1.nativeColorValue.Length; i++)
                 {
                     c1.nativeColorValue[i] = 0.0f;
                 }
@@ -80,12 +71,12 @@ namespace System.Windows.Media
                 throw new ArgumentException(SR.Format(SR.Color_DimensionMismatch, null));
             }
 
-            if (values.GetLength(0) != c1.nativeColorValue.GetLength(0))
+            if (values.Length != c1.nativeColorValue.Length)
             {
                 throw new ArgumentException(SR.Format(SR.Color_DimensionMismatch, null));
             }
 
-            for (int numChannels = 0; numChannels < values.GetLength(0); numChannels++)
+            for (int numChannels = 0; numChannels < values.Length; numChannels++)
             {
                 c1.nativeColorValue[numChannels] = values[numChannels];
             }
@@ -305,10 +296,10 @@ namespace System.Windows.Media
                 var sb = new StringBuilder();
                 sb.AppendFormat(provider, "{0}{1} ", Parsers.s_ContextColor, uriString);
                 sb.AppendFormat(provider,"{1:" + format + "}{0}",separator,scRgbColor.a);
-                for (int i= 0; i< nativeColorValue.GetLength(0); ++i )
+                for (int i = 0; i < nativeColorValue.Length; ++i )
                 {
                     sb.AppendFormat(provider,"{0:" + format + "}",nativeColorValue[i]);
-                    if (i< nativeColorValue.GetLength(0)-1 )
+                    if (i < nativeColorValue.Length - 1)
                     {
                         sb.AppendFormat(provider,"{0}",separator);
                     }
@@ -350,7 +341,7 @@ namespace System.Windows.Media
             }
             else
             {
-                for (int i = 0; i < color.nativeColorValue.GetLength(0); i++)
+                for (int i = 0; i < color.nativeColorValue.Length; i++)
                     result = result && FloatUtil.AreClose(nativeColorValue[i], color.nativeColorValue[i]);
             }
 
@@ -416,14 +407,12 @@ namespace System.Windows.Media
             }
             else if (color1.context == color2.context)
             {
-                Color c1 = new Color();
-                c1.context = color1.context;
-                
-                #pragma warning suppress 6506 // c1.context is obviously not null - both color1.context AND color2.context are not null
+                Color c1 = new Color { context = color1.context };
+
                 c1.nativeColorValue = new float[c1.context.NumChannels];
-                for (int i = 0; i < c1.nativeColorValue.GetLength(0); i++)
+                for (int i = 0; i < c1.nativeColorValue.Length; i++)
                 {
-                    c1.nativeColorValue[i] = color1.nativeColorValue[i] + color2.nativeColorValue[i] ;
+                    c1.nativeColorValue[i] = color1.nativeColorValue[i] + color2.nativeColorValue[i];
                 }
 
                 Color c2 = Color.FromRgb(0, 0, 0);
@@ -431,7 +420,7 @@ namespace System.Windows.Media
                 c2.context = new ColorContext(PixelFormats.Bgra32);
 
                 ColorTransform colorTransform = new ColorTransform(c1.context, c2.context);
-                float[] sRGBValue = new float[3];
+                Span<float> sRGBValue = stackalloc float[3];
 
                 colorTransform.Translate(c1.nativeColorValue, sRGBValue);
 
@@ -535,12 +524,10 @@ namespace System.Windows.Media
             }
             else if (color1.context == color2.context)
             {
-                Color c1 = new Color();
-                c1.context = color1.context;
+                Color c1 = new Color { context = color1.context };
 
-                #pragma warning suppress 6506 // c1.context is obviously not null - both color1.context AND color2.context are not null
                 c1.nativeColorValue = new float[c1.context.NumChannels];
-                for (int i = 0; i < c1.nativeColorValue.GetLength(0); i++)
+                for (int i = 0; i < c1.nativeColorValue.Length; i++)
                 {
                     c1.nativeColorValue[i] = color1.nativeColorValue[i] - color2.nativeColorValue[i];
                 }
@@ -550,7 +537,7 @@ namespace System.Windows.Media
                 c2.context = new ColorContext(PixelFormats.Bgra32);
 
                 ColorTransform colorTransform = new ColorTransform(c1.context, c2.context);
-                float[] sRGBValue = new float[3];
+                Span<float> sRGBValue = stackalloc float[3];
 
                 colorTransform.Translate(c1.nativeColorValue, sRGBValue);
 
@@ -647,7 +634,6 @@ namespace System.Windows.Media
             {
                 c1.context = color.context;
 
-                #pragma warning suppress 6506 // c1.context is obviously not null
                 c1.ComputeNativeValues(c1.context.NumChannels);
             }
 
@@ -691,10 +677,8 @@ namespace System.Windows.Media
         /// <returns>Whether or not the two colors are equal</returns>
         public override bool Equals(object o)
         {
-            if (o is Color)
+            if (o is Color color)
             {
-                Color color = (Color)o;
-
                 return (this == color);
             }
             else
@@ -750,12 +734,12 @@ namespace System.Windows.Media
                     return false;
                 }
 
-                if (color1.nativeColorValue.GetLength(0) != color2.nativeColorValue.GetLength(0))
+                if (color1.nativeColorValue.Length != color2.nativeColorValue.Length)
                 {
                     return false;
                 }
 
-                for (int i = 0; i < color1.nativeColorValue.GetLength(0); i++)
+                for (int i = 0; i < color1.nativeColorValue.Length; i++)
                 {
                     if (color1.nativeColorValue[i] != color2.nativeColorValue[i])
                     {
@@ -1097,7 +1081,7 @@ namespace System.Windows.Media
                 c2.context = new ColorContext(PixelFormats.Bgra32);
 
                 ColorTransform colorTransform = new ColorTransform(this.context, c2.context);
-                float[] scRGBValue = new float[3];
+                Span<float> scRGBValue = stackalloc float[3];
 
                 colorTransform.Translate(this.nativeColorValue, scRGBValue);
 
@@ -1110,16 +1094,11 @@ namespace System.Windows.Media
         private void ComputeNativeValues(int numChannels)
         {
             this.nativeColorValue = new float[numChannels];
-            if (this.nativeColorValue.GetLength(0) > 0)
+            if (this.nativeColorValue.Length > 0)
             {
-                float[] sRGBValue = new float[3];
-
-                sRGBValue[0] = this.sRgbColor.r / 255.0f;
-                sRGBValue[1] = this.sRgbColor.g / 255.0f;
-                sRGBValue[2] = this.sRgbColor.b / 255.0f;
+                Span<float> sRGBValue = [this.sRgbColor.r / 255.0f, this.sRgbColor.g / 255.0f, this.sRgbColor.b / 255.0f];
 
                 ColorTransform colorTransform = new ColorTransform(this.context, new ColorContext(PixelFormats.Bgra32));
-
                 colorTransform.Translate(sRGBValue, this.nativeColorValue);
             }
         }

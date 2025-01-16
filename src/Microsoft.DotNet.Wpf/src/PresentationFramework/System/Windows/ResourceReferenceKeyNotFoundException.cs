@@ -9,9 +9,7 @@
 //
 // 
 
-using System;
 using System.Runtime.Serialization;
-using System.Security;
 
 namespace System.Windows
 {

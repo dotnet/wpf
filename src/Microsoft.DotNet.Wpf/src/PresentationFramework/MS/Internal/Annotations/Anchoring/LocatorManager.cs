@@ -1,37 +1,15 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-#pragma warning disable 1634, 1691
-//
-//
-// Description:
-//     The main entry-point to the Anchoring namespace.  LocatorManager is the
-//     controller for the Anchoring algorithms.  Most of the work is delegated
-//     to processors.  LocatorManager maintains a registry of processors.
-//     Spec: Anchoring Namespace Spec.doc
-//
-//
-
-using System;
-using System.IO;
 using System.Collections;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Diagnostics;
-using System.Globalization;
-using System.Reflection;
 using System.Windows;
 using System.Windows.Annotations;
 using System.Windows.Annotations.Storage;
-using System.Windows.Controls;
-using System.Windows.Controls.Primitives;
 using System.Windows.Documents;
-using System.Windows.Markup;
 using System.Windows.Threading;
 using System.Xml;
-using MS.Internal;
-using MS.Utility;
 
 
 namespace MS.Internal.Annotations.Anchoring
@@ -456,7 +434,6 @@ namespace MS.Internal.Annotations.Anchoring
         ///     processed, you should set this property and call LoadAnnotations/
         ///     UnloadAnnotations on the service.
         /// </summary>
-#pragma warning suppress 7009
         public static readonly DependencyProperty SubTreeProcessorIdProperty = DependencyProperty.RegisterAttached(
                 "SubTreeProcessorId",
                 typeof(string),
@@ -1043,9 +1020,11 @@ namespace MS.Internal.Annotations.Anchoring
         /// special cases by calling code to override results from this method</returns>
         private ResolvingLocatorState ResolveSingleLocator(ref object selection, ref AttachmentLevel attachmentLevel, AttachmentLevel attemptedLevel, ContentLocator locator, int offset, DependencyObject startNode, bool skipStartNode)
         {
-            ResolvingLocatorState data = new ResolvingLocatorState();
-            data.LocatorPartIndex = offset;
-            data.ContentLocatorBase = locator;
+            ResolvingLocatorState data = new ResolvingLocatorState
+            {
+                LocatorPartIndex = offset,
+                ContentLocatorBase = locator
+            };
 
             PrePostDescendentsWalker<ResolvingLocatorState> walker = new PrePostDescendentsWalker<ResolvingLocatorState>(TreeWalkPriority.VisualTree, ResolveLocatorPart, TerminateResolve, data);
             walker.StartWalk(startNode, skipStartNode);

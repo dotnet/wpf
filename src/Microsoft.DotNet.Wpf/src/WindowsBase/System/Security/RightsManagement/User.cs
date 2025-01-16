@@ -2,27 +2,8 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-//
-//
-// Description:
-//  This class implements the UnsignedPublishLicense class 
-//   this class is the first step in the RightsManagement publishing process
-//
-//
-//
-//
-
-using System;
-using System.Collections;
-using System.Collections.Generic;           // for IEqualityComparer<T> generic interface.
-using System.Diagnostics;
-using System.Globalization;
-using System.Text;
-using System.Windows;
-
-using MS.Internal;                          // for Invariant
+using MS.Internal;
 using MS.Internal.Security.RightsManagement;
-using SecurityHelper = MS.Internal.WindowsBase.SecurityHelper;
 
 namespace System.Security.RightsManagement
 {

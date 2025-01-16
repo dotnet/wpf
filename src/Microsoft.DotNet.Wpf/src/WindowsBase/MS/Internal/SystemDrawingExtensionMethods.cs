@@ -2,14 +2,7 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-//
-//
-// Description: Helper methods for code that uses types from System.Drawing.
-//
-
-using System;
 using System.IO;
-using System.Security;
 
 namespace MS.Internal
 {

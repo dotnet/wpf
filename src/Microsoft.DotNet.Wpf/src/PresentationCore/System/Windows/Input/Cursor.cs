@@ -2,18 +2,10 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-using System;
 using System.ComponentModel;
-using System.Text;
-using System.Globalization;
 using MS.Win32;
 using System.Runtime.InteropServices;
-using System.Resources;
 using System.IO;
-using System.Security;
-using SecurityHelper=MS.Internal.SecurityHelper;
-using SR=MS.Internal.PresentationCore.SR;
-using MS.Internal.PresentationCore;     //  FriendAccessAllowed
 
 namespace System.Windows.Input
 {
@@ -97,7 +89,6 @@ namespace System.Windows.Input
         ///     Cursor from a SafeHandle to an HCURSOR
         /// </summary>
         /// <param name="cursorHandle"></param>
-        [FriendAccessAllowed] //used by ColumnHeader.GetCursor in PresentationFramework
         internal Cursor(SafeHandle cursorHandle )
         {
             if (! cursorHandle.IsInvalid )

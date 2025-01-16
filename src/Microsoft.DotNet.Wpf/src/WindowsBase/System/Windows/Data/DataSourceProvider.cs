@@ -2,17 +2,11 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-//
-//
 // Description: common base class and contract for data source provider objects
 //
 // Specs:       http://avalon/connecteddata/Specs/Avalon%20DataProviders.mht
-//
 
-using System;
-using System.Diagnostics;
 using System.ComponentModel;
-using System.Threading;
 using System.Windows.Threading;     // Dispatcher*
 
 using MS.Internal;  // Invariant
@@ -344,8 +338,6 @@ namespace System.Windows.Data
 
         private void EndDefer()
         {
-            Debug.Assert(_deferLevel > 0);
-
             --_deferLevel;
 
             if (_deferLevel == 0)

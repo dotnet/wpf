@@ -5,7 +5,6 @@
 #nullable disable
 
 using System.Collections;
-using System.Collections.Generic;
 using System.Reflection;
 using System.Xaml.MS.Impl;
 
@@ -41,7 +40,7 @@ namespace System.Xaml.Schema
             // Dictionaries and Collections must implement IEnumerable or have method
             // GetEnumerator() where return type is assignable to IEnumerator
             bool isIEnumerable = typeof(IEnumerable).IsAssignableFrom(type);
-            if (!isIEnumerable && LookupEnumeratorMethod(type) == null)
+            if (!isIEnumerable && LookupEnumeratorMethod(type) is null)
             {
                 return XamlCollectionKind.None;
             }
@@ -51,6 +50,7 @@ namespace System.Xaml.Schema
             {
                 return XamlCollectionKind.Dictionary;
             }
+
             if (TryGetIDictionaryAdder(type, out addMethod))
             {
                 return XamlCollectionKind.Dictionary;
@@ -60,17 +60,19 @@ namespace System.Xaml.Schema
             {
                 return XamlCollectionKind.Collection;
             }
+
             if (TryGetICollectionAdder(type, out addMethod))
             {
                 return XamlCollectionKind.Collection;
             }
 
             // If the type doesn't match any of the interfaces, check for Add methods
-            if (TryGetDictionaryAdder(type, false /*mayBeIDictionary*/, out addMethod))
+            if (TryGetDictionaryAdder(type, mayBeIDictionary: false, out addMethod))
             {
                 return XamlCollectionKind.Dictionary;
             }
-            if (TryGetCollectionAdder(type, false /*mayBeICollection*/, out addMethod))
+
+            if (TryGetCollectionAdder(type, mayBeICollection: false, out addMethod))
             {
                 return XamlCollectionKind.Collection;
             }
@@ -84,20 +86,23 @@ namespace System.Xaml.Schema
             switch (collectionKind)
             {
                 case XamlCollectionKind.Collection:
-                    bool isCollection = TryGetCollectionAdder(type, true /*mayBeICollection*/, out result);
-                    if (isCollection && result == null)
+                    bool isCollection = TryGetCollectionAdder(type, mayBeICollection: true, out result);
+                    if (isCollection && result is null)
                     {
                         throw new XamlSchemaException(SR.Format(SR.AmbiguousCollectionItemType, type));
                     }
+
                     break;
                 case XamlCollectionKind.Dictionary:
-                    bool isDictionary = TryGetDictionaryAdder(type, true /*mayBeIDictionary*/, out result);
-                    if (isDictionary && result == null)
+                    bool isDictionary = TryGetDictionaryAdder(type, mayBeIDictionary: true, out result);
+                    if (isDictionary && result is null)
                     {
                         throw new XamlSchemaException(SR.Format(SR.AmbiguousDictionaryItemType, type));
                     }
+
                     break;
             }
+
             return result;
         }
 
@@ -107,7 +112,7 @@ namespace System.Xaml.Schema
         {
             bool hasMoreThanOneICollection = false;
             Type genericICollection = GetGenericInterface(type, typeof(ICollection<>), out hasMoreThanOneICollection);
-            if (genericICollection != null)
+            if (genericICollection is not null)
             {
                 addMethod = genericICollection.GetMethod(KnownStrings.Add);
                 return true;
@@ -129,7 +134,7 @@ namespace System.Xaml.Schema
                 // Look for ICollection<T> implementation
                 if (TryGetICollectionAdder(type, out addMethod))
                 {
-                    if (addMethod != null)
+                    if (addMethod is not null)
                     {
                         return true;
                     }
@@ -144,11 +149,12 @@ namespace System.Xaml.Schema
             // Else if it implements IList, the item type is Object
             bool hasMoreThanOneAddMethod = false;
             addMethod = GetAddMethod(type, 1, out hasMoreThanOneAddMethod);
-            if (addMethod == null && typeof(IList).IsAssignableFrom(type))
+            if (addMethod is null && typeof(IList).IsAssignableFrom(type))
             {
                 addMethod = IListAddMethod;
             }
-            if (addMethod != null)
+
+            if (addMethod is not null)
             {
                 return true;
             }
@@ -171,7 +177,7 @@ namespace System.Xaml.Schema
         {
             bool hasMoreThanOneIDictionary = false;
             Type genericIDictionary = GetGenericInterface(type, typeof(IDictionary<,>), out hasMoreThanOneIDictionary);
-            if (genericIDictionary != null)
+            if (genericIDictionary is not null)
             {
                 addMethod = GetPublicMethod(genericIDictionary, KnownStrings.Add, 2);
                 return true;
@@ -193,7 +199,7 @@ namespace System.Xaml.Schema
                 // Look for IDictionary<K,V> implementation
                 if (TryGetIDictionaryAdder(type, out addMethod))
                 {
-                    if (addMethod != null)
+                    if (addMethod is not null)
                     {
                         return true;
                     }
@@ -208,11 +214,12 @@ namespace System.Xaml.Schema
             // Else if it implements non-generic IDictionary, key and item types are Object
             bool hasMoreThanOneAddMethod = false;
             addMethod = GetAddMethod(type, 2, out hasMoreThanOneAddMethod);
-            if (addMethod == null && typeof(IDictionary).IsAssignableFrom(type))
+            if (addMethod is null && typeof(IDictionary).IsAssignableFrom(type))
             {
                 addMethod = IDictionaryAddMethod;
             }
-            if (addMethod != null)
+
+            if (addMethod is not null)
             {
                 return true;
             }
@@ -254,16 +261,18 @@ namespace System.Xaml.Schema
                 MethodInfo isReadOnlyMethod = genericICollection.GetProperty(KnownStrings.IsReadOnly).GetGetMethod();
                 return isReadOnlyMethod;
             }
+
             return null;
         }
 
         private static MethodInfo LookupEnumeratorMethod(Type type)
         {
             MethodInfo result = GetMethod(type, KnownStrings.GetEnumerator, Type.EmptyTypes);
-            if ((result != null) && !typeof(IEnumerator).IsAssignableFrom(result.ReturnType))
+            if ((result is not null) && !typeof(IEnumerator).IsAssignableFrom(result.ReturnType))
             {
                 result = null;
             }
+
             return result;
         }
 
@@ -275,19 +284,22 @@ namespace System.Xaml.Schema
             {
                 return type;
             }
+
             foreach (Type currentInterface in type.GetInterfaces())
             {
                 if (currentInterface.IsGenericType && currentInterface.GetGenericTypeDefinition() == interfaceType)
                 {
-                    if (result != null)
+                    if (result is not null)
                     {
                         // More than one genericType<T> implemented
                         hasMultiple = true;
                         return null;
                     }
+
                     result = currentInterface;
                 }
             }
+
             return result;
         }
 
@@ -295,7 +307,7 @@ namespace System.Xaml.Schema
         {
             MethodInfo result = null;
             MemberInfo[] addMembers = type.GetMember(KnownStrings.Add, MemberTypes.Method, GetBindingFlags(type));
-            if (addMembers != null)
+            if (addMembers is not null)
             {
                 foreach (MemberInfo mi in addMembers)
                 {
@@ -304,20 +316,24 @@ namespace System.Xaml.Schema
                     {
                         continue;
                     }
+
                     ParameterInfo[] paramInfos = method.GetParameters();
-                    if (paramInfos == null || paramInfos.Length != paramCount)
+                    if (paramInfos is null || paramInfos.Length != paramCount)
                     {
                         continue;
                     }
-                    if (result != null)
+
+                    if (result is not null)
                     {
                         // More than one Add method
                         hasMoreThanOne = true;
                         return null;
                     }
+
                     result = method;
                 }
             }
+
             hasMoreThanOne = false;
             return result;
         }
@@ -331,16 +347,18 @@ namespace System.Xaml.Schema
             {
                 flags |= BindingFlags.NonPublic;
             }
+
             return flags;
         }
 
         private static MethodInfo GetMethod(Type type, string name, Type[] argTypes)
         {
             MethodInfo result = type.GetMethod(name, GetBindingFlags(type), null, argTypes, null);
-            if (result != null && !TypeReflector.IsPublicOrInternal(result))
+            if (result is not null && !TypeReflector.IsPublicOrInternal(result))
             {
                 result = null;
             }
+
             return result;
         }
 
@@ -355,6 +373,7 @@ namespace System.Xaml.Schema
                     return method;
                 }
             }
+
             return null;
         }
 
@@ -362,10 +381,11 @@ namespace System.Xaml.Schema
         {
             get
             {
-                if (s_typeOfObjectArray == null)
+                if (s_typeOfObjectArray is null)
                 {
                     s_typeOfObjectArray = new Type[] { typeof(object) };
                 }
+
                 return s_typeOfObjectArray;
             }
         }
@@ -374,10 +394,11 @@ namespace System.Xaml.Schema
         {
             get
             {
-                if (s_typeOfTwoObjectArray == null)
+                if (s_typeOfTwoObjectArray is null)
                 {
                     s_typeOfTwoObjectArray = new Type[] { typeof(object), typeof(object) };
                 }
+
                 return s_typeOfTwoObjectArray;
             }
         }
@@ -386,10 +407,11 @@ namespace System.Xaml.Schema
         {
             get
             {
-                if (s_getEnumeratorMethod == null)
+                if (s_getEnumeratorMethod is null)
                 {
                     s_getEnumeratorMethod = typeof(IEnumerable).GetMethod(KnownStrings.GetEnumerator);
                 }
+
                 return s_getEnumeratorMethod;
             }
         }
@@ -398,10 +420,11 @@ namespace System.Xaml.Schema
         {
             get
             {
-                if (s_listAddMethod == null)
+                if (s_listAddMethod is null)
                 {
                     s_listAddMethod = typeof(IList).GetMethod(KnownStrings.Add);
                 }
+
                 return s_listAddMethod;
             }
         }
@@ -410,10 +433,11 @@ namespace System.Xaml.Schema
         {
             get
             {
-                if (s_dictionaryAddMethod == null)
+                if (s_dictionaryAddMethod is null)
                 {
                     s_dictionaryAddMethod = typeof(IDictionary).GetMethod(KnownStrings.Add);
                 }
+
                 return s_dictionaryAddMethod;
             }
         }

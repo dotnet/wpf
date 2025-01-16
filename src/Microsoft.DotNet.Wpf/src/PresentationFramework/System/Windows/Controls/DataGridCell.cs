@@ -1,19 +1,12 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
 
-using System;
-using System.Collections.ObjectModel;
-using System.ComponentModel;
-using System.Diagnostics;
-using System.Globalization;
-using System.Windows;
 using System.Windows.Controls.Primitives;
 using System.Windows.Data;
 using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Threading;
 using System.Windows.Automation;
 
 namespace System.Windows.Controls
@@ -871,8 +864,10 @@ namespace System.Windows.Controls
             if (DataGridHelper.IsGridLineVisible(dataGrid, /*isHorizontal = */ false))
             {
                 double thickness = DataGridOwner.VerticalGridLineThickness;
-                Rect rect = new Rect(new Size(thickness, RenderSize.Height));
-                rect.X = RenderSize.Width - thickness;
+                Rect rect = new Rect(new Size(thickness, RenderSize.Height))
+                {
+                    X = RenderSize.Width - thickness
+                };
 
                 drawingContext.DrawRectangle(DataGridOwner.VerticalGridLinesBrush, null, rect);
             }
@@ -880,8 +875,10 @@ namespace System.Windows.Controls
             if (DataGridHelper.IsGridLineVisible(dataGrid, /*isHorizontal = */ true))
             {
                 double thickness = dataGrid.HorizontalGridLineThickness;
-                Rect rect = new Rect(new Size(RenderSize.Width, thickness));
-                rect.Y = RenderSize.Height - thickness;
+                Rect rect = new Rect(new Size(RenderSize.Width, thickness))
+                {
+                    Y = RenderSize.Height - thickness
+                };
 
                 drawingContext.DrawRectangle(dataGrid.HorizontalGridLinesBrush, null, rect);
             }

@@ -2,37 +2,15 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-//
-//
-// Description:
-//      The MediaContext class controls the media layer.
-//
-
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Diagnostics;
-using System.Runtime.InteropServices;
 using System.Threading;
 using System.Windows.Threading;
-using System.Windows;
 using System.Windows.Input;
 using System.Windows.Interop;
-using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Media.Composition;
-using System.Security;
-using System.Windows.Media.Effects;
-
 using MS.Internal;
-using MS.Internal.PresentationCore;
 using MS.Utility;
 using MS.Win32;
-
-using Microsoft.Win32.SafeHandles;
-
-using SR=MS.Internal.PresentationCore.SR;
 
 namespace System.Windows.Media
 {
@@ -1612,7 +1590,6 @@ namespace System.Windows.Media
         /// <summary>
         /// Add a pending loaded or unloaded callback
         /// </summary>
-        [FriendAccessAllowed] // Built into Core, also used by Framework.
         internal LoadedOrUnloadedOperation AddLoadedOrUnloadedCallback(
             DispatcherOperationCallback callback,
             DependencyObject target)
@@ -1632,7 +1609,6 @@ namespace System.Windows.Media
         /// <summary>
         /// Remove a pending loaded or unloaded callback
         /// </summary>
-        [FriendAccessAllowed] // Built into Core, also used by Framework.
         internal void RemoveLoadedOrUnloadedCallback(LoadedOrUnloadedOperation op)
         {
             Debug.Assert(op != null);

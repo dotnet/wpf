@@ -1,32 +1,16 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-//
-// Description:
-//  This class handles IMM32 IME's composition string and support level 3 input to TextBox and RichTextBox.
-//
-
-using System;
 using System.Runtime.InteropServices;
-using System.Threading;
 using System.Collections;
-using System.Diagnostics;
 using System.Windows.Media;
 using System.Windows.Input;
-using System.Windows.Documents;
 using System.Windows.Interop;
-using System.Windows.Threading;
-using System.Security;
-using System.Text;
 using MS.Win32;
 using MS.Internal.Documents;
-using MS.Internal.PresentationFramework;
 using MS.Internal;
 using MS.Internal.Interop;
-
-// Enable presharp pragma warning suppress directives.
-#pragma warning disable 1634, 1691
 
 namespace System.Windows.Documents
 {
@@ -430,11 +414,8 @@ namespace System.Windows.Documents
                 size = UnsafeNativeMethods.ImmGetCompositionString(new HandleRef(this, himc), NativeMethods.GCS_RESULTSTR, IntPtr.Zero, 0);
                 if (size > 0)
                 {
-                    result = new char[size / Marshal.SizeOf(typeof(short))];
+                    result = new char[size / sizeof(short)];
 
-                    // 3rd param is out and contains actual result of this call.
-                    // suppress Presharp 6031.
-#pragma warning suppress 6031
                     UnsafeNativeMethods.ImmGetCompositionString(new HandleRef(this, himc), NativeMethods.GCS_RESULTSTR, result, size);
                 }
             }
@@ -447,10 +428,8 @@ namespace System.Windows.Documents
                 size = UnsafeNativeMethods.ImmGetCompositionString(new HandleRef(this, himc), NativeMethods.GCS_COMPSTR, IntPtr.Zero, 0);
                 if (size > 0)
                 {
-                    composition = new char[size / Marshal.SizeOf(typeof(short))];
-                    // 3rd param is out and contains actual result of this call.
-                    // suppress Presharp 6031.
-#pragma warning suppress 6031
+                    composition = new char[size / sizeof(short)];
+
                     UnsafeNativeMethods.ImmGetCompositionString(new HandleRef(this, himc), NativeMethods.GCS_COMPSTR, composition, size);
 
                     //
@@ -477,10 +456,8 @@ namespace System.Windows.Documents
                         size = UnsafeNativeMethods.ImmGetCompositionString(new HandleRef(this, himc), NativeMethods.GCS_COMPATTR, IntPtr.Zero, 0);
                         if (size > 0)
                         {
-                            attributes = new byte[size / Marshal.SizeOf(typeof(byte))];
-                            // 3rd param is out and contains actual result of this call.
-                            // suppress Presharp 6031.
-#pragma warning suppress 6031
+                            attributes = new byte[size / sizeof(byte)];
+
                             UnsafeNativeMethods.ImmGetCompositionString(new HandleRef(this, himc), NativeMethods.GCS_COMPATTR, attributes, size);
                         }
                     }
@@ -702,7 +679,7 @@ namespace System.Windows.Documents
                     //  - fail to lock IMC.
                     // Those cases are ignorable for us.
                     // In addition, it does not set win32 last error and we have no clue to handle error.
-#pragma warning suppress 6031
+
                     UnsafeNativeMethods.ImmSetCandidateWindow(new HandleRef(this, himc), ref candform);
                     UnsafeNativeMethods.ImmReleaseContext(new HandleRef(this, hwnd), new HandleRef(this, himc));
                 }
@@ -796,8 +773,10 @@ namespace System.Windows.Documents
                 milPointCaret = compositionTarget.TransformToDevice.Transform(milPointCaret);
 
                 // Build COMPOSITIONFORM. COMPOSITIONFORM is window coodidate.
-                NativeMethods.COMPOSITIONFORM compform = new NativeMethods.COMPOSITIONFORM();
-                compform.dwStyle = NativeMethods.CFS_RECT;
+                NativeMethods.COMPOSITIONFORM compform = new NativeMethods.COMPOSITIONFORM
+                {
+                    dwStyle = NativeMethods.CFS_RECT
+                };
                 compform.rcArea.left = ConvertToInt32(milPointTopLeft.X);
                 compform.rcArea.right = ConvertToInt32(milPointBottomRight.X);
                 compform.rcArea.top = ConvertToInt32(milPointTopLeft.Y);
@@ -1349,7 +1328,7 @@ namespace System.Windows.Documents
 
             string target = range.Text;
 
-            int requestSize = Marshal.SizeOf(typeof(NativeMethods.RECONVERTSTRING)) + (target.Length * Marshal.SizeOf(typeof(short))) + ((_maxSrounding + 1) * Marshal.SizeOf(typeof(short)) * 2);
+            int requestSize = Marshal.SizeOf(typeof(NativeMethods.RECONVERTSTRING)) + (target.Length * sizeof(short)) + ((_maxSrounding + 1) * sizeof(short) * 2);
             IntPtr lret = new IntPtr(requestSize);
 
             if (lParam != IntPtr.Zero)
@@ -1365,9 +1344,9 @@ namespace System.Windows.Documents
                 reconv.dwStrLen = surrounding.Length;                                         // in char count
                 reconv.dwStrOffset = Marshal.SizeOf(typeof(NativeMethods.RECONVERTSTRING));   // in byte count
                 reconv.dwCompStrLen = target.Length;                                          // in char count
-                reconv.dwCompStrOffset = offsetStart * Marshal.SizeOf(typeof(short));         // in byte count
+                reconv.dwCompStrOffset = offsetStart * sizeof(short);                         // in byte count
                 reconv.dwTargetStrLen = target.Length;                                        // in char count
-                reconv.dwTargetStrOffset = offsetStart * Marshal.SizeOf(typeof(short));       // in byte count
+                reconv.dwTargetStrOffset = offsetStart * sizeof(short);                       // in byte count
 
                 if (!fDocFeed)
                 {
@@ -1543,7 +1522,7 @@ namespace System.Windows.Documents
                 ITextPointer start = range.Start.CreatePointer(LogicalDirection.Backward);
 
                 // Move the start point to new  dwCompStrOffset.
-                start = MoveToNextCharPos(start, (reconv.dwCompStrOffset - _reconv.dwCompStrOffset) / Marshal.SizeOf(typeof(short)));
+                start = MoveToNextCharPos(start, (reconv.dwCompStrOffset - _reconv.dwCompStrOffset) / sizeof(short));
                 // Create the end position and move this as dwCompStrLen.
                 ITextPointer end = start.CreatePointer(LogicalDirection.Forward);
                 end = MoveToNextCharPos(end, reconv.dwCompStrLen);

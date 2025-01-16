@@ -1,6 +1,10 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
+
+using System.Windows.Markup;    // for XmlLanguage
+using System.Windows.Media;
+using System.Globalization;
 
 /*++                                       
     Description:
@@ -10,14 +14,6 @@
 
 namespace System.Windows.Documents
 {
-    using System.Windows.Shapes;
-    using System.Windows.Markup;    // for XmlLanguage
-    using System.Windows.Media;
-    using System.Diagnostics;
-    using System.Globalization;
-    using System.Windows;
-    using System.Collections.Generic;
-
     //a set of characters that have the same font, face and size
     internal sealed class FixedSOMTextRun : FixedSOMElement, IComparable
     {
@@ -99,12 +95,14 @@ namespace System.Windows.Documents
             {
                 return null;
             }
-            FixedSOMTextRun run = new FixedSOMTextRun(boundingRect, transform, fixedNode, startIndex, endIndex);
-            run._fontUri = glyphs.FontUri;
-            run._cultureInfo = glyphs.Language.GetCompatibleCulture();
-            run._bidiLevel = glyphs.BidiLevel;
-            run._isSideways = glyphs.IsSideways;
-            run._fontSize = glyphs.FontRenderingEmSize;
+            FixedSOMTextRun run = new FixedSOMTextRun(boundingRect, transform, fixedNode, startIndex, endIndex)
+            {
+                _fontUri = glyphs.FontUri,
+                _cultureInfo = glyphs.Language.GetCompatibleCulture(),
+                _bidiLevel = glyphs.BidiLevel,
+                _isSideways = glyphs.IsSideways,
+                _fontSize = glyphs.FontRenderingEmSize
+            };
 
             GlyphRun glyphRun = glyphs.ToGlyphRun();
 

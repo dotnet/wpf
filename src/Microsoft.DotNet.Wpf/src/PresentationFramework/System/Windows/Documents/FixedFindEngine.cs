@@ -1,6 +1,12 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
+
+using System.IO;
+using System.Xml;
+using System.Text;
+using System.Globalization;
+using System.Windows.Markup;
 
 //
 // Description:
@@ -10,14 +16,6 @@
 
 namespace System.Windows.Documents
 {
-    using System;
-    using System.IO;
-    using System.Xml;
-    using System.Text;
-    using System.Globalization;
-    using System.Diagnostics;
-    using System.Windows.Markup;
-
     internal sealed class FixedFindEngine
     {
         //Searches for the specified pattern and updates start *or* end pointers depending on search direction
@@ -372,17 +370,18 @@ namespace System.Windows.Documents
             //Wrap around a compatibility reader
             XmlReader xmlReader = new XmlCompatibilityReader(xmlTextReader, _predefinedNamespaces);
 
-            XmlReaderSettings settings = new XmlReaderSettings();
-            settings.IgnoreWhitespace = true;
-            settings.IgnoreComments = true;
-            settings.ProhibitDtd = true;
+            XmlReaderSettings settings = new XmlReaderSettings
+            {
+                IgnoreWhitespace = true,
+                IgnoreComments = true,
+                ProhibitDtd = true
+            };
 
             xmlReader = XmlReader.Create(xmlReader, settings);
 
             xmlReader.MoveToContent();
 
             StringBuilder pageString = new StringBuilder();
-            bool isSideways = false;
             string unicodeStr = null;
             
             while (xmlReader.Read())
@@ -395,15 +394,10 @@ namespace System.Windows.Documents
                         {
                             unicodeStr = xmlReader.GetAttribute("UnicodeString");
 
-                            if (!String.IsNullOrEmpty(unicodeStr))
+                            if (!string.IsNullOrEmpty(unicodeStr))
                             {
                                 string sidewaysString = xmlReader.GetAttribute("IsSideways");
-                                isSideways = false;
-                                if (sidewaysString != null &&
-                                    String.Compare(sidewaysString, Boolean.TrueString, StringComparison.OrdinalIgnoreCase) == 0)
-                                {
-                                    isSideways = true;
-                                }
+                                bool isSideways = string.Equals(sidewaysString, "True", StringComparison.OrdinalIgnoreCase);
                                 
                                 if (reverseRTL)
                                 {

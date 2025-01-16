@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -8,9 +8,6 @@
 //  of an individual "format feature" within a compound file.
 //
 
-// Allow use of presharp warning numbers [6506] and [6518] unknown to the compiler
-#pragma warning disable 1634, 1691
-
 using System;
 using System.IO;
 
@@ -18,15 +15,12 @@ using System.IO;
 using MS.Utility;     // For SR.cs
 #else
 using System.Windows;
-using MS.Internal.WindowsBase; // FriendAccessAllowed
+using MS.Internal.WindowsBase;
 #endif
 
 namespace MS.Internal.IO.Packaging.CompoundFile
 {
     ///<summary>Class for manipulating version object</summary>
-#if !PBTCOMPILER
-    [FriendAccessAllowed]
-#endif
     internal class FormatVersion
     {
         //------------------------------------------------------
@@ -227,10 +221,6 @@ namespace MS.Internal.IO.Packaging.CompoundFile
 
             FormatVersion v = (FormatVersion) obj;
 
-            //PRESHARP:Parameter to this public method must be validated:  A null-dereference can occur here. 
-            //    Parameter 'v' to this public method must be validated:  A null-dereference can occur here. 
-            //This is a false positive as the checks above can gurantee no null dereference will occur  
-#pragma warning disable 6506
             if (!string.Equals(_featureIdentifier, v.FeatureIdentifier, StringComparison.OrdinalIgnoreCase)
                 || _reader != v.ReaderVersion
                 || _writer != v.WriterVersion
@@ -238,7 +228,6 @@ namespace MS.Internal.IO.Packaging.CompoundFile
             {
                 return false;
             }
-#pragma warning restore 6506
 
             return true;
         }
@@ -307,10 +296,9 @@ namespace MS.Internal.IO.Packaging.CompoundFile
                 // Suppress 56518 Local IDisposable object not disposed: 
                 // Reason: The stream is not owned by the BlockManager, therefore we can 
                 // close the BinaryWriter as it will Close the stream underneath.        
-#pragma warning disable 6518
                 int len = 0;
                 BinaryWriter binarywriter = null;
-#pragma warning restore 6518
+
                 if (stream != null)
                 {
                     binarywriter = new BinaryWriter(stream, System.Text.Encoding.Unicode);
@@ -525,9 +513,7 @@ namespace MS.Internal.IO.Packaging.CompoundFile
             // Suppress 56518 Local IDisposable object not disposed: 
             // Reason: The stream is not owned by the BlockManager, therefore we can 
             // close the BinaryWriter as it will Close the stream underneath.
-#pragma warning disable 6518
             BinaryReader streamReader = new BinaryReader(stream, System.Text.Encoding.Unicode);
-#pragma warning restore 6518
 
             return LoadFromBinaryReader(streamReader, out bytesRead);
         }

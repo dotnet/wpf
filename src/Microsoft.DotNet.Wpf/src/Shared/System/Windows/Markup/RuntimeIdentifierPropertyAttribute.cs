@@ -18,14 +18,13 @@ using SRCS = System.Runtime.CompilerServices;
 #if PBTCOMPILER
 namespace MS.Internal.Markup
 #elif WINDOWS_BASE
-using MS.Internal.WindowsBase;     // FriendAccessAllowed
 
 namespace System.Windows.Markup
 #else
 namespace System.Windows.Markup
 #endif
 {
-#if !PBTCOMPILER && !TARGETTING35SP1 && !WINDOWS_BASE
+#if !PBTCOMPILER && !WINDOWS_BASE
     /// <summary>
     /// This attribute is placed on a class to identify the property that will
     /// function as an Name for the given class
@@ -64,17 +63,14 @@ namespace System.Windows.Markup
         //  the same rules, but the parser is able to give a better error message
         //  when it happens.
 #if !PBTCOMPILER
-        [FriendAccessAllowed] // Built into Base, used by Core and Framework.
         internal static bool NameValidationCallback(object candidateName)
         {
-            string name = candidateName as string;
-
-            if( name != null )
+            if (candidateName is string name)
             {
                 // Non-null string, ask the XAML validation code for blessing.
                 return IsValidIdentifierName(name);
             }
-            else if( candidateName == null )
+            else if (candidateName == null)
             {
                 // Null string is allowed
                 return true;
@@ -91,9 +87,6 @@ namespace System.Windows.Markup
         /// Validates the name to follow Naming guidelines
         /// </summary>
         /// <param name="name">string to validate</param>
-#if !PBTCOMPILER
-        [FriendAccessAllowed] // Built into Base, used by Core and Framework.
-#endif
         internal static bool IsValidIdentifierName(string name)
         {
             // Grammar:

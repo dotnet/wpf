@@ -1,44 +1,30 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-//
-//
-//
+using MS.Win32;
+using System.Collections;
+using System.Collections.Specialized;
+using System.ComponentModel;
+using System.Formats.Nrbf;
+using System.IO;
+using System.Runtime.InteropServices;
+using System.Runtime.InteropServices.ComTypes;
+using System.Runtime.Serialization;
+using System.Runtime.Serialization.Formatters.Binary;
+using System.Windows.Interop;
+using System.Windows.Media.Imaging;
+using System.Text;
+using MS.Internal;
+
+using IComDataObject = System.Runtime.InteropServices.ComTypes.IDataObject;
+
 // Description: Top-level class for data transfer for drag-drop and clipboard.
 //
 // See spec at http://avalon/uis/Data%20Transfer%20clipboard%20dragdrop/Avalon%20Data%20Transfer%20Object.htm
-//
-//
-
 
 namespace System.Windows
 {
-    using System;
-    using MS.Win32;
-    using System.Collections;
-    using System.Collections.Specialized;
-    using System.ComponentModel;
-    using System.Diagnostics;
-    using System.Formats.Nrbf;
-    using System.IO;
-    using System.Runtime.InteropServices;
-    using System.Runtime.InteropServices.ComTypes;
-    using System.Runtime.Serialization;
-    using System.Runtime.Serialization.Formatters.Binary;
-    using System.Security;
-    using System.Windows.Interop;
-    using System.Windows.Media.Imaging;
-    using System.Text;
-    using MS.Internal;
-    using MS.Internal.PresentationCore;                        // SecurityHelper
-
-    using SR=MS.Internal.PresentationCore.SR;
-    using IComDataObject = System.Runtime.InteropServices.ComTypes.IDataObject;
-
-// PreSharp uses message numbers that the C# compiler doesn't know about.
-// Disable the C# complaints, per the PreSharp documentation.
-#pragma warning disable 1634, 1691
 
     #region DataObject Class
     /// <summary>
@@ -332,7 +318,6 @@ namespace System.Windows
         /// to specify whether the
         /// data can be converted to another format.
         /// </summary>
-        [FriendAccessAllowed]
         public void SetData(string format, Object data, bool autoConvert)
         {
             ArgumentNullException.ThrowIfNull(format);
@@ -1264,27 +1249,21 @@ namespace System.Windows
         /// <summary>
         /// Retrieves a list of distinct strings from the array.
         /// </summary>
-        private static string[] GetDistinctStrings(string[] formats)
+        private static string[] GetDistinctStrings(List<string> formats)
         {
-            ArrayList distinct;
-            string[] distinctStrings;
+            List<string> distinct = new(formats.Count);
 
-            distinct = new ArrayList();
-            for (int i=0; i<formats.Length; i++)
+            for (int i = 0; i < formats.Count; i++)
             {
-                string formatString;
+                string formatString = formats[i];
 
-                formatString = formats[i];
                 if (!distinct.Contains(formatString))
                 {
                     distinct.Add(formatString);
                 }
             }
 
-            distinctStrings = new string[distinct.Count];
-            distinct.CopyTo(distinctStrings, 0);
-
-            return distinctStrings;
+            return distinct.ToArray();
         }
 
         /// <summary>
@@ -1861,10 +1840,6 @@ namespace System.Windows
 
                 currentPtr = (IntPtr)((long)currentPtr + baseStructSize);
 
-                // Win32 CopyMemory return void, so we should disable PreSharp 6523 that
-                // expects the Win32 exception with the last error.
-#pragma warning disable 6523
-
                 // Write out the strings...
                 for (int i = 0; i < files.Length; i++)
                 {
@@ -1881,8 +1856,6 @@ namespace System.Windows
                     // Increase the current pointer by 2 since it is a unicode.
                     currentPtr = (IntPtr)((long)currentPtr + 2);
                 }
-
-#pragma warning restore 6523
 
                 // Terminate the string and add 2bytes since it is a unicode.
                 unsafe
@@ -1929,13 +1902,7 @@ namespace System.Windows
                 {
                     chars = str.ToCharArray(0, str.Length);
 
-                    // Win32 CopyMemory return void, so we should disable PreSharp 6523 that
-                    // expects the Win32 exception with the last error.
-#pragma warning disable 6523
-
                     UnsafeNativeMethods.CopyMemoryW(ptr, chars, chars.Length * 2);
-
-#pragma warning restore 6523
 
                     // Terminate the string becasue of GlobalReAlloc GMEM_ZEROINIT will zero
                     // out only the bytes it adds to the memory object. It doesn't initialize
@@ -1985,13 +1952,7 @@ namespace System.Windows
 
                 try
                 {
-                    // Win32 CopyMemory return void, so we should disable PreSharp 6523 that
-                    // expects the Win32 exception with the last error.
-#pragma warning disable 6523
-
                     UnsafeNativeMethods.CopyMemory(ptr, strBytes, pinvokeSize);
-
-#pragma warning restore 6523
 
                     Marshal.Copy(new byte[] { 0 }, 0, (IntPtr)((long)ptr + pinvokeSize), 1);
                 }
@@ -2039,14 +2000,8 @@ namespace System.Windows
 
             try
             {
-                // Win32 CopyMemory return void, so we should disable PreSharp 6523 that
-                // expects the Win32 exception with the last error.
-#pragma warning disable 6523
-
                 // Copy UTF8 encoding bytes to the memory.
                 UnsafeNativeMethods.CopyMemory(pointerUtf8, utf8Bytes, utf8ByteCount);
-
-#pragma warning restore 6523
 
                 // Copy the null into the last of memory.
                 Marshal.Copy(new byte[] { 0 }, 0, (IntPtr)((long)pointerUtf8 + utf8ByteCount), 1);
@@ -2289,11 +2244,13 @@ namespace System.Windows
                         string format;
 
                         format = formats[i];
-                        temp = new FORMATETC();
-                        temp.cfFormat = (short)DataFormats.GetDataFormat(format).Id;
-                        temp.dwAspect = DVASPECT.DVASPECT_CONTENT;
-                        temp.ptd = IntPtr.Zero;
-                        temp.lindex = -1;
+                        temp = new FORMATETC
+                        {
+                            cfFormat = (short)DataFormats.GetDataFormat(format).Id,
+                            dwAspect = DVASPECT.DVASPECT_CONTENT,
+                            ptd = IntPtr.Zero,
+                            lindex = -1
+                        };
 
                         if (IsFormatEqual(format, DataFormats.Bitmap))
                         {
@@ -2481,25 +2438,15 @@ namespace System.Windows
 
             public string[] GetFormats(bool autoConvert)
             {
+                IEnumFORMATETC enumFORMATETC = EnumFormatEtcInner(DATADIR.DATADIR_GET);
+                List<string> formats = [];
 
-                IEnumFORMATETC enumFORMATETC;
-                ArrayList formats;
-                string[] temp;
-
-                enumFORMATETC = null;
-                formats = new ArrayList();
-
-                enumFORMATETC = EnumFormatEtcInner(DATADIR.DATADIR_GET);
-
-                if (enumFORMATETC != null)
+                if (enumFORMATETC is not null)
                 {
-                    FORMATETC []formatetc;
-                    int[] retrieved;
+                    FORMATETC[] formatetc = [new FORMATETC()];
+                    int[] retrieved = [1];
 
                     enumFORMATETC.Reset();
-
-                    formatetc = new FORMATETC[] { new FORMATETC() };
-                    retrieved = new int[] {1};
 
                     while (retrieved[0] > 0)
                     {
@@ -2507,15 +2454,13 @@ namespace System.Windows
 
                         if (enumFORMATETC.Next(1, formatetc, retrieved) == NativeMethods.S_OK && retrieved[0] > 0)
                         {
-                            string name;
+                            string name = DataFormats.GetDataFormat(formatetc[0].cfFormat).Name;
 
-                            name = DataFormats.GetDataFormat(formatetc[0].cfFormat).Name;
                             if (autoConvert)
                             {
-                                string[] mappedFormats;
+                                string[] mappedFormats = GetMappedFormats(name);
 
-                                mappedFormats = GetMappedFormats(name);
-                                for (int i=0; i<mappedFormats.Length; i++)
+                                for (int i = 0; i < mappedFormats.Length; i++)
                                 {
                                     formats.Add(mappedFormats[i]);
                                 }
@@ -2539,9 +2484,7 @@ namespace System.Windows
                     }
                 }
 
-                temp = new string[formats.Count];
-                formats.CopyTo(temp, 0);
-                return GetDistinctStrings(temp);
+                return GetDistinctStrings(formats);
             }
 
             public void SetData(string format, Object data)
@@ -2696,12 +2639,13 @@ namespace System.Windows
                 FORMATETC formatetc;
                 STGMEDIUM medium;
 
-                formatetc = new FORMATETC();
-
-                formatetc.cfFormat = (short)DataFormats.GetDataFormat(format).Id;
-                formatetc.dwAspect = aspect;
-                formatetc.lindex = index;
-                formatetc.tymed = TYMED.TYMED_ISTREAM;
+                formatetc = new FORMATETC
+                {
+                    cfFormat = (short)DataFormats.GetDataFormat(format).Id,
+                    dwAspect = aspect,
+                    lindex = index,
+                    tymed = TYMED.TYMED_ISTREAM
+                };
 
                 object outData = null;
 
@@ -2868,12 +2812,13 @@ namespace System.Windows
                 STGMEDIUM medium;
                 Object data;
 
-                formatetc = new FORMATETC();
-
-                formatetc.cfFormat = (short)DataFormats.GetDataFormat(format).Id;
-                formatetc.dwAspect = aspect;
-                formatetc.lindex = index;
-                formatetc.tymed = TYMED.TYMED_HGLOBAL;
+                formatetc = new FORMATETC
+                {
+                    cfFormat = (short)DataFormats.GetDataFormat(format).Id,
+                    dwAspect = aspect,
+                    lindex = index,
+                    tymed = TYMED.TYMED_HGLOBAL
+                };
 
                 data = null;
 
@@ -3245,10 +3190,12 @@ namespace System.Windows
                 FORMATETC formatetc;
                 int hr;
 
-                formatetc = new FORMATETC();
-                formatetc.cfFormat = (short)DataFormats.GetDataFormat(format).Id;
-                formatetc.dwAspect = aspect;
-                formatetc.lindex = index;
+                formatetc = new FORMATETC
+                {
+                    cfFormat = (short)DataFormats.GetDataFormat(format).Id,
+                    dwAspect = aspect,
+                    lindex = index
+                };
 
                 for (int i=0; i<ALLOWED_TYMEDS.Length; i++)
                 {
@@ -3401,10 +3348,7 @@ namespace System.Windows
 
                 if (autoConvert)
                 {
-                    ArrayList formats;
-                    string[] temp;
-
-                    formats = new ArrayList();
+                    List<string> formats = [];
 
                     for (int baseFormatIndex = 0; baseFormatIndex < baseVar.Length; baseFormatIndex++)
                     {
@@ -3455,15 +3399,13 @@ namespace System.Windows
                         else
                         {
                              if (!serializationCheckFailedForThisFunction)
-                            {
+                             {
                                 formats.Add(baseVar[baseFormatIndex]);
-                            }
+                             }
                         }
                     }
 
-                    temp = new string[formats.Count];
-                    formats.CopyTo(temp, 0);
-                    baseVar = GetDistinctStrings(temp);
+                    baseVar = GetDistinctStrings(formats);
                 }
 
                 return baseVar;

@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -9,20 +9,9 @@
 using MS.Internal;
 using MS.Internal.KnownBoxes;
 using MS.Internal.PresentationFramework;
-using MS.Utility;
-using System.Collections;
-using System.ComponentModel;
-using System.Threading;
-using System.Windows.Automation;
-using System.Windows.Automation.Provider;
-using System.Windows.Controls;
-using System.Windows;
 using System.Windows.Data;
 using System.Windows.Media;
-using System.Windows.Markup;
 using System.Windows.Input;
-using System;
-using System.Diagnostics;
 
 
 namespace System.Windows.Controls.Primitives
@@ -694,9 +683,11 @@ namespace System.Windows.Controls.Primitives
         {
             if (!HasNonDefaultValue(target))
             {
-                Binding binding = new Binding();
-                binding.RelativeSource = RelativeSource.TemplatedParent;
-                binding.Path = new PropertyPath(source);
+                Binding binding = new Binding
+                {
+                    RelativeSource = RelativeSource.TemplatedParent,
+                    Path = new PropertyPath(source)
+                };
                 SetBinding(target, binding);
             }
         }
@@ -706,9 +697,11 @@ namespace System.Windows.Controls.Primitives
         {
             if (element != null && !element.HasNonDefaultValue(target))
             {
-                Binding binding = new Binding();
-                binding.Source = this.TemplatedParent;
-                binding.Path = new PropertyPath(source);
+                Binding binding = new Binding
+                {
+                    Source = this.TemplatedParent,
+                    Path = new PropertyPath(source)
+                };
                 element.SetBinding(target, binding);
             }
         }

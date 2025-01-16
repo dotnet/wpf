@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -7,12 +7,8 @@
 
 
 using System;
-using System.Windows.Automation;
-using System.Windows.Automation.Provider;
-using System.Windows;
 using System.Collections;
 using System.Runtime.InteropServices;
-using System.ComponentModel;
 using MS.Win32;
 
 namespace MS.Internal.AutomationProxies
@@ -206,9 +202,10 @@ namespace MS.Internal.AutomationProxies
             // Make sure that no new group have been added, try to match all the GroupId to an 
             // existing one.
             int itemCount = WindowsListView.GetItemCount (_hwnd);
-            NativeMethods.LVITEM_V6 item = new NativeMethods.LVITEM_V6 ();
-
-            item.mask = NativeMethods.LVIF_GROUPID;
+            NativeMethods.LVITEM_V6 item = new NativeMethods.LVITEM_V6
+            {
+                mask = NativeMethods.LVIF_GROUPID
+            };
 
             for (item.iItem = 0; item.iItem < itemCount; item.iItem++)
             {
@@ -370,8 +367,10 @@ namespace MS.Internal.AutomationProxies
             bool isComctrlV6OnOsVerV6orHigher = Misc.IsComctrlV6OnOsVerV6orHigher(hwnd);
            
             int itemCount = WindowsListView.GetItemCount(hwnd);
-            NativeMethods.LVITEM_V6 item = new NativeMethods.LVITEM_V6();
-            item.mask = NativeMethods.LVIF_GROUPID;
+            NativeMethods.LVITEM_V6 item = new NativeMethods.LVITEM_V6
+            {
+                mask = NativeMethods.LVIF_GROUPID
+            };
 
             // The only place where the GroupManager gets constructed
             GroupManager manager = new GroupManager(itemCount, hwnd, isComctrlV6OnOsVerV6orHigher);

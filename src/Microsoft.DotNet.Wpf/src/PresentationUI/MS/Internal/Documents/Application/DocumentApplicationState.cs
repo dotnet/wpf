@@ -4,14 +4,11 @@
 
 // Description: Represents the current UI state of the application.
 
-
-using MS.Internal.PresentationUI;
 using System;
 
 namespace MS.Internal.Documents.Application
 {
     [Serializable]
-    [FriendAccessAllowed]
     internal struct DocumentApplicationState
     {
         //------------------------------------------------------

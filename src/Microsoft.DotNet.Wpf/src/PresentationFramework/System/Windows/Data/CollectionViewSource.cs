@@ -9,7 +9,6 @@
 // See spec at CollectionViewSource.mht
 //
 
-using System;
 using System.Collections;           // IEnumerable
 using System.Collections.ObjectModel;   // ObservableCollection<T>
 using System.Collections.Specialized;   // NotifyCollectionChanged*

@@ -1,6 +1,20 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
+
+
+#region Using declarations
+
+using System.ComponentModel;
+using System.Windows.Controls.Primitives;
+using System.Diagnostics;
+using System.Windows.Media;
+#if RIBBON_IN_FRAMEWORK
+using Microsoft.Windows.Controls;
+#else
+    using Microsoft.Windows.Controls.Ribbon;
+#endif
+using MS.Internal;
 
 #if RIBBON_IN_FRAMEWORK
 namespace System.Windows.Controls.Ribbon.Primitives
@@ -8,25 +22,6 @@ namespace System.Windows.Controls.Ribbon.Primitives
 namespace Microsoft.Windows.Controls.Ribbon.Primitives
 #endif
 {
-
-    #region Using declarations
-
-    using System;
-    using System.Collections.Generic;
-    using System.ComponentModel;
-    using System.Windows;
-    using System.Windows.Controls;
-    using System.Windows.Controls.Primitives;
-    using System.Diagnostics;
-    using System.Windows.Media;
-#if RIBBON_IN_FRAMEWORK
-    using System.Windows.Controls.Ribbon;
-    using Microsoft.Windows.Controls;
-#else
-    using Microsoft.Windows.Controls.Ribbon;
-#endif
-    using MS.Internal;
-
     #endregion
 
     public class RibbonGalleryCategoriesPanel : Panel, IProvideStarLayoutInfoBase, IContainsStarLayoutManager, IScrollInfo
@@ -813,13 +808,9 @@ namespace Microsoft.Windows.Controls.Ribbon.Primitives
             {
                 return Rect.Empty;
             }
-#pragma warning disable 1634, 1691
-#pragma warning disable 56506
             // Compute the child's rect relative to (0,0) in our coordinate space.
-            // This is a false positive by PreSharp. visual cannot be null because of the 'if' check above
             GeneralTransform childTransform = visual.TransformToAncestor(this);
-#pragma warning restore 56506
-#pragma warning restore 1634, 1691
+
             rectangle = childTransform.TransformBounds(rectangle);
 
             // We can't do any work unless we're scrolling.

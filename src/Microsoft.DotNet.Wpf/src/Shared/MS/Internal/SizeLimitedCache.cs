@@ -2,11 +2,6 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-using System;
-using System.Collections.Generic;
-
-using MS.Internal.PresentationCore;
-
 namespace MS.Internal
 {
     /// <summary>
@@ -25,7 +20,6 @@ namespace MS.Internal
     ///     changed, it gets moved to the end of the list. Also, permanent items,
     ///     though in the hash table, are NOT in the linked list.
     /// </remarks>
-    [FriendAccessAllowed]
     internal class SizeLimitedCache<K, V>
     {
         //*****************************************************

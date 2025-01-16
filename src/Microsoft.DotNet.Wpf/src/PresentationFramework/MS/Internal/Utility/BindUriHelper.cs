@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -7,34 +7,12 @@
 //  Description:    BindUriHelper class. Allows bindToObject, bindToStream
 //
 
-using System;
-using System.IO;
-using System.ComponentModel;
-using System.Diagnostics;
-using System.Globalization;
-using System.Text; 
-using MS.Win32; 
 
 #if PRESENTATIONFRAMEWORK
 
 using System.Windows;
 using System.Windows.Navigation;
-using System.Windows.Media;
-using MS.Internal.PresentationFramework;
 using MS.Internal.AppModel;
-using System.Windows.Controls;
-using MS.Internal ; 
-using System.Security; 
-using System.IO.Packaging; 
-using System.Reflection;
-using MS.Internal.Utility;
-using System.Net;
-
-// In order to avoid generating warnings about unknown message numbers and 
-// unknown pragmas when compiling your C# source code with the actual C# compiler, 
-// you need to disable warnings 1634 and 1691. (Presharp Documentation)
-#pragma warning disable 1634, 1691
-
 
 namespace MS.Internal.Utility
 {

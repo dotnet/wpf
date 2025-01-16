@@ -2,23 +2,11 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-//
-//
 // Description: Helper for classes that need to clean up data structures
 //              containing WeakReferences
-//
 
-using System;
-using System.Diagnostics;           // Debug
-using System.Collections;           // Hashtable
-using System.Collections.Generic;   // List<T>
-using System.Collections.Specialized; // HybridDictionary
-using System.Runtime.CompilerServices;  // RuntimeHelpers
-using System.Security;              // 
-using System.Threading;             // [ThreadStatic]
-using System.Windows;               // WeakEventManager
-using System.Windows.Threading;     // DispatcherObject
-using MS.Utility;                   // FrugalList
+using System.Threading;
+using System.Windows.Threading;
 
 namespace MS.Internal
 {
@@ -34,12 +22,16 @@ namespace MS.Internal
             _maxPollingInterval = TimeSpan.FromMilliseconds(maxInterval);
 
             _cleanupTimerPriority = DispatcherPriority.ContextIdle;
-            _defaultCleanupTimer = new DispatcherTimer(_cleanupTimerPriority);
-            _defaultCleanupTimer.Interval = _basePollingInterval;
+            _defaultCleanupTimer = new DispatcherTimer(_cleanupTimerPriority)
+            {
+                Interval = _basePollingInterval
+            };
             _defaultCleanupTimer.Tick += OnCleanupTick;
 
-            _starvationTimer = new DispatcherTimer(DispatcherPriority.Normal);
-            _starvationTimer.Interval = TimeSpan.FromMilliseconds(promotionInterval);
+            _starvationTimer = new DispatcherTimer(DispatcherPriority.Normal)
+            {
+                Interval = TimeSpan.FromMilliseconds(promotionInterval)
+            };
             _starvationTimer.Tick += OnStarvationTick;
 
             _cleanupTimer = _defaultCleanupTimer;

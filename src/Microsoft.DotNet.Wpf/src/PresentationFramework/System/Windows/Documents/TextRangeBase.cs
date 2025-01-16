@@ -1,6 +1,14 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
+
+using MS.Internal;
+using System.Collections;
+using System.Globalization;
+using System.Text;
+using System.Xml;
+using System.IO;
+using System.Windows.Controls; // TextBlock
 
 //
 // Description: Provides an abstract level of TextRange implementation
@@ -23,17 +31,6 @@
 
 namespace System.Windows.Documents
 {
-    using MS.Internal;
-    using System.Collections;
-    using System.Collections.Generic;
-    using System.Threading;
-    using System.Globalization;
-    using System.Text;
-    using System.Xml;
-    using System.IO;
-    using MS.Internal.Documents;
-    using System.Windows.Controls; // TextBlock
-
     /// <summary>
     /// A class a portion of text content.
     /// Can be contigous or disjoint; supports rectangular table ranges.
@@ -1348,7 +1345,7 @@ namespace System.Windows.Documents
                 // which can create paragraphs etc.
                 if (textData.Length > 0)
                 {
-                    ITextPointer insertPosition = (explicitInsertPosition == null) ? thisRange.Start : explicitInsertPosition;
+                    ITextPointer insertPosition = explicitInsertPosition ?? thisRange.Start;
 
                     // Ensure last paragraph existence and prepare ends for the new selection
                     bool pastedFragmentEndsWithNewLine = textData.EndsWith("\n", StringComparison.Ordinal);
@@ -1742,9 +1739,8 @@ namespace System.Windows.Documents
                 else
                 {
                     // Handle Floater/Figure boundaries: non-empty ranges never cross them
-                    if (start is TextPointer)
+                    if (start is TextPointer adjustedStart)
                     {
-                        TextPointer adjustedStart = (TextPointer)start;
                         TextPointer adjustedEnd = (TextPointer)end;
                         NormalizeAnchoredBlockBoundaries(ref adjustedStart, ref adjustedEnd);
                         start = adjustedStart;

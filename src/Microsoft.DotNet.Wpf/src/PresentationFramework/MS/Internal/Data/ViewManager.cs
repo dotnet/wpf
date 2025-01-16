@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -124,11 +124,9 @@
 
 \***************************************************************************/
 
-using System;
 using System.ComponentModel;
 using System.Collections;
 using System.Collections.Specialized;
-using System.Diagnostics;
 using System.Reflection;
 
 using System.Windows;         // for exception strings
@@ -178,9 +176,8 @@ namespace MS.Internal.Data
 
         public override bool Equals(object o)
         {
-            if (o is WeakRefKey)
+            if (o is WeakRefKey ck)
             {
-                WeakRefKey ck = (WeakRefKey)o;
                 object c1 = Target;
                 object c2 = ck.Target;
 
@@ -557,7 +554,7 @@ namespace MS.Internal.Data
                 else
                 {
                     // collection is not a factory - create an appropriate view
-                    IList il = (ilsList != null) ? ilsList : collection as IList;
+                    IList il = ilsList ?? collection as IList;
                     if (il != null)
                     {
                         // create a view on an IList or IBindingList
@@ -585,7 +582,7 @@ namespace MS.Internal.Data
                     throw new ArgumentException(SR.Format(SR.CollectionView_WrongType, collectionViewType.Name));
 
                 // if collection is IListSource, get its list first (bug 1023903)
-                object arg = (ilsList != null) ? ilsList : collection;
+                object arg = ilsList ?? collection;
 
                 try
                 {

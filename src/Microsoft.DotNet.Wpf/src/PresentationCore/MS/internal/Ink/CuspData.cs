@@ -1,15 +1,10 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
 
-using System;
-using System.Diagnostics;
 using System.Windows;
-using System.Windows.Media;
-using System.Windows.Ink;
 using System.Windows.Input;
-using System.Collections.Generic;
 using MS.Internal.Ink.InkSerializedFormat;
 
 namespace MS.Internal.Ink
@@ -40,8 +35,10 @@ namespace MS.Internal.Ink
 
             // Construct the lists of data points and nodes
             _nodes.Add(0);
-            CDataPoint cdp0 = new CDataPoint();
-            cdp0.Index = 0;
+            CDataPoint cdp0 = new CDataPoint
+            {
+                Index = 0
+            };
             //convert from Avalon to Himetric
             Point point = (Point)stylusPoints[0];
             point.X *= StrokeCollectionSerializer.AvalonToHimetricMultiplier;
@@ -59,8 +56,10 @@ namespace MS.Internal.Ink
                     //this is a unique point, add it
                     index++;
 
-                    CDataPoint cdp = new CDataPoint();
-                    cdp.Index = index;
+                    CDataPoint cdp = new CDataPoint
+                    {
+                        Index = index
+                    };
 
                     //convert from Avalon to Himetric
                     Point point2 = (Point)stylusPoints[i];

@@ -8,8 +8,6 @@
 
 namespace System.Windows.Documents
 {
-    using System;
-
     // Abstract version of TextPointer.  It has full read-only support for
     // rich content, but only supports plain text editing.
     internal interface ITextPointer

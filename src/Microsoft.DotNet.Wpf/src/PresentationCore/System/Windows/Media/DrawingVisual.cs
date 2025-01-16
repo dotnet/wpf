@@ -4,17 +4,7 @@
 
 //
 
-using System;
-using System.Windows.Threading;
-
-using System.Windows.Media;
 using System.Windows.Media.Composition;
-using System.Diagnostics;
-using System.Collections.Generic;
-using MS.Internal;
-using MS.Win32;
-using System.Resources;
-using System.Runtime.InteropServices;
 
 namespace System.Windows.Media
 {

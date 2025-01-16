@@ -14,15 +14,7 @@
     AccessorTable;  table lookup is cheaper than doing reflection again.
 \***************************************************************************/
 
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.ComponentModel;                // IBindingList
-using System.Diagnostics;
-using System.Reflection;                    // TypeDescriptor
-using System.Windows;                       // SR
 using System.Windows.Threading;             // Dispatcher
-using MS.Internal;                          // Invariant.Assert
 
 namespace MS.Internal.Data
 {

@@ -2,28 +2,11 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-//
-//
 // Description:
-//   This class wraps the issuance license publishing serveces 
-//
-//
-//
-//
+//   This class wraps the issuance license publishing services
 
-
-using System;
 using System.Text;
-using System.Collections;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Diagnostics;
-using System.Security;
 using System.Security.RightsManagement;
-using SecurityHelper = MS.Internal.WindowsBase.SecurityHelper;
-using System.Globalization;             // For CultureInfo
-using MS.Internal;                      // for Invariant
-using System.Windows;
 
 namespace MS.Internal.Security.RightsManagement
 {
@@ -1012,14 +995,15 @@ namespace MS.Internal.Security.RightsManagement
                                 publicKeyTemp);
             Errors.ThrowOnErrorCode(hr);
 
-            RevocationPoint resultRevocationPoint = new RevocationPoint();
-
-            resultRevocationPoint.Id = (idTemp == null) ? null : idTemp.ToString();
-            resultRevocationPoint.IdType = (idTypeTemp == null) ? null : idTypeTemp.ToString();
-            resultRevocationPoint.Url = (urlTemp == null) ? null : new Uri(urlTemp.ToString());
-            resultRevocationPoint.Name = (nameTemp == null) ? null : nameTemp.ToString();
-            resultRevocationPoint.PublicKey = (publicKeyTemp == null) ? null : publicKeyTemp.ToString();
-            resultRevocationPoint.Frequency = frequency;
+            RevocationPoint resultRevocationPoint = new RevocationPoint
+            {
+                Id = (idTemp == null) ? null : idTemp.ToString(),
+                IdType = (idTypeTemp == null) ? null : idTypeTemp.ToString(),
+                Url = (urlTemp == null) ? null : new Uri(urlTemp.ToString()),
+                Name = (nameTemp == null) ? null : nameTemp.ToString(),
+                PublicKey = (publicKeyTemp == null) ? null : publicKeyTemp.ToString(),
+                Frequency = frequency
+            };
 
             return resultRevocationPoint;
         }

@@ -6,9 +6,6 @@
 // Description: Undo unit for TextContainer.ExtractElement calls.
 //
 
-using System;
-using MS.Internal;
-
 namespace System.Windows.Documents
 {
     // Undo unit for TextContainer.ExtractElement calls.

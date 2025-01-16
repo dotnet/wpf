@@ -2,11 +2,8 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-using System;
-using System.Net;
 using System.Windows;
 using MS.Internal.Utility;
-using System.Security;
 
 namespace MS.Internal.AppModel
 {
@@ -15,7 +12,7 @@ namespace MS.Internal.AppModel
         /// <summary>
         /// Text that will be set on the status bar.
         /// </summary>
-        private SecurityCriticalDataForSet<string> _text;
+        private string _text;
 
         /// <summary>
         /// Creates a RequestSetStatusBarEventArgs based on a specified string.
@@ -24,7 +21,7 @@ namespace MS.Internal.AppModel
         internal RequestSetStatusBarEventArgs(string text)
             : base()
         {
-            _text.Value = text;
+            _text = text;
             base.RoutedEvent = System.Windows.Documents.Hyperlink.RequestSetStatusBarEvent;
         }
 
@@ -36,9 +33,9 @@ namespace MS.Internal.AppModel
             : base()
         {
             if (targetUri == null)
-                _text.Value = String.Empty;
+                _text = String.Empty;
             else
-                _text.Value = BindUriHelper.UriToString(targetUri);
+                _text = BindUriHelper.UriToString(targetUri);
 
             base.RoutedEvent = System.Windows.Documents.Hyperlink.RequestSetStatusBarEvent;
         }
@@ -50,7 +47,7 @@ namespace MS.Internal.AppModel
         {
             get
             {
-                return _text.Value;
+                return _text;
             }
         }
 

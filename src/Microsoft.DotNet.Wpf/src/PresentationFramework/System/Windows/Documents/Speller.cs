@@ -2,27 +2,23 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
+using MS.Internal;
+using System.Threading;
+using System.Windows.Threading;
+using System.Globalization;
+using System.Collections;
+using System.Windows.Controls;
+using System.Windows.Markup; // XmlLanguage
+using System.Windows.Input;
+using System.IO;
+using System.Windows.Navigation;
+
 //
 // Description: Spell checking component for the TextEditor.
 //
 
 namespace System.Windows.Documents
 {
-    using MS.Internal;
-    using System.Threading;
-    using System.Windows.Threading;
-    using System.Globalization;
-    using System.Collections;
-    using System.Collections.Generic;
-    using System.Security;
-    using System.Runtime.InteropServices;
-    using MS.Win32;
-    using System.Windows.Controls;
-    using System.Windows.Markup; // XmlLanguage
-    using System.Windows.Input;
-    using System.IO;
-    using System.Windows.Navigation;
-
     // Spell checking component for the TextEditor.
     // Class is marked as partial to allow for definition of TextMapOffsetLogger in a separate
     // source file. When TextMapOffsetLogger is removed, the partial declaration can
@@ -177,17 +173,8 @@ namespace System.Windows.Documents
         // for an error range.
         // This method actually runs the speller on the specified text,
         // re-evaluating the error from scratch.
-        internal IList GetSuggestionsForError(SpellingError error)
+        internal List<string> GetSuggestionsForError(SpellingError error)
         {
-            ITextPointer contextStart;
-            ITextPointer contextEnd;
-            ITextPointer contentStart;
-            ITextPointer contentEnd;
-            TextMap textMap;
-            ArrayList suggestions;
-
-            suggestions = new ArrayList(1);
-
             //
             // IMPORTANT!!
             //
@@ -195,18 +182,15 @@ namespace System.Windows.Documents
             // calculate the exact same error.  Keep the two methods in sync!
             //
 
-            XmlLanguage language;
-            CultureInfo culture = GetCurrentCultureAndLanguage(error.Start, out language);
-            if (culture == null || !_spellerInterop.CanSpellCheck(culture))
-            {
-                // Return an empty list.
-            }
-            else
-            {
-                ExpandToWordBreakAndContext(error.Start, LogicalDirection.Backward, language, out contentStart, out contextStart);
-                ExpandToWordBreakAndContext(error.End, LogicalDirection.Forward, language, out contentEnd, out contextEnd);
+            List<string> suggestions = new(4);
+            CultureInfo culture = GetCurrentCultureAndLanguage(error.Start, out XmlLanguage language);
 
-                textMap = new TextMap(contextStart, contextEnd, contentStart, contentEnd);
+            if (culture is not null && _spellerInterop.CanSpellCheck(culture))
+            {
+                ExpandToWordBreakAndContext(error.Start, LogicalDirection.Backward, language, out ITextPointer contentStart, out ITextPointer contextStart);
+                ExpandToWordBreakAndContext(error.End, LogicalDirection.Forward, language, out ITextPointer contentEnd, out ITextPointer contextEnd);
+
+                TextMap textMap = new(contextStart, contextEnd, contentStart, contentEnd);
 
                 SetCulture(culture);
 
@@ -253,7 +237,7 @@ namespace System.Windows.Documents
                         {
                             string error = TextRangeBase.GetTextInternal(errorStart, errorEnd, ref charArray);
 
-                            if (String.Compare(word, error, true /* ignoreCase */, _defaultCulture) == 0)
+                            if (string.Compare(word, error, ignoreCase: true, _defaultCulture) == 0)
                             {
                                 _statusTable.MarkCleanRange(errorStart, errorEnd);
                             }
@@ -915,7 +899,7 @@ namespace System.Windows.Documents
             {
                 if (textSegment.SubSegments.Count == 0)
                 {
-                    ArrayList suggestions = (ArrayList)data.Data;
+                    List<string> suggestions = (List<string>)data.Data;
                     if(textSegment.Suggestions.Count > 0)
                     {
                         foreach(string suggestion in textSegment.Suggestions)

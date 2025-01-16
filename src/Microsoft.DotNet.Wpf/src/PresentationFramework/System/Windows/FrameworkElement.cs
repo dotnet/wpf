@@ -1,17 +1,11 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-using System;
 using System.Collections;
-using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.ComponentModel;
-using System.Diagnostics;
 using System.Globalization;
-using System.Windows.Threading;
-using System.Threading;
-using System.Reflection;
 using System.Windows.Data;
 using System.Windows.Diagnostics;
 using System.Windows.Documents;
@@ -20,29 +14,17 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Media.Media3D;
-using System.Windows.Media.TextFormatting;
 using System.Windows.Navigation;
 using System.Windows.Markup;
 using System.Windows.Controls;
-using System.Windows.Automation;
 
 using MS.Internal;
 using MS.Internal.KnownBoxes;
 using MS.Internal.PresentationFramework;    // SafeSecurityHelper
 using MS.Utility;
-using MS.Internal.Automation;
-using MS.Internal.PtsTable;                 // BodyContainerProxy
-using System.Security;
-
-// Disabling 1634 and 1691:
-// In order to avoid generating warnings about unknown message numbers and
-// unknown pragmas when compiling C# source code with the C# compiler,
-// you need to disable warnings 1634 and 1691. (Presharp Documentation)
-#pragma warning disable 1634, 1691
 
 namespace System.Windows
 {
-
     /// <summary>
     /// HorizontalAlignment - The HorizontalAlignment enum is used to describe
     /// how element is positioned or stretched horizontally within a parent's layout slot.
@@ -1778,7 +1760,7 @@ namespace System.Windows
 
                 DependencyObject parent = LogicalTreeHelper.GetParent(d);
 
-                d = (parent != null) ? parent : Helper.FindMentor(d.InheritanceContext);
+                d = parent ?? Helper.FindMentor(d.InheritanceContext);
             }
 
             scopeOwner = null;
@@ -2052,8 +2034,10 @@ namespace System.Windows
         internal Expression GetExpressionCore(DependencyProperty dp, PropertyMetadata metadata)
         {
             this.IsRequestingExpression = true;
-            EffectiveValueEntry entry = new EffectiveValueEntry(dp);
-            entry.Value = DependencyProperty.UnsetValue;
+            EffectiveValueEntry entry = new EffectiveValueEntry(dp)
+            {
+                Value = DependencyProperty.UnsetValue
+            };
             this.EvaluateBaseValueCore(dp, metadata, ref entry);
             this.IsRequestingExpression = false;
 
@@ -2411,7 +2395,7 @@ namespace System.Windows
 
             // Coerce Callback for font properties for responding to system themes
             TextElement.FontFamilyProperty.OverrideMetadata(_typeofThis, new FrameworkPropertyMetadata(SystemFonts.MessageFontFamily, FrameworkPropertyMetadataOptions.Inherits, null, new CoerceValueCallback(CoerceFontFamily)));
-            TextElement.FontSizeProperty.OverrideMetadata(_typeofThis, new FrameworkPropertyMetadata(SystemFonts.MessageFontSize, FrameworkPropertyMetadataOptions.Inherits, null, new CoerceValueCallback(CoerceFontSize)));
+            TextElement.FontSizeProperty.OverrideMetadata(_typeofThis, new FrameworkPropertyMetadata(SystemFonts.ThemeMessageFontSize, FrameworkPropertyMetadataOptions.Inherits, null, new CoerceValueCallback(CoerceFontSize)));
             TextElement.FontStyleProperty.OverrideMetadata(_typeofThis, new FrameworkPropertyMetadata(SystemFonts.MessageFontStyle, FrameworkPropertyMetadataOptions.Inherits, null, new CoerceValueCallback(CoerceFontStyle)));
             TextElement.FontWeightProperty.OverrideMetadata(_typeofThis, new FrameworkPropertyMetadata(SystemFonts.MessageFontWeight, FrameworkPropertyMetadataOptions.Inherits, null, new CoerceValueCallback(CoerceFontWeight)));
 
@@ -2512,7 +2496,7 @@ namespace System.Windows
             if (Parent == null)
             {
                 // Invalidate relevant properties for this subtree
-                DependencyObject parent = (newParent != null) ? newParent : oldParent;
+                DependencyObject parent = newParent ?? oldParent;
                 TreeWalkHelper.InvalidateOnTreeChange(this, null, parent, (newParent != null));
             }
 
@@ -3308,8 +3292,10 @@ namespace System.Windows
         /// </summary>
         public void BringIntoView(Rect targetRectangle)
         {
-            RequestBringIntoViewEventArgs args = new RequestBringIntoViewEventArgs(this, targetRectangle);
-            args.RoutedEvent=RequestBringIntoViewEvent;
+            RequestBringIntoViewEventArgs args = new RequestBringIntoViewEventArgs(this, targetRectangle)
+            {
+                RoutedEvent = RequestBringIntoViewEvent
+            };
             RaiseEvent(args);
         }
 
@@ -4802,14 +4788,16 @@ namespace System.Windows
         /// </summary>
         protected internal override void OnRenderSizeChanged(SizeChangedInfo sizeInfo)
         {
-            SizeChangedEventArgs localArgs = new SizeChangedEventArgs(this, sizeInfo);
-            localArgs.RoutedEvent = SizeChangedEvent;
+            SizeChangedEventArgs localArgs = new SizeChangedEventArgs(this, sizeInfo)
+            {
+                RoutedEvent = SizeChangedEvent
+            };
 
             //first, invalidate ActualWidth and/or ActualHeight
             //Note: if any handler of invalidation will dirtyfy layout,
             //subsequent handlers will run on effectively dirty layouts
             //we only guarantee cleaning between elements, not between handlers here
-            if(sizeInfo.WidthChanged)
+            if (sizeInfo.WidthChanged)
             {
                 HasWidthEverChanged = true;
                 NotifyPropertyChange(new DependencyPropertyChangedEventArgs(ActualWidthProperty, _actualWidthMetadata, sizeInfo.PreviousSize.Width, sizeInfo.NewSize.Width));
@@ -5162,10 +5150,12 @@ namespace System.Windows
 
             // Create a TransformCollection and make sure it does not participate
             // in the InheritanceContext treeness because it is internal operation only.
-            TransformCollection ts = new TransformCollection();
-            ts.CanBeInheritanceContext = false;
+            TransformCollection ts = new TransformCollection
+            {
+                CanBeInheritanceContext = false
+            };
 
-            if(additionalTransform != null)
+            if (additionalTransform != null)
                 ts.Add(additionalTransform);
 
             if(renderTransform != null)
@@ -5173,8 +5163,10 @@ namespace System.Windows
 
             ts.Add(layoutTransform);
 
-            TransformGroup group = new TransformGroup();
-            group.Children = ts;
+            TransformGroup group = new TransformGroup
+            {
+                Children = ts
+            };
 
             element.InternalSetTransformWorkaround(group);
         }
@@ -5228,8 +5220,10 @@ namespace System.Windows
                 {
                     // Create a TransformGroup and make sure it does not participate
                     // in the InheritanceContext treeness because it is internal operation only.
-                    t = new TransformGroup();
-                    t.CanBeInheritanceContext = false;
+                    t = new TransformGroup
+                    {
+                        CanBeInheritanceContext = false
+                    };
                     t.Children.CanBeInheritanceContext = false;
 
                     if (additionalTransform != null)
@@ -5564,7 +5558,7 @@ namespace System.Windows
             // For root elements with default values, return current system metric if local value has not been set
             if (ShouldUseSystemFont((FrameworkElement)o, TextElement.FontSizeProperty))
             {
-                return SystemFonts.MessageFontSize;
+                return SystemFonts.ThemeMessageFontSize;
             }
 
             return value;

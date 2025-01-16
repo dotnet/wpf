@@ -1,7 +1,6 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
-#nullable disable
+
 using System.Collections.Generic;
 using System.Globalization;
 using Xunit;
@@ -10,16 +9,16 @@ namespace System.Windows.Markup.Tests;
 
 public class DateTimeValueSerializerTests
 {
-    public static IEnumerable<object[]> CanConvertFrom_TestData()
+    public static IEnumerable<object?[]> CanConvertFrom_TestData()
     {
-        yield return new object[] { new DateTime(), true };
-        yield return new object[] { new object(), false };
-        yield return new object[] { null, false };
+        yield return new object?[] { new DateTime(), true };
+        yield return new object?[] { new object(), false };
+        yield return new object?[] { null, false };
     }
 
     [Theory]
     [MemberData(nameof(CanConvertFrom_TestData))]
-    public void CanConvertToString_Invoke_ReturnsFalse(object value, bool expected)
+    public void CanConvertToString_Invoke_ReturnsFalse(object? value, bool expected)
     {
         var serializer = new DateTimeValueSerializer();
         Assert.Equal(expected, serializer.CanConvertToString(value, null));
@@ -42,11 +41,11 @@ public class DateTimeValueSerializerTests
         var serializer = new DateTimeValueSerializer();
         Assert.Equal(date.ToString(format, CultureInfo.InvariantCulture), serializer.ConvertToString(date, null));
     }
-    
+
     [Theory]
     [InlineData("notDateTime")]
     [InlineData(null)]
-    public void ConvertToString_NotDateTime_ThrowsNotSupportedException(object value)
+    public void ConvertToString_NotDateTime_ThrowsNotSupportedException(object? value)
     {
         var serializer = new DateTimeValueSerializer();
         Assert.Throws<NotSupportedException>(() => serializer.ConvertToString(value, null));
@@ -81,6 +80,6 @@ public class DateTimeValueSerializerTests
     public void ConvertFromString_NullString_ThrowsNotSupportedException()
     {
         var serializer = new DateTimeValueSerializer();
-        Assert.Throws<NotSupportedException>(() => serializer.ConvertFromString(null!, null));   
+        Assert.Throws<NotSupportedException>(() => serializer.ConvertFromString(null!, null));
     }
 }

@@ -14,9 +14,6 @@
                 
 
 --*/
-using System;
-using System.IO.Packaging;
-
 namespace System.Windows.Xps.Packaging
 {
     /// <summary>

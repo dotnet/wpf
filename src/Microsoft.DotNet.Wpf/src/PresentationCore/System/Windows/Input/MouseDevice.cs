@@ -1,32 +1,20 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-using System.Diagnostics;
 using System.Collections;
-using System.Windows;
-using System.Windows.Media;
-using System.Windows.Input;
 using System.Windows.Input.StylusPointer;
 using System.Windows.Interop;
 using System.Windows.Threading;
-using System.Security;
 using MS.Internal;
-using MS.Internal.PresentationCore;                        // SecurityHelper
-using MS.Win32; // *NativeMethods
+using MS.Win32;
 using System.Runtime.InteropServices;
-using System;
-
-using SR = MS.Internal.PresentationCore.SR;
-
-#pragma warning disable 1634, 1691  // suppressing PreSharp warnings
 
 // There's a choice of where to send MouseWheel events - to the element under
 // the mouse (like IE does) or to the element with keyboard focus (like Win32
 // does).  The latter choice lets you move the mouse away from the area you're
 // scrolling and still use the wheel.  To get this effect, uncomment this line.
 //#define SEND_WHEEL_EVENTS_TO_FOCUS
-
 
 namespace System.Windows.Input
 {
@@ -38,10 +26,10 @@ namespace System.Windows.Input
     {
        internal MouseDevice(InputManager inputManager)
        {
-            _inputManager = new SecurityCriticalData<InputManager>(inputManager);
-            _inputManager.Value.PreProcessInput += new PreProcessInputEventHandler(PreProcessInput);
-            _inputManager.Value.PreNotifyInput += new NotifyInputEventHandler(PreNotifyInput);
-            _inputManager.Value.PostProcessInput += new ProcessInputEventHandler(PostProcessInput);
+            _inputManager = inputManager;
+            _inputManager.PreProcessInput += new PreProcessInputEventHandler(PreProcessInput);
+            _inputManager.PreNotifyInput += new NotifyInputEventHandler(PreNotifyInput);
+            _inputManager.PostProcessInput += new ProcessInputEventHandler(PostProcessInput);
 
             // Get information about how far two clicks of a double click can be considered
             // to be in the "same place and time".
@@ -64,7 +52,7 @@ namespace System.Windows.Input
             _reevaluateCaptureDelegate = new DispatcherOperationCallback(ReevaluateCaptureAsync);
             _reevaluateCaptureOperation = null;
 
-            _inputManager.Value.HitTestInvalidatedAsync += new EventHandler(OnHitTestInvalidatedAsync);
+            _inputManager.HitTestInvalidatedAsync += new EventHandler(OnHitTestInvalidatedAsync);
         }
 
         /// <summary>
@@ -208,32 +196,12 @@ namespace System.Windows.Input
         ///     Callers must have UIPermission(UIPermissionWindow.AllWindows) to call this API.
         /// </remarks>
 
-        public override PresentationSource ActiveSource
-        {
-            get
-            {
-                if (_inputSource != null)
-                {
-                    return _inputSource.Value;
-                }
-                return null;
-            }
-        }
+        public override PresentationSource ActiveSource => _inputSource;
 
         /// <summary>
         ///     Returns the PresentationSource that is reporting input for this device.
         /// </summary>
-        internal PresentationSource CriticalActiveSource
-        {
-            get
-            {
-                if (_inputSource != null)
-                {
-                    return _inputSource.Value;
-                }
-                return null;
-            }
-        }
+        internal PresentationSource CriticalActiveSource => _inputSource;
 
         /// <summary>
         ///     Returns the element that the mouse is over.
@@ -246,7 +214,6 @@ namespace System.Windows.Input
         {
             get
             {
-//                 VerifyAccess();
                 return _mouseOver;
             }
         }
@@ -255,7 +222,6 @@ namespace System.Windows.Input
         ///     Returns the element that the mouse is over regardless of
         ///     its IsEnabled state.
         /// </summary>
-        [FriendAccessAllowed]
         internal IInputElement RawDirectlyOver
         {
             get
@@ -341,7 +307,6 @@ namespace System.Windows.Input
             {
                 UIElement e = element as UIElement;
 
-                #pragma warning suppress 6506 // e is obviously not null
                 if(e.IsVisible && e.IsEnabled)
                 {
                     success = true;
@@ -351,7 +316,6 @@ namespace System.Windows.Input
             {
                 ContentElement ce = element as ContentElement;
 
-                #pragma warning suppress 6506 // ce is obviosuly not null
                 if(ce.IsEnabled) // There is no IsVisible property for ContentElement
                 {
                     success = true;
@@ -361,7 +325,6 @@ namespace System.Windows.Input
             {
                 UIElement3D e = element as UIElement3D;
 
-                #pragma warning suppress 6506 // e is obviously not null
                 if(e.IsVisible && e.IsEnabled)
                 {
                     success = true;
@@ -395,7 +358,7 @@ namespace System.Windows.Input
                 }
                 else if (_mouseCapture != null)
                 {
-                    mouseInputProvider = _providerCapture.Value;
+                    mouseInputProvider = _providerCapture;
                 }
 
                 // If we found a mouse input provider, ask it to either capture
@@ -448,7 +411,7 @@ namespace System.Windows.Input
 
             IMouseInputProvider mouseInputProvider = null;
 
-            IEnumerator inputProviders = _inputManager.Value.UnsecureInputProviders.GetEnumerator();
+            IEnumerator inputProviders = _inputManager.UnsecureInputProviders.GetEnumerator();
 
             while (inputProviders.MoveNext())
             {
@@ -598,9 +561,9 @@ namespace System.Windows.Input
             }
             else
             {
-                if (_inputSource != null)
+                if (_inputSource is not null)
                 {
-                    relativePresentationSource = _inputSource.Value;
+                    relativePresentationSource = _inputSource;
                 }
             }
 
@@ -923,11 +886,13 @@ namespace System.Windows.Input
                                                                      timeStamp,
                                                                      activeSource,
                                                                      RawMouseActions.AbsoluteMove,
-                                                                     (int) ptClient.X,
-                                                                     (int) ptClient.Y,
+                                                                     (int)ptClient.X,
+                                                                     (int)ptClient.Y,
                                                                      0,
-                                                                     IntPtr.Zero);
-                report._isSynchronize = true;
+                                                                     IntPtr.Zero)
+                {
+                    _isSynchronize = true
+                };
 
                 InputReportEventArgs inputReportEventArgs;
                 if (_stylusDevice != null)
@@ -943,7 +908,7 @@ namespace System.Windows.Input
                 inputReportEventArgs.RoutedEvent=InputManager.PreviewInputReportEvent;
 
                 //ProcessInput has a linkdemand
-                _inputManager.Value.ProcessInput(inputReportEventArgs);
+                _inputManager.ProcessInput(inputReportEventArgs);
             }
         }
 
@@ -966,11 +931,13 @@ namespace System.Windows.Input
         private bool UpdateCursorPrivate()
         {
             int timeStamp = Environment.TickCount;
-            QueryCursorEventArgs queryCursor = new QueryCursorEventArgs(this, timeStamp);
-            queryCursor.Cursor = Cursors.Arrow;
-            queryCursor.RoutedEvent=Mouse.QueryCursorEvent;
+            QueryCursorEventArgs queryCursor = new QueryCursorEventArgs(this, timeStamp)
+            {
+                Cursor = Cursors.Arrow,
+                RoutedEvent = Mouse.QueryCursorEvent
+            };
             //ProcessInput has a linkdemand
-            _inputManager.Value.ProcessInput(queryCursor);
+            _inputManager.ProcessInput(queryCursor);
             return queryCursor.Handled;
         }
 
@@ -1072,7 +1039,7 @@ namespace System.Windows.Input
                 _mouseCapture = mouseCapture;
                 if (_mouseCapture != null)
                 {
-                    _providerCapture = new SecurityCriticalDataClass<IMouseInputProvider>(providerCapture);
+                    _providerCapture = providerCapture;
                 }
                 else
                 {
@@ -1155,19 +1122,23 @@ namespace System.Windows.Input
                 // Send the LostMouseCapture and GotMouseCapture events.
                 if (oldMouseCapture != null)
                 {
-                    MouseEventArgs lostCapture = new MouseEventArgs(this, timestamp, _stylusDevice);
-                    lostCapture.RoutedEvent=Mouse.LostMouseCaptureEvent;
-                    lostCapture.Source= oldMouseCapture;
+                    MouseEventArgs lostCapture = new MouseEventArgs(this, timestamp, _stylusDevice)
+                    {
+                        RoutedEvent = Mouse.LostMouseCaptureEvent,
+                        Source = oldMouseCapture
+                    };
                     //ProcessInput has a linkdemand
-                    _inputManager.Value.ProcessInput(lostCapture);
+                    _inputManager.ProcessInput(lostCapture);
                 }
                 if (_mouseCapture != null)
                 {
-                    MouseEventArgs gotCapture = new MouseEventArgs(this, timestamp, _stylusDevice);
-                    gotCapture.RoutedEvent=Mouse.GotMouseCaptureEvent;
-                    gotCapture.Source= _mouseCapture;
+                    MouseEventArgs gotCapture = new MouseEventArgs(this, timestamp, _stylusDevice)
+                    {
+                        RoutedEvent = Mouse.GotMouseCaptureEvent,
+                        Source = _mouseCapture
+                    };
                     //ProcessInput has a linkdemand
-                    _inputManager.Value.ProcessInput(gotCapture);
+                    _inputManager.ProcessInput(gotCapture);
                 }
 
                 // Force a mouse move so we can update the mouse over.
@@ -1210,15 +1181,17 @@ namespace System.Windows.Input
                                                                                         rawMouseInputReport.Y,
                                                                                         rawMouseInputReport.Wheel,
                                                                                         rawMouseInputReport.ExtraInformation);
-                            InputReportEventArgs actionsArgs = new InputReportEventArgs(inputReportEventArgs.Device, reportActions);
-                            actionsArgs.RoutedEvent=InputManager.PreviewInputReportEvent;
+                            InputReportEventArgs actionsArgs = new InputReportEventArgs(inputReportEventArgs.Device, reportActions)
+                            {
+                                RoutedEvent = InputManager.PreviewInputReportEvent
+                            };
                             e.PushInput(actionsArgs, null);
 
                             PushActivateInputReport(e, inputReportEventArgs, rawMouseInputReport, clearExtraInformation:false);
                         }
                     }
                     // Only process mouse input that is from our active PresentationSource.
-                    else if ((_inputSource != null) && (rawMouseInputReport.InputSource == _inputSource.Value))
+                    else if ((_inputSource is not null) && (rawMouseInputReport.InputSource == _inputSource))
                     {
                         // We need to remember the StylusDevice that generated this input.  Use the _tagStylusDevice
                         // to store this in before we take over the inputReport Device and loose it.  Any
@@ -1294,8 +1267,10 @@ namespace System.Windows.Input
                                                                                             0,
                                                                                             rawMouseInputReport.Wheel,
                                                                                             rawMouseInputReport.ExtraInformation);
-                                InputReportEventArgs actionsArgs = new InputReportEventArgs(inputDevice, reportActions);
-                                actionsArgs.RoutedEvent=InputManager.PreviewInputReportEvent;
+                                InputReportEventArgs actionsArgs = new InputReportEventArgs(inputDevice, reportActions)
+                                {
+                                    RoutedEvent = InputManager.PreviewInputReportEvent
+                                };
                                 e.PushInput(actionsArgs, null);
 
                                 // Push a new RawMouseInputReport for the AbsoluteMove.
@@ -1307,8 +1282,10 @@ namespace System.Windows.Input
                                                                                          rawMouseInputReport.Y,
                                                                                          0,
                                                                                          IntPtr.Zero);
-                                InputReportEventArgs moveArgs = new InputReportEventArgs(inputDevice, reportMove);
-                                moveArgs.RoutedEvent=InputManager.PreviewInputReportEvent;
+                                InputReportEventArgs moveArgs = new InputReportEventArgs(inputDevice, reportMove)
+                                {
+                                    RoutedEvent = InputManager.PreviewInputReportEvent
+                                };
                                 e.PushInput(moveArgs, null);
                             }
                             else
@@ -1348,10 +1325,12 @@ namespace System.Windows.Input
                             // The mouse is not physically over the capture point (or
                             // subtree), so raise the PreviewMouseDownOutsideCapturedElement
                             // event first.
-                            MouseButtonEventArgs clickThrough = new MouseButtonEventArgs(this, mouseButtonEventArgs.Timestamp, mouseButtonEventArgs.ChangedButton, GetStylusDevice(e.StagingItem));
-                            clickThrough.RoutedEvent=Mouse.PreviewMouseDownOutsideCapturedElementEvent;
+                            MouseButtonEventArgs clickThrough = new MouseButtonEventArgs(this, mouseButtonEventArgs.Timestamp, mouseButtonEventArgs.ChangedButton, GetStylusDevice(e.StagingItem))
+                            {
+                                RoutedEvent = Mouse.PreviewMouseDownOutsideCapturedElementEvent
+                            };
                             //ProcessInput has a linkdemand
-                            _inputManager.Value.ProcessInput(clickThrough);
+                            _inputManager.ProcessInput(clickThrough);
                         }
                     }
 
@@ -1364,10 +1343,12 @@ namespace System.Windows.Input
                             // The mouse is not physically over the capture point (or
                             // subtree), so raise the PreviewMouseUpOutsideCapturedElement
                             // event first.
-                            MouseButtonEventArgs clickThrough = new MouseButtonEventArgs(this, mouseButtonEventArgs.Timestamp, mouseButtonEventArgs.ChangedButton, GetStylusDevice(e.StagingItem));
-                            clickThrough.RoutedEvent=Mouse.PreviewMouseUpOutsideCapturedElementEvent;
+                            MouseButtonEventArgs clickThrough = new MouseButtonEventArgs(this, mouseButtonEventArgs.Timestamp, mouseButtonEventArgs.ChangedButton, GetStylusDevice(e.StagingItem))
+                            {
+                                RoutedEvent = Mouse.PreviewMouseUpOutsideCapturedElementEvent
+                            };
                             //ProcessInput has a linkdemand
-                            _inputManager.Value.ProcessInput(clickThrough);
+                            _inputManager.ProcessInput(clickThrough);
                         }
                     }
                 }
@@ -1393,8 +1374,10 @@ namespace System.Windows.Input
                                                                          extraInformation);
 
             // Push a new RawMouseInputReport for the activate.
-            InputReportEventArgs activateArgs = new InputReportEventArgs(inputReportEventArgs.Device, reportActivate);
-            activateArgs.RoutedEvent=InputManager.PreviewInputReportEvent;
+            InputReportEventArgs activateArgs = new InputReportEventArgs(inputReportEventArgs.Device, reportActivate)
+            {
+                RoutedEvent = InputManager.PreviewInputReportEvent
+            };
             e.PushInput(activateArgs, null);
         }
 
@@ -1445,15 +1428,15 @@ namespace System.Windows.Input
                         // if the existing source is null, no need to do any special-case handling
                         if (_inputSource == null)
                         {
-                            _inputSource = new SecurityCriticalDataClass<PresentationSource>(rawMouseInputReport.InputSource);
+                            _inputSource = rawMouseInputReport.InputSource;
                         }
                         // if the new source is the same as the old source, don't bother doing anything
-                        else if (_inputSource.Value != rawMouseInputReport.InputSource)
+                        else if (_inputSource != rawMouseInputReport.InputSource)
                         {
-                            IMouseInputProvider toDeactivate = _inputSource.Value.GetInputProvider(typeof(MouseDevice)) as IMouseInputProvider;
+                            IMouseInputProvider toDeactivate = _inputSource.GetInputProvider(typeof(MouseDevice)) as IMouseInputProvider;
 
                             // All mouse information is now restricted to this presentation source.
-                            _inputSource = new SecurityCriticalDataClass<PresentationSource>(rawMouseInputReport.InputSource);
+                            _inputSource = rawMouseInputReport.InputSource;
 
                             if (toDeactivate != null)
                             {
@@ -1463,7 +1446,7 @@ namespace System.Windows.Input
                     }
 
                     // Only process mouse input that is from our active presentation source.
-                    if ((_inputSource != null) && (rawMouseInputReport.InputSource == _inputSource.Value))
+                    if ((_inputSource is not null) && (rawMouseInputReport.InputSource == _inputSource))
                     {
                         // If the input is reporting mouse deactivation, we need
                         // to break any capture we may have.  Note that we only do
@@ -1520,11 +1503,11 @@ namespace System.Windows.Input
                                         {
                                             if (rawMouseInputReport._isSynchronize)
                                             {
-                                                GlobalHitTest(true, ptClient, _inputSource.Value, out mouseOver, out rawMouseOver);
+                                                GlobalHitTest(true, ptClient, _inputSource, out mouseOver, out rawMouseOver);
                                             }
                                             else
                                             {
-                                                LocalHitTest(true, ptClient, _inputSource.Value, out mouseOver, out rawMouseOver);
+                                                LocalHitTest(true, ptClient, _inputSource, out mouseOver, out rawMouseOver);
                                             }
 
                                             if (mouseOver == rawMouseOver)
@@ -1553,11 +1536,11 @@ namespace System.Windows.Input
                                     case CaptureMode.Element:
                                         if (rawMouseInputReport._isSynchronize)
                                         {
-                                            mouseOver = GlobalHitTest(true, ptClient, _inputSource.Value);
+                                            mouseOver = GlobalHitTest(true, ptClient, _inputSource);
                                         }
                                         else
                                         {
-                                            mouseOver = LocalHitTest(true, ptClient, _inputSource.Value);
+                                            mouseOver = LocalHitTest(true, ptClient, _inputSource);
                                         }
 
                                         // There is no reason to process rawMouseOver when
@@ -1585,7 +1568,7 @@ namespace System.Windows.Input
                                                 // This allows us to have our capture-to-subtree span multiple windows.
 
                                                 // GlobalHitTest always returns an IInputElement, so we are sure to have one.
-                                                GlobalHitTest(true, ptClient, _inputSource.Value, out mouseOver, out rawMouseOver);
+                                                GlobalHitTest(true, ptClient, _inputSource, out mouseOver, out rawMouseOver);
                                             }
 
                                             if (mouseOver != null && !InputElement.IsValid(mouseOver) )
@@ -1739,7 +1722,7 @@ namespace System.Windows.Input
                             actions |= RawMouseActions.VerticalWheelRotate;
 
                             // Tell the InputManager that the MostRecentDevice is us.
-                            _inputManager.Value.MostRecentInputDevice = this;
+                            _inputManager.MostRecentInputDevice = this;
                         }
 
                         // Mouse query cursor events are never considered redundant.
@@ -1775,7 +1758,7 @@ namespace System.Windows.Input
                                 actions |= ButtonPressActions[iButton];
 
                                 // Tell the InputManager that the MostRecentDevice is us.
-                                _inputManager.Value.MostRecentInputDevice = this;
+                                _inputManager.MostRecentInputDevice = this;
                             }
 
                             if ((rawMouseInputReport.Actions & ButtonReleaseActions[iButton]) == ButtonReleaseActions[iButton])
@@ -1783,7 +1766,7 @@ namespace System.Windows.Input
                                 actions |= ButtonReleaseActions[iButton];
 
                                 // Tell the InputManager that the MostRecentDevice is us.
-                                _inputManager.Value.MostRecentInputDevice = this;
+                                _inputManager.MostRecentInputDevice = this;
                             }
                         }
                     }
@@ -1842,14 +1825,16 @@ namespace System.Windows.Input
                 if (!e.StagingItem.Input.Handled)
                 {
                     MouseWheelEventArgs previewWheel = (MouseWheelEventArgs) e.StagingItem.Input;
-                    MouseWheelEventArgs wheel = new MouseWheelEventArgs(this, previewWheel.Timestamp, previewWheel.Delta);
-                    wheel.RoutedEvent=Mouse.MouseWheelEvent;
+                    MouseWheelEventArgs wheel = new MouseWheelEventArgs(this, previewWheel.Timestamp, previewWheel.Delta)
+                    {
+                        RoutedEvent = Mouse.MouseWheelEvent
+                    };
 
-                    #if SEND_WHEEL_EVENTS_TO_FOCUS
+#if SEND_WHEEL_EVENTS_TO_FOCUS
                     // wheel events are treated as if they came from the
                     // element with keyboard focus
                     wheel.Source = previewWheel.Source;
-                    #endif
+#endif
 
                     e.PushInput(wheel, e.StagingItem);
                 }
@@ -1861,9 +1846,11 @@ namespace System.Windows.Input
                 if (!e.StagingItem.Input.Handled)
                 {
                     MouseButtonEventArgs previewDown = (MouseButtonEventArgs) e.StagingItem.Input;
-                    MouseButtonEventArgs down = new MouseButtonEventArgs(this, previewDown.Timestamp, previewDown.ChangedButton, GetStylusDevice(e.StagingItem));
-                    down.ClickCount = previewDown.ClickCount;
-                    down.RoutedEvent=Mouse.MouseDownEvent;
+                    MouseButtonEventArgs down = new MouseButtonEventArgs(this, previewDown.Timestamp, previewDown.ChangedButton, GetStylusDevice(e.StagingItem))
+                    {
+                        ClickCount = previewDown.ClickCount,
+                        RoutedEvent = Mouse.MouseDownEvent
+                    };
                     e.PushInput(down, e.StagingItem);
                 }
             }
@@ -1874,8 +1861,10 @@ namespace System.Windows.Input
                 if (!e.StagingItem.Input.Handled)
                 {
                     MouseButtonEventArgs previewUp = (MouseButtonEventArgs) e.StagingItem.Input;
-                    MouseButtonEventArgs up = new MouseButtonEventArgs(this, previewUp.Timestamp, previewUp.ChangedButton, GetStylusDevice(e.StagingItem));
-                    up.RoutedEvent=Mouse.MouseUpEvent;
+                    MouseButtonEventArgs up = new MouseButtonEventArgs(this, previewUp.Timestamp, previewUp.ChangedButton, GetStylusDevice(e.StagingItem))
+                    {
+                        RoutedEvent = Mouse.MouseUpEvent
+                    };
                     e.PushInput(up, e.StagingItem);
                 }
             }
@@ -1886,8 +1875,10 @@ namespace System.Windows.Input
                 if (!e.StagingItem.Input.Handled)
                 {
                     MouseEventArgs previewMove = (MouseEventArgs) e.StagingItem.Input;
-                    MouseEventArgs move = new MouseEventArgs(this, previewMove.Timestamp, GetStylusDevice(e.StagingItem));
-                    move.RoutedEvent=Mouse.MouseMoveEvent;
+                    MouseEventArgs move = new MouseEventArgs(this, previewMove.Timestamp, GetStylusDevice(e.StagingItem))
+                    {
+                        RoutedEvent = Mouse.MouseMoveEvent
+                    };
                     e.PushInput(move, e.StagingItem);
                 }
             }
@@ -1911,7 +1902,7 @@ namespace System.Windows.Input
                     RawMouseInputReport rawMouseInputReport = (RawMouseInputReport) inputReportEventArgs.Report;
 
                     // Only process mouse input that is from our active visual manager.
-                    if ((_inputSource != null) && (rawMouseInputReport.InputSource == _inputSource.Value))
+                    if ((_inputSource is not null) && (rawMouseInputReport.InputSource == _inputSource))
                     {
                         // In general, this is where we promote the non-redundant
                         // reported actions to our premier events.
@@ -1932,11 +1923,12 @@ namespace System.Windows.Input
                         // HorizontalWheelRotate hasn't been handled yet
                         if ((actions & RawMouseActions.VerticalWheelRotate) == RawMouseActions.VerticalWheelRotate)
                         {
-                            MouseWheelEventArgs previewWheel = new MouseWheelEventArgs(this, rawMouseInputReport.Timestamp, rawMouseInputReport.Wheel);
+                            MouseWheelEventArgs previewWheel = new MouseWheelEventArgs(this, rawMouseInputReport.Timestamp, rawMouseInputReport.Wheel)
+                            {
+                                RoutedEvent = Mouse.PreviewMouseWheelEvent
+                            };
 
-                            previewWheel.RoutedEvent=Mouse.PreviewMouseWheelEvent;
-
-                            #if SEND_WHEEL_EVENTS_TO_FOCUS
+#if SEND_WHEEL_EVENTS_TO_FOCUS
                             // wheel events are treated as if they came from the
                             // element with keyboard focus
                             DependencyObject focus = Keyboard.FocusedElement as DependencyObject;
@@ -1944,7 +1936,7 @@ namespace System.Windows.Input
                             {
                                 previewWheel.Source = focus;
                             }
-                            #endif
+#endif
 
                             e.PushInput(previewWheel, e.StagingItem);
                         }
@@ -1952,90 +1944,100 @@ namespace System.Windows.Input
                         // Raw --> PreviewMouseDown
                         if ((actions & RawMouseActions.Button1Press) == RawMouseActions.Button1Press)
                         {
-                            MouseButtonEventArgs previewDown = new MouseButtonEventArgs(this, rawMouseInputReport.Timestamp, MouseButton.Left, GetStylusDevice(e.StagingItem));
-
-                            previewDown.RoutedEvent=Mouse.PreviewMouseDownEvent;
+                            MouseButtonEventArgs previewDown = new MouseButtonEventArgs(this, rawMouseInputReport.Timestamp, MouseButton.Left, GetStylusDevice(e.StagingItem))
+                            {
+                                RoutedEvent = Mouse.PreviewMouseDownEvent
+                            };
                             e.PushInput(previewDown, e.StagingItem);
                         }
 
                         // Raw --> PreviewMouseUp
                         if ((actions & RawMouseActions.Button1Release) == RawMouseActions.Button1Release)
                         {
-                            MouseButtonEventArgs previewUp = new MouseButtonEventArgs(this, rawMouseInputReport.Timestamp, MouseButton.Left, GetStylusDevice(e.StagingItem));
-
-                            previewUp.RoutedEvent=Mouse.PreviewMouseUpEvent;
+                            MouseButtonEventArgs previewUp = new MouseButtonEventArgs(this, rawMouseInputReport.Timestamp, MouseButton.Left, GetStylusDevice(e.StagingItem))
+                            {
+                                RoutedEvent = Mouse.PreviewMouseUpEvent
+                            };
                             e.PushInput(previewUp, e.StagingItem);
                         }
 
                         // Raw --> PreviewMouseDown
                         if ((actions & RawMouseActions.Button2Press) == RawMouseActions.Button2Press)
                         {
-                            MouseButtonEventArgs previewDown = new MouseButtonEventArgs(this, rawMouseInputReport.Timestamp, MouseButton.Right, GetStylusDevice(e.StagingItem));
-
-                            previewDown.RoutedEvent=Mouse.PreviewMouseDownEvent;
+                            MouseButtonEventArgs previewDown = new MouseButtonEventArgs(this, rawMouseInputReport.Timestamp, MouseButton.Right, GetStylusDevice(e.StagingItem))
+                            {
+                                RoutedEvent = Mouse.PreviewMouseDownEvent
+                            };
                             e.PushInput(previewDown, e.StagingItem);
                         }
 
                         // Raw --> PreviewMouseUp
                         if ((actions & RawMouseActions.Button2Release) == RawMouseActions.Button2Release)
                         {
-                            MouseButtonEventArgs previewUp = new MouseButtonEventArgs(this, rawMouseInputReport.Timestamp, MouseButton.Right, GetStylusDevice(e.StagingItem));
-
-                            previewUp.RoutedEvent=Mouse.PreviewMouseUpEvent;
+                            MouseButtonEventArgs previewUp = new MouseButtonEventArgs(this, rawMouseInputReport.Timestamp, MouseButton.Right, GetStylusDevice(e.StagingItem))
+                            {
+                                RoutedEvent = Mouse.PreviewMouseUpEvent
+                            };
                             e.PushInput(previewUp, e.StagingItem);
                         }
 
                         // Raw --> PreviewMouseDown
                         if ((actions & RawMouseActions.Button3Press) == RawMouseActions.Button3Press)
                         {
-                            MouseButtonEventArgs previewDown = new MouseButtonEventArgs(this, rawMouseInputReport.Timestamp, MouseButton.Middle, GetStylusDevice(e.StagingItem));
-
-                            previewDown.RoutedEvent=Mouse.PreviewMouseDownEvent;
+                            MouseButtonEventArgs previewDown = new MouseButtonEventArgs(this, rawMouseInputReport.Timestamp, MouseButton.Middle, GetStylusDevice(e.StagingItem))
+                            {
+                                RoutedEvent = Mouse.PreviewMouseDownEvent
+                            };
                             e.PushInput(previewDown, e.StagingItem);
                         }
 
                         // Raw --> PreviewMouseUp
                         if ((actions & RawMouseActions.Button3Release) == RawMouseActions.Button3Release)
                         {
-                            MouseButtonEventArgs previewUp = new MouseButtonEventArgs(this, rawMouseInputReport.Timestamp, MouseButton.Middle, GetStylusDevice(e.StagingItem));
-
-                            previewUp.RoutedEvent=Mouse.PreviewMouseUpEvent;
+                            MouseButtonEventArgs previewUp = new MouseButtonEventArgs(this, rawMouseInputReport.Timestamp, MouseButton.Middle, GetStylusDevice(e.StagingItem))
+                            {
+                                RoutedEvent = Mouse.PreviewMouseUpEvent
+                            };
                             e.PushInput(previewUp, e.StagingItem);
                         }
 
                         // Raw --> PreviewMouseDown
                         if ((actions & RawMouseActions.Button4Press) == RawMouseActions.Button4Press)
                         {
-                            MouseButtonEventArgs previewDown = new MouseButtonEventArgs(this, rawMouseInputReport.Timestamp, MouseButton.XButton1, GetStylusDevice(e.StagingItem));
-
-                            previewDown.RoutedEvent=Mouse.PreviewMouseDownEvent;
+                            MouseButtonEventArgs previewDown = new MouseButtonEventArgs(this, rawMouseInputReport.Timestamp, MouseButton.XButton1, GetStylusDevice(e.StagingItem))
+                            {
+                                RoutedEvent = Mouse.PreviewMouseDownEvent
+                            };
                             e.PushInput(previewDown, e.StagingItem);
                         }
 
                         // Raw --> PreviewMouseUp
                         if ((actions & RawMouseActions.Button4Release) == RawMouseActions.Button4Release)
                         {
-                            MouseButtonEventArgs previewUp = new MouseButtonEventArgs(this, rawMouseInputReport.Timestamp, MouseButton.XButton1, GetStylusDevice(e.StagingItem));
-
-                            previewUp.RoutedEvent=Mouse.PreviewMouseUpEvent;
+                            MouseButtonEventArgs previewUp = new MouseButtonEventArgs(this, rawMouseInputReport.Timestamp, MouseButton.XButton1, GetStylusDevice(e.StagingItem))
+                            {
+                                RoutedEvent = Mouse.PreviewMouseUpEvent
+                            };
                             e.PushInput(previewUp, e.StagingItem);
                         }
 
                         // Raw --> PreviewMouseDown
                         if ((actions & RawMouseActions.Button5Press) == RawMouseActions.Button5Press)
                         {
-                            MouseButtonEventArgs previewDown = new MouseButtonEventArgs(this, rawMouseInputReport.Timestamp, MouseButton.XButton2, GetStylusDevice(e.StagingItem));
-
-                            previewDown.RoutedEvent=Mouse.PreviewMouseDownEvent;
+                            MouseButtonEventArgs previewDown = new MouseButtonEventArgs(this, rawMouseInputReport.Timestamp, MouseButton.XButton2, GetStylusDevice(e.StagingItem))
+                            {
+                                RoutedEvent = Mouse.PreviewMouseDownEvent
+                            };
                             e.PushInput(previewDown, e.StagingItem);
                         }
 
                         // Raw --> PreviewMouseUp
                         if ((actions & RawMouseActions.Button5Release) == RawMouseActions.Button5Release)
                         {
-                            MouseButtonEventArgs previewUp = new MouseButtonEventArgs(this, rawMouseInputReport.Timestamp, MouseButton.XButton2, GetStylusDevice(e.StagingItem));
-
-                            previewUp.RoutedEvent=Mouse.PreviewMouseUpEvent;
+                            MouseButtonEventArgs previewUp = new MouseButtonEventArgs(this, rawMouseInputReport.Timestamp, MouseButton.XButton2, GetStylusDevice(e.StagingItem))
+                            {
+                                RoutedEvent = Mouse.PreviewMouseUpEvent
+                            };
                             e.PushInput(previewUp, e.StagingItem);
                         }
 
@@ -2043,9 +2045,10 @@ namespace System.Windows.Input
                         // RelativeMove, VirtualDesktopMove haven't been handled yet
                         if ((actions & RawMouseActions.AbsoluteMove) == RawMouseActions.AbsoluteMove)
                         {
-                            MouseEventArgs previewMove = new MouseEventArgs(this, rawMouseInputReport.Timestamp, GetStylusDevice(e.StagingItem));
-
-                            previewMove.RoutedEvent=Mouse.PreviewMouseMoveEvent;
+                            MouseEventArgs previewMove = new MouseEventArgs(this, rawMouseInputReport.Timestamp, GetStylusDevice(e.StagingItem))
+                            {
+                                RoutedEvent = Mouse.PreviewMouseMoveEvent
+                            };
                             e.PushInput(previewMove, e.StagingItem);
                         }
 
@@ -2220,7 +2223,7 @@ namespace System.Windows.Input
         {
             get
             {
-                return _inputSource != null && _inputSource.Value != null;
+                return _inputSource != null;
             }
         }
 
@@ -2264,9 +2267,9 @@ namespace System.Windows.Input
             }
         }
 
-        private SecurityCriticalDataClass<PresentationSource> _inputSource;
+        private PresentationSource _inputSource;
 
-        private SecurityCriticalData<InputManager> _inputManager;
+        private InputManager _inputManager;
 
         private IInputElement _mouseOver;
         private DeferredElementTreeState _mouseOverTreeState;
@@ -2275,7 +2278,7 @@ namespace System.Windows.Input
 
         private IInputElement _mouseCapture;
         private DeferredElementTreeState _mouseCaptureWithinTreeState;
-        private SecurityCriticalDataClass<IMouseInputProvider> _providerCapture;
+        private IMouseInputProvider _providerCapture;
         private CaptureMode _captureMode;
         private bool _isCaptureMouseInProgress;
 

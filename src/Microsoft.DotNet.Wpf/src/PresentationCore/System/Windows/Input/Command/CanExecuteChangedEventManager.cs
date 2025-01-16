@@ -8,11 +8,7 @@
 //              pattern.  See WeakEventTable.cs for an overview.
 //
 
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using System.Runtime.CompilerServices;  // ConditionalWeakTable
-using System.Windows;       // WeakEventManager
 using MS.Internal;          // NamedObject
 
 namespace System.Windows.Input

@@ -897,6 +897,20 @@ namespace System.Windows.Media
         }
 
         /// <summary>
+        /// Initializes a new instance using a <paramref name="values"/>. Elements are copied.
+        /// </summary>
+        /// <param name="values"></param>
+        internal DoubleCollection(params ReadOnlySpan<double> values)
+        {
+            _collection = new FrugalStructList<double>(values.Length);
+
+            foreach (double item in values)
+            {
+                _collection.Add(item);
+            }
+        }
+
+        /// <summary>
         /// Creates a DoubleCollection with all of the same elements as collection
         /// </summary>
         public DoubleCollection(IEnumerable<double> collection)

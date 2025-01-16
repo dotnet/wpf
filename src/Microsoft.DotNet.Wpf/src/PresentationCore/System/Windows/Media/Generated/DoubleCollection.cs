@@ -948,12 +948,6 @@ namespace System.Windows.Media
                 }
             }
 
-
-
-
-
-
-
             WritePostscript();
         }
 

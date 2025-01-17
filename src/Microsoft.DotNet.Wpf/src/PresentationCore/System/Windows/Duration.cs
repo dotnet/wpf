@@ -3,6 +3,7 @@
 // See the LICENSE file in the project root for more information.
 
 using System.ComponentModel;
+using System.Diagnostics;
 
 namespace System.Windows
 {
@@ -11,10 +12,10 @@ namespace System.Windows
     /// This structure may represent a TimeSpan, Automatic, or Forever value.
     /// </summary>
     [TypeConverter(typeof(DurationConverter))]
-    public struct Duration
+    public readonly struct Duration
     {
-        private TimeSpan _timeSpan;
-        private DurationType _durationType;
+        private readonly TimeSpan _timeSpan;
+        private readonly DurationType _durationType;
 
         /// <summary>
         /// Creates a Duration from a TimeSpan.
@@ -23,11 +24,21 @@ namespace System.Windows
         public Duration(TimeSpan timeSpan)
         {
             if (timeSpan < TimeSpan.Zero)
-            {
-                throw new ArgumentException(SR.Timing_InvalidArgNonNegative, "timeSpan");
-            }
+                throw new ArgumentException(SR.Timing_InvalidArgNonNegative, nameof(timeSpan));
+
             _durationType = DurationType.TimeSpan;
             _timeSpan = timeSpan;
+        }
+
+        /// <summary>
+        /// Private constructor, server for creation of <see cref="Duration.Automatic"/> and <see cref="Duration.Forever"/> only.
+        /// </summary>
+        /// <param name="durationType">Only <see cref="Duration.Automatic"/> and <see cref="Duration.Forever"/> values are permitted.</param>
+        private Duration(DurationType durationType)
+        {
+            Debug.Assert(durationType == DurationType.Automatic || durationType == DurationType.Forever);
+
+            _durationType = durationType;
         }
 
         #region Operators
@@ -39,7 +50,7 @@ namespace System.Windows
         // Any comparision with Automatic returns false, except for ==.
         // Unlike NaN, Automatic == Automatic is true.
         //
-  
+
 
         /// <summary>
         /// Implicitly creates a Duration from a TimeSpan.
@@ -49,9 +60,8 @@ namespace System.Windows
         public static implicit operator Duration(TimeSpan timeSpan)
         {
             if (timeSpan < TimeSpan.Zero)
-            {
-                throw new ArgumentException(SR.Timing_InvalidArgNonNegative, "timeSpan");
-            }
+                throw new ArgumentException(SR.Timing_InvalidArgNonNegative, nameof(timeSpan));
+
             return new Duration(timeSpan);
         }
 
@@ -346,7 +356,7 @@ namespace System.Windows
         {
             get
             {
-                return (_durationType == DurationType.TimeSpan);
+                return _durationType == DurationType.TimeSpan;
             }
         }
 
@@ -358,12 +368,7 @@ namespace System.Windows
         {
             get
             {
-                Duration duration = new Duration
-                {
-                    _durationType = DurationType.Automatic
-                };
-
-                return duration;
+                return new Duration(DurationType.Automatic);
             }
         }
 
@@ -375,12 +380,7 @@ namespace System.Windows
         {
             get
             {
-                Duration duration = new Duration
-                {
-                    _durationType = DurationType.Forever
-                };
-
-                return duration;
+                return new Duration(DurationType.Forever);
             }
         }
 
@@ -388,19 +388,12 @@ namespace System.Windows
         /// Returns the TimeSpan value that this Duration represents.
         /// </summary>
         /// <value>The TimeSpan value that this Duration represents.</value>
-        /// <exception cref="System.InvalidOperationException">Thrown if this Duration represents null.</exception>
+        /// <exception cref="InvalidOperationException">Thrown if this Duration represents null.</exception>
         public TimeSpan TimeSpan
         {
             get
             {
-                if (HasTimeSpan)
-                {
-                    return _timeSpan;
-                }
-                else
-                {
-                    throw new InvalidOperationException(SR.Format(SR.Timing_NotTimeSpan, this));
-                }
+                return HasTimeSpan ? _timeSpan : throw new InvalidOperationException(SR.Format(SR.Timing_NotTimeSpan, this));
             }
         }
 
@@ -423,20 +416,9 @@ namespace System.Windows
         /// </summary>
         /// <param name="value"></param>
         /// <returns>true if value is a Duration and is equal to this instance; otherwise false.</returns>
-        public override bool Equals(Object value)
+        public override bool Equals(object value)
         {
-            if (value == null)
-            {
-                return false;
-            }
-            else if (value is Duration)
-            {
-                return Equals((Duration)value);
-            }
-            else
-            {
-                return false;
-            }
+            return value is Duration duration && Equals(duration);
         }
 
         /// <summary>
@@ -480,14 +462,7 @@ namespace System.Windows
         /// <returns>A 32-bit signed integer hash code.</returns>
         public override int GetHashCode()
         {
-            if (HasTimeSpan)
-            {
-                return _timeSpan.GetHashCode();
-            }
-            else
-            {
-                return _durationType.GetHashCode() + 17;
-            }
+            return HasTimeSpan ? _timeSpan.GetHashCode() : _durationType.GetHashCode() + 17;
         }
 
         /// <summary>

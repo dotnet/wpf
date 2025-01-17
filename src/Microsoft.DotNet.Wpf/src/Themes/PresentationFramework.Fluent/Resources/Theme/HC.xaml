@@ -60,7 +60,10 @@
     <SolidColorBrush x:Key="AccentFillColorTertiaryBrush" Opacity="0.8" Color="{StaticResource SystemAccentColorDark1}" />
     <SolidColorBrush x:Key="AccentFillColorDisabledBrush" Color="{StaticResource SystemColorWindowColor}" />
 
-    <SolidColorBrush x:Key="SystemFillColorAttentionBrush" Color="{StaticResource SystemAccentColor}" />    
+    <SolidColorBrush x:Key="SystemFillColorAttentionBrush" Color="{StaticResource SystemAccentColor}" />  
+    <SolidColorBrush x:Key="SystemControlHyperlinkTextBrush" Color="{StaticResource SystemAccentColor}" />  
+    <SolidColorBrush x:Key="SystemControlPageTextBaseMediumBrush" Color="{StaticResource SystemBaseMediumColor}" />
+    <SolidColorBrush x:Key="SystemControlHighlightBaseMediumLowBrush" Color="{StaticResource SystemBaseMediumLowColor}" />
 
 
     <!--  Brushes  -->
@@ -349,6 +352,12 @@
     <!--  Flyout  -->
     <SolidColorBrush x:Key="FlyoutBackground" Color="{StaticResource SystemColorWindowColor}" />
     <SolidColorBrush x:Key="FlyoutBorderBrush" Color="{StaticResource SystemColorWindowTextColor}" />
+
+    <!--  Hyperlink  -->
+    <SolidColorBrush x:Key="HyperlinkForeground" Color="{StaticResource SystemAccentColor}" />
+    <SolidColorBrush x:Key="HyperlinkForegroundPointerOver" Color="{StaticResource SystemBaseMediumColor}" />
+    <SolidColorBrush x:Key="HyperlinkForegroundPressed" Color="{StaticResource SystemBaseMediumLowColor}" />
+    <SolidColorBrush x:Key="HyperlinkForegroundDisabled" Color="{StaticResource SystemColorGrayTextColor}" />
 
     <!--  HyperlinkButton  -->
     <SolidColorBrush x:Key="HyperlinkButtonBackground" Color="Transparent" />

@@ -466,6 +466,11 @@
   <!--  Flyout  -->
   <SolidColorBrush x:Key="FlyoutBackground" Color="{StaticResource AcrylicBackgroundFillColorDefault}" />
   <SolidColorBrush x:Key="FlyoutBorderBrush" Color="{StaticResource SurfaceStrokeColorFlyout}" />
+  <!--  Hyperlink  -->
+  <SolidColorBrush x:Key="HyperlinkForeground" Color="{StaticResource AccentTextFillColorPrimaryBrush}" />
+  <SolidColorBrush x:Key="HyperlinkForegroundPointerOver" Color="{StaticResource AccentTextFillColorSecondaryBrush}" />
+  <SolidColorBrush x:Key="HyperlinkForegroundPressed" Color="{StaticResource AccentTextFillColorTertiaryBrush}" />
+  <SolidColorBrush x:Key="HyperlinkForegroundDisabled" Color="{StaticResource TextFillColorDisabled}" />
   <!--  HyperlinkButton  -->
   <SolidColorBrush x:Key="HyperlinkButtonBackground" Color="{StaticResource SubtleFillColorTransparent}" />
   <SolidColorBrush x:Key="HyperlinkButtonBackgroundPointerOver" Color="{StaticResource SubtleFillColorSecondary}" />
@@ -2673,16 +2678,16 @@
   </Style>
   <sys:Boolean x:Key="HyperlinkUnderlineVisible">False</sys:Boolean>
   <Style x:Key="DefaultHyperlinkStyle" TargetType="Hyperlink">
-    <Setter Property="Foreground" Value="Blue" />
+    <Setter Property="Foreground" Value="{DynamicResource HyperlinkButtonForeground}" />
     <Setter Property="TextDecorations" Value="Underline" />
     <Style.Triggers>
-      <Trigger Property="IsMouseOver" Value="true">
-        <Setter Property="Foreground" Value="Green" />
+      <Trigger Property="IsMouseOver" Value="True">
+        <Setter Property="Foreground" Value="{DynamicResource HyperlinkButtonBackgroundPointerOver}" />
       </Trigger>
-      <Trigger Property="IsEnabled" Value="false">
-        <Setter Property="Foreground" Value="Pink" />
+      <Trigger Property="IsEnabled" Value="False">
+        <Setter Property="Foreground" Value="{DynamicResource HyperlinkButtonForegroundDisabled}" />
       </Trigger>
-      <Trigger Property="IsEnabled" Value="true">
+      <Trigger Property="IsEnabled" Value="True">
         <Setter Property="Cursor" Value="Hand" />
       </Trigger>
     </Style.Triggers>

@@ -40,7 +40,30 @@ namespace System.Windows.Media
         /// <param name="guidelinesX">Array of X coordinates that defines a set of vertical guidelines.</param>
         /// <param name="guidelinesY">Array of Y coordinates that defines a set of horizontal guidelines.</param>
         /// <param name="isDynamic">Usage flag: when true then rendering machine will detect animation state and apply subpixel animation behavior.</param>
-        internal GuidelineSet(ReadOnlySpan<double> guidelinesX, ReadOnlySpan<double> guidelinesY, bool isDynamic = false)
+        internal GuidelineSet(ReadOnlySpan<double> guidelinesX, ReadOnlySpan<double> guidelinesY)
+        {
+            if (!guidelinesX.IsEmpty)
+            {
+                GuidelinesX = new DoubleCollection(guidelinesX);
+            }
+
+            if (!guidelinesY.IsEmpty)
+            {
+                GuidelinesY = new DoubleCollection(guidelinesY);
+            }
+        }
+
+        /// <summary>
+        /// Constructs a new GuidelineSet object.
+        /// This constructor is internal for now, till we'll find a solution
+        /// for multi-path dynamic guideline implementation. If/when it'll happen,
+        /// it should become "public" so that the next constructor (without "isDynamic'
+        /// argument) may go away.
+        /// </summary>
+        /// <param name="guidelinesX">Array of X coordinates that defines a set of vertical guidelines.</param>
+        /// <param name="guidelinesY">Array of Y coordinates that defines a set of horizontal guidelines.</param>
+        /// <param name="isDynamic">Usage flag: when true then rendering machine will detect animation state and apply subpixel animation behavior.</param>
+        internal GuidelineSet(ReadOnlySpan<double> guidelinesX, ReadOnlySpan<double> guidelinesY, bool isDynamic)
         {
             if (!guidelinesX.IsEmpty)
             {

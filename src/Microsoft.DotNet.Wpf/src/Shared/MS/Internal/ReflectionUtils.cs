@@ -5,8 +5,8 @@
 #nullable enable
 
 using System.Runtime.CompilerServices;
+using System.Reflection.Metadata;
 using System.Reflection;
-using System.Text;
 using System;
 
 namespace MS.Internal
@@ -67,13 +67,11 @@ namespace MS.Internal
                 UnescapeDirty(ref fullName);
 
             // Since having "," or "=" in the assembly name is very rare, we don't want to inline
+            // and we will fallback to the runtime implementation to handle such case for us
             [MethodImpl(MethodImplOptions.NoInlining)]
             static void UnescapeDirty(ref ReadOnlySpan<char> dirtyName)
             {
-                StringBuilder sb = new(dirtyName.Length);
-                sb.Append(dirtyName);
-                sb.Replace("\\", null);
-                dirtyName = sb.ToString();
+                dirtyName = !AssemblyNameInfo.TryParse(dirtyName, out AssemblyNameInfo? result) ? ReadOnlySpan<char>.Empty : result.Name;
             }
 
             return fullName;

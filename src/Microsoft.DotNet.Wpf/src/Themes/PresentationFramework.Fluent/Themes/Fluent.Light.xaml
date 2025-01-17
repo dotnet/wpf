@@ -467,9 +467,9 @@
   <SolidColorBrush x:Key="FlyoutBackground" Color="{StaticResource AcrylicBackgroundFillColorDefault}" />
   <SolidColorBrush x:Key="FlyoutBorderBrush" Color="{StaticResource SurfaceStrokeColorFlyout}" />
   <!--  Hyperlink  -->
-  <SolidColorBrush x:Key="HyperlinkForeground" Color="{StaticResource AccentTextFillColorPrimaryBrush}" />
-  <SolidColorBrush x:Key="HyperlinkForegroundPointerOver" Color="{StaticResource AccentTextFillColorSecondaryBrush}" />
-  <SolidColorBrush x:Key="HyperlinkForegroundPressed" Color="{StaticResource AccentTextFillColorTertiaryBrush}" />
+  <SolidColorBrush x:Key="HyperlinkForeground" Color="{StaticResource SystemAccentColorDark2}" />
+  <SolidColorBrush x:Key="HyperlinkForegroundPointerOver" Color="{StaticResource SystemAccentColorDark3}" />
+  <SolidColorBrush x:Key="HyperlinkForegroundPressed" Color="{StaticResource SystemAccentColorDark1}" />
   <SolidColorBrush x:Key="HyperlinkForegroundDisabled" Color="{StaticResource TextFillColorDisabled}" />
   <!--  HyperlinkButton  -->
   <SolidColorBrush x:Key="HyperlinkButtonBackground" Color="{StaticResource SubtleFillColorTransparent}" />

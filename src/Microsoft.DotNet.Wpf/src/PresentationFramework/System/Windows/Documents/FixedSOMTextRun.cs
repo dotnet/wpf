@@ -411,7 +411,6 @@ namespace System.Windows.Documents
         #region Private Fields
 
         private double _defaultCharWidth;
-
 #pragma warning disable CS0414 // Private field is assigned but its value is never used
         private Uri _fontUri;
 #pragma warning restore CS0414 // Private field is assigned but its value is never used

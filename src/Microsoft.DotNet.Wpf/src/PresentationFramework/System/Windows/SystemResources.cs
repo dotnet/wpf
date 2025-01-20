@@ -571,7 +571,7 @@ namespace System.Windows
                 }
                 else
                 {
-                    _assemblyName = SafeSecurityHelper.GetAssemblyPartialName(assembly);
+                    _assemblyName = ReflectionUtils.GetAssemblyPartialName(assembly).ToString();
                 }
             }
 
@@ -786,7 +786,7 @@ namespace System.Windows
                 }
 
                 assemblyName = sb.ToString();
-                string fullName = SafeSecurityHelper.GetFullAssemblyNameFromPartialName(_assembly, assemblyName);
+                string fullName = ReflectionUtils.GetFullAssemblyNameFromPartialName(_assembly, assemblyName);
 
                 assembly = null;
                 try

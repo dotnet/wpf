@@ -232,11 +232,10 @@ namespace MS.Internal.Resources
             {
                 if (_resourceSet == null)
                 {
-                    string manifestResourceName;
+                    //"$(AssemblyShortname).unlocalizable.g"
+                    string manifestResourceName = $"{ReflectionUtils.GetAssemblyPartialName(_assembly)}{UnLocalizableResourceNameSuffix}";
+                    ResourceManager manager = new(manifestResourceName, _assembly);
 
-                    manifestResourceName = SafeSecurityHelper.GetAssemblyPartialName(_assembly) + UnLocalizableResourceNameSuffix;
-
-                    ResourceManager manager = new ResourceManager(manifestResourceName, this._assembly);
                     _resourceSet = manager.GetResourceSet(CultureInfo.InvariantCulture, true, false);
                 }
 
@@ -254,11 +253,9 @@ namespace MS.Internal.Resources
             {
                 if (_resourceManager == null)
                 {
-                    string baseResourceName;  // Our build system always generate a resource base name "$(AssemblyShortname).g"
-
-                    baseResourceName = SafeSecurityHelper.GetAssemblyPartialName(_assembly) + LocalizableResourceNameSuffix;
-
-                    _resourceManager = new ResourceManager(baseResourceName, this._assembly);
+                    // Our build system always generate a resource base name "$(AssemblyShortname).g"
+                    string baseResourceName = $"{ReflectionUtils.GetAssemblyPartialName(_assembly)}{LocalizableResourceNameSuffix}";
+                    _resourceManager = new ResourceManager(baseResourceName, _assembly);
                 }
 
                 return _resourceManager;

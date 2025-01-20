@@ -2481,7 +2481,7 @@ namespace System.Windows.Markup
 
         private static bool IsInternalAllowedOnType(Type type)
         {
-            bool isInternalAllowed = ReflectionHelper.LocalAssemblyName == type.Assembly.GetName().Name ||
+            bool isInternalAllowed = ReflectionHelper.LocalAssemblyName == ReflectionUtils.GetAssemblyPartialName(type.Assembly) ||
                                      IsFriendAssembly(type.Assembly);
             _hasInternals = _hasInternals || isInternalAllowed;
             return isInternalAllowed;

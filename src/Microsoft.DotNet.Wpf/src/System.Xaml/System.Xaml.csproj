@@ -24,6 +24,9 @@
     <Compile Include="$(WpfSharedDir)MS\Internal\Xaml\Parser\SpecialBracketCharacters.cs">
       <Link>Common\WPF\MS\Internal\Xaml\Parser\SpecialBracketCharacters.cs</Link>
     </Compile>
+    <Compile Include="$(WpfSharedDir)\MS\Internal\ReflectionUtils.cs">
+      <Link>Common\WPF\MS\Internal\ReflectionUtils.cs</Link>
+    </Compile>
     <Compile Include="$(WpfSharedDir)MS\Internal\SafeSecurityHelper.cs">
       <Link>Common\WPF\MS\Internal\SafeSecurityHelper.cs</Link>
     </Compile>

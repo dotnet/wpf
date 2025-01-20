@@ -8,6 +8,7 @@ using System.Collections;
 using System.Collections.ObjectModel;
 using System.Reflection;
 using System.Text;
+using MS.Internal;
 using System.Threading;
 using System.Xaml.MS.Impl;
 using System.Xaml.Schema;
@@ -786,7 +787,6 @@ namespace System.Xaml
                 return false;
             }
 
-            // Not using Assembly.GetName() because it doesn't work in partial-trust
             AssemblyName toAssemblyName = new AssemblyName(toAssembly.FullName);
             foreach (AssemblyName friend in friends)
             {
@@ -1042,8 +1042,7 @@ namespace System.Xaml
 
             if (!assemblyMappings.TryGetValue(clrNs, out result))
             {
-                string assemblyName = FullyQualifyAssemblyNamesInClrNamespaces ?
-                    assembly.FullName : GetAssemblyShortName(assembly);
+                string assemblyName = FullyQualifyAssemblyNamesInClrNamespaces ? assembly.FullName : ReflectionUtils.GetAssemblyPartialName(assembly).ToString();
                 string xmlns = ClrNamespaceUriParser.GetUri(clrNs, assemblyName);
                 List<string> list = new List<string>();
                 list.Add(xmlns);
@@ -1201,14 +1200,6 @@ namespace System.Xaml
         #endregion
 
         #region Helper Methods
-
-        // Given an assembly, return the assembly short name.  We need to avoid Assembly.GetName() so we run in PartialTrust without asserting.
-        internal static string GetAssemblyShortName(Assembly assembly)
-        {
-            string assemblyLongName = assembly.FullName;
-            string assemblyShortName = assemblyLongName.Substring(0, assemblyLongName.IndexOf(','));
-            return assemblyShortName;
-        }
 
         internal static ConcurrentDictionary<K, V> CreateDictionary<K, V>()
         {

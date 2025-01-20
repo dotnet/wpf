@@ -1,9 +1,10 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
-using MS.Win32;
 using System.Windows.Input;
+using System.Reflection;
+using MS.Internal;
+using MS.Win32;
 
 namespace System.Windows.Interop
 {
@@ -418,7 +419,7 @@ namespace System.Windows.Interop
         /// <remarks>Not intended to be tested outside test code</remarks>
         internal static void SetPlatformSupportsTransparentChildWindowsForTestingOnly(bool value)
         {
-            if (string.Equals(System.Reflection.Assembly.GetEntryAssembly().GetName().Name, "drthwndsource", StringComparison.CurrentCultureIgnoreCase))
+            if (ReflectionUtils.GetAssemblyPartialName(Assembly.GetEntryAssembly()).Equals("drthwndsource", StringComparison.CurrentCultureIgnoreCase))
             {
                 _platformSupportsTransparentChildWindows = value;
             }

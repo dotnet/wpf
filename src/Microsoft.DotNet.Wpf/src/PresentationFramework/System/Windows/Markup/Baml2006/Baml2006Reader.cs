@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Globalization;
 using XamlReaderHelper = System.Windows.Markup.XamlReaderHelper;
 using System.Runtime.CompilerServices;
+using MS.Internal;
 
 namespace System.Windows.Baml2006
 {
@@ -2105,11 +2106,9 @@ namespace System.Windows.Baml2006
 
         // Providing the assembly short name may lead to ambiguity between two versions of the same assembly, but we need to
         // keep it this way since it is exposed publicly via the Namespace property, Baml2006ReaderInternal provides the full Assembly name.
-        // We need to avoid Assembly.GetName() so we run in PartialTrust without asserting.
         internal virtual ReadOnlySpan<char> GetAssemblyNameForNamespace(Assembly assembly)
         {
-            string assemblyLongName = assembly.FullName;
-            return assemblyLongName.AsSpan(0, assemblyLongName.IndexOf(','));
+            return ReflectionUtils.GetAssemblyPartialName(assembly);
         }
 
         // (prefix, namespaceUri)

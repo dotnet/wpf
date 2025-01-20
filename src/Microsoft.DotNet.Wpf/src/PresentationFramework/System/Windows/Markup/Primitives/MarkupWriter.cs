@@ -1,17 +1,17 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 //
 //  Contents:  XAML writer
 //
 
+using System.Xml.Serialization;
 using System.ComponentModel;
-using System.Reflection;
 using System.Collections;
+using System.Reflection;
+using MS.Internal;
 using System.Text;
 using System.Xml;
-using System.Xml.Serialization;
 
 namespace System.Windows.Markup.Primitives
 {
@@ -1610,14 +1610,14 @@ namespace System.Windows.Markup.Primitives
                 {
                     if (type.Namespace == null)
                     {
-                        result = $"{clrUriPrefix};assembly={type.Assembly.GetName().Name}";
+                        result = $"{clrUriPrefix};assembly={ReflectionUtils.GetAssemblyPartialName(type.Assembly)}";
                     }
                     else
                     {
                         Dictionary<string, string> namespaceToUri = GetMappingsFor(type.Assembly);
                         if (!namespaceToUri.TryGetValue(type.Namespace, out result))
                         {
-                            result = $"{clrUriPrefix}{type.Namespace};assembly={type.Assembly.GetName().Name}";
+                            result = $"{clrUriPrefix}{type.Namespace};assembly={ReflectionUtils.GetAssemblyPartialName(type.Assembly)}";
                         }
                     }
                 }

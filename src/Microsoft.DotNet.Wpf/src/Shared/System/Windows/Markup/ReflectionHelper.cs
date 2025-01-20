@@ -504,7 +504,7 @@ namespace System.Xaml
 #if PBTCOMPILER
         internal static bool IsInternalAllowedOnType(Type type)
         {
-            return ((LocalAssemblyName == type.Assembly.GetName().Name) || IsFriendAssembly(type.Assembly));
+            return LocalAssemblyName == ReflectionUtils.GetAssemblyPartialName(type.Assembly) || IsFriendAssembly(type.Assembly);
         }
 #endif
 

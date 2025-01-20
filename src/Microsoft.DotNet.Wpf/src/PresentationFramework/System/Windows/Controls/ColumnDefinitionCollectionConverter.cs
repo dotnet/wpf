@@ -65,6 +65,8 @@ namespace System.Windows.Controls
         /// <param name="destinationType"> The Type being queried for support. </param>
         public override bool CanConvertTo(ITypeDescriptorContext typeDescriptorContext, Type destinationType)
         {
+            // Implementing this function can lead to potential data loss if the given ColumnDefinition contains MinWidth and MaxWidth.
+            // Returning false to avoid serialization issues with the XAML object, as the default CanConvertTo method returns true when destinationType is string
             return false;
         }
     }

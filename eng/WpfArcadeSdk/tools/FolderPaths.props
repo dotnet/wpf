@@ -9,6 +9,7 @@
     <WpfCycleBreakersDir>$(RepoRoot)src\Microsoft.DotNet.Wpf\cycle-breakers\</WpfCycleBreakersDir>
     <WpfApiCompatBaselineDir>$(RepoRoot)src\Microsoft.DotNet.Wpf\ApiCompat\Baselines\</WpfApiCompatBaselineDir>
     <WpfSourceDir>$(RepoRoot)src\Microsoft.DotNet.Wpf\src\</WpfSourceDir>
+    <WpfRedistDir>$(RepoRoot)src\Microsoft.DotNet.Wpf\redist\</WpfRedistDir>
     <WpfGraphicsPath>$(WpfSourceDir)WpfGfx\</WpfGraphicsPath>
     <WpfGraphicsDir>$(WpfGraphicsPath)</WpfGraphicsDir>
     <WpfPresentationNativeDir>$(WpfSourceDir)PresentationNative\</WpfPresentationNativeDir>

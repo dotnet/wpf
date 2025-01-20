@@ -2,10 +2,7 @@
   <Import Project="$([MSBuild]::GetPathOfFileAbove('Directory.Build.targets', '$(MSBuildThisFileDirectory)../'))" />
 
   <PropertyGroup>
-    <_PackagingNativePath Condition="'$(WpfRuntimeIdentifier)'=='win-x64' And '$(Configuration)' != 'Debug'">$(ArtifactsDir)packaging\$(Configuration)\x64\Microsoft.DotNet.Wpf.GitHub</_PackagingNativePath>
-    <_PackagingNativePath Condition="'$(WpfRuntimeIdentifier)'=='win-x64' And '$(Configuration)' == 'Debug'">$(ArtifactsDir)packaging\$(Configuration)\x64\Microsoft.DotNet.Wpf.GitHub.Debug</_PackagingNativePath>
-    <_PackagingNativePath Condition="'$(WpfRuntimeIdentifier)'=='win-x86' And '$(Configuration)' != 'Debug'">$(ArtifactsDir)packaging\$(Configuration)\Microsoft.DotNet.Wpf.GitHub</_PackagingNativePath>
-    <_PackagingNativePath Condition="'$(WpfRuntimeIdentifier)'=='win-x86' And '$(Configuration)' == 'Debug'">$(ArtifactsDir)packaging\$(Configuration)\Microsoft.DotNet.Wpf.GitHub.Debug</_PackagingNativePath>
+    <_PackagingNativePath>$(ArtifactsPackagingDir)$(GitHubTransportPackageName)\runtimes\$(WpfRuntimeIdentifier)\native\</_PackagingNativePath>
   </PropertyGroup>
 
   <!--
@@ -15,12 +12,45 @@
           BeforeTargets="AssignTargetPaths"
           Returns="@(None)">
     <ItemGroup>
-      <!-- These exist to ensure that dependencies (esp. native ones) are binplaced with tests correctly -->
-      <None Include="$(_PackagingNativePath)\runtimes\$(WpfRuntimeIdentifier)\native\*.dll"
+      <!--
+        These exist to ensure that dependencies (esp. native ones) are binplaced with tests correctly.
+        We use the explicit file names instead of globbing to make the build fail if the dlls were not found.
+      -->
+      <_WpfNativeDependency Include="$(_PackagingNativePath)D3DCompiler_47_cor3.dll" Condition="'$(WpfRuntimeIdentifier)' != 'win-arm64'" />
+      <_WpfNativeDependency Include="$(_PackagingNativePath)PresentationNative_cor3.dll" />
+      <_WpfNativeDependency Include="$(_PackagingNativePath)vcruntime140d.dll" Condition="'$(Configuration)' == 'Debug'" />
+      <_WpfNativeDependency Include="$(_PackagingNativePath)vcruntime140_cor3.dll" Condition="'$(Configuration)' != 'Debug'" />
+      <_WpfNativeDependency Include="$(_PackagingNativePath)PenImc_cor3.dll" />
+      <_WpfNativeDependency Include="$(_PackagingNativePath)wpfgfx_cor3.dll" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <None Include="@(_WpfNativeDependency)"
             CopyToOutputDirectory="PreserveNewest"
             Visible="False" />
     </ItemGroup>
   </Target>
+
+  <!--
+    Include native dependencies as project reference to make sure that they are built before the test projects and before the task IncludeNativeDependencies is executed.
+  -->
+  <ItemGroup>
+    <ProjectReference Include="$(WpfRedistDir)D3DCompiler\D3DCompiler.vcxproj"
+                      ReferenceOutputAssembly="False"
+                      Visible="False" />
+    <ProjectReference Include="$(WpfRedistDir)PresentationNative\PresentationNative.vcxproj"
+                      ReferenceOutputAssembly="False"
+                      Visible="False" />
+    <ProjectReference Include="$(WpfRedistDir)VCRuntime\VCRuntime.vcxproj"
+                      ReferenceOutputAssembly="False"
+                      Visible="False" />
+    <ProjectReference Include="$(WpfSourceDir)PenImc\dll\PenImc.vcxproj"
+                      ReferenceOutputAssembly="False"
+                      Visible="True" />
+    <ProjectReference Include="$(WpfSourceDir)WpfGfx\core\dll\wpfgfx.vcxproj"
+                      ReferenceOutputAssembly="False"
+                      Visible="False" />
+  </ItemGroup>
 
   <!--
    Referencing packages that reference the desktop package causes grief with building internally. Currently this

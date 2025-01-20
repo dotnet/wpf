@@ -14,7 +14,7 @@ using MS.Internal.KnownBoxes;
 
 namespace System.Windows.Media
 {
-    sealed partial class StreamGeometry : Geometry
+    public sealed partial class StreamGeometry : Geometry
     {
         //------------------------------------------------------
         //

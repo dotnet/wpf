@@ -15,7 +15,7 @@ namespace System.Windows.Markup.Primitives
     /// </summary>
     internal class MarkupObjectWrapper : MarkupObject
     {
-        MarkupObject  _baseObject;
+        private MarkupObject  _baseObject;
 
         public MarkupObjectWrapper(MarkupObject baseObject)
         {
@@ -55,7 +55,7 @@ namespace System.Windows.Markup.Primitives
     /// </summary>
     internal class MarkupPropertyWrapper : MarkupProperty 
     {
-        MarkupProperty _baseProperty;
+        private MarkupProperty _baseProperty;
 
         /*
         protected MarkupProperty BaseProperty
@@ -162,7 +162,7 @@ namespace System.Windows.Markup.Primitives
     /// </summary>
     internal class ExtensionSimplifierMarkupObject : MarkupObjectWrapper
     {
-        IValueSerializerContext _context;
+        private IValueSerializerContext _context;
 
         public ExtensionSimplifierMarkupObject(MarkupObject baseObject, IValueSerializerContext context)
             : base(baseObject) 
@@ -201,7 +201,7 @@ namespace System.Windows.Markup.Primitives
     /// </summary>
     internal class ExtensionSimplifierProperty : MarkupPropertyWrapper
     {
-        IValueSerializerContext _context;
+        private IValueSerializerContext _context;
 
         public ExtensionSimplifierProperty(MarkupProperty baseProperty, IValueSerializerContext context) : base(baseProperty) 
         {

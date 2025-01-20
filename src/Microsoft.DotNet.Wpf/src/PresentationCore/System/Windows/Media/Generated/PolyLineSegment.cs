@@ -14,7 +14,7 @@ using MS.Internal;
 
 namespace System.Windows.Media
 {
-    sealed partial class PolyLineSegment : PathSegment
+    public sealed partial class PolyLineSegment : PathSegment
     {
         //------------------------------------------------------
         //

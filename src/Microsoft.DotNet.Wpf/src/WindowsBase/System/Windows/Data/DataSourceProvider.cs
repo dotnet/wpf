@@ -431,7 +431,7 @@ namespace System.Windows.Data
         private Exception _error;
         private Dispatcher _dispatcher;
 
-        static readonly DispatcherOperationCallback UpdateWithNewResultCallback = new DispatcherOperationCallback(UpdateWithNewResult);
+        private static readonly DispatcherOperationCallback UpdateWithNewResultCallback = new DispatcherOperationCallback(UpdateWithNewResult);
 }
 }
 

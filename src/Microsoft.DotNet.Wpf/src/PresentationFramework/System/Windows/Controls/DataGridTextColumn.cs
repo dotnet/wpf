@@ -197,7 +197,7 @@ namespace System.Windows.Controls
         }
 
         // convert text the user has typed into the appropriate string to enter into the editable TextBox
-        string ConvertTextForEdit(string s)
+        private string ConvertTextForEdit(string s)
         {
             // Backspace becomes the empty string
             if (s == "\b")

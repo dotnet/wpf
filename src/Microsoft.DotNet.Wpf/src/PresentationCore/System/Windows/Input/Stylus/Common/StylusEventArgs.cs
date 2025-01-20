@@ -132,6 +132,6 @@ namespace System.Windows.Input
 
         /////////////////////////////////////////////////////////////////////
 
-        RawStylusInputReport    _inputReport;
+        private RawStylusInputReport    _inputReport;
     }
 }

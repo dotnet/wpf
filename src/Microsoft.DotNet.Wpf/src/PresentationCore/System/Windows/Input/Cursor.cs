@@ -115,7 +115,7 @@ namespace System.Windows.Input
             GC.SuppressFinalize(this);
         }
 
-        void Dispose(bool disposing)
+        private void Dispose(bool disposing)
         {
             if ( _cursorHandle != null )
             {
@@ -123,8 +123,6 @@ namespace System.Windows.Input
                 _cursorHandle = null;
             }
         }
-
-
 
         /// <summary>
         /// CursorType - Cursor Type Enumeration

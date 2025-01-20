@@ -25,24 +25,26 @@ namespace MS.Internal.Xaml.Runtime
 
     internal class DynamicMethodRuntime : ClrObjectRuntime
     {
-        const BindingFlags BF_AllInstanceMembers =
+        private const BindingFlags BF_AllInstanceMembers =
             BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic;
-        const BindingFlags BF_AllStaticMembers =
+        private const BindingFlags BF_AllStaticMembers =
             BindingFlags.Static | BindingFlags.Public | BindingFlags.NonPublic;
+        private static MethodInfo s_GetTypeFromHandleMethod;
+        private static MethodInfo s_InvokeMemberMethod;
 
-        static MethodInfo s_GetTypeFromHandleMethod;
-        static MethodInfo s_InvokeMemberMethod;
+        private delegate void PropertySetDelegate(object target, object value);
 
-        delegate void PropertySetDelegate(object target, object value);
-        delegate object PropertyGetDelegate(object target);
-        delegate object FactoryDelegate(object[] args);
-        delegate Delegate DelegateCreator(Type delegateType, object target, string methodName);
+        private delegate object PropertyGetDelegate(object target);
 
-        Assembly _localAssembly;
+        private delegate object FactoryDelegate(object[] args);
 
-        Type _localType;
+        private delegate Delegate DelegateCreator(Type delegateType, object target, string methodName);
 
-        XamlSchemaContext _schemaContext;
+        private Assembly _localAssembly;
+
+        private Type _localType;
+
+        private XamlSchemaContext _schemaContext;
 
         // We cache based on MemberInfo instead of XamlMember for two reasons:
         // 1. Equivalent XamlMembers can actually have different MemberInfos. Caching based on
@@ -52,12 +54,12 @@ namespace MS.Internal.Xaml.Runtime
         //    we don't have to worry that we're keeping it rooted. If this ever becomes a concern,
         //    we can switch to a ConditionalWeakTable here.
 
-        Dictionary<MethodInfo, PropertyGetDelegate> _propertyGetDelegates;
-        Dictionary<MethodInfo, PropertySetDelegate> _propertySetDelegates;
-        Dictionary<MethodBase, FactoryDelegate> _factoryDelegates;
-        Dictionary<Type, object> _converterInstances;
-        Dictionary<Type, DelegateCreator> _delegateCreators;
-        DelegateCreator _delegateCreatorWithoutHelper;
+        private Dictionary<MethodInfo, PropertyGetDelegate> _propertyGetDelegates;
+        private Dictionary<MethodInfo, PropertySetDelegate> _propertySetDelegates;
+        private Dictionary<MethodBase, FactoryDelegate> _factoryDelegates;
+        private Dictionary<Type, object> _converterInstances;
+        private Dictionary<Type, DelegateCreator> _delegateCreators;
+        private DelegateCreator _delegateCreatorWithoutHelper;
 
         private Dictionary<MethodInfo, PropertyGetDelegate> PropertyGetDelegates
         {

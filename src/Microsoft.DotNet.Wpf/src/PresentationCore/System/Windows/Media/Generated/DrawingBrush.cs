@@ -14,7 +14,7 @@ using System.Windows.Media.Composition;
 
 namespace System.Windows.Media
 {
-    sealed partial class DrawingBrush : TileBrush
+    public sealed partial class DrawingBrush : TileBrush
     {
         //------------------------------------------------------
         //

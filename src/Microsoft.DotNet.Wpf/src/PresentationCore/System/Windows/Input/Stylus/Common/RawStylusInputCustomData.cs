@@ -40,8 +40,8 @@ namespace System.Windows.Input.StylusPlugIns
             }
         }
 
-        StylusPlugIn    _owner;
-        object          _data;
+        private StylusPlugIn    _owner;
+        private object          _data;
     }
 }
 

@@ -100,8 +100,8 @@ namespace MS.Internal.Xaml.Context
 
     internal class NameFixupToken : IAddLineInfo
     {
-        List<string> _names;
-        List<XAML3.INameScopeDictionary> _nameScopeDictionaryList;
+        private List<string> _names;
+        private List<XAML3.INameScopeDictionary> _nameScopeDictionaryList;
 
         public NameFixupToken()
         {

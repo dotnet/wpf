@@ -761,7 +761,7 @@ namespace MS.Internal.Ink.GestureRecognition
             }
         }
 
-        enum RECO_TYPE : ushort
+        private enum RECO_TYPE : ushort
         {
             RECO_TYPE_WSTRING = 0,
             RECO_TYPE_WCHAR = 1

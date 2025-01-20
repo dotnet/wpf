@@ -12,7 +12,7 @@ using MS.Win32;
 namespace MS.Internal.AutomationProxies
 {
     // FormsLink proxy
-    class FormsLink : ProxyHwnd, IInvokeProvider
+    internal class FormsLink : ProxyHwnd, IInvokeProvider
     {
         // ------------------------------------------------------
         //

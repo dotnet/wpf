@@ -125,7 +125,7 @@ namespace System.Windows.Controls
             get { return _maximizeValueCommand; }
         }
 
-        static void InitializeCommands()
+        private static void InitializeCommands()
         {
             _increaseLargeCommand = new RoutedCommand("IncreaseLarge", typeof(Slider));
             _decreaseLargeCommand = new RoutedCommand("DecreaseLarge", typeof(Slider));

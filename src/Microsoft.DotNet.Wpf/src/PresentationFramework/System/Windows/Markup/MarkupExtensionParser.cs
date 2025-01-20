@@ -1641,7 +1641,7 @@ namespace System.Windows.Markup
         /// properties here, since MarkupExtensions don't support events or
         /// DependencyProperties.
         /// </summary>
-        AttributeContext GetAttributeContext(
+        private AttributeContext GetAttributeContext(
                 Type   elementBaseType,
                 string elementBaseTypeNamespaceUri,
                 string attributeNamespaceUri,
@@ -1683,7 +1683,7 @@ namespace System.Windows.Markup
         /// <summary>
         /// Throw a XamlParseException
         /// </summary>
-        void ThrowException(
+        private void ThrowException(
             string id,
             string parameter1,
             int    lineNumber,
@@ -1696,7 +1696,7 @@ namespace System.Windows.Markup
         /// <summary>
         /// Throw a XamlParseException
         /// </summary>
-        void ThrowException(
+        private void ThrowException(
             string id,
             string parameter1,
             string parameter2,
@@ -1710,7 +1710,7 @@ namespace System.Windows.Markup
         /// <summary>
         /// Throw a XamlParseException
         /// </summary>
-        void ThrowException(
+        private void ThrowException(
             string id,
             string parameter1,
             string parameter2,
@@ -1725,7 +1725,7 @@ namespace System.Windows.Markup
         /// <summary>
         /// Throw a XamlParseException
         /// </summary>
-        void ThrowExceptionWithLine(
+        private void ThrowExceptionWithLine(
             string message,
             int    lineNumber,
             int    linePosition)

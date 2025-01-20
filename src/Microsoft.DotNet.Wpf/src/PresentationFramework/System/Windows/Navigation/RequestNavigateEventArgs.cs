@@ -13,8 +13,8 @@ namespace System.Windows.Navigation
     /// <ExternalAPI/> 
     public class RequestNavigateEventArgs : RoutedEventArgs
     {
-        Uri _uri;
-        string _target;
+        private Uri _uri;
+        private string _target;
 
         /// <summary> 
         /// Default constructor

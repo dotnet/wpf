@@ -24,7 +24,7 @@ namespace System.Windows.Data
 
         public object Parent { get { return _parent; } }
 
-        IEnumerable _collection;
-        object _parent;
+        private IEnumerable _collection;
+        private object _parent;
     }
 }

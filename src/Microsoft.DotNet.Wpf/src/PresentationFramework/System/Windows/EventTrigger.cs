@@ -253,10 +253,10 @@ namespace System.Windows
         internal static readonly UncommonField<TriggerCollection> TriggerCollectionField = new UncommonField<TriggerCollection>(null);
 
         // This is the listener that we hook up to the SourceId element.
-        RoutedEventHandler _routedEventHandler = null;
+        private RoutedEventHandler _routedEventHandler = null;
 
         // This is the SourceId-ed element.
-        FrameworkElement _source;
+        private FrameworkElement _source;
         
 
 

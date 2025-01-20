@@ -15,7 +15,7 @@ using System.Windows.Media.Composition;
 
 namespace System.Windows.Media.Effects
 {
-    sealed partial class PixelShader : Animatable, DUCE.IResource
+    public sealed partial class PixelShader : Animatable, DUCE.IResource
     {
         //------------------------------------------------------
         //

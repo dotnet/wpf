@@ -60,7 +60,7 @@ namespace MS.Internal.Data
 
         private SortDescriptionCollection  _sortParameters;
         private XmlNamespaceManager  _namespaceManager;
-        CultureInfo _culture;
+        private CultureInfo _culture;
     }
 }
 

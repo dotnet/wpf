@@ -17,7 +17,7 @@ using MS.Win32;
 
 namespace MS.Internal.AutomationProxies
 {
-    class ListViewItemCheckbox: ProxySimple, IToggleProvider
+    internal class ListViewItemCheckbox: ProxySimple, IToggleProvider
     {
         // ------------------------------------------------------
         //

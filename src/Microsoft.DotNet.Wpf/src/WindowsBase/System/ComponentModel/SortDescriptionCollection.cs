@@ -110,8 +110,9 @@ namespace System.ComponentModel
                 CollectionChanged(this, new NotifyCollectionChangedEventArgs(action, item, index));
             }
         }
+
         // raise CollectionChanged event to any listeners
-        void OnCollectionChanged(NotifyCollectionChangedAction action)
+        private void OnCollectionChanged(NotifyCollectionChangedAction action)
         {
             if (CollectionChanged != null)
             {
@@ -124,7 +125,7 @@ namespace System.ComponentModel
         /// <summary>
         /// Immutable, read-only SortDescriptionCollection
         /// </summary>
-        class EmptySortDescriptionCollection : SortDescriptionCollection, IList
+        private class EmptySortDescriptionCollection : SortDescriptionCollection, IList
         {
             //------------------------------------------------------
             //

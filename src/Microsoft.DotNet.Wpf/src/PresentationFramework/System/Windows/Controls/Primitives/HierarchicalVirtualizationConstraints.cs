@@ -143,10 +143,10 @@ namespace System.Windows.Controls
 
         #region Data
 
-        VirtualizationCacheLength _cacheLength;
-        VirtualizationCacheLengthUnit _cacheLengthUnit;
-        Rect _viewport;
-        long _scrollGeneration;
+        private VirtualizationCacheLength _cacheLength;
+        private VirtualizationCacheLengthUnit _cacheLengthUnit;
+        private Rect _viewport;
+        private long _scrollGeneration;
 
         #endregion
     }

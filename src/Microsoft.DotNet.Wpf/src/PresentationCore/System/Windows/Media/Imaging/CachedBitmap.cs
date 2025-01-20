@@ -403,9 +403,9 @@ namespace System.Windows.Media.Imaging
             UpdateCachedSettings();
         }
 
-        BitmapSource        _source;
-        BitmapCreateOptions _createOptions = BitmapCreateOptions.None;
-        BitmapCacheOption   _cacheOption = BitmapCacheOption.Default;
+        private BitmapSource        _source;
+        private BitmapCreateOptions _createOptions = BitmapCreateOptions.None;
+        private BitmapCacheOption   _cacheOption = BitmapCacheOption.Default;
     }
     #endregion // CachedBitmap
 }

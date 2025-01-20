@@ -92,7 +92,7 @@ namespace Microsoft.Windows.Automation.Peers
             get { return (RibbonGroup)Owner; }
         }
 
-        RibbonGroupHeaderAutomationPeer HeaderPeer
+        private RibbonGroupHeaderAutomationPeer HeaderPeer
         {
             get
             {

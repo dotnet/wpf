@@ -1152,7 +1152,7 @@ namespace MS.Internal
 
         #region Helper methods
 
-        void UnexpectedCall()
+        private void UnexpectedCall()
         {
             Invariant.Assert(false, "Call to FrameworkObject expects either FE or FCE");
         }

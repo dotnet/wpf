@@ -165,6 +165,6 @@ namespace System.Windows.Navigation
         private NavigationMode _navigationMode;
         private WebRequest _webRequest;
         private bool _isNavInitiator;
-	    object _navigator;
+        private object _navigator;
     }
 }

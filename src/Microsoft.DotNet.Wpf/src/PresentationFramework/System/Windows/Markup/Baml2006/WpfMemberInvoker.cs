@@ -9,9 +9,9 @@ namespace System.Windows.Baml2006
 {
     internal class WpfMemberInvoker : XamlMemberInvoker
     {
-        WpfXamlMember _member;
-        bool _hasShouldSerializeMethodBeenLookedup = false;
-        MethodInfo _shouldSerializeMethod = null;
+        private WpfXamlMember _member;
+        private bool _hasShouldSerializeMethodBeenLookedup = false;
+        private MethodInfo _shouldSerializeMethod = null;
 
         public WpfMemberInvoker(WpfXamlMember member) : base(member)
         {

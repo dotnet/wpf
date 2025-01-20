@@ -1959,7 +1959,7 @@ namespace System.Windows.Interop
             }
         }
 
-        bool _windowPosChanging;
+        private bool _windowPosChanging;
 
         private void OnShowWindow(bool enableRenderTarget)
         {

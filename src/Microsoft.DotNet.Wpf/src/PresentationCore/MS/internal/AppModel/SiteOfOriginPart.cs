@@ -217,9 +217,9 @@ namespace MS.Internal.AppModel
 
         #region Private Members
 
-        Uri _absoluteLocation = null;
-        ContentType _contentType = MS.Internal.ContentType.Empty;
-        Stream _cacheStream = null;
+        private Uri _absoluteLocation = null;
+        private ContentType _contentType = MS.Internal.ContentType.Empty;
+        private Stream _cacheStream = null;
         private Object _globalLock = new Object();
 
         #endregion Private Members

@@ -26,7 +26,7 @@ namespace Standard
         private WndProc _wndProcCallback;
         private string _className;
         private bool _isDisposed;
-        Dispatcher _dispatcher;
+        private Dispatcher _dispatcher;
 
         public IntPtr Handle 
         { 

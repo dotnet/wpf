@@ -20,7 +20,7 @@ namespace MS.Internal.AutomationProxies
     // For example the EM_LINEINDEX message converts a line number to it's starting character position.
     // Perhaps not the best choice but we use it to be consistent.
 
-    class WindowsEditBox : ProxyHwnd, IValueProvider, ITextProvider
+    internal class WindowsEditBox : ProxyHwnd, IValueProvider, ITextProvider
     {
         // ------------------------------------------------------
         //

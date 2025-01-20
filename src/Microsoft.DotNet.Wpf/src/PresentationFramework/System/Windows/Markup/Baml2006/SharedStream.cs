@@ -298,7 +298,7 @@ namespace System.Windows.Baml2006
             return false;
         }
 
-        class RefCount
+        private class RefCount
         {
             public int Value;
         }

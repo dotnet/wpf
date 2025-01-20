@@ -463,7 +463,7 @@ namespace MS.Internal.AppModel
 
         #region Private fields
 
-        PageFunctionBase _keepAlivePageFunction = null;
+        private PageFunctionBase _keepAlivePageFunction = null;
 
         #endregion
     }

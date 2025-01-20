@@ -16,7 +16,7 @@ namespace System.Windows.Input.StylusWisp
     /// </summary>
     public class WispTabletDeviceCollection : TabletDeviceCollection
     {
-        const int VistaMajorVersion = 6;
+        private const int VistaMajorVersion = 6;
 
         /////////////////////////////////////////////////////////////////////
 
@@ -251,7 +251,7 @@ namespace System.Windows.Input.StylusWisp
         }
 
         /////////////////////////////////////////////////////////////////////
-        void UpdateTabletsImpl()
+        private void UpdateTabletsImpl()
         {
             // REENTRANCY NOTE: Let a PenThread do this work to avoid reentrancy!
             //                  On return you get entire list of tablet and info needed to
@@ -535,7 +535,7 @@ namespace System.Windows.Input.StylusWisp
         /////////////////////////////////////////////////////////////////////
         //  NOTE: This routine takes indexes that are in the TabletCollection range
         //        and not in the wisptis tablet index range.
-        void AddTablet(uint index, TabletDevice tabletDevice)
+        private void AddTablet(uint index, TabletDevice tabletDevice)
         {
             Debug.Assert(index <= Count);
             Debug.Assert(tabletDevice.Type != (TabletDeviceType)(-1)); // make sure not the mouse tablet device!
@@ -555,7 +555,7 @@ namespace System.Windows.Input.StylusWisp
         /////////////////////////////////////////////////////////////////////
         //  NOTE: This routine takes indexes that are in the TabletCollection range
         //        and not in the wisptis tablet index range.
-        void RemoveTablet(uint index)
+        private void RemoveTablet(uint index)
         {
             System.Diagnostics.Debug.Assert(index < Count && Count > 0);
 
@@ -693,10 +693,10 @@ namespace System.Windows.Input.StylusWisp
 
         /////////////////////////////////////////////////////////////////////
 
-        TabletDevice[]          _tablets = Array.Empty<TabletDevice>();
-        uint                    _indexMouseTablet = UInt32.MaxValue;
-        bool                    _inUpdateTablets;       // detect re-entrancy
-        bool                    _hasUpdateTabletsBeenCalledReentrantly;
-        List<TabletDevice>      _deferredTablets = new List<TabletDevice>();
+        private TabletDevice[]          _tablets = Array.Empty<TabletDevice>();
+        private uint                    _indexMouseTablet = UInt32.MaxValue;
+        private bool                    _inUpdateTablets;       // detect re-entrancy
+        private bool                    _hasUpdateTabletsBeenCalledReentrantly;
+        private List<TabletDevice>      _deferredTablets = new List<TabletDevice>();
     }
 }

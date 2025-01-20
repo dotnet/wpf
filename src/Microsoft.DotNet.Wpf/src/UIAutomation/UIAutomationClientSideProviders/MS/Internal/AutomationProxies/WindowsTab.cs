@@ -23,7 +23,7 @@ using NativeMethodsSetLastError = MS.Internal.UIAutomationClientSideProviders.Na
 
 namespace MS.Internal.AutomationProxies
 {
-    class WindowsTab: ProxyHwnd, ISelectionProvider, IScrollProvider, IRawElementProviderHwndOverride
+    internal class WindowsTab: ProxyHwnd, ISelectionProvider, IScrollProvider, IRawElementProviderHwndOverride
     {
         // ------------------------------------------------------
         //
@@ -895,7 +895,7 @@ namespace MS.Internal.AutomationProxies
 
     #region WindowsTabItem
 
-    class WindowsTabItem : ProxyFragment, ISelectionItemProvider, IScrollItemProvider
+    internal class WindowsTabItem : ProxyFragment, ISelectionItemProvider, IScrollItemProvider
     {
         // ------------------------------------------------------
         //
@@ -1365,7 +1365,7 @@ namespace MS.Internal.AutomationProxies
         #region Private Fields
 
         // Cached value for a winform
-        bool _fIsWinform;
+        private bool _fIsWinform;
 
         #endregion Private Fields
     }
@@ -1380,7 +1380,7 @@ namespace MS.Internal.AutomationProxies
 
     #region WindowsTabChildOverrideProxy
 
-    class WindowsTabChildOverrideProxy : ProxyHwnd
+    internal class WindowsTabChildOverrideProxy : ProxyHwnd
     {
         // ------------------------------------------------------
         //

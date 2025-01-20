@@ -54,7 +54,7 @@ namespace System.Windows.Markup
                 }
             }
 
-            int _value;
+            private int _value;
         }    
 #endif
 

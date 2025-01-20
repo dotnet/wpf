@@ -387,7 +387,7 @@ namespace MS.Internal
         private readonly LockRecursionPolicy _lockRecursionPolicy;
         private readonly bool _disableDispatcherProcessingWhenNoRecursion;
 
-        bool _disposed;
+        private bool _disposed;
 
         #endregion Private Fields
     }

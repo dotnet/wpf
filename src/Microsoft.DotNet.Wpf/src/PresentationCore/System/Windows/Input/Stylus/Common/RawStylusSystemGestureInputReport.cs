@@ -192,9 +192,9 @@ namespace System.Windows.Input
 
         /////////////////////////////////////////////////////////////////////
 
-        SystemGesture _id;
-        int _gestureX;// gesture location in tablet device coordinates
-        int _gestureY;
-        int _buttonState;
-}
+        private SystemGesture _id;
+        private int _gestureX; // gesture location in tablet device coordinates
+        private int _gestureY;
+        private int _buttonState;
+    }
 }

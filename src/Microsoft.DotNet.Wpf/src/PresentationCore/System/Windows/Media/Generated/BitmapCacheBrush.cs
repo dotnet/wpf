@@ -15,7 +15,7 @@ using System.Windows.Media.Composition;
 
 namespace System.Windows.Media
 {
-    sealed partial class BitmapCacheBrush : Brush
+    public sealed partial class BitmapCacheBrush : Brush
     {
         //------------------------------------------------------
         //

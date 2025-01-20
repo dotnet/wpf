@@ -51,13 +51,11 @@ namespace MS.Internal.AutomationProxies
         //  Constructors
         //
         //------------------------------------------------------
- 
+
         #region Constructors
 
         // Static class - Private to prevent creation
-        Input()
-        {
-        }
+        private Input() { }
 
         #endregion Constructors
 

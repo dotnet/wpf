@@ -77,9 +77,9 @@ namespace MS.Internal.Media
             }
         }
         
-        double _x ;
-        double _y ; 
-        double _z ; 
+        private double _x ;
+        private double _y ;
+        private double _z ; 
             
     }
 

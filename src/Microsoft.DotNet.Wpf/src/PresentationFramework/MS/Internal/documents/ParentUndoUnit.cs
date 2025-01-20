@@ -600,7 +600,7 @@ namespace MS.Internal.Documents
         /// <returns>
         /// true if the unit is already in the parent chain, false otherwise
         /// </returns>
-        bool IsInParentUnitChain(IUndoUnit unit)
+        private bool IsInParentUnitChain(IUndoUnit unit)
         {
             if (unit is IParentUndoUnit)
             {

@@ -14,7 +14,7 @@ using System.Windows.Media.Composition;
 
 namespace System.Windows.Media
 {
-    sealed partial class RadialGradientBrush : GradientBrush
+    public sealed partial class RadialGradientBrush : GradientBrush
     {
         //------------------------------------------------------
         //

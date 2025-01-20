@@ -14,7 +14,7 @@ using System.Windows.Media.Composition;
 
 namespace System.Windows.Media
 {
-    sealed partial class ScaleTransform : Transform
+    public sealed partial class ScaleTransform : Transform
     {
         //------------------------------------------------------
         //

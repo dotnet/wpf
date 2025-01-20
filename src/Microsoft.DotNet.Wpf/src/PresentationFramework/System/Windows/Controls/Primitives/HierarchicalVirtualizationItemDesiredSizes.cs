@@ -214,14 +214,14 @@ namespace System.Windows.Controls
 
         #region Data
 
-        Size _logicalSize;
-        Size _logicalSizeInViewport;
-        Size _logicalSizeBeforeViewport;
-        Size _logicalSizeAfterViewport;
-        Size _pixelSize;
-        Size _pixelSizeInViewport;
-        Size _pixelSizeBeforeViewport;
-        Size _pixelSizeAfterViewport;
+        private Size _logicalSize;
+        private Size _logicalSizeInViewport;
+        private Size _logicalSizeBeforeViewport;
+        private Size _logicalSizeAfterViewport;
+        private Size _pixelSize;
+        private Size _pixelSizeInViewport;
+        private Size _pixelSizeBeforeViewport;
+        private Size _pixelSizeAfterViewport;
 
         #endregion
     }

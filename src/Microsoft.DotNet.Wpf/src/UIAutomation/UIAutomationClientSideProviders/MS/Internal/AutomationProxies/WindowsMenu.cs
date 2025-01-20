@@ -22,7 +22,7 @@ using MS.Win32;
 namespace MS.Internal.AutomationProxies
 {
     // Win32 menu proxy
-    class WindowsMenu: ProxyHwnd
+    internal class WindowsMenu: ProxyHwnd
     {
         // ------------------------------------------------------
         //
@@ -2983,7 +2983,7 @@ namespace MS.Internal.AutomationProxies
 
             #region Private Fields
 
-            IntPtr _hwndParent;
+            private IntPtr _hwndParent;
 
             #endregion
         }

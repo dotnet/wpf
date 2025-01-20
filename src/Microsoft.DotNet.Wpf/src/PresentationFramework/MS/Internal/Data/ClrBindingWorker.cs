@@ -50,7 +50,7 @@ namespace MS.Internal.Data
 
         // separate method to avoid loading System.Xml if not needed
         [System.Runtime.CompilerServices.MethodImpl(System.Runtime.CompilerServices.MethodImplOptions.NoInlining)]
-        PropertyPath PrepareXmlBinding(PropertyPath path)
+        private PropertyPath PrepareXmlBinding(PropertyPath path)
         {
             if (path == null)
             {
@@ -550,8 +550,9 @@ namespace MS.Internal.Data
         //
         //------------------------------------------------------
 
-        PropertyPathWorker PW { get { return _pathWorker; } }
-        XmlBindingWorker XmlWorker { get { return (XmlBindingWorker)GetValue(Feature.XmlWorker, null); } }
+        private PropertyPathWorker PW { get { return _pathWorker; } }
+
+        private XmlBindingWorker XmlWorker { get { return (XmlBindingWorker)GetValue(Feature.XmlWorker, null); } }
 
         //------------------------------------------------------
         //
@@ -559,7 +560,7 @@ namespace MS.Internal.Data
         //
         //------------------------------------------------------
 
-        void SetStatus(PropertyPathStatus status)
+        private void SetStatus(PropertyPathStatus status)
         {
             switch (status)
             {
@@ -578,7 +579,7 @@ namespace MS.Internal.Data
             }
         }
 
-        void ReplaceDependencySources()
+        private void ReplaceDependencySources()
         {
             if (!ParentBindingExpression.IsDetaching)
             {
@@ -619,7 +620,7 @@ namespace MS.Internal.Data
 
         #region Async
 
-        void RequestAsyncGetValue(object item, int level)
+        private void RequestAsyncGetValue(object item, int level)
         {
             // get information about the property whose value we want
             string name = GetNameFromInfo(PW.GetAccessor(level));
@@ -641,7 +642,7 @@ namespace MS.Internal.Data
             Engine.AddAsyncRequest(TargetElement, pendingGetValueRequest);
         }
 
-        static object OnGetValueCallback(AsyncDataRequest adr)
+        private static object OnGetValueCallback(AsyncDataRequest adr)
         {
             AsyncGetValueRequest request = (AsyncGetValueRequest)adr;
             ClrBindingWorker worker = (ClrBindingWorker)request.Args[0];
@@ -651,7 +652,7 @@ namespace MS.Internal.Data
             return value;
         }
 
-        static object OnCompleteGetValueCallback(AsyncDataRequest adr)
+        private static object OnCompleteGetValueCallback(AsyncDataRequest adr)
         {
             AsyncGetValueRequest request = (AsyncGetValueRequest)adr;
             ClrBindingWorker worker = (ClrBindingWorker)request.Args[0];
@@ -665,7 +666,7 @@ namespace MS.Internal.Data
             return null;
         }
 
-        static object OnCompleteGetValueOperation(object arg)
+        private static object OnCompleteGetValueOperation(object arg)
         {
             AsyncGetValueRequest request = (AsyncGetValueRequest)arg;
             ClrBindingWorker worker = (ClrBindingWorker)request.Args[0];
@@ -673,7 +674,7 @@ namespace MS.Internal.Data
             return null;
         }
 
-        void CompleteGetValue(AsyncGetValueRequest request)
+        private void CompleteGetValue(AsyncGetValueRequest request)
         {
             AsyncGetValueRequest pendingGetValueRequest = (AsyncGetValueRequest)GetValue(Feature.PendingGetValueRequest, null);
             if (pendingGetValueRequest == request)
@@ -702,8 +703,7 @@ namespace MS.Internal.Data
             }
         }
 
-
-        void RequestAsyncSetValue(object item, object value)
+        private void RequestAsyncSetValue(object item, object value)
         {
             // get information about the property whose value we want
             string name = GetNameFromInfo(PW.GetAccessor(PW.Length - 1));
@@ -725,7 +725,7 @@ namespace MS.Internal.Data
             Engine.AddAsyncRequest(TargetElement, pendingSetValueRequest);
         }
 
-        static object OnSetValueCallback(AsyncDataRequest adr)
+        private static object OnSetValueCallback(AsyncDataRequest adr)
         {
             AsyncSetValueRequest request = (AsyncSetValueRequest)adr;
             ClrBindingWorker worker = (ClrBindingWorker)request.Args[0];
@@ -733,7 +733,7 @@ namespace MS.Internal.Data
             return null;
         }
 
-        static object OnCompleteSetValueCallback(AsyncDataRequest adr)
+        private static object OnCompleteSetValueCallback(AsyncDataRequest adr)
         {
             AsyncSetValueRequest request = (AsyncSetValueRequest)adr;
             ClrBindingWorker worker = (ClrBindingWorker)request.Args[0];
@@ -747,7 +747,7 @@ namespace MS.Internal.Data
             return null;
         }
 
-        static object OnCompleteSetValueOperation(object arg)
+        private static object OnCompleteSetValueOperation(object arg)
         {
             AsyncSetValueRequest request = (AsyncSetValueRequest)arg;
             ClrBindingWorker worker = (ClrBindingWorker)request.Args[0];
@@ -755,7 +755,7 @@ namespace MS.Internal.Data
             return null;
         }
 
-        void CompleteSetValue(AsyncSetValueRequest request)
+        private void CompleteSetValue(AsyncSetValueRequest request)
         {
             AsyncSetValueRequest pendingSetValueRequest = (AsyncSetValueRequest)GetValue(Feature.PendingSetValueRequest, null);
             if (pendingSetValueRequest == request)
@@ -794,7 +794,7 @@ namespace MS.Internal.Data
             }
         }
 
-        string GetNameFromInfo(object info)
+        private string GetNameFromInfo(object info)
         {
             MemberInfo mi;
             PropertyDescriptor pd;
@@ -829,12 +829,12 @@ namespace MS.Internal.Data
         //
         //------------------------------------------------------
 
-        static readonly AsyncRequestCallback DoGetValueCallback = new AsyncRequestCallback(OnGetValueCallback);
-        static readonly AsyncRequestCallback CompleteGetValueCallback = new AsyncRequestCallback(OnCompleteGetValueCallback);
-        static readonly DispatcherOperationCallback CompleteGetValueLocalCallback = new DispatcherOperationCallback(OnCompleteGetValueOperation);
-        static readonly AsyncRequestCallback DoSetValueCallback = new AsyncRequestCallback(OnSetValueCallback);
-        static readonly AsyncRequestCallback CompleteSetValueCallback = new AsyncRequestCallback(OnCompleteSetValueCallback);
-        static readonly DispatcherOperationCallback CompleteSetValueLocalCallback = new DispatcherOperationCallback(OnCompleteSetValueOperation);
+        private static readonly AsyncRequestCallback DoGetValueCallback = new AsyncRequestCallback(OnGetValueCallback);
+        private static readonly AsyncRequestCallback CompleteGetValueCallback = new AsyncRequestCallback(OnCompleteGetValueCallback);
+        private static readonly DispatcherOperationCallback CompleteGetValueLocalCallback = new DispatcherOperationCallback(OnCompleteGetValueOperation);
+        private static readonly AsyncRequestCallback DoSetValueCallback = new AsyncRequestCallback(OnSetValueCallback);
+        private static readonly AsyncRequestCallback CompleteSetValueCallback = new AsyncRequestCallback(OnCompleteSetValueCallback);
+        private static readonly DispatcherOperationCallback CompleteSetValueLocalCallback = new DispatcherOperationCallback(OnCompleteSetValueOperation);
 
         //------------------------------------------------------
         //
@@ -842,7 +842,7 @@ namespace MS.Internal.Data
         //
         //------------------------------------------------------
 
-        PropertyPathWorker _pathWorker;
+        private PropertyPathWorker _pathWorker;
     }
 
     internal class WeakDependencySource
@@ -862,7 +862,7 @@ namespace MS.Internal.Data
         internal DependencyObject DependencyObject { get { return (DependencyObject)BindingExpressionBase.GetReference(_item); } }
         internal DependencyProperty DependencyProperty { get { return _dp; } }
 
-        object _item;
-        DependencyProperty _dp;
+        private object _item;
+        private DependencyProperty _dp;
     }
 }

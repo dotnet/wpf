@@ -773,29 +773,29 @@ namespace MS.Internal.Documents
         /// <summary>
         /// The XPS document from which to read signatures.
         /// </summary>
-        XpsDocument _xpsDocument;
+        private XpsDocument _xpsDocument;
 
         /// <summary>
         /// The fixed document sequence to which to write signature definitions.
         /// </summary>
-        IXpsFixedDocumentSequenceReader _fixedDocumentSequence;
+        private IXpsFixedDocumentSequenceReader _fixedDocumentSequence;
 
         /// <summary>
         /// The fixed document to which to write signature definitions.
         /// </summary>
-        IXpsFixedDocumentReader _fixedDocument;
+        private IXpsFixedDocumentReader _fixedDocument;
 
         /// <summary>
         /// A list of all the signatures in the package.
         /// </summary>
-        IList<DigitalSignature> _digitalSignatureList;
+        private IList<DigitalSignature> _digitalSignatureList;
 
         /// <summary>
         /// A cached read-only version of the signature list. This is a wrapper
         /// around _digitalSignatureList that is intended to be passed out by
         /// the Signatures property.
         /// </summary>
-        ReadOnlyCollection<DigitalSignature> _readOnlySignatureList;
+        private ReadOnlyCollection<DigitalSignature> _readOnlySignatureList;
 
         //Contains all known flags that don't convert to Corrupted.
         //(All flags except Cyclic and NotSignatureValid).  We will be looking for unknown flags using this

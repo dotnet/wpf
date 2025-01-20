@@ -181,10 +181,10 @@ namespace MS.Internal.Automation
         //  Private Fields
         //
         //------------------------------------------------------
- 
+
         #region Private Fields
 
-        Thread _thread;              // the thread on which QueueItem's are processed
+        private Thread _thread;      // the thread on which QueueItem's are processed
         private Queue _q;            // a synchronized queue
         private AutoResetEvent _ev;  // notifies when new queue items show up
         private bool _quitting;      // true if need to stop queueing

@@ -58,11 +58,12 @@ namespace MS.Internal.Data
 
     internal class PathParser
     {
-        string _error;
+        private string _error;
         public String Error { get { return _error; } }
-        void SetError(string id, params object[] args) { _error = SR.Format(SR.GetResourceString(id), args); }
 
-        enum State { Init, DrillIn, Prop, Done };
+        private void SetError(string id, params object[] args) { _error = SR.Format(SR.GetResourceString(id), args); }
+
+        private enum State { Init, DrillIn, Prop, Done };
 
         // Each level of the path consists of
         //      a property or indexer:
@@ -179,7 +180,7 @@ namespace MS.Internal.Data
             return result;
         }
 
-        void AddProperty()
+        private void AddProperty()
         {
             int start = _index;
             int level = 0;
@@ -221,10 +222,9 @@ namespace MS.Internal.Data
             StartNewLevel();
         }
 
+        private enum IndexerState { BeginParam, ParenString, ValueString, Done }
 
-        enum IndexerState { BeginParam, ParenString, ValueString, Done }
-
-        void AddIndexer()
+        private void AddIndexer()
         {
             // indexer args are parsed by a (sub-) state machine with four
             // states.  The string is a comma-separated list of params, each
@@ -379,7 +379,7 @@ namespace MS.Internal.Data
             StartNewLevel();
         }
 
-        void StartNewLevel()
+        private void StartNewLevel()
         {
             _state = (_index < _n) ? State.DrillIn : State.Done;
             _drillIn = DrillIn.Never;
@@ -390,15 +390,15 @@ namespace MS.Internal.Data
             return ch == '.' || ch == '/' || ch == '[' || ch == ']';
         }
 
-        State _state;
-        string _path;
-        int _index;
-        int _n;
-        DrillIn _drillIn;
-        ArrayList _al = new ArrayList();
-        const char NullChar = Char.MinValue;
-        const char EscapeChar = '^';
-        static SourceValueInfo[] EmptyInfo = Array.Empty<SourceValueInfo>();
+        private State _state;
+        private string _path;
+        private int _index;
+        private int _n;
+        private DrillIn _drillIn;
+        private ArrayList _al = new ArrayList();
+        private const char NullChar = Char.MinValue;
+        private const char EscapeChar = '^';
+        private static SourceValueInfo[] EmptyInfo = Array.Empty<SourceValueInfo>();
     }
 }
 

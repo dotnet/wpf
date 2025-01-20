@@ -489,12 +489,12 @@ namespace System.Windows.Xps.Serialization
 
         #region private data
 
-        Dispatcher _dispatcher;
-        bool _serializationOperationCanceled;
-        XmlWriter _currentPageXmlWriter;
-        bool _isBatchWorkItemInProgress;
-        Stack _operationStack;
-        Queue _batchOperationQueue;
+        private Dispatcher _dispatcher;
+        private bool _serializationOperationCanceled;
+        private XmlWriter _currentPageXmlWriter;
+        private bool _isBatchWorkItemInProgress;
+        private Stack _operationStack;
+        private Queue _batchOperationQueue;
 
         #endregion private data
     }

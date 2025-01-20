@@ -92,7 +92,7 @@ namespace Microsoft.Windows.Controls.Ribbon
 
         #region DismissPopup
 
-        bool _retainFocusOnDismiss = false;
+        private bool _retainFocusOnDismiss = false;
         internal override void OnIsDropDownOpenChanged(DependencyPropertyChangedEventArgs e)
         {
             base.OnIsDropDownOpenChanged(e);

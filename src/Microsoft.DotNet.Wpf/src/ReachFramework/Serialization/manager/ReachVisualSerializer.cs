@@ -208,7 +208,7 @@ namespace System.Windows.Xps.Serialization
 
     };
 
-    class NodeContext
+    internal class NodeContext
     {
         #region Constructor
 

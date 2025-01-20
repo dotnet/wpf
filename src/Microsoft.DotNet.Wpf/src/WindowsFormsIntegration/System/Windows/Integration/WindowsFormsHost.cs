@@ -65,7 +65,7 @@ namespace System.Windows.Forms.Integration
         /// <summary>
         /// Notifies Avalon that focus has moved within this WindowsFormsHost.
         /// </summary>
-        void NotifyFocusWithinHost()
+        private void NotifyFocusWithinHost()
         {
             DependencyObject focusScope = GetFocusScopeForElement(this);
             if (null != focusScope)
@@ -373,7 +373,7 @@ namespace System.Windows.Forms.Integration
 
         #region Rendering
 
-        static Brush defaultBrush = SystemColors.WindowBrush;
+        private static Brush defaultBrush = SystemColors.WindowBrush;
         /// <summary>
         ///     Manually searches up the parent tree to find the first FrameworkElement that
         ///     has a non-null background, and returns that Brush.
@@ -458,7 +458,7 @@ namespace System.Windows.Forms.Integration
         private DummyNativeWindow _dummyNativeWindow;
         private class DummyNativeWindow : NativeWindow, IDisposable
         {
-            WindowsFormsHost _host;
+            private WindowsFormsHost _host;
             public DummyNativeWindow(WindowsFormsHost host)
             { _host = host; }
 
@@ -515,7 +515,7 @@ namespace System.Windows.Forms.Integration
             }
         }
 
-        void ApplyAllProperties(object sender, RoutedEventArgs e)
+        private void ApplyAllProperties(object sender, RoutedEventArgs e)
         {
             _propertyMap.ApplyAll();
         }

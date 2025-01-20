@@ -185,7 +185,7 @@ namespace MS.Internal.Data
 
 #endif // LiveShapingInstrumentation
 
-        LiveShapingList _list;      // my owner
-        LiveShapingBlock _placeholderBlock; // used to handle a race condition arising in live sorting
+        private LiveShapingList _list;      // my owner
+        private LiveShapingBlock _placeholderBlock; // used to handle a race condition arising in live sorting
     }
 }

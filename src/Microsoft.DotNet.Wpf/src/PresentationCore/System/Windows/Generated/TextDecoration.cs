@@ -15,7 +15,7 @@ using System.Windows.Media.Animation;
 
 namespace System.Windows
 {
-    sealed partial class TextDecoration : Animatable
+    public sealed partial class TextDecoration : Animatable
     {
         //------------------------------------------------------
         //

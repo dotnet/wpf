@@ -118,7 +118,7 @@ namespace MS.Internal.Ink.InkSerializedFormat
         /// <param name="stylusPoints"></param>
         /// <param name="extendedProperties"></param>
 #endif
-        static uint DecodeISFIntoStroke(
+        private static uint DecodeISFIntoStroke(
 #if OLD_ISF
             Compressor compressor, 
 #endif
@@ -341,7 +341,7 @@ namespace MS.Internal.Ink.InkSerializedFormat
         /// Loads packets from the input stream.  For example, packets are all of the x's in a stroke
         /// </summary>
 #endif
-        static uint LoadPackets(Stream inputStream, 
+        private static uint LoadPackets(Stream inputStream, 
                                 uint totalBytesInStrokeBlockOfIsfStream, 
 #if OLD_ISF
                                 Compressor compressor, 
@@ -794,7 +794,7 @@ namespace MS.Internal.Ink.InkSerializedFormat
         /// <param name="stream">null to calculate size only</param>
         /// <param name="strokeLookupEntry"></param>
 #endif
-        static uint SavePackets(
+        private static uint SavePackets(
             Stroke stroke,
             Stream stream, 
 #if OLD_ISF
@@ -935,7 +935,7 @@ namespace MS.Internal.Ink.InkSerializedFormat
         /// <param name="guid"></param>
         /// <param name="algo"></param>
 #endif
-        static uint SavePacketPropertyData(
+        private static uint SavePacketPropertyData(
             int[] packetdata, 
             Stream stream, 
 #if OLD_ISF

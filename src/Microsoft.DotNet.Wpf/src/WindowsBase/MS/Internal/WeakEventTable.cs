@@ -209,7 +209,7 @@ namespace MS.Internal
             }
         }
 
-        bool DoCleanup(bool forceCleanup)
+        private bool DoCleanup(bool forceCleanup)
         {
             if (IsCleanupEnabled || forceCleanup)
             {
@@ -441,7 +441,7 @@ namespace MS.Internal
         private Hashtable _dataTable = new Hashtable();     // maps EventKey -> data
         private Hashtable _eventNameTable = new Hashtable(); // maps <Type,name> -> manager
 
-        ReaderWriterLockWrapper     _lock = new ReaderWriterLockWrapper();
+        private ReaderWriterLockWrapper     _lock = new ReaderWriterLockWrapper();
         private int                 _cleanupRequests;
         private bool                _cleanupEnabled = true;
         private CleanupHelper       _cleanupHelper;
@@ -563,9 +563,9 @@ namespace MS.Internal
                 return !key1.Equals(key2);
             }
 
-            WeakEventManager _manager;
-            object _source;             // lookup: direct ref;  In table: WeakRef
-            int _hashcode;              // cached, in case source is GC'd
+            private WeakEventManager _manager;
+            private object _source;             // lookup: direct ref;  In table: WeakRef
+            private int _hashcode;              // cached, in case source is GC'd
         }
 
         // the key for the event name table:  <ownerType, eventName>
@@ -602,8 +602,8 @@ namespace MS.Internal
                 return !key1.Equals(key2);
             }
 
-            Type _eventSourceType;
-            string _eventName;
+            private Type _eventSourceType;
+            private string _eventName;
         }
 
         #endregion Table Keys

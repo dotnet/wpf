@@ -17,7 +17,7 @@ using System.Windows.Media.Composition;
 
 namespace System.Windows.Media
 {
-    sealed partial class GuidelineSet : Animatable, DUCE.IResource
+    public sealed partial class GuidelineSet : Animatable, DUCE.IResource
     {
         //------------------------------------------------------
         //

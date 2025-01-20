@@ -14,7 +14,7 @@ using System.Windows.Media.Composition;
 
 namespace System.Windows.Media
 {
-    sealed partial class SolidColorBrush : Brush
+    public sealed partial class SolidColorBrush : Brush
     {
         //------------------------------------------------------
         //

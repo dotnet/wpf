@@ -31,7 +31,7 @@ namespace System.Windows.Media.Imaging
             }
         }
 
-        int _percentComplete;
+        private int _percentComplete;
     }
 
     #endregion

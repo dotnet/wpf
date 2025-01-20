@@ -14,7 +14,7 @@ using MS.Internal.KnownBoxes;
 
 namespace System.Windows.Media
 {
-    sealed partial class ArcSegment : PathSegment
+    public sealed partial class ArcSegment : PathSegment
     {
         //------------------------------------------------------
         //

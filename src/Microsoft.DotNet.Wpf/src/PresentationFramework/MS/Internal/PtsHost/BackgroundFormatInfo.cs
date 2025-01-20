@@ -267,7 +267,7 @@ namespace MS.Internal.PtsHost
         // Holds the formatter to invalidate when _throttleBackgroundTimer
         // fires.
         //-------------------------------------------------------------------
-        IFlowDocumentFormatter _pendingBackgroundFormatter;
+        private IFlowDocumentFormatter _pendingBackgroundFormatter;
 
         //-------------------------------------------------------------------
         // Number of seconds to disable background layout after receiving

@@ -15,7 +15,7 @@ using MS.Win32;
 namespace MS.Internal.AutomationProxies
 {
     // This class represents the Alt-Tab (task switch) window.
-    class WindowsAltTab : ProxyHwnd
+    internal class WindowsAltTab : ProxyHwnd
     {
         // ------------------------------------------------------
         //
@@ -308,7 +308,7 @@ namespace MS.Internal.AutomationProxies
 
         // Proxy class for an entry in the Alt-Tab window, representing
         // a single running program.
-        class WindowsAltTabItem : ProxySimple
+        private class WindowsAltTabItem : ProxySimple
         {
             // ------------------------------------------------------
             //

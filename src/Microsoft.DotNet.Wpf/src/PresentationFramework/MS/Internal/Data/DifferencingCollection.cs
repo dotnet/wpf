@@ -218,7 +218,7 @@ namespace MS.Internal.Data
             }
         }
 
-        void LoadItems(IEnumerable enumerable)
+        private void LoadItems(IEnumerable enumerable)
         {
             foreach (object o in enumerable)
             {
@@ -227,7 +227,7 @@ namespace MS.Internal.Data
         }
 
         // reload the list from the given enumerable, raising required events
-        void Reload(IEnumerable enumerable)
+        private void Reload(IEnumerable enumerable)
         {
             Items.Clear();
             LoadItems(enumerable);
@@ -237,8 +237,8 @@ namespace MS.Internal.Data
             OnCollectionChanged(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Reset));
         }
 
-        enum Change { None, Add, Remove, Move, Replace, Reset }
+        private enum Change { None, Add, Remove, Move, Replace, Reset }
 
-        static object Unset = new Object();
+        private static object Unset = new Object();
     }
 }

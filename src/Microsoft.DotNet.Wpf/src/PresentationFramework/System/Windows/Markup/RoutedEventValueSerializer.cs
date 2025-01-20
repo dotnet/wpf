@@ -36,9 +36,9 @@ namespace System.Windows.Markup
             return base.ConvertToString(value, context);
         }
 
-        static Dictionary<Type, Type> initializedTypes = new Dictionary<Type, Type>();
+        private static Dictionary<Type, Type> initializedTypes = new Dictionary<Type, Type>();
 
-        static void ForceTypeConstructors(Type currentType)
+        private static void ForceTypeConstructors(Type currentType)
         {
             // Force load the Statics by walking up the hierarchy and running class constructors
             while (currentType != null && !initializedTypes.ContainsKey(currentType))

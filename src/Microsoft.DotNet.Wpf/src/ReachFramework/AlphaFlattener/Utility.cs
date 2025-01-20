@@ -23,9 +23,9 @@ namespace Microsoft.Internal.AlphaFlattener
 #if DEBUG
     internal static class StopWatch
 	{
-		static double   s_total; // = 0;
-		static DateTime s_startTime;
-		static int      s_count; // = 0;
+		private static double   s_total; // = 0;
+		private static DateTime s_startTime;
+		private static int      s_count; // = 0;
 
 		internal static void Start()
 		{
@@ -1196,7 +1196,7 @@ namespace Microsoft.Internal.AlphaFlattener
         #region Image
 
         // val could be larger than 255 * 255 because of super lumbinance
-        static Byte Div255(int val)
+        private static Byte Div255(int val)
         {
             if (val > 255 * 255)
             {

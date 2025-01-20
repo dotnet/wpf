@@ -289,8 +289,7 @@ namespace System.Windows.Xps.Serialization
         }
 
 
-        private
-        Stack<NodeContext>   _contextStack;
-        VisualTreeFlattener  _flattener;
+        private Stack<NodeContext>   _contextStack;
+        private VisualTreeFlattener  _flattener;
     };
 }

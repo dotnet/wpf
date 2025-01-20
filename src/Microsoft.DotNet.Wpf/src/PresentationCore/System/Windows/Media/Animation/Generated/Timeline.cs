@@ -12,7 +12,7 @@
 // These types are aliased to match the unamanaged names used in interop
 namespace System.Windows.Media.Animation
 {
-    abstract partial class Timeline : Animatable
+    public abstract partial class Timeline : Animatable
     {
         //------------------------------------------------------
         //

@@ -2731,8 +2731,9 @@ namespace System.Windows.Markup
                 // if the prefix was "" then
                 // 1) normal properties resolve to the parent Tag namespace.
                 // 2) Attached properties resolve to the "" default namespace.
-                int dotIndex = name.IndexOf('.');
-                if (-1 == dotIndex)
+#pragma warning disable CA1847
+                if (!name.Contains("."))
+#pragma warning restore CA1847
                     attribNamespaceURI = parentURI;
                 else
                     attribNamespaceURI = XmlReader.LookupNamespace("");

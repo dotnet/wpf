@@ -3963,20 +3963,20 @@ namespace System.Windows.Controls
             /// </summary>
             static GridLinesRenderer()
             {
-                s_oddDashPen = new Pen(Brushes.Blue, c_penWidth);
-                DoubleCollection oddDashArray = new DoubleCollection();
-                oddDashArray.Add(c_dashLength);
-                oddDashArray.Add(c_dashLength);
-                s_oddDashPen.DashStyle = new DashStyle(oddDashArray, 0);
-                s_oddDashPen.DashCap = PenLineCap.Flat;
+                DoubleCollection dashArray = new DoubleCollection(DashLength, DashLength);
+
+                s_oddDashPen = new Pen(Brushes.Blue, PenWidth)
+                {
+                    DashStyle = new DashStyle(dashArray, 0),
+                    DashCap = PenLineCap.Flat
+                };
                 s_oddDashPen.Freeze();
 
-                s_evenDashPen = new Pen(Brushes.Yellow, c_penWidth);
-                DoubleCollection evenDashArray = new DoubleCollection();
-                evenDashArray.Add(c_dashLength);
-                evenDashArray.Add(c_dashLength);
-                s_evenDashPen.DashStyle = new DashStyle(evenDashArray, c_dashLength);
-                s_evenDashPen.DashCap = PenLineCap.Flat;
+                s_evenDashPen = new Pen(Brushes.Yellow, PenWidth)
+                {
+                    DashStyle = new DashStyle(dashArray, DashLength),
+                    DashCap = PenLineCap.Flat
+                };
                 s_evenDashPen.Freeze();
             }
 
@@ -4029,11 +4029,10 @@ namespace System.Windows.Controls
                 drawingContext.DrawLine(s_evenDashPen, start, end);
             }
 
-            private const double c_dashLength = 4.0;    //
-            private const double c_penWidth = 1.0;      //
+            private const double DashLength = 4.0;    //
+            private const double PenWidth = 1.0;      //
             private static readonly Pen s_oddDashPen;   //  first pen to draw dash
             private static readonly Pen s_evenDashPen;  //  second pen to draw dash
-            private static readonly Point c_zeroPoint = new Point(0, 0);
         }
 
         #endregion Private Structures Classes

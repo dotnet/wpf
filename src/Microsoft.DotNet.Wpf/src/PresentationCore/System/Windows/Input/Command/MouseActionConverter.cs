@@ -1,19 +1,19 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
+using System.Runtime.CompilerServices;
 using System.ComponentModel;
 using System.Globalization;
 
 namespace System.Windows.Input
 {
     /// <summary>
-    /// Converter class for converting between a <see langword="string"/> and <see cref="MouseAction"/>.
+    /// Converter class for converting between a <see cref="string"/> and <see cref="MouseAction"/>.
     /// </summary>
     public class MouseActionConverter : TypeConverter
     {
         ///<summary>
-        /// Used to check whether we can convert a <see langword="string"/> into a <see cref="MouseAction"/>.
+        /// Used to check whether we can convert a <see cref="string"/> into a <see cref="MouseAction"/>.
         ///</summary>
         ///<param name="context">ITypeDescriptorContext</param>
         ///<param name="sourceType">type to convert from</param>
@@ -25,11 +25,11 @@ namespace System.Windows.Input
         }
 
         /// <summary>
-        /// Used to check whether we can convert specified value to <see langword="string"/>.
+        /// Used to check whether we can convert specified value to <see cref="string"/>.
         /// </summary>
         /// <param name="context">ITypeDescriptorContext</param>
         /// <param name="destinationType">Type to convert to</param>
-        /// <returns><see langword="true"/> if conversion to <see langword="string"/> is possible, <see langword="false"/> otherwise.</returns>
+        /// <returns><see langword="true"/> if conversion to <see cref="string"/> is possible, <see langword="false"/> otherwise.</returns>
         public override bool CanConvertTo(ITypeDescriptorContext context, Type destinationType)
         {
             // We can convert to an InstanceDescriptor or to a string
@@ -45,41 +45,48 @@ namespace System.Windows.Input
         }
 
         /// <summary>
-        /// Converts <paramref name="source"/> of <see langword="string"/> type to its <see cref="MouseAction"/> represensation.
+        /// Converts <paramref name="source"/> of <see cref="string"/> type to its <see cref="MouseAction"/> represensation.
         /// </summary>
         /// <param name="context">Parser Context</param>
         /// <param name="culture">Culture Info</param>
         /// <param name="source">MouseAction String</param>
-        /// <returns>A <see cref="MouseAction"/> representing the <see langword="string"/> specified by <paramref name="source"/>.</returns>
+        /// <returns>A <see cref="MouseAction"/> representing the <see cref="string"/> specified by <paramref name="source"/>.</returns>
         public override object ConvertFrom(ITypeDescriptorContext context, CultureInfo culture, object source)
         {
             if (source is not string mouseAction)
                 throw GetConvertFromException(source);
 
             ReadOnlySpan<char> mouseActionToken = mouseAction.AsSpan().Trim();
-            return mouseActionToken switch
-            {
-                _ when mouseActionToken.IsEmpty => MouseAction.None, // Special casing as produced by "ConvertTo"
-                _ when mouseActionToken.Equals("None", StringComparison.OrdinalIgnoreCase) => MouseAction.None,
-                _ when mouseActionToken.Equals("LeftClick", StringComparison.OrdinalIgnoreCase) => MouseAction.LeftClick,
-                _ when mouseActionToken.Equals("RightClick", StringComparison.OrdinalIgnoreCase) => MouseAction.RightClick,
-                _ when mouseActionToken.Equals("MiddleClick", StringComparison.OrdinalIgnoreCase) => MouseAction.MiddleClick,
-                _ when mouseActionToken.Equals("WheelClick", StringComparison.OrdinalIgnoreCase) => MouseAction.WheelClick,
-                _ when mouseActionToken.Equals("LeftDoubleClick", StringComparison.OrdinalIgnoreCase) => MouseAction.LeftDoubleClick,
-                _ when mouseActionToken.Equals("RightDoubleClick", StringComparison.OrdinalIgnoreCase) => MouseAction.RightDoubleClick,
-                _ when mouseActionToken.Equals("MiddleDoubleClick", StringComparison.OrdinalIgnoreCase) => MouseAction.MiddleDoubleClick,
-                _ => throw new NotSupportedException(SR.Format(SR.Unsupported_MouseAction, mouseActionToken.ToString()))
-            };
+
+            return ConvertFromImpl(mouseActionToken);
         }
 
         /// <summary>
-        /// Converts a <paramref name="value"/> of <see cref="MouseAction"/> to its <see langword="string"/> represensation.
+        /// Converts <paramref name="mouseActionToken"/> to its <see cref="MouseAction"/> represensation.
+        /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        internal static MouseAction ConvertFromImpl(ReadOnlySpan<char> mouseActionToken) => mouseActionToken switch
+        {
+            _ when mouseActionToken.IsEmpty => MouseAction.None, // Special casing as produced by "ConvertTo"
+            _ when mouseActionToken.Equals("None", StringComparison.OrdinalIgnoreCase) => MouseAction.None,
+            _ when mouseActionToken.Equals("LeftClick", StringComparison.OrdinalIgnoreCase) => MouseAction.LeftClick,
+            _ when mouseActionToken.Equals("RightClick", StringComparison.OrdinalIgnoreCase) => MouseAction.RightClick,
+            _ when mouseActionToken.Equals("MiddleClick", StringComparison.OrdinalIgnoreCase) => MouseAction.MiddleClick,
+            _ when mouseActionToken.Equals("WheelClick", StringComparison.OrdinalIgnoreCase) => MouseAction.WheelClick,
+            _ when mouseActionToken.Equals("LeftDoubleClick", StringComparison.OrdinalIgnoreCase) => MouseAction.LeftDoubleClick,
+            _ when mouseActionToken.Equals("RightDoubleClick", StringComparison.OrdinalIgnoreCase) => MouseAction.RightDoubleClick,
+            _ when mouseActionToken.Equals("MiddleDoubleClick", StringComparison.OrdinalIgnoreCase) => MouseAction.MiddleDoubleClick,
+            _ => throw new NotSupportedException(SR.Format(SR.Unsupported_MouseAction, mouseActionToken.ToString()))
+        };
+
+        /// <summary>
+        /// Converts a <paramref name="value"/> of <see cref="MouseAction"/> to its <see cref="string"/> represensation.
         /// </summary>
         /// <param name="context">Serialization Context</param>
         /// <param name="culture">Culture Info</param>
         /// <param name="value">MouseAction value </param>
         /// <param name="destinationType">Type to Convert</param>
-        /// <returns>A <see langword="string"/> representing the <see cref="MouseAction"/> specified by <paramref name="value"/>.</returns>
+        /// <returns>A <see cref="string"/> representing the <see cref="MouseAction"/> specified by <paramref name="value"/>.</returns>
         public override object ConvertTo(ITypeDescriptorContext context, CultureInfo culture, object value, Type destinationType)
         {
             ArgumentNullException.ThrowIfNull(destinationType);

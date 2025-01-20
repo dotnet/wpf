@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -1040,20 +1040,6 @@ namespace MS.Win32
         public const int KEYEVENTF_KEYUP = 0x0002;
         public const int KEYEVENTF_UNICODE = 0x0004;
         public const int KEYEVENTF_SCANCODE = 0x0008;
-
-        public const int MOUSEEVENTF_MOVE = 0x0001;
-        public const int MOUSEEVENTF_LEFTDOWN = 0x0002;
-        public const int MOUSEEVENTF_LEFTUP = 0x0004;
-        public const int MOUSEEVENTF_RIGHTDOWN = 0x0008;
-        public const int MOUSEEVENTF_RIGHTUP = 0x0010;
-        public const int MOUSEEVENTF_MIDDLEDOWN = 0x0020;
-        public const int MOUSEEVENTF_MIDDLEUP = 0x0040;
-        public const int MOUSEEVENTF_XDOWN = 0x0080;
-        public const int MOUSEEVENTF_XUP = 0x0100;
-        public const int MOUSEEVENTF_WHEEL = 0x00800;
-        public const int MOUSEEVENTF_VIRTUALDESK = 0x04000;
-        public const int MOUSEEVENTF_ABSOLUTE = 0x08000;
-        public const int MOUSEEVENTF_ACTUAL = 0x10000;
 
         public const int GWL_HINSTANCE = -6;
         public const int GWL_USERDATA = -21;

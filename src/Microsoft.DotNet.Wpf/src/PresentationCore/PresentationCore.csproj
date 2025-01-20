@@ -747,6 +747,7 @@
     <Compile Include="System\Windows\Media\CultureSpecificStringDictionary.cs" />
     <Compile Include="System\Windows\Media\DashStyle.cs" />
     <Compile Include="System\Windows\Media\DashStyles.cs" />
+	<Compile Include="System\Windows\Media\DoubleCollection.cs" />
     <Compile Include="System\Windows\Media\Drawing.cs" />
     <Compile Include="System\Windows\Media\DrawingBrush.cs" />
     <Compile Include="System\Windows\Media\DrawingCollection.cs" />

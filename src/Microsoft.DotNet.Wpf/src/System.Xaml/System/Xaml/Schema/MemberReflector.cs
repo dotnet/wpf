@@ -6,6 +6,7 @@
 
 using System.ComponentModel;
 using System.Reflection;
+using System.Threading;
 using System.Windows.Markup;
 
 namespace System.Xaml.Schema
@@ -16,6 +17,7 @@ namespace System.Xaml.Schema
         private const DesignerSerializationVisibility VisibilityInvalid = (DesignerSerializationVisibility)int.MaxValue;
         // VisibilityNone indicates the value was looked up, and wasn't present
         private const DesignerSerializationVisibility VisibilityNone = (DesignerSerializationVisibility)(int.MaxValue - 1);
+        private static MemberReflector s_UnknownReflector;
 
         // Lazy init: check NullableReference.IsSet to determine if these fields have been initialized
         private NullableReference<string> _constructorArgument;
@@ -73,29 +75,35 @@ namespace System.Xaml.Schema
             _valueSerializer.Value = null;
         }
 
-        internal static MemberReflector UnknownReflector { get; } = CreateUnknownReflector();
-
-        private static MemberReflector CreateUnknownReflector()
+        internal static MemberReflector UnknownReflector
         {
-            MemberReflector unknownReflector = new MemberReflector
+            get
             {
-                _designerSerializationVisibility = DesignerSerializationVisibility.Visible,
-                _memberBits = (int)BoolMemberBits.Default |
-                (int)BoolMemberBits.Unknown | (int)BoolMemberBits.AllValid
-            };
+                if (s_UnknownReflector is null)
+                {
+                    MemberReflector unknownReflector = new MemberReflector
+                    {
+                        _designerSerializationVisibility = DesignerSerializationVisibility.Visible,
+                        _memberBits = (int)BoolMemberBits.Default |
+                        (int)BoolMemberBits.Unknown | (int)BoolMemberBits.AllValid
+                    };
 
-            // Explicitly set all the nullable references so that IsSet is true
-            unknownReflector._deferringLoader.Value = null;
-            unknownReflector._getter.Value = null;
-            unknownReflector._setter.Value = null;
-            unknownReflector._typeConverter.Value = null;
-            unknownReflector._valueSerializer.Value = null;
+                    // Explicitly set all the nullable references so that IsSet is true
+                    unknownReflector._deferringLoader.Value = null;
+                    unknownReflector._getter.Value = null;
+                    unknownReflector._setter.Value = null;
+                    unknownReflector._typeConverter.Value = null;
+                    unknownReflector._valueSerializer.Value = null;
 
-            unknownReflector.DependsOn = XamlType.EmptyList<XamlMember>.Value;
-            unknownReflector.Invoker = XamlMemberInvoker.UnknownInvoker;
-            unknownReflector.Type = XamlLanguage.Object;
+                    unknownReflector.DependsOn = XamlType.EmptyList<XamlMember>.Value;
+                    unknownReflector.Invoker = XamlMemberInvoker.UnknownInvoker;
+                    unknownReflector.Type = XamlLanguage.Object;
 
-            return unknownReflector;
+                    Interlocked.CompareExchange(ref s_UnknownReflector, unknownReflector, null);
+                }
+
+                return s_UnknownReflector;
+            }
         }
 
         // Lazy init and thread safety note: all implicit properties (i.e properties without backing

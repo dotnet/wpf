@@ -3146,7 +3146,7 @@ namespace System.Windows
                 // Remove the notification handlers.
                 //
 
-                oldContent.PropagateChangedHandler(ContentsChangedHandler, false /* remove */);
+                oldContent.PropagateChangedHandler(ContentsChangedHandler, adding: false);
 
 
                 //

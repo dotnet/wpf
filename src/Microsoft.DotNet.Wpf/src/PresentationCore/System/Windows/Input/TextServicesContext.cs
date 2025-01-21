@@ -465,7 +465,7 @@ namespace System.Windows.Input
             internal override void OnShutDown(object target, object sender, EventArgs e)
             {
                 TextServicesContext textServicesContext = (TextServicesContext)target;
-                textServicesContext.Uninitialize(!(sender is Dispatcher) /*appDomainShutdown*/);
+                textServicesContext.Uninitialize(appDomainShutdown: !(sender is Dispatcher));
             }
         }
 

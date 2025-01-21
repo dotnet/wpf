@@ -786,10 +786,12 @@ namespace MS.Internal.Ink
                     continue;
                 }
 
-                double s = FindIntersection(points[count-1] - points[i],            /*hitBegin*/
-                                                    point - points[i],              /*hitEnd*/
-                                                    new Vector(0, 0),               /*orgBegin*/
-                                                    points[i+1] - points[i]         /*orgEnd*/);
+                double s = FindIntersection(
+                    hitBegin: points[count-1] - points[i],
+                    hitEnd: point - points[i],
+                    orgBegin: new Vector(0, 0),
+                    orgEnd: points[i+1] - points[i]);
+
                 if (s >=0 && s <= 1)
                 {
                     // Intersection found, adjust the fIndex

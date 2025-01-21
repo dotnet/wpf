@@ -237,7 +237,7 @@ namespace System.Windows.Input
 
                 bool isUpSimple = false;
                 isUpSimple = vFrom.TrySimpleTransformToAncestor(rootFrom,
-                                                                false, /* do not apply inverse */
+                                                                inverse: false,
                                                                 out gUp,
                                                                 out mUp);               
                 if (isUpSimple)
@@ -306,7 +306,7 @@ namespace System.Windows.Input
                         }
 
                         bool isDownSimple = vToAsVisual.TrySimpleTransformToAncestor(rootTo,
-                                                                                     true, /* apply inverse */
+                                                                                     inverse: true,
                                                                                      out gDown,
                                                                                      out mDown);
 

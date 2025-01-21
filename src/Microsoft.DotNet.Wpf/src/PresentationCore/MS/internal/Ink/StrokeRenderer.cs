@@ -867,21 +867,21 @@ namespace MS.Internal.Ink
             Debug.Assert(points != null);
             Debug.Assert(points.Count > 0);
 
-            context.BeginFigure(points[points.Count - 1], //start point
-                                        true,   //isFilled
-                                        true);  //IsClosed
+            context.BeginFigure(startPoint: points[points.Count - 1],
+                                isFilled: true,
+                                isClosed: true);
 
             if (isBezierFigure)
             {
                 context.PolyBezierTo(points,
-                                     true,      //isStroked
-                                     true);     //isSmoothJoin
+                                     isStroked: true,
+                                     isSmoothJoin: true);
             }
             else
             {
                 context.PolyLineTo(points,
-                                     true,      //isStroked
-                                     true);     //isSmoothJoin
+                                   isStroked: true,
+                                   isSmoothJoin: true);
             }
         }
 
@@ -895,18 +895,18 @@ namespace MS.Internal.Ink
             Debug.Assert(abPoints != null && dcPoints != null);
             Debug.Assert(abPoints.Count > 0 && dcPoints.Count > 0);
 
-            context.BeginFigure(abPoints[0], //start point
-                                        true,   //isFilled
-                                        true);  //IsClosed
+            context.BeginFigure(startPoint: abPoints[0],
+                                isFilled: true,
+                                isClosed: true);
 
             context.PolyLineTo(abPoints,
-                                 true,      //isStroked
-                                 true);     //isSmoothJoin
+                               isStroked: true,
+                               isSmoothJoin: true);
 
             context.PolyLineTo(dcPoints,
-                                 true,      //isStroked
-                                 true);     //isSmoothJoin
-}
+                               isStroked: true,
+                               isSmoothJoin: true);
+        }
 
         /// <summary>
         /// Private helper to render a path figure to the SGC
@@ -922,9 +922,9 @@ namespace MS.Internal.Ink
                 return;
             }
 
-            context.BeginFigure(abPoints[0], //start point
-                                        true,   //isFilled
-                                        true);  //IsClosed
+            context.BeginFigure(startPoint: abPoints[0],
+                                isFilled: true,
+                                isClosed: true);
 
             for (int j = 0; j < 2; j++)
             {
@@ -938,9 +938,9 @@ namespace MS.Internal.Ink
                         if (polyLinePoints.Count > 0)
                         {
                             //polyline first
-                            context.PolyLineTo(  polyLinePoints,
-                                                 true,      //isStroked
-                                                 true);     //isSmoothJoin
+                            context.PolyLineTo(polyLinePoints,
+                                               isStroked: true,
+                                               isSmoothJoin: true);
                             polyLinePoints.Clear();
                         }
                         //we're arcing, pull out height, width and the arc to point
@@ -948,18 +948,18 @@ namespace MS.Internal.Ink
                         if (i + 2 < points.Count)
                         {
                             Point sizePoint = points[i + 1];
-                            Size ellipseSize = new Size(sizePoint.X / 2/*width*/, sizePoint.Y / 2/*height*/);
+                            Size ellipseSize = new Size(width: sizePoint.X / 2, height: sizePoint.Y / 2);
                             Point arcToPoint = points[i + 2];
 
                             bool isLargeArc = false; //>= 180
 
-                            context.ArcTo(  arcToPoint,
-                                            ellipseSize,
-                                            0d,             //rotation
-                                            isLargeArc,     //isLargeArc
-                                            SweepDirection.Clockwise,
-                                            true,           //isStroked
-                                            true);          //isSmoothJoin
+                            context.ArcTo(arcToPoint,
+                                          ellipseSize,
+                                          rotationAngle: 0d,
+                                          isLargeArc: isLargeArc,
+                                          SweepDirection.Clockwise,
+                                          isStroked: true,
+                                          isSmoothJoin: true);
                         }
                         i += 3; //advance past this arcTo block
                     }
@@ -974,8 +974,8 @@ namespace MS.Internal.Ink
                 {
                     //polyline
                     context.PolyLineTo(polyLinePoints,
-                                         true,      //isStroked
-                                         true);     //isSmoothJoin
+                                       isStroked: true,
+                                       isSmoothJoin: true);
                     polyLinePoints.Clear();
                 }
             }

@@ -108,7 +108,7 @@ namespace System.Windows.Media.Media3D
                                                      HitTestFilterCallback filterCallback,
                                                      HitTestResultBehavior lastResult)
         {
-            return RaiseCallback(resultCallback, filterCallback, lastResult, 0.0 /* distance adjustment */);
+            return RaiseCallback(resultCallback, filterCallback, lastResult, distanceAdjustment: 0.0);
         }
 
         internal HitTestResultBehavior RaiseCallback(HitTestResultCallback resultCallback, 

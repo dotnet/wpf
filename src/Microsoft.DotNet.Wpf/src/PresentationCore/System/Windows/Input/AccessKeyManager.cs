@@ -264,7 +264,7 @@ namespace System.Windows.Input
 
                 if (invokeUIElement != null)
                 {
-                    AccessKeyEventArgs args = new AccessKeyEventArgs(key, !oneUIElement || existsElsewhere /* == isMultiple */,userInitiated);
+                    AccessKeyEventArgs args = new AccessKeyEventArgs(key, isMultiple: !oneUIElement || existsElsewhere, userInitiated);
                     try
                     {
                         invokeUIElement.InvokeAccessKey(args);

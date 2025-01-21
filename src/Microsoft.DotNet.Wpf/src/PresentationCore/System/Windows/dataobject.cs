@@ -492,7 +492,7 @@ namespace System.Windows
             fileDropListStrings = new string[fileDropList.Count];
             fileDropList.CopyTo(fileDropListStrings, 0);
 
-            SetData(DataFormats.FileDrop, fileDropListStrings, /*audoConvert*/true);
+            SetData(DataFormats.FileDrop, fileDropListStrings, autoConvert: true);
         }
 
         /// <summary>
@@ -502,7 +502,7 @@ namespace System.Windows
         {
             ArgumentNullException.ThrowIfNull(image);
 
-            SetData(DataFormats.Bitmap, image, /*audoConvert*/true);
+            SetData(DataFormats.Bitmap, image, autoConvert: true);
         }
 
         /// <summary>
@@ -527,7 +527,7 @@ namespace System.Windows
                 throw new InvalidEnumArgumentException("format", (int)format, typeof(TextDataFormat));
             }
 
-            SetData(DataFormats.ConvertToDataFormats(format), textData, /*audoConvert*/false);
+            SetData(DataFormats.ConvertToDataFormats(format), textData, autoConvert: false);
         }
 
         /// <summary>
@@ -657,7 +657,7 @@ namespace System.Windows
                     medium.tymed = TYMED.TYMED_ISTREAM;
 
                     IStream istream = null;
-                    hr = Win32CreateStreamOnHGlobal(IntPtr.Zero, true /*deleteOnRelease*/, ref istream);
+                    hr = Win32CreateStreamOnHGlobal(IntPtr.Zero, fDeleteOnRelease: true, ref istream);
                     if ( NativeMethods.Succeeded(hr) )
                     {
                         medium.unionmember = Marshal.GetComInterfaceForObject(istream, typeof(IStream));
@@ -1144,7 +1144,7 @@ namespace System.Windows
         /// </summary>
         internal static int Win32WideCharToMultiByte(string wideString, int wideChars, byte[] bytes, int byteCount)
         {
-            int win32Return = UnsafeNativeMethods.WideCharToMultiByte(0 /*CP_ACP*/, 0 /*flags*/, wideString, wideChars, bytes, byteCount, IntPtr.Zero, IntPtr.Zero);
+            int win32Return = UnsafeNativeMethods.WideCharToMultiByte(0 /*CP_ACP*/, flags: 0, wideString, wideChars, bytes, byteCount, IntPtr.Zero, IntPtr.Zero);
             int win32Error = Marshal.GetLastWin32Error();
             if (win32Return == 0)
             {

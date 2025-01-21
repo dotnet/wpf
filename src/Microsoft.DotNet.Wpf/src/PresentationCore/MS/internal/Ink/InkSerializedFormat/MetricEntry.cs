@@ -45,12 +45,13 @@ namespace MS.Internal.Ink.InkSerializedFormat
     internal class MetricEntry
     {
         //Maximum buffer size required to store the largest MetricEntry
-        private static int MAX_METRIC_DATA_BUFF = 24;
+        private const int MAX_METRIC_DATA_BUFF = 24;
+        // We always allocate the max buffer needed to store the largest possible Metric Information blob
+        private readonly byte[] _data = new byte[MAX_METRIC_DATA_BUFF];
 
         private KnownTagCache.KnownTagIndex _tag = 0;
         private uint _size = 0;
         private MetricEntry _next;
-        private byte[] _data = new Byte[MAX_METRIC_DATA_BUFF]; // We always allocate the max buffer needed to store the largest possible Metric Information blob
         private static MetricEntryList[] _metricEntryOptional;
 
         // helpers for Ink-local property metrics for X/Y coordiantes

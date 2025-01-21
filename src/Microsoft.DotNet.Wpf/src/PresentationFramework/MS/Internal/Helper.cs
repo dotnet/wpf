@@ -1023,12 +1023,12 @@ namespace MS.Internal
             ItemValueStorageField.ClearValue(owner);
         }
 
-        internal static void ClearItemValueStorage(DependencyObject owner, int[] dpIndices)
+        internal static void ClearItemValueStorage(DependencyObject owner, ReadOnlySpan<int> dpIndices)
         {
             ClearItemValueStorageRecursive(ItemValueStorageField.GetValue(owner), dpIndices);
         }
 
-        private static void ClearItemValueStorageRecursive(WeakDictionary<object, List<KeyValuePair<int, object>>> itemValueStorage, int[] dpIndices)
+        private static void ClearItemValueStorageRecursive(WeakDictionary<object, List<KeyValuePair<int, object>>> itemValueStorage, ReadOnlySpan<int> dpIndices)
         {
             if (itemValueStorage != null)
             {

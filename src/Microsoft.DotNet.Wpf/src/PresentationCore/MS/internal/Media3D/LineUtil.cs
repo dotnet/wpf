@@ -490,18 +490,18 @@ namespace MS.Internal.Media3D
             }
         
             bool inside = true;
-            bool[] middle = new bool[3];        // True if ray origin in middle for coord i.
-            double[] plane = new double[3];     // Candidate BBox Planes
-            int i;                              // General Loop Counter
-        
+            Span<bool> middle = stackalloc bool[3];        // True if ray origin in middle for coord i.
+            Span<double> plane = stackalloc double[3];     // Candidate BBox Planes
+            int i;                                         // General Loop Counter
+
             // Find all candidate planes; select the plane nearest to the ray origin
             // for each coordinate.
-        
-            double[] rgfMin = new double[] { box.X, box.Y, box.Z };
-            double[] rgfMax = new double[] { box.X + box.SizeX, box.Y + box.SizeY, box.Z + box.SizeZ };
-            double[] rgfRayPos = new double[] { origin.X, origin.Y, origin.Z };
-            double[] rgfRayDir = new double[] { direction.X, direction.Y, direction.Z };
-        
+
+            ReadOnlySpan<double> rgfMin = [box.X, box.Y, box.Z];
+            ReadOnlySpan<double> rgfMax = [box.X + box.SizeX, box.Y + box.SizeY, box.Z + box.SizeZ];
+            ReadOnlySpan<double> rgfRayPos = [origin.X, origin.Y, origin.Z];
+            ReadOnlySpan<double> rgfRayDir = [direction.X, direction.Y, direction.Z];
+
             for (i = 0; i < 3; ++i)
             {
                 if (rgfRayPos[i] < rgfMin[i])

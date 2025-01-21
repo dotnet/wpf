@@ -268,13 +268,7 @@ namespace MS.Internal.Ink.InkSerializedFormat
             return;
         }
 
-        private static ReadOnlySpan<byte> Base64HeaderBytes => [(byte)'b',
-                                                                (byte)'a',
-                                                                (byte)'s',
-                                                                (byte)'e',
-                                                                (byte)'6',
-                                                                (byte)'4',
-                                                                (byte)':'];
+        private static ReadOnlySpan<byte> Base64HeaderBytes => "base64:"u8;
 
 #if OLD_ISF
         /// <summary>

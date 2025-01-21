@@ -3377,8 +3377,7 @@ namespace System.Windows.Documents
 
         internal void ComputePreferredCodePage()
         {
-            int[] CodePageList = {
-                1252, 932, 949, 1361, 936, 950, 1253, 1254, 1258, 1255, 1256, 1257, 1251, 874, 1250, 437, 850 };
+            ReadOnlySpan<int> CodePageList = [1252, 932, 949, 1361, 936, 950, 1253, 1254, 1258, 1255, 1256, 1257, 1251, 874, 1250, 437, 850];
 
             CodePage = 1252;
             CharSet = 0;
@@ -3388,9 +3387,9 @@ namespace System.Windows.Documents
                 byte[] rgBytes = new byte[Name.Length * 6];
                 char[] rgChars = new char[Name.Length * 6];
 
-                for (int i = 0; i < CodePageList.Length; i++)
+                foreach (int codePage in CodePageList)
                 {
-                    Encoding e = InternalEncoding.GetEncoding(CodePageList[i]);
+                    Encoding e = InternalEncoding.GetEncoding(codePage);
 
                     int cb = e.GetBytes(Name, 0, Name.Length, rgBytes, 0);
                     int cch = e.GetChars(rgBytes, 0, cb, rgChars, 0);
@@ -3409,8 +3408,8 @@ namespace System.Windows.Documents
                         // This code page can encode this font name.
                         if (k == cch)
                         {
-                            CodePage = CodePageList[i];
-                            CharSet = CodePageToCharSet(CodePage);
+                            CodePage = codePage;
+                            CharSet = CodePageToCharSet(codePage);
                             break;
                         }
                     }

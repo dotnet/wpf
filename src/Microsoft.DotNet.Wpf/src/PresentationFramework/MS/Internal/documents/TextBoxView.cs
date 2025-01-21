@@ -1552,7 +1552,7 @@ namespace System.Windows.Controls
 
             // Text selection is inherently different from speller highlights.  We are guaranteed a single contiguous range.
             // As such, we can optimize our algorithm to choose arrange over measure.
-            int[] offsets = new int[] { currentSelectionRange.StartIndex, currentSelectionRange.StartIndex + currentSelectionRange.PositionsAdded };
+            ReadOnlySpan<int> offsets = [currentSelectionRange.StartIndex, currentSelectionRange.StartIndex + currentSelectionRange.PositionsAdded];
 
             using (TextBoxLine line = new TextBoxLine(this))
             {

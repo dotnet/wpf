@@ -108,7 +108,7 @@ namespace MS.Win32
             fixed (ushort* ptrCharTypes = charTypes)
             {
                 if (!SafeNativeMethodsPrivate.GetStringTypeEx(locale, infoType, ptrSourceString, sourceString.Length, ptrCharTypes))
-                    throw new Win32Exception(); //Initializes with Marshal.GetLastPInvokeError()
+                    throw new Win32Exception(); // Initializes with Marshal.GetLastPInvokeError()
             }        
 
             return true;

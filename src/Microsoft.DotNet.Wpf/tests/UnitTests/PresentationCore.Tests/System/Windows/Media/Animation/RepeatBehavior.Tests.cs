@@ -6,28 +6,22 @@ namespace System.Windows.Media.Animation;
 public sealed class RepeatBehaviorTests
 {
     [Theory]
+    // NaN is invalid
+    [InlineData(double.NaN)]
+    // Infinity is invalid
     [InlineData(double.PositiveInfinity)]
     [InlineData(double.NegativeInfinity)]
-    public void Constructor_InfinityCount_ThrowsArgumentOutOfRangeException(double count)
-    {
-        Assert.Throws<ArgumentOutOfRangeException>(() => new RepeatBehavior(count));
-    }
-
-    [Theory]
+    // Negative values are invalid
     [InlineData(double.MinValue)]
     [InlineData(-0.0000000000001)]
-    public void Constructor_NegativeCount_ThrowsArgumentOutOfRangeException(double count)
+    public void Constructor_InvalidCount_ThrowsArgumentOutOfRangeException(double count)
     {
         Assert.Throws<ArgumentOutOfRangeException>(() => new RepeatBehavior(count));
     }
 
-    [Fact]
-    public void Constructor_NaNCount_ThrowsArgumentOutOfRangeException()
-    {
-        Assert.Throws<ArgumentOutOfRangeException>(() => new RepeatBehavior(double.NaN));
-    }
-
     [Theory]
+    // Anything above zero is allowed
+    [InlineData(0)]
     [InlineData(1.0)]
     [InlineData(double.MaxValue)]
     public void Kind_Count_ReturnsExpected_Value(double count)

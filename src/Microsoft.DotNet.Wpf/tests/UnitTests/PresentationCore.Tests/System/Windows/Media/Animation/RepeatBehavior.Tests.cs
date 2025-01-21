@@ -20,7 +20,7 @@ public sealed class RepeatBehaviorTests
     }
 
     [Theory]
-    // Anything above zero is allowed
+    // Zero and above is allowed
     [InlineData(0)]
     [InlineData(1.0)]
     [InlineData(double.MaxValue)]

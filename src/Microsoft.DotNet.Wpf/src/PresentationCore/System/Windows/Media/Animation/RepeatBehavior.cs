@@ -102,7 +102,7 @@ namespace System.Windows.Media.Animation
         /// Returns the iteration count specified by this RepeatBehavior.
         /// </summary>
         /// <value>The iteration count specified by this RepeatBehavior.</value>
-        /// <exception cref="System.InvalidOperationException">Thrown if this RepeatBehavior does not represent an iteration count.</exception>
+        /// <exception cref="InvalidOperationException">Thrown if this RepeatBehavior does not represent an iteration count.</exception>
         public double Count
         {
             get
@@ -118,7 +118,7 @@ namespace System.Windows.Media.Animation
         /// Returns the repeat duration specified by this RepeatBehavior.
         /// </summary>
         /// <value>A TimeSpan representing the repeat duration specified by this RepeatBehavior.</value>
-        /// <exception cref="System.InvalidOperationException">Thrown if this RepeatBehavior does not represent a repeat duration.</exception>
+        /// <exception cref="InvalidOperationException">Thrown if this RepeatBehavior does not represent a repeat duration.</exception>
         public TimeSpan Duration
         {
             get
@@ -223,7 +223,7 @@ namespace System.Windows.Media.Animation
                 case RepeatBehaviorType.Forever:
 
                     // We try to choose an unlikely hash code value for Forever.
-                    // All Forevers need to return the same hash code value.
+                    // All Forever instances need to return the same hash code value.
                     return int.MaxValue - 42;
 
                 default:

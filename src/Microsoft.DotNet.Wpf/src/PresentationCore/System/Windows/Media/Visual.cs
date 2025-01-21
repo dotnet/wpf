@@ -503,7 +503,7 @@ namespace System.Windows.Media
         /// </summary>
         internal Rect CalculateSubgraphBoundsOuterSpace()
         {
-            return CalculateSubgraphBoundsOuterSpace(false /* renderBounds */);
+            return CalculateSubgraphBoundsOuterSpace(renderBounds: false);
         }
 
         /// <summary>
@@ -513,7 +513,7 @@ namespace System.Windows.Media
         /// </summary>
         internal Rect CalculateSubgraphRenderBoundsOuterSpace()
         {
-            return CalculateSubgraphBoundsOuterSpace(true /* renderBounds */);
+            return CalculateSubgraphBoundsOuterSpace(renderBounds: true);
         }
 
         /// <summary>
@@ -3425,7 +3425,7 @@ namespace System.Windows.Media
             }
             protected set
             {
-                ChangeVisualClip(value, false /* dontSetWhenClose */);
+                ChangeVisualClip(value, dontSetWhenClose: false);
             }
         }
 

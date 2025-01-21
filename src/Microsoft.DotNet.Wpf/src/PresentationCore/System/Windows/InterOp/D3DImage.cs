@@ -717,8 +717,7 @@ namespace System.Windows.Interop
                 channel.SendCommand(
                     (byte*)&data,
                     sizeof(DUCE.MILCMD_D3DIMAGE_PRESENT),
-                    true /* sendInSeparateBatch */
-                    );
+                    sendInSeparateBatch: true);
             }
 
             _isDirty = false;
@@ -805,8 +804,7 @@ namespace System.Windows.Interop
                     channel.SendCommand(
                         (byte*)&data,
                         sizeof(DUCE.MILCMD_D3DIMAGE),
-                        false /* sendInSeparateBatch */
-                        );
+                        sendInSeparateBatch: false);
                 }
 
                 // Presents only happen on the async channel so don't let RTB flip this bit

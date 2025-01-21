@@ -729,7 +729,7 @@ namespace MS.Internal.Ink
                 // points[i-1] should be removed
                 if (i > 0)
                 {
-                    points.RemoveRange(0, i /*count*/);   // Remove points[0] to points[i-1]
+                    points.RemoveRange(0, count: i);   // Remove points[0] to points[i-1]
                     IsIncrementalLassoDirty = true;
                 }
 

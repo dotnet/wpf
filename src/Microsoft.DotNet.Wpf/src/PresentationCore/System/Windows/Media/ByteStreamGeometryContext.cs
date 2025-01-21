@@ -96,7 +96,7 @@ namespace System.Windows.Media
                 Point* scratchForLine = stackalloc Point[1];
                 scratchForLine[0] = point;
                 GenericPolyTo(scratchForLine,
-                              1 /* count */,
+                              count: 1,
                               isStroked,
                               isSmoothJoin,
                               false /* does not have curves */,
@@ -117,7 +117,7 @@ namespace System.Windows.Media
                 scratchForQuadraticBezier[0] = point1;
                 scratchForQuadraticBezier[1] = point2;
                 GenericPolyTo(scratchForQuadraticBezier,
-                              2 /* count */,
+                              count: 2,
                               isStroked,
                               isSmoothJoin,
                               true /* has curves */,
@@ -139,7 +139,7 @@ namespace System.Windows.Media
                 scratchForBezier[1] = point2;
                 scratchForBezier[2] = point3;
                 GenericPolyTo(scratchForBezier,
-                              3 /* count */,
+                              count: 3,
                               isStroked,
                               isSmoothJoin,
                               true /* has curves */,
@@ -158,7 +158,7 @@ namespace System.Windows.Media
                           isStroked, 
                           isSmoothJoin, 
                           false /* does not have curves */,
-                          1 /* pointCountMultiple */,
+                          pointCountMultiple: 1,
                           MIL_SEGMENT_TYPE.MilSegmentPolyLine);
         }
 
@@ -173,7 +173,7 @@ namespace System.Windows.Media
                           isStroked, 
                           isSmoothJoin, 
                           true /* has curves */,
-                          2 /* pointCountMultiple */,
+                          pointCountMultiple: 2,
                           MIL_SEGMENT_TYPE.MilSegmentPolyQuadraticBezier);
         }
 
@@ -188,7 +188,7 @@ namespace System.Windows.Media
                           isStroked, 
                           isSmoothJoin, 
                           true /* has curves */,
-                          3 /* pointCountMultiple */,
+                          pointCountMultiple: 3,
                           MIL_SEGMENT_TYPE.MilSegmentPolyBezier);
         }
 
@@ -353,7 +353,7 @@ namespace System.Windows.Media
                 Invariant.Assert(_currOffset >= bufferOffset+cbDataSize);
             }
 
-            ReadWriteData(true /* reading */, pbData, cbDataSize, 0, ref bufferOffset);
+            ReadWriteData(reading: true, pbData, cbDataSize, 0, ref bufferOffset);
         }
         
         /// <summary>

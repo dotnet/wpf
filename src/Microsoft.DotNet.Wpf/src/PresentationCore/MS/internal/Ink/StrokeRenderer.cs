@@ -122,7 +122,7 @@ namespace MS.Internal.Ink
                             //insert a stroke node for the previous node
                             strokeNodePoints.Clear();
                             strokeNode.GetPreviousContourPoints(strokeNodePoints);
-                            AddFigureToStreamGeometryContext(context, strokeNodePoints, strokeNode.IsEllipse/*isBezierFigure*/);
+                            AddFigureToStreamGeometryContext(context, strokeNodePoints, isBezierFigure: strokeNode.IsEllipse);
 
                             previousPreviousNodeRendered = true;
                         }
@@ -130,7 +130,7 @@ namespace MS.Internal.Ink
                         //render the stroke node
                         strokeNodePoints.Clear();
                         strokeNode.GetContourPoints(strokeNodePoints);
-                        AddFigureToStreamGeometryContext(context, strokeNodePoints, strokeNode.IsEllipse/*isBezierFigure*/);
+                        AddFigureToStreamGeometryContext(context, strokeNodePoints, isBezierFigure: strokeNode.IsEllipse);
                     }
 
                     if (!directionChanged)
@@ -176,7 +176,7 @@ namespace MS.Internal.Ink
                             }
 
                             //now render away!
-                            AddFigureToStreamGeometryContext(context, connectingQuadPoints, false/*isBezierFigure*/);
+                            AddFigureToStreamGeometryContext(context, connectingQuadPoints, isBezierFigure: false);
                         }
                     }
                 }
@@ -490,7 +490,7 @@ namespace MS.Internal.Ink
                             {
                                 //render a complete first stroke node or we can get artifacts
                                 prevPrevStrokeNode.GetContourPoints(polyLinePoints);
-                                AddFigureToStreamGeometryContext(context, polyLinePoints, prevPrevStrokeNode.IsEllipse/*isBezierFigure*/);
+                                AddFigureToStreamGeometryContext(context, polyLinePoints, isBezierFigure: prevPrevStrokeNode.IsEllipse);
                                 polyLinePoints.Clear();
                             }
 
@@ -565,7 +565,7 @@ namespace MS.Internal.Ink
                                 {
                                     //render a complete stroke node or we can get artifacts
                                     prevStrokeNode.GetContourPoints(polyLinePoints);
-                                    AddFigureToStreamGeometryContext(context, polyLinePoints, prevStrokeNode.IsEllipse/*isBezierFigure*/);
+                                    AddFigureToStreamGeometryContext(context, polyLinePoints, isBezierFigure: prevStrokeNode.IsEllipse);
                                     polyLinePoints.Clear();
                                 }
                             }
@@ -672,7 +672,7 @@ namespace MS.Internal.Ink
                             // we only have a single point to render
                             Debug.Assert(pathFigureABSide.Count == 0);
                             prevPrevStrokeNode.GetContourPoints(pathFigureABSide);
-                            AddFigureToStreamGeometryContext(context, pathFigureABSide, prevPrevStrokeNode.IsEllipse/*isBezierFigure*/);
+                            AddFigureToStreamGeometryContext(context, pathFigureABSide, isBezierFigure: prevPrevStrokeNode.IsEllipse);
 }
                     }
                     else if (prevStrokeNode.IsValid && strokeNode.IsValid)
@@ -700,7 +700,7 @@ namespace MS.Internal.Ink
                             {
                                 //render a complete stroke node or we can get artifacts
                                 strokeNode.GetContourPoints(polyLinePoints);
-                                AddFigureToStreamGeometryContext(context, polyLinePoints, strokeNode.IsEllipse/*isBezierFigure*/);
+                                AddFigureToStreamGeometryContext(context, polyLinePoints, isBezierFigure: strokeNode.IsEllipse);
                             }
                         }
                         else
@@ -763,7 +763,7 @@ namespace MS.Internal.Ink
                 //we're between 100% and 70% overlapped
                 //just render two distinct figures with a connecting quad (if needed)
                 strokeNodePrevious.GetContourPoints(pointBuffer1);
-                AddFigureToStreamGeometryContext(context, pointBuffer1, strokeNodePrevious.IsEllipse/*isBezierFigure*/);
+                AddFigureToStreamGeometryContext(context, pointBuffer1, isBezierFigure: strokeNodePrevious.IsEllipse);
 
                 Quad quad = strokeNodeCurrent.GetConnectingQuad();
                 if (!quad.IsEmpty)
@@ -772,11 +772,11 @@ namespace MS.Internal.Ink
                     pointBuffer3.Add(quad.B);
                     pointBuffer3.Add(quad.C);
                     pointBuffer3.Add(quad.D);
-                    AddFigureToStreamGeometryContext(context, pointBuffer3, false/*isBezierFigure*/);
+                    AddFigureToStreamGeometryContext(context, pointBuffer3, isBezierFigure: false);
                 }
 
                 strokeNodeCurrent.GetContourPoints(pointBuffer2);
-                AddFigureToStreamGeometryContext(context, pointBuffer2, strokeNodeCurrent.IsEllipse/*isBezierFigure*/);
+                AddFigureToStreamGeometryContext(context, pointBuffer2, isBezierFigure: strokeNodeCurrent.IsEllipse);
             }
             else
             {

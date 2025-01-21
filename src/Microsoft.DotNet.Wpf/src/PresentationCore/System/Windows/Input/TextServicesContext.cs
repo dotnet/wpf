@@ -212,7 +212,7 @@ namespace System.Windows.Input
 
                 // Create a TSF document.
                 threadManager.CreateDocumentMgr(out doc);
-                doc.CreateContext(_clientId, 0 /* flags */, _defaultTextStore, out context, out editCookie);
+                doc.CreateContext(_clientId, flags: 0, _defaultTextStore, out context, out editCookie);
                 doc.Push(context);
 
                 // Release any native resources we're done with.

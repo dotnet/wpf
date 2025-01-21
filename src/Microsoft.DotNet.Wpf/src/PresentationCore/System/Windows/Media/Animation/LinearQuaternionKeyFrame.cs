@@ -27,7 +27,7 @@ namespace System.Windows.Media.Animation
                     "UseShortestPath",
                     typeof(bool),
                     typeof(LinearQuaternionKeyFrame),
-                    new PropertyMetadata(/* defaultValue = */ BooleanBoxes.TrueBox));
+                    new PropertyMetadata(defaultValue: BooleanBoxes.TrueBox));
 
         /// <summary>
         /// If true, the animation will automatically flip the sign of the destination

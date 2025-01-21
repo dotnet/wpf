@@ -59,7 +59,7 @@ namespace System.Windows.Input
             ArgumentNullException.ThrowIfNull(element);
 
             ManipulationDevice device = ManipulationDevice.GetManipulationDevice(element);
-            device?.CompleteManipulation(/* withInertia = */ true);
+            device?.CompleteManipulation(withInertia: true);
         }
 
         /// <summary>
@@ -80,7 +80,7 @@ namespace System.Windows.Input
             ManipulationDevice device = ManipulationDevice.GetManipulationDevice(element);
             if (device != null)
             {
-                device.CompleteManipulation(/* withInertia = */ false);
+                device.CompleteManipulation(withInertia: false);
                 return true;
             }
 

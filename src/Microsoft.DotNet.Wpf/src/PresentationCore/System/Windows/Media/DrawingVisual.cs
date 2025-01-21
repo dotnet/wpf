@@ -110,7 +110,7 @@ namespace System.Windows.Media
             // 
 
             // Propagate notification handlers.
-            newContent?.PropagateChangedHandler(ContentsChangedHandler, true /* adding */);
+            newContent?.PropagateChangedHandler(ContentsChangedHandler, adding: true);
 
             _content = newContent;
 

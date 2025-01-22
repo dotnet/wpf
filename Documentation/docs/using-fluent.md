@@ -224,7 +224,7 @@ or including it in your runtime config file as follows :
 
 ## Going ahead
 
-There are a lot of issues in the styles and the current infrastructure of how Fluent theme is loaded, etc. and we will keep working iteratively to resolve these issues in .NET 10. There are still a lot of features that are still missing that we will on in the next iteration.
+There are a lot of issues in the styles and the current infrastructure of how Fluent theme is loaded, etc. and we will keep working iteratively to resolve these issues in .NET 10. There are still a lot of features that are still missing that we will work on in the next iteration.
 
 Meanwhile, I would like to ask the community to go ahead and try out the new theme in their applications, and provide us with feedbacks via GitHub issues, discussions, feature suggestions and PRs to make it better.
 

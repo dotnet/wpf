@@ -1,6 +1,9 @@
 
 # Developer Guide : Using Fluent theme in WPF in .NET 9
 
+> [!NOTE]
+> Fluent theme is still in experimental mode and there can be some breaking changes ( like UI behavior, the way in which Fluent is loaded, how the keys are referenced, ThemeMode APIs etc ) in the upcoming .NET releases.
+
 In .NET 9, as part of the ongoing modernization in WPF, we introduced the Fluent ( Windows 11 ) theme. However there are still a lot of gaps that need to be filled. In this document, we describe the behaviors and general ways of using the new Fluent theme. Key-enhancements include : 
 
 - Enable Fluent theme at two levels : Application and Window

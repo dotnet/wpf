@@ -148,6 +148,7 @@
   <Color x:Key="LayerFillColorAlt">#FFFFFF</Color>
   <Color x:Key="LayerOnAcrylicFillColorDefault">#40FFFFFF</Color>
   <Color x:Key="LayerOnAccentAcrylicFillColorDefault">#40FFFFFF</Color>
+  <Color x:Key="SystemBaseMediumLowColor">#66000000</Color>
   <!--  Fallback color for missing Acrylic used for e.g. Flyouts  -->
   <Color x:Key="AcrylicBackgroundFillColorDefault">#F9F9F9</Color>
   <Color x:Key="LayerOnMicaBaseAltFillColorDefault">#B3FFFFFF</Color>
@@ -275,6 +276,7 @@
   <SolidColorBrush x:Key="SystemFillColorNeutralBackgroundBrush" Color="{StaticResource SystemFillColorNeutralBackground}" />
   <SolidColorBrush x:Key="SystemFillColorSolidAttentionBackgroundBrush" Color="{StaticResource SystemFillColorSolidAttentionBackground}" />
   <SolidColorBrush x:Key="SystemFillColorSolidNeutralBackgroundBrush" Color="{StaticResource SystemFillColorSolidNeutralBackground}" />
+  <SolidColorBrush x:Key="SystemControlForegroundBaseMediumLowBrush" Color="{StaticResource SystemBaseMediumLowColor}" />
   <!--  Elevation border brushes  -->
   <LinearGradientBrush x:Key="ControlElevationBorderBrush" MappingMode="RelativeToBoundingBox" StartPoint="0,1" EndPoint="0,0">
     <LinearGradientBrush.GradientStops>
@@ -576,6 +578,8 @@
   <SolidColorBrush x:Key="RadioButtonOuterEllipseCheckedStrokeDisabled" Color="{StaticResource AccentFillColorDisabled}" />
   <!--  RatingControl  -->
   <SolidColorBrush x:Key="RatingControlSelectedForeground" Color="{StaticResource SystemAccentColorDark1}" />
+  <!-- ResizeGrip -->
+  <SolidColorBrush x:Key="ResizeGripForeground" Color="{StaticResource SystemBaseMediumLowColor}" />
   <!-- RepeatButton -->
   <SolidColorBrush x:Key="RepeatButtonBackground" Color="{StaticResource ControlFillColorDefault}" />
   <SolidColorBrush x:Key="RepeatButtonBackgroundPointerOver" Color="{StaticResource ControlFillColorSecondary}" />
@@ -3510,7 +3514,7 @@
       <Setter.Value>
         <ControlTemplate TargetType="ResizeGrip">
           <Grid SnapsToDevicePixels="true" Background="{TemplateBinding Background}">
-            <TextBlock FontFamily="{DynamicResource SymbolThemeFontFamily}" Text="" />
+            <TextBlock FontFamily="{DynamicResource SymbolThemeFontFamily}" Text="" FontSize="12" Foreground="{DynamicResource ResizeGripForeground}" Width="15" Height="15" />
           </Grid>
         </ControlTemplate>
       </Setter.Value>

@@ -1,6 +1,6 @@
 <ResourceDictionary
-xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
     <Style x:Key="DefaultResizeGripStyle" TargetType="{x:Type ResizeGrip}">
         <Setter Property="OverridesDefaultStyle" Value="True" />
@@ -11,9 +11,15 @@ xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
             <Setter.Value>
                 <ControlTemplate TargetType="ResizeGrip">
                     <Grid
-        SnapsToDevicePixels="true"
-        Background="{TemplateBinding Background}">
-                        <TextBlock FontFamily="{DynamicResource SymbolThemeFontFamily}" Text="&#xF169;" />
+                        SnapsToDevicePixels="true"
+                        Background="{TemplateBinding Background}">
+                        <TextBlock 
+                            FontFamily="{DynamicResource SymbolThemeFontFamily}" 
+                            Text="&#xF169;" 
+                            FontSize="12" 
+                            Foreground="{DynamicResource ResizeGripForeground}" 
+                            Width="15" 
+                            Height="15"/>
                     </Grid>
                 </ControlTemplate>
             </Setter.Value>

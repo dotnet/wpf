@@ -157,6 +157,8 @@
     <SolidColorBrush x:Key="SystemFillColorSolidAttentionBackgroundBrush" Color="{StaticResource SystemColorWindowColor}" />
     <SolidColorBrush x:Key="SystemFillColorSolidNeutralBackgroundBrush" Color="{StaticResource SystemColorWindowColor}" />
 
+    <SolidColorBrush x:Key="SystemControlForegroundBaseMediumLowBrush" Color="{StaticResource SystemColorButtonTextColor}" />
+
     <!--  Elevation border brushes  -->
 
     <SolidColorBrush x:Key="ControlElevationBorderBrush" Color="{StaticResource SystemColorWindowTextColor}" />
@@ -490,6 +492,9 @@
     <SolidColorBrush x:Key="RepeatButtonForeground" Color="{StaticResource SystemColorWindowTextColor}" />
     <SolidColorBrush x:Key="RepeatButtonForegroundPressed" Color="{StaticResource SystemColorHighlightColor}" />
     <SolidColorBrush x:Key="RepeatButtonForegroundDisabled" Color="{StaticResource SystemColorGrayTextColor}" />
+
+    <!-- ResizeGrip -->
+    <SolidColorBrush x:Key="ResizeGripForeground" Color="{StaticResource SystemColorButtonTextColor}" />
 
     <!-- ScrollBar -->
     <SolidColorBrush x:Key="ScrollBarTrackFill" Color="Transparent" />

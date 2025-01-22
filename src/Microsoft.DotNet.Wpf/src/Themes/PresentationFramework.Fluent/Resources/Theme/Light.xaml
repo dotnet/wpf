@@ -100,6 +100,8 @@
     <Color x:Key="LayerOnAcrylicFillColorDefault">#40FFFFFF</Color>
     <Color x:Key="LayerOnAccentAcrylicFillColorDefault">#40FFFFFF</Color>
 
+    <Color x:Key="SystemBaseMediumLowColor">#66000000</Color>
+
     <!--  Fallback color for missing Acrylic used for e.g. Flyouts  -->
     <Color x:Key="AcrylicBackgroundFillColorDefault">#F9F9F9</Color>
 
@@ -258,6 +260,8 @@
     <SolidColorBrush x:Key="SystemFillColorNeutralBackgroundBrush" Color="{StaticResource SystemFillColorNeutralBackground}" />
     <SolidColorBrush x:Key="SystemFillColorSolidAttentionBackgroundBrush" Color="{StaticResource SystemFillColorSolidAttentionBackground}" />
     <SolidColorBrush x:Key="SystemFillColorSolidNeutralBackgroundBrush" Color="{StaticResource SystemFillColorSolidNeutralBackground}" />
+
+    <SolidColorBrush x:Key="SystemControlForegroundBaseMediumLowBrush" Color="{StaticResource SystemBaseMediumLowColor}" />
 
     <!--  Elevation border brushes  -->
 
@@ -600,6 +604,9 @@
 
     <!--  RatingControl  -->
     <SolidColorBrush x:Key="RatingControlSelectedForeground" Color="{StaticResource SystemAccentColorDark1}" />
+
+    <!-- ResizeGrip -->
+    <SolidColorBrush x:Key="ResizeGripForeground" Color="{StaticResource SystemBaseMediumLowColor}" />
 
     <!-- RepeatButton -->
     <SolidColorBrush x:Key="RepeatButtonBackground" Color="{StaticResource ControlFillColorDefault}" />

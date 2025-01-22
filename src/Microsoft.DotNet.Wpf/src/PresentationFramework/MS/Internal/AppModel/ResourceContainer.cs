@@ -1,6 +1,5 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 //
 //
@@ -12,17 +11,12 @@
 // the NotSupportedException.
 // 
 
-using System.IO.Packaging;
-using System.IO;
-using System.Reflection;
-using System.Globalization;
-using System.Windows;
-using System.Reflection;
-using System.IO.Packaging;
 using System.Windows.Navigation;
-using System.Collections.Generic;
-
 using MS.Internal.Resources;
+using System.IO.Packaging;
+using System.Reflection;
+using System.Windows;
+using System.IO;
 
 namespace MS.Internal.AppModel
 {

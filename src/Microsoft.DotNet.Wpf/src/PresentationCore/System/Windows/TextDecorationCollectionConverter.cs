@@ -1,7 +1,7 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
+using System.ComponentModel.Design.Serialization;
 using System.ComponentModel;
 using System.Globalization;
 using System.Reflection;
@@ -9,7 +9,7 @@ using System.Reflection;
 namespace System.Windows
 {
     /// <summary>
-    /// Provides a type converter to convert from <see langword="string"/> to <see cref="TextDecorationCollection"/> only.
+    /// Provides a type converter to convert from <see cref="string"/> to <see cref="TextDecorationCollection"/> only.
     /// </summary>     
     public sealed class TextDecorationCollectionConverter : TypeConverter
     {
@@ -44,7 +44,7 @@ namespace System.Windows
         }
 
         /// <summary>
-        /// Converts <paramref name="input"/> of <see langword="string"/> type to its <see cref="TextDecorationCollection"/> represensation.
+        /// Converts <paramref name="input"/> of <see langword="string"/> type to its <see cref="TextDecorationCollection"/> representation.
         /// </summary>
         /// <param name="context">Context information used for conversion, ignored currently.</param>
         /// <param name="culture">The culture specifier to use, ignored currently.</param>        
@@ -62,10 +62,10 @@ namespace System.Windows
         }
 
         /// <summary>
-        /// Converts <paramref name="text"/> to its <see cref="TextDecorationCollection"/> represensation.
+        /// Converts <paramref name="text"/> to its <see cref="TextDecorationCollection"/> representation.
         /// </summary>
         /// <param name="text">The string to be converted into TextDecorationCollection object.</param>
-        /// <returns>A <see cref="TextDecorationCollection"/> representing the <see langword="string"/> specified by <paramref name="text"/>.</returns>
+        /// <returns>A <see cref="TextDecorationCollection"/> representing the <see cref="string"/> specified by <paramref name="text"/>.</returns>
         /// <remarks>
         /// The text parameter can be either be <see langword="null"/>; <see cref="string.Empty"/>; the string "None"
         /// or a combination of the predefined <see cref="TextDecorations"/> names delimited by commas (,).

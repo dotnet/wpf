@@ -8,7 +8,35 @@ namespace System.Windows;
 public class TextDecorationCollectionConverterTests
 {
     [Theory]
-    [MemberData(nameof(ConvertFromString_TestData))]
+    // Only valid type
+    [InlineData(true, typeof(string))]
+    // Invalid types
+    [InlineData(false, typeof(TextDecorationCollection))]
+    [InlineData(false, typeof(IEnumerable<TextDecoration>))]
+    [InlineData(false, typeof(InstanceDescriptor))]
+    public void CanConvertFrom_ReturnsExpected(bool expected, Type sourceType)
+    {
+        TextDecorationCollectionConverter converter = new();
+
+        Assert.Equal(expected, converter.CanConvertFrom(sourceType));
+    }
+
+    [Theory]
+    // Only valid type
+    [InlineData(true, typeof(InstanceDescriptor))]
+    // Invalid types
+    [InlineData(false, typeof(TextDecorationCollection))]
+    [InlineData(false, typeof(IEnumerable<TextDecoration>))]
+    [InlineData(false, typeof(string))]
+    public void CanConvertTo_ReturnsExpected(bool expected, Type destinationType)
+    {
+        TextDecorationCollectionConverter converter = new();
+
+        Assert.Equal(expected, converter.CanConvertTo(destinationType));
+    }
+
+    [Theory]
+    [MemberData(nameof(ConvertFromString_ReturnsExpected_Data))]
     public void ConvertFromString_ReturnsExpected(TextDecorationCollection expected, string text)
     {
         TextDecorationCollection converted = TextDecorationCollectionConverter.ConvertFromString(text);
@@ -23,16 +51,7 @@ public class TextDecorationCollectionConverterTests
         }
     }
 
-    [Fact]
-    public void ConvertFromString_NullValue_ReturnsNull()
-    {
-        // null is simply null (NOTE: This differs from instance method ConvertFrom, that will throw on null value)
-        TextDecorationCollection? converted = TextDecorationCollectionConverter.ConvertFromString(null);
-
-        Assert.Null(converted);
-    }
-
-    public static IEnumerable<object?[]> ConvertFromString_TestData
+    public static IEnumerable<object?[]> ConvertFromString_ReturnsExpected_Data
     {
         get
         {
@@ -57,6 +76,15 @@ public class TextDecorationCollectionConverterTests
         }
     }
 
+    [Fact]
+    public void ConvertFromString_NullValue_ReturnsNull()
+    {
+        // null is simply null (NOTE: This differs from instance method ConvertFrom, that will throw on null value)
+        TextDecorationCollection? converted = TextDecorationCollectionConverter.ConvertFromString(null);
+
+        Assert.Null(converted);
+    }
+
     [Theory]
     // Starts with a separator
     [InlineData(",  Strikethrough   ,Underline, Baseline ")]
@@ -75,34 +103,6 @@ public class TextDecorationCollectionConverterTests
     public void ConvertFromString_ThrowsArgumentException(string text)
     {
         Assert.Throws<ArgumentException>(() => TextDecorationCollectionConverter.ConvertFromString(text));
-    }
-
-    [Theory]
-    // Only valid type
-    [InlineData(true, typeof(InstanceDescriptor))]
-    // Invalid types
-    [InlineData(false, typeof(TextDecorationCollection))]
-    [InlineData(false, typeof(IEnumerable<TextDecoration>))]
-    [InlineData(false, typeof(string))]
-    public void CanConvertTo_ReturnsExpected(bool expected, Type destinationType)
-    {
-        TextDecorationCollectionConverter converter = new();
-
-        Assert.Equal(expected, converter.CanConvertTo(destinationType));
-    }
-
-    [Theory]
-    // Only valid type
-    [InlineData(true, typeof(string))]
-    // Invalid types
-    [InlineData(false, typeof(TextDecorationCollection))]
-    [InlineData(false, typeof(IEnumerable<TextDecoration>))]
-    [InlineData(false, typeof(InstanceDescriptor))]
-    public void CanConvertFrom_ReturnsExpected(bool expected, Type sourceType)
-    {
-        TextDecorationCollectionConverter converter = new();
-
-        Assert.Equal(expected, converter.CanConvertFrom(sourceType));
     }
 
     [Theory]

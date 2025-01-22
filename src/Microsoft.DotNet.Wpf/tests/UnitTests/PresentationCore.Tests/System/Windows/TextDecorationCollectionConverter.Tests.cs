@@ -215,13 +215,22 @@ public class TextDecorationCollectionConverterTests
             // Single decoration
             yield return new object[] { new TextDecorationCollection(new TextDecoration[1] { TextDecorations.Underline[0] }),
                                         new TextDecorationCollection(new TextDecoration[1] { TextDecorations.Underline[0] }),
-
                                         typeof(InstanceDescriptor) };
 
             // Multiple decorations
             yield return new object[] { new TextDecorationCollection(new TextDecoration[3] { TextDecorations.Underline[0], TextDecorations.OverLine[0], TextDecorations.Baseline[0] }),
                                         new TextDecorationCollection(new TextDecoration[3] { TextDecorations.Underline[0], TextDecorations.OverLine[0], TextDecorations.Baseline[0] }),
                                         typeof(InstanceDescriptor) };
+
+            // Source value just needs to be IEnumerable<TextDecoration>
+
+            // T[]
+            yield return new object[] { new TextDecorationCollection(new TextDecoration[3] { TextDecorations.Underline[0], TextDecorations.OverLine[0], TextDecorations.Baseline[0] }),
+                                        new TextDecoration[3] { TextDecorations.Underline[0], TextDecorations.OverLine[0], TextDecorations.Baseline[0] }, typeof(InstanceDescriptor) };
+
+            // List<T>
+            yield return new object[] { new TextDecorationCollection(new TextDecoration[3] { TextDecorations.Underline[0], TextDecorations.OverLine[0], TextDecorations.Baseline[0] }),
+                                        new List<TextDecoration> { TextDecorations.Underline[0], TextDecorations.OverLine[0], TextDecorations.Baseline[0] }, typeof(InstanceDescriptor) };
         }
     }
 

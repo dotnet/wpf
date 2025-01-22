@@ -3501,6 +3501,22 @@
     </Setter>
   </Style>
   <Style BasedOn="{StaticResource DefaultRepeatButtonStyle}" TargetType="{x:Type RepeatButton}" />
+  <Style x:Key="DefaultResizeGripStyle" TargetType="{x:Type ResizeGrip}">
+    <Setter Property="OverridesDefaultStyle" Value="True" />
+    <Setter Property="MinWidth" Value="{DynamicResource {x:Static SystemParameters.VerticalScrollBarWidthKey}}" />
+    <Setter Property="MinHeight" Value="{DynamicResource {x:Static SystemParameters.HorizontalScrollBarHeightKey}}" />
+    <Setter Property="Background" Value="Transparent" />
+    <Setter Property="Template">
+      <Setter.Value>
+        <ControlTemplate TargetType="ResizeGrip">
+          <Grid SnapsToDevicePixels="true" Background="{TemplateBinding Background}">
+            <TextBlock FontFamily="{DynamicResource SymbolThemeFontFamily}" Text="" />
+          </Grid>
+        </ControlTemplate>
+      </Setter.Value>
+    </Setter>
+  </Style>
+  <Style BasedOn="{StaticResource DefaultResizeGripStyle}" TargetType="{x:Type ResizeGrip}" />
   <Thickness x:Key="RichTextBoxAccentBorderThemeThickness">0,0,0,1</Thickness>
   <Style x:Key="DefaultRichTextBoxStyle" TargetType="{x:Type RichTextBox}">
     <Setter Property="Foreground" Value="{DynamicResource TextControlForeground}" />

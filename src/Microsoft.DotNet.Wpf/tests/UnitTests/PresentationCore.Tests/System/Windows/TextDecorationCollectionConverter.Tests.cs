@@ -2,6 +2,7 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 
 using System.ComponentModel.Design.Serialization;
+using System.Globalization;
 
 namespace System.Windows;
 
@@ -33,6 +34,84 @@ public class TextDecorationCollectionConverterTests
         TextDecorationCollectionConverter converter = new();
 
         Assert.Equal(expected, converter.CanConvertTo(destinationType));
+    }
+
+    [Theory]
+    [MemberData(nameof(ConvertFrom_ReturnsExpected_Data))]
+    public void ConvertFrom_ReturnsExpected(TextDecorationCollection expected, CultureInfo cultureInfo, string text)
+    {
+        TextDecorationCollectionConverter converter = new();
+
+        TextDecorationCollection? converted = (TextDecorationCollection?)converter.ConvertFrom(null, cultureInfo, text);
+
+        // Check count
+        Assert.NotNull(converted);
+        Assert.Equal(expected.Count, converted.Count);
+
+        // We require the order to be exact as well
+        for (int i = 0; i < expected.Count; i++)
+        {
+            Assert.Equal(expected[i], converted[i]);
+        }
+    }
+
+    public static IEnumerable<object?[]> ConvertFrom_ReturnsExpected_Data
+    {
+        get
+        {
+            // "None" returns no items
+            yield return new object[] { new TextDecorationCollection(), CultureInfo.InvariantCulture, string.Empty };
+            yield return new object[] { new TextDecorationCollection(), CultureInfo.InvariantCulture, "          " };
+            yield return new object[] { new TextDecorationCollection(), CultureInfo.InvariantCulture, "None" };
+            yield return new object[] { new TextDecorationCollection(), CultureInfo.InvariantCulture, "      None     " };
+
+            yield return new object[] { new TextDecorationCollection(), new CultureInfo("ru-RU"), string.Empty };
+            yield return new object[] { new TextDecorationCollection(), new CultureInfo("no-NO"), "          " };
+            yield return new object[] { new TextDecorationCollection(), new CultureInfo("no-NO"), "None" };
+            yield return new object[] { new TextDecorationCollection(), new CultureInfo("ru-RU"), "      None     " };
+
+            // Order matters here
+            yield return new object[] { new TextDecorationCollection([TextDecorations.Strikethrough[0]]), new CultureInfo("no-NO"), "Strikethrough" };
+            yield return new object[] { new TextDecorationCollection([TextDecorations.Strikethrough[0]]), new CultureInfo("ru-RU"), "Strikethrough           " };
+
+            yield return new object[] { new TextDecorationCollection([TextDecorations.Underline[0], TextDecorations.Baseline[0]]),
+                                        new CultureInfo("no-NO"),
+                                        "Underline, Baseline" };
+            yield return new object[] { new TextDecorationCollection([TextDecorations.Strikethrough[0], TextDecorations.Underline[0], TextDecorations.Baseline[0]]),
+                                        new CultureInfo("ru-RU"),
+                                        "  Strikethrough   ,Underline, Baseline " };
+
+            yield return new object[] { new TextDecorationCollection([TextDecorations.Strikethrough[0], TextDecorations.Underline[0],
+                                                                      TextDecorations.Baseline[0], TextDecorations.OverLine[0]]),
+                                                                      new CultureInfo("fr-FR"), "  Strikethrough   ,Underline, Baseline        , Overline             " };
+
+        }
+    }
+
+    [Theory]
+    // Starts with a separator
+    [InlineData(",  Strikethrough   ,Underline, Baseline ")]
+    // Ends with a separator
+    [InlineData(" Strikethrough   ,Underline, Baseline, Overline, ")]
+    // Duplicate item (must be unique)
+    [InlineData("  Strikethrough  , Strikethrough, ,Underline, Baseline ")]
+    [InlineData(" Underline, Underline ")]
+    // None must be specified alone
+    [InlineData("None,  Strikethrough   ,Underline, Baseline ")]
+    [InlineData("None,  Strikethrough   ,Underline, Baseline, Overline ")]
+    // Invalid decoration at the end
+    [InlineData(" Strikethrough   ,Underline, Baseline, Overline, x ")]
+    // Invalid decoration
+    [InlineData(" Noneee ")]
+    // Invalid data type
+    [InlineData(double.PositiveInfinity)]
+    [InlineData(1554554)]
+    [InlineData(125.4d)]
+    public void ConvertFrom_ThrowsArgumentException(object? source)
+    {
+        TextDecorationCollectionConverter converter = new();
+
+        Assert.Throws<ArgumentException>(() => converter.ConvertFrom(null, null, source));
     }
 
     [Theory]
@@ -106,7 +185,48 @@ public class TextDecorationCollectionConverterTests
     }
 
     [Theory]
-    [MemberData(nameof(ConvertTo_ThrowsArgumentNullException_TestData))]
+    [MemberData(nameof(ConvertTo_ReturnsExpected_Data))]
+    public void ConvertTo_ReturnsExpected(TextDecorationCollection expected, object? value, Type destinationType)
+    {
+        TextDecorationCollectionConverter converter = new();
+
+        InstanceDescriptor? result = (InstanceDescriptor?)converter.ConvertTo(null, null, value, destinationType);
+
+        Assert.NotNull(result);
+
+        // Create instance using the InstanceDescriptor
+        TextDecorationCollection? actual = (TextDecorationCollection?)result.Invoke();
+
+        // Check instance
+        Assert.NotNull(actual);
+        Assert.Equal(expected.Count, actual.Count);
+
+        // We require the order to be exact as well
+        for (int i = 0; i < expected.Count; i++)
+        {
+            Assert.Equal(expected[i], actual[i]);
+        }
+    }
+
+    public static IEnumerable<object[]> ConvertTo_ReturnsExpected_Data
+    {
+        get
+        {
+            // Single decoration
+            yield return new object[] { new TextDecorationCollection(new TextDecoration[1] { TextDecorations.Underline[0] }),
+                                        new TextDecorationCollection(new TextDecoration[1] { TextDecorations.Underline[0] }),
+
+                                        typeof(InstanceDescriptor) };
+
+            // Multiple decorations
+            yield return new object[] { new TextDecorationCollection(new TextDecoration[3] { TextDecorations.Underline[0], TextDecorations.OverLine[0], TextDecorations.Baseline[0] }),
+                                        new TextDecorationCollection(new TextDecoration[3] { TextDecorations.Underline[0], TextDecorations.OverLine[0], TextDecorations.Baseline[0] }),
+                                        typeof(InstanceDescriptor) };
+        }
+    }
+
+    [Theory]
+    [MemberData(nameof(ConvertTo_ThrowsArgumentNullException_Data))]
     public void ConvertTo_ThrowsArgumentNullException(object value, Type destinationType)
     {
         TextDecorationCollectionConverter converter = new();
@@ -114,7 +234,7 @@ public class TextDecorationCollectionConverterTests
         Assert.Throws<ArgumentNullException>(() => converter.ConvertTo(null, null, value, destinationType));
     }
 
-    public static IEnumerable<object?[]> ConvertTo_ThrowsArgumentNullException_TestData
+    public static IEnumerable<object?[]> ConvertTo_ThrowsArgumentNullException_Data
     {
         get
         {

@@ -3733,7 +3733,7 @@
     </Setter>
   </Style>
   <Style BasedOn="{StaticResource DefaultScrollViewerStyle}" TargetType="{x:Type ScrollViewer}" />
-  <Style TargetType="{x:Type Separator}">
+  <Style x:Key="DefaultSeparatorStyle" TargetType="{x:Type Separator}">
     <Setter Property="BorderBrush" Value="{DynamicResource SeparatorBorderBrush}" />
     <Setter Property="Background" Value="Transparent" />
     <Setter Property="Margin" Value="0" />
@@ -3749,6 +3749,7 @@
       </Setter.Value>
     </Setter>
   </Style>
+  <Style BasedOn="{StaticResource DefaultSeparatorStyle}" TargetType="{x:Type Separator}" />
   <Style x:Key="SliderButtonStyle" TargetType="{x:Type RepeatButton}">
     <Setter Property="IsTabStop" Value="False" />
     <Setter Property="Focusable" Value="False" />
@@ -4458,22 +4459,7 @@
   <Style x:Key="{x:Static ToolBar.RadioButtonStyleKey}" BasedOn="{StaticResource DefaultRadioButtonStyle}" TargetType="{x:Type RadioButton}" />
   <Style x:Key="{x:Static ToolBar.ComboBoxStyleKey}" BasedOn="{StaticResource DefaultComboBoxStyle}" TargetType="{x:Type ComboBox}" />
   <Style x:Key="{x:Static ToolBar.MenuStyleKey}" BasedOn="{StaticResource DefaultMenuStyle}" TargetType="{x:Type Menu}" />
-  <Style x:Key="{x:Static ToolBar.SeparatorStyleKey}" TargetType="{x:Type Separator}">
-    <Setter Property="BorderBrush" Value="{DynamicResource SeparatorBorderBrush}" />
-    <Setter Property="Background" Value="Transparent" />
-    <Setter Property="Margin" Value="0" />
-    <Setter Property="BorderThickness" Value="1,1,0,0" />
-    <Setter Property="Focusable" Value="False" />
-    <Setter Property="SnapsToDevicePixels" Value="True" />
-    <Setter Property="OverridesDefaultStyle" Value="True" />
-    <Setter Property="Template">
-      <Setter.Value>
-        <ControlTemplate TargetType="{x:Type Separator}">
-          <Border Width="{TemplateBinding Width}" Margin="{TemplateBinding Margin}" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" />
-        </ControlTemplate>
-      </Setter.Value>
-    </Setter>
-  </Style>
+  <Style x:Key="{x:Static ToolBar.SeparatorStyleKey}" BasedOn="{StaticResource DefaultSeparatorStyle}" TargetType="{x:Type Separator}" />
   <Style x:Key="{x:Static ToolBar.TextBoxStyleKey}" TargetType="{x:Type TextBox}">
     <Setter Property="KeyboardNavigation.TabNavigation" Value="None" />
     <Setter Property="FocusVisualStyle" Value="{x:Null}" />

@@ -2657,7 +2657,7 @@
       </Setter.Value>
     </Setter>
   </Style>
-  <Style x:Key="{x:Type ItemsControl}" TargetType="{x:Type ItemsControl}">
+  <Style x:Key="DefaultItemsControlStyle" TargetType="{x:Type ItemsControl}">
     <Setter Property="Border.CornerRadius" Value="4" />
     <Setter Property="Template">
       <Setter.Value>
@@ -2669,6 +2669,7 @@
       </Setter.Value>
     </Setter>
   </Style>
+  <Style BasedOn="{StaticResource DefaultItemsControlStyle}" TargetType="{x:Type ItemsControl}" />
   <Style TargetType="{x:Type Label}">
     <Setter Property="Padding" Value="0,0,0,4" />
     <Setter Property="Focusable" Value="False" />
@@ -4808,7 +4809,7 @@
     </Style.Triggers>
   </Style>
   <Style BasedOn="{StaticResource DefaultTreeViewItemStyle}" TargetType="{x:Type TreeViewItem}" />
-  <Style x:Key="{x:Type UserControl}" TargetType="{x:Type UserControl}">
+  <Style x:Key="DefaultUserControlStyle" TargetType="{x:Type UserControl}">
     <Setter Property="Border.CornerRadius" Value="4" />
     <Setter Property="Template">
       <Setter.Value>
@@ -4820,6 +4821,7 @@
       </Setter.Value>
     </Setter>
   </Style>
+  <Style BasedOn="{StaticResource DefaultUserControlStyle}" TargetType="{x:Type UserControl}" />
   <ControlTemplate x:Key="WindowTemplateKey" TargetType="{x:Type Window}">
     <Border Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}">
       <Grid>

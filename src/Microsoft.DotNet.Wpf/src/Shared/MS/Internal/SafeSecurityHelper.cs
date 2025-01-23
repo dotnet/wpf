@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -58,37 +58,7 @@ namespace System.Xaml
         }
 #endif
 
-#if PRESENTATION_CORE || PRESENTATIONFRAMEWORK ||REACHFRAMEWORK || DEBUG
-
-#if !WINDOWS_BASE && !SYSTEM_XAML
-        /// <summary>
-        ///     Given an assembly, returns the partial name of the assembly.
-        /// </summary>
-        internal static string GetAssemblyPartialName(Assembly assembly)
-        {
-            AssemblyName name = new AssemblyName(assembly.FullName);
-            string partialName = name.Name;
-            return (partialName != null) ? partialName : string.Empty;
-        }
-#endif
-
-#endif
-
 #if PRESENTATIONFRAMEWORK
-
-        /// <summary>
-        ///     Get the full assembly name by combining the partial name passed in
-        ///     with everything else from proto assembly.
-        /// </summary>
-        internal static string GetFullAssemblyNameFromPartialName(
-                                    Assembly protoAssembly,
-                                    string partialName)
-        {
-            AssemblyName name = new AssemblyName(protoAssembly.FullName);
-            name.Name = partialName;
-            return name.FullName;
-        }
-
         internal static Point ClientToScreen(UIElement relativeTo, Point point)
         {
             GeneralTransform transform;
@@ -151,6 +121,7 @@ namespace System.Xaml
                     return assemblies[i];
                 }
             }
+
             return null;
         }
 
@@ -165,12 +136,13 @@ namespace System.Xaml
                     _assemblies = new Dictionary<object, AssemblyName>();
                 }
                 else
-	            {
+                {
                     if (_assemblies.TryGetValue(key, out result))
                     {
                         return result;
                     }
-	            }
+                }
+
                 //
                 // We use AssemblyName ctor here because GetName demands FileIOPermission
                 // and does load more than just the required information.
@@ -185,6 +157,7 @@ namespace System.Xaml
                     GCNotificationToken.RegisterCallback(_cleanupCollectedAssemblies, null);
                     _isGCCallbackPending  = true;
                 }
+
                 return result;
             }
         }
@@ -198,11 +171,11 @@ namespace System.Xaml
             {
                 foreach (object key in _assemblies.Keys)
                 {
-                    WeakReference weakRef = key as WeakReference;
-                    if (weakRef is null)
+                    if (key is not WeakReference weakRef)
                     {
                         continue;
                     }
+
                     if (weakRef.IsAlive)
                     {
                         // There is a weak ref that is still alive, register another GC callback for next time
@@ -215,9 +188,11 @@ namespace System.Xaml
                         {
                             keysToRemove = new List<object>();
                         }
+
                         keysToRemove.Add(key);
                     }
                 }
+
                 if (keysToRemove is not null)
                 {
                     foreach (object key in keysToRemove)
@@ -225,6 +200,7 @@ namespace System.Xaml
                         _assemblies.Remove(key);
                     }
                 }
+
                 if (foundLiveDynamicAssemblies)
                 {
                     GCNotificationToken.RegisterCallback(_cleanupCollectedAssemblies, null);
@@ -311,6 +287,7 @@ namespace System.Xaml
                     return (target1 == target2);
                 }
             }
+
             return base.Equals(o);
         }
 
@@ -320,6 +297,7 @@ namespace System.Xaml
             {
                 return object.ReferenceEquals(right, null);
             }
+
             return left.Equals(right);
         }
 

@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -109,12 +109,14 @@ namespace MS.Internal.IO.Packaging
         /// </remarks>
         void IStream.Stat(out System.Runtime.InteropServices.ComTypes.STATSTG streamStats, int grfStatFlag)
         {
-            streamStats = new System.Runtime.InteropServices.ComTypes.STATSTG();
-            streamStats.type = NativeMethods.STGTY_STREAM;
-            streamStats.cbSize = _ioStream.Length;
+            streamStats = new System.Runtime.InteropServices.ComTypes.STATSTG
+            {
+                type = NativeMethods.STGTY_STREAM,
+                cbSize = _ioStream.Length,
 
-            // Return access information in grfMode.
-            streamStats.grfMode = 0; // default value for each flag will be false
+                // Return access information in grfMode.
+                grfMode = 0 // default value for each flag will be false
+            };
             if (_ioStream.CanRead && _ioStream.CanWrite)
             {
                 streamStats.grfMode |= NativeMethods.STGM_READWRITE;

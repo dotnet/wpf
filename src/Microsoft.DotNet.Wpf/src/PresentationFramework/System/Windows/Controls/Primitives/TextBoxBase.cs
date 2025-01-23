@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -105,8 +105,10 @@ namespace System.Windows.Controls.Primitives
                 return;
             }
 
-            TextRange range = new TextRange(_textContainer.End, _textContainer.End);
-            range.Text = textData; // Note that in RichTextBox this assignment will convert NewLines into Paragraphs
+            TextRange range = new TextRange(_textContainer.End, _textContainer.End)
+            {
+                Text = textData // Note that in RichTextBox this assignment will convert NewLines into Paragraphs
+            };
         }
 
         /// <summary>
@@ -1971,10 +1973,8 @@ namespace System.Windows.Controls.Primitives
 
             // Add renderScope as a child of ContentHostTemplateName
             _renderScope = renderScope;
-            if (_textBoxContentHost is ScrollViewer)
+            if (_textBoxContentHost is ScrollViewer scrollViewer)
             {
-                ScrollViewer scrollViewer = (ScrollViewer)_textBoxContentHost;
-
                 if (scrollViewer.Content != null)
                 {
                     _renderScope = null;
@@ -1987,9 +1987,8 @@ namespace System.Windows.Controls.Primitives
                     scrollViewer.Content = _renderScope; // this may replace old render scope in case of upgrade scenario in TextBox
                 }
             }
-            else if (_textBoxContentHost is Decorator)
+            else if (_textBoxContentHost is Decorator decorator)
             {
-                Decorator decorator = (Decorator)_textBoxContentHost;
                 if (decorator.Child != null)
                 {
                     _renderScope = null;

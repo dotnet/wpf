@@ -773,13 +773,15 @@ namespace System.Windows
 
         static private Rect CreateEmptyRect()
         {
-            Rect rect = new Rect();
-            // We can't set these via the property setters because negatives widths
-            // are rejected in those APIs.
-            rect._x = Double.PositiveInfinity;
-            rect._y = Double.PositiveInfinity;
-            rect._width = Double.NegativeInfinity;
-            rect._height = Double.NegativeInfinity;
+            Rect rect = new Rect
+            {
+                // We can't set these via the property setters because negatives widths
+                // are rejected in those APIs.
+                _x = Double.PositiveInfinity,
+                _y = Double.PositiveInfinity,
+                _width = Double.NegativeInfinity,
+                _height = Double.NegativeInfinity
+            };
             return rect;
         }
 

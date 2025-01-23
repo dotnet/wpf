@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -19,12 +19,6 @@ using System.Windows.Navigation;
 using System.IO.Packaging;
 using MS.Internal.AppModel;
 using MS.Internal.PresentationCore;
-
-//From Presharp documentation:
-//In order to avoid generating warnings about unknown message numbers and
-//unknown pragmas when compiling your C# source code with the actual C# compiler,
-//you need to disable warnings 1634 and 1691. 
-#pragma warning disable 1634, 1691
 
 namespace MS.Internal
 {
@@ -94,11 +88,6 @@ namespace MS.Internal
             }
 
             CookieHandler.HandleWebRequest(httpRequest);
-
-            if (String.IsNullOrEmpty(httpRequest.Referer))
-            {
-                httpRequest.Referer = BindUriHelper.GetReferer(uri);
-            }
 
             CustomCredentialPolicy.EnsureCustomCredentialPolicy();
 
@@ -274,7 +263,6 @@ namespace MS.Internal
                     }
                 }
             }
-#pragma warning disable 6502
             catch (NotImplementedException)
             {
                 // this is a valid result and indicates that the subclass chose not to implement this property
@@ -283,7 +271,6 @@ namespace MS.Internal
             {
                 // this is a valid result and indicates that the subclass chose not to implement this property
             }
-#pragma warning restore 6502
         }
 
         // DevDiv2 29007 - IE9 - pack://siteoforigin:,,,/ Uris fail for standalone applications

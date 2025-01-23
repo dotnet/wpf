@@ -1,13 +1,6 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
-
-// 
-// Description: FloaterBaseParagraph class provides a wrapper for floater 
-//              and UIElement objects.
-//
-#pragma warning disable 1634, 1691  // avoid generating warnings about unknown
-// message numbers and unknown pragmas for PRESharp contol
 
 using System.Windows.Documents;
 
@@ -210,5 +203,3 @@ namespace MS.Internal.PtsHost
         #endregion PTS callbacks
     }
 }
-
-#pragma warning enable 1634, 1691

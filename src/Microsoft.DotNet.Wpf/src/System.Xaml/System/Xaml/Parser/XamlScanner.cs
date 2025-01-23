@@ -40,7 +40,7 @@ namespace MS.Internal.Xaml.Parser
         internal XamlScanner(XamlParserContext context, XmlReader xmlReader, XamlXmlReaderSettings settings)
         {
             _xmlReader = xmlReader;
-            _xmlLineInfo = settings.ProvideLineInfo ? (xmlReader as IXmlLineInfo) : null;  //consider removing the "settings" check
+            _xmlLineInfo = settings.ProvideLineInfo ? (xmlReader as IXmlLineInfo) : null;  // consider removing the "settings" check
 
             _parserContext = context;
 
@@ -203,6 +203,7 @@ namespace MS.Internal.Xaml.Parser
                 break;
             }
         }
+
         // ============= Private ==================================
 
         private XamlText AccumulatedText
@@ -213,6 +214,7 @@ namespace MS.Internal.Xaml.Parser
                 {
                     _accumulatedText = new XamlText(_scannerStack.CurrentXmlSpacePreserve);
                 }
+
                 return _accumulatedText;
             }
         }
@@ -248,6 +250,7 @@ namespace MS.Internal.Xaml.Parser
                 {
                     throw LineInfo(new XamlParseException(SR.Format(SR.ParentlessPropertyElement, _xmlReader.Name)));
                 }
+
                 ReadPropertyElement(name, _scannerStack.CurrentType, _scannerStack.CurrentTypeNamespace, isEmptyTag);
             }
             else
@@ -352,6 +355,7 @@ namespace MS.Internal.Xaml.Parser
             {
                 _scannerStack.CurrentProperty = node.PropertyElement;
             }
+
             node.NodeType = ScannerNodeType.PROPERTYELEMENT;
             node.IsCtorForcingMember = false;
         }
@@ -379,6 +383,7 @@ namespace MS.Internal.Xaml.Parser
                     throw new XamlParseException(_typeArgumentAttribute.LineNumber, _typeArgumentAttribute.LinePosition, error);
                 }
             }
+
             XamlTypeName typeName = new XamlTypeName(xmlns, name, typeArgs);
             node.Type = _parserContext.GetXamlType(typeName, true);
 
@@ -401,6 +406,7 @@ namespace MS.Internal.Xaml.Parser
             {
                 node.NodeType = ScannerNodeType.EMPTYELEMENT;
             }
+
             return false;
         }
 
@@ -485,8 +491,10 @@ namespace MS.Internal.Xaml.Parser
                 _scannerStack.Pop();
             }
 
-            XamlScannerNode node = new XamlScannerNode(_xmlLineInfo);
-            node.NodeType = ScannerNodeType.ENDTAG;
+            XamlScannerNode node = new XamlScannerNode(_xmlLineInfo)
+            {
+                NodeType = ScannerNodeType.ENDTAG
+            };
             _readNodesQueue.Enqueue(node);
         }
 
@@ -507,8 +515,10 @@ namespace MS.Internal.Xaml.Parser
 
         private void ReadNone()
         {
-            XamlScannerNode node = new XamlScannerNode(_xmlLineInfo);
-            node.NodeType = ScannerNodeType.NONE;
+            XamlScannerNode node = new XamlScannerNode(_xmlLineInfo)
+            {
+                NodeType = ScannerNodeType.NONE
+            };
             _readNodesQueue.Enqueue(node);
         }
 
@@ -572,7 +582,8 @@ namespace MS.Internal.Xaml.Parser
                 }
 
                 b = _xmlReader.MoveToNextAttribute();
-            } while (b);
+            }
+            while (b);
 
             PreprocessForTypeArguments(list);
 
@@ -580,6 +591,7 @@ namespace MS.Internal.Xaml.Parser
             {
                 _attributes = list;
             }
+
             // Restore the XML reader’s position to the Element after reading the
             // attributes so that the rest of the code can always assume it is on an Element
             _xmlReader.MoveToElement();
@@ -605,6 +617,7 @@ namespace MS.Internal.Xaml.Parser
                     }
                 }
             }
+
             if (typeArgsIdx >= 0)
             {
                 attrList.RemoveAt(typeArgsIdx);
@@ -628,9 +641,9 @@ namespace MS.Internal.Xaml.Parser
                 {
                     StripUidProperty();
                 }
+
                 return;
             }
-
 
             bool tagIsRoot = _scannerStack.Depth == 0; // Attributes are processed before frame is pushed
             foreach (XamlAttribute attr in _attributes)
@@ -659,6 +672,7 @@ namespace MS.Internal.Xaml.Parser
                     {
                         ctorDirectivesList = new List<XamlAttribute>();
                     }
+
                     ctorDirectivesList.Add(attr);
                         break;
 
@@ -673,6 +687,7 @@ namespace MS.Internal.Xaml.Parser
                     {
                         otherDirectivesList = new List<XamlAttribute>();
                     }
+
                     otherDirectivesList.Add(attr);
                     break;
 
@@ -681,6 +696,7 @@ namespace MS.Internal.Xaml.Parser
                     {
                         otherPropertiesList = new List<XamlAttribute>();
                     }
+
                     otherPropertiesList.Add(attr);
                     break;
                 }
@@ -722,6 +738,7 @@ namespace MS.Internal.Xaml.Parser
                     _attributes.RemoveAt(i);
                 }
             }
+
             if (_attributes.Count == 0)
             {
                 _attributes = null;
@@ -756,6 +773,7 @@ namespace MS.Internal.Xaml.Parser
                     else
                         _scannerStack.CurrentXmlSpacePreserve = false;
                 }
+
                 node.NodeType = ScannerNodeType.DIRECTIVE;
                 break;
 
@@ -818,6 +836,7 @@ namespace MS.Internal.Xaml.Parser
                 // we are In a Whitespace significant collection.
                 EnqueueTextNode();
             }
+
             ClearAccumulatedText();
         }
 
@@ -828,9 +847,11 @@ namespace MS.Internal.Xaml.Parser
             // Don't send the text if it is Whitespace outside the root tag.
             if (!(_scannerStack.Depth == 0 && AccumulatedText.IsWhiteSpaceOnly))
             {
-                XamlScannerNode node = new XamlScannerNode(_xmlLineInfo);
-                node.NodeType = ScannerNodeType.TEXT;
-                node.TextContent = AccumulatedText;
+                XamlScannerNode node = new XamlScannerNode(_xmlLineInfo)
+                {
+                    NodeType = ScannerNodeType.TEXT,
+                    TextContent = AccumulatedText
+                };
                 _readNodesQueue.Enqueue(node);
             }
         }
@@ -841,10 +862,12 @@ namespace MS.Internal.Xaml.Parser
             string xamlNamespace = attr.XmlNsUriDefined;
             _parserContext.AddNamespacePrefix(prefix, xamlNamespace);
 
-            XamlScannerNode node = new XamlScannerNode(attr);
-            node.NodeType = ScannerNodeType.PREFIXDEFINITION;
-            node.Prefix = prefix;
-            node.TypeNamespace = xamlNamespace;
+            XamlScannerNode node = new XamlScannerNode(attr)
+            {
+                NodeType = ScannerNodeType.PREFIXDEFINITION,
+                Prefix = prefix,
+                TypeNamespace = xamlNamespace
+            };
 
             _readNodesQueue.Enqueue(node);
         }
@@ -862,6 +885,7 @@ namespace MS.Internal.Xaml.Parser
             {
                 e.SetLineInfo(_xmlLineInfo.LineNumber, _xmlLineInfo.LinePosition);
             }
+
             return e;
         }
     }

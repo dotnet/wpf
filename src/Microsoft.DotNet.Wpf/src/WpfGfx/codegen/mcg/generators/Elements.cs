@@ -67,8 +67,6 @@ namespace MS.Internal.MilCodeGen.Generators
                             using System.Windows.Input;
                             using System.Windows.Media.Animation;
 
-                            #pragma warning disable 1634, 1691  // suppressing PreSharp warnings
-
                             namespace [[e.Namespace]]
                             {
                                 partial class [[e.Name]] [[(e.ImplementsIAnimatable ? ": IAnimatable" : "")]]

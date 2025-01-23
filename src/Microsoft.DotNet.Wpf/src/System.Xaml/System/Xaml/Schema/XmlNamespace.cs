@@ -75,7 +75,7 @@ namespace System.Xaml.Schema
             if (directive == null)
             {
                 directive = new UnknownProperty(name,
-                                                null, /*declaringType - xml directives don't have one. */
+                                                declaringType: null, /* xml directives don't have a declaring type. */
                                                 XmlDirectives.Uri);
             }
             return directive;

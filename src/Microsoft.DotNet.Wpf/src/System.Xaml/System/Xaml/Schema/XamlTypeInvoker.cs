@@ -40,6 +40,7 @@ namespace System.Xaml.Schema
                 {
                     s_Unknown = new XamlTypeInvoker();
                 }
+
                 return s_Unknown;
             }
         }
@@ -57,8 +58,7 @@ namespace System.Xaml.Schema
         public virtual void AddToCollection(object instance, object item)
         {
             ArgumentNullException.ThrowIfNull(instance);
-            IList list = instance as IList;
-            if (list is not null)
+            if (instance is IList list)
             {
                 list.Add(item);
                 return;
@@ -69,6 +69,7 @@ namespace System.Xaml.Schema
             {
                 throw new NotSupportedException(SR.OnlySupportedOnCollections);
             }
+
             XamlType itemType;
             if (item is not null)
             {
@@ -78,19 +79,20 @@ namespace System.Xaml.Schema
             {
                 itemType = _xamlType.ItemType;
             }
+
             MethodInfo addMethod = GetAddMethod(itemType);
             if (addMethod is null)
             {
                 throw new XamlSchemaException(SR.Format(SR.NoAddMethodFound, _xamlType, itemType));
             }
+
             addMethod.Invoke(instance, new object[] { item });
         }
 
         public virtual void AddToDictionary(object instance, object key, object item)
         {
             ArgumentNullException.ThrowIfNull(instance);
-            IDictionary dictionary = instance as IDictionary;
-            if (dictionary is not null)
+            if (instance is IDictionary dictionary)
             {
                 dictionary.Add(key, item);
                 return;
@@ -101,6 +103,7 @@ namespace System.Xaml.Schema
             {
                 throw new NotSupportedException(SR.OnlySupportedOnDictionaries);
             }
+
             XamlType itemType;
             if (item is not null)
             {
@@ -110,11 +113,13 @@ namespace System.Xaml.Schema
             {
                 itemType = _xamlType.ItemType;
             }
+
             MethodInfo addMethod = GetAddMethod(itemType);
             if (addMethod is null)
             {
                 throw new XamlSchemaException(SR.Format(SR.NoAddMethodFound, _xamlType, itemType));
             }
+
             addMethod.Invoke(instance, new object[] { key, item });
         }
 
@@ -129,6 +134,7 @@ namespace System.Xaml.Schema
                     return result;
                 }
             }
+
             return Activator.CreateInstance(_xamlType.UnderlyingType, arguments);
         }
 
@@ -170,6 +176,7 @@ namespace System.Xaml.Schema
                         addMethods.TryAdd(type, addMethod);
                     }
                 }
+
                 _addMethods = addMethods;
             }
 
@@ -204,16 +211,17 @@ namespace System.Xaml.Schema
         public virtual IEnumerator GetItems(object instance)
         {
             ArgumentNullException.ThrowIfNull(instance);
-            IEnumerable enumerable = instance as IEnumerable;
-            if (enumerable is not null)
+            if (instance is IEnumerable enumerable)
             {
                 return enumerable.GetEnumerator();
             }
+
             ThrowIfUnknown();
             if (!_xamlType.IsCollection && !_xamlType.IsDictionary)
             {
                 throw new NotSupportedException(SR.OnlySupportedOnCollectionsAndDictionaries);
             }
+
             MethodInfo getEnumMethod = GetEnumeratorMethod();
             return (IEnumerator)getEnumMethod.Invoke(instance, Array.Empty<object>());
         }
@@ -227,6 +235,7 @@ namespace System.Xaml.Schema
                     Type type = _xamlType.UnderlyingType.UnderlyingSystemType;
                     _isPublic = type.IsVisible ? ThreeValuedBool.True : ThreeValuedBool.False;
                 }
+
                 return _isPublic == ThreeValuedBool.True;
             }
         }
@@ -248,8 +257,7 @@ namespace System.Xaml.Schema
         {
             private static ThreeValuedBool s_securityFailureWithCtorDelegate;
             private static ConstructorInfo s_actionCtor =
-                typeof(Action<object>).GetConstructor(new Type[] { typeof(Object), typeof(IntPtr) });
-
+                typeof(Action<object>).GetConstructor(new Type[] { typeof(object), typeof(IntPtr) });
 
             public static object CreateInstance(XamlTypeInvoker type)
             {
@@ -257,6 +265,7 @@ namespace System.Xaml.Schema
                 {
                     return null;
                 }
+
                 object inst = CallCtorDelegate(type);
                 return inst;
             }
@@ -280,15 +289,18 @@ namespace System.Xaml.Schema
                 {
                     return true;
                 }
+
                 if (!type.IsPublic)
                 {
                     return false;
                 }
+
                 if (s_securityFailureWithCtorDelegate == ThreeValuedBool.NotSet)
                 {
                     s_securityFailureWithCtorDelegate =
                         ThreeValuedBool.False;
                 }
+
                 if (s_securityFailureWithCtorDelegate == ThreeValuedBool.True)
                 {
                     return false;
@@ -302,6 +314,7 @@ namespace System.Xaml.Schema
                     // Throwing MissingMethodException for equivalence with Activator.CreateInstance
                     throw new MissingMethodException(SR.Format(SR.NoDefaultConstructor, underlyingType.FullName));
                 }
+
                 if ((tConstInfo.IsSecurityCritical && !tConstInfo.IsSecuritySafeCritical) ||
                     (tConstInfo.Attributes & MethodAttributes.HasSecurity) == MethodAttributes.HasSecurity ||
                     (underlyingType.Attributes & TypeAttributes.HasSecurity) == TypeAttributes.HasSecurity)
@@ -311,6 +324,7 @@ namespace System.Xaml.Schema
                     type._isPublic = ThreeValuedBool.False;
                     return false;
                 }
+
                 IntPtr constPtr = tConstInfo.MethodHandle.GetFunctionPointer();
                 // This requires Reflection Permission
                 Action<object> ctorDelegate = ctorDelegate =

@@ -46,6 +46,7 @@ namespace MS.Internal.Xaml
             {
                 return null;
             }
+
             XamlMember member = xamlType.GetMember(propertyName);
             return IsVisible(member, rootObjectType) ? member : null;
         }
@@ -56,6 +57,7 @@ namespace MS.Internal.Xaml
             {
                 return null;
             }
+
             XamlMember member = xamlType.GetAttachableMember(propertyName);
             return IsVisible(member, null) ? member : null;
         }
@@ -77,6 +79,7 @@ namespace MS.Internal.Xaml
             {
                 throw new XamlInternalException(SR.Format(SR.ParentlessPropertyElement, propName.ScopedName));
             }
+
             XamlMember property = null;
             XamlType ownerType = null;
             string ns = ResolveXamlNameNS(propName);
@@ -84,6 +87,7 @@ namespace MS.Internal.Xaml
             {
                 throw new XamlParseException(SR.Format(SR.PrefixNotFound, propName.Prefix));
             }
+
             XamlType rootTagType = tagIsRoot ? tagType : null;
 
             // If we have <foo x:TA="" foo.bar=""/> we want foo in foo.bar to match the tag
@@ -116,6 +120,7 @@ namespace MS.Internal.Xaml
             {
                 property = GetXamlAttachableProperty(ownerType, propName.Name);
             }
+
             if (property is null)
             {
                 // This is an unknown property.
@@ -132,6 +137,7 @@ namespace MS.Internal.Xaml
                     property = CreateUnknownAttachableMember(declaringType, propName.Name);
                 }
             }
+
             return property;
         }
 
@@ -143,7 +149,7 @@ namespace MS.Internal.Xaml
             // If prefix is "" then
             // Normal Properties resolve to the ownerType namespace
             // Attachable properties resolve to the actual "" namespace
-            if (String.IsNullOrEmpty(propName.Prefix) && !propName.IsDotted)
+            if (string.IsNullOrEmpty(propName.Prefix) && !propName.IsDotted)
             {
                 ns = tagNamespace;
             }
@@ -151,6 +157,7 @@ namespace MS.Internal.Xaml
             {
                 ns = ResolveXamlNameNS(propName);
             }
+
             return ns;
         }
 
@@ -175,6 +182,7 @@ namespace MS.Internal.Xaml
                     property = GetXamlAttachableProperty(tagType, propName.Name);
                 }
             }
+
             // Not Simple, not Attachable, look for Directives.
             if (property is null && propUsageNamespace is not null)
             {
@@ -188,9 +196,11 @@ namespace MS.Internal.Xaml
                         // we don't have UnknownProperty.Exception
                         directive = new XamlDirective(propUsageNamespace, propName.Name);
                     }
+
                     property = directive;
                 }
             }
+
             if (property is null)
             {
                 if (tagNamespace == propUsageNamespace)
@@ -204,13 +214,13 @@ namespace MS.Internal.Xaml
                     property = new XamlDirective(propUsageNamespace, propName.Name);
                 }
             }
+
             return property;
         }
 
-        abstract public void AddNamespacePrefix(string prefix, string xamlNamespace);
-        abstract public string FindNamespaceByPrefix(string prefix);
-        abstract public IEnumerable<NamespaceDeclaration> GetNamespacePrefixes();
-
+        public abstract void AddNamespacePrefix(string prefix, string xamlNamespace);
+        public abstract string FindNamespaceByPrefix(string prefix);
+        public abstract IEnumerable<NamespaceDeclaration> GetNamespacePrefixes();
 
         // -------------------- internal ------------------------
 
@@ -237,6 +247,7 @@ namespace MS.Internal.Xaml
             {
                 throw new XamlParseException(SR.Format(SR.PrefixNotFound, typeName.Prefix));
             }
+
             return new XamlTypeName(xamlNs, typeName.Name);
         }
 
@@ -274,8 +285,10 @@ namespace MS.Internal.Xaml
                         typeArgs[i] = GetXamlTypeOrUnknown(typeNames[i]);
                     }
                 }
+
                 xamlType = new XamlType(typeName.Namespace, typeName.Name, typeArgs, SchemaContext);
             }
+
             return xamlType;
         }
 
@@ -287,6 +300,7 @@ namespace MS.Internal.Xaml
                 {
                     _resolvePrefixCachedDelegate = new Func<string, string>(FindNamespaceByPrefix);
                 }
+
                 return _resolvePrefixCachedDelegate;
             }
         }
@@ -304,6 +318,7 @@ namespace MS.Internal.Xaml
             {
                 throw new XamlParseException(error);
             }
+
             return GetXamlType(typeName, false, skipVisibilityCheck);
         }
 
@@ -313,6 +328,7 @@ namespace MS.Internal.Xaml
             {
                 return SchemaContext.GetXamlDirective(xamlNS, name);
             }
+
             return null;
         }
 
@@ -345,6 +361,7 @@ namespace MS.Internal.Xaml
             {
                 return false;
             }
+
             XamlType propertyType = GetXamlType(propNs, propTypeName, tagType.TypeArguments);
             return tagType == propertyType;
         }
@@ -360,6 +377,7 @@ namespace MS.Internal.Xaml
                 // or: <Grid> <Grid Grid.Row="0" /> </Grid>
                 property = GetXamlAttachableProperty(tagType, propName);
             }
+
             return property;
         }
 
@@ -372,6 +390,7 @@ namespace MS.Internal.Xaml
             {
                 xamlType = null;
             }
+
             return xamlType;
         }
     }

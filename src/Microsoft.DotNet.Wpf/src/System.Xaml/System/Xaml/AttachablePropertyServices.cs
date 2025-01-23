@@ -20,8 +20,7 @@ namespace System.Xaml
                 return 0;
             }
 
-            IAttachedPropertyStore ap = instance as IAttachedPropertyStore;
-            if (ap is not null)
+            if (instance is IAttachedPropertyStore ap)
             {
                 return ap.PropertyCount;
             }
@@ -36,8 +35,7 @@ namespace System.Xaml
                 return;
             }
 
-            IAttachedPropertyStore ap = instance as IAttachedPropertyStore;
-            if (ap is not null)
+            if (instance is IAttachedPropertyStore ap)
             {
                 ap.CopyPropertiesTo(array, index);
             }
@@ -54,8 +52,7 @@ namespace System.Xaml
                 return false;
             }
 
-            IAttachedPropertyStore ap = instance as IAttachedPropertyStore;
-            if (ap is not null)
+            if (instance is IAttachedPropertyStore ap)
             {
                 return ap.RemoveProperty(name);
             }
@@ -72,8 +69,7 @@ namespace System.Xaml
 
             ArgumentNullException.ThrowIfNull(name);
 
-            IAttachedPropertyStore ap = instance as IAttachedPropertyStore;
-            if (ap is not null)
+            if (instance is IAttachedPropertyStore ap)
             {
                 ap.SetProperty(name, value);
                 return;
@@ -96,8 +92,7 @@ namespace System.Xaml
                 return false;
             }
 
-            IAttachedPropertyStore ap = instance as IAttachedPropertyStore;
-            if (ap is not null)
+            if (instance is IAttachedPropertyStore ap)
             {
                 object obj;
                 bool result = ap.TryGetProperty(name, out obj);
@@ -109,6 +104,7 @@ namespace System.Xaml
                         return true;
                     }
                 }
+
                 value = default(T);
                 return false;
             }
@@ -153,6 +149,7 @@ namespace System.Xaml
                         }
                     }
                 }
+
                 return 0;
             }
 
@@ -172,6 +169,7 @@ namespace System.Xaml
                         }
                     }
                 }
+
                 return false;
             }
 
@@ -231,6 +229,7 @@ namespace System.Xaml
                         }
                     }
                 }
+
                 value = default(T);
                 return false;
             }

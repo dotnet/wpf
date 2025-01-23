@@ -2,7 +2,7 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-//  Description: Specifies that the whitespace surrounding an element should be trimmed.
+// Description: Specifies that the whitespace surrounding an element should be trimmed.
 
 using System;
 using System.Reflection;
@@ -49,9 +49,8 @@ namespace System.Windows.Markup
             {
                 MethodInfo methodInfo;
 #if !PBTCOMPILER
-                DependencyProperty dp = dpOrPiOrMi as DependencyProperty;
 
-                if (dp != null)
+                if (dpOrPiOrMi is DependencyProperty dp)
                 {
                     // While parsing styles or templates, we end up getting a DependencyProperty,
                     // even for non-attached cases. In this case, we try fetching the CLR

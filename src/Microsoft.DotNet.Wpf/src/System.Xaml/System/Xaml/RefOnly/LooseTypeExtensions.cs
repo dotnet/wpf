@@ -32,10 +32,12 @@ namespace System.Xaml
             {
                 return false;
             }
+
             if (t1.Assembly.FullName == t2.Assembly.FullName)
             {
                 return true;
             }
+
             AssemblyName t1name = new AssemblyName(t1.Assembly.FullName);
             AssemblyName t2name = new AssemblyName(t2.Assembly.FullName);
             if (t1name.Name == t2name.Name)
@@ -43,6 +45,7 @@ namespace System.Xaml
                 return t1name.CultureInfo.Equals(t2name.CultureInfo) &&
                     SafeSecurityHelper.IsSameKeyToken(t1name.GetPublicKeyToken(), t2name.GetPublicKeyToken());
             }
+
             return IsWindowsBaseToSystemXamlComparison(t1.Assembly, t2.Assembly, t1name, t2name);
         }
 
@@ -60,6 +63,7 @@ namespace System.Xaml
             {
                 windowsBaseName = name2;
             }
+
             return (windowsBaseName is not null && SafeSecurityHelper.IsSameKeyToken(windowsBaseName.GetPublicKeyToken(), WindowsBaseToken));
         }
 
@@ -116,6 +120,7 @@ namespace System.Xaml
                     }
                 }
             }
+
             return false;
         }
 
@@ -128,7 +133,7 @@ namespace System.Xaml
 
             if (AssemblyQualifiedNameEquals(t1, t2))
             {
-                return false; //strictly testing for sub-class
+                return false; // strictly testing for sub-class
             }
 
             for(Type baseType = t1.BaseType; baseType is not null; baseType = baseType.BaseType)
@@ -138,6 +143,7 @@ namespace System.Xaml
                     return true;
                 }
             }
+
             return false;
         }
     }

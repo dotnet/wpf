@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -7,9 +7,6 @@
 
 using System.Threading;
 using System.Runtime.InteropServices;
-
-// Enable presharp pragma warning suppress directives.
-#pragma warning disable 1634, 1691
 
 namespace MS.Internal.Security.RightsManagement
 {
@@ -84,16 +81,13 @@ namespace MS.Internal.Security.RightsManagement
                         _callbackData = Marshal.PtrToStringUni(pvParam);
                     }
                 }
-// disabling PreSharp false positive. In this case we are actually re-throwing the same exception 
-// on the application thread inside WaitForCompletion() function
-#pragma warning disable 56500                  
+                // We are actually re-throwing the same exception on the application thread inside WaitForCompletion() function          
                 catch (Exception e)
                 {
                     // We catch all exceptions of the second worker thread (created by the unmanaged RM SDK)
                     // preserve them , and then rethrow later  on the main thread from the WaitForCompletion method
                     _exception = e;
                 }
-#pragma warning restore 56500
                 finally
                 {
                     // After this signal, OnStatus will NOT be invoked until we instigate another "transaction"

@@ -28,6 +28,7 @@ namespace System.Xaml
                 {
                     _xmlnsDictionary = new Dictionary<string, string>(settings._xmlnsDictionary);
                 }
+
                 XmlLang = settings.XmlLang;
                 XmlSpacePreserve = settings.XmlSpacePreserve;
                 SkipXmlCompatibilityProcessing = settings.SkipXmlCompatibilityProcessing;

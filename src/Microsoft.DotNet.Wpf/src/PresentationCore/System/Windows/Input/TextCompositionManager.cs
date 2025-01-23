@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -310,9 +310,11 @@ namespace System.Windows.Input
             }
 
             composition.Stage = TextCompositionStage.Started;
-            TextCompositionEventArgs textargs = new TextCompositionEventArgs(composition._InputDevice, composition);
-            textargs.RoutedEvent=TextCompositionManager.PreviewTextInputStartEvent;
-            textargs.Source= composition.Source;
+            TextCompositionEventArgs textargs = new TextCompositionEventArgs(composition._InputDevice, composition)
+            {
+                RoutedEvent = TextCompositionManager.PreviewTextInputStartEvent,
+                Source = composition.Source
+            };
             return composition._InputManager.ProcessInput(textargs);
         }
 
@@ -335,9 +337,11 @@ namespace System.Windows.Input
                 throw new ArgumentException(SR.Format(SR.TextCompositionManager_TextCompositionHasDone, "composition"));
             }
 
-            TextCompositionEventArgs textargs = new TextCompositionEventArgs(composition._InputDevice, composition);
-            textargs.RoutedEvent=TextCompositionManager.PreviewTextInputUpdateEvent;
-            textargs.Source= composition.Source;
+            TextCompositionEventArgs textargs = new TextCompositionEventArgs(composition._InputDevice, composition)
+            {
+                RoutedEvent = TextCompositionManager.PreviewTextInputUpdateEvent,
+                Source = composition.Source
+            };
             return composition._InputManager.ProcessInput(textargs);
         }
 
@@ -361,9 +365,11 @@ namespace System.Windows.Input
             }
 
             composition.Stage = TextCompositionStage.Done;
-            TextCompositionEventArgs textargs = new TextCompositionEventArgs(composition._InputDevice, composition);
-            textargs.RoutedEvent=TextCompositionManager.PreviewTextInputEvent;
-            textargs.Source= composition.Source;
+            TextCompositionEventArgs textargs = new TextCompositionEventArgs(composition._InputDevice, composition)
+            {
+                RoutedEvent = TextCompositionManager.PreviewTextInputEvent,
+                Source = composition.Source
+            };
             return composition._InputManager.ProcessInput(textargs);
         }
 
@@ -520,9 +526,11 @@ namespace System.Windows.Input
                 TextCompositionEventArgs textArgs = (TextCompositionEventArgs) e.StagingItem.Input;
                 if(!textArgs.Handled)
                 {
-                    TextCompositionEventArgs text = new TextCompositionEventArgs(textArgs.Device, textArgs.TextComposition);
-                    text.RoutedEvent=TextCompositionManager.TextInputStartEvent;
-                    text.Source= textArgs.TextComposition.Source;
+                    TextCompositionEventArgs text = new TextCompositionEventArgs(textArgs.Device, textArgs.TextComposition)
+                    {
+                        RoutedEvent = TextCompositionManager.TextInputStartEvent,
+                        Source = textArgs.TextComposition.Source
+                    };
                     e.PushInput(text, e.StagingItem);
                 }
             }
@@ -533,9 +541,11 @@ namespace System.Windows.Input
                 TextCompositionEventArgs textArgs = (TextCompositionEventArgs) e.StagingItem.Input;
                 if(!textArgs.Handled)
                 {
-                    TextCompositionEventArgs text = new TextCompositionEventArgs(textArgs.Device, textArgs.TextComposition);
-                    text.RoutedEvent=TextCompositionManager.TextInputUpdateEvent;
-                    text.Source= textArgs.TextComposition.Source;
+                    TextCompositionEventArgs text = new TextCompositionEventArgs(textArgs.Device, textArgs.TextComposition)
+                    {
+                        RoutedEvent = TextCompositionManager.TextInputUpdateEvent,
+                        Source = textArgs.TextComposition.Source
+                    };
                     e.PushInput(text, e.StagingItem);
                 }
             }
@@ -546,9 +556,11 @@ namespace System.Windows.Input
                 TextCompositionEventArgs textArgs = (TextCompositionEventArgs) e.StagingItem.Input;
                 if(!textArgs.Handled)
                 {
-                    TextCompositionEventArgs text = new TextCompositionEventArgs(textArgs.Device, textArgs.TextComposition);
-                    text.RoutedEvent=TextCompositionManager.TextInputEvent;
-                    text.Source= textArgs.TextComposition.Source;
+                    TextCompositionEventArgs text = new TextCompositionEventArgs(textArgs.Device, textArgs.TextComposition)
+                    {
+                        RoutedEvent = TextCompositionManager.TextInputEvent,
+                        Source = textArgs.TextComposition.Source
+                    };
                     e.PushInput(text, e.StagingItem);
                 }
             }

@@ -34,6 +34,7 @@ namespace MS.Internal.Xaml.Context
             {
                 _settings = settings.StripDelegates();
             }
+
             _runtime = runtime;
             BaseUri = savedContext.BaseUri;
             // If the bottom of the stack is a (no XamlType) Value (reparse) then back-up onto it.
@@ -94,12 +95,14 @@ namespace MS.Internal.Xaml.Context
                     rootNameScopeDictionary = new NameScopeDictionary(rootNameScope);
                 }
             }
+
             _stack.CurrentFrame.NameScopeDictionary = rootNameScopeDictionary;
             _stack.PushScope();  // put a blank sentinal frame on the stack.
             if (settings is not null)
             {
                 _settings = settings.StripDelegates();
             }
+
             _runtime = runtime;
             _savedDepth = 0;
         }
@@ -114,6 +117,7 @@ namespace MS.Internal.Xaml.Context
                     result = Assembly.Load(_settings.AccessLevel.AssemblyAccessToAssemblyName);
                     base.LocalAssembly = result;
                 }
+
                 return result;
             }
             protected set { base.LocalAssembly = value; }
@@ -158,6 +162,7 @@ namespace MS.Internal.Xaml.Context
                 xamlType = GetXamlType(name, true, true);
                 throw new XamlParseException(SR.Format(SR.TypeNotFound, xamlType.GetQualifiedName()));
             }
+
             return xamlType.UnderlyingType;
         }
 
@@ -168,7 +173,7 @@ namespace MS.Internal.Xaml.Context
 
         internal AmbientPropertyValue ServiceProvider_GetFirstAmbientValue(IEnumerable<XamlType> ceilingTypes, XamlMember[] properties)
         {
-            List<AmbientPropertyValue> valueList = FindAmbientValues(ceilingTypes, /*searchLiveStackOnly*/false, /*types*/null, properties, true);
+            List<AmbientPropertyValue> valueList = FindAmbientValues(ceilingTypes, searchLiveStackOnly: false, types: null, properties, true);
             return (valueList.Count == 0) ? null : valueList[0];
         }
 
@@ -180,7 +185,7 @@ namespace MS.Internal.Xaml.Context
 
         internal IEnumerable<AmbientPropertyValue> ServiceProvider_GetAllAmbientValues(IEnumerable<XamlType> ceilingTypes, XamlMember[] properties)
         {
-            List<AmbientPropertyValue> valueList = FindAmbientValues(ceilingTypes, /*searchLiveStackOnly*/false, /*types*/null, properties, /*stopAfterFirst*/ false);
+            List<AmbientPropertyValue> valueList = FindAmbientValues(ceilingTypes, searchLiveStackOnly: false, types: null, properties, stopAfterFirst: false);
             return valueList;
         }
 
@@ -202,6 +207,7 @@ namespace MS.Internal.Xaml.Context
             {
                 _settings = new XamlObjectWriterSettings();
             }
+
             return _settings;
         }
 
@@ -209,7 +215,7 @@ namespace MS.Internal.Xaml.Context
 
         // -----  abstracts overriden from XamlContext.
 
-        public override void AddNamespacePrefix(String prefix, string xamlNS)
+        public override void AddNamespacePrefix(string prefix, string xamlNS)
         {
             _stack.CurrentFrame.AddNamespace(prefix, xamlNS);
         }
@@ -225,8 +231,10 @@ namespace MS.Internal.Xaml.Context
                 {
                     return xamlNs;
                 }
+
                 frame = (ObjectWriterFrame)frame.Previous;
             }
+
             return null;
         }
 
@@ -247,6 +255,7 @@ namespace MS.Internal.Xaml.Context
                         }
                     }
                 }
+
                 frame = (ObjectWriterFrame)frame.Previous;
             }
         }
@@ -268,6 +277,7 @@ namespace MS.Internal.Xaml.Context
                 {
                     _serviceProviderContext = new ServiceProviderContext(this);
                 }
+
                 return _serviceProviderContext;
             }
         }
@@ -292,6 +302,7 @@ namespace MS.Internal.Xaml.Context
             {
                 return frame.XamlType;
             }
+
             return frame.Member.Type;
         }
 
@@ -372,13 +383,11 @@ namespace MS.Internal.Xaml.Context
                                 }
                                 else
                                 {   // The Ambient Property is either Fully build or not set.
-
                                     // FIRST: Ask the object (via IQueryAmbient interface) if it has a value for this property.
                                     // This is usefull to prevent needless creation of empty lazy properties.
-                                    var ambientCtrl = inst as XAML3.IQueryAmbient;
 
                                     // If there is no ambientControl or if ambientControl says YES, then get the property value.
-                                    if (ambientCtrl is null || ambientCtrl.IsAmbientPropertyAvailable(prop.Name))
+                                    if (inst is not XAML3.IQueryAmbient ambientCtrl || ambientCtrl.IsAmbientPropertyAvailable(prop.Name))
                                     {
                                         returnAmbientValue = true;
                                         value = _runtime.GetValue(inst, prop);
@@ -758,12 +767,13 @@ namespace MS.Internal.Xaml.Context
         {
             get
             {
-                //evaluate if _rootInstance should just always look at _rootFrame.Instance instead of caching an instance
+                // evaluate if _rootInstance should just always look at _rootFrame.Instance instead of caching an instance
                 if (_rootInstance is null)
                 {
                     ObjectWriterFrame rootFrame = GetTopFrame();
                     _rootInstance = rootFrame.Instance;
                 }
+
                 return _rootInstance;
             }
         }
@@ -781,6 +791,7 @@ namespace MS.Internal.Xaml.Context
             {
                 frame = frame.Previous;
             }
+
             return (ObjectWriterFrame)frame;
         }
 
@@ -792,6 +803,7 @@ namespace MS.Internal.Xaml.Context
                 {
                     frame.NameScopeDictionary = frame.Instance as XAML3.INameScopeDictionary ?? new NameScopeDictionary(frame.Instance as XAML3.INameScope);
                 }
+
                 if (frame.NameScopeDictionary is null)
                 {
                     if (frame.Depth == 1)
@@ -813,6 +825,7 @@ namespace MS.Internal.Xaml.Context
                     }
                 }
             }
+
             // We are sure to find a name scope at the root (at least).
             Debug.Assert(frame.NameScopeDictionary is not null || frame.Depth == 0);
             return frame.NameScopeDictionary;
@@ -834,8 +847,10 @@ namespace MS.Internal.Xaml.Context
                         previousNameScopeDictionary = nameScopeDictionary;
                         yield return nameScopeDictionary;
                     }
+
                     frame = (ObjectWriterFrame)frame.Previous;
                 }
+
                 // return the provided root namescope if it's different from the document root namescope
                 if (frame.NameScopeDictionary is not null && frame.NameScopeDictionary != previousNameScopeDictionary)
                 {
@@ -853,8 +868,10 @@ namespace MS.Internal.Xaml.Context
                 {
                     return true;
                 }
+
                 frame = (ObjectWriterFrame)frame.Previous;
             }
+
             return false;
         }
 
@@ -874,8 +891,7 @@ namespace MS.Internal.Xaml.Context
 
             if (nameScopeDictionary is null)
             {
-                XAML3.INameScope nameScope = inst as XAML3.INameScope;
-                if (nameScope is not null)
+                if (inst is XAML3.INameScope nameScope)
                 {
                     nameScopeDictionary = new NameScopeDictionary(nameScope);
                 }
@@ -958,13 +974,16 @@ namespace MS.Internal.Xaml.Context
                     {
                         isFullyInitialized = IsInitializedCallback.IsFullyInitialized(obj);
                     }
+
                     if (NameResolutionComplete || isFullyInitialized || IsInitializedCallback is null)
                     {
                         value = obj;
                     }
+
                     break;
                 }
             }
+
             return value;
         }
 
@@ -984,9 +1003,11 @@ namespace MS.Internal.Xaml.Context
                     {
                         continue;
                     }
+
                     allNamesAndValues.Add(nameValuePair);
                 }
             }
+
             return allNamesAndValues;
         }
 
@@ -1092,6 +1113,7 @@ namespace MS.Internal.Xaml.Context
                         break;
                     }
                 }
+
                 return value;
             }
 
@@ -1116,9 +1138,11 @@ namespace MS.Internal.Xaml.Context
                         {
                             continue;
                         }
+
                         allNamesAndValues.Add(nameValuePair);
                     }
                 }
+
                 return allNamesAndValues;
             }
         }

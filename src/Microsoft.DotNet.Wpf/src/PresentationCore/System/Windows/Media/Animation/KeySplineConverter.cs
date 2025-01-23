@@ -1,9 +1,6 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
-
-// Allow suppression of certain presharp messages
-#pragma warning disable 1634, 1691
 
 using MS.Internal;
 using System.ComponentModel;
@@ -115,7 +112,6 @@ namespace System.Windows
                 }
                 else if (destinationType == typeof(string))
                 {
-#pragma warning disable 56506 // Suppress presharp warning: Parameter 'cultureInfo.TextInfo' to this public method must be validated:  A null-dereference can occur here.
                     return String.Format(
                         cultureInfo,
                         "{0}{4}{1}{4}{2}{4}{3}",
@@ -124,7 +120,6 @@ namespace System.Windows
                         keySpline.ControlPoint2.X,
                         keySpline.ControlPoint2.Y,
                         cultureInfo != null ? cultureInfo.TextInfo.ListSeparator : CultureInfo.InvariantCulture.TextInfo.ListSeparator);
-#pragma warning restore 56506
                 }
             }
 

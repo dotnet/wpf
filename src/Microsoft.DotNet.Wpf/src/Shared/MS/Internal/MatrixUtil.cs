@@ -233,8 +233,10 @@ namespace MS.Internal
         {
             if (matrix._type == MatrixTypes.TRANSFORM_IS_IDENTITY)
             {
-                matrix = new Matrix(1, 0, 0, 1, offsetX, offsetY);
-                matrix._type = MatrixTypes.TRANSFORM_IS_TRANSLATION;
+                matrix = new Matrix(1, 0, 0, 1, offsetX, offsetY)
+                {
+                    _type = MatrixTypes.TRANSFORM_IS_TRANSLATION
+                };
             }
             else
             {

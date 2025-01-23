@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -199,8 +199,10 @@ namespace MS.Internal.TextFormatting
                     }
                     else
                     {
-                        LsTbd markerRequiredLsTbd = new LsTbd();
-                        markerRequiredLsTbd.ur = settings.TextIndent; // marker requires a tab stop at text start position
+                        LsTbd markerRequiredLsTbd = new LsTbd
+                        {
+                            ur = settings.TextIndent // marker requires a tab stop at text start position
+                        };
                         context.SetTabs(incrementalTab, &markerRequiredLsTbd, 1);
                     }
                 }

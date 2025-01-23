@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -138,9 +138,11 @@ namespace MS.Internal.TextFormatting
             //
             // Client of text formatter would simply pass the value of TextBreakpoint.Width
             // back to PTS pfnFormatLineVariants call.
-            LsLineWidths lineWidths = new LsLineWidths();
-            lineWidths.upLimLine = maxLineWidth;
-            lineWidths.upStartMainText = fullText.TextStore.Settings.TextIndent;
+            LsLineWidths lineWidths = new LsLineWidths
+            {
+                upLimLine = maxLineWidth,
+                upStartMainText = fullText.TextStore.Settings.TextIndent
+            };
             lineWidths.upStartMarker = lineWidths.upStartMainText;
             lineWidths.upStartTrailing = lineWidths.upLimLine;
             lineWidths.upMinStartTrailing = lineWidths.upStartTrailing;

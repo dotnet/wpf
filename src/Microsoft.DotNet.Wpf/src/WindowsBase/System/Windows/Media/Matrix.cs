@@ -755,7 +755,7 @@ namespace System.Windows.Media
         /// <param name='angle'>The angle to rotate specified in radians</param>
         internal static Matrix CreateRotationRadians(double angle)
         {
-            return CreateRotationRadians(angle, /* centerX = */ 0, /* centerY = */ 0);
+            return CreateRotationRadians(angle, centerX: 0, centerY: 0);
         }
 
         /// <summary>

@@ -106,8 +106,7 @@ namespace System.Xaml.Schema
 
         public override bool Equals(object obj)
         {
-            XamlValueConverter<TConverterBase> other = obj as XamlValueConverter<TConverterBase>;
-            if (other is null)
+            if (obj is not XamlValueConverter<TConverterBase> other)
             {
                 return false;
             }
@@ -122,6 +121,7 @@ namespace System.Xaml.Schema
             {
                 result ^= ConverterType.GetHashCode();
             }
+
             if (TargetType is not null)
             {
                 result ^= TargetType.GetHashCode();
@@ -138,6 +138,7 @@ namespace System.Xaml.Schema
             {
                 return converter2 is null;
             }
+
             if (converter2 is null)
             {
                 return false;

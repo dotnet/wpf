@@ -131,9 +131,9 @@ namespace System.Windows.Markup.Localizer
         //-------------------------------
         // Private members
         //-------------------------------
-        private string _uid;
-        private string _className;
-        private string _propertyName;
-        private string _assemblyName;
+        private readonly string _uid;
+        private readonly string _className;
+        private readonly string _propertyName;
+        private readonly string _assemblyName;
     }
 }

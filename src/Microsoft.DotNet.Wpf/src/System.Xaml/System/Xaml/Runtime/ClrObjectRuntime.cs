@@ -28,6 +28,7 @@ namespace MS.Internal.Xaml.Runtime
             {
                 _ignoreCanConvert = settings.IgnoreCanConvert;
             }
+
             _isWriter = isWriter;
         }
 
@@ -37,6 +38,7 @@ namespace MS.Internal.Xaml.Runtime
             {
                 return e.InnerException;
             }
+
             return e;
         }
 
@@ -46,6 +48,7 @@ namespace MS.Internal.Xaml.Runtime
             {
                 throw CreateException(SR.Format(SR.CannotCreateBadType, xamlType.Name));
             }
+
             try
             {
                 return CreateInstanceWithCtor(xamlType, args);
@@ -60,6 +63,7 @@ namespace MS.Internal.Xaml.Runtime
                 {
                     throw;
                 }
+
                 throw CreateException(SR.Format(SR.ConstructorInvocation, xamlType.UnderlyingType), UnwrapTargetInvocationException(ex));
             }
         }
@@ -76,6 +80,7 @@ namespace MS.Internal.Xaml.Runtime
             {
                 throw CreateException((SR.Format(SR.CannotResolveTypeForFactoryMethod, xamlType, methodName)));
             }
+
             object instance = null;
             try
             {
@@ -97,6 +102,7 @@ namespace MS.Internal.Xaml.Runtime
                 string qMethodName = $"{type}.{methodName}";
                 throw CreateException(SR.Format(SR.FactoryReturnedNull, qMethodName));
             }
+
             return instance;
         }
 
@@ -113,19 +119,21 @@ namespace MS.Internal.Xaml.Runtime
             {
                 factory = type.GetMethod(methodName, flags, null, Type.EmptyTypes, null);
             }
+
             if (factory is null)
             {
                 // We go down this path even if there are no args, because we might match a params array
                 MemberInfo[] members = type.GetMember(methodName, MemberTypes.Method, flags);
-                MethodBase[] methods = members as MethodBase[];
-                if (methods is null)
+                if (members is not MethodBase[] methods)
                 {
                     methods = new MethodBase[members.Length];
                     Array.Copy(members, methods, members.Length);
                 }
+
                 // This method throws if it can't find a match, so factory will never be null
                 factory = (MethodInfo)BindToMethod(flags, methods, args);
             }
+
             return factory;
         }
 
@@ -135,7 +143,7 @@ namespace MS.Internal.Xaml.Runtime
                 bindingFlags, candidates, ref args, null, null, null, out _);
         }
 
-        //CreateFromValue is expected to convert the provided value via any applicable converter (on property or type) or provide the original value if there is no converter
+        // CreateFromValue is expected to convert the provided value via any applicable converter (on property or type) or provide the original value if there is no converter
         public override object CreateFromValue(
                                     ServiceProviderContext serviceContext,
                                     XamlValueConverter<TypeConverter> ts, object value,
@@ -162,6 +170,7 @@ namespace MS.Internal.Xaml.Runtime
                 {
                     throw;
                 }
+
                 throw CreateException(SR.Format(SR.TypeConverterFailed2, instance, typeof(string)), ex);
             }
         }
@@ -178,6 +187,7 @@ namespace MS.Internal.Xaml.Runtime
                 {
                     throw;
                 }
+
                 throw CreateException(SR.Format(SR.CanConvertFromFailed, typeof(T), converter.GetType()), ex);
             }
         }
@@ -194,6 +204,7 @@ namespace MS.Internal.Xaml.Runtime
                 {
                     throw;
                 }
+
                 throw CreateException(SR.Format(SR.CanConvertToFailed, type, converter.GetType()), ex);
             }
         }
@@ -210,6 +221,7 @@ namespace MS.Internal.Xaml.Runtime
                 {
                     throw;
                 }
+
                 throw CreateException(SR.Format(SR.TypeConverterFailed2, instance, typeof(string)), ex);
             }
         }
@@ -226,6 +238,7 @@ namespace MS.Internal.Xaml.Runtime
                 {
                     throw;
                 }
+
                 throw CreateException(SR.Format(SR.TypeConverterFailed2, instance, typeof(T)), ex);
             }
         }
@@ -261,8 +274,10 @@ namespace MS.Internal.Xaml.Runtime
                 {
                     throw;
                 }
+
                 throw CreateException(SR.Format(SR.GetValue, property), UnwrapTargetInvocationException(e));
             }
+
             return value;
         }
 
@@ -279,6 +294,7 @@ namespace MS.Internal.Xaml.Runtime
                 {
                     return;
                 }
+
                 SetValue(property, inst, value);
             }
             catch(Exception e)
@@ -287,6 +303,7 @@ namespace MS.Internal.Xaml.Runtime
                 {
                     throw;
                 }
+
                 throw CreateException(SR.Format(SR.SetValue, property), UnwrapTargetInvocationException(e));
             }
         }
@@ -308,6 +325,7 @@ namespace MS.Internal.Xaml.Runtime
                 {
                     throw;
                 }
+
                 throw CreateException(SR.Format(SR.AddCollection, collectionType), UnwrapTargetInvocationException(e));
             }
         }
@@ -324,6 +342,7 @@ namespace MS.Internal.Xaml.Runtime
                 {
                     throw;
                 }
+
                 throw CreateException(SR.Format(SR.AddDictionary, dictionaryType), UnwrapTargetInvocationException(e));
             }
         }
@@ -346,8 +365,10 @@ namespace MS.Internal.Xaml.Runtime
                 {
                     throw;
                 }
+
                 throw CreateException(SR.Format(SR.GetItemsException, collectionType), ex);
             }
+
             return result;
         }
 
@@ -360,8 +381,7 @@ namespace MS.Internal.Xaml.Runtime
                 // - an IDictionaryEnumerator,
                 // - an IEnumerator<KeyValuePair<K,V>>, or
                 // - an IEnumerator that returns DictionaryEntrys
-                IDictionaryEnumerator dictionaryEnumerator = enumerator as IDictionaryEnumerator;
-                if (dictionaryEnumerator is not null)
+                if (enumerator is IDictionaryEnumerator dictionaryEnumerator)
                 {
                     return DictionaryEntriesFromIDictionaryEnumerator(dictionaryEnumerator);
                 }
@@ -391,6 +411,7 @@ namespace MS.Internal.Xaml.Runtime
                 {
                     throw;
                 }
+
                 throw CreateException(SR.Format(SR.GetItemsException, dictionaryType), ex);
             }
         }
@@ -407,6 +428,7 @@ namespace MS.Internal.Xaml.Runtime
                 {
                     throw;
                 }
+
                 throw CreateException(SR.Format(SR.APSException, instance));
             }
         }
@@ -422,6 +444,7 @@ namespace MS.Internal.Xaml.Runtime
                     result = new KeyValuePair<AttachableMemberIdentifier, object>[count];
                     AttachablePropertyServices.CopyPropertiesTo(instance, result, 0);
                 }
+
                 return result;
             }
             catch (Exception ex)
@@ -430,6 +453,7 @@ namespace MS.Internal.Xaml.Runtime
                 {
                     throw;
                 }
+
                 throw CreateException(SR.Format(SR.APSException, instance));
             }
         }
@@ -438,8 +462,7 @@ namespace MS.Internal.Xaml.Runtime
         {
             try
             {
-                XAML3.IComponentConnector connector = root as XAML3.IComponentConnector;
-                if(connector is not null)
+                if (root is XAML3.IComponentConnector connector)
                 {
                     connector.Connect(connectionId, instance);
                 }
@@ -450,6 +473,7 @@ namespace MS.Internal.Xaml.Runtime
                 {
                     throw;
                 }
+
                 throw CreateException(SR.SetConnectionId, e);
             }
         }
@@ -458,10 +482,9 @@ namespace MS.Internal.Xaml.Runtime
         {
             try
             {
-                ISupportInitialize supportInit = obj as ISupportInitialize;
-                if(supportInit is not null)
+                if (obj is ISupportInitialize supportInit)
                 {
-                    if(begin)
+                    if (begin)
                     {
                         supportInit.BeginInit();
                     }
@@ -477,6 +500,7 @@ namespace MS.Internal.Xaml.Runtime
                 {
                     throw;
                 }
+
                 throw CreateException(SR.Format(SR.InitializationGuard, xamlType), e);
             }
         }
@@ -494,6 +518,7 @@ namespace MS.Internal.Xaml.Runtime
                 {
                     throw;
                 }
+
                 throw CreateException(SR.Format(SR.ProvideValue, me.GetType()), e);
             }
         }
@@ -502,8 +527,7 @@ namespace MS.Internal.Xaml.Runtime
         {
             try
             {
-                XAML3.IUriContext uriContext = obj as XAML3.IUriContext;
-                if(uriContext is not null)
+                if (obj is XAML3.IUriContext uriContext)
                 {
                     uriContext.BaseUri = baseUri;
                 }
@@ -514,6 +538,7 @@ namespace MS.Internal.Xaml.Runtime
                 {
                     throw;
                 }
+
                 throw CreateException(SR.Format(SR.AddDictionary, xamlType), e);
             }
         }
@@ -523,17 +548,16 @@ namespace MS.Internal.Xaml.Runtime
         public override void SetXmlInstance(object inst, XamlMember property, XAML3.XData xData)
         {
             object propInstance = GetValue(inst, property, true);
-            IXmlSerializable iXmlSerial = propInstance as IXmlSerializable;
-            if(iXmlSerial is null)
+            if (propInstance is not IXmlSerializable iXmlSerial)
             {
                 throw CreateException((SR.Format(SR.XmlDataNull, property.Name)));
             }
 
-            XmlReader reader = xData.XmlReader as XmlReader;
-            if(reader is null)
+            if (xData.XmlReader is not XmlReader reader)
             {
                 throw new XamlInternalException(SR.Format(SR.XmlValueNotReader, property.Name));
             }
+
             try
             {
                 iXmlSerial.ReadXml(reader);
@@ -544,6 +568,7 @@ namespace MS.Internal.Xaml.Runtime
                 {
                     throw;
                 }
+
                 throw CreateException(SR.Format(SR.SetXmlInstance, property), e);
             }
         }
@@ -564,20 +589,22 @@ namespace MS.Internal.Xaml.Runtime
                 {
                     throw new XamlObjectWriterException(SR.Format(SR.DeferringLoaderInstanceNull, deferringLoader));
                 }
+
                 return converter.Load(deferredContent, serviceContext);
             }
             catch (Exception e)
             {
                 // Reset the reader in case our caller catches and retries
-                IXamlIndexingReader indexingReader = deferredContent as IXamlIndexingReader;
-                if(indexingReader is not null && indexingReader.CurrentIndex >= 0)
+                if (deferredContent is IXamlIndexingReader indexingReader && indexingReader.CurrentIndex >= 0)
                 {
                     indexingReader.CurrentIndex = -1;
                 }
+
                 if (CriticalExceptions.IsCriticalException(e) || e is XamlException)
                 {
                     throw;
                 }
+
                 throw CreateException(SR.DeferredLoad, e);
             }
         }
@@ -593,6 +620,7 @@ namespace MS.Internal.Xaml.Runtime
                 {
                     throw new XamlObjectWriterException(SR.Format(SR.DeferringLoaderInstanceNull, deferringLoader));
                 }
+
                 return converter.Save(value, serviceContext);
             }
             catch (Exception e)
@@ -601,6 +629,7 @@ namespace MS.Internal.Xaml.Runtime
                 {
                     throw;
                 }
+
                 throw CreateException(SR.DeferredSave, e);
             }
         }
@@ -617,6 +646,7 @@ namespace MS.Internal.Xaml.Runtime
                 {
                     throw;
                 }
+
                 throw CreateException(SR.Format(SR.ShouldSerializeFailed, member));
             }
         }
@@ -629,7 +659,7 @@ namespace MS.Internal.Xaml.Runtime
             object obj;
             if (typeConverter is not null)
             {
-                //We sometimes ignoreCanConvert for WPFv3 Compatibility (but only if a string is coming in)
+                // We sometimes ignoreCanConvert for WPFv3 Compatibility (but only if a string is coming in)
                 if (_ignoreCanConvert && value.GetType() == typeof(string))
                 {
                     obj = typeConverter.ConvertFrom(serviceContext, TypeConverterHelper.InvariantEnglishUS, value);
@@ -642,14 +672,14 @@ namespace MS.Internal.Xaml.Runtime
                     }
                     else
                     {
-                        //let the value passthrough (to be set as the property value later).
+                        // let the value passthrough (to be set as the property value later).
                         obj = value;
                     }
                 }
             }
             else
             {
-                //let the value passthrough (to be set as the property value later).
+                // let the value passthrough (to be set as the property value later).
                 obj = value;
             }
 
@@ -682,6 +712,7 @@ namespace MS.Internal.Xaml.Runtime
             {
                 ex = new XamlObjectReaderException(message, innerException);
             }
+
             return (LineInfo is not null) ? LineInfo.WithLineInfo(ex) : ex;
         }
 
@@ -698,12 +729,15 @@ namespace MS.Internal.Xaml.Runtime
                 {
                     throw;
                 }
+
                 throw CreateException(SR.Format(SR.GetItemsException, collectionType), UnwrapTargetInvocationException(ex));
             }
+
             if (result is null)
             {
                 throw CreateException(SR.Format(SR.GetItemsReturnedNull, collectionType));
             }
+
             return result;
         }
 

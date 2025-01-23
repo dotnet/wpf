@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -1249,14 +1249,6 @@ namespace System.Windows.Data
                 IEditableObject ieo = items[i] as IEditableObject;
                 if (ieo != null)
                 {
-                    // PreSharp uses message numbers that the C# compiler doesn't know about.
-                    // Disable the C# complaints, per the PreSharp documentation.
-                    #pragma warning disable 1634, 1691
-
-                    // PreSharp complains about catching NullReference (and other) exceptions.
-                    // It doesn't recognize that IsCritical[Application]Exception() handles these correctly.
-                    #pragma warning disable 56500
-
                     try
                     {
                         ieo.EndEdit();
@@ -1270,9 +1262,6 @@ namespace System.Windows.Data
                         AddValidationError(error);
                         result = false;
                     }
-
-                    #pragma warning restore 56500
-                    #pragma warning restore 1634, 1691
                 }
             }
             return result;
@@ -1428,14 +1417,16 @@ namespace System.Windows.Data
                     ProposedValueEntry entry = _proposedValueTable[i];
                     Binding originalBinding = entry.Binding;
 
-                    Binding binding = new Binding();
-                    binding.Source = entry.Item;
-                    binding.Mode = BindingMode.TwoWay;
-                    binding.Path = new PropertyPath(entry.PropertyName, originalBinding.Path.PathParameters);
+                    Binding binding = new Binding
+                    {
+                        Source = entry.Item,
+                        Mode = BindingMode.TwoWay,
+                        Path = new PropertyPath(entry.PropertyName, originalBinding.Path.PathParameters),
 
-                    binding.ValidatesOnDataErrors = originalBinding.ValidatesOnDataErrors;
-                    binding.ValidatesOnNotifyDataErrors = originalBinding.ValidatesOnNotifyDataErrors;
-                    binding.ValidatesOnExceptions = originalBinding.ValidatesOnExceptions;
+                        ValidatesOnDataErrors = originalBinding.ValidatesOnDataErrors,
+                        ValidatesOnNotifyDataErrors = originalBinding.ValidatesOnNotifyDataErrors,
+                        ValidatesOnExceptions = originalBinding.ValidatesOnExceptions
+                    };
 
                     Collection<ValidationRule> rules = originalBinding.ValidationRulesInternal;
                     if (rules != null)

@@ -1,9 +1,9 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
-using MS.Internal;
+using System.Runtime.InteropServices;
 using MS.Win32.PresentationCore;
+using MS.Internal;
 
 namespace System.Windows.Media.Imaging
 {
@@ -113,7 +113,7 @@ namespace System.Windows.Media.Imaging
             ArgumentNullException.ThrowIfNull(pixels);
 
             if (pixels.Rank != 1)
-                throw new ArgumentException(SR.Collection_BadRank, "pixels");
+                throw new ArgumentException(SR.Collection_BadRank, nameof(pixels));
 
             int elementSize = -1;
 
@@ -131,55 +131,8 @@ namespace System.Windows.Media.Imaging
 
             int destBufferSize = elementSize * pixels.Length;
 
-            if (pixels is byte[])
-            {
-                fixed(void * pixelArray = (byte[])pixels)
-                    InitFromMemoryPtr(pixelWidth, pixelHeight, dpiX, dpiY,
-                                      pixelFormat, palette,
-                                      (IntPtr)pixelArray, destBufferSize, stride);
-            }
-            else if (pixels is short[])
-            {
-                fixed(void * pixelArray = (short[])pixels)
-                    InitFromMemoryPtr(pixelWidth, pixelHeight, dpiX, dpiY,
-                                      pixelFormat, palette,
-                                      (IntPtr)pixelArray, destBufferSize, stride);
-            }
-            else if (pixels is ushort[])
-            {
-                fixed(void * pixelArray = (ushort[])pixels)
-                    InitFromMemoryPtr(pixelWidth, pixelHeight, dpiX, dpiY,
-                                      pixelFormat, palette,
-                                      (IntPtr)pixelArray, destBufferSize, stride);
-            }
-            else if (pixels is int[])
-            {
-                fixed(void * pixelArray = (int[])pixels)
-                    InitFromMemoryPtr(pixelWidth, pixelHeight, dpiX, dpiY,
-                                      pixelFormat, palette,
-                                      (IntPtr)pixelArray, destBufferSize, stride);
-            }
-            else if (pixels is uint[])
-            {
-                fixed(void * pixelArray = (uint[])pixels)
-                    InitFromMemoryPtr(pixelWidth, pixelHeight, dpiX, dpiY,
-                                      pixelFormat, palette,
-                                      (IntPtr)pixelArray, destBufferSize, stride);
-            }
-            else if (pixels is float[])
-            {
-                fixed(void * pixelArray = (float[])pixels)
-                    InitFromMemoryPtr(pixelWidth, pixelHeight, dpiX, dpiY,
-                                      pixelFormat, palette,
-                                      (IntPtr)pixelArray, destBufferSize, stride);
-            }
-            else if (pixels is double[])
-            {
-                fixed(void * pixelArray = (double[])pixels)
-                    InitFromMemoryPtr(pixelWidth, pixelHeight, dpiX, dpiY,
-                                      pixelFormat, palette,
-                                      (IntPtr)pixelArray, destBufferSize, stride);
-            }
+            fixed (byte* pixelArray = &MemoryMarshal.GetArrayDataReference(pixels))
+                InitFromMemoryPtr(pixelWidth, pixelHeight, dpiX, dpiY, pixelFormat, palette, (nint)pixelArray, destBufferSize, stride);
         }
 
         /// <summary>

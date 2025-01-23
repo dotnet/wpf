@@ -93,42 +93,7 @@ namespace MS.Internal.Utility
             else if (orgUri.IsAbsoluteUri == false)
             {
                 // if the orgUri is an absolute Uri, don't need to resolve it again.
-                
-                Uri baseuri = baseUri ?? BindUriHelper.BaseUri;
-
-#if CF_Envelope_Activation_Enabled
-                bool isContainer = false ;
-
-                //
-                // if the BaseUri starts with pack://application we know that we're not in a container. 
-                //
-                // By deferring the registration of the container scheme - we avoid registering the ssres protocol. 
-                // and enable less code that requires elevation. 
-                // 
-                // Note that when container moves to pack: ( PS 25616) - we won't need this check anyway. 
-                // 
-
-                if (  // Check that the baseuri starts with pack://application:,,,/
-                       ! DoSchemeAndHostMatch(baseuri, BaseUriHelper.PackAppBaseUri))
-                {
-                    isContainer = String.Compare(baseuri.Scheme, CompoundFileUri.UriSchemeContainer, StringComparison.OrdinalIgnoreCase) == 0;
-                }           
-
-                Debug.Assert(baseuri.OriginalString == BaseUriHelper.FixFileUri(baseuri).OriginalString, "Base Uri is legacy file Uri and may not resolve relative uris correctly. This method should be updated");
-
-                // Once we move to PackUri, we don't need a special way
-                //  of resolving Uri. We can use the regurlar one.
-                if (isContainer)
-                {
-                    newUri = ResolveContainerUri(baseuri, orgUri);
-                }
-                else
-                {
-#endif
-                    newUri = new Uri(baseuri, orgUri);
-#if CF_Envelope_Activation_Enabled
-                }
-#endif
+                newUri = new Uri(baseUri ?? BaseUriHelper.PackAppBaseUri, orgUri);
             }
             else
             {

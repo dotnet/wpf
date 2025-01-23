@@ -605,6 +605,8 @@
   <SolidColorBrush x:Key="SnackBarBorderBrush" Color="{StaticResource SurfaceStrokeColorFlyout}" />
   <!--  StatusBar  -->
   <!--  TO DO  -->
+  <!--  StatusBarItem  -->
+  <SolidColorBrush x:Key="StatusBarItemForegroundDisabled" Color="{StaticResource TextFillColorDisabled}" />
   <!--  TabControl / TabView  -->
   <SolidColorBrush x:Key="TabViewBackground" Color="{StaticResource SubtleFillColorTransparent}" />
   <SolidColorBrush x:Key="TabViewForeground" Color="{StaticResource TextFillColorPrimary}" />

@@ -506,6 +506,8 @@
   <SolidColorBrush x:Key="SnackBarBorderBrush" Color="{StaticResource SystemColorWindowTextColor}" />
   <!--  StatusBar  -->
   <!--  TO DO  -->
+  <!--  StatusBarItem  -->
+  <SolidColorBrush x:Key="StatusBarItemForegroundDisabled" Color="{StaticResource SystemColorGrayTextColor}" />
   <!--  TabControl / TabView  -->
   <SolidColorBrush x:Key="TabViewBackground" Color="{StaticResource SystemColorWindowColor}" />
   <SolidColorBrush x:Key="TabViewForeground" Color="{StaticResource SystemColorWindowTextColor}" />

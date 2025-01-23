@@ -5,6 +5,7 @@
 
 using System.Runtime.CompilerServices;
 using System.Reflection.Metadata;
+using System.Diagnostics;
 using System.Reflection;
 using System.Text;
 using System;
@@ -123,6 +124,20 @@ namespace MS.Internal
                 if (assemblyToken.Length != 16)
                     assemblyToken = ReadOnlySpan<char>.Empty;
             }
+        }
+
+        /// <summary>
+        /// Compares whether two PublicKeyTokens are the same.
+        /// If both <paramref name="reqToken"/> and <paramref name="curToken"/> are <see cref="ReadOnlySpan{byte}.Empty"/>, <see langword="true"/> is returned.
+        /// </summary>
+        /// <param name="reqToken">First PublicKeyToken to compare.</param>
+        /// <param name="curToken">Second PublicKeyToken to compare.</param>
+        /// <returns><see langword="true"/> if both parameters are <see cref="ReadOnlySpan{byte}.Empty"/> or equal in sequence, <see langword="false"/> otherwise.</returns>
+        internal static bool IsSamePublicKeyToken(ReadOnlySpan<byte> reqToken, ReadOnlySpan<byte> curToken)
+        {
+            Debug.Assert((reqToken.IsEmpty || reqToken.Length == 8) && (curToken.IsEmpty || curToken.Length == 8), "Provided PublicKeyToken has invalid length");
+
+            return reqToken.SequenceEqual(curToken);
         }
 #endif
     }

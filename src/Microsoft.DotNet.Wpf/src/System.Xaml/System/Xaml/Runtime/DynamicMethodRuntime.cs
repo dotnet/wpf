@@ -14,7 +14,6 @@ using System.Xaml.Schema;
 
 namespace MS.Internal.Xaml.Runtime
 {
-
     // Perf notes:
     // - Consider caching some bounded number of ctor/factory binding lookups, similar to what
     //   Activator.CreateInstance does.
@@ -68,6 +67,7 @@ namespace MS.Internal.Xaml.Runtime
                 {
                     _propertyGetDelegates = new Dictionary<MethodInfo, PropertyGetDelegate>();
                 }
+
                 return _propertyGetDelegates;
             }
         }
@@ -80,6 +80,7 @@ namespace MS.Internal.Xaml.Runtime
                 {
                     _propertySetDelegates = new Dictionary<MethodInfo, PropertySetDelegate>();
                 }
+
                 return _propertySetDelegates;
             }
         }
@@ -92,6 +93,7 @@ namespace MS.Internal.Xaml.Runtime
                 {
                     _factoryDelegates = new Dictionary<MethodBase, FactoryDelegate>();
                 }
+
                 return _factoryDelegates;
             }
         }
@@ -104,6 +106,7 @@ namespace MS.Internal.Xaml.Runtime
                 {
                     _converterInstances = new Dictionary<Type, object>();
                 }
+
                 return _converterInstances;
             }
         }
@@ -116,13 +119,14 @@ namespace MS.Internal.Xaml.Runtime
                 {
                     _delegateCreators = new Dictionary<Type, DelegateCreator>();
                 }
+
                 return _delegateCreators;
             }
         }
 
         internal DynamicMethodRuntime(XamlRuntimeSettings settings, XamlSchemaContext schemaContext,
             XamlAccessLevel accessLevel)
-            : base(settings, true /*isWriter*/)
+            : base(settings, isWriter: true)
         {
             Debug.Assert(schemaContext is not null);
             Debug.Assert(accessLevel is not null);
@@ -130,7 +134,7 @@ namespace MS.Internal.Xaml.Runtime
             _localAssembly = Assembly.Load(accessLevel.AssemblyAccessToAssemblyName);
             if (accessLevel.PrivateAccessToTypeName is not null)
             {
-                _localType = _localAssembly.GetType(accessLevel.PrivateAccessToTypeName, true /*throwOnError*/);
+                _localType = _localAssembly.GetType(accessLevel.PrivateAccessToTypeName, throwOnError: true);
             }
         }
 
@@ -141,16 +145,18 @@ namespace MS.Internal.Xaml.Runtime
             {
                 return null;
             }
+
             object result;
             if (!ConverterInstances.TryGetValue(clrType, out result))
             {
                 result = CreateInstanceWithCtor(clrType, null);
                 ConverterInstances.Add(clrType, result);
             }
+
             return (TConverterBase)result;
         }
 
-        //CreateFromValue is expected to convert the provided value via any applicable converter (on property or type) or provide the original value if there is no converter
+        // CreateFromValue is expected to convert the provided value via any applicable converter (on property or type) or provide the original value if there is no converter
         public override object CreateFromValue(
                                     ServiceProviderContext serviceContext,
                                     XamlValueConverter<TypeConverter> ts, object value,
@@ -158,8 +164,7 @@ namespace MS.Internal.Xaml.Runtime
         {
             if (ts == BuiltInValueConverter.Event)
             {
-                string valueString = value as string;
-                if (valueString is not null)
+                if (value is string valueString)
                 {
                     object rootObject;
                     Type delegateType;
@@ -168,6 +173,7 @@ namespace MS.Internal.Xaml.Runtime
                     return CreateDelegate(delegateType, rootObject, valueString);
                 }
             }
+
             return base.CreateFromValue(serviceContext, ts, value, property);
         }
 
@@ -180,6 +186,7 @@ namespace MS.Internal.Xaml.Runtime
                 creator = CreateDelegateCreator(targetType);
                 DelegateCreators.Add(targetType, creator);
             }
+
             return creator.Invoke(delegateType, target, methodName);
         }
 
@@ -195,6 +202,7 @@ namespace MS.Internal.Xaml.Runtime
             {
                 ctor = type.GetConstructor(BF_AllInstanceMembers, null, Type.EmptyTypes, null);
             }
+
             if (ctor is null)
             {
                 // We go down this path even if there are no args, because we might match a params array
@@ -202,12 +210,14 @@ namespace MS.Internal.Xaml.Runtime
                 // This method throws if it can't find a match, so ctor will never be null
                 ctor = (ConstructorInfo)BindToMethod(BF_AllInstanceMembers, ctors, args);
             }
+
             FactoryDelegate factoryDelegate;
             if (!FactoryDelegates.TryGetValue(ctor, out factoryDelegate))
             {
                 factoryDelegate = CreateFactoryDelegate(ctor);
                 FactoryDelegates.Add(ctor, factoryDelegate);
             }
+
             return factoryDelegate.Invoke(args);
         }
 
@@ -220,6 +230,7 @@ namespace MS.Internal.Xaml.Runtime
                 factoryDelegate = CreateFactoryDelegate(factory);
                 FactoryDelegates.Add(factory, factoryDelegate);
             }
+
             return factoryDelegate.Invoke(args);
         }
 
@@ -237,6 +248,7 @@ namespace MS.Internal.Xaml.Runtime
                 getterDelegate = CreateGetDelegate(getter);
                 PropertyGetDelegates.Add(getter, getterDelegate);
             }
+
             return getterDelegate.Invoke(obj);
         }
 
@@ -254,6 +266,7 @@ namespace MS.Internal.Xaml.Runtime
                 setterDelegate = CreateSetDelegate(setter);
                 PropertySetDelegates.Add(setter, setterDelegate);
             }
+
             setterDelegate.Invoke(obj, value);
         }
 
@@ -273,6 +286,7 @@ namespace MS.Internal.Xaml.Runtime
                 {
                     _delegateCreatorWithoutHelper = CreateDelegateCreatorWithoutHelper();
                 }
+
                 return _delegateCreatorWithoutHelper;
             }
 
@@ -311,7 +325,7 @@ namespace MS.Internal.Xaml.Runtime
 
         private FactoryDelegate CreateFactoryDelegate(ConstructorInfo ctor)
         {
-            DynamicMethod dynamicMethod = CreateDynamicMethod($"{ctor.DeclaringType.Name}Ctor", 
+            DynamicMethod dynamicMethod = CreateDynamicMethod($"{ctor.DeclaringType.Name}Ctor",
                 typeof(object), typeof(object[]));
             ILGenerator ilGenerator = dynamicMethod.GetILGenerator();
 
@@ -325,7 +339,7 @@ namespace MS.Internal.Xaml.Runtime
 
         private FactoryDelegate CreateFactoryDelegate(MethodInfo factory)
         {
-            DynamicMethod dynamicMethod = CreateDynamicMethod($"{factory.Name}Factory", 
+            DynamicMethod dynamicMethod = CreateDynamicMethod($"{factory.Name}Factory",
                 typeof(object), typeof(object[]));
             ILGenerator ilGenerator = dynamicMethod.GetILGenerator();
 
@@ -375,6 +389,7 @@ namespace MS.Internal.Xaml.Runtime
                     Emit_CastTo(ilGenerator, paramType);
                 }
             }
+
             return locals;
         }
 
@@ -385,6 +400,7 @@ namespace MS.Internal.Xaml.Runtime
             {
                 return;
             }
+
             for (int i = 0; i < locals.Length; i++)
             {
                 if (locals[i] is not null)
@@ -403,7 +419,7 @@ namespace MS.Internal.Xaml.Runtime
         // Note that CreateGetDelegate fails verification for value types (and probably shouldn't)
         private PropertyGetDelegate CreateGetDelegate(MethodInfo getter)
         {
-            DynamicMethod dynamicMethod = CreateDynamicMethod($"{getter.Name}Getter", 
+            DynamicMethod dynamicMethod = CreateDynamicMethod($"{getter.Name}Getter",
                 typeof(object), typeof(object));
             ILGenerator ilGenerator = dynamicMethod.GetILGenerator();
 
@@ -463,6 +479,7 @@ namespace MS.Internal.Xaml.Runtime
                 {
                     return _localType;
                 }
+
                 if (instanceMethod.IsFamilyOrAssembly)
                 {
                     // This is a non-security-critical check; we're attempting to do the right thing here,
@@ -475,6 +492,7 @@ namespace MS.Internal.Xaml.Runtime
                     }
                 }
             }
+
             // Otherwise just cast to the declaring type of the member
             return declaringType;
         }
@@ -548,7 +566,7 @@ namespace MS.Internal.Xaml.Runtime
         private void Emit_LateBoundInvoke(ILGenerator ilGenerator, Type targetType, string methodName,
             BindingFlags bindingFlags, short targetArgNum, params short[] paramArgNums)
         {
-            //Emits: typeof(targetType).InvokeMember(
+            // Emits: typeof(targetType).InvokeMember(
             //           methodName, bindingFlags, null, ldarg_targetArgNum,
             //           new object[] { ldarg_paramArgNums });
 
@@ -571,6 +589,7 @@ namespace MS.Internal.Xaml.Runtime
                 // Assuming all arguments are reference types
                 ilGenerator.Emit(OpCodes.Stelem_Ref); // args[i] = ldarg_paramArgNums[i]
             }
+
             ilGenerator.Emit(OpCodes.Ldloc, args);
 
             if (s_InvokeMemberMethod is null)
@@ -578,6 +597,7 @@ namespace MS.Internal.Xaml.Runtime
                 s_InvokeMemberMethod = typeof(Type).GetMethod(KnownStrings.InvokeMember,
                     new Type[] { typeof(string), typeof(BindingFlags), typeof(Binder), typeof(object), typeof(object[]) });
             }
+
             ilGenerator.Emit(OpCodes.Callvirt, s_InvokeMemberMethod);
         }
 
@@ -590,6 +610,7 @@ namespace MS.Internal.Xaml.Runtime
                     KnownStrings.GetTypeFromHandle, BindingFlags.Public | BindingFlags.Static,
                     null, new Type[] { typeof(RuntimeTypeHandle) }, null);
             }
+
             ilGenerator.Emit(OpCodes.Call, s_GetTypeFromHandleMethod);
         }
     }

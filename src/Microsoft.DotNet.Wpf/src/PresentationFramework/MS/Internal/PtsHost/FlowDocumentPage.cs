@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+ï»¿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -292,7 +292,7 @@ namespace MS.Internal.PtsHost
                     ie = _ptsPage.InputHitTest(point);
                 }
             }
-            return (ie != null) ? ie : _structuralCache.FormattingOwner as IInputElement;
+            return ie ?? _structuralCache.FormattingOwner as IInputElement;
         }
 
         /// <summary>
@@ -392,7 +392,7 @@ namespace MS.Internal.PtsHost
         }
 
         /// <summary>
-        /// Called when a UIElement-derived class which is hosted by a IContentHost changes it’s DesiredSize
+        /// Called when a UIElement-derived class which is hosted by a IContentHost changes itâ€™s DesiredSize
         /// </summary>
         /// <param name="child">
         /// Child element whose DesiredSize has changed
@@ -1212,7 +1212,7 @@ namespace MS.Internal.PtsHost
         }
 
         /// <summary>
-        /// Called when a UIElement-derived class which is hosted by a IContentHost changes it’s DesiredSize
+        /// Called when a UIElement-derived class which is hosted by a IContentHost changes itâ€™s DesiredSize
         /// </summary>
         /// <param name="child">
         /// Child element whose DesiredSize has changed

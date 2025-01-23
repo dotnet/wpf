@@ -116,6 +116,7 @@ namespace System.Xaml
                         xamlLineInfoConsumer.SetLineInfo(xamlLineInfo.LineNumber, xamlLineInfo.LinePosition);
                     }
                 }
+
                 xamlWriter.WriteNode(xamlReader);
             }
 
@@ -136,7 +137,7 @@ namespace System.Xaml
             return sw.ToString();
         }
 
-        public static void Save(String fileName, object instance)
+        public static void Save(string fileName, object instance)
         {
             ArgumentNullException.ThrowIfNull(fileName);
             //
@@ -145,6 +146,7 @@ namespace System.Xaml
             {
                 throw new ArgumentException(SR.StringIsNullOrEmpty, nameof(fileName));
             }
+
             using (var writer = XmlWriter.Create(fileName, new XmlWriterSettings { Indent = true, OmitXmlDeclaration = true }))
             {
                 Save(writer, instance);

@@ -57,9 +57,11 @@ namespace System.Windows.Markup
             BamlRecordWriter       bamlWriter)
         {
 
-            TemplateXamlParser templateParser = new TemplateXamlParser(tokenReader, context);
-            templateParser.ParserHooks = _parserHooks;
-            templateParser.BamlRecordWriter = bamlWriter;
+            TemplateXamlParser templateParser = new TemplateXamlParser(tokenReader, context)
+            {
+                ParserHooks = _parserHooks,
+                BamlRecordWriter = bamlWriter
+            };
 
             // Process the xamlNode that is passed in so that the <Template> element is written to baml
             templateParser.WriteElementStart((XamlElementStartNode)xamlNode);

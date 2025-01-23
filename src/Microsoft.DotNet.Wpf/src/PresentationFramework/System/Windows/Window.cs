@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -25,11 +25,6 @@ using BuildInfo = MS.Internal.PresentationFramework.BuildInfo;
 using SNM = Standard.NativeMethods;
 using HRESULT = MS.Internal.Interop.HRESULT;
 using Win32Error = MS.Internal.Interop.Win32Error;
-
-//In order to avoid generating warnings about unknown message numbers and
-//unknown pragmas when compiling your C# source code with the actual C# compiler,
-//you need to disable warnings 1634 and 1691. (Presharp Documentation)
-#pragma warning disable 1634, 1691
 
 namespace System.Windows
 {
@@ -254,10 +249,8 @@ namespace System.Windows
                     // SendMessage's return value is dependent on the message send.  WM_SYSCOMMAND
                     // and WM_LBUTTONUP return value just signify whether the WndProc handled the
                     // message or not, so they are not interesting
-#pragma warning disable 6523
                     UnsafeNativeMethods.SendMessage( Handle, WindowMessage.WM_SYSCOMMAND, (IntPtr)NativeMethods.SC_MOUSEMOVE, IntPtr.Zero);
                     UnsafeNativeMethods.SendMessage( Handle, WindowMessage.WM_LBUTTONUP, IntPtr.Zero, IntPtr.Zero);
-#pragma warning restore 6523
                 }
             }
             else
@@ -355,12 +348,11 @@ namespace System.Windows
             // If the callback function returns false on any enumerated window, or if there are no windows
             // found in the thread, the return value is false.
             // No need for use to actually check the return value.
-#pragma warning disable 6523
             UnsafeNativeMethods.EnumThreadWindows(SafeNativeMethods.GetCurrentThreadId(),
                                                   new NativeMethods.EnumThreadWindowsCallback(ThreadWindowsCallback),
                                                   NativeMethods.NullHandleRef);
-#pragma warning enable 6523
-            //disable those windows
+
+            // Disable those windows
             EnableThreadWindows(false);
 
             IntPtr hWndCapture = SafeNativeMethods.GetCapture();
@@ -1889,9 +1881,11 @@ namespace System.Windows
                     //
                     // PS Windows OS Bug: 955861
 
-                    Size childArrangeBounds = new Size();
-                    childArrangeBounds.Width = Math.Max(0.0, arrangeBounds.Width - frameSize.Width);
-                    childArrangeBounds.Height = Math.Max(0.0, arrangeBounds.Height - frameSize.Height);
+                    Size childArrangeBounds = new Size
+                    {
+                        Width = Math.Max(0.0, arrangeBounds.Width - frameSize.Width),
+                        Height = Math.Max(0.0, arrangeBounds.Height - frameSize.Height)
+                    };
 
                     child.Arrange(new Rect(childArrangeBounds));
 
@@ -2262,9 +2256,7 @@ namespace System.Windows
                 // SendMessage's return value is dependent on the message send.  WM_CLOSE
                 // return value just signify whether the WndProc handled the
                 // message or not, so it is not interesting
-#pragma warning disable 6523
                 UnsafeNativeMethods.UnsafeSendMessage(Handle, WindowMessage.WM_CLOSE, new IntPtr(), new IntPtr());
-#pragma warning enable 6523
             }
         }
 
@@ -2541,9 +2533,8 @@ namespace System.Windows
                 // Window sends WM_CLOSE (which in turn sends WM_DESTROY) to the hwnd when
                 // Window.Close() is called.  Thus, this HwndSource created by window is always
                 // disposed by HwndSource itself
-#pragma warning disable 56518
                 HwndSource source = new HwndSource(param);
-#pragma warning enable 56518
+
                 _swh = new SourceWindowHelper(source);
                 source.SizeToContentChanged += new EventHandler(OnSourceSizeToContentChanged);
 
@@ -2636,13 +2627,15 @@ namespace System.Windows
 
         internal virtual HwndSourceParameters CreateHwndSourceParameters()
         {
-            HwndSourceParameters param = new HwndSourceParameters(Title, NativeMethods.CW_USEDEFAULT, NativeMethods.CW_USEDEFAULT);
-            param.UsesPerPixelOpacity = AllowsTransparency;
-            param.WindowStyle = _Style;
-            param.ExtendedWindowStyle = _StyleEx;
-            param.ParentWindow = _ownerHandle;
-            param.AdjustSizingForNonClientArea = true;
-            param.HwndSourceHook = new HwndSourceHook(WindowFilterMessage); // hook to process window messages
+            HwndSourceParameters param = new HwndSourceParameters(Title, NativeMethods.CW_USEDEFAULT, NativeMethods.CW_USEDEFAULT)
+            {
+                UsesPerPixelOpacity = AllowsTransparency,
+                WindowStyle = _Style,
+                ExtendedWindowStyle = _StyleEx,
+                ParentWindow = _ownerHandle,
+                AdjustSizingForNonClientArea = true,
+                HwndSourceHook = new HwndSourceHook(WindowFilterMessage) // hook to process window messages
+            };
             return param;
         }
 
@@ -3425,9 +3418,11 @@ namespace System.Windows
                     // hwnd size and the frame size
                     //
                     // PS Windows OS Bug: 955861
-                    Size childConstraint = new Size();
-                    childConstraint.Width = ((constraint.Width == Double.PositiveInfinity) ? Double.PositiveInfinity : Math.Max(0.0, (constraint.Width - frameSize.Width)));
-                    childConstraint.Height = ((constraint.Height == Double.PositiveInfinity) ? Double.PositiveInfinity : Math.Max(0.0, (constraint.Height - frameSize.Height)));
+                    Size childConstraint = new Size
+                    {
+                        Width = ((constraint.Width == Double.PositiveInfinity) ? Double.PositiveInfinity : Math.Max(0.0, (constraint.Width - frameSize.Width))),
+                        Height = ((constraint.Height == Double.PositiveInfinity) ? Double.PositiveInfinity : Math.Max(0.0, (constraint.Height - frameSize.Height)))
+                    };
 
                     child.Measure(childConstraint);
                     Size childDesiredSize = child.DesiredSize;
@@ -3648,10 +3643,7 @@ namespace System.Windows
                 {
                     // Calls EnableWindow which returns the previous Window state
                     // (enable/disable) and we don't care about that here
-#pragma warning disable 6523
                     UnsafeNativeMethods.EnableWindowNoThrow(new HandleRef(null, hWnd), state);
-#pragma warning enable 6523
-
                 }
             }
 
@@ -3972,8 +3964,10 @@ namespace System.Windows
         {
             int styleEx = UnsafeNativeMethods.GetWindowLong(new HandleRef(this, hwndHandle), NativeMethods.GWL_EXSTYLE);
 
-            NativeMethods.WINDOWPLACEMENT wp = new NativeMethods.WINDOWPLACEMENT();
-            wp.length = Marshal.SizeOf(typeof(NativeMethods.WINDOWPLACEMENT));
+            NativeMethods.WINDOWPLACEMENT wp = new NativeMethods.WINDOWPLACEMENT
+            {
+                length = Marshal.SizeOf(typeof(NativeMethods.WINDOWPLACEMENT))
+            };
             UnsafeNativeMethods.GetWindowPlacement(new HandleRef(this, hwndHandle), ref wp);
             Point locationDeviceUnits = new Point(wp.rcNormalPosition_left, wp.rcNormalPosition_top);
 
@@ -5930,9 +5924,11 @@ namespace System.Windows
         // OR-ing of BoundsSpecified enum is not supported.
         private void UpdateHwndRestoreBounds(double newValue, BoundsSpecified specifiedRestoreBounds)
         {
+            NativeMethods.WINDOWPLACEMENT wp = new NativeMethods.WINDOWPLACEMENT
+            {
+                length = Marshal.SizeOf(typeof(NativeMethods.WINDOWPLACEMENT))
+            };
 
-            NativeMethods.WINDOWPLACEMENT wp = new NativeMethods.WINDOWPLACEMENT();
-            wp.length = Marshal.SizeOf(typeof(NativeMethods.WINDOWPLACEMENT));
             UnsafeNativeMethods.GetWindowPlacement(new HandleRef(this, Handle), ref wp);
 
             double convertedValue = (LogicalToDeviceUnits(new Point(newValue, 0))).X;
@@ -6016,8 +6012,10 @@ namespace System.Windows
 
             if (hMonitor != IntPtr.Zero)
             {
-                NativeMethods.MONITORINFOEX monitorInfo = new NativeMethods.MONITORINFOEX();
-                monitorInfo.cbSize = Marshal.SizeOf(typeof(NativeMethods.MONITORINFOEX));
+                NativeMethods.MONITORINFOEX monitorInfo = new NativeMethods.MONITORINFOEX
+                {
+                    cbSize = Marshal.SizeOf(typeof(NativeMethods.MONITORINFOEX))
+                };
 
                 SafeNativeMethods.GetMonitorInfo(new HandleRef(this, hMonitor), monitorInfo);
                 NativeMethods.RECT workAreaRect = monitorInfo.rcWork;
@@ -7040,7 +7038,7 @@ namespace System.Windows
 
             // If the original source is not from the same PresentationSource as of the Window,
             // then do not act on the PanningFeedback.
-            if (!PresentationSource.UnderSamePresentationSource(e.OriginalSource as DependencyObject, this))
+            if (!PresentationSource.IsUnderSamePresentationSource(e.OriginalSource as DependencyObject, this))
             {
                 return;
             }
@@ -7433,8 +7431,10 @@ namespace System.Windows
                     get
                     {
                         IntPtr monitor;
-                        NativeMethods.MONITORINFOEX monitorInfo = new NativeMethods.MONITORINFOEX();
-                        monitorInfo.cbSize = Marshal.SizeOf(typeof(NativeMethods.MONITORINFOEX));
+                        NativeMethods.MONITORINFOEX monitorInfo = new NativeMethods.MONITORINFOEX
+                        {
+                            cbSize = Marshal.SizeOf(typeof(NativeMethods.MONITORINFOEX))
+                        };
 
                         monitor = SafeNativeMethods.MonitorFromWindow( new HandleRef( this, Handle), NativeMethods.MONITOR_DEFAULTTONEAREST  );
                         if ( monitor != IntPtr.Zero )
@@ -7443,7 +7443,7 @@ namespace System.Windows
                         }
 
                         return monitorInfo.rcWork;
-}
+                    }
                 }
 
                 private NativeMethods.RECT ClientBounds

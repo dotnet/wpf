@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -236,9 +236,11 @@ namespace System.Windows.Media
                 return Geometry.GetEmptyPathGeometryData();
             }
 
-            PathGeometryData data = new PathGeometryData();
-            data.FillRule = FillRule.EvenOdd;
-            data.Matrix = CompositionResourceManager.TransformToMilMatrix3x2D(Transform);
+            PathGeometryData data = new PathGeometryData
+            {
+                FillRule = FillRule.EvenOdd,
+                Matrix = CompositionResourceManager.TransformToMilMatrix3x2D(Transform)
+            };
 
             ByteStreamGeometryContext ctx = new ByteStreamGeometryContext();
 

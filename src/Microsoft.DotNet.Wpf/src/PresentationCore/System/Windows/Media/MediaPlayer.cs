@@ -1,14 +1,9 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
 using System.Windows.Media.Animation;
 using System.Windows.Media.Composition;
-
-// Disable the warnings that C# emmits when it finds pragmas it does not recognize, this is to
-// get rid of false positive PreSharp warning
-#pragma warning disable 1634, 1691
-
 
 namespace System.Windows.Media
 {

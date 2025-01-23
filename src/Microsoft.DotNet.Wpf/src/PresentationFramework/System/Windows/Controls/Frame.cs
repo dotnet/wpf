@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -1217,17 +1217,18 @@ namespace System.Windows.Controls
                 return null;
             }
 
-            FramePersistState state = new FramePersistState();
+            FramePersistState state = new FramePersistState
+            {
+                // Save a JournalEntry for the current content.
+                JournalEntry = _navigationService.MakeJournalEntry(JournalReason.NewContentNavigation),
+                // The current Content may be null or may not want to be journaled (=> JournalEntry=null).
+                // But we still need to save and then restore the NS GUID - there may be other JEs keyed
+                // by this GUID value.
+                // i. There is a somewhat similar case in ApplicationProxyInternal._GetSaveHistoryBytesDelegate().
+                NavSvcGuid = _navigationService.GuidId,
 
-            // Save a JournalEntry for the current content.
-            state.JournalEntry = _navigationService.MakeJournalEntry(JournalReason.NewContentNavigation);
-            // The current Content may be null or may not want to be journaled (=> JournalEntry=null).
-            // But we still need to save and then restore the NS GUID - there may be other JEs keyed
-            // by this GUID value.
-            // i. There is a somewhat similar case in ApplicationProxyInternal._GetSaveHistoryBytesDelegate().
-            state.NavSvcGuid = _navigationService.GuidId;
-
-            state.JournalOwnership = _journalOwnership;
+                JournalOwnership = _journalOwnership
+            };
             if (_ownJournalScope != null)
             {
                 Debug.Assert(_journalOwnership == JournalOwnership.OwnsJournal);

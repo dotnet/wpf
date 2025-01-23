@@ -1,8 +1,6 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
-
-#pragma warning disable 1634, 1691  // suppressing PreSharp warnings
 
 namespace System.Windows
 {
@@ -42,7 +40,6 @@ namespace System.Windows
 
             if (!typeof(DependencyObject).IsAssignableFrom(systemType))
             {
-                #pragma warning suppress 6506 // systemType is obviously not null
                 throw new ArgumentException(SR.Format(SR.DTypeNotSupportForSystemType, systemType.Name));
             }
 
@@ -81,10 +78,11 @@ namespace System.Windows
             if (!DTypeFromCLRType.TryGetValue(systemType, out dType))
             {
                 // No DependencyObjectType found, create
-                dType = new DependencyObjectType();
-
-                // Store CLR type
-                dType._systemType = systemType;
+                dType = new DependencyObjectType
+                {
+                    // Store CLR type
+                    _systemType = systemType
+                };
 
                 // Store reverse mapping
                 DTypeFromCLRType[systemType] = dType;

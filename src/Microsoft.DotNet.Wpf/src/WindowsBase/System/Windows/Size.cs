@@ -145,11 +145,13 @@ namespace System.Windows
             
         static private Size CreateEmptySize()
         {
-            Size size = new Size();
-            // We can't set these via the property setters because negatives widths
-            // are rejected in those APIs.
-            size._width = Double.NegativeInfinity;
-            size._height = Double.NegativeInfinity;
+            Size size = new Size
+            {
+                // We can't set these via the property setters because negatives widths
+                // are rejected in those APIs.
+                _width = Double.NegativeInfinity,
+                _height = Double.NegativeInfinity
+            };
             return size;
         }
 

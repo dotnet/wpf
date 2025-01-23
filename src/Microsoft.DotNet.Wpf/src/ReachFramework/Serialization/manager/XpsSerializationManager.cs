@@ -1,8 +1,6 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
-
-
 
 using System.Collections;
 using System.ComponentModel;
@@ -13,8 +11,6 @@ using System.Windows.Documents;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using MS.Utility;
-
-#pragma warning disable 1634, 1691 //Allows suppression of certain PreSharp messages
 
 namespace System.Windows.Xps.Serialization
 {
@@ -103,9 +99,6 @@ namespace System.Windows.Xps.Serialization
 
             if( serializedObject is DocumentPaginator )
             {
-                // Prefast complains that serializedObject is not tested for null
-                // It is tested a few lines up
-                #pragma warning suppress 56506
                 if((serializedObject as DocumentPaginator).Source is FixedDocument &&
                     serializedObject.GetType().ToString().Contains( "FixedDocumentPaginator") )
                 {

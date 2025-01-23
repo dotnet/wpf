@@ -80,8 +80,7 @@ namespace System.Windows.Markup
 
                 ArgumentNullException.ThrowIfNull(serviceProvider);
 
-                IXamlTypeResolver xamlTypeResolver = serviceProvider.GetService(typeof(IXamlTypeResolver)) as IXamlTypeResolver;
-                if (xamlTypeResolver is null)
+                if (serviceProvider.GetService(typeof(IXamlTypeResolver)) is not IXamlTypeResolver xamlTypeResolver)
                 {
                     throw new ArgumentException(SR.Format(SR.MarkupExtensionNoContext, GetType().Name, nameof(IXamlTypeResolver)));
                 }
@@ -129,7 +128,8 @@ namespace System.Windows.Markup
                 }
 
                 currentType = currentType.BaseType;
-            } while(currentType is not null);
+            }
+            while(currentType is not null);
 
             currentType = type;
             do
@@ -137,12 +137,13 @@ namespace System.Windows.Markup
                 PropertyInfo prop = currentType.GetProperty(name, BindingFlags.Public | BindingFlags.Static);
                 if (prop is not null)
                 {
-                    value = prop.GetValue(null,null);
+                    value = prop.GetValue(null, null);
                     return true;
                 }
 
                 currentType = currentType.BaseType;
-            } while(currentType is not null);
+            }
+            while(currentType is not null);
 
             value = null;
             return false;

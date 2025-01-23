@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -14,19 +14,10 @@ using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Markup;
 
-#if DEBUG
-#endif
-
 using MS.Internal;
 using MS.Internal.KnownBoxes;
 using MS.Internal.PresentationFramework;
 using MS.Utility;
-
-// Disabling 1634 and 1691:
-// In order to avoid generating warnings about unknown message numbers and
-// unknown pragmas when compiling C# source code with the C# compiler,
-// you need to disable warnings 1634 and 1691. (Presharp Documentation)
-#pragma warning disable 1634, 1691
 
 namespace System.Windows
 {
@@ -670,8 +661,10 @@ namespace System.Windows
         internal Expression GetExpressionCore(DependencyProperty dp, PropertyMetadata metadata)
         {
             this.IsRequestingExpression = true;
-            EffectiveValueEntry entry = new EffectiveValueEntry(dp);
-            entry.Value = DependencyProperty.UnsetValue;
+            EffectiveValueEntry entry = new EffectiveValueEntry(dp)
+            {
+                Value = DependencyProperty.UnsetValue
+            };
             this.EvaluateBaseValueCore(dp, metadata, ref entry);
             this.IsRequestingExpression = false;
 
@@ -1059,8 +1052,10 @@ namespace System.Windows
         /// </summary>
         public void BringIntoView()
         {
-            RequestBringIntoViewEventArgs args = new RequestBringIntoViewEventArgs(this, Rect.Empty);
-            args.RoutedEvent=FrameworkElement.RequestBringIntoViewEvent;
+            RequestBringIntoViewEventArgs args = new RequestBringIntoViewEventArgs(this, Rect.Empty)
+            {
+                RoutedEvent = FrameworkElement.RequestBringIntoViewEvent
+            };
             RaiseEvent(args);
         }
 

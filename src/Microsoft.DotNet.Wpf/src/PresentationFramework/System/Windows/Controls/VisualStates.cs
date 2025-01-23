@@ -4,10 +4,7 @@
 
 namespace System.Windows.Controls
 {
-    /// <summary>
-    /// Names and helpers for visual states in the controls.
-    /// <remarks>THIS IS A SHARED FILE.  PresentationFramework.Design.dll must be rebuilt if changed.</remarks>
-    /// </summary>
+    /// <summary> Names and helpers for visual states in the controls. </summary>
     internal static class VisualStates
     {
         #region CalendarDayButton
@@ -414,9 +411,9 @@ namespace System.Windows.Controls
         /// Ordered list of state names and fallback states to transition into.
         /// Only the first state to be found will be used.
         /// </param>
-        public static void GoToState(Control control, bool useTransitions, params string[] stateNames)
+        public static void GoToState(Control control, bool useTransitions, params ReadOnlySpan<string> stateNames)
         {
-            if (stateNames == null)
+            if (stateNames.IsEmpty)
             {
                 return;
             }

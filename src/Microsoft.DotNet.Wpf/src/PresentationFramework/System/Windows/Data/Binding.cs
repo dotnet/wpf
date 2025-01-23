@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -147,19 +147,6 @@ namespace System.Windows.Data
             FrameworkElement.RemoveHandler(element, TargetUpdatedEvent, handler);
         }
 
-
-        // PreSharp uses message numbers that the C# compiler doesn't know about.
-        // Disable the C# complaints, per the PreSharp documentation.
-        #pragma warning disable 1634, 1691
-
-        // PreSharp checks that the type of the DP agrees with the type of the static
-        // accessors.  But setting the type of the DP to XmlNamespaceManager would
-        // load System.Xml during the static cctor, which is considered a perf bug.
-        // So instead we set the type of the DP to 'object' and use the
-        // ValidateValueCallback to ensure that only values of the right type are allowed.
-        // Meanwhile, disable the PreSharp warning
-        #pragma warning disable 7008
-
         /// <summary>
         /// The XmlNamespaceManager to use to perform Namespace aware XPath queries in XmlData bindings
         /// </summary>
@@ -190,10 +177,6 @@ namespace System.Windows.Data
         {
             return (value == null) || SystemXmlHelper.IsXmlNamespaceManager(value);
         }
-
-        #pragma warning restore 7008
-        #pragma warning restore 1634, 1691
-
 
         //------------------------------------------------------
         //

@@ -1,13 +1,9 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
 // Description: Facade class that groups together the main functionality that clients need to get started.
 //
-
-
-// PRESHARP: In order to avoid generating warnings about unkown message numbers and unknown pragmas.
-#pragma warning disable 1634, 1691
 
 using MS.Internal.Automation;
 using MS.Win32;
@@ -93,8 +89,7 @@ namespace System.Windows.Automation
         public static string PropertyName( AutomationProperty property )
         {
             ArgumentNullException.ThrowIfNull(property);
-            // Suppress PRESHARP Parameter to this public method must be validated; element is checked above.
-#pragma warning suppress 56506
+
             string full = property.ProgrammaticName.Split('.')[1]; // remove portion before the ".", leaving just "NameProperty" or similar
             return full.Substring(0, full.Length - 8); // Slice away "Property" suffix
         }
@@ -107,8 +102,7 @@ namespace System.Windows.Automation
         public static string PatternName( AutomationPattern pattern )
         {
             ArgumentNullException.ThrowIfNull(pattern);
-            // Suppress PRESHARP Parameter to this public method must be validated; element is checked above.
-#pragma warning suppress 56506
+
             string full = pattern.ProgrammaticName;
             return full.Substring(0, full.Length - 26); // Slice away "InvokePatternIdentifiers.Pattern" to get just "Invoke"
         }
@@ -162,9 +156,6 @@ namespace System.Windows.Automation
                     else if ( ( scope & TreeScope.Element ) == TreeScope.Element )
                     {
                         // ...OR Element where the element implements WindowPattern
-                        // PRESHARP will flag this as warning 56506/6506:Parameter 'element' to this public method must be validated: A null-dereference can occur here.
-                        // False positive, element is checked, see above
-#pragma warning suppress 6506
                         object val = element.GetCurrentPropertyValue(AutomationElement.NativeWindowHandleProperty);
                         if ( val != null && val is int && (int)val != 0 )
                         {

@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -23,12 +23,8 @@ using IComDataObject = System.Runtime.InteropServices.ComTypes.IDataObject;
 //
 // See spec at http://avalon/uis/Data%20Transfer%20clipboard%20dragdrop/Avalon%20Data%20Transfer%20Object.htm
 
-
 namespace System.Windows
 {
-    // PreSharp uses message numbers that the C# compiler doesn't know about.
-    // Disable the C# complaints, per the PreSharp documentation.
-#pragma warning disable 1634, 1691
 
     #region DataObject Class
     /// <summary>
@@ -1844,10 +1840,6 @@ namespace System.Windows
 
                 currentPtr = (IntPtr)((long)currentPtr + baseStructSize);
 
-                // Win32 CopyMemory return void, so we should disable PreSharp 6523 that
-                // expects the Win32 exception with the last error.
-#pragma warning disable 6523
-
                 // Write out the strings...
                 for (int i = 0; i < files.Length; i++)
                 {
@@ -1864,8 +1856,6 @@ namespace System.Windows
                     // Increase the current pointer by 2 since it is a unicode.
                     currentPtr = (IntPtr)((long)currentPtr + 2);
                 }
-
-#pragma warning restore 6523
 
                 // Terminate the string and add 2bytes since it is a unicode.
                 unsafe
@@ -1912,13 +1902,7 @@ namespace System.Windows
                 {
                     chars = str.ToCharArray(0, str.Length);
 
-                    // Win32 CopyMemory return void, so we should disable PreSharp 6523 that
-                    // expects the Win32 exception with the last error.
-#pragma warning disable 6523
-
                     UnsafeNativeMethods.CopyMemoryW(ptr, chars, chars.Length * 2);
-
-#pragma warning restore 6523
 
                     // Terminate the string becasue of GlobalReAlloc GMEM_ZEROINIT will zero
                     // out only the bytes it adds to the memory object. It doesn't initialize
@@ -1968,13 +1952,7 @@ namespace System.Windows
 
                 try
                 {
-                    // Win32 CopyMemory return void, so we should disable PreSharp 6523 that
-                    // expects the Win32 exception with the last error.
-#pragma warning disable 6523
-
                     UnsafeNativeMethods.CopyMemory(ptr, strBytes, pinvokeSize);
-
-#pragma warning restore 6523
 
                     Marshal.Copy(new byte[] { 0 }, 0, (IntPtr)((long)ptr + pinvokeSize), 1);
                 }
@@ -2022,14 +2000,8 @@ namespace System.Windows
 
             try
             {
-                // Win32 CopyMemory return void, so we should disable PreSharp 6523 that
-                // expects the Win32 exception with the last error.
-#pragma warning disable 6523
-
                 // Copy UTF8 encoding bytes to the memory.
                 UnsafeNativeMethods.CopyMemory(pointerUtf8, utf8Bytes, utf8ByteCount);
-
-#pragma warning restore 6523
 
                 // Copy the null into the last of memory.
                 Marshal.Copy(new byte[] { 0 }, 0, (IntPtr)((long)pointerUtf8 + utf8ByteCount), 1);
@@ -2272,11 +2244,13 @@ namespace System.Windows
                         string format;
 
                         format = formats[i];
-                        temp = new FORMATETC();
-                        temp.cfFormat = (short)DataFormats.GetDataFormat(format).Id;
-                        temp.dwAspect = DVASPECT.DVASPECT_CONTENT;
-                        temp.ptd = IntPtr.Zero;
-                        temp.lindex = -1;
+                        temp = new FORMATETC
+                        {
+                            cfFormat = (short)DataFormats.GetDataFormat(format).Id,
+                            dwAspect = DVASPECT.DVASPECT_CONTENT,
+                            ptd = IntPtr.Zero,
+                            lindex = -1
+                        };
 
                         if (IsFormatEqual(format, DataFormats.Bitmap))
                         {
@@ -2665,12 +2639,13 @@ namespace System.Windows
                 FORMATETC formatetc;
                 STGMEDIUM medium;
 
-                formatetc = new FORMATETC();
-
-                formatetc.cfFormat = (short)DataFormats.GetDataFormat(format).Id;
-                formatetc.dwAspect = aspect;
-                formatetc.lindex = index;
-                formatetc.tymed = TYMED.TYMED_ISTREAM;
+                formatetc = new FORMATETC
+                {
+                    cfFormat = (short)DataFormats.GetDataFormat(format).Id,
+                    dwAspect = aspect,
+                    lindex = index,
+                    tymed = TYMED.TYMED_ISTREAM
+                };
 
                 object outData = null;
 
@@ -2837,12 +2812,13 @@ namespace System.Windows
                 STGMEDIUM medium;
                 Object data;
 
-                formatetc = new FORMATETC();
-
-                formatetc.cfFormat = (short)DataFormats.GetDataFormat(format).Id;
-                formatetc.dwAspect = aspect;
-                formatetc.lindex = index;
-                formatetc.tymed = TYMED.TYMED_HGLOBAL;
+                formatetc = new FORMATETC
+                {
+                    cfFormat = (short)DataFormats.GetDataFormat(format).Id,
+                    dwAspect = aspect,
+                    lindex = index,
+                    tymed = TYMED.TYMED_HGLOBAL
+                };
 
                 data = null;
 
@@ -3214,10 +3190,12 @@ namespace System.Windows
                 FORMATETC formatetc;
                 int hr;
 
-                formatetc = new FORMATETC();
-                formatetc.cfFormat = (short)DataFormats.GetDataFormat(format).Id;
-                formatetc.dwAspect = aspect;
-                formatetc.lindex = index;
+                formatetc = new FORMATETC
+                {
+                    cfFormat = (short)DataFormats.GetDataFormat(format).Id,
+                    dwAspect = aspect,
+                    lindex = index
+                };
 
                 for (int i=0; i<ALLOWED_TYMEDS.Length; i++)
                 {

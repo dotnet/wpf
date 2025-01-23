@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -185,10 +185,9 @@ namespace System.Windows.Forms.Integration
             set
             {
                 UIElement oldValue = Child;
-#pragma warning disable 1634, 1691
-#pragma warning disable 56526
+
                 _child = value;
-#pragma warning restore 1634, 1691, 56526
+
                 HostContainerInternal.Children.Clear();
                 if (_child != null)
                 {
@@ -570,15 +569,19 @@ namespace System.Windows.Forms.Integration
                 }
                 SWF.CreateParams cp = this.CreateParams;
 
-                HwndSourceParameters HWSParam = new HwndSourceParameters(this.Text, cp.Width, cp.Height);
-                HWSParam.WindowClassStyle = cp.ClassStyle;
-                HWSParam.WindowStyle = cp.Style;
-                HWSParam.ExtendedWindowStyle = cp.ExStyle;
-                HWSParam.ParentWindow = Handle;
-                HWSParam.HwndSourceHook = HwndSourceHook;
+                HwndSourceParameters HWSParam = new HwndSourceParameters(this.Text, cp.Width, cp.Height)
+                {
+                    WindowClassStyle = cp.ClassStyle,
+                    WindowStyle = cp.Style,
+                    ExtendedWindowStyle = cp.ExStyle,
+                    ParentWindow = Handle,
+                    HwndSourceHook = HwndSourceHook
+                };
 
-                _hwndSource = new HwndSource(HWSParam);
-                _hwndSource.RootVisual = _decorator;
+                _hwndSource = new HwndSource(HWSParam)
+                {
+                    RootVisual = _decorator
+                };
                 //For keyboarding: Set the IKeyboardInputSite so that keyboard interop works...
                 (_hwndSource as IKeyboardInputSink).KeyboardInputSite = (HostContainerInternal as IKeyboardInputSite);
             });

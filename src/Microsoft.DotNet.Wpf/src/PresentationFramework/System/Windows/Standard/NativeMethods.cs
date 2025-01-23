@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -1879,8 +1879,10 @@ namespace Standard
         {
             get
             {
-                var ncm = new NONCLIENTMETRICS();
-                ncm.cbSize = Marshal.SizeOf(typeof(NONCLIENTMETRICS));
+                var ncm = new NONCLIENTMETRICS
+                {
+                    cbSize = Marshal.SizeOf(typeof(NONCLIENTMETRICS))
+                };
                 return ncm;
             }
         }
@@ -1889,9 +1891,11 @@ namespace Standard
         {
             get
             {
-                var ncm = new NONCLIENTMETRICS();
-                // Account for the missing iPaddedBorderWidth
-                ncm.cbSize = Marshal.SizeOf(typeof(NONCLIENTMETRICS)) - sizeof(int);
+                var ncm = new NONCLIENTMETRICS
+                {
+                    // Account for the missing iPaddedBorderWidth
+                    cbSize = Marshal.SizeOf(typeof(NONCLIENTMETRICS)) - sizeof(int)
+                };
                 return ncm;
             }
         }

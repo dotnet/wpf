@@ -162,8 +162,7 @@ namespace MS.Internal
             if (HostFileManager != null)
             {
                 object docData = HostFileManager.GetFileDocData(fileName);
-                IPersistFileCheckSum fileChecksummer = docData as IPersistFileCheckSum;
-                if (fileChecksummer != null)
+                if (docData is IPersistFileCheckSum fileChecksummer)
                 {
                     byte[] tempBytes = new byte[1024];
                     int actualSize;

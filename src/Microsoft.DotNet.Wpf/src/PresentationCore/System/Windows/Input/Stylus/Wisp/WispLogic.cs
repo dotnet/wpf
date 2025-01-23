@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -214,9 +214,10 @@ namespace System.Windows.Input.StylusWisp
                                 coalescedMove.TabletDeviceId,
                                 coalescedMove.StylusDeviceId,
                                 mergedData
-                                );
-
-                        coalescedMove.StylusDevice = stylusDevice.StylusDevice;
+                                )
+                        {
+                            StylusDevice = stylusDevice.StylusDevice
+                        };
 
                         _coalescedMoves[stylusDevice] = coalescedMove;
                     }
@@ -355,8 +356,10 @@ namespace System.Windows.Input.StylusWisp
                 }
 
                 // build InputReportEventArgs
-                InputReportEventArgs input = new InputReportEventArgs(null, rawStylusInputReport);
-                input.RoutedEvent = InputManager.PreviewInputReportEvent;
+                InputReportEventArgs input = new InputReportEventArgs(null, rawStylusInputReport)
+                {
+                    RoutedEvent = InputManager.PreviewInputReportEvent
+                };
 
                 // Set flag to prevent reentrancy due to wisptis mouse event getting triggered
                 // while processing this stylus event.
@@ -439,8 +442,10 @@ namespace System.Windows.Input.StylusWisp
                     !_deferredMouseMove.InputSource.CompositionTarget.IsDisposed)
                 {
                     // Process mouse move now since nothing else from stylus came through...
-                    InputReportEventArgs mouseArgs = new InputReportEventArgs(_inputManager.PrimaryMouseDevice, _deferredMouseMove);
-                    mouseArgs.RoutedEvent = InputManager.PreviewInputReportEvent;
+                    InputReportEventArgs mouseArgs = new InputReportEventArgs(_inputManager.PrimaryMouseDevice, _deferredMouseMove)
+                    {
+                        RoutedEvent = InputManager.PreviewInputReportEvent
+                    };
                     _deferredMouseMove = null; // Clear this out before sending.
                     // This will cause _lastMoveFromStylus to be set to false.
                     _inputManager.ProcessInput(mouseArgs);
@@ -565,8 +570,10 @@ namespace System.Windows.Input.StylusWisp
                                                                                 0,
                                                                                 IntPtr.Zero);
 
-                                            InputReportEventArgs args = new InputReportEventArgs(CurrentStylusDevice.StylusDevice, cancelCaptureInputReport);
-                                            args.RoutedEvent = InputManager.PreviewInputReportEvent;
+                                            InputReportEventArgs args = new InputReportEventArgs(CurrentStylusDevice.StylusDevice, cancelCaptureInputReport)
+                                            {
+                                                RoutedEvent = InputManager.PreviewInputReportEvent
+                                            };
                                             e.Cancel();
                                             _inputManager.ProcessInput(args);
                                         }
@@ -611,8 +618,10 @@ namespace System.Windows.Input.StylusWisp
                                                                                     mouseInputReport.Wheel,
                                                                                     mouseInputReport.ExtraInformation);
 
-                                                InputReportEventArgs args = new InputReportEventArgs(activateStylusDevice.StylusDevice, activateInputReport);
-                                                args.RoutedEvent = InputManager.PreviewInputReportEvent;
+                                                InputReportEventArgs args = new InputReportEventArgs(activateStylusDevice.StylusDevice, activateInputReport)
+                                                {
+                                                    RoutedEvent = InputManager.PreviewInputReportEvent
+                                                };
                                                 _inputManager.ProcessInput(args);
                                             }
 
@@ -1289,8 +1298,10 @@ namespace System.Windows.Input.StylusWisp
                                                         0,
                                                         IntPtr.Zero);
 
-                    InputReportEventArgs actionsArgs = new InputReportEventArgs(stylusDevice.StylusDevice, newMouseInputReport);
-                    actionsArgs.RoutedEvent = InputManager.PreviewInputReportEvent;
+                    InputReportEventArgs actionsArgs = new InputReportEventArgs(stylusDevice.StylusDevice, newMouseInputReport)
+                    {
+                        RoutedEvent = InputManager.PreviewInputReportEvent
+                    };
                     _inputManager.ProcessInput(actionsArgs);
                 }
             }
@@ -1757,8 +1768,10 @@ namespace System.Windows.Input.StylusWisp
                                                                             InputMode.Foreground, stylusArgs.Timestamp, mouseInputSource,
                                                                             actions, (int)pt.X, (int)pt.Y, 0, IntPtr.Zero);
 
-                                InputReportEventArgs inputReportArgs = new InputReportEventArgs(stylusDevice.StylusDevice, mouseInputReport);
-                                inputReportArgs.RoutedEvent = InputManager.PreviewInputReportEvent;
+                                InputReportEventArgs inputReportArgs = new InputReportEventArgs(stylusDevice.StylusDevice, mouseInputReport)
+                                {
+                                    RoutedEvent = InputManager.PreviewInputReportEvent
+                                };
                                 _inputManager.ProcessInput(inputReportArgs);
                             }
                         }
@@ -2570,8 +2583,10 @@ namespace System.Windows.Input.StylusWisp
                                          stylusDevice.Id,
                                          rawStylusInputReport.Data);
 
-            InputReportEventArgs input = new InputReportEventArgs(stylusDevice, inputReport);
-            input.RoutedEvent = InputManager.PreviewInputReportEvent;
+            InputReportEventArgs input = new InputReportEventArgs(stylusDevice, inputReport)
+            {
+                RoutedEvent = InputManager.PreviewInputReportEvent
+            };
             _inputManager.ProcessInput(input);
         }
 
@@ -2794,10 +2809,14 @@ namespace System.Windows.Input.StylusWisp
                                                         gesture,
                                                         0, // Gesture X location (only used for flicks)
                                                         0, // Gesture Y location (only used for flicks)
-                                                        0); // ButtonState (only used for flicks)
-            inputReport.StylusDevice = stylusDevice;
-            InputReportEventArgs input = new InputReportEventArgs(stylusDevice, inputReport);
-            input.RoutedEvent = InputManager.PreviewInputReportEvent;
+                                                        0)
+            {
+                StylusDevice = stylusDevice
+            }; // ButtonState (only used for flicks)
+            InputReportEventArgs input = new InputReportEventArgs(stylusDevice, inputReport)
+            {
+                RoutedEvent = InputManager.PreviewInputReportEvent
+            };
             // Process this directly instead of doing a push. We want this event to get
             // to the user before the StylusUp and MouseUp event.
             InputManagerProcessInputEventArgs(input);
@@ -2847,8 +2866,10 @@ namespace System.Windows.Input.StylusWisp
                     mouseInputReport._isSynchronize = true;
                 }
 
-                InputReportEventArgs inputReportArgs = new InputReportEventArgs(stylusDevice.StylusDevice, mouseInputReport);
-                inputReportArgs.RoutedEvent = InputManager.PreviewInputReportEvent;
+                InputReportEventArgs inputReportArgs = new InputReportEventArgs(stylusDevice.StylusDevice, mouseInputReport)
+                {
+                    RoutedEvent = InputManager.PreviewInputReportEvent
+                };
 
                 // Process this directly instead of doing a push. We want this event to get
                 // to the user before the StylusUp and MouseUp event.
@@ -2890,8 +2911,10 @@ namespace System.Windows.Input.StylusWisp
                             button.CachedButtonState = currentButtonState;
 
                             // do work to push Button event
-                            StylusButtonEventArgs args = new StylusButtonEventArgs(stylusDevice, report.Timestamp, button);
-                            args.InputReport = report;
+                            StylusButtonEventArgs args = new StylusButtonEventArgs(stylusDevice, report.Timestamp, button)
+                            {
+                                InputReport = report
+                            };
                             if (currentButtonState == StylusButtonState.Down)
                             {
                                 args.RoutedEvent = Stylus.PreviewStylusButtonDownEvent;

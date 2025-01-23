@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -397,12 +397,13 @@ namespace Microsoft.Windows.Controls.Ribbon
         /// </returns>
         internal static NativeMethods.RECT FromRect(Rect rect)
         {
-            NativeMethods.RECT rc = new NativeMethods.RECT();
-
-            rc.top = DoubleUtil.DoubleToInt(rect.Y);
-            rc.left = DoubleUtil.DoubleToInt(rect.X);
-            rc.bottom = DoubleUtil.DoubleToInt(rect.Bottom);
-            rc.right = DoubleUtil.DoubleToInt(rect.Right);
+            NativeMethods.RECT rc = new NativeMethods.RECT
+            {
+                top = DoubleUtil.DoubleToInt(rect.Y),
+                left = DoubleUtil.DoubleToInt(rect.X),
+                bottom = DoubleUtil.DoubleToInt(rect.Bottom),
+                right = DoubleUtil.DoubleToInt(rect.Right)
+            };
 
             return rc;
         }
@@ -418,12 +419,13 @@ namespace Microsoft.Windows.Controls.Ribbon
         /// </returns>
         internal static Rect ToRect(NativeMethods.RECT rc)
         {
-            Rect rect = new Rect();
-
-            rect.X = rc.left;
-            rect.Y = rc.top;
-            rect.Width = rc.right - rc.left;
-            rect.Height = rc.bottom - rc.top;
+            Rect rect = new Rect
+            {
+                X = rc.left,
+                Y = rc.top,
+                Width = rc.right - rc.left,
+                Height = rc.bottom - rc.top
+            };
 
             return rect;
         }

@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -16,11 +16,6 @@ using System.Windows.Controls;
 using MS.Win32;
 using MS.Internal.AppModel;
 using MS.Internal.Interop;
-
-//In order to avoid generating warnings about unknown message numbers and
-//unknown pragmas when compiling your C# source code with the actual C# compiler,
-//you need to disable warnings 1634 and 1691. (Presharp Documentation)
-#pragma warning disable 1634, 1691
 
 namespace MS.Internal.Controls
 {
@@ -113,9 +108,6 @@ namespace MS.Internal.Controls
                     cancelRequested = e.Cancel;
                 }
             }
-            // We disable this to suppress FXCop warning since in this case we really want to catch all exceptions
-            // please refer to comment below
-#pragma warning disable 6502
             catch
             {
                 // This is an interesting pattern of putting a try catch block around this that catches everything,
@@ -125,7 +117,6 @@ namespace MS.Internal.Controls
                 // There fore I catch all exceptions and cancel navigation 
                 cancelRequested = true;
             }
-#pragma warning restore 6502
             finally
             {
                 // Clean the WebBrowser control state if navigation cancelled.

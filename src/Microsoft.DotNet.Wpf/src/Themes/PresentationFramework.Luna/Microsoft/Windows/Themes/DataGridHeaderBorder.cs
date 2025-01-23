@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -105,9 +105,11 @@ namespace Microsoft.Windows.Themes
             LinearGradientBrush background = (LinearGradientBrush)GetCachedFreezable((int)backgroundType);
             if (background == null)
             {
-                background = new LinearGradientBrush();
-                background.StartPoint = new Point();
-                background.EndPoint = new Point(0.0, 1.0);
+                background = new LinearGradientBrush
+                {
+                    StartPoint = new Point(),
+                    EndPoint = new Point(0.0, 1.0)
+                };
 
                 if (isPressed)
                 {
@@ -169,9 +171,10 @@ namespace Microsoft.Windows.Themes
                 dc.PushTransform(positionTransform);
 
                 PathGeometry tabGeometry = new PathGeometry();
-                PathFigure tabFigure = new PathFigure();
-
-                tabFigure.StartPoint = new Point(0.5, 0.5);
+                PathFigure tabFigure = new PathFigure
+                {
+                    StartPoint = new Point(0.5, 0.5)
+                };
 
                 LineSegment line = new LineSegment(new Point(size.Width - 0.5, 0.5), true);
                 line.Freeze();
@@ -210,9 +213,11 @@ namespace Microsoft.Windows.Themes
                 LinearGradientBrush tabFill = (LinearGradientBrush)GetCachedFreezable((int)LunaFreezables.TabFill);
                 if (tabFill == null)
                 {
-                    tabFill = new LinearGradientBrush();
-                    tabFill.StartPoint = new Point();
-                    tabFill.EndPoint = new Point(1.0, 0.0);
+                    tabFill = new LinearGradientBrush
+                    {
+                        StartPoint = new Point(),
+                        EndPoint = new Point(1.0, 0.0)
+                    };
                     if (themeColor == ThemeColor.Homestead)
                     {
                         tabFill.GradientStops.Add(new GradientStop(Color.FromArgb(0xFF, 0xE3, 0x91, 0x4F), 0.0));
@@ -265,9 +270,11 @@ namespace Microsoft.Windows.Themes
                         LinearGradientBrush gripper = (LinearGradientBrush)GetCachedFreezable((int)(horizontal ? LunaFreezables.HorizontalGripper : LunaFreezables.VerticalGripper));
                         if (gripper == null)
                         {
-                            gripper = new LinearGradientBrush();
-                            gripper.StartPoint = new Point();
-                            gripper.EndPoint = new Point(1.0, 0.0);
+                            gripper = new LinearGradientBrush
+                            {
+                                StartPoint = new Point(),
+                                EndPoint = new Point(1.0, 0.0)
+                            };
 
                             Color highlight = Color.FromArgb(0xFF, 0xFF, 0xFF, 0xFF);
                             Color shadow = Color.FromArgb(0xFF, 0xC7, 0xC5, 0xB2);

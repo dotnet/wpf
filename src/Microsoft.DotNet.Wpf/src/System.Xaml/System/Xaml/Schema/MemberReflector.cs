@@ -49,6 +49,7 @@ namespace System.Xaml.Schema
             {
                 _memberBits = (int)BoolMemberBits.Event;
             }
+
             _memberBits |= GetValidMask((int)BoolMemberBits.Event);
         }
 
@@ -80,10 +81,12 @@ namespace System.Xaml.Schema
             {
                 if (s_UnknownReflector is null)
                 {
-                    s_UnknownReflector = new MemberReflector();
-                    s_UnknownReflector._designerSerializationVisibility = DesignerSerializationVisibility.Visible;
-                    s_UnknownReflector._memberBits = (int)BoolMemberBits.Default |
-                        (int)BoolMemberBits.Unknown | (int)BoolMemberBits.AllValid;
+                    s_UnknownReflector = new MemberReflector
+                    {
+                        _designerSerializationVisibility = DesignerSerializationVisibility.Visible,
+                        _memberBits = (int)BoolMemberBits.Default |
+                        (int)BoolMemberBits.Unknown | (int)BoolMemberBits.AllValid
+                    };
 
                     // Explicitly set all the nullable references so that IsSet is true
                     s_UnknownReflector._deferringLoader.Value = null;
@@ -96,6 +99,7 @@ namespace System.Xaml.Schema
                     s_UnknownReflector.Invoker = XamlMemberInvoker.UnknownInvoker;
                     s_UnknownReflector.Type = XamlLanguage.Object;
                 }
+
                 return s_UnknownReflector;
             }
         }
@@ -114,7 +118,7 @@ namespace System.Xaml.Schema
             get { return _constructorArgument.IsSet; }
         }
 
-        internal IReadOnlyDictionary<char,char> MarkupExtensionBracketCharactersArgument { get; set; }
+        internal IReadOnlyDictionary<char, char> MarkupExtensionBracketCharactersArgument { get; set; }
 
         internal bool MarkupExtensionBracketCharactersArgumentIsSet { get; set; }
 
@@ -223,6 +227,7 @@ namespace System.Xaml.Schema
             {
                 return false;
             }
+
             if (method.IsAssembly || method.IsFamilyOrAssembly)
             {
                 if (TypeReflector.IsInternal(method.DeclaringType))
@@ -230,9 +235,11 @@ namespace System.Xaml.Schema
                     // We've already done an internals visibility check for the declaring type
                     return true;
                 }
+
                 return schemaContext.AreInternalsVisibleTo(
                     method.DeclaringType.Assembly, accessingAssembly);
             }
+
             return false;
         }
 
@@ -251,10 +258,12 @@ namespace System.Xaml.Schema
             {
                 return false;
             }
+
             if (method.IsFamily || method.IsFamilyOrAssembly)
             {
                 return true;
             }
+
             if (method.IsFamilyAndAssembly)
             {
                 if (TypeReflector.IsInternal(method.DeclaringType))
@@ -262,9 +271,11 @@ namespace System.Xaml.Schema
                     // We've already done an internals visibility check for the declaring type
                     return true;
                 }
+
                 return schemaContext.AreInternalsVisibleTo(
                     method.DeclaringType.Assembly, derivedType.Assembly);
             }
+
             return false;
         }
 
@@ -280,9 +291,9 @@ namespace System.Xaml.Schema
                     }
                 }
             }
+
             return true;
         }
-
 
         // Used by Reflector for attribute lookups
         protected override MemberInfo Member

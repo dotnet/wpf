@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -291,8 +291,10 @@ namespace System.Windows.Markup
                 parserContext = new ParserContext();
             }
 
-            XmlTextReader reader = new XmlTextReader(stream, XmlNodeType.Document, parserContext);
-            reader.DtdProcessing = DtdProcessing.Prohibit;
+            XmlTextReader reader = new XmlTextReader(stream, XmlNodeType.Document, parserContext)
+            {
+                DtdProcessing = DtdProcessing.Prohibit
+            };
             return LoadAsync(reader, parserContext, useRestrictiveXamlReader);
         }
 
@@ -338,10 +340,12 @@ namespace System.Windows.Markup
                 }
             }
             _baseUri = parserContext.BaseUri;
-            System.Xaml.XamlXmlReaderSettings settings = new System.Xaml.XamlXmlReaderSettings();
-            settings.IgnoreUidsOnPropertyElements = true;
-            settings.BaseUri = parserContext.BaseUri;
-            settings.ProvideLineInfo = true;
+            System.Xaml.XamlXmlReaderSettings settings = new System.Xaml.XamlXmlReaderSettings
+            {
+                IgnoreUidsOnPropertyElements = true,
+                BaseUri = parserContext.BaseUri,
+                ProvideLineInfo = true
+            };
             XamlSchemaContext schemaContext = parserContext.XamlTypeMapper != null ?
                 parserContext.XamlTypeMapper.SchemaContext : GetWpfSchemaContext();
 
@@ -498,7 +502,7 @@ namespace System.Windows.Markup
 
         internal static XamlParseException WrapException(Exception e, IXamlLineInfo lineInfo, Uri baseUri)
         {
-            Exception baseException = (e.InnerException == null) ? e : e.InnerException;
+            Exception baseException = e.InnerException ?? e;
             if (baseException is System.Windows.Markup.XamlParseException)
             {
                 var xe = ((System.Windows.Markup.XamlParseException)baseException);
@@ -515,9 +519,8 @@ namespace System.Windows.Markup
                 System.Xaml.XamlException xe = (System.Xaml.XamlException)e;
                 return new XamlParseException(xe.Message, xe.LineNumber, xe.LinePosition, baseUri, baseException);
             }
-            else if (e is XmlException)
+            else if (e is XmlException xe)
             {
-                XmlException xe = (XmlException)e;
                 return new XamlParseException(xe.Message, xe.LineNumber, xe.LinePosition, baseUri, baseException);
             }
             else
@@ -719,9 +722,11 @@ namespace System.Windows.Markup
         #region Internal Methods
         internal static XamlObjectWriterSettings CreateObjectWriterSettings()
         {
-            XamlObjectWriterSettings owSettings = new XamlObjectWriterSettings();
-            owSettings.IgnoreCanConvert = true;
-            owSettings.PreferUnconvertedDictionaryKeys = true;
+            XamlObjectWriterSettings owSettings = new XamlObjectWriterSettings
+            {
+                IgnoreCanConvert = true,
+                PreferUnconvertedDictionaryKeys = true
+            };
             return owSettings;
         }
 
@@ -747,15 +752,19 @@ namespace System.Windows.Markup
 
         internal static Baml2006ReaderSettings CreateBamlReaderSettings()
         {
-            Baml2006ReaderSettings brSettings = new Baml2006ReaderSettings();
-            brSettings.IgnoreUidsOnPropertyElements = true;
+            Baml2006ReaderSettings brSettings = new Baml2006ReaderSettings
+            {
+                IgnoreUidsOnPropertyElements = true
+            };
             return brSettings;
         }
 
         internal static XamlSchemaContextSettings CreateSchemaContextSettings()
         {
-            XamlSchemaContextSettings xscSettings = new XamlSchemaContextSettings();
-            xscSettings.SupportMarkupExtensionsWithDuplicateArity = true;
+            XamlSchemaContextSettings xscSettings = new XamlSchemaContextSettings
+            {
+                SupportMarkupExtensionsWithDuplicateArity = true
+            };
             return xscSettings;
         }
 
@@ -879,10 +888,12 @@ namespace System.Windows.Markup
                     }
                 }
 
-                System.Xaml.XamlXmlReaderSettings settings = new System.Xaml.XamlXmlReaderSettings();
-                settings.IgnoreUidsOnPropertyElements = true;
-                settings.BaseUri = parserContext.BaseUri;
-                settings.ProvideLineInfo = true;
+                System.Xaml.XamlXmlReaderSettings settings = new System.Xaml.XamlXmlReaderSettings
+                {
+                    IgnoreUidsOnPropertyElements = true,
+                    BaseUri = parserContext.BaseUri,
+                    ProvideLineInfo = true
+                };
 
                 XamlSchemaContext schemaContext = parserContext.XamlTypeMapper != null ?
                     parserContext.XamlTypeMapper.SchemaContext : GetWpfSchemaContext();
@@ -1142,15 +1153,19 @@ namespace System.Windows.Markup
 
         private static WpfSharedBamlSchemaContext CreateBamlSchemaContext()
         {
-            XamlSchemaContextSettings settings = new XamlSchemaContextSettings();
-            settings.SupportMarkupExtensionsWithDuplicateArity = true;
+            XamlSchemaContextSettings settings = new XamlSchemaContextSettings
+            {
+                SupportMarkupExtensionsWithDuplicateArity = true
+            };
             return new WpfSharedBamlSchemaContext(settings);
         }
 
         private static WpfSharedXamlSchemaContext CreateXamlSchemaContext(bool useV3Rules)
         {
-            XamlSchemaContextSettings settings = new XamlSchemaContextSettings();
-            settings.SupportMarkupExtensionsWithDuplicateArity = true;
+            XamlSchemaContextSettings settings = new XamlSchemaContextSettings
+            {
+                SupportMarkupExtensionsWithDuplicateArity = true
+            };
             return new WpfSharedXamlSchemaContext(settings, useV3Rules);
         }
 

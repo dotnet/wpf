@@ -331,8 +331,10 @@ namespace MS.Internal.IO.Packaging
         /// <returns>opc-legal string suitable for embedding in XML digital signatures</returns>
         private static String DateTimeToXmlFormattedTime(DateTime dt, string format)
         {
-            DateTimeFormatInfo formatter = new DateTimeFormatInfo();
-            formatter.FullDateTimePattern = format;
+            DateTimeFormatInfo formatter = new DateTimeFormatInfo
+            {
+                FullDateTimePattern = format
+            };
             return dt.ToString(format, formatter);
         }
 
@@ -349,8 +351,10 @@ namespace MS.Internal.IO.Packaging
             string[] legalFormats = ConvertXmlFormatStringToDateTimeFormatString(format);
 
             // the default formatter is culture-invariant (which is what we want)
-            DateTimeFormatInfo formatter = new DateTimeFormatInfo();
-            formatter.FullDateTimePattern = format;
+            DateTimeFormatInfo formatter = new DateTimeFormatInfo
+            {
+                FullDateTimePattern = format
+            };
             return DateTime.ParseExact(s, legalFormats, formatter, 
                 DateTimeStyles.NoCurrentDateDefault 
                 | DateTimeStyles.AllowLeadingWhite 

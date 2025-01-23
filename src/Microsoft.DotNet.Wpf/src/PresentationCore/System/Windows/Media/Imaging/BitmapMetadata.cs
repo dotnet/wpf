@@ -1,9 +1,6 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
-
-//
-//
 
 using System.Collections;
 using System.Collections.ObjectModel;
@@ -12,9 +9,6 @@ using MS.Win32.PresentationCore;
 using System.Globalization;
 using System.Runtime.InteropServices;
 using System.Text;
-using MS.Internal.PresentationCore;                        // SecurityHelper
-
-#pragma warning disable 1634, 1691  // suppressing PreSharp warnings
 
 namespace System.Windows.Media.Imaging
 {
@@ -174,7 +168,7 @@ namespace System.Windows.Media.Imaging
                             {
                                 if (pIMetadataWriter != IntPtr.Zero)
                                 {
-                                    #pragma warning suppress 6031 // Return value ignored on purpose.
+                                    // Return value ignored on purpose.
                                     UnsafeNativeMethods.MILUnknown.Release(pIMetadataWriter);
                                 }
                             }
@@ -315,7 +309,7 @@ namespace System.Windows.Media.Imaging
                                 }
                                 if (pIMetadataWriter != IntPtr.Zero)
                                 {
-                                    #pragma warning suppress 6031 // Return value ignored on purpose.
+                                    // Return value ignored on purpose.
                                     UnsafeNativeMethods.MILUnknown.Release(pIMetadataWriter);
                                 }
                             }
@@ -712,12 +706,12 @@ namespace System.Windows.Media.Imaging
                 {
                     if (blockWriter != IntPtr.Zero)
                     {
-                        #pragma warning suppress 6031 // Return value ignored on purpose.
+                        // Return value ignored on purpose.
                         UnsafeNativeMethods.MILUnknown.Release(blockWriter);
                     }
                     if (queryWriter != IntPtr.Zero)
                     {
-                        #pragma warning suppress 6031 // Return value ignored on purpose.
+                        // Return value ignored on purpose.
                         UnsafeNativeMethods.MILUnknown.Release(queryWriter);
                     }
                 }
@@ -761,12 +755,12 @@ namespace System.Windows.Media.Imaging
                 {
                     if (blockWriter != IntPtr.Zero)
                     {
-                        #pragma warning suppress 6031 // Return value ignored on purpose.
+                        // Return value ignored on purpose.
                         UnsafeNativeMethods.MILUnknown.Release(blockWriter);
                     }
                     if (queryWriter != IntPtr.Zero)
                     {
-                        #pragma warning suppress 6031 // Return value ignored on purpose.
+                        // Return value ignored on purpose.
                         UnsafeNativeMethods.MILUnknown.Release(queryWriter);
                     }
                 }
@@ -818,7 +812,7 @@ namespace System.Windows.Media.Imaging
             {
                 if (queryWriter != IntPtr.Zero)
                 {
-                    #pragma warning suppress 6031 // Return value ignored on purpose.
+                    // Return value ignored on purpose.
                     UnsafeNativeMethods.MILUnknown.Release(queryWriter);
                 }
             }
@@ -1045,10 +1039,8 @@ namespace System.Windows.Media.Imaging
                     BitmapMetadata metadata = value as BitmapMetadata;
                     Invariant.Assert(metadata != null);
 
-                    #pragma warning suppress 6506 // Invariant.Assert(metadata != null);
                     metadata.VerifyAccess();
 
-                    #pragma warning suppress 6506 // Invariant.Assert(metadata != null);
                     lock (metadata._syncObject)
                     {
                         lock (_syncObject)
@@ -1334,9 +1326,10 @@ namespace System.Windows.Media.Imaging
             set
             {
                 DateTime dt = System.Convert.ToDateTime(value, CultureInfo.InvariantCulture);
-                PROPVARIANT propVar= new PROPVARIANT();
-
-                propVar.varType = (ushort)VarEnum.VT_FILETIME;
+                PROPVARIANT propVar = new PROPVARIANT
+                {
+                    varType = (ushort)VarEnum.VT_FILETIME
+                };
                 long longFileTime = dt.ToFileTime();
                 propVar.filetime.dwLowDateTime = (Int32)longFileTime;
                 propVar.filetime.dwHighDateTime = (Int32)((longFileTime >> 32) & 0xFFFFFFFF);

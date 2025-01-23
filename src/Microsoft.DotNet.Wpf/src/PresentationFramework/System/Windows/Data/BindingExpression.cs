@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -1627,14 +1627,6 @@ namespace System.Windows.Data
             string stringFormat = EffectiveStringFormat;
             Invariant.Assert(converter != null || stringFormat != null);
 
-            // PreSharp uses message numbers that the C# compiler doesn't know about.
-            // Disable the C# complaints, per the PreSharp documentation.
-            #pragma warning disable 1634, 1691
-
-            // PreSharp complains about catching NullReference (and other) exceptions.
-            // It doesn't recognize that IsCritical[Application]Exception() handles these correctly.
-            #pragma warning disable 56500
-
             object convertedValue = null;
             try
             {
@@ -1684,9 +1676,6 @@ namespace System.Windows.Data
                 convertedValue = DependencyProperty.UnsetValue;
             }
 
-            #pragma warning restore 56500
-            #pragma warning restore 1634, 1691
-
             return convertedValue;
         }
 
@@ -1697,14 +1686,6 @@ namespace System.Windows.Data
                                          CultureInfo culture)
         {
             Invariant.Assert(converter != null);
-
-            // PreSharp uses message numbers that the C# compiler doesn't know about.
-            // Disable the C# complaints, per the PreSharp documentation.
-            #pragma warning disable 1634, 1691
-
-            // PreSharp complains about catching NullReference (and other) exceptions.
-            // It doesn't recognize that IsCritical[Application]Exception() handles these correctly.
-            #pragma warning disable 56500
 
             object convertedValue = null;
             try
@@ -1747,9 +1728,6 @@ namespace System.Windows.Data
                 }
                 convertedValue = DependencyProperty.UnsetValue;
             }
-
-            #pragma warning restore 56500
-            #pragma warning restore 1634, 1691
 
             return convertedValue;
         }
@@ -1994,15 +1972,6 @@ namespace System.Windows.Data
                 return value;
             }
 
-
-            // PreSharp uses message numbers that the C# compiler doesn't know about.
-            // Disable the C# complaints, per the PreSharp documentation.
-            #pragma warning disable 1634, 1691
-
-            // PreSharp complains about catching NullReference (and other) exceptions.
-            // It doesn't recognize that IsCritical[Application]Exception() handles these correctly.
-            #pragma warning disable 56500
-
             try
             {
                 BeginSourceUpdate();
@@ -2037,9 +2006,6 @@ namespace System.Windows.Data
             {
                 EndSourceUpdate();
             }
-
-            #pragma warning restore 56500
-            #pragma warning restore 1634, 1691
 
             OnSourceUpdated();
 
@@ -2616,8 +2582,10 @@ namespace System.Windows.Data
         // raise the TargetUpdated event (explicit polymorphism)
         internal static void OnTargetUpdated(DependencyObject d, DependencyProperty dp)
         {
-            DataTransferEventArgs args = new DataTransferEventArgs(d, dp);
-            args.RoutedEvent = Binding.TargetUpdatedEvent;
+            DataTransferEventArgs args = new DataTransferEventArgs(d, dp)
+            {
+                RoutedEvent = Binding.TargetUpdatedEvent
+            };
             FrameworkObject fo = new FrameworkObject(d);
 
             if (!fo.IsValid && d != null)
@@ -2631,8 +2599,10 @@ namespace System.Windows.Data
         // raise the SourceUpdatedEvent event (explicit polymorphism)
         internal static void OnSourceUpdated(DependencyObject d, DependencyProperty dp)
         {
-            DataTransferEventArgs args = new DataTransferEventArgs(d, dp);
-            args.RoutedEvent = Binding.SourceUpdatedEvent;
+            DataTransferEventArgs args = new DataTransferEventArgs(d, dp)
+            {
+                RoutedEvent = Binding.SourceUpdatedEvent
+            };
             FrameworkObject fo = new FrameworkObject(d);
 
             if (!fo.IsValid && d != null)

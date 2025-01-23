@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -12,8 +12,6 @@
 
 using System.ComponentModel;    // for TypeConverter
 using System.Windows.Markup;
-
-#pragma warning disable 1634, 1691  // suppressing PreSharp warnings
 
 namespace System.Windows.Input
 {
@@ -45,11 +43,9 @@ namespace System.Windows.Input
         {
             KeyGesture keyGesture = value as KeyGesture;
 
-            #pragma warning disable 6506
             return (keyGesture != null) 
                 && ModifierKeysConverter.IsDefinedModifierKeys(keyGesture.Modifiers)
                 && KeyGestureConverter.IsDefinedKey(keyGesture.Key);
-            #pragma warning restore 6506
         }
 
         /// <summary>

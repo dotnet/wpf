@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -65,7 +65,7 @@ namespace System.Windows.Documents
         /// <returns>The document tree</returns>
         public FixedDocument GetDocument(bool forceReload)
         {
-            DocumentsTrace.FixedDocumentSequence.IDF.Trace($"DocumentReference.GetDocument ({(Source == null ? new Uri("", UriKind.RelativeOrAbsolute) : Source)}, {forceReload})");
+            DocumentsTrace.FixedDocumentSequence.IDF.Trace($"DocumentReference.GetDocument ({(Source ?? new Uri("", UriKind.RelativeOrAbsolute))}, {forceReload})");
              VerifyAccess();
 
             FixedDocument idp = null;
@@ -274,9 +274,10 @@ namespace System.Windows.Documents
                     throw new ApplicationException(SR.DocumentReferenceNotFound);
                 }
 
-                ParserContext pc = new ParserContext();
-
-                pc.BaseUri = uriToLoad;
+                ParserContext pc = new ParserContext
+                {
+                    BaseUri = uriToLoad
+                };
 
                 if (BindUriHelper.IsXamlMimeType(mimeType))
                 {

@@ -35,7 +35,7 @@ namespace MS.Internal.Xaml.Context
         // and remove those dependencies. But we still want to be able to inform MEs/TCs that
         // the named objects they're getting aren't actually fully initialized. So we save this list
         // of incompletely initialized objects at the point we start completing references.
-        HashSet <object> _uninitializedObjectsAtParseEnd;
+        HashSet<object> _uninitializedObjectsAtParseEnd;
 
         public NameFixupGraph()
         {
@@ -99,6 +99,7 @@ namespace MS.Internal.Xaml.Context
             {
                 return false;
             }
+
             return _dependenciesByParentObject.ContainsKey(parent);
         }
 
@@ -108,6 +109,7 @@ namespace MS.Internal.Xaml.Context
             {
                 return true;
             }
+
             foreach (NameFixupToken pendingToken in _resolvedTokensPendingProcessing)
             {
                 if (pendingToken.Target.Instance == instance)
@@ -115,6 +117,7 @@ namespace MS.Internal.Xaml.Context
                     return true;
                 }
             }
+
             return false;
         }
 
@@ -134,6 +137,7 @@ namespace MS.Internal.Xaml.Context
             {
                 return;
             }
+
             for (int i = 0; i < dependencies.Count; i++)
             {
                 NameFixupToken token = dependencies[i];
@@ -195,12 +199,14 @@ namespace MS.Internal.Xaml.Context
                         // For simple fixups, we need to return the resolved object
                         token.ReferencedObject = instance;
                     }
+
                     token.NeededNames.Remove(name);
                     nameDependencies.RemoveAt(i);
                     if (nameDependencies.Count == 0)
                     {
                         _dependenciesByName.Remove(name);
                     }
+
                     if (token.NeededNames.Count == 0)
                     {
                         RemoveTokenByParent(token);
@@ -238,10 +244,12 @@ namespace MS.Internal.Xaml.Context
 
         public void AddEndOfParseDependency(object childThatHasUnresolvedChildren, FixupTarget parentObject)
         {
-            NameFixupToken token = new NameFixupToken();
-            token.Target = parentObject;
-            token.FixupType = FixupType.UnresolvedChildren;
-            token.ReferencedObject = childThatHasUnresolvedChildren;
+            NameFixupToken token = new NameFixupToken
+            {
+                Target = parentObject,
+                FixupType = FixupType.UnresolvedChildren,
+                ReferencedObject = childThatHasUnresolvedChildren
+            };
             AddToMultiDict(_dependenciesByParentObject, parentObject.Instance, token);
             // We don't add to the _dependenciesByChildObject, because at end-of-parse, a single
             // child object can be a dependency of multiple parents
@@ -269,11 +277,13 @@ namespace MS.Internal.Xaml.Context
                         i++;
                         continue;
                     }
+
                     dependencies.RemoveAt(i);
                     if (dependencies.Count == 0)
                     {
                         _dependenciesByName.Remove(name);
                     }
+
                     RemoveTokenByParent(token);
                     yield return token;
                 }
@@ -346,6 +356,7 @@ namespace MS.Internal.Xaml.Context
                     markupExtensionTokens.Add(curToken);
                 }
             }
+
             while (markupExtensionTokens.Count > 0)
             {
                 bool found = false;
@@ -359,6 +370,7 @@ namespace MS.Internal.Xaml.Context
                         i++;
                         continue;
                     }
+
                     // Iterate the list in backwards order, so we return the deepest first
                     for (int j = dependencies.Count - 1; j >= 0; j--)
                     {
@@ -366,9 +378,11 @@ namespace MS.Internal.Xaml.Context
                         RemoveTokenByParent(token);
                         yield return token;
                     }
+
                     found = true;
                     markupExtensionTokens.RemoveAt(i);
                 }
+
                 if (!found)
                 {
                     // We have MEs left, but they all have dependencies on other MEs.
@@ -386,6 +400,7 @@ namespace MS.Internal.Xaml.Context
                     startNodeOutEdges = list;
                     break;
                 }
+
                 for (int i = 0; i < startNodeOutEdges.Count; i++)
                 {
                     List<NameFixupToken> dependencies = new List<NameFixupToken>();
@@ -416,6 +431,7 @@ namespace MS.Internal.Xaml.Context
                 // Cycle, skip it
                 return true;
             }
+
             alreadyTraversed.Add(inEdge);
             FrugalObjectList<NameFixupToken> outEdges;
             if (inEdge.ReferencedObject is null ||
@@ -424,6 +440,7 @@ namespace MS.Internal.Xaml.Context
                 // No dependencies, we're done with this subgraph
                 return true;
             }
+
             for (int i = 0; i < outEdges.Count; i++)
             {
                 NameFixupToken outEdge = outEdges[i];
@@ -431,12 +448,14 @@ namespace MS.Internal.Xaml.Context
                 {
                     return false;
                 }
+
                 Debug.Assert(outEdge.FixupType == FixupType.UnresolvedChildren);
                 if (!FindDependencies(outEdge, alreadyTraversed))
                 {
                     return false;
                 }
             }
+
             return true;
         }
 
@@ -465,6 +484,7 @@ namespace MS.Internal.Xaml.Context
                 tokenList = new FrugalObjectList<NameFixupToken>(1);
                 dict.Add(key, tokenList);
             }
+
             tokenList.Add(value);
         }
 
@@ -492,6 +512,7 @@ namespace MS.Internal.Xaml.Context
                     exceptionMessage.Append(meName);
                 }
             }
+
             throw new XamlObjectWriterException(exceptionMessage.ToString());
         }
     }

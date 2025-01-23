@@ -54,8 +54,7 @@ namespace System.Windows
 
             _resourceName = resourceName.ToLowerInvariant();
             _hInstance = (HINSTANCE)Marshal.GetHINSTANCE(resourceAssembly.ManifestModule);
-            AssemblyName name = new(resourceAssembly.FullName);
-            _resourceManager = new ResourceManager($"{name.Name}.g", resourceAssembly);
+            _resourceManager = new ResourceManager($"{ReflectionUtils.GetAssemblyPartialName(resourceAssembly)}.g", resourceAssembly);
         }
 
         public void Show(bool autoClose)

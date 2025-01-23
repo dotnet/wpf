@@ -9,8 +9,6 @@ using System.Xaml;
 using System.Xaml.Replacements;
 using MS.Internal.Serialization;
 
-#pragma warning disable 1634, 1691  // suppressing PreSharp warnings
-
 namespace System.Windows.Markup
 {
     /// <summary>
@@ -147,6 +145,7 @@ namespace System.Windows.Markup
                     }
                 }
             }
+
             lock (s_valueSerializersLock)
             {
                 // This uses s_valueSerializersLock's instance as a sentinal for null (as opposed to not attempted yet).
@@ -245,6 +244,7 @@ namespace System.Windows.Markup
             {
                 text = value.GetType().FullName;
             }
+
             return new NotSupportedException(SR.Format(SR.ConvertToException, base.GetType().Name, text, destinationType.FullName));
         }
 
@@ -262,6 +262,7 @@ namespace System.Windows.Markup
             {
                 text = value.GetType().FullName;
             }
+
             return new NotSupportedException(SR.Format(SR.ConvertFromException, base.GetType().Name, text));
         }
 

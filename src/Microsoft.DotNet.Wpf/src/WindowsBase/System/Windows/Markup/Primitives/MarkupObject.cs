@@ -42,7 +42,7 @@ namespace System.Windows.Markup.Primitives
         /// If the MarkupItem is in a dictionary, one of the properties of the item will have an IsKey set to true. 
         /// This is the value for the dictionary key.
         /// </summary>
-        public virtual IEnumerable<MarkupProperty> Properties { get { return GetProperties(true /*mapToConstructorArgs*/); } }
+        public virtual IEnumerable<MarkupProperty> Properties { get { return GetProperties(mapToConstructorArgs: true); } }
         internal abstract IEnumerable<MarkupProperty> GetProperties(bool mapToConstructorArgs);
 
         /// <summary>

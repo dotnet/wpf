@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -89,7 +89,7 @@ namespace System.Windows.Media
 
                             if (!uriHolder.BaseUri.IsAbsoluteUri)
                             {
-                                uriHolder.BaseUri = new Uri(BaseUriHelper.BaseUri, uriHolder.BaseUri);
+                                uriHolder.BaseUri = new Uri(BaseUriHelper.PackAppBaseUri, uriHolder.BaseUri);
                             }
                         } // uriHolder.BaseUriString != ""
                         else
@@ -97,7 +97,7 @@ namespace System.Windows.Media
                             // if we reach here, the base uri we got from IUriContext is ""
                             // and the inputString is a relative uri.  Here we resolve it to
                             // application's base
-                            uriHolder.BaseUri = BaseUriHelper.BaseUri;
+                            uriHolder.BaseUri = BaseUriHelper.PackAppBaseUri;
                         }
                     } // iuc != null
                 } // context!= null

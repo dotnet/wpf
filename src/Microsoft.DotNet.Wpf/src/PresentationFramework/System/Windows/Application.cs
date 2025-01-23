@@ -1943,10 +1943,7 @@ namespace System.Windows
         {
             get
             {
-                if (_applicationMarkupBaseUri == null)
-                {
-                    _applicationMarkupBaseUri = BaseUriHelper.BaseUri;
-                }
+                _applicationMarkupBaseUri ??= BaseUriHelper.PackAppBaseUri;
 
                 return _applicationMarkupBaseUri;
             }

@@ -40,12 +40,12 @@ namespace System.Windows.Markup
         {
             get { return _designerSerializationOptions; }
         }
-        
+
         #endregion Properties
 
         #region Data
 
-        DesignerSerializationOptions _designerSerializationOptions;
+        private DesignerSerializationOptions _designerSerializationOptions;
 
         #endregion Data
     }

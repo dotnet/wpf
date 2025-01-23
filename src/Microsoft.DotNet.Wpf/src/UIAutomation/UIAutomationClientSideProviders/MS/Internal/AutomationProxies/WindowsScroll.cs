@@ -14,7 +14,7 @@ using MS.Win32;
 namespace MS.Internal.AutomationProxies
 {
     // Static class used to support the Scroll pattern for controls that have scroll bars. 
-    static class WindowScroll
+    internal static class WindowScroll
     {
         #region Internal Methods
 

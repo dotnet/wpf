@@ -413,7 +413,7 @@ namespace System.Windows.Navigation
             return _journalScope;
         }
 
-        bool IsConsistent(NavigateInfo navInfo)
+        private bool IsConsistent(NavigateInfo navInfo)
         {
             return navInfo == null
                 || navInfo.IsConsistent
@@ -1999,7 +1999,7 @@ namespace System.Windows.Navigation
             remove { _navigating -= value; }
         }
 
-        NavigatingCancelEventHandler _navigating;
+        private NavigatingCancelEventHandler _navigating;
 
         /// <summary>
         /// Fires the Navigating event and returns a bool to indicate whether a navigation is
@@ -2197,7 +2197,7 @@ namespace System.Windows.Navigation
             remove { _navigated -= value; }
         }
 
-        NavigatedEventHandler _navigated;
+        private NavigatedEventHandler _navigated;
 
         private void FireNavigated(object navState)
         {
@@ -2338,7 +2338,7 @@ namespace System.Windows.Navigation
             remove { _navigationProgress -= value; }
         }
 
-        NavigationProgressEventHandler _navigationProgress;
+        private NavigationProgressEventHandler _navigationProgress;
 
         private void FireNavigationProgress(Uri source)
         {
@@ -2390,7 +2390,7 @@ namespace System.Windows.Navigation
             remove { _loadCompleted -= value; }
         }
 
-        LoadCompletedEventHandler _loadCompleted;
+        private LoadCompletedEventHandler _loadCompleted;
 
         private void FireLoadCompleted(bool isNavInitiator, object navState)
         {
@@ -2551,7 +2551,7 @@ namespace System.Windows.Navigation
             remove { _stopped -= value; }
         }
 
-        NavigationStoppedEventHandler _stopped;
+        private NavigationStoppedEventHandler _stopped;
 
         private void FireNavigationStopped(object navState)
         {
@@ -4257,8 +4257,8 @@ namespace System.Windows.Navigation
             }
         }
 
-        Object _content;
-        Uri _uri;
+        private Object _content;
+        private Uri _uri;
     }
 
     #endregion BPReadyEventArgs Class
@@ -4435,12 +4435,12 @@ namespace System.Windows.Navigation
             return null;
         }
 
-        Uri _source;
-        object _content;
-        Object _navState;
-        NavigationService _nc;
-        NavigationMode _navigationMode = NavigationMode.New;
-        DispatcherOperation _postedOp;
+        private Uri _source;
+        private object _content;
+        private Object _navState;
+        private NavigationService _nc;
+        private NavigationMode _navigationMode = NavigationMode.New;
+        private DispatcherOperation _postedOp;
     }
 
     #endregion NavigateQueueItem class

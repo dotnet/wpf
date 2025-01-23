@@ -17,7 +17,7 @@ using UnsafeNativeMethods = MS.Win32.PresentationCore.UnsafeNativeMethods.MilCor
 
 namespace System.Windows.Media
 {
-    partial class MediaContext
+    internal partial class MediaContext
     {
         /// <summary>
         /// A helper structure that abstracts channel management.

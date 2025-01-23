@@ -16,7 +16,7 @@ using MS.Internal;
 
 namespace System.Xaml.MS.Impl
 {
-    class XmlNsInfo
+    internal class XmlNsInfo
     {
         // Thread-safety: any lazily initalized fields in this class must be assigned idempotently.
         // I.e. never assign until the result is complete; and if multiple threads are assigning
@@ -121,7 +121,7 @@ namespace System.Xaml.MS.Impl
             _fullyQualifyAssemblyName = fullyQualifyAssemblyName;
         }
 
-        void EnsureReflectionOnlyAttributeData()
+        private void EnsureReflectionOnlyAttributeData()
         {
             if (_attributeData is null)
             {
@@ -151,7 +151,7 @@ namespace System.Xaml.MS.Impl
             return prefix2;
         }
 
-        IList<XmlNsDefinition> LoadNsDefs()
+        private IList<XmlNsDefinition> LoadNsDefs()
         {
             IList<XmlNsDefinition> result = new List<XmlNsDefinition>();
 
@@ -192,7 +192,7 @@ namespace System.Xaml.MS.Impl
             return result;
         }
 
-        void LoadNsDefHelper(IList<XmlNsDefinition> result, string xmlns, string clrns, Assembly assembly)
+        private void LoadNsDefHelper(IList<XmlNsDefinition> result, string xmlns, string clrns, Assembly assembly)
         {
             if (string.IsNullOrEmpty(xmlns) || clrns is null)
             {
@@ -202,7 +202,7 @@ namespace System.Xaml.MS.Impl
             result.Add(new XmlNsDefinition { ClrNamespace = clrns, XmlNamespace = xmlns });
         }
 
-        ConcurrentDictionary<string, IList<string>> LoadClrToXmlNs()
+        private ConcurrentDictionary<string, IList<string>> LoadClrToXmlNs()
         {
             ConcurrentDictionary<string, IList<string>> result =
                 XamlSchemaContext.CreateDictionary<string, IList<string>>();
@@ -242,7 +242,7 @@ namespace System.Xaml.MS.Impl
             return result;
         }
 
-        ICollection<AssemblyName> LoadInternalsVisibleTo()
+        private ICollection<AssemblyName> LoadInternalsVisibleTo()
         {
             var result = new List<AssemblyName>();
 
@@ -277,7 +277,7 @@ namespace System.Xaml.MS.Impl
             return result;
         }
 
-        void LoadInternalsVisibleToHelper(List<AssemblyName> result, string assemblyName, Assembly assembly)
+        private void LoadInternalsVisibleToHelper(List<AssemblyName> result, string assemblyName, Assembly assembly)
         {
             if (assemblyName is null)
             {
@@ -300,7 +300,7 @@ namespace System.Xaml.MS.Impl
             }
         }
 
-        Dictionary<string, string> LoadOldToNewNs()
+        private Dictionary<string, string> LoadOldToNewNs()
         {
             Dictionary<string, string> result = new Dictionary<string, string>(StringComparer.Ordinal);
 
@@ -338,7 +338,7 @@ namespace System.Xaml.MS.Impl
             return result;
         }
 
-        void LoadOldToNewNsHelper(Dictionary<string, string> result, string oldns, string newns, Assembly assembly)
+        private void LoadOldToNewNsHelper(Dictionary<string, string> result, string oldns, string newns, Assembly assembly)
         {
             if (string.IsNullOrEmpty(newns) || string.IsNullOrEmpty(oldns))
             {
@@ -353,7 +353,7 @@ namespace System.Xaml.MS.Impl
             result.Add(oldns, newns);
         }
 
-        Dictionary<string, string> LoadPrefixes()
+        private Dictionary<string, string> LoadPrefixes()
         {
             Dictionary<string, string> result = new Dictionary<string, string>(StringComparer.Ordinal);
 
@@ -390,7 +390,7 @@ namespace System.Xaml.MS.Impl
             return result;
         }
 
-        void LoadPrefixesHelper(Dictionary<string, string> result, string xmlns, string prefix, Assembly assembly)
+        private void LoadPrefixesHelper(Dictionary<string, string> result, string xmlns, string prefix, Assembly assembly)
         {
             if (string.IsNullOrEmpty(prefix) || string.IsNullOrEmpty(xmlns))
             {
@@ -405,7 +405,7 @@ namespace System.Xaml.MS.Impl
             }
         }
 
-        string LoadRootNamespace()
+        private string LoadRootNamespace()
         {
             Assembly assembly = Assembly;
             if (assembly is null)
@@ -435,7 +435,7 @@ namespace System.Xaml.MS.Impl
             }
         }
 
-        void MakeListsImmutable(IDictionary<string, IList<string>> dict)
+        private void MakeListsImmutable(IDictionary<string, IList<string>> dict)
         {
             // Need to copy the keys because we can't change a dictionary while iterating
             string[] keys = new string[dict.Count];
@@ -448,8 +448,8 @@ namespace System.Xaml.MS.Impl
 
         private class NamespaceComparer
         {
-            XmlNsInfo _nsInfo;
-            IDictionary<string, int> _subsumeCount;
+            private XmlNsInfo _nsInfo;
+            private IDictionary<string, int> _subsumeCount;
 
             public NamespaceComparer(XmlNsInfo nsInfo, Assembly assembly)
             {

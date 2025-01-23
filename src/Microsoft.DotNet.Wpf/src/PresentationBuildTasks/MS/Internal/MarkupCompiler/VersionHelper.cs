@@ -14,7 +14,7 @@ namespace MS.Internal
 {
     internal static class VersionHelper
     {
-        static readonly Version NullVersion = new Version(0, 0, 0, 0);
+        private static readonly Version NullVersion = new Version(0, 0, 0, 0);
 
         /// <summary>
         /// Parses a version string of the form "major [ '.' minor [ '.' build [ '.' revision ] ] ]".

@@ -1025,7 +1025,7 @@ namespace System.Windows.Documents
             #region Private Fields
 
 
-            SpellChecker _spellChecker;
+            private SpellChecker _spellChecker;
             private IReadOnlyList<string> _suggestions;
             private bool? _isClean = null;
 

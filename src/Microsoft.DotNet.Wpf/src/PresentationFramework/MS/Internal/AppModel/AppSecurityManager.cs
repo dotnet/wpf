@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 
 namespace MS.Internal.AppModel
 {
-    enum LaunchResult
+    internal enum LaunchResult
     {
         Launched,
         NotLaunched,

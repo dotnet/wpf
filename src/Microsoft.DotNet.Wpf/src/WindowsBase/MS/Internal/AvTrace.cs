@@ -150,7 +150,7 @@ namespace MS.Internal
         //
         // Internal initialization
         //
-        void Initialize( )
+        private void Initialize( )
         {
             // Decide if we should actually create a TraceSource instance (doing so isn't free,
             // so we don't want to do it if we can avoid it).
@@ -468,37 +468,37 @@ namespace MS.Internal
         //
 
         // Flag showing if tracing is enabled.  See also the IsEnabledOverride property
-        bool _isEnabled = false;
+        private bool _isEnabled = false;
 
         // If this is set, then having the debugger attached is an excuse to be enabled,
         // even if the registry flag isn't set.
-        bool _enabledByDebugger = false;
+        private bool _enabledByDebugger = false;
 
         // If this flag is set, Trace doesn't automatically add the .GetHashCode and .GetType
         // to the format string.
-        bool _suppressGeneratedParameters = false;
+        private bool _suppressGeneratedParameters = false;
 
         // If this flag is set, tracing will be enabled, as if it was set in the registry.
-        static bool _hasBeenRefreshed = false;
+        private static bool _hasBeenRefreshed = false;
 
         // Delegates to create and remove the TraceSource instance
-        GetTraceSourceDelegate _getTraceSourceDelegate;
-        ClearTraceSourceDelegate _clearTraceSourceDelegate;
+        private GetTraceSourceDelegate _getTraceSourceDelegate;
+        private ClearTraceSourceDelegate _clearTraceSourceDelegate;
 
         // Cache of TraceSource instance; real value resides in PresentationTraceSources.
-        TraceSource _traceSource;
+        private TraceSource _traceSource;
 
         // Cache used by IsWpfTracingEnabledInRegistry
-        static Nullable<bool> _enabledInRegistry = null;
+        private static Nullable<bool> _enabledInRegistry = null;
 
-        static char[] FormatChars = new char[]{ '{', '}' };
+        private static char[] FormatChars = new char[]{ '{', '}' };
     }
 
     internal delegate void AvTraceEventHandler( AvTraceBuilder traceBuilder, object[] parameters, int start );
 
     internal class AvTraceBuilder
     {
-        StringBuilder  _sb;
+        private StringBuilder  _sb;
 
         public AvTraceBuilder()
         {

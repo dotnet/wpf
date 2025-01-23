@@ -13,8 +13,7 @@ namespace MS.Internal
                 delegate() { return PresentationTraceSources.DataBindingSource; },
                 delegate() { PresentationTraceSources._DataBindingSource = null; }
                 );
-
-		static AvTraceDetails _CannotCreateDefaultValueConverter;
+        private static AvTraceDetails _CannotCreateDefaultValueConverter;
         static public AvTraceDetails CannotCreateDefaultValueConverter(params object[] args)
         {
             if ( _CannotCreateDefaultValueConverter == null )
@@ -24,7 +23,7 @@ namespace MS.Internal
             return new AvTraceFormat(_CannotCreateDefaultValueConverter, args);
         }
 
-		static AvTraceDetails _NoMentor;
+        private static AvTraceDetails _NoMentor;
 		static public AvTraceDetails NoMentor
         {
             get
@@ -38,7 +37,7 @@ namespace MS.Internal
             }
         }
 
-		static AvTraceDetails _NoDataContext;
+        private static AvTraceDetails _NoDataContext;
 		static public AvTraceDetails NoDataContext
         {
             get
@@ -52,7 +51,7 @@ namespace MS.Internal
             }
         }
 
-		static AvTraceDetails _NoSource;
+        private static AvTraceDetails _NoSource;
         static public AvTraceDetails NoSource(params object[] args)
         {
             if ( _NoSource == null )
@@ -62,7 +61,7 @@ namespace MS.Internal
             return new AvTraceFormat(_NoSource, args);
         }
 
-		static AvTraceDetails _BadValueAtTransfer;
+        private static AvTraceDetails _BadValueAtTransfer;
 		static public AvTraceDetails BadValueAtTransfer
         {
             get
@@ -76,7 +75,7 @@ namespace MS.Internal
             }
         }
 
-		static AvTraceDetails _BadConverterForTransfer;
+        private static AvTraceDetails _BadConverterForTransfer;
         static public AvTraceDetails BadConverterForTransfer(params object[] args)
         {
             if ( _BadConverterForTransfer == null )
@@ -86,7 +85,7 @@ namespace MS.Internal
             return new AvTraceFormat(_BadConverterForTransfer, args);
         }
 
-		static AvTraceDetails _BadConverterForUpdate;
+        private static AvTraceDetails _BadConverterForUpdate;
         static public AvTraceDetails BadConverterForUpdate(params object[] args)
         {
             if ( _BadConverterForUpdate == null )
@@ -96,7 +95,7 @@ namespace MS.Internal
             return new AvTraceFormat(_BadConverterForUpdate, args);
         }
 
-		static AvTraceDetails _WorkerUpdateFailed;
+        private static AvTraceDetails _WorkerUpdateFailed;
 		static public AvTraceDetails WorkerUpdateFailed
         {
             get
@@ -110,7 +109,7 @@ namespace MS.Internal
             }
         }
 
-		static AvTraceDetails _RequiresExplicitCulture;
+        private static AvTraceDetails _RequiresExplicitCulture;
 		static public AvTraceDetails RequiresExplicitCulture
         {
             get
@@ -124,7 +123,7 @@ namespace MS.Internal
             }
         }
 
-		static AvTraceDetails _NoValueToTransfer;
+        private static AvTraceDetails _NoValueToTransfer;
 		static public AvTraceDetails NoValueToTransfer
         {
             get
@@ -138,7 +137,7 @@ namespace MS.Internal
             }
         }
 
-		static AvTraceDetails _FallbackConversionFailed;
+        private static AvTraceDetails _FallbackConversionFailed;
         static public AvTraceDetails FallbackConversionFailed(params object[] args)
         {
             if ( _FallbackConversionFailed == null )
@@ -148,7 +147,7 @@ namespace MS.Internal
             return new AvTraceFormat(_FallbackConversionFailed, args);
         }
 
-		static AvTraceDetails _TargetNullValueConversionFailed;
+        private static AvTraceDetails _TargetNullValueConversionFailed;
         static public AvTraceDetails TargetNullValueConversionFailed(params object[] args)
         {
             if ( _TargetNullValueConversionFailed == null )
@@ -158,7 +157,7 @@ namespace MS.Internal
             return new AvTraceFormat(_TargetNullValueConversionFailed, args);
         }
 
-		static AvTraceDetails _BindingGroupNameMatchFailed;
+        private static AvTraceDetails _BindingGroupNameMatchFailed;
         static public AvTraceDetails BindingGroupNameMatchFailed(params object[] args)
         {
             if ( _BindingGroupNameMatchFailed == null )
@@ -168,7 +167,7 @@ namespace MS.Internal
             return new AvTraceFormat(_BindingGroupNameMatchFailed, args);
         }
 
-		static AvTraceDetails _BindingGroupWrongProperty;
+        private static AvTraceDetails _BindingGroupWrongProperty;
         static public AvTraceDetails BindingGroupWrongProperty(params object[] args)
         {
             if ( _BindingGroupWrongProperty == null )
@@ -178,7 +177,7 @@ namespace MS.Internal
             return new AvTraceFormat(_BindingGroupWrongProperty, args);
         }
 
-		static AvTraceDetails _BindingGroupMultipleInheritance;
+        private static AvTraceDetails _BindingGroupMultipleInheritance;
 		static public AvTraceDetails BindingGroupMultipleInheritance
         {
             get
@@ -192,7 +191,7 @@ namespace MS.Internal
             }
         }
 
-		static AvTraceDetails _SharesProposedValuesRequriesImplicitBindingGroup;
+        private static AvTraceDetails _SharesProposedValuesRequriesImplicitBindingGroup;
         static public AvTraceDetails SharesProposedValuesRequriesImplicitBindingGroup(params object[] args)
         {
             if ( _SharesProposedValuesRequriesImplicitBindingGroup == null )
@@ -202,7 +201,7 @@ namespace MS.Internal
             return new AvTraceFormat(_SharesProposedValuesRequriesImplicitBindingGroup, args);
         }
 
-		static AvTraceDetails _CannotGetClrRawValue;
+        private static AvTraceDetails _CannotGetClrRawValue;
         static public AvTraceDetails CannotGetClrRawValue(params object[] args)
         {
             if ( _CannotGetClrRawValue == null )
@@ -212,7 +211,7 @@ namespace MS.Internal
             return new AvTraceFormat(_CannotGetClrRawValue, args);
         }
 
-		static AvTraceDetails _CannotSetClrRawValue;
+        private static AvTraceDetails _CannotSetClrRawValue;
         static public AvTraceDetails CannotSetClrRawValue(params object[] args)
         {
             if ( _CannotSetClrRawValue == null )
@@ -222,7 +221,7 @@ namespace MS.Internal
             return new AvTraceFormat(_CannotSetClrRawValue, args);
         }
 
-		static AvTraceDetails _MissingDataItem;
+        private static AvTraceDetails _MissingDataItem;
 		static public AvTraceDetails MissingDataItem
         {
             get
@@ -236,7 +235,7 @@ namespace MS.Internal
             }
         }
 
-		static AvTraceDetails _MissingInfo;
+        private static AvTraceDetails _MissingInfo;
 		static public AvTraceDetails MissingInfo
         {
             get
@@ -250,7 +249,7 @@ namespace MS.Internal
             }
         }
 
-		static AvTraceDetails _NullDataItem;
+        private static AvTraceDetails _NullDataItem;
 		static public AvTraceDetails NullDataItem
         {
             get
@@ -264,7 +263,7 @@ namespace MS.Internal
             }
         }
 
-		static AvTraceDetails _DefaultValueConverterFailed;
+        private static AvTraceDetails _DefaultValueConverterFailed;
         static public AvTraceDetails DefaultValueConverterFailed(params object[] args)
         {
             if ( _DefaultValueConverterFailed == null )
@@ -274,7 +273,7 @@ namespace MS.Internal
             return new AvTraceFormat(_DefaultValueConverterFailed, args);
         }
 
-		static AvTraceDetails _DefaultValueConverterFailedForCulture;
+        private static AvTraceDetails _DefaultValueConverterFailedForCulture;
         static public AvTraceDetails DefaultValueConverterFailedForCulture(params object[] args)
         {
             if ( _DefaultValueConverterFailedForCulture == null )
@@ -284,7 +283,7 @@ namespace MS.Internal
             return new AvTraceFormat(_DefaultValueConverterFailedForCulture, args);
         }
 
-		static AvTraceDetails _StyleAndStyleSelectorDefined;
+        private static AvTraceDetails _StyleAndStyleSelectorDefined;
         static public AvTraceDetails StyleAndStyleSelectorDefined(params object[] args)
         {
             if ( _StyleAndStyleSelectorDefined == null )
@@ -294,7 +293,7 @@ namespace MS.Internal
             return new AvTraceFormat(_StyleAndStyleSelectorDefined, args);
         }
 
-		static AvTraceDetails _TemplateAndTemplateSelectorDefined;
+        private static AvTraceDetails _TemplateAndTemplateSelectorDefined;
         static public AvTraceDetails TemplateAndTemplateSelectorDefined(params object[] args)
         {
             if ( _TemplateAndTemplateSelectorDefined == null )
@@ -304,7 +303,7 @@ namespace MS.Internal
             return new AvTraceFormat(_TemplateAndTemplateSelectorDefined, args);
         }
 
-		static AvTraceDetails _ItemTemplateForDirectItem;
+        private static AvTraceDetails _ItemTemplateForDirectItem;
 		static public AvTraceDetails ItemTemplateForDirectItem
         {
             get
@@ -318,7 +317,7 @@ namespace MS.Internal
             }
         }
 
-		static AvTraceDetails _BadMultiConverterForUpdate;
+        private static AvTraceDetails _BadMultiConverterForUpdate;
         static public AvTraceDetails BadMultiConverterForUpdate(params object[] args)
         {
             if ( _BadMultiConverterForUpdate == null )
@@ -328,7 +327,7 @@ namespace MS.Internal
             return new AvTraceFormat(_BadMultiConverterForUpdate, args);
         }
 
-		static AvTraceDetails _MultiValueConverterMissingForTransfer;
+        private static AvTraceDetails _MultiValueConverterMissingForTransfer;
 		static public AvTraceDetails MultiValueConverterMissingForTransfer
         {
             get
@@ -342,7 +341,7 @@ namespace MS.Internal
             }
         }
 
-		static AvTraceDetails _MultiValueConverterMissingForUpdate;
+        private static AvTraceDetails _MultiValueConverterMissingForUpdate;
 		static public AvTraceDetails MultiValueConverterMissingForUpdate
         {
             get
@@ -356,7 +355,7 @@ namespace MS.Internal
             }
         }
 
-		static AvTraceDetails _MultiValueConverterMismatch;
+        private static AvTraceDetails _MultiValueConverterMismatch;
 		static public AvTraceDetails MultiValueConverterMismatch
         {
             get
@@ -370,7 +369,7 @@ namespace MS.Internal
             }
         }
 
-		static AvTraceDetails _MultiBindingHasNoConverter;
+        private static AvTraceDetails _MultiBindingHasNoConverter;
 		static public AvTraceDetails MultiBindingHasNoConverter
         {
             get
@@ -384,7 +383,7 @@ namespace MS.Internal
             }
         }
 
-		static AvTraceDetails _UnsetValueInMultiBindingExpressionUpdate;
+        private static AvTraceDetails _UnsetValueInMultiBindingExpressionUpdate;
         static public AvTraceDetails UnsetValueInMultiBindingExpressionUpdate(params object[] args)
         {
             if ( _UnsetValueInMultiBindingExpressionUpdate == null )
@@ -394,7 +393,7 @@ namespace MS.Internal
             return new AvTraceFormat(_UnsetValueInMultiBindingExpressionUpdate, args);
         }
 
-		static AvTraceDetails _ObjectDataProviderHasNoSource;
+        private static AvTraceDetails _ObjectDataProviderHasNoSource;
 		static public AvTraceDetails ObjectDataProviderHasNoSource
         {
             get
@@ -408,7 +407,7 @@ namespace MS.Internal
             }
         }
 
-		static AvTraceDetails _ObjDPCreateFailed;
+        private static AvTraceDetails _ObjDPCreateFailed;
 		static public AvTraceDetails ObjDPCreateFailed
         {
             get
@@ -422,7 +421,7 @@ namespace MS.Internal
             }
         }
 
-		static AvTraceDetails _ObjDPInvokeFailed;
+        private static AvTraceDetails _ObjDPInvokeFailed;
 		static public AvTraceDetails ObjDPInvokeFailed
         {
             get
@@ -436,7 +435,7 @@ namespace MS.Internal
             }
         }
 
-		static AvTraceDetails _RefPreviousNotInContext;
+        private static AvTraceDetails _RefPreviousNotInContext;
 		static public AvTraceDetails RefPreviousNotInContext
         {
             get
@@ -450,7 +449,7 @@ namespace MS.Internal
             }
         }
 
-		static AvTraceDetails _RefNoWrapperInChildren;
+        private static AvTraceDetails _RefNoWrapperInChildren;
 		static public AvTraceDetails RefNoWrapperInChildren
         {
             get
@@ -464,7 +463,7 @@ namespace MS.Internal
             }
         }
 
-		static AvTraceDetails _RefAncestorTypeNotSpecified;
+        private static AvTraceDetails _RefAncestorTypeNotSpecified;
 		static public AvTraceDetails RefAncestorTypeNotSpecified
         {
             get
@@ -478,7 +477,7 @@ namespace MS.Internal
             }
         }
 
-		static AvTraceDetails _RefAncestorLevelInvalid;
+        private static AvTraceDetails _RefAncestorLevelInvalid;
 		static public AvTraceDetails RefAncestorLevelInvalid
         {
             get
@@ -492,7 +491,7 @@ namespace MS.Internal
             }
         }
 
-		static AvTraceDetails _ClrReplaceItem;
+        private static AvTraceDetails _ClrReplaceItem;
         static public AvTraceDetails ClrReplaceItem(params object[] args)
         {
             if ( _ClrReplaceItem == null )
@@ -502,7 +501,7 @@ namespace MS.Internal
             return new AvTraceFormat(_ClrReplaceItem, args);
         }
 
-		static AvTraceDetails _NullItem;
+        private static AvTraceDetails _NullItem;
         static public AvTraceDetails NullItem(params object[] args)
         {
             if ( _NullItem == null )
@@ -512,7 +511,7 @@ namespace MS.Internal
             return new AvTraceFormat(_NullItem, args);
         }
 
-		static AvTraceDetails _PlaceholderItem;
+        private static AvTraceDetails _PlaceholderItem;
         static public AvTraceDetails PlaceholderItem(params object[] args)
         {
             if ( _PlaceholderItem == null )
@@ -522,7 +521,7 @@ namespace MS.Internal
             return new AvTraceFormat(_PlaceholderItem, args);
         }
 
-		static AvTraceDetails _DataErrorInfoFailed;
+        private static AvTraceDetails _DataErrorInfoFailed;
         static public AvTraceDetails DataErrorInfoFailed(params object[] args)
         {
             if ( _DataErrorInfoFailed == null )
@@ -532,7 +531,7 @@ namespace MS.Internal
             return new AvTraceFormat(_DataErrorInfoFailed, args);
         }
 
-		static AvTraceDetails _DisallowTwoWay;
+        private static AvTraceDetails _DisallowTwoWay;
         static public AvTraceDetails DisallowTwoWay(params object[] args)
         {
             if ( _DisallowTwoWay == null )
@@ -542,7 +541,7 @@ namespace MS.Internal
             return new AvTraceFormat(_DisallowTwoWay, args);
         }
 
-		static AvTraceDetails _XmlBindingToNonXml;
+        private static AvTraceDetails _XmlBindingToNonXml;
 		static public AvTraceDetails XmlBindingToNonXml
         {
             get
@@ -556,7 +555,7 @@ namespace MS.Internal
             }
         }
 
-		static AvTraceDetails _XmlBindingToNonXmlCollection;
+        private static AvTraceDetails _XmlBindingToNonXmlCollection;
 		static public AvTraceDetails XmlBindingToNonXmlCollection
         {
             get
@@ -570,7 +569,7 @@ namespace MS.Internal
             }
         }
 
-		static AvTraceDetails _CannotGetXmlNodeCollection;
+        private static AvTraceDetails _CannotGetXmlNodeCollection;
 		static public AvTraceDetails CannotGetXmlNodeCollection
         {
             get
@@ -584,7 +583,7 @@ namespace MS.Internal
             }
         }
 
-		static AvTraceDetails _BadXPath;
+        private static AvTraceDetails _BadXPath;
         static public AvTraceDetails BadXPath(params object[] args)
         {
             if ( _BadXPath == null )
@@ -594,7 +593,7 @@ namespace MS.Internal
             return new AvTraceFormat(_BadXPath, args);
         }
 
-		static AvTraceDetails _XmlDPInlineDocError;
+        private static AvTraceDetails _XmlDPInlineDocError;
 		static public AvTraceDetails XmlDPInlineDocError
         {
             get
@@ -608,7 +607,7 @@ namespace MS.Internal
             }
         }
 
-		static AvTraceDetails _XmlNamespaceNotSet;
+        private static AvTraceDetails _XmlNamespaceNotSet;
 		static public AvTraceDetails XmlNamespaceNotSet
         {
             get
@@ -622,7 +621,7 @@ namespace MS.Internal
             }
         }
 
-		static AvTraceDetails _XmlDPAsyncDocError;
+        private static AvTraceDetails _XmlDPAsyncDocError;
 		static public AvTraceDetails XmlDPAsyncDocError
         {
             get
@@ -636,7 +635,7 @@ namespace MS.Internal
             }
         }
 
-		static AvTraceDetails _XmlDPSelectNodesFailed;
+        private static AvTraceDetails _XmlDPSelectNodesFailed;
 		static public AvTraceDetails XmlDPSelectNodesFailed
         {
             get
@@ -650,7 +649,7 @@ namespace MS.Internal
             }
         }
 
-		static AvTraceDetails _CollectionViewIsUnsupported;
+        private static AvTraceDetails _CollectionViewIsUnsupported;
 		static public AvTraceDetails CollectionViewIsUnsupported
         {
             get
@@ -664,7 +663,7 @@ namespace MS.Internal
             }
         }
 
-		static AvTraceDetails _CollectionChangedWithoutNotification;
+        private static AvTraceDetails _CollectionChangedWithoutNotification;
         static public AvTraceDetails CollectionChangedWithoutNotification(params object[] args)
         {
             if ( _CollectionChangedWithoutNotification == null )
@@ -674,7 +673,7 @@ namespace MS.Internal
             return new AvTraceFormat(_CollectionChangedWithoutNotification, args);
         }
 
-		static AvTraceDetails _CannotSort;
+        private static AvTraceDetails _CannotSort;
         static public AvTraceDetails CannotSort(params object[] args)
         {
             if ( _CannotSort == null )
@@ -684,7 +683,7 @@ namespace MS.Internal
             return new AvTraceFormat(_CannotSort, args);
         }
 
-		static AvTraceDetails _CreatedExpression;
+        private static AvTraceDetails _CreatedExpression;
         static public AvTraceDetails CreatedExpression(params object[] args)
         {
             if ( _CreatedExpression == null )
@@ -694,7 +693,7 @@ namespace MS.Internal
             return new AvTraceFormat(_CreatedExpression, args);
         }
 
-		static AvTraceDetails _CreatedExpressionInParent;
+        private static AvTraceDetails _CreatedExpressionInParent;
         static public AvTraceDetails CreatedExpressionInParent(params object[] args)
         {
             if ( _CreatedExpressionInParent == null )
@@ -704,7 +703,7 @@ namespace MS.Internal
             return new AvTraceFormat(_CreatedExpressionInParent, args);
         }
 
-		static AvTraceDetails _BindingPath;
+        private static AvTraceDetails _BindingPath;
         static public AvTraceDetails BindingPath(params object[] args)
         {
             if ( _BindingPath == null )
@@ -714,7 +713,7 @@ namespace MS.Internal
             return new AvTraceFormat(_BindingPath, args);
         }
 
-		static AvTraceDetails _BindingXPathAndPath;
+        private static AvTraceDetails _BindingXPathAndPath;
         static public AvTraceDetails BindingXPathAndPath(params object[] args)
         {
             if ( _BindingXPathAndPath == null )
@@ -724,7 +723,7 @@ namespace MS.Internal
             return new AvTraceFormat(_BindingXPathAndPath, args);
         }
 
-		static AvTraceDetails _ResolveDefaultMode;
+        private static AvTraceDetails _ResolveDefaultMode;
         static public AvTraceDetails ResolveDefaultMode(params object[] args)
         {
             if ( _ResolveDefaultMode == null )
@@ -734,7 +733,7 @@ namespace MS.Internal
             return new AvTraceFormat(_ResolveDefaultMode, args);
         }
 
-		static AvTraceDetails _ResolveDefaultUpdate;
+        private static AvTraceDetails _ResolveDefaultUpdate;
         static public AvTraceDetails ResolveDefaultUpdate(params object[] args)
         {
             if ( _ResolveDefaultUpdate == null )
@@ -744,7 +743,7 @@ namespace MS.Internal
             return new AvTraceFormat(_ResolveDefaultUpdate, args);
         }
 
-		static AvTraceDetails _AttachExpression;
+        private static AvTraceDetails _AttachExpression;
         static public AvTraceDetails AttachExpression(params object[] args)
         {
             if ( _AttachExpression == null )
@@ -754,7 +753,7 @@ namespace MS.Internal
             return new AvTraceFormat(_AttachExpression, args);
         }
 
-		static AvTraceDetails _DetachExpression;
+        private static AvTraceDetails _DetachExpression;
         static public AvTraceDetails DetachExpression(params object[] args)
         {
             if ( _DetachExpression == null )
@@ -764,7 +763,7 @@ namespace MS.Internal
             return new AvTraceFormat(_DetachExpression, args);
         }
 
-		static AvTraceDetails _UseMentor;
+        private static AvTraceDetails _UseMentor;
         static public AvTraceDetails UseMentor(params object[] args)
         {
             if ( _UseMentor == null )
@@ -774,7 +773,7 @@ namespace MS.Internal
             return new AvTraceFormat(_UseMentor, args);
         }
 
-		static AvTraceDetails _DeferAttachToContext;
+        private static AvTraceDetails _DeferAttachToContext;
         static public AvTraceDetails DeferAttachToContext(params object[] args)
         {
             if ( _DeferAttachToContext == null )
@@ -784,7 +783,7 @@ namespace MS.Internal
             return new AvTraceFormat(_DeferAttachToContext, args);
         }
 
-		static AvTraceDetails _SourceRequiresTreeContext;
+        private static AvTraceDetails _SourceRequiresTreeContext;
         static public AvTraceDetails SourceRequiresTreeContext(params object[] args)
         {
             if ( _SourceRequiresTreeContext == null )
@@ -794,7 +793,7 @@ namespace MS.Internal
             return new AvTraceFormat(_SourceRequiresTreeContext, args);
         }
 
-		static AvTraceDetails _AttachToContext;
+        private static AvTraceDetails _AttachToContext;
         static public AvTraceDetails AttachToContext(params object[] args)
         {
             if ( _AttachToContext == null )
@@ -804,7 +803,7 @@ namespace MS.Internal
             return new AvTraceFormat(_AttachToContext, args);
         }
 
-		static AvTraceDetails _PathRequiresTreeContext;
+        private static AvTraceDetails _PathRequiresTreeContext;
         static public AvTraceDetails PathRequiresTreeContext(params object[] args)
         {
             if ( _PathRequiresTreeContext == null )
@@ -814,7 +813,7 @@ namespace MS.Internal
             return new AvTraceFormat(_PathRequiresTreeContext, args);
         }
 
-		static AvTraceDetails _NoMentorExtended;
+        private static AvTraceDetails _NoMentorExtended;
         static public AvTraceDetails NoMentorExtended(params object[] args)
         {
             if ( _NoMentorExtended == null )
@@ -824,7 +823,7 @@ namespace MS.Internal
             return new AvTraceFormat(_NoMentorExtended, args);
         }
 
-		static AvTraceDetails _ContextElement;
+        private static AvTraceDetails _ContextElement;
         static public AvTraceDetails ContextElement(params object[] args)
         {
             if ( _ContextElement == null )
@@ -834,7 +833,7 @@ namespace MS.Internal
             return new AvTraceFormat(_ContextElement, args);
         }
 
-		static AvTraceDetails _NullDataContext;
+        private static AvTraceDetails _NullDataContext;
         static public AvTraceDetails NullDataContext(params object[] args)
         {
             if ( _NullDataContext == null )
@@ -844,7 +843,7 @@ namespace MS.Internal
             return new AvTraceFormat(_NullDataContext, args);
         }
 
-		static AvTraceDetails _RelativeSource;
+        private static AvTraceDetails _RelativeSource;
         static public AvTraceDetails RelativeSource(params object[] args)
         {
             if ( _RelativeSource == null )
@@ -854,7 +853,7 @@ namespace MS.Internal
             return new AvTraceFormat(_RelativeSource, args);
         }
 
-		static AvTraceDetails _AncestorLookup;
+        private static AvTraceDetails _AncestorLookup;
         static public AvTraceDetails AncestorLookup(params object[] args)
         {
             if ( _AncestorLookup == null )
@@ -864,7 +863,7 @@ namespace MS.Internal
             return new AvTraceFormat(_AncestorLookup, args);
         }
 
-		static AvTraceDetails _ElementNameQuery;
+        private static AvTraceDetails _ElementNameQuery;
         static public AvTraceDetails ElementNameQuery(params object[] args)
         {
             if ( _ElementNameQuery == null )
@@ -874,7 +873,7 @@ namespace MS.Internal
             return new AvTraceFormat(_ElementNameQuery, args);
         }
 
-		static AvTraceDetails _ElementNameQueryTemplate;
+        private static AvTraceDetails _ElementNameQueryTemplate;
         static public AvTraceDetails ElementNameQueryTemplate(params object[] args)
         {
             if ( _ElementNameQueryTemplate == null )
@@ -884,7 +883,7 @@ namespace MS.Internal
             return new AvTraceFormat(_ElementNameQueryTemplate, args);
         }
 
-		static AvTraceDetails _UseCVS;
+        private static AvTraceDetails _UseCVS;
         static public AvTraceDetails UseCVS(params object[] args)
         {
             if ( _UseCVS == null )
@@ -894,7 +893,7 @@ namespace MS.Internal
             return new AvTraceFormat(_UseCVS, args);
         }
 
-		static AvTraceDetails _UseDataProvider;
+        private static AvTraceDetails _UseDataProvider;
         static public AvTraceDetails UseDataProvider(params object[] args)
         {
             if ( _UseDataProvider == null )
@@ -904,7 +903,7 @@ namespace MS.Internal
             return new AvTraceFormat(_UseDataProvider, args);
         }
 
-		static AvTraceDetails _ActivateItem;
+        private static AvTraceDetails _ActivateItem;
         static public AvTraceDetails ActivateItem(params object[] args)
         {
             if ( _ActivateItem == null )
@@ -914,7 +913,7 @@ namespace MS.Internal
             return new AvTraceFormat(_ActivateItem, args);
         }
 
-		static AvTraceDetails _Deactivate;
+        private static AvTraceDetails _Deactivate;
         static public AvTraceDetails Deactivate(params object[] args)
         {
             if ( _Deactivate == null )
@@ -924,7 +923,7 @@ namespace MS.Internal
             return new AvTraceFormat(_Deactivate, args);
         }
 
-		static AvTraceDetails _GetRawValue;
+        private static AvTraceDetails _GetRawValue;
         static public AvTraceDetails GetRawValue(params object[] args)
         {
             if ( _GetRawValue == null )
@@ -934,7 +933,7 @@ namespace MS.Internal
             return new AvTraceFormat(_GetRawValue, args);
         }
 
-		static AvTraceDetails _ConvertDBNull;
+        private static AvTraceDetails _ConvertDBNull;
         static public AvTraceDetails ConvertDBNull(params object[] args)
         {
             if ( _ConvertDBNull == null )
@@ -944,7 +943,7 @@ namespace MS.Internal
             return new AvTraceFormat(_ConvertDBNull, args);
         }
 
-		static AvTraceDetails _UserConverter;
+        private static AvTraceDetails _UserConverter;
         static public AvTraceDetails UserConverter(params object[] args)
         {
             if ( _UserConverter == null )
@@ -954,7 +953,7 @@ namespace MS.Internal
             return new AvTraceFormat(_UserConverter, args);
         }
 
-		static AvTraceDetails _NullConverter;
+        private static AvTraceDetails _NullConverter;
         static public AvTraceDetails NullConverter(params object[] args)
         {
             if ( _NullConverter == null )
@@ -964,7 +963,7 @@ namespace MS.Internal
             return new AvTraceFormat(_NullConverter, args);
         }
 
-		static AvTraceDetails _DefaultConverter;
+        private static AvTraceDetails _DefaultConverter;
         static public AvTraceDetails DefaultConverter(params object[] args)
         {
             if ( _DefaultConverter == null )
@@ -974,7 +973,7 @@ namespace MS.Internal
             return new AvTraceFormat(_DefaultConverter, args);
         }
 
-		static AvTraceDetails _FormattedValue;
+        private static AvTraceDetails _FormattedValue;
         static public AvTraceDetails FormattedValue(params object[] args)
         {
             if ( _FormattedValue == null )
@@ -984,7 +983,7 @@ namespace MS.Internal
             return new AvTraceFormat(_FormattedValue, args);
         }
 
-		static AvTraceDetails _FormattingFailed;
+        private static AvTraceDetails _FormattingFailed;
         static public AvTraceDetails FormattingFailed(params object[] args)
         {
             if ( _FormattingFailed == null )
@@ -994,7 +993,7 @@ namespace MS.Internal
             return new AvTraceFormat(_FormattingFailed, args);
         }
 
-		static AvTraceDetails _BadValueAtTransferExtended;
+        private static AvTraceDetails _BadValueAtTransferExtended;
         static public AvTraceDetails BadValueAtTransferExtended(params object[] args)
         {
             if ( _BadValueAtTransferExtended == null )
@@ -1004,7 +1003,7 @@ namespace MS.Internal
             return new AvTraceFormat(_BadValueAtTransferExtended, args);
         }
 
-		static AvTraceDetails _UseFallback;
+        private static AvTraceDetails _UseFallback;
         static public AvTraceDetails UseFallback(params object[] args)
         {
             if ( _UseFallback == null )
@@ -1014,7 +1013,7 @@ namespace MS.Internal
             return new AvTraceFormat(_UseFallback, args);
         }
 
-		static AvTraceDetails _TransferValue;
+        private static AvTraceDetails _TransferValue;
         static public AvTraceDetails TransferValue(params object[] args)
         {
             if ( _TransferValue == null )
@@ -1024,7 +1023,7 @@ namespace MS.Internal
             return new AvTraceFormat(_TransferValue, args);
         }
 
-		static AvTraceDetails _UpdateRawValue;
+        private static AvTraceDetails _UpdateRawValue;
         static public AvTraceDetails UpdateRawValue(params object[] args)
         {
             if ( _UpdateRawValue == null )
@@ -1034,7 +1033,7 @@ namespace MS.Internal
             return new AvTraceFormat(_UpdateRawValue, args);
         }
 
-		static AvTraceDetails _ValidationRuleFailed;
+        private static AvTraceDetails _ValidationRuleFailed;
         static public AvTraceDetails ValidationRuleFailed(params object[] args)
         {
             if ( _ValidationRuleFailed == null )
@@ -1044,7 +1043,7 @@ namespace MS.Internal
             return new AvTraceFormat(_ValidationRuleFailed, args);
         }
 
-		static AvTraceDetails _UserConvertBack;
+        private static AvTraceDetails _UserConvertBack;
         static public AvTraceDetails UserConvertBack(params object[] args)
         {
             if ( _UserConvertBack == null )
@@ -1054,7 +1053,7 @@ namespace MS.Internal
             return new AvTraceFormat(_UserConvertBack, args);
         }
 
-		static AvTraceDetails _DefaultConvertBack;
+        private static AvTraceDetails _DefaultConvertBack;
         static public AvTraceDetails DefaultConvertBack(params object[] args)
         {
             if ( _DefaultConvertBack == null )
@@ -1064,7 +1063,7 @@ namespace MS.Internal
             return new AvTraceFormat(_DefaultConvertBack, args);
         }
 
-		static AvTraceDetails _Update;
+        private static AvTraceDetails _Update;
         static public AvTraceDetails Update(params object[] args)
         {
             if ( _Update == null )
@@ -1074,7 +1073,7 @@ namespace MS.Internal
             return new AvTraceFormat(_Update, args);
         }
 
-		static AvTraceDetails _GotEvent;
+        private static AvTraceDetails _GotEvent;
         static public AvTraceDetails GotEvent(params object[] args)
         {
             if ( _GotEvent == null )
@@ -1084,7 +1083,7 @@ namespace MS.Internal
             return new AvTraceFormat(_GotEvent, args);
         }
 
-		static AvTraceDetails _GotPropertyChanged;
+        private static AvTraceDetails _GotPropertyChanged;
         static public AvTraceDetails GotPropertyChanged(params object[] args)
         {
             if ( _GotPropertyChanged == null )
@@ -1094,7 +1093,7 @@ namespace MS.Internal
             return new AvTraceFormat(_GotPropertyChanged, args);
         }
 
-		static AvTraceDetails _PriorityTransfer;
+        private static AvTraceDetails _PriorityTransfer;
         static public AvTraceDetails PriorityTransfer(params object[] args)
         {
             if ( _PriorityTransfer == null )
@@ -1104,7 +1103,7 @@ namespace MS.Internal
             return new AvTraceFormat(_PriorityTransfer, args);
         }
 
-		static AvTraceDetails _ChildNotAttached;
+        private static AvTraceDetails _ChildNotAttached;
         static public AvTraceDetails ChildNotAttached(params object[] args)
         {
             if ( _ChildNotAttached == null )
@@ -1114,7 +1113,7 @@ namespace MS.Internal
             return new AvTraceFormat(_ChildNotAttached, args);
         }
 
-		static AvTraceDetails _GetRawValueMulti;
+        private static AvTraceDetails _GetRawValueMulti;
         static public AvTraceDetails GetRawValueMulti(params object[] args)
         {
             if ( _GetRawValueMulti == null )
@@ -1124,7 +1123,7 @@ namespace MS.Internal
             return new AvTraceFormat(_GetRawValueMulti, args);
         }
 
-		static AvTraceDetails _UserConvertBackMulti;
+        private static AvTraceDetails _UserConvertBackMulti;
         static public AvTraceDetails UserConvertBackMulti(params object[] args)
         {
             if ( _UserConvertBackMulti == null )
@@ -1134,7 +1133,7 @@ namespace MS.Internal
             return new AvTraceFormat(_UserConvertBackMulti, args);
         }
 
-		static AvTraceDetails _GetValue;
+        private static AvTraceDetails _GetValue;
         static public AvTraceDetails GetValue(params object[] args)
         {
             if ( _GetValue == null )
@@ -1144,7 +1143,7 @@ namespace MS.Internal
             return new AvTraceFormat(_GetValue, args);
         }
 
-		static AvTraceDetails _SetValue;
+        private static AvTraceDetails _SetValue;
         static public AvTraceDetails SetValue(params object[] args)
         {
             if ( _SetValue == null )
@@ -1154,7 +1153,7 @@ namespace MS.Internal
             return new AvTraceFormat(_SetValue, args);
         }
 
-		static AvTraceDetails _ReplaceItemShort;
+        private static AvTraceDetails _ReplaceItemShort;
         static public AvTraceDetails ReplaceItemShort(params object[] args)
         {
             if ( _ReplaceItemShort == null )
@@ -1164,7 +1163,7 @@ namespace MS.Internal
             return new AvTraceFormat(_ReplaceItemShort, args);
         }
 
-		static AvTraceDetails _ReplaceItemLong;
+        private static AvTraceDetails _ReplaceItemLong;
         static public AvTraceDetails ReplaceItemLong(params object[] args)
         {
             if ( _ReplaceItemLong == null )
@@ -1174,7 +1173,7 @@ namespace MS.Internal
             return new AvTraceFormat(_ReplaceItemLong, args);
         }
 
-		static AvTraceDetails _GetInfo_Reuse;
+        private static AvTraceDetails _GetInfo_Reuse;
         static public AvTraceDetails GetInfo_Reuse(params object[] args)
         {
             if ( _GetInfo_Reuse == null )
@@ -1184,7 +1183,7 @@ namespace MS.Internal
             return new AvTraceFormat(_GetInfo_Reuse, args);
         }
 
-		static AvTraceDetails _GetInfo_Null;
+        private static AvTraceDetails _GetInfo_Null;
         static public AvTraceDetails GetInfo_Null(params object[] args)
         {
             if ( _GetInfo_Null == null )
@@ -1194,7 +1193,7 @@ namespace MS.Internal
             return new AvTraceFormat(_GetInfo_Null, args);
         }
 
-		static AvTraceDetails _GetInfo_Cache;
+        private static AvTraceDetails _GetInfo_Cache;
         static public AvTraceDetails GetInfo_Cache(params object[] args)
         {
             if ( _GetInfo_Cache == null )
@@ -1204,7 +1203,7 @@ namespace MS.Internal
             return new AvTraceFormat(_GetInfo_Cache, args);
         }
 
-		static AvTraceDetails _GetInfo_Property;
+        private static AvTraceDetails _GetInfo_Property;
         static public AvTraceDetails GetInfo_Property(params object[] args)
         {
             if ( _GetInfo_Property == null )
@@ -1214,7 +1213,7 @@ namespace MS.Internal
             return new AvTraceFormat(_GetInfo_Property, args);
         }
 
-		static AvTraceDetails _GetInfo_Indexer;
+        private static AvTraceDetails _GetInfo_Indexer;
         static public AvTraceDetails GetInfo_Indexer(params object[] args)
         {
             if ( _GetInfo_Indexer == null )
@@ -1224,7 +1223,7 @@ namespace MS.Internal
             return new AvTraceFormat(_GetInfo_Indexer, args);
         }
 
-		static AvTraceDetails _XmlContextNode;
+        private static AvTraceDetails _XmlContextNode;
         static public AvTraceDetails XmlContextNode(params object[] args)
         {
             if ( _XmlContextNode == null )
@@ -1234,7 +1233,7 @@ namespace MS.Internal
             return new AvTraceFormat(_XmlContextNode, args);
         }
 
-		static AvTraceDetails _XmlNewCollection;
+        private static AvTraceDetails _XmlNewCollection;
         static public AvTraceDetails XmlNewCollection(params object[] args)
         {
             if ( _XmlNewCollection == null )
@@ -1244,7 +1243,7 @@ namespace MS.Internal
             return new AvTraceFormat(_XmlNewCollection, args);
         }
 
-		static AvTraceDetails _XmlSynchronizeCollection;
+        private static AvTraceDetails _XmlSynchronizeCollection;
         static public AvTraceDetails XmlSynchronizeCollection(params object[] args)
         {
             if ( _XmlSynchronizeCollection == null )
@@ -1254,7 +1253,7 @@ namespace MS.Internal
             return new AvTraceFormat(_XmlSynchronizeCollection, args);
         }
 
-		static AvTraceDetails _SelectNodes;
+        private static AvTraceDetails _SelectNodes;
         static public AvTraceDetails SelectNodes(params object[] args)
         {
             if ( _SelectNodes == null )
@@ -1264,7 +1263,7 @@ namespace MS.Internal
             return new AvTraceFormat(_SelectNodes, args);
         }
 
-		static AvTraceDetails _BeginQuery;
+        private static AvTraceDetails _BeginQuery;
         static public AvTraceDetails BeginQuery(params object[] args)
         {
             if ( _BeginQuery == null )
@@ -1274,7 +1273,7 @@ namespace MS.Internal
             return new AvTraceFormat(_BeginQuery, args);
         }
 
-		static AvTraceDetails _QueryFinished;
+        private static AvTraceDetails _QueryFinished;
         static public AvTraceDetails QueryFinished(params object[] args)
         {
             if ( _QueryFinished == null )
@@ -1284,7 +1283,7 @@ namespace MS.Internal
             return new AvTraceFormat(_QueryFinished, args);
         }
 
-		static AvTraceDetails _QueryResult;
+        private static AvTraceDetails _QueryResult;
         static public AvTraceDetails QueryResult(params object[] args)
         {
             if ( _QueryResult == null )
@@ -1294,7 +1293,7 @@ namespace MS.Internal
             return new AvTraceFormat(_QueryResult, args);
         }
 
-		static AvTraceDetails _XmlLoadSource;
+        private static AvTraceDetails _XmlLoadSource;
         static public AvTraceDetails XmlLoadSource(params object[] args)
         {
             if ( _XmlLoadSource == null )
@@ -1304,7 +1303,7 @@ namespace MS.Internal
             return new AvTraceFormat(_XmlLoadSource, args);
         }
 
-		static AvTraceDetails _XmlLoadDoc;
+        private static AvTraceDetails _XmlLoadDoc;
         static public AvTraceDetails XmlLoadDoc(params object[] args)
         {
             if ( _XmlLoadDoc == null )
@@ -1314,7 +1313,7 @@ namespace MS.Internal
             return new AvTraceFormat(_XmlLoadDoc, args);
         }
 
-		static AvTraceDetails _XmlLoadInline;
+        private static AvTraceDetails _XmlLoadInline;
         static public AvTraceDetails XmlLoadInline(params object[] args)
         {
             if ( _XmlLoadInline == null )
@@ -1324,7 +1323,7 @@ namespace MS.Internal
             return new AvTraceFormat(_XmlLoadInline, args);
         }
 
-		static AvTraceDetails _XmlBuildCollection;
+        private static AvTraceDetails _XmlBuildCollection;
         static public AvTraceDetails XmlBuildCollection(params object[] args)
         {
             if ( _XmlBuildCollection == null )
@@ -1405,8 +1404,7 @@ namespace MS.Internal
                 delegate() { return PresentationTraceSources.DocumentsSource; },
                 delegate() { PresentationTraceSources._DocumentsSource = null; }
                 );
-
-		static AvTraceDetails _FormatPage;
+        private static AvTraceDetails _FormatPage;
 		static public AvTraceDetails FormatPage
         {
             get
@@ -1420,7 +1418,7 @@ namespace MS.Internal
             }
         }
 
-		static AvTraceDetails _PageFormattingError;
+        private static AvTraceDetails _PageFormattingError;
 		static public AvTraceDetails PageFormattingError
         {
             get
@@ -1434,7 +1432,7 @@ namespace MS.Internal
             }
         }
 
-		static AvTraceDetails _UnableToFreezeFreezableSubProperty;
+        private static AvTraceDetails _UnableToFreezeFreezableSubProperty;
 		static public AvTraceDetails UnableToFreezeFreezableSubProperty
         {
             get
@@ -1448,7 +1446,7 @@ namespace MS.Internal
             }
         }
 
-		static AvTraceDetails _UnableToFreezeAnimatedProperties;
+        private static AvTraceDetails _UnableToFreezeAnimatedProperties;
 		static public AvTraceDetails UnableToFreezeAnimatedProperties
         {
             get
@@ -1533,8 +1531,7 @@ namespace MS.Internal
                 delegate() { return PresentationTraceSources.ResourceDictionarySource; },
                 delegate() { PresentationTraceSources._ResourceDictionarySource = null; }
                 );
-
-		static AvTraceDetails _AddResource;
+        private static AvTraceDetails _AddResource;
 		static public AvTraceDetails AddResource
         {
             get
@@ -1548,7 +1545,7 @@ namespace MS.Internal
             }
         }
 
-		static AvTraceDetails _RealizeDeferContent;
+        private static AvTraceDetails _RealizeDeferContent;
 		static public AvTraceDetails RealizeDeferContent
         {
             get
@@ -1562,7 +1559,7 @@ namespace MS.Internal
             }
         }
 
-		static AvTraceDetails _FoundResourceOnElement;
+        private static AvTraceDetails _FoundResourceOnElement;
 		static public AvTraceDetails FoundResourceOnElement
         {
             get
@@ -1576,7 +1573,7 @@ namespace MS.Internal
             }
         }
 
-		static AvTraceDetails _FoundResourceInStyle;
+        private static AvTraceDetails _FoundResourceInStyle;
 		static public AvTraceDetails FoundResourceInStyle
         {
             get
@@ -1590,7 +1587,7 @@ namespace MS.Internal
             }
         }
 
-		static AvTraceDetails _FoundResourceInTemplate;
+        private static AvTraceDetails _FoundResourceInTemplate;
 		static public AvTraceDetails FoundResourceInTemplate
         {
             get
@@ -1604,7 +1601,7 @@ namespace MS.Internal
             }
         }
 
-		static AvTraceDetails _FoundResourceInThemeStyle;
+        private static AvTraceDetails _FoundResourceInThemeStyle;
 		static public AvTraceDetails FoundResourceInThemeStyle
         {
             get
@@ -1618,7 +1615,7 @@ namespace MS.Internal
             }
         }
 
-		static AvTraceDetails _FoundResourceInApplication;
+        private static AvTraceDetails _FoundResourceInApplication;
 		static public AvTraceDetails FoundResourceInApplication
         {
             get
@@ -1632,7 +1629,7 @@ namespace MS.Internal
             }
         }
 
-		static AvTraceDetails _FoundResourceInTheme;
+        private static AvTraceDetails _FoundResourceInTheme;
 		static public AvTraceDetails FoundResourceInTheme
         {
             get
@@ -1646,7 +1643,7 @@ namespace MS.Internal
             }
         }
 
-		static AvTraceDetails _ResourceNotFound;
+        private static AvTraceDetails _ResourceNotFound;
 		static public AvTraceDetails ResourceNotFound
         {
             get
@@ -1660,7 +1657,7 @@ namespace MS.Internal
             }
         }
 
-		static AvTraceDetails _NewResourceDictionary;
+        private static AvTraceDetails _NewResourceDictionary;
 		static public AvTraceDetails NewResourceDictionary
         {
             get
@@ -1674,7 +1671,7 @@ namespace MS.Internal
             }
         }
 
-		static AvTraceDetails _FindResource;
+        private static AvTraceDetails _FindResource;
 		static public AvTraceDetails FindResource
         {
             get
@@ -1688,7 +1685,7 @@ namespace MS.Internal
             }
         }
 
-		static AvTraceDetails _SetKey;
+        private static AvTraceDetails _SetKey;
 		static public AvTraceDetails SetKey
         {
             get
@@ -1773,8 +1770,7 @@ namespace MS.Internal
                 delegate() { return PresentationTraceSources.MarkupSource; },
                 delegate() { PresentationTraceSources._MarkupSource = null; }
                 );
-
-		static AvTraceDetails _AddValueToAddChild;
+        private static AvTraceDetails _AddValueToAddChild;
 		static public AvTraceDetails AddValueToAddChild
         {
             get
@@ -1788,7 +1784,7 @@ namespace MS.Internal
             }
         }
 
-		static AvTraceDetails _AddValueToArray;
+        private static AvTraceDetails _AddValueToArray;
 		static public AvTraceDetails AddValueToArray
         {
             get
@@ -1802,7 +1798,7 @@ namespace MS.Internal
             }
         }
 
-		static AvTraceDetails _AddValueToDictionary;
+        private static AvTraceDetails _AddValueToDictionary;
 		static public AvTraceDetails AddValueToDictionary
         {
             get
@@ -1816,7 +1812,7 @@ namespace MS.Internal
             }
         }
 
-		static AvTraceDetails _AddValueToList;
+        private static AvTraceDetails _AddValueToList;
 		static public AvTraceDetails AddValueToList
         {
             get
@@ -1830,7 +1826,7 @@ namespace MS.Internal
             }
         }
 
-		static AvTraceDetails _BeginInit;
+        private static AvTraceDetails _BeginInit;
 		static public AvTraceDetails BeginInit
         {
             get
@@ -1844,7 +1840,7 @@ namespace MS.Internal
             }
         }
 
-		static AvTraceDetails _CreateMarkupExtension;
+        private static AvTraceDetails _CreateMarkupExtension;
 		static public AvTraceDetails CreateMarkupExtension
         {
             get
@@ -1858,7 +1854,7 @@ namespace MS.Internal
             }
         }
 
-		static AvTraceDetails _CreateObject;
+        private static AvTraceDetails _CreateObject;
 		static public AvTraceDetails CreateObject
         {
             get
@@ -1872,7 +1868,7 @@ namespace MS.Internal
             }
         }
 
-		static AvTraceDetails _EndInit;
+        private static AvTraceDetails _EndInit;
 		static public AvTraceDetails EndInit
         {
             get
@@ -1886,7 +1882,7 @@ namespace MS.Internal
             }
         }
 
-		static AvTraceDetails _Load;
+        private static AvTraceDetails _Load;
 		static public AvTraceDetails Load
         {
             get
@@ -1900,7 +1896,7 @@ namespace MS.Internal
             }
         }
 
-		static AvTraceDetails _ProcessConstructorParameter;
+        private static AvTraceDetails _ProcessConstructorParameter;
 		static public AvTraceDetails ProcessConstructorParameter
         {
             get
@@ -1914,7 +1910,7 @@ namespace MS.Internal
             }
         }
 
-		static AvTraceDetails _ProvideValue;
+        private static AvTraceDetails _ProvideValue;
 		static public AvTraceDetails ProvideValue
         {
             get
@@ -1928,7 +1924,7 @@ namespace MS.Internal
             }
         }
 
-		static AvTraceDetails _SetCPA;
+        private static AvTraceDetails _SetCPA;
 		static public AvTraceDetails SetCPA
         {
             get
@@ -1942,7 +1938,7 @@ namespace MS.Internal
             }
         }
 
-		static AvTraceDetails _SetPropertyValue;
+        private static AvTraceDetails _SetPropertyValue;
 		static public AvTraceDetails SetPropertyValue
         {
             get
@@ -1956,7 +1952,7 @@ namespace MS.Internal
             }
         }
 
-		static AvTraceDetails _ThrowException;
+        private static AvTraceDetails _ThrowException;
 		static public AvTraceDetails ThrowException
         {
             get
@@ -1970,7 +1966,7 @@ namespace MS.Internal
             }
         }
 
-		static AvTraceDetails _TypeConvert;
+        private static AvTraceDetails _TypeConvert;
 		static public AvTraceDetails TypeConvert
         {
             get
@@ -1984,7 +1980,7 @@ namespace MS.Internal
             }
         }
 
-		static AvTraceDetails _TypeConvertFallback;
+        private static AvTraceDetails _TypeConvertFallback;
 		static public AvTraceDetails TypeConvertFallback
         {
             get
@@ -2069,8 +2065,7 @@ namespace MS.Internal
                 delegate() { return PresentationTraceSources.HwndHostSource; },
                 delegate() { PresentationTraceSources._HwndHostSource = null; }
                 );
-
-		static AvTraceDetails _HwndHostIn3D;
+        private static AvTraceDetails _HwndHostIn3D;
 		static public AvTraceDetails HwndHostIn3D
         {
             get
@@ -2155,8 +2150,7 @@ namespace MS.Internal
                 delegate() { return PresentationTraceSources.ShellSource; },
                 delegate() { PresentationTraceSources._ShellSource = null; }
                 );
-
-		static AvTraceDetails _NotOnWindows7;
+        private static AvTraceDetails _NotOnWindows7;
 		static public AvTraceDetails NotOnWindows7
         {
             get
@@ -2170,7 +2164,7 @@ namespace MS.Internal
             }
         }
 
-		static AvTraceDetails _ExplorerTaskbarTimeout;
+        private static AvTraceDetails _ExplorerTaskbarTimeout;
 		static public AvTraceDetails ExplorerTaskbarTimeout
         {
             get
@@ -2184,7 +2178,7 @@ namespace MS.Internal
             }
         }
 
-		static AvTraceDetails _ExplorerTaskbarRetrying;
+        private static AvTraceDetails _ExplorerTaskbarRetrying;
 		static public AvTraceDetails ExplorerTaskbarRetrying
         {
             get
@@ -2198,7 +2192,7 @@ namespace MS.Internal
             }
         }
 
-		static AvTraceDetails _ExplorerTaskbarNotRunning;
+        private static AvTraceDetails _ExplorerTaskbarNotRunning;
 		static public AvTraceDetails ExplorerTaskbarNotRunning
         {
             get
@@ -2212,7 +2206,7 @@ namespace MS.Internal
             }
         }
 
-		static AvTraceDetails _NativeTaskbarError;
+        private static AvTraceDetails _NativeTaskbarError;
         static public AvTraceDetails NativeTaskbarError(params object[] args)
         {
             if ( _NativeTaskbarError == null )
@@ -2222,7 +2216,7 @@ namespace MS.Internal
             return new AvTraceFormat(_NativeTaskbarError, args);
         }
 
-		static AvTraceDetails _RejectingJumpItemsBecauseCatastrophicFailure;
+        private static AvTraceDetails _RejectingJumpItemsBecauseCatastrophicFailure;
 		static public AvTraceDetails RejectingJumpItemsBecauseCatastrophicFailure
         {
             get
@@ -2236,7 +2230,7 @@ namespace MS.Internal
             }
         }
 
-		static AvTraceDetails _RejectingJumpListCategoryBecauseNoRegisteredHandler;
+        private static AvTraceDetails _RejectingJumpListCategoryBecauseNoRegisteredHandler;
         static public AvTraceDetails RejectingJumpListCategoryBecauseNoRegisteredHandler(params object[] args)
         {
             if ( _RejectingJumpListCategoryBecauseNoRegisteredHandler == null )

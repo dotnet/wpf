@@ -25,7 +25,7 @@ namespace MS.Internal.Xaml.Parser
 
     internal class XamlScannerStack
     {
-        Stack<XamlScannerFrame> _stack;
+        private Stack<XamlScannerFrame> _stack;
 
         public XamlScannerStack()
         {

@@ -12,12 +12,12 @@ namespace MS.Internal.Xaml.Context
     // This stack has the following features:
     //  1) it recycles frames
     //  2) it is <T>, and avoids activator.createinstance with the creationDelegate
-    class XamlContextStack<T> where T : XamlFrame
+    internal class XamlContextStack<T> where T : XamlFrame
     {
         private int _depth;
-        T _currentFrame;
-        T _recycledFrame;
-        Func<T> _creationDelegate;
+        private T _currentFrame;
+        private T _recycledFrame;
+        private Func<T> _creationDelegate;
 
         public XamlContextStack(Func<T> creationDelegate)
         {

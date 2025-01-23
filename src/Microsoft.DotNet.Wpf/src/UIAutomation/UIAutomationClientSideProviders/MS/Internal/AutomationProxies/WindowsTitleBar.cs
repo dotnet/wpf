@@ -17,7 +17,7 @@ namespace MS.Internal.AutomationProxies
     // there is a win32 title bar contant for the ime button.  There really is no such thing as an ims button
     // it's bogus.  So when this code apears to by using 1 for the item for the system menu it will never
     // conflict because the ime button does not exist.
-    class WindowsTitleBar: ProxyFragment
+    internal class WindowsTitleBar: ProxyFragment
     {
         // ------------------------------------------------------
         //
@@ -234,7 +234,7 @@ namespace MS.Internal.AutomationProxies
 
         #region TitleBarButton
 
-        class TitleBarButton: ProxySimple, IInvokeProvider
+        private class TitleBarButton: ProxySimple, IInvokeProvider
         {
             //------------------------------------------------------
             //

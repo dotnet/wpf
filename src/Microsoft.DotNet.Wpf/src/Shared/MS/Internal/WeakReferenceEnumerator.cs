@@ -61,9 +61,9 @@ namespace MS.Internal
             _StrongReference = null;
         }
 
-        int _i;
-        ArrayList _List;
-        object _StrongReference;
+        private int _i;
+        private ArrayList _List;
+        private object _StrongReference;
     }
 }
 

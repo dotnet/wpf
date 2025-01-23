@@ -125,7 +125,7 @@ namespace MS.Utility
             EventProvider.Register(providerGuid);
         }
 
-        static bool IsClassicETWRegistryEnabled()
+        private static bool IsClassicETWRegistryEnabled()
         {
             string regKey = @"HKEY_CURRENT_USER\Software\Microsoft\Avalon.Graphics\";                
             return int.Equals(1, Microsoft.Win32.Registry.GetValue(regKey, "ClassicETW", 0));

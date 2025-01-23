@@ -54,6 +54,6 @@ namespace System.Windows.Controls
             return _values.IndexOf(o);
         }
 
-        List<object> _values = new List<object>();
+        private List<object> _values = new List<object>();
     }
 }

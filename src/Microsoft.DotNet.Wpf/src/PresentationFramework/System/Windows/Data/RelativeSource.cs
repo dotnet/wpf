@@ -265,10 +265,10 @@ namespace System.Windows.Data
         {
             get { return (_ancestorLevel == -1); }
         }
-#endregion private properties
+        #endregion private properties
 
-#region private methods
-        void InitializeMode(RelativeSourceMode mode)
+        #region private methods
+        private void InitializeMode(RelativeSourceMode mode)
         {
             Debug.Assert(IsUninitialized);
 

@@ -136,8 +136,8 @@ namespace System.Windows.Markup
                 return targetType;
         }
 
-                // Helper to insert line and position numbers into message, if they are present
-        void ThrowException(
+        // Helper to insert line and position numbers into message, if they are present
+        private void ThrowException(
              string id,
              int  lineNumber,
              int  linePosition)

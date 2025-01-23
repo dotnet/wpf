@@ -12,7 +12,7 @@
 // These types are aliased to match the unamanaged names used in interop
 namespace System.Windows.Media.Media3D
 {
-    abstract partial class Light : Model3D
+    public abstract partial class Light : Model3D
     {
         //------------------------------------------------------
         //

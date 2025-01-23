@@ -15,7 +15,7 @@ using System.Windows.Media.Composition;
 
 namespace System.Windows.Media.Media3D
 {
-    sealed partial class MaterialGroup : Material
+    public sealed partial class MaterialGroup : Material
     {
         //------------------------------------------------------
         //

@@ -14,7 +14,7 @@ using MS.Internal;
 
 namespace System.Windows.Media
 {
-    sealed partial class PolyBezierSegment : PathSegment
+    public sealed partial class PolyBezierSegment : PathSegment
     {
         //------------------------------------------------------
         //

@@ -14,7 +14,7 @@ using MS.Win32;
 
 namespace MS.Internal.AutomationProxies
 {
-    static class XSendMessage
+    internal static class XSendMessage
     {
         //------------------------------------------------------
         //

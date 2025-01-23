@@ -98,7 +98,7 @@ namespace System.Xaml
         // This is a HybridDictionary of Name-Object maps
         private HybridDictionary _nameMap;
 
-        IEnumerator<KeyValuePair<string, object>> GetEnumerator() => new Enumerator(_nameMap);
+        private IEnumerator<KeyValuePair<string, object>> GetEnumerator() => new Enumerator(_nameMap);
 
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 

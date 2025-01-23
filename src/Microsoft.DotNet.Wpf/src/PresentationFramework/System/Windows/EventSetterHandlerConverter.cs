@@ -15,7 +15,7 @@ namespace System.Windows.Markup
     /// </summary>
     public sealed class EventSetterHandlerConverter : TypeConverter
     {
-        static Type s_ServiceProviderContextType;
+        private static Type s_ServiceProviderContextType;
 
         /// <summary>
         ///     Whether we can convert from a given type - this class only converts from string

@@ -7,7 +7,7 @@ using MS.Internal.WindowsBase;
 
 namespace System.Windows.Baml2006
 {
-    class Baml6Assembly
+    internal class Baml6Assembly
     {
         // Information needed to resolve a BamlAssembly to a CLR Assembly
         public readonly string Name;

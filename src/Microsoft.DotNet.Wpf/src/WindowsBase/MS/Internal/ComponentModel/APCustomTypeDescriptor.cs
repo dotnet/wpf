@@ -12,7 +12,7 @@ namespace MS.Internal.ComponentModel
     ///     could just inherit from the CustomTypeDescriptor class, which does most of the forwarding
     ///     work for us, but these are allocated a lot so we want them to be structs.
     /// </summary>
-    struct APCustomTypeDescriptor : ICustomTypeDescriptor {
+    internal struct APCustomTypeDescriptor : ICustomTypeDescriptor {
         //------------------------------------------------------
         //
         //  Constructors

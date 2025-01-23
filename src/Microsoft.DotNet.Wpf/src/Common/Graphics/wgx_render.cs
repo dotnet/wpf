@@ -584,7 +584,7 @@ namespace MS.Internal
         eChildLast = 0x2
     };
 
-    enum MILResourceType
+    internal enum MILResourceType
     {
         eMILResourceVideo = 0,
         eMILCOB = 1,
@@ -594,7 +594,7 @@ namespace MS.Internal
         eMILResourceLast = 5
     };
 
-    enum MILAVInstructionType
+    internal enum MILAVInstructionType
     {
         eAVPlay = 0,
         eAVStop,
@@ -658,21 +658,21 @@ namespace MS.Internal
     [StructLayout(LayoutKind.Sequential)]
     internal struct WICBitmapPattern
     {
-        Int64 Offset;
-        UInt32 Length;
-        IntPtr Pattern;
-        IntPtr Mask;
+        private Int64 Offset;
+        private UInt32 Length;
+        private IntPtr Pattern;
+        private IntPtr Mask;
     }
 
     [StructLayout(LayoutKind.Sequential)]
     internal struct MILBitmapItem
     {
-        uint          Size;
-        IntPtr        Desc;
-        uint          DescSize;
-        IntPtr        Data;
-        uint          DataSize;
-        uint          Cookie;
+        private uint          Size;
+        private IntPtr        Desc;
+        private uint          DescSize;
+        private IntPtr        Data;
+        private uint          DataSize;
+        private uint          Cookie;
     };
 
     [StructLayout(LayoutKind.Sequential)]
@@ -680,15 +680,15 @@ namespace MS.Internal
     {
         // Size of this structure.
 
-        int nSize;
+        private int nSize;
 
         // minimum number of inputs required.
 
-        int cMinInputs;
+        private int cMinInputs;
 
         // maximum number of inputs that will be processed.
 
-        int cMaxInputs;
+        private int cMaxInputs;
 
         // Set to false requires all the inputs and the
         // output to have the same pixel format determined
@@ -696,23 +696,23 @@ namespace MS.Internal
         // index. Set to true allows different input/output
         // pixel formats.
 
-        [MarshalAs(UnmanagedType.Bool)] bool fSupportMultiFormat;
+        [MarshalAs(UnmanagedType.Bool)] private bool fSupportMultiFormat;
 
         // Supports auxilliary data out.
 
-        [MarshalAs(UnmanagedType.Bool)] bool fAuxiliaryData;
+        [MarshalAs(UnmanagedType.Bool)] private bool fAuxiliaryData;
 
         // TRUE if the effect supports multiple output
 
-        [MarshalAs(UnmanagedType.Bool)] bool fSupportMultiOutput;
+        [MarshalAs(UnmanagedType.Bool)] private bool fSupportMultiOutput;
 
         // TRUE if the effect can provide output band by band
 
-        [MarshalAs(UnmanagedType.Bool)] bool fSupportBanding;
+        [MarshalAs(UnmanagedType.Bool)] private bool fSupportBanding;
 
         // TRUE if the effect supports multi-resolution
 
-        [MarshalAs(UnmanagedType.Bool)] bool fSupportMultiResolution;
+        [MarshalAs(UnmanagedType.Bool)] private bool fSupportMultiResolution;
 };
 
     [StructLayout(LayoutKind.Sequential)]

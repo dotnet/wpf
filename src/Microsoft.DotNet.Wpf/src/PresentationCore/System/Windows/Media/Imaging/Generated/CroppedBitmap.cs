@@ -13,7 +13,7 @@
 
 namespace System.Windows.Media.Imaging
 {
-    sealed partial class CroppedBitmap : BitmapSource
+    public sealed partial class CroppedBitmap : BitmapSource
     {
         //------------------------------------------------------
         //

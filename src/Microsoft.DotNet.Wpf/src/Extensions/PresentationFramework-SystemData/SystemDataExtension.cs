@@ -220,11 +220,11 @@ namespace MS.Internal
                 dataTable.Initialized += OnInitialized;
             }
 
-            void OnInitialized(object sender, EventArgs e)
+            private void OnInitialized(object sender, EventArgs e)
             {
             }
 
-            object _target;
+            private object _target;
         }
 
         private class DataRowViewToRelatedViewLink
@@ -235,15 +235,15 @@ namespace MS.Internal
                 dataRowView.PropertyChanged += OnPropertyChanged;
             }
 
-            void OnPropertyChanged(object sender, PropertyChangedEventArgs e)
+            private void OnPropertyChanged(object sender, PropertyChangedEventArgs e)
             {
             }
 
-            object _target;
+            private object _target;
         }
 
-        static Type s_DataTablePropertyDescriptorType;
-        static Type s_DataRelationPropertyDescriptorType;
+        private static Type s_DataTablePropertyDescriptorType;
+        private static Type s_DataRelationPropertyDescriptorType;
     }
 }
 

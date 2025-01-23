@@ -51,7 +51,7 @@ using System.Windows.Automation;
 
 namespace MS.Internal.Automation
 {
-    static class CacheHelper
+    internal static class CacheHelper
     {
         //------------------------------------------------------
         //

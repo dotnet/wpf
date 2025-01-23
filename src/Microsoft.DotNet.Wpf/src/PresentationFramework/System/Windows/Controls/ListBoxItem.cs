@@ -394,7 +394,7 @@ namespace System.Windows.Controls
 
         #region Private Fields
 
-        DispatcherOperation parentNotifyDraggedOperation = null;
+        private DispatcherOperation parentNotifyDraggedOperation = null;
 
         #endregion
 

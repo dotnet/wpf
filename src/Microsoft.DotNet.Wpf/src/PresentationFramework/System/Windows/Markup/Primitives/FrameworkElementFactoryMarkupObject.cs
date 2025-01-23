@@ -281,8 +281,8 @@ namespace System.Windows.Markup.Primitives
             get { return _factory; }
         }
 
-        FrameworkElementFactoryMarkupObject _item;
-        FrameworkElementFactory _factory;
+        private FrameworkElementFactoryMarkupObject _item;
+        private FrameworkElementFactory _factory;
     }
 
     /// <summary>
@@ -350,7 +350,7 @@ namespace System.Windows.Markup.Primitives
             get { return _factory.Text; }
         }
 
-        FrameworkElementFactoryMarkupObject _item;
-        FrameworkElementFactory _factory;
+        private FrameworkElementFactoryMarkupObject _item;
+        private FrameworkElementFactory _factory;
     }
 }

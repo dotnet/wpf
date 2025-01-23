@@ -12,7 +12,7 @@
 // These types are aliased to match the unamanaged names used in interop
 namespace System.Windows.Media
 {
-    sealed partial class QuadraticBezierSegment : PathSegment
+    public sealed partial class QuadraticBezierSegment : PathSegment
     {
         //------------------------------------------------------
         //

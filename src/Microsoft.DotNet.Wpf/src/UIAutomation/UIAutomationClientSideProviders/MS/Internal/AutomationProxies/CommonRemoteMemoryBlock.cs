@@ -21,7 +21,7 @@ using MS.Win32;
 namespace MS.Internal.AutomationProxies
 {
     // Class to allocate shared memory between process.
-    class RemoteMemoryBlock : SafeHandleZeroOrMinusOneIsInvalid
+    internal class RemoteMemoryBlock : SafeHandleZeroOrMinusOneIsInvalid
     {
         // ------------------------------------------------------
         //

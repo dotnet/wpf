@@ -14,7 +14,7 @@ using MS.Internal;
 
 namespace System.Windows.Media
 {
-    abstract partial class GradientBrush : Brush
+    public abstract partial class GradientBrush : Brush
     {
         //------------------------------------------------------
         //

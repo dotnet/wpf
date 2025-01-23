@@ -12,7 +12,7 @@ using System.Windows.Automation.Provider;
 
 namespace MS.Internal.AutomationProxies
 {
-    class WindowsNonControl: ProxyHwnd
+    internal class WindowsNonControl: ProxyHwnd
     {
         // ------------------------------------------------------
         //
@@ -22,7 +22,7 @@ namespace MS.Internal.AutomationProxies
 
         #region Constructors
 
-        WindowsNonControl(IntPtr hwnd, ProxyFragment parent, int item)
+        private WindowsNonControl(IntPtr hwnd, ProxyFragment parent, int item)
             : base(hwnd, parent, item)
         {
             _fIsContent = false;

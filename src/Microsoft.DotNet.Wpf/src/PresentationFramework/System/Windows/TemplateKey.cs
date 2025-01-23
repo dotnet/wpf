@@ -171,9 +171,9 @@ namespace System.Windows
             return result;
         }
 
-        object _dataType;
-        TemplateType _templateType;
-        bool _initializing;
+        private object _dataType;
+        private TemplateType _templateType;
+        private bool _initializing;
     }
 }
 

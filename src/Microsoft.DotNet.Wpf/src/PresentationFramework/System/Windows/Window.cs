@@ -3746,7 +3746,7 @@ namespace System.Windows
             }
         }
 
-        IntPtr GetCurrentMonitorFromMousePosition()
+        private IntPtr GetCurrentMonitorFromMousePosition()
         {
             // center on the screen on which the mouse is on
             NativeMethods.POINT pt = default;
@@ -7133,7 +7133,7 @@ namespace System.Windows
         /// <summary>
         ///     Method to compensate a point for PanningFeedback.
         /// </summary>
-        Point CompensateForPanningFeedback(Point point)
+        private Point CompensateForPanningFeedback(Point point)
         {
             if (!double.IsNaN(_prePanningLocation.X) && !double.IsNaN(_prePanningLocation.Y) && (_swh != null))
             {
@@ -7337,7 +7337,7 @@ namespace System.Windows
         // the mouse of over the resizegrip control
         private Control                 _resizeGripControl;
 
-        Point _prePanningLocation = new Point(double.NaN, double.NaN);
+        private Point _prePanningLocation = new Point(double.NaN, double.NaN);
 
         // static objects for Events
         private static readonly object EVENT_SOURCEINITIALIZED = new object();
@@ -7376,7 +7376,7 @@ namespace System.Windows
                                           new FrameworkPropertyMetadata((IWindowService)null,
                                           FrameworkPropertyMetadataOptions.Inherits | FrameworkPropertyMetadataOptions.OverridesInheritanceBehavior));
 
-        DispatcherOperation         _contentRenderedCallback;
+        private DispatcherOperation _contentRenderedCallback;
 
         private WeakReference _currentPanningTarget;
 

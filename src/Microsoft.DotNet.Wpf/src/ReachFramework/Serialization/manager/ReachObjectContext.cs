@@ -371,8 +371,10 @@ namespace System.Windows.Xps.Serialization
         bool                                 _isReadOnlyValue;
         private
         SerializablePropertyContext          _backingPropertyContext;
+        private
         static
         Stack                                _recycableSerializableObjectContexts;
+        private
         static
         object                               _stackLock = new Object();
 

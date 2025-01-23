@@ -14,7 +14,7 @@ using System.Windows.Media.Composition;
 
 namespace System.Windows.Media
 {
-    sealed partial class LineGeometry : Geometry
+    public sealed partial class LineGeometry : Geometry
     {
         //------------------------------------------------------
         //

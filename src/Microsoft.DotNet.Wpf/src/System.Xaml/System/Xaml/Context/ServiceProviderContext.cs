@@ -24,7 +24,7 @@ namespace MS.Internal.Xaml
                                   IDestinationTypeProvider,
                                   IXamlLineInfo
     {
-        ObjectWriterContext _xamlContext;
+        private ObjectWriterContext _xamlContext;
 
         public ServiceProviderContext(ObjectWriterContext context)
         {

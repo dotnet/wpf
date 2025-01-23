@@ -534,7 +534,7 @@ namespace System.Windows.Xps.Packaging
         /// Safe: Does not expose critical resources to the caller
         /// </SecurityNote>
         [SecuritySafeCritical]
-        void ReleaseFontResource(Uri uri)
+        private void ReleaseFontResource(Uri uri)
         {
             IXpsOMFontResourceCollection fontCollection = _xpsPartResources.GetFontResources();
             IOpcPartUri partUri = GenerateIOpcPartUri(uri);

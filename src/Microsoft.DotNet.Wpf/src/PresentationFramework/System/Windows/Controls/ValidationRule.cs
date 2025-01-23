@@ -90,8 +90,8 @@ namespace System.Windows.Controls
             set { _validatesOnTargetUpdated = value; }
         }
 
-        ValidationStep  _validationStep;
-        bool            _validatesOnTargetUpdated;
+        private ValidationStep  _validationStep;
+        private bool            _validatesOnTargetUpdated;
     }
 }
 

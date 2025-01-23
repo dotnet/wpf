@@ -33,6 +33,6 @@ namespace MS.Internal
             return _name;
         }
 
-        string _name;
+        private string _name;
     }
 }

@@ -2241,7 +2241,7 @@ namespace System.Windows.Interop
             }
         }
 
-        IKeyboardInputSink ChildSinkWithFocus
+        private IKeyboardInputSink ChildSinkWithFocus
         {
             get
             {
@@ -2662,7 +2662,7 @@ namespace System.Windows.Interop
                    value == SizeToContent.WidthAndHeight;
         }
 
-        class ThreadDataBlob
+        private class ThreadDataBlob
         {
             public int TranslateAcceleratorCallDepth;
         }
@@ -2804,9 +2804,9 @@ namespace System.Windows.Interop
 
         private HwndAppCommandInputProvider _appCommand;
 
-        WeakEventDispatcherShutdown _weakShutdownHandler;
-        WeakEventPreprocessMessage _weakPreprocessMessageHandler;
-        WeakEventPreprocessMessage _weakMenuModeMessageHandler;
+        private WeakEventDispatcherShutdown _weakShutdownHandler;
+        private WeakEventPreprocessMessage _weakPreprocessMessageHandler;
+        private WeakEventPreprocessMessage _weakMenuModeMessageHandler;
 
         private static System.LocalDataStoreSlot _threadSlot;
 

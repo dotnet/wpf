@@ -30,7 +30,7 @@ namespace MS.Internal.AutomationProxies
     //     Call the delegate associated with the hwnd to create a raw element.
     //     Call the automation code to queue a new notification for the client.
     //     
-    static class WinEventTracker
+    internal static class WinEventTracker
     {
         #region Internal Methods
 
@@ -595,9 +595,9 @@ namespace MS.Internal.AutomationProxies
         private static Hashtable[] _ahp = new Hashtable[EventIdToIndex.Length];
 
         private static uint _globalEventKey = 0;
-        
+
         // Parameters needed to send a notification to a client
-        struct EventCreateParams
+        private struct EventCreateParams
         {
             // hwnd requesting a notification
             internal IntPtr _hwnd;

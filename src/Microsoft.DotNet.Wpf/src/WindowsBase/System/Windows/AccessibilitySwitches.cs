@@ -38,7 +38,7 @@ namespace System.Windows
         /// <summary>
         /// Guards against multiple verifications of the switch values.
         /// </summary>
-        static int s_SwitchesVerified = 0;
+        private static int s_SwitchesVerified = 0;
 
         #endregion
 

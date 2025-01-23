@@ -546,7 +546,7 @@ namespace System.Windows.Controls
             DefaultValue = 0,
         }
 
-        BoolField _tabItemBoolFieldStore = BoolField.DefaultValue;
+        private BoolField _tabItemBoolFieldStore = BoolField.DefaultValue;
 
         #endregion Private Fields
 

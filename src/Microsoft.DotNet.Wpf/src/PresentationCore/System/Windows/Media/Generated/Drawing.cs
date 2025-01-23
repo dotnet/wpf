@@ -15,7 +15,7 @@ using System.Windows.Media.Composition;
 
 namespace System.Windows.Media
 {
-    abstract partial class Drawing : Animatable, DUCE.IResource
+    public abstract partial class Drawing : Animatable, DUCE.IResource
     {
         //------------------------------------------------------
         //

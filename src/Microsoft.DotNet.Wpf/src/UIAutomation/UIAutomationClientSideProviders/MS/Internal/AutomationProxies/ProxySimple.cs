@@ -41,7 +41,7 @@ namespace MS.Internal.AutomationProxies
     //
     // The distinction between Proxy siblings is made through an ID (called _item).
     // The underlying hwnd is kept, as the proxy parent and a flag to _fSubtree.
-    class ProxySimple : IRawElementProviderSimple, IRawElementProviderFragment
+    internal class ProxySimple : IRawElementProviderSimple, IRawElementProviderFragment
     {
         // ------------------------------------------------------
         //

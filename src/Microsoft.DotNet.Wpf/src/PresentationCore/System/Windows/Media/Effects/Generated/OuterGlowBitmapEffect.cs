@@ -12,7 +12,7 @@
 // These types are aliased to match the unamanaged names used in interop
 namespace System.Windows.Media.Effects
 {
-    sealed partial class OuterGlowBitmapEffect : BitmapEffect
+    public sealed partial class OuterGlowBitmapEffect : BitmapEffect
     {
         //------------------------------------------------------
         //

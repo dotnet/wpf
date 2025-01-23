@@ -16,7 +16,7 @@ using System.Windows.Media.Animation;
 
 namespace System.Windows.Media
 {
-    sealed partial class PathFigure : Animatable
+    public sealed partial class PathFigure : Animatable
     {
         //------------------------------------------------------
         //

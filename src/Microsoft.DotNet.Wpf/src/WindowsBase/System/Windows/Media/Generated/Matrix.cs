@@ -20,7 +20,7 @@ namespace System.Windows.Media
     [Serializable]
     [TypeConverter(typeof(MatrixConverter))]
     [ValueSerializer(typeof(MatrixValueSerializer))] // Used by MarkupWriter
-    partial struct Matrix : IFormattable
+    public partial struct Matrix : IFormattable
     {
         //------------------------------------------------------
         //

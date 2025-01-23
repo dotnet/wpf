@@ -14,7 +14,7 @@ using MS.Internal;
 
 namespace System.Windows.Media.Effects
 {
-    sealed partial class BitmapEffectGroup : BitmapEffect
+    public sealed partial class BitmapEffectGroup : BitmapEffect
     {
         //------------------------------------------------------
         //

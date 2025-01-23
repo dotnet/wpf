@@ -14,7 +14,7 @@ using System.Windows.Media.Composition;
 
 namespace System.Windows.Media.Media3D
 {
-    sealed partial class EmissiveMaterial : Material
+    public sealed partial class EmissiveMaterial : Material
     {
         //------------------------------------------------------
         //

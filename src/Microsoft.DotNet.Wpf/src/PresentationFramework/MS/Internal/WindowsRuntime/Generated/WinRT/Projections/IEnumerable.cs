@@ -163,7 +163,8 @@ namespace MS.Internal.WindowsRuntime.ABI.System.Collections.Generic
             _obj = obj;
             _FromIterable = new FromAbiHelper(this);
         }
-        FromAbiHelper _FromIterable;
+
+        private FromAbiHelper _FromIterable;
 
         unsafe global::MS.Internal.WindowsRuntime.Windows.Foundation.Collections.IIterator<T> global::MS.Internal.WindowsRuntime.Windows.Foundation.Collections.IIterable<T>.First()
         {
@@ -569,7 +570,8 @@ namespace MS.Internal.WindowsRuntime.ABI.System.Collections.Generic
             _obj = obj;
             _FromIterator = new FromAbiHelper(this);
         }
-        FromAbiHelper _FromIterator;
+
+        private FromAbiHelper _FromIterator;
 
         public unsafe bool _MoveNext()
         {

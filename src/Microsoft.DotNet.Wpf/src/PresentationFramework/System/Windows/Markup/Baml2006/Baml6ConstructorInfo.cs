@@ -4,7 +4,7 @@
 
 namespace System.Windows.Baml2006
 {
-    struct Baml6ConstructorInfo
+    internal struct Baml6ConstructorInfo
     {
         public Baml6ConstructorInfo(List<Type> types, Func<Object[], object> ctor)
         {
@@ -12,8 +12,8 @@ namespace System.Windows.Baml2006
             _constructor = ctor;
         }
 
-        List<Type> _types;
-        Func<Object[], object> _constructor;
+        private List<Type> _types;
+        private Func<Object[], object> _constructor;
 
         public List<Type> Types { get { return _types; } }
         public Func<Object[], object> Constructor { get { return _constructor; } }

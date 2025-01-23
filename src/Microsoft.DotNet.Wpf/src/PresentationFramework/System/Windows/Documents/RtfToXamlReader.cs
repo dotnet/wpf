@@ -3795,7 +3795,7 @@ namespace System.Windows.Documents
 
         #region Private Fields
 
-        Hashtable _fontMappings;
+        private Hashtable _fontMappings;
 
         #endregion Private Fields
     }

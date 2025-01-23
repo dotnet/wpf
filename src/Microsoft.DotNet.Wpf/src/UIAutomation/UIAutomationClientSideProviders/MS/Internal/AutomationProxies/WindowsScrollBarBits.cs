@@ -18,7 +18,7 @@ using MS.Win32;
 namespace MS.Internal.AutomationProxies
 {
     // Proxy for the up, down, large increment, large decrement and thumb piece of a scrollbar
-    class WindowsScrollBarBits: ProxySimple, IInvokeProvider
+    internal class WindowsScrollBarBits: ProxySimple, IInvokeProvider
     {
         // ------------------------------------------------------
         //

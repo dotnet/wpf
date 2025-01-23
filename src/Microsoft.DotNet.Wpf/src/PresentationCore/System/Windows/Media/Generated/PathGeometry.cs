@@ -16,7 +16,7 @@ using System.Windows.Media.Composition;
 
 namespace System.Windows.Media
 {
-    sealed partial class PathGeometry : Geometry
+    public sealed partial class PathGeometry : Geometry
     {
         //------------------------------------------------------
         //

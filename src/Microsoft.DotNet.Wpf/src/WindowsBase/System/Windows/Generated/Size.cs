@@ -20,7 +20,7 @@ namespace System.Windows
     [Serializable]
     [TypeConverter(typeof(SizeConverter))]
     [ValueSerializer(typeof(SizeValueSerializer))] // Used by MarkupWriter
-    partial struct Size : IFormattable
+    public partial struct Size : IFormattable
     {
         //------------------------------------------------------
         //

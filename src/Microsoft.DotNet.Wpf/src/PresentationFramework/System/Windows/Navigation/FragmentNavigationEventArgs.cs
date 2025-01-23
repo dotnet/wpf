@@ -86,7 +86,7 @@ namespace System.Windows.Navigation
 
         private string _fragment;
         private bool _handled;
-        object _navigator;
+        private object _navigator;
 
         #endregion Private Fields
     }

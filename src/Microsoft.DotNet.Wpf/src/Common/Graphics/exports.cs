@@ -323,13 +323,13 @@ namespace System.Windows.Media.Composition
             /// <summary>
             /// Primary channel.
             /// </summary>
-            IntPtr _hChannel;
+            private IntPtr _hChannel;
 
             private Channel _referenceChannel;
             private bool _isSynchronous;
             private bool _isOutOfBandChannel;
 
-            IntPtr _pConnection;
+            private IntPtr _pConnection;
 
             /// <summary>
             /// Creates a channel and associates it with channel group (partition).

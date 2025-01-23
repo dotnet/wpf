@@ -12,9 +12,12 @@ namespace MS.Internal.Data
     {
         internal LiveShapingBlock() : base() { }
         internal LiveShapingBlock(bool b) : base(b) { }
-        LiveShapingBlock ParentBlock { get { return Parent as LiveShapingBlock; } }
-        LiveShapingBlock LeftChildBlock { get { return (LiveShapingBlock)LeftChild; } }
-        LiveShapingBlock RightChildBlock { get { return (LiveShapingBlock)RightChild; } }
+
+        private LiveShapingBlock ParentBlock { get { return Parent as LiveShapingBlock; } }
+
+        private LiveShapingBlock LeftChildBlock { get { return (LiveShapingBlock)LeftChild; } }
+
+        private LiveShapingBlock RightChildBlock { get { return (LiveShapingBlock)RightChild; } }
 
         internal LiveShapingList List
         {
@@ -175,7 +178,7 @@ namespace MS.Internal.Data
         }
 
         // binary search that ignores dirty items
-        RBFinger<LiveShapingItem> LocalSearch(LiveShapingItem item, int left, int right, Comparison<LiveShapingItem> comparison)
+        private RBFinger<LiveShapingItem> LocalSearch(LiveShapingItem item, int left, int right, Comparison<LiveShapingItem> comparison)
         {
             int k;
             while (right - left > BinarySearchThreshold)
@@ -266,7 +269,7 @@ namespace MS.Internal.Data
 
         // find the item in the tree to my left.  If it's larger than the nearest clean
         // neighbor, return a finger to the given offset within this node
-        RBFinger<LiveShapingItem> SearchLeft(LiveShapingItem item, int offset, Comparison<LiveShapingItem> comparison)
+        private RBFinger<LiveShapingItem> SearchLeft(LiveShapingItem item, int offset, Comparison<LiveShapingItem> comparison)
         {
             LiveShapingBlock foundBlock = this;
 
@@ -347,7 +350,7 @@ namespace MS.Internal.Data
 
         // find the item in the tree to my right.  If it's smaller than the nearest clean
         // neighbor, return a finger to the given offset within this node
-        RBFinger<LiveShapingItem> SearchRight(LiveShapingItem item, int offset, Comparison<LiveShapingItem> comparison)
+        private RBFinger<LiveShapingItem> SearchRight(LiveShapingItem item, int offset, Comparison<LiveShapingItem> comparison)
         {
             LiveShapingBlock foundBlock = this;
 
@@ -426,7 +429,7 @@ namespace MS.Internal.Data
             return new RBFinger<LiveShapingItem>() { Node = foundBlock, Offset = offset, Index = baseIndex + offset };
         }
 
-        void GetFirstAndLastCleanItems(out int first, out int last, out int size)
+        private void GetFirstAndLastCleanItems(out int first, out int last, out int size)
         {
             size = Size;
             for (first = 0; first < size; ++first)

@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -89,8 +89,7 @@ namespace System.Windows.Controls
            {
                // When we are given a relative Uri path, expand to an absolute Uri by resolving
                // it against the Application's base Uri.  This would typically return a Pack Uri.
-               m_lastRequestedAbsoluteUri =
-                   BaseUriHelper.GetResolvedUri(BaseUriHelper.BaseUri, newValue);
+               m_lastRequestedAbsoluteUri = BaseUriHelper.GetResolvedUri(BaseUriHelper.PackAppBaseUri, newValue);
            }
 
            // Invalidate items that depend on the Source uri

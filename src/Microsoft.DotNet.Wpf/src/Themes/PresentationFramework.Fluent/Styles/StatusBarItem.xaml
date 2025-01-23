@@ -31,4 +31,5 @@
             </Setter.Value>
         </Setter>
     </Style>
+    <Style BasedOn="{StaticResource DefaultStatusBarItemStyle}" TargetType="{x:Type StatusBarItem}" />
 </ResourceDictionary>

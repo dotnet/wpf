@@ -32,9 +32,8 @@ namespace System.Windows.Media
         ///</summary>
         private static Color FromProfile(Uri profileUri)
         {
-            Color color = new();
+            Color color = new() { context = new ColorContext(profileUri) };
 
-            color.context = new ColorContext(profileUri);
             color.scRgbColor.a = 1.0f;
             color.scRgbColor.r = 0.0f;
             color.scRgbColor.g = 0.0f;

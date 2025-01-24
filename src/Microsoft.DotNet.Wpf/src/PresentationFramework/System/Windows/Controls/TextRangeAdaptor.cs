@@ -355,7 +355,7 @@ namespace MS.Internal.Automation
                     },
                     delegate(object val1, object val2) { return (double)val1 == (double)val2; })
                 );
-            // OutlineStyles 
+            // OutlineStyles
             _textPatternAttributes.Add(
                 TextPatternIdentifiers.OutlineStylesAttribute,
                 new TextAttributeHelper(
@@ -468,12 +468,12 @@ namespace MS.Internal.Automation
             _end = end.CreatePointer();
             _textPeer = textPeer;
         }
-        #endregion Constructors        
+        #endregion Constructors
 
         #region Internal methods
-        
+
         /// <summary>
-        /// This wrapper is to cover up a shortcoming in MoveToInsertionPosition code. 
+        /// This wrapper is to cover up a shortcoming in MoveToInsertionPosition code.
         /// If the position is inside a Hyperlink, it is being moved out of the hyperlink and to the previous
         /// insertion position which can be on the previous line (or unit) and this is creating problems
         /// This is a temporary solution until we find a better solution to handle the case
@@ -489,7 +489,7 @@ namespace MS.Internal.Automation
             return false;
         }
         #endregion Internal methods
-        
+
 
 
 
@@ -547,7 +547,7 @@ namespace MS.Internal.Automation
                     break;
 
                 case TextUnit.Format:
-                    // Formatting changes can be introduced by elements. Hence it is fair to 
+                    // Formatting changes can be introduced by elements. Hence it is fair to
                     // assume that formatting boundaries are defined by non-text context.
 
                     if (expandStart)
@@ -751,7 +751,7 @@ namespace MS.Internal.Automation
                     break;
 
                 case TextUnit.Format:
-                    // Formatting changes can be introduced by elements. Hence it is fair to 
+                    // Formatting changes can be introduced by elements. Hence it is fair to
                     // assume that formatting boundaries are defined by non-text context.
                     while (position.GetPointerContext(direction) == TextPointerContext.Text)
                     {
@@ -917,9 +917,9 @@ namespace MS.Internal.Automation
 
                         if (textSegments != null && textSegments.Count > 0)
                         {
-                            //When comparing, we need to take into account if the pointer is not right at 
+                            //When comparing, we need to take into account if the pointer is not right at
                             //the end of the page (or beginning) because of normalization
-                            
+
                             if (direction == LogicalDirection.Forward)
                             {
                                 while (position.CompareTo(textSegments[textSegments.Count - 1].End) != 0)
@@ -985,7 +985,7 @@ namespace MS.Internal.Automation
         /// </summary>
         /// <param name="position">The position to move</param>
         /// <param name="unit">Text units to step by</param>
-        /// <param name="count">Number of units to step over. Also specifies the direction of moving: 
+        /// <param name="count">Number of units to step over. Also specifies the direction of moving:
         /// forward if positive, backward otherwise</param>
         /// <returns>The actual number of units the position was moved over</returns>
         private int MovePositionByUnits(ITextPointer position, TextUnit unit, int count)
@@ -1022,7 +1022,7 @@ namespace MS.Internal.Automation
                     break;
 
                 case TextUnit.Format:
-                    // Formatting changes can be introduced by elements. Hence it is fair to 
+                    // Formatting changes can be introduced by elements. Hence it is fair to
                     // assume that formatting boundaries are defined by non-text context.
                     while (moved < absCount)
                     {
@@ -1095,7 +1095,7 @@ namespace MS.Internal.Automation
                         }
 
                         moved = position.MoveToLineBoundary(count);
-                        
+
                         MoveToInsertionPosition(position, LogicalDirection.Forward);
 
                         if (moved < 0)
@@ -1103,7 +1103,7 @@ namespace MS.Internal.Automation
                             moved = -moved; // Will be reversed below.
                         }
                     }
-                    break; 
+                    break;
 
                 case TextUnit.Paragraph:
                     // Utilize TextRange logic to determine paragraph boundaries.
@@ -1339,11 +1339,11 @@ namespace MS.Internal.Automation
                 {
                     if (lineStyle == TextDecorationLineStyle.None)
                     {
-                        // There's a whole bunch of all kinds of custom styles defined in TextDecorationLineStyle 
-                        // including WordsOnly, Double, Wavy, DoubleWavy, ThickWavy, which we can not determine from 
-                        // TextDecoration anyway. Hence, it seems would be too much bang for a buck if we try 
-                        // to guess out the other dozen by analyzing TextDecoration.Pen. Let's keep it simple 
-                        // and make difference only between solid and dashed lines. 
+                        // There's a whole bunch of all kinds of custom styles defined in TextDecorationLineStyle
+                        // including WordsOnly, Double, Wavy, DoubleWavy, ThickWavy, which we can not determine from
+                        // TextDecoration anyway. Hence, it seems would be too much bang for a buck if we try
+                        // to guess out the other dozen by analyzing TextDecoration.Pen. Let's keep it simple
+                        // and make difference only between solid and dashed lines.
                         if (decor.Pen != null)
                         {
                             lineStyle = (decor.Pen.DashStyle.Dashes.Count > 1) ? TextDecorationLineStyle.Dash : TextDecorationLineStyle.Single;
@@ -1434,8 +1434,8 @@ namespace MS.Internal.Automation
         }
 
         /// <summary>
-        /// Helper function to check if given position is at word boundary. TextPointerBase.IsAtWordBoundary 
-        /// cannot be used for not normalized positions, because it will always return TRUE, but in fact such 
+        /// Helper function to check if given position is at word boundary. TextPointerBase.IsAtWordBoundary
+        /// cannot be used for not normalized positions, because it will always return TRUE, but in fact such
         /// position is not in world boundary.
         /// </summary>
         private static bool IsAtWordBoundary(ITextPointer position)
@@ -1449,7 +1449,7 @@ namespace MS.Internal.Automation
         }
 
         /// <summary>
-        /// Helper function to move given position to word boundary. TextPointerBase.MoveToNextWordBoundary 
+        /// Helper function to move given position to word boundary. TextPointerBase.MoveToNextWordBoundary
         /// cannot be used directly, because it does not modify LogicalDirection. Because of that, IsAtWordBoundary
         /// for just moved positions may return FALSE.
         /// </summary>
@@ -1492,7 +1492,7 @@ namespace MS.Internal.Automation
         {
             MoveToInsertionPosition(_start, _start.LogicalDirection);
             MoveToInsertionPosition(_end, _end.LogicalDirection);
-            
+
             // If start passes end, move the entire range to the start position.
             if (_start.CompareTo(_end) > 0)
             {
@@ -1542,7 +1542,7 @@ namespace MS.Internal.Automation
         #region Private Types
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         private class TextAttributeHelper
         {
@@ -1584,7 +1584,7 @@ namespace MS.Internal.Automation
         /// <summary>
         /// Compares this range with another range.
         /// </summary>
-        /// <param name="range">A range to compare. 
+        /// <param name="range">A range to compare.
         /// The range must have come from the same text provider or an InvalidArgumentException will be thrown.</param>
         /// <returns>true if both ranges span the same text.</returns>
         bool ITextRangeProvider.Compare(ITextRangeProvider range)
@@ -1606,8 +1606,8 @@ namespace MS.Internal.Automation
         /// <param name="targetRange">The range with the other endpoint to compare.
         /// The range must have come from the same text provider or an InvalidArgumentException will be thrown.</param>
         /// <param name="targetEndpoint">The endpoint on the other range to compare.</param>
-        /// <returns>Returns &lt;0 if this endpoint occurs earlier in the text than the target endpoint. 
-        /// Returns 0 if this endpoint is at the same location as the target endpoint. 
+        /// <returns>Returns &lt;0 if this endpoint occurs earlier in the text than the target endpoint.
+        /// Returns 0 if this endpoint is at the same location as the target endpoint.
         /// Returns &gt;0 if this endpoint occurs later in the text than the target endpoint.</returns>
         int ITextRangeProvider.CompareEndpoints(TextPatternRangeEndpoint endpoint, ITextRangeProvider targetRange, TextPatternRangeEndpoint targetEndpoint)
         {
@@ -1633,7 +1633,7 @@ namespace MS.Internal.Automation
         {
             Normalize();
 
-            // TextPattern spec update: End EndPoint moves to the end of the same TextUnit that 
+            // TextPattern spec update: End EndPoint moves to the end of the same TextUnit that
             // Start EndPoint is within (whether it was within that unit originally or not).
             // To support this scenario always move _end to the next position after _start.
             _end.MoveToPosition(_start);
@@ -1674,7 +1674,7 @@ namespace MS.Internal.Automation
                 ITextPointer stop = _start;
                 ITextPointer position = _end.CreatePointer(LogicalDirection.Backward);
 
-                // Go backward from the range end position until we find a position that 
+                // Go backward from the range end position until we find a position that
                 // has our attribute or we hit the start position of the search range.
                 attrStart = stop;
                 while (position.CompareTo(stop) > 0)
@@ -1705,7 +1705,7 @@ namespace MS.Internal.Automation
                 ITextPointer stop = _end;
                 ITextPointer position = _start.CreatePointer(LogicalDirection.Forward);
 
-                // Go backward from the range end position until we find a position that 
+                // Go backward from the range end position until we find a position that
                 // has our attribute or we hit the start position of the search range.
                 attrEnd = stop;
                 while (position.CompareTo(stop) < 0)
@@ -1784,13 +1784,13 @@ namespace MS.Internal.Automation
         /// Retrieves the value of a text attribute over the entire range.
         /// </summary>
         /// <param name="attributeId">The text attribute.</param>
-        /// <returns>The value of the attribute across the range. 
+        /// <returns>The value of the attribute across the range.
         /// If the attribute's value varies over the range then the value is TextPattern.MixedAttributeValue</returns>
         object ITextRangeProvider.GetAttributeValue(int attributeId)
         {
             AutomationTextAttribute attribute = AutomationTextAttribute.LookupById(attributeId);
 
-            
+
             // In Windows 8, a new text attribute was introduced that WPF does not have any reference for
             // this caused WPF to throw an ArgumentException.  This code path was strange as we already can
             // return NotSupported, which is a valid response.  So change this to no longer throw.
@@ -1813,9 +1813,10 @@ namespace MS.Internal.Automation
         /// This will not return null, but may return an empty array.</returns>
         double[] ITextRangeProvider.GetBoundingRectangles()
         {
+            Rect[] rects = _textAdaptor.GetBoundingRectangles(_start, _end, true, true);
+
             Normalize();
 
-            Rect[] rects = _textAdaptor.GetBoundingRectangles(_start, _end, true, true);
             double[] asDoubles = new double[rects.Length * 4];
             for (int i = 0; i < rects.Length; i++)
             {
@@ -1866,18 +1867,18 @@ namespace MS.Internal.Automation
         /// <summary>
         /// Moves the range the specified number of units in the text.  Note that the text is not altered.  Instead the
         /// range spans a different part of the text.
-        /// If the range is degenerate, this method tries to move the insertion point count units.  If the range is nondegenerate 
-        /// and count is greater than zero, this method collapses the range at its end point, moves the resulting range forward 
-        /// to a unit boundary (if it is not already at one), and then tries to move count - 1 units forward. If the range is 
-        /// nondegenerate and count is less than zero, this method collapses the range at the starting point, moves the resulting 
-        /// range backward to a unit boundary (if it isn't already at one), and then tries to move |count| - 1 units backward. 
-        /// Thus, in both cases, collapsing a nondegenerate range, whether or not moving to the start or end of the unit following 
+        /// If the range is degenerate, this method tries to move the insertion point count units.  If the range is nondegenerate
+        /// and count is greater than zero, this method collapses the range at its end point, moves the resulting range forward
+        /// to a unit boundary (if it is not already at one), and then tries to move count - 1 units forward. If the range is
+        /// nondegenerate and count is less than zero, this method collapses the range at the starting point, moves the resulting
+        /// range backward to a unit boundary (if it isn't already at one), and then tries to move |count| - 1 units backward.
+        /// Thus, in both cases, collapsing a nondegenerate range, whether or not moving to the start or end of the unit following
         /// the collapse, counts as a unit.
         /// </summary>
         /// <param name="unit">The textual unit for moving.</param>
-        /// <param name="count">The number of units to move.  A positive count moves the range forward.  
+        /// <param name="count">The number of units to move.  A positive count moves the range forward.
         /// A negative count moves backward. A count of 0 has no effect.</param>
-        /// <returns>The number of units actually moved, which can be less than the number requested if 
+        /// <returns>The number of units actually moved, which can be less than the number requested if
         /// moving the range runs into the beginning or end of the document.</returns>
         int ITextRangeProvider.Move(TextUnit unit, int count)
         {
@@ -1910,7 +1911,7 @@ namespace MS.Internal.Automation
                     {
                         _end.MoveToNextInsertionPosition(LogicalDirection.Forward);
                     }
-                    
+
                     ExpandToEnclosingUnit(unit, true, true);
                     // If endpoint has been moved, but 'movedCount' is 0, it means that we snapped to neariest
                     // unit boundary. Treat this situation as actual move.
@@ -1931,9 +1932,9 @@ namespace MS.Internal.Automation
         /// </summary>
         /// <param name="endpoint">The endpoint to move.</param>
         /// <param name="unit">The textual unit for moving.</param>
-        /// <param name="count">The number of units to move.  A positive count moves the endpoint forward.  
+        /// <param name="count">The number of units to move.  A positive count moves the endpoint forward.
         /// A negative count moves backward. A count of 0 has no effect.</param>
-        /// <returns>The number of units actually moved, which can be less than the number requested if 
+        /// <returns>The number of units actually moved, which can be less than the number requested if
         /// moving the endpoint runs into the beginning or end of the document.</returns>
         int ITextRangeProvider.MoveEndpointByUnit(TextPatternRangeEndpoint endpoint, TextUnit unit, int count)
         {
@@ -1957,7 +1958,7 @@ namespace MS.Internal.Automation
 
                 // If endpoint has been moved at least by one unit, snap it to TextUnit boundary,
                 // because movement done by MovePositionByUnits does not guarantee position snapping.
-                if ((count > 0 && position.CompareTo(positionRef) > 0) || 
+                if ((count > 0 && position.CompareTo(positionRef) > 0) ||
                     (count < 0 && position.CompareTo(positionRef) < 0) ||
                     (position.CompareTo(positionRef) == 0 && position.LogicalDirection != positionRef.LogicalDirection))
                 {
@@ -2029,7 +2030,7 @@ namespace MS.Internal.Automation
 
         /// <summary>
         /// Selects the text of the range within the provider.  If the provider does not have a concept of selection then
-        /// it should return false for ITextProvider.SupportsTextSelection property and throw an InvalidOperation 
+        /// it should return false for ITextProvider.SupportsTextSelection property and throw an InvalidOperation
         /// exception for this method.
         /// </summary>
         void ITextRangeProvider.Select()
@@ -2046,7 +2047,7 @@ namespace MS.Internal.Automation
 
         /// <summary>
         /// Adds the text of the range to the current selection.  If the provider does not have a concept of selection
-        /// or does not support multiple disjoint selection then it throw an InvalidOperation 
+        /// or does not support multiple disjoint selection then it throw an InvalidOperation
         /// exception for this method.
         /// </summary>
         void ITextRangeProvider.AddToSelection()
@@ -2056,7 +2057,7 @@ namespace MS.Internal.Automation
 
         /// <summary>
         /// Removes the text of the range from the current selection.  If the provider does not have a concept of selection
-        /// or does not support multiple disjoint selection then it throw an InvalidOperation 
+        /// or does not support multiple disjoint selection then it throw an InvalidOperation
         /// exception for this method.
         /// </summary>
         void ITextRangeProvider.RemoveFromSelection()

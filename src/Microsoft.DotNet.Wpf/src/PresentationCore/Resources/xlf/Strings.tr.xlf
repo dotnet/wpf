@@ -1782,16 +1782,6 @@
         <target state="translated">Bölüm adı içerik türüyle uyumlu değil.</target>
         <note />
       </trans-unit>
-      <trans-unit id="InvalidPermissionStateValue">
-        <source>PermissionState value '{0}' is not valid for this Permission.</source>
-        <target state="translated">'{0}' PermissionState değeri bu İzin için geçerli değil.</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="InvalidPermissionType">
-        <source>Permission type is not valid. Expected '{0}'.</source>
-        <target state="translated">İzin türü geçerli değil. Beklenen '{0}'.</target>
-        <note />
-      </trans-unit>
       <trans-unit id="InvalidPressureValue">
         <source>Pressure must be a value between 0 and 1.</source>
         <target state="translated">Basınç 0 ile 1 arasında bir değer olmalıdır.</target>
@@ -2855,11 +2845,6 @@
       <trans-unit id="SearchText">
         <source>Search</source>
         <target state="translated">Arama</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="SecurityExceptionForSettingSandboxExternalToTrue">
-        <source>Cannot set SandboxExternalContent to true in partial trust.</source>
-        <target state="translated">Kısmi güvende SandboxExternalContent true olarak ayarlanamaz.</target>
         <note />
       </trans-unit>
       <trans-unit id="SeekNegative">

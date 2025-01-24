@@ -2,17 +2,16 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-#nullable disable
-
+using System.Diagnostics;
 using System.Reflection;
 
 namespace System.Xaml.MS.Impl
 {
     [DebuggerDisplay("{ClrNamespace} {Assembly.FullName}")]
-    internal class AssemblyNamespacePair
+    internal readonly struct AssemblyNamespacePair
     {
-        WeakReference _assembly;
-        string _clrNamespace;
+        private readonly WeakReference _assembly;
+        private readonly string _clrNamespace;
 
         public AssemblyNamespacePair(Assembly asm, string clrNamespace)
         {
@@ -20,9 +19,9 @@ namespace System.Xaml.MS.Impl
             _clrNamespace = clrNamespace;
         }
 
-        public Assembly Assembly
+        public Assembly? Assembly
         {
-            get { return (Assembly)_assembly.Target; }
+            get { return (Assembly?)_assembly.Target; }
         }
 
         public string ClrNamespace

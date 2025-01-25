@@ -52,6 +52,7 @@ namespace System.Windows.Controls
 
                 return collection;
             }
+            
             throw GetConvertFromException(value);
         }
 

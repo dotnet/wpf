@@ -46,7 +46,7 @@ namespace System.Windows.Controls
         {
             if (value is string input)
             {
-                RowDefinitionCollection collection = new RowDefinitionCollection(); // Pass Grid instance
+                RowDefinitionCollection collection = new RowDefinitionCollection();
 
                 TokenizerHelper th = new TokenizerHelper(input, cultureInfo);
                 while (th.NextToken())
@@ -56,6 +56,7 @@ namespace System.Windows.Controls
 
                 return collection;
             }
+            
             throw GetConvertFromException(value);
         }
 

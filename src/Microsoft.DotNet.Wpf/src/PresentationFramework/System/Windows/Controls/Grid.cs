@@ -273,20 +273,20 @@ namespace System.Windows.Controls
             }
             set
             {
-                if (value?.Owner == this)
-                {
-                    return;
-                }
-
                 if (value?.Owner is not null)
                 {
-                    throw new ArgumentException(SR.Format(SR.GridCollection_InOtherCollection, "value", "ColumnDefinitionCollection"));
+                    if (value.Owner == this)
+                    {
+                        return;
+                    }
+
+                    throw new ArgumentException(SR.Format(SR.GridCollection_InOtherCollection, nameof(value), nameof(ColumnDefinitionCollection)));
                 }
 
                 _data ??= new ExtendedData();
-                if (_data?.ColumnDefinitions is { } cd)
+                if (_data.ColumnDefinitions is { } columnDefinitions)
                 {
-                    cd.Owner = null;
+                    columnDefinitions.Owner = null;
                 }
                 
                 if (value is null)
@@ -317,20 +317,20 @@ namespace System.Windows.Controls
             }
             set
             {
-                if (value?.Owner == this)
-                {
-                    return;
-                }
-
                 if (value?.Owner is not null)
                 {
-                    throw new ArgumentException(SR.Format(SR.GridCollection_InOtherCollection, "value", "RowDefinitionCollection"));
+                    if (value.Owner == this)
+                    {
+                        return;
+                    }
+                    
+                    throw new ArgumentException(SR.Format(SR.GridCollection_InOtherCollection, nameof(value), nameof(RowDefinitionCollection)));
                 }
 
                 _data ??= new ExtendedData();
-                if (_data?.RowDefinitions is { } rd)
+                if (_data.RowDefinitions is { } rowDefinitions)
                 {
-                    rd.Owner = null;
+                    rowDefinitions.Owner = null;
                 }
 
                 if (value is null)

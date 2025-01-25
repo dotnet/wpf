@@ -381,12 +381,7 @@ namespace System.Windows.Controls
         {
             get
             {
-                if (_owner is null)
-                {
-                    return false;
-                }
-                return (    _owner.MeasureOverrideInProgress
-                        ||  _owner.ArrangeOverrideInProgress    );
+                return _owner is not null && (_owner.MeasureOverrideInProgress || _owner.ArrangeOverrideInProgress);
             }
         }
 
@@ -398,12 +393,7 @@ namespace System.Windows.Controls
         {
             get
             {
-                if (_owner is null)
-                {
-                    return false;
-                }
-                return (    _owner.MeasureOverrideInProgress
-                        ||  _owner.ArrangeOverrideInProgress    );
+                return _owner is not null && (_owner.MeasureOverrideInProgress || _owner.ArrangeOverrideInProgress);
             }
         }
 
@@ -512,7 +502,7 @@ namespace System.Windows.Controls
         /// </summary>
         internal Grid Owner
         {
-            get { return (_owner); }
+            get => _owner;
             set
             {
                 if (_owner == value)
@@ -526,8 +516,9 @@ namespace System.Windows.Controls
                     PrivateOnModified();
                     for (int i = 0; i < _size; i++)
                     {
-                        _owner.AddLogicalChild(_items[i]);
-                        _items[i].OnEnterParentTree();
+                        DefinitionBase item = _items[i];
+                        _owner.AddLogicalChild(item);
+                        item.OnEnterParentTree();
                     }
                 }
                 else if (value is null)
@@ -535,14 +526,15 @@ namespace System.Windows.Controls
                     PrivateOnModified();
                     for (int i = 0; i < _size; i++)
                     {
-                        _items[i].OnExitParentTree();
-                        _owner.RemoveLogicalChild(_items[i]);
+                        DefinitionBase item = _items[i];
+                        item.OnExitParentTree();
+                        _owner.RemoveLogicalChild(item);
                     }
                     _owner = null;
                 }
                 else
                 {
-                    throw new ArgumentException(SR.Format(SR.GridCollection_InOtherCollection, "value", "ColumnDefinitionCollection"));
+                    throw new ArgumentException(SR.Format(SR.GridCollection_InOtherCollection, nameof(value), nameof(ColumnDefinitionCollection)));
                 }
             }
         }

@@ -480,7 +480,7 @@ namespace MS.Internal.MilCodeGen.Helpers
                             _collection = new FrugalStructList<[[type]]>(icollectionOfT);
                         }
                         else
-                        {       
+                        {
                             ICollection icollection = collection as ICollection;
 
                             if (icollection != null) // an IC but not and IC<T>

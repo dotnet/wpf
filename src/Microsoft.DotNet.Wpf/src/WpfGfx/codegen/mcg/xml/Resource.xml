@@ -154,13 +154,6 @@
 
     <Enums ManagedNamespace="System.Windows.Media">
 
-        <Namespaces>
-            <Namespace Name="System" />
-            <Namespace Name="System.ComponentModel" />
-            <Namespace Name="System.Runtime.InteropServices" />
-            <Namespace Name="MS.Internal.PresentationCore" />
-        </Namespaces>
-
         <Enum Name="ColorInterpolationMode" UnmanagedName="MilColorInterpolationMode"
               Comment="This determines how the colors in a gradient are interpolated." >
             <Field Name="ScRgbLinearInterpolation" Value="0"
@@ -230,7 +223,7 @@
                  for Tile before the lower values, since Tile is more common.
                  The value of this optimization has not been tested. -->
             <Field Name="Tile" Value="4"
-                   Comment="The basic tile mode  the base tile is drawn and the remaining area is filled by repeating the base tile such that the right edge of one tile butts the left edge of the next, and similarly for bottom and top" />
+                   Comment="The basic tile mode  the base tile is drawn and the remaining area is filled by repeating the base tile such that the right edge of one tile is adjacent to the left edge of the next, and similarly for bottom and top" />
             <Field Name="FlipX" Value="1"
                    Comment="The same as tile, but alternate columns of tiles are flipped horizontally.  The base tile is drawn untransformed." />
             <Field Name="FlipY" Value="2"
@@ -421,13 +414,6 @@
 
     <Enums ManagedNamespace="System.Windows.Media.Imaging">
 
-        <Namespaces>
-            <Namespace Name="System" />
-            <Namespace Name="System.ComponentModel" />
-            <Namespace Name="System.Runtime.InteropServices" />
-            <Namespace Name="MS.Internal.PresentationCore" />
-        </Namespaces>
-
         <!-- Imaging Enums -->
 
         <Enum Name="Rotation" UnmanagedName="int"
@@ -474,13 +460,6 @@
     </Enums>
 
     <Enums ManagedNamespace="System.Windows">
-
-        <Namespaces>
-            <Namespace Name="System" />
-            <Namespace Name="System.ComponentModel" />
-            <Namespace Name="System.Runtime.InteropServices" />
-            <Namespace Name="MS.Internal.PresentationCore" />
-        </Namespaces>
 
         <Enum Name="TextDecorationLocation"
             Comment="Referenced localization of the text decoration" >
@@ -1675,18 +1654,10 @@
 
         <Namespaces>
             <Namespace Name="MS.Internal"/>
-            <Namespace Name="MS.Internal.WindowsBase" />
-            <Namespace Name="System"/>
-            <Namespace Name="System.Collections"/>
             <Namespace Name="System.ComponentModel"/>
-            <Namespace Name="System.Diagnostics"/>
             <Namespace Name="System.Globalization"/>
-            <Namespace Name="System.Reflection"/>
-            <Namespace Name="System.Runtime.InteropServices"/>
-            <Namespace Name="System.ComponentModel.Design.Serialization"/>
             <Namespace Name="System.Windows.Markup"/>
             <Namespace Name="System.Windows.Converters"/>
-            <Namespace Name="System.Windows"/>
         </Namespaces>
 
         <Resource Name="PointF" ManagedType="Point" UnmanagedName="MilPoint2F"
@@ -1756,19 +1727,10 @@
 
         <Namespaces>
             <Namespace Name="MS.Internal"/>
-            <Namespace Name="MS.Internal.WindowsBase" />
-            <Namespace Name="System"/>
-            <Namespace Name="System.Collections"/>
             <Namespace Name="System.ComponentModel"/>
-            <Namespace Name="System.Diagnostics"/>
             <Namespace Name="System.Globalization"/>
-            <Namespace Name="System.Reflection"/>
-            <Namespace Name="System.Runtime.InteropServices"/>
-            <Namespace Name="System.ComponentModel.Design.Serialization"/>
             <Namespace Name="System.Windows.Markup"/>
             <Namespace Name="System.Windows.Media.Converters"/>
-            <Namespace Name="System.Windows"/>
-            <Namespace Name="System.Windows.Media"/>
         </Namespaces>
 
         <Resource Name="Matrix" UnmanagedName="MilMatrix3x2D" IsValueType="true" SkipProperties="true"
@@ -2306,26 +2268,15 @@
         <Namespaces>
             <Namespace Name="MS.Internal"/>
             <Namespace Name="MS.Internal.Collections"/>
-            <Namespace Name="MS.Internal.PresentationCore" />
             <Namespace Name="MS.Utility"/>
-            <Namespace Name="System"/>
             <Namespace Name="System.Collections"/>
-            <Namespace Name="System.Collections.Generic"/>
             <Namespace Name="System.ComponentModel"/>
-            <Namespace Name="System.ComponentModel.Design.Serialization"/>
-            <Namespace Name="System.Diagnostics"/>
             <Namespace Name="System.Globalization"/>
-            <Namespace Name="System.Reflection"/>
-            <Namespace Name="System.Runtime.InteropServices"/>
             <Namespace Name="System.Text"/>
             <Namespace Name="System.Windows.Markup"/>
             <Namespace Name="System.Windows.Media.Media3D.Converters"/>
-            <Namespace Name="System.Windows.Media"/>
             <Namespace Name="System.Windows.Media.Animation"/>
             <Namespace Name="System.Windows.Media.Composition"/>
-            <Namespace Name="System.Security" />
-            <Namespace Name="SR=MS.Internal.PresentationCore.SR" />
-            <Namespace Name="System.Windows.Media.Imaging"/>
         </Namespaces>
 
         <!--
@@ -2704,29 +2655,11 @@
     <Resources ManagedNamespace="System.Windows.Media.Effects">
         <Namespaces>
             <Namespace Name="MS.Internal"/>
-            <Namespace Name="MS.Internal.Collections"/>
-            <Namespace Name="MS.Internal.KnownBoxes"/>
-            <Namespace Name="MS.Internal.PresentationCore" />
             <Namespace Name="MS.Utility"/>
-            <Namespace Name="System"/>
             <Namespace Name="System.Collections"/>
-            <Namespace Name="System.Collections.Generic"/>
-            <Namespace Name="System.ComponentModel"/>
-            <Namespace Name="System.Diagnostics"/>
-            <Namespace Name="System.Globalization"/>
-            <Namespace Name="System.Reflection"/>
-            <Namespace Name="System.Runtime.InteropServices"/>
-            <Namespace Name="System.ComponentModel.Design.Serialization"/>
-            <Namespace Name="System.Text"/>
-            <Namespace Name="System.Windows"/>
-            <Namespace Name="System.Windows.Media"/>
-            <Namespace Name="System.Windows.Media.Media3D"/>
             <Namespace Name="System.Windows.Media.Animation"/>
             <Namespace Name="System.Windows.Media.Composition"/>
             <Namespace Name="System.Windows.Media.Imaging"/>
-            <Namespace Name="System.Windows.Markup"/>
-            <Namespace Name="System.Security" />
-            <Namespace Name="SR=MS.Internal.PresentationCore.SR" />
         </Namespaces>
 
         <Resource Name="PixelShader" SkipToString="true" SkipUpdate="true" CanIntroduceCycles="false" >
@@ -2865,29 +2798,16 @@
             <Namespace Name="MS.Internal"/>
             <Namespace Name="MS.Internal.KnownBoxes"/>
             <Namespace Name="MS.Internal.Collections"/>
-            <Namespace Name="MS.Internal.PresentationCore" />
             <Namespace Name="MS.Utility"/>
-            <Namespace Name="System"/>
             <Namespace Name="System.Collections"/>
-            <Namespace Name="System.Collections.Generic"/>
             <Namespace Name="System.ComponentModel"/>
-            <Namespace Name="System.Diagnostics"/>
             <Namespace Name="System.Globalization"/>
-            <Namespace Name="System.Reflection"/>
-            <Namespace Name="System.Runtime.InteropServices"/>
-            <Namespace Name="System.ComponentModel.Design.Serialization"/>
             <Namespace Name="System.Text"/>
-            <Namespace Name="System.Windows"/>
-            <Namespace Name="System.Windows.Media"/>
             <Namespace Name="System.Windows.Media.Effects"/>
-            <Namespace Name="System.Windows.Media.Media3D"/>
             <Namespace Name="System.Windows.Media.Animation"/>
             <Namespace Name="System.Windows.Media.Composition"/>
-            <Namespace Name="System.Windows.Media.Imaging"/>
             <Namespace Name="System.Windows.Markup"/>
             <Namespace Name="System.Windows.Media.Converters"/>
-            <Namespace Name="System.Security" />
-            <Namespace Name="SR=MS.Internal.PresentationCore.SR" />
         </Namespaces>
 
         <!--
@@ -3479,30 +3399,8 @@
     <Resources ManagedNamespace="System.Windows.Media.Animation">
         <Namespaces>
             <Namespace Name="MS.Internal"/>
-            <Namespace Name="MS.Internal.KnownBoxes"/>
-            <Namespace Name="MS.Internal.Collections"/>
-            <Namespace Name="MS.Internal.PresentationCore" />
             <Namespace Name="MS.Utility"/>
-            <Namespace Name="System"/>
             <Namespace Name="System.Collections"/>
-            <Namespace Name="System.Collections.Generic"/>
-            <Namespace Name="System.ComponentModel"/>
-            <Namespace Name="System.Diagnostics"/>
-            <Namespace Name="System.Globalization"/>
-            <Namespace Name="System.Reflection"/>
-            <Namespace Name="System.Runtime.InteropServices"/>
-            <Namespace Name="System.ComponentModel.Design.Serialization"/>
-            <Namespace Name="System.Text"/>
-            <Namespace Name="System.Windows"/>
-            <Namespace Name="System.Windows.Media"/>
-            <Namespace Name="System.Windows.Media.Media3D"/>
-            <Namespace Name="System.Windows.Media.Animation"/>
-            <Namespace Name="System.Windows.Media.Composition"/>
-            <Namespace Name="System.Windows.Media.Imaging"/>
-            <Namespace Name="System.Windows.Markup"/>
-            <Namespace Name="System.Windows.Media.Converters"/>
-            <Namespace Name="System.Security" />
-            <Namespace Name="SR=MS.Internal.PresentationCore.SR" />
         </Namespaces>
 
         <Resource Name="Timeline" IsAbstract="true" IsAnimatable="true" HasUnmanagedResource="false" SkipToString="true" />
@@ -3525,24 +3423,10 @@
     <Resources ManagedNamespace="System.Windows">
 
         <Namespaces>
-            <Namespace Name="MS.Internal.PresentationCore" />
-            <Namespace Name="System"/>
             <Namespace Name="System.Collections"/>
-            <Namespace Name="System.Collections.Generic"/>
-            <Namespace Name="System.ComponentModel"/>
-            <Namespace Name="System.ComponentModel.Design.Serialization"/>
-            <Namespace Name="System.Diagnostics"/>
-            <Namespace Name="System.Globalization"/>
-            <Namespace Name="System.Reflection"/>
-            <Namespace Name="System.Runtime.InteropServices"/>
             <Namespace Name="System.Windows.Media"/>
             <Namespace Name="System.Windows.Media.Animation"/>
-            <Namespace Name="System.Windows.Media.Imaging"/>
-            <Namespace Name="System.Windows.Markup"/>
-            <Namespace Name="System.Windows.Converters"/>
-            <Namespace Name="MS.Internal.Collections" />
             <Namespace Name="MS.Utility"/>
-            <Namespace Name="SR=MS.Internal.PresentationCore.SR" />
         </Namespaces>
 
         <Resource Name="TextDecoration" IsAnimatable="true" IsAbstract="false" SkipToString="true" HasUnmanagedResource="false" >
@@ -3576,22 +3460,9 @@
     <Resources ManagedNamespace="System.Windows.Media.Imaging">
 
         <Namespaces>
-            <Namespace Name="MS.Internal"/>
-            <Namespace Name="MS.Internal.PresentationCore" />
-            <Namespace Name="System"/>
             <Namespace Name="System.IO"/>
-            <Namespace Name="System.Collections"/>
             <Namespace Name="System.ComponentModel"/>
             <Namespace Name="System.Net.Cache"/>
-            <Namespace Name="System.Runtime.InteropServices"/>
-            <Namespace Name="System.Windows.Threading"/>
-            <Namespace Name="System.Windows"/>
-            <Namespace Name="System.Windows.Media"/>
-            <Namespace Name="System.Windows.Media.Animation"/>
-            <Namespace Name="System.Windows.Media.Composition"/>
-            <Namespace Name="System.Windows.Media.Imaging"/>
-            <Namespace Name="System.Windows.Media.Media3D"/>
-            <Namespace Name="System.Diagnostics"/>
         </Namespaces>
     <!--
         Imaging primitives and resources
@@ -3665,9 +3536,6 @@
     <Resources ManagedNamespace="System.Windows.Interop">
         <Namespaces>
             <Namespace Name="MS.Internal"/>
-            <Namespace Name="MS.Internal.PresentationCore" />
-            <Namespace Name="System"/>
-            <Namespace Name="System.IO"/>
             <Namespace Name="System.Collections"/>
             <Namespace Name="System.ComponentModel"/>
             <Namespace Name="System.Net.Cache"/>
@@ -3679,7 +3547,6 @@
             <Namespace Name="System.Windows.Media.Composition"/>
             <Namespace Name="System.Windows.Media.Imaging"/>
             <Namespace Name="System.Windows.Media.Media3D"/>
-            <Namespace Name="System.Diagnostics"/>
         </Namespaces>
 
         <Resource Name="D3DImage" Extends="ImageSource" LeaveUnsealed="true" IsAnimatable="true" SkipToString="true" CanIntroduceCycles="false" />
@@ -3697,22 +3564,11 @@
 
         <Namespaces>
             <Namespace Name="MS.Internal"/>
-            <Namespace Name="MS.Internal.PresentationCore" />
-            <Namespace Name="System"/>
-            <Namespace Name="System.Collections"/>
-            <Namespace Name="System.Collections.Generic"/>
             <Namespace Name="System.Runtime.InteropServices"/>
             <Namespace Name="System.Windows.Threading"/>
-            <Namespace Name="System.Windows"/>
-            <Namespace Name="System.Windows.Media"/>
             <Namespace Name="System.Windows.Media.Animation"/>
             <Namespace Name="System.Windows.Media.Composition"/>
             <Namespace Name="System.Windows.Media.Effects"/>
-            <Namespace Name="System.Windows.Media.Imaging"/>
-            <Namespace Name="System.Windows.Media.Media3D"/>
-            <Namespace Name="System.Diagnostics"/>
-            <Namespace Name="SR=MS.Internal.PresentationCore.SR" />
-            <Namespace Name="System.Security" />
         </Namespaces>
 
         <RenderDataInstruction Name="DrawLine"

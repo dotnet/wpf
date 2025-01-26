@@ -69,53 +69,16 @@ namespace MS.Internal.MilCodeGen.ResourceModel
 
                 string fullPath = Path.Combine(resourceModel.OutputDirectory, path);
 
-                string moduleReference;
-                string sridReference = 
-                    [[inline]]
-                        using SR=System.Windows.SR;
-                    [[/inline]];
-
-                // Duplicate AnimatedTypeHelpers class across Core/Framework causes name conflicts,
-                // requiring that they be split across two namespaces.
-                switch (instance.ModuleName)
-                {
-                    case @"PresentationCore":
-                        moduleReference = "using MS.Internal.PresentationCore;";
-                        sridReference = 
-                            [[inline]]
-                                using SR=MS.Internal.PresentationCore.SR;
-                            [[/inline]];
-                        break;
-                    case "PresentationFramework":
-                        moduleReference = "using MS.Internal.PresentationFramework;";
-                        break;
-                    default:
-                        moduleReference = "";
-                        break;
-                }
-               
-
                 using (FileCodeSink csFile = new FileCodeSink(fullPath, fileName, true /* Create dir if necessary */))
                 {
                     csFile.WriteBlock(
                         [[inline]]
                             [[Helpers.ManagedStyle.WriteFileHeader(fileName)]]
 
-                            using MS.Internal;
-
-                            using System;
-                            using System.Collections;
-                            using System.ComponentModel;
-                            using System.Diagnostics;
-                            using System.Windows.Media.Animation;   
                             using System.Windows.Media.Media3D;
-              
-                            [[moduleReference]]
-
-                            [[sridReference]]
 
                             namespace System.Windows.Media.Animation
-                            {       
+                            {
                                 /// <summary>
                                 ///
                                 /// </summary>

@@ -72,9 +72,7 @@ namespace MS.Internal.MilCodeGen.ResourceModel
                         [[inline]]
                             [[Helpers.ManagedStyle.WriteFileHeader(fileName,  @"wpf\src\Graphics\codegen\mcg\generators\PolySegmentTemplate.cs")]]
 
-                            using System;
                             using System.Collections;
-                            using System.Collections.Generic;
                             using System.ComponentModel;
                             using System.Windows;
                             using System.Windows.Markup;
@@ -83,9 +81,6 @@ namespace MS.Internal.MilCodeGen.ResourceModel
                             using System.Windows.Media.Composition;
                             using System.Reflection;
                             using MS.Internal;
-                            using System.Security;
-
-                            using SR=MS.Internal.PresentationCore.SR;
 
                             namespace System.Windows.Media
                             {

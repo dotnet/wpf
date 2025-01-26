@@ -351,7 +351,6 @@ namespace MS.Internal.MilCodeGen.Generators
                 {
                     cs.Write(
                         [[inline]]
-
                                 if (_collection.Count == 0)
                                 {
                                     return String.Empty;
@@ -720,7 +719,6 @@ namespace MS.Internal.MilCodeGen.Generators
                     {
                         serializationContextCanConvertTo =
                             [[inline]]
-
                                 // When invoked by the serialization engine we can convert to string only for some instances
                                 if (context != null && context.Instance != null)
                                 {
@@ -740,7 +738,6 @@ namespace MS.Internal.MilCodeGen.Generators
 
                         serializationContextConvertTo =
                             [[inline]]
-
                                 // When invoked by the serialization engine we can convert to string only for some instances
                                 if (context != null && context.Instance != null)
                                 {
@@ -822,9 +819,8 @@ namespace MS.Internal.MilCodeGen.Generators
                                             throw GetConvertFromException(value);
                                         }
 
-                                        String source = value as string;
 
-                                        if (source != null)
+                                        if (value is string source)
                                         {
                                             return [[resource.Name]].Parse(source[[contextParam]]);
                                         }
@@ -855,7 +851,6 @@ namespace MS.Internal.MilCodeGen.Generators
                                             if (destinationType == typeof(string))
                                             {
                                                 [[serializationContextConvertTo]]// Delegate to the formatting/culture-aware ConvertToString method.
-
                                                 return instance.ConvertToString(null, culture);
                                             }
                                         }
@@ -864,7 +859,6 @@ namespace MS.Internal.MilCodeGen.Generators
                                         return base.ConvertTo(context, culture, value, destinationType);
                                     }
                                 }
-
                             }
                         [[/inline]]
                             );
@@ -905,7 +899,6 @@ namespace MS.Internal.MilCodeGen.Generators
                     {
                         valueSerializerCanConvertTo =
                             [[inline]]
-
                                 // Validate the input type
                                 if (!(value is [[resource.Name]]))
                                 {
@@ -913,7 +906,6 @@ namespace MS.Internal.MilCodeGen.Generators
                                 }
 
                                 return true;
-
                             [[/inline]]
                                 ;
                     }
@@ -923,7 +915,6 @@ namespace MS.Internal.MilCodeGen.Generators
                     {
                         valueSerializerCanConvertTo =
                             [[inline]]
-
                                 // When invoked by the serialization engine we can convert to string only for some instances
                                 if (!(value is [[resource.Name]]))
                                 {
@@ -933,14 +924,11 @@ namespace MS.Internal.MilCodeGen.Generators
                                 [[resource.Name]] instance  = ([[resource.Name]]) value;
 
                                 return instance.CanSerializeToString();
-
-
                             [[/inline]]
                                 ;
 
                         valueSerializerConvertTo =
                             [[inline]]
-							
                                 // When invoked by the serialization engine we can convert to string only for some instances
                                 if (!instance.CanSerializeToString())
                                 {
@@ -994,7 +982,6 @@ namespace MS.Internal.MilCodeGen.Generators
                                         {
                                             return base.ConvertFromString( value, context );
                                         }
-
                                     }
 
                                     /// <summary>
@@ -1002,21 +989,15 @@ namespace MS.Internal.MilCodeGen.Generators
                                     /// </summary>
                                     public override string ConvertToString(object value, IValueSerializerContext context)
                                     {
-                                        if (value is [[resource.Name]])
+                                        if (value is [[resource.Name]] instance)
                                         {
-                                            [[resource.Name]] instance = ([[resource.Name]]) value;
                                             [[valueSerializerConvertTo]]
-
                                             return instance.ConvertToString(null, System.Windows.Markup.TypeConverterHelper.InvariantEnglishUS);
                                         }
 
                                         return base.ConvertToString(value, context);
                                     }
                                 }
-
-
-
-
                             }
                         [[/inline]]
                             );

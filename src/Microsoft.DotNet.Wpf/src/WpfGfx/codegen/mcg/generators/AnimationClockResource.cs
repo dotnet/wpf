@@ -71,13 +71,7 @@ namespace MS.Internal.MilCodeGen.Generators
                         [[inline]]
                             [[Helpers.ManagedStyle.WriteFileHeader(fileName)]]
 
-                            using System;
-                            using System.Windows;
-                            using System.Windows.Media;
                             using System.Windows.Media.Composition;
-                            using System.Diagnostics;
-                            using System.Runtime.InteropServices;
-                            using System.Security;
 
                             namespace System.Windows.Media.Animation
                             {
@@ -177,11 +171,12 @@ namespace MS.Internal.MilCodeGen.Generators
                                         DUCE.ResourceHandle handle,
                                         DUCE.Channel channel)
                                     {
-                                        DUCE.MILCMD_[[nameAsUpper]]RESOURCE cmd = new DUCE.MILCMD_[[nameAsUpper]]RESOURCE();
-
-                                        cmd.Type = MILCMD.MilCmd[[resource.Name]]Resource;
-                                        cmd.Handle = handle;
-                                        cmd.Value = CurrentValue;
+                                        DUCE.MILCMD_[[nameAsUpper]]RESOURCE cmd = new DUCE.MILCMD_[[nameAsUpper]]RESOURCE
+                                        {
+                                            Type = MILCMD.MilCmd[[resource.Name]]Resource,
+                                            Handle = handle,
+                                            Value = CurrentValue
+                                        };
 
                                         unsafe
                                         {

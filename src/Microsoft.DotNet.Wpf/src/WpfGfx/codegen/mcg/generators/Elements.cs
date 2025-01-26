@@ -56,13 +56,8 @@ namespace MS.Internal.MilCodeGen.Generators
                         [[inline]]
                             using MS.Internal;
                             using MS.Internal.KnownBoxes;
-                            using MS.Internal.PresentationCore;
                             using MS.Utility;
-                            using System;
-                            using System.Collections.Generic;
                             using System.ComponentModel;
-                            using System.Diagnostics;
-                            using System.Security;
                             using System.Windows.Input;
                             using System.Windows.Media.Animation;
 

@@ -68,10 +68,6 @@ namespace MS.Internal.MilCodeGen.ResourceModel
                 string fullPath = Path.Combine(resourceModel.OutputDirectory, path);
 
                 string moduleReference = "";
-                string sridReference = 
-                            [[inline]]
-                                using SR=System.Windows.SR;
-                            [[/inline]];
 
                 // Duplicate AnimatedTypeHelpers class across Core/Framework causes name conflicts,
                 // requiring that they be split across two namespaces.
@@ -79,10 +75,6 @@ namespace MS.Internal.MilCodeGen.ResourceModel
                 {
                     case @"PresentationCore":
                         moduleReference = "using MS.Internal.PresentationCore;";
-                        sridReference = 
-                            [[inline]]
-                                using SR=MS.Internal.PresentationCore.SR;
-                            [[/inline]];
                         break;
                     case "PresentationFramework":
                         moduleReference = "using MS.Internal.PresentationFramework;";
@@ -95,21 +87,11 @@ namespace MS.Internal.MilCodeGen.ResourceModel
                         [[inline]]
                             [[Helpers.ManagedStyle.WriteFileHeader(fileName)]]
 
-                            using MS.Internal;
                             using MS.Internal.KnownBoxes;
-
-                            using System;
                             using System.Collections;
-                            using System.Collections.Generic;
                             using System.ComponentModel;
-                            using System.Diagnostics;
-                            using System.Windows;
                             using System.Windows.Markup;
-                            using System.Windows.Media.Animation;
-                            using System.Windows.Media.Media3D;   
-
-                            [[sridReference]]
-
+                            using System.Windows.Media.Media3D;
                             [[moduleReference]]
 
                             namespace System.Windows.Media.Animation
@@ -877,8 +859,10 @@ namespace MS.Internal.MilCodeGen.ResourceModel
                                                             hasPacedKeyTimes = true;
                                                         }
                                                         
-                                                        KeyTimeBlock block = new KeyTimeBlock();
-                                                        block.BeginIndex = index;
+                                                        KeyTimeBlock block = new KeyTimeBlock
+                                                        {
+                                                            BeginIndex = index
+                                                        };
                                                        
                                                         // NOTE: We don't want to go all the way up to the
                                                         // last frame because if it is Uniform or Paced its

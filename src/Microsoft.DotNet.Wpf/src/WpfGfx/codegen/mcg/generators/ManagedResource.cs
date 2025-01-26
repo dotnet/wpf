@@ -72,7 +72,6 @@ namespace MS.Internal.MilCodeGen.Generators
                     
                     List<string> modifiers = new List<string>();
                     List<string> extends = new List<string>();
-                    string typeconverter = String.Empty;
                     string attributes = String.Empty;
 
                     if (resource.IsAbstract)
@@ -158,15 +157,10 @@ namespace MS.Internal.MilCodeGen.Generators
 
                     csFile.WriteBlock(
                         [[inline]]
-                            // These types are aliased to match the unamanaged names used in interop
-                            using BOOL = System.UInt32;
-                            using WORD = System.UInt16;
-                            using Float = System.Single;
 
                             namespace [[resource.ManagedNamespace]]
                             {
                                 [[Helpers.CollectionHelper.WriteCollectionSummary(resource)]]
-                                [[typeconverter]]
                                 [[attributes]]
                                 [[WriteClassDeclaration(resource.Name, !resource.IsValueType, modifiers, extends)]]
                                 {
@@ -256,7 +250,6 @@ namespace MS.Internal.MilCodeGen.Generators
                                     [[Helpers.CollectionHelper.WriteCollectionConstructors(resource)]]
 
                                     #endregion Constructors
-
                                 }
                             }
                         [[/inline]]
@@ -1203,7 +1196,7 @@ namespace MS.Internal.MilCodeGen.Generators
                         cs.WriteBlock(
                             [[inline]]
                                 Debug.Assert([[GetDefaultFieldName(field)]] == null || [[GetDefaultFieldName(field)]].IsFrozen,
-                                    "Detected context bound default value [[resource.Name]].[[GetDefaultFieldName(field)]].");
+                                    "Detected context bound default value [[resource.Name]].[[GetDefaultFieldName(field)]] (See OS Bug #947272).");
 
                             [[/inline]]
                         );
@@ -1241,7 +1234,6 @@ namespace MS.Internal.MilCodeGen.Generators
                             // to make sure that they are not mutable, otherwise we will throw
                             // if these get touched by more than one thread in the lifetime
                             // of your app.
-                            //
                             [[cs]]
 
                             // Initializations

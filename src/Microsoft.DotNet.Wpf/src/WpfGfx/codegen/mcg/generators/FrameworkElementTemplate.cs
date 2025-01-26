@@ -78,17 +78,11 @@ namespace MS.Internal.MilCodeGen.ResourceModel
 
                             using MS.Internal;
                             using MS.Utility;
-
-                            using System;
                             using System.Collections;
-                            using System.Diagnostics;
-                            using System.Security;
                             using System.Windows.Controls;
                             using System.Windows.Diagnostics;
                             using System.Windows.Media;
                             using System.Windows.Markup;
-
-                            using SR=System.Windows.SR;
 
                             namespace [[instance.ClassNamespace]]
                             {
@@ -246,7 +240,7 @@ namespace MS.Internal.MilCodeGen.ResourceModel
                                         return _parent;
                                     }
 
-                                    // Consider marking whether Add should be called *before* or *after* the element adds it to its structure
+                                    // mark whether Add should be called *before* or *after* the element adds it to its structure
                                     /// <summary>
                                     ///     Called by an element when that element adds the given object to
                                     ///     its logical tree.  FrameworkElement updates the affected
@@ -283,7 +277,7 @@ namespace MS.Internal.MilCodeGen.ResourceModel
                                             {
                                                 if (exceptionThrown)
                                                 {
-                                                    // 
+                                                    // Future: ILTN removal: make this more robust
                                                     // At the very least we should disconnect the child that we failed to add.
 
                                                     // Consider doing this...
@@ -294,7 +288,7 @@ namespace MS.Internal.MilCodeGen.ResourceModel
                                     }
 
 
-                                    // 
+                                    // mark whether Remove should be called *before* or *after* the element removes it from it's structure
                                     /// <summary>
                                     ///     Called by an element when that element removes the given object from
                                     ///     its logical tree.  FrameworkElement updates the affected
@@ -368,7 +362,7 @@ namespace MS.Internal.MilCodeGen.ResourceModel
                                         }
 
                                         // Logical Parent must first be dropped before you are attached to a newParent
-                                        // This mitigates illegal tree state caused by logical child stealing
+                                        // This mitigates illegal tree state caused by logical child stealing as illustrated in bug 970706
                                         if (_parent != null && newParent != null && _parent != newParent)
                                         {
                                             throw new System.InvalidOperationException(SR.HasLogicalParent);
@@ -407,7 +401,7 @@ namespace MS.Internal.MilCodeGen.ResourceModel
                                         ///////////////////
 
                                         // Invalidate relevant properties for this subtree
-                                        DependencyObject parent = (newParent != null) ? newParent : oldParent;
+                                        DependencyObject parent = newParent ?? oldParent;
                                         TreeWalkHelper.InvalidateOnTreeChange([[instance.ThisString]], parent, (newParent != null));
 
                                         // If no one has called BeginInit then mark the element initialized and fire Initialized event

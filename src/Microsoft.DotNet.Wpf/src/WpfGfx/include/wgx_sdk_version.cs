@@ -2,15 +2,12 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-
-//---------------------------------------------------------------------------
 //
-
 //
 // This file was generated, please do not edit it directly.
 //
+// Please see MilCodeGen.html for more information.
 //
-//---------------------------------------------------------------------------
 
 // This code is generated from mcg\generators\ProtocolFingerprint.cs
 
@@ -31,7 +28,7 @@ namespace MS.Internal.Composition
             {
                 unchecked
                 {
-                    return (uint)0x200184C0;
+                    return (uint)0xB5A7A872;
                 }
             }
         }
@@ -45,12 +42,10 @@ namespace MS.Internal.Composition
             {
                 unchecked
                 {
-                    return (uint)0xBDDCB2B;
+                    return (uint)0xFA198EC2;
                 }
             }
         }
     }
 }
-
-
 

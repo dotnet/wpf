@@ -197,5 +197,3 @@ typedef enum
 } MILCMD;
 
 
-
-

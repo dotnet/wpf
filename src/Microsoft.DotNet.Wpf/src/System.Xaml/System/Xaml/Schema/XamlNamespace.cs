@@ -169,7 +169,7 @@ namespace System.Xaml.Schema
         {
             // The only external mutation we allow is adding new namespaces. So the count of
             // namespaces also serves as a revision number.
-            get => (_assemblyNamespaces != null) ? _assemblyNamespaces.Length : 0;
+            get => _assemblyNamespaces?.Length ?? 0;
         }
 
         private Type TryGetType(string typeName)
@@ -279,12 +279,13 @@ namespace System.Xaml.Schema
             }
             else
             {
+                // Copy items over to the new collection
                 assemblyNamespacesCopy = new AssemblyNamespacePair[_assemblyNamespaces.Length + 1];
+                _assemblyNamespaces.CopyTo(assemblyNamespacesCopy, 0);
             }
 
-            // Copy over and add new item
-            _assemblyNamespaces.CopyTo(assemblyNamespacesCopy, 0);
-            assemblyNamespacesCopy[assemblyNamespacesCopy.Length - 1] = pair;
+            // Add new pair as the last one
+            assemblyNamespacesCopy[^1] = pair;
 
             _assemblyNamespaces = assemblyNamespacesCopy;
         }

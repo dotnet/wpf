@@ -1,19 +1,15 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
-
-//
 
 using System.ComponentModel.Design.Serialization;
 using System.ComponentModel;
 using System.Globalization;
-using System.Diagnostics;
 using System.Reflection;
 
 namespace System.Windows
 {
     /// <summary>
-    /// Provides a type converter to convert from <see cref="Duration"/> to <see langword="string"/> and vice versa.
+    /// Provides a type converter to convert from <see cref="Duration"/> to <see cref="string"/> and vice versa.
     /// </summary>
     public class DurationConverter : TypeConverter
     {
@@ -22,30 +18,30 @@ namespace System.Windows
         /// </summary>
         /// <param name="td">Context information used for conversion.</param>
         /// <param name="t">Type being evaluated for conversion.</param>
-        /// <returns><see langword="true"/> if the given <paramref name="sourceType"/> can be converted from, <see langword="false"/> otherwise.</returns>
+        /// <returns><see langword="true"/> if the given <paramref name="t"/> can be converted from, <see langword="false"/> otherwise.</returns>
         public override bool CanConvertFrom(ITypeDescriptorContext td, Type t)
         {
             return t == typeof(string);
         }
 
         /// <summary>
-        /// Returns whether this class can convert specified value to <see langword="string"/>.
+        /// Returns whether this class can convert specified value to <see cref="string"/>.
         /// </summary>
         /// <param name="context">Context information used for conversion.</param>
         /// <param name="destinationType">Type being evaluated for conversion.</param>
-        /// <returns><see langword="true"/> if conversion to <see langword="string"/> is possible, <see langword="false"/> otherwise.</returns>
+        /// <returns><see langword="true"/> if conversion to <see cref="string"/> is possible, <see langword="false"/> otherwise.</returns>
         public override bool CanConvertTo(ITypeDescriptorContext context, Type destinationType)
         {
             return destinationType == typeof(InstanceDescriptor) || destinationType == typeof(string);
         }
 
         /// <summary>
-        /// Converts <paramref name="value"/> of <see langword="string"/> type to its <see cref="Duration"/> represensation.
+        /// Converts <paramref name="value"/> of <see cref="string"/> type to its <see cref="Duration"/> representation.
         /// </summary>
         /// <param name="td">Context information used for conversion.</param>
         /// <param name="cultureInfo">The culture specifier to use.</param>
         /// <param name="value">The string to convert from.</param>
-        /// <returns>A <see cref="Duration"/> representing the <see langword="string"/> specified by <paramref name="value"/>.</returns>
+        /// <returns>A <see cref="Duration"/> representing the <see cref="string"/> specified by <paramref name="value"/>.</returns>
         public override object ConvertFrom(ITypeDescriptorContext td, CultureInfo cultureInfo, object value)
         {
             // In case value is not a string, we can try to check InstanceDescriptor or we just throw NotSupportedException
@@ -66,7 +62,7 @@ namespace System.Windows
         }
 
         /// <summary>
-        /// Faciliaties parsing from <paramref name="valueSpan"/> to <see cref="TimeSpan"/> and initializes new <see cref="Duration"/> instance.
+        /// Facilities parsing from <paramref name="valueSpan"/> to <see cref="TimeSpan"/> and initializes new <see cref="Duration"/> instance.
         /// </summary>
         /// <param name="valueSpan">The string to convert from.</param>
         /// <param name="cultureInfo">The culture specifier to use.</param>
@@ -86,13 +82,13 @@ namespace System.Windows
         }
 
         /// <summary>
-        /// Converts a <paramref name="value"/> of <see cref="Duration"/> to its <see langword="string"/> represensation.
+        /// Converts a <paramref name="value"/> of <see cref="Duration"/> to its <see cref="string"/> representation.
         /// </summary>
         /// <param name="context">Context information used for conversion.</param>
         /// <param name="cultureInfo">The culture specifier to use, currently ignored during conversion.</param>
         /// <param name="value">Duration value to convert from.</param>
         /// <param name="destinationType">Type being evaluated for conversion.</param>
-        /// <returns>A <see langword="string"/> representing the <see cref="Duration"/> specified by <paramref name="value"/>.</returns>
+        /// <returns>A <see cref="string"/> representing the <see cref="Duration"/> specified by <paramref name="value"/>.</returns>
         public override object ConvertTo(ITypeDescriptorContext context, CultureInfo cultureInfo, object value, Type destinationType)
         {
             ArgumentNullException.ThrowIfNull(destinationType);

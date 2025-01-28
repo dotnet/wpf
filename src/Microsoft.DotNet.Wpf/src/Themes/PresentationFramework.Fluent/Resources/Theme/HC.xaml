@@ -157,6 +157,8 @@
     <SolidColorBrush x:Key="SystemFillColorSolidAttentionBackgroundBrush" Color="{StaticResource SystemColorWindowColor}" />
     <SolidColorBrush x:Key="SystemFillColorSolidNeutralBackgroundBrush" Color="{StaticResource SystemColorWindowColor}" />
 
+    <SolidColorBrush x:Key="SystemControlForegroundBaseHighBrush" Color="{StaticResource SystemColorButtonTextColor}" />
+
     <!--  Elevation border brushes  -->
 
     <SolidColorBrush x:Key="ControlElevationBorderBrush" Color="{StaticResource SystemColorWindowTextColor}" />
@@ -349,6 +351,9 @@
     <!--  Flyout  -->
     <SolidColorBrush x:Key="FlyoutBackground" Color="{StaticResource SystemColorWindowColor}" />
     <SolidColorBrush x:Key="FlyoutBorderBrush" Color="{StaticResource SystemColorWindowTextColor}" />
+
+    <!--  GroupBox  -->
+    <SolidColorBrush x:Key="GroupBoxForeground" Color="{StaticResource SystemColorButtonTextColor}" />
 
     <!--  HyperlinkButton  -->
     <SolidColorBrush x:Key="HyperlinkButtonBackground" Color="Transparent" />

@@ -148,6 +148,7 @@
   <Color x:Key="LayerFillColorAlt">#0DFFFFFF</Color>
   <Color x:Key="LayerOnAcrylicFillColorDefault">#09FFFFFF</Color>
   <Color x:Key="LayerOnAccentAcrylicFillColorDefault">#09FFFFFF</Color>
+  <Color x:Key="SystemBaseHighColor">#FFFFFFFF</Color>
   <!--  Fallback color for missing Acrylic used for e.g. Flyouts  -->
   <Color x:Key="AcrylicBackgroundFillColorDefault">#2C2C2C</Color>
   <Color x:Key="LayerOnMicaBaseAltFillColorDefault">#733A3A3A</Color>
@@ -275,6 +276,7 @@
   <SolidColorBrush x:Key="SystemFillColorNeutralBackgroundBrush" Color="{StaticResource SystemFillColorNeutralBackground}" />
   <SolidColorBrush x:Key="SystemFillColorSolidAttentionBackgroundBrush" Color="{StaticResource SystemFillColorSolidAttentionBackground}" />
   <SolidColorBrush x:Key="SystemFillColorSolidNeutralBackgroundBrush" Color="{StaticResource SystemFillColorSolidNeutralBackground}" />
+  <SolidColorBrush x:Key="SystemControlForegroundBaseHighBrush" Color="{StaticResource SystemBaseHighColor}" />
   <!--  Elevation border brushes  -->
   <LinearGradientBrush x:Key="ControlElevationBorderBrush" MappingMode="Absolute" StartPoint="0,0" EndPoint="0,3">
     <!--<LinearGradientBrush.RelativeTransform>
@@ -469,6 +471,8 @@
   <!--  Flyout  -->
   <SolidColorBrush x:Key="FlyoutBackground" Color="{StaticResource AcrylicBackgroundFillColorDefault}" />
   <SolidColorBrush x:Key="FlyoutBorderBrush" Color="{StaticResource SurfaceStrokeColorFlyout}" />
+  <!--  GroupBox  -->
+  <SolidColorBrush x:Key="GroupBoxForeground" Color="{StaticResource SystemBaseHighColor}" />
   <!--  HyperlinkButton  -->
   <SolidColorBrush x:Key="HyperlinkButtonBackground" Color="{StaticResource SubtleFillColorTransparent}" />
   <SolidColorBrush x:Key="HyperlinkButtonBackgroundPointerOver" Color="{StaticResource SubtleFillColorSecondary}" />
@@ -2652,6 +2656,29 @@
     <Setter Property="Focusable" Value="False" />
     <Setter Property="SnapsToDevicePixels" Value="True" />
   </Style>
+  <Thickness x:Key="GroupBoxPadding">0,0,0,15</Thickness>
+  <system:Double x:Key="GroupBoxHeaderFontSize">20</system:Double>
+  <Thickness x:Key="GroupBoxHeaderMargin">0,4,0,20</Thickness>
+  <Style x:Key="DefaultGroupBoxStyle" TargetType="{x:Type GroupBox}">
+    <Setter Property="OverridesDefaultStyle" Value="True" />
+    <Setter Property="Foreground" Value="{DynamicResource GroupBoxForeground}" />
+    <Setter Property="Padding" Value="{DynamicResource GroupBoxPadding}" />
+    <Setter Property="Template">
+      <Setter.Value>
+        <ControlTemplate TargetType="{x:Type GroupBox}">
+          <Grid Background="{TemplateBinding Background}" SnapsToDevicePixels="true">
+            <Grid.RowDefinitions>
+              <RowDefinition Height="Auto" />
+              <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+            <ContentPresenter Grid.Row="0" TextElement.FontSize="{DynamicResource GroupBoxHeaderFontSize}" Margin="{DynamicResource GroupBoxHeaderMargin}" ContentSource="Header" RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+            <ContentPresenter Grid.Row="1" Margin="{TemplateBinding Padding}" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+          </Grid>
+        </ControlTemplate>
+      </Setter.Value>
+    </Setter>
+  </Style>
+  <Style BasedOn="{StaticResource DefaultGroupBoxStyle}" TargetType="{x:Type GroupBox}" />
   <Style x:Key="{x:Type GroupItem}" TargetType="{x:Type GroupItem}">
     <Setter Property="Template">
       <Setter.Value>

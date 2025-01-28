@@ -196,6 +196,7 @@
   <SolidColorBrush x:Key="SystemFillColorNeutralBackgroundBrush" Color="{StaticResource SystemColorWindowColor}" />
   <SolidColorBrush x:Key="SystemFillColorSolidAttentionBackgroundBrush" Color="{StaticResource SystemColorWindowColor}" />
   <SolidColorBrush x:Key="SystemFillColorSolidNeutralBackgroundBrush" Color="{StaticResource SystemColorWindowColor}" />
+  <SolidColorBrush x:Key="SystemControlForegroundBaseHighBrush" Color="{StaticResource SystemColorButtonTextColor}" />
   <!--  Elevation border brushes  -->
   <SolidColorBrush x:Key="ControlElevationBorderBrush" Color="{StaticResource SystemColorWindowTextColor}" />
   <SolidColorBrush x:Key="CircleElevationBorderBrush" Color="{StaticResource SystemColorWindowTextColor}" />
@@ -367,6 +368,8 @@
   <!--  Flyout  -->
   <SolidColorBrush x:Key="FlyoutBackground" Color="{StaticResource SystemColorWindowColor}" />
   <SolidColorBrush x:Key="FlyoutBorderBrush" Color="{StaticResource SystemColorWindowTextColor}" />
+  <!--  GroupBox  -->
+  <SolidColorBrush x:Key="GroupBoxForeground" Color="{StaticResource SystemColorButtonTextColor}" />
   <!--  HyperlinkButton  -->
   <SolidColorBrush x:Key="HyperlinkButtonBackground" Color="Transparent" />
   <SolidColorBrush x:Key="HyperlinkButtonBackgroundPointerOver" Color="{StaticResource SystemColorWindowColor}" />
@@ -2633,6 +2636,29 @@
     <Setter Property="Focusable" Value="False" />
     <Setter Property="SnapsToDevicePixels" Value="True" />
   </Style>
+  <Thickness x:Key="GroupBoxPadding">0,0,0,15</Thickness>
+  <system:Double x:Key="GroupBoxHeaderFontSize">20</system:Double>
+  <Thickness x:Key="GroupBoxHeaderMargin">0,4,0,20</Thickness>
+  <Style x:Key="DefaultGroupBoxStyle" TargetType="{x:Type GroupBox}">
+    <Setter Property="OverridesDefaultStyle" Value="True" />
+    <Setter Property="Foreground" Value="{DynamicResource GroupBoxForeground}" />
+    <Setter Property="Padding" Value="{DynamicResource GroupBoxPadding}" />
+    <Setter Property="Template">
+      <Setter.Value>
+        <ControlTemplate TargetType="{x:Type GroupBox}">
+          <Grid Background="{TemplateBinding Background}" SnapsToDevicePixels="true">
+            <Grid.RowDefinitions>
+              <RowDefinition Height="Auto" />
+              <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+            <ContentPresenter Grid.Row="0" TextElement.FontSize="{DynamicResource GroupBoxHeaderFontSize}" Margin="{DynamicResource GroupBoxHeaderMargin}" ContentSource="Header" RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+            <ContentPresenter Grid.Row="1" Margin="{TemplateBinding Padding}" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+          </Grid>
+        </ControlTemplate>
+      </Setter.Value>
+    </Setter>
+  </Style>
+  <Style BasedOn="{StaticResource DefaultGroupBoxStyle}" TargetType="{x:Type GroupBox}" />
   <Style x:Key="{x:Type GroupItem}" TargetType="{x:Type GroupItem}">
     <Setter Property="Template">
       <Setter.Value>

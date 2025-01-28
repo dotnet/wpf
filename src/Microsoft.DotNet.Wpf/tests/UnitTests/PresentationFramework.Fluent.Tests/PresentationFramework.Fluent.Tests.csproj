@@ -13,6 +13,7 @@
     <PackageReference Include="xunit.stafact" Version="$(XUnitStaFactPackageVersion)" />
     <PackageReference Include="System.Configuration.ConfigurationManager" Version="$(SystemConfigurationConfigurationManagerPackageVersion)" />
     <PackageReference Include="$(SystemIOPackagingPackage)" Version="$(SystemIOPackagingVersion)" />
+    <PackageReference Include="System.Windows.Extensions" Version="$(SystemWindowsExtensionsPackageVersion)" />
   </ItemGroup>
 
   <ItemGroup>
@@ -20,16 +21,18 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="$(WpfSourceDir)PresentationFramework\PresentationFramework.csproj" />
-    <ProjectReference Include="$(WpfSourceDir)System.Windows.Primitives\System.Windows.Primitives.csproj" />
-
-    <ProjectReference Include="$(WpfSourceDir)PresentationCore\PresentationCore.csproj" />
     <ProjectReference Include="$(WpfSourceDir)DirectWriteForwarder\DirectWriteForwarder.vcxproj">
       <UndefineProperties>TargetFramework;TargetFrameworks</UndefineProperties>
     </ProjectReference>
-    <ProjectReference Include="$(WpfSourceDir)System.Xaml\System.Xaml.csproj" />
-    <ProjectReference Include="$(WpfSourceDir)WindowsBase\WindowsBase.csproj" />
+
+    <ProjectReference Include="$(WpfSourceDir)PresentationCore\PresentationCore.csproj" />
+    <ProjectReference Include="$(WpfSourceDir)PresentationFramework\PresentationFramework.csproj" />
     <ProjectReference Include="$(WpfSourceDir)UIAutomation\UIAutomationTypes\UIAutomationTypes.csproj" />
+    <ProjectReference Include="$(WpfSourceDir)WindowsBase\WindowsBase.csproj" />
+    <ProjectReference Include="$(WpfSourceDir)System.Xaml\System.Xaml.csproj" />
+    <ProjectReference Include="$(WpfSourceDir)System.Windows.Primitives\System.Windows.Primitives.csproj" />
+
     <ProjectReference Include="$(WpfSourceDir)UIAutomation\UIAutomationProvider\UIAutomationProvider.csproj" />
+    <ProjectReference Include="$(WpfSourceDir)Themes\PresentationFramework.Fluent\PresentationFramework.Fluent.csproj" />
   </ItemGroup>
 </Project>

@@ -132,6 +132,7 @@ jobs:
           ${{ if eq(parameters.runAsPublic, 'true') }}:
             Build_Debug_x86:
               _BuildConfig: Debug
+              _Coverage: true
               # override some variables for debug
               # _SignType has to be real for package publishing to succeed - do not override to test.
           Build_Release_x86:
@@ -139,6 +140,7 @@ jobs:
           ${{ if eq(parameters.runAsPublic, 'true') }}:
             Build_Debug_x64:
               _BuildConfig: Debug
+              _Coverage: true
               # override some variables for debug
               # _SignType has to be real for package publishing to succeed - do not override to test.
               _Platform: x64
@@ -174,6 +176,7 @@ jobs:
           $(_OfficialBuildIdArgs)
           $(_PlatformArgs)
           $(_InternalRuntimeDownloadArgs)
+          /p:Coverage=$(_Coverage)
         displayName: Windows Build / Publish
         # This condition should be kept in sync with the condition for 'Run DRTs' step 
         #   When building on a regular pipeline (!_HelixPipeline), build as usual 
@@ -191,6 +194,7 @@ jobs:
           $(_PlatformArgs)
           $(_InternalRuntimeDownloadArgs)
           /bl:$(Build.SourcesDirectory)\artifacts\log\$(_BuildConfig)\Test.binlog
+          /p:Coverage=$(_Coverage)
         displayName: Run xUnit Tests
         condition: and(or(ne(variables['_HelixPipeline'], 'true'), and(eq(variables['_HelixPipeline'], 'true') ,eq(variables['_BuildConfig'], 'Release'), eq(variables['_PublicBuildPipeline'], 'true'), eq(variables['_ContinuousIntegrationTestsEnabled'], 'true'))), ne(variables['_Platform'], 'arm64'))
 
@@ -203,7 +207,15 @@ jobs:
           mergeTestResults: true
         continueOnError: true
         condition: and(eq(variables['_BuildConfig'], 'Release'), ne(variables['_Platform'], 'arm64'))
-
+      
+      # Upload code coverage data
+      - script: $(Build.SourcesDirectory)/.dotnet/dotnet msbuild
+          eng/CodeCoverage.proj
+          /p:Configuration=$(_BuildConfig)
+          /p:CodeCovToken=$(CODECOV_TOKEN)
+          /bl:$(BUILD.SOURCESDIRECTORY)\artifacts\log\$(_BuildConfig)\CodeCoverage.binlog
+        displayName: Upload coverage to codecov.io
+        condition: and(succeeded(), eq(variables._Coverage, 'true'))
       # - task: PowerShell@2
       #   displayName: Install .NET Core
       #   inputs:

@@ -1,9 +1,6 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
-
-// Allow suppression of certain presharp messages
-#pragma warning disable 1634, 1691
 
 using System.Collections;
 using System.Runtime.InteropServices;
@@ -127,13 +124,11 @@ namespace System.Windows.Media.Imaging
                 {
                     if (!_fStarted)
                     {
-#pragma warning suppress 56503 // Suppress presharp warning: Follows a pattern similar to Nullable.
-                    throw new InvalidOperationException(SR.Enumerator_NotStarted);
+                        throw new InvalidOperationException(SR.Enumerator_NotStarted);
                     }
                     else
                     {
-#pragma warning suppress 56503 // Suppress presharp warning: Follows a pattern similar to Nullable.
-                    throw new InvalidOperationException(SR.Enumerator_ReachedEnd);
+                        throw new InvalidOperationException(SR.Enumerator_ReachedEnd);
                     }
                 }
 

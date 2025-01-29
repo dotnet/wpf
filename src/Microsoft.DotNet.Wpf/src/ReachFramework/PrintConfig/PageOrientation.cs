@@ -101,8 +101,10 @@ namespace MS.Internal.Printing.Configuration
 
         internal static PrintCapabilityFeature NewFeatureCallback(InternalPrintCapabilities printCap)
         {
-            PageOrientationCapability cap = new PageOrientationCapability(printCap);
-            cap._orientations = new Collection<OrientationOption>();
+            PageOrientationCapability cap = new PageOrientationCapability(printCap)
+            {
+                _orientations = new Collection<OrientationOption>()
+            };
 
             return cap;
         }

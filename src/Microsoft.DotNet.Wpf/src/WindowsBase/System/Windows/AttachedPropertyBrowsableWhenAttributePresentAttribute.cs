@@ -64,8 +64,8 @@ namespace System.Windows
         /// </summary>
         public override bool Equals(object obj) 
         {
-            AttachedPropertyBrowsableWhenAttributePresentAttribute other = obj as AttachedPropertyBrowsableWhenAttributePresentAttribute;
-            if (other == null) return false;
+            if (obj is not AttachedPropertyBrowsableWhenAttributePresentAttribute other)
+                return false;
             return _attributeType == other._attributeType;
         }
 

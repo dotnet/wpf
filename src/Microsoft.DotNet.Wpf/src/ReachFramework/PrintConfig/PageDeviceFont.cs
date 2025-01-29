@@ -103,8 +103,10 @@ namespace MS.Internal.Printing.Configuration
 
         internal static PrintCapabilityFeature NewFeatureCallback(InternalPrintCapabilities printCap)
         {
-            PageDeviceFontSubstitutionCapability cap = new PageDeviceFontSubstitutionCapability(printCap);
-            cap._substOptions = new Collection<DeviceFontSubstitutionOption>();
+            PageDeviceFontSubstitutionCapability cap = new PageDeviceFontSubstitutionCapability(printCap)
+            {
+                _substOptions = new Collection<DeviceFontSubstitutionOption>()
+            };
 
             return cap;
         }

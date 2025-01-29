@@ -11,8 +11,6 @@ using MS.Internal;
 //      FixedTextPointer.
 //
 
-#pragma warning disable 1634, 1691 // To enable presharp warning disables (#pragma suppress) below.
-
 namespace System.Windows.Documents
 {
     /// <summary>
@@ -632,7 +630,6 @@ namespace System.Windows.Documents
         {
             get
             {
-                #pragma warning suppress 56503
                 throw new NotImplementedException();
             }
         }

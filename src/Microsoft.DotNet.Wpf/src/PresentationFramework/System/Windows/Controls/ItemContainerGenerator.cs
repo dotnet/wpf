@@ -2055,7 +2055,8 @@ namespace System.Windows.Controls
 
             // add it to the list of placeholder items (this keeps it from being GC'd)
             if (_emptyGroupItems == null)
-                _emptyGroupItems = new ArrayList();
+                _emptyGroupItems = new List<EmptyGroupItem>();
+
             _emptyGroupItems.Add(emptyGroupItem);
         }
 
@@ -2489,8 +2490,10 @@ namespace System.Windows.Controls
             // otherwise, create a new unrealized block
             else
             {
-                uib = new UnrealizedItemBlock();
-                uib.ItemCount = 1;
+                uib = new UnrealizedItemBlock
+                {
+                    ItemCount = 1
+                };
 
                 // split the current realized block, if necessary
                 RealizedItemBlock rib;
@@ -2706,8 +2709,10 @@ namespace System.Windows.Controls
             // otherwise, create a new unrealized block
             else
             {
-                uib = new UnrealizedItemBlock();
-                uib.ItemCount = 1;
+                uib = new UnrealizedItemBlock
+                {
+                    ItemCount = 1
+                };
 
                 // split the current realized block, if necessary
                 if (offsetFromBlockStart > 0 && (rib = block as RealizedItemBlock) != null)
@@ -2792,7 +2797,7 @@ namespace System.Windows.Controls
         private ReadOnlyCollection<object> _itemsReadOnly;
         private GroupStyle      _groupStyle;
         private ItemContainerGenerator _parent;
-        private ArrayList       _emptyGroupItems;
+        private List<EmptyGroupItem> _emptyGroupItems;
         private int             _alternationCount;
 
         private Type            _containerType;     // type of containers on the recycle queue

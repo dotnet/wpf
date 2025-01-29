@@ -205,8 +205,10 @@ namespace MS.Internal.Printing.Configuration
 
         internal static PrintCapabilityFeature NewFeatureCallback(InternalPrintCapabilities printCap)
         {
-            JobDuplexCapability cap = new JobDuplexCapability(printCap);
-            cap._duplexOptions = new Collection<DuplexOption>();
+            JobDuplexCapability cap = new JobDuplexCapability(printCap)
+            {
+                _duplexOptions = new Collection<DuplexOption>()
+            };
 
             return cap;
         }

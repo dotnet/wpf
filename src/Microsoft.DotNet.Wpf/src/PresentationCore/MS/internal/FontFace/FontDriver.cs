@@ -7,10 +7,6 @@ using System.Runtime.InteropServices;
 using MS.Internal.PresentationCore;
 using MS.Internal.FontCache;
 
-// Since we disable PreSharp warnings in this file, we first need to disable warnings about unknown message numbers and unknown pragmas.
-#pragma warning disable 1634, 1691
-
-
 namespace MS.Internal.FontFace
 {
     /// <summary>

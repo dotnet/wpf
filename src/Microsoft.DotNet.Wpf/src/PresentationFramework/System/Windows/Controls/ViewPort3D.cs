@@ -52,16 +52,17 @@ namespace System.Windows.Controls
         /// </summary>
         public Viewport3D()
         {
-            _viewport3DVisual = new Viewport3DVisual();
-
-            // The value for the Camera property and the Children property on Viewport3D
-            // will also be the value for these properties on the Viewport3DVisual we
-            // create as an internal Visual child.  This then will cause these values to
-            // be shared, which will break property inheritance, dynamic resource references
-            // and databinding.  To prevent this, we mark the internal
-            // Viewport3DVisual.CanBeInheritanceContext to be false, allowing Camera and
-            // Children to only pick up value context from the Viewport3D (this).
-            _viewport3DVisual.CanBeInheritanceContext = false;
+            _viewport3DVisual = new Viewport3DVisual
+            {
+                // The value for the Camera property and the Children property on Viewport3D
+                // will also be the value for these properties on the Viewport3DVisual we
+                // create as an internal Visual child.  This then will cause these values to
+                // be shared, which will break property inheritance, dynamic resource references
+                // and databinding.  To prevent this, we mark the internal
+                // Viewport3DVisual.CanBeInheritanceContext to be false, allowing Camera and
+                // Children to only pick up value context from the Viewport3D (this).
+                CanBeInheritanceContext = false
+            };
 
             this.AddVisualChild(_viewport3DVisual);
 

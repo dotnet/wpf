@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -12,12 +12,6 @@ using System.Threading;
 using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
 using System.Runtime.CompilerServices;
-
-// Disabling 1634 and 1691:
-// In order to avoid generating warnings about unknown message numbers and
-// unknown pragmas when compiling C# source code with the C# compiler,
-// you need to disable warnings 1634 and 1691. (Presharp Documentation)
-#pragma warning disable 1634, 1691
 
 namespace System.Windows.Threading
 {
@@ -105,13 +99,12 @@ namespace System.Windows.Threading
                         // being updated if we encounter a dead weak reference.
                         for(int i = 0; i < _dispatchers.Count; i++)
                         {
-                            Dispatcher d = _dispatchers[i].Target as Dispatcher;
-                            if(d != null)
+                            if (_dispatchers[i].Target is Dispatcher d)
                             {
                                 // Note: we compare the thread objects themselves to protect
                                 // against threads reusing old thread IDs.
                                 Thread dispatcherThread = d.Thread;
-                                if(dispatcherThread == thread)
+                                if (dispatcherThread == thread)
                                 {
                                     dispatcher = d;
 
@@ -1427,8 +1420,10 @@ namespace System.Windows.Threading
             // Turn off processing.
             _disableProcessingCount++;
 
-            DispatcherProcessingDisabled dpd = new DispatcherProcessingDisabled();
-            dpd._dispatcher = this;
+            DispatcherProcessingDisabled dpd = new DispatcherProcessingDisabled
+            {
+                _dispatcher = this
+            };
             return dpd;
         }
 
@@ -1694,8 +1689,7 @@ namespace System.Windows.Threading
             {
                 if (!_hasRequestProcessingFailed)
                     return _reservedPtsCache;
-                Tuple<Object, List<String>> tuple = _reservedPtsCache as Tuple<Object, List<String>>;
-                if (tuple == null)
+                if (_reservedPtsCache is not Tuple<Object, List<String>> tuple)
                     return _reservedPtsCache;
                 else
                     return tuple.Item1;
@@ -1707,8 +1701,7 @@ namespace System.Windows.Threading
                     _reservedPtsCache = value;
                 else
                 {
-                    Tuple<Object, List<String>> tuple = _reservedPtsCache as Tuple<Object, List<String>>;
-                    List<String> list = (tuple != null) ? tuple.Item2 : new List<String>();
+                    List<String> list = (_reservedPtsCache is Tuple<Object, List<String>> tuple) ? tuple.Item2 : new List<String>();
                     _reservedPtsCache = new Tuple<Object, List<String>>(value, list);
                 }
             }
@@ -2488,8 +2481,7 @@ namespace System.Windows.Threading
             }
 
             // add a new entry to the failure log
-            Tuple<Object, List<String>> tuple = _reservedPtsCache as Tuple<Object, List<String>>;
-            if (tuple != null)
+            if (_reservedPtsCache is Tuple<Object, List<String>> tuple)
             {
                 List<String> list = tuple.Item2;
                 list.Add(String.Format(System.Globalization.CultureInfo.InvariantCulture,
@@ -2500,7 +2492,7 @@ namespace System.Windows.Threading
                 if (list.Count > 1000)
                 {
                     // keep the earliest and latest failures
-                    list.RemoveRange(100, list.Count-200);
+                    list.RemoveRange(100, list.Count - 200);
                     // acknowledge the gap
                     list.Insert(100, "... entries removed to conserve memory ...");
                 }

@@ -632,8 +632,10 @@ namespace System.Windows.Input
                 return true;
             }
 
-            CancelEventArgs e = new CancelEventArgs();
-            e.Cancel = false;
+            CancelEventArgs e = new CancelEventArgs
+            {
+                Cancel = false
+            };
 
             //
             // call the listeners

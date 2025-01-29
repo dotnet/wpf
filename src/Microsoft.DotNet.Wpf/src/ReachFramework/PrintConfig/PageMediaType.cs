@@ -104,8 +104,10 @@ namespace MS.Internal.Printing.Configuration
 
         internal static PrintCapabilityFeature NewFeatureCallback(InternalPrintCapabilities printCap)
         {
-            PageMediaTypeCapability cap = new PageMediaTypeCapability(printCap);
-            cap._mediaTypes = new Collection<MediaTypeOption>();
+            PageMediaTypeCapability cap = new PageMediaTypeCapability(printCap)
+            {
+                _mediaTypes = new Collection<MediaTypeOption>()
+            };
 
             return cap;
         }

@@ -48,8 +48,10 @@ namespace System.Windows.Documents
         #region Constructors
         static FixedPage()
         {
-            FrameworkPropertyMetadata metadata = new FrameworkPropertyMetadata(FlowDirection.LeftToRight, FrameworkPropertyMetadataOptions.AffectsParentArrange);
-            metadata.CoerceValueCallback = new CoerceValueCallback(CoerceFlowDirection);
+            FrameworkPropertyMetadata metadata = new FrameworkPropertyMetadata(FlowDirection.LeftToRight, FrameworkPropertyMetadataOptions.AffectsParentArrange)
+            {
+                CoerceValueCallback = new CoerceValueCallback(CoerceFlowDirection)
+            };
             FlowDirectionProperty.OverrideMetadata(typeof(FixedPage), metadata);
             // This puts the origin always at the top left of the page and prevents mirroring unless this is overridden.
         }

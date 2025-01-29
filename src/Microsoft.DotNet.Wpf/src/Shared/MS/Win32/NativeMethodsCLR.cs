@@ -72,9 +72,7 @@ namespace MS.Win32
 
             public override bool Equals( object obj )
             {
-                XFORM xform = obj as XFORM;
-
-                if( xform == null )
+                if (obj is not XFORM xform)
                 {
                     return false;
                 }

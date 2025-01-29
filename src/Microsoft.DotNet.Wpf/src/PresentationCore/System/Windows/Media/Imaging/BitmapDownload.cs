@@ -1,8 +1,6 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
-
-#pragma warning disable 1634, 1691 // Allow suppression of certain presharp messages
 
 using System.IO;
 using System.Collections;
@@ -101,8 +99,10 @@ namespace System.Windows.Media.Imaging
                 }
             }
 
-            entry = new QueueEntry();
-            entry.decoders  = new List<WeakReference>();
+            entry = new QueueEntry
+            {
+                decoders = new List<WeakReference>()
+            };
 
             lock (_syncLock)
             {
@@ -201,8 +201,6 @@ namespace System.Windows.Media.Imaging
                 {
                     QueueEntry entry = (QueueEntry)workQueue.Dequeue();
 
-                    #pragma warning disable 6500
-
                     // Catch all exceptions and marshal them to the correct thread
                     try
                     {
@@ -227,8 +225,6 @@ namespace System.Windows.Media.Imaging
                         //
                         entry = null;
                     }
-
-                    #pragma warning restore 6500
                 }
             }
         }
@@ -238,8 +234,6 @@ namespace System.Windows.Media.Imaging
         private static void ResponseCallback(IAsyncResult result)
         {
             QueueEntry entry = (QueueEntry)result.AsyncState;
-
-            #pragma warning disable 6500
 
             // Catch all exceptions and marshal them to the correct thread
             try
@@ -254,12 +248,10 @@ namespace System.Windows.Media.Imaging
                 // Signal
                 _waitEvent.Set();
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 MarshalException(entry, e);
             }
-
-            #pragma warning restore 6500
         }
 
         ///
@@ -270,18 +262,14 @@ namespace System.Windows.Media.Imaging
             QueueEntry entry = (QueueEntry)result.AsyncState;
             int bytesRead = 0;
 
-            #pragma warning disable 6500
-
             try
             {
                 bytesRead = entry.inputStream.EndRead(result);
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 MarshalException(entry, e);
             }
-
-            #pragma warning restore 6500
 
             if (bytesRead == 0)
             {

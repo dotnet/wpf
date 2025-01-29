@@ -1691,8 +1691,10 @@ namespace System.Windows.Controls
             //Bound to Ctrl+1.
             InputBinding zoom100InputBinding =
                 new InputBinding(NavigationCommands.Zoom,
-                new KeyGesture(Key.D1, ModifierKeys.Control));
-            zoom100InputBinding.CommandParameter = 100.0;
+                new KeyGesture(Key.D1, ModifierKeys.Control))
+                {
+                    CommandParameter = 100.0
+                };
 
             CommandManager.RegisterClassInputBinding(typeof(DocumentViewer),
                 zoom100InputBinding);
@@ -1701,8 +1703,10 @@ namespace System.Windows.Controls
             //Bound to Ctrl+3.
             InputBinding wholePageInputBinding =
                             new InputBinding(DocumentViewer.FitToMaxPagesAcrossCommand,
-                            new KeyGesture(Key.D3, ModifierKeys.Control));
-            wholePageInputBinding.CommandParameter = 1;
+                            new KeyGesture(Key.D3, ModifierKeys.Control))
+                            {
+                                CommandParameter = 1
+                            };
 
             CommandManager.RegisterClassInputBinding(typeof(DocumentViewer),
                 wholePageInputBinding);
@@ -1711,8 +1715,10 @@ namespace System.Windows.Controls
             //Bound to Ctrl+4.
             InputBinding twoPagesInputBinding =
                             new InputBinding(DocumentViewer.FitToMaxPagesAcrossCommand,
-                            new KeyGesture(Key.D4, ModifierKeys.Control));
-            twoPagesInputBinding.CommandParameter = 2;
+                            new KeyGesture(Key.D4, ModifierKeys.Control))
+                            {
+                                CommandParameter = 2
+                            };
 
             CommandManager.RegisterClassInputBinding(typeof(DocumentViewer),
                 twoPagesInputBinding);
@@ -2051,8 +2057,10 @@ namespace System.Windows.Controls
             if (_documentScrollInfo == null)
             {
                 // Construct IDocumentScrollInfo (DocumentGrid).
-                _documentScrollInfo = new DocumentGrid();
-                _documentScrollInfo.DocumentViewerOwner = this;
+                _documentScrollInfo = new DocumentGrid
+                {
+                    DocumentViewerOwner = this
+                };
 
                 //If IDocumentScrollInfo is a FrameworkElement we can give it a
                 //Name for automation.
@@ -2327,9 +2335,8 @@ namespace System.Windows.Controls
             bool ok;
 
             // Ensure value is double
-            if (value is double)
+            if (value is double checkValue)
             {
-                double checkValue = (double)value;
 
                 // Check if double is within an assumed range
                 if ((double.IsNaN(checkValue)) ||

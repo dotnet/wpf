@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -64,10 +64,12 @@ namespace System.Windows.Documents
         {
             TextTreeTextElementNode clone;
 
-            clone = new TextTreeTextElementNode();
-            clone._symbolCount = _symbolCount;
-            clone._imeCharCount = _imeCharCount;
-            clone._textElement = _textElement;
+            clone = new TextTreeTextElementNode
+            {
+                _symbolCount = _symbolCount,
+                _imeCharCount = _imeCharCount,
+                _textElement = _textElement
+            };
 
             return clone;
         }

@@ -466,10 +466,11 @@ namespace MS.Internal.AutomationProxies
             if (index != -1)
             {
                 // get id of the group to which item belongs
-                NativeMethods.LVITEM_V6 item = new NativeMethods.LVITEM_V6 ();
-
-                item.mask = NativeMethods.LVIF_GROUPID;
-                item.iItem = index;
+                NativeMethods.LVITEM_V6 item = new NativeMethods.LVITEM_V6
+                {
+                    mask = NativeMethods.LVIF_GROUPID,
+                    iItem = index
+                };
                 if (XSendMessage.GetItem(hwnd, ref item))
                 {
                     WindowsListViewGroup group = new WindowsListViewGroup (hwnd, parent, item.iGroupID);

@@ -314,8 +314,10 @@ namespace System.Windows.Controls
         // Allocates the initial render scope for this control.
         internal override FrameworkElement CreateRenderScope()
         {
-            FlowDocumentView renderScope = new FlowDocumentView();
-            renderScope.Document = this.Document;
+            FlowDocumentView renderScope = new FlowDocumentView
+            {
+                Document = this.Document
+            };
 
             // Set a margin so that the BiDi Or Italic caret has room to render at the edges of content.
             // Otherwise, anti-aliasing or italic causes the caret to be partially clipped.

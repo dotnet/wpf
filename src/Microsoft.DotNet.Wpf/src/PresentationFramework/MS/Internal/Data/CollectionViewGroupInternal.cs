@@ -13,6 +13,7 @@ using System.ComponentModel;    // PropertyChangedEventArgs, GroupDescription
 using System.Windows;           // DependencyProperty.UnsetValue
 using System.Windows.Data;      // CollectionViewGroup
 using System.Windows.Threading; // Dispatcher
+using System.Collections.Generic;
 
 namespace MS.Internal.Data
 {
@@ -521,19 +522,18 @@ namespace MS.Internal.Data
         internal void AddSubgroupToMap(object nameKey, CollectionViewGroupInternal subgroup)
         {
             Debug.Assert(subgroup != null);
-            if (nameKey == null)
-            {
-                // use null name place holder.
-                nameKey = _nullGroupNameKey;
-            }
-            if (_nameToGroupMap == null)
-            {
-                _nameToGroupMap = new Hashtable();
-            }
+
+            // Use null name place holder.
+            nameKey ??= s_nullGroupNameKey;
+
+            // The dictionary is not initialized until first addition 
+            _nameToGroupMap ??= new Dictionary<object, WeakReference>();
+
             // Add to the map. Use WeakReference to avoid memory leaks
             // in case some one calls ProtectedItems.Remove instead of
             // CollectionViewGroupInternal.Remove
             _nameToGroupMap[nameKey] = new WeakReference(subgroup);
+
             ScheduleMapCleanup();
         }
 
@@ -543,27 +543,20 @@ namespace MS.Internal.Data
         private void RemoveSubgroupFromMap(CollectionViewGroupInternal subgroup)
         {
             Debug.Assert(subgroup != null);
+
             if (_nameToGroupMap == null)
-            {
                 return;
-            }
-            object keyToBeRemoved = null;
 
             // Search for the subgroup in the map.
-            foreach (object key in _nameToGroupMap.Keys)
+            foreach (KeyValuePair<object, WeakReference> item in _nameToGroupMap)
             {
-                WeakReference weakRef = _nameToGroupMap[key] as WeakReference;
-                if (weakRef != null &&
-                    weakRef.Target == subgroup)
+                if (item.Value.Target == subgroup)
                 {
-                    keyToBeRemoved = key;
+                    _nameToGroupMap.Remove(item.Key);
                     break;
                 }
             }
-            if (keyToBeRemoved != null)
-            {
-                _nameToGroupMap.Remove(keyToBeRemoved);
-            }
+
             ScheduleMapCleanup();
         }
 
@@ -574,18 +567,16 @@ namespace MS.Internal.Data
         {
             if (_nameToGroupMap != null)
             {
-                if (nameKey == null)
-                {
-                    // use null name place holder.
-                    nameKey = _nullGroupNameKey;
-                }
+                // Use null name place holder.
+                nameKey ??= s_nullGroupNameKey;
+
                 // Find and return the subgroup
-                WeakReference weakRef = _nameToGroupMap[nameKey] as WeakReference;
-                if (weakRef != null)
+                if (_nameToGroupMap.TryGetValue(nameKey, out WeakReference weakRef))
                 {
-                    return (weakRef.Target as CollectionViewGroupInternal);
+                    return weakRef.Target as CollectionViewGroupInternal;
                 }
             }
+
             return null;
         }
 
@@ -598,28 +589,20 @@ namespace MS.Internal.Data
             if (!_mapCleanupScheduled)
             {
                 _mapCleanupScheduled = true;
-                Dispatcher.CurrentDispatcher.BeginInvoke(
-                    (Action)delegate ()
+                Dispatcher.CurrentDispatcher.BeginInvoke(() =>
+                {
+                    _mapCleanupScheduled = false;
+                    if (_nameToGroupMap != null)
                     {
-                        _mapCleanupScheduled = false;
-                        if (_nameToGroupMap != null)
+                        foreach (KeyValuePair<object, WeakReference> item in _nameToGroupMap)
                         {
-                            ArrayList keysToBeRemoved = new ArrayList();
-                            foreach (object key in _nameToGroupMap.Keys)
+                            if (!item.Value.IsAlive)
                             {
-                                WeakReference weakRef = _nameToGroupMap[key] as WeakReference;
-                                if (weakRef == null || !weakRef.IsAlive)
-                                {
-                                    keysToBeRemoved.Add(key);
-                                }
-                            }
-                            foreach (object key in keysToBeRemoved)
-                            {
-                                _nameToGroupMap.Remove(key);
+                                _nameToGroupMap.Remove(item.Key);
                             }
                         }
-                    },
-                    DispatcherPriority.ContextIdle);
+                    }
+                }, DispatcherPriority.ContextIdle);
             }
         }
 
@@ -754,16 +737,18 @@ namespace MS.Internal.Data
         //
         //------------------------------------------------------
 
-        GroupDescription _groupBy;
-        CollectionViewGroupInternal _parentGroup;
-        IComparer _groupComparer;
-        int _fullCount = 1;
-        int _lastIndex;
-        int _version;       // for detecting stale enumerators
-        Hashtable _nameToGroupMap; // To cache the mapping between name and subgroup
-        bool _mapCleanupScheduled = false;
-        bool _isExplicit;
-        static NamedObject _nullGroupNameKey = new NamedObject("NullGroupNameKey");
+        private readonly CollectionViewGroupInternal _parentGroup;
+        private readonly bool _isExplicit;
+
+        private GroupDescription _groupBy;
+        private IComparer _groupComparer;
+        private int _fullCount = 1;
+        private int _lastIndex;
+        private int _version;       // for detecting stale enumerators
+
+        private static readonly NamedObject s_nullGroupNameKey = new("NullGroupNameKey");
+        private Dictionary<object, WeakReference> _nameToGroupMap; // To cache the mapping between name and subgroup
+        private bool _mapCleanupScheduled = false;
 
         #endregion Private fields
 
@@ -865,7 +850,7 @@ namespace MS.Internal.Data
             {
                 if (_toRemove == null)
                 {
-                    _toRemove = new System.Collections.Generic.List<CollectionViewGroupInternal>();
+                    _toRemove = new List<CollectionViewGroupInternal>();
                 }
                 _toRemove.Add(group);
             }
@@ -890,7 +875,7 @@ namespace MS.Internal.Data
                 }
             }
 
-            System.Collections.Generic.List<CollectionViewGroupInternal> _toRemove;
+            private List<CollectionViewGroupInternal> _toRemove;
         }
 
         #endregion Private classes

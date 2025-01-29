@@ -2,11 +2,6 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-//
-// Description:
-//      Implements the FixedDocumentSequence element
-//
-
 using MS.Internal.Documents;
 using System.Collections;
 using System.Collections.Specialized;
@@ -17,8 +12,6 @@ using System.Windows.Threading;     // Dispatcher
 using System.Windows.Media;         // Visual
 using System.Windows.Markup; // IAddChild, ContentProperty
 using System.Windows.Navigation;
-
-#pragma warning disable 1634, 1691  // suppressing PreSharp warnings
 
 namespace System.Windows.Documents
 {
@@ -320,11 +313,9 @@ namespace System.Windows.Documents
             // Because of that we are expecting one of 2 types here.
             DynamicDocumentPaginator childPaginator = null;
             ContentPosition childContentPosition = null;
-            if (contentPosition is DocumentSequenceTextPointer)
+            if (contentPosition is DocumentSequenceTextPointer dsTextPointer)
             {
-                DocumentSequenceTextPointer dsTextPointer = (DocumentSequenceTextPointer)contentPosition;
 
-                #pragma warning suppress 6506 // dsTextPointer is obviously not null
                 childPaginator = GetPaginator(dsTextPointer.ChildBlock.DocRef);
                 childContentPosition = dsTextPointer.ChildPointer as ContentPosition;
             }

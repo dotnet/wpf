@@ -304,7 +304,7 @@ namespace System.Windows.Controls.Primitives
         {
             ItemsControl ic = ItemsControl.ItemsControlFromItemContainer(TemplatedParent);
 
-            return (ic != null) ? ic : (FrameworkElement)this;
+            return ic ?? (FrameworkElement)this;
         }
 
         // if and only if both conditions below are satisfied, row presenter visual is ready.

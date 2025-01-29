@@ -1091,8 +1091,10 @@ namespace System.Windows.Controls
 
         private BindingBase GetDatePickerBinding(DependencyProperty property)
         {
-            Binding binding = new Binding(property.Name);
-            binding.Source = this;
+            Binding binding = new Binding(property.Name)
+            {
+                Source = this
+            };
             return binding;
         }
 

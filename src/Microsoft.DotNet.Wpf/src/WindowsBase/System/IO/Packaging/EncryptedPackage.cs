@@ -491,8 +491,7 @@ namespace System.IO.Packaging
             }
             catch (IOException ex)
             {
-                COMException comException = ex.InnerException as COMException;
-                if (comException != null && comException.ErrorCode == STG_E_FILEALREADYEXISTS)
+                if (ex.InnerException is COMException comException && comException.ErrorCode == STG_E_FILEALREADYEXISTS)
                     return false;
 
                 throw;  // Any other kind of IOException is a real error.
@@ -548,8 +547,7 @@ namespace System.IO.Packaging
             }
             catch (IOException ex)
             {
-                COMException comException = ex.InnerException as COMException;
-                if (comException != null && comException.ErrorCode == STG_E_FILEALREADYEXISTS)
+                if (ex.InnerException is COMException comException && comException.ErrorCode == STG_E_FILEALREADYEXISTS)
                     return false;
 
                 throw;  // Any other kind of IOException is a real error.
@@ -905,8 +903,7 @@ namespace System.IO.Packaging
 
             foreach (IDataTransform dataTransform in transforms)
             {
-                string id = dataTransform.TransformIdentifier as string;
-                if (id != null &&
+                if (dataTransform.TransformIdentifier is string id &&
                     string.Equals(id, RightsManagementEncryptionTransform.ClassTransformIdentifier, StringComparison.OrdinalIgnoreCase))
                 {
                     // Do not allow more than one RM Transform
@@ -1126,8 +1123,8 @@ namespace System.IO.Packaging
                 //copy the stream
 
                 PackagingUtilities.CopyStream(packageStream, _packageStream,
-                                                Int64.MaxValue, /*bytes to copy*/
-                                                4096 /*buffer size */);
+                                                bytesToCopy: Int64.MaxValue,
+                                                bufferSize: 4096);
                 _package = Package.Open(_packageStream, FileMode.Open, this.FileOpenAccess);
             }
             else

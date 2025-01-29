@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -85,10 +85,12 @@ namespace Microsoft.Windows.Themes
             TimeSpan translateTime = TimeSpan.FromSeconds(twiceWidth / 200.0); // travel at 200px /second
             TimeSpan pauseTime = TimeSpan.FromSeconds(1.0);  // pause 1 second between animations
 
-            DoubleAnimationUsingKeyFrames animation = new DoubleAnimationUsingKeyFrames();
-            animation.BeginTime = TimeSpan.Zero;
-            animation.Duration = new Duration(translateTime + pauseTime);
-            animation.RepeatBehavior = RepeatBehavior.Forever;
+            DoubleAnimationUsingKeyFrames animation = new DoubleAnimationUsingKeyFrames
+            {
+                BeginTime = TimeSpan.Zero,
+                Duration = new Duration(translateTime + pauseTime),
+                RepeatBehavior = RepeatBehavior.Forever
+            };
             animation.KeyFrames.Add(new LinearDoubleKeyFrame(twiceWidth, translateTime));
 
             TranslateTransform translation = new TranslateTransform();

@@ -367,8 +367,10 @@ namespace System.Windows.Baml2006
             {
                 if (typeId == _bamlType.Count)
                 {
-                    BamlType type = new BamlType(assemblyId, typeName);
-                    type.Flags = flags;
+                    BamlType type = new BamlType(assemblyId, typeName)
+                    {
+                        Flags = flags
+                    };
                     _bamlType.Add(type);
                 }
                 else if (typeId > _bamlType.Count)

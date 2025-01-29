@@ -279,7 +279,7 @@ namespace System.Windows.Markup
             set
             {
                 EndRepeat();
-                _xmlLang = (null == value ? String.Empty : value);
+                _xmlLang = (value ?? string.Empty);
             }
         }
 
@@ -637,23 +637,24 @@ namespace System.Windows.Markup
 #if !PBTCOMPILER
         internal ParserContext ScopedCopy(bool copyNameScopeStack)
         {
-            ParserContext context = new ParserContext();
+            ParserContext context = new ParserContext
+            {
+                _baseUri = _baseUri,
+                _skipJournaledProperties = _skipJournaledProperties,
+                _xmlLang = _xmlLang,
+                _xmlSpace = _xmlSpace,
+                _repeat = _repeat,
+                _lineNumber = _lineNumber,
+                _linePosition = _linePosition,
+                _isDebugBamlStream = _isDebugBamlStream,
+                _mapTable = _mapTable,
+                _xamlTypeMapper = _xamlTypeMapper,
+                _targetType = _targetType,
 
-            context._baseUri = _baseUri;
-            context._skipJournaledProperties = _skipJournaledProperties;
-            context._xmlLang = _xmlLang;
-            context._xmlSpace = _xmlSpace;
-            context._repeat = _repeat;
-            context._lineNumber = _lineNumber;
-            context._linePosition = _linePosition;
-            context._isDebugBamlStream = _isDebugBamlStream;
-            context._mapTable = _mapTable;
-            context._xamlTypeMapper = _xamlTypeMapper;
-            context._targetType = _targetType;
-
-            context._streamCreatedAssembly = _streamCreatedAssembly;
-            context._rootElement = _rootElement;
-            context._styleConnector = _styleConnector;
+                _streamCreatedAssembly = _streamCreatedAssembly,
+                _rootElement = _rootElement,
+                _styleConnector = _styleConnector
+            };
 
             // Copy the name scope stack, if necessary.
 

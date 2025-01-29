@@ -7,9 +7,6 @@ using System.Globalization;
 using System.Windows.Navigation;
 using System.Windows.Markup;
 
-// Allow suppression of presharp warnings
-#pragma warning disable 1634, 1691
-
 namespace System.Windows.Media
 {
     /// <summary>
@@ -46,9 +43,6 @@ namespace System.Windows.Media
                     // only if it's a named font family.
                     FontFamily fontFamily = context.Instance as FontFamily;
 
-                    // Suppress PRESharp warning that fontFamily can be null; apparently PRESharp
-                    // doesn't understand short circuit evaluation of operator &&.
-#pragma warning suppress 56506
                     return fontFamily != null && fontFamily.Source != null && fontFamily.Source.Length != 0;
                 }
                 else

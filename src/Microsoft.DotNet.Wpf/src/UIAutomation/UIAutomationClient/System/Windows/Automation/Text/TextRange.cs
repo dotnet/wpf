@@ -7,9 +7,6 @@
 //                  and moved to .Text subnamespace.
 //
 
-// PRESHARP: In order to avoid generating warnings about unkown message numbers and unknown pragmas.
-#pragma warning disable 1634, 1691
-
 using System.Diagnostics;
 using System.Globalization;
 using System.Runtime.InteropServices;
@@ -217,7 +214,7 @@ namespace System.Windows.Automation.Text
             // A null string is not should throw an ArgumentNullException while an empty string should throw an ArgumentException.
             // Therefore we can not use IsNullOrEmpty() here, suppress the warning.
             ArgumentNullException.ThrowIfNull(text);
-#pragma warning suppress 6507
+
             Misc.ValidateArgument(text.Length != 0, nameof(SR.TextMustNotBeNullOrEmpty));
 
             SafeTextRangeHandle hResultTextRange = UiaCoreApi.TextRange_FindText(_hTextRange, text, backward, ignoreCase);

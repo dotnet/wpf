@@ -1,14 +1,10 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
 // Description: Wraps some of IAccessible to support getting basic properties
 //              and default action
 //
-
-
-// PRESHARP: In order to avoid generating warnings about unkown message numbers and unknown pragmas.
-#pragma warning disable 1634, 1691
 
 using System;
 using System.Diagnostics;
@@ -394,12 +390,9 @@ namespace MS.Internal.AutomationProxies
                     catch (Exception e)
                     {
                         if (HandleIAccessibleException(e))
-                        {
-                            // PerSharp/PreFast will flag this as a warning, 6503/56503: Property get methods should not throw exceptions.
-                            // We are communicate with the underlying control to get the information.  
+                        { 
                             // The control may not be able to give us the information we need.
                             // Throw the correct exception to communicate the failure.
-#pragma warning suppress 6503
                             throw;
                         }
                         return null;
@@ -494,11 +487,8 @@ namespace MS.Internal.AutomationProxies
                 {
                     if (HandleIAccessibleException(e))
                     {
-                        // PerSharp/PreFast will flag this as a warning, 6503/56503: Property get methods should not throw exceptions.
-                        // We are communicate with the underlying control to get the information.  
                         // The control may not be able to give us the information we need.
                         // Throw the correct exception to communicate the failure.
-#pragma warning suppress 6503
                         throw;
                     }
                     return AccessibleState.Unavailable;
@@ -513,21 +503,16 @@ namespace MS.Internal.AutomationProxies
                 try
                 {
                     string value = FixBstr(_acc.get_accValue(_idChild));
-                    // PerSharp/PreFast will flag this as warning 6507/56507: Prefer 'string.IsNullOrEmpty(value)' over checks for null and/or emptiness.
                     // Need to convert nulls into an empty string, so need to just test for a null.
                     // Therefore we can not use IsNullOrEmpty() here, suppress the warning.
-#pragma warning suppress 6507
-                    return value != null ? value : "";
+                    return value ?? "";
                 }
                 catch (Exception e)
                 {
                     if (HandleIAccessibleException(e))
                     {
-                        // PerSharp/PreFast will flag this as a warning, 6503/56503: Property get methods should not throw exceptions.
-                        // We are communicate with the underlying control to get the information.  
                         // The control may not be able to give us the information we need.
                         // Throw the correct exception to communicate the failure.
-#pragma warning suppress 6503
                         throw;
                     }
                     return "";
@@ -574,9 +559,8 @@ namespace MS.Internal.AutomationProxies
                 {
                     return Accessible.Wrap(accChild);
                 }
-                else if (child is int)
+                else if (child is int idChild)
                 {
-                    int idChild = (int)child;
                     return Accessible.Wrap(accParent.IAccessible, idChild);
                 }
             }
@@ -640,11 +624,10 @@ namespace MS.Internal.AutomationProxies
                 children = new Accessible[1];
                 children[0] = AccessibleFromObject(obj, _acc);
             }
-            else if (obj is object [])
+            else if (obj is object[] objs)
             {
-                object [] objs = (object [])obj;
                 children = new Accessible[objs.Length];
-                for (int i=0;i<objs.Length;i++)
+                for (int i = 0; i < objs.Length; i++)
                 {
                     children[i] = AccessibleFromObject(objs[i], _acc);
                 }
@@ -728,11 +711,8 @@ namespace MS.Internal.AutomationProxies
                 {
                     if (HandleIAccessibleException(e))
                     {
-                        // PerSharp/PreFast will flag this as a warning, 6503/56503: Property get methods should not throw exceptions.
-                        // We are communicate with the underlying control to get the information.  
                         // The control may not be able to give us the information we need.
                         // Throw the correct exception to communicate the failure.
-#pragma warning suppress 6503
                         throw;
                     }
                     return "";
@@ -768,10 +748,8 @@ namespace MS.Internal.AutomationProxies
                 // point is not on this object or one of its children
                 rval = null;
             }
-            else if (scan is int)
+            else if (scan is int idChild) // point is on child or self. If self then return 'this'
             {
-                // point is on child or self. If self then return 'this'
-                int idChild = (int)scan;
                 if (idChild == NativeMethods.CHILD_SELF)
                 {
                     rval = this;
@@ -869,12 +847,9 @@ namespace MS.Internal.AutomationProxies
                     catch (Exception e)
                     {
                         if (HandleIAccessibleException(e))
-                        {
-                            // PerSharp/PreFast will flag this as a warning, 6503/56503: Property get methods should not throw exceptions.
-                            // We are communicate with the underlying control to get the information.  
+                        { 
                             // The control may not be able to give us the information we need.
                             // Throw the correct exception to communicate the failure.
-#pragma warning suppress 6503
                             throw;
                         }
 

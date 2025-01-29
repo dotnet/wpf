@@ -8,8 +8,6 @@ using System.Windows.Threading;
 using System.Runtime.InteropServices;
 using MS.Win32.PresentationCore;
 
-#pragma warning disable 1634, 1691  // suppressing PreSharp warnings
-
 namespace System.Windows.Media.Imaging
 {
     #region PROPBAG2

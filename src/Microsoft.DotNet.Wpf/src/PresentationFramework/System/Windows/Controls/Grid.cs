@@ -23,8 +23,6 @@ using System.Threading;
 using System.Windows.Media;
 using System.Windows.Markup;
 
-#pragma warning disable 1634, 1691  // suppressing PreSharp warnings
-
 namespace System.Windows.Controls
 {
     /// <summary>
@@ -896,19 +894,20 @@ namespace System.Windows.Controls
                     continue;
                 }
 
-                CellCache cell = new CellCache();
+                CellCache cell = new CellCache
+                {
+                    //
+                    //  read and cache child positioning properties
+                    //
 
-                //
-                //  read and cache child positioning properties
-                //
-
-                //  read indices from the corresponding properties
-                //      clamp to value < number_of_columns
-                //      column >= 0 is guaranteed by property value validation callback
-                cell.ColumnIndex = Math.Min(GetColumn(child), DefinitionsU.Length - 1);
-                //      clamp to value < number_of_rows
-                //      row >= 0 is guaranteed by property value validation callback
-                cell.RowIndex = Math.Min(GetRow(child), DefinitionsV.Length - 1);
+                    //  read indices from the corresponding properties
+                    //      clamp to value < number_of_columns
+                    //      column >= 0 is guaranteed by property value validation callback
+                    ColumnIndex = Math.Min(GetColumn(child), DefinitionsU.Length - 1),
+                    //      clamp to value < number_of_rows
+                    //      row >= 0 is guaranteed by property value validation callback
+                    RowIndex = Math.Min(GetRow(child), DefinitionsV.Length - 1)
+                };
 
                 //  read span properties
                 //      clamp to not exceed beyond right side of the grid
@@ -3921,12 +3920,12 @@ namespace System.Windows.Controls
                 {
                     if (_currentEnumerator == -1)
                     {
-                        #pragma warning suppress 6503 // IEnumerator.Current is documented to throw this exception
+                        // IEnumerator.Current is documented to throw this exception
                         throw new InvalidOperationException(SR.EnumeratorNotStarted);
                     }
                     if (_currentEnumerator >= 3)
                     {
-                        #pragma warning suppress 6503 // IEnumerator.Current is documented to throw this exception
+                        // IEnumerator.Current is documented to throw this exception
                         throw new InvalidOperationException(SR.EnumeratorReachedEnd);
                     }
 

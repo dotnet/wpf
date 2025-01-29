@@ -497,26 +497,29 @@ namespace MS.Internal.Annotations.Anchoring
             if (segmentValue == null)
                 throw new ArgumentException(SR.Format(SR.InvalidLocatorPart, TextSelectionProcessor.SegmentAttribute + segmentNumber.ToString(NumberFormatInfo.InvariantInfo)));
 
-            string[] values = segmentValue.Split(TextSelectionProcessor.Separator);
-            if (values.Length != 4)
+            ReadOnlySpan<char> segmentValueSpan = segmentValue.AsSpan();
+            Span<Range> splitRegions = stackalloc Range[5];
+
+            if (segmentValueSpan.Split(splitRegions, TextSelectionProcessor.Separator) != 4)
                 throw new ArgumentException(SR.Format(SR.InvalidLocatorPart, TextSelectionProcessor.SegmentAttribute + segmentNumber.ToString(NumberFormatInfo.InvariantInfo)));
-            start = GetPoint(values[0], values[1]);
-            end = GetPoint(values[2], values[3]);
+
+            start = GetPoint(segmentValueSpan[splitRegions[0]], segmentValueSpan[splitRegions[1]]);
+            end = GetPoint(segmentValueSpan[splitRegions[2]], segmentValueSpan[splitRegions[3]]);
         }
 
         /// <summary>
-        /// Calculate Point out of string X and Y values
+        /// Calculates <see cref="Point"/> out of X and Y values supplied as a <see cref="string"/>.
         /// </summary>
-        /// <param name="xstr">x string value</param>
-        /// <param name="ystr">y string value</param>
-        /// <returns></returns>
-        private Point GetPoint(string xstr, string ystr)
+        /// <param name="xValue">x string value</param>
+        /// <param name="yValue">y string value</param>
+        /// <returns>Initialized <see cref="Point"/> structure.</returns>
+        private static Point GetPoint(ReadOnlySpan<char> xValue, ReadOnlySpan<char> yValue)
         {
             Point point;
-            if (xstr != null && !String.IsNullOrEmpty(xstr.Trim()) && ystr != null && !String.IsNullOrEmpty(ystr.Trim()))
+            if (!xValue.Trim().IsEmpty && !yValue.Trim().IsEmpty)
             {
-                double x = Double.Parse(xstr, NumberFormatInfo.InvariantInfo);
-                double y = Double.Parse(ystr, NumberFormatInfo.InvariantInfo);
+                double x = double.Parse(xValue, NumberFormatInfo.InvariantInfo);
+                double y = double.Parse(yValue, NumberFormatInfo.InvariantInfo);
                 point = new Point(x, y);
             }
             else

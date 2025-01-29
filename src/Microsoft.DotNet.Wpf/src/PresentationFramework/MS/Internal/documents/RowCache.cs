@@ -832,8 +832,10 @@ namespace MS.Internal.Documents
             //calculate the width & height and return the resulting RowInfo struct
 
             //Populate the struct with initial data
-            RowInfo newRow = new RowInfo();
-            newRow.FirstPage = startPage;
+            RowInfo newRow = new RowInfo
+            {
+                FirstPage = startPage
+            };
 
             //Keep adding pages until we either:
             // - run out of pages to add
@@ -926,8 +928,10 @@ namespace MS.Internal.Documents
             while (currentPage < lastPage)
             {
                 //Build a new row.
-                RowInfo newRow = new RowInfo();
-                newRow.FirstPage = currentPage;
+                RowInfo newRow = new RowInfo
+                {
+                    FirstPage = currentPage
+                };
 
                 //Add pages until we either run out of pages or need to start a new row.               
                 do
@@ -1010,9 +1014,11 @@ namespace MS.Internal.Documents
                 RowInfo currentRow = _rowCache[rowIndex];
                 //Create a new row and copy pertinent data
                 //from the old one.
-                RowInfo updatedRow = new RowInfo();
-                updatedRow.VerticalOffset = currentRow.VerticalOffset;
-                updatedRow.FirstPage = currentRow.FirstPage;
+                RowInfo updatedRow = new RowInfo
+                {
+                    VerticalOffset = currentRow.VerticalOffset,
+                    FirstPage = currentRow.FirstPage
+                };
 
                 //Now rebuild this row, thus recalculating the row's size
                 //based on the new page sizes.
@@ -1121,9 +1127,11 @@ namespace MS.Internal.Documents
 
             if (oldRow.FirstPage < startPage)
             {
-                RowInfo updatedRow = new RowInfo();
-                updatedRow.VerticalOffset = oldRow.VerticalOffset;
-                updatedRow.FirstPage = oldRow.FirstPage;
+                RowInfo updatedRow = new RowInfo
+                {
+                    VerticalOffset = oldRow.VerticalOffset,
+                    FirstPage = oldRow.FirstPage
+                };
 
                 for (int i = oldRow.FirstPage; i < startPage; i++)
                 {

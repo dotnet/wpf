@@ -694,8 +694,10 @@ namespace System.Windows.Media.Animation
                                 hasPacedKeyTimes = true;
                             }
 
-                            KeyTimeBlock block = new KeyTimeBlock();
-                            block.BeginIndex = index;
+                            KeyTimeBlock block = new KeyTimeBlock
+                            {
+                                BeginIndex = index
+                            };
 
                             // NOTE: We don't want to go all the way up to the
                             // last frame because if it is Uniform or Paced its

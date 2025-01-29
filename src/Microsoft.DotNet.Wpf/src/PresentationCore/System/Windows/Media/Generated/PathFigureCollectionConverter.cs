@@ -8,8 +8,6 @@
 using System.ComponentModel;
 using System.Globalization;
 
-#pragma warning disable 1634, 1691  // suppressing PreSharp warnings
-
 namespace System.Windows.Media
 {
     /// <summary>
@@ -57,7 +55,6 @@ namespace System.Windows.Media
 
                     PathFigureCollection value = (PathFigureCollection)context.Instance;
 
-                    #pragma warning suppress 6506 // value is obviously not null
                     return value.CanSerializeToString();
                 }
 
@@ -122,7 +119,6 @@ namespace System.Windows.Media
                     // When invoked by the serialization engine we can convert to string only for some instances
                     if (context != null && context.Instance != null)
                     {
-                        #pragma warning suppress 6506 // instance is obviously not null
                         if (!instance.CanSerializeToString())
                         {
                             throw new NotSupportedException(SR.Converter_ConvertToNotSupported);
@@ -130,8 +126,6 @@ namespace System.Windows.Media
                     }
 
                     // Delegate to the formatting/culture-aware ConvertToString method.
-
-                    #pragma warning suppress 6506 // instance is obviously not null
                     return instance.ConvertToString(null, culture);
                 }
             }

@@ -102,8 +102,10 @@ namespace MS.Internal.Printing.Configuration
 
         internal static PrintCapabilityFeature NewFeatureCallback(InternalPrintCapabilities printCap)
         {
-            PageBorderlessCapability cap = new PageBorderlessCapability(printCap);
-            cap._borderlessOptions = new Collection<BorderlessOption>();
+            PageBorderlessCapability cap = new PageBorderlessCapability(printCap)
+            {
+                _borderlessOptions = new Collection<BorderlessOption>()
+            };
 
             return cap;
         }

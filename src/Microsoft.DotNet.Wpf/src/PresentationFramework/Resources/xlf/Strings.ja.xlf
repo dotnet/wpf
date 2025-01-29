@@ -2413,16 +2413,6 @@ Do you want to replace it?</source>
         <target state="translated">型 '{0}' は、有効な PageFunction 型ではありません。</target>
         <note />
       </trans-unit>
-      <trans-unit id="InvalidPermissionStateValue">
-        <source>PermissionState value '{0}' is not valid for this Permission.</source>
-        <target state="translated">PermissionState 値 '{0}' は、このアクセス許可に対して無効です。</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="InvalidPermissionType">
-        <source>Permission type is not valid. Expected '{0}'.</source>
-        <target state="translated">アクセス許可の種類が無効です。'{0}' を指定してください。</target>
-        <note />
-      </trans-unit>
       <trans-unit id="InvalidPoint">
         <source>Invalid Point value.</source>
         <target state="translated">無効な Point 値です。</target>
@@ -4826,11 +4816,6 @@ Do you want to replace it?</source>
       <trans-unit id="ScrollViewer_OutOfRange">
         <source>'{0}' parameter has value '{1}', which is not in the valid range of '{2}' to '{3}'.</source>
         <target state="translated">'{0}' パラメーターには値 '{1}' があります。これは、'{2}' から '{3}' の有効な範囲内にありません。</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="SecurityExceptionForSettingSandboxExternalToTrue">
-        <source>Cannot set SandboxExternalContent to true in partial trust.</source>
-        <target state="translated">部分的な信頼では、SandboxExternalContent を true に設定できません。</target>
         <note />
       </trans-unit>
       <trans-unit id="SeekFailed">

@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -1160,8 +1160,10 @@ namespace System.Windows.Controls
             // determine the type of column to be created and create one
             if (propertyType.IsEnum)
             {
-                comboBoxColumn = new DataGridComboBoxColumn();
-                comboBoxColumn.ItemsSource = Enum.GetValues(propertyType);
+                comboBoxColumn = new DataGridComboBoxColumn
+                {
+                    ItemsSource = Enum.GetValues(propertyType)
+                };
                 dataGridColumn = comboBoxColumn;
             }
             else if (typeof(string).IsAssignableFrom(propertyType))

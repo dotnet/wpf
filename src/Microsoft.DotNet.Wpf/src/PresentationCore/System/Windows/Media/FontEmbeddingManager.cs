@@ -2,9 +2,6 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-// Allow suppression of presharp warnings
-#pragma warning disable 1634, 1691
-
 namespace System.Windows.Media
 {
     /// <summary>
@@ -46,9 +43,6 @@ namespace System.Windows.Media
         {
             ArgumentNullException.ThrowIfNull(glyphRun);
 
-            // Suppress PRESharp parameter validation warning about glyphRun.GlyphTypeface because
-            // GlyphRun.GlyphTypeface property cannot be null.
-#pragma warning suppress 56506
             Uri glyphTypeface = glyphRun.GlyphTypeface.FontUri;
 
             Dictionary<ushort, bool> glyphSet;

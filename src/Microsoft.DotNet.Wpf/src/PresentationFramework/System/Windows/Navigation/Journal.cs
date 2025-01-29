@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -25,9 +25,6 @@ using System.Runtime.Serialization;
 
 using MS.Internal;
 using MS.Internal.AppModel;
-
-// Since we disable PreSharp warnings in this file, we first need to disable warnings about unknown message numbers and unknown pragmas.
-#pragma warning disable 1634, 1691
 
 namespace System.Windows.Navigation
 {

@@ -154,9 +154,8 @@ namespace System.Windows.Controls
         /// and unit type as oCompare.</returns>
         public override bool Equals(object obj)
         {
-            if (obj is DataGridLength)
+            if (obj is DataGridLength l)
             {
-                DataGridLength l = (DataGridLength)obj;
                 return this == l;
             }
             else

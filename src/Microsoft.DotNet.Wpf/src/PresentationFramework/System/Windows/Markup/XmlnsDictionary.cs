@@ -255,9 +255,8 @@ namespace System.Windows.Markup
         /// <param name="index">The zero-based index in array at which copying begins</param>
         public void CopyTo(Array array, int index)
         {
-            IDictionary dict = GetNamespacesInScope(NamespaceScope.All) as IDictionary;
-            if (dict != null)
-                dict.CopyTo(array,index);
+            if (GetNamespacesInScope(NamespaceScope.All) is IDictionary dict)
+                dict.CopyTo(array, index);
         }
 
 #endregion ICollectionMethods
@@ -387,7 +386,7 @@ namespace System.Windows.Markup
         public string DefaultNamespace()
         {
              string defaultNs = LookupNamespace(string.Empty);
-             return (defaultNs == null) ? string.Empty : defaultNs;
+             return defaultNs ?? string.Empty;
          }
 #endif
 

@@ -278,14 +278,18 @@ namespace MS.Internal.Documents
         {
             //Create the DocumentPageView, which will display our
             //content.
-            _documentPageView = new DocumentPageView();
-            _documentPageView.ClipToBounds = true;
-            _documentPageView.StretchDirection = StretchDirection.Both;
-            _documentPageView.PageNumber = int.MaxValue;
+            _documentPageView = new DocumentPageView
+            {
+                ClipToBounds = true,
+                StretchDirection = StretchDirection.Both,
+                PageNumber = int.MaxValue
+            };
 
             //Create the content control that contains the page content.
-            _documentContainer = new ContentControl();
-            _documentContainer.Content = _documentPageView;
+            _documentContainer = new ContentControl
+            {
+                Content = _documentPageView
+            };
 
             _loaded = false;
         }

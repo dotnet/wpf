@@ -78,8 +78,6 @@ namespace MS.Internal.Ink.InkSerializedFormat
             // Presharp gives a warning when local IDisposable variables are not closed
             // in this case, we can't call Dispose since it will also close the underlying stream
             // which still needs to be written to
-#pragma warning disable 1634, 1691
-#pragma warning disable 6518
             BinaryWriter bw = new BinaryWriter(stream);
 
             // if this guid used the legacy internal attribute persistence APIs,
@@ -295,8 +293,6 @@ namespace MS.Internal.Ink.InkSerializedFormat
                     throw new InvalidOperationException(SR.InvalidEpInIsf);
                 }
             }
-#pragma warning restore 6518
-#pragma warning restore 1634, 1691
         }
 #if OLD_ISF
         /// <summary>

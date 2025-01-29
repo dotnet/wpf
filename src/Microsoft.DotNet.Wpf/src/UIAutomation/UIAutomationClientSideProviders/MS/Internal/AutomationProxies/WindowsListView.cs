@@ -1401,11 +1401,12 @@ namespace MS.Internal.AutomationProxies
         static internal NativeMethods.LVHITTESTINFO_INTERNAL SubitemHitTest (IntPtr hwnd, int item, NativeMethods.Win32Point pt)
         {
             // Allocate a local LVHITTESTINFO struct.
-            NativeMethods.LVHITTESTINFO_INTERNAL hitTest = new NativeMethods.LVHITTESTINFO_INTERNAL ();
-
-            // Set the point of interest.
-            hitTest.pt = pt;
-            hitTest.iItem = item;
+            NativeMethods.LVHITTESTINFO_INTERNAL hitTest = new NativeMethods.LVHITTESTINFO_INTERNAL
+            {
+                // Set the point of interest.
+                pt = pt,
+                iItem = item
+            };
 
             int result = -1;
 
@@ -1817,11 +1818,12 @@ namespace MS.Internal.AutomationProxies
         // set listview item state
         private static bool SetItemState (IntPtr hwnd, int item, int stateMask, int state)
         {
-            NativeMethods.LVITEM lvitem = new NativeMethods.LVITEM ();
-
-            lvitem.mask = NativeMethods.LVIF_STATE;
-            lvitem.state = state;
-            lvitem.stateMask = stateMask;
+            NativeMethods.LVITEM lvitem = new NativeMethods.LVITEM
+            {
+                mask = NativeMethods.LVIF_STATE,
+                state = state,
+                stateMask = stateMask
+            };
 
             return XSendMessage.SetItem(hwnd, item, lvitem);
         }

@@ -962,8 +962,10 @@ namespace System.Windows.Media.Animation
         /// </summary>
         internal void Dump()
         {
-            System.Text.StringBuilder builder = new System.Text.StringBuilder();
-            builder.Capacity = 1024;
+            System.Text.StringBuilder builder = new System.Text.StringBuilder
+            {
+                Capacity = 1024
+            };
             builder.Append("========================================\n");
             builder.Append("Timelines rooted at Timeline ");
             builder.Append(_debugIdentity);

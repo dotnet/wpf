@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -896,16 +896,18 @@ namespace System.Windows.Controls
                     if (_clonedElement != null)
                     {
                         // Create visual copy of selected element
-                        VisualBrush visualBrush = new VisualBrush(_clonedElement);
-                        visualBrush.Stretch = Stretch.None;
+                        VisualBrush visualBrush = new VisualBrush(_clonedElement)
+                        {
+                            Stretch = Stretch.None,
 
-                        //Set position and dimension of content
-                        visualBrush.ViewboxUnits = BrushMappingMode.Absolute;
-                        visualBrush.Viewbox = new Rect(_clonedElement.RenderSize);
+                            //Set position and dimension of content
+                            ViewboxUnits = BrushMappingMode.Absolute,
+                            Viewbox = new Rect(_clonedElement.RenderSize),
 
-                        //Set position and dimension of tile
-                        visualBrush.ViewportUnits = BrushMappingMode.Absolute;
-                        visualBrush.Viewport = new Rect(_clonedElement.RenderSize);
+                            //Set position and dimension of tile
+                            ViewportUnits = BrushMappingMode.Absolute,
+                            Viewport = new Rect(_clonedElement.RenderSize)
+                        };
 
                         // We need to check if the item acquires a mirror transform through the visual tree
                         // below the ComboBox. If it does then the same mirror transform needs to be applied
@@ -927,10 +929,12 @@ namespace System.Windows.Controls
                         }
 
                         // Apply visual brush to a rectangle
-                        Rectangle rect = new Rectangle();
-                        rect.Fill = visualBrush;
-                        rect.Width = _clonedElement.RenderSize.Width;
-                        rect.Height = _clonedElement.RenderSize.Height;
+                        Rectangle rect = new Rectangle
+                        {
+                            Fill = visualBrush,
+                            Width = _clonedElement.RenderSize.Width,
+                            Height = _clonedElement.RenderSize.Height
+                        };
 
                         _clonedElement.LayoutUpdated += CloneLayoutUpdated;
 
@@ -1203,8 +1207,10 @@ namespace System.Windows.Controls
                 Debug.Assert(_autoScrollTimer == null, "IsMouseCaptured went from true to true");
                 if (_autoScrollTimer == null)
                 {
-                    _autoScrollTimer = new DispatcherTimer(DispatcherPriority.SystemIdle);
-                    _autoScrollTimer.Interval = AutoScrollTimeout;
+                    _autoScrollTimer = new DispatcherTimer(DispatcherPriority.SystemIdle)
+                    {
+                        Interval = AutoScrollTimeout
+                    };
                     _autoScrollTimer.Tick += new EventHandler(OnAutoScrollTimeout);
                     _autoScrollTimer.Start();
                 }

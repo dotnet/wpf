@@ -103,8 +103,10 @@ namespace MS.Internal.Printing.Configuration
 
         internal static PrintCapabilityFeature NewFeatureCallback(InternalPrintCapabilities printCap)
         {
-            PageOutputQualityCapability cap = new PageOutputQualityCapability(printCap);
-            cap._qualityOptions = new Collection<OutputQualityOption>();
+            PageOutputQualityCapability cap = new PageOutputQualityCapability(printCap)
+            {
+                _qualityOptions = new Collection<OutputQualityOption>()
+            };
 
             return cap;
         }

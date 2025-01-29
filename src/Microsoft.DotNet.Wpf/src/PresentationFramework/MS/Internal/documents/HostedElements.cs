@@ -1,15 +1,9 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-//
-// Enumerator class for returning descendants of TextBlock and FlowDocumentPage
-//
-
 using System.Collections;
 using System.Collections.ObjectModel;
-
-#pragma warning disable 1634, 1691  // suppressing PreSharp warnings
 
 namespace System.Windows.Documents
 {
@@ -160,19 +154,18 @@ namespace System.Windows.Documents
         {
             get
             {
-                // Disable PRESharp warning 6503: "Property get methods should not throw exceptions".
                 // HostedElements must throw exception if Current property is incorrectly accessed
                 if (_textSegments == null)
                 {
                     // Collection was modified 
-#pragma warning suppress 6503 // IEnumerator.Current is documented to throw this exception
+                    // IEnumerator.Current is documented to throw this exception
                     throw new InvalidOperationException(SR.EnumeratorCollectionDisposed);
                 }
 
                 if (_currentPosition == null)
                 {
                     // Enumerator not started. Call MoveNext to see if we can move ahead
-#pragma warning suppress 6503 // IEnumerator.Current is documented to throw this exception
+                    // IEnumerator.Current is documented to throw this exception
                     throw new InvalidOperationException(SR.EnumeratorNotStarted);
                 }
 

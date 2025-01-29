@@ -199,9 +199,8 @@ namespace MS.Internal.Documents
         private Rect CalculateViewportRect()
         {
             Rect visibleRect = Rect.Empty;
-            if (RenderScope is IScrollInfo)
+            if (RenderScope is IScrollInfo scrollInfo)
             {
-                IScrollInfo scrollInfo = (IScrollInfo)RenderScope;
                 if (scrollInfo.ViewportWidth != 0 && scrollInfo.ViewportHeight != 0)
                 {
                     visibleRect = new Rect(scrollInfo.HorizontalOffset, scrollInfo.VerticalOffset, scrollInfo.ViewportWidth, scrollInfo.ViewportHeight);
@@ -816,10 +815,8 @@ namespace MS.Internal.Documents
                     }
                 }
             }
-            else if (paragraph is SubpageParagraphResult)
+            else if (paragraph is SubpageParagraphResult subpageParagraphResult) // Subpage implies new coordinate system.
             {
-                // Subpage implies new coordinate system.
-                SubpageParagraphResult subpageParagraphResult = (SubpageParagraphResult)paragraph;
                 point.X -= subpageParagraphResult.ContentOffset.X;
                 point.Y -= subpageParagraphResult.ContentOffset.Y;
 
@@ -830,9 +827,8 @@ namespace MS.Internal.Documents
             {
                 ReadOnlyCollection<ColumnResult> columns;
                 ReadOnlyCollection<ParagraphResult> nestedFloatingElements;
-                if (paragraph is FloaterParagraphResult)
+                if (paragraph is FloaterParagraphResult floaterParagraphResult)
                 {
-                    FloaterParagraphResult floaterParagraphResult = (FloaterParagraphResult)paragraph;
                     columns = floaterParagraphResult.Columns;
                     nestedFloatingElements = floaterParagraphResult.FloatingElements;
                     TransformToSubpage(ref point, floaterParagraphResult.ContentOffset);
@@ -1030,10 +1026,8 @@ namespace MS.Internal.Documents
                     cellInfo = ((TableParagraphResult)paragraph).GetCellInfoFromPoint(point);
                 }
             }
-            else if (paragraph is SubpageParagraphResult)
+            else if (paragraph is SubpageParagraphResult subpageParagraphResult) // Subpage implies new coordinate system.
             {
-                // Subpage implies new coordinate system.
-                SubpageParagraphResult subpageParagraphResult = (SubpageParagraphResult)paragraph;
                 point.X -= subpageParagraphResult.ContentOffset.X;
                 point.Y -= subpageParagraphResult.ContentOffset.Y;
 
@@ -1044,10 +1038,8 @@ namespace MS.Internal.Documents
                     cellInfo.Adjust(new Point(subpageParagraphResult.ContentOffset.X, subpageParagraphResult.ContentOffset.Y));
                 }
             }
-            else if (paragraph is FigureParagraphResult)
+            else if (paragraph is FigureParagraphResult figureParagraphResult) // Subpage implies new coordinate system.
             {
-                // Subpage implies new coordinate system.
-                FigureParagraphResult figureParagraphResult = (FigureParagraphResult)paragraph;
                 TransformToSubpage(ref point, figureParagraphResult.ContentOffset);
                 cellInfo = GetCellInfoFromPoint(figureParagraphResult.Columns, figureParagraphResult.FloatingElements, point, tableFilter);
                 if (cellInfo != null)
@@ -1055,10 +1047,8 @@ namespace MS.Internal.Documents
                     cellInfo.Adjust(new Point(figureParagraphResult.ContentOffset.X, figureParagraphResult.ContentOffset.Y));
                 }
             }
-            else if (paragraph is FloaterParagraphResult)
+            else if (paragraph is FloaterParagraphResult floaterParagraphResult) // Subpage implies new coordinate system.
             {
-                // Subpage implies new coordinate system.
-                FloaterParagraphResult floaterParagraphResult = (FloaterParagraphResult)paragraph;
                 TransformToSubpage(ref point, floaterParagraphResult.ContentOffset);
                 cellInfo = GetCellInfoFromPoint(floaterParagraphResult.Columns, floaterParagraphResult.FloatingElements, point, tableFilter);
                 if (cellInfo != null)
@@ -1191,10 +1181,8 @@ namespace MS.Internal.Documents
                     }
                 }
             }
-            else if (paragraph is SubpageParagraphResult)
+            else if (paragraph is SubpageParagraphResult subpageParagraphResult) // Subpage implies new coordinate system.
             {
-                // Subpage implies new coordinate system.
-                SubpageParagraphResult subpageParagraphResult = (SubpageParagraphResult)paragraph;
                 rect = GetRectangleFromTextPosition(subpageParagraphResult.Columns, subpageParagraphResult.FloatingElements, position);
                 if (rect != Rect.Empty)
                 {
@@ -1202,9 +1190,8 @@ namespace MS.Internal.Documents
                     rect.Y += subpageParagraphResult.ContentOffset.Y;
                 }
             }
-            else if (paragraph is FloaterParagraphResult)
+            else if (paragraph is FloaterParagraphResult floaterParagraphResult)
             {
-                FloaterParagraphResult floaterParagraphResult = (FloaterParagraphResult)paragraph;
                 ReadOnlyCollection<ColumnResult> columns = floaterParagraphResult.Columns;
                 ReadOnlyCollection<ParagraphResult> nestedFloatingElements = floaterParagraphResult.FloatingElements;
                 Invariant.Assert(columns != null, "Columns collection is null.");
@@ -1216,9 +1203,8 @@ namespace MS.Internal.Documents
                     TransformFromSubpage(ref rect, floaterParagraphResult.ContentOffset);
                 }
             }
-            else if (paragraph is FigureParagraphResult)
+            else if (paragraph is FigureParagraphResult figureParagraphResult)
             {
-                FigureParagraphResult figureParagraphResult = (FigureParagraphResult)paragraph;
                 ReadOnlyCollection<ColumnResult> columns = figureParagraphResult.Columns;
                 ReadOnlyCollection<ParagraphResult> nestedFloatingElements = figureParagraphResult.FloatingElements;
                 Invariant.Assert(columns != null, "Columns collection is null.");
@@ -1401,19 +1387,16 @@ namespace MS.Internal.Documents
                 Geometry paragraphGeometry = null;
                 Invariant.Assert(floatingElements[i] is FloaterParagraphResult ||
                                  floatingElements[i] is FigureParagraphResult);
-                if (floatingElements[i] is FloaterParagraphResult)
+                // Transform visible rect to subpage coordinates, and transform geometry from subpage coordinates
+                if (floatingElements[i] is FloaterParagraphResult floaterParagraphResult)
                 {
-                    // Transform visible rect to subpage coordinates, and transform geometry from subpage coordinates
-                    FloaterParagraphResult floaterParagraphResult = (FloaterParagraphResult)floatingElements[i];
                     TransformToSubpage(ref visibleRectThisPara, floaterParagraphResult.ContentOffset);
                     paragraphGeometry = floaterParagraphResult.GetTightBoundingGeometryFromTextPositions(startPosition, endPosition, visibleRectThisPara, out success);
                     // Geometry within the floater needs to be transformed from subpage content
                     TransformFromSubpage(paragraphGeometry, floaterParagraphResult.ContentOffset);
                 }
-                else if (floatingElements[i] is FigureParagraphResult)
+                else if (floatingElements[i] is FigureParagraphResult figureParagraphResult) // Transform visible rect to subpage coordinates, and transform geometry from subpage coordinates
                 {
-                    // Transform visible rect to subpage coordinates, and transform geometry from subpage coordinates
-                    FigureParagraphResult figureParagraphResult = (FigureParagraphResult)floatingElements[i];
                     TransformToSubpage(ref visibleRectThisPara, figureParagraphResult.ContentOffset);
                     paragraphGeometry = figureParagraphResult.GetTightBoundingGeometryFromTextPositions(startPosition, endPosition, visibleRectThisPara, out success);
                     // Geometry within the figure needs to be transformed from subpage content
@@ -1510,9 +1493,8 @@ namespace MS.Internal.Documents
                     isAtCaretUnitBoundary = IsAtCaretUnitBoundary(nestedParagraphs, _emptyParagraphCollection, position);
                 }
             }
-            else if (paragraph is SubpageParagraphResult)
+            else if (paragraph is SubpageParagraphResult subpageParagraphResult)
             {
-                SubpageParagraphResult subpageParagraphResult = (SubpageParagraphResult)paragraph;
                 ReadOnlyCollection<ColumnResult> columns = subpageParagraphResult.Columns;
                 ReadOnlyCollection<ParagraphResult> nestedFloatingElements = subpageParagraphResult.FloatingElements;
                 Invariant.Assert(columns != null, "Column collection is null.");
@@ -1522,9 +1504,8 @@ namespace MS.Internal.Documents
                     isAtCaretUnitBoundary = IsAtCaretUnitBoundary(columns, nestedFloatingElements, position);
                 }
             }
-            else if (paragraph is FigureParagraphResult)
+            else if (paragraph is FigureParagraphResult figureParagraphResult)
             {
-                FigureParagraphResult figureParagraphResult = (FigureParagraphResult)paragraph;
                 ReadOnlyCollection<ColumnResult> columns = figureParagraphResult.Columns;
                 ReadOnlyCollection<ParagraphResult> nestedFloatingElements = figureParagraphResult.FloatingElements;
                 Invariant.Assert(columns != null, "Column collection is null.");
@@ -1534,9 +1515,8 @@ namespace MS.Internal.Documents
                     isAtCaretUnitBoundary = IsAtCaretUnitBoundary(columns, nestedFloatingElements, position);
                 }
             }
-            else if (paragraph is FloaterParagraphResult)
+            else if (paragraph is FloaterParagraphResult floaterParagraphResult)
             {
-                FloaterParagraphResult floaterParagraphResult = (FloaterParagraphResult)paragraph;
                 ReadOnlyCollection<ColumnResult> columns = floaterParagraphResult.Columns;
                 ReadOnlyCollection<ParagraphResult> nestedFloatingElements = floaterParagraphResult.FloatingElements;
                 Invariant.Assert(columns != null, "Column collection is null.");
@@ -1637,9 +1617,8 @@ namespace MS.Internal.Documents
                     nextCaretPosition = GetNextCaretUnitPosition(nestedParagraphs, _emptyParagraphCollection, position, direction);
                 }
             }
-            else if (paragraph is SubpageParagraphResult)
+            else if (paragraph is SubpageParagraphResult subpageParagraphResult)
             {
-                SubpageParagraphResult subpageParagraphResult = (SubpageParagraphResult)paragraph;
                 ReadOnlyCollection<ColumnResult> columns = subpageParagraphResult.Columns;
                 ReadOnlyCollection<ParagraphResult> nestedFloatingElements = subpageParagraphResult.FloatingElements;
                 Invariant.Assert(columns != null, "Column collection is null.");
@@ -1649,9 +1628,8 @@ namespace MS.Internal.Documents
                     nextCaretPosition = GetNextCaretUnitPosition(columns, nestedFloatingElements, position, direction);
                 }
             }
-            else if (paragraph is FigureParagraphResult)
+            else if (paragraph is FigureParagraphResult figureParagraphResult)
             {
-                FigureParagraphResult figureParagraphResult = (FigureParagraphResult)paragraph;
                 ReadOnlyCollection<ColumnResult> columns = figureParagraphResult.Columns;
                 ReadOnlyCollection<ParagraphResult> nestedFloatingElements = figureParagraphResult.FloatingElements;
                 Invariant.Assert(columns != null, "Column collection is null.");
@@ -1661,9 +1639,8 @@ namespace MS.Internal.Documents
                     nextCaretPosition = GetNextCaretUnitPosition(columns, nestedFloatingElements, position, direction);
                 }
             }
-            else if (paragraph is FloaterParagraphResult)
+            else if (paragraph is FloaterParagraphResult floaterParagraphResult)
             {
-                FloaterParagraphResult floaterParagraphResult = (FloaterParagraphResult)paragraph;
                 ReadOnlyCollection<ColumnResult> columns = floaterParagraphResult.Columns;
                 ReadOnlyCollection<ParagraphResult> nestedFloatingElements = floaterParagraphResult.FloatingElements;
                 Invariant.Assert(columns != null, "Column collection is null.");
@@ -1760,9 +1737,8 @@ namespace MS.Internal.Documents
                     backspaceCaretPosition = GetBackspaceCaretUnitPosition(nestedParagraphs, _emptyParagraphCollection, position);
                 }
             }
-            else if (paragraph is SubpageParagraphResult)
+            else if (paragraph is SubpageParagraphResult subpageParagraphResult)
             {
-                SubpageParagraphResult subpageParagraphResult = (SubpageParagraphResult)paragraph;
                 ReadOnlyCollection<ColumnResult> columns = subpageParagraphResult.Columns;
                 ReadOnlyCollection<ParagraphResult> nestedFloatingElements = subpageParagraphResult.FloatingElements;
                 Invariant.Assert(columns != null, "Column collection is null.");
@@ -1772,9 +1748,8 @@ namespace MS.Internal.Documents
                     backspaceCaretPosition = GetBackspaceCaretUnitPosition(columns, nestedFloatingElements, position);
                 }
             }
-            else if (paragraph is FigureParagraphResult)
+            else if (paragraph is FigureParagraphResult figureParagraphResult)
             {
-                FigureParagraphResult figureParagraphResult = (FigureParagraphResult)paragraph;
                 ReadOnlyCollection<ColumnResult> columns = figureParagraphResult.Columns;
                 ReadOnlyCollection<ParagraphResult> nestedFloatingElements = figureParagraphResult.FloatingElements;
                 Invariant.Assert(columns != null, "Column collection is null.");
@@ -1784,9 +1759,8 @@ namespace MS.Internal.Documents
                     backspaceCaretPosition = GetBackspaceCaretUnitPosition(columns, nestedFloatingElements, position);
                 }
             }
-            else if (paragraph is FloaterParagraphResult)
+            else if (paragraph is FloaterParagraphResult floaterParagraphResult)
             {
-                FloaterParagraphResult floaterParagraphResult = (FloaterParagraphResult)paragraph;
                 ReadOnlyCollection<ColumnResult> columns = floaterParagraphResult.Columns;
                 ReadOnlyCollection<ParagraphResult> nestedFloatingElements = floaterParagraphResult.FloatingElements;
                 Invariant.Assert(columns != null, "Column collection is null.");
@@ -2355,9 +2329,8 @@ namespace MS.Internal.Documents
                     lineRange = GetLineRangeFromPosition(nestedParagraphs, _emptyParagraphCollection, position);
                 }
             }
-            else if (paragraph is SubpageParagraphResult)
+            else if (paragraph is SubpageParagraphResult subpageParagraphResult)
             {
-                SubpageParagraphResult subpageParagraphResult = (SubpageParagraphResult)paragraph;
                 ReadOnlyCollection<ColumnResult> columns = subpageParagraphResult.Columns;
                 ReadOnlyCollection<ParagraphResult> nestedFloatingElements = subpageParagraphResult.FloatingElements;
                 Invariant.Assert(columns != null, "Column collection is null.");
@@ -2367,9 +2340,8 @@ namespace MS.Internal.Documents
                     lineRange = GetLineRangeFromPosition(columns, nestedFloatingElements, position);
                 }
             }
-            else if (paragraph is FigureParagraphResult)
+            else if (paragraph is FigureParagraphResult figureParagraphResult)
             {
-                FigureParagraphResult figureParagraphResult = (FigureParagraphResult)paragraph;
                 ReadOnlyCollection<ColumnResult> columns = figureParagraphResult.Columns;
                 ReadOnlyCollection<ParagraphResult> nestedFloatingElements = figureParagraphResult.FloatingElements;
                 Invariant.Assert(columns != null, "Column collection is null.");
@@ -2379,9 +2351,8 @@ namespace MS.Internal.Documents
                     lineRange = GetLineRangeFromPosition(columns, nestedFloatingElements, position);
                 }
             }
-            else if (paragraph is FloaterParagraphResult)
+            else if (paragraph is FloaterParagraphResult floaterParagraphResult)
             {
-                FloaterParagraphResult floaterParagraphResult = (FloaterParagraphResult)paragraph;
                 ReadOnlyCollection<ColumnResult> columns = floaterParagraphResult.Columns;
                 ReadOnlyCollection<ParagraphResult> nestedFloatingElements = floaterParagraphResult.FloatingElements;
                 Invariant.Assert(columns != null, "Column collection is null.");
@@ -2563,10 +2534,8 @@ namespace MS.Internal.Documents
                         }
                     }
                 }
-                else if (paragraphs[paragraphIndex] is TableParagraphResult)
+                else if (paragraphs[paragraphIndex] is TableParagraphResult tableResult) // c) TableParagraph - process nested paragraphs.
                 {
-                    // c) TableParagraph - process nested paragraphs.
-                    TableParagraphResult tableResult = (TableParagraphResult)paragraphs[paragraphIndex];
                     CellParaClient cpcStart = tableResult.GetCellParaClientFromPosition(position);
                     CellParaClient cpcCur = cpcStart;
                     Rect paragraphBox = paragraphs[paragraphIndex].LayoutBox;
@@ -2828,9 +2797,8 @@ namespace MS.Internal.Documents
                         break;
                     }
                 }
-                else if (paragraphs[paragraphIndex] is TableParagraphResult)
+                else if (paragraphs[paragraphIndex] is TableParagraphResult tableResult)
                 {
-                    TableParagraphResult tableResult = (TableParagraphResult)paragraphs[paragraphIndex];
                     Rect paragraphBox = paragraphs[paragraphIndex].LayoutBox;
                     CellParaClient cpcCur = null;
 
@@ -3133,9 +3101,8 @@ namespace MS.Internal.Documents
             for (int index = 0; index < paragraphs.Count; index++)
             {
                 ParagraphResult paragraph = paragraphs[index];
-                if (paragraph is TextParagraphResult)
+                if (paragraph is TextParagraphResult tpr)
                 {
-                    TextParagraphResult tpr = (TextParagraphResult)paragraph;
                     if (start.CompareTo(tpr.EndPosition) < 0 && end.CompareTo(tpr.StartPosition) > 0)
                     {
                         ITextPointer startRange = start.CompareTo(tpr.StartPosition) < 0 ? tpr.StartPosition : start;
@@ -3190,9 +3157,8 @@ namespace MS.Internal.Documents
                 {
                     success = true;
                     ITextPointer endThisPara = end.CompareTo(paragraph.EndPosition) < 0 ? end : paragraph.EndPosition;
-                    if (paragraph is FigureParagraphResult)
+                    if (paragraph is FigureParagraphResult figureParagraphResult)
                     {
-                        FigureParagraphResult figureParagraphResult = (FigureParagraphResult)paragraph;
                         ReadOnlyCollection<ColumnResult> columns = figureParagraphResult.Columns;
                         ReadOnlyCollection<ParagraphResult> nestedFloatingElements = figureParagraphResult.FloatingElements;
                         Invariant.Assert(columns != null, "Column collection is null.");
@@ -3202,9 +3168,8 @@ namespace MS.Internal.Documents
                             GetGlyphRuns(glyphRuns, start, endThisPara, columns, nestedFloatingElements);
                         }
                     }
-                    else if (paragraph is FloaterParagraphResult)
+                    else if (paragraph is FloaterParagraphResult floaterParagraphResult)
                     {
-                        FloaterParagraphResult floaterParagraphResult = (FloaterParagraphResult)paragraph;
                         ReadOnlyCollection<ColumnResult> columns = floaterParagraphResult.Columns;
                         ReadOnlyCollection<ParagraphResult> nestedFloatingElements = floaterParagraphResult.FloatingElements;
                         Invariant.Assert(columns != null, "Column collection is null.");

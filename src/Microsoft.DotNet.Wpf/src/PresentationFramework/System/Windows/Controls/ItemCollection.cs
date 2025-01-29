@@ -736,7 +736,6 @@ namespace System.Windows.Controls
             }
         }
 
-#pragma warning disable 1634, 1691  // about to use PreSharp message numbers - unknown to C#
         /// <summary>
         ///     Returns an object to be used in thread synchronization.
         /// </summary>
@@ -752,14 +751,12 @@ namespace System.Windows.Controls
                 if (IsUsingItemsSource)
                 {
                     // see discussion in XML comment above.
-                    #pragma warning suppress 6503 // "Property get methods should not throw exceptions."
                     throw new NotSupportedException(SR.ItemCollectionShouldUseInnerSyncRoot);
                 }
 
                 return _internalView.SyncRoot;
             }
         }
-#pragma warning restore 1634, 1691
 
         /// <summary>
         ///     Gets a value indicating whether the IList has a fixed size.
@@ -1978,17 +1975,12 @@ namespace System.Windows.Controls
         // be sure that we reference that member on the derived class.
         private new void VerifyRefreshNotDeferred()
         {
-            #pragma warning disable 1634, 1691 // about to use PreSharp message numbers - unknown to C#
-            #pragma warning disable 6503
             // If the Refresh is being deferred to change filtering or sorting of the
             // data by this CollectionView, then CollectionView will not reflect the correct
             // state of the underlying data.
 
             if (IsRefreshDeferred)
                 throw new InvalidOperationException(SR.NoCheckOrChangeWhenDeferred);
-
-            #pragma warning restore 6503
-            #pragma warning restore 1634, 1691
         }
 
         // SortDescription was added/removed to/from this ItemCollection.SortDescriptions, refresh CollView

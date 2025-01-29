@@ -14,8 +14,6 @@ using System.Windows.Media;
 using System.Windows.Ink;
 using System.Windows.Input;
 
-#pragma warning disable 1634, 1691  // suppressing PreSharp warnings
-
 namespace MS.Internal.Ink.GestureRecognition
 {
     /// <summary>
@@ -508,11 +506,13 @@ namespace MS.Internal.Ink.GestureRecognition
                 packetProperties[i].guid = propertyGuids[i];
                 propertyInfo = infosToUse[i];
 
-                MS.Win32.Recognizer.PROPERTY_METRICS propertyMetrics = new MS.Win32.Recognizer.PROPERTY_METRICS( );
-                propertyMetrics.nLogicalMin = propertyInfo.Minimum;
-                propertyMetrics.nLogicalMax = propertyInfo.Maximum;
-                propertyMetrics.Units = (int)(propertyInfo.Unit);
-                propertyMetrics.fResolution = propertyInfo.Resolution;
+                MS.Win32.Recognizer.PROPERTY_METRICS propertyMetrics = new MS.Win32.Recognizer.PROPERTY_METRICS
+                {
+                    nLogicalMin = propertyInfo.Minimum,
+                    nLogicalMax = propertyInfo.Maximum,
+                    Units = (int)(propertyInfo.Unit),
+                    fResolution = propertyInfo.Resolution
+                };
                 packetProperties[i].PropertyMetrics = propertyMetrics;
             }
 
@@ -632,7 +632,6 @@ namespace MS.Internal.Ink.GestureRecognition
                 {
                     if (pRecoAlternates[i] != IntPtr.Zero)
                     {
-                        #pragma warning suppress 6031, 56031 // Return value ignored on purpose.
                         MS.Win32.Recognizer.UnsafeNativeMethods.DestroyAlternate(pRecoAlternates[i]);
                         pRecoAlternates[i] = IntPtr.Zero;
                     }

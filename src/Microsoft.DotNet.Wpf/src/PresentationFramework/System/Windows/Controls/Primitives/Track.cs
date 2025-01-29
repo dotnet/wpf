@@ -683,9 +683,11 @@ namespace System.Windows.Controls.Primitives
         {
             if (!HasNonDefaultValue(target))
             {
-                Binding binding = new Binding();
-                binding.RelativeSource = RelativeSource.TemplatedParent;
-                binding.Path = new PropertyPath(source);
+                Binding binding = new Binding
+                {
+                    RelativeSource = RelativeSource.TemplatedParent,
+                    Path = new PropertyPath(source)
+                };
                 SetBinding(target, binding);
             }
         }
@@ -695,9 +697,11 @@ namespace System.Windows.Controls.Primitives
         {
             if (element != null && !element.HasNonDefaultValue(target))
             {
-                Binding binding = new Binding();
-                binding.Source = this.TemplatedParent;
-                binding.Path = new PropertyPath(source);
+                Binding binding = new Binding
+                {
+                    Source = this.TemplatedParent,
+                    Path = new PropertyPath(source)
+                };
                 element.SetBinding(target, binding);
             }
         }

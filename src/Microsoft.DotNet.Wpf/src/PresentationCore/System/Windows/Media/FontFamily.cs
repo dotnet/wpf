@@ -10,9 +10,6 @@ using MS.Internal.FontCache;
 using MS.Internal.FontFace;
 using MS.Internal.Shaping;
 
-// Since we disable PreSharp warnings in this file, we first need to disable warnings about unknown message numbers and unknown pragmas.
-#pragma warning disable 1634, 1691
-
 namespace System.Windows.Media
 {
     /// <summary>
@@ -191,7 +188,7 @@ namespace System.Windows.Media
         public override string ToString()
         {
             string source = _familyIdentifier.Source;
-            return source != null ? source : string.Empty;
+            return source ?? string.Empty;
         }
 
 
@@ -521,8 +518,6 @@ namespace System.Windows.Media
                 return fontFamily;
             }
             // The method returns null in case of malformed/non-existent fonts and we fall back to the next font.
-            // Therefore, we can disable PreSharp warning about empty catch bodies.
-#pragma warning disable 6502
             catch (FileFormatException)
             {
                 // malformed font file
@@ -548,7 +543,7 @@ namespace System.Windows.Media
             {
                 // canonical name points to a malformed Uri
             }
-#pragma warning restore 6502
+
             // we want to fall back to the default fallback font instead of crashing
             return null;
         }

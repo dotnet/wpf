@@ -2,8 +2,6 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-#pragma warning disable 1634, 1691 // Allow suppression of certain presharp messages
-
 using MS.Internal;
 using MS.Win32;
 using System.IO;
@@ -434,7 +432,6 @@ namespace System.Windows.Media
             }
             else if (obj1 != null && obj2 != null)
             {
-                #pragma warning disable 6506
                 return (
                     (context1._profileHeader.phSize == context2._profileHeader.phSize) &&
                     (context1._profileHeader.phCMMType == context2._profileHeader.phCMMType) &&
@@ -458,7 +455,6 @@ namespace System.Windows.Media
                     (context1._profileHeader.phIlluminant_2 == context2._profileHeader.phIlluminant_2) &&
                     (context1._profileHeader.phCreator == context2._profileHeader.phCreator)
                     );
-                #pragma warning restore 6506
             }
             else
             {

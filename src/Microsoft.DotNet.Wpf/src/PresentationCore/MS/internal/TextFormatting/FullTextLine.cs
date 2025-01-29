@@ -161,8 +161,10 @@ namespace MS.Internal.TextFormatting
                 {
                     _statusFlags |= StatusFlags.IsJustified;
                 }
-                _metrics = new TextMetrics();
-                _metrics._pixelsPerDip = pixelsPerDip;
+                _metrics = new TextMetrics
+                {
+                    _pixelsPerDip = pixelsPerDip
+                };
                 _ploline = IntPtr.Zero;
             }
 

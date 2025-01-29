@@ -103,8 +103,10 @@ namespace MS.Internal.Printing.Configuration
 
         internal static PrintCapabilityFeature NewFeatureCallback(InternalPrintCapabilities printCap)
         {
-            PageOutputColorCapability cap = new PageOutputColorCapability(printCap);
-            cap._outputColors = new Collection<OutputColorOption>();
+            PageOutputColorCapability cap = new PageOutputColorCapability(printCap)
+            {
+                _outputColors = new Collection<OutputColorOption>()
+            };
 
             return cap;
         }

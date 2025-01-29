@@ -134,7 +134,7 @@ namespace MS.Internal.Xaml
 
             foreach (var property in properties)
             {
-                if (property == null)
+                if (property is null)
                 {
                     // we don't allow any property to be null
                     throw new ArgumentException(SR.Format(SR.ValueInArrayIsNull, "properties"));
@@ -150,15 +150,15 @@ namespace MS.Internal.Xaml
 
             foreach (var type in types)
             {
-                if (type == null)
+                if (type is null)
                 {
                     // we don't allow any type to be null
                     throw new ArgumentException(SR.Format(SR.ValueInArrayIsNull, "types"));
                 }
             }
+
             return _xamlContext.ServiceProvider_GetFirstAmbientValue(types);
         }
-
 
         IEnumerable<AmbientPropertyValue> IAmbientProvider.GetAllAmbientValues(
                                                     IEnumerable<XamlType> ceilingTypes,
@@ -168,7 +168,7 @@ namespace MS.Internal.Xaml
 
             foreach (var property in properties)
             {
-                if (property == null)
+                if (property is null)
                 {
                     // we don't allow any property to be null
                     throw new ArgumentException(SR.Format(SR.ValueInArrayIsNull, "properties"));
@@ -184,7 +184,7 @@ namespace MS.Internal.Xaml
 
             foreach (var type in types)
             {
-                if (type == null)
+                if (type is null)
                 {
                     // we don't allow any type to be null
                     throw new ArgumentException(SR.Format(SR.ValueInArrayIsNull, "types"));
@@ -204,7 +204,7 @@ namespace MS.Internal.Xaml
 
             foreach (var property in properties)
             {
-                if (property == null)
+                if (property is null)
                 {
                     // we don't allow any property to be null
                     throw new ArgumentException(SR.Format(SR.ValueInArrayIsNull, "properties"));
@@ -286,8 +286,12 @@ namespace MS.Internal.Xaml
             {
                 return null;
             }
-            var token = new NameFixupToken();
-            token.CanAssignDirectly = canAssignDirectly;
+
+            var token = new NameFixupToken
+            {
+                CanAssignDirectly = canAssignDirectly
+            };
+
             token.NeededNames.AddRange(names);
             if (token.CanAssignDirectly && token.NeededNames.Count != 1)
             {
@@ -295,7 +299,7 @@ namespace MS.Internal.Xaml
             }
 
             // TypeConverter case (aka "Initialization")
-            if (_xamlContext.CurrentType == null)
+            if (_xamlContext.CurrentType is null)
             {
                 // If this is OBJECT Initialization
                 if (_xamlContext.ParentProperty == XamlLanguage.Initialization)
@@ -360,7 +364,6 @@ namespace MS.Internal.Xaml
             return token;
         }
 
-
         IEnumerable<KeyValuePair<string, object>> IXamlNameResolver.GetAllNamesAndValuesInScope()
         {
             return _xamlContext.GetAllNamesAndValuesInScope();
@@ -374,7 +377,6 @@ namespace MS.Internal.Xaml
             }
             remove
             {
-
                 _xamlContext.RemoveNameScopeInitializationCompleteSubscriber(value);
             }
         }

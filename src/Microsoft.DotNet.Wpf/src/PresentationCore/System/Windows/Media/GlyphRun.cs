@@ -14,9 +14,6 @@
 //
 //
 
-// Enable presharp pragma warning suppress directives.
-#pragma warning disable 1634, 1691
-
 using System.Collections;
 using System.ComponentModel;
 using System.Windows.Media.Converters;
@@ -128,10 +125,6 @@ namespace System.Windows.Media
             XmlLanguage language
             )
         {
-            // Suppress PRESharp warning that glyphIndices and advanceWidths are not validated and can be null.
-            // They can indeed be null, but that's perfectly OK. An explicit null check in the constructor is
-            // not required.
-#pragma warning suppress 56506
             Initialize(
                 glyphTypeface,
                 bidiLevel,
@@ -223,10 +216,6 @@ namespace System.Windows.Media
             XmlLanguage             language
             )
         {
-            // Suppress PRESharp warning that glyphIndices and advanceWidths are not validated and can be null.
-            // They can indeed be null, but that's perfectly OK. An explicit null check in the constructor is
-            // not required.
-#pragma warning suppress 56506
             Initialize(
                 glyphTypeface,
                 bidiLevel,
@@ -284,10 +273,6 @@ namespace System.Windows.Media
         {
             GlyphRun glyphRun = new GlyphRun(pixelsPerDip);
 
-            // Suppress PRESharp warning that glyphIndices and advanceWidths are not validated and can be null.
-            // They can indeed be null, but that's perfectly OK. An explicit null check in the constructor is
-            // not required.
-#pragma warning suppress 56506
             glyphRun.Initialize(
                 glyphTypeface,
                 bidiLevel,
@@ -1599,8 +1584,10 @@ namespace System.Windows.Media
 
                 if (accumulatedGeometry == null)
                 {
-                    accumulatedGeometry = new GeometryGroup();
-                    accumulatedGeometry.FillRule = FillRule.Nonzero;
+                    accumulatedGeometry = new GeometryGroup
+                    {
+                        FillRule = FillRule.Nonzero
+                    };
                 }
 
                 accumulatedGeometry.Children.Add(glyphGeometry.GetOutlinedPathGeometry(RelativeFlatteningTolerance, ToleranceType.Relative));

@@ -937,8 +937,10 @@ namespace System.Windows.Input
         private TouchEventArgs CreateEventArgs(RoutedEvent routedEvent)
         {
             // review timestamps
-            TouchEventArgs touchEventArgs = new TouchEventArgs(this, Environment.TickCount);
-            touchEventArgs.RoutedEvent = routedEvent;
+            TouchEventArgs touchEventArgs = new TouchEventArgs(this, Environment.TickCount)
+            {
+                RoutedEvent = routedEvent
+            };
             return touchEventArgs;
         }
 

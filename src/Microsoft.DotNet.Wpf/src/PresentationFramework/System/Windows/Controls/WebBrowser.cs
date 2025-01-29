@@ -273,8 +273,10 @@ namespace System.Windows.Controls
             object retVal = null;            
             if (scriptObjectEx != null)
             {
-                NativeMethods.DISPPARAMS dp = new NativeMethods.DISPPARAMS();
-                dp.rgvarg = IntPtr.Zero;
+                NativeMethods.DISPPARAMS dp = new NativeMethods.DISPPARAMS
+                {
+                    rgvarg = IntPtr.Zero
+                };
                 try
                 {
                     // If we use reflection to call script code, we need to Assert for the UnmanagedCode permission. 

@@ -207,8 +207,10 @@ namespace MS.Internal.Printing.Configuration
 
         internal static PrintCapabilityFeature NewFeatureCallback(InternalPrintCapabilities printCap)
         {
-            DocumentCollateCapability cap = new DocumentCollateCapability(printCap);
-            cap._collateOptions = new Collection<CollateOption>();
+            DocumentCollateCapability cap = new DocumentCollateCapability(printCap)
+            {
+                _collateOptions = new Collection<CollateOption>()
+            };
 
             return cap;
         }

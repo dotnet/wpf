@@ -1782,16 +1782,6 @@
         <target state="translated">Der Teilname entspricht nicht dessen Inhaltstyp.</target>
         <note />
       </trans-unit>
-      <trans-unit id="InvalidPermissionStateValue">
-        <source>PermissionState value '{0}' is not valid for this Permission.</source>
-        <target state="translated">Der PermissionState-Wert "{0}" ist für diese Berechtigung nicht gültig.</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="InvalidPermissionType">
-        <source>Permission type is not valid. Expected '{0}'.</source>
-        <target state="translated">Ungültiger Berechtigungstyp. Erwartet wurde "{0}".</target>
-        <note />
-      </trans-unit>
       <trans-unit id="InvalidPressureValue">
         <source>Pressure must be a value between 0 and 1.</source>
         <target state="translated">Der Druck muss einen Wert zwischen 0 und 1 besitzen.</target>
@@ -2855,11 +2845,6 @@
       <trans-unit id="SearchText">
         <source>Search</source>
         <target state="translated">Suche</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="SecurityExceptionForSettingSandboxExternalToTrue">
-        <source>Cannot set SandboxExternalContent to true in partial trust.</source>
-        <target state="translated">SandboxExternalContent kann bei Verwendung mit teilweiser Vertrauenswürdigkeit nicht auf "true" festgelegt werden.</target>
         <note />
       </trans-unit>
       <trans-unit id="SeekNegative">

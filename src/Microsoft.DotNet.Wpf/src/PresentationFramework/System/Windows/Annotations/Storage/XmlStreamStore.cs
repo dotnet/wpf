@@ -724,8 +724,10 @@ namespace System.Windows.Annotations.Storage
 
             lock (SyncRoot)
             {
-                _document = new XmlDocument();
-                _document.PreserveWhitespace = false;
+                _document = new XmlDocument
+                {
+                    PreserveWhitespace = false
+                };
                 if (_stream.Length == 0)
                 {
                     _document.LoadXml(

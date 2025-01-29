@@ -102,8 +102,10 @@ namespace MS.Internal.Printing.Configuration
 
         internal static PrintCapabilityFeature NewFeatureCallback(InternalPrintCapabilities printCap)
         {
-            PageTrueTypeFontModeCapability cap = new PageTrueTypeFontModeCapability(printCap);
-            cap._trueTypeFontModes = new Collection<TrueTypeFontModeOption>();
+            PageTrueTypeFontModeCapability cap = new PageTrueTypeFontModeCapability(printCap)
+            {
+                _trueTypeFontModes = new Collection<TrueTypeFontModeOption>()
+            };
 
             return cap;
         }

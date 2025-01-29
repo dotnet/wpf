@@ -18,8 +18,6 @@ using System.Windows.Controls;
 using MS.Internal.Utility;
 using MS.Internal.Hashing.PresentationFramework;    // HashHelper
 
-#pragma warning disable 1634, 1691  // suppressing PreSharp warnings
-
 namespace MS.Internal.Data
 {
     /// <summary>
@@ -1560,12 +1558,12 @@ namespace MS.Internal.Data
                     // InvalidOperationException: The enumerator is positioned before the first element of the collection or after the last element.
                     if (_index < 0)
                     {
-#pragma warning suppress 6503 // ICollectionView.CurrentItem is documented to throw this exception
+                        // ICollectionView.CurrentItem is documented to throw this exception
                         throw new InvalidOperationException(SR.EnumeratorNotStarted);
                     }
                     if (_done)
                     {
-#pragma warning suppress 6503 // ICollectionView.CurrentItem is documented to throw this exception
+                        // ICollectionView.CurrentItem is documented to throw this exception
                         throw new InvalidOperationException(SR.EnumeratorReachedEnd);
                     }
 

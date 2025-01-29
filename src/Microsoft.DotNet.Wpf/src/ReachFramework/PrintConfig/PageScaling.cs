@@ -19,8 +19,6 @@ using System.Globalization;
 
 using System.Printing;
 
-#pragma warning disable 1634, 1691 // Allows suppression of certain PreSharp messages
-
 namespace MS.Internal.Printing.Configuration
 {
     /// <summary>
@@ -167,8 +165,10 @@ namespace MS.Internal.Printing.Configuration
 
         internal static PrintCapabilityFeature NewFeatureCallback(InternalPrintCapabilities printCap)
         {
-            PageScalingCapability cap = new PageScalingCapability(printCap);
-            cap._scalingOptions = new Collection<ScalingOption>();
+            PageScalingCapability cap = new PageScalingCapability(printCap)
+            {
+                _scalingOptions = new Collection<ScalingOption>()
+            };
 
             return cap;
         }
@@ -330,16 +330,15 @@ namespace MS.Internal.Printing.Configuration
                         }
                     }
                     // We want to catch internal FormatException to skip recoverable XML content syntax error
-                    #pragma warning suppress 56502
-                    #if _DEBUG
+#if _DEBUG
                     catch (FormatException e)
-                    #else
+#else
                     catch (FormatException)
-                    #endif
+#endif
                     {
-                        #if _DEBUG
+#if _DEBUG
                         Trace.WriteLine("-Error- " + e.Message);
-                        #endif
+#endif
                     }
                 }
                 else

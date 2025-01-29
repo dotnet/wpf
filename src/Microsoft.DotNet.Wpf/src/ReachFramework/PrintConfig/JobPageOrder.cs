@@ -101,8 +101,10 @@ namespace MS.Internal.Printing.Configuration
 
         internal static PrintCapabilityFeature NewFeatureCallback(InternalPrintCapabilities printCap)
         {
-            JobPageOrderCapability cap = new JobPageOrderCapability(printCap);
-            cap._orderOptions = new Collection<PageOrderOption>();
+            JobPageOrderCapability cap = new JobPageOrderCapability(printCap)
+            {
+                _orderOptions = new Collection<PageOrderOption>()
+            };
 
             return cap;
         }

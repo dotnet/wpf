@@ -101,23 +101,22 @@ namespace MS.Win32
         public const UInt16 C3_IDEOGRAPH  = 0x0100;
         public const UInt16 C3_KASHIDA    = 0x0200;
 
-        public static bool GetStringTypeEx(uint locale, uint infoType, char[] sourceString, int count,
-            UInt16[] charTypes)
+        public static unsafe bool GetStringTypeEx(uint locale, uint infoType, ReadOnlySpan<char> sourceString, Span<UInt16> charTypes)
         {
-            bool win32Return = SafeNativeMethodsPrivate.GetStringTypeEx(locale, infoType, sourceString, count, charTypes);
-            int win32Error = Marshal.GetLastWin32Error();
-
-            if (!win32Return)
+            // Since we do not use [LibraryImport], Span<T> marshallers are not available by default
+            fixed (char* ptrSourceString = sourceString)
+            fixed (ushort* ptrCharTypes = charTypes)
             {
-                throw new Win32Exception(win32Error);
-            }
+                if (!SafeNativeMethodsPrivate.GetStringTypeEx(locale, infoType, ptrSourceString, sourceString.Length, ptrCharTypes))
+                    throw new Win32Exception(); // Initializes with Marshal.GetLastPInvokeError()
+            }        
 
-            return win32Return;
+            return true;
         }
         
-            public static int GetSysColor(int nIndex)
+        public static int GetSysColor(int nIndex)
         {
-                return SafeNativeMethodsPrivate.GetSysColor(nIndex);
+            return SafeNativeMethodsPrivate.GetSysColor(nIndex);
         }
 
         public static bool IsClipboardFormatAvailable(int format)
@@ -201,11 +200,10 @@ namespace MS.Win32
             [DllImport(ExternDll.User32, SetLastError=true, CharSet=CharSet.Auto)]
             public static extern int GetCaretBlinkTime();
 
-            [DllImport("kernel32.dll", SetLastError = true, CharSet = CharSet.Auto)]
-            public static extern bool GetStringTypeEx(uint locale, uint infoType, char[] sourceString, int count,
-                [Out, MarshalAs(UnmanagedType.LPArray, SizeParamIndex = 3)] UInt16[] charTypes);
+            [DllImport(ExternDll.Kernel32, SetLastError = true, CharSet = CharSet.Auto)]
+            public static unsafe extern bool GetStringTypeEx(uint locale, uint infoType, char* sourceString, int count, ushort* charTypes);
             
-            [DllImport(ExternDll.User32, CharSet = System.Runtime.InteropServices.CharSet.Auto)]
+            [DllImport(ExternDll.User32, CharSet = CharSet.Auto)]
             public static extern int GetSysColor(int nIndex);
 
             [DllImport(ExternDll.User32, ExactSpelling = true, CharSet = CharSet.Auto)]

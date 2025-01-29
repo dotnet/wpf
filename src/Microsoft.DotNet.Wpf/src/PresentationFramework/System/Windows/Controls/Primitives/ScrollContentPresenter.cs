@@ -568,13 +568,8 @@ namespace System.Windows.Controls
                 return Rect.Empty;
             }
 
-            // This is a false positive by PreSharp. visual cannot be null because of the 'if' check above
-#pragma warning disable 1634, 1691
-#pragma warning disable 56506
             // Compute the child's rect relative to (0,0) in our coordinate space.
             GeneralTransform childTransform = visual.TransformToAncestor(this);
-#pragma warning restore 56506
-#pragma warning restore 1634, 1691
 
             rectangle = childTransform.TransformBounds(rectangle);
 

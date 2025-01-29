@@ -2,9 +2,6 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-// Allow suppression of certain presharp messages
-#pragma warning disable 1634, 1691
-
 using System.ComponentModel;
 
 namespace System.Windows.Media.Animation
@@ -34,10 +31,11 @@ namespace System.Windows.Media.Animation
                 throw new ArgumentOutOfRangeException(nameof(percent), SR.Format(SR.Animation_KeyTime_InvalidPercentValue, percent));
             }
 
-            KeyTime keyTime = new KeyTime();
-
-            keyTime._value = percent;
-            keyTime._type = KeyTimeType.Percent;
+            KeyTime keyTime = new KeyTime
+            {
+                _value = percent,
+                _type = KeyTimeType.Percent
+            };
 
             return keyTime;
         }
@@ -53,10 +51,11 @@ namespace System.Windows.Media.Animation
                 throw new ArgumentOutOfRangeException(nameof(timeSpan), SR.Format(SR.Animation_KeyTime_LessThanZero, timeSpan));
             }
 
-            KeyTime keyTime = new KeyTime();
-
-            keyTime._value = timeSpan;
-            keyTime._type = KeyTimeType.TimeSpan;
+            KeyTime keyTime = new KeyTime
+            {
+                _value = timeSpan,
+                _type = KeyTimeType.TimeSpan
+            };
 
             return keyTime;
         }
@@ -69,8 +68,10 @@ namespace System.Windows.Media.Animation
         {
             get
             {
-                KeyTime keyTime = new KeyTime();
-                keyTime._type = KeyTimeType.Uniform;
+                KeyTime keyTime = new KeyTime
+                {
+                    _type = KeyTimeType.Uniform
+                };
 
                 return keyTime;
             }
@@ -84,8 +85,10 @@ namespace System.Windows.Media.Animation
         {
             get
             {
-                KeyTime keyTime = new KeyTime();
-                keyTime._type = KeyTimeType.Paced;
+                KeyTime keyTime = new KeyTime
+                {
+                    _type = KeyTimeType.Paced
+                };
 
                 return keyTime;
             }
@@ -241,7 +244,6 @@ namespace System.Windows.Media.Animation
                 }
                 else
                 {
-#pragma warning suppress 56503 // Suppress presharp warning: Follows a pattern similar to Nullable.
                     throw new InvalidOperationException();
                 }
             }
@@ -263,7 +265,6 @@ namespace System.Windows.Media.Animation
                 }
                 else
                 {
-#pragma warning suppress 56503 // Suppress presharp warning: Follows a pattern similar to Nullable.
                     throw new InvalidOperationException();
                 }
             }

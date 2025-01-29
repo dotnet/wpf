@@ -210,8 +210,10 @@ namespace MS.Internal.Printing.Configuration
 
         internal static PrintCapabilityFeature NewFeatureCallback(InternalPrintCapabilities printCap)
         {
-            JobStapleCapability cap = new JobStapleCapability(printCap);
-            cap._staplingOptions = new Collection<StaplingOption>();
+            JobStapleCapability cap = new JobStapleCapability(printCap)
+            {
+                _staplingOptions = new Collection<StaplingOption>()
+            };
 
             return cap;
         }

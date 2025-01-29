@@ -841,7 +841,7 @@ namespace System.Windows.Documents
 
         internal static string ToString(DocumentSequenceTextPointer thisTp)
         {
-            return $"{(thisTp is DocumentSequenceTextPointer ? "DSTP" : "DSTN")} Id={thisTp.DebugId} B={thisTp.ChildBlock.DebugId} G={thisTp.ChildPointer.LogicalDirection}";
+            return $"{(thisTp is not null ? "DSTP" : "DSTN")} Id={thisTp.DebugId} B={thisTp.ChildBlock.DebugId} G={thisTp.ChildPointer.LogicalDirection}";
         }
 #endif
         #endregion Internal Methods

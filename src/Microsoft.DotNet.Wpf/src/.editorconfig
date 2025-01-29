@@ -257,9 +257,6 @@ dotnet_diagnostic.IDE0082.severity = suggestion
 # IDE0100: Remove redundant equality
 dotnet_diagnostic.IDE0100.severity = suggestion
 
-# IDE0150: Prefer 'null' check over type check
-dotnet_diagnostic.IDE0150.severity = suggestion
-
 # IDE0180: Use tuple to swap values
 dotnet_diagnostic.IDE0180.severity = suggestion
 

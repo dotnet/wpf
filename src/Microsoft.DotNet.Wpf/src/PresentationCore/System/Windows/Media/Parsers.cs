@@ -1,176 +1,157 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
-
-//  Synopsis: Implements class Parsers for internal use of type converters
 
 using System.ComponentModel;
 using System.Windows.Media;
 
 namespace MS.Internal
 {
+    /// <summary>
+    /// Implements class Parsers for internal use of type converters
+    /// </summary>
     internal static partial class Parsers
     {
-        private const int s_zeroChar = (int) '0';
-        private const int s_aLower   = (int) 'a';
-        private const int s_aUpper   = (int) 'A';
+        /// <summary>
+        /// Map from an ASCII char to its hex value, e.g. arr['b'] == 11. 0xFF means it's not a hex digit.
+        /// </summary>
+        private static ReadOnlySpan<byte> CharToHexLookup =>
+        [
+            0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, // 0-15
+            0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, // 16-31
+            0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, // 32-47
+            0x0,  0x1,  0x2,  0x3,  0x4,  0x5,  0x6,  0x7,  0x8,  0x9,  0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, // 48-63
+            0xFF, 0xA,  0xB,  0xC,  0xD,  0xE,  0xF,  0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, // 64-79
+            0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, // 80-95
+            0xFF, 0xa,  0xb,  0xc,  0xd,  0xe,  0xf,                                                        // 96-102
+        ];
 
-        static private int ParseHexChar(char c )
+        /// <summary>
+        /// Parses a 0-9 and a-f / A-F character to its respective number.
+        /// </summary>
+        /// <exception cref="FormatException"></exception>
+        private static int ParseHexChar(char hexChar)
         {
-            int intChar = (int) c;
+            int intChar;
 
-            if ((intChar >= s_zeroChar) && (intChar <= (s_zeroChar+9)))
-            {
-                return (intChar-s_zeroChar);
-            }
+            // This also eliminates the bounds check
+            if (hexChar >= CharToHexLookup.Length || (intChar = CharToHexLookup[hexChar]) == 0xFF)
+                throw new FormatException(SR.Parsers_IllegalToken);
 
-            if ((intChar >= s_aLower) && (intChar <= (s_aLower+5)))
-            {
-                return (intChar-s_aLower + 10);
-            }
-
-            if ((intChar >= s_aUpper) && (intChar <= (s_aUpper+5)))
-            {
-                return (intChar-s_aUpper + 10);
-            }
-            throw new FormatException(SR.Parsers_IllegalToken);
+            return intChar;
         }
 
-        static private Color ParseHexColor(string trimmedColor)
+        private static Color ParseHexColor(ReadOnlySpan<char> trimmedColor)
         {
-            int a,r,g,b;
-            a = 255;
+            int a, r, g, b;
 
-            if ( trimmedColor.Length > 7 )
+            if (trimmedColor.Length > 7) // #00000000 (ARGB)
             {
-                a = ParseHexChar(trimmedColor[1]) * 16 + ParseHexChar(trimmedColor[2]);
-                r = ParseHexChar(trimmedColor[3]) * 16 + ParseHexChar(trimmedColor[4]);
-                g = ParseHexChar(trimmedColor[5]) * 16 + ParseHexChar(trimmedColor[6]);
-                b = ParseHexChar(trimmedColor[7]) * 16 + ParseHexChar(trimmedColor[8]);
+                a = ParseHexChar(trimmedColor[1]) << 4 + ParseHexChar(trimmedColor[2]);
+                r = ParseHexChar(trimmedColor[3]) << 4 + ParseHexChar(trimmedColor[4]);
+                g = ParseHexChar(trimmedColor[5]) << 4 + ParseHexChar(trimmedColor[6]);
+                b = ParseHexChar(trimmedColor[7]) << 4 + ParseHexChar(trimmedColor[8]);
             }
-            else if ( trimmedColor.Length > 5)
+            else if (trimmedColor.Length > 5) // #000000 (RGB)
             {
-                r = ParseHexChar(trimmedColor[1]) * 16 + ParseHexChar(trimmedColor[2]);
-                g = ParseHexChar(trimmedColor[3]) * 16 + ParseHexChar(trimmedColor[4]);
-                b = ParseHexChar(trimmedColor[5]) * 16 + ParseHexChar(trimmedColor[6]);
+                a = 255;
+                r = ParseHexChar(trimmedColor[1]) << 4 + ParseHexChar(trimmedColor[2]);
+                g = ParseHexChar(trimmedColor[3]) << 4 + ParseHexChar(trimmedColor[4]);
+                b = ParseHexChar(trimmedColor[5]) << 4 + ParseHexChar(trimmedColor[6]);
             }
-            else if (trimmedColor.Length > 4)
+            else if (trimmedColor.Length > 4) // #0000 (single-digit ARGB)
             {
                 a = ParseHexChar(trimmedColor[1]);
-                a = a + a*16;
+                a += a << 4;
                 r = ParseHexChar(trimmedColor[2]);
-                r = r + r*16;
+                r += r << 4;
                 g = ParseHexChar(trimmedColor[3]);
-                g = g + g*16;
+                g += g << 4;
                 b = ParseHexChar(trimmedColor[4]);
-                b = b + b*16;
+                b += b << 4;
             }
-            else
+            else // #000 (single-digit RGB)
             {
+                a = 255;
                 r = ParseHexChar(trimmedColor[1]);
-                r = r + r*16;
+                r += r << 4;
                 g = ParseHexChar(trimmedColor[2]);
-                g = g + g*16;
+                g += g << 4;
                 b = ParseHexChar(trimmedColor[3]);
-                b = b + b*16;
+                b += b << 4;
             }
 
-            return ( Color.FromArgb ((byte)a, (byte)r, (byte)g, (byte)b) );
+            return Color.FromArgb((byte)a, (byte)r, (byte)g, (byte)b);
         }
 
-    internal const string s_ContextColor = "ContextColor ";
-    internal const string s_ContextColorNoSpace = "ContextColor";
+        internal const string ContextColor = "ContextColor ";
 
-    static private Color ParseContextColor(string trimmedColor, IFormatProvider formatProvider, ITypeDescriptorContext context)
+        private static Color ParseContextColor(ReadOnlySpan<char> trimmedColor, IFormatProvider formatProvider, ITypeDescriptorContext context)
         {
-            if (!trimmedColor.StartsWith(s_ContextColor, StringComparison.OrdinalIgnoreCase))
-            {
+            if (!trimmedColor.StartsWith(ContextColor, StringComparison.OrdinalIgnoreCase))
                 throw new FormatException(SR.Parsers_IllegalToken);
-            }
 
-            string tokens = trimmedColor.Substring(s_ContextColor.Length);
-            tokens = tokens.Trim();
-            string[] preSplit = tokens.Split(' ');
-            if (preSplit.Length < 2)
-            {
+            // Skip "ContextColor " prefix
+            ReadOnlySpan<char> tokens = trimmedColor.Slice(ContextColor.Length).Trim();
+
+            // Check whether the format is at least e.g. "file://profile.icc 1.0"
+            Span<Range> splitSegments = stackalloc Range[4];
+
+            if (tokens.Split(splitSegments, ' ') < 2)
                 throw new FormatException(SR.Parsers_IllegalToken);
-            }
 
-            tokens = tokens.Substring(preSplit[0].Length);
+            // Retrieve "file://profile.icc" part
+            string profileString = tokens[splitSegments[0]].ToString();
+            // Skip "file://profile.icc" part
+            ReadOnlySpan<char> colorPart = tokens.Slice(profileString.Length);
 
-            TokenizerHelper th = new TokenizerHelper(tokens, formatProvider);
-            string[] split = tokens.Split(new Char[] { ',', ' ' }, StringSplitOptions.RemoveEmptyEntries);
-            int numTokens = split.Length;
+            // Retrieve alpha value
+            ValueTokenizerHelper tokenizer = new(colorPart, formatProvider);
+            float alpha = float.Parse(tokenizer.NextTokenRequired(), formatProvider);
 
-            float alpha = Convert.ToSingle(th.NextTokenRequired(), formatProvider);
+            // While we do not support colors with more than 8 channels, the underlying initialization code will take care of it,
+            // so here we just silently count the color values and let it throw NotImplementedException in the color translation code-path.
+            int numTokens = colorPart.Count(',');
+            Span<float> values = stackalloc float[numTokens];
 
-            float[] values = new float[numTokens - 1];
+            for (int i = 0; i < values.Length; i++)
+                values[i] = float.Parse(tokenizer.NextTokenRequired(), formatProvider);
 
-            for (int i = 0; i < numTokens - 1; i++)
-            {
-                values[i] = Convert.ToSingle(th.NextTokenRequired(), formatProvider);
-            }
+            UriHolder uriHolder = TypeConverterHelper.GetUriFromUriContext(context, profileString);
+            Uri profileUri = uriHolder.BaseUri is not null ? new Uri(uriHolder.BaseUri, uriHolder.OriginalUri) : uriHolder.OriginalUri;
 
-            string profileString = preSplit[0];
-
-            UriHolder uriHolder = TypeConverterHelper.GetUriFromUriContext(context,profileString);
-
-            Uri profileUri;
-
-            if (uriHolder.BaseUri != null)
-            {
-                profileUri = new Uri(uriHolder.BaseUri, uriHolder.OriginalUri);
-            }
-            else
-            {
-                profileUri = uriHolder.OriginalUri;
-            }
-
-            Color result = Color.FromAValues(alpha, values, profileUri);
-
-            // If the number of color values found does not match the number of channels in the profile, we must throw
-            if (result.ColorContext.NumChannels != values.Length)
-            {
-                throw new FormatException(SR.Parsers_IllegalToken);
-            }
-
-            return result;
+            // If the number of color values found does not match the number of channels in the profile, FromAValues will throw
+            return Color.FromAValues(alpha, values, profileUri);
         }
 
-        static private Color ParseScRgbColor(string trimmedColor, IFormatProvider formatProvider)
+        private static Color ParseScRgbColor(ReadOnlySpan<char> trimmedColor, IFormatProvider formatProvider)
         {
             if (!trimmedColor.StartsWith("sc#", StringComparison.Ordinal))
-            {
                 throw new FormatException(SR.Parsers_IllegalToken);
-            }
 
-            string tokens = trimmedColor.Substring(3, trimmedColor.Length - 3);
+            // Skip prefix (sc#)
+            ReadOnlySpan<char> tokens = trimmedColor.Slice(3);
 
             // The tokenizer helper will tokenize a list based on the IFormatProvider.
-            TokenizerHelper th = new TokenizerHelper(tokens, formatProvider);
-            float[] values = new float[4];
+            ValueTokenizerHelper tokenizer = new(tokens, formatProvider);
+            Span<float> values = stackalloc float[4];
 
             for (int i = 0; i < 3; i++)
-            {
-                values[i] = Convert.ToSingle(th.NextTokenRequired(), formatProvider);
-            }
+                values[i] = float.Parse(tokenizer.NextTokenRequired(), formatProvider);
 
-            if (th.NextToken())
+            if (tokenizer.NextToken())
             {
-                values[3] = Convert.ToSingle(th.GetCurrentToken(), formatProvider);
+                values[3] = float.Parse(tokenizer.GetCurrentToken(), formatProvider);
 
                 // We should be out of tokens at this point
-                if (th.NextToken())
+                if (tokenizer.NextToken())
                 {
                     throw new FormatException(SR.Parsers_IllegalToken);
                 }
 
                 return Color.FromScRgb(values[0], values[1], values[2], values[3]);
             }
-            else
-            {
-                return Color.FromScRgb(1.0f, values[0], values[1], values[2]);
-            }
+
+            return Color.FromScRgb(1.0f, values[0], values[1], values[2]);
         }
 
         /// <summary>
@@ -191,44 +172,26 @@ namespace MS.Internal
         /// </summary>
         internal static Color ParseColor(string color, IFormatProvider formatProvider, ITypeDescriptorContext context)
         {
-            bool isPossibleKnowColor;
-            bool isNumericColor;
-            bool isScRgbColor;
-            bool isContextColor;
-            string trimmedColor = KnownColors.MatchColor(color, out isPossibleKnowColor, out isNumericColor, out isContextColor, out isScRgbColor);
+            ReadOnlySpan<char> trimmedColor = color.AsSpan().Trim();
+            ColorKind colorKind = KnownColors.MatchColor(trimmedColor);
 
-            if ((isPossibleKnowColor == false) &&
-                (isNumericColor == false) &&
-                (isScRgbColor == false) &&
-                (isContextColor== false))
-            {
-                throw new FormatException(SR.Parsers_IllegalToken);
-            }
+            // Check that our assumption stays true
+            Debug.Assert(colorKind is ColorKind.NumericColor or ColorKind.ContextColor or ColorKind.ScRgbColor or ColorKind.KnownColor);
 
-            //Is it a number?
-            if (isNumericColor)
-            {
+            if (colorKind is ColorKind.NumericColor)
                 return ParseHexColor(trimmedColor);
-            }
-            else if (isContextColor)
-            {
+
+            if (colorKind is ColorKind.ContextColor)
                 return ParseContextColor(trimmedColor, formatProvider, context);
-            }
-            else if (isScRgbColor)
-            {
+
+            if (colorKind is ColorKind.ScRgbColor)
                 return ParseScRgbColor(trimmedColor, formatProvider);
-            }
-            else
-            {
-                KnownColor kc = KnownColors.ColorStringToKnownColor(trimmedColor);
 
-                if (kc == KnownColor.UnknownColor)
-                {
-                    throw new FormatException(SR.Parsers_IllegalToken);
-                }
+            KnownColor knownColor = KnownColors.ColorStringToKnownColor(trimmedColor);
+            if (knownColor == KnownColor.UnknownColor)
+                throw new FormatException(SR.Parsers_IllegalToken);
 
-                return Color.FromUInt32((uint)kc);
-            }
+            return Color.FromUInt32((uint)knownColor);
         }
 
         /// <summary>
@@ -239,57 +202,38 @@ namespace MS.Internal
         /// </summary>
         internal static Brush ParseBrush(string brush, IFormatProvider formatProvider, ITypeDescriptorContext context)
         {
-            bool isPossibleKnownColor;
-            bool isNumericColor;
-            bool isScRgbColor;
-            bool isContextColor;
-            string trimmedColor = KnownColors.MatchColor(brush, out isPossibleKnownColor, out isNumericColor, out isContextColor, out isScRgbColor);
-
-            if (trimmedColor.Length == 0)
-            {
+            ReadOnlySpan<char> trimmedColor = brush.AsSpan().Trim();
+            if (trimmedColor.IsEmpty)
                 throw new FormatException(SR.Parser_Empty);
-            }
+
+            ColorKind colorKind = KnownColors.MatchColor(trimmedColor);
+
+            // Check that our assumption stays true
+            Debug.Assert(colorKind is ColorKind.NumericColor or ColorKind.ContextColor or ColorKind.ScRgbColor or ColorKind.KnownColor);
 
             // Note that because trimmedColor is exactly brush.Trim() we don't have to worry about
-            // extra tokens as we do with TokenizerHelper.  If we return one of the solid color
-            // brushes then the ParseColor routine (or ColorStringToKnownColor) matched the entire
-            // input.
-            if (isNumericColor)
-            {
-                return (new SolidColorBrush(ParseHexColor(trimmedColor)));
-            }
+            // extra tokens as we do with TokenizerHelper. If we return one of the solid color brushes
+            // then the ParseColor routine (or ColorStringToKnownColor) matched the entire input.
+            if (colorKind is ColorKind.NumericColor)
+                return new SolidColorBrush(ParseHexColor(trimmedColor));
 
-            if (isContextColor)
-            {
-                return (new SolidColorBrush(ParseContextColor(trimmedColor, formatProvider, context)));
-            }
+            if (colorKind is ColorKind.ContextColor)
+                return new SolidColorBrush(ParseContextColor(trimmedColor, formatProvider, context));
 
-            if (isScRgbColor)
-            {
-                return (new SolidColorBrush(ParseScRgbColor(trimmedColor, formatProvider)));
-            }
+            if (colorKind is ColorKind.ScRgbColor)
+                return new SolidColorBrush(ParseScRgbColor(trimmedColor, formatProvider));
 
-            if (isPossibleKnownColor)
-            {
-                SolidColorBrush scp = KnownColors.ColorStringToKnownBrush(trimmedColor);
+            // NULL is returned when the color was not valid
+            SolidColorBrush solidColorBrush = KnownColors.ColorStringToKnownBrush(trimmedColor);
 
-                if (scp != null)
-                {
-                    return scp;
-                }
-            }
-
-            // If it's not a color, so the content is illegal.
-            throw new FormatException(SR.Parsers_IllegalToken);
+            return solidColorBrush is not null ? solidColorBrush : throw new FormatException(SR.Parsers_IllegalToken);
         }
 
 
         /// <summary>
         /// ParseTransform - parse a Transform from a string
         /// </summary>
-        internal static Transform ParseTransform(
-            string transformString,
-            IFormatProvider formatProvider)
+        internal static Transform ParseTransform(string transformString, IFormatProvider formatProvider)
         {
             Matrix matrix = Matrix.Parse(transformString);
 
@@ -299,13 +243,11 @@ namespace MS.Internal
         /// <summary>
         /// Parse a PathFigureCollection string.
         /// </summary>
-        internal static PathFigureCollection ParsePathFigureCollection(
-            string pathString,
-            IFormatProvider formatProvider)
+        internal static PathFigureCollection ParsePathFigureCollection(string pathString, IFormatProvider formatProvider)
         {
-            PathStreamGeometryContext context = new PathStreamGeometryContext();
+            PathStreamGeometryContext context = new();
 
-            AbbreviatedGeometryParser parser = new AbbreviatedGeometryParser();
+            AbbreviatedGeometryParser parser = new();
 
             parser.ParseToGeometryContext(context, pathString, 0 /* curIndex */);
             

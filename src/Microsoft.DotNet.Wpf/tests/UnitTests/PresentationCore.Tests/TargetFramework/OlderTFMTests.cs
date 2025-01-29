@@ -1,5 +1,4 @@
 ﻿using System.Diagnostics;
-using System.Xml.Linq;
 
 namespace PresentationCore.Tests.TargetFramework
 {
@@ -24,17 +23,17 @@ namespace PresentationCore.Tests.TargetFramework
             {
                 targetFramework.Should().NotBeNullOrEmpty();
                 CreateProject("WPFSampleApp", targetFramework);
-                // Define the project file path
-                string projectFile = @"D:\\FORK\\Harshita\\TFM\\wpf\\src\\Microsoft.DotNet.Wpf\\src\\WPFSampleApp\\WPFSampleApp\WPFSampleApp\\WPFSampleApp.csproj";
+                //// Define the project file path
+                //string projectFile = @"D:\FORK\Harshita\WPFMain\wpf\src\Microsoft.DotNet.Wpf\tests\UnitTests\PresentationCore.Tests\WPFSampleApp.csproj";
 
-                if (!File.Exists(projectFile))
-                {
-                    Console.WriteLine($"Project file not found: {projectFile}");
-                    throw new FileNotFoundException($"Project file not found: {projectFile}");
-                }
-                Console.WriteLine($"Project file found: {projectFile}");
-                string publishPath = @"D:\\FORK\\Harshita\\TFM\\wpf\\src\\Microsoft.DotNet.Wpf\\src\\WPFSampleApp\\WPFSampleApp\\WPFSampleApp\\publish";
-                RunDotnetPublish(projectFile, publishPath);
+                //if (!File.Exists(projectFile))
+                //{
+                //    Console.WriteLine($"Project file not found: {projectFile}");
+                //    throw new FileNotFoundException($"Project file not found: {projectFile}");
+                //}
+                //Console.WriteLine($"Project file found: {projectFile}");
+                //string publishPath = @"D:\FORK\Harshita\WPFMain\wpf\src\Microsoft.DotNet.Wpf\src\WPFSampleApp\WPFSampleApp\WPFSampleApp\publish";
+                //RunDotnetPublish(projectFile, publishPath);
             }
             catch (Exception ex)
             {
@@ -47,7 +46,7 @@ namespace PresentationCore.Tests.TargetFramework
         {
             
             // Define project path
-            string rootPath = @"D:\\FORK\\Harshita\\TFM\\wpf\\src\\Microsoft.DotNet.Wpf\\src\\WPFSampleApp";
+            string rootPath = @"D:\FORK\Harshita\WPFMain\wpf\src\Microsoft.DotNet.Wpf\tests\UnitTests\PresentationCore.Tests";
             if (!(Directory.Exists(rootPath)))
             {
                 Directory.CreateDirectory(rootPath);
@@ -94,25 +93,25 @@ namespace PresentationCore.Tests.TargetFramework
                     Console.WriteLine($"Error: {error}");
                 }
             }
-            // Path to the .csproj file
-            string csprojFilePath = Path.Combine(projectPath, $"{Path.GetFileName(projectPath)}.csproj");
+            //// Path to the .csproj file
+            //string csprojFilePath = Path.Combine(projectPath, $"{Path.GetFileName(projectPath)}.csproj");
 
-            if (File.Exists(csprojFilePath))
-            {
-                // Load the .csproj file as an XML document
-                XDocument csprojDoc = XDocument.Load(csprojFilePath);
+            //if (File.Exists(csprojFilePath))
+            //{
+            //    // Load the .csproj file as an XML document
+            //    XDocument csprojDoc = XDocument.Load(csprojFilePath);
 
-                // Check if the WindowsBase reference exists, if not, add it
-                var itemGroup = csprojDoc.Descendants("ItemGroup").FirstOrDefault();
-                if(itemGroup != null)
-                {
-                    itemGroup.Add(new XElement("Reference", new XAttribute("Include", "$(WpfSourceDir)WindowsBase\\WindowsBase.csproj")));
-                }              
+            //    // Check if the WindowsBase reference exists, if not, add it
+            //    var itemGroup = csprojDoc.Descendants("ItemGroup").FirstOrDefault();
+            //    if(itemGroup != null)
+            //    {
+            //        itemGroup.Add(new XElement("Reference", new XAttribute("Include", "$(WpfSourceDir)WindowsBase\\WindowsBase.csproj")));
+            //    }              
 
-                // Save the changes back to the .csproj file
-                csprojDoc.Save(csprojFilePath);
-            }
-            Console.WriteLine($"Project '{projectName}' created with target framework '{targetFramework}'.");
+            //    // Save the changes back to the .csproj file
+            //    csprojDoc.Save(csprojFilePath);
+            //}
+            //Console.WriteLine($"Project '{projectName}' created with target framework '{targetFramework}'.");
          
         }
 
@@ -148,7 +147,6 @@ namespace PresentationCore.Tests.TargetFramework
 
             //return process.ExitCode == 0; // Return true if the exit code is 0 (success)
         }
-
 
 
     }

@@ -3,7 +3,7 @@
 
 using System.Windows.Media;
 
-namespace Fluent.UITests.ThemeModeTests;
+namespace PresentationFramework.Fluent.Tests.ThemeModeTests;
 
 public class WindowThemeModeTests
 {

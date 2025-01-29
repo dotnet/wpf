@@ -6,8 +6,17 @@
     <RootNamespace />
     <TargetFramework Condition="!$(TargetFramework.Contains('windows'))">$(TargetFramework)-windows</TargetFramework>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <ImportWindowsDesktopTargets>true</ImportWindowsDesktopTargets>
+    <GenerateProgramFile>true</GenerateProgramFile>
   </PropertyGroup>
 
+  <ItemGroup>
+    <None Remove="ControlTests\Data\ButtonTests.xaml" />
+    <None Remove="ResourceTests\Data\Dark.Test.xaml" />
+    <None Remove="ResourceTests\Data\HC.Test.xaml" />
+    <None Remove="ResourceTests\Data\Light.Test.xaml" />
+  </ItemGroup>
+  
   <ItemGroup>
     <PackageReference Include="FluentAssertions" Version="$(FluentAssertionsVersion)" />
     <PackageReference Include="xunit.stafact" Version="$(XUnitStaFactPackageVersion)" />
@@ -21,6 +30,13 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Page Include="ResourceTests\Data\Dark.Test.xaml" />
+    <Page Include="ResourceTests\Data\HC.Test.xaml" />
+    <Page Include="ResourceTests\Data\Light.Test.xaml" />
+    <Page Include="ControlTests\Data\ButtonTests.xaml" />
+  </ItemGroup>
+  
+  <ItemGroup>    
     <ProjectReference Include="$(WpfSourceDir)DirectWriteForwarder\DirectWriteForwarder.vcxproj">
       <UndefineProperties>TargetFramework;TargetFrameworks</UndefineProperties>
     </ProjectReference>
@@ -36,3 +52,4 @@
     <ProjectReference Include="$(WpfSourceDir)Themes\PresentationFramework.Fluent\PresentationFramework.Fluent.csproj" />
   </ItemGroup>
 </Project>
+

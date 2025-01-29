@@ -28,8 +28,6 @@
   </ItemGroup>
   <PropertyGroup>
     <UseDestinationLibFolder>true</UseDestinationLibFolder>
-    <TargetFrameworkIdentifier>.NETCoreApp</TargetFrameworkIdentifier>
-    <RestoreProjectStyle>Unknown</RestoreProjectStyle>
     <!-- 
       Opting out of this to ensure _WindowsBaseReference is used as 
       OutputItemsType in the project reference later.
@@ -86,11 +84,8 @@
     <CLCompile Include="main.cpp" />
     <CLCompile Include="OtherAssemblyAttrs.cpp" />
   </ItemGroup>
-  <!--
-    PackageReferences to pass to CppCliHelper target
-  -->
   <ItemGroup>
-    <AdditionalPackageReference Include="$(SystemIOPackagingPackage)" Version="$(SystemIOPackagingVersion)" />
+    <PackageReference Include="$(SystemIOPackagingPackage)" Version="$(SystemIOPackagingVersion)" />
   </ItemGroup>
   <!--
     Ignore ijwhost.dll during packaging

@@ -822,11 +822,6 @@
         <target state="translated">'{1}' bağımsız değişkenle '{0}' için Oluşturucu bulunamadı.</target>
         <note />
       </trans-unit>
-      <trans-unit id="NoDefaultConstructor">
-        <source>No default constructor found for type '{0}'. You can use the Arguments or FactoryMethod directives to construct this type.</source>
-        <target state="translated">'{0}' türü için varsayılan oluşturucu bulunamadı. Bu türü oluşturmak için Arguments veya FactoryMethod yönergelerini kullanabilirsiniz.</target>
-        <note />
-      </trans-unit>
       <trans-unit id="NoElementUsage">
         <source>'{0}' is not allowed in element usage.</source>
         <target state="translated">Öğe kullanımında '{0}' kullanılmasına izin verilmez.</target>

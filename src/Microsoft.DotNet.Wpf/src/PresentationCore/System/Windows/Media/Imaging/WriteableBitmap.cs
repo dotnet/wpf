@@ -353,7 +353,7 @@ namespace System.Windows.Media.Imaging
 
             WritePixelsImpl(sourceRect,
                             sourceBuffer,
-                            sourceBufferSize,
+                            (uint)sourceBufferSize,
                             sourceBufferStride, 
                             destinationX,
                             destinationY,
@@ -381,14 +381,11 @@ namespace System.Windows.Media.Imaging
         {
             WritePreamble();
 
-            int elementSize;
-            int sourceBufferSize;
-            Type elementType;
             ValidateArrayAndGetInfo(sourceBuffer,
                                     /*backwardsCompat*/ false,
-                                    out elementSize,
-                                    out sourceBufferSize,
-                                    out elementType);
+                                    out _,
+                                    out uint sourceBufferSize,
+                                    out Type elementType);
 
             // We accept arrays of arbitrary value types - but not reference types.
             if (elementType == null || !elementType.IsValueType)
@@ -434,7 +431,7 @@ namespace System.Windows.Media.Imaging
         {
             WritePreamble();
 
-            ArgumentOutOfRangeException.ThrowIfNegativeOrZero(bufferSize);
+            ArgumentOutOfRangeException.ThrowIfZero(bufferSize);
             ArgumentOutOfRangeException.ThrowIfNegativeOrZero(stride);
 
             if (sourceRect.IsEmpty || sourceRect.Width <= 0 || sourceRect.Height <= 0)
@@ -457,7 +454,7 @@ namespace System.Windows.Media.Imaging
 
             WritePixelsImpl(sourceRect, 
                             buffer,
-                            bufferSize,
+                            (uint)bufferSize,
                             stride,
                             destinationX,
                             destinationY,
@@ -485,14 +482,11 @@ namespace System.Windows.Media.Imaging
                 return;
             }
 
-            int elementSize;
-            int sourceBufferSize;
-            Type elementType;
             ValidateArrayAndGetInfo(pixels,
                                     /*backwardsCompat*/ true,
-                                    out elementSize,
-                                    out sourceBufferSize, 
-                                    out elementType);
+                                    out int elementSize,
+                                    out uint sourceBufferSize, 
+                                    out Type elementType);
 
             ArgumentOutOfRangeException.ThrowIfNegativeOrZero(stride);
             ArgumentOutOfRangeException.ThrowIfNegative(offset);
@@ -505,7 +499,7 @@ namespace System.Windows.Media.Imaging
             
             checked
             {
-                int offsetInBytes = checked(offset * elementSize);
+                uint offsetInBytes = (uint)offset * (uint)elementSize;
                 if (offsetInBytes >= sourceBufferSize)
                 {
                     // Backwards compat:
@@ -763,7 +757,7 @@ namespace System.Windows.Media.Imaging
                 try
                 {
                     Int32Rect rcFull = new Int32Rect(0, 0, _pixelWidth, _pixelHeight);
-                    int bufferSize = checked(_backBufferStride * source.PixelHeight);
+                    uint bufferSize = checked((uint)_backBufferStride * (uint)source.PixelHeight);
                     source.CriticalCopyPixels(rcFull, _backBuffer, bufferSize, _backBufferStride);
                     AddDirtyRect(rcFull);
                 }
@@ -804,7 +798,7 @@ namespace System.Windows.Media.Imaging
         private void WritePixelsImpl(
             Int32Rect sourceRect,
             IntPtr    sourceBuffer,
-            int       sourceBufferSize,
+            uint      sourceBufferSize,
             int       sourceBufferStride,
             int       destinationX,
             int       destinationY,
@@ -866,7 +860,7 @@ namespace System.Windows.Media.Imaging
             {
                 uint finalRowWidthInBits = (uint)((sourceRect.X + sourceRect.Width) * _format.InternalBitsPerPixel);
                 uint finalRowWidthInBytes = ((finalRowWidthInBits + 7) / 8);
-                uint requiredBufferSize = (uint)((sourceRect.Y + sourceRect.Height - 1) * sourceBufferStride) + finalRowWidthInBytes;
+                uint requiredBufferSize = ((uint)(sourceRect.Y + sourceRect.Height - 1) * (uint)sourceBufferStride) + finalRowWidthInBytes;
                 if (sourceBufferSize < requiredBufferSize)
                 {
                     if (backwardsCompat)
@@ -897,14 +891,14 @@ namespace System.Windows.Media.Imaging
                 //
                 unsafe
                 {
-                    uint destOffset = (uint)(destinationY * _backBufferStride) + destXbyteOffset;
+                    uint destOffset = ((uint)destinationY * (uint)_backBufferStride) + destXbyteOffset;
                     byte* pDest = (byte*)_backBuffer.ToPointer();
                     pDest += destOffset;
                     uint outputBufferSize = _backBufferSize - destOffset;
 
                     byte* pSource = (byte*)sourceBuffer.ToPointer();
                     pSource += firstPixelByteOffet;
-                    uint inputBufferSize = (uint)sourceBufferSize - firstPixelByteOffet;
+                    uint inputBufferSize = sourceBufferSize - firstPixelByteOffet;
 
                     Lock();
 
@@ -1052,11 +1046,11 @@ namespace System.Windows.Media.Imaging
         /// <param name="sourceBufferSize">
         ///     On output, will contain the size of the array.
         /// </param>
-        private void ValidateArrayAndGetInfo(Array sourceBuffer,
-                                                       bool backwardsCompat,
-                                                       out int elementSize,
-                                                       out int sourceBufferSize,
-                                                       out Type elementType)
+        private static void ValidateArrayAndGetInfo(Array sourceBuffer,
+                                                    bool backwardsCompat,
+                                                    out int elementSize,
+                                                    out uint sourceBufferSize,
+                                                    out Type elementType)
         {
             //
             // Assure that a valid pixels Array was provided.
@@ -1088,7 +1082,7 @@ namespace System.Windows.Media.Imaging
                     {
                         object exemplar = sourceBuffer.GetValue(0);
                         elementSize = Marshal.SizeOf(exemplar);
-                        sourceBufferSize = firstDimLength * elementSize;
+                        sourceBufferSize = (uint)firstDimLength * (uint)elementSize;
                         elementType = exemplar.GetType();
                     }
                 }
@@ -1116,7 +1110,7 @@ namespace System.Windows.Media.Imaging
                     {
                         object exemplar = sourceBuffer.GetValue(0, 0);
                         elementSize = Marshal.SizeOf(exemplar);
-                        sourceBufferSize = (firstDimLength * secondDimLength) * elementSize;
+                        sourceBufferSize = ((uint)firstDimLength * (uint)secondDimLength) * (uint)elementSize;
                         elementType = exemplar.GetType();
                     }
                 }

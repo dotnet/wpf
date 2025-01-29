@@ -2,21 +2,31 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
+//
+//
 // This file was generated, please do not edit it directly.
+//
 // Please see MilCodeGen.html for more information.
+//
 
+using MS.Internal;
 using MS.Internal.Collections;
 using MS.Utility;
 using System.Collections;
+using System.ComponentModel;
+using System.Globalization;
+using System.Text;
+using System.Windows.Markup;
+using System.Windows.Media.Media3D.Converters;
 using System.Windows.Media.Animation;
-
-// These types are aliased to match the unamanaged names used in interop
+using System.Windows.Media.Composition;
 
 namespace System.Windows.Media.Media3D
 {
     /// <summary>
     /// A collection of Material objects.
     /// </summary>
+
     public sealed partial class MaterialCollection : Animatable, IList, IList<Material>
     {
         //------------------------------------------------------
@@ -152,7 +162,7 @@ namespace System.Windows.Media.Media3D
             // not in the collection.  Therefore we need to first verify the old value exists
             // before calling OnFreezablePropertyChanged.  Since we already need to locate
             // the item in the collection we keep the index and use RemoveAt(...) to do
-            // the work.#1016178)
+            // the work.  (Windows OS #1016178)
 
             // We use the public IndexOf to guard our UIContext since OnFreezablePropertyChanged
             // is only called conditionally.  IList.IndexOf returns -1 if the value is not found.
@@ -241,6 +251,7 @@ namespace System.Windows.Media.Media3D
 
                 if (!Object.ReferenceEquals(_collection[ index ], value))
                 {
+
                     Material oldValue = _collection[ index ];
                     OnFreezablePropertyChanged(oldValue, value);
 
@@ -617,7 +628,8 @@ namespace System.Windows.Media.Media3D
                 _collection.Add(newValue);
                 OnInsert(newValue);
             }
-}
+
+        }
         /// <summary>
         /// Implementation of Freezable.CloneCurrentValueCore()
         /// </summary>
@@ -638,7 +650,8 @@ namespace System.Windows.Media.Media3D
                 _collection.Add(newValue);
                 OnInsert(newValue);
             }
-}
+
+        }
         /// <summary>
         /// Implementation of Freezable.GetAsFrozenCore()
         /// </summary>
@@ -659,7 +672,8 @@ namespace System.Windows.Media.Media3D
                 _collection.Add(newValue);
                 OnInsert(newValue);
             }
-}
+
+        }
         /// <summary>
         /// Implementation of Freezable.GetCurrentValueAsFrozenCore()
         /// </summary>
@@ -680,7 +694,8 @@ namespace System.Windows.Media.Media3D
                 _collection.Add(newValue);
                 OnInsert(newValue);
             }
-}
+
+        }
         /// <summary>
         /// Implementation of <see cref="System.Windows.Freezable.FreezeCore">Freezable.FreezeCore</see>.
         /// </summary>
@@ -784,6 +799,7 @@ namespace System.Windows.Media.Media3D
 
             void IDisposable.Dispose()
             {
+
             }
 
             /// <summary>

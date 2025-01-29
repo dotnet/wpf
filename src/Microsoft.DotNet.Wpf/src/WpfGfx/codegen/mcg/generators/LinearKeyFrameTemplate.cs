@@ -197,10 +197,10 @@ namespace MS.Internal.MilCodeGen.ResourceModel
             // requiring that they be split across two namespaces.
             switch (moduleName)
             {
-                case @"Core\CSharp":
+                case @"PresentationCore":
                     moduleReference = "using MS.Internal.PresentationCore;";
                     break;
-                case "Framework":
+                case "PresentationFramework":
                     moduleReference = "using MS.Internal.PresentationFramework;";
                     break;
             }
@@ -215,13 +215,6 @@ namespace MS.Internal.MilCodeGen.ResourceModel
                 [[inline]]
                     [[Helpers.ManagedStyle.WriteFileHeader(fileName)]]
 
-                    using MS.Internal;
-
-                    using System;
-                    using System.Collections;
-                    using System.ComponentModel;
-                    using System.Diagnostics;
-                    using System.Windows.Media;
                     using System.Windows.Media.Media3D;
 
                     [[moduleReference]]

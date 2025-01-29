@@ -2,15 +2,12 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-
-//---------------------------------------------------------------------------
 //
-
 //
 // This file was generated, please do not edit it directly.
 //
+// Please see MilCodeGen.html for more information.
 //
-//---------------------------------------------------------------------------
 
 //
 // Enum which describes whether certain values should be considered as absolute 
@@ -204,15 +201,6 @@ internal struct MilColorF
     internal float g;
     internal float b;
     internal float a;
-
-    public override int GetHashCode()
-    {
-        return a.GetHashCode() ^ r.GetHashCode() ^ g.GetHashCode() ^ b.GetHashCode();
-    }
-    public override bool Equals(object obj)
-    {
-        return base.Equals(obj);
-    }
 };
 
 /// <summary>
@@ -344,5 +332,3 @@ internal struct MilMatrix3x2D
     internal double DX;
     internal double DY;
 };
-
-

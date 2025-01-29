@@ -13,6 +13,8 @@ using System.Windows.Media.Media3D;
 
 namespace System.Windows.Media.Animation
 {
+
+
     /// <summary>
     /// This class is used as part of a BooleanKeyFrameCollection in
     /// conjunction with a KeyFrameBooleanAnimation to animate a
@@ -1607,4 +1609,5 @@ namespace System.Windows.Media.Animation
 
         #endregion
     }
+
 }

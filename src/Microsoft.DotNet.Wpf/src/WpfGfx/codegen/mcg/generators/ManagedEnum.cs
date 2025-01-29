@@ -135,18 +135,7 @@ namespace MS.Internal.MilCodeGen.Generators
                         using [[s]];
                     [[/inline]]
                 ); 
-            }            
-
-            // Write the string resource declaration
-            enumFile.Write(
-                [[inline]]
-                    #if PRESENTATION_CORE
-                    using SR=MS.Internal.PresentationCore.SR;
-                    #else
-                    using SR=System.Windows.SR;
-                    #endif
-                [[/inline]]
-            ); 
+            }
 
             // Open namespace this enum exists in            
             enumFile.Write(

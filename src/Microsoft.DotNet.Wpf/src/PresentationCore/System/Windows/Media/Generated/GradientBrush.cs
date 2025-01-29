@@ -10,10 +10,23 @@
 //
 
 using MS.Internal;
-// These types are aliased to match the unamanaged names used in interop
+using MS.Internal.KnownBoxes;
+using MS.Internal.Collections;
+using MS.Utility;
+using System.Collections;
+using System.ComponentModel;
+using System.Globalization;
+using System.Text;
+using System.Windows.Media.Effects;
+using System.Windows.Media.Animation;
+using System.Windows.Media.Composition;
+using System.Windows.Markup;
+using System.Windows.Media.Converters;
 
 namespace System.Windows.Media
 {
+
+
     abstract partial class GradientBrush : Brush
     {
         //------------------------------------------------------
@@ -76,6 +89,10 @@ namespace System.Windows.Media
         }
         private static void GradientStopsPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
+
+
+
+
             GradientBrush target = ((GradientBrush) d);
 
 
@@ -311,6 +328,8 @@ namespace System.Windows.Media
                                    /* isIndependentlyAnimated  = */ false,
                                    /* coerceValueCallback */ null);
         }
+
+
 
         #endregion Constructors
     }

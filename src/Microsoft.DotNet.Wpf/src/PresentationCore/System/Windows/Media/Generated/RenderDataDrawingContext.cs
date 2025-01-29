@@ -2,10 +2,16 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
+//
+//
 // This file was generated, please do not edit it directly.
+//
 // Please see MilCodeGen.html for more information.
+//
 
 using MS.Internal;
+using System.Runtime.InteropServices;
+using System.Windows.Threading;
 using System.Windows.Media.Animation;
 using System.Windows.Media.Composition;
 using System.Windows.Media.Effects;
@@ -62,7 +68,10 @@ namespace System.Windows.Media
                                             (byte*)&record,
                                             40 /* sizeof(MILCMD_DRAW_LINE) */);
             }                           
-}
+
+
+
+        }
 
         /// <summary>
         ///     DrawLine - 
@@ -120,7 +129,10 @@ namespace System.Windows.Media
                                             (byte*)&record,
                                             48 /* sizeof(MILCMD_DRAW_LINE_ANIMATE) */);
             }                            
-}
+
+
+
+        }
         /// <summary>
         ///     DrawRectangle - 
         ///     Draw a rectangle with the provided Brush and/or Pen.
@@ -172,7 +184,10 @@ namespace System.Windows.Media
                                             (byte*)&record,
                                             40 /* sizeof(MILCMD_DRAW_RECTANGLE) */);
             }                           
-}
+
+
+
+        }
 
         /// <summary>
         ///     DrawRectangle - 
@@ -231,7 +246,10 @@ namespace System.Windows.Media
                                             (byte*)&record,
                                             48 /* sizeof(MILCMD_DRAW_RECTANGLE_ANIMATE) */);
             }                            
-}
+
+
+
+        }
         /// <summary>
         ///     DrawRoundedRectangle - 
         ///     Draw a rounded rectangle with the provided Brush and/or Pen.
@@ -295,7 +313,10 @@ namespace System.Windows.Media
                                             (byte*)&record,
                                             56 /* sizeof(MILCMD_DRAW_ROUNDED_RECTANGLE) */);
             }                           
-}
+
+
+
+        }
 
         /// <summary>
         ///     DrawRoundedRectangle - 
@@ -376,7 +397,10 @@ namespace System.Windows.Media
                                             (byte*)&record,
                                             72 /* sizeof(MILCMD_DRAW_ROUNDED_RECTANGLE_ANIMATE) */);
             }                            
-}
+
+
+
+        }
         /// <summary>
         ///     DrawEllipse - 
         ///     Draw an ellipse with the provided Brush and/or Pen.
@@ -442,7 +466,10 @@ namespace System.Windows.Media
                                             (byte*)&record,
                                             40 /* sizeof(MILCMD_DRAW_ELLIPSE) */);
             }                           
-}
+
+
+
+        }
 
         /// <summary>
         ///     DrawEllipse - 
@@ -525,7 +552,10 @@ namespace System.Windows.Media
                                             (byte*)&record,
                                             56 /* sizeof(MILCMD_DRAW_ELLIPSE_ANIMATE) */);
             }                            
-}
+
+
+
+        }
         /// <summary>
         ///     DrawGeometry - 
         ///     Draw a Geometry with the provided Brush and/or Pen.
@@ -577,7 +607,10 @@ namespace System.Windows.Media
                                             (byte*)&record,
                                             16 /* sizeof(MILCMD_DRAW_GEOMETRY) */);
             }                           
-}
+
+
+
+        }
 
         /// <summary>
         ///     DrawImage - 
@@ -625,7 +658,10 @@ namespace System.Windows.Media
                                             (byte*)&record,
                                             40 /* sizeof(MILCMD_DRAW_IMAGE) */);
             }                           
-}
+
+
+
+        }
 
         /// <summary>
         ///     DrawImage - 
@@ -679,7 +715,10 @@ namespace System.Windows.Media
                                             (byte*)&record,
                                             40 /* sizeof(MILCMD_DRAW_IMAGE_ANIMATE) */);
             }                            
-}
+
+
+
+        }
         /// <summary>
         ///     DrawGlyphRun - 
         ///     Draw a GlyphRun
@@ -723,7 +762,10 @@ namespace System.Windows.Media
                                             (byte*)&record,
                                             8 /* sizeof(MILCMD_DRAW_GLYPH_RUN) */);
             }                           
-}
+
+
+
+        }
 
         /// <summary>
         ///     DrawDrawing - 
@@ -763,7 +805,10 @@ namespace System.Windows.Media
                                             (byte*)&record,
                                             8 /* sizeof(MILCMD_DRAW_DRAWING) */);
             }                           
-}
+
+
+
+        }
 
         /// <summary>
         ///     DrawVideo - 
@@ -809,7 +854,10 @@ namespace System.Windows.Media
                                             (byte*)&record,
                                             40 /* sizeof(MILCMD_DRAW_VIDEO) */);
             }                           
-}
+
+
+
+        }
 
         /// <summary>
         ///     DrawVideo - 
@@ -861,7 +909,10 @@ namespace System.Windows.Media
                                             (byte*)&record,
                                             40 /* sizeof(MILCMD_DRAW_VIDEO_ANIMATE) */);
             }                            
-}
+
+
+
+        }
         /// <summary>
         ///     PushClip - 
         ///     Push a clip region, which will apply to all drawing primitives until the 
@@ -899,7 +950,8 @@ namespace System.Windows.Media
             }                           
 
             _stackDepth++;                            
-}
+
+        }
 
         /// <summary>
         ///     PushOpacityMask - 
@@ -938,7 +990,8 @@ namespace System.Windows.Media
             }                           
 
             _stackDepth++;                            
-}
+
+        }
 
         /// <summary>
         ///     PushOpacity - 
@@ -979,7 +1032,8 @@ namespace System.Windows.Media
             }                           
 
             _stackDepth++;                            
-}
+
+        }
 
         /// <summary>
         ///     PushOpacity - 
@@ -1026,7 +1080,8 @@ namespace System.Windows.Media
             }                            
 
             _stackDepth++;
-}
+
+        }
         /// <summary>
         ///     PushTransform - 
         ///     Push a Transform which will apply to all drawing operations until the corresponding 
@@ -1064,7 +1119,8 @@ namespace System.Windows.Media
             }                           
 
             _stackDepth++;                            
-}
+
+        }
 
         /// <summary>
         ///     PushGuidelineSet - 
@@ -1128,6 +1184,8 @@ namespace System.Windows.Media
                 }
                 else
                 {
+
+
                     MILCMD_PUSH_GUIDELINE_SET record =
                         new MILCMD_PUSH_GUIDELINE_SET (
                             _renderData.AddDependentResource(guidelines)
@@ -1181,7 +1239,8 @@ namespace System.Windows.Media
             }                           
 
             _stackDepth++;                            
-}
+
+        }
 
         /// <summary>
         ///     PushGuidelineY2 - 
@@ -1226,7 +1285,8 @@ namespace System.Windows.Media
             }                           
 
             _stackDepth++;                            
-}
+
+        }
 
         /// <summary>
         ///     PushEffect - 
@@ -1319,7 +1379,8 @@ namespace System.Windows.Media
             {
                 _renderData.EndTopLevelBitmapEffect();
             }
-}
+
+        }
 
         private UInt32 UseAnimations(
             Double baseValue,

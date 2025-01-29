@@ -2,25 +2,30 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
+//
+//
 // This file was generated, please do not edit it directly.
+//
 // Please see MilCodeGen.html for more information.
+//
 
 using MS.Internal;
+using MS.Internal.Collections;
 using MS.Utility;
 using System.Collections;
 using System.ComponentModel;
+using System.Globalization;
 using System.Text;
 using System.Windows.Markup;
 using System.Windows.Media.Media3D.Converters;
-
-// These types are aliased to match the unamanaged names used in interop
+using System.Windows.Media.Animation;
+using System.Windows.Media.Composition;
 
 namespace System.Windows.Media.Media3D
 {
     /// <summary>
     /// A collection of Vector3Ds.
     /// </summary>
-
     [TypeConverter(typeof(Vector3DCollectionConverter))]
     [ValueSerializer(typeof(Vector3DCollectionValueSerializer))] // Used by MarkupWriter
     public sealed partial class Vector3DCollection : Freezable, IFormattable, IList, IList<Vector3D>
@@ -111,6 +116,8 @@ namespace System.Windows.Media.Media3D
         /// </summary>
         public void Insert(int index, Vector3D value)
         {
+
+
             WritePreamble();
             _collection.Insert(index, value);
 
@@ -188,6 +195,8 @@ namespace System.Windows.Media.Media3D
             }
             set
             {
+
+
                 WritePreamble();
                 _collection[ index ] = value;
 
@@ -524,7 +533,8 @@ namespace System.Windows.Media.Media3D
             {
                 _collection.Add(sourceVector3DCollection._collection[i]);
             }
-}
+
+        }
         /// <summary>
         /// Implementation of Freezable.CloneCurrentValueCore()
         /// </summary>
@@ -542,7 +552,8 @@ namespace System.Windows.Media.Media3D
             {
                 _collection.Add(sourceVector3DCollection._collection[i]);
             }
-}
+
+        }
         /// <summary>
         /// Implementation of Freezable.GetAsFrozenCore()
         /// </summary>
@@ -560,7 +571,8 @@ namespace System.Windows.Media.Media3D
             {
                 _collection.Add(sourceVector3DCollection._collection[i]);
             }
-}
+
+        }
         /// <summary>
         /// Implementation of Freezable.GetCurrentValueAsFrozenCore()
         /// </summary>
@@ -578,7 +590,8 @@ namespace System.Windows.Media.Media3D
             {
                 _collection.Add(sourceVector3DCollection._collection[i]);
             }
-}
+
+        }
 
 
         #endregion ProtectedMethods
@@ -772,6 +785,7 @@ namespace System.Windows.Media.Media3D
 
             void IDisposable.Dispose()
             {
+
             }
 
             /// <summary>
@@ -912,6 +926,7 @@ namespace System.Windows.Media.Media3D
 
             ArgumentNullException.ThrowIfNull(collection);
 
+
             ICollection<Vector3D> icollectionOfT = collection as ICollection<Vector3D>;
 
             if (icollectionOfT != null)
@@ -932,8 +947,11 @@ namespace System.Windows.Media.Media3D
 
                     foreach (Vector3D item in collection)
                     {
+
                         _collection.Add(item);
                     }
+
+
                 }
             }
 

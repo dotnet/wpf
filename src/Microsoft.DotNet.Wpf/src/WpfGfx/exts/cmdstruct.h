@@ -181,5 +181,3 @@ static MILCOMMAND MarshalCommands[] =
     /* 0x8d */ { "MILCMD_BITMAPCACHE", "milcore!MILCMD_BITMAPCACHE", false, false, 0, 0, 0 }, // MilCmdBitmapCache
 };
 
-
-

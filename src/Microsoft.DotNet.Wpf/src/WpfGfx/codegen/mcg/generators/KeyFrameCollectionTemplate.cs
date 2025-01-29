@@ -69,16 +69,8 @@ namespace MS.Internal.MilCodeGen.ResourceModel
                         [[inline]]
                             [[Helpers.ManagedStyle.WriteFileHeader(fileName)]]
 
-                            using MS.Internal;
-
-                            using System;
                             using System.Collections;
-                            using System.Collections.Generic;
-                            using System.ComponentModel;
-                            using System.Diagnostics;
                             using System.Globalization;
-                            using System.Windows.Media.Animation;
-                            using System.Windows.Media.Media3D;
 
                             namespace System.Windows.Media.Animation
                             {
@@ -119,9 +111,10 @@ namespace MS.Internal.MilCodeGen.ResourceModel
                                         {
                                             if (s_emptyCollection == null)
                                             {
-                                                [[instance.TypeName]]KeyFrameCollection emptyCollection = new [[instance.TypeName]]KeyFrameCollection();
-                                                
-                                                emptyCollection._keyFrames = new List< [[instance.TypeName]]KeyFrame>(0);
+                                                [[instance.TypeName]]KeyFrameCollection emptyCollection = new [[instance.TypeName]]KeyFrameCollection
+                                                {
+                                                    _keyFrames = new List<[[instance.TypeName]]KeyFrame>(0)
+                                                };
                                                 emptyCollection.Freeze();
                                                 
                                                 s_emptyCollection = emptyCollection;
@@ -347,10 +340,7 @@ namespace MS.Internal.MilCodeGen.ResourceModel
                                     /// </summary>
                                     public int Add([[instance.TypeName]]KeyFrame keyFrame)
                                     {
-                                        if (keyFrame == null)
-                                        {
-                                            throw new ArgumentNullException("keyFrame");
-                                        }
+                                        ArgumentNullException.ThrowIfNull(keyFrame);
 
                                         WritePreamble();
                                         
@@ -431,10 +421,7 @@ namespace MS.Internal.MilCodeGen.ResourceModel
                                     /// </summary>
                                     public void Insert(int index, [[instance.TypeName]]KeyFrame keyFrame)
                                     {
-                                        if (keyFrame == null)
-                                        {
-                                            throw new ArgumentNullException("keyFrame");
-                                        }
+                                        ArgumentNullException.ThrowIfNull(keyFrame);
 
                                         WritePreamble();
                                         

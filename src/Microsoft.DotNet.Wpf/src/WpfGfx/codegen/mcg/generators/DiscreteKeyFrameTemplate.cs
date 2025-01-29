@@ -174,7 +174,6 @@ namespace MS.Internal.MilCodeGen.ResourceModel
             string fileName = "DiscreteKeyFrames.cs";
             string path = null;
             string fullPath = null;
-            string moduleReference = null;
 
             //
             // Create a new file
@@ -182,18 +181,6 @@ namespace MS.Internal.MilCodeGen.ResourceModel
 
             path = "src\\" + moduleName + "\\System\\Windows\\Media\\Animation\\Generated";
             fullPath = Path.Combine(resourceModel.OutputDirectory, path);
-
-            // Duplicate AnimatedTypeHelpers class across Core/Framework causes name conflicts,
-            // requiring that they be split across two namespaces.
-            switch (moduleName)
-            {
-                case @"Core\CSharp":
-                    moduleReference = "using MS.Internal.PresentationCore;";
-                    break;
-                case "Framework":
-                    moduleReference = "using MS.Internal.PresentationFramework;";
-                    break;
-            }
 
             csFile = new FileCodeSink(fullPath, fileName, true /* Create dir if necessary */);
 
@@ -205,16 +192,7 @@ namespace MS.Internal.MilCodeGen.ResourceModel
                 [[inline]]
                     [[Helpers.ManagedStyle.WriteFileHeader(fileName)]]
 
-                    using MS.Internal;
-
-                    using System;
-                    using System.Collections;
-                    using System.ComponentModel;
-                    using System.Diagnostics;
-                    using System.Windows.Media;
                     using System.Windows.Media.Media3D;
-
-                    [[moduleReference]]
 
                     namespace System.Windows.Media.Animation
                     {

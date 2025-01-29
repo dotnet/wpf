@@ -9,11 +9,17 @@
 // Please see MilCodeGen.html for more information.
 //
 
+using MS.Internal;
+using MS.Utility;
+using System.Collections;
 using System.Windows.Media.Animation;
-// These types are aliased to match the unamanaged names used in interop
+using System.Windows.Media.Composition;
+using System.Windows.Media.Imaging;
 
 namespace System.Windows.Media.Effects
 {
+
+
     abstract partial class BitmapEffect : Animatable
     {
         //------------------------------------------------------
@@ -41,6 +47,9 @@ namespace System.Windows.Media.Effects
         {
             return (BitmapEffect)base.CloneCurrentValue();
         }
+
+
+
 
         #endregion Public Methods
 

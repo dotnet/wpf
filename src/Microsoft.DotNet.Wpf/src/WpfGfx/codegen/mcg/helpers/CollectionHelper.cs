@@ -395,18 +395,13 @@ namespace MS.Internal.MilCodeGen.Helpers
                 [[inline]]
                     ReadPreamble();
 
-                    if (array == null)
-                    {
-                        throw new ArgumentNullException("array");
-                    }
+                    ArgumentNullException.ThrowIfNull(array);
 
                     // This will not throw in the case that we are copying
                     // from an empty collection.  This is consistent with the
                     // BCL Collection implementations. (Windows 1587365)
-                    if (index < 0  || (index + _collection.Count) > array.Length)
-                    {
-                        throw new ArgumentOutOfRangeException("index");
-                    }
+                    ArgumentOutOfRangeException.ThrowIfNegative(index);
+                    ArgumentOutOfRangeException.ThrowIfGreaterThan(index, array.Length - _collection.Count);
                 [[/inline]];
         }
 
@@ -475,49 +470,44 @@ namespace MS.Internal.MilCodeGen.Helpers
 
                         WritePreamble();
                 
-                        if (collection != null)
+                        ArgumentNullException.ThrowIfNull(collection);
+                
+                        [[resource.CollectionType.IsFreezable ? "bool needsItemValidation = true;" : string.Empty]]
+                        ICollection<[[type]]> icollectionOfT = collection as ICollection<[[type]]>;
+
+                        if (icollectionOfT != null)
                         {
-                            [[resource.CollectionType.IsFreezable ? "bool needsItemValidation = true;" : string.Empty]]
-                            ICollection<[[type]]> icollectionOfT = collection as ICollection<[[type]]>;
-
-                            if (icollectionOfT != null)
-                            {
-                                _collection = new FrugalStructList<[[type]]>(icollectionOfT);
-                            }
-                            else
-                            {       
-                                ICollection icollection = collection as ICollection;
-
-                                if (icollection != null) // an IC but not and IC<T>
-                                {
-                                    _collection = new FrugalStructList<[[type]]>(icollection);
-                                }
-                                else // not a IC or IC<T> so fall back to the slower Add
-                                {
-                                    _collection = new FrugalStructList<[[type]]>();
-
-                                    foreach ([[type]] item in collection)
-                                    {
-                                        [[Collection_CheckNullInsert(resource, "item")]]
-                                        [[Collection_Add(resource, type, "item", String.Empty)]]
-                                    }
-
-                                    [[resource.CollectionType.IsFreezable ? "needsItemValidation = false;" : string.Empty]]
-                                }
-                            }
-
-                            [[resource.CollectionType.IsFreezable ? "if (needsItemValidation)" : string.Empty]]
-                            [[resource.CollectionType.IsFreezable ? "{" : string.Empty]]
-                                [[Collection_CheckAllNotNullAndFirePropertyChanged(resource, type, "collection")]]
-                            [[resource.CollectionType.IsFreezable ? "}" : string.Empty]]
-
-                            [[UpdateResource(resource)]]
-                            WritePostscript();
+                            _collection = new FrugalStructList<[[type]]>(icollectionOfT);
                         }
                         else
                         {
-                            throw new ArgumentNullException("collection");
+                            ICollection icollection = collection as ICollection;
+
+                            if (icollection != null) // an IC but not and IC<T>
+                            {
+                                _collection = new FrugalStructList<[[type]]>(icollection);
+                            }
+                            else // not a IC or IC<T> so fall back to the slower Add
+                            {
+                                _collection = new FrugalStructList<[[type]]>();
+
+                                foreach ([[type]] item in collection)
+                                {
+                                    [[Collection_CheckNullInsert(resource, "item")]]
+                                    [[Collection_Add(resource, type, "item", String.Empty)]]
+                                }
+
+                                [[resource.CollectionType.IsFreezable ? "needsItemValidation = false;" : string.Empty]]
+                            }
                         }
+
+                        [[resource.CollectionType.IsFreezable ? "if (needsItemValidation)" : string.Empty]]
+                        [[resource.CollectionType.IsFreezable ? "{" : string.Empty]]
+                            [[Collection_CheckAllNotNullAndFirePropertyChanged(resource, type, "collection")]]
+                        [[resource.CollectionType.IsFreezable ? "}" : string.Empty]]
+
+                        [[UpdateResource(resource)]]
+                        WritePostscript();
                     }
                 [[/inline]];
 
@@ -1172,10 +1162,7 @@ namespace MS.Internal.MilCodeGen.Helpers
 
                     private [[type]] Cast(object value)
                     {
-                        if( value == null )
-                        {
-                            throw new System.ArgumentNullException("value");
-                        }
+                        ArgumentNullException.ThrowIfNull(value);
 
                         if (!(value is [[type]]))
                         {

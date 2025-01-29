@@ -51,12 +51,6 @@ namespace MS.Internal.MilCodeGen.Runtime
             
             _fileCreated = !File.Exists(_filePath);
 
-            // If the file exists and is readonly attempt to check out the file.
-            if (!_fileCreated && ((File.GetAttributes(_filePath) & FileAttributes.ReadOnly) != 0))
-            {
-                TfFile(_filePath, "edit");
-            }
-
             _streamWriter = new StreamWriter(_filePath, false, Encoding.ASCII);
         }
 
@@ -82,35 +76,6 @@ namespace MS.Internal.MilCodeGen.Runtime
         public static void DisableSd()
         {
             _disableSd = true;
-        }
-
-        public void TfFile(string filename, string op)
-        {
-            if (_tfOperation != "")
-            {
-                throw new Exception("Internal error");
-            }
-
-            _tfOperation = op;
-
-            if (_disableSd) return;
-
-            Process tfProcess = new Process();
-
-            tfProcess.StartInfo.FileName = "tf.cmd";
-            tfProcess.StartInfo.Arguments = op + " " + filename;
-            tfProcess.StartInfo.CreateNoWindow = true;
-            tfProcess.StartInfo.UseShellExecute = true;
-
-            tfProcess.Start();
-
-            tfProcess.WaitForExit();
-
-            if (0 != tfProcess.ExitCode)
-            {
-                throw new ApplicationException("Non-zero return code (" + tfProcess.ExitCode + ") encountered executing:\n"+
-                                               tfProcess.StartInfo.FileName + " " + tfProcess.StartInfo.Arguments);
-            }
         }
 
         #endregion Public Methods
@@ -153,12 +118,6 @@ namespace MS.Internal.MilCodeGen.Runtime
                         FlushCurrentLine();
                         _streamWriter.Close();
                         _streamWriter = null;
-                    }
-
-                    if (_fileCreated)
-                    {
-                        // If we created the file, we now need to Sd Add it
-                        TfFile(_filePath, "add");
                     }
 
                     LogCreation();

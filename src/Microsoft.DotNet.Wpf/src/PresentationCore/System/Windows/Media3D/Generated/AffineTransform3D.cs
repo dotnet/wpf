@@ -9,9 +9,22 @@
 // Please see MilCodeGen.html for more information.
 //
 
-// These types are aliased to match the unamanaged names used in interop
+using MS.Internal;
+using MS.Internal.Collections;
+using MS.Utility;
+using System.Collections;
+using System.ComponentModel;
+using System.Globalization;
+using System.Text;
+using System.Windows.Markup;
+using System.Windows.Media.Media3D.Converters;
+using System.Windows.Media.Animation;
+using System.Windows.Media.Composition;
+
 namespace System.Windows.Media.Media3D
 {
+
+
     abstract partial class AffineTransform3D : Transform3D
     {
         //------------------------------------------------------
@@ -39,6 +52,9 @@ namespace System.Windows.Media.Media3D
         {
             return (AffineTransform3D)base.CloneCurrentValue();
         }
+
+
+
 
         #endregion Public Methods
 

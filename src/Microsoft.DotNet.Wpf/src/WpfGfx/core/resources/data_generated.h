@@ -617,5 +617,3 @@ struct CMilBitmapCacheDuce_Data
 };
 
 #pragma warning (pop)
-
-

@@ -9,9 +9,17 @@
 // Please see MilCodeGen.html for more information.
 //
 
-// These types are aliased to match the unamanaged names used in interop
+using MS.Internal;
+using MS.Utility;
+using System.Collections;
+using System.Windows.Media.Animation;
+using System.Windows.Media.Composition;
+using System.Windows.Media.Imaging;
+
 namespace System.Windows.Media.Effects
 {
+
+
     sealed partial class DropShadowBitmapEffect : BitmapEffect
     {
         //------------------------------------------------------
@@ -316,7 +324,6 @@ namespace System.Windows.Media.Effects
             // of your app.
 
 
-
             // Initializations
             Type typeofThis = typeof(DropShadowBitmapEffect);
             ShadowDepthProperty =
@@ -374,6 +381,8 @@ namespace System.Windows.Media.Effects
                                    /* isIndependentlyAnimated  = */ true,
                                    /* coerceValueCallback */ null);
         }
+
+
 
         #endregion Constructors
     }

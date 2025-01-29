@@ -9,10 +9,6 @@
 // Please see MilCodeGen.html for more information.
 //
 
-#if PRESENTATION_CORE
-#else
-using SR=System.Windows.SR;
-#endif
 
 namespace System.Windows
 {

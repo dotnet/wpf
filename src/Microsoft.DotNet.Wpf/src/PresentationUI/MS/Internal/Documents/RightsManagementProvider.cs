@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -7,26 +7,24 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
 using System.IO.Packaging;
-using System.Security;
 using System.Security.RightsManagement;
-using System.Windows.TrustUI;
 
 using MS.Internal.Documents.Application;
 
 using Microsoft.Win32;
 
-using SR=System.Windows.TrustUI.SR;
+using SR = System.Windows.TrustUI.SR;
 
 namespace MS.Internal.Documents
 {
-/// <summary>
-/// RightsManagementProvider is used to connect DRP to RM APIs 
-/// </summary>
-/// <remarks>
-/// This class is a facade for the RM APIs. It is the model between the Manager
-/// and the EncryptedPackageEnvelope and System.Security.RightsManagement classes.
-/// </remarks>
-internal class RightsManagementProvider : IRightsManagementProvider, IDisposable
+    /// <summary>
+    /// RightsManagementProvider is used to connect DRP to RM APIs 
+    /// </summary>
+    /// <remarks>
+    /// This class is a facade for the RM APIs. It is the model between the Manager
+    /// and the EncryptedPackageEnvelope and System.Security.RightsManagement classes.
+    /// </remarks>
+    internal class RightsManagementProvider : IRightsManagementProvider, IDisposable
 {
     #region Constructors
     //--------------------------------------------------------------------------
@@ -1066,14 +1064,15 @@ internal class RightsManagementProvider : IRightsManagementProvider, IDisposable
         RightsManagementUser user,
         IList<ContentGrant> grantList)
     {
-        RightsManagementLicense rmLicense = new RightsManagementLicense();
+            RightsManagementLicense rmLicense = new RightsManagementLicense
+            {
+                LicensedUser = user,
+                LicensePermissions = RightsManagementPermissions.AllowNothing,
+                ValidFrom = DateTime.MinValue,
+                ValidUntil = DateTime.MaxValue
+            };
 
-        rmLicense.LicensedUser = user;
-        rmLicense.LicensePermissions = RightsManagementPermissions.AllowNothing;
-        rmLicense.ValidFrom = DateTime.MinValue;
-        rmLicense.ValidUntil = DateTime.MaxValue;        
-
-        AddReferralInfo(rmLicense);
+            AddReferralInfo(rmLicense);
 
         if (grantList != null)
         {

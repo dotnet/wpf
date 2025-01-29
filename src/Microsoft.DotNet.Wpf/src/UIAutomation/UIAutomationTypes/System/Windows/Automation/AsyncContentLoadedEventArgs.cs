@@ -9,10 +9,7 @@
 //
 //
 
-using System;
-using System.Windows.Automation;
-
-namespace System.Windows.Automation 
+namespace System.Windows.Automation
 {
     /// <summary>
     /// AsyncContentLoadedEventArgs event args class

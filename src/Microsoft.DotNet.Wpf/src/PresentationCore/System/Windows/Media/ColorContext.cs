@@ -1,33 +1,17 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-//
-#pragma warning disable 1634, 1691 // Allow suppression of certain presharp messages
-
-using System;
 using MS.Internal;
-using MS.Internal.PresentationCore;
 using MS.Win32;
 using System.IO;
 using System.Runtime.InteropServices;
-using System.Windows.Media;
 using System.Resources;
-using System.Security;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.ComponentModel.Design.Serialization;
 using System.Reflection;
-using System.Diagnostics;
 using System.Globalization;
-using Microsoft.Win32.SafeHandles;
 using System.Net;
-using System.IO.Packaging;
-using System.Windows.Navigation;
-using System.Diagnostics.CodeAnalysis;
 using System.Text;
 
-using SR = MS.Internal.PresentationCore.SR;
 using UnsafeNativeMethodsMilCoreApi = MS.Win32.PresentationCore.UnsafeNativeMethods;
 using IWICCC = MS.Win32.PresentationCore.UnsafeNativeMethods.IWICColorContext;
 
@@ -448,7 +432,6 @@ namespace System.Windows.Media
             }
             else if (obj1 != null && obj2 != null)
             {
-                #pragma warning disable 6506
                 return (
                     (context1._profileHeader.phSize == context2._profileHeader.phSize) &&
                     (context1._profileHeader.phCMMType == context2._profileHeader.phCMMType) &&
@@ -472,7 +455,6 @@ namespace System.Windows.Media
                     (context1._profileHeader.phIlluminant_2 == context2._profileHeader.phIlluminant_2) &&
                     (context1._profileHeader.phCreator == context2._profileHeader.phCreator)
                     );
-                #pragma warning restore 6506
             }
             else
             {

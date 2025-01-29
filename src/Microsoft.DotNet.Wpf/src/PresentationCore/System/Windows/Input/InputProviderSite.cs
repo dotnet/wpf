@@ -1,15 +1,6 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
-
-using System;
-using System.Security;
-using MS.Internal;
-using MS.Internal.PresentationCore;                        // SecurityHelper
-using MS.Win32;
-using System.Windows.Threading;
-
-using SR=MS.Internal.PresentationCore.SR;
 
 namespace System.Windows.Input
 {
@@ -92,10 +83,12 @@ namespace System.Windows.Input
 
             bool handled = false;
 
-            InputReportEventArgs input = new InputReportEventArgs(null, inputReport);
-            input.RoutedEvent=InputManager.PreviewInputReportEvent;
+            InputReportEventArgs input = new InputReportEventArgs(null, inputReport)
+            {
+                RoutedEvent = InputManager.PreviewInputReportEvent
+            };
 
-            if(_inputManager is not null)
+            if (_inputManager is not null)
             {
                 handled = _inputManager.ProcessInput(input);
             }

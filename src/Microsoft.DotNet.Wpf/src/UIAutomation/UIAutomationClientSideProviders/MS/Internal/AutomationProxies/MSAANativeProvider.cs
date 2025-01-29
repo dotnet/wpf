@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -6,14 +6,9 @@
 //              implementations.  NativeMsaaProviderRoot creates
 //              instances of this class.
 
-// PRESHARP: In order to avoid generating warnings about unkown message numbers and unknown pragmas.
-#pragma warning disable 1634, 1691
-
 using System;
 using System.Collections;
 using System.Diagnostics;
-using System.Globalization;
-using System.Runtime.InteropServices;
 using System.Windows;
 using System.Windows.Automation;
 using System.Windows.Automation.Provider;
@@ -1086,9 +1081,7 @@ namespace MS.Internal.AutomationProxies
                     _knownRoot = (MsaaNativeProvider)Create(_hwnd, NativeMethods.CHILD_SELF, NativeMethods.OBJID_CLIENT);
                     if (_knownRoot == null)
                     {
-                        // PerSharp/PreFast will flag this as a warning, 6503/56503: Property get methods should not throw exceptions.
                         // When failing to create the element, the correct this to do is to throw an ElementNotAvailableException.
-#pragma warning suppress 6503
                         throw new ElementNotAvailableException();
                     }
                 }

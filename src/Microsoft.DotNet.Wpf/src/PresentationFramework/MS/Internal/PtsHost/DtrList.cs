@@ -7,10 +7,6 @@
 //              contains information about tree changes.
 //
 
-
-using System;
-using System.Diagnostics;
-
 namespace MS.Internal.PtsHost
 {
     // ----------------------------------------------------------------------

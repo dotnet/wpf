@@ -1,32 +1,16 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-//
-// Description:
-//  This class handles IMM32 IME's composition string and support level 3 input to TextBox and RichTextBox.
-//
-
-using System;
 using System.Runtime.InteropServices;
-using System.Threading;
 using System.Collections;
-using System.Diagnostics;
 using System.Windows.Media;
 using System.Windows.Input;
-using System.Windows.Documents;
 using System.Windows.Interop;
-using System.Windows.Threading;
-using System.Security;
-using System.Text;
 using MS.Win32;
 using MS.Internal.Documents;
-using MS.Internal.PresentationFramework;
 using MS.Internal;
 using MS.Internal.Interop;
-
-// Enable presharp pragma warning suppress directives.
-#pragma warning disable 1634, 1691
 
 namespace System.Windows.Documents
 {
@@ -432,9 +416,6 @@ namespace System.Windows.Documents
                 {
                     result = new char[size / sizeof(short)];
 
-                    // 3rd param is out and contains actual result of this call.
-                    // suppress Presharp 6031.
-#pragma warning suppress 6031
                     UnsafeNativeMethods.ImmGetCompositionString(new HandleRef(this, himc), NativeMethods.GCS_RESULTSTR, result, size);
                 }
             }
@@ -448,9 +429,7 @@ namespace System.Windows.Documents
                 if (size > 0)
                 {
                     composition = new char[size / sizeof(short)];
-                    // 3rd param is out and contains actual result of this call.
-                    // suppress Presharp 6031.
-#pragma warning suppress 6031
+
                     UnsafeNativeMethods.ImmGetCompositionString(new HandleRef(this, himc), NativeMethods.GCS_COMPSTR, composition, size);
 
                     //
@@ -478,9 +457,7 @@ namespace System.Windows.Documents
                         if (size > 0)
                         {
                             attributes = new byte[size / sizeof(byte)];
-                            // 3rd param is out and contains actual result of this call.
-                            // suppress Presharp 6031.
-#pragma warning suppress 6031
+
                             UnsafeNativeMethods.ImmGetCompositionString(new HandleRef(this, himc), NativeMethods.GCS_COMPATTR, attributes, size);
                         }
                     }
@@ -702,7 +679,7 @@ namespace System.Windows.Documents
                     //  - fail to lock IMC.
                     // Those cases are ignorable for us.
                     // In addition, it does not set win32 last error and we have no clue to handle error.
-#pragma warning suppress 6031
+
                     UnsafeNativeMethods.ImmSetCandidateWindow(new HandleRef(this, himc), ref candform);
                     UnsafeNativeMethods.ImmReleaseContext(new HandleRef(this, hwnd), new HandleRef(this, himc));
                 }
@@ -796,8 +773,10 @@ namespace System.Windows.Documents
                 milPointCaret = compositionTarget.TransformToDevice.Transform(milPointCaret);
 
                 // Build COMPOSITIONFORM. COMPOSITIONFORM is window coodidate.
-                NativeMethods.COMPOSITIONFORM compform = new NativeMethods.COMPOSITIONFORM();
-                compform.dwStyle = NativeMethods.CFS_RECT;
+                NativeMethods.COMPOSITIONFORM compform = new NativeMethods.COMPOSITIONFORM
+                {
+                    dwStyle = NativeMethods.CFS_RECT
+                };
                 compform.rcArea.left = ConvertToInt32(milPointTopLeft.X);
                 compform.rcArea.right = ConvertToInt32(milPointBottomRight.X);
                 compform.rcArea.top = ConvertToInt32(milPointTopLeft.Y);

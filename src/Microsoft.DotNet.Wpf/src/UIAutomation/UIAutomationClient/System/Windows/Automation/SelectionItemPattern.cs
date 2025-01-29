@@ -4,9 +4,6 @@
 
 // Description: Client-side wrapper for SelectionItem Pattern
 
-using System;
-using System.Collections;
-using System.Windows.Automation.Provider;
 using MS.Internal.Automation;
 
 namespace System.Windows.Automation

@@ -2,33 +2,9 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-//
-//
-// Description:
-//  Class for manipulating streams in the container file
-//
-//
-//
-//
-//
-//
-//
-//
-
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Diagnostics; // For Debug.Assert
-using System.IO;
 using System.Runtime.InteropServices;
-using System.Security;
-
-using System.Windows;                 //  SR.[exception message]
 using MS.Internal.IO.Packaging.CompoundFile;
 using CU = MS.Internal.IO.Packaging.CompoundFile.ContainerUtilities;
-
-using System.IO.Packaging;
-using MS.Internal.WindowsBase;
 
 namespace System.IO.Packaging
 {
@@ -828,8 +804,7 @@ namespace System.IO.Packaging
 
                 foreach (IDataTransform dataTransform in transforms)
                 {
-                    string id = dataTransform.TransformIdentifier as string;
-                    if (id != null)
+                    if (dataTransform.TransformIdentifier is string id)
                     {
                         if (string.Equals(id, RightsManagementEncryptionTransform.ClassTransformIdentifier, StringComparison.OrdinalIgnoreCase)
                             &&

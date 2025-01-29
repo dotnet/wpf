@@ -12,22 +12,12 @@
 //     Spec: Anchoring Namespace Spec.doc
 //
 
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Diagnostics;
 using System.Globalization;
 using System.Windows;
 using System.Windows.Annotations;
-using System.Windows.Annotations.Storage;
-using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using System.Windows.Documents;
-using System.Windows.Media;
 using System.Xml;
-using MS.Utility;
-
-using MS.Internal.Documents;
 
 namespace MS.Internal.Annotations.Anchoring
 {
@@ -442,18 +432,18 @@ namespace MS.Internal.Annotations.Anchoring
         private static void GetLocatorPartSegmentValues(ContentLocatorPart locatorPart, int segmentNumber, out int startOffset, out int endOffset)
         {
             if (segmentNumber < 0)
-                throw new ArgumentException("segmentNumber");
+                throw new ArgumentException(nameof(segmentNumber));
 
-            string segmentString = locatorPart.NameValuePairs[SegmentAttribute + segmentNumber.ToString(NumberFormatInfo.InvariantInfo)];
+            ReadOnlySpan<char> segmentString = locatorPart.NameValuePairs[SegmentAttribute + segmentNumber.ToString(NumberFormatInfo.InvariantInfo)].AsSpan();
 
-            string[] values = segmentString.Split(Separator);
-            if (values.Length != 2)
+            Span<Range> splitRegions = stackalloc Range[3];
+            if (segmentString.Split(splitRegions, Separator) != 2)
             {
                 throw new ArgumentException(SR.Format(SR.InvalidLocatorPart, SegmentAttribute + segmentNumber.ToString(NumberFormatInfo.InvariantInfo)));
             }
 
-            startOffset = Int32.Parse(values[0], NumberFormatInfo.InvariantInfo);
-            endOffset = Int32.Parse(values[1], NumberFormatInfo.InvariantInfo);
+            startOffset = int.Parse(segmentString[splitRegions[0]], NumberFormatInfo.InvariantInfo);
+            endOffset = int.Parse(segmentString[splitRegions[1]], NumberFormatInfo.InvariantInfo);
         }
 
         /// <summary>

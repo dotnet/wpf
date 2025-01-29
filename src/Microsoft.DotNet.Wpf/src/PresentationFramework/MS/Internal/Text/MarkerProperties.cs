@@ -8,11 +8,9 @@
 //
 
 
-using System;
 using System.Windows;
 using System.Windows.Documents;
 using System.Windows.Media.TextFormatting;
-using MS.Internal.PtsHost.UnsafeNativeMethods; // Relative line height from PTS
 
 namespace MS.Internal.Text
 {

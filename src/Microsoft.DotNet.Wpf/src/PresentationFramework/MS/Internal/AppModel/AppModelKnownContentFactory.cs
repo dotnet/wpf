@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -7,14 +7,10 @@
 // Provides a method to turn a baml stream into an object.
 //
 
-using System;
 using System.IO;
 using System.Windows;
 using System.Windows.Markup;
 using System.Windows.Navigation;
-using MS.Internal.Controls;
-using MS.Internal.Navigation;
-using MS.Internal.Utility;
 using MS.Internal.Resources;
 using System.IO.Packaging;
 using System.ComponentModel;
@@ -57,10 +53,11 @@ namespace MS.Internal.AppModel
                 throw new InvalidOperationException(SR.BamlIsNotSupportedOutsideOfApplicationResources);
             }
 
-            ParserContext pc = new ParserContext();
-
-            pc.BaseUri = baseUri;
-            pc.SkipJournaledProperties = isJournalNavigation;
+            ParserContext pc = new ParserContext
+            {
+                BaseUri = baseUri,
+                SkipJournaledProperties = isJournalNavigation
+            };
 
             return Application.LoadBamlStreamWithSyncInfo(stream, pc);
         }
@@ -86,16 +83,19 @@ namespace MS.Internal.AppModel
 
                 stream.Close();
 
-                WebBrowser webBrowser = new WebBrowser();
-                webBrowser.Source = baseUri;
+                WebBrowser webBrowser = new WebBrowser
+                {
+                    Source = baseUri
+                };
                 return webBrowser;
             }
             else
             {
-                ParserContext pc = new ParserContext();
-
-                pc.BaseUri = baseUri;
-                pc.SkipJournaledProperties = isJournalNavigation;
+                ParserContext pc = new ParserContext
+                {
+                    BaseUri = baseUri,
+                    SkipJournaledProperties = isJournalNavigation
+                };
 
                 if (allowAsync)
                 {
@@ -151,8 +151,10 @@ namespace MS.Internal.AppModel
 
             stream.Close();
 
-            WebBrowser webBrowser = new WebBrowser();
-            webBrowser.Source = baseUri;
+            WebBrowser webBrowser = new WebBrowser
+            {
+                Source = baseUri
+            };
 
             return webBrowser;
         }

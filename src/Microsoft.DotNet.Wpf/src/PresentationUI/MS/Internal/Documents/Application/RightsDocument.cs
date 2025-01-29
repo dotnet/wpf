@@ -3,15 +3,13 @@
 // See the LICENSE file in the project root for more information.
 using System.IO;
 using System.IO.Packaging;
-using System.Security;
-using System.Security.RightsManagement;
 
 namespace MS.Internal.Documents.Application
 {
-/// <summary>
-/// Extends StreamDocument with EncryptedPackageEnvelope for use by RightsController.
-/// </summary>
-internal class RightsDocument : StreamDocument<StreamProxy>
+    /// <summary>
+    /// Extends StreamDocument with EncryptedPackageEnvelope for use by RightsController.
+    /// </summary>
+    internal class RightsDocument : StreamDocument<StreamProxy>
 {
     #region Constructors
     //--------------------------------------------------------------------------

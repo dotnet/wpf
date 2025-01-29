@@ -1,32 +1,13 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-using System;
-using System.Security;
-using System.Collections.Generic;
+using System.Globalization;
+using System.Runtime.InteropServices;
 using System.Threading;
 using System.Windows.Threading;
-using System.Runtime.InteropServices;
-using System.Diagnostics;
 using MS.Internal;
 using MS.Internal.Interop;
-using System.Globalization; // CultureInfo.InvariantCulture
-
-#if WINDOWS_BASE
-    using MS.Internal.WindowsBase;
-#elif PRESENTATION_CORE
-    using MS.Internal.PresentationCore;
-#elif PRESENTATIONFRAMEWORK
-    using MS.Internal.PresentationFramework;
-#elif DRT
-    using MS.Internal.Drt;
-#else
-using MS.Internal.YourAssemblyName;
-#endif
-
-// Disable pragma warnings to enable PREsharp pragmas
-#pragma warning disable 1634, 1691
 
 namespace MS.Win32
 {

@@ -1,27 +1,14 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
 //#define OLD_ISF
 
-using MS.Utility;
-using System;
-using System.Diagnostics;
-using System.Security;
 using System.Windows;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
 using System.IO;
-using System.ComponentModel;
-using System.Runtime.CompilerServices;
-using System.Runtime.Serialization;
-using System.Collections;
-using System.Collections.Generic;
 using System.Windows.Input;
 using System.Windows.Ink;
-using MS.Internal.IO.Packaging;
-
-using SR=MS.Internal.PresentationCore.SR;
 
 namespace MS.Internal.Ink.InkSerializedFormat
 {
@@ -849,12 +836,14 @@ namespace MS.Internal.Ink.InkSerializedFormat
 
 
 
-            // Create a new drawing attribute
-            DrawingAttributes attributes = new DrawingAttributes();
-            // pull off our defaults onthe drawing attribute as we need to
-            //  respect what the ISF has.
-            attributes.DrawingFlags = 0;
-            cb = DrawingAttributeSerializer.DecodeAsISF(strm, guidList, cbDA, attributes);
+                // Create a new drawing attribute
+                DrawingAttributes attributes = new DrawingAttributes
+                {
+                    // pull off our defaults onthe drawing attribute as we need to
+                    //  respect what the ISF has.
+                    DrawingFlags = 0
+                };
+                cb = DrawingAttributeSerializer.DecodeAsISF(strm, guidList, cbDA, attributes);
 
             // Load the stream into this attribute
             if (cbSize < cbDA)
@@ -1120,9 +1109,10 @@ namespace MS.Internal.Ink.InkSerializedFormat
                 cbTotal -= cb;
 
                 // now create new metric entry
-                MetricEntry entry = new MetricEntry();
-
-                entry.Tag = (KnownTagCache.KnownTagIndex)dw;
+                MetricEntry entry = new MetricEntry
+                {
+                    Tag = (KnownTagCache.KnownTagIndex)dw
+                };
 
                 byte[] data = new byte[size];
 
@@ -1250,8 +1240,10 @@ namespace MS.Internal.Ink.InkSerializedFormat
         /// <returns></returns>
         private uint DecodeTransformBlock(Stream strm, KnownTagCache.KnownTagIndex tag, uint cbSize, bool useDoubles, out TransformDescriptor xform)
         {
-            xform = new TransformDescriptor();
-            xform.Tag = tag;
+            xform = new TransformDescriptor
+            {
+                Tag = tag
+            };
 
             uint cbRead = 0;
             uint cbTotal = cbSize;
@@ -1259,12 +1251,7 @@ namespace MS.Internal.Ink.InkSerializedFormat
             if (0 == cbSize)
                 return 0;
 
-            // samgeo - Presharp issue
-            // Presharp gives a warning when local IDisposable variables are not closed
-            // in this case, we can't call Dispose since it will also close the underlying stream
-            // which still needs to be read from
-#pragma warning disable 1634, 1691
-#pragma warning disable 6518
+            // TODO: Use leaveOpen ctor
             BinaryReader bw = new BinaryReader(strm);
 
             if (KnownTagCache.KnownTagIndex.TransformRotate == tag)
@@ -1325,8 +1312,6 @@ namespace MS.Internal.Ink.InkSerializedFormat
             }
 
             return cbRead;
-#pragma warning restore 6518
-#pragma warning restore 1634, 1691
         }
 
         /// <summary>
@@ -2074,13 +2059,7 @@ namespace MS.Internal.Ink.InkSerializedFormat
                 strm.WriteByte(bCompAlgo);
                 cbWrote++;
 
-                // Now write all the ids in the stream
-                // samgeo - Presharp issue
-                // Presharp gives a warning when local IDisposable variables are not closed
-                // in this case, we can't call Dispose since it will also close the underlying stream
-                // which still needs to be written to
-#pragma warning disable 1634, 1691
-#pragma warning disable 6518
+                // TODO: Use leaveOpen ctor
                 BinaryWriter bw = new BinaryWriter(strm);
 
                 for (int i = 0; i < strkIds.Length; i++)
@@ -2088,8 +2067,6 @@ namespace MS.Internal.Ink.InkSerializedFormat
                     bw.Write(strkIds[i]);
                     cbWrote += Native.SizeOfInt;
                 }
-#pragma warning restore 6518
-#pragma warning restore 1634, 1691
             }
 
             return cbWrote;
@@ -2426,12 +2403,7 @@ namespace MS.Internal.Ink.InkSerializedFormat
             }
             else
             {
-                // samgeo - Presharp issue
-                // Presharp gives a warning when local IDisposable variables are not closed
-                // in this case, we can't call Dispose since it will also close the underlying stream
-                // which still needs to be written to
-#pragma warning disable 1634, 1691
-#pragma warning disable 6518
+                // TODO: Use leaveOpen ctor
                 BinaryWriter bw = new BinaryWriter(strm);
 
                 for (int i = 0; i < xform.Size; i++)
@@ -2449,8 +2421,6 @@ namespace MS.Internal.Ink.InkSerializedFormat
                         cbData += Native.SizeOfFloat;
                     }
                 }
-#pragma warning restore 6518
-#pragma warning restore 1634, 1691
             }
 
             return cbData;

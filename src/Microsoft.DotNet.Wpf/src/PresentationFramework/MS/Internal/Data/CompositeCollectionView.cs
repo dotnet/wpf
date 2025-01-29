@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -9,22 +9,14 @@
 //              CollectionView.mht
 //
 
-using System;
 using System.Collections;
-using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.ComponentModel;
-using System.Diagnostics;
 using System.Windows;
 using System.Windows.Data;
-using MS.Internal;              // Invariant.Assert
-using MS.Internal.Controls;
 using System.Windows.Controls;
 using MS.Internal.Utility;
-using MS.Utility;
 using MS.Internal.Hashing.PresentationFramework;    // HashHelper
-
-#pragma warning disable 1634, 1691  // suppressing PreSharp warnings
 
 namespace MS.Internal.Data
 {
@@ -1566,12 +1558,12 @@ namespace MS.Internal.Data
                     // InvalidOperationException: The enumerator is positioned before the first element of the collection or after the last element.
                     if (_index < 0)
                     {
-#pragma warning suppress 6503 // ICollectionView.CurrentItem is documented to throw this exception
+                        // ICollectionView.CurrentItem is documented to throw this exception
                         throw new InvalidOperationException(SR.EnumeratorNotStarted);
                     }
                     if (_done)
                     {
-#pragma warning suppress 6503 // ICollectionView.CurrentItem is documented to throw this exception
+                        // ICollectionView.CurrentItem is documented to throw this exception
                         throw new InvalidOperationException(SR.EnumeratorReachedEnd);
                     }
 

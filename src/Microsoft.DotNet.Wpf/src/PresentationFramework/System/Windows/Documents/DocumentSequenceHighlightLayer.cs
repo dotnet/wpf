@@ -2,18 +2,15 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
+using MS.Internal.Documents;
+using System.Collections;
+
 //
 // Description: DocumentSequence's HighlightLayer for TextSelection.
 //
 
 namespace System.Windows.Documents
 {
-    using MS.Internal.Documents;
-    using System;
-    using System.Diagnostics;
-    using System.Collections;
-    using System.Collections.Generic;
-
     // A special HighlightLayer that exists only to notify a FixedDocument
     // of changes to its highlights when the highlights are stored on a
     // DocumentSequenceTextContainer.

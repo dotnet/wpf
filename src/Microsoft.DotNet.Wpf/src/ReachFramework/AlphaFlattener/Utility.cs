@@ -1,29 +1,18 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
 
-using System;
-using System.Collections;              // for ArrayList
-using System.Collections.Generic;
-using System.Diagnostics;
-
 using System.Windows;                  // for Rect                        WindowsBase.dll
 using System.Windows.Media;            // for Geometry, Brush, ImageData. PresentationCore.dll
-using System.Windows.Media.Effects;
 using System.Windows.Media.Imaging;
-
-using Microsoft.Internal;
 using System.Runtime.CompilerServices;
-using MS.Internal.ReachFramework;
-
-using System.Security;
 using System.Windows.Xps.Serialization;
 using MS.Utility;
 
 using BuildInfo = MS.Internal.ReachFramework.BuildInfo;
 
-[assembly: InternalsVisibleTo(       "System.Printing, PublicKey=" + BuildInfo.WCP_PUBLIC_KEY_STRING)]
+[assembly: InternalsVisibleTo("System.Printing, PublicKey=" + BuildInfo.WCP_PUBLIC_KEY_STRING)]
 
 // This code is debug only until we decide to go all the way with enforcements.
 #if ENFORCEMENT
@@ -32,7 +21,7 @@ using BuildInfo = MS.Internal.ReachFramework.BuildInfo;
 namespace Microsoft.Internal.AlphaFlattener
 {
 #if DEBUG
-	internal static class StopWatch
+    internal static class StopWatch
 	{
 		static double   s_total; // = 0;
 		static DateTime s_startTime;
@@ -1529,11 +1518,12 @@ namespace Microsoft.Internal.AlphaFlattener
         /// <returns></returns>
         public static DrawingBrush CreateNonInheritingDrawingBrush(Drawing drawing)
         {
-            DrawingBrush db = new DrawingBrush();
-
-            // Opt-out of inheritance through the new Freezable.
-            db.CanBeInheritanceContext = false;
-            db.Drawing = drawing;
+            DrawingBrush db = new DrawingBrush
+            {
+                // Opt-out of inheritance through the new Freezable.
+                CanBeInheritanceContext = false,
+                Drawing = drawing
+            };
 
             return db;
         }

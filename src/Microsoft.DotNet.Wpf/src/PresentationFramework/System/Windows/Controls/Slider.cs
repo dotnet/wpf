@@ -1,32 +1,21 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
 
-using System;
 using System.ComponentModel;
-using System.Diagnostics;
 using System.Globalization;
-using System.Collections;
-using System.Windows.Threading;
-
-using System.Windows;
 using System.Windows.Automation.Peers;
 using System.Windows.Controls.Primitives;
-using System.Windows.Data;
 
 using System.Windows.Input;
 using System.Windows.Media;
-
-using MS.Win32;
 using MS.Internal;
 using MS.Internal.Commands;
 using MS.Internal.Telemetry.PresentationFramework;
 
 
 // For typeconverter
-using System.ComponentModel.Design.Serialization;
-using System.Reflection;
 
 
 namespace System.Windows.Controls
@@ -847,10 +836,12 @@ namespace System.Windows.Controls
 
             if (_autoToolTip == null)
             {
-                _autoToolTip = new ToolTip();
-                _autoToolTip.Placement = PlacementMode.Custom;
-                _autoToolTip.PlacementTarget = thumb;
-                _autoToolTip.CustomPopupPlacementCallback = new CustomPopupPlacementCallback(this.AutoToolTipCustomPlacementCallback);
+                _autoToolTip = new ToolTip
+                {
+                    Placement = PlacementMode.Custom,
+                    PlacementTarget = thumb,
+                    CustomPopupPlacementCallback = new CustomPopupPlacementCallback(this.AutoToolTipCustomPlacementCallback)
+                };
             }
 
             thumb.ToolTip = _autoToolTip;

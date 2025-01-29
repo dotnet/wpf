@@ -1,31 +1,10 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-//
-//
-
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Collections.Specialized;
-using System.ComponentModel;
-using System.ComponentModel.Design.Serialization;
-using System.Reflection;
 using MS.Internal;
 using MS.Win32.PresentationCore;
-using System.Diagnostics;
-using System.Globalization;
 using System.Runtime.InteropServices;
-using System.IO;
-using System.Security;
-using System.Windows.Media.Imaging;
-using System.Windows.Media.Composition;
-using System.Text;
-using MS.Internal.PresentationCore;
-using System.Diagnostics.CodeAnalysis;
-
-#pragma warning disable 1634, 1691  // suppressing PreSharp warnings
 
 //
 // This class wraps a PROPVARIANT type for interop with the unmanaged metadata APIs.  Only
@@ -471,7 +450,7 @@ namespace System.Windows.Media.Imaging
 
                         for (uint i=0; i<ca.cElems; i++)
                         {
-                            #pragma warning suppress 6031 // Return value ignored on purpose.
+                            // Return value ignored on purpose.
                             UnsafeNativeMethods.MILUnknown.Release(Marshal.ReadIntPtr(punkPtr, (int) (i*sizeIntPtr)));
                         }
                     }
@@ -501,7 +480,7 @@ namespace System.Windows.Media.Imaging
             }
             else if (vt == VarEnum.VT_UNKNOWN)
             {
-                #pragma warning suppress 6031 // Return value ignored on purpose.
+                // Return value ignored on purpose.
                 UnsafeNativeMethods.MILUnknown.Release(punkVal);
             }
 

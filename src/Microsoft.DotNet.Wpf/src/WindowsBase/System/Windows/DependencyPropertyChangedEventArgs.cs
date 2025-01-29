@@ -2,8 +2,6 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-using System;
-
 namespace System.Windows
 {
     /// <summary>
@@ -57,8 +55,10 @@ namespace System.Windows
         {
             _property = property;
             _metadata = metadata;
-            _oldEntry = new EffectiveValueEntry(property);
-            _oldEntry.Value = value;
+            _oldEntry = new EffectiveValueEntry(property)
+            {
+                Value = value
+            };
             _newEntry = _oldEntry;
 
             _flags = 0;

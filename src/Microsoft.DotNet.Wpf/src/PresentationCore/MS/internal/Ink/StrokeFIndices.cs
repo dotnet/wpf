@@ -3,14 +3,7 @@
 // See the LICENSE file in the project root for more information.
 
 
-using MS.Utility;
-using MS.Internal;
-using System;
-using System.Windows;
-using System.Collections.Generic;
 using System.Globalization;
-
-using SR=MS.Internal.PresentationCore.SR;
 
 namespace MS.Internal.Ink
 {

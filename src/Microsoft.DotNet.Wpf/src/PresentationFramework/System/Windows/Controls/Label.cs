@@ -8,14 +8,9 @@
 * Implements label control.
 *
 \***************************************************************************/
-using System;
-using System.Windows.Threading;
-
-using System.Windows;
 using System.Windows.Input;
 using System.Windows.Markup;
 using System.ComponentModel;
-using System.Xaml;
 using MS.Internal.Telemetry.PresentationFramework;
 
 namespace System.Windows.Controls

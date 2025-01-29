@@ -9,13 +9,6 @@
 
 namespace System.Windows.Documents
 {
-    using System.Collections;
-    using System.Collections.Generic;
-    using System.Windows.Shapes;
-    using System.Windows.Controls;
-    using System.Diagnostics;
-    using System.Windows.Media;
-
     internal class FixedSOMLineRanges
     {
         public void AddRange(double start, double end)

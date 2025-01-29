@@ -2,27 +2,10 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-//
-//
-//
-// Description: Provides methods that assert an application is in a valid state.
-//
+using Microsoft.Win32;
 
-#if WINDOWS_BASE
-using MS.Internal.WindowsBase;
-#elif DRT
-using MS.Internal.Drt;
-#else
-#error There is an attempt to use this class from an unexpected assembly.
-#endif
 namespace MS.Internal
 {
-    using System;
-    using System.Security; 
-    using Microsoft.Win32;
-    using System.Diagnostics;
-    using System.Windows;
-    
     /// <summary>
     /// Provides methods that assert an application is in a valid state. 
     /// </summary>
@@ -244,7 +227,6 @@ namespace MS.Internal
                 if (key != null)
                 {
                     object dbgJITDebugLaunchSettingValue = key.GetValue("DbgJITDebugLaunchSetting");
-                    string dbgManagedDebuggerValue = key.GetValue("DbgManagedDebugger") as string;
 
                     //
                     // Only count the enable if there's a JIT debugger to launch.
@@ -252,7 +234,7 @@ namespace MS.Internal
                     enabled = (dbgJITDebugLaunchSettingValue is int && ((int)dbgJITDebugLaunchSettingValue & 2) != 0);
                     if (enabled)
                     {
-                        enabled = dbgManagedDebuggerValue != null && dbgManagedDebuggerValue.Length > 0;
+                        enabled = key.GetValue("DbgManagedDebugger") is string dbgManagedDebuggerValue && dbgManagedDebuggerValue.Length > 0;
                     }
                 }
                 return enabled;

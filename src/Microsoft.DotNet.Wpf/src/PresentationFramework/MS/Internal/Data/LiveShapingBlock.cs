@@ -6,14 +6,6 @@
 // Description: A component of the list data structure used for live shaping.
 //
 
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Diagnostics;
-
-using System.Windows;
-using System.Windows.Data;
-
 namespace MS.Internal.Data
 {
     internal class LiveShapingBlock : RBNode<LiveShapingItem>

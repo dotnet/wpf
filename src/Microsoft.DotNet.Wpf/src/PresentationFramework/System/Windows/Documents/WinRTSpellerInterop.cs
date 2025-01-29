@@ -2,6 +2,21 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
+using MS.Internal.WindowsRuntime.Windows.Data.Text;
+using System.Diagnostics.CodeAnalysis;
+using System.Globalization;
+using System.IO;
+using System.Runtime.InteropServices;
+using System.Security;
+using System.Text.RegularExpressions;
+using System.Threading;
+using System.Windows.Controls;
+using System.Windows.Documents.Tracing;
+using System.Windows.Input;
+using System.Windows.Threading;
+
+using System.Windows.Documents.MsSpellCheckLib;
+
 //
 // Description: Custom COM marshalling code and interfaces for interaction
 //                  with the WinRT wordbreaker API and ISpellChecker
@@ -10,29 +25,6 @@
 
 namespace System.Windows.Documents
 {
-    using MS.Internal;
-    using MS.Internal.WindowsRuntime.Windows.Data.Text;
-
-    using System;
-    using System.Collections.Generic;
-    using System.ComponentModel;
-    using System.Diagnostics;
-    using System.Diagnostics.CodeAnalysis;
-    using System.Globalization;
-    using System.IO;
-    using System.Runtime.InteropServices;
-    using System.Runtime.CompilerServices;
-    using System.Security;
-    using System.Text.RegularExpressions;
-    using System.Threading;
-    using System.Windows;
-    using System.Windows.Controls;
-    using System.Windows.Documents.Tracing;
-    using System.Windows.Input;
-    using System.Windows.Threading;
-
-    using System.Windows.Documents.MsSpellCheckLib;
-
     internal partial class WinRTSpellerInterop: SpellerInteropBase
     {
         #region Constructors

@@ -1,27 +1,11 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-/***************************************************************************\
-*
-*
-*  Defines a top-level ContextLayoutManager - a layout dirtiness tracking/clearing system.
-*
-*
-\***************************************************************************/
-
-using System;
 using System.Windows.Threading;
-using System.Collections;
-
 using System.Windows.Media;
-using System.Windows.Media.Media3D;
 using System.Windows.Automation.Peers;
-
-using MS.Internal;
 using MS.Utility;
-
-using SR=MS.Internal.PresentationCore.SR;
 
 namespace System.Windows
 {
@@ -862,8 +846,10 @@ namespace System.Windows
                 Request r;
                 for(int i=0; i<PocketCapacity; i++)
                 {
-                    r = new Request();
-                    r.Next = _pocket;
+                    r = new Request
+                    {
+                        Next = _pocket
+                    };
                     _pocket = r;
                 }
                 _pocketSize = PocketCapacity;
@@ -1061,8 +1047,10 @@ namespace System.Windows
             ListItem t;
             for(int i=0; i<PocketCapacity; i++)
             {
-                t = new ListItem();
-                t.Next = _pocket;
+                t = new ListItem
+                {
+                    Next = _pocket
+                };
                 _pocket = t;
             }
             _pocketSize = PocketCapacity;

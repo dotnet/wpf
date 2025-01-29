@@ -8,11 +8,6 @@
 //              an image into a destination rectangle.
 //
 
-
-using System.Diagnostics;
-using System.Windows.Media.Imaging;
-using MS.Internal;
-
 namespace System.Windows.Media
 {
     /// <summary>

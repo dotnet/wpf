@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -7,33 +7,21 @@
 //              Most text scenarios should use the FlowDocumentScrollViewer.
 //
 
-using System;
-using System.IO;
 using System.Collections;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Diagnostics;
-using System.Reflection;
-using System.Globalization;
-using System.Windows.Automation;
 using System.Windows.Threading;
 using System.Windows.Documents;
 using System.Windows.Media;
 using System.Windows.Media.TextFormatting;
 using System.Windows.Markup;
-
-using MS.Utility;
 using MS.Internal;                  // Invariant.Assert
-using MS.Internal.Automation;       // TextAdaptor
 using System.Windows.Automation.Peers;
 using MS.Internal.Text;
 using MS.Internal.Documents;
 using MS.Internal.Controls;
 using MS.Internal.PresentationFramework;
 using MS.Internal.Telemetry.PresentationFramework;
-
-#pragma warning disable 1634, 1691  // suppressing PreSharp warnings
 
 namespace System.Windows.Controls
 {
@@ -1727,7 +1715,7 @@ Debug.Assert(lineCount == LineCount);
             }
 
             // If nothing has been hit, assume that element itself has been hit.
-            return (ie != null) ? ie : this;
+            return ie ?? this;
         }
 
         /// <summary>
@@ -1861,7 +1849,7 @@ Debug.Assert(lineCount == LineCount);
             {
                 if(CheckFlags(Flags.ContentChangeInProgress))
                 {
-                    #pragma warning suppress 6503 // IEnumerator.Current is documented to throw this exception
+                    // IEnumerator.Current is documented to throw this exception
                     throw new InvalidOperationException(SR.TextContainerChangingReentrancyInvalid);
                 }
 
@@ -3032,9 +3020,11 @@ Debug.Assert(lineCount == LineCount);
         {
             if (null == _textBlockCache)
             {
-                _textBlockCache = new TextBlockCache();
-                _textBlockCache._lineProperties = GetLineProperties();
-                _textBlockCache._textRunCache = new TextRunCache();
+                _textBlockCache = new TextBlockCache
+                {
+                    _lineProperties = GetLineProperties(),
+                    _textRunCache = new TextRunCache()
+                };
             }
         }
 
@@ -4100,7 +4090,7 @@ Debug.Assert(lineCount == LineCount);
 
             if (text._complexContent == null)
             {
-                text._contentCache = (newText != null) ? newText : String.Empty;
+                text._contentCache = newText ?? string.Empty;
             }
             else
             {
@@ -4148,9 +4138,3 @@ Debug.Assert(lineCount == LineCount);
         #endregion Dependency Property Helpers
     }
 }
-
-
-// Disable pragma warnings to enable PREsharp pragmas
-#pragma warning restore 1634, 1691
-
-

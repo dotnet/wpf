@@ -1,20 +1,13 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
 // Description: Tooltip Proxy
 
-// PRESHARP: In order to avoid generating warnings about unkown message numbers and unknown pragmas.
-#pragma warning disable 1634, 1691
-
 using System;
-using System.Globalization;
-using System.Text;
 using System.Windows.Automation;
 using System.Windows.Automation.Provider;
 using System.Windows;
-using System.Runtime.InteropServices;
-using System.ComponentModel;
 using MS.Win32;
 
 namespace MS.Internal.AutomationProxies
@@ -215,7 +208,7 @@ namespace MS.Internal.AutomationProxies
                 int isDWMEnabled = 0; // DWM is not enabled
                 try
                 {
-#pragma warning suppress 56031 // No need to check return value; failure means it isn't enabled
+                    // No need to check return value; failure means it isn't enabled
                     UnsafeNativeMethods.DwmIsCompositionEnabled(out isDWMEnabled);
                 }
                 catch (DllNotFoundException)

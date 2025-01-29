@@ -2,21 +2,15 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-//
 // Description:
 //  Common container-related operations that can be shared among internal
 //  components.
-//
 
 using System;
 using System.Collections;   // for IList
-using System.Globalization;
 using System.IO;
-using System.Runtime.InteropServices;
-using System.Runtime.Serialization;
 using System.Text;          // for StringBuilder
 using System.Diagnostics;   // for Debug.Assert
-using System.Security;
 
 
 #if PBTCOMPILER

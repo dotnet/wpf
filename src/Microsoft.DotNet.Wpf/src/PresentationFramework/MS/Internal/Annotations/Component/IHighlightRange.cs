@@ -7,20 +7,9 @@
 // between HighlightComponent and AnnotationHighlightLayer
 //
 
-using System;
-using MS.Internal;
-using System.Diagnostics;
-using System.Collections;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Windows;
 using System.Windows.Annotations;
-using System.Windows.Documents;
 using System.Windows.Media;
-using MS.Internal.Text;
 using System.Windows.Shapes;
-using MS.Internal.Annotations.Anchoring;
-using System.Windows.Controls;
 
 namespace MS.Internal.Annotations.Component
 {

@@ -7,11 +7,9 @@
 // Description: Base class for DataTemplateKey, TableTemplateKey.
 //
 
-using System;
 using System.Reflection;
 using System.ComponentModel;
 using System.Windows.Markup;
-using MS.Internal.Data;         // DataBindEngine.EnglishUSCulture
 
 namespace System.Windows
 {

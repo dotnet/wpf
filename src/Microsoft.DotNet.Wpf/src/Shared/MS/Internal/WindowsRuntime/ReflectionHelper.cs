@@ -11,17 +11,20 @@
 using MS.Internal.WindowsBase;
 #elif PRESENTATION_CORE
 using MS.Internal.PresentationCore;
+using System;
+using System.Reflection;
+
 #elif PRESENTATIONFRAMEWORK
 using MS.Internal.WindowsRuntime;
+using System;
+using System.Reflection;
+
 #elif REACHFRAMEWORK
 using MS.Internal.ReachFramework;
 #else
 using MS.Internal;
 #endif
 
-using System;
-using System.Runtime.InteropServices;
-using System.Security;
 
 #if WINDOWS_BASE
 namespace MS.Internal.WindowsBase
@@ -35,10 +38,6 @@ namespace MS.Internal
 {
     namespace WindowsRuntime
     {
-        using System;
-        using System.Collections.Generic;
-        using System.Reflection;
-
         internal static class ReflectionHelper
         {
             /// <summary>

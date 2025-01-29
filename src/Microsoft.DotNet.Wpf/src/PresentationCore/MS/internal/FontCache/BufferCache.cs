@@ -8,7 +8,6 @@
 // Description: BufferCache class implementation.
 //
 
-using System;
 using System.Threading;
 using MS.Internal.Text.TextInterface;
 

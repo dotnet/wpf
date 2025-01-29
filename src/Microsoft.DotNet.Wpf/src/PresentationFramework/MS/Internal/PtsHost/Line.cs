@@ -1,23 +1,9 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-
-//
-// Description: Text line formatter.
-//
-
-#pragma warning disable 1634, 1691  // avoid generating warnings about unknown
-                                    // message numbers and unknown pragmas for PRESharp contol
-
-using System;
-using System.Diagnostics;
-using System.Collections;
-using System.Collections.Generic;
 using System.Globalization;
-using System.Security;                  // SecurityCritical
 using System.Windows;
-using System.Windows.Controls;
 using System.Windows.Documents;
 using System.Windows.Media;
 using System.Windows.Media.TextFormatting;
@@ -218,7 +204,7 @@ namespace MS.Internal.PtsHost
                 precedingText = new CharacterBufferRange(precedingTextString, 0, precedingTextString.Length);                
 
                 StaticTextPointer pointer = position.CreateStaticPointer();
-                DependencyObject element = (pointer.Parent != null) ? pointer.Parent : _paraClient.Paragraph.Element;
+                DependencyObject element = pointer.Parent ?? _paraClient.Paragraph.Element;
                 culture = DynamicPropertyReader.GetCultureInfo(element);
             }
 
@@ -414,9 +400,8 @@ namespace MS.Internal.PtsHost
                     foreach (TextSpan<TextRun> textSpan in runs)
                     {
                         TextRun run = (TextRun)textSpan.Value;
-                        if (run is InlineObjectRun)
+                        if (run is InlineObjectRun inlineObject)
                         {
-                            InlineObjectRun inlineObject = (InlineObjectRun)run;
                             FlowDirection flowDirection;
                             Rect rect = GetBoundsFromPosition(dcpRun, run.Length, out flowDirection);
                             Debug.Assert(DoubleUtil.GreaterThanOrClose(rect.Width, 0), "Negative inline object's width.");
@@ -428,7 +413,7 @@ namespace MS.Internal.PtsHost
                                 ContainerVisual parent = currentParent as ContainerVisual;
                                 Invariant.Assert(parent != null, "Parent should always derives from ContainerVisual.");
                                 parent.Children.Remove(inlineObject.UIElementIsland);
-                            }                                                        
+                            }
 
                             if (!line.HasCollapsed || ((rect.Left + inlineObject.UIElementIsland.Root.DesiredSize.Width) < line.Width))
                             {
@@ -1332,6 +1317,3 @@ namespace MS.Internal.PtsHost
         #endregion FormattingContext Class
     }
 }
-
-#pragma warning enable 1634, 1691
-

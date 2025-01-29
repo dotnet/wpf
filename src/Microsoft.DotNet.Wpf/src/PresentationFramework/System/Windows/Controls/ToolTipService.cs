@@ -3,12 +3,7 @@
 // See the LICENSE file in the project root for more information.
 
 
-using System;
-using System.Windows;
-using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
-using System.Windows.Input;
-using System.Windows.Media;
 using MS.Internal.KnownBoxes;
 using System.ComponentModel;
 

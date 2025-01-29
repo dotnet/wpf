@@ -2,21 +2,8 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-//  Microsoft Windows Presentation Foundation
-//
-
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Windows;
-using System.Windows.Media;
-using System.IO;
-using System.Windows.Markup;
 using System.Windows.Media.Composition;
 using System.Windows.Media.Media3D;
-using System.Security;
-using System.Runtime.InteropServices;
-using SR = MS.Internal.PresentationCore.SR;
 
 namespace System.Windows.Media.Effects
 {

@@ -1,31 +1,17 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
 //#define DEBUG_RENDERING_FEEDBACK
-//
-//
+
 // Description:
 //      DynamicRenderer PlugIn - Provides off (and on) app Dispatcher Inking support.
-//
-//
 
-using System;
-using System.Diagnostics;
-using System.Collections.Specialized;
-using System.Collections.Generic;
-using System.Windows;
-using System.Windows.Input;
 using System.Windows.Media;
-using System.Threading;
 using System.Windows.Threading;
-using MS.Utility;
 using System.Windows.Ink;
 using MS.Internal.Ink;
-using System.Security;
 
-using SR=MS.Internal.PresentationCore.SR;
-    
 namespace System.Windows.Input.StylusPlugIns
 {
     /////////////////////////////////////////////////////////////////////////
@@ -209,8 +195,10 @@ namespace System.Windows.Input.StylusPlugIns
                 { 
                     if (_visualTarget == null)
                     {
-                        _visualTarget = new VisualTarget(this);
-                        _visualTarget.RootVisual = new ContainerVisual();
+                        _visualTarget = new VisualTarget(this)
+                        {
+                            RootVisual = new ContainerVisual()
+                        };
                     }
                     return _visualTarget;
                 }

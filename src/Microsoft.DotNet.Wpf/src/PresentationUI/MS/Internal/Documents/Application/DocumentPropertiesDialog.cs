@@ -4,15 +4,8 @@
 
 // Description: 
 //    DocumentPropertiesDialog - Dialog to view the current document properties.
-using MS.Internal.Documents;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Drawing;
 using System.Globalization;
-using System.IO.Packaging;                  // For Package
-using System.Security;
-using System.Text;
 using System.Windows.Forms;
 using System.Windows.TrustUI;               // For string resources
 

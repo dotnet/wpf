@@ -11,8 +11,6 @@
 //
 //
 
-using System;
-
 namespace System.Windows
 {
     /// <summary>

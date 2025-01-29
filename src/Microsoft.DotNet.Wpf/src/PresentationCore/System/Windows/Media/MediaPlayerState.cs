@@ -1,39 +1,16 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-//
-//
-
-using System;
-using System.Threading;
-using System.Security;
-using System.Diagnostics;
-using System.ComponentModel;
 using MS.Internal;
-using MS.Internal.PresentationCore;                        // SecurityHelper
+using MS.Internal.PresentationCore;
 using MS.Win32;
 using System.IO.Packaging;
-using System.Windows.Media.Animation;
-using System.Windows.Media;
 using System.Windows.Media.Composition;
-using System.Windows.Media.Imaging;
 using System.Windows.Threading;
 using System.Windows.Navigation;
-using System.Runtime.InteropServices;
-using System.IO;
-using System.Security.AccessControl;//for semaphore access permissions
-using System.Net;
-using Microsoft.Win32;
-using SR=MS.Internal.PresentationCore.SR;
-using UnsafeNativeMethods=MS.Win32.PresentationCore.UnsafeNativeMethods;
 
-//
-// Disable the warnings that C# emmits when it finds pragmas it does not recognize, this is to
-// get rid of false positive PreSharp warning
-//
-#pragma warning disable 1634, 1691
-
+using UnsafeNativeMethods = MS.Win32.PresentationCore.UnsafeNativeMethods;
 
 namespace System.Windows.Media
 {
@@ -1022,11 +999,7 @@ namespace System.Windows.Media
             bool                    notifyUceDirectly
             )
         {
-//
-// This is an interrop call, but, it does not set a last error being a COM call. So, suppress the
-// presharp warning about losing last error.
-//
-#pragma warning disable 6523
+            // This is an interrop call, but, it does not set a last error being a COM call. 
 
             //
             // AddRef to ensure the media player stays alive during transport, even if the
@@ -1046,8 +1019,6 @@ namespace System.Windows.Media
                 _nativeMedia,
                 notifyUceDirectly
                 );
-
-#pragma warning restore 6523
         }
 
         #endregion

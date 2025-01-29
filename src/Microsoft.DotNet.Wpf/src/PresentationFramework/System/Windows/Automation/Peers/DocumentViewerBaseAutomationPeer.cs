@@ -6,7 +6,6 @@
 // Description: AutomationPeer associated with DocumentViewerBase.
 //
 
-using System.Collections.Generic;           // List<T>
 using System.Windows.Controls.Primitives;   // DocumentViewerBase
 using System.Windows.Documents;             // IDocumentPaginatorSource
 

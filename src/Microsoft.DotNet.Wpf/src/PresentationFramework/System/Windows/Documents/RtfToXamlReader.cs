@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -7,7 +7,6 @@
 //
 
 using System.Collections;
-using System.Diagnostics;
 using System.Globalization;
 using System.Text;
 using System.IO;
@@ -940,8 +939,10 @@ namespace System.Windows.Documents
             {
                 if (_fsEmptyState == null)
                 {
-                    _fsEmptyState = new FormatState();
-                    _fsEmptyState.FontSize = -1;
+                    _fsEmptyState = new FormatState
+                    {
+                        FontSize = -1
+                    };
                 }
 
                 return _fsEmptyState;
@@ -3175,13 +3176,14 @@ namespace System.Windows.Documents
 
         internal void AddEntry(MarkerStyle m, long nILS, long nStartIndexOverride, long nStartIndexDefault, long nLevel)
         {
-            MarkerListEntry entry = new MarkerListEntry();
-
-            entry.Marker = m;
-            entry.StartIndexOverride = nStartIndexOverride;
-            entry.StartIndexDefault = nStartIndexDefault;
-            entry.VirtualListLevel = nLevel;
-            entry.ILS = nILS;
+            MarkerListEntry entry = new MarkerListEntry
+            {
+                Marker = m,
+                StartIndexOverride = nStartIndexOverride,
+                StartIndexDefault = nStartIndexDefault,
+                VirtualListLevel = nLevel,
+                ILS = nILS
+            };
             Add(entry);
         }
 
@@ -3562,9 +3564,10 @@ namespace System.Windows.Documents
                 return entry;
             }
 
-            entry = new FontTableEntry();
-
-            entry.Index = index;
+            entry = new FontTableEntry
+            {
+                Index = index
+            };
 
             Add(entry);
 
@@ -3624,8 +3627,10 @@ namespace System.Windows.Documents
             }
 
             // Not there - define one.
-            FontTableEntry newEntry = new FontTableEntry();
-            newEntry.Index = maxIndex + 1;
+            FontTableEntry newEntry = new FontTableEntry
+            {
+                Index = maxIndex + 1
+            };
             Add(newEntry);
             newEntry.Name = name;
             return maxIndex + 1;
@@ -3956,8 +3961,10 @@ namespace System.Windows.Documents
             }
 
             // OK, need to add one
-            ColorTableEntry entry = new ColorTableEntry();
-            entry.Color = color;
+            ColorTableEntry entry = new ColorTableEntry
+            {
+                Color = color
+            };
             Add(entry);
             return Count - 1;
         }
@@ -4663,16 +4670,17 @@ namespace System.Windows.Documents
 
         internal void InheritFormatState(FormatState formatState)
         {
-            _formatState = new FormatState(formatState);
-
-            // Reset non-inherited properties
-            _formatState.LI = 0;
-            _formatState.RI = 0;
-            _formatState.SB = 0;
-            _formatState.SA = 0;
-            _formatState.FI = 0;
-            _formatState.Marker = MarkerStyle.MarkerNone;
-            _formatState.CBPara = -1;
+            _formatState = new FormatState(formatState)
+            {
+                // Reset non-inherited properties
+                LI = 0,
+                RI = 0,
+                SB = 0,
+                SA = 0,
+                FI = 0,
+                Marker = MarkerStyle.MarkerNone,
+                CBPara = -1
+            };
         }
 
         internal string GetTagName()
@@ -5609,10 +5617,12 @@ namespace System.Windows.Documents
                         else if (cs.CellX > cf.CellX)
                         {
                             // Hmmm, need to insert a new cell here
-                            ColumnState csNew = new ColumnState();
-                            csNew.Row = dnRow;
-                            csNew.CellX = cf.CellX;
-                            csNew.IsFilled = (prevColX == prevCellX);
+                            ColumnState csNew = new ColumnState
+                            {
+                                Row = dnRow,
+                                CellX = cf.CellX,
+                                IsFilled = (prevColX == prevCellX)
+                            };
                             cols.Insert(k, csNew);
                             bHandled = true;
                             break;
@@ -5624,10 +5634,12 @@ namespace System.Windows.Documents
                     // New cell at the end
                     if (!bHandled)
                     {
-                        ColumnState csNew = new ColumnState();
-                        csNew.Row = dnRow;
-                        csNew.CellX = cf.CellX;
-                        csNew.IsFilled = (prevColX == prevCellX);
+                        ColumnState csNew = new ColumnState
+                        {
+                            Row = dnRow,
+                            CellX = cf.CellX,
+                            IsFilled = (prevColX == prevCellX)
+                        };
                         cols.Add(csNew);
                     }
 
@@ -6363,8 +6375,10 @@ namespace System.Windows.Documents
                     int nChildHere = nnAt - nAt;
                     if (nChildHere > 1)
                     {
-                        DocumentNode dnNewDir = new DocumentNode(DocumentNodeType.dnInline);
-                        dnNewDir.FormatState = new FormatState(dn.Parent.FormatState);
+                        DocumentNode dnNewDir = new DocumentNode(DocumentNodeType.dnInline)
+                        {
+                            FormatState = new FormatState(dn.Parent.FormatState)
+                        };
                         dnNewDir.FormatState.DirChar = dn.FormatState.DirChar;
 
                         InsertChildAt(dn.ClosedParent, dnNewDir, nAt, nChildHere);
@@ -6819,13 +6833,14 @@ namespace System.Windows.Documents
                         // Note that I'm building this list up in the reverse order of GetOpenMarkerStyles
                         if (dnList.Type == DocumentNodeType.dnList)
                         {
-                            MarkerListEntry mle = new MarkerListEntry();
-
-                            mle.Marker = dnList.FormatState.Marker;
-                            mle.StartIndexOverride = dnList.FormatState.StartIndex;
-                            mle.StartIndexDefault = dnList.FormatState.StartIndexDefault;
-                            mle.VirtualListLevel = dnList.VirtualListLevel;
-                            mle.ILS = dnList.FormatState.ILS;
+                            MarkerListEntry mle = new MarkerListEntry
+                            {
+                                Marker = dnList.FormatState.Marker,
+                                StartIndexOverride = dnList.FormatState.StartIndex,
+                                StartIndexDefault = dnList.FormatState.StartIndexDefault,
+                                VirtualListLevel = dnList.VirtualListLevel,
+                                ILS = dnList.FormatState.ILS
+                            };
                             ml.Insert(0, mle);
 
                             if (mle.Marker != MarkerStyle.MarkerBullet)
@@ -7517,8 +7532,10 @@ namespace System.Windows.Documents
         internal ConverterState()
         {
             _rtfFormatStack = new RtfFormatStack();
-            _documentNodeArray = new DocumentNodeArray();
-            _documentNodeArray.IsMain = true;
+            _documentNodeArray = new DocumentNodeArray
+            {
+                IsMain = true
+            };
             _fontTable = new FontTable();
             _colorTable = new ColorTable();
             _listTable = new ListTable();
@@ -8342,8 +8359,10 @@ namespace System.Windows.Documents
 
         internal DocumentNode ProcessHyperlinkField(string instr)
         {
-            DocumentNode dn = new DocumentNode(DocumentNodeType.dnHyperlink);
-            dn.FormatState = new FormatState(_converterState.PreviousTopFormatState(0));
+            DocumentNode dn = new DocumentNode(DocumentNodeType.dnHyperlink)
+            {
+                FormatState = new FormatState(_converterState.PreviousTopFormatState(0))
+            };
             string sUri = null;
             string sTarget = null;
             string sBookmark = null;
@@ -8449,8 +8468,10 @@ namespace System.Windows.Documents
 
         internal DocumentNode ProcessSymbolField(string instr)
         {
-            DocumentNode dn = new DocumentNode(DocumentNodeType.dnText);
-            dn.FormatState = new FormatState(_converterState.PreviousTopFormatState(0));
+            DocumentNode dn = new DocumentNode(DocumentNodeType.dnText)
+            {
+                FormatState = new FormatState(_converterState.PreviousTopFormatState(0))
+            };
 
             int nChar = -1;
             EncodeType encodeType = EncodeType.Ansi;
@@ -8660,9 +8681,10 @@ namespace System.Windows.Documents
                 formatState.ImageSource = imagePartUriString;
 
                 // Create the image document node
-                DocumentNode dnImage = new DocumentNode(DocumentNodeType.dnImage);
-
-                dnImage.FormatState = formatState;
+                DocumentNode dnImage = new DocumentNode(DocumentNodeType.dnImage)
+                {
+                    FormatState = formatState
+                };
 
                 StringBuilder imageStringBuilder = new StringBuilder();
 
@@ -8853,9 +8875,11 @@ namespace System.Windows.Documents
                     nAt = dna.FindUnmatched(DocumentNodeType.dnFieldBegin);
                     if (nAt >= 0)
                     {
-                        DocumentNode dnEnd = new DocumentNode(DocumentNodeType.dnFieldEnd);
-                        dnEnd.FormatState = new FormatState(fsCur);
-                        dnEnd.IsPending = false;
+                        DocumentNode dnEnd = new DocumentNode(DocumentNodeType.dnFieldEnd)
+                        {
+                            FormatState = new FormatState(fsCur),
+                            IsPending = false
+                        };
                         dna.Push(dnEnd);
                         dna.EntryAt(nAt).IsMatched = true;
                         ProcessField();
@@ -8867,9 +8891,11 @@ namespace System.Windows.Documents
                     nAt = dna.FindUnmatched(DocumentNodeType.dnFieldBegin);
                     if (nAt >= 0)
                     {
-                        DocumentNode dnEnd = new DocumentNode(DocumentNodeType.dnFieldEnd);
-                        dnEnd.FormatState = new FormatState(fsCur);
-                        dnEnd.IsPending = false;
+                        DocumentNode dnEnd = new DocumentNode(DocumentNodeType.dnFieldEnd)
+                        {
+                            FormatState = new FormatState(fsCur),
+                            IsPending = false
+                        };
                         dna.Push(dnEnd);
                         dna.EntryAt(nAt).IsMatched = true;
                     }
@@ -9852,8 +9878,10 @@ namespace System.Windows.Documents
                 }
             }
 
-            dn = new DocumentNode(DocumentNodeType.dnParagraph);
-            dn.FormatState = new FormatState(formatState);
+            dn = new DocumentNode(DocumentNodeType.dnParagraph)
+            {
+                FormatState = new FormatState(formatState)
+            };
             dn.ConstrainFontPropagation(formatState);
             dna.InsertNode(nInsertAt, dn);
 
@@ -9869,8 +9897,10 @@ namespace System.Windows.Documents
             Debug.Assert(nInsertAt >= 0 && nChildren > 0 && nInsertAt + nChildren - 1 < dna.Count);
 
             DocumentNode dnChild = dna.EntryAt(nInsertAt + nChildren - 1);
-            DocumentNode dn = new DocumentNode(DocumentNodeType.dnParagraph);
-            dn.FormatState = new FormatState(dnChild.FormatState);
+            DocumentNode dn = new DocumentNode(DocumentNodeType.dnParagraph)
+            {
+                FormatState = new FormatState(dnChild.FormatState)
+            };
             dn.ConstrainFontPropagation(dn.FormatState);
 
             DocumentNode dnParent = null;
@@ -10153,9 +10183,10 @@ namespace System.Windows.Documents
                     {
                         formatState.RtfDestination = RtfDestination.DestListText;
                         DocumentNodeArray dna = _converterState.DocumentNodeArray;
-                        DocumentNode dnl = new DocumentNode(DocumentNodeType.dnListText);
-
-                        dnl.FormatState = new FormatState(formatState);
+                        DocumentNode dnl = new DocumentNode(DocumentNodeType.dnListText)
+                        {
+                            FormatState = new FormatState(formatState)
+                        };
                         dna.Push(dnl);
                     }
                     break;
@@ -10430,9 +10461,10 @@ namespace System.Windows.Documents
                     {
                         fsCur.RtfDestination = RtfDestination.DestListText;
                         DocumentNodeArray dna = _converterState.DocumentNodeArray;
-                        DocumentNode dnl = new DocumentNode(DocumentNodeType.dnListText);
-
-                        dnl.FormatState = new FormatState(formatState);
+                        DocumentNode dnl = new DocumentNode(DocumentNodeType.dnListText)
+                        {
+                            FormatState = new FormatState(formatState)
+                        };
                         dna.Push(dnl);
                     }
                     break;
@@ -10999,11 +11031,12 @@ namespace System.Windows.Documents
             }
 
             DocumentNodeArray dna = _converterState.DocumentNodeArray;
-            DocumentNode dnf = new DocumentNode(DocumentNodeType.dnFieldBegin);
-
-            dnf.FormatState = new FormatState(formatState);
-            dnf.IsPending = false;  // Field start mark should not impact other tags open/close behavior
-            dnf.IsTerminated = true;
+            DocumentNode dnf = new DocumentNode(DocumentNodeType.dnFieldBegin)
+            {
+                FormatState = new FormatState(formatState),
+                IsPending = false,  // Field start mark should not impact other tags open/close behavior
+                IsTerminated = true
+            };
             dna.Push(dnf);
         }
 
@@ -11503,8 +11536,10 @@ namespace System.Windows.Documents
             // OK, create a text node if necessary
             if (dnTop == null || dnTop.Type != DocumentNodeType.dnText)
             {
-                dnTop = new DocumentNode(DocumentNodeType.dnText);
-                dnTop.FormatState = new FormatState(formatState);
+                dnTop = new DocumentNode(DocumentNodeType.dnText)
+                {
+                    FormatState = new FormatState(formatState)
+                };
                 dna.Push(dnTop);
             }
 
@@ -11523,8 +11558,10 @@ namespace System.Windows.Documents
                 dna.CloseAt(dna.Count - 1);
             }
 
-            DocumentNode documentNode = new DocumentNode(DocumentNodeType.dnLineBreak);
-            documentNode.FormatState = new FormatState(formatState);
+            DocumentNode documentNode = new DocumentNode(DocumentNodeType.dnLineBreak)
+            {
+                FormatState = new FormatState(formatState)
+            };
             dna.Push(documentNode);
             dna.CloseAt(dna.Count - 1);
             dna.CoalesceChildren(_converterState, dna.Count - 1);

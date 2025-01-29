@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -11,17 +11,12 @@ using MS.Internal.KnownBoxes;
 using MS.Internal.Media;
 using MS.Internal.PresentationCore;
 using MS.Utility;
-using System;
 using System.Collections;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Diagnostics;
-using System.Security;
 using System.Windows.Automation;
 using System.Windows.Automation.Peers;
 using System.Windows.Input;
 using System.Windows.Input.StylusPlugIns;
-using System.Windows.Interop;
 using System.Windows.Markup;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
@@ -55,10 +50,6 @@ namespace System.Windows
         /// </summary>
         Collapsed
     }
-
-    // PreSharp uses message numbers that the C# compiler doesn't know about.
-    // Disable the C# complaints, per the PreSharp documentation.
-#pragma warning disable 1634, 1691
 
     /// <summary>
     /// UIElement is the base class for frameworks building on the Windows Presentation Core.
@@ -1144,17 +1135,13 @@ namespace System.Windows
                 HandleRef desktopWnd = new HandleRef(null, IntPtr.Zero);
 
                 // Win32Exception will get the Win32 error code so we don't have to
-#pragma warning disable 6523
                 IntPtr dc = UnsafeNativeMethods.GetDC(desktopWnd);
 
                 // Detecting error case from unmanaged call, required by PREsharp to throw a Win32Exception
-#pragma warning disable 6503
                 if (dc == IntPtr.Zero)
                 {
                     throw new Win32Exception();
                 }
-#pragma warning restore 6503
-#pragma warning restore 6523
 
                 try
                 {

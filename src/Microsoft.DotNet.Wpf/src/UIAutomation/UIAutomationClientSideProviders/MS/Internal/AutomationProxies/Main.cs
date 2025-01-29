@@ -5,10 +5,7 @@
 // Description: 
 //      Proxy registration.
 
-using System;
 using System.Windows.Automation;
-using System.Windows.Automation.Provider;
-using MS.Win32;
 
 namespace UIAutomationClientsideProviders
 {

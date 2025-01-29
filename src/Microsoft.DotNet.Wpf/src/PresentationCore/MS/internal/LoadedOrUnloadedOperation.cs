@@ -8,9 +8,6 @@
 //      A pending loaded or unloaded operation, to be run by the MediaContext.
 //
 
-using System;
-using System.Diagnostics;           // Debug.Assert
-
 using System.Windows;               // DependencyObject
 using System.Windows.Threading;     // DispatcherOperationCallback
 

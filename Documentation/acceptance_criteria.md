@@ -34,7 +34,7 @@ Thank you for contributing to **WPF for .NET Core!**  We ask that before you sta
 
 5. The issue will be discussed with community members and WPF developers to understand the problem and review possible solutions. 
 
-6. When the a solution has been agreed upon, implement and **validate the change locally**.
+6. When a solution has been agreed upon, implement and **validate the change locally**.
     > Please follow the testing requirements [Developer Guide](developer-guide.md).
     
     > Verify your change works. Create and test the updated feature area locally with a WPF test application compiled against a version of the WPF Framework that contains your changes.  See the [Developer Guide](developer-guide.md) for instructions on testing against local builds.

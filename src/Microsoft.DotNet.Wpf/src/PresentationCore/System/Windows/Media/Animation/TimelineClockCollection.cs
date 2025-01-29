@@ -1,16 +1,6 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
-
-// ClockCollection.cs
-
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-
-using SR=MS.Internal.PresentationCore.SR;
-
-#pragma warning disable 1634, 1691  // suppressing PreSharp warnings
 
 namespace System.Windows.Media.Animation
 {
@@ -104,7 +94,7 @@ namespace System.Windows.Media.Animation
 
             foreach (Clock t in this)
             {
-                #pragma warning suppress 6506 // the enumerator will not contain nulls
+                // the enumerator will not contain nulls
                 if (t.Equals(item))
                     return true;
             }
@@ -241,9 +231,7 @@ namespace System.Windows.Media.Animation
             else
             {
                 // Both are non-null.
-#pragma warning disable 56506 // Suppress presharp warning: Parameter 'objA' to this public method must be validated:  A null-dereference can occur here.
                 return objA._owner == objB._owner;
-#pragma warning restore 56506
             }
         }
 

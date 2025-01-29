@@ -6,16 +6,15 @@
 
 
 using System.IO;
-using System.Security;
 
 namespace MS.Internal.Documents.Application
 {
-/// <summary>
-/// Extends Document with a support for StreamProxy versus simply stream.
-/// </summary>
-/// <typeparam name="T">The type of stream to back the document with.
-/// </typeparam>
-internal class StreamDocument<T> : Document where T : StreamProxy
+    /// <summary>
+    /// Extends Document with a support for StreamProxy versus simply stream.
+    /// </summary>
+    /// <typeparam name="T">The type of stream to back the document with.
+    /// </typeparam>
+    internal class StreamDocument<T> : Document where T : StreamProxy
 {
     #region Constructors
     //--------------------------------------------------------------------------

@@ -7,8 +7,6 @@
 //   Xaml Writer Modes for values that are of type Expression.
 //
 
-using System;
-
 namespace System.Windows.Markup
 {
     /// <summary>

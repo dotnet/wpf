@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -8,21 +8,16 @@
 using MS.Internal;
 using MS.Internal.Controls;
 using MS.Utility;
-
-using System;
 using System.Collections;
-using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Globalization;
-using System.Diagnostics;
 using System.IO;
 using System.Windows.Controls.Primitives;
 using System.Windows.Media;
 using System.Windows.Threading;
 using System.Windows.Input;
 using System.Windows.Data;
-using MS.Internal.Data;
 
 namespace System.Windows.Controls
 {
@@ -1498,13 +1493,9 @@ namespace System.Windows.Controls
                 return Rect.Empty;
             }
 
-#pragma warning disable 1634, 1691
-#pragma warning disable 56506
             // Compute the child's rect relative to (0,0) in our coordinate space.
-            // This is a false positive by PreSharp. visual cannot be null because of the 'if' check above
             GeneralTransform childTransform = visual.TransformToAncestor(this);
-#pragma warning restore 56506
-#pragma warning restore 1634, 1691
+
             rectangle = childTransform.TransformBounds(rectangle);
 
             // We can't do any work unless we're scrolling.
@@ -2096,10 +2087,12 @@ namespace System.Windows.Controls
                 // when IsScrollActive is set to false (asynchronously).
                 if (IsScrollActive)
                 {
-                    info = new OffsetInformation();
-                    info.previouslyMeasuredOffsets = previouslyMeasuredOffsets;
-                    info.lastPageSafeOffset = lastPageSafeOffset;
-                    info.lastPagePixelSize = lastPagePixelSize;
+                    info = new OffsetInformation
+                    {
+                        previouslyMeasuredOffsets = previouslyMeasuredOffsets,
+                        lastPageSafeOffset = lastPageSafeOffset,
+                        lastPagePixelSize = lastPagePixelSize
+                    };
                     OffsetInformationField.SetValue(this, info);
                 }
 
@@ -6816,8 +6809,10 @@ namespace System.Windows.Controls
                 HierarchicalVirtualizationConstraints constraints = new HierarchicalVirtualizationConstraints(
                     childCacheSize,
                     childCacheUnit,
-                    childViewport);
-                constraints.ScrollGeneration = scrollGeneration;
+                    childViewport)
+                {
+                    ScrollGeneration = scrollGeneration
+                };
                 virtualizingChild.Constraints = constraints;
                 virtualizingChild.InBackgroundLayout = MeasureCaches;
                 virtualizingChild.MustDisableVirtualization = mustDisableVirtualization;
@@ -9450,8 +9445,10 @@ namespace System.Windows.Controls
 
         private bool NotifyCleanupItem(UIElement child, ItemsControl itemsControl)
         {
-            CleanUpVirtualizedItemEventArgs e = new CleanUpVirtualizedItemEventArgs(itemsControl.ItemContainerGenerator.ItemFromContainer(child), child);
-            e.Source = this;
+            CleanUpVirtualizedItemEventArgs e = new CleanUpVirtualizedItemEventArgs(itemsControl.ItemContainerGenerator.ItemFromContainer(child), child)
+            {
+                Source = this
+            };
             OnCleanUpVirtualizedItem(e);
 
             return !e.Cancel;
@@ -12022,27 +12019,28 @@ namespace System.Windows.Controls
                 _flushDepth = 0;
                 _luThreshold = s_DefaultLayoutUpdatedThreshold;
 
-                string s = FrameworkCompatibilityPreferences.GetScrollingTraceFile();
-                if (!String.IsNullOrEmpty(s))
+                string trace = FrameworkCompatibilityPreferences.GetScrollingTraceFile();
+                if (!string.IsNullOrEmpty(trace))
                 {
-                    string[] a = s.Split(';');
-                    _fileName = a[0];
+                    Span<Range> splitRegions = stackalloc Range[4];
+                    ReadOnlySpan<char> traceSplits = trace.AsSpan();
+                    int regionsLength = traceSplits.Split(splitRegions, ';');
 
-                    if (a.Length > 1)
+                    _fileName = traceSplits[splitRegions[0]].ToString();
+
+                    if (regionsLength > 1)
                     {
-                        int flushDepth;
-                        if (Int32.TryParse(a[1], NumberStyles.Integer, CultureInfo.InvariantCulture, out flushDepth))
+                        if (int.TryParse(traceSplits[splitRegions[1]], NumberStyles.Integer, CultureInfo.InvariantCulture, out int flushDepth))
                         {
                             _flushDepth = flushDepth;
                         }
                     }
 
-                    if (a.Length > 2)
+                    if (regionsLength > 2)
                     {
-                        int luThreshold;
-                        if (Int32.TryParse(a[2], NumberStyles.Integer, CultureInfo.InvariantCulture, out luThreshold))
+                        if (int.TryParse(traceSplits[splitRegions[2]], NumberStyles.Integer, CultureInfo.InvariantCulture, out int luThreshold))
                         {
-                            _luThreshold = (luThreshold <= 0) ? Int32.MaxValue : luThreshold;
+                            _luThreshold = (luThreshold <= 0) ? int.MaxValue : luThreshold;
                         }
                     }
                 }
@@ -12120,7 +12118,7 @@ namespace System.Windows.Controls
             }
 
             // for use from VS Immediate window
-            static void Mark(params object[] args)
+            static void Mark(params ReadOnlySpan<object> args)
             {
                 ScrollTraceRecord record = new ScrollTraceRecord(ScrollTraceOp.Mark, null, -1, 0, 0, BuildDetail(args));
                 lock (s_TargetToTraceListMap)
@@ -12232,7 +12230,7 @@ namespace System.Windows.Controls
                 return (sti != null && sti.ScrollTracer != null);
             }
 
-            internal static void Trace(VirtualizingStackPanel vsp, ScrollTraceOp op, params object[] args)
+            internal static void Trace(VirtualizingStackPanel vsp, ScrollTraceOp op, params ReadOnlySpan<object> args)
             {
                 ScrollTracingInfo sti = ScrollTracingInfoField.GetValue(vsp);
                 ScrollTracer tracer = sti.ScrollTracer;
@@ -12275,16 +12273,12 @@ namespace System.Windows.Controls
                 return sb.ToString();
             }
 
-            private static string BuildDetail(object[] args)
+            private static string BuildDetail(ReadOnlySpan<object> args)
             {
-                int length = (args != null) ? args.Length : 0;
-                if (length == 0)
-                    return String.Empty;
-                else
-                    return String.Format(CultureInfo.InvariantCulture, s_format[length], args);
+                return args.IsEmpty ? string.Empty : string.Format(CultureInfo.InvariantCulture, s_format[args.Length], args);
             }
 
-            private static string[] s_format = new string[] {
+            private static readonly string[] s_format = new string[] {
                 "",
                 "{0}",
                 "{0} {1}",
@@ -12395,7 +12389,7 @@ namespace System.Windows.Controls
                 }
             }
 
-            private void AddTrace(VirtualizingStackPanel vsp, ScrollTraceOp op, ScrollTracingInfo sti, params object[] args)
+            private void AddTrace(VirtualizingStackPanel vsp, ScrollTraceOp op, ScrollTracingInfo sti, params ReadOnlySpan<object> args)
             {
                 // the trace list contains references back into the VSP that can lead
                 // to memory leaks if the app removes the VSP.  To avoid this, treat
@@ -12406,10 +12400,8 @@ namespace System.Windows.Controls
                 {
                     if (++_luCount > _luThreshold)
                     {
-                        AddTrace(null, ScrollTraceOp.ID, _nullInfo,
-                            "Inactive at", DateTime.Now);
-                        ItemsControl ic;
-                        if (_wrIC.TryGetTarget(out ic))
+                        AddTrace(null, ScrollTraceOp.ID, _nullInfo, "Inactive at", DateTime.Now);
+                        if (_wrIC.TryGetTarget(out ItemsControl ic))
                         {
                             ic.LayoutUpdated -= OnLayoutUpdated;
                         }
@@ -12424,10 +12416,8 @@ namespace System.Windows.Controls
 
                     if (luCount < 0)
                     {
-                        AddTrace(null, ScrollTraceOp.ID, _nullInfo,
-                            "Reactivate at", DateTime.Now);
-                        ItemsControl ic;
-                        if (_wrIC.TryGetTarget(out ic))
+                        AddTrace(null, ScrollTraceOp.ID, _nullInfo, "Reactivate at", DateTime.Now);
+                        if (_wrIC.TryGetTarget(out ItemsControl ic))
                         {
                             ic.LayoutUpdated += OnLayoutUpdated;
                         }
@@ -12994,11 +12984,13 @@ namespace System.Windows.Controls
 
             if (IsScrolling)
             {
-                s._scrollData = new ScrollData();
-                s._scrollData._offset = _scrollData._offset;
-                s._scrollData._extent = _scrollData._extent;
-                s._scrollData._computedOffset = _scrollData._computedOffset;
-                s._scrollData._viewport = _scrollData._viewport;
+                s._scrollData = new ScrollData
+                {
+                    _offset = _scrollData._offset,
+                    _extent = _scrollData._extent,
+                    _computedOffset = _scrollData._computedOffset,
+                    _viewport = _scrollData._viewport
+                };
             }
 
             s._boolFieldStore                               = _boolFieldStore;
@@ -13032,11 +13024,13 @@ namespace System.Windows.Controls
             List<ChildInfo> list = new List<ChildInfo>();
             foreach (UIElement child in RealizedChildren)
             {
-                ChildInfo info = new ChildInfo();
-                info._itemIndex = g.IndexFromContainer(child, returnLocalIndex:true);
-                info._desiredSize = child.DesiredSize;
-                info._arrangeRect = child.PreviousArrangeRect;
-                info._inset = (Thickness)child.GetValue(ItemsHostInsetProperty);
+                ChildInfo info = new ChildInfo
+                {
+                    _itemIndex = g.IndexFromContainer(child, returnLocalIndex: true),
+                    _desiredSize = child.DesiredSize,
+                    _arrangeRect = child.PreviousArrangeRect,
+                    _inset = (Thickness)child.GetValue(ItemsHostInsetProperty)
+                };
                 list.Add(info);
             }
             s._realizedChildren = list;

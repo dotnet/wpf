@@ -1,23 +1,13 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-using System;
 using System.Collections;
-using System.Diagnostics;
-using System.ComponentModel;
-using System.Runtime.InteropServices;
 using System.Windows.Threading;
-using System.Security;
 using System.Windows.Media;
-using System.Windows.Media.Media3D;
-using System.Windows.Markup;
 using System.Windows.Input;
-using MS.Win32;
 using MS.Utility;
 using MS.Internal;
-
-using SR=MS.Internal.PresentationCore.SR;
 
 namespace System.Windows
 {
@@ -594,24 +584,20 @@ namespace System.Windows
         ///     Helper method which returns true when all the given visuals 
         ///     are in the same presentation source.
         /// </summary>
-        internal static bool UnderSamePresentationSource(params DependencyObject[] visuals)
+        internal static bool IsUnderSamePresentationSource(params ReadOnlySpan<DependencyObject> visuals)
         {
-            if (visuals == null || visuals.Length == 0)
-            {
+            if (visuals.IsEmpty)
                 return true;
-            }
 
             PresentationSource baseSource = CriticalFromVisual(visuals[0]);
-
-            int count = visuals.Length;
-            for (int i = 1; i < count; i++)
+            for (int i = 1; i < visuals.Length; i++)
             {
-                PresentationSource currentSource = CriticalFromVisual(visuals[i]);
-                if (currentSource != baseSource)
+                if (baseSource != CriticalFromVisual(visuals[i]))
                 {
                     return false;
                 }
             }
+
             return true;
         }
 
@@ -708,9 +694,10 @@ namespace System.Windows
             {
                 doTarget.SetValue(CachedSourceProperty, realSource);
 
-                SourceChangedEventArgs args = new SourceChangedEventArgs(cachedSource, realSource);
-
-                args.RoutedEvent=SourceChangedEvent;
+                SourceChangedEventArgs args = new SourceChangedEventArgs(cachedSource, realSource)
+                {
+                    RoutedEvent = SourceChangedEvent
+                };
                 if (doTarget is UIElement uiElement)
                 {
                     uiElement.RaiseEvent(args);

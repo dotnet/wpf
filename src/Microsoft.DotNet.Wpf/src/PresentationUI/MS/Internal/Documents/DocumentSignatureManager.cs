@@ -1,22 +1,18 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 // Description: 
 //    DocumentSignatureManager is an internal API for Mongoose to deal with Digital Signatures.
 
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.IO.Packaging;
 using System.Reflection;
-using System.Security;
 using System.Security.Cryptography;
 using System.Security.Cryptography.X509Certificates;
 using System.Threading;
 using System.Windows.TrustUI;
 using System.Windows.Forms;
-using System.Windows.Interop;
 using System.Windows.Threading;
 
 using MS.Internal.Documents.Application;
@@ -790,14 +786,15 @@ namespace MS.Internal.Documents
         internal void OnAddRequestSignature(SignatureResources sigResources, DateTime dateTime)
         {
             //Use the SignatureResource to create Request Digitalsignature.
-            DigitalSignature digSigRequest = new DigitalSignature();
-
-            //Assign fields.
-            digSigRequest.SignatureState = SignatureStatus.NotSigned;
-            digSigRequest.SubjectName = sigResources._subjectName;
-            digSigRequest.Reason = sigResources._reason;
-            digSigRequest.Location = sigResources._location;
-            digSigRequest.SignedOn = dateTime;
+            DigitalSignature digSigRequest = new DigitalSignature
+            {
+                //Assign fields.
+                SignatureState = SignatureStatus.NotSigned,
+                SubjectName = sigResources._subjectName,
+                Reason = sigResources._reason,
+                Location = sigResources._location,
+                SignedOn = dateTime
+            };
 
             Guid spotId = DigitalSignatureProvider.AddRequestSignature(digSigRequest);
 
@@ -1029,10 +1026,11 @@ namespace MS.Internal.Documents
                 null);
 
             CertificateValidationThreadInfo threadInfo =
-                new CertificateValidationThreadInfo();
-
-            threadInfo.CertificateList = certificateList;
-            threadInfo.Operation = dispatcherOperation;
+                new CertificateValidationThreadInfo
+                {
+                    CertificateList = certificateList,
+                    Operation = dispatcherOperation
+                };
 
             Trace.SafeWrite(
                 Trace.Signatures,

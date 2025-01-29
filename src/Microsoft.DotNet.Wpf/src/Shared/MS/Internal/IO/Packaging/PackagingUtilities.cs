@@ -10,19 +10,11 @@
 //
 //
 
-using System;
 using System.IO;
 using System.IO.IsolatedStorage;
-using MS.Internal.WindowsBase;
-using System.Xml;               // For XmlReader
-using System.Diagnostics;       // For Debug.Assert
-using System.Text;              // For Encoding
-using System.Windows;           // For Exception strings - SR
-using System.Security;                  // for SecurityCritical
-using Microsoft.Win32;                  // for Registry classes
-
-
-using MS.Internal;
+using System.Xml;
+using System.Text;
+using Microsoft.Win32;
 
 namespace MS.Internal.IO.Packaging
 {

@@ -1,32 +1,21 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
 // Description: The main DocumentViewer subclass that drives the MongooseUI
 
-
-// Used to support the warnings disabled below
-#pragma warning disable 1634, 1691
-
 using MS.Internal.Documents.Application;
-using MS.Internal.IO.Packaging;             // For PreloadedPackages
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;                // For IValueConverter
 using System.Globalization;                 // For localization of string conversion
 using System.IO;
-using System.IO.Packaging;                  // For Packages
 using System.Printing;                      // For PrintQueue
-using System.Security;
 using System.Windows;
 using System.Windows.Controls;              // For Page Ranges
-using System.Windows.Controls.Primitives;   // For ToggleButton
 using System.Windows.Data;                  // For data binding
 using System.Windows.Documents;             // For PresentationUIStyleResources
 using System.Windows.Documents.Serialization;             // For WritingCompletedEventArgs
 using System.Windows.Input;                 // For focus / input based events
 using System.Windows.Interop;               // For WindowInteropHelper
-using System.Windows.Navigation;            // For NavigationWindow
 using System.Windows.Markup;                // For MarkupExtension
 using System.Windows.Threading;             // For DispatcherPriority
 using System.Windows.TrustUI;               // For string resources
@@ -720,13 +709,17 @@ namespace MS.Internal.Documents
 
                         // Setup two binds on the Width and Height to ensure these are controlled
                         // by the ContentControl parent.
-                        Binding bind = new Binding("Width");
-                        bind.Mode = BindingMode.OneWay;
-                        bind.Source = host;
+                        Binding bind = new Binding("Width")
+                        {
+                            Mode = BindingMode.OneWay,
+                            Source = host
+                        };
                         _zoomComboBox.SetBinding(ContentControl.WidthProperty, bind);
-                        bind = new Binding("Height");
-                        bind.Mode = BindingMode.OneWay;
-                        bind.Source = host;
+                        bind = new Binding("Height")
+                        {
+                            Mode = BindingMode.OneWay,
+                            Source = host
+                        };
                         _zoomComboBox.SetBinding(ContentControl.HeightProperty, bind);
 
                         // Insert the ZoomComboBox into it's host (and thus the ToolBar).
@@ -772,13 +765,17 @@ namespace MS.Internal.Documents
 
                         // Setup two binds on the Width and Height to ensure these are controlled
                         // by the ContentControl parent.
-                        Binding bind = new Binding("Width");
-                        bind.Mode = BindingMode.OneWay;
-                        bind.Source = host;
+                        Binding bind = new Binding("Width")
+                        {
+                            Mode = BindingMode.OneWay,
+                            Source = host
+                        };
                         _pageTextBox.SetBinding(ContentControl.WidthProperty, bind);
-                        bind = new Binding("Height");
-                        bind.Mode = BindingMode.OneWay;
-                        bind.Source = host;
+                        bind = new Binding("Height")
+                        {
+                            Mode = BindingMode.OneWay,
+                            Source = host
+                        };
                         _pageTextBox.SetBinding(ContentControl.HeightProperty, bind);
 
                         // Insert the PageTextBox into it's host (and thus the ToolBar).
@@ -1092,19 +1089,25 @@ namespace MS.Internal.Documents
 
             // Setup the DigitalSignaturesMenu
             // Add the Sign MenuItem
-            MenuItem menuItem = new MenuItem();
-            menuItem.Name = _digSigSignMenuItemName;
-            menuItem.Command = DocumentApplicationDocumentViewer.Sign;
+            MenuItem menuItem = new MenuItem
+            {
+                Name = _digSigSignMenuItemName,
+                Command = DocumentApplicationDocumentViewer.Sign
+            };
             DigitalSignaturesMenuItem.Items.Add(menuItem);
 
-            menuItem = new MenuItem();
-            menuItem.Name = _digSigRequestSignersMenuItemName;
-            menuItem.Command = DocumentApplicationDocumentViewer.RequestSigners;
+            menuItem = new MenuItem
+            {
+                Name = _digSigRequestSignersMenuItemName,
+                Command = DocumentApplicationDocumentViewer.RequestSigners
+            };
             DigitalSignaturesMenuItem.Items.Add(menuItem);
 
-            menuItem = new MenuItem();
-            menuItem.Name = _digSigShowSignatureSummaryMenuItemName;
-            menuItem.Command = DocumentApplicationDocumentViewer.ShowSignatureSummary;
+            menuItem = new MenuItem
+            {
+                Name = _digSigShowSignatureSummaryMenuItemName,
+                Command = DocumentApplicationDocumentViewer.ShowSignatureSummary
+            };
             DigitalSignaturesMenuItem.Items.Add(menuItem);
 
             // Properly handle Esc from menus
@@ -1113,9 +1116,11 @@ namespace MS.Internal.Documents
 
             // Setup ZoomComboBox
             // Bind Text to ZoomPercentage
-            Binding bind = new Binding("Zoom");
-            bind.Mode = BindingMode.OneWay;
-            bind.Source = this;
+            Binding bind = new Binding("Zoom")
+            {
+                Mode = BindingMode.OneWay,
+                Source = this
+            };
             ZoomComboBox.SetBinding(ZoomComboBox.ZoomProperty, bind);
             // Attach ZoomComboBox event handlers
             ZoomComboBox.LostKeyboardFocus += new KeyboardFocusChangedEventHandler(OnZoomComboBoxLostFocus);
@@ -1127,9 +1132,11 @@ namespace MS.Internal.Documents
             // Fill the ZoomComboBox items
             PopulateZoomComboBoxItems();
 
-            bind = new Binding("MasterPageNumber");
-            bind.Mode = BindingMode.OneWay;
-            bind.Source = this;
+            bind = new Binding("MasterPageNumber")
+            {
+                Mode = BindingMode.OneWay,
+                Source = this
+            };
             PageTextBox.SetBinding(PageTextBox.PageNumberProperty, bind);
             // Attach PageTextBox event handlers
             PageTextBox.LostKeyboardFocus += new KeyboardFocusChangedEventHandler(OnPageTextBoxLostFocus);
@@ -1824,14 +1831,15 @@ namespace MS.Internal.Documents
         private void AddZoomComboBoxItem(ZoomComboBoxItem zoomItem, String name)
         {
             // Create new ComboBox Item
-            ComboBoxItem newItem = new ComboBoxItem();
+            ComboBoxItem newItem = new ComboBoxItem
+            {
+                // Assign Content and Name
+                Content = zoomItem,
+                Name = String.IsNullOrEmpty(name) ? String.Empty : name,
 
-            // Assign Content and Name
-            newItem.Content = zoomItem;
-            newItem.Name = String.IsNullOrEmpty(name) ? String.Empty : name;
-
-            // Right align the content to match the TextBox portion of the ComboBox.
-            newItem.HorizontalAlignment = HorizontalAlignment.Right;
+                // Right align the content to match the TextBox portion of the ComboBox.
+                HorizontalAlignment = HorizontalAlignment.Right
+            };
 
             // Add item to ZoomComboBox
             ZoomComboBox.Items.Add(newItem);
@@ -1886,17 +1894,11 @@ namespace MS.Internal.Documents
                     isValidArg = true;
                 }
             }
-            // Allow empty catch statements.
-#pragma warning disable 56502
-
             // Catch only the expected parse exceptions
             catch (ArgumentOutOfRangeException) { }
             catch (ArgumentNullException) { }
             catch (FormatException) { }
             catch (OverflowException) { }
-
-            // Disallow empty catch statements.
-#pragma warning restore 56502
 
             return isValidArg;
         }
@@ -1984,16 +1986,10 @@ namespace MS.Internal.Documents
                     return int.Parse(pageNumberString, culture);
                 }
             }
-// Allow empty catch statements.
-#pragma warning disable 56502
-
             // Catch only the expected parse exceptions
             catch (ArgumentNullException) { }
             catch (FormatException) { }
             catch (OverflowException) { }
-
-// Disallow empty catch statements.
-#pragma warning restore 56502
 
             return _invalidPageNumber;
         }

@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -6,17 +6,13 @@
 // Description: Provides a view port for a page of content for a DocumentPage.
 //
 
-using System.Windows.Automation;            // AutomationPattern
 using System.Windows.Automation.Peers;      // AutomationPeer
-using System.Windows.Controls;              // StretchDirection
-using System.Windows.Controls.Primitives;   // DocumentViewerBase
 using System.Windows.Documents;             // DocumentPaginator
 using System.Windows.Media;                 // Visual
 using System.Windows.Media.Imaging;         // RenderTargetBitmap
 using System.Windows.Threading;             // Dispatcher
 using MS.Internal;                          // Invariant
 using MS.Internal.Documents;                // DocumentPageHost, DocumentPageTextView
-using MS.Internal.Automation;               // TextAdaptor
 using MS.Internal.KnownBoxes;               // BooleanBoxes
 
 
@@ -107,7 +103,7 @@ namespace System.Windows.Controls.Primitives
         /// </summary>
         public DocumentPage DocumentPage
         {
-            get { return (_documentPage == null) ? DocumentPage.Missing : _documentPage; }
+            get { return _documentPage ?? DocumentPage.Missing; }
         }
 
         /// <summary>
@@ -241,14 +237,18 @@ namespace System.Windows.Controls.Primitives
                         pageSize = _documentPaginator.PageSize;
                         if (Double.IsInfinity(availableSize.Width))
                         {
-                            newPageSize = new Size();
-                            newPageSize.Height = availableSize.Height / _pageZoom;
+                            newPageSize = new Size
+                            {
+                                Height = availableSize.Height / _pageZoom
+                            };
                             newPageSize.Width = newPageSize.Height * (pageSize.Width / pageSize.Height); // Keep aspect ratio.
                         }
                         else if (Double.IsInfinity(availableSize.Height))
                         {
-                            newPageSize = new Size();
-                            newPageSize.Width = availableSize.Width / _pageZoom;
+                            newPageSize = new Size
+                            {
+                                Width = availableSize.Width / _pageZoom
+                            };
                             newPageSize.Height = newPageSize.Width * (pageSize.Height / pageSize.Width); // Keep aspect ratio.
                         }
                         else

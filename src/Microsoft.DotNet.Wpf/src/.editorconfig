@@ -182,26 +182,8 @@ dotnet_diagnostic.CA5351.severity = suggestion
 # CA5362: Potential reference cycle in deserialized object graph
 dotnet_diagnostic.CA5362.severity = suggestion
 
-# CSIsNull001: Use 'is' pattern check
-dotnet_diagnostic.CSIsNull001.severity = suggestion
-
-# CSIsNull002: Use 'is not' pattern check
-dotnet_diagnostic.CSIsNull002.severity = suggestion
-
 # IDE0005: Using directive is unnecessary.
 dotnet_diagnostic.IDE0005.severity = suggestion
-
-# IDE0017: Simplify object initialization
-dotnet_diagnostic.IDE0017.severity = suggestion
-
-# IDE0019: Use pattern matching to avoid as followed by a null check
-dotnet_diagnostic.IDE0019.severity = suggestion
-
-# IDE0020: Use pattern matching to avoid is check followed by a cast (with variable)
-dotnet_diagnostic.IDE0020.severity = suggestion
-
-# IDE0029: Use coalesce expression
-dotnet_diagnostic.IDE0029.severity = suggestion
 
 # IDE0030: Null check can be simplified
 dotnet_diagnostic.IDE0030.severity = suggestion
@@ -293,59 +275,8 @@ dotnet_diagnostic.IDE0300.severity = suggestion
 # IDE1006: Naming Styles
 dotnet_diagnostic.IDE1006.severity = suggestion
 
-# SA1001: Commas should not be preceded by whitespace
-dotnet_diagnostic.SA1001.severity = suggestion
-
-# SA1005: Single line comment should begin with a space
-dotnet_diagnostic.SA1005.severity = suggestion
-
-# SA1014: Opening generic brackets should not be preceded by a space
-dotnet_diagnostic.SA1014.severity = suggestion
-
-# SA1027: Tabs and spaces should be used correctly
-dotnet_diagnostic.SA1027.severity = suggestion
-
-# SA1028: Code should not contain trailing whitespace
-dotnet_diagnostic.SA1028.severity = suggestion
-
-# SA1121: Use built-in type alias
-dotnet_diagnostic.SA1121.severity = suggestion
-
-# SA1129: Do not use default value type constructor
-dotnet_diagnostic.SA1129.severity = suggestion
-
-# SA1131: Constant values should appear on the right-hand side of comparisons
-dotnet_diagnostic.SA1131.severity = suggestion
-
-# SA1206: Keyword ordering
-dotnet_diagnostic.SA1206.severity = suggestion
-
 # SA1400: Member should declare an access modifier
 dotnet_diagnostic.SA1400.severity = suggestion
-
-# SA1404: Code analysis suppression should have justification
-dotnet_diagnostic.SA1404.severity = suggestion
-
-# SA1408: Conditional expressions should declare precedence
-dotnet_diagnostic.SA1408.severity = suggestion
-
-# SA1500: Braces for multi-line statements should not share line
-dotnet_diagnostic.SA1500.severity = suggestion
-
-# SA1505: An opening brace should not be followed by a blank line
-dotnet_diagnostic.SA1505.severity = suggestion
-
-# SA1507: Code should not contain multiple blank lines in a row
-dotnet_diagnostic.SA1507.severity = suggestion
-
-# SA1508: A closing brace should not be preceded by a blank line
-dotnet_diagnostic.SA1508.severity = suggestion
-
-# SA1513: Closing brace should be followed by blank line
-dotnet_diagnostic.SA1513.severity = suggestion
-
-# SA1518: Code should not contain blank lines at the end of the file
-dotnet_diagnostic.SA1518.severity = suggestion
 
 # SYSLIB1045: Convert to 'GeneratedRegexAttribute'.
 dotnet_diagnostic.SYSLIB1045.severity = suggestion

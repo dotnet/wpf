@@ -12,16 +12,9 @@
 //
 
 
-using System;
 using System.Collections;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
-using System.ComponentModel;
-using System.Diagnostics;
-using System.IO;
-using System.Windows.Annotations.Storage;
-using System.Windows.Data;
 using System.Xml;
 using System.Xml.Schema;
 using System.Xml.Serialization;
@@ -604,6 +597,8 @@ namespace System.Windows.Annotations
         {
             Invariant.Assert(reader != null, "No reader passed in.");
 
+            Span<Range> segments = stackalloc Range[3];
+
             // Read all the attributes
             while (reader.MoveToNextAttribute())
             {
@@ -611,7 +606,7 @@ namespace System.Windows.Annotations
 
                 // Skip null and empty values - they will be treated the
                 // same as if they weren't specified at all
-                if (String.IsNullOrEmpty(value))
+                if (string.IsNullOrEmpty(value))
                     continue;
 
                 switch (reader.LocalName)
@@ -634,27 +629,29 @@ namespace System.Windows.Annotations
                     #pragma warning restore 0618
 
                     case AnnotationXmlConstants.Attributes.TypeName:
-                        string[] typeName = value.Split(_Colon);
-                        if (typeName.Length == 1)
+                        ReadOnlySpan<char> typeName = value.AsSpan();
+                        int segmentsLength = typeName.Split(segments, Colon, StringSplitOptions.TrimEntries);
+
+                        if (segmentsLength == 1) // Contains only name
                         {
-                            typeName[0] = typeName[0].Trim();
-                            if (String.IsNullOrEmpty(typeName[0]))
+                            ReadOnlySpan<char> name = typeName[segments[0]];
+                            if (name.IsEmpty)
                             {
                                 // Just a string of whitespace (empty string doesn't get processed)
                                 throw new FormatException(SR.Format(SR.InvalidAttributeValue, AnnotationXmlConstants.Attributes.TypeName));
                             }
-                            _typeName = new XmlQualifiedName(typeName[0]);
+                            _typeName = new XmlQualifiedName(name.ToString());
                         }
-                        else if (typeName.Length == 2)
+                        else if (segmentsLength == 2) //Contains both namespace:name
                         {
-                            typeName[0] = typeName[0].Trim();
-                            typeName[1] = typeName[1].Trim();
-                            if (String.IsNullOrEmpty(typeName[0]) || String.IsNullOrEmpty(typeName[1]))
+                            ReadOnlySpan<char> @namespace = typeName[segments[0]];
+                            ReadOnlySpan<char> name = typeName[segments[1]];
+                            if (@namespace.IsEmpty || name.IsEmpty)
                             {
                                 // One colon, prefix or suffix is empty string or whitespace
                                 throw new FormatException(SR.Format(SR.InvalidAttributeValue, AnnotationXmlConstants.Attributes.TypeName));
                             }
-                            _typeName = new XmlQualifiedName(typeName[1], reader.LookupNamespace(typeName[0]));
+                            _typeName = new XmlQualifiedName(name.ToString(), reader.LookupNamespace(@namespace.ToString()));
                         }
                         else
                         {
@@ -954,7 +951,7 @@ namespace System.Windows.Annotations
         /// <summary>
         /// Colon used to split the parts of a qualified name attribute value
         /// </summary>
-        private const char _Colon = ':';
+        private const char Colon = ':';
 
         #endregion Private Fields
     }

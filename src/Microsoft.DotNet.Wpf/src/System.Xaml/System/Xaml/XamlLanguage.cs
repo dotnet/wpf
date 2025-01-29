@@ -4,7 +4,6 @@
 
 #nullable disable
 
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Reflection;
@@ -102,17 +101,17 @@ namespace System.Xaml
             new Lazy<XamlType>(() => GetXamlType(typeof(PositionalParameterDescriptor)), true);
 
         private static Lazy<XamlType> s_char =
-            new Lazy<XamlType>(() => GetXamlType(typeof(Char)), true);
+            new Lazy<XamlType>(() => GetXamlType(typeof(char)), true);
         private static Lazy<XamlType> s_single =
-            new Lazy<XamlType>(() => GetXamlType(typeof(Single)), true);
+            new Lazy<XamlType>(() => GetXamlType(typeof(float)), true);
         private static Lazy<XamlType> s_byte =
-            new Lazy<XamlType>(() => GetXamlType(typeof(Byte)), true);
+            new Lazy<XamlType>(() => GetXamlType(typeof(byte)), true);
         private static Lazy<XamlType> s_int16 =
-            new Lazy<XamlType>(() => GetXamlType(typeof(Int16)), true);
+            new Lazy<XamlType>(() => GetXamlType(typeof(short)), true);
         private static Lazy<XamlType> s_int64 =
-            new Lazy<XamlType>(() => GetXamlType(typeof(Int64)), true);
+            new Lazy<XamlType>(() => GetXamlType(typeof(long)), true);
         private static Lazy<XamlType> s_decimal =
-            new Lazy<XamlType>(() => GetXamlType(typeof(Decimal)), true);
+            new Lazy<XamlType>(() => GetXamlType(typeof(decimal)), true);
         private static Lazy<XamlType> s_uri =
             new Lazy<XamlType>(() => GetXamlType(typeof(Uri)), true);
         private static Lazy<XamlType> s_timespan =
@@ -253,10 +252,12 @@ namespace System.Xaml
             {
                 return KnownStrings.Member;
             }
+
             if (type.Equals(typeof(PropertyDefinition)))
             {
                 return KnownStrings.Property;
             }
+
             return null;
         }
 
@@ -368,6 +369,7 @@ namespace System.Xaml
                         return null;
                 }
             }
+
             return null;
         }
 
@@ -388,6 +390,7 @@ namespace System.Xaml
                         return null;
                 }
             }
+
             return null;
         }
 
@@ -415,9 +418,11 @@ namespace System.Xaml
         private static ReadOnlyCollection<XamlDirective> GetAllDirectives()
         {
             XamlDirective[] result = new XamlDirective[]
-                { Arguments, AsyncRecords, Class, Code, ClassModifier, ConnectionId, FactoryMethod, FieldModifier,
+                {
+                    Arguments, AsyncRecords, Class, Code, ClassModifier, ConnectionId, FactoryMethod, FieldModifier,
                     Key, Initialization, Items, Members, ClassAttributes, Name, PositionalParameters, Shared, Subclass,
-                    SynchronousMode, TypeArguments, Uid, UnknownContent, Base, Lang, Space};
+                    SynchronousMode, TypeArguments, Uid, UnknownContent, Base, Lang, Space
+                };
             return new ReadOnlyCollection<XamlDirective>(result);
         }
 
@@ -425,7 +430,9 @@ namespace System.Xaml
         {
             // System.Xaml and WindowsBase
             Assembly[] assemblies = new Assembly[]
-                { typeof(XamlLanguage).Assembly, typeof(MarkupExtension).Assembly };
+                {
+                    typeof(XamlLanguage).Assembly, typeof(MarkupExtension).Assembly
+                };
             XamlSchemaContextSettings settings =
                 new XamlSchemaContextSettings { SupportMarkupExtensionsWithDuplicateArity = true };
             XamlSchemaContext result = new XamlSchemaContext(assemblies, settings);

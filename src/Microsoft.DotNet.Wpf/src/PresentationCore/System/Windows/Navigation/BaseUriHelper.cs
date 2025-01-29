@@ -1,22 +1,12 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-//
-//
-//
-
-using System;
-using System.Diagnostics;
-using System.IO.Packaging;
 using System.Globalization;
-using System.Net;
 using System.Text;
-using System.Windows;
 using System.Windows.Markup;
 using System.Windows.Media;
 using System.Reflection;
-using System.IO;
 
 using MS.Internal;
 using MS.Internal.AppModel;
@@ -24,10 +14,6 @@ using MS.Internal.IO.Packaging;
 using MS.Internal.PresentationCore;
 
 using PackUriHelper = System.IO.Packaging.PackUriHelper;
-// In order to avoid generating warnings about unknown message numbers and
-// unknown pragmas when compiling your C# source code with the actual C# compiler,
-// you need to disable warnings 1634 and 1691. (Presharp Documentation)
-#pragma warning disable 1634, 1691
 
 namespace System.Windows.Navigation
 {
@@ -205,12 +191,13 @@ namespace System.Windows.Navigation
         internal static Assembly GetLoadedAssembly(string assemblyName, string assemblyVersion, string assemblyKey)
         {
             Assembly assembly;
-            AssemblyName asmName = new AssemblyName(assemblyName);
-
-            // We always use the primary assembly (culture neutral) for resource manager.
-            // if the required resource lives in satellite assembly, ResourceManager can find
-            // the right satellite assembly later.
-            asmName.CultureInfo = new CultureInfo(String.Empty);
+            AssemblyName asmName = new AssemblyName(assemblyName)
+            {
+                // We always use the primary assembly (culture neutral) for resource manager.
+                // if the required resource lives in satellite assembly, ResourceManager can find
+                // the right satellite assembly later.
+                CultureInfo = new CultureInfo(String.Empty)
+            };
 
             if (!String.IsNullOrEmpty(assemblyVersion))
             {
@@ -340,7 +327,7 @@ namespace System.Windows.Navigation
 
                     if (assembly != null)
                     {
-                        return (string.Equals(SafeSecurityHelper.GetAssemblyPartialName(assembly), assemblyName, StringComparison.OrdinalIgnoreCase));
+                        return ReflectionUtils.GetAssemblyPartialName(assembly).Equals(assemblyName, StringComparison.OrdinalIgnoreCase);
                     }
                     else
                     {

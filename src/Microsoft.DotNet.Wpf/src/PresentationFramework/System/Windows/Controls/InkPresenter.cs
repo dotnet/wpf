@@ -7,16 +7,9 @@
 //      A rendering element which binds to the strokes data
 //
 
-using System;
-using System.Diagnostics;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Windows;
 using System.Windows.Media;
-using System.Windows.Controls;
 using System.Windows.Ink;
 using System.Windows.Threading;
-using System.Windows.Input;
 using MS.Internal.Ink;
 using System.Windows.Automation.Peers;
 

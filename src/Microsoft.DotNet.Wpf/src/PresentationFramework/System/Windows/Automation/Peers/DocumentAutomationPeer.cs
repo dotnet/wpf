@@ -6,8 +6,6 @@
 // Description: AutomationPeer associated with flow and fixed documents.
 //
 
-using System.Collections.Generic;           // List<T>
-using System.Security;                      // SecurityCritical
 using System.Windows.Documents;             // ITextContainer
 using System.Windows.Interop;               // HwndSource
 using System.Windows.Media;                 // Visual

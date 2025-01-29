@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -9,19 +9,12 @@
 //
 //
 
-using System;
 using System.ComponentModel;
 using System.ComponentModel.Design.Serialization;
 using System.Runtime.CompilerServices;
 using System.Globalization;
 using System.Reflection;
-using System.Text;
-using System.Windows;
-using System.Security;
 using MS.Internal;
-using MS.Utility;
-
-#pragma warning disable 1634, 1691  // suppressing PreSharp warnings
 
 namespace System.Windows
 {

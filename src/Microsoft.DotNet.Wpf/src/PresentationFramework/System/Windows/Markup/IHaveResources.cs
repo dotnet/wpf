@@ -10,11 +10,6 @@
 //   lookup in the parser stack.
 //
 
-using System;
-using System.Windows;
-using System.Reflection;
-using System.Globalization;
-
 namespace System.Windows.Markup
 {
     internal interface IHaveResources

@@ -7,8 +7,6 @@
 // Description: SelectedItemCollection holds the list of selected items of a Selector.
 //
 
-using System;
-using System.Collections;
 using System.Collections.ObjectModel;
 using System.Windows.Controls.Primitives;
 

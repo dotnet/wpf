@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -9,28 +9,16 @@
 //
 //
 
-using System;
 using System.Collections;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Diagnostics;
 using System.Globalization;
 using System.IO;
-using System.Reflection;
-using System.Runtime.InteropServices;
-using System.Security;
 using System.Windows;
 using System.Windows.Markup;    // for XmlLanguage
 using System.Windows.Media;
 
 using MS.Win32;
-using MS.Utility;
-using MS.Internal;
 using MS.Internal.FontFace;
 using MS.Internal.Shaping;
-
-// Since we disable PreSharp warnings in this file, we first need to disable warnings about unknown message numbers and unknown pragmas.
-#pragma warning disable 1634, 1691
 
 namespace MS.Internal.FontCache
 {
@@ -88,7 +76,7 @@ namespace MS.Internal.FontCache
             {
                 if (_userCompositeFonts == null)
                 {
-                    _userCompositeFonts = GetCompositeFontList(new FontSourceCollection(_folderUri, false, true));
+                    _userCompositeFonts = GetCompositeFontList(new FontSourceCollection(_folderUri, true));
                 }
                 return _userCompositeFonts;
             }
@@ -249,7 +237,6 @@ namespace MS.Internal.FontCache
                         if (_systemCompositeFonts[index] == null)
                         {
                             FontSource fontSource = new FontSource(new Uri(Path.Combine(FamilyCollection.SxSFontsResourcePrefix, _systemCompositeFontsFileNames[index] + Util.CompositeFontExtension), UriKind.RelativeOrAbsolute),
-                                                                   skipDemand:true,
                                                                    isComposite:true,
                                                                    isInternalCompositeFont:true);
 

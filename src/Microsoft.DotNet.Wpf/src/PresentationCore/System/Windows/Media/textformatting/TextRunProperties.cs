@@ -12,10 +12,7 @@
 //
 
 
-using System;
 using System.Globalization;
-using System.Windows;
-using MS.Internal;
 
 namespace System.Windows.Media.TextFormatting
 {

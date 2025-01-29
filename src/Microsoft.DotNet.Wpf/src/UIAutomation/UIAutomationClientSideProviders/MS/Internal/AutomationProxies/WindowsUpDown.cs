@@ -6,12 +6,8 @@
 
 using System;
 using System.Windows;
-using System.Collections;
-using System.ComponentModel;
 using System.Windows.Automation;
 using System.Windows.Automation.Provider;
-using System.Text;
-using System.Runtime.InteropServices;
 using MS.Win32;
 using NativeMethodsSetLastError = MS.Internal.UIAutomationClientSideProviders.NativeMethodsSetLastError;
 

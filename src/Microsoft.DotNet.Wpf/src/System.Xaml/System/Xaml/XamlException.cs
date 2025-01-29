@@ -5,7 +5,6 @@
 #nullable disable
 
 using System.Runtime.Serialization;
-using System.Security;
 using MS.Internal.Xaml.Parser;
 
 namespace System.Xaml
@@ -23,8 +22,7 @@ namespace System.Xaml
         public XamlException(string message, Exception innerException)
             : base(message, innerException)
         {
-            XamlException xex = innerException as XamlException;
-            if (xex != null)
+            if (innerException is XamlException xex)
             {
                 LineNumber = xex.LineNumber;
                 LinePosition = xex.LinePosition;
@@ -47,8 +45,10 @@ namespace System.Xaml
                     {
                         return SR.Format(SR.LineNumberAndPosition, base.Message, LineNumber, LinePosition);
                     }
+
                     return SR.Format(SR.LineNumberOnly, base.Message, LineNumber);
                 }
+
                 return base.Message;
             }
         }
@@ -112,10 +112,10 @@ namespace System.Xaml
             : base(info, context) { }
 
         // FxCop and [Serializable] required this.
-        //public override void GetObjectData(SerializationInfo info, StreamingContext context)
-        //{
+        // public override void GetObjectData(SerializationInfo info, StreamingContext context)
+        // {
         //    base.GetObjectData(info, context);
-        //}
+        // }
     }
 
     [Serializable]  // FxCop advised this be Serializable.
@@ -144,7 +144,7 @@ namespace System.Xaml
         public XamlDuplicateMemberException() { }
 
         public XamlDuplicateMemberException(XamlMember member, XamlType type)
-            : base(SR.Format(SR.DuplicateMemberSet, (member != null) ? member.Name : null, (type != null) ? type.Name : null))
+            : base(SR.Format(SR.DuplicateMemberSet, (member is not null) ? member.Name : null, (type is not null) ? type.Name : null))
         {
             DuplicateMember = member;
             ParentType = type;

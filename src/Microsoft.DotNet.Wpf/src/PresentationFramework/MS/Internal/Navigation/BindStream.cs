@@ -9,11 +9,8 @@
 //
 
 
-using System;
 using System.IO;
-using System.Security; // SecurityCritical attribute
 using MS.Internal.AppModel;
-using System.Net;
 using System.Windows.Threading; //DispatcherObject
 using System.Windows.Markup;
 using System.Reflection;

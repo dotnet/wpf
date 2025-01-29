@@ -5,7 +5,6 @@
 using System.Xaml;
 using System.ComponentModel;
 using System.Globalization;
-using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 
 namespace System.Windows.Markup

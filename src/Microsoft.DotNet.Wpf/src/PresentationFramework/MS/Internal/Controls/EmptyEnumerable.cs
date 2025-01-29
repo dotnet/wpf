@@ -6,7 +6,6 @@
 // Description: Empty enumerable
 //
 
-using System;
 using System.Collections;
 
 namespace MS.Internal.Controls

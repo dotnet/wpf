@@ -13,7 +13,6 @@
 using System.ComponentModel;        // TypeConverter
 using System.Windows.Media;         // Brush
 using System.Windows.Markup; // ContentProperty
-using MS.Internal;
 
 namespace System.Windows.Documents
 {

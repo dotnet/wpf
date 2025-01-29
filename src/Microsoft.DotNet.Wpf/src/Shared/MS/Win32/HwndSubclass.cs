@@ -2,29 +2,10 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-using System;
 using System.Runtime.InteropServices;
-using MS.Internal;
 using MS.Internal.Interop;
-using MS.Utility;
-using System.Windows;
 using System.Windows.Threading;
-using System.Security;                       // CAS
-using System.Threading;                      // Thread
-
-// The SecurityHelper class differs between assemblies and could not actually be
-//  shared, so it is duplicated across namespaces to prevent name collision.
-#if WINDOWS_BASE
-    using MS.Internal.WindowsBase;
-#elif PRESENTATION_CORE
-    using MS.Internal.PresentationCore;
-#elif PRESENTATIONFRAMEWORK
-    using MS.Internal.PresentationFramework;
-#elif DRT
-    using MS.Internal.Drt;
-#else
-#error Attempt to use a class (duplicated across multiple namespaces) from an unknown assembly.
-#endif
+using System.Threading;
 
 namespace MS.Win32
 {
@@ -417,9 +398,7 @@ namespace MS.Win32
             param.retVal = IntPtr.Zero;
             if (_bond == Bond.Attached)
             {
-                HwndWrapperHook hook= _hook.Target as HwndWrapperHook;
-
-                if (hook != null)
+                if (_hook.Target is HwndWrapperHook hook)
                 {
                     // make the call
                     param.retVal = hook(param.hwnd, param.msg, param.wParam, param.lParam, ref param.handled);

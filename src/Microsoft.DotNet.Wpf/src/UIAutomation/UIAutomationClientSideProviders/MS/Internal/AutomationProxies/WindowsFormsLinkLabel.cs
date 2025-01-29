@@ -1,21 +1,12 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
 // Description: Windows LinkLabel Proxy
 
-// PRESHARP: In order to avoid generating warnings about unkown message numbers and unknown pragmas.
-#pragma warning disable 1634, 1691
-
 using System;
-using System.Collections;
-using System.ComponentModel;
-using System.Runtime.InteropServices;
 using System.Windows.Automation;
 using System.Windows.Automation.Provider;
-using Accessibility;
-using System.Windows;
-using System.Windows.Input;
 using MS.Win32;
 
 namespace MS.Internal.AutomationProxies

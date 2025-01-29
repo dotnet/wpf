@@ -12,15 +12,8 @@
 //     Spec: Anchoring Namespace Spec.doc
 //
 
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Diagnostics;
 using System.Windows;
 using System.Windows.Annotations;
-using System.Windows.Annotations.Storage;
-using System.Windows.Media;
-using MS.Utility;
 using System.Xml;
 
 namespace MS.Internal.Annotations.Anchoring

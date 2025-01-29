@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -9,30 +9,7 @@
 // Please see MilCodeGen.html for more information.
 //
 
-using MS.Internal;
-using MS.Internal.Collections;
-using MS.Internal.PresentationCore;
-using MS.Utility;
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.ComponentModel.Design.Serialization;
-using System.Diagnostics;
-using System.Globalization;
-using System.Reflection;
-using System.Runtime.InteropServices;
-using System.Text;
 using System.Windows.Markup;
-using System.Windows.Media.Media3D.Converters;
-using System.Windows.Media;
-using System.Windows.Media.Animation;
-using System.Windows.Media.Composition;
-using System.Security;
-using SR=MS.Internal.PresentationCore.SR;
-using System.Windows.Media.Imaging;
-
-#pragma warning disable 1634, 1691  // suppressing PreSharp warnings
 
 namespace System.Windows.Media.Media3D.Converters
 {
@@ -84,12 +61,9 @@ namespace System.Windows.Media.Media3D.Converters
         /// </summary>
         public override string ConvertToString(object value, IValueSerializerContext context)
         {
-            if (value is Point3DCollection)
+            if (value is Point3DCollection instance)
             {
-                Point3DCollection instance = (Point3DCollection) value;
 
-
-                #pragma warning suppress 6506 // instance is obviously not null
                 return instance.ConvertToString(null, System.Windows.Markup.TypeConverterHelper.InvariantEnglishUS);
             }
 

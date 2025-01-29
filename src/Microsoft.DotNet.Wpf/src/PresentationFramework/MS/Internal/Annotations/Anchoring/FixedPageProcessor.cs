@@ -13,19 +13,12 @@
 //
 //
 
-using System;
-using System.Diagnostics;
-using System.Collections;
-using System.Collections.Generic;
 using System.Globalization;
 using System.Xml;
 using System.Windows;
 using System.Windows.Annotations;
-using System.Windows.Annotations.Storage;
 using System.Windows.Controls.Primitives;
 using System.Windows.Documents;
-using System.Windows.Media;
-using MS.Utility;
 
 namespace MS.Internal.Annotations.Anchoring
 {

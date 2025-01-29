@@ -1,12 +1,8 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
 
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Windows;
 using System.Windows.Automation.Peers;
 using System.Windows.Controls.Primitives;
 using System.Windows.Input;
@@ -915,34 +911,32 @@ namespace System.Windows.Controls
 
         internal void OnCalendarButtonPressed(CalendarButton b, bool switchDisplayMode)
         {
-            if (b.DataContext is DateTime)
+            if (b.DataContext is DateTime d)
             {
-                DateTime d = (DateTime)b.DataContext;
-
                 DateTime? newDate = null;
                 CalendarMode newMode = CalendarMode.Month;
 
                 switch (this.DisplayMode)
                 {
                     case CalendarMode.Month:
-                    {
-                        Debug.Assert(false);
-                        break;
-                    }
+                        {
+                            Debug.Assert(false);
+                            break;
+                        }
 
                     case CalendarMode.Year:
-                    {
-                        newDate = DateTimeHelper.SetYearMonth(this.DisplayDate, d);
-                        newMode = CalendarMode.Month;
-                        break;
-                    }
+                        {
+                            newDate = DateTimeHelper.SetYearMonth(this.DisplayDate, d);
+                            newMode = CalendarMode.Month;
+                            break;
+                        }
 
                     case CalendarMode.Decade:
-                    {
-                        newDate = DateTimeHelper.SetYear(this.DisplayDate, d.Year);
-                        newMode = CalendarMode.Year;
-                        break;
-                    }
+                        {
+                            newDate = DateTimeHelper.SetYear(this.DisplayDate, d.Year);
+                            newMode = CalendarMode.Year;
+                            break;
+                        }
 
                     default:
                         Debug.Assert(false);

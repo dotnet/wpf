@@ -6,19 +6,12 @@
 // Description: TextLine wrapper used by TextBoxView.
 //
 
-using System;
 using System.Globalization;
-using System.Collections;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Windows;
-using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using System.Windows.Documents;
 using System.Windows.Media;
 using System.Windows.Media.TextFormatting;
 using MS.Internal;
-using MS.Internal.PtsHost;
 using MS.Internal.Text;
 
 namespace System.Windows.Controls

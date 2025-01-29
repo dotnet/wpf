@@ -1,22 +1,6 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
-
-//
-// 
-//
-// Description: 3D size implementation. 
-//
-//             
-//
-//
-
-using System.Windows;
-using System.Windows.Media.Media3D;
-
-using System;
-
-using SR=MS.Internal.PresentationCore.SR;
 
 namespace System.Windows.Media.Media3D
 {
@@ -187,11 +171,13 @@ namespace System.Windows.Media.Media3D
 
         private static Size3D CreateEmptySize3D()
         {
-            Size3D empty = new Size3D();
-            // Can't use setters because they throw on negative values
-            empty._x = Double.NegativeInfinity;
-            empty._y = Double.NegativeInfinity;
-            empty._z = Double.NegativeInfinity;
+            Size3D empty = new Size3D
+            {
+                // Can't use setters because they throw on negative values
+                _x = Double.NegativeInfinity,
+                _y = Double.NegativeInfinity,
+                _z = Double.NegativeInfinity
+            };
             return empty;
         }
 

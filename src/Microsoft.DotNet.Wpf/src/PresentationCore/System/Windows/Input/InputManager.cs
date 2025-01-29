@@ -1,20 +1,12 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
 using System.Collections;
-using System.Collections.Generic;
 using System.Windows.Threading;
 using System.Threading;
-using System.Windows;
-using System.Security;
-using MS.Win32;
 using MS.Internal;
-using System;
-using System.Diagnostics;
 using System.Windows.Automation;
-
-using SR=MS.Internal.PresentationCore.SR;
 
 namespace System.Windows.Input
 {
@@ -658,9 +650,9 @@ namespace System.Windows.Input
             // PreProcessedInputEventArgs and cast it to NotifyInputEventArgs
             // or ProcessInputEventArgs because a malicious user could upcast
             // the object and call inappropriate methods.
-            NotifyInputEventArgs notifyInputEventArgs = (_notifyInputEventArgs != null) ? _notifyInputEventArgs : new NotifyInputEventArgs();
-            ProcessInputEventArgs processInputEventArgs = (_processInputEventArgs != null) ? _processInputEventArgs : new ProcessInputEventArgs();
-            PreProcessInputEventArgs preProcessInputEventArgs = (_preProcessInputEventArgs != null) ? _preProcessInputEventArgs : new PreProcessInputEventArgs();
+            NotifyInputEventArgs notifyInputEventArgs = _notifyInputEventArgs ?? new NotifyInputEventArgs();
+            ProcessInputEventArgs processInputEventArgs = _processInputEventArgs ?? new ProcessInputEventArgs();
+            PreProcessInputEventArgs preProcessInputEventArgs = _preProcessInputEventArgs ?? new PreProcessInputEventArgs();
             _notifyInputEventArgs = null;
             _processInputEventArgs = null;
             _preProcessInputEventArgs = null;
@@ -863,8 +855,10 @@ namespace System.Windows.Input
                             {
                                 InputReportEventArgs previewInputReport = (InputReportEventArgs) item.Input;
 
-                                InputReportEventArgs inputReport = new InputReportEventArgs(previewInputReport.Device, previewInputReport.Report);
-                                inputReport.RoutedEvent=InputManager.InputReportEvent;
+                                InputReportEventArgs inputReport = new InputReportEventArgs(previewInputReport.Device, previewInputReport.Report)
+                                {
+                                    RoutedEvent = InputManager.InputReportEvent
+                                };
                                 PushInput(inputReport, item);
                             }
                         }

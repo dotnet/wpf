@@ -5,9 +5,6 @@
 //
 //
 
-using System;
-using System.Windows.Input;
-
 namespace System.Windows.Input
 {
     ///<summary>

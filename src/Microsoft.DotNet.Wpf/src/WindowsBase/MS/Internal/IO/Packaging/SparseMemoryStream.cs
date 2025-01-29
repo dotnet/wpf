@@ -2,24 +2,11 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-//
-//
 // Description:
 //  This is an internal class that is build around ArrayList of Memory streams to enable really large (63 bit size)
 //  virtual streams.
-//
-//
-//
-//
-//
 
-using System;
-using System.Diagnostics;
-using System.Collections.Generic;
 using System.IO;
-using System.IO.IsolatedStorage;
-using System.Windows;
-using MS.Internal.WindowsBase;
 
 namespace MS.Internal.IO.Packaging
 {
@@ -319,8 +306,8 @@ namespace MS.Internal.IO.Packaging
                     {
                         _isolatedStorageStream.Seek(0, SeekOrigin.Begin);
                         PackagingUtilities.CopyStream(_isolatedStorageStream, stream,
-                                                Int64.MaxValue/*bytes to copy*/,
-                                                0x80000 /*512K buffer size */);
+                                                bytesToCopy: Int64.MaxValue,
+                                                bufferSize: 0x80000 /* 512K */);
                     }
                  }
                 else
@@ -670,8 +657,8 @@ namespace MS.Internal.IO.Packaging
                             _isolatedStorageStream.Seek(0, SeekOrigin.Begin);
                             newMemStreamBlock.Stream.Seek(0, SeekOrigin.Begin);
                             PackagingUtilities.CopyStream(_isolatedStorageStream, newMemStreamBlock.Stream,
-                                                    Int64.MaxValue/*bytes to copy*/,
-                                                    0x80000 /*512K buffer size */);
+                                                    bytesToCopy: Int64.MaxValue,
+                                                    bufferSize: 0x80000 /* 512K */);
                         }
 
                         Debug.Assert(newMemStreamBlock.Stream.Length > 0);

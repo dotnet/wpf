@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -9,12 +9,9 @@
 //
 
 using System;
-using System.Collections;
-using System.Text;
 using System.Windows.Automation;
 using System.Windows.Automation.Provider;
 using System.Runtime.InteropServices;
-using System.ComponentModel;
 using System.Windows;
 using MS.Win32;
 
@@ -539,8 +536,10 @@ namespace MS.Internal.AutomationProxies
                     break;
             }
 
-            NativeMethods.ScrollInfo si = new NativeMethods.ScrollInfo ();
-            si.fMask = NativeMethods.SIF_ALL;
+            NativeMethods.ScrollInfo si = new NativeMethods.ScrollInfo
+            {
+                fMask = NativeMethods.SIF_ALL
+            };
             si.cbSize = Marshal.SizeOf (si.GetType ());
 
             if (!Misc.GetScrollInfo(_hwnd, _sbFlag, ref si))

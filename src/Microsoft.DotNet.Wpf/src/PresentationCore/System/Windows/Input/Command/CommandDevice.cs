@@ -1,17 +1,10 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
 //
 // 
 
-using System;
-using System.Collections;
-using System.Windows;
-using System.Windows.Media;
-using System.Security;
-using MS.Internal;
-using MS.Internal.PresentationCore;                        // SecurityHelper
 using MS.Win32; // VK translation.
 
 namespace System.Windows.Input
@@ -100,9 +93,11 @@ namespace System.Windows.Input
                                 {
                                     // Send the app command to the tree to be handled by UIElements and ContentElements
                                     // that will forward the event to CommandManager.
-                                    CommandDeviceEventArgs args = new CommandDeviceEventArgs(this, rawAppCommandInputReport.Timestamp, command);
-                                    args.RoutedEvent = CommandDeviceEvent;
-                                    args.Source = commandTarget;
+                                    CommandDeviceEventArgs args = new CommandDeviceEventArgs(this, rawAppCommandInputReport.Timestamp, command)
+                                    {
+                                        RoutedEvent = CommandDeviceEvent,
+                                        Source = commandTarget
+                                    };
                                     e.PushInput(args, e.StagingItem);
                                 }
                             }

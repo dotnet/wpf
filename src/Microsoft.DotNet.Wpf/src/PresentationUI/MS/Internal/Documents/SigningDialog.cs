@@ -5,9 +5,7 @@
 // Description: 
 //    SigningDialog is the Forms dialog that allows users to select signing parameters.
 using System;
-using System.ComponentModel;
 using System.Drawing;
-using System.Windows.Forms;
 using System.Windows.TrustUI;
 using System.Security.Cryptography.X509Certificates;
 using System.Globalization;                 // For localization of string conversion

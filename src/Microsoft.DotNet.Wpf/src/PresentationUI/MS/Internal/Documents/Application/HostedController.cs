@@ -5,20 +5,14 @@
 // Description:
 // Responsible for the lifecycle of the Document when hosted in a browser.
 
-using System;
-using System.Security;
-using System.Windows.TrustUI;
-using System.Windows.Interop;
-using MS.Internal;
-
 namespace MS.Internal.Documents.Application
 {
-/// <summary>
-/// Responsible for the lifecycle of the Document when hosted in a browser.
-/// <see cref="MS.Internal.Documents.Application.IDocumentController"/>
-/// </summary>
+    /// <summary>
+    /// Responsible for the lifecycle of the Document when hosted in a browser.
+    /// <see cref="MS.Internal.Documents.Application.IDocumentController"/>
+    /// </summary>
 
-internal class HostedController : IDocumentController
+    internal class HostedController : IDocumentController
 {
     #region IDocumentController Members
     //--------------------------------------------------------------------------

@@ -2,35 +2,15 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-//
-//
 // Description:
 //  These are the internal helpers required to call into unmanaged 
 //  Promethium Rights Management SDK APIs 
-//
-//
-//
-//
 
-using System;
 using System.Collections;
-using System.Collections.ObjectModel;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Security;
 using System.Security.RightsManagement;
-using SecurityHelper = MS.Internal.WindowsBase.SecurityHelper;
 using System.Text;
-using System.Globalization;                 // For CultureInfo
-// for Invariant
-using System.Windows;                       // for SR and SR
-
-using MS.Internal;
-using System.Runtime.InteropServices;
-
-using Microsoft.Win32; // for Registry and RegistryKey classes 
-
-using MS.Internal.WindowsBase;
+using System.Globalization;
+using Microsoft.Win32;
 
 namespace MS.Internal.Security.RightsManagement
 {
@@ -792,12 +772,13 @@ namespace MS.Internal.Security.RightsManagement
             List<RightNameExpirationInfoPair> unboundRightsList =
                         GetRightsInfoFromUseLicense(serializedUseLicense, out rightsGroupName);
 
-            BoundLicenseParams boundLicenseParams = new BoundLicenseParams();
-
-            boundLicenseParams.uVersion = 0;
-            boundLicenseParams.hEnablingPrincipal = 0;
-            boundLicenseParams.hSecureStore = 0;
-            boundLicenseParams.wszRightsGroup = rightsGroupName;
+            BoundLicenseParams boundLicenseParams = new BoundLicenseParams
+            {
+                uVersion = 0,
+                hEnablingPrincipal = 0,
+                hSecureStore = 0,
+                wszRightsGroup = rightsGroupName
+            };
 
             string contentId;
             string contentIdType;
@@ -937,8 +918,7 @@ namespace MS.Internal.Security.RightsManagement
             else
             {
                 object keyValue = key.GetValue(null); // this should get the default value
-                string stringValue = keyValue as string;
-                if (stringValue != null)
+                if (keyValue is string stringValue)
                 {
                     return new Uri(stringValue);
                 }
@@ -995,15 +975,17 @@ namespace MS.Internal.Security.RightsManagement
 
             if (url != null)
             {
-                activationServer = new ActivationServerInfo();
-                activationServer.PubKey = null;
-                activationServer.Url = url.AbsoluteUri;  // We are using Uri class as a basic validation mechanism. These URIs come from unmanaged 
-                // code libraries and go back as parameters into the unmanaged code libraries. 
-                // We use AbsoluteUri property as means of verifying that it is actually an absolute and 
-                // well formed Uri. If by any chance it happened to be a relative URI, an exception will 
-                // be thrown here. This will perform the necessary escaping.
+                activationServer = new ActivationServerInfo
+                {
+                    PubKey = null,
+                    Url = url.AbsoluteUri,  // We are using Uri class as a basic validation mechanism. These URIs come from unmanaged 
+                                            // code libraries and go back as parameters into the unmanaged code libraries. 
+                                            // We use AbsoluteUri property as means of verifying that it is actually an absolute and 
+                                            // well formed Uri. If by any chance it happened to be a relative URI, an exception will 
+                                            // be thrown here. This will perform the necessary escaping.
 
-                activationServer.Version = NativeConstants.DrmCallbackVersion;
+                    Version = NativeConstants.DrmCallbackVersion
+                };
             }
 
             int hr = SafeNativeMethods.DRMActivate(

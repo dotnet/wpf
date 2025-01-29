@@ -11,9 +11,6 @@
         of bytes.
                                                                     
 --*/
-using System;
-using System.Security;
-
 namespace System.Windows.Xps.Serialization
 {
     /// <summary>

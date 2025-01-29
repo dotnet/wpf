@@ -2,24 +2,16 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-//
-//
 // Description:
 //  This is an internal interface that enables the following channels of communications 
 //          a) provides CompressStream and FileItemStream with an ability to construct TrackingMemoryStreams
 //          b) it used by the TrackingMemoryStreams, to report their memory usage 
 //          b) it used by the Mode Enforcing Streams to report end of operation (that might require an Auto Flush)
-//
-//
-//
-//
-//
 
-using System;
 using System.IO;
 
 namespace MS.Internal.IO.Packaging
-{   
+{
     /// <summary>
     /// ITrackingMemoryStreamFactory interface is used to enable various modules 
     /// to notify that more memory were possibly allocated and 

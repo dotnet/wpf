@@ -2,24 +2,10 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-//+-----------------------------------------------------------------------
-//
-//
-//
 //  Contents:  Composite font info parsed from composite font file
-//
-//
 
-using System;
-using System.Globalization;
-using System.Collections;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Windows;
 using System.Windows.Markup;
 using System.Windows.Media;
-
-using SR=MS.Internal.PresentationCore.SR;
 
 namespace MS.Internal.FontFace
 {

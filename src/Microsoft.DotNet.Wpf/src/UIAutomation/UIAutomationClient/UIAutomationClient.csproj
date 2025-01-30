@@ -29,7 +29,7 @@
     <Compile Include="MS\Internal\Automation\ClickablePoint.cs" />
     <Compile Include="MS\Internal\Automation\ClientEventManager.cs" />
     <Compile Include="MS\Internal\Automation\ClientSideQueueItem.cs" />
-    <Compile Include="MS\Internal\Automation\CodeQuality_Approved.cs" />
+    <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="MS\Internal\Automation\EventListener.cs" />
     <Compile Include="MS\Internal\Automation\EventListenerClientSide.cs" />
     <Compile Include="MS\Internal\Automation\FocusTracker.cs" />

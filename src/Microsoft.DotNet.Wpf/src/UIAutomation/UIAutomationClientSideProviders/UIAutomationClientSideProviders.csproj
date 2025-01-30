@@ -21,7 +21,7 @@
     </Compile>
     <Compile Include="MS\Internal\AutomationProxies\Accessible.cs" />
     <Compile Include="MS\Internal\AutomationProxies\ClickablePoint.cs" />
-    <Compile Include="MS\Internal\AutomationProxies\CodeQuality_Approved.cs" />
+    <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="MS\Internal\AutomationProxies\CommonGetThemePartSize.cs" />
     <Compile Include="MS\Internal\AutomationProxies\CommonRemoteMemoryBlock.cs" />
     <Compile Include="MS\Internal\AutomationProxies\CommonXSendMessage.cs" />

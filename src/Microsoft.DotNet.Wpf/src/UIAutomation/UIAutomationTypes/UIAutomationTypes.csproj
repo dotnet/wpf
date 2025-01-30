@@ -28,7 +28,7 @@
     <Compile Include="$(WpfSharedDir)\MS\Win32\NativeMethodsSetLastError.cs" />
     <Compile Include="$(WpfSharedDir)\MS\Win32\UnsafeNativeMethodsCLR.cs" />
     <Compile Include="MS\Internal\Automation\AutomationIdentifierConstants.cs" />
-    <Compile Include="MS\Internal\Automation\CodeQuality_Approved.cs" />
+    <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="MS\Internal\Automation\UiaCoreTypesApi.cs" />
     <Compile Include="System\Windows\Automation\ActiveTextPositionChangedEventArgs.cs" />
     <Compile Include="System\Windows\Automation\AsyncContentLoadedEventArgs.cs" />

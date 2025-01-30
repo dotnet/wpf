@@ -281,6 +281,7 @@ namespace System.Windows
         {
             DependencyObject d = fe;
 
+#pragma warning disable IDE0031
             if (newTemplate != null)
             {
                 newTemplate.Seal();
@@ -299,6 +300,7 @@ namespace System.Windows
                     StyleHelper.CheckForCyclicReferencesInStyleAndTemplateTriggers(templateProperty, newTemplate, style, themeStyle);
                 }
 #endif
+#pragma warning restore IDE0031
             }
 
             // Update the template cache

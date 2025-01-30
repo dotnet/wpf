@@ -32,7 +32,7 @@ namespace MS.Internal.AppModel
         {
             try
             {
-                string cookies = GetCookie(httpRequest.RequestUri, false/*throwIfNoCookie*/);
+                string cookies = GetCookie(httpRequest.RequestUri, throwIfNoCookie: false);
                 if(!string.IsNullOrEmpty(cookies))
                 {
                     if (httpRequest.CookieContainer == null)

@@ -116,7 +116,7 @@ namespace System.Windows.Media
                 {
                     DisconnectHostedVisual(
                         channel,
-                        /* removeChannelFromCollection */ true);
+                        removeChannelFromCollection: true);
                 }
             }
 
@@ -367,7 +367,7 @@ namespace System.Windows.Media
             {
                 DisconnectHostedVisual(
                     (DUCE.Channel)ide.Key,
-                    /* removeChannelFromCollection */ false);
+                    removeChannelFromCollection: false);
             }
 
             _connectedChannels.Clear();

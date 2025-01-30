@@ -63,8 +63,8 @@ namespace System.Windows.Input
             GeneralTransform rootToElement)
         {
             // Get width and heith in pixel value
-            double width = GetStylusPointWidthOrHeight(stylusPoint, /*isWidth*/ true);
-            double height = GetStylusPointWidthOrHeight(stylusPoint, /*isWidth*/ false);
+            double width = GetStylusPointWidthOrHeight(stylusPoint, isWidth: true);
+            double height = GetStylusPointWidthOrHeight(stylusPoint, isWidth: false);
 
             // Get the position with respect to root
             Point rootPoint;

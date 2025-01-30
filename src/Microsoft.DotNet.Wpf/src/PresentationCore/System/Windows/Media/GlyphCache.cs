@@ -96,7 +96,7 @@ namespace System.Windows.Media
             UnsafeNativeMethods.MILUnknown.AddRef(_reversePInvokeWrapper);
             cmd.CallbackPointer = (UInt64)_reversePInvokeWrapper.DangerousGetHandle();
 
-            _channel.SendCommand((byte*)&cmd, sizeof(DUCE.MILCMD_GLYPHCACHE_SETCALLBACK), false /* sendInSeparateBatch */);
+            _channel.SendCommand((byte*)&cmd, sizeof(DUCE.MILCMD_GLYPHCACHE_SETCALLBACK), sendInSeparateBatch: false);
         }
 
         private CreateGlyphsCallbackDelegate _createGlyphBitmapsCallbackDelegate;                

@@ -123,14 +123,13 @@ namespace System.Windows.Media.Imaging
             {
                 string pathToUse = tmpFileName.ToString();
                 SafeFileHandle fileHandle = MS.Win32.UnsafeNativeMethods.CreateFile(
-                    pathToUse, 
-                    NativeMethods.GENERIC_READ | NativeMethods.GENERIC_WRITE, /* dwDesiredAccess */
-                    0,                                                        /* dwShare */
-                    null,                                                     /* lpSecurityAttributes */
-                    NativeMethods.CREATE_ALWAYS,                              /* dwCreationDisposition */
-                    NativeMethods.FILE_ATTRIBUTE_TEMPORARY | 
-                    NativeMethods.FILE_FLAG_DELETE_ON_CLOSE,                  /* dwFlagsAndAttributes */
-                    IntPtr.Zero                                               /* hTemplateFile */
+                    pathToUse,
+                    dwDesiredAccess: NativeMethods.GENERIC_READ | NativeMethods.GENERIC_WRITE,
+                    dwShareMode: 0,
+                    lpSecurityAttributes: null,
+                    dwCreationDisposition: NativeMethods.CREATE_ALWAYS,
+                    dwFlagsAndAttributes: NativeMethods.FILE_ATTRIBUTE_TEMPORARY | NativeMethods.FILE_FLAG_DELETE_ON_CLOSE,
+                    hTemplateFile: IntPtr.Zero
                     );
 
                 if (fileHandle.IsInvalid)

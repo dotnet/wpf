@@ -641,7 +641,7 @@ namespace System.Windows.Input
                     moveFocusTo = _activeSource.RootVisual;
                 }
 
-                Focus(moveFocusTo, /*askOld=*/ false, /*askNew=*/ true, /*forceToNullIfFailed=*/ true);
+                Focus(moveFocusTo, askOld: false, askNew: true, forceToNullIfFailed: true);
             }
             else
             {

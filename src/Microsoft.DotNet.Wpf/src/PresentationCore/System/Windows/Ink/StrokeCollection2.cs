@@ -386,7 +386,7 @@ namespace System.Windows.Ink
                     foreach (Stroke stroke in strokes)
                     {
                         stroke.DrawInternal(context, StrokeRenderer.GetHighlighterAttributes(stroke, stroke.DrawingAttributes),
-                                            false /*Don't draw selected stroke as hollow*/);
+                                            drawAsHollow: false);
                     }
                 }
                 finally
@@ -397,7 +397,7 @@ namespace System.Windows.Ink
 
             foreach(Stroke stroke in solidStrokes)
             {
-                stroke.DrawInternal(context, stroke.DrawingAttributes, false/*Don't draw selected stroke as hollow*/);
+                stroke.DrawInternal(context, stroke.DrawingAttributes, drawAsHollow: false);
             }
         }
         #endregion

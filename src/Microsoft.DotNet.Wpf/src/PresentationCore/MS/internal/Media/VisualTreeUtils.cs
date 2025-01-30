@@ -186,7 +186,7 @@ namespace MS.Internal.Media
         /// </summary>
         internal static void EnsureNonNullVisual(DependencyObject element)
         {
-            EnsureVisual(element, /* allowNull = */ false);
+            EnsureVisual(element, allowNull: false);
         }
 
         /// <summary>
@@ -195,7 +195,7 @@ namespace MS.Internal.Media
         /// </summary>
         internal static void EnsureVisual(DependencyObject element)
         {
-            EnsureVisual(element, /* allowNull = */ true);
+            EnsureVisual(element, allowNull: true);
         }
 
         /// <summary>

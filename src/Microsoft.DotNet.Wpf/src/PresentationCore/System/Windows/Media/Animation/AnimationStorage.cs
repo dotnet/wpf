@@ -450,8 +450,8 @@ namespace System.Windows.Media.Animation
                                 metadata,
                                 oldEntry,
                                 ref newEntry,
-                                false /* coerceWithDeferredReference */,
-                                false /* coerceWithCurrentValue */,
+                                coerceWithDeferredReference: false,
+                                coerceWithCurrentValue: false,
                                 OperationType.Unknown);
 
                         if (_hadValidationError)

@@ -61,7 +61,7 @@ namespace System.Windows.Input
             ManipulationDevice device = ManipulationDevice.GetManipulationDevice(element);
             if (device != null)
             {
-                device.CompleteManipulation(/* withInertia = */ true);
+                device.CompleteManipulation(withInertia: true);
             }
         }
 
@@ -83,7 +83,7 @@ namespace System.Windows.Input
             ManipulationDevice device = ManipulationDevice.GetManipulationDevice(element);
             if (device != null)
             {
-                device.CompleteManipulation(/* withInertia = */ false);
+                device.CompleteManipulation(withInertia: false);
                 return true;
             }
 

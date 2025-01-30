@@ -282,7 +282,7 @@ namespace System.Windows.Ink
 
                 base.ClearItems();
 
-                RaiseStrokesChanged(null /*added*/, removed, -1);
+                RaiseStrokesChanged(addedStrokes: null, removed, -1);
             }
         }
 
@@ -296,7 +296,7 @@ namespace System.Windows.Ink
 
             StrokeCollection removed = new StrokeCollection();
             ( (List<Stroke>)removed.Items ).Add(removedStroke);
-            RaiseStrokesChanged(null /*added*/, removed, index);
+            RaiseStrokesChanged(addedStrokes: null, removed, index);
         }
 
         /// <summary>
@@ -314,7 +314,7 @@ namespace System.Windows.Ink
 
             StrokeCollection addedStrokes = new StrokeCollection();
             ( (List<Stroke>)addedStrokes.Items ).Add(stroke);
-            RaiseStrokesChanged(addedStrokes, null /*removed*/, index);
+            RaiseStrokesChanged(addedStrokes, removedStrokes: null, index);
         }
 
         /// <summary>
@@ -398,7 +398,7 @@ namespace System.Windows.Ink
                 ( (List<Stroke>)this.Items ).RemoveAt(indexes[x]);
             }
 
-            RaiseStrokesChanged(null /*added*/, strokes, indexes[0]);
+            RaiseStrokesChanged(addedStrokes: null, strokes, indexes[0]);
         }
 
         /// <summary>
@@ -434,7 +434,7 @@ namespace System.Windows.Ink
             //and call our protected List<Stroke> directly
             ( (List<Stroke>)this.Items ).AddRange(strokes);
 
-            RaiseStrokesChanged(strokes, null /*removed*/, index);
+            RaiseStrokesChanged(strokes, removedStrokes: null, index);
         }
 
         /// <summary>

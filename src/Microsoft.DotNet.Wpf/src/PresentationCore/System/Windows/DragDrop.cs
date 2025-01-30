@@ -670,7 +670,7 @@ namespace System.Windows
             GiveFeedbackEventArgs args;
 
             // Create GiveFeedback event arguments.
-            args = new GiveFeedbackEventArgs((DragDropEffects)effect, /*UseDefaultCursors*/ false);
+            args = new GiveFeedbackEventArgs((DragDropEffects)effect, useDefaultCursors: false);
 
             // Raise the give feedback event for both Tunnel(Preview) and Bubble.
             RaiseGiveFeedbackEvent(args);

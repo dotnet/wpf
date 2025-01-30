@@ -148,7 +148,7 @@ namespace System.Windows.Media
         {
             ReadPreamble();
             // Delegate to the internal method which implements all ToString calls.
-            return ConvertToString(null /* format string */, null /* format provider */);
+            return ConvertToString(format: null, provider: null);
         }
 
         /// <summary>
@@ -162,7 +162,7 @@ namespace System.Windows.Media
         {
             ReadPreamble();
             // Delegate to the internal method which implements all ToString calls.
-            return ConvertToString(null /* format string */, provider);
+            return ConvertToString(format: null, provider);
         }
 
         /// <summary>

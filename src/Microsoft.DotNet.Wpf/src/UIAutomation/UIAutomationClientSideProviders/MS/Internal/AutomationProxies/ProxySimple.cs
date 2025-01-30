@@ -29,6 +29,7 @@
 using System;
 using System.Windows.Automation;
 using System.Windows.Automation.Provider;
+using System.Collections.Generic;
 using Accessibility;
 using System.Windows;
 using MS.Win32;

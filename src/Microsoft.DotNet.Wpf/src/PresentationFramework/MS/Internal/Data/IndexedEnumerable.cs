@@ -183,10 +183,7 @@ namespace MS.Internal.Data
                 _cachedIsEmpty = !ie.MoveNext();
 
                 IDisposable d = ie as IDisposable;
-                if (d != null)
-                {
-                    d.Dispose();
-                }
+                d?.Dispose();
 
                 if (_cachedIsEmpty.Value)
                     _cachedCount = 0;
@@ -454,10 +451,7 @@ namespace MS.Internal.Data
         private void DisposeEnumerator(ref IEnumerator ie)
         {
             IDisposable d = ie as IDisposable;
-            if (d != null)
-            {
-                d.Dispose();
-            }
+            d?.Dispose();
 
             ie = null;
         }
@@ -762,10 +756,7 @@ namespace MS.Internal.Data
             public void Dispose()
             {
                 IDisposable d = _enumerator as IDisposable;
-                if (d != null)
-                {
-                    d.Dispose();
-                }
+                d?.Dispose();
                 _enumerator = null;
             }
 

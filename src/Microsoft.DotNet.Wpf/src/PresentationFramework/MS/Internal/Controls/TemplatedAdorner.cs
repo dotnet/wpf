@@ -160,10 +160,7 @@ namespace MS.Internal.Controls
 
             finalSize = base.ArrangeOverride(size);
 
-            if (_child != null)
-            {
-                _child.Arrange(new Rect(new Point(), finalSize));
-            }
+            _child?.Arrange(new Rect(new Point(), finalSize));
             return finalSize;
         }
 

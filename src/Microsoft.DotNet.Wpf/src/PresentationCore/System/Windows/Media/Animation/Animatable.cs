@@ -71,10 +71,7 @@ namespace System.Windows.Media.Animation
 
                     DUCE.IResource storage = storageObject as DUCE.IResource;
 
-                    if (storage != null)
-                    {
-                        storage.AddRefOnChannel(channel);
-                    }
+                    storage?.AddRefOnChannel(channel);
                 }
             }
         }
@@ -96,10 +93,7 @@ namespace System.Windows.Media.Animation
 
                     DUCE.IResource storage = storageObject as DUCE.IResource;
 
-                    if (storage != null)
-                    {
-                        storage.ReleaseOnChannel(channel);
-                    }
+                    storage?.ReleaseOnChannel(channel);
                 }
             }
         }
@@ -157,18 +151,12 @@ namespace System.Windows.Media.Animation
         // overloads.
         internal void AddRefResource(DUCE.IResource resource, DUCE.Channel channel)
         {
-            if (resource != null)
-            {
-                resource.AddRefOnChannel(channel);
-            }
+            resource?.AddRefOnChannel(channel);
         }
 
         internal void ReleaseResource(DUCE.IResource resource, DUCE.Channel channel)
         {
-            if (resource != null)
-            {
-                resource.ReleaseOnChannel(channel);
-            }
+            resource?.ReleaseOnChannel(channel);
         }
 
         #endregion LocalProperty/CachedValue stuff

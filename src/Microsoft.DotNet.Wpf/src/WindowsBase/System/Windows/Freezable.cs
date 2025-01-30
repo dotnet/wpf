@@ -548,10 +548,7 @@ namespace System.Windows
                 DependencyObject context = SingletonContext;
 
                 contextAsFreezable = context as Freezable;
-                if (contextAsFreezable != null)
-                {
-                    contextAsFreezable.GetChangeHandlersAndInvalidateSubProperties(ref calledHandlers);
-                }
+                contextAsFreezable?.GetChangeHandlersAndInvalidateSubProperties(ref calledHandlers);
 
                 if (SingletonContextProperty != null)
                 {
@@ -577,10 +574,7 @@ namespace System.Windows
                         if (currentDO != lastDO)
                         {
                             contextAsFreezable = currentDO as Freezable;
-                            if (contextAsFreezable != null)
-                            {
-                                contextAsFreezable.GetChangeHandlersAndInvalidateSubProperties(ref calledHandlers);
-                            }
+                            contextAsFreezable?.GetChangeHandlersAndInvalidateSubProperties(ref calledHandlers);
 
                             lastDO = currentDO;
                         }

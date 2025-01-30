@@ -307,7 +307,7 @@ namespace MS.Win32
             IntPtr buffer = IntPtr.Zero;
             int bytesReturned;
 
-            int sessionId = SessionId.HasValue ? SessionId.Value : NativeMethods.WTS_CURRENT_SESSION;
+            int sessionId = SessionId ?? NativeMethods.WTS_CURRENT_SESSION;
             bool currentSessionConnectState = defaultResult;
 
             try

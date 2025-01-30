@@ -1195,10 +1195,7 @@ namespace System.Windows.Controls.Primitives
                     {
                         // restore capture to popup we took it from, if there was one
                         Popup parentPopup = parentPopupRoot.Parent as Popup;
-                        if (parentPopup != null)
-                        {
-                            parentPopup.EstablishPopupCapture(isRestoringCapture:true);
-                        }
+                        parentPopup?.EstablishPopupCapture(isRestoringCapture:true);
                     }
                 }
                 _cacheValid[(int)CacheBits.CaptureEngaged] = false;

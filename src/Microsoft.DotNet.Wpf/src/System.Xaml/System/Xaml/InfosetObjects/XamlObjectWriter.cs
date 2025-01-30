@@ -92,7 +92,7 @@ namespace System.Xaml
                 _preferUnconvertedDictionaryKeys = settings.PreferUnconvertedDictionaryKeys;
             }
 
-            XAML3.INameScope rootNameScope = (settings is not null) ? settings.ExternalNameScope : null;
+            XAML3.INameScope rootNameScope = settings?.ExternalNameScope;
 
             XamlRuntime runtime = CreateRuntime(settings, schemaContext);
 

@@ -1828,13 +1828,10 @@ namespace System.Windows
 
                 void Inflate(DeferredResourceReference deferredResourceReference)
                 {
-                    if (deferredResourceReference is not null)
-                    {
-                        // This will inflate the deferred reference, causing it
-                        // to be removed from the list.  The list may also be
-                        // purged of dead references.
-                        deferredResourceReference.GetValue(BaseValueSourceInternal.Unknown);
-                    }
+                    // This will inflate the deferred reference, causing it
+                    // to be removed from the list.  The list may also be
+                    // purged of dead references.
+                    deferredResourceReference?.GetValue(BaseValueSourceInternal.Unknown);
                 }
             }
         }
@@ -2545,10 +2542,7 @@ namespace System.Windows
                 _deferredResourceReferencesList = loadedRD._deferredResourceReferencesList;
 
                 // redirect each entry toward its new owner
-                if (_deferredResourceReferencesList != null)
-                {
-                    _deferredResourceReferencesList.ChangeDictionary(this);
-                }
+                _deferredResourceReferencesList?.ChangeDictionary(this);
             }
         }
 

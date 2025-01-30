@@ -167,18 +167,12 @@ namespace System.Windows.Controls
             if (!this.IsExpanded)
             {
                 Button button = GetIconButton();
-                if (button != null)
-                {
-                    button.AddHandler(ButtonBase.ClickEvent, new RoutedEventHandler(OnButtonClick));
-                }
+                button?.AddHandler(ButtonBase.ClickEvent, new RoutedEventHandler(OnButtonClick));
             }
             else
             {
                 Button closeButton = GetCloseButton();
-                if (closeButton != null)
-                {
-                    closeButton.AddHandler(ButtonBase.ClickEvent, new RoutedEventHandler(OnButtonClick));
-                }
+                closeButton?.AddHandler(ButtonBase.ClickEvent, new RoutedEventHandler(OnButtonClick));
 
                 Thumb titleThumb = GetTitleThumb();
                 if (titleThumb != null)
@@ -783,8 +777,7 @@ namespace System.Windows.Controls
             if (stickyNoteControl.Content != null && stickyNoteControl.Content.Type != StickyNoteType.Ink)
             {
                 FrameworkElement innerControl = stickyNoteControl.Content.InnerControl;
-                if (innerControl != null)
-                    innerControl.SetValue(e.Property, e.NewValue);
+                innerControl?.SetValue(e.Property, e.NewValue);
             }
         }
 
@@ -800,8 +793,7 @@ namespace System.Windows.Controls
             if (e.Property == ForegroundProperty && stickyNoteControl.Content != null && stickyNoteControl.Content.Type != StickyNoteType.Ink)
             {
                 FrameworkElement innerControl = stickyNoteControl.Content.InnerControl;
-                if (innerControl != null)
-                    innerControl.SetValue(ForegroundProperty, e.NewValue);
+                innerControl?.SetValue(ForegroundProperty, e.NewValue);
             }
         }
 
@@ -965,11 +957,8 @@ namespace System.Windows.Controls
                 Invariant.Assert(Content != null && Content.InnerControl is InkCanvas);
                 FrameworkElement parent = VisualTreeHelper.GetParent(Content.InnerControl) as FrameworkElement;
 
-                if (parent != null)
-                {
-                    // Invalidate ContentArea's measure so that scrollbar could be updated correctly.
-                    parent.InvalidateMeasure();
-                }
+                // Invalidate ContentArea's measure so that scrollbar could be updated correctly.
+                parent?.InvalidateMeasure();
             }
 
             //fire trace event
@@ -1273,16 +1262,10 @@ namespace System.Windows.Controls
             }
 
             Button closeButton = GetCloseButton();
-            if (closeButton != null)
-            {
-                closeButton.RemoveHandler(ButtonBase.ClickEvent, new RoutedEventHandler(OnButtonClick));
-            }
+            closeButton?.RemoveHandler(ButtonBase.ClickEvent, new RoutedEventHandler(OnButtonClick));
 
             Button iconButton = GetIconButton();
-            if (iconButton != null)
-            {
-                iconButton.RemoveHandler(ButtonBase.ClickEvent, new RoutedEventHandler(OnButtonClick));
-            }
+            iconButton?.RemoveHandler(ButtonBase.ClickEvent, new RoutedEventHandler(OnButtonClick));
 
             Thumb titleThumb = GetTitleThumb();
             if (titleThumb != null)
@@ -1384,10 +1367,7 @@ namespace System.Windows.Controls
         private void BringToFront()
         {
             PresentationContext pc = ((IAnnotationComponent)this).PresentationContext;
-            if ( pc != null )
-            {
-                pc.BringToFront(this);
-            }
+            pc?.BringToFront(this);
         }
 
         /// <summary>
@@ -1398,10 +1378,7 @@ namespace System.Windows.Controls
         private void SendToBack()
         {
             PresentationContext pc = ((IAnnotationComponent)this).PresentationContext;
-            if (pc != null)
-            {
-                pc.SendToBack(this);
-            }
+            pc?.SendToBack(this);
         }
 
         /// <summary>
@@ -1410,10 +1387,7 @@ namespace System.Windows.Controls
         private void InvalidateTransform()
         {
             PresentationContext pc = ((IAnnotationComponent)this).PresentationContext;
-            if ( pc != null )
-            {
-                pc.InvalidateTransform(this);
-            }
+            pc?.InvalidateTransform(this);
         }
 
         /// <summary>

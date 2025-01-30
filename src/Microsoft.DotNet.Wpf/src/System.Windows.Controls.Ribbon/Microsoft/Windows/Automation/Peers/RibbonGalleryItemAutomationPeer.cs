@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -100,23 +100,17 @@ namespace Microsoft.Windows.Automation.Peers
         [System.Runtime.CompilerServices.MethodImpl(System.Runtime.CompilerServices.MethodImplOptions.NoInlining)]
         internal void RaiseAutomationIsSelectedChanged(bool isSelected)
         {
-            if (EventsSource != null)
-            {
-                EventsSource.RaisePropertyChangedEvent(
+            EventsSource?.RaisePropertyChangedEvent(
                     SelectionItemPatternIdentifiers.IsSelectedProperty,
                         !isSelected,
                         isSelected);
-            }
         }
 
 
         // Selection Events needs to be raised on DataItem Peers now when they exist.
         internal void RaiseAutomationSelectionEvent(AutomationEvents eventId)
         {
-            if (EventsSource != null)
-            {
-                EventsSource.RaiseAutomationEvent(eventId);
-            }
+            EventsSource?.RaiseAutomationEvent(eventId);
         }
 
         #endregion Selection Events

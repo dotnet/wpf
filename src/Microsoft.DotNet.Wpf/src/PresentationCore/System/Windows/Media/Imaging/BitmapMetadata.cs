@@ -303,10 +303,7 @@ namespace System.Windows.Media.Imaging
                             }
                             finally
                             {
-                                if (pIMetadataReader != null)
-                                {
-                                    pIMetadataReader.Dispose();
-                                }
+                                pIMetadataReader?.Dispose();
                                 if (pIMetadataWriter != IntPtr.Zero)
                                 {
                                     // Return value ignored on purpose.
@@ -1109,10 +1106,7 @@ namespace System.Windows.Media.Imaging
                     {
                         BitmapMetadata metadata = objValue as BitmapMetadata;
 
-                        if (metadata != null)
-                        {
-                            metadata.Freeze();
-                        }
+                        metadata?.Freeze();
                     }
 
                     return objValue;

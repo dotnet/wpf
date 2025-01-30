@@ -412,10 +412,7 @@ namespace System.Windows.Input
         /// <param name="index">start index in the current list to copy</param>
         public void CopyTo(InputBinding[] inputBindings, int index)
         {
-            if (_innerBindingList != null)
-            {
-                _innerBindingList.CopyTo(inputBindings, index);
-            }
+            _innerBindingList?.CopyTo(inputBindings, index);
         }
 #endregion Public
 

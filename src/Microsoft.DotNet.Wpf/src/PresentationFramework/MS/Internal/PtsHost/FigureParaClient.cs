@@ -44,10 +44,7 @@ namespace MS.Internal.PtsHost
                 SubpageHandle = IntPtr.Zero;
             }
 
-            if(_pageContext != null)
-            {
-                _pageContext.RemoveFloatingParaClient(this);
-            }
+            _pageContext?.RemoveFloatingParaClient(this);
 
             base.Dispose();
         }

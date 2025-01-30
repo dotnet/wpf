@@ -126,11 +126,8 @@ namespace System.Windows.Ink
                     }
                     finally
                     {
-                        if (strokeInfo != null)
-                        {
-                            //detach from event handlers, or else we leak.
-                            strokeInfo.Detach();
-                        }
+                        //detach from event handlers, or else we leak.
+                        strokeInfo?.Detach();
                     }
                 }
             }

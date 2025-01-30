@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -674,10 +674,7 @@ namespace System.Windows.Controls
             // Due to inherited properties, its safer not to cast to control because this might get fired for
             // non-controls.
             var control = d as Control;
-            if (control != null)
-            {
-                control.UpdateVisualState();
-            }
+            control?.UpdateVisualState();
         }
 
         /// <summary>
@@ -718,10 +715,7 @@ namespace System.Windows.Controls
             if (count>0)
             {
                 UIElement child = (UIElement)(this.GetVisualChild(0));
-                if (child != null)
-                {
-                    child.Arrange(new Rect(arrangeBounds));
-                }
+                child?.Arrange(new Rect(arrangeBounds));
             }
             return arrangeBounds;
         }

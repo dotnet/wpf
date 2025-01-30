@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -98,10 +98,7 @@ namespace System.Windows.Markup
                 }
 
                 UIElement uiElement = args.Instance as UIElement;
-                if (uiElement != null)
-                {
-                    uiElement.SetPersistId(persistId++);
-                }
+                uiElement?.SetPersistId(persistId++);
 
                 XamlSourceInfoHelper.SetXamlSourceInfo(args.Instance, args, baseUri);
 

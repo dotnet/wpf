@@ -1171,10 +1171,7 @@ namespace System.Windows.Documents
             {
                 HighlightVisual hv = HighlightVisual.GetHighlightVisual(SyncGetPage(i, false /*forceReload*/));
 
-                if (hv != null)
-                {
-                    hv.InvalidateHighlights();
-                }
+                hv?.InvalidateHighlights();
             }
         }
 

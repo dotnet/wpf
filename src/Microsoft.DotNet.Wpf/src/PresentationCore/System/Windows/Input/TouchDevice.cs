@@ -1132,10 +1132,7 @@ namespace System.Windows.Input
 
         private static void RemoveActiveDevice(TouchDevice device)
         {
-            if (_activeDevices != null)
-            {
-                _activeDevices.Remove(device);
-            }
+            _activeDevices?.Remove(device);
         }
 
         internal static TouchPointCollection GetTouchPoints(IInputElement relativeTo)

@@ -1425,10 +1425,7 @@ namespace System.Windows.Interop
                 peer = UIElementAutomationPeer.GetRootAutomationPeer(root, handle);
             }
 
-            if (peer != null)
-            {
-                peer.AddToAutomationEventList();
-            }
+            peer?.AddToAutomationEventList();
 
             return peer;
         }

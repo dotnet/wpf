@@ -635,7 +635,7 @@ namespace Microsoft.Internal.AlphaFlattener
         {
             Toolbox.EmitEvent(EventTrace.Event.WClientDRXStartPageBegin);
 
-            String printTicketXMLStr = (ticket == null) ? null : ticket.ToXmlString();
+            String printTicketXMLStr = ticket?.ToXmlString();
 
             CaptureTicketSettings(ticket, printTicketXMLStr);
 

@@ -135,10 +135,7 @@ namespace MS.Internal.Automation
                     _hHooks[i] = IntPtr.Zero;
                 }
             }
-            if (_qEvents != null)
-            {
-                _qEvents.Clear();
-            }
+            _qEvents?.Clear();
             _fBusy = false;
         }
 

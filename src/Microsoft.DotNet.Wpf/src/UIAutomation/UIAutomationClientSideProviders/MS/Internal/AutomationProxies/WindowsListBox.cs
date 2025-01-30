@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -124,10 +124,7 @@ namespace MS.Internal.AutomationProxies
 
                 default :
                     ProxySimple el = (ProxyHwnd)WindowsListBox.Create(hwnd, 0);
-                    if (el != null)
-                    {
-                        el.DispatchEvents(eventId, idProp, idObject, idChild);
-                    }
+                    el?.DispatchEvents(eventId, idProp, idObject, idChild);
                     break;
             }
         }
@@ -507,10 +504,7 @@ namespace MS.Internal.AutomationProxies
                 return;
             }
 
-            if (el != null)
-            {
-                el.DispatchEvents(eventId, idProp, idObject, idChild);
-            }
+            el?.DispatchEvents(eventId, idProp, idObject, idChild);
         }
 
         private static void RaiseEventsOnWindow(IntPtr hwnd, int eventId, object idProp, int idObject, int idChild)
@@ -538,10 +532,7 @@ namespace MS.Internal.AutomationProxies
                 }
             }
 
-            if (el != null)
-            {
-                el.DispatchEvents(eventId, idProp, idObject, idChild);
-            }
+            el?.DispatchEvents(eventId, idProp, idObject, idChild);
         }
 
         #region Selection Pattern Helpers

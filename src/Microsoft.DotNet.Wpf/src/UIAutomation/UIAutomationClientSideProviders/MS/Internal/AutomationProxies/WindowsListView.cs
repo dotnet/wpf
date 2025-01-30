@@ -140,10 +140,7 @@ namespace MS.Internal.AutomationProxies
                 default :
                 {
                     ProxySimple el = new WindowsListView( hwnd, null, -1 );
-                    if (el != null)
-                    {
-                        el.DispatchEvents( eventId, idProp, idObject, idChild );
-                    }
+                    el?.DispatchEvents( eventId, idProp, idObject, idChild );
                     break;
                 }
             }
@@ -2004,10 +2001,7 @@ namespace MS.Internal.AutomationProxies
                 el = wlv;
             }
 
-            if (el != null)
-            {
-                el.DispatchEvents(eventId, idProp, idObject, idChild);
-            }
+            el?.DispatchEvents(eventId, idProp, idObject, idChild);
 
             return;
         }

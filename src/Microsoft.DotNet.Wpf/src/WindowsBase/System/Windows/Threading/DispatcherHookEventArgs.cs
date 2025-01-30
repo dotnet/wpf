@@ -27,7 +27,7 @@ namespace System.Windows.Threading
         {
             get
             {
-                return _operation != null ? _operation.Dispatcher : null;
+                return _operation?.Dispatcher;
             }
         }
         

@@ -551,10 +551,7 @@ namespace MS.Internal.PtsHost
                 DirtyTextRange dtr = new DirtyTextRange(Table.ContentStartOffset, charCount, charCount);
                 StructuralCache.AddDirtyTextRange(dtr);
             }
-            if (StructuralCache.FormattingOwner.Formatter != null)
-            {
-                StructuralCache.FormattingOwner.Formatter.OnContentInvalidated(true, Table.ContentStart, Table.ContentEnd);
-            }
+            StructuralCache.FormattingOwner.Formatter?.OnContentInvalidated(true, Table.ContentStart, Table.ContentEnd);
         }
 
         #endregion Private Methods

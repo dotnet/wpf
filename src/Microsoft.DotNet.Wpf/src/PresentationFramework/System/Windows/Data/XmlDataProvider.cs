@@ -394,8 +394,7 @@ namespace System.Windows.Data
             public void WriteXml(XmlWriter writer)
             {
                 XmlDocument doc = _host.DocumentForSerialization;
-                if (doc != null)
-                    doc.Save(writer);
+                doc?.Save(writer);
             }
 
             public void ReadXml(XmlReader reader)
@@ -435,8 +434,7 @@ namespace System.Windows.Data
                 if (_tryInlineDoc || (_savedDocument != null) || (_domSetDocument != null))
                 {
                     // if inline or assigned doc hasn't been parsed yet, wait for it
-                    if (_waitForInlineDoc != null)
-                        _waitForInlineDoc.WaitOne();
+                    _waitForInlineDoc?.WaitOne();
                     return _document;
                 }
                 return null;
@@ -459,8 +457,7 @@ namespace System.Windows.Data
             if (!_tryInlineDoc)
             {
                 _savedDocument = null;
-                if (_waitForInlineDoc != null)
-                    _waitForInlineDoc.Set();
+                _waitForInlineDoc?.Set();
                 return;
             }
 
@@ -504,8 +501,7 @@ namespace System.Windows.Data
 
                 // If serializer had to wait for the inline doc, it's available now.
                 // If there was an error, null will be returned for DocumentForSerialization.
-                if (_waitForInlineDoc != null)
-                    _waitForInlineDoc.Set();
+                _waitForInlineDoc?.Set();
             }
 
             // warn the user if the default xmlns wasn't set explicitly (bug 1006946)
@@ -719,8 +715,7 @@ namespace System.Windows.Data
         {
             _tryInlineDoc = false;
             _savedDocument = null;
-            if (_waitForInlineDoc != null)
-                _waitForInlineDoc.Set();
+            _waitForInlineDoc?.Set();
         }
 
         private void Hook()

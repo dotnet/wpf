@@ -597,10 +597,7 @@ namespace System.Windows.Threading
             {
                 Continue = false;
 
-                if(_waitTimer != null)
-                {
-                    _waitTimer.Dispose();
-                }
+                _waitTimer?.Dispose();
 
                 _operation.Aborted -= new EventHandler(OnCompletedOrAborted);
                 _operation.Completed -= new EventHandler(OnCompletedOrAborted);

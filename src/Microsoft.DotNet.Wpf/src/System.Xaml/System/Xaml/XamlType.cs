@@ -1049,7 +1049,7 @@ namespace System.Xaml
         {
             if (UnderlyingType is null)
             {
-                return (BaseType is not null) ? BaseType.GetAllAttachableMembers() : null;
+                return BaseType?.GetAllAttachableMembers();
             }
 
             EnsureReflector();
@@ -1060,7 +1060,7 @@ namespace System.Xaml
         {
             if (UnderlyingType is null)
             {
-                return (BaseType is not null) ? BaseType.GetAllMembers() : null;
+                return BaseType?.GetAllMembers();
             }
 
             EnsureReflector();
@@ -1134,7 +1134,7 @@ namespace System.Xaml
         {
             if (UnderlyingType is null)
             {
-                return (BaseType is not null) ? BaseType.GetAttachableMember(name) : null;
+                return BaseType?.GetAttachableMember(name);
             }
 
             EnsureReflector();

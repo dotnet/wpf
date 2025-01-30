@@ -71,10 +71,7 @@ namespace MS.Internal.Controls
             }
             finally
             {
-                if (dc != null)
-                {
-                    dc.Close();
-                }
+                dc?.Close();
             }
             hatchDG.Freeze();
 

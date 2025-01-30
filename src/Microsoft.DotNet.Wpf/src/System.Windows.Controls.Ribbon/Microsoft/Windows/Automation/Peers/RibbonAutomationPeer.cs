@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -133,10 +133,7 @@ namespace Microsoft.Windows.Automation.Peers
             {
 #if RIBBON_IN_FRAMEWORK
                 AutomationPeer peer = CreatePeerForElement(OwningRibbon.RibbonTabHeaderItemsControl);
-                if (peer != null)
-                {
-                    peer.ForceEnsureChildren();
-                }
+                peer?.ForceEnsureChildren();
 #else
                 // We are unable to use this commented piece of code because ForceEnsureChildren 
                 // is an internal method in .Net 4.0. The public alternative is to use 

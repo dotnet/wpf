@@ -817,10 +817,7 @@ namespace MS.Internal.PtsHost
                     }
 
                     // Dispose PTS page
-                    if (_ptsPage != null)
-                    {
-                        _ptsPage.Dispose();
-                    }
+                    _ptsPage?.Dispose();
                 }
                 try
                 {
@@ -896,10 +893,7 @@ namespace MS.Internal.PtsHost
         //-------------------------------------------------------------------
         private void OnAfterFormatPage()
         {
-            if (_textView != null)
-            {
-                _textView.Invalidate();
-            }
+            _textView?.Invalidate();
             _visualNeedsUpdate = true;
         }
 
@@ -1029,10 +1023,7 @@ namespace MS.Internal.PtsHost
         /// </summary>
         private void ValidateTextView()
         {
-            if (_textView != null)
-            {
-                _textView.OnUpdated();
-            }
+            _textView?.OnUpdated();
         }
 
         /// <summary>

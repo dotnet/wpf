@@ -1033,28 +1033,19 @@ namespace MS.Internal.Documents
 
                 // WOOT! COLUMNS!
                 cellInfo = GetCellInfoFromPoint(subpageParagraphResult.Columns, subpageParagraphResult.FloatingElements, point, tableFilter);
-                if (cellInfo != null)
-                {
-                    cellInfo.Adjust(new Point(subpageParagraphResult.ContentOffset.X, subpageParagraphResult.ContentOffset.Y));
-                }
+                cellInfo?.Adjust(new Point(subpageParagraphResult.ContentOffset.X, subpageParagraphResult.ContentOffset.Y));
             }
             else if (paragraph is FigureParagraphResult figureParagraphResult) // Subpage implies new coordinate system.
             {
                 TransformToSubpage(ref point, figureParagraphResult.ContentOffset);
                 cellInfo = GetCellInfoFromPoint(figureParagraphResult.Columns, figureParagraphResult.FloatingElements, point, tableFilter);
-                if (cellInfo != null)
-                {
-                    cellInfo.Adjust(new Point(figureParagraphResult.ContentOffset.X, figureParagraphResult.ContentOffset.Y));
-                }
+                cellInfo?.Adjust(new Point(figureParagraphResult.ContentOffset.X, figureParagraphResult.ContentOffset.Y));
             }
             else if (paragraph is FloaterParagraphResult floaterParagraphResult) // Subpage implies new coordinate system.
             {
                 TransformToSubpage(ref point, floaterParagraphResult.ContentOffset);
                 cellInfo = GetCellInfoFromPoint(floaterParagraphResult.Columns, floaterParagraphResult.FloatingElements, point, tableFilter);
-                if (cellInfo != null)
-                {
-                    cellInfo.Adjust(new Point(floaterParagraphResult.ContentOffset.X, floaterParagraphResult.ContentOffset.Y));
-                }
+                cellInfo?.Adjust(new Point(floaterParagraphResult.ContentOffset.X, floaterParagraphResult.ContentOffset.Y));
             }
 
             if (tableFilter != null && cellInfo != null && cellInfo.Cell.Table != tableFilter)

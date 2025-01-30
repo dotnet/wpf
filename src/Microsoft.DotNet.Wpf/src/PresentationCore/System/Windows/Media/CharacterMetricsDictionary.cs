@@ -324,7 +324,7 @@ namespace System.Windows.Media
 
         internal CharacterMetrics[] GetPage(int i)
         {
-            return (_pageTable != null) ? _pageTable[i] : null;
+            return _pageTable?[i];
         }
 
         private CharacterMetrics[] GetPageFromUnicodeScalar(int unicodeScalar)

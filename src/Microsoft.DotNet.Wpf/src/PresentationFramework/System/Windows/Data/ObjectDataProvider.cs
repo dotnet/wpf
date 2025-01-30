@@ -351,7 +351,7 @@ namespace System.Windows.Data
             _objectInstance = value;
 
             // set the objectType by looking at the new value
-            SetObjectType((value != null) ? value.GetType() : null);
+            SetObjectType(value?.GetType());
 
             // raise this change event AFTER both oType and oInstance are updated
             OnPropertyChanged(s_instance);

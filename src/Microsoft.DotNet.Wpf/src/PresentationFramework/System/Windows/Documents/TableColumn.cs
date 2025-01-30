@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -263,10 +263,7 @@ namespace System.Windows.Documents
         private static void OnWidthChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             Table table = ((TableColumn) d).Table;
-            if(table != null)
-            {
-                table.InvalidateColumns();
-            }
+            table?.InvalidateColumns();
         }
 
         /// <summary>
@@ -275,10 +272,7 @@ namespace System.Windows.Documents
         private static void OnBackgroundChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             Table table = ((TableColumn) d).Table;
-            if(table != null)
-            {
-                table.InvalidateColumns();
-            }
+            table?.InvalidateColumns();
         }
 
         #endregion Static Initialization 

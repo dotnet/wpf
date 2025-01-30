@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -3023,7 +3023,7 @@ namespace System.Windows.Media
                 // To enable emulation of the legacy effects on top of the new effects pipeline, store the
                 // bitmap effect information in our staging uncommon field: UserProvidedBitmapEffectData.
 
-                BitmapEffect oldBitmapEffect = (bed == null) ? null : bed.BitmapEffect;
+                BitmapEffect oldBitmapEffect = bed?.BitmapEffect;
                 if (oldBitmapEffect == value) // If new and old value are the same, this set call can be treated as a no-op.
                 {
                     return;
@@ -3120,7 +3120,7 @@ namespace System.Windows.Media
                 // To enable emulation of the legacy effects on top of the new effects pipeline, store the
                 // bitmap effect input information in our staging uncommon field: UserProvidedBitmapEffectData.
 
-                BitmapEffectInput oldBitmapEffectInput = (bed == null) ? null : bed.BitmapEffectInput;
+                BitmapEffectInput oldBitmapEffectInput = bed?.BitmapEffectInput;
                 BitmapEffectInput newBitmapEffectInput = value;
 
                 if (oldBitmapEffectInput == newBitmapEffectInput) // If new and old value are the same, this set call can be treated as a no-op.
@@ -3161,8 +3161,8 @@ namespace System.Windows.Media
         internal void BitmapEffectEmulationChanged(object sender, EventArgs e)
         {
             BitmapEffectState bed = UserProvidedBitmapEffectData.GetValue(this);
-            BitmapEffect currentBitmapEffect = (bed == null) ? null : bed.BitmapEffect;
-            BitmapEffectInput currentBitmapEffectInput = (bed == null) ? null : bed.BitmapEffectInput;
+            BitmapEffect currentBitmapEffect = bed?.BitmapEffect;
+            BitmapEffectInput currentBitmapEffectInput = bed?.BitmapEffectInput;
 
             // Note that when this method is called, a legacy BitmapEffect has been set or reset on
             // the Visual by the user. The next step is to try to emulate the effect in case the current
@@ -3254,7 +3254,7 @@ namespace System.Windows.Media
             {
                 BitmapEffectState bitmapEffectState = BitmapEffectStateField.GetValue(this);
 
-                BitmapEffect bitmapEffect = (bitmapEffectState == null) ? null : bitmapEffectState.BitmapEffect;
+                BitmapEffect bitmapEffect = bitmapEffectState?.BitmapEffect;
                 if (bitmapEffect == value)
                 {
                     return;
@@ -3305,7 +3305,7 @@ namespace System.Windows.Media
                 VerifyAPIReadWrite();
                 BitmapEffectState bitmapEffectState = BitmapEffectStateField.GetValue(this);
 
-                BitmapEffectInput bitmapEffectInput = (bitmapEffectState == null) ? null : bitmapEffectState.BitmapEffectInput;
+                BitmapEffectInput bitmapEffectInput = bitmapEffectState?.BitmapEffectInput;
                 if (bitmapEffectInput == value)
                 {
                     return;
@@ -4598,10 +4598,7 @@ namespace System.Windows.Media
                 }
 
                 // group can be null if it does not have an inverse
-                if (group != null)
-                {
-                    group.Freeze();
-                }
+                group?.Freeze();
 
                 // Initialize out params
                 generalTransform = group;
@@ -4971,10 +4968,7 @@ namespace System.Windows.Media
             for (int i = 0; i < count; i++)
             {
                 Visual cv = InternalGetVisualChild(i);
-                if (cv != null)
-                {
-                    cv.RecursiveSetDpiScaleVisualFlags(args);
-                }
+                cv?.RecursiveSetDpiScaleVisualFlags(args);
             }
         }
 

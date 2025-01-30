@@ -1161,10 +1161,7 @@ namespace System.Windows.Controls
                     for (int offset = 0;  offset < block.ContainerCount;  ++offset)
                     {
                         GroupItem gi = ((RealizedItemBlock)block).ContainerAt(offset) as GroupItem;
-                        if (gi != null)
-                        {
-                            gi.Generator.ChangeAlternationCount();
-                        }
+                        gi?.Generator.ChangeAlternationCount();
                     }
 
                     block = block.Next;
@@ -1954,7 +1951,7 @@ namespace System.Windows.Controls
                 else
                 {
                     CollectionView cv = Host.View.CollectionView;
-                    items = (cv == null) ? null : cv.Groups;
+                    items = cv?.Groups;
                     if (items == null)
                     {
                         items = Host.View;
@@ -2065,8 +2062,7 @@ namespace System.Windows.Controls
         {
             // Discard placeholder container.
             UnlinkContainerFromItem(groupItem, group);
-            if (_emptyGroupItems != null)
-                _emptyGroupItems.Remove(groupItem);
+            _emptyGroupItems?.Remove(groupItem);
 
             // inform layout as if the group just got added
             if (ItemsChanged != null)

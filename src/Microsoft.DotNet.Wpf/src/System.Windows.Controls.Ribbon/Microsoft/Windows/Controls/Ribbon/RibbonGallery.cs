@@ -2535,10 +2535,7 @@ namespace Microsoft.Windows.Controls.Ribbon
             {
                 RibbonGalleryCategory category = (RibbonGalleryCategory)gallery.ItemContainerGenerator.ContainerFromIndex(index);
 
-                if (category != null)
-                {
-                    category.NotifyPropertyChanged(e);
-                }
+                category?.NotifyPropertyChanged(e);
             }
         }
 

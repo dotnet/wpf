@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -236,18 +236,12 @@ namespace MS.Internal.Data
                 for (int i = 0, n = ProtectedItems.Count; i < n; ++i)
                 {
                     CollectionViewGroupInternal subGroup = ProtectedItems[i] as CollectionViewGroupInternal;
-                    if (subGroup != null)
-                    {
-                        subGroup.Clear();
-                    }
+                    subGroup?.Clear();
                 }
             }
 
             ProtectedItems.Clear();
-            if (_nameToGroupMap != null)
-            {
-                _nameToGroupMap.Clear();
-            }
+            _nameToGroupMap?.Clear();
         }
 
         // return the index of the given item within the list of leaves governed
@@ -397,13 +391,10 @@ namespace MS.Internal.Data
                 if (comparer != null)
                 {
                     IListComparer ilc = comparer as IListComparer;
-                    if (ilc != null)
-                    {
-                        // reset the IListComparer before each search.  This cannot be done
-                        // any less frequently (e.g. in Root.AddToSubgroups), due to the
-                        // possibility that the item may appear in more than one subgroup.
-                        ilc.Reset();
-                    }
+                    // reset the IListComparer before each search.  This cannot be done
+                    // any less frequently (e.g. in Root.AddToSubgroups), due to the
+                    // possibility that the item may appear in more than one subgroup.
+                    ilc?.Reset();
 
                     for (index = low; index < high; ++index)
                     {
@@ -512,8 +503,7 @@ namespace MS.Internal.Data
         // the group's description has changed - notify parent
         protected virtual void OnGroupByChanged()
         {
-            if (Parent != null)
-                Parent.OnGroupByChanged();
+            Parent?.OnGroupByChanged();
         }
 
         /// <summary>

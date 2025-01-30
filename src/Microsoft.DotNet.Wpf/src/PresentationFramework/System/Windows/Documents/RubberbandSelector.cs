@@ -143,10 +143,7 @@ namespace System.Windows.Documents
             if (page != null)
             {
                 HighlightVisual hv = HighlightVisual.GetHighlightVisual(page);
-                if (hv != null)
-                {
-                    hv.UpdateRubberbandSelection(this);
-                }
+                hv?.UpdateRubberbandSelection(this);
             }
         }
 

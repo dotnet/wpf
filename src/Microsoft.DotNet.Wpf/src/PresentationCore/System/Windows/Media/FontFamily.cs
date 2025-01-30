@@ -69,7 +69,7 @@ namespace System.Windows.Media
             ArgumentNullException.ThrowIfNull(familyName);
 
             if (baseUri != null && !baseUri.IsAbsoluteUri)
-                throw new ArgumentException(SR.UriNotAbsolute, "baseUri");
+                throw new ArgumentException(SR.UriNotAbsolute, nameof(baseUri));
 
             _familyIdentifier = new FontFamilyIdentifier(familyName, baseUri);
         }

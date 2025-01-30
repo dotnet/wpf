@@ -77,7 +77,7 @@ namespace System.Windows.Controls
             {
                 throw new ArgumentException(
                     SR.DataGridLength_Infinity,
-                    "value");
+                    nameof(value));
             }
 
             if (type != DataGridLengthUnitType.Auto &&
@@ -88,21 +88,21 @@ namespace System.Windows.Controls
             {
                 throw new ArgumentException(
                     SR.DataGridLength_InvalidType, 
-                    "type");
+                    nameof(type));
             }
 
             if (Double.IsInfinity(desiredValue))
             {
                 throw new ArgumentException(
                     SR.DataGridLength_Infinity, 
-                    "desiredValue");
+                    nameof(desiredValue));
             }
 
             if (Double.IsInfinity(displayValue))
             {
                 throw new ArgumentException(
                     SR.DataGridLength_Infinity,
-                    "displayValue");
+                    nameof(displayValue));
             }
 
             _unitValue = (type == DataGridLengthUnitType.Auto) ? AutoValue : value;

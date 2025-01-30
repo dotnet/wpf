@@ -65,7 +65,7 @@ namespace System.Windows.Documents
                 return;
             }
 
-            throw (new ArgumentException(SR.Format(SR.UnexpectedParameterType, value.GetType(), typeof(TableRow)), "value"));
+            throw (new ArgumentException(SR.Format(SR.UnexpectedParameterType, value.GetType(), typeof(TableRow)), nameof(value)));
         }
 
         /// <summary>

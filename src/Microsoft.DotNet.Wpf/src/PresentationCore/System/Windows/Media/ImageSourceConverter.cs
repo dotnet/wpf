@@ -53,7 +53,7 @@ namespace System.Windows.Media
                 {
                     if (!(context.Instance is ImageSource))
                     {
-                        throw new ArgumentException(SR.Format(SR.General_Expected_Type, "ImageSource"), "context");
+                        throw new ArgumentException(SR.Format(SR.General_Expected_Type, "ImageSource"), nameof(context));
                     }
 
                     ImageSource value = (ImageSource)context.Instance;

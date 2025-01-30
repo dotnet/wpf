@@ -270,7 +270,7 @@ namespace System.Windows.Controls
             ToolBar toolBar = value as ToolBar;
             if (toolBar == null)
             {
-                throw new ArgumentException(SR.Format(SR.UnexpectedParameterType, value.GetType(), typeof(ToolBar)), "value");
+                throw new ArgumentException(SR.Format(SR.UnexpectedParameterType, value.GetType(), typeof(ToolBar)), nameof(value));
             }
 
             ToolBars.Add(toolBar);
@@ -473,7 +473,7 @@ namespace System.Windows.Controls
         {
             if (_toolBarsCollection == null)
             {
-                throw new ArgumentOutOfRangeException("index", index, SR.Visual_ArgumentOutOfRange);
+                throw new ArgumentOutOfRangeException(nameof(index), index, SR.Visual_ArgumentOutOfRange);
             }
             return _toolBarsCollection[index];
         }

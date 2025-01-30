@@ -392,7 +392,7 @@ namespace System.Windows.Data
             FrameworkPropertyMetadata fwMetaData = dp.GetMetadata(d.DependencyObjectType) as FrameworkPropertyMetadata;
 
             if ((fwMetaData != null && !fwMetaData.IsDataBindingAllowed) || dp.ReadOnly)
-                throw new ArgumentException(SR.Format(SR.PropertyNotBindable, dp.Name), "dp");
+                throw new ArgumentException(SR.Format(SR.PropertyNotBindable, dp.Name), nameof(dp));
 
             // create the BindingExpression
             BindingExpression bindExpr = new BindingExpression(binding, parent);

@@ -339,7 +339,7 @@ namespace System.Windows.Controls
             //check if there is a TemplateChild on FrameworkElement
             if (base.TemplateChild == null)
             {
-                throw new ArgumentOutOfRangeException("index", index, SR.Visual_ArgumentOutOfRange);
+                throw new ArgumentOutOfRangeException(nameof(index), index, SR.Visual_ArgumentOutOfRange);
             }
             else
             {
@@ -352,7 +352,7 @@ namespace System.Windows.Controls
                         return _adornerLayer;
 
                     default:
-                        throw new ArgumentOutOfRangeException("index", index, SR.Visual_ArgumentOutOfRange);
+                        throw new ArgumentOutOfRangeException(nameof(index), index, SR.Visual_ArgumentOutOfRange);
                 }
             }
          }

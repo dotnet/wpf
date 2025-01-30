@@ -850,7 +850,7 @@ namespace System.Windows.Controls
                 parent = VisualTreeHelper.GetParent(dependencyObjectChild);
                 if (parent == null)
                 {
-                    throw new ArgumentException(SR.Stack_VisualInDifferentSubTree,"child");
+                    throw new ArgumentException(SR.Stack_VisualInDifferentSubTree,nameof(child));
                 }
             }
 

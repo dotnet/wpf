@@ -90,7 +90,7 @@ namespace System.Windows.Controls
         {
             if (_uriList.Contains(item))
             {
-                throw new ArgumentException(SR.CustomDictionaryItemAlreadyExists, "item");
+                throw new ArgumentException(SR.CustomDictionaryItemAlreadyExists, nameof(item));
             }
 
             ValidateUri(item);

@@ -82,7 +82,7 @@ namespace MS.Internal.Documents.Application
         {
             throw new ArgumentException(
                 SR.PackagingWriteNotSupported,
-                "workspace");
+                nameof(workspace));
         }
 
         Package temporaryPackage = Package.Open(

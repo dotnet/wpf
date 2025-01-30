@@ -366,7 +366,7 @@ namespace System.Windows.Controls.Primitives
         {
             if (_visualChildren == null || _visualChildren[index] == null)
             {
-                throw new ArgumentOutOfRangeException("index", index, SR.Visual_ArgumentOutOfRange);
+                throw new ArgumentOutOfRangeException(nameof(index), index, SR.Visual_ArgumentOutOfRange);
             }
             return _visualChildren[index];
         }

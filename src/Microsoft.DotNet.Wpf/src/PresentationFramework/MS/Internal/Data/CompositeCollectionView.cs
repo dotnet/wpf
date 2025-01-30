@@ -199,7 +199,7 @@ namespace MS.Internal.Data
             {
                 // couldn't find item at index
                 item = null;
-                throw new ArgumentOutOfRangeException("index");
+                throw new ArgumentOutOfRangeException(nameof(index));
             }
             else
             {

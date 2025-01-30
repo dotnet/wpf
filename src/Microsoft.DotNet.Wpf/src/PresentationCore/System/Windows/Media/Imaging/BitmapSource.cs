@@ -640,7 +640,7 @@ namespace System.Windows.Media.Imaging
             ArgumentNullException.ThrowIfNull(pixels);
 
             if (pixels.Rank != 1)
-                throw new ArgumentException(SR.Collection_BadRank, "pixels");
+                throw new ArgumentException(SR.Collection_BadRank, nameof(pixels));
 
             if (offset < 0)
             {
@@ -711,7 +711,7 @@ namespace System.Windows.Media.Imaging
         internal void CriticalCopyPixels(Int32Rect sourceRect, IntPtr buffer, int bufferSize, int stride)
         {
             if (buffer == IntPtr.Zero)
-                throw new ArgumentNullException("buffer");
+                throw new ArgumentNullException(nameof(buffer));
 
             ArgumentOutOfRangeException.ThrowIfNegativeOrZero(stride);
 

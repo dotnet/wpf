@@ -86,8 +86,8 @@ namespace System.Windows.Documents
 
             SetFlags(ignoreTextUnitBoundaries, Flags.IgnoreTextUnitBoundaries);
 
-            ValidationHelper.VerifyPosition(position1.TextContainer, position1, "position1");
-            ValidationHelper.VerifyPosition(position1.TextContainer, position2, "position2");
+            ValidationHelper.VerifyPosition(position1.TextContainer, position1, nameof(position1));
+            ValidationHelper.VerifyPosition(position1.TextContainer, position2, nameof(position2));
 
             TextRangeBase.Select(this, position1, position2);
         }
@@ -799,7 +799,7 @@ namespace System.Windows.Documents
             {
                 // We exclude checking thcickness values because we have special treatment for negative values
                 // in TextRangeEdit.SetParagraphProperty - negative values mean: "leave the value as is".
-                throw new ArgumentException(SR.Format(SR.TextEditorTypeOfParameterIsNotAppropriateForFormattingProperty, value == null ? "null" : value.GetType().Name, formattingProperty.Name), "value");
+                throw new ArgumentException(SR.Format(SR.TextEditorTypeOfParameterIsNotAppropriateForFormattingProperty, value == null ? "null" : value.GetType().Name, formattingProperty.Name), nameof(value));
             }
 
             // Check propertyValueAction validity
@@ -809,13 +809,13 @@ namespace System.Windows.Documents
                 propertyValueAction != PropertyValueAction.IncreaseByPercentageValue &&
                 propertyValueAction != PropertyValueAction.DecreaseByPercentageValue)
             {
-                throw new ArgumentException(SR.TextRange_InvalidParameterValue, "propertyValueAction");
+                throw new ArgumentException(SR.TextRange_InvalidParameterValue, nameof(propertyValueAction));
             }
             // Check if propertyValueAction is applicable to this property
             if (propertyValueAction != PropertyValueAction.SetValue &&
                 !TextSchema.IsPropertyIncremental(formattingProperty))
             {
-                throw new ArgumentException(SR.Format(SR.TextRange_PropertyCannotBeIncrementedOrDecremented, formattingProperty.Name), "propertyValueAction");
+                throw new ArgumentException(SR.Format(SR.TextRange_PropertyCannotBeIncrementedOrDecremented, formattingProperty.Name), nameof(propertyValueAction));
             }
 
             ApplyPropertyToTextVirtual(formattingProperty, value, applyToParagraphs, propertyValueAction);

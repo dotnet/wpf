@@ -63,7 +63,7 @@ namespace System.Windows.Controls
         {
             if (!(value is UIElement))
             {
-                throw new ArgumentException (SR.Format(SR.UnexpectedParameterType, value.GetType(), typeof(UIElement)), "value");
+                throw new ArgumentException (SR.Format(SR.UnexpectedParameterType, value.GetType(), typeof(UIElement)), nameof(value));
             }
 
             if (this.Child != null)
@@ -171,7 +171,7 @@ namespace System.Windows.Controls
             if (    (_child == null)
                 ||  (index != 0))
             {
-                throw new ArgumentOutOfRangeException("index", index, SR.Visual_ArgumentOutOfRange);
+                throw new ArgumentOutOfRangeException(nameof(index), index, SR.Visual_ArgumentOutOfRange);
             }
             
             return _child;

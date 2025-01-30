@@ -85,7 +85,7 @@ namespace System.IO.Packaging
             ArgumentNullException.ThrowIfNull(signature);
 
             if (result < VerifyResult.Success || result > VerifyResult.NotSigned)
-                throw new System.ArgumentOutOfRangeException("result");
+                throw new System.ArgumentOutOfRangeException(nameof(result));
 
             _signature = signature;
             _result = result;
@@ -202,7 +202,7 @@ namespace System.IO.Packaging
                 ArgumentNullException.ThrowIfNull(value);
 
                 if (value.Length == 0)
-                    throw new ArgumentException(SR.UnsupportedHashAlgorithm, "value");
+                    throw new ArgumentException(SR.UnsupportedHashAlgorithm, nameof(value));
 
                 _hashAlgorithmString = value;
             }
@@ -221,7 +221,7 @@ namespace System.IO.Packaging
             set
             {
                 if ((value < CertificateEmbeddingOption.InCertificatePart) || (value > CertificateEmbeddingOption.NotEmbedded))
-                    throw new ArgumentOutOfRangeException("value");
+                    throw new ArgumentOutOfRangeException(nameof(value));
 
                 _certificateEmbeddingOption = value;
             }
@@ -920,7 +920,7 @@ namespace System.IO.Packaging
                         if (_signatures.Count == 0)
                             DeleteOriginPart();
 
-                        throw new ArgumentException(SR.PartToSignMissing, "parts");
+                        throw new ArgumentException(SR.PartToSignMissing, nameof(parts));
                     }
                 }
             }
@@ -957,12 +957,12 @@ namespace System.IO.Packaging
                 {
                     // ensure they don't duplicate the reserved one
                     if (string.Equals(obj.Id, XTable.Get(XTable.ID.OpcAttrValue), StringComparison.Ordinal))
-                        throw new ArgumentException(SR.SignaturePackageObjectTagMustBeUnique, "signatureObjects");
+                        throw new ArgumentException(SR.SignaturePackageObjectTagMustBeUnique, nameof(signatureObjects));
 
                     // check for duplicates
                     //if (ids.Contains(obj.Id))
                     if (ids.Exists(new StringMatchPredicate(obj.Id).Match))
-                        throw new ArgumentException(SR.SignatureObjectIdMustBeUnique, "signatureObjects");
+                        throw new ArgumentException(SR.SignatureObjectIdMustBeUnique, nameof(signatureObjects));
                     else
                         ids.Add(obj.Id);
                 }
@@ -978,7 +978,7 @@ namespace System.IO.Packaging
                 }
                 catch (System.Xml.XmlException xmlException)
                 {
-                    throw new ArgumentException(SR.Format(SR.NotAValidXmlIdString, signatureId), "signatureId", xmlException);
+                    throw new ArgumentException(SR.Format(SR.NotAValidXmlIdString, signatureId), nameof(signatureId), xmlException);
                 }
             }
         }

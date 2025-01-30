@@ -39,7 +39,7 @@ namespace System.Windows.Ink
 
             if (IEnumerablePointHelper.GetCount(points) == 0)
             {
-                throw new System.ArgumentException(SR.EmptyArrayNotAllowedAsArgument, "points");
+                throw new System.ArgumentException(SR.EmptyArrayNotAllowedAsArgument, nameof(points));
             }
 
             if (false == _fValid)
@@ -62,7 +62,7 @@ namespace System.Windows.Ink
 
             if (stylusPoints.Count == 0)
             {
-                throw new System.ArgumentException(SR.EmptyArrayNotAllowedAsArgument, "stylusPoints");
+                throw new System.ArgumentException(SR.EmptyArrayNotAllowedAsArgument, nameof(stylusPoints));
             }
 
             if (false == _fValid)

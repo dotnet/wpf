@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -53,10 +53,10 @@ namespace MS.Internal.Documents
             {
                 ContainerVisual pageVisualHost = currentParent as ContainerVisual;
                 if (pageVisualHost == null)
-                    throw new ArgumentException(SR.DocumentPageView_ParentNotDocumentPageHost, "pageVisual");
+                    throw new ArgumentException(SR.DocumentPageView_ParentNotDocumentPageHost, nameof(pageVisual));
                 DocumentPageHost docPageHost = VisualTreeHelper.GetParent(pageVisualHost) as DocumentPageHost;
                 if (docPageHost == null)
-                    throw new ArgumentException(SR.DocumentPageView_ParentNotDocumentPageHost, "pageVisual");
+                    throw new ArgumentException(SR.DocumentPageView_ParentNotDocumentPageHost, nameof(pageVisual));
                 docPageHost.PageVisual = null;
             }
         }
@@ -122,7 +122,7 @@ namespace MS.Internal.Documents
         {
             if (index != 0 || _pageVisual == null)
             {
-                throw new ArgumentOutOfRangeException("index", index, SR.Visual_ArgumentOutOfRange);
+                throw new ArgumentOutOfRangeException(nameof(index), index, SR.Visual_ArgumentOutOfRange);
             }
             return VisualTreeHelper.GetParent(_pageVisual) as Visual;
         }

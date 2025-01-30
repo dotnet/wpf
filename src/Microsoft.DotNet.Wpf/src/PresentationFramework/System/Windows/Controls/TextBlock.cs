@@ -1149,7 +1149,7 @@ namespace System.Windows.Controls
         {
             if (_complexContent == null)
             {
-                throw new ArgumentOutOfRangeException("index");
+                throw new ArgumentOutOfRangeException(nameof(index));
             }
             return _complexContent.VisualChildren[index];
         }

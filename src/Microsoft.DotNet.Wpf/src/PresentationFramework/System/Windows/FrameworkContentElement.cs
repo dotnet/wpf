@@ -2097,7 +2097,7 @@ namespace System.Windows
                 // Thus we support any indices in the range [-1, 65535).
                 if (value < -1 || value >= 0xFFFF)
                 {
-                    throw new ArgumentOutOfRangeException("value", SR.TemplateChildIndexOutOfRange);
+                    throw new ArgumentOutOfRangeException(nameof(value), SR.TemplateChildIndexOutOfRange);
                 }
 
                 uint childIndex = (value == -1) ? 0xFFFF : (uint)value;

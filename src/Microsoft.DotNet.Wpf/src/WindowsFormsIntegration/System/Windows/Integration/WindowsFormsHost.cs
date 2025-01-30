@@ -285,7 +285,7 @@ namespace System.Windows.Forms.Integration
             returnSize.Height = Math.Min(returnSize.Height, finalSize.Height);
             if (HostContainerInternal.BackgroundImage != null)
             {
-                _propertyMap.OnPropertyChanged(this, "Background", this.Background);
+                _propertyMap.OnPropertyChanged(this, nameof(Background), this.Background);
             }
             return returnSize;
         }
@@ -413,7 +413,7 @@ namespace System.Windows.Forms.Integration
                 if (_cachedBackbrush != parentBrush)
                 {
                     _cachedBackbrush = parentBrush;
-                    _propertyMap.OnPropertyChanged(this, "Background", parentBrush);
+                    _propertyMap.OnPropertyChanged(this, nameof(Background), parentBrush);
                 }
             }
         }
@@ -775,7 +775,7 @@ namespace System.Windows.Forms.Integration
             {
                 if (_host == null) { return base.Cursor; }
 
-                if (!_host.PropertyMap.PropertyMappedToEmptyTranslator("Cursor"))
+                if (!_host.PropertyMap.PropertyMappedToEmptyTranslator(nameof(Cursor)))
                 { return base.Cursor; }
 
                 bool forceCursorMapped = _host.PropertyMap.PropertyMappedToEmptyTranslator("ForceCursor");

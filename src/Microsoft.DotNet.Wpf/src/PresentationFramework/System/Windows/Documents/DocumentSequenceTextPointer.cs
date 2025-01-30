@@ -783,7 +783,7 @@ namespace System.Windows.Documents
             {
                 if (!xGapAwareScan(newTp, distance))
                 {
-                    throw new ArgumentException(SR.BadDistance, "distance");
+                    throw new ArgumentException(SR.BadDistance, nameof(distance));
                 }
             }
             return newTp;

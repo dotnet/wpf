@@ -1705,7 +1705,7 @@ namespace System.Windows.Controls.Primitives
             IDocumentPaginatorSource document = value as IDocumentPaginatorSource;
             if (document == null)
             {
-                throw new ArgumentException(SR.DocumentViewerChildMustImplementIDocumentPaginatorSource, "value");
+                throw new ArgumentException(SR.DocumentViewerChildMustImplementIDocumentPaginatorSource, nameof(value));
             }
             this.Document = document;
         }

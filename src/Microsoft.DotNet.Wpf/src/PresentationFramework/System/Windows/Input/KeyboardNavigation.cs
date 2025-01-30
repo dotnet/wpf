@@ -662,7 +662,7 @@ namespace System.Windows.Input
                 }
                 else
                 {
-                    throw new ArgumentOutOfRangeException("index", index, SR.Visual_ArgumentOutOfRange);
+                    throw new ArgumentOutOfRangeException(nameof(index), index, SR.Visual_ArgumentOutOfRange);
                 }
             }
 

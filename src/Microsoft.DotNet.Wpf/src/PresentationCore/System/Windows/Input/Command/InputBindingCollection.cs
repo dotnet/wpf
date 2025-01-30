@@ -162,7 +162,7 @@ namespace System.Windows.Input
                 }
                 else
                 {
-                    throw new ArgumentOutOfRangeException("index");
+                    throw new ArgumentOutOfRangeException(nameof(index));
                 }
             }
             set
@@ -183,7 +183,7 @@ namespace System.Windows.Input
                 }
                 else
                 {
-                    throw new ArgumentOutOfRangeException("index");
+                    throw new ArgumentOutOfRangeException(nameof(index));
                 }
             }
         }

@@ -319,7 +319,7 @@ namespace System.Windows.Documents
             IEnumerator enumerator = range.GetEnumerator();
             if (enumerator == null)
             {
-                throw new ArgumentException(SR.TextElementCollection_NoEnumerator, "range");
+                throw new ArgumentException(SR.TextElementCollection_NoEnumerator, nameof(range));
             }
 
             this.TextContainer.BeginChange();
@@ -396,7 +396,7 @@ namespace System.Windows.Documents
 
             if (!(value is TextElementType))
             {
-                throw new ArgumentException(SR.Format(SR.TextElementCollection_TextElementTypeExpected, typeof(TextElementType).Name), "value");
+                throw new ArgumentException(SR.Format(SR.TextElementCollection_TextElementTypeExpected, typeof(TextElementType).Name), nameof(value));
             }
 
             ValidateChild((TextElementType)value);
@@ -451,7 +451,7 @@ namespace System.Windows.Documents
 
             if (newItem == null)
             {
-                throw new ArgumentException(SR.Format(SR.TextElementCollection_TextElementTypeExpected, typeof(TextElementType).Name), "value");
+                throw new ArgumentException(SR.Format(SR.TextElementCollection_TextElementTypeExpected, typeof(TextElementType).Name), nameof(value));
             }
 
             if (index < 0)
@@ -562,7 +562,7 @@ namespace System.Windows.Documents
 
                 if (!(value is TextElementType))
                 {
-                    throw new ArgumentException(SR.Format(SR.TextElementCollection_TextElementTypeExpected, typeof(TextElementType).Name), "value");
+                    throw new ArgumentException(SR.Format(SR.TextElementCollection_TextElementTypeExpected, typeof(TextElementType).Name), nameof(value));
                 }
 
                 ValidateChild((TextElementType)value);

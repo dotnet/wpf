@@ -132,7 +132,7 @@ installed, we can then simply reference those local binaries directly from the p
 ```
 
 ### Testing specific versions of the Microsoft.WindowsDesktop.App runtime
-At times, it is necessary to install and test specific versions of the runtime. This can be helpful if you are trying to root cause when an issue started occuring, or need to compare functionality between two different versions.
+At times, it is necessary to install and test specific versions of the runtime. This can be helpful if you are trying to root cause when an issue started occurring, or need to compare functionality between two different versions.
 
 For testing different versions of the runtime, you can install a specific version of the runtimes via the [dotnet install script](https://docs.microsoft.com/en-us/dotnet/core/tools/dotnet-install-script). Below is an example powershell script of how you can use the `dotnet-install.ps1` script that will install both 32-bit and 64-bit versions of the `Microsoft.WindowsDesktop.App` runtime into the specified folder:
 
@@ -210,7 +210,7 @@ Follow the following steps sequentially.
 6. Click on `+` button on top right and add `PresentationBuildTasks.dll`.
 7. Click OK.
 8. Right click on `MsBuild.exe` in solution explorer and select Properties.
-9. In the Parameters textbox enter the fullpath to a solution file (.sln ||.csproj) of a test repo.
+9. In the Parameters textbox enter the full path to a solution file (.sln ||.csproj) of a test repo.
 10. Click Save.
 11. Open "`<wpf clone directory>\src\Microsoft.DotNet.Wpf\src\PresentationBuildTasks\Microsoft\Build\Tasks\Windows\MarkupCompilePass2.cs`" (File -> Open -> File) in editor
 12. Insert a breakpoint at start of `execute` function.
@@ -218,9 +218,9 @@ Follow the following steps sequentially.
 
 ## Commonly Encountered Errors
 #### The specified RuntimeIdentifier `win-` is not recognized (Code: NETSDK1083)
-If you are seeing this error it means you are possibly missing `<PlatformTarget>` tag from your `.csproj` file. Please add the tag with apropriate value.
+If you are seeing this error it means you are possibly missing `<PlatformTarget>` tag from your `.csproj` file. Please add the tag with appropriate value.
 
-For example:- if your wpf binaries are build for platform `x86` you should add `<PlatformTarget>x86</PlatformTarget>` to your `.csproj` file.
+For example:- if your wpf binaries are built for platform `x86` you should add `<PlatformTarget>x86</PlatformTarget>` to your `.csproj` file.
 Your final csproj file should look like as below:
 
 ```xml

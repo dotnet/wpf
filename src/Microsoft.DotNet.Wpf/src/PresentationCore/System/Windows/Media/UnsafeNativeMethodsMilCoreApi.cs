@@ -1,6 +1,5 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 //  ABOUT THIS FILE:
 //   -- This file contains native methods which are deemed NOT SAFE in the sense that any usage of them

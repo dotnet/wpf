@@ -1263,6 +1263,9 @@
     </Setter>
   </Style>
   <Style BasedOn="{StaticResource DefaultCheckBoxStyle}" TargetType="{x:Type CheckBox}" />
+  <DataTemplate DataType="{x:Type CollectionViewGroup}">
+    <ContentPresenter Content="{Binding Path=Name}" ContentStringFormat="{TemplateBinding ContentStringFormat}" />
+  </DataTemplate>
   <Thickness x:Key="ComboBoxPadding">10,8,10,8</Thickness>
   <Thickness x:Key="ComboBoxBorderThemeThickness">1,1,1,1</Thickness>
   <Thickness x:Key="ComboBoxAccentBorderThemeThickness">0,0,0,2</Thickness>
@@ -1499,6 +1502,15 @@
   </Style>
   <Style BasedOn="{StaticResource DefaultComboBoxItemStyle}" TargetType="{x:Type ComboBoxItem}" />
   <Style BasedOn="{StaticResource DefaultComboBoxStyle}" TargetType="{x:Type ComboBox}" />
+  <Style x:Key="{x:Type ContentControl}" TargetType="{x:Type ContentControl}">
+    <Setter Property="Template">
+      <Setter.Value>
+        <ControlTemplate TargetType="{x:Type ContentControl}">
+          <ContentPresenter />
+        </ControlTemplate>
+      </Setter.Value>
+    </Setter>
+  </Style>
   <Thickness x:Key="ContextMenuBorderThickness">1</Thickness>
   <Style x:Key="DefaultContextMenuStyle" TargetType="{x:Type ContextMenu}">
     <Setter Property="TextElement.Foreground" Value="{DynamicResource ContextMenuForeground}" />
@@ -1521,7 +1533,9 @@
             <Border.RenderTransform>
               <TranslateTransform />
             </Border.RenderTransform>
-            <StackPanel ClipToBounds="True" IsItemsHost="True" KeyboardNavigation.DirectionalNavigation="Cycle" Orientation="Vertical" />
+            <ScrollViewer CanContentScroll="True" HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto">
+              <StackPanel ClipToBounds="True" IsItemsHost="True" KeyboardNavigation.DirectionalNavigation="Cycle" Orientation="Vertical" />
+            </ScrollViewer>
           </Border>
           <ControlTemplate.Triggers>
             <Trigger Property="IsOpen" Value="True">
@@ -2468,7 +2482,7 @@
                   <Storyboard>
                     <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenterBorder" Storyboard.TargetProperty="(Border.Visibility)">
                       <DiscreteObjectKeyFrame KeyTime="0" Value="{x:Static Visibility.Visible}" />
-                      <DiscreteObjectKeyFrame KeyTime="0:0:5" Value="{x:Static Visibility.Collapsed}" />
+                      <DiscreteObjectKeyFrame KeyTime="0:0:0.2" Value="{x:Static Visibility.Collapsed}" />
                     </ObjectAnimationUsingKeyFrames>
                     <DoubleAnimationUsingKeyFrames Storyboard.TargetName="AnimationFactorBorder" Storyboard.TargetProperty="Width">
                       <DiscreteDoubleKeyFrame KeyTime="0" Value="0.0" />
@@ -2634,6 +2648,30 @@
     <Setter Property="Margin" Value="0" />
     <Setter Property="Focusable" Value="False" />
     <Setter Property="SnapsToDevicePixels" Value="True" />
+  </Style>
+  <Style x:Key="{x:Type GroupItem}" TargetType="{x:Type GroupItem}">
+    <Setter Property="Template">
+      <Setter.Value>
+        <ControlTemplate TargetType="{x:Type GroupItem}">
+          <StackPanel>
+            <ContentPresenter x:Name="PART_Header" />
+            <ItemsPresenter x:Name="ItemsPresenter" Margin="5,0,0,0" />
+          </StackPanel>
+        </ControlTemplate>
+      </Setter.Value>
+    </Setter>
+  </Style>
+  <Style x:Key="{x:Type HeaderedContentControl}" TargetType="{x:Type HeaderedContentControl}">
+    <Setter Property="Template">
+      <Setter.Value>
+        <ControlTemplate TargetType="{x:Type HeaderedContentControl}">
+          <StackPanel>
+            <ContentPresenter ContentSource="Header" />
+            <ContentPresenter />
+          </StackPanel>
+        </ControlTemplate>
+      </Setter.Value>
+    </Setter>
   </Style>
   <Style TargetType="{x:Type Label}">
     <Setter Property="Padding" Value="0,0,0,4" />
@@ -4174,7 +4212,7 @@
     <Setter Property="ScrollViewer.IsDeferredScrollingEnabled" Value="False" />
     <Setter Property="HorizontalAlignment" Value="Stretch" />
     <Setter Property="VerticalAlignment" Value="Stretch" />
-    <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+    <Setter Property="HorizontalContentAlignment" Value="Left" />
     <Setter Property="VerticalContentAlignment" Value="Top" />
     <Setter Property="MinHeight" Value="{DynamicResource TextControlThemeMinHeight}" />
     <Setter Property="MinWidth" Value="{DynamicResource TextControlThemeMinWidth}" />
@@ -4305,7 +4343,7 @@
     <Setter Property="ScrollViewer.IsDeferredScrollingEnabled" Value="False" />
     <Setter Property="HorizontalAlignment" Value="Stretch" />
     <Setter Property="VerticalAlignment" Value="Stretch" />
-    <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+    <Setter Property="HorizontalContentAlignment" Value="Left" />
     <Setter Property="VerticalContentAlignment" Value="Top" />
     <Setter Property="MinHeight" Value="{DynamicResource TextControlThemeMinHeight}" />
     <Setter Property="MinWidth" Value="{DynamicResource TextControlThemeMinWidth}" />

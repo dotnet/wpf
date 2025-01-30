@@ -265,11 +265,13 @@ namespace MS.Internal.PtsHost
             isClean = this.IsClean;
 
             // Add new entry into BreakRecordTable
-            entry = new BreakRecordTableEntry();
-            entry.BreakRecord = brOut;
-            entry.DocumentPage = new WeakReference(page);
-            entry.TextSegments = textView.TextSegments;
-            entry.DependentMax = dependentMax;
+            entry = new BreakRecordTableEntry
+            {
+                BreakRecord = brOut,
+                DocumentPage = new WeakReference(page),
+                TextSegments = textView.TextSegments,
+                DependentMax = dependentMax
+            };
             if (pageNumber == _breakRecords.Count)
             {
                 _breakRecords.Add(entry);

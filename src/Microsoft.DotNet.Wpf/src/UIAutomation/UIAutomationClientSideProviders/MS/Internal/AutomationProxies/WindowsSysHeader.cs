@@ -148,9 +148,10 @@ namespace MS.Internal.AutomationProxies
         // Returns a Proxy element corresponding to the specified screen coordinates.
         internal override ProxySimple ElementProviderFromPoint (int x, int y)
         {
-            NativeMethods.HDHITTESTINFO HitTestInfo = new NativeMethods.HDHITTESTINFO();
-
-            HitTestInfo.pt = new NativeMethods.Win32Point (x, y);
+            NativeMethods.HDHITTESTINFO HitTestInfo = new NativeMethods.HDHITTESTINFO
+            {
+                pt = new NativeMethods.Win32Point(x, y)
+            };
 
             int index = -1;
 

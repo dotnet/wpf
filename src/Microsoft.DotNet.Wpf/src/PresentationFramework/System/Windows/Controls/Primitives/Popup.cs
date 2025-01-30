@@ -26,10 +26,6 @@ using MS.Win32;
 
 using CommonDependencyProperty = MS.Internal.PresentationFramework.CommonDependencyPropertyAttribute;
 
-// Disable pragma warnings to enable PREsharp pragmas
-#pragma warning disable 1634, 1691
-
-
 namespace System.Windows.Controls.Primitives
 {
     /// <summary>
@@ -904,9 +900,11 @@ namespace System.Windows.Controls.Primitives
             // lookups can work.  The Popup for tooltip and context menu isn't in the tree
             // so FE relies on GetUIParentCore to return the placement target as the
             // effective logical parent
-            Binding binding = new Binding("PlacementTarget");
-            binding.Mode = BindingMode.OneWay;
-            binding.Source = child;
+            Binding binding = new Binding("PlacementTarget")
+            {
+                Mode = BindingMode.OneWay,
+                Source = child
+            };
             popup.SetBinding(PlacementTargetProperty, binding);
 
             // NOTE: this will hook up child as a logical child of Popup.
@@ -916,48 +914,64 @@ namespace System.Windows.Controls.Primitives
             // the tree into the child (unless at a later date an alternate method has been created).
             popup.Child = child;
 
-            binding = new Binding("VerticalOffset");
-            binding.Mode = BindingMode.OneWay;
-            binding.Source = child;
+            binding = new Binding("VerticalOffset")
+            {
+                Mode = BindingMode.OneWay,
+                Source = child
+            };
             popup.SetBinding(VerticalOffsetProperty, binding);
 
-            binding = new Binding("HorizontalOffset");
-            binding.Mode = BindingMode.OneWay;
-            binding.Source = child;
+            binding = new Binding("HorizontalOffset")
+            {
+                Mode = BindingMode.OneWay,
+                Source = child
+            };
             popup.SetBinding(HorizontalOffsetProperty, binding);
 
-            binding = new Binding("PlacementRectangle");
-            binding.Mode = BindingMode.OneWay;
-            binding.Source = child;
+            binding = new Binding("PlacementRectangle")
+            {
+                Mode = BindingMode.OneWay,
+                Source = child
+            };
             popup.SetBinding(PlacementRectangleProperty, binding);
 
-            binding = new Binding("Placement");
-            binding.Mode = BindingMode.OneWay;
-            binding.Source = child;
+            binding = new Binding("Placement")
+            {
+                Mode = BindingMode.OneWay,
+                Source = child
+            };
             popup.SetBinding(PlacementProperty, binding);
 
-            binding = new Binding("StaysOpen");
-            binding.Mode = BindingMode.OneWay;
-            binding.Source = child;
+            binding = new Binding("StaysOpen")
+            {
+                Mode = BindingMode.OneWay,
+                Source = child
+            };
             popup.SetBinding(StaysOpenProperty, binding);
 
-            binding = new Binding("CustomPopupPlacementCallback");
-            binding.Mode = BindingMode.OneWay;
-            binding.Source = child;
+            binding = new Binding("CustomPopupPlacementCallback")
+            {
+                Mode = BindingMode.OneWay,
+                Source = child
+            };
             popup.SetBinding(CustomPopupPlacementCallbackProperty, binding);
 
             if (bindTreatMousePlacementAsBottomProperty)
             {
-                binding = new Binding("FromKeyboard");
-                binding.Mode = BindingMode.OneWay;
-                binding.Source = child;
+                binding = new Binding("FromKeyboard")
+                {
+                    Mode = BindingMode.OneWay,
+                    Source = child
+                };
                 popup.SetBinding(TreatMousePlacementAsBottomProperty, binding);
             }
 
             // Note: IsOpen should always be last in this method
-            binding = new Binding("IsOpen");
-            binding.Mode = BindingMode.OneWay;
-            binding.Source = child;
+            binding = new Binding("IsOpen")
+            {
+                Mode = BindingMode.OneWay,
+                Source = child
+            };
             popup.SetBinding(IsOpenProperty, binding);
         }
 
@@ -1295,8 +1309,10 @@ namespace System.Windows.Controls.Primitives
         ///</param>
         void IAddChild.AddText(string text)
         {
-            TextBlock lbl = new TextBlock();
-            lbl.Text = text;
+            TextBlock lbl = new TextBlock
+            {
+                Text = text
+            };
 
             Child = lbl;
         }
@@ -2658,9 +2674,10 @@ namespace System.Windows.Controls.Primitives
 
             if (monitor != IntPtr.Zero)
             {
-                NativeMethods.MONITORINFOEX monitorInfo = new NativeMethods.MONITORINFOEX();
-
-                monitorInfo.cbSize = Marshal.SizeOf(typeof(NativeMethods.MONITORINFOEX));
+                NativeMethods.MONITORINFOEX monitorInfo = new NativeMethods.MONITORINFOEX
+                {
+                    cbSize = Marshal.SizeOf(typeof(NativeMethods.MONITORINFOEX))
+                };
                 SafeNativeMethods.GetMonitorInfo(new HandleRef(null, monitor), monitorInfo);
 
                 //If this is a pop up for a menu or ToolTip then respect the work area if opening in the work area.
@@ -2703,9 +2720,6 @@ namespace System.Windows.Controls.Primitives
                 return new Rect(mousePoint.x, mousePoint.y, 0, 0);
             }
         }
-
-        // Not interested in the unmanaged error codes. Error return values detected and handled. Extended error information not needed.
-#pragma warning disable 6523
 
         /// <summary>
         ///     Returns information about the mouse cursor size.
@@ -2846,8 +2860,6 @@ namespace System.Windows.Controls.Primitives
         {
             return _secHelper.GetWindowRect();
         }
-
-#pragma warning restore 6523
 
         #endregion Positioning
 
@@ -3279,10 +3291,6 @@ namespace System.Windows.Controls.Primitives
                 return root as Visual;
             }
 
-// newWindow is referenced by the _window static field, but
-// PreSharp will think that newWindow is local and should be disposed.
-#pragma warning disable 6518
-
             internal void BuildWindow(int x, int y, Visual placementTarget,
                 bool transparent, HwndSourceHook hook, AutoResizedEventHandler handler, HwndDpiChangedEventHandler dpiChangedHandler)
             {
@@ -3323,10 +3331,12 @@ namespace System.Windows.Controls.Primitives
                 }
 
                 // set window parameters
-                HwndSourceParameters param = new HwndSourceParameters(String.Empty);
-                param.WindowClassStyle = classStyle;
-                param.WindowStyle = style;
-                param.ExtendedWindowStyle = styleEx;
+                HwndSourceParameters param = new HwndSourceParameters(String.Empty)
+                {
+                    WindowClassStyle = classStyle,
+                    WindowStyle = style,
+                    ExtendedWindowStyle = styleEx
+                };
                 param.SetPosition(x, y);
 
                 if (IsChildPopup)
@@ -3365,8 +3375,6 @@ namespace System.Windows.Controls.Primitives
                 newWindow.DpiChanged += dpiChangedHandler;
             }
 
-#pragma warning restore 6518
-
             private static bool ConnectedToForegroundWindow(IntPtr window)
             {
                 IntPtr foregroundWindow = UnsafeNativeMethods.GetForegroundWindow();
@@ -3390,7 +3398,7 @@ namespace System.Windows.Controls.Primitives
             private static IntPtr GetHandle(HwndSource hwnd)
             {
                 // add hook to the popup's window
-                return (hwnd!=null ? hwnd.CriticalHandle : IntPtr.Zero);
+                return (hwnd!=null ? hwnd.Handle : IntPtr.Zero);
             }
 
             private static IntPtr GetParentHandle(HwndSource hwnd)

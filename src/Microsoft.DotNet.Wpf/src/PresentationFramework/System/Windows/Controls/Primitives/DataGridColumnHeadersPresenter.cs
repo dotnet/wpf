@@ -745,8 +745,10 @@ namespace System.Windows.Controls.Primitives
         {
             Debug.Assert(_draggingSrcColumnHeader != null, "Dragging header is null");
 
-            DataGridColumnFloatingHeader floatingHeader = new DataGridColumnFloatingHeader();
-            floatingHeader.ReferenceHeader = _draggingSrcColumnHeader;
+            DataGridColumnFloatingHeader floatingHeader = new DataGridColumnFloatingHeader
+            {
+                ReferenceHeader = _draggingSrcColumnHeader
+            };
             return floatingHeader;
         }
 
@@ -776,8 +778,10 @@ namespace System.Windows.Controls.Primitives
         {
             Debug.Assert(_draggingSrcColumnHeader != null, "Dragging header is null");
 
-            DataGridColumnDropSeparator indicator = new DataGridColumnDropSeparator();
-            indicator.ReferenceHeader = _draggingSrcColumnHeader;
+            DataGridColumnDropSeparator indicator = new DataGridColumnDropSeparator
+            {
+                ReferenceHeader = _draggingSrcColumnHeader
+            };
             return indicator;
         }
 

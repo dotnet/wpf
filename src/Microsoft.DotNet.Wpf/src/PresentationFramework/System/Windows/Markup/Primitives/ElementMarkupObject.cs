@@ -342,7 +342,7 @@ namespace System.Windows.Markup.Primitives
         {
             // The instance stored in _shouldSerializeCacheLock is used as a sentinal for null
             // The avoids having to perform two lookups in the Hashtable to detect a cached null value.
-            object value = methodInfo == null ? _shouldSerializeCacheLock : methodInfo;
+            object value = methodInfo ?? _shouldSerializeCacheLock;
             lock (_shouldSerializeCacheLock)
             {
                 _shouldSerializeCache[key] = value;

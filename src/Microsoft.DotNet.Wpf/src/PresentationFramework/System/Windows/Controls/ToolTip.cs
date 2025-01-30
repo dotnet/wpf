@@ -499,13 +499,14 @@ namespace System.Windows.Controls
         {
             Debug.Assert(_parentPopup == null, "_parentPopup should be null");
 
-            _parentPopup = new Popup();
+            _parentPopup = new Popup
+            {
+                AllowsTransparency = true,
 
-            _parentPopup.AllowsTransparency = true;
-
-            // When StaysOpen is true (default), make the popup window WS_EX_Transparent
-            // to allow mouse input to go through the tooltip
-            _parentPopup.HitTestable = !StaysOpen;
+                // When StaysOpen is true (default), make the popup window WS_EX_Transparent
+                // to allow mouse input to go through the tooltip
+                HitTestable = !StaysOpen
+            };
 
             // Coerce HasDropShadow property in case popup can't be transparent
             CoerceValue(HasDropShadowProperty);

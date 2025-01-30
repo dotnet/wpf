@@ -195,8 +195,10 @@ namespace System.Windows.Input.StylusPlugIns
                 { 
                     if (_visualTarget == null)
                     {
-                        _visualTarget = new VisualTarget(this);
-                        _visualTarget.RootVisual = new ContainerVisual();
+                        _visualTarget = new VisualTarget(this)
+                        {
+                            RootVisual = new ContainerVisual()
+                        };
                     }
                     return _visualTarget;
                 }

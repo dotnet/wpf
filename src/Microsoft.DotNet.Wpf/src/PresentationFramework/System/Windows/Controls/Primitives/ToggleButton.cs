@@ -10,9 +10,6 @@ using System.Windows.Automation.Peers;
 
 using MS.Internal.KnownBoxes;
 
-// Disable CS3001: Warning as Error: not CLS-compliant
-#pragma warning disable 3001
-
 namespace System.Windows.Controls.Primitives
 {
     /// <summary>

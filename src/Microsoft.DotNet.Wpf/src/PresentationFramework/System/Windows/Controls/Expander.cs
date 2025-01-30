@@ -265,9 +265,11 @@ namespace System.Windows.Controls
         /// </summary>
         protected virtual void OnExpanded()
         {
-            RoutedEventArgs args = new RoutedEventArgs();
-            args.RoutedEvent = Expander.ExpandedEvent;
-            args.Source = this;
+            RoutedEventArgs args = new RoutedEventArgs
+            {
+                RoutedEvent = Expander.ExpandedEvent,
+                Source = this
+            };
             RaiseEvent(args);
         }
 

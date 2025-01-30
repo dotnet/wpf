@@ -1573,9 +1573,11 @@ namespace System.Windows.Input
                 bCanShown  = true;
                 if (fShow)
                 {
-                    NativeMethods.REGISTERWORD regWord = new NativeMethods.REGISTERWORD();
-                    regWord.lpReading = null;
-                    regWord.lpWord = strRegister;
+                    NativeMethods.REGISTERWORD regWord = new NativeMethods.REGISTERWORD
+                    {
+                        lpReading = null,
+                        lpWord = strRegister
+                    };
                     UnsafeNativeMethods.ImmConfigureIME(new HandleRef(this, hkl), new HandleRef(this, HwndFromInputElement(element)), NativeMethods.IME_CONFIG_REGISTERWORD, ref regWord);
                 }
             }

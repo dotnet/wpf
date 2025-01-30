@@ -1182,8 +1182,10 @@ namespace System.Windows.Input.Manipulations
         /// <returns>the new ManipulatorState object</returns>
         private static ManipulatorState CreateManipulatorState(Manipulator2D manipulator)
         {
-            ManipulatorState state = new ManipulatorState(manipulator.Id);
-            state.InitialManipulatorSnapshot = manipulator;
+            ManipulatorState state = new ManipulatorState(manipulator.Id)
+            {
+                InitialManipulatorSnapshot = manipulator
+            };
             state.CurrentManipulatorSnapshot = state.InitialManipulatorSnapshot;
             return state;
         }

@@ -330,7 +330,7 @@ namespace System.Windows
             ///////////////////
 
             // Invalidate relevant properties for this subtree
-            DependencyObject parent = (newParent != null) ? newParent : oldParent;
+            DependencyObject parent = newParent ?? oldParent;
             TreeWalkHelper.InvalidateOnTreeChange(/* fe = */ this, /* fce = */ null, parent, (newParent != null));
 
             // If no one has called BeginInit then mark the element initialized and fire Initialized event

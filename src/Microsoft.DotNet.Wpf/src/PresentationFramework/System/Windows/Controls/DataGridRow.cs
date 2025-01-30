@@ -707,9 +707,8 @@ namespace System.Windows.Controls
                 row.DataGridOwner,
                 DataGrid.RowDetailsVisibilityModeProperty);
 
-            if (visibility is DataGridRowDetailsVisibilityMode)
+            if (visibility is DataGridRowDetailsVisibilityMode visibilityMode)
             {
-                var visibilityMode = (DataGridRowDetailsVisibilityMode)visibility;
                 var hasDetailsTemplate = row.DetailsTemplate != null || row.DetailsTemplateSelector != null;
                 var isRealItem = row.Item != CollectionView.NewItemPlaceholder;
                 switch (visibilityMode)

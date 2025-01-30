@@ -217,10 +217,11 @@ namespace System.Windows
 
                 if ( _resources == null )
                 {
-                    _resources = new ResourceDictionary();
-
-                    // A Template ResourceDictionary can be accessed across threads
-                    _resources.CanBeAccessedAcrossThreads = true;
+                    _resources = new ResourceDictionary
+                    {
+                        // A Template ResourceDictionary can be accessed across threads
+                        CanBeAccessedAcrossThreads = true
+                    };
                 }
 
                 if ( IsSealed )
@@ -812,12 +813,14 @@ namespace System.Windows
 
                     // Create a Binding equivalent to the TemplateBindingExtension
 
-                    Binding binding = new Binding();
-                    binding.Mode = BindingMode.OneWay;
-                    binding.RelativeSource = RelativeSource.TemplatedParent;
-                    binding.Path = new PropertyPath(templateBindingExtension.Property);
-                    binding.Converter = templateBindingExtension.Converter;
-                    binding.ConverterParameter = templateBindingExtension.ConverterParameter;
+                    Binding binding = new Binding
+                    {
+                        Mode = BindingMode.OneWay,
+                        RelativeSource = RelativeSource.TemplatedParent,
+                        Path = new PropertyPath(templateBindingExtension.Property),
+                        Converter = templateBindingExtension.Converter,
+                        ConverterParameter = templateBindingExtension.ConverterParameter
+                    };
 
                     value = binding;
 
@@ -842,9 +845,11 @@ namespace System.Windows
 
             dependencyObject.ProvideSelfAsInheritanceContext(value, dependencyProperty);
 
-            EffectiveValueEntry entry = new EffectiveValueEntry(dependencyProperty);
-            entry.BaseValueSourceInternal = BaseValueSourceInternal.ParentTemplate;
-            entry.Value = value;
+            EffectiveValueEntry entry = new EffectiveValueEntry(dependencyProperty)
+            {
+                BaseValueSourceInternal = BaseValueSourceInternal.ParentTemplate,
+                Value = value
+            };
 
             if (isMarkupExtension)
             {

@@ -309,8 +309,6 @@ namespace System.Windows.Forms.Integration
             }
             set
             {
-#pragma warning disable 1634, 1691
-#pragma warning disable 56526
                 Control oldChild = Child;
                 SWF.Form form = value as SWF.Form;
                 if (form != null)
@@ -337,7 +335,6 @@ namespace System.Windows.Forms.Integration
                     _priorConstraint = new Size(double.NaN, double.NaN);
                 }
                 OnChildChanged(oldChild);
-#pragma warning restore 1634, 1691, 56526
             }
         }
 

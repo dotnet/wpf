@@ -17,9 +17,6 @@ using MS.Internal.Controls;
 
 using BuildInfo = MS.Internal.PresentationFramework.BuildInfo;
 
-// Disable CS3001: Warning as Error: not CLS-compliant
-#pragma warning disable 3001
-
 namespace System.Windows.Controls.Primitives
 {
     /// <summary>
@@ -746,10 +743,11 @@ namespace System.Windows.Controls.Primitives
             if (bindingExpr == null)
             {
                 // create the binding
-                binding = new Binding();
-
-                // Set source to null so binding does not use ambient DataContext
-                binding.Source = null;
+                binding = new Binding
+                {
+                    // Set source to null so binding does not use ambient DataContext
+                    Source = null
+                };
 
                 if (useXml)
                 {
@@ -1766,9 +1764,10 @@ namespace System.Windows.Controls.Primitives
         /// </summary>
         private void InvokeSelectionChanged(List<ItemInfo> unselectedInfos, List<ItemInfo> selectedInfos)
         {
-            SelectionChangedEventArgs selectionChanged = new SelectionChangedEventArgs(unselectedInfos, selectedInfos);
-
-            selectionChanged.Source=this;
+            SelectionChangedEventArgs selectionChanged = new SelectionChangedEventArgs(unselectedInfos, selectedInfos)
+            {
+                Source = this
+            };
 
             OnSelectionChanged(selectionChanged);
         }

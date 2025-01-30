@@ -10,7 +10,7 @@ namespace System.Windows.Markup
     /// An attribute that specifies which property the xml:lang value should
     /// be directed to.
     /// Example:
-    //     [XmlLangProperty("Language")]
+    // [XmlLangProperty("Language")]
     //     public class ExampleFrameworkElement
     //
     //   Means that when the parser sees:

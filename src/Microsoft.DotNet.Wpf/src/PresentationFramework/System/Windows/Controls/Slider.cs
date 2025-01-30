@@ -818,10 +818,12 @@ namespace System.Windows.Controls
 
             if (_autoToolTip == null)
             {
-                _autoToolTip = new ToolTip();
-                _autoToolTip.Placement = PlacementMode.Custom;
-                _autoToolTip.PlacementTarget = thumb;
-                _autoToolTip.CustomPopupPlacementCallback = new CustomPopupPlacementCallback(this.AutoToolTipCustomPlacementCallback);
+                _autoToolTip = new ToolTip
+                {
+                    Placement = PlacementMode.Custom,
+                    PlacementTarget = thumb,
+                    CustomPopupPlacementCallback = new CustomPopupPlacementCallback(this.AutoToolTipCustomPlacementCallback)
+                };
             }
 
             thumb.ToolTip = _autoToolTip;

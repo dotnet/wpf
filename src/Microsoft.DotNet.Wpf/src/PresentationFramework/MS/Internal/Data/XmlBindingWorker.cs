@@ -394,8 +394,10 @@ namespace MS.Internal.Data
                                     ParentBindingExpression);
             }
 
-            QueriedCollection = new XmlDataCollection(XmlDataProvider);
-            QueriedCollection.XmlNamespaceManager = NamespaceManager;
+            QueriedCollection = new XmlDataCollection(XmlDataProvider)
+            {
+                XmlNamespaceManager = NamespaceManager
+            };
             QueriedCollection.SynchronizeCollection(nodes);
             return QueriedCollection;
         }

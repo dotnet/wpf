@@ -34,7 +34,7 @@ namespace Microsoft.Windows.Controls
             RibbonGroup ownerRibbonGroup)
             : base(adornedElement)
         {
-            PlacementTarget = (placementTarget == null ? adornedElement : placementTarget);
+            PlacementTarget = (placementTarget ?? adornedElement);
             HorizontalPlacement = horizontalPlacement;
             VerticalPlacement = verticalPlacement;
             HorizontalOffset = horizontalOffset;

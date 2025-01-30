@@ -29,10 +29,12 @@ namespace System.Windows.Media.Animation
 {
     static Storyboard()
     {
-        PropertyMetadata targetPropertyMetadata = new PropertyMetadata();
-        targetPropertyMetadata.FreezeValueCallback = TargetFreezeValueCallback;
+            PropertyMetadata targetPropertyMetadata = new PropertyMetadata
+            {
+                FreezeValueCallback = TargetFreezeValueCallback
+            };
 
-        TargetProperty = DependencyProperty.RegisterAttached("Target", typeof(DependencyObject), typeof(Storyboard), targetPropertyMetadata);
+            TargetProperty = DependencyProperty.RegisterAttached("Target", typeof(DependencyObject), typeof(Storyboard), targetPropertyMetadata);
     }
 
     /// <summary>

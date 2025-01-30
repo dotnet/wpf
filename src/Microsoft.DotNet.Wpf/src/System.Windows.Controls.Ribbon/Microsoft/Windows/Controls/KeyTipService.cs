@@ -939,8 +939,10 @@ namespace Microsoft.Windows.Controls
 
             HideCurrentShowingKeyTips();
             _prefixText = string.Empty;
-            KeyTipAccessedEventArgs eventArgs = new KeyTipAccessedEventArgs();
-            eventArgs.RoutedEvent = PreviewKeyTipAccessedEvent;
+            KeyTipAccessedEventArgs eventArgs = new KeyTipAccessedEventArgs
+            {
+                RoutedEvent = PreviewKeyTipAccessedEvent
+            };
             object oldFocusedElement = Keyboard.FocusedElement;
             IInputElement inputElement = exactMatchElement as IInputElement;
             if (inputElement != null)
@@ -1093,8 +1095,10 @@ namespace Microsoft.Windows.Controls
         {
             if (_showKeyTipsTimer == null)
             {
-                _showKeyTipsTimer = new DispatcherTimer(DispatcherPriority.Normal);
-                _showKeyTipsTimer.Interval = TimeSpan.FromMilliseconds(ShowKeyTipsWaitTime);
+                _showKeyTipsTimer = new DispatcherTimer(DispatcherPriority.Normal)
+                {
+                    Interval = TimeSpan.FromMilliseconds(ShowKeyTipsWaitTime)
+                };
                 _showKeyTipsTimer.Tick += delegate(object sender, EventArgs e) { ShowKeyTips(); };
             }
             _showKeyTipsTimer.Start();
@@ -1368,7 +1372,7 @@ namespace Microsoft.Windows.Controls
                     if (activatingEventArgs.KeyTipVisibility == Visibility.Visible)
                     {
                         // Create the keytip and add it as the adorner.
-                        UIElement adornedElement = RibbonHelper.GetContainingUIElement(activatingEventArgs.PlacementTarget == null ? element : activatingEventArgs.PlacementTarget);
+                        UIElement adornedElement = RibbonHelper.GetContainingUIElement(activatingEventArgs.PlacementTarget ?? element);
                         if (adornedElement != null && adornedElement.IsVisible)
                         {
                             bool isScrollAdornerLayer = false;

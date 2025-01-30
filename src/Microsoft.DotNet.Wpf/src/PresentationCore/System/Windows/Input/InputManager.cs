@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -650,9 +650,9 @@ namespace System.Windows.Input
             // PreProcessedInputEventArgs and cast it to NotifyInputEventArgs
             // or ProcessInputEventArgs because a malicious user could upcast
             // the object and call inappropriate methods.
-            NotifyInputEventArgs notifyInputEventArgs = (_notifyInputEventArgs != null) ? _notifyInputEventArgs : new NotifyInputEventArgs();
-            ProcessInputEventArgs processInputEventArgs = (_processInputEventArgs != null) ? _processInputEventArgs : new ProcessInputEventArgs();
-            PreProcessInputEventArgs preProcessInputEventArgs = (_preProcessInputEventArgs != null) ? _preProcessInputEventArgs : new PreProcessInputEventArgs();
+            NotifyInputEventArgs notifyInputEventArgs = _notifyInputEventArgs ?? new NotifyInputEventArgs();
+            ProcessInputEventArgs processInputEventArgs = _processInputEventArgs ?? new ProcessInputEventArgs();
+            PreProcessInputEventArgs preProcessInputEventArgs = _preProcessInputEventArgs ?? new PreProcessInputEventArgs();
             _notifyInputEventArgs = null;
             _processInputEventArgs = null;
             _preProcessInputEventArgs = null;
@@ -855,8 +855,10 @@ namespace System.Windows.Input
                             {
                                 InputReportEventArgs previewInputReport = (InputReportEventArgs) item.Input;
 
-                                InputReportEventArgs inputReport = new InputReportEventArgs(previewInputReport.Device, previewInputReport.Report);
-                                inputReport.RoutedEvent=InputManager.InputReportEvent;
+                                InputReportEventArgs inputReport = new InputReportEventArgs(previewInputReport.Device, previewInputReport.Report)
+                                {
+                                    RoutedEvent = InputManager.InputReportEvent
+                                };
                                 PushInput(inputReport, item);
                             }
                         }

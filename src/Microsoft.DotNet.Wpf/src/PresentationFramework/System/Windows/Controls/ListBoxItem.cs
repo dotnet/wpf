@@ -14,7 +14,7 @@ using System.Windows.Input;
 using System.Windows.Controls.Primitives;
 
 // Disable CS3001: Warning as Error: not CLS-compliant
-#pragma warning disable 3001
+#pragma warning disable CS3001
 
 namespace System.Windows.Controls
 {

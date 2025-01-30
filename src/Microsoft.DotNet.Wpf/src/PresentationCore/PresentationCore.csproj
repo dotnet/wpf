@@ -50,7 +50,6 @@
     <Compile Include="$(WpfSharedDir)\MS\Internal\FreezableOperations.cs" />
     <Compile Include="$(WpfSharedDir)\MS\Internal\PointUtil.cs" />
     <Compile Include="$(WpfSharedDir)\MS\Internal\MimeTypeMapper.cs" />
-    <Compile Include="$(WpfSharedDir)\MS\Internal\Pair.cs" />
     <Compile Include="$(WpfSharedDir)\MS\Internal\PartialList.cs" />
     <Compile Include="$(WpfSharedDir)\MS\Internal\LegacyPriorityQueue.cs" />
     <Compile Include="$(WpfSharedDir)\MS\Internal\SequentialUshortCollection.cs" />
@@ -139,7 +138,6 @@
     <Compile Include="MS\Internal\Automation\ElementProxy.cs" />
     <Compile Include="MS\Internal\Automation\ElementUtil.cs" />
     <Compile Include="MS\Internal\Automation\EventMap.cs" />
-    <Compile Include="MS\Internal\Automation\EventPropertyMap.cs" />
     <Compile Include="MS\Internal\Automation\ExpandCollapseProviderWrapper.cs" />
     <Compile Include="MS\Internal\Automation\GridItemProviderWrapper.cs" />
     <Compile Include="MS\Internal\Automation\GridProviderWrapper.cs" />
@@ -612,7 +610,6 @@
     <Compile Include="System\Windows\Input\Command\InputBindingCollection.cs" />
     <Compile Include="System\Windows\Input\Command\InputGesture.cs" />
     <Compile Include="System\Windows\Input\Command\InputGestureCollection.cs" />
-    <Compile Include="System\Windows\Input\Command\ISecureCommand.cs" />
     <Compile Include="System\Windows\Input\Command\KeyBinding.cs" />
     <Compile Include="System\Windows\Input\Command\KeyGesture.cs" />
     <Compile Include="System\Windows\Input\Command\KeyGestureConverter.cs" />
@@ -628,7 +625,6 @@
     <Compile Include="System\Windows\Input\Command\NavigationCommands.cs" />
     <Compile Include="System\Windows\Input\Command\RoutedCommand.cs" />
     <Compile Include="System\Windows\Input\Command\RoutedUICommand.cs" />
-    <Compile Include="System\Windows\Input\Command\SecureUICommand.cs" />
     <Compile Include="System\Windows\Input\Stylus\Common\DynamicRenderer.cs" />
     <Compile Include="System\Windows\Input\Stylus\Common\DynamicRendererThreadManager.cs" />
     <Compile Include="System\Windows\Input\Stylus\Common\MultiTouchSystemGestureLogic.cs" />

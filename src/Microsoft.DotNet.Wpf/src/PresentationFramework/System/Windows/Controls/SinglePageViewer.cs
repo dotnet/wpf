@@ -665,11 +665,13 @@ namespace System.Windows.Controls
                 {
                     // Store the current state of the document in the PrintingState
                     paginator = ((IDocumentPaginatorSource)document).DocumentPaginator as FlowDocumentPaginator;
-                    _printingState = new FlowDocumentPrintingState();
-                    _printingState.XpsDocumentWriter = docWriter;
-                    _printingState.PageSize = paginator.PageSize;
-                    _printingState.PagePadding = document.PagePadding;
-                    _printingState.IsSelectionEnabled = IsSelectionEnabled;
+                    _printingState = new FlowDocumentPrintingState
+                    {
+                        XpsDocumentWriter = docWriter,
+                        PageSize = paginator.PageSize,
+                        PagePadding = document.PagePadding,
+                        IsSelectionEnabled = IsSelectionEnabled
+                    };
 
                     // Since _printingState value is used to determine CanExecute state, we must invalidate that state.
                     CommandManager.InvalidateRequerySuggested();

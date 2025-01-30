@@ -76,8 +76,7 @@ namespace System.Windows
         {
             get
             {
-                DefaultValueFactory defaultFactory = _defaultValue as DefaultValueFactory;
-                if (defaultFactory == null)
+                if (_defaultValue is not DefaultValueFactory defaultFactory)
                 {
                     return _defaultValue;
                 }
@@ -134,8 +133,7 @@ namespace System.Windows
 
             // If we are not using a DefaultValueFactory (common case)
             // just return _defaultValue
-            DefaultValueFactory defaultFactory = _defaultValue as DefaultValueFactory;
-            if (defaultFactory == null)
+            if (_defaultValue is not DefaultValueFactory defaultFactory)
             {
                 return _defaultValue;
             }
@@ -293,9 +291,7 @@ namespace System.Windows
         /// <param name="value">The cached default</param>
         private static void DefaultValueCacheRemovalCallback(ArrayList list, int key, object value)
         {
-            Freezable cachedDefault = value as Freezable;
-
-            if (cachedDefault != null)
+            if (value is Freezable cachedDefault)
             {
                 // Freeze fires the Changed event so we need to clear off the handlers before
                 // calling it.  Otherwise the promoter would run and attempt to set the
@@ -316,10 +312,11 @@ namespace System.Windows
         /// <param name="value">The cached default</param>
         private static void DefaultValueCachePromotionCallback(ArrayList list, int key, object value)
         {
-            Freezable cachedDefault = value as Freezable;
-
-            // The only way to promote a cached default is to fire its Changed event.
-            cachedDefault?.FireChanged();
+            if (value is Freezable cachedDefault)
+            {
+                // The only way to promote a cached default is to fire its Changed event.
+                cachedDefault.FireChanged();
+            }
         }
 
 
@@ -458,9 +455,7 @@ namespace System.Windows
 
                 if (value != null)
                 {
-                    Freezable valueAsFreezable = value as Freezable;
-
-                    if (valueAsFreezable != null)
+                    if (value is Freezable valueAsFreezable)
                     {
                         if (!valueAsFreezable.Freeze(isChecking))
                         {
@@ -479,9 +474,7 @@ namespace System.Windows
                     }
                     else  // not a Freezable
                     {
-                        DispatcherObject valueAsDispatcherObject = value as DispatcherObject;
-
-                        if (valueAsDispatcherObject != null)
+                        if (value is DispatcherObject valueAsDispatcherObject)
                         {
                             if (valueAsDispatcherObject.Dispatcher == null)
                             {
@@ -504,7 +497,7 @@ namespace System.Windows
                                         d,
                                         dp,
                                         dp.OwnerType,
-                                        valueAsDispatcherObject );
+                                        valueAsDispatcherObject);
                                 }
 
                                 return false;

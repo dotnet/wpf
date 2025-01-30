@@ -616,8 +616,10 @@ namespace System.Windows.Controls
                 Debug.Assert(_autoScrollTimer == null, "IsMouseCaptured went from true to true");
                 if (_autoScrollTimer == null)
                 {
-                    _autoScrollTimer = new DispatcherTimer(DispatcherPriority.SystemIdle);
-                    _autoScrollTimer.Interval = AutoScrollTimeout;
+                    _autoScrollTimer = new DispatcherTimer(DispatcherPriority.SystemIdle)
+                    {
+                        Interval = AutoScrollTimeout
+                    };
                     _autoScrollTimer.Tick += new EventHandler(OnAutoScrollTimeout);
                     _autoScrollTimer.Start();
                 }

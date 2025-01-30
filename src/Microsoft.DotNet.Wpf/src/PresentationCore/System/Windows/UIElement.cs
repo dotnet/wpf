@@ -51,10 +51,6 @@ namespace System.Windows
         Collapsed
     }
 
-    // PreSharp uses message numbers that the C# compiler doesn't know about.
-    // Disable the C# complaints, per the PreSharp documentation.
-#pragma warning disable 1634, 1691
-
     /// <summary>
     /// UIElement is the base class for frameworks building on the Windows Presentation Core.
     /// </summary>
@@ -1139,17 +1135,13 @@ namespace System.Windows
                 HandleRef desktopWnd = new HandleRef(null, IntPtr.Zero);
 
                 // Win32Exception will get the Win32 error code so we don't have to
-#pragma warning disable 6523
                 IntPtr dc = UnsafeNativeMethods.GetDC(desktopWnd);
 
                 // Detecting error case from unmanaged call, required by PREsharp to throw a Win32Exception
-#pragma warning disable 6503
                 if (dc == IntPtr.Zero)
                 {
                     throw new Win32Exception();
                 }
-#pragma warning restore 6503
-#pragma warning restore 6523
 
                 try
                 {

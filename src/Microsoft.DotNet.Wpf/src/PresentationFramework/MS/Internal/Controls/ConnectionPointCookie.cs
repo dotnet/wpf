@@ -1,14 +1,10 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
 using System.Runtime.InteropServices;
 using System.Windows;
 using MS.Win32;
-
-// Since we disable PreSharp warnings in this file, PreSharp warning is unknown to C# compiler.
-// We first need to disable warnings about unknown message numbers and unknown pragmas.
-#pragma warning disable 1634, 1691
 
 namespace MS.Internal.Controls
 {
@@ -23,10 +19,8 @@ namespace MS.Internal.Controls
         internal ConnectionPointCookie(object source, object sink, Type eventInterface)
         {
             Exception ex = null;
-            if (source is UnsafeNativeMethods.IConnectionPointContainer)
+            if (source is UnsafeNativeMethods.IConnectionPointContainer cpc)
             {
-                UnsafeNativeMethods.IConnectionPointContainer cpc = (UnsafeNativeMethods.IConnectionPointContainer)source;
-
                 try
                 {
                     Guid tmp = eventInterface.GUID;
@@ -37,11 +31,11 @@ namespace MS.Internal.Controls
                 }
                 catch (Exception e)
                 {
-                    if(CriticalExceptions.IsCriticalException(e))
+                    if (CriticalExceptions.IsCriticalException(e))
                     {
                         throw;
                     }
-                    
+
                     connectionPoint = null;
                 }
 
@@ -91,10 +85,6 @@ namespace MS.Internal.Controls
             }
         }
 
-#pragma warning disable 6500
-
-// The 6500 warning is actually handled in below code, but the PreSharp explicitly checks the presence of NullReferenceException and SEHException, and still treat below code as violation of presharp rule, so suppress it here.
-
         /// <summary>
         /// Disconnect the current connection point.  If the object is not connected,
         /// this method will do nothing.
@@ -137,8 +127,6 @@ namespace MS.Internal.Controls
                 }
             }
         }
-
-#pragma warning restore 6500
 
         ~ConnectionPointCookie()
         {

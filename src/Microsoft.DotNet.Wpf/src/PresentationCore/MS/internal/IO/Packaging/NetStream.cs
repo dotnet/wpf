@@ -586,12 +586,13 @@ namespace MS.Internal.IO.Packaging
                 _byteRangeDownloader = new ByteRangeDownloader(_uri,
                                                                _tempFileStream,
                                                                _readEventHandles[(int)ReadEvent.ByteRangeReadEvent].SafeWaitHandle,
-                                                               _tempFileMutex);
+                                                               _tempFileMutex)
+                {
+                    Proxy = _originalRequest.Proxy,
 
-                _byteRangeDownloader.Proxy = _originalRequest.Proxy;
-
-                _byteRangeDownloader.Credentials = _originalRequest.Credentials;
-                _byteRangeDownloader.CachePolicy = _originalRequest.CachePolicy;
+                    Credentials = _originalRequest.Credentials,
+                    CachePolicy = _originalRequest.CachePolicy
+                };
 
                 _byteRangesAvailable = new ArrayList(); // byte ranges that are downloaded
             }

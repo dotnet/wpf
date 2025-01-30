@@ -105,7 +105,7 @@ namespace System.Windows.Controls.Primitives
         private void OnAnyMouseLeftButtonDown(System.Windows.Input.MouseButtonEventArgs e)
         {
             // Ignore actions if the button down arises from a different presentation source
-            if (!PresentationSource.UnderSamePresentationSource(e.OriginalSource as DependencyObject, this))
+            if (!PresentationSource.IsUnderSamePresentationSource(e.OriginalSource as DependencyObject, this))
             {
                 return;
             }
@@ -288,8 +288,10 @@ namespace System.Windows.Controls.Primitives
                 DataGridHelper.IsGridLineVisible(dataGrid, /*isHorizontal = */ true))
             {
                 double thickness = dataGrid.HorizontalGridLineThickness;
-                Rect rect = new Rect(new Size(RenderSize.Width, thickness));
-                rect.Y = RenderSize.Height - thickness;
+                Rect rect = new Rect(new Size(RenderSize.Width, thickness))
+                {
+                    Y = RenderSize.Height - thickness
+                };
 
                 drawingContext.DrawRectangle(dataGrid.HorizontalGridLinesBrush, null, rect);
             }

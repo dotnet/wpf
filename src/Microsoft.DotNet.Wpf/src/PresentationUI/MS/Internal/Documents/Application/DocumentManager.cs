@@ -93,13 +93,14 @@ namespace MS.Internal.Documents.Application
         // because we have a fileToken we might be able to save
         _canSave = true;
 
-        PackageDocument doc = new PackageDocument(
-            new RightsDocument(
-            new FileDocument(fileToken)));
+            PackageDocument doc = new PackageDocument(
+                new RightsDocument(
+                new FileDocument(fileToken)))
+            {
+                Uri = source
+            };
 
-        doc.Uri = source;
-
-        return doc;
+            return doc;
     }
 
     /// <summary>
@@ -110,13 +111,14 @@ namespace MS.Internal.Documents.Application
     internal static PackageDocument CreateDefaultDocument(
         Uri source, Stream stream)
     {
-        PackageDocument doc = new PackageDocument(
-            new RightsDocument(
-            new FileDocument(stream)));
+            PackageDocument doc = new PackageDocument(
+                new RightsDocument(
+                new FileDocument(stream)))
+            {
+                Uri = source
+            };
 
-        doc.Uri = source;
-
-        return doc;
+            return doc;
     }
 
     /// <summary>

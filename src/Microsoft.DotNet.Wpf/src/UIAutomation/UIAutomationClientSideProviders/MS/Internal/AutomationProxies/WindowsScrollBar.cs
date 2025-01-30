@@ -566,8 +566,10 @@ namespace MS.Internal.AutomationProxies
 
         private int GetScrollValue (ScrollBarInfo info)
         {
-            NativeMethods.ScrollInfo si = new NativeMethods.ScrollInfo ();
-            si.fMask = NativeMethods.SIF_ALL;
+            NativeMethods.ScrollInfo si = new NativeMethods.ScrollInfo
+            {
+                fMask = NativeMethods.SIF_ALL
+            };
             si.cbSize = Marshal.SizeOf (si.GetType ());
 
             if (!Misc.GetScrollInfo(_hwnd, _sbFlag, ref si))
@@ -617,8 +619,10 @@ namespace MS.Internal.AutomationProxies
                 throw new ElementNotEnabledException();
             }
 
-            NativeMethods.ScrollInfo si = new NativeMethods.ScrollInfo ();
-            si.fMask = NativeMethods.SIF_ALL;
+            NativeMethods.ScrollInfo si = new NativeMethods.ScrollInfo
+            {
+                fMask = NativeMethods.SIF_ALL
+            };
             si.cbSize = Marshal.SizeOf (si.GetType ());
 
             if (!Misc.GetScrollInfo(_hwnd, _sbFlag, ref si))

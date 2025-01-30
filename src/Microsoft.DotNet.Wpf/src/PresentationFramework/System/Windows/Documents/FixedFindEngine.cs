@@ -367,10 +367,12 @@ namespace System.Windows.Documents
             //Wrap around a compatibility reader
             XmlReader xmlReader = new XmlCompatibilityReader(xmlTextReader, _predefinedNamespaces);
 
-            XmlReaderSettings settings = new XmlReaderSettings();
-            settings.IgnoreWhitespace = true;
-            settings.IgnoreComments = true;
-            settings.ProhibitDtd = true;
+            XmlReaderSettings settings = new XmlReaderSettings
+            {
+                IgnoreWhitespace = true,
+                IgnoreComments = true,
+                ProhibitDtd = true
+            };
 
             xmlReader = XmlReader.Create(xmlReader, settings);
 

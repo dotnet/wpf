@@ -35,9 +35,11 @@ namespace System.Windows
             {
                 return;
             }
-            
-            StylusEventArgs stylusEventArgs = new StylusEventArgs(Stylus.CurrentStylusDevice, Environment.TickCount);
-            stylusEventArgs.RoutedEvent = oldValue ? Stylus.StylusLeaveEvent : Stylus.StylusEnterEvent;
+
+            StylusEventArgs stylusEventArgs = new StylusEventArgs(Stylus.CurrentStylusDevice, Environment.TickCount)
+            {
+                RoutedEvent = oldValue ? Stylus.StylusLeaveEvent : Stylus.StylusEnterEvent
+            };
 
             if (uie != null)
             {

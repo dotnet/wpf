@@ -584,8 +584,10 @@ namespace System.Windows.Documents
                     targetUri = FixedPage.GetLinkUri(sourceElement, targetUri);
                 }
 
-                RequestNavigateEventArgs navigateArgs = new RequestNavigateEventArgs(targetUri, targetWindow);
-                navigateArgs.Source = sourceElement;
+                RequestNavigateEventArgs navigateArgs = new RequestNavigateEventArgs(targetUri, targetWindow)
+                {
+                    Source = sourceElement
+                };
                 sourceElement.RaiseEvent(navigateArgs);
 
                 if (navigateArgs.Handled)

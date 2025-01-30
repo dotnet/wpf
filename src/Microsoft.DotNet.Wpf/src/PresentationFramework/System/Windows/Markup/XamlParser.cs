@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -17,12 +17,6 @@ using System.Diagnostics;
 using System.Reflection;
 using System.Globalization;
 using MS.Utility;
-
-// Disabling 1634 and 1691:
-// In order to avoid generating warnings about unknown message numbers and
-// unknown pragmas when compiling C# source code with the C# compiler,
-// you need to disable warnings 1634 and 1691. (Presharp Documentation)
-#pragma warning disable 1634, 1691
 
 #if PBTCOMPILER
 namespace MS.Internal.Markup
@@ -96,7 +90,7 @@ namespace System.Windows.Markup
             // CS0618: A class member was marked with the Obsolete attribute, such that a warning 
             // will be issued when the class member is referenced. 
             textReader.ProhibitDtd = true;
-#pragma warning enable 0618 
+#pragma warning restore 0618 
 
             XmlCompatibilityReader xcr = new XmlCompatibilityReader(textReader,
                                                                     new IsXmlNamespaceSupportedCallback(IsXmlNamespaceSupported),
@@ -221,9 +215,8 @@ namespace System.Windows.Markup
                     int linePosition = 0;
                     string newMessage = null;
 
-                    if (e is XmlException)
+                    if (e is XmlException xmlEx)
                     {
-                        XmlException xmlEx = (XmlException)e;
                         lineNumber = xmlEx.LineNumber;
                         linePosition = xmlEx.LinePosition;
                         newMessage = xmlEx.Message;

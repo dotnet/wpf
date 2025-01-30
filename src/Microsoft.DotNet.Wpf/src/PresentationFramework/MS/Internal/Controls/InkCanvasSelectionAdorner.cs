@@ -60,9 +60,11 @@ namespace MS.Internal.Controls
                     null,
                     new Rect(0.0, 0.0, 1f, 1f));
 
-                Pen squareCapPen = new Pen(Brushes.Black, LineThickness);
-                squareCapPen.StartLineCap = PenLineCap.Square;
-                squareCapPen.EndLineCap = PenLineCap.Square;
+                Pen squareCapPen = new Pen(Brushes.Black, LineThickness)
+                {
+                    StartLineCap = PenLineCap.Square,
+                    EndLineCap = PenLineCap.Square
+                };
 
                 dc.DrawLine(squareCapPen,
                     new Point(1f, 0f), new Point(0f, 1f));
@@ -73,10 +75,12 @@ namespace MS.Internal.Controls
             }
             hatchDG.Freeze();
 
-            DrawingBrush tileBrush = new DrawingBrush(hatchDG);
-            tileBrush.TileMode = TileMode.Tile;
-            tileBrush.Viewport = new Rect(0, 0, HatchBorderMargin, HatchBorderMargin);
-            tileBrush.ViewportUnits = BrushMappingMode.Absolute;
+            DrawingBrush tileBrush = new DrawingBrush(hatchDG)
+            {
+                TileMode = TileMode.Tile,
+                Viewport = new Rect(0, 0, HatchBorderMargin, HatchBorderMargin),
+                ViewportUnits = BrushMappingMode.Absolute
+            };
             tileBrush.Freeze();
 
             _hatchPen = new Pen(tileBrush, HatchBorderMargin);
@@ -248,8 +252,10 @@ namespace MS.Internal.Controls
 
                     if (hatchGeometry == null)
                     {
-                        PathFigure path = new PathFigure();
-                        path.StartPoint = new Point(hatchRect.Left, hatchRect.Top);
+                        PathFigure path = new PathFigure
+                        {
+                            StartPoint = new Point(hatchRect.Left, hatchRect.Top)
+                        };
 
                         PathSegmentCollection segments = new PathSegmentCollection();
 

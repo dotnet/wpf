@@ -143,14 +143,15 @@ namespace MS.Internal.Documents.Application
 
                 if (clear != null)
                 {
-                    clear = new RightsManagementSuppressedStream(
-                        clear,
-                        DocumentRightsManagementManager.Current.HasPermissionToEdit);
-
-                    // Reset the position of the stream since GetPackageStream will
-                    // create a package and move the stream pointer somewhere else
-                    clear.Position = 0;
-                }
+                        clear = new RightsManagementSuppressedStream(
+                            clear,
+                            DocumentRightsManagementManager.Current.HasPermissionToEdit)
+                        {
+                            // Reset the position of the stream since GetPackageStream will
+                            // create a package and move the stream pointer somewhere else
+                            Position = 0
+                        };
+                    }
                 else
                 {
                     Trace.SafeWrite(
@@ -223,14 +224,15 @@ namespace MS.Internal.Documents.Application
 
                 if (clear != null)
                 {
-                    clear = new RightsManagementSuppressedStream(
-                        clear,
-                        DocumentRightsManagementManager.Current.HasPermissionToEdit);
-
-                    // Reset the position of the stream since GetPackageStream will
-                    // create a package and move the stream pointer somewhere else
-                    clear.Position = 0;
-                }
+                        clear = new RightsManagementSuppressedStream(
+                            clear,
+                            DocumentRightsManagementManager.Current.HasPermissionToEdit)
+                        {
+                            // Reset the position of the stream since GetPackageStream will
+                            // create a package and move the stream pointer somewhere else
+                            Position = 0
+                        };
+                    }
                 else
                 {
                     Trace.SafeWrite(
@@ -469,13 +471,14 @@ namespace MS.Internal.Documents.Application
 
         clear = envelope.GetPackageStream();
 
-        clear = new RightsManagementSuppressedStream(clear, allowWrite);
+            clear = new RightsManagementSuppressedStream(clear, allowWrite)
+            {
+                // Reset the position of the stream since GetPackageStream will
+                // create a package and move the stream pointer somewhere else
+                Position = 0
+            };
 
-        // Reset the position of the stream since GetPackageStream will
-        // create a package and move the stream pointer somewhere else
-        clear.Position = 0;
-
-        return clear;
+            return clear;
     }
 
     /// <summary>

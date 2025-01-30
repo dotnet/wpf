@@ -553,12 +553,14 @@ namespace System.Windows.Controls
 
                     // Store the current state of the document in the PrintingState
                     paginator = ((IDocumentPaginatorSource)Document).DocumentPaginator as FlowDocumentPaginator;
-                    _printingState = new FlowDocumentPrintingState();
-                    _printingState.XpsDocumentWriter = docWriter;
-                    _printingState.PageSize = paginator.PageSize;
-                    _printingState.PagePadding = Document.PagePadding;
-                    _printingState.IsSelectionEnabled = IsSelectionEnabled;
-                    _printingState.ColumnWidth = Document.ColumnWidth;
+                    _printingState = new FlowDocumentPrintingState
+                    {
+                        XpsDocumentWriter = docWriter,
+                        PageSize = paginator.PageSize,
+                        PagePadding = Document.PagePadding,
+                        IsSelectionEnabled = IsSelectionEnabled,
+                        ColumnWidth = Document.ColumnWidth
+                    };
 
                     // Since _printingState value is used to determine CanExecute state, we must invalidate that state.
                     CommandManager.InvalidateRequerySuggested();
@@ -983,9 +985,11 @@ namespace System.Windows.Controls
                 RenderScope != null &&
                 Document.StructuralCache.TextContainer.TextSelection == null)
             {
-                _textEditor = new TextEditor(Document.StructuralCache.TextContainer, this, false);
-                _textEditor.IsReadOnly = !IsEditingEnabled;
-                _textEditor.TextView = textView;
+                _textEditor = new TextEditor(Document.StructuralCache.TextContainer, this, false)
+                {
+                    IsReadOnly = !IsEditingEnabled,
+                    TextView = textView
+                };
             }
 
             //restore AnnotationsService state
@@ -1288,9 +1292,11 @@ namespace System.Windows.Controls
         /// </summary>
         private void CreateTwoWayBinding(FrameworkElement fe, DependencyProperty dp, string propertyPath)
         {
-            Binding binding = new Binding(propertyPath);
-            binding.Mode = BindingMode.TwoWay;
-            binding.Source = this;
+            Binding binding = new Binding(propertyPath)
+            {
+                Mode = BindingMode.TwoWay,
+                Source = this
+            };
             fe.SetBinding(dp, binding);
         }
 

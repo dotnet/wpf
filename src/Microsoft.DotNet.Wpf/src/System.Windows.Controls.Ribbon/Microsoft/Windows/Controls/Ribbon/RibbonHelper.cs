@@ -65,13 +65,15 @@ namespace Microsoft.Windows.Controls.Ribbon
                     !string.IsNullOrEmpty(toolTipFooterDescription) ||
                     toolTipFooterImageSource != null)
                 {
-                    RibbonToolTip ribbonToolTip = new RibbonToolTip();
-                    ribbonToolTip.Title = toolTipTitle;
-                    ribbonToolTip.Description = toolTipDescription;
-                    ribbonToolTip.ImageSource = toolTipImageSource;
-                    ribbonToolTip.FooterTitle = toolTipFooterTitle;
-                    ribbonToolTip.FooterDescription = toolTipFooterDescription;
-                    ribbonToolTip.FooterImageSource = toolTipFooterImageSource;
+                    RibbonToolTip ribbonToolTip = new RibbonToolTip
+                    {
+                        Title = toolTipTitle,
+                        Description = toolTipDescription,
+                        ImageSource = toolTipImageSource,
+                        FooterTitle = toolTipFooterTitle,
+                        FooterDescription = toolTipFooterDescription,
+                        FooterImageSource = toolTipFooterImageSource
+                    };
                     value = ribbonToolTip;
                 }
             }
@@ -129,8 +131,10 @@ namespace Microsoft.Windows.Controls.Ribbon
                     if (ribbonToolTip == null ||
                         ribbonToolTip.Title != content.ToString())
                     {
-                        ribbonToolTip = new RibbonToolTip();
-                        ribbonToolTip.Title = content.ToString();
+                        ribbonToolTip = new RibbonToolTip
+                        {
+                            Title = content.ToString()
+                        };
                         visualChild.ToolTip = ribbonToolTip;
                     }
                 }
@@ -2381,16 +2385,22 @@ namespace Microsoft.Windows.Controls.Ribbon
             Popup popup = menuItem.Popup;
             if (popup != null)
             {
-                Binding binding = new Binding("SubmenuPlaceholder");
-                binding.Source = parentItemsControl;
+                Binding binding = new Binding("SubmenuPlaceholder")
+                {
+                    Source = parentItemsControl
+                };
                 BindingOperations.SetBinding(popup, Popup.PlacementTargetProperty, binding);
 
-                binding = new Binding("SubmenuPlaceholder.ActualWidth");
-                binding.Source = parentItemsControl;
+                binding = new Binding("SubmenuPlaceholder.ActualWidth")
+                {
+                    Source = parentItemsControl
+                };
                 BindingOperations.SetBinding(popup, Popup.WidthProperty, binding);
 
-                binding = new Binding("SubmenuPlaceholder.ActualHeight");
-                binding.Source = parentItemsControl;
+                binding = new Binding("SubmenuPlaceholder.ActualHeight")
+                {
+                    Source = parentItemsControl
+                };
                 BindingOperations.SetBinding(popup, Popup.HeightProperty, binding);
                 BindingOperations.SetBinding(menuItem, RibbonMenuItem.DropDownHeightProperty, binding);
             }

@@ -16,11 +16,6 @@ using MS.Win32;
 using MS.Internal.Documents;
 using MS.Internal.Commands; // CommandHelpers
 
-#pragma warning disable 1634, 1691 // To enable presharp warning disables (#pragma suppress) below.
-//
-// Description: Text editing service for controls.
-//
-
 namespace System.Windows.Documents
 {
     /// <summary>
@@ -507,8 +502,10 @@ namespace System.Windows.Documents
         {
             if (_mouseSelectionState == null)
             {
-                _mouseSelectionState = new MouseSelectionState();
-                _mouseSelectionState.Timer = new DispatcherTimer(DispatcherPriority.Normal);
+                _mouseSelectionState = new MouseSelectionState
+                {
+                    Timer = new DispatcherTimer(DispatcherPriority.Normal)
+                };
                 _mouseSelectionState.Timer.Tick += new EventHandler(HandleMouseSelectionTick);
                 // 400ms is the default value for MenuShowDelay. Creating timer with smaller value may
                 // cause Dispatcher queue starvation.

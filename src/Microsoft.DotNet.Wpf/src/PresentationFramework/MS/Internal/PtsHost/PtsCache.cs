@@ -189,6 +189,7 @@ namespace MS.Internal.PtsHost
                 }
             }
 
+#pragma warning disable IDE0017
             // Create new PTS Context, if cannot find free one.
             if (index == _contextPool.Count)
             {
@@ -197,6 +198,7 @@ namespace MS.Internal.PtsHost
                 _contextPool[index].PtsHost = new PtsHost();
                 _contextPool[index].PtsHost.Context = CreatePTSContext(index, textFormattingMode);
             }
+#pragma warning restore IDE0017
 
             // Initialize TextFormatter, if optimal paragraph is enabled.
             // Optimal paragraph requires new TextFormatter for every PTS Context.

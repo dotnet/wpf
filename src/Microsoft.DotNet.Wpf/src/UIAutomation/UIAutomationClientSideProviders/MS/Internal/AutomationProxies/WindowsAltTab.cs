@@ -4,9 +4,6 @@
 
 // Description: HWND-based Alt-Tab (Task Switch) Window Proxy
 
-// PRESHARP: In order to avoid generating warnings about unknown message numbers and unknown pragmas.
-#pragma warning disable 1634, 1691
-
 using System;
 using System.Text;
 using System.Windows.Automation.Provider;

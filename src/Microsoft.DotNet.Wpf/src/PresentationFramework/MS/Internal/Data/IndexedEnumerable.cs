@@ -202,7 +202,6 @@ namespace MS.Internal.Data
         {
             get
             {
-#pragma warning disable 1634 // about to use PreSharp message numbers - unknown to C#
                 // try if source collection has a indexer
                 object value;
                 if (GetNativeItemAt(index, out value))
@@ -242,13 +241,11 @@ namespace MS.Internal.Data
                 // moved beyond the end of the enumerator?
                 if (moveBy != 0)
                 {
-#pragma warning suppress 6503   // "Property get methods should not throw exceptions."
                     throw new ArgumentOutOfRangeException("index"); // validating the index argument
                 }
 
                 CacheCurrentItem(index, _enumerator.Current);
                 return _cachedItem;
-#pragma warning restore 1634
             }
         }
 

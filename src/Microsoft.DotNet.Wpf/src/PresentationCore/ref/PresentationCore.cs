@@ -651,7 +651,7 @@ namespace System.Windows
     }
     public delegate void DragEventHandler(object sender, System.Windows.DragEventArgs e);
     [System.ComponentModel.TypeConverterAttribute(typeof(System.Windows.DurationConverter))]
-    public partial struct Duration
+    public readonly partial struct Duration
     {
         public Duration(System.TimeSpan timeSpan) { throw null; }
         public static System.Windows.Duration Automatic { get { throw null; } }
@@ -10119,7 +10119,7 @@ namespace System.Windows.Media.Animation
         void System.Collections.IList.Remove(object keyFrame) { }
     }
     [System.ComponentModel.TypeConverterAttribute(typeof(System.Windows.Media.Animation.RepeatBehaviorConverter))]
-    public partial struct RepeatBehavior : System.IFormattable
+    public readonly partial struct RepeatBehavior : System.IFormattable
     {
         public RepeatBehavior(double count) { throw null; }
         public RepeatBehavior(System.TimeSpan duration) { throw null; }

@@ -234,8 +234,10 @@ namespace System.Windows.Controls.Primitives
         /// <param name="newValue">The new value of the Value property.</param>
         protected virtual void OnValueChanged(double oldValue, double newValue)
         {
-            RoutedPropertyChangedEventArgs<double> args = new RoutedPropertyChangedEventArgs<double>(oldValue, newValue);
-            args.RoutedEvent=RangeBase.ValueChangedEvent;
+            RoutedPropertyChangedEventArgs<double> args = new RoutedPropertyChangedEventArgs<double>(oldValue, newValue)
+            {
+                RoutedEvent = RangeBase.ValueChangedEvent
+            };
             RaiseEvent(args);
         }
 

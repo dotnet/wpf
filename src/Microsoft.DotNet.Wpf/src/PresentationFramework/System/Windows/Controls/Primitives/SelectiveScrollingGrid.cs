@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -75,16 +75,20 @@ namespace System.Windows.Controls.Primitives
                     // Add binding to XProperty of transform if orientation is not horizontal
                     if (orientation != SelectiveScrollingOrientation.Horizontal)
                     {
-                        Binding horizontalBinding = new Binding("ContentHorizontalOffset");
-                        horizontalBinding.Source = scrollViewer;
+                        Binding horizontalBinding = new Binding("ContentHorizontalOffset")
+                        {
+                            Source = scrollViewer
+                        };
                         BindingOperations.SetBinding(translateTransform, TranslateTransform.XProperty, horizontalBinding);
                     }
 
                     // Add binding to YProperty of transfrom if orientation is not vertical
                     if (orientation != SelectiveScrollingOrientation.Vertical)
                     {
-                        Binding verticalBinding = new Binding("ContentVerticalOffset");
-                        verticalBinding.Source = scrollViewer;
+                        Binding verticalBinding = new Binding("ContentVerticalOffset")
+                        {
+                            Source = scrollViewer
+                        };
                         BindingOperations.SetBinding(translateTransform, TranslateTransform.YProperty, verticalBinding);
                     }
 

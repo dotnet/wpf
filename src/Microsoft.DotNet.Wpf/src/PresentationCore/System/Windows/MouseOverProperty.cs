@@ -44,8 +44,10 @@ namespace System.Windows
 
             if (shouldFireNotification)
             {
-                MouseEventArgs mouseEventArgs = new MouseEventArgs(Mouse.PrimaryDevice, Environment.TickCount, Mouse.PrimaryDevice.StylusDevice);
-                mouseEventArgs.RoutedEvent = oldValue ? Mouse.MouseLeaveEvent : Mouse.MouseEnterEvent;
+                MouseEventArgs mouseEventArgs = new MouseEventArgs(Mouse.PrimaryDevice, Environment.TickCount, Mouse.PrimaryDevice.StylusDevice)
+                {
+                    RoutedEvent = oldValue ? Mouse.MouseLeaveEvent : Mouse.MouseEnterEvent
+                };
 
                 if (uie != null)
                 {

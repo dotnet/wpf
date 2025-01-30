@@ -1350,8 +1350,10 @@ namespace System.Windows.Controls
         {
             IList children = RealizedChildren;
 
-            ArrangeState arrangeState = new ArrangeState();
-            arrangeState.ChildHeight = arrangeSize.Height;
+            ArrangeState arrangeState = new ArrangeState
+            {
+                ChildHeight = arrangeSize.Height
+            };
             DataGrid parentDataGrid = ParentDataGrid;
 
             /*

@@ -357,13 +357,15 @@ namespace System.Windows.Input.StylusWisp
                                                                              InAir ? RawStylusActions.InAirMove : RawStylusActions.Move,
                                                                              TabletDevice.Id,
                                                                              Id,
-                                                                             data);
+                                                                             data)
+                        {
+                            Synchronized = true
+                        };
 
-
-                        report.Synchronized = true;
-
-                        InputReportEventArgs inputReportEventArgs = new InputReportEventArgs(StylusDevice, report);
-                        inputReportEventArgs.RoutedEvent = InputManager.PreviewInputReportEvent;
+                        InputReportEventArgs inputReportEventArgs = new InputReportEventArgs(StylusDevice, report)
+                        {
+                            RoutedEvent = InputManager.PreviewInputReportEvent
+                        };
 
                         _stylusLogic.InputManagerProcessInputEventArgs(inputReportEventArgs);
                     }
@@ -622,16 +624,20 @@ namespace System.Windows.Input.StylusWisp
                 // Send the LostStylusCapture and GotStylusCapture events.
                 if (oldStylusCapture != null)
                 {
-                    StylusEventArgs lostCapture = new StylusEventArgs(StylusDevice, timestamp);
-                    lostCapture.RoutedEvent = Stylus.LostStylusCaptureEvent;
-                    lostCapture.Source = oldStylusCapture;
+                    StylusEventArgs lostCapture = new StylusEventArgs(StylusDevice, timestamp)
+                    {
+                        RoutedEvent = Stylus.LostStylusCaptureEvent,
+                        Source = oldStylusCapture
+                    };
                     _stylusLogic.InputManagerProcessInputEventArgs(lostCapture);
                 }
                 if (_stylusCapture != null)
                 {
-                    StylusEventArgs gotCapture = new StylusEventArgs(StylusDevice, timestamp);
-                    gotCapture.RoutedEvent = Stylus.GotStylusCaptureEvent;
-                    gotCapture.Source = _stylusCapture;
+                    StylusEventArgs gotCapture = new StylusEventArgs(StylusDevice, timestamp)
+                    {
+                        RoutedEvent = Stylus.GotStylusCaptureEvent,
+                        Source = _stylusCapture
+                    };
                     _stylusLogic.InputManagerProcessInputEventArgs(gotCapture);
                 }
 
@@ -1686,8 +1692,10 @@ namespace System.Windows.Input.StylusWisp
                                                      actions,
                                                      (int)pt.X, (int)pt.Y, 0, IntPtr.Zero);
 
-                        InputReportEventArgs inputReportArgs = new InputReportEventArgs(StylusDevice, mouseInputReport);
-                        inputReportArgs.RoutedEvent = InputManager.PreviewInputReportEvent;
+                        InputReportEventArgs inputReportArgs = new InputReportEventArgs(StylusDevice, mouseInputReport)
+                        {
+                            RoutedEvent = InputManager.PreviewInputReportEvent
+                        };
                         _stylusLogic.InputManagerProcessInputEventArgs(inputReportArgs);
                     }
                 }

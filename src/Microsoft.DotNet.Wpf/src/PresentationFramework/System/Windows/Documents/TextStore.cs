@@ -2782,10 +2782,12 @@ namespace System.Windows.Documents
                         continue;
                 }
 
-                UnsafeNativeMethods.TS_ATTRVAL attrval = new UnsafeNativeMethods.TS_ATTRVAL();
-                attrval.attributeId = _supportingattributes[i].Guid;
-                attrval.overlappedId = (int)_supportingattributes[i].Style;
-                attrval.val = new NativeMethods.VARIANT();
+                UnsafeNativeMethods.TS_ATTRVAL attrval = new UnsafeNativeMethods.TS_ATTRVAL
+                {
+                    attributeId = _supportingattributes[i].Guid,
+                    overlappedId = (int)_supportingattributes[i].Style,
+                    val = new NativeMethods.VARIANT()
+                };
 
                 // This VARIANT is returned to the caller, which supposed to call VariantClear().
                 // GC does not have to clear it.
@@ -4664,16 +4666,18 @@ namespace System.Windows.Documents
                 _targetName = FrameworkCompatibilityPreferences.GetIMECompositionTraceTarget();
                 _flushDepth = 0;
 
-                string s = FrameworkCompatibilityPreferences.GetIMECompositionTraceFile();
-                if (!String.IsNullOrEmpty(s))
+                string trace = FrameworkCompatibilityPreferences.GetIMECompositionTraceFile();
+                if (!string.IsNullOrEmpty(trace))
                 {
-                    string[] a = s.Split(';');
-                    _fileName = a[0];
+                    Span<Range> splitRegions = stackalloc Range[3];
+                    ReadOnlySpan<char> traceSplits = trace.AsSpan();
+                    int regionsLength = traceSplits.Split(splitRegions, ';');
 
-                    if (a.Length > 1)
+                    _fileName = traceSplits[splitRegions[0]].ToString();
+
+                    if (regionsLength > 1)
                     {
-                        int flushDepth;
-                        if (Int32.TryParse(a[1], NumberStyles.Integer, CultureInfo.InvariantCulture, out flushDepth))
+                        if (int.TryParse(traceSplits[splitRegions[1]], NumberStyles.Integer, CultureInfo.InvariantCulture, out int flushDepth))
                         {
                             _flushDepth = flushDepth;
                         }
@@ -4744,7 +4748,7 @@ namespace System.Windows.Documents
             }
 
             // for use from VS Immediate window
-            internal static void Mark(params object[] args)
+            internal static void Mark(params ReadOnlySpan<object> args)
             {
                 IMECompositionTraceRecord record = new IMECompositionTraceRecord(IMECompositionTraceOp.Mark, BuildDetail(args));
                 lock (s_TargetToTraceListMap)
@@ -4796,7 +4800,7 @@ namespace System.Windows.Documents
                 return (cti != null && cti.IMECompositionTracer != null);
             }
 
-            internal static void Trace(TextStore textStore, IMECompositionTraceOp op, params object[] args)
+            internal static void Trace(TextStore textStore, IMECompositionTraceOp op, params ReadOnlySpan<object> args)
             {
                 IMECompositionTracingInfo cti = IMECompositionTracingInfoField.GetValue(textStore.UiScope);
                 IMECompositionTracer tracer = cti.IMECompositionTracer;
@@ -4839,16 +4843,12 @@ namespace System.Windows.Documents
                 return sb.ToString();
             }
 
-            private static string BuildDetail(object[] args)
+            private static string BuildDetail(ReadOnlySpan<object> args)
             {
-                int length = (args != null) ? args.Length : 0;
-                if (length == 0)
-                    return String.Empty;
-                else
-                    return String.Format(CultureInfo.InvariantCulture, s_format[length], args);
+                return args.IsEmpty ? string.Empty : string.Format(CultureInfo.InvariantCulture, s_format[args.Length], args);
             }
 
-            private static string[] s_format = new string[] {
+            private static readonly string[] s_format = new string[] {
                 "",
                 "{0}",
                 "{0} {1}",
@@ -4913,7 +4913,7 @@ namespace System.Windows.Documents
                 AddTrace(textStore, IMECompositionTraceOp.ID, _nullInfo, DisplayType(uiScope));
             }
 
-            private void AddTrace(TextStore textStore, IMECompositionTraceOp op, IMECompositionTracingInfo cti, params object[] args)
+            private void AddTrace(TextStore textStore, IMECompositionTraceOp op, IMECompositionTracingInfo cti, params ReadOnlySpan<object> args)
             {
                 // pop a E* op from the stack
                 if (IMECompositionTraceOp.FirstEndOp <= op && _opStack.Count > 0)

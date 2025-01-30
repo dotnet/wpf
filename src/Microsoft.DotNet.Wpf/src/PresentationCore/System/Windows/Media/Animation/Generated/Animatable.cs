@@ -9,9 +9,6 @@
 //
 // Please see MilCodeGen.html for more information.
 
-// Allow suppression of certain presharp messages
-#pragma warning disable 1634, 1691
-
 namespace System.Windows.Media.Animation
 {
     /// <summary>
@@ -66,17 +63,13 @@ namespace System.Windows.Media.Animation
 
             if (!AnimationStorage.IsPropertyAnimatable(this, dp))
             {
-        #pragma warning disable 56506 // Suppress presharp warning: Parameter 'dp' to this public method must be validated:  A null-dereference can occur here.
                 throw new ArgumentException(SR.Format(SR.Animation_DependencyPropertyIsNotAnimatable, dp.Name, this.GetType()), "dp");
-        #pragma warning restore 56506
             }
 
             if (clock != null
                 && !AnimationStorage.IsAnimationValid(dp, clock.Timeline))
             {
-        #pragma warning disable 56506 // Suppress presharp warning: Parameter 'dp' to this public method must be validated:  A null-dereference can occur here.
                 throw new ArgumentException(SR.Format(SR.Animation_AnimationTimelineTypeMismatch, clock.Timeline.GetType(), dp.Name, dp.PropertyType), "clock");
-        #pragma warning restore 56506
             }
 
             if (!HandoffBehaviorEnum.IsDefined(handoffBehavior))
@@ -135,9 +128,7 @@ namespace System.Windows.Media.Animation
 
             if (!AnimationStorage.IsPropertyAnimatable(this, dp))
             {
-        #pragma warning disable 56506 // Suppress presharp warning: Parameter 'dp' to this public method must be validated:  A null-dereference can occur here.
                 throw new ArgumentException(SR.Format(SR.Animation_DependencyPropertyIsNotAnimatable, dp.Name, this.GetType()), "dp");
-        #pragma warning restore 56506
             }
 
             if (   animation != null

@@ -581,18 +581,21 @@ namespace System.Windows.Controls
 
             if ((binding = column.DisplayMemberBinding) != null)
             {
-                cell = new TextBlock();
-
-                // Needed this. Otherwise can't size to content at startup time.
-                // The reason is cell.Text is empty after the first round of measure.
-                cell.DataContext = Content;
+                cell = new TextBlock
+                {
+                    // Needed this. Otherwise can't size to content at startup time.
+                    // The reason is cell.Text is empty after the first round of measure.
+                    DataContext = Content
+                };
 
                 cell.SetBinding(TextBlock.TextProperty, binding);
             }
             else
             {
-                ContentPresenter cp = new ContentPresenter();
-                cp.Content = Content;
+                ContentPresenter cp = new ContentPresenter
+                {
+                    Content = Content
+                };
 
                 DataTemplate dt;
                 DataTemplateSelector dts;

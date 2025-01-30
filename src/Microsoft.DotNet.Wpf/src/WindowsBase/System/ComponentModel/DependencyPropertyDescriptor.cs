@@ -1,12 +1,10 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
 using MS.Internal.ComponentModel;
 using System.Reflection;
 using System.Windows;
-
-#pragma warning disable 1634, 1691  // suppressing PreSharp warnings
 
 namespace System.ComponentModel
 {
@@ -84,17 +82,14 @@ namespace System.ComponentModel
             DependencyProperty dp = null;
             bool isAttached = false;
 
-            DependencyObjectPropertyDescriptor idpd = property as DependencyObjectPropertyDescriptor;
-            if (idpd != null) 
+            if (property is DependencyObjectPropertyDescriptor idpd)
             {
                 dp = idpd.DependencyProperty;
                 isAttached = idpd.IsAttached;
             }
-            else 
+            else
             {
-                #pragma warning suppress 6506 // Property is obviously not null.
-                DependencyPropertyAttribute dpa = property.Attributes[typeof(DependencyPropertyAttribute)] as DependencyPropertyAttribute;
-                if (dpa != null)
+                if (property.Attributes[typeof(DependencyPropertyAttribute)] is DependencyPropertyAttribute dpa)
                 {
                     dp = dpa.DependencyProperty;
                     isAttached = dpa.IsAttached;
@@ -308,8 +303,7 @@ namespace System.ComponentModel
         /// </summary>
         public override bool Equals(object obj) 
         {
-            DependencyPropertyDescriptor dp = obj as DependencyPropertyDescriptor;
-            if (dp != null && dp._dp == _dp && dp._componentType == _componentType)
+            if (obj is DependencyPropertyDescriptor dp && dp._dp == _dp && dp._componentType == _componentType)
             {
                 return true;
             }

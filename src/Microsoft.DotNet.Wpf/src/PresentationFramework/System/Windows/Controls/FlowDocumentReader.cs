@@ -1110,9 +1110,11 @@ namespace System.Windows.Controls
         /// </summary>
         private void CreateTwoWayBinding(FrameworkElement fe, DependencyProperty dp, string propertyPath)
         {
-            Binding binding = new Binding(propertyPath);
-            binding.Mode = BindingMode.TwoWay;
-            binding.Source = this;
+            Binding binding = new Binding(propertyPath)
+            {
+                Mode = BindingMode.TwoWay,
+                Source = this
+            };
             fe.SetBinding(dp, binding);
         }
 
@@ -1252,9 +1254,8 @@ namespace System.Windows.Controls
                 mode = (FlowDocumentReaderViewingMode)value;
                 success = true;
             }
-            else if (value is String)
+            else if (value is String str)
             {
-                String str = (String)value;
                 if (str == FlowDocumentReaderViewingMode.Page.ToString())
                 {
                     mode = FlowDocumentReaderViewingMode.Page;

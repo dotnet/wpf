@@ -3961,8 +3961,6 @@ namespace System.Windows.Media.Animation
             /// </summary>
             ~SubtreeFinalizer()
             {
-#pragma warning disable 1634, 1691
-#pragma warning suppress 6525
                 _timeManager.ScheduleClockCleanup();
             }
 
@@ -4180,8 +4178,10 @@ namespace System.Windows.Media.Animation
         /// </summary>
         internal void Dump()
         {
-            System.Text.StringBuilder builder = new System.Text.StringBuilder();
-            builder.Capacity = 1024;
+            System.Text.StringBuilder builder = new System.Text.StringBuilder
+            {
+                Capacity = 1024
+            };
             builder.Append("======================================================================\n");
             builder.Append("Clocks rooted at Clock ");
             builder.Append(_debugIdentity);

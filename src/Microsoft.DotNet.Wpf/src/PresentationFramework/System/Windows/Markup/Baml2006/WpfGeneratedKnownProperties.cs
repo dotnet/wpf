@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -1717,14 +1717,16 @@ namespace System.Windows.Baml2006
         {
             Type type = typeof(System.Windows.Controls.AccessText);
             DependencyProperty  dp = System.Windows.Controls.AccessText.TextProperty;
-            var bamlMember = new WpfKnownMember( this,  // Schema Context
+            var bamlMember = new WpfKnownMember(this,  // Schema Context
                             this.GetXamlType(typeof(System.Windows.Controls.AccessText)), // DeclaringType
                             "Text", // Name
                              dp, // DependencyProperty
                             false, // IsReadOnly
                             false // IsAttachable
-                                     );
-            bamlMember.TypeConverterType = typeof(System.ComponentModel.StringConverter);
+                                     )
+            {
+                TypeConverterType = typeof(System.ComponentModel.StringConverter)
+            };
             bamlMember.Freeze();
             return bamlMember;
         }
@@ -1766,14 +1768,16 @@ namespace System.Windows.Baml2006
         {
             Type type = typeof(System.Windows.Controls.Border);
             DependencyProperty  dp = System.Windows.Controls.Border.BackgroundProperty;
-            var bamlMember = new WpfKnownMember( this,  // Schema Context
+            var bamlMember = new WpfKnownMember(this,  // Schema Context
                             this.GetXamlType(typeof(System.Windows.Controls.Border)), // DeclaringType
                             "Background", // Name
                              dp, // DependencyProperty
                             false, // IsReadOnly
                             false // IsAttachable
-                                     );
-            bamlMember.TypeConverterType = typeof(System.Windows.Media.BrushConverter);
+                                     )
+            {
+                TypeConverterType = typeof(System.Windows.Media.BrushConverter)
+            };
             bamlMember.Freeze();
             return bamlMember;
         }
@@ -1783,14 +1787,16 @@ namespace System.Windows.Baml2006
         {
             Type type = typeof(System.Windows.Controls.Border);
             DependencyProperty  dp = System.Windows.Controls.Border.BorderBrushProperty;
-            var bamlMember = new WpfKnownMember( this,  // Schema Context
+            var bamlMember = new WpfKnownMember(this,  // Schema Context
                             this.GetXamlType(typeof(System.Windows.Controls.Border)), // DeclaringType
                             "BorderBrush", // Name
                              dp, // DependencyProperty
                             false, // IsReadOnly
                             false // IsAttachable
-                                     );
-            bamlMember.TypeConverterType = typeof(System.Windows.Media.BrushConverter);
+                                     )
+            {
+                TypeConverterType = typeof(System.Windows.Media.BrushConverter)
+            };
             bamlMember.Freeze();
             return bamlMember;
         }
@@ -1800,14 +1806,16 @@ namespace System.Windows.Baml2006
         {
             Type type = typeof(System.Windows.Controls.Border);
             DependencyProperty  dp = System.Windows.Controls.Border.BorderThicknessProperty;
-            var bamlMember = new WpfKnownMember( this,  // Schema Context
+            var bamlMember = new WpfKnownMember(this,  // Schema Context
                             this.GetXamlType(typeof(System.Windows.Controls.Border)), // DeclaringType
                             "BorderThickness", // Name
                              dp, // DependencyProperty
                             false, // IsReadOnly
                             false // IsAttachable
-                                     );
-            bamlMember.TypeConverterType = typeof(System.Windows.ThicknessConverter);
+                                     )
+            {
+                TypeConverterType = typeof(System.Windows.ThicknessConverter)
+            };
             bamlMember.Freeze();
             return bamlMember;
         }
@@ -1817,14 +1825,16 @@ namespace System.Windows.Baml2006
         {
             Type type = typeof(System.Windows.Controls.Primitives.ButtonBase);
             DependencyProperty  dp = System.Windows.Controls.Primitives.ButtonBase.CommandProperty;
-            var bamlMember = new WpfKnownMember( this,  // Schema Context
+            var bamlMember = new WpfKnownMember(this,  // Schema Context
                             this.GetXamlType(typeof(System.Windows.Controls.Primitives.ButtonBase)), // DeclaringType
                             "Command", // Name
                              dp, // DependencyProperty
                             false, // IsReadOnly
                             false // IsAttachable
-                                     );
-            bamlMember.TypeConverterType = typeof(System.Windows.Input.CommandConverter);
+                                     )
+            {
+                TypeConverterType = typeof(System.Windows.Input.CommandConverter)
+            };
             bamlMember.Freeze();
             return bamlMember;
         }
@@ -1834,15 +1844,17 @@ namespace System.Windows.Baml2006
         {
             Type type = typeof(System.Windows.Controls.Primitives.ButtonBase);
             DependencyProperty  dp = System.Windows.Controls.Primitives.ButtonBase.CommandParameterProperty;
-            var bamlMember = new WpfKnownMember( this,  // Schema Context
+            var bamlMember = new WpfKnownMember(this,  // Schema Context
                             this.GetXamlType(typeof(System.Windows.Controls.Primitives.ButtonBase)), // DeclaringType
                             "CommandParameter", // Name
                              dp, // DependencyProperty
                             false, // IsReadOnly
                             false // IsAttachable
-                                     );
-            bamlMember.HasSpecialTypeConverter = true;
-            bamlMember.TypeConverterType = typeof(System.Object);
+                                     )
+            {
+                HasSpecialTypeConverter = true,
+                TypeConverterType = typeof(System.Object)
+            };
             bamlMember.Freeze();
             return bamlMember;
         }
@@ -1868,15 +1880,17 @@ namespace System.Windows.Baml2006
         {
             Type type = typeof(System.Windows.Controls.Primitives.ButtonBase);
             DependencyProperty  dp = System.Windows.Controls.Primitives.ButtonBase.IsPressedProperty;
-            var bamlMember = new WpfKnownMember( this,  // Schema Context
+            var bamlMember = new WpfKnownMember(this,  // Schema Context
                             this.GetXamlType(typeof(System.Windows.Controls.Primitives.ButtonBase)), // DeclaringType
                             "IsPressed", // Name
                              dp, // DependencyProperty
                             false, // IsReadOnly
                             false // IsAttachable
-                                     );
-            bamlMember.TypeConverterType = typeof(System.ComponentModel.BooleanConverter);
-            bamlMember.IsWritePrivate = true;
+                                     )
+            {
+                TypeConverterType = typeof(System.ComponentModel.BooleanConverter),
+                IsWritePrivate = true
+            };
             bamlMember.Freeze();
             return bamlMember;
         }
@@ -1886,14 +1900,16 @@ namespace System.Windows.Baml2006
         {
             Type type = typeof(System.Windows.Controls.ColumnDefinition);
             DependencyProperty  dp = System.Windows.Controls.ColumnDefinition.MaxWidthProperty;
-            var bamlMember = new WpfKnownMember( this,  // Schema Context
+            var bamlMember = new WpfKnownMember(this,  // Schema Context
                             this.GetXamlType(typeof(System.Windows.Controls.ColumnDefinition)), // DeclaringType
                             "MaxWidth", // Name
                              dp, // DependencyProperty
                             false, // IsReadOnly
                             false // IsAttachable
-                                     );
-            bamlMember.TypeConverterType = typeof(System.Windows.LengthConverter);
+                                     )
+            {
+                TypeConverterType = typeof(System.Windows.LengthConverter)
+            };
             bamlMember.Freeze();
             return bamlMember;
         }
@@ -1903,14 +1919,16 @@ namespace System.Windows.Baml2006
         {
             Type type = typeof(System.Windows.Controls.ColumnDefinition);
             DependencyProperty  dp = System.Windows.Controls.ColumnDefinition.MinWidthProperty;
-            var bamlMember = new WpfKnownMember( this,  // Schema Context
+            var bamlMember = new WpfKnownMember(this,  // Schema Context
                             this.GetXamlType(typeof(System.Windows.Controls.ColumnDefinition)), // DeclaringType
                             "MinWidth", // Name
                              dp, // DependencyProperty
                             false, // IsReadOnly
                             false // IsAttachable
-                                     );
-            bamlMember.TypeConverterType = typeof(System.Windows.LengthConverter);
+                                     )
+            {
+                TypeConverterType = typeof(System.Windows.LengthConverter)
+            };
             bamlMember.Freeze();
             return bamlMember;
         }
@@ -1920,14 +1938,16 @@ namespace System.Windows.Baml2006
         {
             Type type = typeof(System.Windows.Controls.ColumnDefinition);
             DependencyProperty  dp = System.Windows.Controls.ColumnDefinition.WidthProperty;
-            var bamlMember = new WpfKnownMember( this,  // Schema Context
+            var bamlMember = new WpfKnownMember(this,  // Schema Context
                             this.GetXamlType(typeof(System.Windows.Controls.ColumnDefinition)), // DeclaringType
                             "Width", // Name
                              dp, // DependencyProperty
                             false, // IsReadOnly
                             false // IsAttachable
-                                     );
-            bamlMember.TypeConverterType = typeof(System.Windows.GridLengthConverter);
+                                     )
+            {
+                TypeConverterType = typeof(System.Windows.GridLengthConverter)
+            };
             bamlMember.Freeze();
             return bamlMember;
         }
@@ -1937,15 +1957,17 @@ namespace System.Windows.Baml2006
         {
             Type type = typeof(System.Windows.Controls.ContentControl);
             DependencyProperty  dp = System.Windows.Controls.ContentControl.ContentProperty;
-            var bamlMember = new WpfKnownMember( this,  // Schema Context
+            var bamlMember = new WpfKnownMember(this,  // Schema Context
                             this.GetXamlType(typeof(System.Windows.Controls.ContentControl)), // DeclaringType
                             "Content", // Name
                              dp, // DependencyProperty
                             false, // IsReadOnly
                             false // IsAttachable
-                                     );
-            bamlMember.HasSpecialTypeConverter = true;
-            bamlMember.TypeConverterType = typeof(System.Object);
+                                     )
+            {
+                HasSpecialTypeConverter = true,
+                TypeConverterType = typeof(System.Object)
+            };
             bamlMember.Freeze();
             return bamlMember;
         }
@@ -1987,15 +2009,17 @@ namespace System.Windows.Baml2006
         {
             Type type = typeof(System.Windows.Controls.ContentControl);
             DependencyProperty  dp = System.Windows.Controls.ContentControl.HasContentProperty;
-            var bamlMember = new WpfKnownMember( this,  // Schema Context
+            var bamlMember = new WpfKnownMember(this,  // Schema Context
                             this.GetXamlType(typeof(System.Windows.Controls.ContentControl)), // DeclaringType
                             "HasContent", // Name
                              dp, // DependencyProperty
                             true, // IsReadOnly
                             false // IsAttachable
-                                     );
-            bamlMember.TypeConverterType = typeof(System.ComponentModel.BooleanConverter);
-            bamlMember.IsWritePrivate = true;
+                                     )
+            {
+                TypeConverterType = typeof(System.ComponentModel.BooleanConverter),
+                IsWritePrivate = true
+            };
             bamlMember.Freeze();
             return bamlMember;
         }
@@ -2005,14 +2029,16 @@ namespace System.Windows.Baml2006
         {
             Type type = typeof(System.Windows.ContentElement);
             DependencyProperty  dp = System.Windows.ContentElement.FocusableProperty;
-            var bamlMember = new WpfKnownMember( this,  // Schema Context
+            var bamlMember = new WpfKnownMember(this,  // Schema Context
                             this.GetXamlType(typeof(System.Windows.ContentElement)), // DeclaringType
                             "Focusable", // Name
                              dp, // DependencyProperty
                             false, // IsReadOnly
                             false // IsAttachable
-                                     );
-            bamlMember.TypeConverterType = typeof(System.ComponentModel.BooleanConverter);
+                                     )
+            {
+                TypeConverterType = typeof(System.ComponentModel.BooleanConverter)
+            };
             bamlMember.Freeze();
             return bamlMember;
         }
@@ -2022,15 +2048,17 @@ namespace System.Windows.Baml2006
         {
             Type type = typeof(System.Windows.Controls.ContentPresenter);
             DependencyProperty  dp = System.Windows.Controls.ContentPresenter.ContentProperty;
-            var bamlMember = new WpfKnownMember( this,  // Schema Context
+            var bamlMember = new WpfKnownMember(this,  // Schema Context
                             this.GetXamlType(typeof(System.Windows.Controls.ContentPresenter)), // DeclaringType
                             "Content", // Name
                              dp, // DependencyProperty
                             false, // IsReadOnly
                             false // IsAttachable
-                                     );
-            bamlMember.HasSpecialTypeConverter = true;
-            bamlMember.TypeConverterType = typeof(System.Object);
+                                     )
+            {
+                HasSpecialTypeConverter = true,
+                TypeConverterType = typeof(System.Object)
+            };
             bamlMember.Freeze();
             return bamlMember;
         }
@@ -2040,14 +2068,16 @@ namespace System.Windows.Baml2006
         {
             Type type = typeof(System.Windows.Controls.ContentPresenter);
             DependencyProperty  dp = System.Windows.Controls.ContentPresenter.ContentSourceProperty;
-            var bamlMember = new WpfKnownMember( this,  // Schema Context
+            var bamlMember = new WpfKnownMember(this,  // Schema Context
                             this.GetXamlType(typeof(System.Windows.Controls.ContentPresenter)), // DeclaringType
                             "ContentSource", // Name
                              dp, // DependencyProperty
                             false, // IsReadOnly
                             false // IsAttachable
-                                     );
-            bamlMember.TypeConverterType = typeof(System.ComponentModel.StringConverter);
+                                     )
+            {
+                TypeConverterType = typeof(System.ComponentModel.StringConverter)
+            };
             bamlMember.Freeze();
             return bamlMember;
         }
@@ -2089,14 +2119,16 @@ namespace System.Windows.Baml2006
         {
             Type type = typeof(System.Windows.Controls.ContentPresenter);
             DependencyProperty  dp = System.Windows.Controls.ContentPresenter.RecognizesAccessKeyProperty;
-            var bamlMember = new WpfKnownMember( this,  // Schema Context
+            var bamlMember = new WpfKnownMember(this,  // Schema Context
                             this.GetXamlType(typeof(System.Windows.Controls.ContentPresenter)), // DeclaringType
                             "RecognizesAccessKey", // Name
                              dp, // DependencyProperty
                             false, // IsReadOnly
                             false // IsAttachable
-                                     );
-            bamlMember.TypeConverterType = typeof(System.ComponentModel.BooleanConverter);
+                                     )
+            {
+                TypeConverterType = typeof(System.ComponentModel.BooleanConverter)
+            };
             bamlMember.Freeze();
             return bamlMember;
         }
@@ -2106,14 +2138,16 @@ namespace System.Windows.Baml2006
         {
             Type type = typeof(System.Windows.Controls.Control);
             DependencyProperty  dp = System.Windows.Controls.Control.BackgroundProperty;
-            var bamlMember = new WpfKnownMember( this,  // Schema Context
+            var bamlMember = new WpfKnownMember(this,  // Schema Context
                             this.GetXamlType(typeof(System.Windows.Controls.Control)), // DeclaringType
                             "Background", // Name
                              dp, // DependencyProperty
                             false, // IsReadOnly
                             false // IsAttachable
-                                     );
-            bamlMember.TypeConverterType = typeof(System.Windows.Media.BrushConverter);
+                                     )
+            {
+                TypeConverterType = typeof(System.Windows.Media.BrushConverter)
+            };
             bamlMember.Freeze();
             return bamlMember;
         }
@@ -2123,14 +2157,16 @@ namespace System.Windows.Baml2006
         {
             Type type = typeof(System.Windows.Controls.Control);
             DependencyProperty  dp = System.Windows.Controls.Control.BorderBrushProperty;
-            var bamlMember = new WpfKnownMember( this,  // Schema Context
+            var bamlMember = new WpfKnownMember(this,  // Schema Context
                             this.GetXamlType(typeof(System.Windows.Controls.Control)), // DeclaringType
                             "BorderBrush", // Name
                              dp, // DependencyProperty
                             false, // IsReadOnly
                             false // IsAttachable
-                                     );
-            bamlMember.TypeConverterType = typeof(System.Windows.Media.BrushConverter);
+                                     )
+            {
+                TypeConverterType = typeof(System.Windows.Media.BrushConverter)
+            };
             bamlMember.Freeze();
             return bamlMember;
         }
@@ -2140,14 +2176,16 @@ namespace System.Windows.Baml2006
         {
             Type type = typeof(System.Windows.Controls.Control);
             DependencyProperty  dp = System.Windows.Controls.Control.BorderThicknessProperty;
-            var bamlMember = new WpfKnownMember( this,  // Schema Context
+            var bamlMember = new WpfKnownMember(this,  // Schema Context
                             this.GetXamlType(typeof(System.Windows.Controls.Control)), // DeclaringType
                             "BorderThickness", // Name
                              dp, // DependencyProperty
                             false, // IsReadOnly
                             false // IsAttachable
-                                     );
-            bamlMember.TypeConverterType = typeof(System.Windows.ThicknessConverter);
+                                     )
+            {
+                TypeConverterType = typeof(System.Windows.ThicknessConverter)
+            };
             bamlMember.Freeze();
             return bamlMember;
         }
@@ -2157,14 +2195,16 @@ namespace System.Windows.Baml2006
         {
             Type type = typeof(System.Windows.Controls.Control);
             DependencyProperty  dp = System.Windows.Controls.Control.FontFamilyProperty;
-            var bamlMember = new WpfKnownMember( this,  // Schema Context
+            var bamlMember = new WpfKnownMember(this,  // Schema Context
                             this.GetXamlType(typeof(System.Windows.Controls.Control)), // DeclaringType
                             "FontFamily", // Name
                              dp, // DependencyProperty
                             false, // IsReadOnly
                             false // IsAttachable
-                                     );
-            bamlMember.TypeConverterType = typeof(System.Windows.Media.FontFamilyConverter);
+                                     )
+            {
+                TypeConverterType = typeof(System.Windows.Media.FontFamilyConverter)
+            };
             bamlMember.Freeze();
             return bamlMember;
         }
@@ -2174,14 +2214,16 @@ namespace System.Windows.Baml2006
         {
             Type type = typeof(System.Windows.Controls.Control);
             DependencyProperty  dp = System.Windows.Controls.Control.FontSizeProperty;
-            var bamlMember = new WpfKnownMember( this,  // Schema Context
+            var bamlMember = new WpfKnownMember(this,  // Schema Context
                             this.GetXamlType(typeof(System.Windows.Controls.Control)), // DeclaringType
                             "FontSize", // Name
                              dp, // DependencyProperty
                             false, // IsReadOnly
                             false // IsAttachable
-                                     );
-            bamlMember.TypeConverterType = typeof(System.Windows.FontSizeConverter);
+                                     )
+            {
+                TypeConverterType = typeof(System.Windows.FontSizeConverter)
+            };
             bamlMember.Freeze();
             return bamlMember;
         }
@@ -2191,14 +2233,16 @@ namespace System.Windows.Baml2006
         {
             Type type = typeof(System.Windows.Controls.Control);
             DependencyProperty  dp = System.Windows.Controls.Control.FontStretchProperty;
-            var bamlMember = new WpfKnownMember( this,  // Schema Context
+            var bamlMember = new WpfKnownMember(this,  // Schema Context
                             this.GetXamlType(typeof(System.Windows.Controls.Control)), // DeclaringType
                             "FontStretch", // Name
                              dp, // DependencyProperty
                             false, // IsReadOnly
                             false // IsAttachable
-                                     );
-            bamlMember.TypeConverterType = typeof(System.Windows.FontStretchConverter);
+                                     )
+            {
+                TypeConverterType = typeof(System.Windows.FontStretchConverter)
+            };
             bamlMember.Freeze();
             return bamlMember;
         }
@@ -2208,14 +2252,16 @@ namespace System.Windows.Baml2006
         {
             Type type = typeof(System.Windows.Controls.Control);
             DependencyProperty  dp = System.Windows.Controls.Control.FontStyleProperty;
-            var bamlMember = new WpfKnownMember( this,  // Schema Context
+            var bamlMember = new WpfKnownMember(this,  // Schema Context
                             this.GetXamlType(typeof(System.Windows.Controls.Control)), // DeclaringType
                             "FontStyle", // Name
                              dp, // DependencyProperty
                             false, // IsReadOnly
                             false // IsAttachable
-                                     );
-            bamlMember.TypeConverterType = typeof(System.Windows.FontStyleConverter);
+                                     )
+            {
+                TypeConverterType = typeof(System.Windows.FontStyleConverter)
+            };
             bamlMember.Freeze();
             return bamlMember;
         }
@@ -2225,14 +2271,16 @@ namespace System.Windows.Baml2006
         {
             Type type = typeof(System.Windows.Controls.Control);
             DependencyProperty  dp = System.Windows.Controls.Control.FontWeightProperty;
-            var bamlMember = new WpfKnownMember( this,  // Schema Context
+            var bamlMember = new WpfKnownMember(this,  // Schema Context
                             this.GetXamlType(typeof(System.Windows.Controls.Control)), // DeclaringType
                             "FontWeight", // Name
                              dp, // DependencyProperty
                             false, // IsReadOnly
                             false // IsAttachable
-                                     );
-            bamlMember.TypeConverterType = typeof(System.Windows.FontWeightConverter);
+                                     )
+            {
+                TypeConverterType = typeof(System.Windows.FontWeightConverter)
+            };
             bamlMember.Freeze();
             return bamlMember;
         }
@@ -2242,14 +2290,16 @@ namespace System.Windows.Baml2006
         {
             Type type = typeof(System.Windows.Controls.Control);
             DependencyProperty  dp = System.Windows.Controls.Control.ForegroundProperty;
-            var bamlMember = new WpfKnownMember( this,  // Schema Context
+            var bamlMember = new WpfKnownMember(this,  // Schema Context
                             this.GetXamlType(typeof(System.Windows.Controls.Control)), // DeclaringType
                             "Foreground", // Name
                              dp, // DependencyProperty
                             false, // IsReadOnly
                             false // IsAttachable
-                                     );
-            bamlMember.TypeConverterType = typeof(System.Windows.Media.BrushConverter);
+                                     )
+            {
+                TypeConverterType = typeof(System.Windows.Media.BrushConverter)
+            };
             bamlMember.Freeze();
             return bamlMember;
         }
@@ -2259,14 +2309,16 @@ namespace System.Windows.Baml2006
         {
             Type type = typeof(System.Windows.Controls.Control);
             DependencyProperty  dp = System.Windows.Controls.Control.HorizontalContentAlignmentProperty;
-            var bamlMember = new WpfKnownMember( this,  // Schema Context
+            var bamlMember = new WpfKnownMember(this,  // Schema Context
                             this.GetXamlType(typeof(System.Windows.Controls.Control)), // DeclaringType
                             "HorizontalContentAlignment", // Name
                              dp, // DependencyProperty
                             false, // IsReadOnly
                             false // IsAttachable
-                                     );
-            bamlMember.TypeConverterType = typeof(System.Windows.HorizontalAlignment);
+                                     )
+            {
+                TypeConverterType = typeof(System.Windows.HorizontalAlignment)
+            };
             bamlMember.Freeze();
             return bamlMember;
         }
@@ -2276,14 +2328,16 @@ namespace System.Windows.Baml2006
         {
             Type type = typeof(System.Windows.Controls.Control);
             DependencyProperty  dp = System.Windows.Controls.Control.IsTabStopProperty;
-            var bamlMember = new WpfKnownMember( this,  // Schema Context
+            var bamlMember = new WpfKnownMember(this,  // Schema Context
                             this.GetXamlType(typeof(System.Windows.Controls.Control)), // DeclaringType
                             "IsTabStop", // Name
                              dp, // DependencyProperty
                             false, // IsReadOnly
                             false // IsAttachable
-                                     );
-            bamlMember.TypeConverterType = typeof(System.ComponentModel.BooleanConverter);
+                                     )
+            {
+                TypeConverterType = typeof(System.ComponentModel.BooleanConverter)
+            };
             bamlMember.Freeze();
             return bamlMember;
         }
@@ -2293,14 +2347,16 @@ namespace System.Windows.Baml2006
         {
             Type type = typeof(System.Windows.Controls.Control);
             DependencyProperty  dp = System.Windows.Controls.Control.PaddingProperty;
-            var bamlMember = new WpfKnownMember( this,  // Schema Context
+            var bamlMember = new WpfKnownMember(this,  // Schema Context
                             this.GetXamlType(typeof(System.Windows.Controls.Control)), // DeclaringType
                             "Padding", // Name
                              dp, // DependencyProperty
                             false, // IsReadOnly
                             false // IsAttachable
-                                     );
-            bamlMember.TypeConverterType = typeof(System.Windows.ThicknessConverter);
+                                     )
+            {
+                TypeConverterType = typeof(System.Windows.ThicknessConverter)
+            };
             bamlMember.Freeze();
             return bamlMember;
         }
@@ -2310,14 +2366,16 @@ namespace System.Windows.Baml2006
         {
             Type type = typeof(System.Windows.Controls.Control);
             DependencyProperty  dp = System.Windows.Controls.Control.TabIndexProperty;
-            var bamlMember = new WpfKnownMember( this,  // Schema Context
+            var bamlMember = new WpfKnownMember(this,  // Schema Context
                             this.GetXamlType(typeof(System.Windows.Controls.Control)), // DeclaringType
                             "TabIndex", // Name
                              dp, // DependencyProperty
                             false, // IsReadOnly
                             false // IsAttachable
-                                     );
-            bamlMember.TypeConverterType = typeof(System.ComponentModel.Int32Converter);
+                                     )
+            {
+                TypeConverterType = typeof(System.ComponentModel.Int32Converter)
+            };
             bamlMember.Freeze();
             return bamlMember;
         }
@@ -2343,14 +2401,16 @@ namespace System.Windows.Baml2006
         {
             Type type = typeof(System.Windows.Controls.Control);
             DependencyProperty  dp = System.Windows.Controls.Control.VerticalContentAlignmentProperty;
-            var bamlMember = new WpfKnownMember( this,  // Schema Context
+            var bamlMember = new WpfKnownMember(this,  // Schema Context
                             this.GetXamlType(typeof(System.Windows.Controls.Control)), // DeclaringType
                             "VerticalContentAlignment", // Name
                              dp, // DependencyProperty
                             false, // IsReadOnly
                             false // IsAttachable
-                                     );
-            bamlMember.TypeConverterType = typeof(System.Windows.VerticalAlignment);
+                                     )
+            {
+                TypeConverterType = typeof(System.Windows.VerticalAlignment)
+            };
             bamlMember.Freeze();
             return bamlMember;
         }
@@ -2360,14 +2420,16 @@ namespace System.Windows.Baml2006
         {
             Type type = typeof(System.Windows.Controls.DockPanel);
             DependencyProperty  dp = System.Windows.Controls.DockPanel.DockProperty;
-            var bamlMember = new WpfKnownMember( this,  // Schema Context
+            var bamlMember = new WpfKnownMember(this,  // Schema Context
                             this.GetXamlType(typeof(System.Windows.Controls.DockPanel)), // DeclaringType
                             "Dock", // Name
                              dp, // DependencyProperty
                             false, // IsReadOnly
                             true // IsAttachable
-                                     );
-            bamlMember.TypeConverterType = typeof(System.Windows.Controls.Dock);
+                                     )
+            {
+                TypeConverterType = typeof(System.Windows.Controls.Dock)
+            };
             bamlMember.Freeze();
             return bamlMember;
         }
@@ -2377,14 +2439,16 @@ namespace System.Windows.Baml2006
         {
             Type type = typeof(System.Windows.Controls.DockPanel);
             DependencyProperty  dp = System.Windows.Controls.DockPanel.LastChildFillProperty;
-            var bamlMember = new WpfKnownMember( this,  // Schema Context
+            var bamlMember = new WpfKnownMember(this,  // Schema Context
                             this.GetXamlType(typeof(System.Windows.Controls.DockPanel)), // DeclaringType
                             "LastChildFill", // Name
                              dp, // DependencyProperty
                             false, // IsReadOnly
                             false // IsAttachable
-                                     );
-            bamlMember.TypeConverterType = typeof(System.ComponentModel.BooleanConverter);
+                                     )
+            {
+                TypeConverterType = typeof(System.ComponentModel.BooleanConverter)
+            };
             bamlMember.Freeze();
             return bamlMember;
         }
@@ -2474,14 +2538,16 @@ namespace System.Windows.Baml2006
         {
             Type type = typeof(System.Windows.FrameworkElement);
             DependencyProperty  dp = System.Windows.FrameworkElement.FlowDirectionProperty;
-            var bamlMember = new WpfKnownMember( this,  // Schema Context
+            var bamlMember = new WpfKnownMember(this,  // Schema Context
                             this.GetXamlType(typeof(System.Windows.FrameworkElement)), // DeclaringType
                             "FlowDirection", // Name
                              dp, // DependencyProperty
                             false, // IsReadOnly
                             false // IsAttachable
-                                     );
-            bamlMember.TypeConverterType = typeof(System.Windows.FlowDirection);
+                                     )
+            {
+                TypeConverterType = typeof(System.Windows.FlowDirection)
+            };
             bamlMember.Freeze();
             return bamlMember;
         }
@@ -2491,14 +2557,16 @@ namespace System.Windows.Baml2006
         {
             Type type = typeof(System.Windows.FrameworkElement);
             DependencyProperty  dp = System.Windows.FrameworkElement.HeightProperty;
-            var bamlMember = new WpfKnownMember( this,  // Schema Context
+            var bamlMember = new WpfKnownMember(this,  // Schema Context
                             this.GetXamlType(typeof(System.Windows.FrameworkElement)), // DeclaringType
                             "Height", // Name
                              dp, // DependencyProperty
                             false, // IsReadOnly
                             false // IsAttachable
-                                     );
-            bamlMember.TypeConverterType = typeof(System.Windows.LengthConverter);
+                                     )
+            {
+                TypeConverterType = typeof(System.Windows.LengthConverter)
+            };
             bamlMember.Freeze();
             return bamlMember;
         }
@@ -2508,14 +2576,16 @@ namespace System.Windows.Baml2006
         {
             Type type = typeof(System.Windows.FrameworkElement);
             DependencyProperty  dp = System.Windows.FrameworkElement.HorizontalAlignmentProperty;
-            var bamlMember = new WpfKnownMember( this,  // Schema Context
+            var bamlMember = new WpfKnownMember(this,  // Schema Context
                             this.GetXamlType(typeof(System.Windows.FrameworkElement)), // DeclaringType
                             "HorizontalAlignment", // Name
                              dp, // DependencyProperty
                             false, // IsReadOnly
                             false // IsAttachable
-                                     );
-            bamlMember.TypeConverterType = typeof(System.Windows.HorizontalAlignment);
+                                     )
+            {
+                TypeConverterType = typeof(System.Windows.HorizontalAlignment)
+            };
             bamlMember.Freeze();
             return bamlMember;
         }
@@ -2525,14 +2595,16 @@ namespace System.Windows.Baml2006
         {
             Type type = typeof(System.Windows.FrameworkElement);
             DependencyProperty  dp = System.Windows.FrameworkElement.MarginProperty;
-            var bamlMember = new WpfKnownMember( this,  // Schema Context
+            var bamlMember = new WpfKnownMember(this,  // Schema Context
                             this.GetXamlType(typeof(System.Windows.FrameworkElement)), // DeclaringType
                             "Margin", // Name
                              dp, // DependencyProperty
                             false, // IsReadOnly
                             false // IsAttachable
-                                     );
-            bamlMember.TypeConverterType = typeof(System.Windows.ThicknessConverter);
+                                     )
+            {
+                TypeConverterType = typeof(System.Windows.ThicknessConverter)
+            };
             bamlMember.Freeze();
             return bamlMember;
         }
@@ -2542,14 +2614,16 @@ namespace System.Windows.Baml2006
         {
             Type type = typeof(System.Windows.FrameworkElement);
             DependencyProperty  dp = System.Windows.FrameworkElement.MaxHeightProperty;
-            var bamlMember = new WpfKnownMember( this,  // Schema Context
+            var bamlMember = new WpfKnownMember(this,  // Schema Context
                             this.GetXamlType(typeof(System.Windows.FrameworkElement)), // DeclaringType
                             "MaxHeight", // Name
                              dp, // DependencyProperty
                             false, // IsReadOnly
                             false // IsAttachable
-                                     );
-            bamlMember.TypeConverterType = typeof(System.Windows.LengthConverter);
+                                     )
+            {
+                TypeConverterType = typeof(System.Windows.LengthConverter)
+            };
             bamlMember.Freeze();
             return bamlMember;
         }
@@ -2559,14 +2633,16 @@ namespace System.Windows.Baml2006
         {
             Type type = typeof(System.Windows.FrameworkElement);
             DependencyProperty  dp = System.Windows.FrameworkElement.MaxWidthProperty;
-            var bamlMember = new WpfKnownMember( this,  // Schema Context
+            var bamlMember = new WpfKnownMember(this,  // Schema Context
                             this.GetXamlType(typeof(System.Windows.FrameworkElement)), // DeclaringType
                             "MaxWidth", // Name
                              dp, // DependencyProperty
                             false, // IsReadOnly
                             false // IsAttachable
-                                     );
-            bamlMember.TypeConverterType = typeof(System.Windows.LengthConverter);
+                                     )
+            {
+                TypeConverterType = typeof(System.Windows.LengthConverter)
+            };
             bamlMember.Freeze();
             return bamlMember;
         }
@@ -2576,14 +2652,16 @@ namespace System.Windows.Baml2006
         {
             Type type = typeof(System.Windows.FrameworkElement);
             DependencyProperty  dp = System.Windows.FrameworkElement.MinHeightProperty;
-            var bamlMember = new WpfKnownMember( this,  // Schema Context
+            var bamlMember = new WpfKnownMember(this,  // Schema Context
                             this.GetXamlType(typeof(System.Windows.FrameworkElement)), // DeclaringType
                             "MinHeight", // Name
                              dp, // DependencyProperty
                             false, // IsReadOnly
                             false // IsAttachable
-                                     );
-            bamlMember.TypeConverterType = typeof(System.Windows.LengthConverter);
+                                     )
+            {
+                TypeConverterType = typeof(System.Windows.LengthConverter)
+            };
             bamlMember.Freeze();
             return bamlMember;
         }
@@ -2593,14 +2671,16 @@ namespace System.Windows.Baml2006
         {
             Type type = typeof(System.Windows.FrameworkElement);
             DependencyProperty  dp = System.Windows.FrameworkElement.MinWidthProperty;
-            var bamlMember = new WpfKnownMember( this,  // Schema Context
+            var bamlMember = new WpfKnownMember(this,  // Schema Context
                             this.GetXamlType(typeof(System.Windows.FrameworkElement)), // DeclaringType
                             "MinWidth", // Name
                              dp, // DependencyProperty
                             false, // IsReadOnly
                             false // IsAttachable
-                                     );
-            bamlMember.TypeConverterType = typeof(System.Windows.LengthConverter);
+                                     )
+            {
+                TypeConverterType = typeof(System.Windows.LengthConverter)
+            };
             bamlMember.Freeze();
             return bamlMember;
         }
@@ -2610,14 +2690,16 @@ namespace System.Windows.Baml2006
         {
             Type type = typeof(System.Windows.FrameworkElement);
             DependencyProperty  dp = System.Windows.FrameworkElement.NameProperty;
-            var bamlMember = new WpfKnownMember( this,  // Schema Context
+            var bamlMember = new WpfKnownMember(this,  // Schema Context
                             this.GetXamlType(typeof(System.Windows.FrameworkElement)), // DeclaringType
                             "Name", // Name
                              dp, // DependencyProperty
                             false, // IsReadOnly
                             false // IsAttachable
-                                     );
-            bamlMember.TypeConverterType = typeof(System.ComponentModel.StringConverter);
+                                     )
+            {
+                TypeConverterType = typeof(System.ComponentModel.StringConverter)
+            };
             bamlMember.Freeze();
             return bamlMember;
         }
@@ -2643,14 +2725,16 @@ namespace System.Windows.Baml2006
         {
             Type type = typeof(System.Windows.FrameworkElement);
             DependencyProperty  dp = System.Windows.FrameworkElement.VerticalAlignmentProperty;
-            var bamlMember = new WpfKnownMember( this,  // Schema Context
+            var bamlMember = new WpfKnownMember(this,  // Schema Context
                             this.GetXamlType(typeof(System.Windows.FrameworkElement)), // DeclaringType
                             "VerticalAlignment", // Name
                              dp, // DependencyProperty
                             false, // IsReadOnly
                             false // IsAttachable
-                                     );
-            bamlMember.TypeConverterType = typeof(System.Windows.VerticalAlignment);
+                                     )
+            {
+                TypeConverterType = typeof(System.Windows.VerticalAlignment)
+            };
             bamlMember.Freeze();
             return bamlMember;
         }
@@ -2660,14 +2744,16 @@ namespace System.Windows.Baml2006
         {
             Type type = typeof(System.Windows.FrameworkElement);
             DependencyProperty  dp = System.Windows.FrameworkElement.WidthProperty;
-            var bamlMember = new WpfKnownMember( this,  // Schema Context
+            var bamlMember = new WpfKnownMember(this,  // Schema Context
                             this.GetXamlType(typeof(System.Windows.FrameworkElement)), // DeclaringType
                             "Width", // Name
                              dp, // DependencyProperty
                             false, // IsReadOnly
                             false // IsAttachable
-                                     );
-            bamlMember.TypeConverterType = typeof(System.Windows.LengthConverter);
+                                     )
+            {
+                TypeConverterType = typeof(System.Windows.LengthConverter)
+            };
             bamlMember.Freeze();
             return bamlMember;
         }
@@ -2725,14 +2811,16 @@ namespace System.Windows.Baml2006
         {
             Type type = typeof(System.Windows.Controls.Grid);
             DependencyProperty  dp = System.Windows.Controls.Grid.ColumnProperty;
-            var bamlMember = new WpfKnownMember( this,  // Schema Context
+            var bamlMember = new WpfKnownMember(this,  // Schema Context
                             this.GetXamlType(typeof(System.Windows.Controls.Grid)), // DeclaringType
                             "Column", // Name
                              dp, // DependencyProperty
                             false, // IsReadOnly
                             true // IsAttachable
-                                     );
-            bamlMember.TypeConverterType = typeof(System.ComponentModel.Int32Converter);
+                                     )
+            {
+                TypeConverterType = typeof(System.ComponentModel.Int32Converter)
+            };
             bamlMember.Freeze();
             return bamlMember;
         }
@@ -2742,14 +2830,16 @@ namespace System.Windows.Baml2006
         {
             Type type = typeof(System.Windows.Controls.Grid);
             DependencyProperty  dp = System.Windows.Controls.Grid.ColumnSpanProperty;
-            var bamlMember = new WpfKnownMember( this,  // Schema Context
+            var bamlMember = new WpfKnownMember(this,  // Schema Context
                             this.GetXamlType(typeof(System.Windows.Controls.Grid)), // DeclaringType
                             "ColumnSpan", // Name
                              dp, // DependencyProperty
                             false, // IsReadOnly
                             true // IsAttachable
-                                     );
-            bamlMember.TypeConverterType = typeof(System.ComponentModel.Int32Converter);
+                                     )
+            {
+                TypeConverterType = typeof(System.ComponentModel.Int32Converter)
+            };
             bamlMember.Freeze();
             return bamlMember;
         }
@@ -2759,14 +2849,16 @@ namespace System.Windows.Baml2006
         {
             Type type = typeof(System.Windows.Controls.Grid);
             DependencyProperty  dp = System.Windows.Controls.Grid.RowProperty;
-            var bamlMember = new WpfKnownMember( this,  // Schema Context
+            var bamlMember = new WpfKnownMember(this,  // Schema Context
                             this.GetXamlType(typeof(System.Windows.Controls.Grid)), // DeclaringType
                             "Row", // Name
                              dp, // DependencyProperty
                             false, // IsReadOnly
                             true // IsAttachable
-                                     );
-            bamlMember.TypeConverterType = typeof(System.ComponentModel.Int32Converter);
+                                     )
+            {
+                TypeConverterType = typeof(System.ComponentModel.Int32Converter)
+            };
             bamlMember.Freeze();
             return bamlMember;
         }
@@ -2776,14 +2868,16 @@ namespace System.Windows.Baml2006
         {
             Type type = typeof(System.Windows.Controls.Grid);
             DependencyProperty  dp = System.Windows.Controls.Grid.RowSpanProperty;
-            var bamlMember = new WpfKnownMember( this,  // Schema Context
+            var bamlMember = new WpfKnownMember(this,  // Schema Context
                             this.GetXamlType(typeof(System.Windows.Controls.Grid)), // DeclaringType
                             "RowSpan", // Name
                              dp, // DependencyProperty
                             false, // IsReadOnly
                             true // IsAttachable
-                                     );
-            bamlMember.TypeConverterType = typeof(System.ComponentModel.Int32Converter);
+                                     )
+            {
+                TypeConverterType = typeof(System.ComponentModel.Int32Converter)
+            };
             bamlMember.Freeze();
             return bamlMember;
         }
@@ -2793,15 +2887,17 @@ namespace System.Windows.Baml2006
         {
             Type type = typeof(System.Windows.Controls.GridViewColumn);
             DependencyProperty  dp = System.Windows.Controls.GridViewColumn.HeaderProperty;
-            var bamlMember = new WpfKnownMember( this,  // Schema Context
+            var bamlMember = new WpfKnownMember(this,  // Schema Context
                             this.GetXamlType(typeof(System.Windows.Controls.GridViewColumn)), // DeclaringType
                             "Header", // Name
                              dp, // DependencyProperty
                             false, // IsReadOnly
                             false // IsAttachable
-                                     );
-            bamlMember.HasSpecialTypeConverter = true;
-            bamlMember.TypeConverterType = typeof(System.Object);
+                                     )
+            {
+                HasSpecialTypeConverter = true,
+                TypeConverterType = typeof(System.Object)
+            };
             bamlMember.Freeze();
             return bamlMember;
         }
@@ -2811,15 +2907,17 @@ namespace System.Windows.Baml2006
         {
             Type type = typeof(System.Windows.Controls.HeaderedContentControl);
             DependencyProperty  dp = System.Windows.Controls.HeaderedContentControl.HasHeaderProperty;
-            var bamlMember = new WpfKnownMember( this,  // Schema Context
+            var bamlMember = new WpfKnownMember(this,  // Schema Context
                             this.GetXamlType(typeof(System.Windows.Controls.HeaderedContentControl)), // DeclaringType
                             "HasHeader", // Name
                              dp, // DependencyProperty
                             true, // IsReadOnly
                             false // IsAttachable
-                                     );
-            bamlMember.TypeConverterType = typeof(System.ComponentModel.BooleanConverter);
-            bamlMember.IsWritePrivate = true;
+                                     )
+            {
+                TypeConverterType = typeof(System.ComponentModel.BooleanConverter),
+                IsWritePrivate = true
+            };
             bamlMember.Freeze();
             return bamlMember;
         }
@@ -2829,15 +2927,17 @@ namespace System.Windows.Baml2006
         {
             Type type = typeof(System.Windows.Controls.HeaderedContentControl);
             DependencyProperty  dp = System.Windows.Controls.HeaderedContentControl.HeaderProperty;
-            var bamlMember = new WpfKnownMember( this,  // Schema Context
+            var bamlMember = new WpfKnownMember(this,  // Schema Context
                             this.GetXamlType(typeof(System.Windows.Controls.HeaderedContentControl)), // DeclaringType
                             "Header", // Name
                              dp, // DependencyProperty
                             false, // IsReadOnly
                             false // IsAttachable
-                                     );
-            bamlMember.HasSpecialTypeConverter = true;
-            bamlMember.TypeConverterType = typeof(System.Object);
+                                     )
+            {
+                HasSpecialTypeConverter = true,
+                TypeConverterType = typeof(System.Object)
+            };
             bamlMember.Freeze();
             return bamlMember;
         }
@@ -2879,15 +2979,17 @@ namespace System.Windows.Baml2006
         {
             Type type = typeof(System.Windows.Controls.HeaderedItemsControl);
             DependencyProperty  dp = System.Windows.Controls.HeaderedItemsControl.HasHeaderProperty;
-            var bamlMember = new WpfKnownMember( this,  // Schema Context
+            var bamlMember = new WpfKnownMember(this,  // Schema Context
                             this.GetXamlType(typeof(System.Windows.Controls.HeaderedItemsControl)), // DeclaringType
                             "HasHeader", // Name
                              dp, // DependencyProperty
                             true, // IsReadOnly
                             false // IsAttachable
-                                     );
-            bamlMember.TypeConverterType = typeof(System.ComponentModel.BooleanConverter);
-            bamlMember.IsWritePrivate = true;
+                                     )
+            {
+                TypeConverterType = typeof(System.ComponentModel.BooleanConverter),
+                IsWritePrivate = true
+            };
             bamlMember.Freeze();
             return bamlMember;
         }
@@ -2897,15 +2999,17 @@ namespace System.Windows.Baml2006
         {
             Type type = typeof(System.Windows.Controls.HeaderedItemsControl);
             DependencyProperty  dp = System.Windows.Controls.HeaderedItemsControl.HeaderProperty;
-            var bamlMember = new WpfKnownMember( this,  // Schema Context
+            var bamlMember = new WpfKnownMember(this,  // Schema Context
                             this.GetXamlType(typeof(System.Windows.Controls.HeaderedItemsControl)), // DeclaringType
                             "Header", // Name
                              dp, // DependencyProperty
                             false, // IsReadOnly
                             false // IsAttachable
-                                     );
-            bamlMember.HasSpecialTypeConverter = true;
-            bamlMember.TypeConverterType = typeof(System.Object);
+                                     )
+            {
+                HasSpecialTypeConverter = true,
+                TypeConverterType = typeof(System.Object)
+            };
             bamlMember.Freeze();
             return bamlMember;
         }
@@ -2947,14 +3051,16 @@ namespace System.Windows.Baml2006
         {
             Type type = typeof(System.Windows.Documents.Hyperlink);
             DependencyProperty  dp = System.Windows.Documents.Hyperlink.NavigateUriProperty;
-            var bamlMember = new WpfKnownMember( this,  // Schema Context
+            var bamlMember = new WpfKnownMember(this,  // Schema Context
                             this.GetXamlType(typeof(System.Windows.Documents.Hyperlink)), // DeclaringType
                             "NavigateUri", // Name
                              dp, // DependencyProperty
                             false, // IsReadOnly
                             false // IsAttachable
-                                     );
-            bamlMember.TypeConverterType = typeof(System.UriTypeConverter);
+                                     )
+            {
+                TypeConverterType = typeof(System.UriTypeConverter)
+            };
             bamlMember.Freeze();
             return bamlMember;
         }
@@ -2964,14 +3070,16 @@ namespace System.Windows.Baml2006
         {
             Type type = typeof(System.Windows.Controls.Image);
             DependencyProperty  dp = System.Windows.Controls.Image.SourceProperty;
-            var bamlMember = new WpfKnownMember( this,  // Schema Context
+            var bamlMember = new WpfKnownMember(this,  // Schema Context
                             this.GetXamlType(typeof(System.Windows.Controls.Image)), // DeclaringType
                             "Source", // Name
                              dp, // DependencyProperty
                             false, // IsReadOnly
                             false // IsAttachable
-                                     );
-            bamlMember.TypeConverterType = typeof(System.Windows.Media.ImageSourceConverter);
+                                     )
+            {
+                TypeConverterType = typeof(System.Windows.Media.ImageSourceConverter)
+            };
             bamlMember.Freeze();
             return bamlMember;
         }
@@ -2981,14 +3089,16 @@ namespace System.Windows.Baml2006
         {
             Type type = typeof(System.Windows.Controls.Image);
             DependencyProperty  dp = System.Windows.Controls.Image.StretchProperty;
-            var bamlMember = new WpfKnownMember( this,  // Schema Context
+            var bamlMember = new WpfKnownMember(this,  // Schema Context
                             this.GetXamlType(typeof(System.Windows.Controls.Image)), // DeclaringType
                             "Stretch", // Name
                              dp, // DependencyProperty
                             false, // IsReadOnly
                             false // IsAttachable
-                                     );
-            bamlMember.TypeConverterType = typeof(System.Windows.Media.Stretch);
+                                     )
+            {
+                TypeConverterType = typeof(System.Windows.Media.Stretch)
+            };
             bamlMember.Freeze();
             return bamlMember;
         }
@@ -3126,15 +3236,17 @@ namespace System.Windows.Baml2006
         {
             Type type = typeof(System.Windows.Controls.Page);
             DependencyProperty  dp = System.Windows.Controls.Page.ContentProperty;
-            var bamlMember = new WpfKnownMember( this,  // Schema Context
+            var bamlMember = new WpfKnownMember(this,  // Schema Context
                             this.GetXamlType(typeof(System.Windows.Controls.Page)), // DeclaringType
                             "Content", // Name
                              dp, // DependencyProperty
                             false, // IsReadOnly
                             false // IsAttachable
-                                     );
-            bamlMember.HasSpecialTypeConverter = true;
-            bamlMember.TypeConverterType = typeof(System.Object);
+                                     )
+            {
+                HasSpecialTypeConverter = true,
+                TypeConverterType = typeof(System.Object)
+            };
             bamlMember.Freeze();
             return bamlMember;
         }
@@ -3144,14 +3256,16 @@ namespace System.Windows.Baml2006
         {
             Type type = typeof(System.Windows.Controls.Panel);
             DependencyProperty  dp = System.Windows.Controls.Panel.BackgroundProperty;
-            var bamlMember = new WpfKnownMember( this,  // Schema Context
+            var bamlMember = new WpfKnownMember(this,  // Schema Context
                             this.GetXamlType(typeof(System.Windows.Controls.Panel)), // DeclaringType
                             "Background", // Name
                              dp, // DependencyProperty
                             false, // IsReadOnly
                             false // IsAttachable
-                                     );
-            bamlMember.TypeConverterType = typeof(System.Windows.Media.BrushConverter);
+                                     )
+            {
+                TypeConverterType = typeof(System.Windows.Media.BrushConverter)
+            };
             bamlMember.Freeze();
             return bamlMember;
         }
@@ -3161,14 +3275,16 @@ namespace System.Windows.Baml2006
         {
             Type type = typeof(System.Windows.Shapes.Path);
             DependencyProperty  dp = System.Windows.Shapes.Path.DataProperty;
-            var bamlMember = new WpfKnownMember( this,  // Schema Context
+            var bamlMember = new WpfKnownMember(this,  // Schema Context
                             this.GetXamlType(typeof(System.Windows.Shapes.Path)), // DeclaringType
                             "Data", // Name
                              dp, // DependencyProperty
                             false, // IsReadOnly
                             false // IsAttachable
-                                     );
-            bamlMember.TypeConverterType = typeof(System.Windows.Media.GeometryConverter);
+                                     )
+            {
+                TypeConverterType = typeof(System.Windows.Media.GeometryConverter)
+            };
             bamlMember.Freeze();
             return bamlMember;
         }
@@ -3194,14 +3310,16 @@ namespace System.Windows.Baml2006
         {
             Type type = typeof(System.Windows.Media.PathGeometry);
             DependencyProperty  dp = System.Windows.Media.PathGeometry.FiguresProperty;
-            var bamlMember = new WpfKnownMember( this,  // Schema Context
+            var bamlMember = new WpfKnownMember(this,  // Schema Context
                             this.GetXamlType(typeof(System.Windows.Media.PathGeometry)), // DeclaringType
                             "Figures", // Name
                              dp, // DependencyProperty
                             false, // IsReadOnly
                             false // IsAttachable
-                                     );
-            bamlMember.TypeConverterType = typeof(System.Windows.Media.PathFigureCollectionConverter);
+                                     )
+            {
+                TypeConverterType = typeof(System.Windows.Media.PathFigureCollectionConverter)
+            };
             bamlMember.Freeze();
             return bamlMember;
         }
@@ -3227,14 +3345,16 @@ namespace System.Windows.Baml2006
         {
             Type type = typeof(System.Windows.Controls.Primitives.Popup);
             DependencyProperty  dp = System.Windows.Controls.Primitives.Popup.IsOpenProperty;
-            var bamlMember = new WpfKnownMember( this,  // Schema Context
+            var bamlMember = new WpfKnownMember(this,  // Schema Context
                             this.GetXamlType(typeof(System.Windows.Controls.Primitives.Popup)), // DeclaringType
                             "IsOpen", // Name
                              dp, // DependencyProperty
                             false, // IsReadOnly
                             false // IsAttachable
-                                     );
-            bamlMember.TypeConverterType = typeof(System.ComponentModel.BooleanConverter);
+                                     )
+            {
+                TypeConverterType = typeof(System.ComponentModel.BooleanConverter)
+            };
             bamlMember.Freeze();
             return bamlMember;
         }
@@ -3244,14 +3364,16 @@ namespace System.Windows.Baml2006
         {
             Type type = typeof(System.Windows.Controls.Primitives.Popup);
             DependencyProperty  dp = System.Windows.Controls.Primitives.Popup.PlacementProperty;
-            var bamlMember = new WpfKnownMember( this,  // Schema Context
+            var bamlMember = new WpfKnownMember(this,  // Schema Context
                             this.GetXamlType(typeof(System.Windows.Controls.Primitives.Popup)), // DeclaringType
                             "Placement", // Name
                              dp, // DependencyProperty
                             false, // IsReadOnly
                             false // IsAttachable
-                                     );
-            bamlMember.TypeConverterType = typeof(System.Windows.Controls.Primitives.PlacementMode);
+                                     )
+            {
+                TypeConverterType = typeof(System.Windows.Controls.Primitives.PlacementMode)
+            };
             bamlMember.Freeze();
             return bamlMember;
         }
@@ -3261,14 +3383,16 @@ namespace System.Windows.Baml2006
         {
             Type type = typeof(System.Windows.Controls.Primitives.Popup);
             DependencyProperty  dp = System.Windows.Controls.Primitives.Popup.PopupAnimationProperty;
-            var bamlMember = new WpfKnownMember( this,  // Schema Context
+            var bamlMember = new WpfKnownMember(this,  // Schema Context
                             this.GetXamlType(typeof(System.Windows.Controls.Primitives.Popup)), // DeclaringType
                             "PopupAnimation", // Name
                              dp, // DependencyProperty
                             false, // IsReadOnly
                             false // IsAttachable
-                                     );
-            bamlMember.TypeConverterType = typeof(System.Windows.Controls.Primitives.PopupAnimation);
+                                     )
+            {
+                TypeConverterType = typeof(System.Windows.Controls.Primitives.PopupAnimation)
+            };
             bamlMember.Freeze();
             return bamlMember;
         }
@@ -3278,14 +3402,16 @@ namespace System.Windows.Baml2006
         {
             Type type = typeof(System.Windows.Controls.RowDefinition);
             DependencyProperty  dp = System.Windows.Controls.RowDefinition.HeightProperty;
-            var bamlMember = new WpfKnownMember( this,  // Schema Context
+            var bamlMember = new WpfKnownMember(this,  // Schema Context
                             this.GetXamlType(typeof(System.Windows.Controls.RowDefinition)), // DeclaringType
                             "Height", // Name
                              dp, // DependencyProperty
                             false, // IsReadOnly
                             false // IsAttachable
-                                     );
-            bamlMember.TypeConverterType = typeof(System.Windows.GridLengthConverter);
+                                     )
+            {
+                TypeConverterType = typeof(System.Windows.GridLengthConverter)
+            };
             bamlMember.Freeze();
             return bamlMember;
         }
@@ -3295,14 +3421,16 @@ namespace System.Windows.Baml2006
         {
             Type type = typeof(System.Windows.Controls.RowDefinition);
             DependencyProperty  dp = System.Windows.Controls.RowDefinition.MaxHeightProperty;
-            var bamlMember = new WpfKnownMember( this,  // Schema Context
+            var bamlMember = new WpfKnownMember(this,  // Schema Context
                             this.GetXamlType(typeof(System.Windows.Controls.RowDefinition)), // DeclaringType
                             "MaxHeight", // Name
                              dp, // DependencyProperty
                             false, // IsReadOnly
                             false // IsAttachable
-                                     );
-            bamlMember.TypeConverterType = typeof(System.Windows.LengthConverter);
+                                     )
+            {
+                TypeConverterType = typeof(System.Windows.LengthConverter)
+            };
             bamlMember.Freeze();
             return bamlMember;
         }
@@ -3312,14 +3440,16 @@ namespace System.Windows.Baml2006
         {
             Type type = typeof(System.Windows.Controls.RowDefinition);
             DependencyProperty  dp = System.Windows.Controls.RowDefinition.MinHeightProperty;
-            var bamlMember = new WpfKnownMember( this,  // Schema Context
+            var bamlMember = new WpfKnownMember(this,  // Schema Context
                             this.GetXamlType(typeof(System.Windows.Controls.RowDefinition)), // DeclaringType
                             "MinHeight", // Name
                              dp, // DependencyProperty
                             false, // IsReadOnly
                             false // IsAttachable
-                                     );
-            bamlMember.TypeConverterType = typeof(System.Windows.LengthConverter);
+                                     )
+            {
+                TypeConverterType = typeof(System.Windows.LengthConverter)
+            };
             bamlMember.Freeze();
             return bamlMember;
         }
@@ -3329,14 +3459,16 @@ namespace System.Windows.Baml2006
         {
             Type type = typeof(System.Windows.Controls.ScrollViewer);
             DependencyProperty  dp = System.Windows.Controls.ScrollViewer.CanContentScrollProperty;
-            var bamlMember = new WpfKnownMember( this,  // Schema Context
+            var bamlMember = new WpfKnownMember(this,  // Schema Context
                             this.GetXamlType(typeof(System.Windows.Controls.ScrollViewer)), // DeclaringType
                             "CanContentScroll", // Name
                              dp, // DependencyProperty
                             false, // IsReadOnly
                             false // IsAttachable
-                                     );
-            bamlMember.TypeConverterType = typeof(System.ComponentModel.BooleanConverter);
+                                     )
+            {
+                TypeConverterType = typeof(System.ComponentModel.BooleanConverter)
+            };
             bamlMember.Freeze();
             return bamlMember;
         }
@@ -3346,14 +3478,16 @@ namespace System.Windows.Baml2006
         {
             Type type = typeof(System.Windows.Controls.ScrollViewer);
             DependencyProperty  dp = System.Windows.Controls.ScrollViewer.HorizontalScrollBarVisibilityProperty;
-            var bamlMember = new WpfKnownMember( this,  // Schema Context
+            var bamlMember = new WpfKnownMember(this,  // Schema Context
                             this.GetXamlType(typeof(System.Windows.Controls.ScrollViewer)), // DeclaringType
                             "HorizontalScrollBarVisibility", // Name
                              dp, // DependencyProperty
                             false, // IsReadOnly
                             false // IsAttachable
-                                     );
-            bamlMember.TypeConverterType = typeof(System.Windows.Controls.ScrollBarVisibility);
+                                     )
+            {
+                TypeConverterType = typeof(System.Windows.Controls.ScrollBarVisibility)
+            };
             bamlMember.Freeze();
             return bamlMember;
         }
@@ -3363,14 +3497,16 @@ namespace System.Windows.Baml2006
         {
             Type type = typeof(System.Windows.Controls.ScrollViewer);
             DependencyProperty  dp = System.Windows.Controls.ScrollViewer.VerticalScrollBarVisibilityProperty;
-            var bamlMember = new WpfKnownMember( this,  // Schema Context
+            var bamlMember = new WpfKnownMember(this,  // Schema Context
                             this.GetXamlType(typeof(System.Windows.Controls.ScrollViewer)), // DeclaringType
                             "VerticalScrollBarVisibility", // Name
                              dp, // DependencyProperty
                             false, // IsReadOnly
                             false // IsAttachable
-                                     );
-            bamlMember.TypeConverterType = typeof(System.Windows.Controls.ScrollBarVisibility);
+                                     )
+            {
+                TypeConverterType = typeof(System.Windows.Controls.ScrollBarVisibility)
+            };
             bamlMember.Freeze();
             return bamlMember;
         }
@@ -3380,14 +3516,16 @@ namespace System.Windows.Baml2006
         {
             Type type = typeof(System.Windows.Shapes.Shape);
             DependencyProperty  dp = System.Windows.Shapes.Shape.FillProperty;
-            var bamlMember = new WpfKnownMember( this,  // Schema Context
+            var bamlMember = new WpfKnownMember(this,  // Schema Context
                             this.GetXamlType(typeof(System.Windows.Shapes.Shape)), // DeclaringType
                             "Fill", // Name
                              dp, // DependencyProperty
                             false, // IsReadOnly
                             false // IsAttachable
-                                     );
-            bamlMember.TypeConverterType = typeof(System.Windows.Media.BrushConverter);
+                                     )
+            {
+                TypeConverterType = typeof(System.Windows.Media.BrushConverter)
+            };
             bamlMember.Freeze();
             return bamlMember;
         }
@@ -3397,14 +3535,16 @@ namespace System.Windows.Baml2006
         {
             Type type = typeof(System.Windows.Shapes.Shape);
             DependencyProperty  dp = System.Windows.Shapes.Shape.StrokeProperty;
-            var bamlMember = new WpfKnownMember( this,  // Schema Context
+            var bamlMember = new WpfKnownMember(this,  // Schema Context
                             this.GetXamlType(typeof(System.Windows.Shapes.Shape)), // DeclaringType
                             "Stroke", // Name
                              dp, // DependencyProperty
                             false, // IsReadOnly
                             false // IsAttachable
-                                     );
-            bamlMember.TypeConverterType = typeof(System.Windows.Media.BrushConverter);
+                                     )
+            {
+                TypeConverterType = typeof(System.Windows.Media.BrushConverter)
+            };
             bamlMember.Freeze();
             return bamlMember;
         }
@@ -3414,14 +3554,16 @@ namespace System.Windows.Baml2006
         {
             Type type = typeof(System.Windows.Shapes.Shape);
             DependencyProperty  dp = System.Windows.Shapes.Shape.StrokeThicknessProperty;
-            var bamlMember = new WpfKnownMember( this,  // Schema Context
+            var bamlMember = new WpfKnownMember(this,  // Schema Context
                             this.GetXamlType(typeof(System.Windows.Shapes.Shape)), // DeclaringType
                             "StrokeThickness", // Name
                              dp, // DependencyProperty
                             false, // IsReadOnly
                             false // IsAttachable
-                                     );
-            bamlMember.TypeConverterType = typeof(System.Windows.LengthConverter);
+                                     )
+            {
+                TypeConverterType = typeof(System.Windows.LengthConverter)
+            };
             bamlMember.Freeze();
             return bamlMember;
         }
@@ -3431,14 +3573,16 @@ namespace System.Windows.Baml2006
         {
             Type type = typeof(System.Windows.Controls.TextBlock);
             DependencyProperty  dp = System.Windows.Controls.TextBlock.BackgroundProperty;
-            var bamlMember = new WpfKnownMember( this,  // Schema Context
+            var bamlMember = new WpfKnownMember(this,  // Schema Context
                             this.GetXamlType(typeof(System.Windows.Controls.TextBlock)), // DeclaringType
                             "Background", // Name
                              dp, // DependencyProperty
                             false, // IsReadOnly
                             false // IsAttachable
-                                     );
-            bamlMember.TypeConverterType = typeof(System.Windows.Media.BrushConverter);
+                                     )
+            {
+                TypeConverterType = typeof(System.Windows.Media.BrushConverter)
+            };
             bamlMember.Freeze();
             return bamlMember;
         }
@@ -3448,14 +3592,16 @@ namespace System.Windows.Baml2006
         {
             Type type = typeof(System.Windows.Controls.TextBlock);
             DependencyProperty  dp = System.Windows.Controls.TextBlock.FontFamilyProperty;
-            var bamlMember = new WpfKnownMember( this,  // Schema Context
+            var bamlMember = new WpfKnownMember(this,  // Schema Context
                             this.GetXamlType(typeof(System.Windows.Controls.TextBlock)), // DeclaringType
                             "FontFamily", // Name
                              dp, // DependencyProperty
                             false, // IsReadOnly
                             false // IsAttachable
-                                     );
-            bamlMember.TypeConverterType = typeof(System.Windows.Media.FontFamilyConverter);
+                                     )
+            {
+                TypeConverterType = typeof(System.Windows.Media.FontFamilyConverter)
+            };
             bamlMember.Freeze();
             return bamlMember;
         }
@@ -3465,14 +3611,16 @@ namespace System.Windows.Baml2006
         {
             Type type = typeof(System.Windows.Controls.TextBlock);
             DependencyProperty  dp = System.Windows.Controls.TextBlock.FontSizeProperty;
-            var bamlMember = new WpfKnownMember( this,  // Schema Context
+            var bamlMember = new WpfKnownMember(this,  // Schema Context
                             this.GetXamlType(typeof(System.Windows.Controls.TextBlock)), // DeclaringType
                             "FontSize", // Name
                              dp, // DependencyProperty
                             false, // IsReadOnly
                             false // IsAttachable
-                                     );
-            bamlMember.TypeConverterType = typeof(System.Windows.FontSizeConverter);
+                                     )
+            {
+                TypeConverterType = typeof(System.Windows.FontSizeConverter)
+            };
             bamlMember.Freeze();
             return bamlMember;
         }
@@ -3482,14 +3630,16 @@ namespace System.Windows.Baml2006
         {
             Type type = typeof(System.Windows.Controls.TextBlock);
             DependencyProperty  dp = System.Windows.Controls.TextBlock.FontStretchProperty;
-            var bamlMember = new WpfKnownMember( this,  // Schema Context
+            var bamlMember = new WpfKnownMember(this,  // Schema Context
                             this.GetXamlType(typeof(System.Windows.Controls.TextBlock)), // DeclaringType
                             "FontStretch", // Name
                              dp, // DependencyProperty
                             false, // IsReadOnly
                             false // IsAttachable
-                                     );
-            bamlMember.TypeConverterType = typeof(System.Windows.FontStretchConverter);
+                                     )
+            {
+                TypeConverterType = typeof(System.Windows.FontStretchConverter)
+            };
             bamlMember.Freeze();
             return bamlMember;
         }
@@ -3499,14 +3649,16 @@ namespace System.Windows.Baml2006
         {
             Type type = typeof(System.Windows.Controls.TextBlock);
             DependencyProperty  dp = System.Windows.Controls.TextBlock.FontStyleProperty;
-            var bamlMember = new WpfKnownMember( this,  // Schema Context
+            var bamlMember = new WpfKnownMember(this,  // Schema Context
                             this.GetXamlType(typeof(System.Windows.Controls.TextBlock)), // DeclaringType
                             "FontStyle", // Name
                              dp, // DependencyProperty
                             false, // IsReadOnly
                             false // IsAttachable
-                                     );
-            bamlMember.TypeConverterType = typeof(System.Windows.FontStyleConverter);
+                                     )
+            {
+                TypeConverterType = typeof(System.Windows.FontStyleConverter)
+            };
             bamlMember.Freeze();
             return bamlMember;
         }
@@ -3516,14 +3668,16 @@ namespace System.Windows.Baml2006
         {
             Type type = typeof(System.Windows.Controls.TextBlock);
             DependencyProperty  dp = System.Windows.Controls.TextBlock.FontWeightProperty;
-            var bamlMember = new WpfKnownMember( this,  // Schema Context
+            var bamlMember = new WpfKnownMember(this,  // Schema Context
                             this.GetXamlType(typeof(System.Windows.Controls.TextBlock)), // DeclaringType
                             "FontWeight", // Name
                              dp, // DependencyProperty
                             false, // IsReadOnly
                             false // IsAttachable
-                                     );
-            bamlMember.TypeConverterType = typeof(System.Windows.FontWeightConverter);
+                                     )
+            {
+                TypeConverterType = typeof(System.Windows.FontWeightConverter)
+            };
             bamlMember.Freeze();
             return bamlMember;
         }
@@ -3533,14 +3687,16 @@ namespace System.Windows.Baml2006
         {
             Type type = typeof(System.Windows.Controls.TextBlock);
             DependencyProperty  dp = System.Windows.Controls.TextBlock.ForegroundProperty;
-            var bamlMember = new WpfKnownMember( this,  // Schema Context
+            var bamlMember = new WpfKnownMember(this,  // Schema Context
                             this.GetXamlType(typeof(System.Windows.Controls.TextBlock)), // DeclaringType
                             "Foreground", // Name
                              dp, // DependencyProperty
                             false, // IsReadOnly
                             false // IsAttachable
-                                     );
-            bamlMember.TypeConverterType = typeof(System.Windows.Media.BrushConverter);
+                                     )
+            {
+                TypeConverterType = typeof(System.Windows.Media.BrushConverter)
+            };
             bamlMember.Freeze();
             return bamlMember;
         }
@@ -3550,14 +3706,16 @@ namespace System.Windows.Baml2006
         {
             Type type = typeof(System.Windows.Controls.TextBlock);
             DependencyProperty  dp = System.Windows.Controls.TextBlock.TextProperty;
-            var bamlMember = new WpfKnownMember( this,  // Schema Context
+            var bamlMember = new WpfKnownMember(this,  // Schema Context
                             this.GetXamlType(typeof(System.Windows.Controls.TextBlock)), // DeclaringType
                             "Text", // Name
                              dp, // DependencyProperty
                             false, // IsReadOnly
                             false // IsAttachable
-                                     );
-            bamlMember.TypeConverterType = typeof(System.ComponentModel.StringConverter);
+                                     )
+            {
+                TypeConverterType = typeof(System.ComponentModel.StringConverter)
+            };
             bamlMember.Freeze();
             return bamlMember;
         }
@@ -3567,14 +3725,16 @@ namespace System.Windows.Baml2006
         {
             Type type = typeof(System.Windows.Controls.TextBlock);
             DependencyProperty  dp = System.Windows.Controls.TextBlock.TextDecorationsProperty;
-            var bamlMember = new WpfKnownMember( this,  // Schema Context
+            var bamlMember = new WpfKnownMember(this,  // Schema Context
                             this.GetXamlType(typeof(System.Windows.Controls.TextBlock)), // DeclaringType
                             "TextDecorations", // Name
                              dp, // DependencyProperty
                             false, // IsReadOnly
                             false // IsAttachable
-                                     );
-            bamlMember.TypeConverterType = typeof(System.Windows.TextDecorationCollectionConverter);
+                                     )
+            {
+                TypeConverterType = typeof(System.Windows.TextDecorationCollectionConverter)
+            };
             bamlMember.Freeze();
             return bamlMember;
         }
@@ -3584,14 +3744,16 @@ namespace System.Windows.Baml2006
         {
             Type type = typeof(System.Windows.Controls.TextBlock);
             DependencyProperty  dp = System.Windows.Controls.TextBlock.TextTrimmingProperty;
-            var bamlMember = new WpfKnownMember( this,  // Schema Context
+            var bamlMember = new WpfKnownMember(this,  // Schema Context
                             this.GetXamlType(typeof(System.Windows.Controls.TextBlock)), // DeclaringType
                             "TextTrimming", // Name
                              dp, // DependencyProperty
                             false, // IsReadOnly
                             false // IsAttachable
-                                     );
-            bamlMember.TypeConverterType = typeof(System.Windows.TextTrimming);
+                                     )
+            {
+                TypeConverterType = typeof(System.Windows.TextTrimming)
+            };
             bamlMember.Freeze();
             return bamlMember;
         }
@@ -3601,14 +3763,16 @@ namespace System.Windows.Baml2006
         {
             Type type = typeof(System.Windows.Controls.TextBlock);
             DependencyProperty  dp = System.Windows.Controls.TextBlock.TextWrappingProperty;
-            var bamlMember = new WpfKnownMember( this,  // Schema Context
+            var bamlMember = new WpfKnownMember(this,  // Schema Context
                             this.GetXamlType(typeof(System.Windows.Controls.TextBlock)), // DeclaringType
                             "TextWrapping", // Name
                              dp, // DependencyProperty
                             false, // IsReadOnly
                             false // IsAttachable
-                                     );
-            bamlMember.TypeConverterType = typeof(System.Windows.TextWrapping);
+                                     )
+            {
+                TypeConverterType = typeof(System.Windows.TextWrapping)
+            };
             bamlMember.Freeze();
             return bamlMember;
         }
@@ -3618,14 +3782,16 @@ namespace System.Windows.Baml2006
         {
             Type type = typeof(System.Windows.Controls.TextBox);
             DependencyProperty  dp = System.Windows.Controls.TextBox.TextProperty;
-            var bamlMember = new WpfKnownMember( this,  // Schema Context
+            var bamlMember = new WpfKnownMember(this,  // Schema Context
                             this.GetXamlType(typeof(System.Windows.Controls.TextBox)), // DeclaringType
                             "Text", // Name
                              dp, // DependencyProperty
                             false, // IsReadOnly
                             false // IsAttachable
-                                     );
-            bamlMember.TypeConverterType = typeof(System.ComponentModel.StringConverter);
+                                     )
+            {
+                TypeConverterType = typeof(System.ComponentModel.StringConverter)
+            };
             bamlMember.Freeze();
             return bamlMember;
         }
@@ -3641,8 +3807,10 @@ namespace System.Windows.Baml2006
                              dp, // DependencyProperty
                             false, // IsReadOnly
                             false // IsAttachable
-                                     );
-            bamlMember.TypeConverterType = typeof(System.ComponentModel.BooleanConverter);
+                                     )
+            {
+                TypeConverterType = typeof(System.ComponentModel.BooleanConverter)
+            };
             bamlMember.Freeze();
             return bamlMember;
         }
@@ -3652,14 +3820,16 @@ namespace System.Windows.Baml2006
         {
             Type type = typeof(System.Windows.Documents.TextElement);
             DependencyProperty  dp = System.Windows.Documents.TextElement.BackgroundProperty;
-            var bamlMember = new WpfKnownMember( this,  // Schema Context
+            var bamlMember = new WpfKnownMember(this,  // Schema Context
                             this.GetXamlType(typeof(System.Windows.Documents.TextElement)), // DeclaringType
                             "Background", // Name
                              dp, // DependencyProperty
                             false, // IsReadOnly
                             false // IsAttachable
-                                     );
-            bamlMember.TypeConverterType = typeof(System.Windows.Media.BrushConverter);
+                                     )
+            {
+                TypeConverterType = typeof(System.Windows.Media.BrushConverter)
+            };
             bamlMember.Freeze();
             return bamlMember;
         }
@@ -3669,14 +3839,16 @@ namespace System.Windows.Baml2006
         {
             Type type = typeof(System.Windows.Documents.TextElement);
             DependencyProperty  dp = System.Windows.Documents.TextElement.FontFamilyProperty;
-            var bamlMember = new WpfKnownMember( this,  // Schema Context
+            var bamlMember = new WpfKnownMember(this,  // Schema Context
                             this.GetXamlType(typeof(System.Windows.Documents.TextElement)), // DeclaringType
                             "FontFamily", // Name
                              dp, // DependencyProperty
                             false, // IsReadOnly
                             false // IsAttachable
-                                     );
-            bamlMember.TypeConverterType = typeof(System.Windows.Media.FontFamilyConverter);
+                                     )
+            {
+                TypeConverterType = typeof(System.Windows.Media.FontFamilyConverter)
+            };
             bamlMember.Freeze();
             return bamlMember;
         }
@@ -3686,14 +3858,16 @@ namespace System.Windows.Baml2006
         {
             Type type = typeof(System.Windows.Documents.TextElement);
             DependencyProperty  dp = System.Windows.Documents.TextElement.FontSizeProperty;
-            var bamlMember = new WpfKnownMember( this,  // Schema Context
+            var bamlMember = new WpfKnownMember(this,  // Schema Context
                             this.GetXamlType(typeof(System.Windows.Documents.TextElement)), // DeclaringType
                             "FontSize", // Name
                              dp, // DependencyProperty
                             false, // IsReadOnly
                             false // IsAttachable
-                                     );
-            bamlMember.TypeConverterType = typeof(System.Windows.FontSizeConverter);
+                                     )
+            {
+                TypeConverterType = typeof(System.Windows.FontSizeConverter)
+            };
             bamlMember.Freeze();
             return bamlMember;
         }
@@ -3703,14 +3877,16 @@ namespace System.Windows.Baml2006
         {
             Type type = typeof(System.Windows.Documents.TextElement);
             DependencyProperty  dp = System.Windows.Documents.TextElement.FontStretchProperty;
-            var bamlMember = new WpfKnownMember( this,  // Schema Context
+            var bamlMember = new WpfKnownMember(this,  // Schema Context
                             this.GetXamlType(typeof(System.Windows.Documents.TextElement)), // DeclaringType
                             "FontStretch", // Name
                              dp, // DependencyProperty
                             false, // IsReadOnly
                             false // IsAttachable
-                                     );
-            bamlMember.TypeConverterType = typeof(System.Windows.FontStretchConverter);
+                                     )
+            {
+                TypeConverterType = typeof(System.Windows.FontStretchConverter)
+            };
             bamlMember.Freeze();
             return bamlMember;
         }
@@ -3720,14 +3896,16 @@ namespace System.Windows.Baml2006
         {
             Type type = typeof(System.Windows.Documents.TextElement);
             DependencyProperty  dp = System.Windows.Documents.TextElement.FontStyleProperty;
-            var bamlMember = new WpfKnownMember( this,  // Schema Context
+            var bamlMember = new WpfKnownMember(this,  // Schema Context
                             this.GetXamlType(typeof(System.Windows.Documents.TextElement)), // DeclaringType
                             "FontStyle", // Name
                              dp, // DependencyProperty
                             false, // IsReadOnly
                             false // IsAttachable
-                                     );
-            bamlMember.TypeConverterType = typeof(System.Windows.FontStyleConverter);
+                                     )
+            {
+                TypeConverterType = typeof(System.Windows.FontStyleConverter)
+            };
             bamlMember.Freeze();
             return bamlMember;
         }
@@ -3737,14 +3915,16 @@ namespace System.Windows.Baml2006
         {
             Type type = typeof(System.Windows.Documents.TextElement);
             DependencyProperty  dp = System.Windows.Documents.TextElement.FontWeightProperty;
-            var bamlMember = new WpfKnownMember( this,  // Schema Context
+            var bamlMember = new WpfKnownMember(this,  // Schema Context
                             this.GetXamlType(typeof(System.Windows.Documents.TextElement)), // DeclaringType
                             "FontWeight", // Name
                              dp, // DependencyProperty
                             false, // IsReadOnly
                             false // IsAttachable
-                                     );
-            bamlMember.TypeConverterType = typeof(System.Windows.FontWeightConverter);
+                                     )
+            {
+                TypeConverterType = typeof(System.Windows.FontWeightConverter)
+            };
             bamlMember.Freeze();
             return bamlMember;
         }
@@ -3754,14 +3934,16 @@ namespace System.Windows.Baml2006
         {
             Type type = typeof(System.Windows.Documents.TextElement);
             DependencyProperty  dp = System.Windows.Documents.TextElement.ForegroundProperty;
-            var bamlMember = new WpfKnownMember( this,  // Schema Context
+            var bamlMember = new WpfKnownMember(this,  // Schema Context
                             this.GetXamlType(typeof(System.Windows.Documents.TextElement)), // DeclaringType
                             "Foreground", // Name
                              dp, // DependencyProperty
                             false, // IsReadOnly
                             false // IsAttachable
-                                     );
-            bamlMember.TypeConverterType = typeof(System.Windows.Media.BrushConverter);
+                                     )
+            {
+                TypeConverterType = typeof(System.Windows.Media.BrushConverter)
+            };
             bamlMember.Freeze();
             return bamlMember;
         }
@@ -3787,14 +3969,16 @@ namespace System.Windows.Baml2006
         {
             Type type = typeof(System.Windows.Controls.Primitives.Track);
             DependencyProperty  dp = System.Windows.Controls.Primitives.Track.IsDirectionReversedProperty;
-            var bamlMember = new WpfKnownMember( this,  // Schema Context
+            var bamlMember = new WpfKnownMember(this,  // Schema Context
                             this.GetXamlType(typeof(System.Windows.Controls.Primitives.Track)), // DeclaringType
                             "IsDirectionReversed", // Name
                              dp, // DependencyProperty
                             false, // IsReadOnly
                             false // IsAttachable
-                                     );
-            bamlMember.TypeConverterType = typeof(System.ComponentModel.BooleanConverter);
+                                     )
+            {
+                TypeConverterType = typeof(System.ComponentModel.BooleanConverter)
+            };
             bamlMember.Freeze();
             return bamlMember;
         }
@@ -3804,14 +3988,16 @@ namespace System.Windows.Baml2006
         {
             Type type = typeof(System.Windows.Controls.Primitives.Track);
             DependencyProperty  dp = System.Windows.Controls.Primitives.Track.MaximumProperty;
-            var bamlMember = new WpfKnownMember( this,  // Schema Context
+            var bamlMember = new WpfKnownMember(this,  // Schema Context
                             this.GetXamlType(typeof(System.Windows.Controls.Primitives.Track)), // DeclaringType
                             "Maximum", // Name
                              dp, // DependencyProperty
                             false, // IsReadOnly
                             false // IsAttachable
-                                     );
-            bamlMember.TypeConverterType = typeof(System.ComponentModel.DoubleConverter);
+                                     )
+            {
+                TypeConverterType = typeof(System.ComponentModel.DoubleConverter)
+            };
             bamlMember.Freeze();
             return bamlMember;
         }
@@ -3821,14 +4007,16 @@ namespace System.Windows.Baml2006
         {
             Type type = typeof(System.Windows.Controls.Primitives.Track);
             DependencyProperty  dp = System.Windows.Controls.Primitives.Track.MinimumProperty;
-            var bamlMember = new WpfKnownMember( this,  // Schema Context
+            var bamlMember = new WpfKnownMember(this,  // Schema Context
                             this.GetXamlType(typeof(System.Windows.Controls.Primitives.Track)), // DeclaringType
                             "Minimum", // Name
                              dp, // DependencyProperty
                             false, // IsReadOnly
                             false // IsAttachable
-                                     );
-            bamlMember.TypeConverterType = typeof(System.ComponentModel.DoubleConverter);
+                                     )
+            {
+                TypeConverterType = typeof(System.ComponentModel.DoubleConverter)
+            };
             bamlMember.Freeze();
             return bamlMember;
         }
@@ -3838,14 +4026,16 @@ namespace System.Windows.Baml2006
         {
             Type type = typeof(System.Windows.Controls.Primitives.Track);
             DependencyProperty  dp = System.Windows.Controls.Primitives.Track.OrientationProperty;
-            var bamlMember = new WpfKnownMember( this,  // Schema Context
+            var bamlMember = new WpfKnownMember(this,  // Schema Context
                             this.GetXamlType(typeof(System.Windows.Controls.Primitives.Track)), // DeclaringType
                             "Orientation", // Name
                              dp, // DependencyProperty
                             false, // IsReadOnly
                             false // IsAttachable
-                                     );
-            bamlMember.TypeConverterType = typeof(System.Windows.Controls.Orientation);
+                                     )
+            {
+                TypeConverterType = typeof(System.Windows.Controls.Orientation)
+            };
             bamlMember.Freeze();
             return bamlMember;
         }
@@ -3855,14 +4045,16 @@ namespace System.Windows.Baml2006
         {
             Type type = typeof(System.Windows.Controls.Primitives.Track);
             DependencyProperty  dp = System.Windows.Controls.Primitives.Track.ValueProperty;
-            var bamlMember = new WpfKnownMember( this,  // Schema Context
+            var bamlMember = new WpfKnownMember(this,  // Schema Context
                             this.GetXamlType(typeof(System.Windows.Controls.Primitives.Track)), // DeclaringType
                             "Value", // Name
                              dp, // DependencyProperty
                             false, // IsReadOnly
                             false // IsAttachable
-                                     );
-            bamlMember.TypeConverterType = typeof(System.ComponentModel.DoubleConverter);
+                                     )
+            {
+                TypeConverterType = typeof(System.ComponentModel.DoubleConverter)
+            };
             bamlMember.Freeze();
             return bamlMember;
         }
@@ -3872,14 +4064,16 @@ namespace System.Windows.Baml2006
         {
             Type type = typeof(System.Windows.Controls.Primitives.Track);
             DependencyProperty  dp = System.Windows.Controls.Primitives.Track.ViewportSizeProperty;
-            var bamlMember = new WpfKnownMember( this,  // Schema Context
+            var bamlMember = new WpfKnownMember(this,  // Schema Context
                             this.GetXamlType(typeof(System.Windows.Controls.Primitives.Track)), // DeclaringType
                             "ViewportSize", // Name
                              dp, // DependencyProperty
                             false, // IsReadOnly
                             false // IsAttachable
-                                     );
-            bamlMember.TypeConverterType = typeof(System.ComponentModel.DoubleConverter);
+                                     )
+            {
+                TypeConverterType = typeof(System.ComponentModel.DoubleConverter)
+            };
             bamlMember.Freeze();
             return bamlMember;
         }
@@ -3921,14 +4115,16 @@ namespace System.Windows.Baml2006
         {
             Type type = typeof(System.Windows.UIElement);
             DependencyProperty  dp = System.Windows.UIElement.ClipToBoundsProperty;
-            var bamlMember = new WpfKnownMember( this,  // Schema Context
+            var bamlMember = new WpfKnownMember(this,  // Schema Context
                             this.GetXamlType(typeof(System.Windows.UIElement)), // DeclaringType
                             "ClipToBounds", // Name
                              dp, // DependencyProperty
                             false, // IsReadOnly
                             false // IsAttachable
-                                     );
-            bamlMember.TypeConverterType = typeof(System.ComponentModel.BooleanConverter);
+                                     )
+            {
+                TypeConverterType = typeof(System.ComponentModel.BooleanConverter)
+            };
             bamlMember.Freeze();
             return bamlMember;
         }
@@ -3938,14 +4134,16 @@ namespace System.Windows.Baml2006
         {
             Type type = typeof(System.Windows.UIElement);
             DependencyProperty  dp = System.Windows.UIElement.FocusableProperty;
-            var bamlMember = new WpfKnownMember( this,  // Schema Context
+            var bamlMember = new WpfKnownMember(this,  // Schema Context
                             this.GetXamlType(typeof(System.Windows.UIElement)), // DeclaringType
                             "Focusable", // Name
                              dp, // DependencyProperty
                             false, // IsReadOnly
                             false // IsAttachable
-                                     );
-            bamlMember.TypeConverterType = typeof(System.ComponentModel.BooleanConverter);
+                                     )
+            {
+                TypeConverterType = typeof(System.ComponentModel.BooleanConverter)
+            };
             bamlMember.Freeze();
             return bamlMember;
         }
@@ -3955,14 +4153,16 @@ namespace System.Windows.Baml2006
         {
             Type type = typeof(System.Windows.UIElement);
             DependencyProperty  dp = System.Windows.UIElement.IsEnabledProperty;
-            var bamlMember = new WpfKnownMember( this,  // Schema Context
+            var bamlMember = new WpfKnownMember(this,  // Schema Context
                             this.GetXamlType(typeof(System.Windows.UIElement)), // DeclaringType
                             "IsEnabled", // Name
                              dp, // DependencyProperty
                             false, // IsReadOnly
                             false // IsAttachable
-                                     );
-            bamlMember.TypeConverterType = typeof(System.ComponentModel.BooleanConverter);
+                                     )
+            {
+                TypeConverterType = typeof(System.ComponentModel.BooleanConverter)
+            };
             bamlMember.Freeze();
             return bamlMember;
         }
@@ -3972,14 +4172,16 @@ namespace System.Windows.Baml2006
         {
             Type type = typeof(System.Windows.UIElement);
             DependencyProperty  dp = System.Windows.UIElement.RenderTransformProperty;
-            var bamlMember = new WpfKnownMember( this,  // Schema Context
+            var bamlMember = new WpfKnownMember(this,  // Schema Context
                             this.GetXamlType(typeof(System.Windows.UIElement)), // DeclaringType
                             "RenderTransform", // Name
                              dp, // DependencyProperty
                             false, // IsReadOnly
                             false // IsAttachable
-                                     );
-            bamlMember.TypeConverterType = typeof(System.Windows.Media.TransformConverter);
+                                     )
+            {
+                TypeConverterType = typeof(System.Windows.Media.TransformConverter)
+            };
             bamlMember.Freeze();
             return bamlMember;
         }
@@ -3989,14 +4191,16 @@ namespace System.Windows.Baml2006
         {
             Type type = typeof(System.Windows.UIElement);
             DependencyProperty  dp = System.Windows.UIElement.VisibilityProperty;
-            var bamlMember = new WpfKnownMember( this,  // Schema Context
+            var bamlMember = new WpfKnownMember(this,  // Schema Context
                             this.GetXamlType(typeof(System.Windows.UIElement)), // DeclaringType
                             "Visibility", // Name
                              dp, // DependencyProperty
                             false, // IsReadOnly
                             false // IsAttachable
-                                     );
-            bamlMember.TypeConverterType = typeof(System.Windows.Visibility);
+                                     )
+            {
+                TypeConverterType = typeof(System.Windows.Visibility)
+            };
             bamlMember.Freeze();
             return bamlMember;
         }
@@ -4006,14 +4210,16 @@ namespace System.Windows.Baml2006
         {
             Type type = typeof(System.Windows.Controls.Viewport3D);
             DependencyProperty  dp = System.Windows.Controls.Viewport3D.ChildrenProperty;
-            var bamlMember = new WpfKnownMember( this,  // Schema Context
+            var bamlMember = new WpfKnownMember(this,  // Schema Context
                             this.GetXamlType(typeof(System.Windows.Controls.Viewport3D)), // DeclaringType
                             "Children", // Name
                              dp, // DependencyProperty
                             true, // IsReadOnly
                             false // IsAttachable
-                                     );
-            bamlMember.IsWritePrivate = true;
+                                     )
+            {
+                IsWritePrivate = true
+            };
             bamlMember.Freeze();
             return bamlMember;
         }
@@ -4022,15 +4228,17 @@ namespace System.Windows.Baml2006
         private WpfKnownMember Create_BamlProperty_AdornedElementPlaceholder_Child()
         {
             Type type = typeof(System.Windows.Controls.AdornedElementPlaceholder);
-            var bamlMember = new WpfKnownMember( this,  // Schema Context
+            var bamlMember = new WpfKnownMember(this,  // Schema Context
                             this.GetXamlType(typeof(System.Windows.Controls.AdornedElementPlaceholder)), // DeclaringType
                             "Child", // Name
                             typeof(System.Windows.UIElement), // type
                             false, // IsReadOnly
                             false // IsAttachable
-                                     );
-            bamlMember.SetDelegate = delegate(object target, object value) { ((System.Windows.Controls.AdornedElementPlaceholder)target).Child = (System.Windows.UIElement)value; };
-            bamlMember.GetDelegate = delegate(object target) { return ((System.Windows.Controls.AdornedElementPlaceholder)target).Child; };
+                                     )
+            {
+                SetDelegate = delegate (object target, object value) { ((System.Windows.Controls.AdornedElementPlaceholder)target).Child = (System.Windows.UIElement)value; },
+                GetDelegate = delegate (object target) { return ((System.Windows.Controls.AdornedElementPlaceholder)target).Child; }
+            };
             bamlMember.Freeze();
             return bamlMember;
         }
@@ -4039,15 +4247,17 @@ namespace System.Windows.Baml2006
         private WpfKnownMember Create_BamlProperty_AdornerDecorator_Child()
         {
             Type type = typeof(System.Windows.Documents.AdornerDecorator);
-            var bamlMember = new WpfKnownMember( this,  // Schema Context
+            var bamlMember = new WpfKnownMember(this,  // Schema Context
                             this.GetXamlType(typeof(System.Windows.Documents.AdornerDecorator)), // DeclaringType
                             "Child", // Name
                             typeof(System.Windows.UIElement), // type
                             false, // IsReadOnly
                             false // IsAttachable
-                                     );
-            bamlMember.SetDelegate = delegate(object target, object value) { ((System.Windows.Documents.AdornerDecorator)target).Child = (System.Windows.UIElement)value; };
-            bamlMember.GetDelegate = delegate(object target) { return ((System.Windows.Documents.AdornerDecorator)target).Child; };
+                                     )
+            {
+                SetDelegate = delegate (object target, object value) { ((System.Windows.Documents.AdornerDecorator)target).Child = (System.Windows.UIElement)value; },
+                GetDelegate = delegate (object target) { return ((System.Windows.Documents.AdornerDecorator)target).Child; }
+            };
             bamlMember.Freeze();
             return bamlMember;
         }
@@ -4056,15 +4266,17 @@ namespace System.Windows.Baml2006
         private WpfKnownMember Create_BamlProperty_AnchoredBlock_Blocks()
         {
             Type type = typeof(System.Windows.Documents.AnchoredBlock);
-            var bamlMember = new WpfKnownMember( this,  // Schema Context
+            var bamlMember = new WpfKnownMember(this,  // Schema Context
                             this.GetXamlType(typeof(System.Windows.Documents.AnchoredBlock)), // DeclaringType
                             "Blocks", // Name
                             typeof(System.Windows.Documents.BlockCollection), // type
                             true, // IsReadOnly
                             false // IsAttachable
-                                     );
-            bamlMember.GetDelegate = delegate(object target) { return ((System.Windows.Documents.AnchoredBlock)target).Blocks; };
-            bamlMember.IsWritePrivate = true;
+                                     )
+            {
+                GetDelegate = delegate (object target) { return ((System.Windows.Documents.AnchoredBlock)target).Blocks; },
+                IsWritePrivate = true
+            };
             bamlMember.Freeze();
             return bamlMember;
         }
@@ -4073,15 +4285,17 @@ namespace System.Windows.Baml2006
         private WpfKnownMember Create_BamlProperty_ArrayExtension_Items()
         {
             Type type = typeof(System.Windows.Markup.ArrayExtension);
-            var bamlMember = new WpfKnownMember( this,  // Schema Context
+            var bamlMember = new WpfKnownMember(this,  // Schema Context
                             this.GetXamlType(typeof(System.Windows.Markup.ArrayExtension)), // DeclaringType
                             "Items", // Name
                             typeof(System.Collections.IList), // type
                             true, // IsReadOnly
                             false // IsAttachable
-                                     );
-            bamlMember.GetDelegate = delegate(object target) { return ((System.Windows.Markup.ArrayExtension)target).Items; };
-            bamlMember.IsWritePrivate = true;
+                                     )
+            {
+                GetDelegate = delegate (object target) { return ((System.Windows.Markup.ArrayExtension)target).Items; },
+                IsWritePrivate = true
+            };
             bamlMember.Freeze();
             return bamlMember;
         }
@@ -4090,15 +4304,17 @@ namespace System.Windows.Baml2006
         private WpfKnownMember Create_BamlProperty_BlockUIContainer_Child()
         {
             Type type = typeof(System.Windows.Documents.BlockUIContainer);
-            var bamlMember = new WpfKnownMember( this,  // Schema Context
+            var bamlMember = new WpfKnownMember(this,  // Schema Context
                             this.GetXamlType(typeof(System.Windows.Documents.BlockUIContainer)), // DeclaringType
                             "Child", // Name
                             typeof(System.Windows.UIElement), // type
                             false, // IsReadOnly
                             false // IsAttachable
-                                     );
-            bamlMember.SetDelegate = delegate(object target, object value) { ((System.Windows.Documents.BlockUIContainer)target).Child = (System.Windows.UIElement)value; };
-            bamlMember.GetDelegate = delegate(object target) { return ((System.Windows.Documents.BlockUIContainer)target).Child; };
+                                     )
+            {
+                SetDelegate = delegate (object target, object value) { ((System.Windows.Documents.BlockUIContainer)target).Child = (System.Windows.UIElement)value; },
+                GetDelegate = delegate (object target) { return ((System.Windows.Documents.BlockUIContainer)target).Child; }
+            };
             bamlMember.Freeze();
             return bamlMember;
         }
@@ -4107,15 +4323,17 @@ namespace System.Windows.Baml2006
         private WpfKnownMember Create_BamlProperty_Bold_Inlines()
         {
             Type type = typeof(System.Windows.Documents.Bold);
-            var bamlMember = new WpfKnownMember( this,  // Schema Context
+            var bamlMember = new WpfKnownMember(this,  // Schema Context
                             this.GetXamlType(typeof(System.Windows.Documents.Bold)), // DeclaringType
                             "Inlines", // Name
                             typeof(System.Windows.Documents.InlineCollection), // type
                             true, // IsReadOnly
                             false // IsAttachable
-                                     );
-            bamlMember.GetDelegate = delegate(object target) { return ((System.Windows.Documents.Bold)target).Inlines; };
-            bamlMember.IsWritePrivate = true;
+                                     )
+            {
+                GetDelegate = delegate (object target) { return ((System.Windows.Documents.Bold)target).Inlines; },
+                IsWritePrivate = true
+            };
             bamlMember.Freeze();
             return bamlMember;
         }
@@ -4124,15 +4342,17 @@ namespace System.Windows.Baml2006
         private WpfKnownMember Create_BamlProperty_BooleanAnimationUsingKeyFrames_KeyFrames()
         {
             Type type = typeof(System.Windows.Media.Animation.BooleanAnimationUsingKeyFrames);
-            var bamlMember = new WpfKnownMember( this,  // Schema Context
+            var bamlMember = new WpfKnownMember(this,  // Schema Context
                             this.GetXamlType(typeof(System.Windows.Media.Animation.BooleanAnimationUsingKeyFrames)), // DeclaringType
                             "KeyFrames", // Name
                             typeof(System.Windows.Media.Animation.BooleanKeyFrameCollection), // type
                             false, // IsReadOnly
                             false // IsAttachable
-                                     );
-            bamlMember.SetDelegate = delegate(object target, object value) { ((System.Windows.Media.Animation.BooleanAnimationUsingKeyFrames)target).KeyFrames = (System.Windows.Media.Animation.BooleanKeyFrameCollection)value; };
-            bamlMember.GetDelegate = delegate(object target) { return ((System.Windows.Media.Animation.BooleanAnimationUsingKeyFrames)target).KeyFrames; };
+                                     )
+            {
+                SetDelegate = delegate (object target, object value) { ((System.Windows.Media.Animation.BooleanAnimationUsingKeyFrames)target).KeyFrames = (System.Windows.Media.Animation.BooleanKeyFrameCollection)value; },
+                GetDelegate = delegate (object target) { return ((System.Windows.Media.Animation.BooleanAnimationUsingKeyFrames)target).KeyFrames; }
+            };
             bamlMember.Freeze();
             return bamlMember;
         }
@@ -4141,15 +4361,17 @@ namespace System.Windows.Baml2006
         private WpfKnownMember Create_BamlProperty_Border_Child()
         {
             Type type = typeof(System.Windows.Controls.Border);
-            var bamlMember = new WpfKnownMember( this,  // Schema Context
+            var bamlMember = new WpfKnownMember(this,  // Schema Context
                             this.GetXamlType(typeof(System.Windows.Controls.Border)), // DeclaringType
                             "Child", // Name
                             typeof(System.Windows.UIElement), // type
                             false, // IsReadOnly
                             false // IsAttachable
-                                     );
-            bamlMember.SetDelegate = delegate(object target, object value) { ((System.Windows.Controls.Border)target).Child = (System.Windows.UIElement)value; };
-            bamlMember.GetDelegate = delegate(object target) { return ((System.Windows.Controls.Border)target).Child; };
+                                     )
+            {
+                SetDelegate = delegate (object target, object value) { ((System.Windows.Controls.Border)target).Child = (System.Windows.UIElement)value; },
+                GetDelegate = delegate (object target) { return ((System.Windows.Controls.Border)target).Child; }
+            };
             bamlMember.Freeze();
             return bamlMember;
         }
@@ -4158,15 +4380,17 @@ namespace System.Windows.Baml2006
         private WpfKnownMember Create_BamlProperty_BulletDecorator_Child()
         {
             Type type = typeof(System.Windows.Controls.Primitives.BulletDecorator);
-            var bamlMember = new WpfKnownMember( this,  // Schema Context
+            var bamlMember = new WpfKnownMember(this,  // Schema Context
                             this.GetXamlType(typeof(System.Windows.Controls.Primitives.BulletDecorator)), // DeclaringType
                             "Child", // Name
                             typeof(System.Windows.UIElement), // type
                             false, // IsReadOnly
                             false // IsAttachable
-                                     );
-            bamlMember.SetDelegate = delegate(object target, object value) { ((System.Windows.Controls.Primitives.BulletDecorator)target).Child = (System.Windows.UIElement)value; };
-            bamlMember.GetDelegate = delegate(object target) { return ((System.Windows.Controls.Primitives.BulletDecorator)target).Child; };
+                                     )
+            {
+                SetDelegate = delegate (object target, object value) { ((System.Windows.Controls.Primitives.BulletDecorator)target).Child = (System.Windows.UIElement)value; },
+                GetDelegate = delegate (object target) { return ((System.Windows.Controls.Primitives.BulletDecorator)target).Child; }
+            };
             bamlMember.Freeze();
             return bamlMember;
         }
@@ -4176,15 +4400,17 @@ namespace System.Windows.Baml2006
         {
             Type type = typeof(System.Windows.Controls.Button);
             DependencyProperty  dp = System.Windows.Controls.Button.ContentProperty;
-            var bamlMember = new WpfKnownMember( this,  // Schema Context
+            var bamlMember = new WpfKnownMember(this,  // Schema Context
                             this.GetXamlType(typeof(System.Windows.Controls.Button)), // DeclaringType
                             "Content", // Name
                              dp, // DependencyProperty
                             false, // IsReadOnly
                             false // IsAttachable
-                                     );
-            bamlMember.HasSpecialTypeConverter = true;
-            bamlMember.TypeConverterType = typeof(System.Object);
+                                     )
+            {
+                HasSpecialTypeConverter = true,
+                TypeConverterType = typeof(System.Object)
+            };
             bamlMember.Freeze();
             return bamlMember;
         }
@@ -4194,15 +4420,17 @@ namespace System.Windows.Baml2006
         {
             Type type = typeof(System.Windows.Controls.Primitives.ButtonBase);
             DependencyProperty  dp = System.Windows.Controls.Primitives.ButtonBase.ContentProperty;
-            var bamlMember = new WpfKnownMember( this,  // Schema Context
+            var bamlMember = new WpfKnownMember(this,  // Schema Context
                             this.GetXamlType(typeof(System.Windows.Controls.Primitives.ButtonBase)), // DeclaringType
                             "Content", // Name
                              dp, // DependencyProperty
                             false, // IsReadOnly
                             false // IsAttachable
-                                     );
-            bamlMember.HasSpecialTypeConverter = true;
-            bamlMember.TypeConverterType = typeof(System.Object);
+                                     )
+            {
+                HasSpecialTypeConverter = true,
+                TypeConverterType = typeof(System.Object)
+            };
             bamlMember.Freeze();
             return bamlMember;
         }
@@ -4211,15 +4439,17 @@ namespace System.Windows.Baml2006
         private WpfKnownMember Create_BamlProperty_ByteAnimationUsingKeyFrames_KeyFrames()
         {
             Type type = typeof(System.Windows.Media.Animation.ByteAnimationUsingKeyFrames);
-            var bamlMember = new WpfKnownMember( this,  // Schema Context
+            var bamlMember = new WpfKnownMember(this,  // Schema Context
                             this.GetXamlType(typeof(System.Windows.Media.Animation.ByteAnimationUsingKeyFrames)), // DeclaringType
                             "KeyFrames", // Name
                             typeof(System.Windows.Media.Animation.ByteKeyFrameCollection), // type
                             false, // IsReadOnly
                             false // IsAttachable
-                                     );
-            bamlMember.SetDelegate = delegate(object target, object value) { ((System.Windows.Media.Animation.ByteAnimationUsingKeyFrames)target).KeyFrames = (System.Windows.Media.Animation.ByteKeyFrameCollection)value; };
-            bamlMember.GetDelegate = delegate(object target) { return ((System.Windows.Media.Animation.ByteAnimationUsingKeyFrames)target).KeyFrames; };
+                                     )
+            {
+                SetDelegate = delegate (object target, object value) { ((System.Windows.Media.Animation.ByteAnimationUsingKeyFrames)target).KeyFrames = (System.Windows.Media.Animation.ByteKeyFrameCollection)value; },
+                GetDelegate = delegate (object target) { return ((System.Windows.Media.Animation.ByteAnimationUsingKeyFrames)target).KeyFrames; }
+            };
             bamlMember.Freeze();
             return bamlMember;
         }
@@ -4228,15 +4458,17 @@ namespace System.Windows.Baml2006
         private WpfKnownMember Create_BamlProperty_Canvas_Children()
         {
             Type type = typeof(System.Windows.Controls.Canvas);
-            var bamlMember = new WpfKnownMember( this,  // Schema Context
+            var bamlMember = new WpfKnownMember(this,  // Schema Context
                             this.GetXamlType(typeof(System.Windows.Controls.Canvas)), // DeclaringType
                             "Children", // Name
                             typeof(System.Windows.Controls.UIElementCollection), // type
                             true, // IsReadOnly
                             false // IsAttachable
-                                     );
-            bamlMember.GetDelegate = delegate(object target) { return ((System.Windows.Controls.Canvas)target).Children; };
-            bamlMember.IsWritePrivate = true;
+                                     )
+            {
+                GetDelegate = delegate (object target) { return ((System.Windows.Controls.Canvas)target).Children; },
+                IsWritePrivate = true
+            };
             bamlMember.Freeze();
             return bamlMember;
         }
@@ -4245,15 +4477,17 @@ namespace System.Windows.Baml2006
         private WpfKnownMember Create_BamlProperty_CharAnimationUsingKeyFrames_KeyFrames()
         {
             Type type = typeof(System.Windows.Media.Animation.CharAnimationUsingKeyFrames);
-            var bamlMember = new WpfKnownMember( this,  // Schema Context
+            var bamlMember = new WpfKnownMember(this,  // Schema Context
                             this.GetXamlType(typeof(System.Windows.Media.Animation.CharAnimationUsingKeyFrames)), // DeclaringType
                             "KeyFrames", // Name
                             typeof(System.Windows.Media.Animation.CharKeyFrameCollection), // type
                             false, // IsReadOnly
                             false // IsAttachable
-                                     );
-            bamlMember.SetDelegate = delegate(object target, object value) { ((System.Windows.Media.Animation.CharAnimationUsingKeyFrames)target).KeyFrames = (System.Windows.Media.Animation.CharKeyFrameCollection)value; };
-            bamlMember.GetDelegate = delegate(object target) { return ((System.Windows.Media.Animation.CharAnimationUsingKeyFrames)target).KeyFrames; };
+                                     )
+            {
+                SetDelegate = delegate (object target, object value) { ((System.Windows.Media.Animation.CharAnimationUsingKeyFrames)target).KeyFrames = (System.Windows.Media.Animation.CharKeyFrameCollection)value; },
+                GetDelegate = delegate (object target) { return ((System.Windows.Media.Animation.CharAnimationUsingKeyFrames)target).KeyFrames; }
+            };
             bamlMember.Freeze();
             return bamlMember;
         }
@@ -4263,15 +4497,17 @@ namespace System.Windows.Baml2006
         {
             Type type = typeof(System.Windows.Controls.CheckBox);
             DependencyProperty  dp = System.Windows.Controls.CheckBox.ContentProperty;
-            var bamlMember = new WpfKnownMember( this,  // Schema Context
+            var bamlMember = new WpfKnownMember(this,  // Schema Context
                             this.GetXamlType(typeof(System.Windows.Controls.CheckBox)), // DeclaringType
                             "Content", // Name
                              dp, // DependencyProperty
                             false, // IsReadOnly
                             false // IsAttachable
-                                     );
-            bamlMember.HasSpecialTypeConverter = true;
-            bamlMember.TypeConverterType = typeof(System.Object);
+                                     )
+            {
+                HasSpecialTypeConverter = true,
+                TypeConverterType = typeof(System.Object)
+            };
             bamlMember.Freeze();
             return bamlMember;
         }
@@ -4280,15 +4516,17 @@ namespace System.Windows.Baml2006
         private WpfKnownMember Create_BamlProperty_ColorAnimationUsingKeyFrames_KeyFrames()
         {
             Type type = typeof(System.Windows.Media.Animation.ColorAnimationUsingKeyFrames);
-            var bamlMember = new WpfKnownMember( this,  // Schema Context
+            var bamlMember = new WpfKnownMember(this,  // Schema Context
                             this.GetXamlType(typeof(System.Windows.Media.Animation.ColorAnimationUsingKeyFrames)), // DeclaringType
                             "KeyFrames", // Name
                             typeof(System.Windows.Media.Animation.ColorKeyFrameCollection), // type
                             false, // IsReadOnly
                             false // IsAttachable
-                                     );
-            bamlMember.SetDelegate = delegate(object target, object value) { ((System.Windows.Media.Animation.ColorAnimationUsingKeyFrames)target).KeyFrames = (System.Windows.Media.Animation.ColorKeyFrameCollection)value; };
-            bamlMember.GetDelegate = delegate(object target) { return ((System.Windows.Media.Animation.ColorAnimationUsingKeyFrames)target).KeyFrames; };
+                                     )
+            {
+                SetDelegate = delegate (object target, object value) { ((System.Windows.Media.Animation.ColorAnimationUsingKeyFrames)target).KeyFrames = (System.Windows.Media.Animation.ColorKeyFrameCollection)value; },
+                GetDelegate = delegate (object target) { return ((System.Windows.Media.Animation.ColorAnimationUsingKeyFrames)target).KeyFrames; }
+            };
             bamlMember.Freeze();
             return bamlMember;
         }
@@ -4297,15 +4535,17 @@ namespace System.Windows.Baml2006
         private WpfKnownMember Create_BamlProperty_ComboBox_Items()
         {
             Type type = typeof(System.Windows.Controls.ComboBox);
-            var bamlMember = new WpfKnownMember( this,  // Schema Context
+            var bamlMember = new WpfKnownMember(this,  // Schema Context
                             this.GetXamlType(typeof(System.Windows.Controls.ComboBox)), // DeclaringType
                             "Items", // Name
                             typeof(System.Windows.Controls.ItemCollection), // type
                             true, // IsReadOnly
                             false // IsAttachable
-                                     );
-            bamlMember.GetDelegate = delegate(object target) { return ((System.Windows.Controls.ComboBox)target).Items; };
-            bamlMember.IsWritePrivate = true;
+                                     )
+            {
+                GetDelegate = delegate (object target) { return ((System.Windows.Controls.ComboBox)target).Items; },
+                IsWritePrivate = true
+            };
             bamlMember.Freeze();
             return bamlMember;
         }
@@ -4315,15 +4555,17 @@ namespace System.Windows.Baml2006
         {
             Type type = typeof(System.Windows.Controls.ComboBoxItem);
             DependencyProperty  dp = System.Windows.Controls.ComboBoxItem.ContentProperty;
-            var bamlMember = new WpfKnownMember( this,  // Schema Context
+            var bamlMember = new WpfKnownMember(this,  // Schema Context
                             this.GetXamlType(typeof(System.Windows.Controls.ComboBoxItem)), // DeclaringType
                             "Content", // Name
                              dp, // DependencyProperty
                             false, // IsReadOnly
                             false // IsAttachable
-                                     );
-            bamlMember.HasSpecialTypeConverter = true;
-            bamlMember.TypeConverterType = typeof(System.Object);
+                                     )
+            {
+                HasSpecialTypeConverter = true,
+                TypeConverterType = typeof(System.Object)
+            };
             bamlMember.Freeze();
             return bamlMember;
         }
@@ -4332,15 +4574,17 @@ namespace System.Windows.Baml2006
         private WpfKnownMember Create_BamlProperty_ContextMenu_Items()
         {
             Type type = typeof(System.Windows.Controls.ContextMenu);
-            var bamlMember = new WpfKnownMember( this,  // Schema Context
+            var bamlMember = new WpfKnownMember(this,  // Schema Context
                             this.GetXamlType(typeof(System.Windows.Controls.ContextMenu)), // DeclaringType
                             "Items", // Name
                             typeof(System.Windows.Controls.ItemCollection), // type
                             true, // IsReadOnly
                             false // IsAttachable
-                                     );
-            bamlMember.GetDelegate = delegate(object target) { return ((System.Windows.Controls.ContextMenu)target).Items; };
-            bamlMember.IsWritePrivate = true;
+                                     )
+            {
+                GetDelegate = delegate (object target) { return ((System.Windows.Controls.ContextMenu)target).Items; },
+                IsWritePrivate = true
+            };
             bamlMember.Freeze();
             return bamlMember;
         }
@@ -4349,15 +4593,17 @@ namespace System.Windows.Baml2006
         private WpfKnownMember Create_BamlProperty_ControlTemplate_VisualTree()
         {
             Type type = typeof(System.Windows.Controls.ControlTemplate);
-            var bamlMember = new WpfKnownMember( this,  // Schema Context
+            var bamlMember = new WpfKnownMember(this,  // Schema Context
                             this.GetXamlType(typeof(System.Windows.Controls.ControlTemplate)), // DeclaringType
                             "VisualTree", // Name
                             typeof(System.Windows.FrameworkElementFactory), // type
                             false, // IsReadOnly
                             false // IsAttachable
-                                     );
-            bamlMember.SetDelegate = delegate(object target, object value) { ((System.Windows.Controls.ControlTemplate)target).VisualTree = (System.Windows.FrameworkElementFactory)value; };
-            bamlMember.GetDelegate = delegate(object target) { return ((System.Windows.Controls.ControlTemplate)target).VisualTree; };
+                                     )
+            {
+                SetDelegate = delegate (object target, object value) { ((System.Windows.Controls.ControlTemplate)target).VisualTree = (System.Windows.FrameworkElementFactory)value; },
+                GetDelegate = delegate (object target) { return ((System.Windows.Controls.ControlTemplate)target).VisualTree; }
+            };
             bamlMember.Freeze();
             return bamlMember;
         }
@@ -4366,15 +4612,17 @@ namespace System.Windows.Baml2006
         private WpfKnownMember Create_BamlProperty_DataTemplate_VisualTree()
         {
             Type type = typeof(System.Windows.DataTemplate);
-            var bamlMember = new WpfKnownMember( this,  // Schema Context
+            var bamlMember = new WpfKnownMember(this,  // Schema Context
                             this.GetXamlType(typeof(System.Windows.DataTemplate)), // DeclaringType
                             "VisualTree", // Name
                             typeof(System.Windows.FrameworkElementFactory), // type
                             false, // IsReadOnly
                             false // IsAttachable
-                                     );
-            bamlMember.SetDelegate = delegate(object target, object value) { ((System.Windows.DataTemplate)target).VisualTree = (System.Windows.FrameworkElementFactory)value; };
-            bamlMember.GetDelegate = delegate(object target) { return ((System.Windows.DataTemplate)target).VisualTree; };
+                                     )
+            {
+                SetDelegate = delegate (object target, object value) { ((System.Windows.DataTemplate)target).VisualTree = (System.Windows.FrameworkElementFactory)value; },
+                GetDelegate = delegate (object target) { return ((System.Windows.DataTemplate)target).VisualTree; }
+            };
             bamlMember.Freeze();
             return bamlMember;
         }
@@ -4383,15 +4631,17 @@ namespace System.Windows.Baml2006
         private WpfKnownMember Create_BamlProperty_DataTrigger_Setters()
         {
             Type type = typeof(System.Windows.DataTrigger);
-            var bamlMember = new WpfKnownMember( this,  // Schema Context
+            var bamlMember = new WpfKnownMember(this,  // Schema Context
                             this.GetXamlType(typeof(System.Windows.DataTrigger)), // DeclaringType
                             "Setters", // Name
                             typeof(System.Windows.SetterBaseCollection), // type
                             true, // IsReadOnly
                             false // IsAttachable
-                                     );
-            bamlMember.GetDelegate = delegate(object target) { return ((System.Windows.DataTrigger)target).Setters; };
-            bamlMember.IsWritePrivate = true;
+                                     )
+            {
+                GetDelegate = delegate (object target) { return ((System.Windows.DataTrigger)target).Setters; },
+                IsWritePrivate = true
+            };
             bamlMember.Freeze();
             return bamlMember;
         }
@@ -4400,15 +4650,17 @@ namespace System.Windows.Baml2006
         private WpfKnownMember Create_BamlProperty_DecimalAnimationUsingKeyFrames_KeyFrames()
         {
             Type type = typeof(System.Windows.Media.Animation.DecimalAnimationUsingKeyFrames);
-            var bamlMember = new WpfKnownMember( this,  // Schema Context
+            var bamlMember = new WpfKnownMember(this,  // Schema Context
                             this.GetXamlType(typeof(System.Windows.Media.Animation.DecimalAnimationUsingKeyFrames)), // DeclaringType
                             "KeyFrames", // Name
                             typeof(System.Windows.Media.Animation.DecimalKeyFrameCollection), // type
                             false, // IsReadOnly
                             false // IsAttachable
-                                     );
-            bamlMember.SetDelegate = delegate(object target, object value) { ((System.Windows.Media.Animation.DecimalAnimationUsingKeyFrames)target).KeyFrames = (System.Windows.Media.Animation.DecimalKeyFrameCollection)value; };
-            bamlMember.GetDelegate = delegate(object target) { return ((System.Windows.Media.Animation.DecimalAnimationUsingKeyFrames)target).KeyFrames; };
+                                     )
+            {
+                SetDelegate = delegate (object target, object value) { ((System.Windows.Media.Animation.DecimalAnimationUsingKeyFrames)target).KeyFrames = (System.Windows.Media.Animation.DecimalKeyFrameCollection)value; },
+                GetDelegate = delegate (object target) { return ((System.Windows.Media.Animation.DecimalAnimationUsingKeyFrames)target).KeyFrames; }
+            };
             bamlMember.Freeze();
             return bamlMember;
         }
@@ -4417,15 +4669,17 @@ namespace System.Windows.Baml2006
         private WpfKnownMember Create_BamlProperty_Decorator_Child()
         {
             Type type = typeof(System.Windows.Controls.Decorator);
-            var bamlMember = new WpfKnownMember( this,  // Schema Context
+            var bamlMember = new WpfKnownMember(this,  // Schema Context
                             this.GetXamlType(typeof(System.Windows.Controls.Decorator)), // DeclaringType
                             "Child", // Name
                             typeof(System.Windows.UIElement), // type
                             false, // IsReadOnly
                             false // IsAttachable
-                                     );
-            bamlMember.SetDelegate = delegate(object target, object value) { ((System.Windows.Controls.Decorator)target).Child = (System.Windows.UIElement)value; };
-            bamlMember.GetDelegate = delegate(object target) { return ((System.Windows.Controls.Decorator)target).Child; };
+                                     )
+            {
+                SetDelegate = delegate (object target, object value) { ((System.Windows.Controls.Decorator)target).Child = (System.Windows.UIElement)value; },
+                GetDelegate = delegate (object target) { return ((System.Windows.Controls.Decorator)target).Child; }
+            };
             bamlMember.Freeze();
             return bamlMember;
         }
@@ -4434,15 +4688,17 @@ namespace System.Windows.Baml2006
         private WpfKnownMember Create_BamlProperty_DockPanel_Children()
         {
             Type type = typeof(System.Windows.Controls.DockPanel);
-            var bamlMember = new WpfKnownMember( this,  // Schema Context
+            var bamlMember = new WpfKnownMember(this,  // Schema Context
                             this.GetXamlType(typeof(System.Windows.Controls.DockPanel)), // DeclaringType
                             "Children", // Name
                             typeof(System.Windows.Controls.UIElementCollection), // type
                             true, // IsReadOnly
                             false // IsAttachable
-                                     );
-            bamlMember.GetDelegate = delegate(object target) { return ((System.Windows.Controls.DockPanel)target).Children; };
-            bamlMember.IsWritePrivate = true;
+                                     )
+            {
+                GetDelegate = delegate (object target) { return ((System.Windows.Controls.DockPanel)target).Children; },
+                IsWritePrivate = true
+            };
             bamlMember.Freeze();
             return bamlMember;
         }
@@ -4467,15 +4723,17 @@ namespace System.Windows.Baml2006
         private WpfKnownMember Create_BamlProperty_DoubleAnimationUsingKeyFrames_KeyFrames()
         {
             Type type = typeof(System.Windows.Media.Animation.DoubleAnimationUsingKeyFrames);
-            var bamlMember = new WpfKnownMember( this,  // Schema Context
+            var bamlMember = new WpfKnownMember(this,  // Schema Context
                             this.GetXamlType(typeof(System.Windows.Media.Animation.DoubleAnimationUsingKeyFrames)), // DeclaringType
                             "KeyFrames", // Name
                             typeof(System.Windows.Media.Animation.DoubleKeyFrameCollection), // type
                             false, // IsReadOnly
                             false // IsAttachable
-                                     );
-            bamlMember.SetDelegate = delegate(object target, object value) { ((System.Windows.Media.Animation.DoubleAnimationUsingKeyFrames)target).KeyFrames = (System.Windows.Media.Animation.DoubleKeyFrameCollection)value; };
-            bamlMember.GetDelegate = delegate(object target) { return ((System.Windows.Media.Animation.DoubleAnimationUsingKeyFrames)target).KeyFrames; };
+                                     )
+            {
+                SetDelegate = delegate (object target, object value) { ((System.Windows.Media.Animation.DoubleAnimationUsingKeyFrames)target).KeyFrames = (System.Windows.Media.Animation.DoubleKeyFrameCollection)value; },
+                GetDelegate = delegate (object target) { return ((System.Windows.Media.Animation.DoubleAnimationUsingKeyFrames)target).KeyFrames; }
+            };
             bamlMember.Freeze();
             return bamlMember;
         }
@@ -4484,15 +4742,17 @@ namespace System.Windows.Baml2006
         private WpfKnownMember Create_BamlProperty_EventTrigger_Actions()
         {
             Type type = typeof(System.Windows.EventTrigger);
-            var bamlMember = new WpfKnownMember( this,  // Schema Context
+            var bamlMember = new WpfKnownMember(this,  // Schema Context
                             this.GetXamlType(typeof(System.Windows.EventTrigger)), // DeclaringType
                             "Actions", // Name
                             typeof(System.Windows.TriggerActionCollection), // type
                             true, // IsReadOnly
                             false // IsAttachable
-                                     );
-            bamlMember.GetDelegate = delegate(object target) { return ((System.Windows.EventTrigger)target).Actions; };
-            bamlMember.IsWritePrivate = true;
+                                     )
+            {
+                GetDelegate = delegate (object target) { return ((System.Windows.EventTrigger)target).Actions; },
+                IsWritePrivate = true
+            };
             bamlMember.Freeze();
             return bamlMember;
         }
@@ -4502,15 +4762,17 @@ namespace System.Windows.Baml2006
         {
             Type type = typeof(System.Windows.Controls.Expander);
             DependencyProperty  dp = System.Windows.Controls.Expander.ContentProperty;
-            var bamlMember = new WpfKnownMember( this,  // Schema Context
+            var bamlMember = new WpfKnownMember(this,  // Schema Context
                             this.GetXamlType(typeof(System.Windows.Controls.Expander)), // DeclaringType
                             "Content", // Name
                              dp, // DependencyProperty
                             false, // IsReadOnly
                             false // IsAttachable
-                                     );
-            bamlMember.HasSpecialTypeConverter = true;
-            bamlMember.TypeConverterType = typeof(System.Object);
+                                     )
+            {
+                HasSpecialTypeConverter = true,
+                TypeConverterType = typeof(System.Object)
+            };
             bamlMember.Freeze();
             return bamlMember;
         }
@@ -4519,15 +4781,17 @@ namespace System.Windows.Baml2006
         private WpfKnownMember Create_BamlProperty_Figure_Blocks()
         {
             Type type = typeof(System.Windows.Documents.Figure);
-            var bamlMember = new WpfKnownMember( this,  // Schema Context
+            var bamlMember = new WpfKnownMember(this,  // Schema Context
                             this.GetXamlType(typeof(System.Windows.Documents.Figure)), // DeclaringType
                             "Blocks", // Name
                             typeof(System.Windows.Documents.BlockCollection), // type
                             true, // IsReadOnly
                             false // IsAttachable
-                                     );
-            bamlMember.GetDelegate = delegate(object target) { return ((System.Windows.Documents.Figure)target).Blocks; };
-            bamlMember.IsWritePrivate = true;
+                                     )
+            {
+                GetDelegate = delegate (object target) { return ((System.Windows.Documents.Figure)target).Blocks; },
+                IsWritePrivate = true
+            };
             bamlMember.Freeze();
             return bamlMember;
         }
@@ -4536,15 +4800,17 @@ namespace System.Windows.Baml2006
         private WpfKnownMember Create_BamlProperty_FixedDocument_Pages()
         {
             Type type = typeof(System.Windows.Documents.FixedDocument);
-            var bamlMember = new WpfKnownMember( this,  // Schema Context
+            var bamlMember = new WpfKnownMember(this,  // Schema Context
                             this.GetXamlType(typeof(System.Windows.Documents.FixedDocument)), // DeclaringType
                             "Pages", // Name
                             typeof(System.Windows.Documents.PageContentCollection), // type
                             true, // IsReadOnly
                             false // IsAttachable
-                                     );
-            bamlMember.GetDelegate = delegate(object target) { return ((System.Windows.Documents.FixedDocument)target).Pages; };
-            bamlMember.IsWritePrivate = true;
+                                     )
+            {
+                GetDelegate = delegate (object target) { return ((System.Windows.Documents.FixedDocument)target).Pages; },
+                IsWritePrivate = true
+            };
             bamlMember.Freeze();
             return bamlMember;
         }
@@ -4553,15 +4819,17 @@ namespace System.Windows.Baml2006
         private WpfKnownMember Create_BamlProperty_FixedDocumentSequence_References()
         {
             Type type = typeof(System.Windows.Documents.FixedDocumentSequence);
-            var bamlMember = new WpfKnownMember( this,  // Schema Context
+            var bamlMember = new WpfKnownMember(this,  // Schema Context
                             this.GetXamlType(typeof(System.Windows.Documents.FixedDocumentSequence)), // DeclaringType
                             "References", // Name
                             typeof(System.Windows.Documents.DocumentReferenceCollection), // type
                             true, // IsReadOnly
                             false // IsAttachable
-                                     );
-            bamlMember.GetDelegate = delegate(object target) { return ((System.Windows.Documents.FixedDocumentSequence)target).References; };
-            bamlMember.IsWritePrivate = true;
+                                     )
+            {
+                GetDelegate = delegate (object target) { return ((System.Windows.Documents.FixedDocumentSequence)target).References; },
+                IsWritePrivate = true
+            };
             bamlMember.Freeze();
             return bamlMember;
         }
@@ -4570,15 +4838,17 @@ namespace System.Windows.Baml2006
         private WpfKnownMember Create_BamlProperty_FixedPage_Children()
         {
             Type type = typeof(System.Windows.Documents.FixedPage);
-            var bamlMember = new WpfKnownMember( this,  // Schema Context
+            var bamlMember = new WpfKnownMember(this,  // Schema Context
                             this.GetXamlType(typeof(System.Windows.Documents.FixedPage)), // DeclaringType
                             "Children", // Name
                             typeof(System.Windows.Controls.UIElementCollection), // type
                             true, // IsReadOnly
                             false // IsAttachable
-                                     );
-            bamlMember.GetDelegate = delegate(object target) { return ((System.Windows.Documents.FixedPage)target).Children; };
-            bamlMember.IsWritePrivate = true;
+                                     )
+            {
+                GetDelegate = delegate (object target) { return ((System.Windows.Documents.FixedPage)target).Children; },
+                IsWritePrivate = true
+            };
             bamlMember.Freeze();
             return bamlMember;
         }
@@ -4587,15 +4857,17 @@ namespace System.Windows.Baml2006
         private WpfKnownMember Create_BamlProperty_Floater_Blocks()
         {
             Type type = typeof(System.Windows.Documents.Floater);
-            var bamlMember = new WpfKnownMember( this,  // Schema Context
+            var bamlMember = new WpfKnownMember(this,  // Schema Context
                             this.GetXamlType(typeof(System.Windows.Documents.Floater)), // DeclaringType
                             "Blocks", // Name
                             typeof(System.Windows.Documents.BlockCollection), // type
                             true, // IsReadOnly
                             false // IsAttachable
-                                     );
-            bamlMember.GetDelegate = delegate(object target) { return ((System.Windows.Documents.Floater)target).Blocks; };
-            bamlMember.IsWritePrivate = true;
+                                     )
+            {
+                GetDelegate = delegate (object target) { return ((System.Windows.Documents.Floater)target).Blocks; },
+                IsWritePrivate = true
+            };
             bamlMember.Freeze();
             return bamlMember;
         }
@@ -4604,15 +4876,17 @@ namespace System.Windows.Baml2006
         private WpfKnownMember Create_BamlProperty_FlowDocument_Blocks()
         {
             Type type = typeof(System.Windows.Documents.FlowDocument);
-            var bamlMember = new WpfKnownMember( this,  // Schema Context
+            var bamlMember = new WpfKnownMember(this,  // Schema Context
                             this.GetXamlType(typeof(System.Windows.Documents.FlowDocument)), // DeclaringType
                             "Blocks", // Name
                             typeof(System.Windows.Documents.BlockCollection), // type
                             true, // IsReadOnly
                             false // IsAttachable
-                                     );
-            bamlMember.GetDelegate = delegate(object target) { return ((System.Windows.Documents.FlowDocument)target).Blocks; };
-            bamlMember.IsWritePrivate = true;
+                                     )
+            {
+                GetDelegate = delegate (object target) { return ((System.Windows.Documents.FlowDocument)target).Blocks; },
+                IsWritePrivate = true
+            };
             bamlMember.Freeze();
             return bamlMember;
         }
@@ -4637,15 +4911,17 @@ namespace System.Windows.Baml2006
         private WpfKnownMember Create_BamlProperty_FrameworkTemplate_VisualTree()
         {
             Type type = typeof(System.Windows.FrameworkTemplate);
-            var bamlMember = new WpfKnownMember( this,  // Schema Context
+            var bamlMember = new WpfKnownMember(this,  // Schema Context
                             this.GetXamlType(typeof(System.Windows.FrameworkTemplate)), // DeclaringType
                             "VisualTree", // Name
                             typeof(System.Windows.FrameworkElementFactory), // type
                             false, // IsReadOnly
                             false // IsAttachable
-                                     );
-            bamlMember.SetDelegate = delegate(object target, object value) { ((System.Windows.FrameworkTemplate)target).VisualTree = (System.Windows.FrameworkElementFactory)value; };
-            bamlMember.GetDelegate = delegate(object target) { return ((System.Windows.FrameworkTemplate)target).VisualTree; };
+                                     )
+            {
+                SetDelegate = delegate (object target, object value) { ((System.Windows.FrameworkTemplate)target).VisualTree = (System.Windows.FrameworkElementFactory)value; },
+                GetDelegate = delegate (object target) { return ((System.Windows.FrameworkTemplate)target).VisualTree; }
+            };
             bamlMember.Freeze();
             return bamlMember;
         }
@@ -4654,15 +4930,17 @@ namespace System.Windows.Baml2006
         private WpfKnownMember Create_BamlProperty_Grid_Children()
         {
             Type type = typeof(System.Windows.Controls.Grid);
-            var bamlMember = new WpfKnownMember( this,  // Schema Context
+            var bamlMember = new WpfKnownMember(this,  // Schema Context
                             this.GetXamlType(typeof(System.Windows.Controls.Grid)), // DeclaringType
                             "Children", // Name
                             typeof(System.Windows.Controls.UIElementCollection), // type
                             true, // IsReadOnly
                             false // IsAttachable
-                                     );
-            bamlMember.GetDelegate = delegate(object target) { return ((System.Windows.Controls.Grid)target).Children; };
-            bamlMember.IsWritePrivate = true;
+                                     )
+            {
+                GetDelegate = delegate (object target) { return ((System.Windows.Controls.Grid)target).Children; },
+                IsWritePrivate = true
+            };
             bamlMember.Freeze();
             return bamlMember;
         }
@@ -4671,15 +4949,17 @@ namespace System.Windows.Baml2006
         private WpfKnownMember Create_BamlProperty_GridView_Columns()
         {
             Type type = typeof(System.Windows.Controls.GridView);
-            var bamlMember = new WpfKnownMember( this,  // Schema Context
+            var bamlMember = new WpfKnownMember(this,  // Schema Context
                             this.GetXamlType(typeof(System.Windows.Controls.GridView)), // DeclaringType
                             "Columns", // Name
                             typeof(System.Windows.Controls.GridViewColumnCollection), // type
                             true, // IsReadOnly
                             false // IsAttachable
-                                     );
-            bamlMember.GetDelegate = delegate(object target) { return ((System.Windows.Controls.GridView)target).Columns; };
-            bamlMember.IsWritePrivate = true;
+                                     )
+            {
+                GetDelegate = delegate (object target) { return ((System.Windows.Controls.GridView)target).Columns; },
+                IsWritePrivate = true
+            };
             bamlMember.Freeze();
             return bamlMember;
         }
@@ -4689,15 +4969,17 @@ namespace System.Windows.Baml2006
         {
             Type type = typeof(System.Windows.Controls.GridViewColumnHeader);
             DependencyProperty  dp = System.Windows.Controls.GridViewColumnHeader.ContentProperty;
-            var bamlMember = new WpfKnownMember( this,  // Schema Context
+            var bamlMember = new WpfKnownMember(this,  // Schema Context
                             this.GetXamlType(typeof(System.Windows.Controls.GridViewColumnHeader)), // DeclaringType
                             "Content", // Name
                              dp, // DependencyProperty
                             false, // IsReadOnly
                             false // IsAttachable
-                                     );
-            bamlMember.HasSpecialTypeConverter = true;
-            bamlMember.TypeConverterType = typeof(System.Object);
+                                     )
+            {
+                HasSpecialTypeConverter = true,
+                TypeConverterType = typeof(System.Object)
+            };
             bamlMember.Freeze();
             return bamlMember;
         }
@@ -4707,15 +4989,17 @@ namespace System.Windows.Baml2006
         {
             Type type = typeof(System.Windows.Controls.GroupBox);
             DependencyProperty  dp = System.Windows.Controls.GroupBox.ContentProperty;
-            var bamlMember = new WpfKnownMember( this,  // Schema Context
+            var bamlMember = new WpfKnownMember(this,  // Schema Context
                             this.GetXamlType(typeof(System.Windows.Controls.GroupBox)), // DeclaringType
                             "Content", // Name
                              dp, // DependencyProperty
                             false, // IsReadOnly
                             false // IsAttachable
-                                     );
-            bamlMember.HasSpecialTypeConverter = true;
-            bamlMember.TypeConverterType = typeof(System.Object);
+                                     )
+            {
+                HasSpecialTypeConverter = true,
+                TypeConverterType = typeof(System.Object)
+            };
             bamlMember.Freeze();
             return bamlMember;
         }
@@ -4725,15 +5009,17 @@ namespace System.Windows.Baml2006
         {
             Type type = typeof(System.Windows.Controls.GroupItem);
             DependencyProperty  dp = System.Windows.Controls.GroupItem.ContentProperty;
-            var bamlMember = new WpfKnownMember( this,  // Schema Context
+            var bamlMember = new WpfKnownMember(this,  // Schema Context
                             this.GetXamlType(typeof(System.Windows.Controls.GroupItem)), // DeclaringType
                             "Content", // Name
                              dp, // DependencyProperty
                             false, // IsReadOnly
                             false // IsAttachable
-                                     );
-            bamlMember.HasSpecialTypeConverter = true;
-            bamlMember.TypeConverterType = typeof(System.Object);
+                                     )
+            {
+                HasSpecialTypeConverter = true,
+                TypeConverterType = typeof(System.Object)
+            };
             bamlMember.Freeze();
             return bamlMember;
         }
@@ -4743,15 +5029,17 @@ namespace System.Windows.Baml2006
         {
             Type type = typeof(System.Windows.Controls.HeaderedContentControl);
             DependencyProperty  dp = System.Windows.Controls.HeaderedContentControl.ContentProperty;
-            var bamlMember = new WpfKnownMember( this,  // Schema Context
+            var bamlMember = new WpfKnownMember(this,  // Schema Context
                             this.GetXamlType(typeof(System.Windows.Controls.HeaderedContentControl)), // DeclaringType
                             "Content", // Name
                              dp, // DependencyProperty
                             false, // IsReadOnly
                             false // IsAttachable
-                                     );
-            bamlMember.HasSpecialTypeConverter = true;
-            bamlMember.TypeConverterType = typeof(System.Object);
+                                     )
+            {
+                HasSpecialTypeConverter = true,
+                TypeConverterType = typeof(System.Object)
+            };
             bamlMember.Freeze();
             return bamlMember;
         }
@@ -4760,15 +5048,17 @@ namespace System.Windows.Baml2006
         private WpfKnownMember Create_BamlProperty_HeaderedItemsControl_Items()
         {
             Type type = typeof(System.Windows.Controls.HeaderedItemsControl);
-            var bamlMember = new WpfKnownMember( this,  // Schema Context
+            var bamlMember = new WpfKnownMember(this,  // Schema Context
                             this.GetXamlType(typeof(System.Windows.Controls.HeaderedItemsControl)), // DeclaringType
                             "Items", // Name
                             typeof(System.Windows.Controls.ItemCollection), // type
                             true, // IsReadOnly
                             false // IsAttachable
-                                     );
-            bamlMember.GetDelegate = delegate(object target) { return ((System.Windows.Controls.HeaderedItemsControl)target).Items; };
-            bamlMember.IsWritePrivate = true;
+                                     )
+            {
+                GetDelegate = delegate (object target) { return ((System.Windows.Controls.HeaderedItemsControl)target).Items; },
+                IsWritePrivate = true
+            };
             bamlMember.Freeze();
             return bamlMember;
         }
@@ -4777,15 +5067,17 @@ namespace System.Windows.Baml2006
         private WpfKnownMember Create_BamlProperty_HierarchicalDataTemplate_VisualTree()
         {
             Type type = typeof(System.Windows.HierarchicalDataTemplate);
-            var bamlMember = new WpfKnownMember( this,  // Schema Context
+            var bamlMember = new WpfKnownMember(this,  // Schema Context
                             this.GetXamlType(typeof(System.Windows.HierarchicalDataTemplate)), // DeclaringType
                             "VisualTree", // Name
                             typeof(System.Windows.FrameworkElementFactory), // type
                             false, // IsReadOnly
                             false // IsAttachable
-                                     );
-            bamlMember.SetDelegate = delegate(object target, object value) { ((System.Windows.HierarchicalDataTemplate)target).VisualTree = (System.Windows.FrameworkElementFactory)value; };
-            bamlMember.GetDelegate = delegate(object target) { return ((System.Windows.HierarchicalDataTemplate)target).VisualTree; };
+                                     )
+            {
+                SetDelegate = delegate (object target, object value) { ((System.Windows.HierarchicalDataTemplate)target).VisualTree = (System.Windows.FrameworkElementFactory)value; },
+                GetDelegate = delegate (object target) { return ((System.Windows.HierarchicalDataTemplate)target).VisualTree; }
+            };
             bamlMember.Freeze();
             return bamlMember;
         }
@@ -4794,15 +5086,17 @@ namespace System.Windows.Baml2006
         private WpfKnownMember Create_BamlProperty_Hyperlink_Inlines()
         {
             Type type = typeof(System.Windows.Documents.Hyperlink);
-            var bamlMember = new WpfKnownMember( this,  // Schema Context
+            var bamlMember = new WpfKnownMember(this,  // Schema Context
                             this.GetXamlType(typeof(System.Windows.Documents.Hyperlink)), // DeclaringType
                             "Inlines", // Name
                             typeof(System.Windows.Documents.InlineCollection), // type
                             true, // IsReadOnly
                             false // IsAttachable
-                                     );
-            bamlMember.GetDelegate = delegate(object target) { return ((System.Windows.Documents.Hyperlink)target).Inlines; };
-            bamlMember.IsWritePrivate = true;
+                                     )
+            {
+                GetDelegate = delegate (object target) { return ((System.Windows.Documents.Hyperlink)target).Inlines; },
+                IsWritePrivate = true
+            };
             bamlMember.Freeze();
             return bamlMember;
         }
@@ -4811,15 +5105,17 @@ namespace System.Windows.Baml2006
         private WpfKnownMember Create_BamlProperty_InkCanvas_Children()
         {
             Type type = typeof(System.Windows.Controls.InkCanvas);
-            var bamlMember = new WpfKnownMember( this,  // Schema Context
+            var bamlMember = new WpfKnownMember(this,  // Schema Context
                             this.GetXamlType(typeof(System.Windows.Controls.InkCanvas)), // DeclaringType
                             "Children", // Name
                             typeof(System.Windows.Controls.UIElementCollection), // type
                             true, // IsReadOnly
                             false // IsAttachable
-                                     );
-            bamlMember.GetDelegate = delegate(object target) { return ((System.Windows.Controls.InkCanvas)target).Children; };
-            bamlMember.IsWritePrivate = true;
+                                     )
+            {
+                GetDelegate = delegate (object target) { return ((System.Windows.Controls.InkCanvas)target).Children; },
+                IsWritePrivate = true
+            };
             bamlMember.Freeze();
             return bamlMember;
         }
@@ -4828,15 +5124,17 @@ namespace System.Windows.Baml2006
         private WpfKnownMember Create_BamlProperty_InkPresenter_Child()
         {
             Type type = typeof(System.Windows.Controls.InkPresenter);
-            var bamlMember = new WpfKnownMember( this,  // Schema Context
+            var bamlMember = new WpfKnownMember(this,  // Schema Context
                             this.GetXamlType(typeof(System.Windows.Controls.InkPresenter)), // DeclaringType
                             "Child", // Name
                             typeof(System.Windows.UIElement), // type
                             false, // IsReadOnly
                             false // IsAttachable
-                                     );
-            bamlMember.SetDelegate = delegate(object target, object value) { ((System.Windows.Controls.InkPresenter)target).Child = (System.Windows.UIElement)value; };
-            bamlMember.GetDelegate = delegate(object target) { return ((System.Windows.Controls.InkPresenter)target).Child; };
+                                     )
+            {
+                SetDelegate = delegate (object target, object value) { ((System.Windows.Controls.InkPresenter)target).Child = (System.Windows.UIElement)value; },
+                GetDelegate = delegate (object target) { return ((System.Windows.Controls.InkPresenter)target).Child; }
+            };
             bamlMember.Freeze();
             return bamlMember;
         }
@@ -4845,15 +5143,17 @@ namespace System.Windows.Baml2006
         private WpfKnownMember Create_BamlProperty_InlineUIContainer_Child()
         {
             Type type = typeof(System.Windows.Documents.InlineUIContainer);
-            var bamlMember = new WpfKnownMember( this,  // Schema Context
+            var bamlMember = new WpfKnownMember(this,  // Schema Context
                             this.GetXamlType(typeof(System.Windows.Documents.InlineUIContainer)), // DeclaringType
                             "Child", // Name
                             typeof(System.Windows.UIElement), // type
                             false, // IsReadOnly
                             false // IsAttachable
-                                     );
-            bamlMember.SetDelegate = delegate(object target, object value) { ((System.Windows.Documents.InlineUIContainer)target).Child = (System.Windows.UIElement)value; };
-            bamlMember.GetDelegate = delegate(object target) { return ((System.Windows.Documents.InlineUIContainer)target).Child; };
+                                     )
+            {
+                SetDelegate = delegate (object target, object value) { ((System.Windows.Documents.InlineUIContainer)target).Child = (System.Windows.UIElement)value; },
+                GetDelegate = delegate (object target) { return ((System.Windows.Documents.InlineUIContainer)target).Child; }
+            };
             bamlMember.Freeze();
             return bamlMember;
         }
@@ -4862,16 +5162,18 @@ namespace System.Windows.Baml2006
         private WpfKnownMember Create_BamlProperty_InputScopeName_NameValue()
         {
             Type type = typeof(System.Windows.Input.InputScopeName);
-            var bamlMember = new WpfKnownMember( this,  // Schema Context
+            var bamlMember = new WpfKnownMember(this,  // Schema Context
                             this.GetXamlType(typeof(System.Windows.Input.InputScopeName)), // DeclaringType
                             "NameValue", // Name
                             typeof(System.Windows.Input.InputScopeNameValue), // type
                             false, // IsReadOnly
                             false // IsAttachable
-                                     );
-            bamlMember.TypeConverterType = typeof(System.Windows.Input.InputScopeNameValue);
-            bamlMember.SetDelegate = delegate(object target, object value) { ((System.Windows.Input.InputScopeName)target).NameValue = (System.Windows.Input.InputScopeNameValue)value; };
-            bamlMember.GetDelegate = delegate(object target) { return ((System.Windows.Input.InputScopeName)target).NameValue; };
+                                     )
+            {
+                TypeConverterType = typeof(System.Windows.Input.InputScopeNameValue),
+                SetDelegate = delegate (object target, object value) { ((System.Windows.Input.InputScopeName)target).NameValue = (System.Windows.Input.InputScopeNameValue)value; },
+                GetDelegate = delegate (object target) { return ((System.Windows.Input.InputScopeName)target).NameValue; }
+            };
             bamlMember.Freeze();
             return bamlMember;
         }
@@ -4880,15 +5182,17 @@ namespace System.Windows.Baml2006
         private WpfKnownMember Create_BamlProperty_Int16AnimationUsingKeyFrames_KeyFrames()
         {
             Type type = typeof(System.Windows.Media.Animation.Int16AnimationUsingKeyFrames);
-            var bamlMember = new WpfKnownMember( this,  // Schema Context
+            var bamlMember = new WpfKnownMember(this,  // Schema Context
                             this.GetXamlType(typeof(System.Windows.Media.Animation.Int16AnimationUsingKeyFrames)), // DeclaringType
                             "KeyFrames", // Name
                             typeof(System.Windows.Media.Animation.Int16KeyFrameCollection), // type
                             false, // IsReadOnly
                             false // IsAttachable
-                                     );
-            bamlMember.SetDelegate = delegate(object target, object value) { ((System.Windows.Media.Animation.Int16AnimationUsingKeyFrames)target).KeyFrames = (System.Windows.Media.Animation.Int16KeyFrameCollection)value; };
-            bamlMember.GetDelegate = delegate(object target) { return ((System.Windows.Media.Animation.Int16AnimationUsingKeyFrames)target).KeyFrames; };
+                                     )
+            {
+                SetDelegate = delegate (object target, object value) { ((System.Windows.Media.Animation.Int16AnimationUsingKeyFrames)target).KeyFrames = (System.Windows.Media.Animation.Int16KeyFrameCollection)value; },
+                GetDelegate = delegate (object target) { return ((System.Windows.Media.Animation.Int16AnimationUsingKeyFrames)target).KeyFrames; }
+            };
             bamlMember.Freeze();
             return bamlMember;
         }
@@ -4897,15 +5201,17 @@ namespace System.Windows.Baml2006
         private WpfKnownMember Create_BamlProperty_Int32AnimationUsingKeyFrames_KeyFrames()
         {
             Type type = typeof(System.Windows.Media.Animation.Int32AnimationUsingKeyFrames);
-            var bamlMember = new WpfKnownMember( this,  // Schema Context
+            var bamlMember = new WpfKnownMember(this,  // Schema Context
                             this.GetXamlType(typeof(System.Windows.Media.Animation.Int32AnimationUsingKeyFrames)), // DeclaringType
                             "KeyFrames", // Name
                             typeof(System.Windows.Media.Animation.Int32KeyFrameCollection), // type
                             false, // IsReadOnly
                             false // IsAttachable
-                                     );
-            bamlMember.SetDelegate = delegate(object target, object value) { ((System.Windows.Media.Animation.Int32AnimationUsingKeyFrames)target).KeyFrames = (System.Windows.Media.Animation.Int32KeyFrameCollection)value; };
-            bamlMember.GetDelegate = delegate(object target) { return ((System.Windows.Media.Animation.Int32AnimationUsingKeyFrames)target).KeyFrames; };
+                                     )
+            {
+                SetDelegate = delegate (object target, object value) { ((System.Windows.Media.Animation.Int32AnimationUsingKeyFrames)target).KeyFrames = (System.Windows.Media.Animation.Int32KeyFrameCollection)value; },
+                GetDelegate = delegate (object target) { return ((System.Windows.Media.Animation.Int32AnimationUsingKeyFrames)target).KeyFrames; }
+            };
             bamlMember.Freeze();
             return bamlMember;
         }
@@ -4914,15 +5220,17 @@ namespace System.Windows.Baml2006
         private WpfKnownMember Create_BamlProperty_Int64AnimationUsingKeyFrames_KeyFrames()
         {
             Type type = typeof(System.Windows.Media.Animation.Int64AnimationUsingKeyFrames);
-            var bamlMember = new WpfKnownMember( this,  // Schema Context
+            var bamlMember = new WpfKnownMember(this,  // Schema Context
                             this.GetXamlType(typeof(System.Windows.Media.Animation.Int64AnimationUsingKeyFrames)), // DeclaringType
                             "KeyFrames", // Name
                             typeof(System.Windows.Media.Animation.Int64KeyFrameCollection), // type
                             false, // IsReadOnly
                             false // IsAttachable
-                                     );
-            bamlMember.SetDelegate = delegate(object target, object value) { ((System.Windows.Media.Animation.Int64AnimationUsingKeyFrames)target).KeyFrames = (System.Windows.Media.Animation.Int64KeyFrameCollection)value; };
-            bamlMember.GetDelegate = delegate(object target) { return ((System.Windows.Media.Animation.Int64AnimationUsingKeyFrames)target).KeyFrames; };
+                                     )
+            {
+                SetDelegate = delegate (object target, object value) { ((System.Windows.Media.Animation.Int64AnimationUsingKeyFrames)target).KeyFrames = (System.Windows.Media.Animation.Int64KeyFrameCollection)value; },
+                GetDelegate = delegate (object target) { return ((System.Windows.Media.Animation.Int64AnimationUsingKeyFrames)target).KeyFrames; }
+            };
             bamlMember.Freeze();
             return bamlMember;
         }
@@ -4931,15 +5239,17 @@ namespace System.Windows.Baml2006
         private WpfKnownMember Create_BamlProperty_Italic_Inlines()
         {
             Type type = typeof(System.Windows.Documents.Italic);
-            var bamlMember = new WpfKnownMember( this,  // Schema Context
+            var bamlMember = new WpfKnownMember(this,  // Schema Context
                             this.GetXamlType(typeof(System.Windows.Documents.Italic)), // DeclaringType
                             "Inlines", // Name
                             typeof(System.Windows.Documents.InlineCollection), // type
                             true, // IsReadOnly
                             false // IsAttachable
-                                     );
-            bamlMember.GetDelegate = delegate(object target) { return ((System.Windows.Documents.Italic)target).Inlines; };
-            bamlMember.IsWritePrivate = true;
+                                     )
+            {
+                GetDelegate = delegate (object target) { return ((System.Windows.Documents.Italic)target).Inlines; },
+                IsWritePrivate = true
+            };
             bamlMember.Freeze();
             return bamlMember;
         }
@@ -4948,15 +5258,17 @@ namespace System.Windows.Baml2006
         private WpfKnownMember Create_BamlProperty_ItemsControl_Items()
         {
             Type type = typeof(System.Windows.Controls.ItemsControl);
-            var bamlMember = new WpfKnownMember( this,  // Schema Context
+            var bamlMember = new WpfKnownMember(this,  // Schema Context
                             this.GetXamlType(typeof(System.Windows.Controls.ItemsControl)), // DeclaringType
                             "Items", // Name
                             typeof(System.Windows.Controls.ItemCollection), // type
                             true, // IsReadOnly
                             false // IsAttachable
-                                     );
-            bamlMember.GetDelegate = delegate(object target) { return ((System.Windows.Controls.ItemsControl)target).Items; };
-            bamlMember.IsWritePrivate = true;
+                                     )
+            {
+                GetDelegate = delegate (object target) { return ((System.Windows.Controls.ItemsControl)target).Items; },
+                IsWritePrivate = true
+            };
             bamlMember.Freeze();
             return bamlMember;
         }
@@ -4965,15 +5277,17 @@ namespace System.Windows.Baml2006
         private WpfKnownMember Create_BamlProperty_ItemsPanelTemplate_VisualTree()
         {
             Type type = typeof(System.Windows.Controls.ItemsPanelTemplate);
-            var bamlMember = new WpfKnownMember( this,  // Schema Context
+            var bamlMember = new WpfKnownMember(this,  // Schema Context
                             this.GetXamlType(typeof(System.Windows.Controls.ItemsPanelTemplate)), // DeclaringType
                             "VisualTree", // Name
                             typeof(System.Windows.FrameworkElementFactory), // type
                             false, // IsReadOnly
                             false // IsAttachable
-                                     );
-            bamlMember.SetDelegate = delegate(object target, object value) { ((System.Windows.Controls.ItemsPanelTemplate)target).VisualTree = (System.Windows.FrameworkElementFactory)value; };
-            bamlMember.GetDelegate = delegate(object target) { return ((System.Windows.Controls.ItemsPanelTemplate)target).VisualTree; };
+                                     )
+            {
+                SetDelegate = delegate (object target, object value) { ((System.Windows.Controls.ItemsPanelTemplate)target).VisualTree = (System.Windows.FrameworkElementFactory)value; },
+                GetDelegate = delegate (object target) { return ((System.Windows.Controls.ItemsPanelTemplate)target).VisualTree; }
+            };
             bamlMember.Freeze();
             return bamlMember;
         }
@@ -4983,15 +5297,17 @@ namespace System.Windows.Baml2006
         {
             Type type = typeof(System.Windows.Controls.Label);
             DependencyProperty  dp = System.Windows.Controls.Label.ContentProperty;
-            var bamlMember = new WpfKnownMember( this,  // Schema Context
+            var bamlMember = new WpfKnownMember(this,  // Schema Context
                             this.GetXamlType(typeof(System.Windows.Controls.Label)), // DeclaringType
                             "Content", // Name
                              dp, // DependencyProperty
                             false, // IsReadOnly
                             false // IsAttachable
-                                     );
-            bamlMember.HasSpecialTypeConverter = true;
-            bamlMember.TypeConverterType = typeof(System.Object);
+                                     )
+            {
+                HasSpecialTypeConverter = true,
+                TypeConverterType = typeof(System.Object)
+            };
             bamlMember.Freeze();
             return bamlMember;
         }
@@ -5016,15 +5332,17 @@ namespace System.Windows.Baml2006
         private WpfKnownMember Create_BamlProperty_List_ListItems()
         {
             Type type = typeof(System.Windows.Documents.List);
-            var bamlMember = new WpfKnownMember( this,  // Schema Context
+            var bamlMember = new WpfKnownMember(this,  // Schema Context
                             this.GetXamlType(typeof(System.Windows.Documents.List)), // DeclaringType
                             "ListItems", // Name
                             typeof(System.Windows.Documents.ListItemCollection), // type
                             true, // IsReadOnly
                             false // IsAttachable
-                                     );
-            bamlMember.GetDelegate = delegate(object target) { return ((System.Windows.Documents.List)target).ListItems; };
-            bamlMember.IsWritePrivate = true;
+                                     )
+            {
+                GetDelegate = delegate (object target) { return ((System.Windows.Documents.List)target).ListItems; },
+                IsWritePrivate = true
+            };
             bamlMember.Freeze();
             return bamlMember;
         }
@@ -5033,15 +5351,17 @@ namespace System.Windows.Baml2006
         private WpfKnownMember Create_BamlProperty_ListBox_Items()
         {
             Type type = typeof(System.Windows.Controls.ListBox);
-            var bamlMember = new WpfKnownMember( this,  // Schema Context
+            var bamlMember = new WpfKnownMember(this,  // Schema Context
                             this.GetXamlType(typeof(System.Windows.Controls.ListBox)), // DeclaringType
                             "Items", // Name
                             typeof(System.Windows.Controls.ItemCollection), // type
                             true, // IsReadOnly
                             false // IsAttachable
-                                     );
-            bamlMember.GetDelegate = delegate(object target) { return ((System.Windows.Controls.ListBox)target).Items; };
-            bamlMember.IsWritePrivate = true;
+                                     )
+            {
+                GetDelegate = delegate (object target) { return ((System.Windows.Controls.ListBox)target).Items; },
+                IsWritePrivate = true
+            };
             bamlMember.Freeze();
             return bamlMember;
         }
@@ -5051,15 +5371,17 @@ namespace System.Windows.Baml2006
         {
             Type type = typeof(System.Windows.Controls.ListBoxItem);
             DependencyProperty  dp = System.Windows.Controls.ListBoxItem.ContentProperty;
-            var bamlMember = new WpfKnownMember( this,  // Schema Context
+            var bamlMember = new WpfKnownMember(this,  // Schema Context
                             this.GetXamlType(typeof(System.Windows.Controls.ListBoxItem)), // DeclaringType
                             "Content", // Name
                              dp, // DependencyProperty
                             false, // IsReadOnly
                             false // IsAttachable
-                                     );
-            bamlMember.HasSpecialTypeConverter = true;
-            bamlMember.TypeConverterType = typeof(System.Object);
+                                     )
+            {
+                HasSpecialTypeConverter = true,
+                TypeConverterType = typeof(System.Object)
+            };
             bamlMember.Freeze();
             return bamlMember;
         }
@@ -5068,15 +5390,17 @@ namespace System.Windows.Baml2006
         private WpfKnownMember Create_BamlProperty_ListItem_Blocks()
         {
             Type type = typeof(System.Windows.Documents.ListItem);
-            var bamlMember = new WpfKnownMember( this,  // Schema Context
+            var bamlMember = new WpfKnownMember(this,  // Schema Context
                             this.GetXamlType(typeof(System.Windows.Documents.ListItem)), // DeclaringType
                             "Blocks", // Name
                             typeof(System.Windows.Documents.BlockCollection), // type
                             true, // IsReadOnly
                             false // IsAttachable
-                                     );
-            bamlMember.GetDelegate = delegate(object target) { return ((System.Windows.Documents.ListItem)target).Blocks; };
-            bamlMember.IsWritePrivate = true;
+                                     )
+            {
+                GetDelegate = delegate (object target) { return ((System.Windows.Documents.ListItem)target).Blocks; },
+                IsWritePrivate = true
+            };
             bamlMember.Freeze();
             return bamlMember;
         }
@@ -5085,15 +5409,17 @@ namespace System.Windows.Baml2006
         private WpfKnownMember Create_BamlProperty_ListView_Items()
         {
             Type type = typeof(System.Windows.Controls.ListView);
-            var bamlMember = new WpfKnownMember( this,  // Schema Context
+            var bamlMember = new WpfKnownMember(this,  // Schema Context
                             this.GetXamlType(typeof(System.Windows.Controls.ListView)), // DeclaringType
                             "Items", // Name
                             typeof(System.Windows.Controls.ItemCollection), // type
                             true, // IsReadOnly
                             false // IsAttachable
-                                     );
-            bamlMember.GetDelegate = delegate(object target) { return ((System.Windows.Controls.ListView)target).Items; };
-            bamlMember.IsWritePrivate = true;
+                                     )
+            {
+                GetDelegate = delegate (object target) { return ((System.Windows.Controls.ListView)target).Items; },
+                IsWritePrivate = true
+            };
             bamlMember.Freeze();
             return bamlMember;
         }
@@ -5103,15 +5429,17 @@ namespace System.Windows.Baml2006
         {
             Type type = typeof(System.Windows.Controls.ListViewItem);
             DependencyProperty  dp = System.Windows.Controls.ListViewItem.ContentProperty;
-            var bamlMember = new WpfKnownMember( this,  // Schema Context
+            var bamlMember = new WpfKnownMember(this,  // Schema Context
                             this.GetXamlType(typeof(System.Windows.Controls.ListViewItem)), // DeclaringType
                             "Content", // Name
                              dp, // DependencyProperty
                             false, // IsReadOnly
                             false // IsAttachable
-                                     );
-            bamlMember.HasSpecialTypeConverter = true;
-            bamlMember.TypeConverterType = typeof(System.Object);
+                                     )
+            {
+                HasSpecialTypeConverter = true,
+                TypeConverterType = typeof(System.Object)
+            };
             bamlMember.Freeze();
             return bamlMember;
         }
@@ -5120,15 +5448,17 @@ namespace System.Windows.Baml2006
         private WpfKnownMember Create_BamlProperty_MatrixAnimationUsingKeyFrames_KeyFrames()
         {
             Type type = typeof(System.Windows.Media.Animation.MatrixAnimationUsingKeyFrames);
-            var bamlMember = new WpfKnownMember( this,  // Schema Context
+            var bamlMember = new WpfKnownMember(this,  // Schema Context
                             this.GetXamlType(typeof(System.Windows.Media.Animation.MatrixAnimationUsingKeyFrames)), // DeclaringType
                             "KeyFrames", // Name
                             typeof(System.Windows.Media.Animation.MatrixKeyFrameCollection), // type
                             false, // IsReadOnly
                             false // IsAttachable
-                                     );
-            bamlMember.SetDelegate = delegate(object target, object value) { ((System.Windows.Media.Animation.MatrixAnimationUsingKeyFrames)target).KeyFrames = (System.Windows.Media.Animation.MatrixKeyFrameCollection)value; };
-            bamlMember.GetDelegate = delegate(object target) { return ((System.Windows.Media.Animation.MatrixAnimationUsingKeyFrames)target).KeyFrames; };
+                                     )
+            {
+                SetDelegate = delegate (object target, object value) { ((System.Windows.Media.Animation.MatrixAnimationUsingKeyFrames)target).KeyFrames = (System.Windows.Media.Animation.MatrixKeyFrameCollection)value; },
+                GetDelegate = delegate (object target) { return ((System.Windows.Media.Animation.MatrixAnimationUsingKeyFrames)target).KeyFrames; }
+            };
             bamlMember.Freeze();
             return bamlMember;
         }
@@ -5137,15 +5467,17 @@ namespace System.Windows.Baml2006
         private WpfKnownMember Create_BamlProperty_Menu_Items()
         {
             Type type = typeof(System.Windows.Controls.Menu);
-            var bamlMember = new WpfKnownMember( this,  // Schema Context
+            var bamlMember = new WpfKnownMember(this,  // Schema Context
                             this.GetXamlType(typeof(System.Windows.Controls.Menu)), // DeclaringType
                             "Items", // Name
                             typeof(System.Windows.Controls.ItemCollection), // type
                             true, // IsReadOnly
                             false // IsAttachable
-                                     );
-            bamlMember.GetDelegate = delegate(object target) { return ((System.Windows.Controls.Menu)target).Items; };
-            bamlMember.IsWritePrivate = true;
+                                     )
+            {
+                GetDelegate = delegate (object target) { return ((System.Windows.Controls.Menu)target).Items; },
+                IsWritePrivate = true
+            };
             bamlMember.Freeze();
             return bamlMember;
         }
@@ -5154,15 +5486,17 @@ namespace System.Windows.Baml2006
         private WpfKnownMember Create_BamlProperty_MenuBase_Items()
         {
             Type type = typeof(System.Windows.Controls.Primitives.MenuBase);
-            var bamlMember = new WpfKnownMember( this,  // Schema Context
+            var bamlMember = new WpfKnownMember(this,  // Schema Context
                             this.GetXamlType(typeof(System.Windows.Controls.Primitives.MenuBase)), // DeclaringType
                             "Items", // Name
                             typeof(System.Windows.Controls.ItemCollection), // type
                             true, // IsReadOnly
                             false // IsAttachable
-                                     );
-            bamlMember.GetDelegate = delegate(object target) { return ((System.Windows.Controls.Primitives.MenuBase)target).Items; };
-            bamlMember.IsWritePrivate = true;
+                                     )
+            {
+                GetDelegate = delegate (object target) { return ((System.Windows.Controls.Primitives.MenuBase)target).Items; },
+                IsWritePrivate = true
+            };
             bamlMember.Freeze();
             return bamlMember;
         }
@@ -5171,15 +5505,17 @@ namespace System.Windows.Baml2006
         private WpfKnownMember Create_BamlProperty_MenuItem_Items()
         {
             Type type = typeof(System.Windows.Controls.MenuItem);
-            var bamlMember = new WpfKnownMember( this,  // Schema Context
+            var bamlMember = new WpfKnownMember(this,  // Schema Context
                             this.GetXamlType(typeof(System.Windows.Controls.MenuItem)), // DeclaringType
                             "Items", // Name
                             typeof(System.Windows.Controls.ItemCollection), // type
                             true, // IsReadOnly
                             false // IsAttachable
-                                     );
-            bamlMember.GetDelegate = delegate(object target) { return ((System.Windows.Controls.MenuItem)target).Items; };
-            bamlMember.IsWritePrivate = true;
+                                     )
+            {
+                GetDelegate = delegate (object target) { return ((System.Windows.Controls.MenuItem)target).Items; },
+                IsWritePrivate = true
+            };
             bamlMember.Freeze();
             return bamlMember;
         }
@@ -5188,15 +5524,17 @@ namespace System.Windows.Baml2006
         private WpfKnownMember Create_BamlProperty_ModelVisual3D_Children()
         {
             Type type = typeof(System.Windows.Media.Media3D.ModelVisual3D);
-            var bamlMember = new WpfKnownMember( this,  // Schema Context
+            var bamlMember = new WpfKnownMember(this,  // Schema Context
                             this.GetXamlType(typeof(System.Windows.Media.Media3D.ModelVisual3D)), // DeclaringType
                             "Children", // Name
                             typeof(System.Windows.Media.Media3D.Visual3DCollection), // type
                             true, // IsReadOnly
                             false // IsAttachable
-                                     );
-            bamlMember.GetDelegate = delegate(object target) { return ((System.Windows.Media.Media3D.ModelVisual3D)target).Children; };
-            bamlMember.IsWritePrivate = true;
+                                     )
+            {
+                GetDelegate = delegate (object target) { return ((System.Windows.Media.Media3D.ModelVisual3D)target).Children; },
+                IsWritePrivate = true
+            };
             bamlMember.Freeze();
             return bamlMember;
         }
@@ -5205,15 +5543,17 @@ namespace System.Windows.Baml2006
         private WpfKnownMember Create_BamlProperty_MultiBinding_Bindings()
         {
             Type type = typeof(System.Windows.Data.MultiBinding);
-            var bamlMember = new WpfKnownMember( this,  // Schema Context
+            var bamlMember = new WpfKnownMember(this,  // Schema Context
                             this.GetXamlType(typeof(System.Windows.Data.MultiBinding)), // DeclaringType
                             "Bindings", // Name
                             typeof(System.Collections.ObjectModel.Collection<System.Windows.Data.BindingBase>), // type
                             true, // IsReadOnly
                             false // IsAttachable
-                                     );
-            bamlMember.GetDelegate = delegate(object target) { return ((System.Windows.Data.MultiBinding)target).Bindings; };
-            bamlMember.IsWritePrivate = true;
+                                     )
+            {
+                GetDelegate = delegate (object target) { return ((System.Windows.Data.MultiBinding)target).Bindings; },
+                IsWritePrivate = true
+            };
             bamlMember.Freeze();
             return bamlMember;
         }
@@ -5222,15 +5562,17 @@ namespace System.Windows.Baml2006
         private WpfKnownMember Create_BamlProperty_MultiDataTrigger_Setters()
         {
             Type type = typeof(System.Windows.MultiDataTrigger);
-            var bamlMember = new WpfKnownMember( this,  // Schema Context
+            var bamlMember = new WpfKnownMember(this,  // Schema Context
                             this.GetXamlType(typeof(System.Windows.MultiDataTrigger)), // DeclaringType
                             "Setters", // Name
                             typeof(System.Windows.SetterBaseCollection), // type
                             true, // IsReadOnly
                             false // IsAttachable
-                                     );
-            bamlMember.GetDelegate = delegate(object target) { return ((System.Windows.MultiDataTrigger)target).Setters; };
-            bamlMember.IsWritePrivate = true;
+                                     )
+            {
+                GetDelegate = delegate (object target) { return ((System.Windows.MultiDataTrigger)target).Setters; },
+                IsWritePrivate = true
+            };
             bamlMember.Freeze();
             return bamlMember;
         }
@@ -5239,15 +5581,17 @@ namespace System.Windows.Baml2006
         private WpfKnownMember Create_BamlProperty_MultiTrigger_Setters()
         {
             Type type = typeof(System.Windows.MultiTrigger);
-            var bamlMember = new WpfKnownMember( this,  // Schema Context
+            var bamlMember = new WpfKnownMember(this,  // Schema Context
                             this.GetXamlType(typeof(System.Windows.MultiTrigger)), // DeclaringType
                             "Setters", // Name
                             typeof(System.Windows.SetterBaseCollection), // type
                             true, // IsReadOnly
                             false // IsAttachable
-                                     );
-            bamlMember.GetDelegate = delegate(object target) { return ((System.Windows.MultiTrigger)target).Setters; };
-            bamlMember.IsWritePrivate = true;
+                                     )
+            {
+                GetDelegate = delegate (object target) { return ((System.Windows.MultiTrigger)target).Setters; },
+                IsWritePrivate = true
+            };
             bamlMember.Freeze();
             return bamlMember;
         }
@@ -5256,15 +5600,17 @@ namespace System.Windows.Baml2006
         private WpfKnownMember Create_BamlProperty_ObjectAnimationUsingKeyFrames_KeyFrames()
         {
             Type type = typeof(System.Windows.Media.Animation.ObjectAnimationUsingKeyFrames);
-            var bamlMember = new WpfKnownMember( this,  // Schema Context
+            var bamlMember = new WpfKnownMember(this,  // Schema Context
                             this.GetXamlType(typeof(System.Windows.Media.Animation.ObjectAnimationUsingKeyFrames)), // DeclaringType
                             "KeyFrames", // Name
                             typeof(System.Windows.Media.Animation.ObjectKeyFrameCollection), // type
                             false, // IsReadOnly
                             false // IsAttachable
-                                     );
-            bamlMember.SetDelegate = delegate(object target, object value) { ((System.Windows.Media.Animation.ObjectAnimationUsingKeyFrames)target).KeyFrames = (System.Windows.Media.Animation.ObjectKeyFrameCollection)value; };
-            bamlMember.GetDelegate = delegate(object target) { return ((System.Windows.Media.Animation.ObjectAnimationUsingKeyFrames)target).KeyFrames; };
+                                     )
+            {
+                SetDelegate = delegate (object target, object value) { ((System.Windows.Media.Animation.ObjectAnimationUsingKeyFrames)target).KeyFrames = (System.Windows.Media.Animation.ObjectKeyFrameCollection)value; },
+                GetDelegate = delegate (object target) { return ((System.Windows.Media.Animation.ObjectAnimationUsingKeyFrames)target).KeyFrames; }
+            };
             bamlMember.Freeze();
             return bamlMember;
         }
@@ -5273,15 +5619,17 @@ namespace System.Windows.Baml2006
         private WpfKnownMember Create_BamlProperty_PageContent_Child()
         {
             Type type = typeof(System.Windows.Documents.PageContent);
-            var bamlMember = new WpfKnownMember( this,  // Schema Context
+            var bamlMember = new WpfKnownMember(this,  // Schema Context
                             this.GetXamlType(typeof(System.Windows.Documents.PageContent)), // DeclaringType
                             "Child", // Name
                             typeof(System.Windows.Documents.FixedPage), // type
                             false, // IsReadOnly
                             false // IsAttachable
-                                     );
-            bamlMember.SetDelegate = delegate(object target, object value) { ((System.Windows.Documents.PageContent)target).Child = (System.Windows.Documents.FixedPage)value; };
-            bamlMember.GetDelegate = delegate(object target) { return ((System.Windows.Documents.PageContent)target).Child; };
+                                     )
+            {
+                SetDelegate = delegate (object target, object value) { ((System.Windows.Documents.PageContent)target).Child = (System.Windows.Documents.FixedPage)value; },
+                GetDelegate = delegate (object target) { return ((System.Windows.Documents.PageContent)target).Child; }
+            };
             bamlMember.Freeze();
             return bamlMember;
         }
@@ -5291,15 +5639,17 @@ namespace System.Windows.Baml2006
         {
             Type type = typeof(System.Windows.Navigation.PageFunctionBase);
             DependencyProperty  dp = System.Windows.Navigation.PageFunctionBase.ContentProperty;
-            var bamlMember = new WpfKnownMember( this,  // Schema Context
+            var bamlMember = new WpfKnownMember(this,  // Schema Context
                             this.GetXamlType(typeof(System.Windows.Navigation.PageFunctionBase)), // DeclaringType
                             "Content", // Name
                              dp, // DependencyProperty
                             false, // IsReadOnly
                             false // IsAttachable
-                                     );
-            bamlMember.HasSpecialTypeConverter = true;
-            bamlMember.TypeConverterType = typeof(System.Object);
+                                     )
+            {
+                HasSpecialTypeConverter = true,
+                TypeConverterType = typeof(System.Object)
+            };
             bamlMember.Freeze();
             return bamlMember;
         }
@@ -5308,15 +5658,17 @@ namespace System.Windows.Baml2006
         private WpfKnownMember Create_BamlProperty_Panel_Children()
         {
             Type type = typeof(System.Windows.Controls.Panel);
-            var bamlMember = new WpfKnownMember( this,  // Schema Context
+            var bamlMember = new WpfKnownMember(this,  // Schema Context
                             this.GetXamlType(typeof(System.Windows.Controls.Panel)), // DeclaringType
                             "Children", // Name
                             typeof(System.Windows.Controls.UIElementCollection), // type
                             true, // IsReadOnly
                             false // IsAttachable
-                                     );
-            bamlMember.GetDelegate = delegate(object target) { return ((System.Windows.Controls.Panel)target).Children; };
-            bamlMember.IsWritePrivate = true;
+                                     )
+            {
+                GetDelegate = delegate (object target) { return ((System.Windows.Controls.Panel)target).Children; },
+                IsWritePrivate = true
+            };
             bamlMember.Freeze();
             return bamlMember;
         }
@@ -5325,15 +5677,17 @@ namespace System.Windows.Baml2006
         private WpfKnownMember Create_BamlProperty_Paragraph_Inlines()
         {
             Type type = typeof(System.Windows.Documents.Paragraph);
-            var bamlMember = new WpfKnownMember( this,  // Schema Context
+            var bamlMember = new WpfKnownMember(this,  // Schema Context
                             this.GetXamlType(typeof(System.Windows.Documents.Paragraph)), // DeclaringType
                             "Inlines", // Name
                             typeof(System.Windows.Documents.InlineCollection), // type
                             true, // IsReadOnly
                             false // IsAttachable
-                                     );
-            bamlMember.GetDelegate = delegate(object target) { return ((System.Windows.Documents.Paragraph)target).Inlines; };
-            bamlMember.IsWritePrivate = true;
+                                     )
+            {
+                GetDelegate = delegate (object target) { return ((System.Windows.Documents.Paragraph)target).Inlines; },
+                IsWritePrivate = true
+            };
             bamlMember.Freeze();
             return bamlMember;
         }
@@ -5358,15 +5712,17 @@ namespace System.Windows.Baml2006
         private WpfKnownMember Create_BamlProperty_Point3DAnimationUsingKeyFrames_KeyFrames()
         {
             Type type = typeof(System.Windows.Media.Animation.Point3DAnimationUsingKeyFrames);
-            var bamlMember = new WpfKnownMember( this,  // Schema Context
+            var bamlMember = new WpfKnownMember(this,  // Schema Context
                             this.GetXamlType(typeof(System.Windows.Media.Animation.Point3DAnimationUsingKeyFrames)), // DeclaringType
                             "KeyFrames", // Name
                             typeof(System.Windows.Media.Animation.Point3DKeyFrameCollection), // type
                             false, // IsReadOnly
                             false // IsAttachable
-                                     );
-            bamlMember.SetDelegate = delegate(object target, object value) { ((System.Windows.Media.Animation.Point3DAnimationUsingKeyFrames)target).KeyFrames = (System.Windows.Media.Animation.Point3DKeyFrameCollection)value; };
-            bamlMember.GetDelegate = delegate(object target) { return ((System.Windows.Media.Animation.Point3DAnimationUsingKeyFrames)target).KeyFrames; };
+                                     )
+            {
+                SetDelegate = delegate (object target, object value) { ((System.Windows.Media.Animation.Point3DAnimationUsingKeyFrames)target).KeyFrames = (System.Windows.Media.Animation.Point3DKeyFrameCollection)value; },
+                GetDelegate = delegate (object target) { return ((System.Windows.Media.Animation.Point3DAnimationUsingKeyFrames)target).KeyFrames; }
+            };
             bamlMember.Freeze();
             return bamlMember;
         }
@@ -5375,15 +5731,17 @@ namespace System.Windows.Baml2006
         private WpfKnownMember Create_BamlProperty_PointAnimationUsingKeyFrames_KeyFrames()
         {
             Type type = typeof(System.Windows.Media.Animation.PointAnimationUsingKeyFrames);
-            var bamlMember = new WpfKnownMember( this,  // Schema Context
+            var bamlMember = new WpfKnownMember(this,  // Schema Context
                             this.GetXamlType(typeof(System.Windows.Media.Animation.PointAnimationUsingKeyFrames)), // DeclaringType
                             "KeyFrames", // Name
                             typeof(System.Windows.Media.Animation.PointKeyFrameCollection), // type
                             false, // IsReadOnly
                             false // IsAttachable
-                                     );
-            bamlMember.SetDelegate = delegate(object target, object value) { ((System.Windows.Media.Animation.PointAnimationUsingKeyFrames)target).KeyFrames = (System.Windows.Media.Animation.PointKeyFrameCollection)value; };
-            bamlMember.GetDelegate = delegate(object target) { return ((System.Windows.Media.Animation.PointAnimationUsingKeyFrames)target).KeyFrames; };
+                                     )
+            {
+                SetDelegate = delegate (object target, object value) { ((System.Windows.Media.Animation.PointAnimationUsingKeyFrames)target).KeyFrames = (System.Windows.Media.Animation.PointKeyFrameCollection)value; },
+                GetDelegate = delegate (object target) { return ((System.Windows.Media.Animation.PointAnimationUsingKeyFrames)target).KeyFrames; }
+            };
             bamlMember.Freeze();
             return bamlMember;
         }
@@ -5392,15 +5750,17 @@ namespace System.Windows.Baml2006
         private WpfKnownMember Create_BamlProperty_PriorityBinding_Bindings()
         {
             Type type = typeof(System.Windows.Data.PriorityBinding);
-            var bamlMember = new WpfKnownMember( this,  // Schema Context
+            var bamlMember = new WpfKnownMember(this,  // Schema Context
                             this.GetXamlType(typeof(System.Windows.Data.PriorityBinding)), // DeclaringType
                             "Bindings", // Name
                             typeof(System.Collections.ObjectModel.Collection<System.Windows.Data.BindingBase>), // type
                             true, // IsReadOnly
                             false // IsAttachable
-                                     );
-            bamlMember.GetDelegate = delegate(object target) { return ((System.Windows.Data.PriorityBinding)target).Bindings; };
-            bamlMember.IsWritePrivate = true;
+                                     )
+            {
+                GetDelegate = delegate (object target) { return ((System.Windows.Data.PriorityBinding)target).Bindings; },
+                IsWritePrivate = true
+            };
             bamlMember.Freeze();
             return bamlMember;
         }
@@ -5409,15 +5769,17 @@ namespace System.Windows.Baml2006
         private WpfKnownMember Create_BamlProperty_QuaternionAnimationUsingKeyFrames_KeyFrames()
         {
             Type type = typeof(System.Windows.Media.Animation.QuaternionAnimationUsingKeyFrames);
-            var bamlMember = new WpfKnownMember( this,  // Schema Context
+            var bamlMember = new WpfKnownMember(this,  // Schema Context
                             this.GetXamlType(typeof(System.Windows.Media.Animation.QuaternionAnimationUsingKeyFrames)), // DeclaringType
                             "KeyFrames", // Name
                             typeof(System.Windows.Media.Animation.QuaternionKeyFrameCollection), // type
                             false, // IsReadOnly
                             false // IsAttachable
-                                     );
-            bamlMember.SetDelegate = delegate(object target, object value) { ((System.Windows.Media.Animation.QuaternionAnimationUsingKeyFrames)target).KeyFrames = (System.Windows.Media.Animation.QuaternionKeyFrameCollection)value; };
-            bamlMember.GetDelegate = delegate(object target) { return ((System.Windows.Media.Animation.QuaternionAnimationUsingKeyFrames)target).KeyFrames; };
+                                     )
+            {
+                SetDelegate = delegate (object target, object value) { ((System.Windows.Media.Animation.QuaternionAnimationUsingKeyFrames)target).KeyFrames = (System.Windows.Media.Animation.QuaternionKeyFrameCollection)value; },
+                GetDelegate = delegate (object target) { return ((System.Windows.Media.Animation.QuaternionAnimationUsingKeyFrames)target).KeyFrames; }
+            };
             bamlMember.Freeze();
             return bamlMember;
         }
@@ -5443,15 +5805,17 @@ namespace System.Windows.Baml2006
         {
             Type type = typeof(System.Windows.Controls.RadioButton);
             DependencyProperty  dp = System.Windows.Controls.RadioButton.ContentProperty;
-            var bamlMember = new WpfKnownMember( this,  // Schema Context
+            var bamlMember = new WpfKnownMember(this,  // Schema Context
                             this.GetXamlType(typeof(System.Windows.Controls.RadioButton)), // DeclaringType
                             "Content", // Name
                              dp, // DependencyProperty
                             false, // IsReadOnly
                             false // IsAttachable
-                                     );
-            bamlMember.HasSpecialTypeConverter = true;
-            bamlMember.TypeConverterType = typeof(System.Object);
+                                     )
+            {
+                HasSpecialTypeConverter = true,
+                TypeConverterType = typeof(System.Object)
+            };
             bamlMember.Freeze();
             return bamlMember;
         }
@@ -5460,15 +5824,17 @@ namespace System.Windows.Baml2006
         private WpfKnownMember Create_BamlProperty_RectAnimationUsingKeyFrames_KeyFrames()
         {
             Type type = typeof(System.Windows.Media.Animation.RectAnimationUsingKeyFrames);
-            var bamlMember = new WpfKnownMember( this,  // Schema Context
+            var bamlMember = new WpfKnownMember(this,  // Schema Context
                             this.GetXamlType(typeof(System.Windows.Media.Animation.RectAnimationUsingKeyFrames)), // DeclaringType
                             "KeyFrames", // Name
                             typeof(System.Windows.Media.Animation.RectKeyFrameCollection), // type
                             false, // IsReadOnly
                             false // IsAttachable
-                                     );
-            bamlMember.SetDelegate = delegate(object target, object value) { ((System.Windows.Media.Animation.RectAnimationUsingKeyFrames)target).KeyFrames = (System.Windows.Media.Animation.RectKeyFrameCollection)value; };
-            bamlMember.GetDelegate = delegate(object target) { return ((System.Windows.Media.Animation.RectAnimationUsingKeyFrames)target).KeyFrames; };
+                                     )
+            {
+                SetDelegate = delegate (object target, object value) { ((System.Windows.Media.Animation.RectAnimationUsingKeyFrames)target).KeyFrames = (System.Windows.Media.Animation.RectKeyFrameCollection)value; },
+                GetDelegate = delegate (object target) { return ((System.Windows.Media.Animation.RectAnimationUsingKeyFrames)target).KeyFrames; }
+            };
             bamlMember.Freeze();
             return bamlMember;
         }
@@ -5478,15 +5844,17 @@ namespace System.Windows.Baml2006
         {
             Type type = typeof(System.Windows.Controls.Primitives.RepeatButton);
             DependencyProperty  dp = System.Windows.Controls.Primitives.RepeatButton.ContentProperty;
-            var bamlMember = new WpfKnownMember( this,  // Schema Context
+            var bamlMember = new WpfKnownMember(this,  // Schema Context
                             this.GetXamlType(typeof(System.Windows.Controls.Primitives.RepeatButton)), // DeclaringType
                             "Content", // Name
                              dp, // DependencyProperty
                             false, // IsReadOnly
                             false // IsAttachable
-                                     );
-            bamlMember.HasSpecialTypeConverter = true;
-            bamlMember.TypeConverterType = typeof(System.Object);
+                                     )
+            {
+                HasSpecialTypeConverter = true,
+                TypeConverterType = typeof(System.Object)
+            };
             bamlMember.Freeze();
             return bamlMember;
         }
@@ -5495,15 +5863,17 @@ namespace System.Windows.Baml2006
         private WpfKnownMember Create_BamlProperty_RichTextBox_Document()
         {
             Type type = typeof(System.Windows.Controls.RichTextBox);
-            var bamlMember = new WpfKnownMember( this,  // Schema Context
+            var bamlMember = new WpfKnownMember(this,  // Schema Context
                             this.GetXamlType(typeof(System.Windows.Controls.RichTextBox)), // DeclaringType
                             "Document", // Name
                             typeof(System.Windows.Documents.FlowDocument), // type
                             false, // IsReadOnly
                             false // IsAttachable
-                                     );
-            bamlMember.SetDelegate = delegate(object target, object value) { ((System.Windows.Controls.RichTextBox)target).Document = (System.Windows.Documents.FlowDocument)value; };
-            bamlMember.GetDelegate = delegate(object target) { return ((System.Windows.Controls.RichTextBox)target).Document; };
+                                     )
+            {
+                SetDelegate = delegate (object target, object value) { ((System.Windows.Controls.RichTextBox)target).Document = (System.Windows.Documents.FlowDocument)value; },
+                GetDelegate = delegate (object target) { return ((System.Windows.Controls.RichTextBox)target).Document; }
+            };
             bamlMember.Freeze();
             return bamlMember;
         }
@@ -5519,8 +5889,10 @@ namespace System.Windows.Baml2006
                              dp, // DependencyProperty
                             false, // IsReadOnly
                             false // IsAttachable
-                                     );
-            bamlMember.TypeConverterType = typeof(System.ComponentModel.BooleanConverter);
+                                     )
+            {
+                TypeConverterType = typeof(System.ComponentModel.BooleanConverter)
+            };
             bamlMember.Freeze();
             return bamlMember;
         }
@@ -5529,15 +5901,17 @@ namespace System.Windows.Baml2006
         private WpfKnownMember Create_BamlProperty_Rotation3DAnimationUsingKeyFrames_KeyFrames()
         {
             Type type = typeof(System.Windows.Media.Animation.Rotation3DAnimationUsingKeyFrames);
-            var bamlMember = new WpfKnownMember( this,  // Schema Context
+            var bamlMember = new WpfKnownMember(this,  // Schema Context
                             this.GetXamlType(typeof(System.Windows.Media.Animation.Rotation3DAnimationUsingKeyFrames)), // DeclaringType
                             "KeyFrames", // Name
                             typeof(System.Windows.Media.Animation.Rotation3DKeyFrameCollection), // type
                             false, // IsReadOnly
                             false // IsAttachable
-                                     );
-            bamlMember.SetDelegate = delegate(object target, object value) { ((System.Windows.Media.Animation.Rotation3DAnimationUsingKeyFrames)target).KeyFrames = (System.Windows.Media.Animation.Rotation3DKeyFrameCollection)value; };
-            bamlMember.GetDelegate = delegate(object target) { return ((System.Windows.Media.Animation.Rotation3DAnimationUsingKeyFrames)target).KeyFrames; };
+                                     )
+            {
+                SetDelegate = delegate (object target, object value) { ((System.Windows.Media.Animation.Rotation3DAnimationUsingKeyFrames)target).KeyFrames = (System.Windows.Media.Animation.Rotation3DKeyFrameCollection)value; },
+                GetDelegate = delegate (object target) { return ((System.Windows.Media.Animation.Rotation3DAnimationUsingKeyFrames)target).KeyFrames; }
+            };
             bamlMember.Freeze();
             return bamlMember;
         }
@@ -5547,14 +5921,16 @@ namespace System.Windows.Baml2006
         {
             Type type = typeof(System.Windows.Documents.Run);
             DependencyProperty  dp = System.Windows.Documents.Run.TextProperty;
-            var bamlMember = new WpfKnownMember( this,  // Schema Context
+            var bamlMember = new WpfKnownMember(this,  // Schema Context
                             this.GetXamlType(typeof(System.Windows.Documents.Run)), // DeclaringType
                             "Text", // Name
                              dp, // DependencyProperty
                             false, // IsReadOnly
                             false // IsAttachable
-                                     );
-            bamlMember.TypeConverterType = typeof(System.ComponentModel.StringConverter);
+                                     )
+            {
+                TypeConverterType = typeof(System.ComponentModel.StringConverter)
+            };
             bamlMember.Freeze();
             return bamlMember;
         }
@@ -5564,15 +5940,17 @@ namespace System.Windows.Baml2006
         {
             Type type = typeof(System.Windows.Controls.ScrollViewer);
             DependencyProperty  dp = System.Windows.Controls.ScrollViewer.ContentProperty;
-            var bamlMember = new WpfKnownMember( this,  // Schema Context
+            var bamlMember = new WpfKnownMember(this,  // Schema Context
                             this.GetXamlType(typeof(System.Windows.Controls.ScrollViewer)), // DeclaringType
                             "Content", // Name
                              dp, // DependencyProperty
                             false, // IsReadOnly
                             false // IsAttachable
-                                     );
-            bamlMember.HasSpecialTypeConverter = true;
-            bamlMember.TypeConverterType = typeof(System.Object);
+                                     )
+            {
+                HasSpecialTypeConverter = true,
+                TypeConverterType = typeof(System.Object)
+            };
             bamlMember.Freeze();
             return bamlMember;
         }
@@ -5581,15 +5959,17 @@ namespace System.Windows.Baml2006
         private WpfKnownMember Create_BamlProperty_Section_Blocks()
         {
             Type type = typeof(System.Windows.Documents.Section);
-            var bamlMember = new WpfKnownMember( this,  // Schema Context
+            var bamlMember = new WpfKnownMember(this,  // Schema Context
                             this.GetXamlType(typeof(System.Windows.Documents.Section)), // DeclaringType
                             "Blocks", // Name
                             typeof(System.Windows.Documents.BlockCollection), // type
                             true, // IsReadOnly
                             false // IsAttachable
-                                     );
-            bamlMember.GetDelegate = delegate(object target) { return ((System.Windows.Documents.Section)target).Blocks; };
-            bamlMember.IsWritePrivate = true;
+                                     )
+            {
+                GetDelegate = delegate (object target) { return ((System.Windows.Documents.Section)target).Blocks; },
+                IsWritePrivate = true
+            };
             bamlMember.Freeze();
             return bamlMember;
         }
@@ -5598,15 +5978,17 @@ namespace System.Windows.Baml2006
         private WpfKnownMember Create_BamlProperty_Selector_Items()
         {
             Type type = typeof(System.Windows.Controls.Primitives.Selector);
-            var bamlMember = new WpfKnownMember( this,  // Schema Context
+            var bamlMember = new WpfKnownMember(this,  // Schema Context
                             this.GetXamlType(typeof(System.Windows.Controls.Primitives.Selector)), // DeclaringType
                             "Items", // Name
                             typeof(System.Windows.Controls.ItemCollection), // type
                             true, // IsReadOnly
                             false // IsAttachable
-                                     );
-            bamlMember.GetDelegate = delegate(object target) { return ((System.Windows.Controls.Primitives.Selector)target).Items; };
-            bamlMember.IsWritePrivate = true;
+                                     )
+            {
+                GetDelegate = delegate (object target) { return ((System.Windows.Controls.Primitives.Selector)target).Items; },
+                IsWritePrivate = true
+            };
             bamlMember.Freeze();
             return bamlMember;
         }
@@ -5615,15 +5997,17 @@ namespace System.Windows.Baml2006
         private WpfKnownMember Create_BamlProperty_SingleAnimationUsingKeyFrames_KeyFrames()
         {
             Type type = typeof(System.Windows.Media.Animation.SingleAnimationUsingKeyFrames);
-            var bamlMember = new WpfKnownMember( this,  // Schema Context
+            var bamlMember = new WpfKnownMember(this,  // Schema Context
                             this.GetXamlType(typeof(System.Windows.Media.Animation.SingleAnimationUsingKeyFrames)), // DeclaringType
                             "KeyFrames", // Name
                             typeof(System.Windows.Media.Animation.SingleKeyFrameCollection), // type
                             false, // IsReadOnly
                             false // IsAttachable
-                                     );
-            bamlMember.SetDelegate = delegate(object target, object value) { ((System.Windows.Media.Animation.SingleAnimationUsingKeyFrames)target).KeyFrames = (System.Windows.Media.Animation.SingleKeyFrameCollection)value; };
-            bamlMember.GetDelegate = delegate(object target) { return ((System.Windows.Media.Animation.SingleAnimationUsingKeyFrames)target).KeyFrames; };
+                                     )
+            {
+                SetDelegate = delegate (object target, object value) { ((System.Windows.Media.Animation.SingleAnimationUsingKeyFrames)target).KeyFrames = (System.Windows.Media.Animation.SingleKeyFrameCollection)value; },
+                GetDelegate = delegate (object target) { return ((System.Windows.Media.Animation.SingleAnimationUsingKeyFrames)target).KeyFrames; }
+            };
             bamlMember.Freeze();
             return bamlMember;
         }
@@ -5632,15 +6016,17 @@ namespace System.Windows.Baml2006
         private WpfKnownMember Create_BamlProperty_SizeAnimationUsingKeyFrames_KeyFrames()
         {
             Type type = typeof(System.Windows.Media.Animation.SizeAnimationUsingKeyFrames);
-            var bamlMember = new WpfKnownMember( this,  // Schema Context
+            var bamlMember = new WpfKnownMember(this,  // Schema Context
                             this.GetXamlType(typeof(System.Windows.Media.Animation.SizeAnimationUsingKeyFrames)), // DeclaringType
                             "KeyFrames", // Name
                             typeof(System.Windows.Media.Animation.SizeKeyFrameCollection), // type
                             false, // IsReadOnly
                             false // IsAttachable
-                                     );
-            bamlMember.SetDelegate = delegate(object target, object value) { ((System.Windows.Media.Animation.SizeAnimationUsingKeyFrames)target).KeyFrames = (System.Windows.Media.Animation.SizeKeyFrameCollection)value; };
-            bamlMember.GetDelegate = delegate(object target) { return ((System.Windows.Media.Animation.SizeAnimationUsingKeyFrames)target).KeyFrames; };
+                                     )
+            {
+                SetDelegate = delegate (object target, object value) { ((System.Windows.Media.Animation.SizeAnimationUsingKeyFrames)target).KeyFrames = (System.Windows.Media.Animation.SizeKeyFrameCollection)value; },
+                GetDelegate = delegate (object target) { return ((System.Windows.Media.Animation.SizeAnimationUsingKeyFrames)target).KeyFrames; }
+            };
             bamlMember.Freeze();
             return bamlMember;
         }
@@ -5649,15 +6035,17 @@ namespace System.Windows.Baml2006
         private WpfKnownMember Create_BamlProperty_Span_Inlines()
         {
             Type type = typeof(System.Windows.Documents.Span);
-            var bamlMember = new WpfKnownMember( this,  // Schema Context
+            var bamlMember = new WpfKnownMember(this,  // Schema Context
                             this.GetXamlType(typeof(System.Windows.Documents.Span)), // DeclaringType
                             "Inlines", // Name
                             typeof(System.Windows.Documents.InlineCollection), // type
                             true, // IsReadOnly
                             false // IsAttachable
-                                     );
-            bamlMember.GetDelegate = delegate(object target) { return ((System.Windows.Documents.Span)target).Inlines; };
-            bamlMember.IsWritePrivate = true;
+                                     )
+            {
+                GetDelegate = delegate (object target) { return ((System.Windows.Documents.Span)target).Inlines; },
+                IsWritePrivate = true
+            };
             bamlMember.Freeze();
             return bamlMember;
         }
@@ -5666,15 +6054,17 @@ namespace System.Windows.Baml2006
         private WpfKnownMember Create_BamlProperty_StackPanel_Children()
         {
             Type type = typeof(System.Windows.Controls.StackPanel);
-            var bamlMember = new WpfKnownMember( this,  // Schema Context
+            var bamlMember = new WpfKnownMember(this,  // Schema Context
                             this.GetXamlType(typeof(System.Windows.Controls.StackPanel)), // DeclaringType
                             "Children", // Name
                             typeof(System.Windows.Controls.UIElementCollection), // type
                             true, // IsReadOnly
                             false // IsAttachable
-                                     );
-            bamlMember.GetDelegate = delegate(object target) { return ((System.Windows.Controls.StackPanel)target).Children; };
-            bamlMember.IsWritePrivate = true;
+                                     )
+            {
+                GetDelegate = delegate (object target) { return ((System.Windows.Controls.StackPanel)target).Children; },
+                IsWritePrivate = true
+            };
             bamlMember.Freeze();
             return bamlMember;
         }
@@ -5683,15 +6073,17 @@ namespace System.Windows.Baml2006
         private WpfKnownMember Create_BamlProperty_StatusBar_Items()
         {
             Type type = typeof(System.Windows.Controls.Primitives.StatusBar);
-            var bamlMember = new WpfKnownMember( this,  // Schema Context
+            var bamlMember = new WpfKnownMember(this,  // Schema Context
                             this.GetXamlType(typeof(System.Windows.Controls.Primitives.StatusBar)), // DeclaringType
                             "Items", // Name
                             typeof(System.Windows.Controls.ItemCollection), // type
                             true, // IsReadOnly
                             false // IsAttachable
-                                     );
-            bamlMember.GetDelegate = delegate(object target) { return ((System.Windows.Controls.Primitives.StatusBar)target).Items; };
-            bamlMember.IsWritePrivate = true;
+                                     )
+            {
+                GetDelegate = delegate (object target) { return ((System.Windows.Controls.Primitives.StatusBar)target).Items; },
+                IsWritePrivate = true
+            };
             bamlMember.Freeze();
             return bamlMember;
         }
@@ -5701,15 +6093,17 @@ namespace System.Windows.Baml2006
         {
             Type type = typeof(System.Windows.Controls.Primitives.StatusBarItem);
             DependencyProperty  dp = System.Windows.Controls.Primitives.StatusBarItem.ContentProperty;
-            var bamlMember = new WpfKnownMember( this,  // Schema Context
+            var bamlMember = new WpfKnownMember(this,  // Schema Context
                             this.GetXamlType(typeof(System.Windows.Controls.Primitives.StatusBarItem)), // DeclaringType
                             "Content", // Name
                              dp, // DependencyProperty
                             false, // IsReadOnly
                             false // IsAttachable
-                                     );
-            bamlMember.HasSpecialTypeConverter = true;
-            bamlMember.TypeConverterType = typeof(System.Object);
+                                     )
+            {
+                HasSpecialTypeConverter = true,
+                TypeConverterType = typeof(System.Object)
+            };
             bamlMember.Freeze();
             return bamlMember;
         }
@@ -5734,15 +6128,17 @@ namespace System.Windows.Baml2006
         private WpfKnownMember Create_BamlProperty_StringAnimationUsingKeyFrames_KeyFrames()
         {
             Type type = typeof(System.Windows.Media.Animation.StringAnimationUsingKeyFrames);
-            var bamlMember = new WpfKnownMember( this,  // Schema Context
+            var bamlMember = new WpfKnownMember(this,  // Schema Context
                             this.GetXamlType(typeof(System.Windows.Media.Animation.StringAnimationUsingKeyFrames)), // DeclaringType
                             "KeyFrames", // Name
                             typeof(System.Windows.Media.Animation.StringKeyFrameCollection), // type
                             false, // IsReadOnly
                             false // IsAttachable
-                                     );
-            bamlMember.SetDelegate = delegate(object target, object value) { ((System.Windows.Media.Animation.StringAnimationUsingKeyFrames)target).KeyFrames = (System.Windows.Media.Animation.StringKeyFrameCollection)value; };
-            bamlMember.GetDelegate = delegate(object target) { return ((System.Windows.Media.Animation.StringAnimationUsingKeyFrames)target).KeyFrames; };
+                                     )
+            {
+                SetDelegate = delegate (object target, object value) { ((System.Windows.Media.Animation.StringAnimationUsingKeyFrames)target).KeyFrames = (System.Windows.Media.Animation.StringKeyFrameCollection)value; },
+                GetDelegate = delegate (object target) { return ((System.Windows.Media.Animation.StringAnimationUsingKeyFrames)target).KeyFrames; }
+            };
             bamlMember.Freeze();
             return bamlMember;
         }
@@ -5751,15 +6147,17 @@ namespace System.Windows.Baml2006
         private WpfKnownMember Create_BamlProperty_Style_Setters()
         {
             Type type = typeof(System.Windows.Style);
-            var bamlMember = new WpfKnownMember( this,  // Schema Context
+            var bamlMember = new WpfKnownMember(this,  // Schema Context
                             this.GetXamlType(typeof(System.Windows.Style)), // DeclaringType
                             "Setters", // Name
                             typeof(System.Windows.SetterBaseCollection), // type
                             true, // IsReadOnly
                             false // IsAttachable
-                                     );
-            bamlMember.GetDelegate = delegate(object target) { return ((System.Windows.Style)target).Setters; };
-            bamlMember.IsWritePrivate = true;
+                                     )
+            {
+                GetDelegate = delegate (object target) { return ((System.Windows.Style)target).Setters; },
+                IsWritePrivate = true
+            };
             bamlMember.Freeze();
             return bamlMember;
         }
@@ -5768,15 +6166,17 @@ namespace System.Windows.Baml2006
         private WpfKnownMember Create_BamlProperty_TabControl_Items()
         {
             Type type = typeof(System.Windows.Controls.TabControl);
-            var bamlMember = new WpfKnownMember( this,  // Schema Context
+            var bamlMember = new WpfKnownMember(this,  // Schema Context
                             this.GetXamlType(typeof(System.Windows.Controls.TabControl)), // DeclaringType
                             "Items", // Name
                             typeof(System.Windows.Controls.ItemCollection), // type
                             true, // IsReadOnly
                             false // IsAttachable
-                                     );
-            bamlMember.GetDelegate = delegate(object target) { return ((System.Windows.Controls.TabControl)target).Items; };
-            bamlMember.IsWritePrivate = true;
+                                     )
+            {
+                GetDelegate = delegate (object target) { return ((System.Windows.Controls.TabControl)target).Items; },
+                IsWritePrivate = true
+            };
             bamlMember.Freeze();
             return bamlMember;
         }
@@ -5786,15 +6186,17 @@ namespace System.Windows.Baml2006
         {
             Type type = typeof(System.Windows.Controls.TabItem);
             DependencyProperty  dp = System.Windows.Controls.TabItem.ContentProperty;
-            var bamlMember = new WpfKnownMember( this,  // Schema Context
+            var bamlMember = new WpfKnownMember(this,  // Schema Context
                             this.GetXamlType(typeof(System.Windows.Controls.TabItem)), // DeclaringType
                             "Content", // Name
                              dp, // DependencyProperty
                             false, // IsReadOnly
                             false // IsAttachable
-                                     );
-            bamlMember.HasSpecialTypeConverter = true;
-            bamlMember.TypeConverterType = typeof(System.Object);
+                                     )
+            {
+                HasSpecialTypeConverter = true,
+                TypeConverterType = typeof(System.Object)
+            };
             bamlMember.Freeze();
             return bamlMember;
         }
@@ -5803,15 +6205,17 @@ namespace System.Windows.Baml2006
         private WpfKnownMember Create_BamlProperty_TabPanel_Children()
         {
             Type type = typeof(System.Windows.Controls.Primitives.TabPanel);
-            var bamlMember = new WpfKnownMember( this,  // Schema Context
+            var bamlMember = new WpfKnownMember(this,  // Schema Context
                             this.GetXamlType(typeof(System.Windows.Controls.Primitives.TabPanel)), // DeclaringType
                             "Children", // Name
                             typeof(System.Windows.Controls.UIElementCollection), // type
                             true, // IsReadOnly
                             false // IsAttachable
-                                     );
-            bamlMember.GetDelegate = delegate(object target) { return ((System.Windows.Controls.Primitives.TabPanel)target).Children; };
-            bamlMember.IsWritePrivate = true;
+                                     )
+            {
+                GetDelegate = delegate (object target) { return ((System.Windows.Controls.Primitives.TabPanel)target).Children; },
+                IsWritePrivate = true
+            };
             bamlMember.Freeze();
             return bamlMember;
         }
@@ -5820,15 +6224,17 @@ namespace System.Windows.Baml2006
         private WpfKnownMember Create_BamlProperty_Table_RowGroups()
         {
             Type type = typeof(System.Windows.Documents.Table);
-            var bamlMember = new WpfKnownMember( this,  // Schema Context
+            var bamlMember = new WpfKnownMember(this,  // Schema Context
                             this.GetXamlType(typeof(System.Windows.Documents.Table)), // DeclaringType
                             "RowGroups", // Name
                             typeof(System.Windows.Documents.TableRowGroupCollection), // type
                             true, // IsReadOnly
                             false // IsAttachable
-                                     );
-            bamlMember.GetDelegate = delegate(object target) { return ((System.Windows.Documents.Table)target).RowGroups; };
-            bamlMember.IsWritePrivate = true;
+                                     )
+            {
+                GetDelegate = delegate (object target) { return ((System.Windows.Documents.Table)target).RowGroups; },
+                IsWritePrivate = true
+            };
             bamlMember.Freeze();
             return bamlMember;
         }
@@ -5837,15 +6243,17 @@ namespace System.Windows.Baml2006
         private WpfKnownMember Create_BamlProperty_TableCell_Blocks()
         {
             Type type = typeof(System.Windows.Documents.TableCell);
-            var bamlMember = new WpfKnownMember( this,  // Schema Context
+            var bamlMember = new WpfKnownMember(this,  // Schema Context
                             this.GetXamlType(typeof(System.Windows.Documents.TableCell)), // DeclaringType
                             "Blocks", // Name
                             typeof(System.Windows.Documents.BlockCollection), // type
                             true, // IsReadOnly
                             false // IsAttachable
-                                     );
-            bamlMember.GetDelegate = delegate(object target) { return ((System.Windows.Documents.TableCell)target).Blocks; };
-            bamlMember.IsWritePrivate = true;
+                                     )
+            {
+                GetDelegate = delegate (object target) { return ((System.Windows.Documents.TableCell)target).Blocks; },
+                IsWritePrivate = true
+            };
             bamlMember.Freeze();
             return bamlMember;
         }
@@ -5854,15 +6262,17 @@ namespace System.Windows.Baml2006
         private WpfKnownMember Create_BamlProperty_TableRow_Cells()
         {
             Type type = typeof(System.Windows.Documents.TableRow);
-            var bamlMember = new WpfKnownMember( this,  // Schema Context
+            var bamlMember = new WpfKnownMember(this,  // Schema Context
                             this.GetXamlType(typeof(System.Windows.Documents.TableRow)), // DeclaringType
                             "Cells", // Name
                             typeof(System.Windows.Documents.TableCellCollection), // type
                             true, // IsReadOnly
                             false // IsAttachable
-                                     );
-            bamlMember.GetDelegate = delegate(object target) { return ((System.Windows.Documents.TableRow)target).Cells; };
-            bamlMember.IsWritePrivate = true;
+                                     )
+            {
+                GetDelegate = delegate (object target) { return ((System.Windows.Documents.TableRow)target).Cells; },
+                IsWritePrivate = true
+            };
             bamlMember.Freeze();
             return bamlMember;
         }
@@ -5871,15 +6281,17 @@ namespace System.Windows.Baml2006
         private WpfKnownMember Create_BamlProperty_TableRowGroup_Rows()
         {
             Type type = typeof(System.Windows.Documents.TableRowGroup);
-            var bamlMember = new WpfKnownMember( this,  // Schema Context
+            var bamlMember = new WpfKnownMember(this,  // Schema Context
                             this.GetXamlType(typeof(System.Windows.Documents.TableRowGroup)), // DeclaringType
                             "Rows", // Name
                             typeof(System.Windows.Documents.TableRowCollection), // type
                             true, // IsReadOnly
                             false // IsAttachable
-                                     );
-            bamlMember.GetDelegate = delegate(object target) { return ((System.Windows.Documents.TableRowGroup)target).Rows; };
-            bamlMember.IsWritePrivate = true;
+                                     )
+            {
+                GetDelegate = delegate (object target) { return ((System.Windows.Documents.TableRowGroup)target).Rows; },
+                IsWritePrivate = true
+            };
             bamlMember.Freeze();
             return bamlMember;
         }
@@ -5888,15 +6300,17 @@ namespace System.Windows.Baml2006
         private WpfKnownMember Create_BamlProperty_TextBlock_Inlines()
         {
             Type type = typeof(System.Windows.Controls.TextBlock);
-            var bamlMember = new WpfKnownMember( this,  // Schema Context
+            var bamlMember = new WpfKnownMember(this,  // Schema Context
                             this.GetXamlType(typeof(System.Windows.Controls.TextBlock)), // DeclaringType
                             "Inlines", // Name
                             typeof(System.Windows.Documents.InlineCollection), // type
                             true, // IsReadOnly
                             false // IsAttachable
-                                     );
-            bamlMember.GetDelegate = delegate(object target) { return ((System.Windows.Controls.TextBlock)target).Inlines; };
-            bamlMember.IsWritePrivate = true;
+                                     )
+            {
+                GetDelegate = delegate (object target) { return ((System.Windows.Controls.TextBlock)target).Inlines; },
+                IsWritePrivate = true
+            };
             bamlMember.Freeze();
             return bamlMember;
         }
@@ -5905,15 +6319,17 @@ namespace System.Windows.Baml2006
         private WpfKnownMember Create_BamlProperty_ThicknessAnimationUsingKeyFrames_KeyFrames()
         {
             Type type = typeof(System.Windows.Media.Animation.ThicknessAnimationUsingKeyFrames);
-            var bamlMember = new WpfKnownMember( this,  // Schema Context
+            var bamlMember = new WpfKnownMember(this,  // Schema Context
                             this.GetXamlType(typeof(System.Windows.Media.Animation.ThicknessAnimationUsingKeyFrames)), // DeclaringType
                             "KeyFrames", // Name
                             typeof(System.Windows.Media.Animation.ThicknessKeyFrameCollection), // type
                             false, // IsReadOnly
                             false // IsAttachable
-                                     );
-            bamlMember.SetDelegate = delegate(object target, object value) { ((System.Windows.Media.Animation.ThicknessAnimationUsingKeyFrames)target).KeyFrames = (System.Windows.Media.Animation.ThicknessKeyFrameCollection)value; };
-            bamlMember.GetDelegate = delegate(object target) { return ((System.Windows.Media.Animation.ThicknessAnimationUsingKeyFrames)target).KeyFrames; };
+                                     )
+            {
+                SetDelegate = delegate (object target, object value) { ((System.Windows.Media.Animation.ThicknessAnimationUsingKeyFrames)target).KeyFrames = (System.Windows.Media.Animation.ThicknessKeyFrameCollection)value; },
+                GetDelegate = delegate (object target) { return ((System.Windows.Media.Animation.ThicknessAnimationUsingKeyFrames)target).KeyFrames; }
+            };
             bamlMember.Freeze();
             return bamlMember;
         }
@@ -5923,15 +6339,17 @@ namespace System.Windows.Baml2006
         {
             Type type = typeof(System.Windows.Controls.Primitives.ToggleButton);
             DependencyProperty  dp = System.Windows.Controls.Primitives.ToggleButton.ContentProperty;
-            var bamlMember = new WpfKnownMember( this,  // Schema Context
+            var bamlMember = new WpfKnownMember(this,  // Schema Context
                             this.GetXamlType(typeof(System.Windows.Controls.Primitives.ToggleButton)), // DeclaringType
                             "Content", // Name
                              dp, // DependencyProperty
                             false, // IsReadOnly
                             false // IsAttachable
-                                     );
-            bamlMember.HasSpecialTypeConverter = true;
-            bamlMember.TypeConverterType = typeof(System.Object);
+                                     )
+            {
+                HasSpecialTypeConverter = true,
+                TypeConverterType = typeof(System.Object)
+            };
             bamlMember.Freeze();
             return bamlMember;
         }
@@ -5940,15 +6358,17 @@ namespace System.Windows.Baml2006
         private WpfKnownMember Create_BamlProperty_ToolBar_Items()
         {
             Type type = typeof(System.Windows.Controls.ToolBar);
-            var bamlMember = new WpfKnownMember( this,  // Schema Context
+            var bamlMember = new WpfKnownMember(this,  // Schema Context
                             this.GetXamlType(typeof(System.Windows.Controls.ToolBar)), // DeclaringType
                             "Items", // Name
                             typeof(System.Windows.Controls.ItemCollection), // type
                             true, // IsReadOnly
                             false // IsAttachable
-                                     );
-            bamlMember.GetDelegate = delegate(object target) { return ((System.Windows.Controls.ToolBar)target).Items; };
-            bamlMember.IsWritePrivate = true;
+                                     )
+            {
+                GetDelegate = delegate (object target) { return ((System.Windows.Controls.ToolBar)target).Items; },
+                IsWritePrivate = true
+            };
             bamlMember.Freeze();
             return bamlMember;
         }
@@ -5957,15 +6377,17 @@ namespace System.Windows.Baml2006
         private WpfKnownMember Create_BamlProperty_ToolBarOverflowPanel_Children()
         {
             Type type = typeof(System.Windows.Controls.Primitives.ToolBarOverflowPanel);
-            var bamlMember = new WpfKnownMember( this,  // Schema Context
+            var bamlMember = new WpfKnownMember(this,  // Schema Context
                             this.GetXamlType(typeof(System.Windows.Controls.Primitives.ToolBarOverflowPanel)), // DeclaringType
                             "Children", // Name
                             typeof(System.Windows.Controls.UIElementCollection), // type
                             true, // IsReadOnly
                             false // IsAttachable
-                                     );
-            bamlMember.GetDelegate = delegate(object target) { return ((System.Windows.Controls.Primitives.ToolBarOverflowPanel)target).Children; };
-            bamlMember.IsWritePrivate = true;
+                                     )
+            {
+                GetDelegate = delegate (object target) { return ((System.Windows.Controls.Primitives.ToolBarOverflowPanel)target).Children; },
+                IsWritePrivate = true
+            };
             bamlMember.Freeze();
             return bamlMember;
         }
@@ -5974,15 +6396,17 @@ namespace System.Windows.Baml2006
         private WpfKnownMember Create_BamlProperty_ToolBarPanel_Children()
         {
             Type type = typeof(System.Windows.Controls.Primitives.ToolBarPanel);
-            var bamlMember = new WpfKnownMember( this,  // Schema Context
+            var bamlMember = new WpfKnownMember(this,  // Schema Context
                             this.GetXamlType(typeof(System.Windows.Controls.Primitives.ToolBarPanel)), // DeclaringType
                             "Children", // Name
                             typeof(System.Windows.Controls.UIElementCollection), // type
                             true, // IsReadOnly
                             false // IsAttachable
-                                     );
-            bamlMember.GetDelegate = delegate(object target) { return ((System.Windows.Controls.Primitives.ToolBarPanel)target).Children; };
-            bamlMember.IsWritePrivate = true;
+                                     )
+            {
+                GetDelegate = delegate (object target) { return ((System.Windows.Controls.Primitives.ToolBarPanel)target).Children; },
+                IsWritePrivate = true
+            };
             bamlMember.Freeze();
             return bamlMember;
         }
@@ -5991,15 +6415,17 @@ namespace System.Windows.Baml2006
         private WpfKnownMember Create_BamlProperty_ToolBarTray_ToolBars()
         {
             Type type = typeof(System.Windows.Controls.ToolBarTray);
-            var bamlMember = new WpfKnownMember( this,  // Schema Context
+            var bamlMember = new WpfKnownMember(this,  // Schema Context
                             this.GetXamlType(typeof(System.Windows.Controls.ToolBarTray)), // DeclaringType
                             "ToolBars", // Name
                             typeof(System.Collections.ObjectModel.Collection<System.Windows.Controls.ToolBar>), // type
                             true, // IsReadOnly
                             false // IsAttachable
-                                     );
-            bamlMember.GetDelegate = delegate(object target) { return ((System.Windows.Controls.ToolBarTray)target).ToolBars; };
-            bamlMember.IsWritePrivate = true;
+                                     )
+            {
+                GetDelegate = delegate (object target) { return ((System.Windows.Controls.ToolBarTray)target).ToolBars; },
+                IsWritePrivate = true
+            };
             bamlMember.Freeze();
             return bamlMember;
         }
@@ -6009,15 +6435,17 @@ namespace System.Windows.Baml2006
         {
             Type type = typeof(System.Windows.Controls.ToolTip);
             DependencyProperty  dp = System.Windows.Controls.ToolTip.ContentProperty;
-            var bamlMember = new WpfKnownMember( this,  // Schema Context
+            var bamlMember = new WpfKnownMember(this,  // Schema Context
                             this.GetXamlType(typeof(System.Windows.Controls.ToolTip)), // DeclaringType
                             "Content", // Name
                              dp, // DependencyProperty
                             false, // IsReadOnly
                             false // IsAttachable
-                                     );
-            bamlMember.HasSpecialTypeConverter = true;
-            bamlMember.TypeConverterType = typeof(System.Object);
+                                     )
+            {
+                HasSpecialTypeConverter = true,
+                TypeConverterType = typeof(System.Object)
+            };
             bamlMember.Freeze();
             return bamlMember;
         }
@@ -6026,15 +6454,17 @@ namespace System.Windows.Baml2006
         private WpfKnownMember Create_BamlProperty_TreeView_Items()
         {
             Type type = typeof(System.Windows.Controls.TreeView);
-            var bamlMember = new WpfKnownMember( this,  // Schema Context
+            var bamlMember = new WpfKnownMember(this,  // Schema Context
                             this.GetXamlType(typeof(System.Windows.Controls.TreeView)), // DeclaringType
                             "Items", // Name
                             typeof(System.Windows.Controls.ItemCollection), // type
                             true, // IsReadOnly
                             false // IsAttachable
-                                     );
-            bamlMember.GetDelegate = delegate(object target) { return ((System.Windows.Controls.TreeView)target).Items; };
-            bamlMember.IsWritePrivate = true;
+                                     )
+            {
+                GetDelegate = delegate (object target) { return ((System.Windows.Controls.TreeView)target).Items; },
+                IsWritePrivate = true
+            };
             bamlMember.Freeze();
             return bamlMember;
         }
@@ -6043,15 +6473,17 @@ namespace System.Windows.Baml2006
         private WpfKnownMember Create_BamlProperty_TreeViewItem_Items()
         {
             Type type = typeof(System.Windows.Controls.TreeViewItem);
-            var bamlMember = new WpfKnownMember( this,  // Schema Context
+            var bamlMember = new WpfKnownMember(this,  // Schema Context
                             this.GetXamlType(typeof(System.Windows.Controls.TreeViewItem)), // DeclaringType
                             "Items", // Name
                             typeof(System.Windows.Controls.ItemCollection), // type
                             true, // IsReadOnly
                             false // IsAttachable
-                                     );
-            bamlMember.GetDelegate = delegate(object target) { return ((System.Windows.Controls.TreeViewItem)target).Items; };
-            bamlMember.IsWritePrivate = true;
+                                     )
+            {
+                GetDelegate = delegate (object target) { return ((System.Windows.Controls.TreeViewItem)target).Items; },
+                IsWritePrivate = true
+            };
             bamlMember.Freeze();
             return bamlMember;
         }
@@ -6060,15 +6492,17 @@ namespace System.Windows.Baml2006
         private WpfKnownMember Create_BamlProperty_Trigger_Setters()
         {
             Type type = typeof(System.Windows.Trigger);
-            var bamlMember = new WpfKnownMember( this,  // Schema Context
+            var bamlMember = new WpfKnownMember(this,  // Schema Context
                             this.GetXamlType(typeof(System.Windows.Trigger)), // DeclaringType
                             "Setters", // Name
                             typeof(System.Windows.SetterBaseCollection), // type
                             true, // IsReadOnly
                             false // IsAttachable
-                                     );
-            bamlMember.GetDelegate = delegate(object target) { return ((System.Windows.Trigger)target).Setters; };
-            bamlMember.IsWritePrivate = true;
+                                     )
+            {
+                GetDelegate = delegate (object target) { return ((System.Windows.Trigger)target).Setters; },
+                IsWritePrivate = true
+            };
             bamlMember.Freeze();
             return bamlMember;
         }
@@ -6077,15 +6511,17 @@ namespace System.Windows.Baml2006
         private WpfKnownMember Create_BamlProperty_Underline_Inlines()
         {
             Type type = typeof(System.Windows.Documents.Underline);
-            var bamlMember = new WpfKnownMember( this,  // Schema Context
+            var bamlMember = new WpfKnownMember(this,  // Schema Context
                             this.GetXamlType(typeof(System.Windows.Documents.Underline)), // DeclaringType
                             "Inlines", // Name
                             typeof(System.Windows.Documents.InlineCollection), // type
                             true, // IsReadOnly
                             false // IsAttachable
-                                     );
-            bamlMember.GetDelegate = delegate(object target) { return ((System.Windows.Documents.Underline)target).Inlines; };
-            bamlMember.IsWritePrivate = true;
+                                     )
+            {
+                GetDelegate = delegate (object target) { return ((System.Windows.Documents.Underline)target).Inlines; },
+                IsWritePrivate = true
+            };
             bamlMember.Freeze();
             return bamlMember;
         }
@@ -6094,15 +6530,17 @@ namespace System.Windows.Baml2006
         private WpfKnownMember Create_BamlProperty_UniformGrid_Children()
         {
             Type type = typeof(System.Windows.Controls.Primitives.UniformGrid);
-            var bamlMember = new WpfKnownMember( this,  // Schema Context
+            var bamlMember = new WpfKnownMember(this,  // Schema Context
                             this.GetXamlType(typeof(System.Windows.Controls.Primitives.UniformGrid)), // DeclaringType
                             "Children", // Name
                             typeof(System.Windows.Controls.UIElementCollection), // type
                             true, // IsReadOnly
                             false // IsAttachable
-                                     );
-            bamlMember.GetDelegate = delegate(object target) { return ((System.Windows.Controls.Primitives.UniformGrid)target).Children; };
-            bamlMember.IsWritePrivate = true;
+                                     )
+            {
+                GetDelegate = delegate (object target) { return ((System.Windows.Controls.Primitives.UniformGrid)target).Children; },
+                IsWritePrivate = true
+            };
             bamlMember.Freeze();
             return bamlMember;
         }
@@ -6112,15 +6550,17 @@ namespace System.Windows.Baml2006
         {
             Type type = typeof(System.Windows.Controls.UserControl);
             DependencyProperty  dp = System.Windows.Controls.UserControl.ContentProperty;
-            var bamlMember = new WpfKnownMember( this,  // Schema Context
+            var bamlMember = new WpfKnownMember(this,  // Schema Context
                             this.GetXamlType(typeof(System.Windows.Controls.UserControl)), // DeclaringType
                             "Content", // Name
                              dp, // DependencyProperty
                             false, // IsReadOnly
                             false // IsAttachable
-                                     );
-            bamlMember.HasSpecialTypeConverter = true;
-            bamlMember.TypeConverterType = typeof(System.Object);
+                                     )
+            {
+                HasSpecialTypeConverter = true,
+                TypeConverterType = typeof(System.Object)
+            };
             bamlMember.Freeze();
             return bamlMember;
         }
@@ -6129,15 +6569,17 @@ namespace System.Windows.Baml2006
         private WpfKnownMember Create_BamlProperty_Vector3DAnimationUsingKeyFrames_KeyFrames()
         {
             Type type = typeof(System.Windows.Media.Animation.Vector3DAnimationUsingKeyFrames);
-            var bamlMember = new WpfKnownMember( this,  // Schema Context
+            var bamlMember = new WpfKnownMember(this,  // Schema Context
                             this.GetXamlType(typeof(System.Windows.Media.Animation.Vector3DAnimationUsingKeyFrames)), // DeclaringType
                             "KeyFrames", // Name
                             typeof(System.Windows.Media.Animation.Vector3DKeyFrameCollection), // type
                             false, // IsReadOnly
                             false // IsAttachable
-                                     );
-            bamlMember.SetDelegate = delegate(object target, object value) { ((System.Windows.Media.Animation.Vector3DAnimationUsingKeyFrames)target).KeyFrames = (System.Windows.Media.Animation.Vector3DKeyFrameCollection)value; };
-            bamlMember.GetDelegate = delegate(object target) { return ((System.Windows.Media.Animation.Vector3DAnimationUsingKeyFrames)target).KeyFrames; };
+                                     )
+            {
+                SetDelegate = delegate (object target, object value) { ((System.Windows.Media.Animation.Vector3DAnimationUsingKeyFrames)target).KeyFrames = (System.Windows.Media.Animation.Vector3DKeyFrameCollection)value; },
+                GetDelegate = delegate (object target) { return ((System.Windows.Media.Animation.Vector3DAnimationUsingKeyFrames)target).KeyFrames; }
+            };
             bamlMember.Freeze();
             return bamlMember;
         }
@@ -6146,15 +6588,17 @@ namespace System.Windows.Baml2006
         private WpfKnownMember Create_BamlProperty_VectorAnimationUsingKeyFrames_KeyFrames()
         {
             Type type = typeof(System.Windows.Media.Animation.VectorAnimationUsingKeyFrames);
-            var bamlMember = new WpfKnownMember( this,  // Schema Context
+            var bamlMember = new WpfKnownMember(this,  // Schema Context
                             this.GetXamlType(typeof(System.Windows.Media.Animation.VectorAnimationUsingKeyFrames)), // DeclaringType
                             "KeyFrames", // Name
                             typeof(System.Windows.Media.Animation.VectorKeyFrameCollection), // type
                             false, // IsReadOnly
                             false // IsAttachable
-                                     );
-            bamlMember.SetDelegate = delegate(object target, object value) { ((System.Windows.Media.Animation.VectorAnimationUsingKeyFrames)target).KeyFrames = (System.Windows.Media.Animation.VectorKeyFrameCollection)value; };
-            bamlMember.GetDelegate = delegate(object target) { return ((System.Windows.Media.Animation.VectorAnimationUsingKeyFrames)target).KeyFrames; };
+                                     )
+            {
+                SetDelegate = delegate (object target, object value) { ((System.Windows.Media.Animation.VectorAnimationUsingKeyFrames)target).KeyFrames = (System.Windows.Media.Animation.VectorKeyFrameCollection)value; },
+                GetDelegate = delegate (object target) { return ((System.Windows.Media.Animation.VectorAnimationUsingKeyFrames)target).KeyFrames; }
+            };
             bamlMember.Freeze();
             return bamlMember;
         }
@@ -6163,15 +6607,17 @@ namespace System.Windows.Baml2006
         private WpfKnownMember Create_BamlProperty_Viewbox_Child()
         {
             Type type = typeof(System.Windows.Controls.Viewbox);
-            var bamlMember = new WpfKnownMember( this,  // Schema Context
+            var bamlMember = new WpfKnownMember(this,  // Schema Context
                             this.GetXamlType(typeof(System.Windows.Controls.Viewbox)), // DeclaringType
                             "Child", // Name
                             typeof(System.Windows.UIElement), // type
                             false, // IsReadOnly
                             false // IsAttachable
-                                     );
-            bamlMember.SetDelegate = delegate(object target, object value) { ((System.Windows.Controls.Viewbox)target).Child = (System.Windows.UIElement)value; };
-            bamlMember.GetDelegate = delegate(object target) { return ((System.Windows.Controls.Viewbox)target).Child; };
+                                     )
+            {
+                SetDelegate = delegate (object target, object value) { ((System.Windows.Controls.Viewbox)target).Child = (System.Windows.UIElement)value; },
+                GetDelegate = delegate (object target) { return ((System.Windows.Controls.Viewbox)target).Child; }
+            };
             bamlMember.Freeze();
             return bamlMember;
         }
@@ -6180,15 +6626,17 @@ namespace System.Windows.Baml2006
         private WpfKnownMember Create_BamlProperty_Viewport3DVisual_Children()
         {
             Type type = typeof(System.Windows.Media.Media3D.Viewport3DVisual);
-            var bamlMember = new WpfKnownMember( this,  // Schema Context
+            var bamlMember = new WpfKnownMember(this,  // Schema Context
                             this.GetXamlType(typeof(System.Windows.Media.Media3D.Viewport3DVisual)), // DeclaringType
                             "Children", // Name
                             typeof(System.Windows.Media.Media3D.Visual3DCollection), // type
                             true, // IsReadOnly
                             false // IsAttachable
-                                     );
-            bamlMember.GetDelegate = delegate(object target) { return ((System.Windows.Media.Media3D.Viewport3DVisual)target).Children; };
-            bamlMember.IsWritePrivate = true;
+                                     )
+            {
+                GetDelegate = delegate (object target) { return ((System.Windows.Media.Media3D.Viewport3DVisual)target).Children; },
+                IsWritePrivate = true
+            };
             bamlMember.Freeze();
             return bamlMember;
         }
@@ -6197,15 +6645,17 @@ namespace System.Windows.Baml2006
         private WpfKnownMember Create_BamlProperty_VirtualizingPanel_Children()
         {
             Type type = typeof(System.Windows.Controls.VirtualizingPanel);
-            var bamlMember = new WpfKnownMember( this,  // Schema Context
+            var bamlMember = new WpfKnownMember(this,  // Schema Context
                             this.GetXamlType(typeof(System.Windows.Controls.VirtualizingPanel)), // DeclaringType
                             "Children", // Name
                             typeof(System.Windows.Controls.UIElementCollection), // type
                             true, // IsReadOnly
                             false // IsAttachable
-                                     );
-            bamlMember.GetDelegate = delegate(object target) { return ((System.Windows.Controls.VirtualizingPanel)target).Children; };
-            bamlMember.IsWritePrivate = true;
+                                     )
+            {
+                GetDelegate = delegate (object target) { return ((System.Windows.Controls.VirtualizingPanel)target).Children; },
+                IsWritePrivate = true
+            };
             bamlMember.Freeze();
             return bamlMember;
         }
@@ -6214,15 +6664,17 @@ namespace System.Windows.Baml2006
         private WpfKnownMember Create_BamlProperty_VirtualizingStackPanel_Children()
         {
             Type type = typeof(System.Windows.Controls.VirtualizingStackPanel);
-            var bamlMember = new WpfKnownMember( this,  // Schema Context
+            var bamlMember = new WpfKnownMember(this,  // Schema Context
                             this.GetXamlType(typeof(System.Windows.Controls.VirtualizingStackPanel)), // DeclaringType
                             "Children", // Name
                             typeof(System.Windows.Controls.UIElementCollection), // type
                             true, // IsReadOnly
                             false // IsAttachable
-                                     );
-            bamlMember.GetDelegate = delegate(object target) { return ((System.Windows.Controls.VirtualizingStackPanel)target).Children; };
-            bamlMember.IsWritePrivate = true;
+                                     )
+            {
+                GetDelegate = delegate (object target) { return ((System.Windows.Controls.VirtualizingStackPanel)target).Children; },
+                IsWritePrivate = true
+            };
             bamlMember.Freeze();
             return bamlMember;
         }
@@ -6232,15 +6684,17 @@ namespace System.Windows.Baml2006
         {
             Type type = typeof(System.Windows.Window);
             DependencyProperty  dp = System.Windows.Window.ContentProperty;
-            var bamlMember = new WpfKnownMember( this,  // Schema Context
+            var bamlMember = new WpfKnownMember(this,  // Schema Context
                             this.GetXamlType(typeof(System.Windows.Window)), // DeclaringType
                             "Content", // Name
                              dp, // DependencyProperty
                             false, // IsReadOnly
                             false // IsAttachable
-                                     );
-            bamlMember.HasSpecialTypeConverter = true;
-            bamlMember.TypeConverterType = typeof(System.Object);
+                                     )
+            {
+                HasSpecialTypeConverter = true,
+                TypeConverterType = typeof(System.Object)
+            };
             bamlMember.Freeze();
             return bamlMember;
         }
@@ -6249,15 +6703,17 @@ namespace System.Windows.Baml2006
         private WpfKnownMember Create_BamlProperty_WrapPanel_Children()
         {
             Type type = typeof(System.Windows.Controls.WrapPanel);
-            var bamlMember = new WpfKnownMember( this,  // Schema Context
+            var bamlMember = new WpfKnownMember(this,  // Schema Context
                             this.GetXamlType(typeof(System.Windows.Controls.WrapPanel)), // DeclaringType
                             "Children", // Name
                             typeof(System.Windows.Controls.UIElementCollection), // type
                             true, // IsReadOnly
                             false // IsAttachable
-                                     );
-            bamlMember.GetDelegate = delegate(object target) { return ((System.Windows.Controls.WrapPanel)target).Children; };
-            bamlMember.IsWritePrivate = true;
+                                     )
+            {
+                GetDelegate = delegate (object target) { return ((System.Windows.Controls.WrapPanel)target).Children; },
+                IsWritePrivate = true
+            };
             bamlMember.Freeze();
             return bamlMember;
         }
@@ -6266,15 +6722,17 @@ namespace System.Windows.Baml2006
         private WpfKnownMember Create_BamlProperty_XmlDataProvider_XmlSerializer()
         {
             Type type = typeof(System.Windows.Data.XmlDataProvider);
-            var bamlMember = new WpfKnownMember( this,  // Schema Context
+            var bamlMember = new WpfKnownMember(this,  // Schema Context
                             this.GetXamlType(typeof(System.Windows.Data.XmlDataProvider)), // DeclaringType
                             "XmlSerializer", // Name
                             typeof(System.Xml.Serialization.IXmlSerializable), // type
                             true, // IsReadOnly
                             false // IsAttachable
-                                     );
-            bamlMember.GetDelegate = delegate(object target) { return ((System.Windows.Data.XmlDataProvider)target).XmlSerializer; };
-            bamlMember.IsWritePrivate = true;
+                                     )
+            {
+                GetDelegate = delegate (object target) { return ((System.Windows.Data.XmlDataProvider)target).XmlSerializer; },
+                IsWritePrivate = true
+            };
             bamlMember.Freeze();
             return bamlMember;
         }
@@ -6283,15 +6741,17 @@ namespace System.Windows.Baml2006
         private WpfKnownMember Create_BamlProperty_ControlTemplate_Triggers()
         {
             Type type = typeof(System.Windows.Controls.ControlTemplate);
-            var bamlMember = new WpfKnownMember( this,  // Schema Context
+            var bamlMember = new WpfKnownMember(this,  // Schema Context
                             this.GetXamlType(typeof(System.Windows.Controls.ControlTemplate)), // DeclaringType
                             "Triggers", // Name
                             typeof(System.Windows.TriggerCollection), // type
                             true, // IsReadOnly
                             false // IsAttachable
-                                     );
-            bamlMember.GetDelegate = delegate(object target) { return ((System.Windows.Controls.ControlTemplate)target).Triggers; };
-            bamlMember.IsWritePrivate = true;
+                                     )
+            {
+                GetDelegate = delegate (object target) { return ((System.Windows.Controls.ControlTemplate)target).Triggers; },
+                IsWritePrivate = true
+            };
             bamlMember.Freeze();
             return bamlMember;
         }
@@ -6300,15 +6760,17 @@ namespace System.Windows.Baml2006
         private WpfKnownMember Create_BamlProperty_DataTemplate_Triggers()
         {
             Type type = typeof(System.Windows.DataTemplate);
-            var bamlMember = new WpfKnownMember( this,  // Schema Context
+            var bamlMember = new WpfKnownMember(this,  // Schema Context
                             this.GetXamlType(typeof(System.Windows.DataTemplate)), // DeclaringType
                             "Triggers", // Name
                             typeof(System.Windows.TriggerCollection), // type
                             true, // IsReadOnly
                             false // IsAttachable
-                                     );
-            bamlMember.GetDelegate = delegate(object target) { return ((System.Windows.DataTemplate)target).Triggers; };
-            bamlMember.IsWritePrivate = true;
+                                     )
+            {
+                GetDelegate = delegate (object target) { return ((System.Windows.DataTemplate)target).Triggers; },
+                IsWritePrivate = true
+            };
             bamlMember.Freeze();
             return bamlMember;
         }
@@ -6317,17 +6779,19 @@ namespace System.Windows.Baml2006
         private WpfKnownMember Create_BamlProperty_DataTemplate_DataTemplateKey()
         {
             Type type = typeof(System.Windows.DataTemplate);
-            var bamlMember = new WpfKnownMember( this,  // Schema Context
+            var bamlMember = new WpfKnownMember(this,  // Schema Context
                             this.GetXamlType(typeof(System.Windows.DataTemplate)), // DeclaringType
                             "DataTemplateKey", // Name
                             typeof(System.Object), // type
                             true, // IsReadOnly
                             false // IsAttachable
-                                     );
-            bamlMember.HasSpecialTypeConverter = true;
-            bamlMember.TypeConverterType = typeof(System.Object);
-            bamlMember.GetDelegate = delegate(object target) { return ((System.Windows.DataTemplate)target).DataTemplateKey; };
-            bamlMember.IsWritePrivate = true;
+                                     )
+            {
+                HasSpecialTypeConverter = true,
+                TypeConverterType = typeof(System.Object),
+                GetDelegate = delegate (object target) { return ((System.Windows.DataTemplate)target).DataTemplateKey; },
+                IsWritePrivate = true
+            };
             bamlMember.Freeze();
             return bamlMember;
         }
@@ -6336,18 +6800,20 @@ namespace System.Windows.Baml2006
         private WpfKnownMember Create_BamlProperty_ControlTemplate_TargetType()
         {
             Type type = typeof(System.Windows.Controls.ControlTemplate);
-            var bamlMember = new WpfKnownMember( this,  // Schema Context
+            var bamlMember = new WpfKnownMember(this,  // Schema Context
                             this.GetXamlType(typeof(System.Windows.Controls.ControlTemplate)), // DeclaringType
                             "TargetType", // Name
                             typeof(System.Type), // type
                             false, // IsReadOnly
                             false // IsAttachable
-                                     );
-            bamlMember.HasSpecialTypeConverter = true;
-            bamlMember.TypeConverterType = typeof(System.Type);
-            bamlMember.Ambient = true;
-            bamlMember.SetDelegate = delegate(object target, object value) { ((System.Windows.Controls.ControlTemplate)target).TargetType = (System.Type)value; };
-            bamlMember.GetDelegate = delegate(object target) { return ((System.Windows.Controls.ControlTemplate)target).TargetType; };
+                                     )
+            {
+                HasSpecialTypeConverter = true,
+                TypeConverterType = typeof(System.Type),
+                Ambient = true,
+                SetDelegate = delegate (object target, object value) { ((System.Windows.Controls.ControlTemplate)target).TargetType = (System.Type)value; },
+                GetDelegate = delegate (object target) { return ((System.Windows.Controls.ControlTemplate)target).TargetType; }
+            };
             bamlMember.Freeze();
             return bamlMember;
         }
@@ -6356,16 +6822,18 @@ namespace System.Windows.Baml2006
         private WpfKnownMember Create_BamlProperty_FrameworkElement_Resources()
         {
             Type type = typeof(System.Windows.FrameworkElement);
-            var bamlMember = new WpfKnownMember( this,  // Schema Context
+            var bamlMember = new WpfKnownMember(this,  // Schema Context
                             this.GetXamlType(typeof(System.Windows.FrameworkElement)), // DeclaringType
                             "Resources", // Name
                             typeof(System.Windows.ResourceDictionary), // type
                             false, // IsReadOnly
                             false // IsAttachable
-                                     );
-            bamlMember.Ambient = true;
-            bamlMember.SetDelegate = delegate(object target, object value) { ((System.Windows.FrameworkElement)target).Resources = (System.Windows.ResourceDictionary)value; };
-            bamlMember.GetDelegate = delegate(object target) { return ((System.Windows.FrameworkElement)target).Resources; };
+                                     )
+            {
+                Ambient = true,
+                SetDelegate = delegate (object target, object value) { ((System.Windows.FrameworkElement)target).Resources = (System.Windows.ResourceDictionary)value; },
+                GetDelegate = delegate (object target) { return ((System.Windows.FrameworkElement)target).Resources; }
+            };
             bamlMember.Freeze();
             return bamlMember;
         }
@@ -6374,17 +6842,19 @@ namespace System.Windows.Baml2006
         private WpfKnownMember Create_BamlProperty_FrameworkTemplate_Template()
         {
             Type type = typeof(System.Windows.FrameworkTemplate);
-            var bamlMember = new WpfKnownMember( this,  // Schema Context
+            var bamlMember = new WpfKnownMember(this,  // Schema Context
                             this.GetXamlType(typeof(System.Windows.FrameworkTemplate)), // DeclaringType
                             "Template", // Name
                             typeof(System.Windows.TemplateContent), // type
                             false, // IsReadOnly
                             false // IsAttachable
-                                     );
-             bamlMember.DeferringLoaderType = typeof(System.Windows.TemplateContentLoader);
-            bamlMember.Ambient = true;
-            bamlMember.SetDelegate = delegate(object target, object value) { ((System.Windows.FrameworkTemplate)target).Template = (System.Windows.TemplateContent)value; };
-            bamlMember.GetDelegate = delegate(object target) { return ((System.Windows.FrameworkTemplate)target).Template; };
+                                     )
+            {
+                DeferringLoaderType = typeof(System.Windows.TemplateContentLoader),
+                Ambient = true,
+                SetDelegate = delegate (object target, object value) { ((System.Windows.FrameworkTemplate)target).Template = (System.Windows.TemplateContent)value; },
+                GetDelegate = delegate (object target) { return ((System.Windows.FrameworkTemplate)target).Template; }
+            };
             bamlMember.Freeze();
             return bamlMember;
         }
@@ -6393,15 +6863,17 @@ namespace System.Windows.Baml2006
         private WpfKnownMember Create_BamlProperty_Grid_ColumnDefinitions()
         {
             Type type = typeof(System.Windows.Controls.Grid);
-            var bamlMember = new WpfKnownMember( this,  // Schema Context
+            var bamlMember = new WpfKnownMember(this,  // Schema Context
                             this.GetXamlType(typeof(System.Windows.Controls.Grid)), // DeclaringType
                             "ColumnDefinitions", // Name
                             typeof(System.Windows.Controls.ColumnDefinitionCollection), // type
                             true, // IsReadOnly
                             false // IsAttachable
-                                     );
-            bamlMember.GetDelegate = delegate(object target) { return ((System.Windows.Controls.Grid)target).ColumnDefinitions; };
-            bamlMember.IsWritePrivate = true;
+                                     )
+            {
+                GetDelegate = delegate (object target) { return ((System.Windows.Controls.Grid)target).ColumnDefinitions; },
+                IsWritePrivate = true
+            };
             bamlMember.Freeze();
             return bamlMember;
         }
@@ -6410,15 +6882,17 @@ namespace System.Windows.Baml2006
         private WpfKnownMember Create_BamlProperty_Grid_RowDefinitions()
         {
             Type type = typeof(System.Windows.Controls.Grid);
-            var bamlMember = new WpfKnownMember( this,  // Schema Context
+            var bamlMember = new WpfKnownMember(this,  // Schema Context
                             this.GetXamlType(typeof(System.Windows.Controls.Grid)), // DeclaringType
                             "RowDefinitions", // Name
                             typeof(System.Windows.Controls.RowDefinitionCollection), // type
                             true, // IsReadOnly
                             false // IsAttachable
-                                     );
-            bamlMember.GetDelegate = delegate(object target) { return ((System.Windows.Controls.Grid)target).RowDefinitions; };
-            bamlMember.IsWritePrivate = true;
+                                     )
+            {
+                GetDelegate = delegate (object target) { return ((System.Windows.Controls.Grid)target).RowDefinitions; },
+                IsWritePrivate = true
+            };
             bamlMember.Freeze();
             return bamlMember;
         }
@@ -6427,15 +6901,17 @@ namespace System.Windows.Baml2006
         private WpfKnownMember Create_BamlProperty_MultiTrigger_Conditions()
         {
             Type type = typeof(System.Windows.MultiTrigger);
-            var bamlMember = new WpfKnownMember( this,  // Schema Context
+            var bamlMember = new WpfKnownMember(this,  // Schema Context
                             this.GetXamlType(typeof(System.Windows.MultiTrigger)), // DeclaringType
                             "Conditions", // Name
                             typeof(System.Windows.ConditionCollection), // type
                             true, // IsReadOnly
                             false // IsAttachable
-                                     );
-            bamlMember.GetDelegate = delegate(object target) { return ((System.Windows.MultiTrigger)target).Conditions; };
-            bamlMember.IsWritePrivate = true;
+                                     )
+            {
+                GetDelegate = delegate (object target) { return ((System.Windows.MultiTrigger)target).Conditions; },
+                IsWritePrivate = true
+            };
             bamlMember.Freeze();
             return bamlMember;
         }
@@ -6460,18 +6936,20 @@ namespace System.Windows.Baml2006
         private WpfKnownMember Create_BamlProperty_Style_TargetType()
         {
             Type type = typeof(System.Windows.Style);
-            var bamlMember = new WpfKnownMember( this,  // Schema Context
+            var bamlMember = new WpfKnownMember(this,  // Schema Context
                             this.GetXamlType(typeof(System.Windows.Style)), // DeclaringType
                             "TargetType", // Name
                             typeof(System.Type), // type
                             false, // IsReadOnly
                             false // IsAttachable
-                                     );
-            bamlMember.HasSpecialTypeConverter = true;
-            bamlMember.TypeConverterType = typeof(System.Type);
-            bamlMember.Ambient = true;
-            bamlMember.SetDelegate = delegate(object target, object value) { ((System.Windows.Style)target).TargetType = (System.Type)value; };
-            bamlMember.GetDelegate = delegate(object target) { return ((System.Windows.Style)target).TargetType; };
+                                     )
+            {
+                HasSpecialTypeConverter = true,
+                TypeConverterType = typeof(System.Type),
+                Ambient = true,
+                SetDelegate = delegate (object target, object value) { ((System.Windows.Style)target).TargetType = (System.Type)value; },
+                GetDelegate = delegate (object target) { return ((System.Windows.Style)target).TargetType; }
+            };
             bamlMember.Freeze();
             return bamlMember;
         }
@@ -6480,15 +6958,17 @@ namespace System.Windows.Baml2006
         private WpfKnownMember Create_BamlProperty_Style_Triggers()
         {
             Type type = typeof(System.Windows.Style);
-            var bamlMember = new WpfKnownMember( this,  // Schema Context
+            var bamlMember = new WpfKnownMember(this,  // Schema Context
                             this.GetXamlType(typeof(System.Windows.Style)), // DeclaringType
                             "Triggers", // Name
                             typeof(System.Windows.TriggerCollection), // type
                             true, // IsReadOnly
                             false // IsAttachable
-                                     );
-            bamlMember.GetDelegate = delegate(object target) { return ((System.Windows.Style)target).Triggers; };
-            bamlMember.IsWritePrivate = true;
+                                     )
+            {
+                GetDelegate = delegate (object target) { return ((System.Windows.Style)target).Triggers; },
+                IsWritePrivate = true
+            };
             bamlMember.Freeze();
             return bamlMember;
         }
@@ -6497,16 +6977,18 @@ namespace System.Windows.Baml2006
         private WpfKnownMember Create_BamlProperty_Setter_Value()
         {
             Type type = typeof(System.Windows.Setter);
-            var bamlMember = new WpfKnownMember( this,  // Schema Context
+            var bamlMember = new WpfKnownMember(this,  // Schema Context
                             this.GetXamlType(typeof(System.Windows.Setter)), // DeclaringType
                             "Value", // Name
                             typeof(System.Object), // type
                             false, // IsReadOnly
                             false // IsAttachable
-                                     );
-            bamlMember.TypeConverterType = typeof(System.Windows.Markup.SetterTriggerConditionValueConverter);
-            bamlMember.SetDelegate = delegate(object target, object value) { ((System.Windows.Setter)target).Value = (System.Object)value; };
-            bamlMember.GetDelegate = delegate(object target) { return ((System.Windows.Setter)target).Value; };
+                                     )
+            {
+                TypeConverterType = typeof(System.Windows.Markup.SetterTriggerConditionValueConverter),
+                SetDelegate = delegate (object target, object value) { ((System.Windows.Setter)target).Value = (System.Object)value; },
+                GetDelegate = delegate (object target) { return ((System.Windows.Setter)target).Value; }
+            };
             bamlMember.Freeze();
             return bamlMember;
         }
@@ -6515,17 +6997,19 @@ namespace System.Windows.Baml2006
         private WpfKnownMember Create_BamlProperty_Setter_TargetName()
         {
             Type type = typeof(System.Windows.Setter);
-            var bamlMember = new WpfKnownMember( this,  // Schema Context
+            var bamlMember = new WpfKnownMember(this,  // Schema Context
                             this.GetXamlType(typeof(System.Windows.Setter)), // DeclaringType
                             "TargetName", // Name
                             typeof(System.String), // type
                             false, // IsReadOnly
                             false // IsAttachable
-                                     );
-            bamlMember.TypeConverterType = typeof(System.ComponentModel.StringConverter);
-            bamlMember.Ambient = true;
-            bamlMember.SetDelegate = delegate(object target, object value) { ((System.Windows.Setter)target).TargetName = (System.String)value; };
-            bamlMember.GetDelegate = delegate(object target) { return ((System.Windows.Setter)target).TargetName; };
+                                     )
+            {
+                TypeConverterType = typeof(System.ComponentModel.StringConverter),
+                Ambient = true,
+                SetDelegate = delegate (object target, object value) { ((System.Windows.Setter)target).TargetName = (System.String)value; },
+                GetDelegate = delegate (object target) { return ((System.Windows.Setter)target).TargetName; }
+            };
             bamlMember.Freeze();
             return bamlMember;
         }
@@ -6534,16 +7018,18 @@ namespace System.Windows.Baml2006
         private WpfKnownMember Create_BamlProperty_Binding_Path()
         {
             Type type = typeof(System.Windows.Data.Binding);
-            var bamlMember = new WpfKnownMember( this,  // Schema Context
+            var bamlMember = new WpfKnownMember(this,  // Schema Context
                             this.GetXamlType(typeof(System.Windows.Data.Binding)), // DeclaringType
                             "Path", // Name
                             typeof(System.Windows.PropertyPath), // type
                             false, // IsReadOnly
                             false // IsAttachable
-                                     );
-            bamlMember.TypeConverterType = typeof(System.Windows.PropertyPathConverter);
-            bamlMember.SetDelegate = delegate(object target, object value) { ((System.Windows.Data.Binding)target).Path = (System.Windows.PropertyPath)value; };
-            bamlMember.GetDelegate = delegate(object target) { return ((System.Windows.Data.Binding)target).Path; };
+                                     )
+            {
+                TypeConverterType = typeof(System.Windows.PropertyPathConverter),
+                SetDelegate = delegate (object target, object value) { ((System.Windows.Data.Binding)target).Path = (System.Windows.PropertyPath)value; },
+                GetDelegate = delegate (object target) { return ((System.Windows.Data.Binding)target).Path; }
+            };
             bamlMember.Freeze();
             return bamlMember;
         }
@@ -6552,17 +7038,19 @@ namespace System.Windows.Baml2006
         private WpfKnownMember Create_BamlProperty_ComponentResourceKey_ResourceId()
         {
             Type type = typeof(System.Windows.ComponentResourceKey);
-            var bamlMember = new WpfKnownMember( this,  // Schema Context
+            var bamlMember = new WpfKnownMember(this,  // Schema Context
                             this.GetXamlType(typeof(System.Windows.ComponentResourceKey)), // DeclaringType
                             "ResourceId", // Name
                             typeof(System.Object), // type
                             false, // IsReadOnly
                             false // IsAttachable
-                                     );
-            bamlMember.HasSpecialTypeConverter = true;
-            bamlMember.TypeConverterType = typeof(System.Object);
-            bamlMember.SetDelegate = delegate(object target, object value) { ((System.Windows.ComponentResourceKey)target).ResourceId = (System.Object)value; };
-            bamlMember.GetDelegate = delegate(object target) { return ((System.Windows.ComponentResourceKey)target).ResourceId; };
+                                     )
+            {
+                HasSpecialTypeConverter = true,
+                TypeConverterType = typeof(System.Object),
+                SetDelegate = delegate (object target, object value) { ((System.Windows.ComponentResourceKey)target).ResourceId = (System.Object)value; },
+                GetDelegate = delegate (object target) { return ((System.Windows.ComponentResourceKey)target).ResourceId; }
+            };
             bamlMember.Freeze();
             return bamlMember;
         }
@@ -6571,17 +7059,19 @@ namespace System.Windows.Baml2006
         private WpfKnownMember Create_BamlProperty_ComponentResourceKey_TypeInTargetAssembly()
         {
             Type type = typeof(System.Windows.ComponentResourceKey);
-            var bamlMember = new WpfKnownMember( this,  // Schema Context
+            var bamlMember = new WpfKnownMember(this,  // Schema Context
                             this.GetXamlType(typeof(System.Windows.ComponentResourceKey)), // DeclaringType
                             "TypeInTargetAssembly", // Name
                             typeof(System.Type), // type
                             false, // IsReadOnly
                             false // IsAttachable
-                                     );
-            bamlMember.HasSpecialTypeConverter = true;
-            bamlMember.TypeConverterType = typeof(System.Type);
-            bamlMember.SetDelegate = delegate(object target, object value) { ((System.Windows.ComponentResourceKey)target).TypeInTargetAssembly = (System.Type)value; };
-            bamlMember.GetDelegate = delegate(object target) { return ((System.Windows.ComponentResourceKey)target).TypeInTargetAssembly; };
+                                     )
+            {
+                HasSpecialTypeConverter = true,
+                TypeConverterType = typeof(System.Type),
+                SetDelegate = delegate (object target, object value) { ((System.Windows.ComponentResourceKey)target).TypeInTargetAssembly = (System.Type)value; },
+                GetDelegate = delegate (object target) { return ((System.Windows.ComponentResourceKey)target).TypeInTargetAssembly; }
+            };
             bamlMember.Freeze();
             return bamlMember;
         }
@@ -6590,15 +7080,17 @@ namespace System.Windows.Baml2006
         private WpfKnownMember Create_BamlProperty_Binding_Converter()
         {
             Type type = typeof(System.Windows.Data.Binding);
-            var bamlMember = new WpfKnownMember( this,  // Schema Context
+            var bamlMember = new WpfKnownMember(this,  // Schema Context
                             this.GetXamlType(typeof(System.Windows.Data.Binding)), // DeclaringType
                             "Converter", // Name
                             typeof(System.Windows.Data.IValueConverter), // type
                             false, // IsReadOnly
                             false // IsAttachable
-                                     );
-            bamlMember.SetDelegate = delegate(object target, object value) { ((System.Windows.Data.Binding)target).Converter = (System.Windows.Data.IValueConverter)value; };
-            bamlMember.GetDelegate = delegate(object target) { return ((System.Windows.Data.Binding)target).Converter; };
+                                     )
+            {
+                SetDelegate = delegate (object target, object value) { ((System.Windows.Data.Binding)target).Converter = (System.Windows.Data.IValueConverter)value; },
+                GetDelegate = delegate (object target) { return ((System.Windows.Data.Binding)target).Converter; }
+            };
             bamlMember.Freeze();
             return bamlMember;
         }
@@ -6607,17 +7099,19 @@ namespace System.Windows.Baml2006
         private WpfKnownMember Create_BamlProperty_Binding_Source()
         {
             Type type = typeof(System.Windows.Data.Binding);
-            var bamlMember = new WpfKnownMember( this,  // Schema Context
+            var bamlMember = new WpfKnownMember(this,  // Schema Context
                             this.GetXamlType(typeof(System.Windows.Data.Binding)), // DeclaringType
                             "Source", // Name
                             typeof(System.Object), // type
                             false, // IsReadOnly
                             false // IsAttachable
-                                     );
-            bamlMember.HasSpecialTypeConverter = true;
-            bamlMember.TypeConverterType = typeof(System.Object);
-            bamlMember.SetDelegate = delegate(object target, object value) { ((System.Windows.Data.Binding)target).Source = (System.Object)value; };
-            bamlMember.GetDelegate = delegate(object target) { return ((System.Windows.Data.Binding)target).Source; };
+                                     )
+            {
+                HasSpecialTypeConverter = true,
+                TypeConverterType = typeof(System.Object),
+                SetDelegate = delegate (object target, object value) { ((System.Windows.Data.Binding)target).Source = (System.Object)value; },
+                GetDelegate = delegate (object target) { return ((System.Windows.Data.Binding)target).Source; }
+            };
             bamlMember.Freeze();
             return bamlMember;
         }
@@ -6626,15 +7120,17 @@ namespace System.Windows.Baml2006
         private WpfKnownMember Create_BamlProperty_Binding_RelativeSource()
         {
             Type type = typeof(System.Windows.Data.Binding);
-            var bamlMember = new WpfKnownMember( this,  // Schema Context
+            var bamlMember = new WpfKnownMember(this,  // Schema Context
                             this.GetXamlType(typeof(System.Windows.Data.Binding)), // DeclaringType
                             "RelativeSource", // Name
                             typeof(System.Windows.Data.RelativeSource), // type
                             false, // IsReadOnly
                             false // IsAttachable
-                                     );
-            bamlMember.SetDelegate = delegate(object target, object value) { ((System.Windows.Data.Binding)target).RelativeSource = (System.Windows.Data.RelativeSource)value; };
-            bamlMember.GetDelegate = delegate(object target) { return ((System.Windows.Data.Binding)target).RelativeSource; };
+                                     )
+            {
+                SetDelegate = delegate (object target, object value) { ((System.Windows.Data.Binding)target).RelativeSource = (System.Windows.Data.RelativeSource)value; },
+                GetDelegate = delegate (object target) { return ((System.Windows.Data.Binding)target).RelativeSource; }
+            };
             bamlMember.Freeze();
             return bamlMember;
         }
@@ -6643,16 +7139,18 @@ namespace System.Windows.Baml2006
         private WpfKnownMember Create_BamlProperty_Binding_Mode()
         {
             Type type = typeof(System.Windows.Data.Binding);
-            var bamlMember = new WpfKnownMember( this,  // Schema Context
+            var bamlMember = new WpfKnownMember(this,  // Schema Context
                             this.GetXamlType(typeof(System.Windows.Data.Binding)), // DeclaringType
                             "Mode", // Name
                             typeof(System.Windows.Data.BindingMode), // type
                             false, // IsReadOnly
                             false // IsAttachable
-                                     );
-            bamlMember.TypeConverterType = typeof(System.Windows.Data.BindingMode);
-            bamlMember.SetDelegate = delegate(object target, object value) { ((System.Windows.Data.Binding)target).Mode = (System.Windows.Data.BindingMode)value; };
-            bamlMember.GetDelegate = delegate(object target) { return ((System.Windows.Data.Binding)target).Mode; };
+                                     )
+            {
+                TypeConverterType = typeof(System.Windows.Data.BindingMode),
+                SetDelegate = delegate (object target, object value) { ((System.Windows.Data.Binding)target).Mode = (System.Windows.Data.BindingMode)value; },
+                GetDelegate = delegate (object target) { return ((System.Windows.Data.Binding)target).Mode; }
+            };
             bamlMember.Freeze();
             return bamlMember;
         }
@@ -6662,14 +7160,16 @@ namespace System.Windows.Baml2006
         {
             Type type = typeof(System.Windows.Media.Animation.Timeline);
             DependencyProperty  dp = System.Windows.Media.Animation.Timeline.BeginTimeProperty;
-            var bamlMember = new WpfKnownMember( this,  // Schema Context
+            var bamlMember = new WpfKnownMember(this,  // Schema Context
                             this.GetXamlType(typeof(System.Windows.Media.Animation.Timeline)), // DeclaringType
                             "BeginTime", // Name
                              dp, // DependencyProperty
                             false, // IsReadOnly
                             false // IsAttachable
-                                     );
-            bamlMember.TypeConverterType = typeof(System.ComponentModel.TimeSpanConverter);
+                                     )
+            {
+                TypeConverterType = typeof(System.ComponentModel.TimeSpanConverter)
+            };
             bamlMember.Freeze();
             return bamlMember;
         }
@@ -6678,16 +7178,18 @@ namespace System.Windows.Baml2006
         private WpfKnownMember Create_BamlProperty_Style_BasedOn()
         {
             Type type = typeof(System.Windows.Style);
-            var bamlMember = new WpfKnownMember( this,  // Schema Context
+            var bamlMember = new WpfKnownMember(this,  // Schema Context
                             this.GetXamlType(typeof(System.Windows.Style)), // DeclaringType
                             "BasedOn", // Name
                             typeof(System.Windows.Style), // type
                             false, // IsReadOnly
                             false // IsAttachable
-                                     );
-            bamlMember.Ambient = true;
-            bamlMember.SetDelegate = delegate(object target, object value) { ((System.Windows.Style)target).BasedOn = (System.Windows.Style)value; };
-            bamlMember.GetDelegate = delegate(object target) { return ((System.Windows.Style)target).BasedOn; };
+                                     )
+            {
+                Ambient = true,
+                SetDelegate = delegate (object target, object value) { ((System.Windows.Style)target).BasedOn = (System.Windows.Style)value; },
+                GetDelegate = delegate (object target) { return ((System.Windows.Style)target).BasedOn; }
+            };
             bamlMember.Freeze();
             return bamlMember;
         }
@@ -6696,16 +7198,18 @@ namespace System.Windows.Baml2006
         private WpfKnownMember Create_BamlProperty_Binding_ElementName()
         {
             Type type = typeof(System.Windows.Data.Binding);
-            var bamlMember = new WpfKnownMember( this,  // Schema Context
+            var bamlMember = new WpfKnownMember(this,  // Schema Context
                             this.GetXamlType(typeof(System.Windows.Data.Binding)), // DeclaringType
                             "ElementName", // Name
                             typeof(System.String), // type
                             false, // IsReadOnly
                             false // IsAttachable
-                                     );
-            bamlMember.TypeConverterType = typeof(System.ComponentModel.StringConverter);
-            bamlMember.SetDelegate = delegate(object target, object value) { ((System.Windows.Data.Binding)target).ElementName = (System.String)value; };
-            bamlMember.GetDelegate = delegate(object target) { return ((System.Windows.Data.Binding)target).ElementName; };
+                                     )
+            {
+                TypeConverterType = typeof(System.ComponentModel.StringConverter),
+                SetDelegate = delegate (object target, object value) { ((System.Windows.Data.Binding)target).ElementName = (System.String)value; },
+                GetDelegate = delegate (object target) { return ((System.Windows.Data.Binding)target).ElementName; }
+            };
             bamlMember.Freeze();
             return bamlMember;
         }
@@ -6714,16 +7218,18 @@ namespace System.Windows.Baml2006
         private WpfKnownMember Create_BamlProperty_Binding_UpdateSourceTrigger()
         {
             Type type = typeof(System.Windows.Data.Binding);
-            var bamlMember = new WpfKnownMember( this,  // Schema Context
+            var bamlMember = new WpfKnownMember(this,  // Schema Context
                             this.GetXamlType(typeof(System.Windows.Data.Binding)), // DeclaringType
                             "UpdateSourceTrigger", // Name
                             typeof(System.Windows.Data.UpdateSourceTrigger), // type
                             false, // IsReadOnly
                             false // IsAttachable
-                                     );
-            bamlMember.TypeConverterType = typeof(System.Windows.Data.UpdateSourceTrigger);
-            bamlMember.SetDelegate = delegate(object target, object value) { ((System.Windows.Data.Binding)target).UpdateSourceTrigger = (System.Windows.Data.UpdateSourceTrigger)value; };
-            bamlMember.GetDelegate = delegate(object target) { return ((System.Windows.Data.Binding)target).UpdateSourceTrigger; };
+                                     )
+            {
+                TypeConverterType = typeof(System.Windows.Data.UpdateSourceTrigger),
+                SetDelegate = delegate (object target, object value) { ((System.Windows.Data.Binding)target).UpdateSourceTrigger = (System.Windows.Data.UpdateSourceTrigger)value; },
+                GetDelegate = delegate (object target) { return ((System.Windows.Data.Binding)target).UpdateSourceTrigger; }
+            };
             bamlMember.Freeze();
             return bamlMember;
         }
@@ -6732,16 +7238,18 @@ namespace System.Windows.Baml2006
         private WpfKnownMember Create_BamlProperty_ResourceDictionary_DeferrableContent()
         {
             Type type = typeof(System.Windows.ResourceDictionary);
-            var bamlMember = new WpfKnownMember( this,  // Schema Context
+            var bamlMember = new WpfKnownMember(this,  // Schema Context
                             this.GetXamlType(typeof(System.Windows.ResourceDictionary)), // DeclaringType
                             "DeferrableContent", // Name
                             typeof(System.Windows.DeferrableContent), // type
                             false, // IsReadOnly
                             false // IsAttachable
-                                     );
-            bamlMember.TypeConverterType = typeof(System.Windows.DeferrableContentConverter);
-            bamlMember.SetDelegate = delegate(object target, object value) { ((System.Windows.ResourceDictionary)target).DeferrableContent = (System.Windows.DeferrableContent)value; };
-            bamlMember.GetDelegate = delegate(object target) { return ((System.Windows.ResourceDictionary)target).DeferrableContent; };
+                                     )
+            {
+                TypeConverterType = typeof(System.Windows.DeferrableContentConverter),
+                SetDelegate = delegate (object target, object value) { ((System.Windows.ResourceDictionary)target).DeferrableContent = (System.Windows.DeferrableContent)value; },
+                GetDelegate = delegate (object target) { return ((System.Windows.ResourceDictionary)target).DeferrableContent; }
+            };
             bamlMember.Freeze();
             return bamlMember;
         }
@@ -6750,16 +7258,18 @@ namespace System.Windows.Baml2006
         private WpfKnownMember Create_BamlProperty_Trigger_Value()
         {
             Type type = typeof(System.Windows.Trigger);
-            var bamlMember = new WpfKnownMember( this,  // Schema Context
+            var bamlMember = new WpfKnownMember(this,  // Schema Context
                             this.GetXamlType(typeof(System.Windows.Trigger)), // DeclaringType
                             "Value", // Name
                             typeof(System.Object), // type
                             false, // IsReadOnly
                             false // IsAttachable
-                                     );
-            bamlMember.TypeConverterType = typeof(System.Windows.Markup.SetterTriggerConditionValueConverter);
-            bamlMember.SetDelegate = delegate(object target, object value) { ((System.Windows.Trigger)target).Value = (System.Object)value; };
-            bamlMember.GetDelegate = delegate(object target) { return ((System.Windows.Trigger)target).Value; };
+                                     )
+            {
+                TypeConverterType = typeof(System.Windows.Markup.SetterTriggerConditionValueConverter),
+                SetDelegate = delegate (object target, object value) { ((System.Windows.Trigger)target).Value = (System.Object)value; },
+                GetDelegate = delegate (object target) { return ((System.Windows.Trigger)target).Value; }
+            };
             bamlMember.Freeze();
             return bamlMember;
         }
@@ -6768,17 +7278,19 @@ namespace System.Windows.Baml2006
         private WpfKnownMember Create_BamlProperty_Trigger_SourceName()
         {
             Type type = typeof(System.Windows.Trigger);
-            var bamlMember = new WpfKnownMember( this,  // Schema Context
+            var bamlMember = new WpfKnownMember(this,  // Schema Context
                             this.GetXamlType(typeof(System.Windows.Trigger)), // DeclaringType
                             "SourceName", // Name
                             typeof(System.String), // type
                             false, // IsReadOnly
                             false // IsAttachable
-                                     );
-            bamlMember.TypeConverterType = typeof(System.ComponentModel.StringConverter);
-            bamlMember.Ambient = true;
-            bamlMember.SetDelegate = delegate(object target, object value) { ((System.Windows.Trigger)target).SourceName = (System.String)value; };
-            bamlMember.GetDelegate = delegate(object target) { return ((System.Windows.Trigger)target).SourceName; };
+                                     )
+            {
+                TypeConverterType = typeof(System.ComponentModel.StringConverter),
+                Ambient = true,
+                SetDelegate = delegate (object target, object value) { ((System.Windows.Trigger)target).SourceName = (System.String)value; },
+                GetDelegate = delegate (object target) { return ((System.Windows.Trigger)target).SourceName; }
+            };
             bamlMember.Freeze();
             return bamlMember;
         }
@@ -6787,17 +7299,19 @@ namespace System.Windows.Baml2006
         private WpfKnownMember Create_BamlProperty_RelativeSource_AncestorType()
         {
             Type type = typeof(System.Windows.Data.RelativeSource);
-            var bamlMember = new WpfKnownMember( this,  // Schema Context
+            var bamlMember = new WpfKnownMember(this,  // Schema Context
                             this.GetXamlType(typeof(System.Windows.Data.RelativeSource)), // DeclaringType
                             "AncestorType", // Name
                             typeof(System.Type), // type
                             false, // IsReadOnly
                             false // IsAttachable
-                                     );
-            bamlMember.HasSpecialTypeConverter = true;
-            bamlMember.TypeConverterType = typeof(System.Type);
-            bamlMember.SetDelegate = delegate(object target, object value) { ((System.Windows.Data.RelativeSource)target).AncestorType = (System.Type)value; };
-            bamlMember.GetDelegate = delegate(object target) { return ((System.Windows.Data.RelativeSource)target).AncestorType; };
+                                     )
+            {
+                HasSpecialTypeConverter = true,
+                TypeConverterType = typeof(System.Type),
+                SetDelegate = delegate (object target, object value) { ((System.Windows.Data.RelativeSource)target).AncestorType = (System.Type)value; },
+                GetDelegate = delegate (object target) { return ((System.Windows.Data.RelativeSource)target).AncestorType; }
+            };
             bamlMember.Freeze();
             return bamlMember;
         }
@@ -6807,14 +7321,16 @@ namespace System.Windows.Baml2006
         {
             Type type = typeof(System.Windows.UIElement);
             DependencyProperty  dp = System.Windows.UIElement.UidProperty;
-            var bamlMember = new WpfKnownMember( this,  // Schema Context
+            var bamlMember = new WpfKnownMember(this,  // Schema Context
                             this.GetXamlType(typeof(System.Windows.UIElement)), // DeclaringType
                             "Uid", // Name
                              dp, // DependencyProperty
                             false, // IsReadOnly
                             false // IsAttachable
-                                     );
-            bamlMember.TypeConverterType = typeof(System.ComponentModel.StringConverter);
+                                     )
+            {
+                TypeConverterType = typeof(System.ComponentModel.StringConverter)
+            };
             bamlMember.Freeze();
             return bamlMember;
         }
@@ -6824,14 +7340,16 @@ namespace System.Windows.Baml2006
         {
             Type type = typeof(System.Windows.FrameworkContentElement);
             DependencyProperty  dp = System.Windows.FrameworkContentElement.NameProperty;
-            var bamlMember = new WpfKnownMember( this,  // Schema Context
+            var bamlMember = new WpfKnownMember(this,  // Schema Context
                             this.GetXamlType(typeof(System.Windows.FrameworkContentElement)), // DeclaringType
                             "Name", // Name
                              dp, // DependencyProperty
                             false, // IsReadOnly
                             false // IsAttachable
-                                     );
-            bamlMember.TypeConverterType = typeof(System.ComponentModel.StringConverter);
+                                     )
+            {
+                TypeConverterType = typeof(System.ComponentModel.StringConverter)
+            };
             bamlMember.Freeze();
             return bamlMember;
         }
@@ -6840,16 +7358,18 @@ namespace System.Windows.Baml2006
         private WpfKnownMember Create_BamlProperty_FrameworkContentElement_Resources()
         {
             Type type = typeof(System.Windows.FrameworkContentElement);
-            var bamlMember = new WpfKnownMember( this,  // Schema Context
+            var bamlMember = new WpfKnownMember(this,  // Schema Context
                             this.GetXamlType(typeof(System.Windows.FrameworkContentElement)), // DeclaringType
                             "Resources", // Name
                             typeof(System.Windows.ResourceDictionary), // type
                             false, // IsReadOnly
                             false // IsAttachable
-                                     );
-            bamlMember.Ambient = true;
-            bamlMember.SetDelegate = delegate(object target, object value) { ((System.Windows.FrameworkContentElement)target).Resources = (System.Windows.ResourceDictionary)value; };
-            bamlMember.GetDelegate = delegate(object target) { return ((System.Windows.FrameworkContentElement)target).Resources; };
+                                     )
+            {
+                Ambient = true,
+                SetDelegate = delegate (object target, object value) { ((System.Windows.FrameworkContentElement)target).Resources = (System.Windows.ResourceDictionary)value; },
+                GetDelegate = delegate (object target) { return ((System.Windows.FrameworkContentElement)target).Resources; }
+            };
             bamlMember.Freeze();
             return bamlMember;
         }
@@ -6858,16 +7378,18 @@ namespace System.Windows.Baml2006
         private WpfKnownMember Create_BamlProperty_Style_Resources()
         {
             Type type = typeof(System.Windows.Style);
-            var bamlMember = new WpfKnownMember( this,  // Schema Context
+            var bamlMember = new WpfKnownMember(this,  // Schema Context
                             this.GetXamlType(typeof(System.Windows.Style)), // DeclaringType
                             "Resources", // Name
                             typeof(System.Windows.ResourceDictionary), // type
                             false, // IsReadOnly
                             false // IsAttachable
-                                     );
-            bamlMember.Ambient = true;
-            bamlMember.SetDelegate = delegate(object target, object value) { ((System.Windows.Style)target).Resources = (System.Windows.ResourceDictionary)value; };
-            bamlMember.GetDelegate = delegate(object target) { return ((System.Windows.Style)target).Resources; };
+                                     )
+            {
+                Ambient = true,
+                SetDelegate = delegate (object target, object value) { ((System.Windows.Style)target).Resources = (System.Windows.ResourceDictionary)value; },
+                GetDelegate = delegate (object target) { return ((System.Windows.Style)target).Resources; }
+            };
             bamlMember.Freeze();
             return bamlMember;
         }
@@ -6876,16 +7398,18 @@ namespace System.Windows.Baml2006
         private WpfKnownMember Create_BamlProperty_FrameworkTemplate_Resources()
         {
             Type type = typeof(System.Windows.FrameworkTemplate);
-            var bamlMember = new WpfKnownMember( this,  // Schema Context
+            var bamlMember = new WpfKnownMember(this,  // Schema Context
                             this.GetXamlType(typeof(System.Windows.FrameworkTemplate)), // DeclaringType
                             "Resources", // Name
                             typeof(System.Windows.ResourceDictionary), // type
                             false, // IsReadOnly
                             false // IsAttachable
-                                     );
-            bamlMember.Ambient = true;
-            bamlMember.SetDelegate = delegate(object target, object value) { ((System.Windows.FrameworkTemplate)target).Resources = (System.Windows.ResourceDictionary)value; };
-            bamlMember.GetDelegate = delegate(object target) { return ((System.Windows.FrameworkTemplate)target).Resources; };
+                                     )
+            {
+                Ambient = true,
+                SetDelegate = delegate (object target, object value) { ((System.Windows.FrameworkTemplate)target).Resources = (System.Windows.ResourceDictionary)value; },
+                GetDelegate = delegate (object target) { return ((System.Windows.FrameworkTemplate)target).Resources; }
+            };
             bamlMember.Freeze();
             return bamlMember;
         }
@@ -6894,16 +7418,18 @@ namespace System.Windows.Baml2006
         private WpfKnownMember Create_BamlProperty_Application_Resources()
         {
             Type type = typeof(System.Windows.Application);
-            var bamlMember = new WpfKnownMember( this,  // Schema Context
+            var bamlMember = new WpfKnownMember(this,  // Schema Context
                             this.GetXamlType(typeof(System.Windows.Application)), // DeclaringType
                             "Resources", // Name
                             typeof(System.Windows.ResourceDictionary), // type
                             false, // IsReadOnly
                             false // IsAttachable
-                                     );
-            bamlMember.Ambient = true;
-            bamlMember.SetDelegate = delegate(object target, object value) { ((System.Windows.Application)target).Resources = (System.Windows.ResourceDictionary)value; };
-            bamlMember.GetDelegate = delegate(object target) { return ((System.Windows.Application)target).Resources; };
+                                     )
+            {
+                Ambient = true,
+                SetDelegate = delegate (object target, object value) { ((System.Windows.Application)target).Resources = (System.Windows.ResourceDictionary)value; },
+                GetDelegate = delegate (object target) { return ((System.Windows.Application)target).Resources; }
+            };
             bamlMember.Freeze();
             return bamlMember;
         }
@@ -6912,15 +7438,17 @@ namespace System.Windows.Baml2006
         private WpfKnownMember Create_BamlProperty_MultiBinding_Converter()
         {
             Type type = typeof(System.Windows.Data.MultiBinding);
-            var bamlMember = new WpfKnownMember( this,  // Schema Context
+            var bamlMember = new WpfKnownMember(this,  // Schema Context
                             this.GetXamlType(typeof(System.Windows.Data.MultiBinding)), // DeclaringType
                             "Converter", // Name
                             typeof(System.Windows.Data.IMultiValueConverter), // type
                             false, // IsReadOnly
                             false // IsAttachable
-                                     );
-            bamlMember.SetDelegate = delegate(object target, object value) { ((System.Windows.Data.MultiBinding)target).Converter = (System.Windows.Data.IMultiValueConverter)value; };
-            bamlMember.GetDelegate = delegate(object target) { return ((System.Windows.Data.MultiBinding)target).Converter; };
+                                     )
+            {
+                SetDelegate = delegate (object target, object value) { ((System.Windows.Data.MultiBinding)target).Converter = (System.Windows.Data.IMultiValueConverter)value; },
+                GetDelegate = delegate (object target) { return ((System.Windows.Data.MultiBinding)target).Converter; }
+            };
             bamlMember.Freeze();
             return bamlMember;
         }
@@ -6929,17 +7457,19 @@ namespace System.Windows.Baml2006
         private WpfKnownMember Create_BamlProperty_MultiBinding_ConverterParameter()
         {
             Type type = typeof(System.Windows.Data.MultiBinding);
-            var bamlMember = new WpfKnownMember( this,  // Schema Context
+            var bamlMember = new WpfKnownMember(this,  // Schema Context
                             this.GetXamlType(typeof(System.Windows.Data.MultiBinding)), // DeclaringType
                             "ConverterParameter", // Name
                             typeof(System.Object), // type
                             false, // IsReadOnly
                             false // IsAttachable
-                                     );
-            bamlMember.HasSpecialTypeConverter = true;
-            bamlMember.TypeConverterType = typeof(System.Object);
-            bamlMember.SetDelegate = delegate(object target, object value) { ((System.Windows.Data.MultiBinding)target).ConverterParameter = (System.Object)value; };
-            bamlMember.GetDelegate = delegate(object target) { return ((System.Windows.Data.MultiBinding)target).ConverterParameter; };
+                                     )
+            {
+                HasSpecialTypeConverter = true,
+                TypeConverterType = typeof(System.Object),
+                SetDelegate = delegate (object target, object value) { ((System.Windows.Data.MultiBinding)target).ConverterParameter = (System.Object)value; },
+                GetDelegate = delegate (object target) { return ((System.Windows.Data.MultiBinding)target).ConverterParameter; }
+            };
             bamlMember.Freeze();
             return bamlMember;
         }
@@ -6949,14 +7479,16 @@ namespace System.Windows.Baml2006
         {
             Type type = typeof(System.Windows.Media.LinearGradientBrush);
             DependencyProperty  dp = System.Windows.Media.LinearGradientBrush.StartPointProperty;
-            var bamlMember = new WpfKnownMember( this,  // Schema Context
+            var bamlMember = new WpfKnownMember(this,  // Schema Context
                             this.GetXamlType(typeof(System.Windows.Media.LinearGradientBrush)), // DeclaringType
                             "StartPoint", // Name
                              dp, // DependencyProperty
                             false, // IsReadOnly
                             false // IsAttachable
-                                     );
-            bamlMember.TypeConverterType = typeof(System.Windows.PointConverter);
+                                     )
+            {
+                TypeConverterType = typeof(System.Windows.PointConverter)
+            };
             bamlMember.Freeze();
             return bamlMember;
         }
@@ -6966,14 +7498,16 @@ namespace System.Windows.Baml2006
         {
             Type type = typeof(System.Windows.Media.LinearGradientBrush);
             DependencyProperty  dp = System.Windows.Media.LinearGradientBrush.EndPointProperty;
-            var bamlMember = new WpfKnownMember( this,  // Schema Context
+            var bamlMember = new WpfKnownMember(this,  // Schema Context
                             this.GetXamlType(typeof(System.Windows.Media.LinearGradientBrush)), // DeclaringType
                             "EndPoint", // Name
                              dp, // DependencyProperty
                             false, // IsReadOnly
                             false // IsAttachable
-                                     );
-            bamlMember.TypeConverterType = typeof(System.Windows.PointConverter);
+                                     )
+            {
+                TypeConverterType = typeof(System.Windows.PointConverter)
+            };
             bamlMember.Freeze();
             return bamlMember;
         }
@@ -6982,16 +7516,18 @@ namespace System.Windows.Baml2006
         private WpfKnownMember Create_BamlProperty_CommandBinding_Command()
         {
             Type type = typeof(System.Windows.Input.CommandBinding);
-            var bamlMember = new WpfKnownMember( this,  // Schema Context
+            var bamlMember = new WpfKnownMember(this,  // Schema Context
                             this.GetXamlType(typeof(System.Windows.Input.CommandBinding)), // DeclaringType
                             "Command", // Name
                             typeof(System.Windows.Input.ICommand), // type
                             false, // IsReadOnly
                             false // IsAttachable
-                                     );
-            bamlMember.TypeConverterType = typeof(System.Windows.Input.CommandConverter);
-            bamlMember.SetDelegate = delegate(object target, object value) { ((System.Windows.Input.CommandBinding)target).Command = (System.Windows.Input.ICommand)value; };
-            bamlMember.GetDelegate = delegate(object target) { return ((System.Windows.Input.CommandBinding)target).Command; };
+                                     )
+            {
+                TypeConverterType = typeof(System.Windows.Input.CommandConverter),
+                SetDelegate = delegate (object target, object value) { ((System.Windows.Input.CommandBinding)target).Command = (System.Windows.Input.ICommand)value; },
+                GetDelegate = delegate (object target) { return ((System.Windows.Input.CommandBinding)target).Command; }
+            };
             bamlMember.Freeze();
             return bamlMember;
         }
@@ -7000,17 +7536,19 @@ namespace System.Windows.Baml2006
         private WpfKnownMember Create_BamlProperty_Condition_Property()
         {
             Type type = typeof(System.Windows.Condition);
-            var bamlMember = new WpfKnownMember( this,  // Schema Context
+            var bamlMember = new WpfKnownMember(this,  // Schema Context
                             this.GetXamlType(typeof(System.Windows.Condition)), // DeclaringType
                             "Property", // Name
                             typeof(System.Windows.DependencyProperty), // type
                             false, // IsReadOnly
                             false // IsAttachable
-                                     );
-            bamlMember.TypeConverterType = typeof(System.Windows.Markup.DependencyPropertyConverter);
-            bamlMember.Ambient = true;
-            bamlMember.SetDelegate = delegate(object target, object value) { ((System.Windows.Condition)target).Property = (System.Windows.DependencyProperty)value; };
-            bamlMember.GetDelegate = delegate(object target) { return ((System.Windows.Condition)target).Property; };
+                                     )
+            {
+                TypeConverterType = typeof(System.Windows.Markup.DependencyPropertyConverter),
+                Ambient = true,
+                SetDelegate = delegate (object target, object value) { ((System.Windows.Condition)target).Property = (System.Windows.DependencyProperty)value; },
+                GetDelegate = delegate (object target) { return ((System.Windows.Condition)target).Property; }
+            };
             bamlMember.Freeze();
             return bamlMember;
         }
@@ -7019,16 +7557,18 @@ namespace System.Windows.Baml2006
         private WpfKnownMember Create_BamlProperty_Condition_Value()
         {
             Type type = typeof(System.Windows.Condition);
-            var bamlMember = new WpfKnownMember( this,  // Schema Context
+            var bamlMember = new WpfKnownMember(this,  // Schema Context
                             this.GetXamlType(typeof(System.Windows.Condition)), // DeclaringType
                             "Value", // Name
                             typeof(System.Object), // type
                             false, // IsReadOnly
                             false // IsAttachable
-                                     );
-            bamlMember.TypeConverterType = typeof(System.Windows.Markup.SetterTriggerConditionValueConverter);
-            bamlMember.SetDelegate = delegate(object target, object value) { ((System.Windows.Condition)target).Value = (System.Object)value; };
-            bamlMember.GetDelegate = delegate(object target) { return ((System.Windows.Condition)target).Value; };
+                                     )
+            {
+                TypeConverterType = typeof(System.Windows.Markup.SetterTriggerConditionValueConverter),
+                SetDelegate = delegate (object target, object value) { ((System.Windows.Condition)target).Value = (System.Object)value; },
+                GetDelegate = delegate (object target) { return ((System.Windows.Condition)target).Value; }
+            };
             bamlMember.Freeze();
             return bamlMember;
         }
@@ -7037,15 +7577,17 @@ namespace System.Windows.Baml2006
         private WpfKnownMember Create_BamlProperty_Condition_Binding()
         {
             Type type = typeof(System.Windows.Condition);
-            var bamlMember = new WpfKnownMember( this,  // Schema Context
+            var bamlMember = new WpfKnownMember(this,  // Schema Context
                             this.GetXamlType(typeof(System.Windows.Condition)), // DeclaringType
                             "Binding", // Name
                             typeof(System.Windows.Data.BindingBase), // type
                             false, // IsReadOnly
                             false // IsAttachable
-                                     );
-            bamlMember.SetDelegate = delegate(object target, object value) { ((System.Windows.Condition)target).Binding = (System.Windows.Data.BindingBase)value; };
-            bamlMember.GetDelegate = delegate(object target) { return ((System.Windows.Condition)target).Binding; };
+                                     )
+            {
+                SetDelegate = delegate (object target, object value) { ((System.Windows.Condition)target).Binding = (System.Windows.Data.BindingBase)value; },
+                GetDelegate = delegate (object target) { return ((System.Windows.Condition)target).Binding; }
+            };
             bamlMember.Freeze();
             return bamlMember;
         }
@@ -7054,17 +7596,19 @@ namespace System.Windows.Baml2006
         private WpfKnownMember Create_BamlProperty_BindingBase_FallbackValue()
         {
             Type type = typeof(System.Windows.Data.BindingBase);
-            var bamlMember = new WpfKnownMember( this,  // Schema Context
+            var bamlMember = new WpfKnownMember(this,  // Schema Context
                             this.GetXamlType(typeof(System.Windows.Data.BindingBase)), // DeclaringType
                             "FallbackValue", // Name
                             typeof(System.Object), // type
                             false, // IsReadOnly
                             false // IsAttachable
-                                     );
-            bamlMember.HasSpecialTypeConverter = true;
-            bamlMember.TypeConverterType = typeof(System.Object);
-            bamlMember.SetDelegate = delegate(object target, object value) { ((System.Windows.Data.BindingBase)target).FallbackValue = (System.Object)value; };
-            bamlMember.GetDelegate = delegate(object target) { return ((System.Windows.Data.BindingBase)target).FallbackValue; };
+                                     )
+            {
+                HasSpecialTypeConverter = true,
+                TypeConverterType = typeof(System.Object),
+                SetDelegate = delegate (object target, object value) { ((System.Windows.Data.BindingBase)target).FallbackValue = (System.Object)value; },
+                GetDelegate = delegate (object target) { return ((System.Windows.Data.BindingBase)target).FallbackValue; }
+            };
             bamlMember.Freeze();
             return bamlMember;
         }
@@ -7074,14 +7618,16 @@ namespace System.Windows.Baml2006
         {
             Type type = typeof(System.Windows.Window);
             DependencyProperty  dp = System.Windows.Window.ResizeModeProperty;
-            var bamlMember = new WpfKnownMember( this,  // Schema Context
+            var bamlMember = new WpfKnownMember(this,  // Schema Context
                             this.GetXamlType(typeof(System.Windows.Window)), // DeclaringType
                             "ResizeMode", // Name
                              dp, // DependencyProperty
                             false, // IsReadOnly
                             false // IsAttachable
-                                     );
-            bamlMember.TypeConverterType = typeof(System.Windows.ResizeMode);
+                                     )
+            {
+                TypeConverterType = typeof(System.Windows.ResizeMode)
+            };
             bamlMember.Freeze();
             return bamlMember;
         }
@@ -7091,14 +7637,16 @@ namespace System.Windows.Baml2006
         {
             Type type = typeof(System.Windows.Window);
             DependencyProperty  dp = System.Windows.Window.WindowStateProperty;
-            var bamlMember = new WpfKnownMember( this,  // Schema Context
+            var bamlMember = new WpfKnownMember(this,  // Schema Context
                             this.GetXamlType(typeof(System.Windows.Window)), // DeclaringType
                             "WindowState", // Name
                              dp, // DependencyProperty
                             false, // IsReadOnly
                             false // IsAttachable
-                                     );
-            bamlMember.TypeConverterType = typeof(System.Windows.WindowState);
+                                     )
+            {
+                TypeConverterType = typeof(System.Windows.WindowState)
+            };
             bamlMember.Freeze();
             return bamlMember;
         }
@@ -7108,14 +7656,16 @@ namespace System.Windows.Baml2006
         {
             Type type = typeof(System.Windows.Window);
             DependencyProperty  dp = System.Windows.Window.TitleProperty;
-            var bamlMember = new WpfKnownMember( this,  // Schema Context
+            var bamlMember = new WpfKnownMember(this,  // Schema Context
                             this.GetXamlType(typeof(System.Windows.Window)), // DeclaringType
                             "Title", // Name
                              dp, // DependencyProperty
                             false, // IsReadOnly
                             false // IsAttachable
-                                     );
-            bamlMember.TypeConverterType = typeof(System.ComponentModel.StringConverter);
+                                     )
+            {
+                TypeConverterType = typeof(System.ComponentModel.StringConverter)
+            };
             bamlMember.Freeze();
             return bamlMember;
         }
@@ -7125,14 +7675,16 @@ namespace System.Windows.Baml2006
         {
             Type type = typeof(System.Windows.Shapes.Shape);
             DependencyProperty  dp = System.Windows.Shapes.Shape.StrokeLineJoinProperty;
-            var bamlMember = new WpfKnownMember( this,  // Schema Context
+            var bamlMember = new WpfKnownMember(this,  // Schema Context
                             this.GetXamlType(typeof(System.Windows.Shapes.Shape)), // DeclaringType
                             "StrokeLineJoin", // Name
                              dp, // DependencyProperty
                             false, // IsReadOnly
                             false // IsAttachable
-                                     );
-            bamlMember.TypeConverterType = typeof(System.Windows.Media.PenLineJoin);
+                                     )
+            {
+                TypeConverterType = typeof(System.Windows.Media.PenLineJoin)
+            };
             bamlMember.Freeze();
             return bamlMember;
         }
@@ -7142,14 +7694,16 @@ namespace System.Windows.Baml2006
         {
             Type type = typeof(System.Windows.Shapes.Shape);
             DependencyProperty  dp = System.Windows.Shapes.Shape.StrokeStartLineCapProperty;
-            var bamlMember = new WpfKnownMember( this,  // Schema Context
+            var bamlMember = new WpfKnownMember(this,  // Schema Context
                             this.GetXamlType(typeof(System.Windows.Shapes.Shape)), // DeclaringType
                             "StrokeStartLineCap", // Name
                              dp, // DependencyProperty
                             false, // IsReadOnly
                             false // IsAttachable
-                                     );
-            bamlMember.TypeConverterType = typeof(System.Windows.Media.PenLineCap);
+                                     )
+            {
+                TypeConverterType = typeof(System.Windows.Media.PenLineCap)
+            };
             bamlMember.Freeze();
             return bamlMember;
         }
@@ -7159,14 +7713,16 @@ namespace System.Windows.Baml2006
         {
             Type type = typeof(System.Windows.Shapes.Shape);
             DependencyProperty  dp = System.Windows.Shapes.Shape.StrokeEndLineCapProperty;
-            var bamlMember = new WpfKnownMember( this,  // Schema Context
+            var bamlMember = new WpfKnownMember(this,  // Schema Context
                             this.GetXamlType(typeof(System.Windows.Shapes.Shape)), // DeclaringType
                             "StrokeEndLineCap", // Name
                              dp, // DependencyProperty
                             false, // IsReadOnly
                             false // IsAttachable
-                                     );
-            bamlMember.TypeConverterType = typeof(System.Windows.Media.PenLineCap);
+                                     )
+            {
+                TypeConverterType = typeof(System.Windows.Media.PenLineCap)
+            };
             bamlMember.Freeze();
             return bamlMember;
         }
@@ -7176,14 +7732,16 @@ namespace System.Windows.Baml2006
         {
             Type type = typeof(System.Windows.Media.TileBrush);
             DependencyProperty  dp = System.Windows.Media.TileBrush.TileModeProperty;
-            var bamlMember = new WpfKnownMember( this,  // Schema Context
+            var bamlMember = new WpfKnownMember(this,  // Schema Context
                             this.GetXamlType(typeof(System.Windows.Media.TileBrush)), // DeclaringType
                             "TileMode", // Name
                              dp, // DependencyProperty
                             false, // IsReadOnly
                             false // IsAttachable
-                                     );
-            bamlMember.TypeConverterType = typeof(System.Windows.Media.TileMode);
+                                     )
+            {
+                TypeConverterType = typeof(System.Windows.Media.TileMode)
+            };
             bamlMember.Freeze();
             return bamlMember;
         }
@@ -7193,14 +7751,16 @@ namespace System.Windows.Baml2006
         {
             Type type = typeof(System.Windows.Media.TileBrush);
             DependencyProperty  dp = System.Windows.Media.TileBrush.ViewboxUnitsProperty;
-            var bamlMember = new WpfKnownMember( this,  // Schema Context
+            var bamlMember = new WpfKnownMember(this,  // Schema Context
                             this.GetXamlType(typeof(System.Windows.Media.TileBrush)), // DeclaringType
                             "ViewboxUnits", // Name
                              dp, // DependencyProperty
                             false, // IsReadOnly
                             false // IsAttachable
-                                     );
-            bamlMember.TypeConverterType = typeof(System.Windows.Media.BrushMappingMode);
+                                     )
+            {
+                TypeConverterType = typeof(System.Windows.Media.BrushMappingMode)
+            };
             bamlMember.Freeze();
             return bamlMember;
         }
@@ -7210,14 +7770,16 @@ namespace System.Windows.Baml2006
         {
             Type type = typeof(System.Windows.Media.TileBrush);
             DependencyProperty  dp = System.Windows.Media.TileBrush.ViewportUnitsProperty;
-            var bamlMember = new WpfKnownMember( this,  // Schema Context
+            var bamlMember = new WpfKnownMember(this,  // Schema Context
                             this.GetXamlType(typeof(System.Windows.Media.TileBrush)), // DeclaringType
                             "ViewportUnits", // Name
                              dp, // DependencyProperty
                             false, // IsReadOnly
                             false // IsAttachable
-                                     );
-            bamlMember.TypeConverterType = typeof(System.Windows.Media.BrushMappingMode);
+                                     )
+            {
+                TypeConverterType = typeof(System.Windows.Media.BrushMappingMode)
+            };
             bamlMember.Freeze();
             return bamlMember;
         }
@@ -7243,14 +7805,16 @@ namespace System.Windows.Baml2006
         {
             Type type = typeof(System.Windows.Controls.TextBox);
             DependencyProperty  dp = System.Windows.Controls.TextBox.TextWrappingProperty;
-            var bamlMember = new WpfKnownMember( this,  // Schema Context
+            var bamlMember = new WpfKnownMember(this,  // Schema Context
                             this.GetXamlType(typeof(System.Windows.Controls.TextBox)), // DeclaringType
                             "TextWrapping", // Name
                              dp, // DependencyProperty
                             false, // IsReadOnly
                             false // IsAttachable
-                                     );
-            bamlMember.TypeConverterType = typeof(System.Windows.TextWrapping);
+                                     )
+            {
+                TypeConverterType = typeof(System.Windows.TextWrapping)
+            };
             bamlMember.Freeze();
             return bamlMember;
         }
@@ -7260,14 +7824,16 @@ namespace System.Windows.Baml2006
         {
             Type type = typeof(System.Windows.Controls.StackPanel);
             DependencyProperty  dp = System.Windows.Controls.StackPanel.OrientationProperty;
-            var bamlMember = new WpfKnownMember( this,  // Schema Context
+            var bamlMember = new WpfKnownMember(this,  // Schema Context
                             this.GetXamlType(typeof(System.Windows.Controls.StackPanel)), // DeclaringType
                             "Orientation", // Name
                              dp, // DependencyProperty
                             false, // IsReadOnly
                             false // IsAttachable
-                                     );
-            bamlMember.TypeConverterType = typeof(System.Windows.Controls.Orientation);
+                                     )
+            {
+                TypeConverterType = typeof(System.Windows.Controls.Orientation)
+            };
             bamlMember.Freeze();
             return bamlMember;
         }
@@ -7276,15 +7842,17 @@ namespace System.Windows.Baml2006
         private WpfKnownMember Create_BamlProperty_Track_Thumb()
         {
             Type type = typeof(System.Windows.Controls.Primitives.Track);
-            var bamlMember = new WpfKnownMember( this,  // Schema Context
+            var bamlMember = new WpfKnownMember(this,  // Schema Context
                             this.GetXamlType(typeof(System.Windows.Controls.Primitives.Track)), // DeclaringType
                             "Thumb", // Name
                             typeof(System.Windows.Controls.Primitives.Thumb), // type
                             false, // IsReadOnly
                             false // IsAttachable
-                                     );
-            bamlMember.SetDelegate = delegate(object target, object value) { ((System.Windows.Controls.Primitives.Track)target).Thumb = (System.Windows.Controls.Primitives.Thumb)value; };
-            bamlMember.GetDelegate = delegate(object target) { return ((System.Windows.Controls.Primitives.Track)target).Thumb; };
+                                     )
+            {
+                SetDelegate = delegate (object target, object value) { ((System.Windows.Controls.Primitives.Track)target).Thumb = (System.Windows.Controls.Primitives.Thumb)value; },
+                GetDelegate = delegate (object target) { return ((System.Windows.Controls.Primitives.Track)target).Thumb; }
+            };
             bamlMember.Freeze();
             return bamlMember;
         }
@@ -7293,15 +7861,17 @@ namespace System.Windows.Baml2006
         private WpfKnownMember Create_BamlProperty_Track_IncreaseRepeatButton()
         {
             Type type = typeof(System.Windows.Controls.Primitives.Track);
-            var bamlMember = new WpfKnownMember( this,  // Schema Context
+            var bamlMember = new WpfKnownMember(this,  // Schema Context
                             this.GetXamlType(typeof(System.Windows.Controls.Primitives.Track)), // DeclaringType
                             "IncreaseRepeatButton", // Name
                             typeof(System.Windows.Controls.Primitives.RepeatButton), // type
                             false, // IsReadOnly
                             false // IsAttachable
-                                     );
-            bamlMember.SetDelegate = delegate(object target, object value) { ((System.Windows.Controls.Primitives.Track)target).IncreaseRepeatButton = (System.Windows.Controls.Primitives.RepeatButton)value; };
-            bamlMember.GetDelegate = delegate(object target) { return ((System.Windows.Controls.Primitives.Track)target).IncreaseRepeatButton; };
+                                     )
+            {
+                SetDelegate = delegate (object target, object value) { ((System.Windows.Controls.Primitives.Track)target).IncreaseRepeatButton = (System.Windows.Controls.Primitives.RepeatButton)value; },
+                GetDelegate = delegate (object target) { return ((System.Windows.Controls.Primitives.Track)target).IncreaseRepeatButton; }
+            };
             bamlMember.Freeze();
             return bamlMember;
         }
@@ -7310,15 +7880,17 @@ namespace System.Windows.Baml2006
         private WpfKnownMember Create_BamlProperty_Track_DecreaseRepeatButton()
         {
             Type type = typeof(System.Windows.Controls.Primitives.Track);
-            var bamlMember = new WpfKnownMember( this,  // Schema Context
+            var bamlMember = new WpfKnownMember(this,  // Schema Context
                             this.GetXamlType(typeof(System.Windows.Controls.Primitives.Track)), // DeclaringType
                             "DecreaseRepeatButton", // Name
                             typeof(System.Windows.Controls.Primitives.RepeatButton), // type
                             false, // IsReadOnly
                             false // IsAttachable
-                                     );
-            bamlMember.SetDelegate = delegate(object target, object value) { ((System.Windows.Controls.Primitives.Track)target).DecreaseRepeatButton = (System.Windows.Controls.Primitives.RepeatButton)value; };
-            bamlMember.GetDelegate = delegate(object target) { return ((System.Windows.Controls.Primitives.Track)target).DecreaseRepeatButton; };
+                                     )
+            {
+                SetDelegate = delegate (object target, object value) { ((System.Windows.Controls.Primitives.Track)target).DecreaseRepeatButton = (System.Windows.Controls.Primitives.RepeatButton)value; },
+                GetDelegate = delegate (object target) { return ((System.Windows.Controls.Primitives.Track)target).DecreaseRepeatButton; }
+            };
             bamlMember.Freeze();
             return bamlMember;
         }
@@ -7327,16 +7899,18 @@ namespace System.Windows.Baml2006
         private WpfKnownMember Create_BamlProperty_EventTrigger_RoutedEvent()
         {
             Type type = typeof(System.Windows.EventTrigger);
-            var bamlMember = new WpfKnownMember( this,  // Schema Context
+            var bamlMember = new WpfKnownMember(this,  // Schema Context
                             this.GetXamlType(typeof(System.Windows.EventTrigger)), // DeclaringType
                             "RoutedEvent", // Name
                             typeof(System.Windows.RoutedEvent), // type
                             false, // IsReadOnly
                             false // IsAttachable
-                                     );
-            bamlMember.TypeConverterType = typeof(System.Windows.Markup.RoutedEventConverter);
-            bamlMember.SetDelegate = delegate(object target, object value) { ((System.Windows.EventTrigger)target).RoutedEvent = (System.Windows.RoutedEvent)value; };
-            bamlMember.GetDelegate = delegate(object target) { return ((System.Windows.EventTrigger)target).RoutedEvent; };
+                                     )
+            {
+                TypeConverterType = typeof(System.Windows.Markup.RoutedEventConverter),
+                SetDelegate = delegate (object target, object value) { ((System.Windows.EventTrigger)target).RoutedEvent = (System.Windows.RoutedEvent)value; },
+                GetDelegate = delegate (object target) { return ((System.Windows.EventTrigger)target).RoutedEvent; }
+            };
             bamlMember.Freeze();
             return bamlMember;
         }
@@ -7346,14 +7920,16 @@ namespace System.Windows.Baml2006
         {
             Type type = typeof(System.Windows.Input.InputBinding);
             DependencyProperty  dp = System.Windows.Input.InputBinding.CommandProperty;
-            var bamlMember = new WpfKnownMember( this,  // Schema Context
+            var bamlMember = new WpfKnownMember(this,  // Schema Context
                             this.GetXamlType(typeof(System.Windows.Input.InputBinding)), // DeclaringType
                             "Command", // Name
                              dp, // DependencyProperty
                             false, // IsReadOnly
                             false // IsAttachable
-                                     );
-            bamlMember.TypeConverterType = typeof(System.Windows.Input.CommandConverter);
+                                     )
+            {
+                TypeConverterType = typeof(System.Windows.Input.CommandConverter)
+            };
             bamlMember.Freeze();
             return bamlMember;
         }
@@ -7362,16 +7938,18 @@ namespace System.Windows.Baml2006
         private WpfKnownMember Create_BamlProperty_KeyBinding_Gesture()
         {
             Type type = typeof(System.Windows.Input.KeyBinding);
-            var bamlMember = new WpfKnownMember( this,  // Schema Context
+            var bamlMember = new WpfKnownMember(this,  // Schema Context
                             this.GetXamlType(typeof(System.Windows.Input.KeyBinding)), // DeclaringType
                             "Gesture", // Name
                             typeof(System.Windows.Input.InputGesture), // type
                             false, // IsReadOnly
                             false // IsAttachable
-                                     );
-            bamlMember.TypeConverterType = typeof(System.Windows.Input.KeyGestureConverter);
-            bamlMember.SetDelegate = delegate(object target, object value) { ((System.Windows.Input.KeyBinding)target).Gesture = (System.Windows.Input.InputGesture)value; };
-            bamlMember.GetDelegate = delegate(object target) { return ((System.Windows.Input.KeyBinding)target).Gesture; };
+                                     )
+            {
+                TypeConverterType = typeof(System.Windows.Input.KeyGestureConverter),
+                SetDelegate = delegate (object target, object value) { ((System.Windows.Input.KeyBinding)target).Gesture = (System.Windows.Input.InputGesture)value; },
+                GetDelegate = delegate (object target) { return ((System.Windows.Input.KeyBinding)target).Gesture; }
+            };
             bamlMember.Freeze();
             return bamlMember;
         }
@@ -7381,14 +7959,16 @@ namespace System.Windows.Baml2006
         {
             Type type = typeof(System.Windows.Controls.TextBox);
             DependencyProperty  dp = System.Windows.Controls.TextBox.TextAlignmentProperty;
-            var bamlMember = new WpfKnownMember( this,  // Schema Context
+            var bamlMember = new WpfKnownMember(this,  // Schema Context
                             this.GetXamlType(typeof(System.Windows.Controls.TextBox)), // DeclaringType
                             "TextAlignment", // Name
                              dp, // DependencyProperty
                             false, // IsReadOnly
                             false // IsAttachable
-                                     );
-            bamlMember.TypeConverterType = typeof(System.Windows.TextAlignment);
+                                     )
+            {
+                TypeConverterType = typeof(System.Windows.TextAlignment)
+            };
             bamlMember.Freeze();
             return bamlMember;
         }
@@ -7398,14 +7978,16 @@ namespace System.Windows.Baml2006
         {
             Type type = typeof(System.Windows.Controls.TextBlock);
             DependencyProperty  dp = System.Windows.Controls.TextBlock.TextAlignmentProperty;
-            var bamlMember = new WpfKnownMember( this,  // Schema Context
+            var bamlMember = new WpfKnownMember(this,  // Schema Context
                             this.GetXamlType(typeof(System.Windows.Controls.TextBlock)), // DeclaringType
                             "TextAlignment", // Name
                              dp, // DependencyProperty
                             false, // IsReadOnly
                             false // IsAttachable
-                                     );
-            bamlMember.TypeConverterType = typeof(System.Windows.TextAlignment);
+                                     )
+            {
+                TypeConverterType = typeof(System.Windows.TextAlignment)
+            };
             bamlMember.Freeze();
             return bamlMember;
         }
@@ -7415,14 +7997,16 @@ namespace System.Windows.Baml2006
         {
             Type type = typeof(System.Windows.Navigation.JournalEntryUnifiedViewConverter);
             DependencyProperty  dp = System.Windows.Navigation.JournalEntryUnifiedViewConverter.JournalEntryPositionProperty;
-            var bamlMember = new WpfKnownMember( this,  // Schema Context
+            var bamlMember = new WpfKnownMember(this,  // Schema Context
                             this.GetXamlType(typeof(System.Windows.Navigation.JournalEntryUnifiedViewConverter)), // DeclaringType
                             "JournalEntryPosition", // Name
                              dp, // DependencyProperty
                             false, // IsReadOnly
                             true // IsAttachable
-                                     );
-            bamlMember.TypeConverterType = typeof(System.Windows.Navigation.JournalEntryPosition);
+                                     )
+            {
+                TypeConverterType = typeof(System.Windows.Navigation.JournalEntryPosition)
+            };
             bamlMember.Freeze();
             return bamlMember;
         }
@@ -7432,14 +8016,16 @@ namespace System.Windows.Baml2006
         {
             Type type = typeof(System.Windows.Media.GradientBrush);
             DependencyProperty  dp = System.Windows.Media.GradientBrush.MappingModeProperty;
-            var bamlMember = new WpfKnownMember( this,  // Schema Context
+            var bamlMember = new WpfKnownMember(this,  // Schema Context
                             this.GetXamlType(typeof(System.Windows.Media.GradientBrush)), // DeclaringType
                             "MappingMode", // Name
                              dp, // DependencyProperty
                             false, // IsReadOnly
                             false // IsAttachable
-                                     );
-            bamlMember.TypeConverterType = typeof(System.Windows.Media.BrushMappingMode);
+                                     )
+            {
+                TypeConverterType = typeof(System.Windows.Media.BrushMappingMode)
+            };
             bamlMember.Freeze();
             return bamlMember;
         }
@@ -7449,15 +8035,17 @@ namespace System.Windows.Baml2006
         {
             Type type = typeof(System.Windows.Controls.MenuItem);
             DependencyProperty  dp = System.Windows.Controls.MenuItem.RoleProperty;
-            var bamlMember = new WpfKnownMember( this,  // Schema Context
+            var bamlMember = new WpfKnownMember(this,  // Schema Context
                             this.GetXamlType(typeof(System.Windows.Controls.MenuItem)), // DeclaringType
                             "Role", // Name
                              dp, // DependencyProperty
                             true, // IsReadOnly
                             false // IsAttachable
-                                     );
-            bamlMember.TypeConverterType = typeof(System.Windows.Controls.MenuItemRole);
-            bamlMember.IsWritePrivate = true;
+                                     )
+            {
+                TypeConverterType = typeof(System.Windows.Controls.MenuItemRole),
+                IsWritePrivate = true
+            };
             bamlMember.Freeze();
             return bamlMember;
         }
@@ -7466,17 +8054,19 @@ namespace System.Windows.Baml2006
         private WpfKnownMember Create_BamlProperty_DataTrigger_Value()
         {
             Type type = typeof(System.Windows.DataTrigger);
-            var bamlMember = new WpfKnownMember( this,  // Schema Context
+            var bamlMember = new WpfKnownMember(this,  // Schema Context
                             this.GetXamlType(typeof(System.Windows.DataTrigger)), // DeclaringType
                             "Value", // Name
                             typeof(System.Object), // type
                             false, // IsReadOnly
                             false // IsAttachable
-                                     );
-            bamlMember.HasSpecialTypeConverter = true;
-            bamlMember.TypeConverterType = typeof(System.Object);
-            bamlMember.SetDelegate = delegate(object target, object value) { ((System.Windows.DataTrigger)target).Value = (System.Object)value; };
-            bamlMember.GetDelegate = delegate(object target) { return ((System.Windows.DataTrigger)target).Value; };
+                                     )
+            {
+                HasSpecialTypeConverter = true,
+                TypeConverterType = typeof(System.Object),
+                SetDelegate = delegate (object target, object value) { ((System.Windows.DataTrigger)target).Value = (System.Object)value; },
+                GetDelegate = delegate (object target) { return ((System.Windows.DataTrigger)target).Value; }
+            };
             bamlMember.Freeze();
             return bamlMember;
         }
@@ -7485,15 +8075,17 @@ namespace System.Windows.Baml2006
         private WpfKnownMember Create_BamlProperty_DataTrigger_Binding()
         {
             Type type = typeof(System.Windows.DataTrigger);
-            var bamlMember = new WpfKnownMember( this,  // Schema Context
+            var bamlMember = new WpfKnownMember(this,  // Schema Context
                             this.GetXamlType(typeof(System.Windows.DataTrigger)), // DeclaringType
                             "Binding", // Name
                             typeof(System.Windows.Data.BindingBase), // type
                             false, // IsReadOnly
                             false // IsAttachable
-                                     );
-            bamlMember.SetDelegate = delegate(object target, object value) { ((System.Windows.DataTrigger)target).Binding = (System.Windows.Data.BindingBase)value; };
-            bamlMember.GetDelegate = delegate(object target) { return ((System.Windows.DataTrigger)target).Binding; };
+                                     )
+            {
+                SetDelegate = delegate (object target, object value) { ((System.Windows.DataTrigger)target).Binding = (System.Windows.Data.BindingBase)value; },
+                GetDelegate = delegate (object target) { return ((System.Windows.DataTrigger)target).Binding; }
+            };
             bamlMember.Freeze();
             return bamlMember;
         }
@@ -7502,17 +8094,19 @@ namespace System.Windows.Baml2006
         private WpfKnownMember Create_BamlProperty_Setter_Property()
         {
             Type type = typeof(System.Windows.Setter);
-            var bamlMember = new WpfKnownMember( this,  // Schema Context
+            var bamlMember = new WpfKnownMember(this,  // Schema Context
                             this.GetXamlType(typeof(System.Windows.Setter)), // DeclaringType
                             "Property", // Name
                             typeof(System.Windows.DependencyProperty), // type
                             false, // IsReadOnly
                             false // IsAttachable
-                                     );
-            bamlMember.TypeConverterType = typeof(System.Windows.Markup.DependencyPropertyConverter);
-            bamlMember.Ambient = true;
-            bamlMember.SetDelegate = delegate(object target, object value) { ((System.Windows.Setter)target).Property = (System.Windows.DependencyProperty)value; };
-            bamlMember.GetDelegate = delegate(object target) { return ((System.Windows.Setter)target).Property; };
+                                     )
+            {
+                TypeConverterType = typeof(System.Windows.Markup.DependencyPropertyConverter),
+                Ambient = true,
+                SetDelegate = delegate (object target, object value) { ((System.Windows.Setter)target).Property = (System.Windows.DependencyProperty)value; },
+                GetDelegate = delegate (object target) { return ((System.Windows.Setter)target).Property; }
+            };
             bamlMember.Freeze();
             return bamlMember;
         }
@@ -7521,16 +8115,18 @@ namespace System.Windows.Baml2006
         private WpfKnownMember Create_BamlProperty_ResourceDictionary_Source()
         {
             Type type = typeof(System.Windows.ResourceDictionary);
-            var bamlMember = new WpfKnownMember( this,  // Schema Context
+            var bamlMember = new WpfKnownMember(this,  // Schema Context
                             this.GetXamlType(typeof(System.Windows.ResourceDictionary)), // DeclaringType
                             "Source", // Name
                             typeof(System.Uri), // type
                             false, // IsReadOnly
                             false // IsAttachable
-                                     );
-            bamlMember.TypeConverterType = typeof(System.UriTypeConverter);
-            bamlMember.SetDelegate = delegate(object target, object value) { ((System.Windows.ResourceDictionary)target).Source = (System.Uri)value; };
-            bamlMember.GetDelegate = delegate(object target) { return ((System.Windows.ResourceDictionary)target).Source; };
+                                     )
+            {
+                TypeConverterType = typeof(System.UriTypeConverter),
+                SetDelegate = delegate (object target, object value) { ((System.Windows.ResourceDictionary)target).Source = (System.Uri)value; },
+                GetDelegate = delegate (object target) { return ((System.Windows.ResourceDictionary)target).Source; }
+            };
             bamlMember.Freeze();
             return bamlMember;
         }
@@ -7539,16 +8135,18 @@ namespace System.Windows.Baml2006
         private WpfKnownMember Create_BamlProperty_BeginStoryboard_Name()
         {
             Type type = typeof(System.Windows.Media.Animation.BeginStoryboard);
-            var bamlMember = new WpfKnownMember( this,  // Schema Context
+            var bamlMember = new WpfKnownMember(this,  // Schema Context
                             this.GetXamlType(typeof(System.Windows.Media.Animation.BeginStoryboard)), // DeclaringType
                             "Name", // Name
                             typeof(System.String), // type
                             false, // IsReadOnly
                             false // IsAttachable
-                                     );
-            bamlMember.TypeConverterType = typeof(System.ComponentModel.StringConverter);
-            bamlMember.SetDelegate = delegate(object target, object value) { ((System.Windows.Media.Animation.BeginStoryboard)target).Name = (System.String)value; };
-            bamlMember.GetDelegate = delegate(object target) { return ((System.Windows.Media.Animation.BeginStoryboard)target).Name; };
+                                     )
+            {
+                TypeConverterType = typeof(System.ComponentModel.StringConverter),
+                SetDelegate = delegate (object target, object value) { ((System.Windows.Media.Animation.BeginStoryboard)target).Name = (System.String)value; },
+                GetDelegate = delegate (object target) { return ((System.Windows.Media.Animation.BeginStoryboard)target).Name; }
+            };
             bamlMember.Freeze();
             return bamlMember;
         }
@@ -7557,15 +8155,17 @@ namespace System.Windows.Baml2006
         private WpfKnownMember Create_BamlProperty_ResourceDictionary_MergedDictionaries()
         {
             Type type = typeof(System.Windows.ResourceDictionary);
-            var bamlMember = new WpfKnownMember( this,  // Schema Context
+            var bamlMember = new WpfKnownMember(this,  // Schema Context
                             this.GetXamlType(typeof(System.Windows.ResourceDictionary)), // DeclaringType
                             "MergedDictionaries", // Name
                             typeof(System.Collections.ObjectModel.Collection<System.Windows.ResourceDictionary>), // type
                             true, // IsReadOnly
                             false // IsAttachable
-                                     );
-            bamlMember.GetDelegate = delegate(object target) { return ((System.Windows.ResourceDictionary)target).MergedDictionaries; };
-            bamlMember.IsWritePrivate = true;
+                                     )
+            {
+                GetDelegate = delegate (object target) { return ((System.Windows.ResourceDictionary)target).MergedDictionaries; },
+                IsWritePrivate = true
+            };
             bamlMember.Freeze();
             return bamlMember;
         }
@@ -7575,14 +8175,16 @@ namespace System.Windows.Baml2006
         {
             Type type = typeof(System.Windows.Input.KeyboardNavigation);
             DependencyProperty  dp = System.Windows.Input.KeyboardNavigation.DirectionalNavigationProperty;
-            var bamlMember = new WpfKnownMember( this,  // Schema Context
+            var bamlMember = new WpfKnownMember(this,  // Schema Context
                             this.GetXamlType(typeof(System.Windows.Input.KeyboardNavigation)), // DeclaringType
                             "DirectionalNavigation", // Name
                              dp, // DependencyProperty
                             false, // IsReadOnly
                             true // IsAttachable
-                                     );
-            bamlMember.TypeConverterType = typeof(System.Windows.Input.KeyboardNavigationMode);
+                                     )
+            {
+                TypeConverterType = typeof(System.Windows.Input.KeyboardNavigationMode)
+            };
             bamlMember.Freeze();
             return bamlMember;
         }
@@ -7592,14 +8194,16 @@ namespace System.Windows.Baml2006
         {
             Type type = typeof(System.Windows.Input.KeyboardNavigation);
             DependencyProperty  dp = System.Windows.Input.KeyboardNavigation.TabNavigationProperty;
-            var bamlMember = new WpfKnownMember( this,  // Schema Context
+            var bamlMember = new WpfKnownMember(this,  // Schema Context
                             this.GetXamlType(typeof(System.Windows.Input.KeyboardNavigation)), // DeclaringType
                             "TabNavigation", // Name
                              dp, // DependencyProperty
                             false, // IsReadOnly
                             true // IsAttachable
-                                     );
-            bamlMember.TypeConverterType = typeof(System.Windows.Input.KeyboardNavigationMode);
+                                     )
+            {
+                TypeConverterType = typeof(System.Windows.Input.KeyboardNavigationMode)
+            };
             bamlMember.Freeze();
             return bamlMember;
         }
@@ -7609,14 +8213,16 @@ namespace System.Windows.Baml2006
         {
             Type type = typeof(System.Windows.Controls.Primitives.ScrollBar);
             DependencyProperty  dp = System.Windows.Controls.Primitives.ScrollBar.OrientationProperty;
-            var bamlMember = new WpfKnownMember( this,  // Schema Context
+            var bamlMember = new WpfKnownMember(this,  // Schema Context
                             this.GetXamlType(typeof(System.Windows.Controls.Primitives.ScrollBar)), // DeclaringType
                             "Orientation", // Name
                              dp, // DependencyProperty
                             false, // IsReadOnly
                             false // IsAttachable
-                                     );
-            bamlMember.TypeConverterType = typeof(System.Windows.Controls.Orientation);
+                                     )
+            {
+                TypeConverterType = typeof(System.Windows.Controls.Orientation)
+            };
             bamlMember.Freeze();
             return bamlMember;
         }
@@ -7625,17 +8231,19 @@ namespace System.Windows.Baml2006
         private WpfKnownMember Create_BamlProperty_Trigger_Property()
         {
             Type type = typeof(System.Windows.Trigger);
-            var bamlMember = new WpfKnownMember( this,  // Schema Context
+            var bamlMember = new WpfKnownMember(this,  // Schema Context
                             this.GetXamlType(typeof(System.Windows.Trigger)), // DeclaringType
                             "Property", // Name
                             typeof(System.Windows.DependencyProperty), // type
                             false, // IsReadOnly
                             false // IsAttachable
-                                     );
-            bamlMember.TypeConverterType = typeof(System.Windows.Markup.DependencyPropertyConverter);
-            bamlMember.Ambient = true;
-            bamlMember.SetDelegate = delegate(object target, object value) { ((System.Windows.Trigger)target).Property = (System.Windows.DependencyProperty)value; };
-            bamlMember.GetDelegate = delegate(object target) { return ((System.Windows.Trigger)target).Property; };
+                                     )
+            {
+                TypeConverterType = typeof(System.Windows.Markup.DependencyPropertyConverter),
+                Ambient = true,
+                SetDelegate = delegate (object target, object value) { ((System.Windows.Trigger)target).Property = (System.Windows.DependencyProperty)value; },
+                GetDelegate = delegate (object target) { return ((System.Windows.Trigger)target).Property; }
+            };
             bamlMember.Freeze();
             return bamlMember;
         }
@@ -7644,16 +8252,18 @@ namespace System.Windows.Baml2006
         private WpfKnownMember Create_BamlProperty_EventTrigger_SourceName()
         {
             Type type = typeof(System.Windows.EventTrigger);
-            var bamlMember = new WpfKnownMember( this,  // Schema Context
+            var bamlMember = new WpfKnownMember(this,  // Schema Context
                             this.GetXamlType(typeof(System.Windows.EventTrigger)), // DeclaringType
                             "SourceName", // Name
                             typeof(System.String), // type
                             false, // IsReadOnly
                             false // IsAttachable
-                                     );
-            bamlMember.TypeConverterType = typeof(System.ComponentModel.StringConverter);
-            bamlMember.SetDelegate = delegate(object target, object value) { ((System.Windows.EventTrigger)target).SourceName = (System.String)value; };
-            bamlMember.GetDelegate = delegate(object target) { return ((System.Windows.EventTrigger)target).SourceName; };
+                                     )
+            {
+                TypeConverterType = typeof(System.ComponentModel.StringConverter),
+                SetDelegate = delegate (object target, object value) { ((System.Windows.EventTrigger)target).SourceName = (System.String)value; },
+                GetDelegate = delegate (object target) { return ((System.Windows.EventTrigger)target).SourceName; }
+            };
             bamlMember.Freeze();
             return bamlMember;
         }
@@ -7663,14 +8273,16 @@ namespace System.Windows.Baml2006
         {
             Type type = typeof(System.Windows.Controls.DefinitionBase);
             DependencyProperty  dp = System.Windows.Controls.DefinitionBase.SharedSizeGroupProperty;
-            var bamlMember = new WpfKnownMember( this,  // Schema Context
+            var bamlMember = new WpfKnownMember(this,  // Schema Context
                             this.GetXamlType(typeof(System.Windows.Controls.DefinitionBase)), // DeclaringType
                             "SharedSizeGroup", // Name
                              dp, // DependencyProperty
                             false, // IsReadOnly
                             false // IsAttachable
-                                     );
-            bamlMember.TypeConverterType = typeof(System.ComponentModel.StringConverter);
+                                     )
+            {
+                TypeConverterType = typeof(System.ComponentModel.StringConverter)
+            };
             bamlMember.Freeze();
             return bamlMember;
         }
@@ -7680,15 +8292,17 @@ namespace System.Windows.Baml2006
         {
             Type type = typeof(System.Windows.Controls.ToolTipService);
             DependencyProperty  dp = System.Windows.Controls.ToolTipService.ToolTipProperty;
-            var bamlMember = new WpfKnownMember( this,  // Schema Context
+            var bamlMember = new WpfKnownMember(this,  // Schema Context
                             this.GetXamlType(typeof(System.Windows.Controls.ToolTipService)), // DeclaringType
                             "ToolTip", // Name
                              dp, // DependencyProperty
                             false, // IsReadOnly
                             true // IsAttachable
-                                     );
-            bamlMember.HasSpecialTypeConverter = true;
-            bamlMember.TypeConverterType = typeof(System.Object);
+                                     )
+            {
+                HasSpecialTypeConverter = true,
+                TypeConverterType = typeof(System.Object)
+            };
             bamlMember.Freeze();
             return bamlMember;
         }
@@ -7698,14 +8312,16 @@ namespace System.Windows.Baml2006
         {
             Type type = typeof(System.Windows.Media.PathFigure);
             DependencyProperty  dp = System.Windows.Media.PathFigure.IsClosedProperty;
-            var bamlMember = new WpfKnownMember( this,  // Schema Context
+            var bamlMember = new WpfKnownMember(this,  // Schema Context
                             this.GetXamlType(typeof(System.Windows.Media.PathFigure)), // DeclaringType
                             "IsClosed", // Name
                              dp, // DependencyProperty
                             false, // IsReadOnly
                             false // IsAttachable
-                                     );
-            bamlMember.TypeConverterType = typeof(System.ComponentModel.BooleanConverter);
+                                     )
+            {
+                TypeConverterType = typeof(System.ComponentModel.BooleanConverter)
+            };
             bamlMember.Freeze();
             return bamlMember;
         }
@@ -7715,14 +8331,16 @@ namespace System.Windows.Baml2006
         {
             Type type = typeof(System.Windows.Media.PathFigure);
             DependencyProperty  dp = System.Windows.Media.PathFigure.IsFilledProperty;
-            var bamlMember = new WpfKnownMember( this,  // Schema Context
+            var bamlMember = new WpfKnownMember(this,  // Schema Context
                             this.GetXamlType(typeof(System.Windows.Media.PathFigure)), // DeclaringType
                             "IsFilled", // Name
                              dp, // DependencyProperty
                             false, // IsReadOnly
                             false // IsAttachable
-                                     );
-            bamlMember.TypeConverterType = typeof(System.ComponentModel.BooleanConverter);
+                                     )
+            {
+                TypeConverterType = typeof(System.ComponentModel.BooleanConverter)
+            };
             bamlMember.Freeze();
             return bamlMember;
         }
@@ -7732,14 +8350,16 @@ namespace System.Windows.Baml2006
         {
             Type type = typeof(System.Windows.Controls.Primitives.ButtonBase);
             DependencyProperty  dp = System.Windows.Controls.Primitives.ButtonBase.ClickModeProperty;
-            var bamlMember = new WpfKnownMember( this,  // Schema Context
+            var bamlMember = new WpfKnownMember(this,  // Schema Context
                             this.GetXamlType(typeof(System.Windows.Controls.Primitives.ButtonBase)), // DeclaringType
                             "ClickMode", // Name
                              dp, // DependencyProperty
                             false, // IsReadOnly
                             false // IsAttachable
-                                     );
-            bamlMember.TypeConverterType = typeof(System.Windows.Controls.ClickMode);
+                                     )
+            {
+                TypeConverterType = typeof(System.Windows.Controls.ClickMode)
+            };
             bamlMember.Freeze();
             return bamlMember;
         }
@@ -7749,14 +8369,16 @@ namespace System.Windows.Baml2006
         {
             Type type = typeof(System.Windows.Documents.Block);
             DependencyProperty  dp = System.Windows.Documents.Block.TextAlignmentProperty;
-            var bamlMember = new WpfKnownMember( this,  // Schema Context
+            var bamlMember = new WpfKnownMember(this,  // Schema Context
                             this.GetXamlType(typeof(System.Windows.Documents.Block)), // DeclaringType
                             "TextAlignment", // Name
                              dp, // DependencyProperty
                             false, // IsReadOnly
                             false // IsAttachable
-                                     );
-            bamlMember.TypeConverterType = typeof(System.Windows.TextAlignment);
+                                     )
+            {
+                TypeConverterType = typeof(System.Windows.TextAlignment)
+            };
             bamlMember.Freeze();
             return bamlMember;
         }
@@ -7766,14 +8388,16 @@ namespace System.Windows.Baml2006
         {
             Type type = typeof(System.Windows.UIElement);
             DependencyProperty  dp = System.Windows.UIElement.RenderTransformOriginProperty;
-            var bamlMember = new WpfKnownMember( this,  // Schema Context
+            var bamlMember = new WpfKnownMember(this,  // Schema Context
                             this.GetXamlType(typeof(System.Windows.UIElement)), // DeclaringType
                             "RenderTransformOrigin", // Name
                              dp, // DependencyProperty
                             false, // IsReadOnly
                             false // IsAttachable
-                                     );
-            bamlMember.TypeConverterType = typeof(System.Windows.PointConverter);
+                                     )
+            {
+                TypeConverterType = typeof(System.Windows.PointConverter)
+            };
             bamlMember.Freeze();
             return bamlMember;
         }
@@ -7783,14 +8407,16 @@ namespace System.Windows.Baml2006
         {
             Type type = typeof(System.Windows.Media.Pen);
             DependencyProperty  dp = System.Windows.Media.Pen.LineJoinProperty;
-            var bamlMember = new WpfKnownMember( this,  // Schema Context
+            var bamlMember = new WpfKnownMember(this,  // Schema Context
                             this.GetXamlType(typeof(System.Windows.Media.Pen)), // DeclaringType
                             "LineJoin", // Name
                              dp, // DependencyProperty
                             false, // IsReadOnly
                             false // IsAttachable
-                                     );
-            bamlMember.TypeConverterType = typeof(System.Windows.Media.PenLineJoin);
+                                     )
+            {
+                TypeConverterType = typeof(System.Windows.Media.PenLineJoin)
+            };
             bamlMember.Freeze();
             return bamlMember;
         }
@@ -7799,15 +8425,17 @@ namespace System.Windows.Baml2006
         private WpfKnownMember Create_BamlProperty_BulletDecorator_Bullet()
         {
             Type type = typeof(System.Windows.Controls.Primitives.BulletDecorator);
-            var bamlMember = new WpfKnownMember( this,  // Schema Context
+            var bamlMember = new WpfKnownMember(this,  // Schema Context
                             this.GetXamlType(typeof(System.Windows.Controls.Primitives.BulletDecorator)), // DeclaringType
                             "Bullet", // Name
                             typeof(System.Windows.UIElement), // type
                             false, // IsReadOnly
                             false // IsAttachable
-                                     );
-            bamlMember.SetDelegate = delegate(object target, object value) { ((System.Windows.Controls.Primitives.BulletDecorator)target).Bullet = (System.Windows.UIElement)value; };
-            bamlMember.GetDelegate = delegate(object target) { return ((System.Windows.Controls.Primitives.BulletDecorator)target).Bullet; };
+                                     )
+            {
+                SetDelegate = delegate (object target, object value) { ((System.Windows.Controls.Primitives.BulletDecorator)target).Bullet = (System.Windows.UIElement)value; },
+                GetDelegate = delegate (object target) { return ((System.Windows.Controls.Primitives.BulletDecorator)target).Bullet; }
+            };
             bamlMember.Freeze();
             return bamlMember;
         }
@@ -7817,14 +8445,16 @@ namespace System.Windows.Baml2006
         {
             Type type = typeof(System.Windows.UIElement);
             DependencyProperty  dp = System.Windows.UIElement.SnapsToDevicePixelsProperty;
-            var bamlMember = new WpfKnownMember( this,  // Schema Context
+            var bamlMember = new WpfKnownMember(this,  // Schema Context
                             this.GetXamlType(typeof(System.Windows.UIElement)), // DeclaringType
                             "SnapsToDevicePixels", // Name
                              dp, // DependencyProperty
                             false, // IsReadOnly
                             false // IsAttachable
-                                     );
-            bamlMember.TypeConverterType = typeof(System.ComponentModel.BooleanConverter);
+                                     )
+            {
+                TypeConverterType = typeof(System.ComponentModel.BooleanConverter)
+            };
             bamlMember.Freeze();
             return bamlMember;
         }
@@ -7833,15 +8463,17 @@ namespace System.Windows.Baml2006
         private WpfKnownMember Create_BamlProperty_UIElement_CommandBindings()
         {
             Type type = typeof(System.Windows.UIElement);
-            var bamlMember = new WpfKnownMember( this,  // Schema Context
+            var bamlMember = new WpfKnownMember(this,  // Schema Context
                             this.GetXamlType(typeof(System.Windows.UIElement)), // DeclaringType
                             "CommandBindings", // Name
                             typeof(System.Windows.Input.CommandBindingCollection), // type
                             true, // IsReadOnly
                             false // IsAttachable
-                                     );
-            bamlMember.GetDelegate = delegate(object target) { return ((System.Windows.UIElement)target).CommandBindings; };
-            bamlMember.IsWritePrivate = true;
+                                     )
+            {
+                GetDelegate = delegate (object target) { return ((System.Windows.UIElement)target).CommandBindings; },
+                IsWritePrivate = true
+            };
             bamlMember.Freeze();
             return bamlMember;
         }
@@ -7850,15 +8482,17 @@ namespace System.Windows.Baml2006
         private WpfKnownMember Create_BamlProperty_UIElement_InputBindings()
         {
             Type type = typeof(System.Windows.UIElement);
-            var bamlMember = new WpfKnownMember( this,  // Schema Context
+            var bamlMember = new WpfKnownMember(this,  // Schema Context
                             this.GetXamlType(typeof(System.Windows.UIElement)), // DeclaringType
                             "InputBindings", // Name
                             typeof(System.Windows.Input.InputBindingCollection), // type
                             true, // IsReadOnly
                             false // IsAttachable
-                                     );
-            bamlMember.GetDelegate = delegate(object target) { return ((System.Windows.UIElement)target).InputBindings; };
-            bamlMember.IsWritePrivate = true;
+                                     )
+            {
+                GetDelegate = delegate (object target) { return ((System.Windows.UIElement)target).InputBindings; },
+                IsWritePrivate = true
+            };
             bamlMember.Freeze();
             return bamlMember;
         }
@@ -7868,14 +8502,16 @@ namespace System.Windows.Baml2006
         {
             Type type = typeof(System.Windows.Media.SolidColorBrush);
             DependencyProperty  dp = System.Windows.Media.SolidColorBrush.ColorProperty;
-            var bamlMember = new WpfKnownMember( this,  // Schema Context
+            var bamlMember = new WpfKnownMember(this,  // Schema Context
                             this.GetXamlType(typeof(System.Windows.Media.SolidColorBrush)), // DeclaringType
                             "Color", // Name
                              dp, // DependencyProperty
                             false, // IsReadOnly
                             false // IsAttachable
-                                     );
-            bamlMember.TypeConverterType = typeof(System.Windows.Media.ColorConverter);
+                                     )
+            {
+                TypeConverterType = typeof(System.Windows.Media.ColorConverter)
+            };
             bamlMember.Freeze();
             return bamlMember;
         }
@@ -7885,14 +8521,16 @@ namespace System.Windows.Baml2006
         {
             Type type = typeof(System.Windows.Media.Brush);
             DependencyProperty  dp = System.Windows.Media.Brush.OpacityProperty;
-            var bamlMember = new WpfKnownMember( this,  // Schema Context
+            var bamlMember = new WpfKnownMember(this,  // Schema Context
                             this.GetXamlType(typeof(System.Windows.Media.Brush)), // DeclaringType
                             "Opacity", // Name
                              dp, // DependencyProperty
                             false, // IsReadOnly
                             false // IsAttachable
-                                     );
-            bamlMember.TypeConverterType = typeof(System.ComponentModel.DoubleConverter);
+                                     )
+            {
+                TypeConverterType = typeof(System.ComponentModel.DoubleConverter)
+            };
             bamlMember.Freeze();
             return bamlMember;
         }
@@ -7902,14 +8540,16 @@ namespace System.Windows.Baml2006
         {
             Type type = typeof(System.Windows.Controls.Primitives.TextBoxBase);
             DependencyProperty  dp = System.Windows.Controls.Primitives.TextBoxBase.AcceptsTabProperty;
-            var bamlMember = new WpfKnownMember( this,  // Schema Context
+            var bamlMember = new WpfKnownMember(this,  // Schema Context
                             this.GetXamlType(typeof(System.Windows.Controls.Primitives.TextBoxBase)), // DeclaringType
                             "AcceptsTab", // Name
                              dp, // DependencyProperty
                             false, // IsReadOnly
                             false // IsAttachable
-                                     );
-            bamlMember.TypeConverterType = typeof(System.ComponentModel.BooleanConverter);
+                                     )
+            {
+                TypeConverterType = typeof(System.ComponentModel.BooleanConverter)
+            };
             bamlMember.Freeze();
             return bamlMember;
         }
@@ -7919,14 +8559,16 @@ namespace System.Windows.Baml2006
         {
             Type type = typeof(System.Windows.Media.PathSegment);
             DependencyProperty  dp = System.Windows.Media.PathSegment.IsStrokedProperty;
-            var bamlMember = new WpfKnownMember( this,  // Schema Context
+            var bamlMember = new WpfKnownMember(this,  // Schema Context
                             this.GetXamlType(typeof(System.Windows.Media.PathSegment)), // DeclaringType
                             "IsStroked", // Name
                              dp, // DependencyProperty
                             false, // IsReadOnly
                             false // IsAttachable
-                                     );
-            bamlMember.TypeConverterType = typeof(System.ComponentModel.BooleanConverter);
+                                     )
+            {
+                TypeConverterType = typeof(System.ComponentModel.BooleanConverter)
+            };
             bamlMember.Freeze();
             return bamlMember;
         }
@@ -7936,14 +8578,16 @@ namespace System.Windows.Baml2006
         {
             Type type = typeof(System.Windows.Controls.VirtualizingPanel);
             DependencyProperty  dp = System.Windows.Controls.VirtualizingPanel.IsVirtualizingProperty;
-            var bamlMember = new WpfKnownMember( this,  // Schema Context
+            var bamlMember = new WpfKnownMember(this,  // Schema Context
                             this.GetXamlType(typeof(System.Windows.Controls.VirtualizingPanel)), // DeclaringType
                             "IsVirtualizing", // Name
                              dp, // DependencyProperty
                             false, // IsReadOnly
                             true // IsAttachable
-                                     );
-            bamlMember.TypeConverterType = typeof(System.ComponentModel.BooleanConverter);
+                                     )
+            {
+                TypeConverterType = typeof(System.ComponentModel.BooleanConverter)
+            };
             bamlMember.Freeze();
             return bamlMember;
         }
@@ -7953,14 +8597,16 @@ namespace System.Windows.Baml2006
         {
             Type type = typeof(System.Windows.Shapes.Shape);
             DependencyProperty  dp = System.Windows.Shapes.Shape.StretchProperty;
-            var bamlMember = new WpfKnownMember( this,  // Schema Context
+            var bamlMember = new WpfKnownMember(this,  // Schema Context
                             this.GetXamlType(typeof(System.Windows.Shapes.Shape)), // DeclaringType
                             "Stretch", // Name
                              dp, // DependencyProperty
                             false, // IsReadOnly
                             false // IsAttachable
-                                     );
-            bamlMember.TypeConverterType = typeof(System.Windows.Media.Stretch);
+                                     )
+            {
+                TypeConverterType = typeof(System.Windows.Media.Stretch)
+            };
             bamlMember.Freeze();
             return bamlMember;
         }
@@ -7970,14 +8616,16 @@ namespace System.Windows.Baml2006
         {
             Type type = typeof(System.Windows.Controls.Frame);
             DependencyProperty  dp = System.Windows.Controls.Frame.JournalOwnershipProperty;
-            var bamlMember = new WpfKnownMember( this,  // Schema Context
+            var bamlMember = new WpfKnownMember(this,  // Schema Context
                             this.GetXamlType(typeof(System.Windows.Controls.Frame)), // DeclaringType
                             "JournalOwnership", // Name
                              dp, // DependencyProperty
                             false, // IsReadOnly
                             false // IsAttachable
-                                     );
-            bamlMember.TypeConverterType = typeof(System.Windows.Navigation.JournalOwnership);
+                                     )
+            {
+                TypeConverterType = typeof(System.Windows.Navigation.JournalOwnership)
+            };
             bamlMember.Freeze();
             return bamlMember;
         }
@@ -7987,14 +8635,16 @@ namespace System.Windows.Baml2006
         {
             Type type = typeof(System.Windows.Controls.Frame);
             DependencyProperty  dp = System.Windows.Controls.Frame.NavigationUIVisibilityProperty;
-            var bamlMember = new WpfKnownMember( this,  // Schema Context
+            var bamlMember = new WpfKnownMember(this,  // Schema Context
                             this.GetXamlType(typeof(System.Windows.Controls.Frame)), // DeclaringType
                             "NavigationUIVisibility", // Name
                              dp, // DependencyProperty
                             false, // IsReadOnly
                             false // IsAttachable
-                                     );
-            bamlMember.TypeConverterType = typeof(System.Windows.Navigation.NavigationUIVisibility);
+                                     )
+            {
+                TypeConverterType = typeof(System.Windows.Navigation.NavigationUIVisibility)
+            };
             bamlMember.Freeze();
             return bamlMember;
         }
@@ -8004,14 +8654,16 @@ namespace System.Windows.Baml2006
         {
             Type type = typeof(System.Windows.Media.Animation.Storyboard);
             DependencyProperty  dp = System.Windows.Media.Animation.Storyboard.TargetNameProperty;
-            var bamlMember = new WpfKnownMember( this,  // Schema Context
+            var bamlMember = new WpfKnownMember(this,  // Schema Context
                             this.GetXamlType(typeof(System.Windows.Media.Animation.Storyboard)), // DeclaringType
                             "TargetName", // Name
                              dp, // DependencyProperty
                             false, // IsReadOnly
                             true // IsAttachable
-                                     );
-            bamlMember.TypeConverterType = typeof(System.ComponentModel.StringConverter);
+                                     )
+            {
+                TypeConverterType = typeof(System.ComponentModel.StringConverter)
+            };
             bamlMember.Freeze();
             return bamlMember;
         }
@@ -8020,16 +8672,18 @@ namespace System.Windows.Baml2006
         private WpfKnownMember Create_BamlProperty_XmlDataProvider_XPath()
         {
             Type type = typeof(System.Windows.Data.XmlDataProvider);
-            var bamlMember = new WpfKnownMember( this,  // Schema Context
+            var bamlMember = new WpfKnownMember(this,  // Schema Context
                             this.GetXamlType(typeof(System.Windows.Data.XmlDataProvider)), // DeclaringType
                             "XPath", // Name
                             typeof(System.String), // type
                             false, // IsReadOnly
                             false // IsAttachable
-                                     );
-            bamlMember.TypeConverterType = typeof(System.ComponentModel.StringConverter);
-            bamlMember.SetDelegate = delegate(object target, object value) { ((System.Windows.Data.XmlDataProvider)target).XPath = (System.String)value; };
-            bamlMember.GetDelegate = delegate(object target) { return ((System.Windows.Data.XmlDataProvider)target).XPath; };
+                                     )
+            {
+                TypeConverterType = typeof(System.ComponentModel.StringConverter),
+                SetDelegate = delegate (object target, object value) { ((System.Windows.Data.XmlDataProvider)target).XPath = (System.String)value; },
+                GetDelegate = delegate (object target) { return ((System.Windows.Data.XmlDataProvider)target).XPath; }
+            };
             bamlMember.Freeze();
             return bamlMember;
         }
@@ -8039,14 +8693,16 @@ namespace System.Windows.Baml2006
         {
             Type type = typeof(System.Windows.Controls.Primitives.Selector);
             DependencyProperty  dp = System.Windows.Controls.Primitives.Selector.IsSelectedProperty;
-            var bamlMember = new WpfKnownMember( this,  // Schema Context
+            var bamlMember = new WpfKnownMember(this,  // Schema Context
                             this.GetXamlType(typeof(System.Windows.Controls.Primitives.Selector)), // DeclaringType
                             "IsSelected", // Name
                              dp, // DependencyProperty
                             false, // IsReadOnly
                             true // IsAttachable
-                                     );
-            bamlMember.TypeConverterType = typeof(System.ComponentModel.BooleanConverter);
+                                     )
+            {
+                TypeConverterType = typeof(System.ComponentModel.BooleanConverter)
+            };
             bamlMember.Freeze();
             return bamlMember;
         }
@@ -8055,18 +8711,20 @@ namespace System.Windows.Baml2006
         private WpfKnownMember Create_BamlProperty_DataTemplate_DataType()
         {
             Type type = typeof(System.Windows.DataTemplate);
-            var bamlMember = new WpfKnownMember( this,  // Schema Context
+            var bamlMember = new WpfKnownMember(this,  // Schema Context
                             this.GetXamlType(typeof(System.Windows.DataTemplate)), // DeclaringType
                             "DataType", // Name
                             typeof(System.Object), // type
                             false, // IsReadOnly
                             false // IsAttachable
-                                     );
-            bamlMember.HasSpecialTypeConverter = true;
-            bamlMember.TypeConverterType = typeof(System.Object);
-            bamlMember.Ambient = true;
-            bamlMember.SetDelegate = delegate(object target, object value) { ((System.Windows.DataTemplate)target).DataType = (System.Object)value; };
-            bamlMember.GetDelegate = delegate(object target) { return ((System.Windows.DataTemplate)target).DataType; };
+                                     )
+            {
+                HasSpecialTypeConverter = true,
+                TypeConverterType = typeof(System.Object),
+                Ambient = true,
+                SetDelegate = delegate (object target, object value) { ((System.Windows.DataTemplate)target).DataType = (System.Object)value; },
+                GetDelegate = delegate (object target) { return ((System.Windows.DataTemplate)target).DataType; }
+            };
             bamlMember.Freeze();
             return bamlMember;
         }
@@ -8076,14 +8734,16 @@ namespace System.Windows.Baml2006
         {
             Type type = typeof(System.Windows.Shapes.Shape);
             DependencyProperty  dp = System.Windows.Shapes.Shape.StrokeMiterLimitProperty;
-            var bamlMember = new WpfKnownMember( this,  // Schema Context
+            var bamlMember = new WpfKnownMember(this,  // Schema Context
                             this.GetXamlType(typeof(System.Windows.Shapes.Shape)), // DeclaringType
                             "StrokeMiterLimit", // Name
                              dp, // DependencyProperty
                             false, // IsReadOnly
                             false // IsAttachable
-                                     );
-            bamlMember.TypeConverterType = typeof(System.ComponentModel.DoubleConverter);
+                                     )
+            {
+                TypeConverterType = typeof(System.ComponentModel.DoubleConverter)
+            };
             bamlMember.Freeze();
             return bamlMember;
         }
@@ -8093,14 +8753,16 @@ namespace System.Windows.Baml2006
         {
             Type type = typeof(System.Windows.UIElement);
             DependencyProperty  dp = System.Windows.UIElement.AllowDropProperty;
-            var bamlMember = new WpfKnownMember( this,  // Schema Context
+            var bamlMember = new WpfKnownMember(this,  // Schema Context
                             this.GetXamlType(typeof(System.Windows.UIElement)), // DeclaringType
                             "AllowDrop", // Name
                              dp, // DependencyProperty
                             false, // IsReadOnly
                             false // IsAttachable
-                                     );
-            bamlMember.TypeConverterType = typeof(System.ComponentModel.BooleanConverter);
+                                     )
+            {
+                TypeConverterType = typeof(System.ComponentModel.BooleanConverter)
+            };
             bamlMember.Freeze();
             return bamlMember;
         }
@@ -8110,14 +8772,16 @@ namespace System.Windows.Baml2006
         {
             Type type = typeof(System.Windows.Controls.MenuItem);
             DependencyProperty  dp = System.Windows.Controls.MenuItem.IsCheckedProperty;
-            var bamlMember = new WpfKnownMember( this,  // Schema Context
+            var bamlMember = new WpfKnownMember(this,  // Schema Context
                             this.GetXamlType(typeof(System.Windows.Controls.MenuItem)), // DeclaringType
                             "IsChecked", // Name
                              dp, // DependencyProperty
                             false, // IsReadOnly
                             false // IsAttachable
-                                     );
-            bamlMember.TypeConverterType = typeof(System.ComponentModel.BooleanConverter);
+                                     )
+            {
+                TypeConverterType = typeof(System.ComponentModel.BooleanConverter)
+            };
             bamlMember.Freeze();
             return bamlMember;
         }
@@ -8127,14 +8791,16 @@ namespace System.Windows.Baml2006
         {
             Type type = typeof(System.Windows.Controls.Panel);
             DependencyProperty  dp = System.Windows.Controls.Panel.IsItemsHostProperty;
-            var bamlMember = new WpfKnownMember( this,  // Schema Context
+            var bamlMember = new WpfKnownMember(this,  // Schema Context
                             this.GetXamlType(typeof(System.Windows.Controls.Panel)), // DeclaringType
                             "IsItemsHost", // Name
                              dp, // DependencyProperty
                             false, // IsReadOnly
                             false // IsAttachable
-                                     );
-            bamlMember.TypeConverterType = typeof(System.ComponentModel.BooleanConverter);
+                                     )
+            {
+                TypeConverterType = typeof(System.ComponentModel.BooleanConverter)
+            };
             bamlMember.Freeze();
             return bamlMember;
         }
@@ -8143,16 +8809,18 @@ namespace System.Windows.Baml2006
         private WpfKnownMember Create_BamlProperty_Binding_XPath()
         {
             Type type = typeof(System.Windows.Data.Binding);
-            var bamlMember = new WpfKnownMember( this,  // Schema Context
+            var bamlMember = new WpfKnownMember(this,  // Schema Context
                             this.GetXamlType(typeof(System.Windows.Data.Binding)), // DeclaringType
                             "XPath", // Name
                             typeof(System.String), // type
                             false, // IsReadOnly
                             false // IsAttachable
-                                     );
-            bamlMember.TypeConverterType = typeof(System.ComponentModel.StringConverter);
-            bamlMember.SetDelegate = delegate(object target, object value) { ((System.Windows.Data.Binding)target).XPath = (System.String)value; };
-            bamlMember.GetDelegate = delegate(object target) { return ((System.Windows.Data.Binding)target).XPath; };
+                                     )
+            {
+                TypeConverterType = typeof(System.ComponentModel.StringConverter),
+                SetDelegate = delegate (object target, object value) { ((System.Windows.Data.Binding)target).XPath = (System.String)value; },
+                GetDelegate = delegate (object target) { return ((System.Windows.Data.Binding)target).XPath; }
+            };
             bamlMember.Freeze();
             return bamlMember;
         }
@@ -8162,14 +8830,16 @@ namespace System.Windows.Baml2006
         {
             Type type = typeof(System.Windows.Window);
             DependencyProperty  dp = System.Windows.Window.AllowsTransparencyProperty;
-            var bamlMember = new WpfKnownMember( this,  // Schema Context
+            var bamlMember = new WpfKnownMember(this,  // Schema Context
                             this.GetXamlType(typeof(System.Windows.Window)), // DeclaringType
                             "AllowsTransparency", // Name
                              dp, // DependencyProperty
                             false, // IsReadOnly
                             false // IsAttachable
-                                     );
-            bamlMember.TypeConverterType = typeof(System.ComponentModel.BooleanConverter);
+                                     )
+            {
+                TypeConverterType = typeof(System.ComponentModel.BooleanConverter)
+            };
             bamlMember.Freeze();
             return bamlMember;
         }
@@ -8178,17 +8848,19 @@ namespace System.Windows.Baml2006
         private WpfKnownMember Create_BamlProperty_ObjectDataProvider_ObjectType()
         {
             Type type = typeof(System.Windows.Data.ObjectDataProvider);
-            var bamlMember = new WpfKnownMember( this,  // Schema Context
+            var bamlMember = new WpfKnownMember(this,  // Schema Context
                             this.GetXamlType(typeof(System.Windows.Data.ObjectDataProvider)), // DeclaringType
                             "ObjectType", // Name
                             typeof(System.Type), // type
                             false, // IsReadOnly
                             false // IsAttachable
-                                     );
-            bamlMember.HasSpecialTypeConverter = true;
-            bamlMember.TypeConverterType = typeof(System.Type);
-            bamlMember.SetDelegate = delegate(object target, object value) { ((System.Windows.Data.ObjectDataProvider)target).ObjectType = (System.Type)value; };
-            bamlMember.GetDelegate = delegate(object target) { return ((System.Windows.Data.ObjectDataProvider)target).ObjectType; };
+                                     )
+            {
+                HasSpecialTypeConverter = true,
+                TypeConverterType = typeof(System.Type),
+                SetDelegate = delegate (object target, object value) { ((System.Windows.Data.ObjectDataProvider)target).ObjectType = (System.Type)value; },
+                GetDelegate = delegate (object target) { return ((System.Windows.Data.ObjectDataProvider)target).ObjectType; }
+            };
             bamlMember.Freeze();
             return bamlMember;
         }
@@ -8198,15 +8870,17 @@ namespace System.Windows.Baml2006
         {
             Type type = typeof(System.Windows.Controls.ToolBar);
             DependencyProperty  dp = System.Windows.Controls.ToolBar.OrientationProperty;
-            var bamlMember = new WpfKnownMember( this,  // Schema Context
+            var bamlMember = new WpfKnownMember(this,  // Schema Context
                             this.GetXamlType(typeof(System.Windows.Controls.ToolBar)), // DeclaringType
                             "Orientation", // Name
                              dp, // DependencyProperty
                             true, // IsReadOnly
                             false // IsAttachable
-                                     );
-            bamlMember.TypeConverterType = typeof(System.Windows.Controls.Orientation);
-            bamlMember.IsWritePrivate = true;
+                                     )
+            {
+                TypeConverterType = typeof(System.Windows.Controls.Orientation),
+                IsWritePrivate = true
+            };
             bamlMember.Freeze();
             return bamlMember;
         }
@@ -8216,14 +8890,16 @@ namespace System.Windows.Baml2006
         {
             Type type = typeof(System.Windows.Controls.Primitives.TextBoxBase);
             DependencyProperty  dp = System.Windows.Controls.Primitives.TextBoxBase.VerticalScrollBarVisibilityProperty;
-            var bamlMember = new WpfKnownMember( this,  // Schema Context
+            var bamlMember = new WpfKnownMember(this,  // Schema Context
                             this.GetXamlType(typeof(System.Windows.Controls.Primitives.TextBoxBase)), // DeclaringType
                             "VerticalScrollBarVisibility", // Name
                              dp, // DependencyProperty
                             false, // IsReadOnly
                             false // IsAttachable
-                                     );
-            bamlMember.TypeConverterType = typeof(System.Windows.Controls.ScrollBarVisibility);
+                                     )
+            {
+                TypeConverterType = typeof(System.Windows.Controls.ScrollBarVisibility)
+            };
             bamlMember.Freeze();
             return bamlMember;
         }
@@ -8233,14 +8909,16 @@ namespace System.Windows.Baml2006
         {
             Type type = typeof(System.Windows.Controls.Primitives.TextBoxBase);
             DependencyProperty  dp = System.Windows.Controls.Primitives.TextBoxBase.HorizontalScrollBarVisibilityProperty;
-            var bamlMember = new WpfKnownMember( this,  // Schema Context
+            var bamlMember = new WpfKnownMember(this,  // Schema Context
                             this.GetXamlType(typeof(System.Windows.Controls.Primitives.TextBoxBase)), // DeclaringType
                             "HorizontalScrollBarVisibility", // Name
                              dp, // DependencyProperty
                             false, // IsReadOnly
                             false // IsAttachable
-                                     );
-            bamlMember.TypeConverterType = typeof(System.Windows.Controls.ScrollBarVisibility);
+                                     )
+            {
+                TypeConverterType = typeof(System.Windows.Controls.ScrollBarVisibility)
+            };
             bamlMember.Freeze();
             return bamlMember;
         }
@@ -8249,15 +8927,17 @@ namespace System.Windows.Baml2006
         private WpfKnownMember Create_BamlProperty_FrameworkElement_Triggers()
         {
             Type type = typeof(System.Windows.FrameworkElement);
-            var bamlMember = new WpfKnownMember( this,  // Schema Context
+            var bamlMember = new WpfKnownMember(this,  // Schema Context
                             this.GetXamlType(typeof(System.Windows.FrameworkElement)), // DeclaringType
                             "Triggers", // Name
                             typeof(System.Windows.TriggerCollection), // type
                             true, // IsReadOnly
                             false // IsAttachable
-                                     );
-            bamlMember.GetDelegate = delegate(object target) { return ((System.Windows.FrameworkElement)target).Triggers; };
-            bamlMember.IsWritePrivate = true;
+                                     )
+            {
+                GetDelegate = delegate (object target) { return ((System.Windows.FrameworkElement)target).Triggers; },
+                IsWritePrivate = true
+            };
             bamlMember.Freeze();
             return bamlMember;
         }
@@ -8266,15 +8946,17 @@ namespace System.Windows.Baml2006
         private WpfKnownMember Create_BamlProperty_MultiDataTrigger_Conditions()
         {
             Type type = typeof(System.Windows.MultiDataTrigger);
-            var bamlMember = new WpfKnownMember( this,  // Schema Context
+            var bamlMember = new WpfKnownMember(this,  // Schema Context
                             this.GetXamlType(typeof(System.Windows.MultiDataTrigger)), // DeclaringType
                             "Conditions", // Name
                             typeof(System.Windows.ConditionCollection), // type
                             true, // IsReadOnly
                             false // IsAttachable
-                                     );
-            bamlMember.GetDelegate = delegate(object target) { return ((System.Windows.MultiDataTrigger)target).Conditions; };
-            bamlMember.IsWritePrivate = true;
+                                     )
+            {
+                GetDelegate = delegate (object target) { return ((System.Windows.MultiDataTrigger)target).Conditions; },
+                IsWritePrivate = true
+            };
             bamlMember.Freeze();
             return bamlMember;
         }
@@ -8284,14 +8966,16 @@ namespace System.Windows.Baml2006
         {
             Type type = typeof(System.Windows.Input.KeyBinding);
             DependencyProperty  dp = System.Windows.Input.KeyBinding.KeyProperty;
-            var bamlMember = new WpfKnownMember( this,  // Schema Context
+            var bamlMember = new WpfKnownMember(this,  // Schema Context
                             this.GetXamlType(typeof(System.Windows.Input.KeyBinding)), // DeclaringType
                             "Key", // Name
                              dp, // DependencyProperty
                             false, // IsReadOnly
                             false // IsAttachable
-                                     );
-            bamlMember.TypeConverterType = typeof(System.Windows.Input.KeyConverter);
+                                     )
+            {
+                TypeConverterType = typeof(System.Windows.Input.KeyConverter)
+            };
             bamlMember.Freeze();
             return bamlMember;
         }
@@ -8300,17 +8984,19 @@ namespace System.Windows.Baml2006
         private WpfKnownMember Create_BamlProperty_Binding_ConverterParameter()
         {
             Type type = typeof(System.Windows.Data.Binding);
-            var bamlMember = new WpfKnownMember( this,  // Schema Context
+            var bamlMember = new WpfKnownMember(this,  // Schema Context
                             this.GetXamlType(typeof(System.Windows.Data.Binding)), // DeclaringType
                             "ConverterParameter", // Name
                             typeof(System.Object), // type
                             false, // IsReadOnly
                             false // IsAttachable
-                                     );
-            bamlMember.HasSpecialTypeConverter = true;
-            bamlMember.TypeConverterType = typeof(System.Object);
-            bamlMember.SetDelegate = delegate(object target, object value) { ((System.Windows.Data.Binding)target).ConverterParameter = (System.Object)value; };
-            bamlMember.GetDelegate = delegate(object target) { return ((System.Windows.Data.Binding)target).ConverterParameter; };
+                                     )
+            {
+                HasSpecialTypeConverter = true,
+                TypeConverterType = typeof(System.Object),
+                SetDelegate = delegate (object target, object value) { ((System.Windows.Data.Binding)target).ConverterParameter = (System.Object)value; },
+                GetDelegate = delegate (object target) { return ((System.Windows.Data.Binding)target).ConverterParameter; }
+            };
             bamlMember.Freeze();
             return bamlMember;
         }
@@ -8320,14 +9006,16 @@ namespace System.Windows.Baml2006
         {
             Type type = typeof(System.Windows.Controls.Canvas);
             DependencyProperty  dp = System.Windows.Controls.Canvas.TopProperty;
-            var bamlMember = new WpfKnownMember( this,  // Schema Context
+            var bamlMember = new WpfKnownMember(this,  // Schema Context
                             this.GetXamlType(typeof(System.Windows.Controls.Canvas)), // DeclaringType
                             "Top", // Name
                              dp, // DependencyProperty
                             false, // IsReadOnly
                             true // IsAttachable
-                                     );
-            bamlMember.TypeConverterType = typeof(System.Windows.LengthConverter);
+                                     )
+            {
+                TypeConverterType = typeof(System.Windows.LengthConverter)
+            };
             bamlMember.Freeze();
             return bamlMember;
         }
@@ -8337,14 +9025,16 @@ namespace System.Windows.Baml2006
         {
             Type type = typeof(System.Windows.Controls.Canvas);
             DependencyProperty  dp = System.Windows.Controls.Canvas.LeftProperty;
-            var bamlMember = new WpfKnownMember( this,  // Schema Context
+            var bamlMember = new WpfKnownMember(this,  // Schema Context
                             this.GetXamlType(typeof(System.Windows.Controls.Canvas)), // DeclaringType
                             "Left", // Name
                              dp, // DependencyProperty
                             false, // IsReadOnly
                             true // IsAttachable
-                                     );
-            bamlMember.TypeConverterType = typeof(System.Windows.LengthConverter);
+                                     )
+            {
+                TypeConverterType = typeof(System.Windows.LengthConverter)
+            };
             bamlMember.Freeze();
             return bamlMember;
         }
@@ -8354,14 +9044,16 @@ namespace System.Windows.Baml2006
         {
             Type type = typeof(System.Windows.Controls.Canvas);
             DependencyProperty  dp = System.Windows.Controls.Canvas.BottomProperty;
-            var bamlMember = new WpfKnownMember( this,  // Schema Context
+            var bamlMember = new WpfKnownMember(this,  // Schema Context
                             this.GetXamlType(typeof(System.Windows.Controls.Canvas)), // DeclaringType
                             "Bottom", // Name
                              dp, // DependencyProperty
                             false, // IsReadOnly
                             true // IsAttachable
-                                     );
-            bamlMember.TypeConverterType = typeof(System.Windows.LengthConverter);
+                                     )
+            {
+                TypeConverterType = typeof(System.Windows.LengthConverter)
+            };
             bamlMember.Freeze();
             return bamlMember;
         }
@@ -8371,14 +9063,16 @@ namespace System.Windows.Baml2006
         {
             Type type = typeof(System.Windows.Controls.Canvas);
             DependencyProperty  dp = System.Windows.Controls.Canvas.RightProperty;
-            var bamlMember = new WpfKnownMember( this,  // Schema Context
+            var bamlMember = new WpfKnownMember(this,  // Schema Context
                             this.GetXamlType(typeof(System.Windows.Controls.Canvas)), // DeclaringType
                             "Right", // Name
                              dp, // DependencyProperty
                             false, // IsReadOnly
                             true // IsAttachable
-                                     );
-            bamlMember.TypeConverterType = typeof(System.Windows.LengthConverter);
+                                     )
+            {
+                TypeConverterType = typeof(System.Windows.LengthConverter)
+            };
             bamlMember.Freeze();
             return bamlMember;
         }
@@ -8388,14 +9082,16 @@ namespace System.Windows.Baml2006
         {
             Type type = typeof(System.Windows.Media.Animation.Storyboard);
             DependencyProperty  dp = System.Windows.Media.Animation.Storyboard.TargetPropertyProperty;
-            var bamlMember = new WpfKnownMember( this,  // Schema Context
+            var bamlMember = new WpfKnownMember(this,  // Schema Context
                             this.GetXamlType(typeof(System.Windows.Media.Animation.Storyboard)), // DeclaringType
                             "TargetProperty", // Name
                              dp, // DependencyProperty
                             false, // IsReadOnly
                             true // IsAttachable
-                                     );
-            bamlMember.TypeConverterType = typeof(System.Windows.PropertyPathConverter);
+                                     )
+            {
+                TypeConverterType = typeof(System.Windows.PropertyPathConverter)
+            };
             bamlMember.Freeze();
             return bamlMember;
         }

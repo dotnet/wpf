@@ -784,14 +784,6 @@ namespace System.Windows
 
             if (tc != null && tc.CanConvertFrom(typeof(string)))
             {
-                // PreSharp uses message numbers that the C# compiler doesn't know about.
-                // Disable the C# complaints, per the PreSharp documentation.
-                #pragma warning disable 1634, 1691
-
-                // PreSharp complains about catching NullReference (and other) exceptions.
-                // It doesn't recognize that IsCritical[Application]Exception() handles these correctly.
-                #pragma warning disable 56500
-
                 try
                 {
                     value = tc.ConvertFromString(null, CultureInfo.InvariantCulture,
@@ -815,9 +807,6 @@ namespace System.Windows
                     if (throwOnError)
                         throw;
                 }
-
-                #pragma warning restore 56500
-                #pragma warning restore 1634, 1691
             }
 
             if (value == null && type.IsAssignableFrom(typeof(string)))

@@ -14,7 +14,7 @@ using System.Windows.Data;
 using System.Windows.Controls.Primitives;
 
 // Disable CS3001: Warning as Error: not CLS-compliant
-#pragma warning disable 3001
+#pragma warning disable CS3001
 
 namespace System.Windows.Controls
 {
@@ -108,8 +108,10 @@ namespace System.Windows.Controls
             // Because TabItem use negative margins some TabItems overlap which would changes the directional navigation if we don't reduce the bounding box
             if (isSelected)
             {
-                Binding binding = new Binding("Margin");
-                binding.Source = tabItem;
+                Binding binding = new Binding("Margin")
+                {
+                    Source = tabItem
+                };
                 BindingOperations.SetBinding(tabItem, KeyboardNavigation.DirectionalNavigationMarginProperty, binding);
             }
             else

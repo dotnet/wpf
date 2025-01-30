@@ -267,8 +267,10 @@ namespace Microsoft.Windows.Controls.Ribbon
             // Bind to Button.IsPressed and set MenuItem.IsPressed manually.
             if (_partHeaderButton != null)
             {
-                Binding binding = new Binding("IsPressed");
-                binding.Source = _partHeaderButton;
+                Binding binding = new Binding("IsPressed")
+                {
+                    Source = _partHeaderButton
+                };
                 this.SetBinding(IsPressedInternalProperty, binding);
             }
         }

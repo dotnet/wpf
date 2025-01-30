@@ -324,9 +324,11 @@ namespace System.Windows.Controls.Primitives
 
             if (TemplatedParent is ToolBar && !HasNonDefaultValue(OrientationProperty))
             {
-                Binding binding = new Binding();
-                binding.RelativeSource = RelativeSource.TemplatedParent;
-                binding.Path = new PropertyPath(ToolBar.OrientationProperty);
+                Binding binding = new Binding
+                {
+                    RelativeSource = RelativeSource.TemplatedParent,
+                    Path = new PropertyPath(ToolBar.OrientationProperty)
+                };
                 SetBinding(OrientationProperty, binding);
             }
         }

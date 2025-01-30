@@ -306,8 +306,8 @@ namespace MS.Internal.IO.Packaging
                     {
                         _isolatedStorageStream.Seek(0, SeekOrigin.Begin);
                         PackagingUtilities.CopyStream(_isolatedStorageStream, stream,
-                                                Int64.MaxValue/*bytes to copy*/,
-                                                0x80000 /*512K buffer size */);
+                                                bytesToCopy: Int64.MaxValue,
+                                                bufferSize: 0x80000 /* 512K */);
                     }
                  }
                 else
@@ -654,8 +654,8 @@ namespace MS.Internal.IO.Packaging
                             _isolatedStorageStream.Seek(0, SeekOrigin.Begin);
                             newMemStreamBlock.Stream.Seek(0, SeekOrigin.Begin);
                             PackagingUtilities.CopyStream(_isolatedStorageStream, newMemStreamBlock.Stream,
-                                                    Int64.MaxValue/*bytes to copy*/,
-                                                    0x80000 /*512K buffer size */);
+                                                    bytesToCopy: Int64.MaxValue,
+                                                    bufferSize: 0x80000 /* 512K */);
                         }
 
                         Debug.Assert(newMemStreamBlock.Stream.Length > 0);

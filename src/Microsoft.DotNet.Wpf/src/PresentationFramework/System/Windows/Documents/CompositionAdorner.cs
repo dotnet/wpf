@@ -270,8 +270,10 @@ namespace System.Windows.Documents
 
                         double squiggleGap = halfLineHeight;
 
-                        PathFigure pathFigure = new PathFigure();
-                        pathFigure.StartPoint = pathPoint;
+                        PathFigure pathFigure = new PathFigure
+                        {
+                            StartPoint = pathPoint
+                        };
 
                         int indexPoint = 0;
 

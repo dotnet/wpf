@@ -2,17 +2,6 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-//
-// Description: DocumentViewerBase is a minimal base class, providing only
-//              the functionality common across document viewing scenarios.
-//              The base class provides no user interface, very few properties,
-//              and minimal policy. Functionality included in the base class:
-//              BringIntoView support & Print API services
-//              and Annotation support.
-//
-#pragma warning disable 1634, 1691  // avoid generating warnings about unknown
-// message numbers and unknown pragmas for PRESharp contol
-
 using System.Collections;               // IEnumerator
 using System.Collections.ObjectModel;   // ReadOnlyCollection<T>
 using System.Windows.Annotations;       // AnnotationService
@@ -1025,9 +1014,11 @@ namespace System.Windows.Controls.Primitives
             if (textContainer != null && this.TextEditorRenderScope != null && textContainer.TextSelection == null)
             {
                 _textView = new MultiPageTextView(this, this.TextEditorRenderScope, textContainer);
-                _textEditor = new TextEditor(textContainer, this, false);
-                _textEditor.IsReadOnly = !IsEditingEnabled;
-                _textEditor.TextView = _textView;
+                _textEditor = new TextEditor(textContainer, this, false)
+                {
+                    IsReadOnly = !IsEditingEnabled,
+                    TextView = _textView
+                };
                 textContainer.TextView = _textView;
             }
 
@@ -1150,9 +1141,8 @@ namespace System.Windows.Controls.Primitives
                     if (child != null)
                     {
                         // Special case UIElements already connected to visual tree.
-                        if (args.TargetObject is UIElement)
+                        if (args.TargetObject is UIElement targetObject)
                         {
-                            UIElement targetObject = (UIElement)args.TargetObject;
                             if (VisualTreeHelper.IsAncestorOf(this, targetObject))
                             {
                                 targetRect = args.TargetRect;
@@ -1541,11 +1531,9 @@ namespace System.Windows.Controls.Primitives
                     {
                         pageNumber = Convert.ToInt32(args.Parameter, System.Globalization.CultureInfo.CurrentCulture);
                     }
-#pragma warning disable 56502 // Allow empty catch statements.
                     catch (InvalidCastException) { }
                     catch (OverflowException) { }
                     catch (FormatException) { }
-#pragma warning restore 56502
 
                     if (pageNumber >= 0)
                     {
@@ -1768,5 +1756,3 @@ namespace System.Windows.Controls.Primitives
         #endregion IServiceProvider
     }
 }
-#pragma warning enable 1634, 1691
-

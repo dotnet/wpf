@@ -2,8 +2,6 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-#pragma warning disable 1634, 1691 // Allow suppression of certain presharp messages
-
 using System.IO;
 using System.IO.Packaging;
 using System.Collections.ObjectModel;
@@ -1068,12 +1066,10 @@ namespace System.Windows.Media.Imaging
                     }
                     else
                     {
-                        #pragma warning disable 6518
                         // We don't have an absolute URI, so we don't necessarily know
                         // if it is a file, but we'll have to assume it is and try to
                         // create a stream from the original string.
                         bitmapStream = new System.IO.FileStream(uri.OriginalString, FileMode.Open, FileAccess.Read, FileShare.Read);
-                        #pragma warning restore 6518
                     }
 
                     uriStream = bitmapStream;
@@ -1170,12 +1166,9 @@ namespace System.Windows.Media.Imaging
             catch
             {
                 bitmapStream.Close();
-                #pragma warning disable 6500
 
                 decoderHandle = null;
                 throw;
-
-                #pragma warning restore 6500
             }
             finally
             {

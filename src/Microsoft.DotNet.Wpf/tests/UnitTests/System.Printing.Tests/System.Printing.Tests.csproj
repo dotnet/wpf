@@ -1,0 +1,31 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <Nullable>enable</Nullable>
+    <Platforms>x64;x86;arm64</Platforms>
+    <RootNamespace />
+    <TargetFramework Condition="!$(TargetFramework.Contains('windows'))">$(TargetFramework)-windows</TargetFramework>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <StrongNameKeyId>Open</StrongNameKeyId>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="FluentAssertions" Version="$(FluentAssertionsVersion)" />
+    <PackageReference Include="xunit.stafact" Version="$(XUnitStaFactPackageVersion)" />
+    <PackageReference Include="System.Configuration.ConfigurationManager" Version="$(SystemConfigurationConfigurationManagerPackageVersion)" />
+    <PackageReference Include="System.Private.Windows.Core.TestUtilities" Version="$(SystemPrivateWindowsCoreTestUtilitiesVersion)" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <MicrosoftPrivateWinFormsReference Include="System.Private.Windows.Core" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="$(WpfSourceDir)WindowsBase\WindowsBase.csproj" />
+    <ProjectReference Include="$(WpfSourceDir)System.Xaml\System.Xaml.csproj" />
+    <ProjectReference Include="$(WpfSourceDir)System.Printing\System.Printing.vcxproj" />
+    <ProjectReference Include="$(WpfSourceDir)PresentationCore\PresentationCore.csproj" />
+    <ProjectReference Include="$(WpfSourceDir)ReachFramework\ReachFramework.csproj" />
+    <ProjectReference Include="$(WpfSourceDir)System.Windows.Primitives\System.Windows.Primitives.csproj" />
+  </ItemGroup>
+</Project>

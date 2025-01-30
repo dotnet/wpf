@@ -135,12 +135,13 @@ namespace MS.Internal.PtsHost
             PTS.FSSUBPAGEDETAILS subpageDetails;
             PTS.Validate(PTS.FsQuerySubpageDetails(PtsContext.Context, _paraHandle, out subpageDetails));
 
-            PTS.FSRECT viewportSubpage = new PTS.FSRECT();
-
-            viewportSubpage.u = viewport.u - ContentRect.u;
-            viewportSubpage.v = viewport.v - ContentRect.v;
-            viewportSubpage.du = viewport.du;
-            viewportSubpage.dv = viewport.dv;
+            PTS.FSRECT viewportSubpage = new PTS.FSRECT
+            {
+                u = viewport.u - ContentRect.u,
+                v = viewport.v - ContentRect.v,
+                du = viewport.du,
+                dv = viewport.dv
+            };
 
             // Subpage content may be simple or complex -
             // depending of set of features used in the content of the subpage.

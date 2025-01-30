@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -22,14 +22,7 @@ using BuildInfo = MS.Internal.PresentationFramework.BuildInfo;
 //                  \wcp\Framework\Ms\Utility\GridContentElementCollection.tb
 //                  \wcp\Framework\Ms\Utility\RowDefinitionCollection.ti
 //
-//
-//
-//
-
-//
 //---------------------------------------------------------------------------
-
-#pragma warning disable 1634, 1691  // suppressing PreSharp warnings
 
 namespace System.Windows.Controls
 {
@@ -798,12 +791,12 @@ namespace System.Windows.Controls
                     {
                         if (_index == -1)
                         {
-                            #pragma warning suppress 6503 // IEnumerator.Current is documented to throw this exception
+                            // IEnumerator.Current is documented to throw this exception
                             throw new InvalidOperationException(SR.EnumeratorNotStarted);
                         }
                         else
                         {
-                            #pragma warning suppress 6503 // IEnumerator.Current is documented to throw this exception
+                            // IEnumerator.Current is documented to throw this exception
                             throw new InvalidOperationException(SR.EnumeratorReachedEnd);
                         }
                     }
@@ -824,12 +817,12 @@ namespace System.Windows.Controls
                     {
                         if (_index == -1)
                         {
-                            #pragma warning suppress 6503 // IEnumerator.Current is documented to throw this exception
+                            // IEnumerator.Current is documented to throw this exception
                             throw new InvalidOperationException(SR.EnumeratorNotStarted);
                         }
                         else
                         {
-                            #pragma warning suppress 6503 // IEnumerator.Current is documented to throw this exception
+                            // IEnumerator.Current is documented to throw this exception
                             throw new InvalidOperationException(SR.EnumeratorReachedEnd);
                         }
                     }

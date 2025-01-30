@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -6,9 +6,6 @@
 // Description: Contains the ZoomPercentageConverter: TypeConverter for the
 //                ZoomPercentage property of DocumentViewer.
 //
-
-// Used to support the warnings disabled below
-#pragma warning disable 1634, 1691
 
 using System.Globalization;
 using System.Windows.Data;
@@ -145,64 +142,59 @@ namespace System.Windows.Documents
                 isValidArg = true;
             }
             // If value is a string, then parse
-            else if (value is string)
-            {
-                try
+            else if (value is string zoomString) // Remove whitespace on either end of the string.
                 {
-                    // Remove whitespace on either end of the string.
-                    string zoomString = (string)value;
-                    if ((culture != null) && !String.IsNullOrEmpty(zoomString))
+                    try
                     {
-                        zoomString = ((string)value).Trim();
-
-                        // If this is not a neutral culture attempt to remove the percent symbol.
-                        if ((!culture.IsNeutralCulture) && (zoomString.Length > 0) && (culture.NumberFormat != null))
+                        if ((culture != null) && !String.IsNullOrEmpty(zoomString))
                         {
-                            // This will strip the percent sign (if it exists) depending on the culture information.
-                            switch (culture.NumberFormat.PercentPositivePattern)
+                            zoomString = ((string)value).Trim();
+
+                            // If this is not a neutral culture attempt to remove the percent symbol.
+                            if ((!culture.IsNeutralCulture) && (zoomString.Length > 0) && (culture.NumberFormat != null))
                             {
-                                case 0: // n %
-                                case 1: // n%
-                                    // Remove the last character if it is a percent sign
-                                    if (zoomString.Length - 1 == zoomString.LastIndexOf(
-                                                                    culture.NumberFormat.PercentSymbol,
-                                                                    StringComparison.CurrentCultureIgnoreCase))
-                                    {
-                                        zoomString = zoomString.Substring(0, zoomString.Length - 1);
-                                    }
-                                    break;
-                                case 2: // %n
-                                    // Remove the first character if it is a percent sign.
-                                    if (0 == zoomString.IndexOf(
-                                                culture.NumberFormat.PercentSymbol,
-                                                StringComparison.CurrentCultureIgnoreCase))
-                                    {
-                                        zoomString = zoomString.Substring(1);
-                                    }
-                                    break;
+                                // This will strip the percent sign (if it exists) depending on the culture information.
+                                switch (culture.NumberFormat.PercentPositivePattern)
+                                {
+                                    case 0: // n %
+                                    case 1: // n%
+                                            // Remove the last character if it is a percent sign
+                                        if (zoomString.Length - 1 == zoomString.LastIndexOf(
+                                                                        culture.NumberFormat.PercentSymbol,
+                                                                        StringComparison.CurrentCultureIgnoreCase))
+                                        {
+                                            zoomString = zoomString.Substring(0, zoomString.Length - 1);
+                                        }
+                                        break;
+                                    case 2: // %n
+                                            // Remove the first character if it is a percent sign.
+                                        if (0 == zoomString.IndexOf(
+                                                    culture.NumberFormat.PercentSymbol,
+                                                    StringComparison.CurrentCultureIgnoreCase))
+                                        {
+                                            zoomString = zoomString.Substring(1);
+                                        }
+                                        break;
+                                }
                             }
+
+                            // If this conversion throws then the string wasn't a valid zoom value.
+                            zoomValue = System.Convert.ToDouble(zoomString, culture);
+                            isValidArg = true;
                         }
-
-                        // If this conversion throws then the string wasn't a valid zoom value.
-                        zoomValue = System.Convert.ToDouble(zoomString, culture);
-                        isValidArg = true;
                     }
-                }
-// Allow empty catch statements.
-#pragma warning disable 56502
 
-                // Catch only the expected parse exceptions
-                catch (ArgumentOutOfRangeException) { }
-                catch (ArgumentNullException) { }
-                catch (FormatException) { }
-                catch (OverflowException) { }
 
-// Disallow empty catch statements.
-#pragma warning restore 56502
+                    // Catch only the expected parse exceptions
+                    catch (ArgumentOutOfRangeException) { }
+                    catch (ArgumentNullException) { }
+                    catch (FormatException) { }
+                    catch (OverflowException) { }
+
             }
 
-            // Argument wasn't a valid percent, set error value.
-            if (!isValidArg)
+                // Argument wasn't a valid percent, set error value.
+                if (!isValidArg)
             {
                 return DependencyProperty.UnsetValue;
             }

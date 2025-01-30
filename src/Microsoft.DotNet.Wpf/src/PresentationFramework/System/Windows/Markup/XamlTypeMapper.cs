@@ -25,12 +25,6 @@ using MS.Internal;  // CriticalExceptions
 
 #endif
 
-// Disabling 1634 and 1691:
-// In order to avoid generating warnings about unknown message numbers and
-// unknown pragmas when compiling C# source code with the C# compiler,
-// you need to disable warnings 1634 and 1691. (Presharp Documentation)
-#pragma warning disable 1634, 1691
-
 #if PBTCOMPILER
 namespace MS.Internal.Markup
 #else
@@ -279,20 +273,21 @@ namespace System.Windows.Markup
 #if !PBTCOMPILER
         internal XamlTypeMapper Clone()
         {
-            XamlTypeMapper newMapper = new XamlTypeMapper(_assemblyNames.Clone() as string[]);
+            XamlTypeMapper newMapper = new XamlTypeMapper(_assemblyNames.Clone() as string[])
+            {
+                _mapTable = _mapTable,
+                _referenceAssembliesLoaded = _referenceAssembliesLoaded,
+                _lineNumber = _lineNumber,
+                _linePosition = _linePosition,
 
-            newMapper._mapTable = _mapTable;
-            newMapper._referenceAssembliesLoaded = _referenceAssembliesLoaded;
-            newMapper._lineNumber = _lineNumber;
-            newMapper._linePosition = _linePosition;
-
-            newMapper._namespaceMaps = _namespaceMaps.Clone() as NamespaceMapEntry[];
-            newMapper._typeLookupFromXmlHashtable = _typeLookupFromXmlHashtable.Clone() as Hashtable;
-            newMapper._namespaceMapHashList = _namespaceMapHashList.Clone() as Hashtable;
-            newMapper._typeInformationCache = CloneHybridDictionary(_typeInformationCache);
-            newMapper._piTable = CloneHybridDictionary(_piTable);
-            newMapper._piReverseTable = CloneStringDictionary(_piReverseTable);
-            newMapper._assemblyPathTable = CloneHybridDictionary(_assemblyPathTable);
+                _namespaceMaps = _namespaceMaps.Clone() as NamespaceMapEntry[],
+                _typeLookupFromXmlHashtable = _typeLookupFromXmlHashtable.Clone() as Hashtable,
+                _namespaceMapHashList = _namespaceMapHashList.Clone() as Hashtable,
+                _typeInformationCache = CloneHybridDictionary(_typeInformationCache),
+                _piTable = CloneHybridDictionary(_piTable),
+                _piReverseTable = CloneStringDictionary(_piReverseTable),
+                _assemblyPathTable = CloneHybridDictionary(_assemblyPathTable)
+            };
 
             return newMapper;
         }
@@ -2487,7 +2482,7 @@ namespace System.Windows.Markup
 
         private static bool IsInternalAllowedOnType(Type type)
         {
-            bool isInternalAllowed = ReflectionHelper.LocalAssemblyName == type.Assembly.GetName().Name ||
+            bool isInternalAllowed = ReflectionHelper.LocalAssemblyName == ReflectionUtils.GetAssemblyPartialName(type.Assembly) ||
                                      IsFriendAssembly(type.Assembly);
             _hasInternals = _hasInternals || isInternalAllowed;
             return isInternalAllowed;
@@ -2558,8 +2553,10 @@ namespace System.Windows.Markup
                                 }
                             }
                             // Create new data structure to store information for the current type
-                            typeAndSerializer = new TypeAndSerializer();
-                            typeAndSerializer.ObjectType = objectType;
+                            typeAndSerializer = new TypeAndSerializer
+                            {
+                                ObjectType = objectType
+                            };
 
                             break;
                         }
@@ -2987,8 +2984,10 @@ namespace System.Windows.Markup
             typeInformationCacheData = _typeInformationCache[type] as TypeInformationCacheData;
             if (null == typeInformationCacheData)
             {
-                typeInformationCacheData = new TypeInformationCacheData(type.BaseType);
-                typeInformationCacheData.ClrNamespace = type.Namespace;
+                typeInformationCacheData = new TypeInformationCacheData(type.BaseType)
+                {
+                    ClrNamespace = type.Namespace
+                };
 
                 _typeInformationCache[type] = typeInformationCacheData;
             }
@@ -3892,20 +3891,16 @@ namespace System.Windows.Markup
             _linePosition = 0;
             _isProtectedAttributeAllowed = false;
 
-            NamespaceMapEntry[] defaultNsMaps = _namespaceMapHashList[XamlReaderHelper.DefaultNamespaceURI] as NamespaceMapEntry[];
-            NamespaceMapEntry[] definitionNsMaps = _namespaceMapHashList[XamlReaderHelper.DefinitionNamespaceURI] as NamespaceMapEntry[];
-            NamespaceMapEntry[] definitionMetroNsMaps = _namespaceMapHashList[XamlReaderHelper.DefinitionMetroNamespaceURI] as NamespaceMapEntry[];
-
             _namespaceMapHashList.Clear();
-            if (null != defaultNsMaps)
+            if (_namespaceMapHashList[XamlReaderHelper.DefaultNamespaceURI] is NamespaceMapEntry[] defaultNsMaps)
             {
                 _namespaceMapHashList.Add(XamlReaderHelper.DefaultNamespaceURI, defaultNsMaps);
             }
-            if (null != definitionNsMaps)
+            if (_namespaceMapHashList[XamlReaderHelper.DefinitionNamespaceURI] is NamespaceMapEntry[] definitionNsMaps)
             {
                 _namespaceMapHashList.Add(XamlReaderHelper.DefinitionNamespaceURI, definitionNsMaps);
             }
-            if (null != definitionMetroNsMaps)
+            if (_namespaceMapHashList[XamlReaderHelper.DefinitionMetroNamespaceURI] is NamespaceMapEntry[] definitionMetroNsMaps)
             {
                 _namespaceMapHashList.Add(XamlReaderHelper.DefinitionMetroNamespaceURI, definitionMetroNsMaps);
             }
@@ -4013,8 +4008,7 @@ namespace System.Windows.Markup
                     "GetPropertyAndType must always be called before SetPropertyAndType");
 
                 // add the type taking a lock
-                PropertyAndType pAndT = _dpLookupHashtable[dpName] as PropertyAndType;
-                if (pAndT == null)
+                if (_dpLookupHashtable[dpName] is not PropertyAndType pAndT)
                 {
                     _dpLookupHashtable[dpName] = new PropertyAndType(null, dpInfo, false, true, ownerType, isInternal);
                 }

@@ -207,9 +207,11 @@ namespace System.Windows.Documents
         private static object CreateFlowDirectionBinding(object o)
         {
             Adorner adorner = (Adorner)o;
-            Binding binding = new Binding("FlowDirection");
-            binding.Mode = BindingMode.OneWay;
-            binding.Source = adorner.AdornedElement;
+            Binding binding = new Binding("FlowDirection")
+            {
+                Mode = BindingMode.OneWay,
+                Source = adorner.AdornedElement
+            };
             adorner.SetBinding(FlowDirectionProperty, binding);
 
             return null;

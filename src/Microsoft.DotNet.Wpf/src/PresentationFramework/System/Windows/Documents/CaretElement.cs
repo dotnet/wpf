@@ -18,9 +18,6 @@ using System.Windows.Controls.Primitives;
 
 namespace System.Windows.Documents
 {
-    // Disable pragma warnings to enable PREsharp pragmas
-#pragma warning disable 1634, 1691
-
     /// <summary>
     /// This class is sealed because it calls OnVisualChildrenChanged virtual in the
     /// constructor and it does not override it, but derived classes could.
@@ -64,8 +61,10 @@ namespace System.Windows.Documents
             // Set AllowDropProperty as "False" not to inherit the value from the ancestor.
             AllowDrop = false;
 
-            _caretElement = new CaretSubElement();
-            _caretElement.ClipToBounds = false;
+            _caretElement = new CaretSubElement
+            {
+                ClipToBounds = false
+            };
 
             AddVisualChild(_caretElement);
         }
@@ -718,8 +717,10 @@ namespace System.Windows.Documents
                     PathFigure pathFigure;
 
                     pathGeometry = new PathGeometry();
-                    pathFigure = new PathFigure();
-                    pathFigure.StartPoint = new Point(0, 0);
+                    pathFigure = new PathFigure
+                    {
+                        StartPoint = new Point(0, 0)
+                    };
                     pathFigure.Segments.Add(new LineSegment(new Point(-bidiCaretIndicatorWidth, 0), true));
                     pathFigure.Segments.Add(new LineSegment(new Point(0, _height / BidiIndicatorHeightRatio), true));
                     pathFigure.IsClosed = true;
@@ -900,9 +901,11 @@ namespace System.Windows.Documents
 
                 if (_blinkAnimationClock == null || _blinkAnimationClock.Timeline.Duration != blinkDuration)
                 {
-                    DoubleAnimationUsingKeyFrames blinkAnimation = new DoubleAnimationUsingKeyFrames();
-                    blinkAnimation.BeginTime = null;
-                    blinkAnimation.RepeatBehavior = RepeatBehavior.Forever;
+                    DoubleAnimationUsingKeyFrames blinkAnimation = new DoubleAnimationUsingKeyFrames
+                    {
+                        BeginTime = null,
+                        RepeatBehavior = RepeatBehavior.Forever
+                    };
                     blinkAnimation.KeyFrames.Add(new DiscreteDoubleKeyFrame(1, KeyTime.FromPercent(0.0)));
                     blinkAnimation.KeyFrames.Add(new DiscreteDoubleKeyFrame(0, KeyTime.FromPercent(0.5)));
                     blinkAnimation.Duration = blinkDuration;
@@ -1126,10 +1129,7 @@ namespace System.Windows.Documents
         {
             Invariant.Assert(_isSelectionActive, "Blink animation should only be required for an owner with active selection.");
 
-            // Disable PreSharp#6523 - Win32 GetCaretBlinkTime can return "0"
-            // without the error if SetCaretBlinkTime set as "0".
-#pragma warning disable 6523
-
+            // Win32 GetCaretBlinkTime can return "0" without the error if SetCaretBlinkTime set as "0".
             int caretBlinkTime = (int)SafeNativeMethods.GetCaretBlinkTime();
             if (caretBlinkTime == 0)
             {
@@ -1137,8 +1137,6 @@ namespace System.Windows.Documents
                 // exception.
                 return -1;
             }
-
-#pragma warning restore 6523
 
             return caretBlinkTime;
         }

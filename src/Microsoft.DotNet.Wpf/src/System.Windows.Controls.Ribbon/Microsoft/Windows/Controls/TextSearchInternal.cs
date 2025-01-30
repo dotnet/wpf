@@ -673,8 +673,10 @@ namespace Microsoft.Windows.Controls
 
         private static Binding CreateBinding(object item, string primaryTextPath)
         {
-            Binding binding = new Binding();
-            binding.Mode = BindingMode.OneWay;
+            Binding binding = new Binding
+            {
+                Mode = BindingMode.OneWay
+            };
 
             // Use xpath for xmlnodes (See Selector.PrepareItemValueBinding)
             if (AssemblyHelper.IsXmlNode(item))

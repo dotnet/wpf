@@ -246,10 +246,12 @@ namespace MS.Internal.Ink
         private static DrawingVisual CreateCursorDrawingVisual(Drawing drawing, int width, int height)
         {
             // Create a drawing brush with the drawing as its content.
-            DrawingBrush db = new DrawingBrush(drawing);
-            db.Stretch = Stretch.None;
-            db.AlignmentX = AlignmentX.Center;
-            db.AlignmentY = AlignmentY.Center;
+            DrawingBrush db = new DrawingBrush(drawing)
+            {
+                Stretch = Stretch.None,
+                AlignmentX = AlignmentX.Center,
+                AlignmentY = AlignmentY.Center
+            };
 
             // Create a drawing visual with our drawing brush.
             DrawingVisual drawingVisual = new DrawingVisual();
@@ -322,13 +324,15 @@ namespace MS.Internal.Ink
             StylusPointCollection stylusPoints = new StylusPointCollection();
             stylusPoints.Add(new StylusPoint(0f, 0f));
 
-            DrawingAttributes da = new DrawingAttributes();
-            da.Color = drawingAttributes.Color;
-            da.Width = drawingAttributes.Width;
-            da.Height = drawingAttributes.Height;
-            da.StylusTipTransform = drawingAttributes.StylusTipTransform;
-            da.IsHighlighter = drawingAttributes.IsHighlighter;
-            da.StylusTip = drawingAttributes.StylusTip;
+            DrawingAttributes da = new DrawingAttributes
+            {
+                Color = drawingAttributes.Color,
+                Width = drawingAttributes.Width,
+                Height = drawingAttributes.Height,
+                StylusTipTransform = drawingAttributes.StylusTipTransform,
+                IsHighlighter = drawingAttributes.IsHighlighter,
+                StylusTip = drawingAttributes.StylusTip
+            };
 
             Stroke singleStroke = new Stroke(stylusPoints, da);
             // 
@@ -446,8 +450,10 @@ namespace MS.Internal.Ink
 
                 PathGeometry pathGeometry = new PathGeometry();
 
-                PathFigure path = new PathFigure();
-                path.StartPoint = new Point(5, 5);
+                PathFigure path = new PathFigure
+                {
+                    StartPoint = new Point(5, 5)
+                };
 
                 LineSegment segment = new LineSegment(new Point(16, 5), true);
                 segment.Freeze();
@@ -470,8 +476,10 @@ namespace MS.Internal.Ink
 
                 pathGeometry.Figures.Add(path);
 
-                path = new PathFigure();
-                path.StartPoint = new Point(5, 5);
+                path = new PathFigure
+                {
+                    StartPoint = new Point(5, 5)
+                };
 
                 segment = new LineSegment(new Point(5, 10), true);
                 segment.Freeze();
@@ -495,8 +503,10 @@ namespace MS.Internal.Ink
                 pathGeometry.Freeze();
 
                 PathGeometry pathGeometry1 = new PathGeometry();
-                path = new PathFigure();
-                path.StartPoint = new Point(15, 15);
+                path = new PathFigure
+                {
+                    StartPoint = new Point(15, 15)
+                };
 
                 segment = new LineSegment(new Point(15, 19), true);
                 segment.Freeze();

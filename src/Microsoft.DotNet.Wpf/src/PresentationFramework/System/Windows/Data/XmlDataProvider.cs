@@ -352,7 +352,7 @@ namespace System.Windows.Data
             Uri sourceUri = this.Source;
             if (sourceUri.IsAbsoluteUri == false)
             {
-                Uri baseUri = (_baseUri != null) ? _baseUri : BindUriHelper.BaseUri;
+                Uri baseUri = _baseUri ?? BindUriHelper.BaseUri;
                 sourceUri = BindUriHelper.GetResolvedUri(baseUri, sourceUri);
             }
 

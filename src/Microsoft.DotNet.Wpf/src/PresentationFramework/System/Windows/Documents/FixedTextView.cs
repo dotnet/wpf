@@ -92,15 +92,13 @@ namespace System.Windows.Documents
                 {
                     pos = _CreateTextPointerFromGlyphs(g, point);
                 }
-                else if (e is Image)
+                else if (e is Image im)
                 {
-                    Image im = (Image)e;
                     FixedPosition fixedp = new FixedPosition(this.FixedPage.CreateFixedNode(this.PageIndex, im), 0);
                     pos = _CreateTextPointer(fixedp, LogicalDirection.Forward);
                 }
-                else if (e is Path)
+                else if (e is Path p)
                 {
-                    Path p = (Path)e;
                     if (p.Fill is ImageBrush)
                     {
                         FixedPosition fixedp = new FixedPosition(this.FixedPage.CreateFixedNode(this.PageIndex, p), 0);
@@ -196,17 +194,15 @@ namespace System.Windows.Documents
             }
 
             DependencyObject element = this.FixedPage.GetElement(fixedp.Node);
-            if (element is Glyphs)
+            if (element is Glyphs g)
             {
-                Glyphs g = (Glyphs)element;
                 designRect = _GetGlyphRunDesignRect(g, fixedp.Offset, fixedp.Offset);
                 // need to do transform
                 GeneralTransform tran = g.TransformToAncestor(this.FixedPage);
                 designRect = _GetTransformedCaretRect(tran, designRect.TopLeft, designRect.Height);
             }
-            else if (element is Image)
+            else if (element is Image image)
             {
-                Image image = (Image)element;
                 GeneralTransform tran = image.TransformToAncestor(this.FixedPage);
                 Point offset = new Point(0, 0);
                 if (fixedp.Offset > 0)
@@ -215,9 +211,8 @@ namespace System.Windows.Documents
                 }
                 designRect = _GetTransformedCaretRect(tran, offset, image.ActualHeight);
             }
-            else if (element is Path)
+            else if (element is Path path)
             {
-                Path path = (Path)element;
                 GeneralTransform tran = path.TransformToAncestor(this.FixedPage);
                 Rect bounds = path.Data.Bounds;
                 Point offset = bounds.TopLeft;
@@ -281,8 +276,10 @@ namespace System.Windows.Documents
                         backgroundRect.Intersect(clipRect);
                     }
 
-                    Geometry thisGeometry = new RectangleGeometry(backgroundRect);
-                    thisGeometry.Transform = t;
+                    Geometry thisGeometry = new RectangleGeometry(backgroundRect)
+                    {
+                        Transform = t
+                    };
 
                     backgroundRect = transform.TransformBounds(backgroundRect);
 
@@ -440,9 +437,8 @@ namespace System.Windows.Documents
             if (_GetFixedPosition(ftp, out fixedp))
             {
                 DependencyObject element = this.FixedPage.GetElement(fixedp.Node);
-                if (element is Glyphs)
+                if (element is Glyphs g)
                 {
-                    Glyphs g = (Glyphs)element;
                     int characterCount = (g.UnicodeString == null ? 0 : g.UnicodeString.Length);
                     if (fixedp.Offset == characterCount)
                     {   //end of line -- allow caret
@@ -511,9 +507,8 @@ namespace System.Windows.Documents
             if (_GetFixedPosition(ftp, out fixedp))
             {
                 DependencyObject element = this.FixedPage.GetElement(fixedp.Node);
-                if (element is Glyphs)
+                if (element is Glyphs g)
                 {
-                    Glyphs g = (Glyphs)element;
                     GlyphRun run = g.ToGlyphRun();
 
                     int characterCount = (run.Characters == null) ? 0 : run.Characters.Count;

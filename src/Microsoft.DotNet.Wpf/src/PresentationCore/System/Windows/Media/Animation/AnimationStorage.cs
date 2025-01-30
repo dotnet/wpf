@@ -393,10 +393,12 @@ namespace System.Windows.Media.Animation
                     {
                         // else entry has modifiers; preserve expression but throw away
                         // coerced & animated values, since we'll be recomputing an animated value
-                        newEntry = new EffectiveValueEntry();
-                        newEntry.BaseValueSourceInternal = oldEntry.BaseValueSourceInternal;
-                        newEntry.PropertyIndex = oldEntry.PropertyIndex;
-                        newEntry.HasExpressionMarker = oldEntry.HasExpressionMarker;
+                        newEntry = new EffectiveValueEntry
+                        {
+                            BaseValueSourceInternal = oldEntry.BaseValueSourceInternal,
+                            PropertyIndex = oldEntry.PropertyIndex,
+                            HasExpressionMarker = oldEntry.HasExpressionMarker
+                        };
 
                         value = oldEntry.ModifiedValue.BaseValue;
                         if (oldEntry.IsDeferredReference)

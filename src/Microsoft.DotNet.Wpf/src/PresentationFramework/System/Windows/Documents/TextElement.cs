@@ -6,9 +6,6 @@
 // Description: Base class for content in text based FrameworkElement.
 //
 
-// Enable presharp pragma warning suppress directives.
-#pragma warning disable 1634, 1691
-
 using System.Collections;
 using System.ComponentModel;
 using System.Windows.Markup;
@@ -111,9 +108,6 @@ namespace System.Windows.Documents
                 // extracted before the final insert.
 
                 SplayTreeNode startNode = start.GetScopingNode();
-                // Suppress presharp 6506: Parameter 'end' to this public method must be validated.
-                // We already validated it indirectly above, when calling ValidationHelper.VerifyPositionPair.
-                #pragma warning suppress 6506
                 SplayTreeNode endNode = end.GetScopingNode();
 
                 if (startNode == _textElementNode)
@@ -153,8 +147,6 @@ namespace System.Windows.Documents
                 }
                 else
                 {
-                    // Presharp doesn't understand that by design TextPointer.TextContainer can never be null.
-                    #pragma warning suppress 6506
                     if (tree == start.TextContainer)
                     {
                         //
@@ -188,8 +180,6 @@ namespace System.Windows.Documents
                             tree.EndChange();
                         }
 
-                        // Presharp doesn't understand that by design TextPointer.TextContainer can never be null.
-                        #pragma warning suppress 56506
                         start.TextContainer.BeginChange();
                         try
                         {
@@ -245,8 +235,6 @@ namespace System.Windows.Documents
                 {
                     tree = EnsureTextContainer();
 
-                    // Presharp doesn't understand that by design EnsureTextContainer can never return null.
-                    #pragma warning suppress 6506
                     tree.BeginChange();
                     try
                     {
@@ -262,8 +250,6 @@ namespace System.Windows.Documents
             {
                 tree = textPosition.TextContainer;
 
-                // Presharp doesn't understand that by design TextPointer.TextContainer can never be null.
-                #pragma warning suppress 56506
                 tree.BeginChange();
                 try
                 {

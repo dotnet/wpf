@@ -852,8 +852,10 @@ namespace System.Windows.Controls
             if (DataGridHelper.IsGridLineVisible(dataGrid, /*isHorizontal = */ false))
             {
                 double thickness = DataGridOwner.VerticalGridLineThickness;
-                Rect rect = new Rect(new Size(thickness, RenderSize.Height));
-                rect.X = RenderSize.Width - thickness;
+                Rect rect = new Rect(new Size(thickness, RenderSize.Height))
+                {
+                    X = RenderSize.Width - thickness
+                };
 
                 drawingContext.DrawRectangle(DataGridOwner.VerticalGridLinesBrush, null, rect);
             }
@@ -861,8 +863,10 @@ namespace System.Windows.Controls
             if (DataGridHelper.IsGridLineVisible(dataGrid, /*isHorizontal = */ true))
             {
                 double thickness = dataGrid.HorizontalGridLineThickness;
-                Rect rect = new Rect(new Size(RenderSize.Width, thickness));
-                rect.Y = RenderSize.Height - thickness;
+                Rect rect = new Rect(new Size(RenderSize.Width, thickness))
+                {
+                    Y = RenderSize.Height - thickness
+                };
 
                 drawingContext.DrawRectangle(dataGrid.HorizontalGridLinesBrush, null, rect);
             }

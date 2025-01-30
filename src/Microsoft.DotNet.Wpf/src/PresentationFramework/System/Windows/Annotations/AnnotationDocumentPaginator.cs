@@ -292,12 +292,16 @@ namespace System.Windows.Annotations
             // causes the page to be disposed
             Size tempSize = page.Size;
 
-            AdornerDecorator decorator = new AdornerDecorator();
-            decorator.FlowDirection = _flowDirection;
-            DocumentPageView dpv = new DocumentPageView();
-            dpv.UseAsynchronousGetPage = false;
-            dpv.DocumentPaginator = _originalPaginator;
-            dpv.PageNumber = pageNumber;
+            AdornerDecorator decorator = new AdornerDecorator
+            {
+                FlowDirection = _flowDirection
+            };
+            DocumentPageView dpv = new DocumentPageView
+            {
+                UseAsynchronousGetPage = false,
+                DocumentPaginator = _originalPaginator,
+                PageNumber = pageNumber
+            };
             decorator.Child = dpv;
 
             // Arrange the first time to get the DPV setup right

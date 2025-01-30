@@ -988,9 +988,11 @@ namespace System.Windows.Media
 
         private static PathGeometryData MakeEmptyPathGeometryData()
         {
-            PathGeometryData data = new PathGeometryData();
-            data.FillRule = FillRule.EvenOdd;
-            data.Matrix = CompositionResourceManager.MatrixToMilMatrix3x2D(Matrix.Identity);
+            PathGeometryData data = new PathGeometryData
+            {
+                FillRule = FillRule.EvenOdd,
+                Matrix = CompositionResourceManager.MatrixToMilMatrix3x2D(Matrix.Identity)
+            };
 
             unsafe
             {

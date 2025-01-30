@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -20,12 +20,13 @@ namespace MS.Win32
             const int maxPathSize = 260;
             const UInt32 fieldControl = (UInt32)maxPathSize;
 
-            NativeMethods.InternetCacheConfigInfo icci =
-                new NativeMethods.InternetCacheConfigInfo();
+                NativeMethods.InternetCacheConfigInfo icci =
+                    new NativeMethods.InternetCacheConfigInfo
+                    {
+                        CachePath = new string(new char[maxPathSize])
+                    };
 
-            icci.CachePath = new string(new char[maxPathSize]);
-
-            UInt32 size = (UInt32)Marshal.SizeOf(icci);
+                UInt32 size = (UInt32)Marshal.SizeOf(icci);
             icci.dwStructSize = size;
             
             bool passed = UnsafeNativeMethods.GetUrlCacheConfigInfo(

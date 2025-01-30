@@ -21,12 +21,6 @@ using MS.Internal;
 using MS.Internal.Utility;
 using System.Windows.Navigation;
 
-// Disabling 1634 and 1691:
-// In order to avoid generating warnings about unknown message numbers and
-// unknown pragmas when compiling C# source code with the C# compiler,
-// you need to disable warnings 1634 and 1691. (Presharp Documentation)
-#pragma warning disable 1634, 1691
-
 namespace System.Windows.Markup
 {
     // Unlike the tokenizer and the writer, the reader knows the difference between CLR
@@ -2362,9 +2356,11 @@ namespace System.Windows.Markup
                 BamlAttributeInfoRecord attribInfo = MapTable.GetAttributeInfoFromId(memberId);
                 if (attribInfo != null)
                 {
-                    StaticExtension se = new StaticExtension();
-                    se.MemberType = MapTable.GetTypeFromId(attribInfo.OwnerTypeId);
-                    se.Member = attribInfo.Name;
+                    StaticExtension se = new StaticExtension
+                    {
+                        MemberType = MapTable.GetTypeFromId(attribInfo.OwnerTypeId),
+                        Member = attribInfo.Name
+                    };
                     valueObject = se.ProvideValue(null);
                 }
             }
@@ -3127,8 +3123,10 @@ namespace System.Windows.Markup
                 // arrays are a little different than other collections, because we wrap them in an array extension.
                 // Here we create an array extension and assign the element type based on the property.
 
-                ArrayExtension arrayExt = new ArrayExtension();
-                arrayExt.Type = context.ExpectedType.GetElementType();
+                ArrayExtension arrayExt = new ArrayExtension
+                {
+                    Type = context.ExpectedType.GetElementType()
+                };
                 holder.Collection = arrayExt;
             }
             else if (holder.DefaultCollection != null)
@@ -3804,9 +3802,8 @@ namespace System.Windows.Markup
 
             // Check if we have a Nullable type.  If so and the object being set is
             // not a Nullable or an expression, then attempt a conversion.
-            if (memberInfo is PropertyInfo)
+            if (memberInfo is PropertyInfo propertyInfo)
             {
-                PropertyInfo propertyInfo = (PropertyInfo)memberInfo;
                 value = OptionallyMakeNullable(propertyInfo.PropertyType, value, propertyInfo.Name);
 
                 propertyInfo.SetValue(parentObject, value, BindingFlags.Default, null, null

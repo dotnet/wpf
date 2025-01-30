@@ -299,10 +299,12 @@ namespace System.Windows
         [System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Advanced)]
         public void PushBranchNode(object node, object source)
         {
-            BranchNode branchNode = new BranchNode();
-            branchNode.Node = node;
-            branchNode.Source = source;
-            
+            BranchNode branchNode = new BranchNode
+            {
+                Node = node,
+                Source = source
+            };
+
             (_branchNodeStack ??= new Stack<BranchNode>(1)).Push(branchNode);
         }
 

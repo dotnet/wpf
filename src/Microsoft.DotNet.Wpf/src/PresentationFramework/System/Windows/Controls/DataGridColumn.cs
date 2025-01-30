@@ -1151,8 +1151,10 @@ namespace System.Windows.Controls
             // determine the type of column to be created and create one
             if (propertyType.IsEnum)
             {
-                comboBoxColumn = new DataGridComboBoxColumn();
-                comboBoxColumn.ItemsSource = Enum.GetValues(propertyType);
+                comboBoxColumn = new DataGridComboBoxColumn
+                {
+                    ItemsSource = Enum.GetValues(propertyType)
+                };
                 dataGridColumn = comboBoxColumn;
             }
             else if (typeof(string).IsAssignableFrom(propertyType))

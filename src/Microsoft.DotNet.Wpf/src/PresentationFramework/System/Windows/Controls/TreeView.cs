@@ -312,8 +312,10 @@ namespace System.Windows.Controls
             if (bindingExpr == null)
             {
                 // create the binding
-                binding = new Binding();
-                binding.Source = null;
+                binding = new Binding
+                {
+                    Source = null
+                };
 
                 if (useXml)
                 {

@@ -924,7 +924,7 @@ namespace System.Windows.Documents
                 textPointer = null;
             }
             flowContentPosition = textPointer as TextPointer;
-            return (flowContentPosition != null) ? flowContentPosition : ContentPosition.Missing;
+            return flowContentPosition ?? ContentPosition.Missing;
         }
 
         /// <summary>

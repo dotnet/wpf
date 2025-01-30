@@ -69,7 +69,7 @@ namespace System.Windows.Documents
         public FixedPage GetPageRoot(bool forceReload)
         {
 #if DEBUG
-            DocumentsTrace.FixedFormat.PageContent.Trace($"PageContent.GetPageRoot Source={(Source == null ? new Uri("", UriKind.RelativeOrAbsolute) : Source)}");
+            DocumentsTrace.FixedFormat.PageContent.Trace($"PageContent.GetPageRoot Source={(Source ?? new Uri("", UriKind.RelativeOrAbsolute))}");
 #endif
 
 //             VerifyAccess();
@@ -98,7 +98,7 @@ namespace System.Windows.Documents
         public void GetPageRootAsync(bool forceReload)
         {
 #if DEBUG
-            DocumentsTrace.FixedFormat.PageContent.Trace($"PageContent.GetPageRootAsync Source={(Source == null ? new Uri("", UriKind.RelativeOrAbsolute) : Source)}");
+            DocumentsTrace.FixedFormat.PageContent.Trace($"PageContent.GetPageRootAsync Source={(Source ?? new Uri("", UriKind.RelativeOrAbsolute))}");
 #endif
 
 //             VerifyAccess();
@@ -138,7 +138,7 @@ namespace System.Windows.Documents
         public void GetPageRootAsyncCancel()
         {
 #if DEBUG
-            DocumentsTrace.FixedFormat.PageContent.Trace($"PageContent.GetPageRootAsyncCancel Source={(Source == null ? new Uri("", UriKind.RelativeOrAbsolute) : Source)}");
+            DocumentsTrace.FixedFormat.PageContent.Trace($"PageContent.GetPageRootAsyncCancel Source={(Source ?? new Uri("", UriKind.RelativeOrAbsolute))}");
 #endif
 //             VerifyAccess();
             // Important: do not throw if no outstanding GetPageRootAsyncCall
@@ -587,8 +587,10 @@ namespace System.Windows.Documents
                 throw new ApplicationException(SR.PageContentNotFound);
             }
 
-            ParserContext pc = new ParserContext();
-            pc.BaseUri = uriToLoad;
+            ParserContext pc = new ParserContext
+            {
+                BaseUri = uriToLoad
+            };
 
             if (BindUriHelper.IsXamlMimeType(mimeType))
             {

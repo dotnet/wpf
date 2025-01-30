@@ -845,8 +845,10 @@ namespace System.Windows
                 Request r;
                 for(int i=0; i<PocketCapacity; i++)
                 {
-                    r = new Request();
-                    r.Next = _pocket;
+                    r = new Request
+                    {
+                        Next = _pocket
+                    };
                     _pocket = r;
                 }
                 _pocketSize = PocketCapacity;
@@ -1043,8 +1045,10 @@ namespace System.Windows
             ListItem t;
             for(int i=0; i<PocketCapacity; i++)
             {
-                t = new ListItem();
-                t.Next = _pocket;
+                t = new ListItem
+                {
+                    Next = _pocket
+                };
                 _pocket = t;
             }
             _pocketSize = PocketCapacity;

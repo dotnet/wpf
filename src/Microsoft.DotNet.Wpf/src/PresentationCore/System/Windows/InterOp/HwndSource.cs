@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -12,8 +12,6 @@ using MS.Utility;
 using MS.Internal;
 using MS.Internal.Interop;
 using System.ComponentModel;
-
-#pragma warning disable 1634, 1691  // suppressing PreSharp warnings
 
 namespace System.Windows.Interop
 {
@@ -64,10 +62,12 @@ namespace System.Windows.Interop
             IntPtr parent)
         {
 
-            HwndSourceParameters param = new HwndSourceParameters(name);
-            param.WindowClassStyle = classStyle;
-            param.WindowStyle = style;
-            param.ExtendedWindowStyle = exStyle;
+            HwndSourceParameters param = new HwndSourceParameters(name)
+            {
+                WindowClassStyle = classStyle,
+                WindowStyle = style,
+                ExtendedWindowStyle = exStyle
+            };
             param.SetPosition(x, y);
             param.ParentWindow = parent;
             Initialize(param);
@@ -123,10 +123,12 @@ namespace System.Windows.Interop
                           bool adjustSizingForNonClientArea)
         {
 
-            HwndSourceParameters parameters = new HwndSourceParameters(name, width, height);
-            parameters.WindowClassStyle = classStyle;
-            parameters.WindowStyle = style;
-            parameters.ExtendedWindowStyle = exStyle;
+            HwndSourceParameters parameters = new HwndSourceParameters(name, width, height)
+            {
+                WindowClassStyle = classStyle,
+                WindowStyle = style,
+                ExtendedWindowStyle = exStyle
+            };
             parameters.SetPosition(x, y);
             parameters.ParentWindow = parent;
             parameters.AdjustSizingForNonClientArea = adjustSizingForNonClientArea;
@@ -179,10 +181,12 @@ namespace System.Windows.Interop
             IntPtr parent)
         {
 
-            HwndSourceParameters parameters = new HwndSourceParameters(name, width, height);
-            parameters.WindowClassStyle = classStyle;
-            parameters.WindowStyle = style;
-            parameters.ExtendedWindowStyle = exStyle;
+            HwndSourceParameters parameters = new HwndSourceParameters(name, width, height)
+            {
+                WindowClassStyle = classStyle,
+                WindowStyle = style,
+                ExtendedWindowStyle = exStyle
+            };
             parameters.SetPosition(x, y);
             parameters.ParentWindow = parent;
             Initialize(parameters);
@@ -261,9 +265,11 @@ namespace System.Windows.Interop
                                        parameters.ParentWindow,
                                        wrapperHooks);
 
-            _hwndTarget = new HwndTarget(_hwndWrapper.Handle);
-            _hwndTarget.UsesPerPixelOpacity = parameters.EffectivePerPixelOpacity;
-            if(_hwndTarget.UsesPerPixelOpacity)
+            _hwndTarget = new HwndTarget(_hwndWrapper.Handle)
+            {
+                UsesPerPixelOpacity = parameters.EffectivePerPixelOpacity
+            };
+            if (_hwndTarget.UsesPerPixelOpacity)
             {
                 _hwndTarget.BackgroundColor = Colors.Transparent;
 
@@ -671,7 +677,7 @@ namespace System.Windows.Interop
             foreach (PresentationSource source in PresentationSource.CriticalCurrentSources)
             {
                 HwndSource test = source as HwndSource;
-                if (test != null && test.CriticalHandle == hwnd)
+                if (test != null && test.Handle == hwnd)
                 {
                     // Don't hand out a disposed source.
                     if (!test.IsDisposed)
@@ -848,7 +854,7 @@ namespace System.Windows.Interop
         {
             // Find the topmost window.  This will handle the case where the HwndSource
             // is a child window.
-            IntPtr hwndRoot = UnsafeNativeMethods.GetAncestor(new HandleRef(this, CriticalHandle), NativeMethods.GA_ROOT);
+            IntPtr hwndRoot = UnsafeNativeMethods.GetAncestor(new HandleRef(this, Handle), NativeMethods.GA_ROOT);
 
             // Open the system menu.
             UnsafeNativeMethods.PostMessage(new HandleRef(this, hwndRoot), MS.Internal.Interop.WindowMessage.WM_SYSCOMMAND, new IntPtr(NativeMethods.SC_KEYMENU), new IntPtr(NativeMethods.VK_SPACE));
@@ -909,18 +915,7 @@ namespace System.Windows.Interop
         /// <summary>
         /// Returns the hwnd handle to the window.
         /// </summary>
-        ///<remarks>
-        ///     Callers must have UIPermission(UIPermissionWindow.AllWindows) to call this API.
-        ///</remarks>
         public IntPtr Handle
-        {
-            get
-            {
-                return CriticalHandle;
-            }
-        }
-
-        internal IntPtr CriticalHandle
         {
             get
             {
@@ -942,7 +937,7 @@ namespace System.Windows.Interop
             {
                 IntPtr capture = SafeNativeMethods.GetCapture();
 
-                return ( capture == CriticalHandle );
+                return ( capture == Handle );
             }
         }
 
@@ -1532,11 +1527,11 @@ namespace System.Windows.Interop
 
             if(_treatAncestorsAsNonClientArea)
             {
-                hwndRoot = UnsafeNativeMethods.GetAncestor(new HandleRef(this, CriticalHandle), NativeMethods.GA_ROOT);
+                hwndRoot = UnsafeNativeMethods.GetAncestor(new HandleRef(this, Handle), NativeMethods.GA_ROOT);
             }
             else
             {
-                hwndRoot = CriticalHandle;
+                hwndRoot = Handle;
             }
 
             SafeNativeMethods.GetWindowRect(new HandleRef(this, hwndRoot), ref rc);
@@ -1745,16 +1740,18 @@ namespace System.Windows.Interop
             case WindowMessage.WM_SYSCHAR:
             case WindowMessage.WM_DEADCHAR:
             case WindowMessage.WM_SYSDEADCHAR:
-                MSGDATA msgdata = new MSGDATA();
-                msgdata.msg = msg;
-                msgdata.handled = handled;
+                    MSGDATA msgdata = new MSGDATA
+                    {
+                        msg = msg,
+                        handled = handled
+                    };
 
-                // Do this under the exception filter/handlers of the
-                // dispatcher for this thread.
-                //
-                // NOTE: we lose the "perf optimization" of passing everything
-                // around by-ref since we have to call through a delegate.
-                object result = Dispatcher.CurrentDispatcher.Invoke(
+                    // Do this under the exception filter/handlers of the
+                    // dispatcher for this thread.
+                    //
+                    // NOTE: we lose the "perf optimization" of passing everything
+                    // around by-ref since we have to call through a delegate.
+                    object result = Dispatcher.CurrentDispatcher.Invoke(
                     DispatcherPriority.Send,
                     new DispatcherOperationCallback(OnPreprocessMessage),
                     msgdata);
@@ -2387,21 +2384,25 @@ namespace System.Windows.Interop
 
                     if (focusElement != null)
                     {
-                        KeyEventArgs tunnelArgs = new KeyEventArgs(Keyboard.PrimaryDevice, this, msg.time, key);
-                        tunnelArgs.ScanCode = scanCode;
-                        tunnelArgs.IsExtendedKey = isExtendedKey;
-                        tunnelArgs.RoutedEvent = keyPreviewEvent;
+                        KeyEventArgs tunnelArgs = new KeyEventArgs(Keyboard.PrimaryDevice, this, msg.time, key)
+                        {
+                            ScanCode = scanCode,
+                            IsExtendedKey = isExtendedKey,
+                            RoutedEvent = keyPreviewEvent
+                        };
                         focusElement.RaiseEvent(tunnelArgs);
 
                         handled = tunnelArgs.Handled;
                     }
                     if (!handled)
                     {
-                        KeyEventArgs bubbleArgs = new KeyEventArgs(Keyboard.PrimaryDevice, this, msg.time, key);
-                        bubbleArgs.ScanCode = scanCode;
-                        bubbleArgs.IsExtendedKey = isExtendedKey;
-                        bubbleArgs.RoutedEvent=keyEvent;
-                        if(focusElement != null)
+                        KeyEventArgs bubbleArgs = new KeyEventArgs(Keyboard.PrimaryDevice, this, msg.time, key)
+                        {
+                            ScanCode = scanCode,
+                            IsExtendedKey = isExtendedKey,
+                            RoutedEvent = keyEvent
+                        };
+                        if (focusElement != null)
                         {
                             focusElement.RaiseEvent(bubbleArgs);
                             handled = bubbleArgs.Handled;
@@ -2514,13 +2515,12 @@ namespace System.Windows.Interop
                         {
                             Disposed(this, EventArgs.Empty);
                         }
-#pragma warning disable 56500
                         // We can't tolerate an exception thrown by third-party code to
                         // abort our Dispose half-way through.  So we just eat it.
                         catch
                         {
                         }
-#pragma warning restore 56500
+
                         Disposed = null;
                     }
 
@@ -2650,7 +2650,7 @@ namespace System.Windows.Interop
         {
             get
             {
-                return UnsafeNativeMethods.GetFocus() == CriticalHandle;
+                return UnsafeNativeMethods.GetFocus() == Handle;
             }
         }
 

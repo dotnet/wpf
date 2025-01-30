@@ -777,14 +777,15 @@ namespace MS.Internal.Documents
         internal void OnAddRequestSignature(SignatureResources sigResources, DateTime dateTime)
         {
             //Use the SignatureResource to create Request Digitalsignature.
-            DigitalSignature digSigRequest = new DigitalSignature();
-
-            //Assign fields.
-            digSigRequest.SignatureState = SignatureStatus.NotSigned;
-            digSigRequest.SubjectName = sigResources._subjectName;
-            digSigRequest.Reason = sigResources._reason;
-            digSigRequest.Location = sigResources._location;
-            digSigRequest.SignedOn = dateTime;
+            DigitalSignature digSigRequest = new DigitalSignature
+            {
+                //Assign fields.
+                SignatureState = SignatureStatus.NotSigned,
+                SubjectName = sigResources._subjectName,
+                Reason = sigResources._reason,
+                Location = sigResources._location,
+                SignedOn = dateTime
+            };
 
             Guid spotId = DigitalSignatureProvider.AddRequestSignature(digSigRequest);
 
@@ -1016,10 +1017,11 @@ namespace MS.Internal.Documents
                 null);
 
             CertificateValidationThreadInfo threadInfo =
-                new CertificateValidationThreadInfo();
-
-            threadInfo.CertificateList = certificateList;
-            threadInfo.Operation = dispatcherOperation;
+                new CertificateValidationThreadInfo
+                {
+                    CertificateList = certificateList,
+                    Operation = dispatcherOperation
+                };
 
             Trace.SafeWrite(
                 Trace.Signatures,

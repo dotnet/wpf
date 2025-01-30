@@ -319,8 +319,10 @@ namespace System.Windows.Input
             if ((target != null) && !IsBlockedByRM)
             {
                 // Raise the Preview Event, check the Handled value, and raise the regular event.
-                CanExecuteRoutedEventArgs args = new CanExecuteRoutedEventArgs(this, parameter);
-                args.RoutedEvent = CommandManager.PreviewCanExecuteEvent;
+                CanExecuteRoutedEventArgs args = new CanExecuteRoutedEventArgs(this, parameter)
+                {
+                    RoutedEvent = CommandManager.PreviewCanExecuteEvent
+                };
                 CriticalCanExecuteWrapper(parameter, target, trusted, args);
                 if (!args.Handled)
                 {
@@ -378,9 +380,11 @@ namespace System.Windows.Input
 
                 // Raise the Preview Event and check for Handled value, and
                 // Raise the regular ExecuteEvent.
-                ExecutedRoutedEventArgs args = new ExecutedRoutedEventArgs(this, parameter);
-                args.RoutedEvent = CommandManager.PreviewExecutedEvent;
-                
+                ExecutedRoutedEventArgs args = new ExecutedRoutedEventArgs(this, parameter)
+                {
+                    RoutedEvent = CommandManager.PreviewExecutedEvent
+                };
+
                 if (targetUIElement != null)
                 {
                     targetUIElement.RaiseEvent(args, userInitiated);

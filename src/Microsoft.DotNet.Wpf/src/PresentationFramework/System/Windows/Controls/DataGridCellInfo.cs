@@ -122,7 +122,7 @@ namespace System.Windows.Controls
             }
             else
             {
-                return new DataGridCellInfo(owner, column, (item == null) ? DependencyProperty.UnsetValue : item);
+                return new DataGridCellInfo(owner, column, item ?? DependencyProperty.UnsetValue);
             }
         }
 

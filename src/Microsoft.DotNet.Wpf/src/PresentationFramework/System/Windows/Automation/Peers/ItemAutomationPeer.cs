@@ -674,7 +674,7 @@ namespace System.Windows.Automation.Peers
                 if (iwr != null)
                 {
                     object item = iwr.Target;
-                    return (item == null) ? DependencyProperty.UnsetValue : item;
+                    return item ?? DependencyProperty.UnsetValue;
                 }
                 else
                 {

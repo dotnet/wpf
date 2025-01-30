@@ -318,10 +318,11 @@ namespace MS.Internal.IO.Packaging
 
                     IndexingFilterMarshaler corePropertiesFilterMarshaler
                         = new IndexingFilterMarshaler(
-                        new CorePropertiesFilter(_package.PackageProperties));
-
-                    // Avoid exception on end of chunks from part filter.
-                    corePropertiesFilterMarshaler.ThrowOnEndOfChunks = false;
+                        new CorePropertiesFilter(_package.PackageProperties))
+                        {
+                            // Avoid exception on end of chunks from part filter.
+                            ThrowOnEndOfChunks = false
+                        };
 
                     _currentFilter = corePropertiesFilterMarshaler;
                     _currentFilter.Init(_grfFlags, _cAttributes, _aAttributes);
@@ -412,10 +413,11 @@ namespace MS.Internal.IO.Packaging
                             }
 
                             IndexingFilterMarshaler xamlFilterMarshaler
-                                = new IndexingFilterMarshaler(new XamlFilter(_currentStream));
-
-                            // Avoid exception on end of chunks from part filter.
-                            xamlFilterMarshaler.ThrowOnEndOfChunks = false;
+                                = new IndexingFilterMarshaler(new XamlFilter(_currentStream))
+                                {
+                                    // Avoid exception on end of chunks from part filter.
+                                    ThrowOnEndOfChunks = false
+                                };
 
                             _currentFilter = xamlFilterMarshaler;
                             _currentFilter.Init(_grfFlags, _cAttributes, _aAttributes);

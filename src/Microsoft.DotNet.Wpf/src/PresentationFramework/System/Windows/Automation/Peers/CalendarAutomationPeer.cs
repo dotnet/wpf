@@ -372,9 +372,8 @@ namespace System.Windows.Automation.Peers
                     if (childRow == row && childColumn == column)
                     {
                         object dataContext = (child as FrameworkElement).DataContext;
-                        if (dataContext is DateTime)
+                        if (dataContext is DateTime date)
                         {
-                            DateTime date = (DateTime)dataContext;
                             AutomationPeer peer = GetOrCreateDateTimeAutomationPeer(date, OwningCalendar.DisplayMode);
                             return ProviderFromPeer(peer);
                         }

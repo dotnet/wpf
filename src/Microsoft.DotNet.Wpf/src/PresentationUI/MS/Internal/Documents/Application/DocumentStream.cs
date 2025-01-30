@@ -2,13 +2,6 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-// Description:
-//  An XpsDocument stream represents the stream data for the document
-//  regardless of implementation of the backing streams.  It has logical
-//  operations that allow elevating from Read to SafeWrite and editing in place.
-
-#pragma warning disable 1634, 1691 // Stops compiler from warning about unknown warnings
-
 using System;
 using System.Globalization;
 using System.IO;
@@ -155,7 +148,6 @@ namespace MS.Internal.Documents.Application
         // Since we have already closed the original file, we need to reopen it if we
         // fail to copy the file or open the new file.  After doing so, we rethrow the 
         // original exception so it can be handled at a higher level.
-#pragma warning suppress 56500 // suppress PreSharp Warning 56500: Avoid `swallowing errors by catching non-specific exceptions..
         catch
         {
             if (isFileSource)
@@ -173,7 +165,6 @@ namespace MS.Internal.Documents.Application
                 }
                 // If we fail to reopen the original file, rethrow an exception to
                 // indicate this specific error.
-#pragma warning suppress 56500 // suppress PreSharp Warning 56500: Avoid `swallowing errors by catching non-specific exceptions..
                 catch (Exception e)
                 {
                     Trace.SafeWrite(
@@ -201,13 +192,14 @@ namespace MS.Internal.Documents.Application
             Trace.SafeWrite(Trace.File, "Performed a stream copy from source.");
         }
 
-        //----------------------------------------------------------------------
-        // Create the DocumentStream
-        result = new DocumentStream(copiesToken, target, this);
+            //----------------------------------------------------------------------
+            // Create the DocumentStream
+            result = new DocumentStream(copiesToken, target, this)
+            {
+                DeleteOnClose = false
+            };
 
-        result.DeleteOnClose = false;
-
-        Trace.SafeWrite(Trace.File, "Created copy to file {0}.", copiesToken.Location);
+            Trace.SafeWrite(Trace.File, "Created copy to file {0}.", copiesToken.Location);
 
         return result;
     }
@@ -291,14 +283,15 @@ namespace MS.Internal.Documents.Application
                 }
             }
 
-            //------------------------------------------------------------------
-            // Create the DocumentStream
-            result = new DocumentStream(
-                tempToken, temporary, this);
+                //------------------------------------------------------------------
+                // Create the DocumentStream
+                result = new DocumentStream(
+                    tempToken, temporary, this)
+                {
+                    DeleteOnClose = true
+                };
 
-            result.DeleteOnClose = true;
-
-            Trace.SafeWrite(Trace.File, "Created temporary file {0}.", tempToken.Location);
+                Trace.SafeWrite(Trace.File, "Created temporary file {0}.", tempToken.Location);
         }
         else
         {
@@ -580,7 +573,6 @@ namespace MS.Internal.Documents.Application
             // A failure to set attributes or ACLs is not fatal to the application, so we
             // do not want it to crash the application for the user, and thus catch all
             // exceptions here.
-#pragma warning suppress 56500 // suppress PreSharp Warning 56500: Avoid `swallowing errors by catching non-specific exceptions..
             catch
             {
                 // TODO: 1603621 back out changes in case of failure 
@@ -606,7 +598,6 @@ namespace MS.Internal.Documents.Application
             // In this case we catch all exceptions and then rethrow a new exception --
             // always using the same exception as a wrapper allows higher level
             // routines to respond to a failure specifically in this section.
-#pragma warning suppress 56500 // suppress PreSharp Warning 56500: Avoid `swallowing errors by catching non-specific exceptions..
             catch (Exception e)
             {
                 Trace.SafeWrite(
@@ -779,7 +770,6 @@ namespace MS.Internal.Documents.Application
                     temporary,
                     io);
             }
-#pragma warning suppress 56500 // suppress PreSharp Warning 56500: Avoid `swallowing errors by catching non-specific exceptions..
             catch (Exception exception)
             {
                 // not editing is not a critical failure for the application
@@ -941,7 +931,6 @@ namespace MS.Internal.Documents.Application
                     backupFile);
             }
         }
-#pragma warning suppress 56500 // suppress PreSharp Warning 56500: Avoid `swallowing errors by catching non-specific exceptions..
         catch(Exception e)
         {
             // We were unable to delete the backup file -- this is not fatal.

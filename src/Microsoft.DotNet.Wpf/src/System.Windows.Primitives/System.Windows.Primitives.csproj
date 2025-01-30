@@ -5,6 +5,7 @@
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <CLSCompliant>false</CLSCompliant>
     <Nullable>enable</Nullable>
+    <ChecksumAlgorithm>SHA256</ChecksumAlgorithm>
     <Platforms>x86;x64;arm64</Platforms>
 
     <!--

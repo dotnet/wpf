@@ -546,16 +546,18 @@ namespace Microsoft.Windows.Controls.Ribbon
                     if (_clonedElement != null)
                     {
                         // Create visual copy of selected element
-                        VisualBrush visualBrush = new VisualBrush(_clonedElement);
-                        visualBrush.Stretch = Stretch.None;
+                        VisualBrush visualBrush = new VisualBrush(_clonedElement)
+                        {
+                            Stretch = Stretch.None,
 
-                        //Set position and dimension of content
-                        visualBrush.ViewboxUnits = BrushMappingMode.Absolute;
-                        visualBrush.Viewbox = new Rect(_clonedElement.RenderSize);
+                            //Set position and dimension of content
+                            ViewboxUnits = BrushMappingMode.Absolute,
+                            Viewbox = new Rect(_clonedElement.RenderSize),
 
-                        //Set position and dimension of tile
-                        visualBrush.ViewportUnits = BrushMappingMode.Absolute;
-                        visualBrush.Viewport = new Rect(_clonedElement.RenderSize);
+                            //Set position and dimension of tile
+                            ViewportUnits = BrushMappingMode.Absolute,
+                            Viewport = new Rect(_clonedElement.RenderSize)
+                        };
 
                         // If the FlowDirection on cloned element doesn't match the combobox's apply a mirror
                         // If the FlowDirection on cloned element doesn't match its parent's apply a mirror
@@ -569,10 +571,12 @@ namespace Microsoft.Windows.Controls.Ribbon
                         }
 
                         // Apply visual brush to a rectangle
-                        Rectangle rect = new Rectangle();
-                        rect.Fill = visualBrush;
-                        rect.Width = _clonedElement.RenderSize.Width;
-                        rect.Height = _clonedElement.RenderSize.Height;
+                        Rectangle rect = new Rectangle
+                        {
+                            Fill = visualBrush,
+                            Width = _clonedElement.RenderSize.Width,
+                            Height = _clonedElement.RenderSize.Height
+                        };
 
                         _clonedElement.LayoutUpdated += CloneLayoutUpdated;
 

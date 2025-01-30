@@ -2404,8 +2404,10 @@ namespace System.Windows.Documents
             if (_caretElement == null)
             {
                 // Create new caret
-                _caretElement = new CaretElement(_textEditor, isBlinkEnabled);
-                _caretElement.IsSelectionActive = isSelectionActive;
+                _caretElement = new CaretElement(_textEditor, isBlinkEnabled)
+                {
+                    IsSelectionActive = isSelectionActive
+                };
 
                 // Check the current input language to draw the BiDi caret in case of BiDi language
                 // like as Arabic or Hebrew input language.

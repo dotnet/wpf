@@ -14,8 +14,6 @@ using System.Windows.Media.Media3D;
 using MS.Utility;
 using MS.Internal;
 
-#pragma warning disable 1634, 1691  // suppressing PreSharp warnings
-
 namespace System.Windows
 {
     /// <summary>
@@ -87,7 +85,6 @@ namespace System.Windows
                         !typeof(FrameworkContentElement).IsAssignableFrom(value) &&
                         !typeof(Visual3D).IsAssignableFrom(value))
                     {
-                        #pragma warning suppress 6506 // value is obviously not null
                         throw new ArgumentException(SR.Format(SR.MustBeFrameworkOr3DDerived, value.Name));
                     }
                 }
@@ -219,7 +216,6 @@ namespace System.Windows
                 throw new NotSupportedException(SR.Format(SR.ModifyingLogicalTreeViaStylesNotImplemented, value, "FrameworkElementFactory.SetValue"));
             }
 
-            #pragma warning suppress 6506 // dp.DefaultMetadata is never null
             if (dp.ReadOnly)
             {
                 // Read-only properties will not be consulting FrameworkElementFactory for value.
@@ -433,11 +429,13 @@ namespace System.Windows
             else
             {
                 // Store original data
-                PropertyValue propertyValue = new PropertyValue();
-                propertyValue.ValueType = valueType;
-                propertyValue.ChildName = null;  // Delayed
-                propertyValue.Property = dp;
-                propertyValue.ValueInternal = value;
+                PropertyValue propertyValue = new PropertyValue
+                {
+                    ValueType = valueType,
+                    ChildName = null,  // Delayed
+                    Property = dp,
+                    ValueInternal = value
+                };
 
                 lock (_synchronized)
                 {

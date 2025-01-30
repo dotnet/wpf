@@ -207,12 +207,14 @@ namespace System.Windows
         internal void AddToPropertyValues(string childName, DependencyProperty dp, object value, PropertyValueType valueType)
         {
             // Store original data
-            PropertyValue propertyValue = new PropertyValue();
-            propertyValue.ValueType = valueType;
-            propertyValue.Conditions = null;  // Delayed - derived class is responsible for this item.
-            propertyValue.ChildName = childName;
-            propertyValue.Property = dp;
-            propertyValue.ValueInternal = value;
+            PropertyValue propertyValue = new PropertyValue
+            {
+                ValueType = valueType,
+                Conditions = null,  // Delayed - derived class is responsible for this item.
+                ChildName = childName,
+                Property = dp,
+                ValueInternal = value
+            };
 
             PropertyValues.Add(propertyValue);
         }

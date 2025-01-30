@@ -252,9 +252,10 @@ namespace MS.Internal.AutomationProxies
         // Returns a Proxy element corresponding to the specified screen coordinates.
         internal override ProxySimple ElementProviderFromPoint (int x, int y)
         {
-            UnsafeNativeMethods.TCHITTESTINFO hti = new UnsafeNativeMethods.TCHITTESTINFO();
-
-            hti.pt = new NativeMethods.Win32Point (x, y);
+            UnsafeNativeMethods.TCHITTESTINFO hti = new UnsafeNativeMethods.TCHITTESTINFO
+            {
+                pt = new NativeMethods.Win32Point(x, y)
+            };
 
             if (!Misc.MapWindowPoints(IntPtr.Zero, _hwnd, ref hti.pt, 1))
             {
@@ -570,9 +571,10 @@ namespace MS.Internal.AutomationProxies
                 // Get rectangles
                 Rect firstRect = firstChild.BoundingRectangle;
                 Rect lastRect = lastChild.BoundingRectangle;
-                NativeMethods.Win32Rect viewable = new NativeMethods.Win32Rect ();
-
-                viewable.left = 0;
+                NativeMethods.Win32Rect viewable = new NativeMethods.Win32Rect
+                {
+                    left = 0
+                };
                 if (!Misc.GetWindowRect(_hwnd, ref viewable))
                 {
                     return 100.0;

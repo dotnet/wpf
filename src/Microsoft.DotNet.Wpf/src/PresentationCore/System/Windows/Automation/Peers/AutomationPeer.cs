@@ -221,8 +221,10 @@ namespace System.Windows.Automation.Peers
 
         internal static HostedWindowWrapper CreateInternal(IntPtr hwnd)
         {
-            HostedWindowWrapper wrapper = new HostedWindowWrapper();
-            wrapper._hwnd = hwnd;
+            HostedWindowWrapper wrapper = new HostedWindowWrapper
+            {
+                _hwnd = hwnd
+            };
             return wrapper;
         }
 

@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -28,9 +28,11 @@ namespace System.Windows.Media.Media3D
             // create holders for the content
             // We don't want this model to set itself as the IC for Geometry and Material 
             // so we set to to not be able to be an inheritance context.
-            GeometryModel3D model = new GeometryModel3D();
-            model.CanBeInheritanceContext = false;
-            
+            GeometryModel3D model = new GeometryModel3D
+            {
+                CanBeInheritanceContext = false
+            };
+
             Visual3DModel = model; 
         } 
         
@@ -414,14 +416,15 @@ namespace System.Windows.Media.Media3D
         /// <returns>The VisualBrush to hold the interactive 2D content</returns>
         private VisualBrush CreateVisualBrush()
         {
-            VisualBrush vb = new VisualBrush();
+            VisualBrush vb = new VisualBrush
+            {
+                // We don't want the VisualBrush being the InheritanceContext for the Visual it contains.  Rather we want
+                // that to be the Viewport2DVisual3D itself.
+                CanBeInheritanceContext = false,
 
-            // We don't want the VisualBrush being the InheritanceContext for the Visual it contains.  Rather we want
-            // that to be the Viewport2DVisual3D itself.
-            vb.CanBeInheritanceContext = false;
-            
-            vb.ViewportUnits = BrushMappingMode.Absolute;
-            vb.TileMode = TileMode.None;            
+                ViewportUnits = BrushMappingMode.Absolute,
+                TileMode = TileMode.None
+            };
 
             // set any rendering options in the visual brush - we do this to still give access to these caching hints
             // without exposing the visual brush
@@ -439,16 +442,17 @@ namespace System.Windows.Media.Media3D
         /// <returns>The BitmapCacheBrush to hold the interactive 2D content</returns>
         private BitmapCacheBrush CreateBitmapCacheBrush()
         {
-            BitmapCacheBrush bcb = new BitmapCacheBrush();
+            BitmapCacheBrush bcb = new BitmapCacheBrush
+            {
+                // We don't want the cache brush being the InheritanceContext for the Visual it contains.  Rather we want
+                // that to be the Viewport2DVisual3D itself.
+                CanBeInheritanceContext = false,
 
-            // We don't want the cache brush being the InheritanceContext for the Visual it contains.  Rather we want
-            // that to be the Viewport2DVisual3D itself.
-            bcb.CanBeInheritanceContext = false;
+                // Ensure that the brush supports rendering all properties on the Visual to match VisualBrush behavior.
+                AutoWrapTarget = true,
 
-            // Ensure that the brush supports rendering all properties on the Visual to match VisualBrush behavior.
-            bcb.AutoWrapTarget = true;
-            
-            bcb.BitmapCache = CacheMode as BitmapCache;
+                BitmapCache = CacheMode as BitmapCache
+            };
             return bcb;
         }
         
@@ -468,36 +472,32 @@ namespace System.Windows.Media.Media3D
             {
                 Material currMaterial = materialStack.Pop();
 
-                if (currMaterial is DiffuseMaterial)
+                if (currMaterial is DiffuseMaterial diffMaterial)
                 {
-                    DiffuseMaterial diffMaterial = (DiffuseMaterial)currMaterial;
                     if ((Boolean)diffMaterial.GetValue(Viewport2DVisual3D.IsVisualHostMaterialProperty))
                     {
                         diffMaterial.Brush = internalBrush;
                         numMaterialsSwapped++;
                     }
                 }
-                else if (currMaterial is EmissiveMaterial)
+                else if (currMaterial is EmissiveMaterial emmMaterial)
                 {
-                    EmissiveMaterial emmMaterial = (EmissiveMaterial)currMaterial;
                     if ((Boolean)emmMaterial.GetValue(Viewport2DVisual3D.IsVisualHostMaterialProperty))
                     {
                         emmMaterial.Brush = internalBrush;
                         numMaterialsSwapped++;
                     }
                 }
-                else if (currMaterial is SpecularMaterial)
+                else if (currMaterial is SpecularMaterial specMaterial)
                 {
-                    SpecularMaterial specMaterial = (SpecularMaterial)currMaterial;
                     if ((Boolean)specMaterial.GetValue(Viewport2DVisual3D.IsVisualHostMaterialProperty))
                     {
                         specMaterial.Brush = internalBrush;
                         numMaterialsSwapped++;
                     }
                 }
-                else if (currMaterial is MaterialGroup)
+                else if (currMaterial is MaterialGroup matGroup)
                 {
-                    MaterialGroup matGroup = (MaterialGroup)currMaterial;
 
                     // the IsVisualHostMaterialProperty should not be set on a MaterialGroup - verify that
                     if ((Boolean)matGroup.GetValue(Viewport2DVisual3D.IsVisualHostMaterialProperty))
@@ -507,10 +507,10 @@ namespace System.Windows.Media.Media3D
 
                     // iterate over the children and put them on the stack of materials to modify
                     MaterialCollection children = matGroup.Children;
-                    
+
                     if (children != null)
                     {
-                        for (int i=0, count = children.Count; i < count; i++)
+                        for (int i = 0, count = children.Count; i < count; i++)
                         {
                             Material m = children[i];
                             materialStack.Push(m);

@@ -2,16 +2,6 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-#pragma warning disable 1634, 1691
-//
-//
-// Description:
-//     PathNode represents a node in a path (a subset of the element tree).
-//     PathNodes can have other PathNodes as children.  Each refers to a
-//     single element in the element tree.
-//     Spec: Anchoring Namespace Spec.doc
-//
-
 using System.Collections;
 using System.Windows;
 using System.Windows.Annotations;
@@ -195,7 +185,6 @@ namespace MS.Internal.Annotations.Anchoring
         /// For instance, the root of a PageViewer's content tree would point
         /// to the DocumentPaginator that is holding on to the tree.
         /// </summary>
-#pragma warning suppress 7009
         internal static readonly DependencyProperty HiddenParentProperty = DependencyProperty.RegisterAttached("HiddenParent", typeof(DependencyObject), typeof(PathNode));
 
         #endregion Internal Properties

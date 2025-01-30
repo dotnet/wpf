@@ -29,11 +29,6 @@ using System.Windows.Interop;
 using System.Windows.Media;
 using System.Windows.Markup;
 
-//In order to avoid generating warnings about unknown message numbers and
-//unknown pragmas when compiling your C# source code with the actual C# compiler,
-//you need to disable warnings 1634 and 1691. (Presharp Documentation)
-#pragma warning disable 1634, 1691
-
 namespace System.Windows.Navigation
 {
     #region NavigationService Class
@@ -1486,7 +1481,6 @@ namespace System.Windows.Navigation
         /// Navigate to the source. Null source results in clearing existing content
         /// </summary>
         /// <value>returns bool to indicate if a navigation was started i.e. Navigating event was not cancelled</value>
-#pragma warning disable 6506  // Both source and navigationState can accept null as valid input.
         internal bool Navigate(Uri source, Object navigationState, bool sandboxExternalContent, bool navigateOnSourceChanged)
         {
             if (IsDisposed)
@@ -1595,17 +1589,11 @@ namespace System.Windows.Navigation
             }
         }
 
-#pragma warning restore 6506
-
-        //
-        // bool Navigate(Object root, Object navigationState)
-        //
         /// <summary>
         /// Navigate to content tree. Async state can be passed across the navigation
         /// and can be retrieved from the Navigation events.
         /// </summary>
         /// <value></value>
-#pragma warning disable 6506  // Both root and navigationState can accept null as vaild input.
         public bool Navigate(Object root, Object navigationState)
         {
             if (IsDisposed)
@@ -1676,8 +1664,6 @@ namespace System.Windows.Navigation
 
             return true;
         }
-
-#pragma warning restore 6506
 
         //
         // bool INavigator.CanGoForward
@@ -1839,7 +1825,6 @@ namespace System.Windows.Navigation
                     //we will end up with and which support Abort and which don't. These are
                     //not fatal errors so we safely ignore them.
 
-#pragma warning disable 6502
                     //Documented exception thrown by this method
                     catch (NotSupportedException)
                     {
@@ -1848,7 +1833,6 @@ namespace System.Windows.Navigation
                     catch (NotImplementedException)
                     {
                     }
-#pragma warning restore 6502
                 }
 
                 extraData = _navigateQueueItem.NavState;
@@ -2213,7 +2197,6 @@ namespace System.Windows.Navigation
         private void HandleNavigated(object navState, bool navigatedToNewContent)
         {
             Debug.Assert(_navStatus == NavigationStatus.Navigated);
-            BrowserInteropHelper.IsInitialViewerNavigation = false;
 
             NavigateInfo navInfo = navState as NavigateInfo;
 
@@ -2925,7 +2908,7 @@ namespace System.Windows.Navigation
                         // to detect XAML, so PresentationHost may get invoked, but our
                         // WpfWebRequestHelper.GetContentType() fails to do the same inference. In particular,
                         // it appears that UrlMon looks at the Content-Disposition HTTP header, but we don't.
-                        if (!IsTopLevelContainer || BrowserInteropHelper.IsInitialViewerNavigation)
+                        if (!IsTopLevelContainer)
                         {
                             throw new InvalidOperationException(SR.FailedToConvertResource);
                         }

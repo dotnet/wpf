@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -13,8 +13,6 @@ using System.Text;
 using System.Windows.Media;
 using System.Windows.Ink;
 using System.Windows.Input;
-
-#pragma warning disable 1634, 1691  // suppressing PreSharp warnings
 
 namespace MS.Internal.Ink.GestureRecognition
 {
@@ -508,11 +506,13 @@ namespace MS.Internal.Ink.GestureRecognition
                 packetProperties[i].guid = propertyGuids[i];
                 propertyInfo = infosToUse[i];
 
-                MS.Win32.Recognizer.PROPERTY_METRICS propertyMetrics = new MS.Win32.Recognizer.PROPERTY_METRICS( );
-                propertyMetrics.nLogicalMin = propertyInfo.Minimum;
-                propertyMetrics.nLogicalMax = propertyInfo.Maximum;
-                propertyMetrics.Units = (int)(propertyInfo.Unit);
-                propertyMetrics.fResolution = propertyInfo.Resolution;
+                MS.Win32.Recognizer.PROPERTY_METRICS propertyMetrics = new MS.Win32.Recognizer.PROPERTY_METRICS
+                {
+                    nLogicalMin = propertyInfo.Minimum,
+                    nLogicalMax = propertyInfo.Maximum,
+                    Units = (int)(propertyInfo.Unit),
+                    fResolution = propertyInfo.Resolution
+                };
                 packetProperties[i].PropertyMetrics = propertyMetrics;
             }
 
@@ -632,7 +632,6 @@ namespace MS.Internal.Ink.GestureRecognition
                 {
                     if (pRecoAlternates[i] != IntPtr.Zero)
                     {
-                        #pragma warning suppress 6031, 56031 // Return value ignored on purpose.
                         MS.Win32.Recognizer.UnsafeNativeMethods.DestroyAlternate(pRecoAlternates[i]);
                         pRecoAlternates[i] = IntPtr.Zero;
                     }

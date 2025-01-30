@@ -614,7 +614,7 @@ namespace System.Windows.Automation.Peers
                     if (_hashtable == null)
                         _hashtable = new WeakDictionary<object,T>();
 
-                    if(!_hashtable.ContainsKey(item) && value is T)
+                    if(!_hashtable.ContainsKey(item) && value is not null)
                         _hashtable[item] = value;
                     else
                         Debug.Assert(false,"it must not add already present Item");
@@ -623,7 +623,7 @@ namespace System.Windows.Automation.Peers
                 {
                     if (_list == null)
                         _list = new List<KeyValuePair<object, T>>();
-                    if(value is T)
+                    if(value is not null)
                         _list.Add(new KeyValuePair<object, T>(item, value));
                 }
 

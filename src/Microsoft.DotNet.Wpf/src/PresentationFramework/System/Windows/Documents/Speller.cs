@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -166,7 +166,7 @@ namespace System.Windows.Documents
             }
 
             SpellingError spellingError = GetError(position, direction, false /* forceEvaluation */);
-            return spellingError == null ? null : spellingError.Start;
+            return spellingError?.Start;
         }
 
         // Called by SpellingError to retreive a list of suggestions
@@ -511,10 +511,7 @@ namespace System.Windows.Documents
                 return;
             }
 
-            if (_statusTable != null)
-            {
-                _statusTable.OnTextChange(e);
-            }
+            _statusTable?.OnTextChange(e);
 
             ScheduleIdleCallback();
         }

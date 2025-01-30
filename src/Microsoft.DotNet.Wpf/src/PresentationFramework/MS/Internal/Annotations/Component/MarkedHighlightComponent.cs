@@ -550,16 +550,14 @@ namespace MS.Internal.Annotations.Component
         {
             if (_state == 0)
             {
-                if (_highlightAnchor != null)
-                    _highlightAnchor.Activate(false);
+                _highlightAnchor?.Activate(false);
                 MarkerBrush = new SolidColorBrush(DefaultMarkerColor);
                 StrokeThickness = MarkerStrokeThickness;
                 _DPHost.SetValue(StickyNoteControl.IsActiveProperty, false);
             }
             else
             {
-                if (_highlightAnchor != null)
-                    _highlightAnchor.Activate(true);
+                _highlightAnchor?.Activate(true);
                 MarkerBrush = new SolidColorBrush(DefaultActiveMarkerColor);
                 StrokeThickness = ActiveMarkerStrokeThickness;
                 _DPHost.SetValue(StickyNoteControl.IsActiveProperty, true);

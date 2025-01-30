@@ -509,10 +509,7 @@ namespace System.Windows.Input
 
         internal void SetManipulationParameters(ManipulationParameters2D parameter)
         {
-            if (_manipulationProcessor != null)
-            {
-                _manipulationProcessor.SetParameters(parameter);
-            }
+            _manipulationProcessor?.SetParameters(parameter);
         }
 
         private void UpdateManipulators(ICollection<IManipulator> updatedManipulators)

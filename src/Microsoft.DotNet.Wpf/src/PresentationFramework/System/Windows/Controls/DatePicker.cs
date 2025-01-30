@@ -881,10 +881,7 @@ namespace System.Windows.Controls
             }
             else
             {
-                if (_isHandlerSuspended != null)
-                {
-                    _isHandlerSuspended.Remove(property);
-                }
+                _isHandlerSuspended?.Remove(property);
             }
         }
 

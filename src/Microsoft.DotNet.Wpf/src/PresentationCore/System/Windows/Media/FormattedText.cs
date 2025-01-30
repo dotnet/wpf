@@ -1050,8 +1050,7 @@ namespace System.Windows.Media
                             TextWrapping currentWrap = _that._defaultParaProps.TextWrapping;
                             _that._defaultParaProps.SetTextWrapping(TextWrapping.NoWrap);
 
-                            if (currentLineBreak != null)
-                                currentLineBreak.Dispose();
+                            currentLineBreak?.Dispose();
 
                             _currentLine.Dispose();
                             _currentLine = FormatLine(
@@ -1070,8 +1069,7 @@ namespace System.Windows.Media
                 _previousHeight = _currentLine.Height;
                 _previousLength = _currentLine.Length;
 
-                if (_previousLineBreak != null)
-                    _previousLineBreak.Dispose();
+                _previousLineBreak?.Dispose();
 
                 _previousLineBreak = currentLineBreak;
 

@@ -873,10 +873,7 @@ namespace System.Windows.Controls.Primitives
                 this._isMonthPressed = true;
                 Mouse.Capture(this, CaptureMode.SubTree);
 
-                if (this.Owner != null)
-                {
-                    this.Owner.OnCalendarButtonPressed(b, false);
-                }
+                this.Owner?.OnCalendarButtonPressed(b, false);
             }
         }
 
@@ -931,18 +928,12 @@ namespace System.Windows.Controls.Primitives
 
         private void PreviousButton_Click(object sender, RoutedEventArgs e)
         {
-            if (this.Owner != null)
-            {
-                this.Owner.OnPreviousClick();
-            }
+            this.Owner?.OnPreviousClick();
         }
 
         private void NextButton_Click(object sender, RoutedEventArgs e)
         {
-            if (this.Owner != null)
-            {
-                this.Owner.OnNextClick();
-            }
+            this.Owner?.OnNextClick();
         }
 
         private void PopulateGrids()

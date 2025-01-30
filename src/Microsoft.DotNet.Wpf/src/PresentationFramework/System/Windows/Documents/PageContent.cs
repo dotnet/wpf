@@ -73,10 +73,7 @@ namespace System.Windows.Documents
 #endif
 
 //             VerifyAccess();
-            if (_asyncOp != null)
-            {
-                _asyncOp.Wait();
-            }
+            _asyncOp?.Wait();
 
             FixedPage p = null;
 

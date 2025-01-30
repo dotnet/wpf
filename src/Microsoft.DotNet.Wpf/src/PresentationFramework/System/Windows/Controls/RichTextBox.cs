@@ -800,10 +800,7 @@ namespace System.Windows.Controls
         {
             RichTextBox richTextBox = (RichTextBox)d;
 
-            if (richTextBox.Document != null)
-            {
-                richTextBox.Document.CoerceValue(IsEnabledProperty);
-            }
+            richTextBox.Document?.CoerceValue(IsEnabledProperty);
         }
 
         #endregion Private Methods

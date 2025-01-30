@@ -131,10 +131,7 @@ namespace MS.Internal.Documents.Application
         {
             IDisposable disposable = controller as IDisposable;
 
-            if (disposable != null)
-            {
-                disposable.Dispose();
-            }
+            disposable?.Dispose();
         }
     }
 

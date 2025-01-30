@@ -810,10 +810,7 @@ namespace Microsoft.Internal.AlphaFlattener
                     }
                 }
 
-                if (_opacityMask != null)
-                {
-                    _opacityMask.ApplyTransform(trans);
-                }
+                _opacityMask?.ApplyTransform(trans);
             }
         }
 

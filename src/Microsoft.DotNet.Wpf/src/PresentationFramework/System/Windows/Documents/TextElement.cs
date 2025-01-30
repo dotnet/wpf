@@ -1094,10 +1094,7 @@ namespace System.Windows.Documents
                         // child.Current could be FrameworkElement, FrameworkContentElement,
                         //  or anything else.  Only recursively call self for FE & FCE.
                         TextElement child = children.Current as TextElement;
-                        if (child != null)
-                        {
-                            child.DeepEndInit();
-                        }
+                        child?.DeepEndInit();
                     }
                 }
 
@@ -1411,7 +1408,7 @@ namespace System.Windows.Documents
                 }
 
                 TextTreeTextElementNode node = _textElementNode.GetNextNode() as TextTreeTextElementNode;
-                return (node != null) ? node.TextElement : null;
+                return node?.TextElement;
             }
         }
 
@@ -1429,7 +1426,7 @@ namespace System.Windows.Documents
                 }
 
                 TextTreeTextElementNode node = _textElementNode.GetPreviousNode() as TextTreeTextElementNode;
-                return (node != null) ? node.TextElement : null;
+                return node?.TextElement;
             }
         }
 
@@ -1447,7 +1444,7 @@ namespace System.Windows.Documents
                 }
 
                 TextTreeTextElementNode node = _textElementNode.GetFirstContainedNode() as TextTreeTextElementNode;
-                return (node != null) ? node.TextElement : null;
+                return node?.TextElement;
             }
         }
 
@@ -1465,7 +1462,7 @@ namespace System.Windows.Documents
                 }
 
                 TextTreeTextElementNode node = _textElementNode.GetLastContainedNode() as TextTreeTextElementNode;
-                return (node != null) ? node.TextElement : null;
+                return node?.TextElement;
             }
         }
 

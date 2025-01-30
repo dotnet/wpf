@@ -689,10 +689,7 @@ namespace System.Windows.Controls
         /// </summary>
         protected virtual void OnPrintCommand()
         {
-            if (CurrentViewer != null)
-            {
-                CurrentViewer.Print();
-            }
+            CurrentViewer?.Print();
         }
 
         /// <summary>
@@ -700,10 +697,7 @@ namespace System.Windows.Controls
         /// </summary>
         protected virtual void OnCancelPrintCommand()
         {
-            if (CurrentViewer != null)
-            {
-                CurrentViewer.CancelPrint();
-            }
+            CurrentViewer?.CancelPrint();
         }
 
         /// <summary>
@@ -1041,10 +1035,7 @@ namespace System.Windows.Controls
             }
 
             // Attach document to the current viewer.
-            if (CurrentViewer != null)
-            {
-                CurrentViewer.SetDocument(newDocument);
-            }
+            CurrentViewer?.SetDocument(newDocument);
 
             // Document invalidation invalidates following properties:
             //      - PageCount
@@ -1065,10 +1056,7 @@ namespace System.Windows.Controls
 
             // Document is also represented as Automation child. Need to invalidate peer to force update.
             FlowDocumentReaderAutomationPeer peer = UIElementAutomationPeer.FromElement(this) as FlowDocumentReaderAutomationPeer;
-            if (peer != null)
-            {
-                peer.InvalidatePeer();
-            }
+            peer?.InvalidatePeer();
         }
 
         /// <summary>
@@ -1518,10 +1506,7 @@ namespace System.Windows.Controls
         /// </summary>
         private void OnPreviousPageCommand()
         {
-            if (CurrentViewer != null)
-            {
-                CurrentViewer.PreviousPage();
-            }
+            CurrentViewer?.PreviousPage();
         }
 
         /// <summary>
@@ -1529,10 +1514,7 @@ namespace System.Windows.Controls
         /// </summary>
         private void OnNextPageCommand()
         {
-            if (CurrentViewer != null)
-            {
-                CurrentViewer.NextPage();
-            }
+            CurrentViewer?.NextPage();
         }
 
         /// <summary>
@@ -1540,10 +1522,7 @@ namespace System.Windows.Controls
         /// </summary>
         private void OnFirstPageCommand()
         {
-            if (CurrentViewer != null)
-            {
-                CurrentViewer.FirstPage();
-            }
+            CurrentViewer?.FirstPage();
         }
 
         /// <summary>
@@ -1551,10 +1530,7 @@ namespace System.Windows.Controls
         /// </summary>
         private void OnLastPageCommand()
         {
-            if (CurrentViewer != null)
-            {
-                CurrentViewer.LastPage();
-            }
+            CurrentViewer?.LastPage();
         }
 
         /// <summary>
@@ -1585,10 +1561,7 @@ namespace System.Windows.Controls
                 if ((findResult != null) && (!findResult.IsEmpty))
                 {
                     // Bring find result into view.
-                    if (CurrentViewer != null)
-                    {
-                        CurrentViewer.ShowFindResult(findResult);
-                    }
+                    CurrentViewer?.ShowFindResult(findResult);
                 }
                 else
                 {
@@ -1646,10 +1619,7 @@ namespace System.Windows.Controls
 
             // Fire automation events if automation is active.
             FlowDocumentReaderAutomationPeer peer = UIElementAutomationPeer.FromElement(viewer) as FlowDocumentReaderAutomationPeer;
-            if (peer != null)
-            {
-                peer.RaiseCurrentViewChangedEvent((FlowDocumentReaderViewingMode)e.NewValue, (FlowDocumentReaderViewingMode)e.OldValue);
-            }
+            peer?.RaiseCurrentViewChangedEvent((FlowDocumentReaderViewingMode)e.NewValue, (FlowDocumentReaderViewingMode)e.OldValue);
         }
 
         /// <summary>
@@ -1687,10 +1657,7 @@ namespace System.Windows.Controls
 
             // Fire automation events if automation is active.
             FlowDocumentReaderAutomationPeer peer = UIElementAutomationPeer.FromElement(viewer) as FlowDocumentReaderAutomationPeer;
-            if (peer != null)
-            {
-                peer.RaiseSupportedViewsChangedEvent(e);
-            }
+            peer?.RaiseSupportedViewsChangedEvent(e);
         }
 
         /// <summary>
@@ -1837,10 +1804,7 @@ namespace System.Windows.Controls
             if (reader.Selection != null)
             {
                 CaretElement caretElement = reader.Selection.CaretElement;
-                if (caretElement != null)
-                {
-                    caretElement.InvalidateVisual();
-                }
+                caretElement?.InvalidateVisual();
             }
         }
 

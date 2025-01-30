@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -800,10 +800,7 @@ namespace System.Windows.Controls
 
             MediaElement target = ((MediaElement) d);
 
-            if (target != null)
-            {
-                target._helper.SetVolume((double)e.NewValue);
-            }
+            target?._helper.SetVolume((double)e.NewValue);
         }
 
         private static void BalancePropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
@@ -815,10 +812,7 @@ namespace System.Windows.Controls
 
             MediaElement target = ((MediaElement) d);
 
-            if (target != null)
-            {
-                target._helper.SetBalance((double)e.NewValue);
-            }
+            target?._helper.SetBalance((double)e.NewValue);
         }
 
         private static void IsMutedPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
@@ -830,10 +824,7 @@ namespace System.Windows.Controls
 
             MediaElement target = ((MediaElement) d);
 
-            if (target != null)
-            {
-                target._helper.SetIsMuted((bool)e.NewValue);
-            }
+            target?._helper.SetIsMuted((bool)e.NewValue);
         }
 
         private static void ScrubbingEnabledPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
@@ -845,10 +836,7 @@ namespace System.Windows.Controls
 
             MediaElement target = ((MediaElement) d);
 
-            if (target != null)
-            {
-                target._helper.SetScrubbingEnabled((bool)e.NewValue);
-            }
+            target?._helper.SetScrubbingEnabled((bool)e.NewValue);
         }
 
         private static
@@ -865,10 +853,7 @@ namespace System.Windows.Controls
 
             MediaElement target = (MediaElement)d;
 
-            if (target != null)
-            {
-                target._helper.SetUnloadedBehavior((MediaState)e.NewValue);
-            }
+            target?._helper.SetUnloadedBehavior((MediaState)e.NewValue);
         }
 
         private static
@@ -885,10 +870,7 @@ namespace System.Windows.Controls
 
             MediaElement target = (MediaElement)d;
 
-            if (target != null)
-            {
-                target._helper.SetLoadedBehavior((MediaState)e.NewValue);
-            }
+            target?._helper.SetLoadedBehavior((MediaState)e.NewValue);
         }
 
         internal

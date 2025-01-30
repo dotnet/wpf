@@ -185,12 +185,6 @@ dotnet_diagnostic.CA5362.severity = suggestion
 # IDE0005: Using directive is unnecessary.
 dotnet_diagnostic.IDE0005.severity = suggestion
 
-# IDE0030: Null check can be simplified
-dotnet_diagnostic.IDE0030.severity = suggestion
-
-# IDE0031: Use null propagation
-dotnet_diagnostic.IDE0031.severity = suggestion
-
 # IDE0034: Simplify 'default' expression
 dotnet_diagnostic.IDE0034.severity = suggestion
 
@@ -256,9 +250,6 @@ dotnet_diagnostic.IDE0082.severity = suggestion
 
 # IDE0100: Remove redundant equality
 dotnet_diagnostic.IDE0100.severity = suggestion
-
-# IDE0150: Prefer 'null' check over type check
-dotnet_diagnostic.IDE0150.severity = suggestion
 
 # IDE0180: Use tuple to swap values
 dotnet_diagnostic.IDE0180.severity = suggestion

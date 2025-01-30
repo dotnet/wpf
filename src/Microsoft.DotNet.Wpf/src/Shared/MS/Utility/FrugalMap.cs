@@ -1753,10 +1753,7 @@ namespace MS.Utility
 
         public void Sort()
         {
-            if (null != _mapStore)
-            {
-                _mapStore.Sort();
-            }
+            _mapStore?.Sort();
         }
 
         public void GetKeyValuePair(int index, out int key, out Object value)
@@ -1777,10 +1774,7 @@ namespace MS.Utility
             {
                 if (null != list)
                 {
-                    if (_mapStore != null)
-                    {
-                        _mapStore.Iterate(list, callback);
-                    }
+                    _mapStore?.Iterate(list, callback);
                 }
                 else
                 {
@@ -2102,10 +2096,7 @@ namespace MS.Utility
 
         public void Sort()
         {
-            if (null != _mapStore)
-            {
-                _mapStore.Sort();
-            }
+            _mapStore?.Sort();
         }
 
         public void GetKeyValuePair(int index, out int key, out Object value)
@@ -2126,10 +2117,7 @@ namespace MS.Utility
             {
                 if (null != list)
                 {
-                    if (_mapStore != null)
-                    {
-                        _mapStore.Iterate(list, callback);
-                    }
+                    _mapStore?.Iterate(list, callback);
                 }
                 else
                 {

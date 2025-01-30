@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -585,20 +585,14 @@ namespace System.Windows.Data
             MoveCurrentTo(newItem);
 
             ISupportInitialize isi = newItem as ISupportInitialize;
-            if (isi != null)
-            {
-                isi.BeginInit();
-            }
+            isi?.BeginInit();
 
             // DataView.AddNew calls BeginEdit on the new item, but other implementations
             // of IBL don't.  Make up for them.
             if (!IsDataView)
             {
                 IEditableObject ieo = newItem as IEditableObject;
-                if (ieo != null)
-                {
-                    ieo.BeginEdit();
-                }
+                ieo?.BeginEdit();
             }
 
             return newItem;
@@ -757,10 +751,7 @@ namespace System.Windows.Data
             }
 
             ISupportInitialize isi = newItem as ISupportInitialize;
-            if (isi != null)
-            {
-                isi.EndInit();
-            }
+            isi?.EndInit();
 
             return newItem;
         }
@@ -977,10 +968,7 @@ namespace System.Windows.Data
             SetEditItem(item);
 
             IEditableObject ieo = item as IEditableObject;
-            if (ieo != null)
-            {
-                ieo.BeginEdit();
-            }
+            ieo?.BeginEdit();
         }
 
         /// <summary>
@@ -1051,10 +1039,7 @@ namespace System.Windows.Data
             IEditableObject ieo = _editItem as IEditableObject;
             SetEditItem(null);
 
-            if (ieo != null)
-            {
-                ieo.CancelEdit();
-            }
+            ieo?.CancelEdit();
         }
 
         /// <summary>

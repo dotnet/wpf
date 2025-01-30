@@ -108,10 +108,7 @@ namespace MS.Internal.AutomationProxies
                     el = new WindowsTab(hwnd, null, -1);
                     break;
             }
-            if (el != null)
-            {
-                el.DispatchEvents (eventId, idProp, idObject, idChild);
-            }
+            el?.DispatchEvents (eventId, idProp, idObject, idChild);
         }
 
         #endregion

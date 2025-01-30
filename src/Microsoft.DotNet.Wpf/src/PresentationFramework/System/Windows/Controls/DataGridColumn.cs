@@ -870,10 +870,7 @@ namespace System.Windows.Controls
                 // to the targets that need notification.
                 DataGridColumn column = (DataGridColumn)d;
                 DataGrid dataGridOwner = column.DataGridOwner;
-                if (dataGridOwner != null)
-                {
-                    dataGridOwner.NotifyPropertyChanged(d, e, target);
-                }
+                dataGridOwner?.NotifyPropertyChanged(d, e, target);
             }
         }
 
@@ -883,10 +880,7 @@ namespace System.Windows.Controls
         /// <param name="propertyName"></param>
         protected void NotifyPropertyChanged(string propertyName)
         {
-            if (DataGridOwner != null)
-            {
-                DataGridOwner.NotifyPropertyChanged(this, propertyName, new DependencyPropertyChangedEventArgs(), DataGridNotificationTarget.RefreshCellContent);
-            }
+            DataGridOwner?.NotifyPropertyChanged(this, propertyName, new DependencyPropertyChangedEventArgs(), DataGridNotificationTarget.RefreshCellContent);
         }
 
         /// <summary>
@@ -973,10 +967,7 @@ namespace System.Windows.Controls
         {
             DataGridColumn column = (DataGridColumn)d;
 
-            if (column.DataGridOwner != null)
-            {
-                column.DataGridOwner.ValidateDisplayIndex(column, (int)baseValue);
-            }
+            column.DataGridOwner?.ValidateDisplayIndex(column, (int)baseValue);
 
             return baseValue;
         }

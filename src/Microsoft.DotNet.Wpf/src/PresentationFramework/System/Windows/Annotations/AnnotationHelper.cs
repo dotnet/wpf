@@ -660,7 +660,7 @@ namespace System.Windows.Annotations
             {
                 host = StyleHelper.FindNameInTemplateContent(fdr, "PART_ContentHost", fdr.TemplateInternal) as Decorator;
             }
-            return host != null ? host.Child : null;
+            return host?.Child;
         }
 
         private static IList<IAttachedAnnotation> GetSpannedAnnotationsForFlow(AnnotationService service, ITextSelection selection)

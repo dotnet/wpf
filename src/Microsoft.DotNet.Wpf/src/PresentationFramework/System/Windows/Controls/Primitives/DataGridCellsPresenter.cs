@@ -340,10 +340,7 @@ namespace System.Windows.Controls.Primitives
         {
             // Update the ItemsSource for the cells
             MultipleCopiesCollection cellItems = ItemsSource as MultipleCopiesCollection;
-            if (cellItems != null)
-            {
-                cellItems.MirrorCollectionChange(e);
-            }
+            cellItems?.MirrorCollectionChange(e);
 
             // For a reset event the only thing the MultipleCopiesCollection can do is set its count to 0.
             Debug.Assert(
@@ -622,8 +619,8 @@ namespace System.Windows.Controls.Primitives
             get
             {
                 DataGridRow owningRow = DataGridRowOwner;
-                DataGrid owningDataGrid = (owningRow != null) ? owningRow.DataGridOwner : null;
-                return (owningDataGrid != null) ? owningDataGrid.Columns : null;
+                DataGrid owningDataGrid = owningRow?.DataGridOwner;
+                return owningDataGrid?.Columns;
             }
         }
 

@@ -226,10 +226,7 @@ namespace MS.Internal.IO.Packaging.CompoundFile
 
                         // If the storage was originally opened on lockbyte implementation
                         //  we need to dispose it as well
-                        if (_unsafeLockByteStream != null)
-                        {
-                            _unsafeLockByteStream.Dispose();
-                        }
+                        _unsafeLockByteStream?.Dispose();
                     }
                 }
                 finally

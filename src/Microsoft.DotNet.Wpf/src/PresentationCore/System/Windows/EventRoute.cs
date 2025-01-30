@@ -510,10 +510,7 @@ namespace System.Windows
             
             _routeItemList.Clear();
 
-            if (_branchNodeStack != null)
-            {
-                _branchNodeStack.Clear();
-            }
+            _branchNodeStack?.Clear();
 
             _sourceItemList.Clear();
         }

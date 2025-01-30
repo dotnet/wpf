@@ -208,10 +208,7 @@ namespace System.Windows.Media.Media3D
             {
                 AnimationStorage storage = AnimationStorage.GetStorage(this, dp);
 
-                if (storage != null)
-                {
-                    storage.EvaluateAnimatedValue(metadata, ref entry);                      
-                }
+                storage?.EvaluateAnimatedValue(metadata, ref entry);
             }
         }
 

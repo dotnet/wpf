@@ -891,10 +891,7 @@ namespace System.Windows.Xps.Packaging
         DisposeXpsDocument(
             )
         {
-            if(_opcPackage != null)
-            {
-                _opcPackage.Close();
-            }
+            _opcPackage?.Close();
         }
 
         internal

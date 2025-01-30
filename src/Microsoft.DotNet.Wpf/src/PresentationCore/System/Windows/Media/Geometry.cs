@@ -398,10 +398,7 @@ namespace System.Windows.Media
                 double[] dashArray = null;
 
                 // If we have a pen, populate the CMD struct
-                if (pen != null)
-                {
-                    pen.GetBasicPenData(&penData, out dashArray);
-                }
+                pen?.GetBasicPenData(&penData, out dashArray);
 
                 fixed (byte* pbPathData = pathData.SerializedData)
                 {
@@ -451,10 +448,7 @@ namespace System.Windows.Media
             MIL_PEN_DATA penData;
             double[] dashArray = null;
 
-            if (pen != null)
-            {
-                pen.GetBasicPenData(&penData, out dashArray);
-            }
+            pen?.GetBasicPenData(&penData, out dashArray);
 
             fixed (double *dashArrayFixed = dashArray)
             {

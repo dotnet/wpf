@@ -341,10 +341,7 @@ namespace MS.Internal.Documents
 
                 //Dispose our DocumentPageView.
                 IDisposable dpv = _documentPageView as IDisposable;
-                if (dpv != null)
-                {
-                    dpv.Dispose();
-                }
+                dpv?.Dispose();
             }
         }
 

@@ -250,14 +250,8 @@ namespace System.Windows
                 }
             }
 
-            if( _enterActions != null )
-            {
-                _enterActions.Seal(this);
-            }
-            if( _exitActions != null )
-            {
-                _exitActions.Seal(this);
-            }
+            _enterActions?.Seal(this);
+            _exitActions?.Seal(this);
 
             // Remove thread affinity so it can be accessed across threads
             DetachFromDispatcher();

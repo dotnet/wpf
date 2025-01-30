@@ -1469,8 +1469,7 @@ namespace System.Windows.Input
                     compartment = TextServicesCompartmentContext.Current.GetThreadCompartment(iminfo.Guid);
                 else if (iminfo.Scope == CompartmentScope.Global)
                     compartment = TextServicesCompartmentContext.Current.GetGlobalCompartment(iminfo.Guid);
-                if (compartment != null)
-                   compartment.UnadviseNotifySink();
+                compartment?.UnadviseNotifySink();
             }
         }
 

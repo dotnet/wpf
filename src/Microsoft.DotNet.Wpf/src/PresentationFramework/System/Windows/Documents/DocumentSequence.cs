@@ -346,10 +346,7 @@ namespace System.Windows.Documents
                 if (asyncRequest != null)
                 {
                     asyncRequest.Cancelled = true;
-                    if (asyncRequest.Page.ChildPaginator != null)
-                    {
-                        asyncRequest.Page.ChildPaginator.CancelAsync(asyncRequest);
-                    }
+                    asyncRequest.Page.ChildPaginator?.CancelAsync(asyncRequest);
                 }
             }
         }

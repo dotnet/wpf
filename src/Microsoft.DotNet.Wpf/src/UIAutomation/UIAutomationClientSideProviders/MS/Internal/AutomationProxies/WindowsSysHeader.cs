@@ -80,10 +80,7 @@ namespace MS.Internal.AutomationProxies
                         {
                             // Notify the Listview that the header Change
                             WindowsListView wlv = (WindowsListView) WindowsListView.Create (hwndParent, 0);
-                            if (wlv != null)
-                            {
-                                wlv.DispatchEvents (eventId, idProp, idObject, idChild);
-                            }
+                            wlv?.DispatchEvents (eventId, idProp, idObject, idChild);
                         }
                     }
                 }
@@ -470,10 +467,7 @@ namespace MS.Internal.AutomationProxies
                 }
 
                 WindowsSysHeader parent = _parent as WindowsSysHeader;
-                if (parent != null)
-                {
-                    parent.ScrollIntoView(this);
-                }
+                parent?.ScrollIntoView(this);
 
                 NativeMethods.Win32Point pt;
 
@@ -718,10 +712,7 @@ namespace MS.Internal.AutomationProxies
                 }
 
                 WindowsSysHeader parent = _parent as WindowsSysHeader;
-                if (parent != null)
-                {
-                    parent.ScrollIntoView(this);
-                }
+                parent?.ScrollIntoView(this);
 
 
                 Rect rect = XSendMessage.GetItemRect(_hwnd, NativeMethods.HDM_GETITEMDROPDOWNRECT, _item);

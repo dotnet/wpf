@@ -549,10 +549,7 @@ namespace System.Windows.Controls
                 if (docWriter != null && ia != null)
                 {
                     // Suspend layout on FlowDocumentView.
-                    if (RenderScope != null)
-                    {
-                        RenderScope.SuspendLayout();
-                    }
+                    RenderScope?.SuspendLayout();
 
                     // Store the current state of the document in the PrintingState
                     paginator = ((IDocumentPaginatorSource)Document).DocumentPaginator as FlowDocumentPaginator;
@@ -615,10 +612,7 @@ namespace System.Windows.Controls
         protected virtual void OnCancelPrintCommand()
         {
 #if !DONOTREFPRINTINGASMMETA
-            if (_printingState != null)
-            {
-                _printingState.XpsDocumentWriter.CancelAsync();
-            }
+            _printingState?.XpsDocumentWriter.CancelAsync();
 #endif // DONOTREFPRINTINGASMMETA
         }
 
@@ -1055,10 +1049,7 @@ namespace System.Windows.Controls
             if (_printingState != null)
             {
                 // Resume layout on FlowDocumentView.
-                if (RenderScope != null)
-                {
-                    RenderScope.ResumeLayout();
-                }
+                RenderScope?.ResumeLayout();
 
                 // Enable TextSelection, if it was previously enabled.
                 if (_printingState.IsSelectionEnabled)
@@ -1111,10 +1102,7 @@ namespace System.Windows.Controls
                 // This supports navigating from baseURI#anchor to just baseURI.
                 if (args.TargetObject == document)
                 {
-                    if (_contentHost != null)
-                    {
-                        _contentHost.ScrollToHome();
-                    }
+                    _contentHost?.ScrollToHome();
                     args.Handled = true; // Mark the event as handled.
                 }
                 else if (args.TargetObject is UIElement)
@@ -1269,10 +1257,7 @@ namespace System.Windows.Controls
 
             // Document is also represented as Automation child. Need to invalidate peer to force update.
             FlowDocumentScrollViewerAutomationPeer peer = UIElementAutomationPeer.FromElement(this) as FlowDocumentScrollViewerAutomationPeer;
-            if (peer != null)
-            {
-                peer.InvalidatePeer();
-            }
+            peer?.InvalidatePeer();
         }
 
         /// <summary>
@@ -1472,59 +1457,35 @@ namespace System.Windows.Controls
             }
             else if (args.Command == _commandLineDown)
             {
-                if (viewer._contentHost != null)
-                {
-                    viewer._contentHost.LineDown();
-                }
+                viewer._contentHost?.LineDown();
             }
             else if (args.Command == _commandLineUp)
             {
-                if (viewer._contentHost != null)
-                {
-                    viewer._contentHost.LineUp();
-                }
+                viewer._contentHost?.LineUp();
             }
             else if (args.Command == _commandLineLeft)
             {
-                if (viewer._contentHost != null)
-                {
-                    viewer._contentHost.LineLeft();
-                }
+                viewer._contentHost?.LineLeft();
             }
             else if (args.Command == _commandLineRight)
             {
-                if (viewer._contentHost != null)
-                {
-                    viewer._contentHost.LineRight();
-                }
+                viewer._contentHost?.LineRight();
             }
             else if (args.Command == NavigationCommands.NextPage)
             {
-                if (viewer._contentHost != null)
-                {
-                    viewer._contentHost.PageDown();
-                }
+                viewer._contentHost?.PageDown();
             }
             else if (args.Command == NavigationCommands.PreviousPage)
             {
-                if (viewer._contentHost != null)
-                {
-                    viewer._contentHost.PageUp();
-                }
+                viewer._contentHost?.PageUp();
             }
             else if (args.Command == NavigationCommands.FirstPage)
             {
-                if (viewer._contentHost != null)
-                {
-                    viewer._contentHost.ScrollToHome();
-                }
+                viewer._contentHost?.ScrollToHome();
             }
             else if (args.Command == NavigationCommands.LastPage)
             {
-                if (viewer._contentHost != null)
-                {
-                    viewer._contentHost.ScrollToEnd();
-                }
+                viewer._contentHost?.ScrollToEnd();
             }
             else
             {
@@ -1771,10 +1732,7 @@ namespace System.Windows.Controls
             if (viewer.Selection != null)
             {
                 CaretElement caretElement = viewer.Selection.CaretElement;
-                if (caretElement != null)
-                {
-                    caretElement.InvalidateVisual();
-                }
+                caretElement?.InvalidateVisual();
             }
         }
 

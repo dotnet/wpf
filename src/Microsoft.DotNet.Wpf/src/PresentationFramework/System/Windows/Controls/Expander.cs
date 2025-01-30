@@ -130,10 +130,7 @@ namespace System.Windows.Controls
 
             // Fire accessibility event
             ExpanderAutomationPeer peer = UIElementAutomationPeer.FromElement(ep) as ExpanderAutomationPeer;
-            if(peer != null)
-            {
-                peer.RaiseExpandCollapseAutomationEvent(!newValue, newValue);
-            }
+            peer?.RaiseExpandCollapseAutomationEvent(!newValue, newValue);
 
             if (newValue)
             {

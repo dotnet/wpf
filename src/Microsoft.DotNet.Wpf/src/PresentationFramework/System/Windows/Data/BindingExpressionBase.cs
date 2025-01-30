@@ -1314,8 +1314,7 @@ namespace System.Windows.Data
                 // When the target is a TextBox with a composition in effect,
                 // do this asynchronously, to avoid confusing the composition's Undo stack
                 System.Windows.Controls.Primitives.TextBoxBase tbb = Target as System.Windows.Controls.Primitives.TextBoxBase;
-                MS.Internal.Documents.UndoManager undoManager = (tbb == null) ? null :
-                    tbb.TextContainer.UndoManager;
+                MS.Internal.Documents.UndoManager undoManager = tbb?.TextContainer.UndoManager;
                 if (undoManager != null &&
                     undoManager.OpenedUnit != null &&
                     undoManager.OpenedUnit.GetType() != typeof(System.Windows.Documents.TextParentUndoUnit))
@@ -1994,7 +1993,7 @@ namespace System.Windows.Data
 
         internal Dispatcher Dispatcher
         {
-            get { return (_engine != null) ? _engine.Dispatcher : null; }
+            get { return _engine?.Dispatcher; }
         }
 
         internal object Value
@@ -2047,10 +2046,7 @@ namespace System.Windows.Data
         internal void Attach(DependencyObject target, DependencyProperty dp)
         {
             // make sure we're on the right thread to access the target
-            if (target != null)
-            {
-                target.VerifyAccess();
-            }
+            target?.VerifyAccess();
 
             IsAttaching = true;
             AttachOverride(target, dp);
@@ -2375,10 +2371,7 @@ namespace System.Windows.Data
             if (!skipBindingGroup)
             {
                 BindingGroup bindingGroup = BindingGroup;
-                if (bindingGroup != null)
-                {
-                    bindingGroup.AddValidationError(validationError);
-                }
+                bindingGroup?.AddValidationError(validationError);
             }
         }
 
@@ -2391,10 +2384,7 @@ namespace System.Windows.Data
             if (!skipBindingGroup)
             {
                 BindingGroup bindingGroup = BindingGroup;
-                if (bindingGroup != null)
-                {
-                    bindingGroup.RemoveValidationError(validationError);
-                }
+                bindingGroup?.RemoveValidationError(validationError);
             }
         }
 
@@ -2456,8 +2446,7 @@ namespace System.Windows.Data
             {
                 BindingExpressionBase bindExpr = bindingExpressions[i];
                 WeakDependencySource[] sources = (i==index) ? newSources :
-                                            (bindExpr != null) ? bindExpr.WeakSources :
-                                            null;
+                                            bindExpr?.WeakSources;
                 int m = (sources == null) ? 0 : sources.Length;
                 for (int j = 0; j < m; ++j)
                 {

@@ -57,9 +57,9 @@ namespace System.Windows
                 {
                     ce.RaiseEvent(mouseEventArgs);
                 }
-                else if (uie3D != null)
+                else
                 {
-                    uie3D.RaiseEvent(mouseEventArgs);
+                    uie3D?.RaiseEvent(mouseEventArgs);
                 }
             }
         }

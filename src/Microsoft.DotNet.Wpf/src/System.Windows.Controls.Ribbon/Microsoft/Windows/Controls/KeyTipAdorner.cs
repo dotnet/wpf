@@ -76,10 +76,7 @@ namespace Microsoft.Windows.Controls
 
         protected override Size ArrangeOverride(Size finalSize)
         {
-            if (_keyTipControl != null)
-            {
-                _keyTipControl.Arrange(new Rect(_keyTipControl.DesiredSize));
-            }
+            _keyTipControl?.Arrange(new Rect(_keyTipControl.DesiredSize));
             return finalSize;
         }
 

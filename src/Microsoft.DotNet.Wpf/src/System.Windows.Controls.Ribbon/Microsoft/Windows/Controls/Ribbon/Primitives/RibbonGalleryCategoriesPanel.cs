@@ -133,7 +133,7 @@ namespace Microsoft.Windows.Controls.Ribbon.Primitives
         // At the time this method is called, scrolling state is in its new, valid state.
         private void OnScrollChange()
         {
-            if (ScrollOwner != null) { ScrollOwner.InvalidateScrollInfo(); }
+            ScrollOwner?.InvalidateScrollInfo();
         }
 
         private void VerifyScrollingData(Size viewport, Size extent, Vector offset)
@@ -619,10 +619,7 @@ namespace Microsoft.Windows.Controls.Ribbon.Primitives
             {
                 TreeHelper.InvalidateMeasureForVisualAncestorPath(this, RibbonHelper.IsISupportStarLayout);
                 RibbonGallery gallery = this.Gallery;
-                if (gallery != null)
-                {
-                    gallery.InvalidateMeasureOnAllCategoriesPanel();
-                }
+                gallery?.InvalidateMeasureOnAllCategoriesPanel();
             }
         }
 

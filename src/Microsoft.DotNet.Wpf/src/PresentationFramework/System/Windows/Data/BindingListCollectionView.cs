@@ -1120,7 +1120,7 @@ namespace System.Windows.Data
         public bool? IsLiveSorting
         {
             get { return IsDataView ? (bool?)true : (bool?)null; }
-            set { throw new InvalidOperationException(SR.Format(SR.CannotChangeLiveShaping, nameof(IsLiveSorting), "CanChangeLiveSorting")); }
+            set { throw new InvalidOperationException(SR.Format(SR.CannotChangeLiveShaping, nameof(IsLiveSorting), nameof(CanChangeLiveSorting))); }
         }
 
         ///<summary>
@@ -1132,7 +1132,7 @@ namespace System.Windows.Data
         public bool? IsLiveFiltering
         {
             get { return IsDataView ? (bool?)true : (bool?)null; }
-            set { throw new InvalidOperationException(SR.Format(SR.CannotChangeLiveShaping, nameof(IsLiveFiltering), "CanChangeLiveFiltering")); }
+            set { throw new InvalidOperationException(SR.Format(SR.CannotChangeLiveShaping, nameof(IsLiveFiltering), nameof(CanChangeLiveFiltering))); }
         }
 
         ///<summary>

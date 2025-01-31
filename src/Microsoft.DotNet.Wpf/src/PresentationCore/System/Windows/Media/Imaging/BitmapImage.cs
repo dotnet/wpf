@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -72,7 +72,7 @@ namespace System.Windows.Media.Imaging
 
             if (UriSource == null && StreamSource == null)
             {
-                throw new InvalidOperationException(SR.Format(SR.Image_NeitherArgument, nameof(UriSource), "StreamSource"));
+                throw new InvalidOperationException(SR.Format(SR.Image_NeitherArgument, nameof(UriSource), nameof(StreamSource)));
             }
 
             // If the Uri is relative, use delay creation as the BaseUri could be set at a later point

@@ -552,7 +552,7 @@ namespace System.Windows.Controls
 
             if (item.Parent != null)
             {
-                throw new ArgumentException(SR.Format(SR.GridCollection_InOtherCollection, "value", "ColumnDefinitionCollection"));
+                throw new ArgumentException(SR.Format(SR.GridCollection_InOtherCollection, nameof(value), "ColumnDefinitionCollection"));
             }
         }
 

@@ -119,7 +119,7 @@ namespace System.Windows.Media
             ArgumentOutOfRangeException.ThrowIfNegative(index);
 
             if (index >= array.Length)
-                throw new ArgumentException(SR.Format(SR.Collection_CopyTo_IndexGreaterThanOrEqualToArrayLength, "index", "array"));
+                throw new ArgumentException(SR.Format(SR.Collection_CopyTo_IndexGreaterThanOrEqualToArrayLength, nameof(index), "array"));
 
             CharacterMetrics[][] pageTable = _pageTable;
             if (pageTable != null)
@@ -176,7 +176,7 @@ namespace System.Windows.Media
             ArgumentOutOfRangeException.ThrowIfNegative(index);
 
             if (index >= array.Length)
-                throw new ArgumentException(SR.Format(SR.Collection_CopyTo_IndexGreaterThanOrEqualToArrayLength, "index", "array"));
+                throw new ArgumentException(SR.Format(SR.Collection_CopyTo_IndexGreaterThanOrEqualToArrayLength, nameof(index), "array"));
 
             if (Count > array.Length - index)
                 throw new ArgumentException(SR.Format(SR.Collection_CopyTo_NumberOfElementsExceedsArrayLength, index, "array"));

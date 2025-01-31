@@ -100,7 +100,7 @@ namespace System.Windows.Media
             {
                 // relative location; we need a base URI
                 if (baseUri == null)
-                    throw new ArgumentNullException(nameof(baseUri), SR.Format(SR.NullBaseUriParam, "baseUri", "location"));
+                    throw new ArgumentNullException(nameof(baseUri), SR.Format(SR.NullBaseUriParam, nameof(baseUri), "location"));
 
                 // the location part must include a path component, otherwise we'll look in windows fonts and ignore the base URI
                 if (string.IsNullOrEmpty(location))

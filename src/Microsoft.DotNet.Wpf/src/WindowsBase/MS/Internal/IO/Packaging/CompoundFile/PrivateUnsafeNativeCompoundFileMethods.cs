@@ -176,7 +176,7 @@ namespace MS.Internal.IO.Packaging.CompoundFile
                                      SafeNativeCompoundFileConstants.STATFLAG_NOOPEN  )) != 0)
                 {
                     // validate grfStatFlag's value
-                    throw new ArgumentException(SR.Format(SR.InvalidArgumentValue, "grfStatFlag", grfStatFlag.ToString(CultureInfo.InvariantCulture)));
+                    throw new ArgumentException(SR.Format(SR.InvalidArgumentValue, nameof(grfStatFlag), grfStatFlag.ToString(CultureInfo.InvariantCulture)));
                 }
 
                 System.Runtime.InteropServices.ComTypes.STATSTG returnValue = new System.Runtime.InteropServices.ComTypes.STATSTG

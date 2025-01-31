@@ -98,7 +98,7 @@ namespace System.Windows.Markup
             ComponentResourceKey key = value as ComponentResourceKey;
             if (key == null)
             {
-                throw new ArgumentException(SR.Format(SR.MustBeOfType, "value", "ComponentResourceKey")); 
+                throw new ArgumentException(SR.Format(SR.MustBeOfType, nameof(value), "ComponentResourceKey")); 
             }
             ArgumentNullException.ThrowIfNull(destinationType);
             return base.CanConvertTo(context, destinationType);

@@ -41,7 +41,7 @@ namespace System.Windows.Xps.Serialization
 
             if (v == null)
             {
-                throw new ArgumentException(SR.Format(SR.MustBeOfType, "serializedObject", typeof(Visual)));
+                throw new ArgumentException(SR.Format(SR.MustBeOfType, nameof(serializedObject), typeof(Visual)));
             }
 
             //  The new class XpsOMSerializationManager now also interacts with this class
@@ -177,7 +177,7 @@ namespace System.Windows.Xps.Serialization
 
             if (v == null)
             {
-                throw new ArgumentException(SR.Format(SR.MustBeOfType, "serializedObject", typeof(Visual)));
+                throw new ArgumentException(SR.Format(SR.MustBeOfType, nameof(serializedObject), typeof(Visual)));
             }
 
             //  The new class XpsOMSerializationManager now also interacts with this class

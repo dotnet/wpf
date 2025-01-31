@@ -298,12 +298,12 @@ namespace System.Windows.Markup.Localizer
 
             if (arrayIndex >= array.Length)
             {
-                throw new ArgumentException(SR.Format(SR.Collection_CopyTo_IndexGreaterThanOrEqualToArrayLength, "arrayIndex", "array"), nameof(arrayIndex));
+                throw new ArgumentException(SR.Format(SR.Collection_CopyTo_IndexGreaterThanOrEqualToArrayLength, nameof(arrayIndex), "array"), nameof(arrayIndex));
             }
 
             if (Count > (array.Length - arrayIndex))
             {
-                throw new ArgumentException(SR.Format(SR.Collection_CopyTo_NumberOfElementsExceedsArrayLength, "arrayIndex", "array"));
+                throw new ArgumentException(SR.Format(SR.Collection_CopyTo_NumberOfElementsExceedsArrayLength, nameof(arrayIndex), "array"));
             }
 
             foreach (KeyValuePair<BamlLocalizableResourceKey, BamlLocalizableResource> pair in _dictionary)

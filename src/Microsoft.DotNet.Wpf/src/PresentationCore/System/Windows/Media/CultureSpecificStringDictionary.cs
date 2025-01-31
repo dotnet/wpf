@@ -111,7 +111,7 @@ namespace System.Windows.Media
             ArgumentOutOfRangeException.ThrowIfNegative(index);
 
             if (index >= array.Length)
-                throw new ArgumentException(SR.Format(SR.Collection_CopyTo_IndexGreaterThanOrEqualToArrayLength, "index", "array"));
+                throw new ArgumentException(SR.Format(SR.Collection_CopyTo_IndexGreaterThanOrEqualToArrayLength, nameof(index), "array"));
 
             if (_innerDictionary.Count > array.Length - index)
                 throw new ArgumentException(SR.Format(SR.Collection_CopyTo_NumberOfElementsExceedsArrayLength, index, "array"));
@@ -145,7 +145,7 @@ namespace System.Windows.Media
             ArgumentOutOfRangeException.ThrowIfNegative(index);
 
             if (index >= array.Length)
-                throw new ArgumentException(SR.Format(SR.Collection_CopyTo_IndexGreaterThanOrEqualToArrayLength, "index", "array"));
+                throw new ArgumentException(SR.Format(SR.Collection_CopyTo_IndexGreaterThanOrEqualToArrayLength, nameof(index), "array"));
 
             if (_innerDictionary.Count > array.Length - index)
                 throw new ArgumentException(SR.Format(SR.Collection_CopyTo_NumberOfElementsExceedsArrayLength, index, "array"));

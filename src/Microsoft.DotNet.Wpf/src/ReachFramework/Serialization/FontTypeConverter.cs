@@ -155,7 +155,7 @@ namespace System.Windows.Xps.Serialization
             GlyphRun fontGlyphRun = (GlyphRun)value;
             if (fontGlyphRun == null)
             {
-                throw new ArgumentException(SR.Format(SR.MustBeOfType, "value", "GlyphRun"));
+                throw new ArgumentException(SR.Format(SR.MustBeOfType, nameof(value), "GlyphRun"));
             }
 
             //

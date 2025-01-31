@@ -57,11 +57,11 @@ namespace System.Windows.Documents
             ArgumentNullException.ThrowIfNull(endPosition);
             if (startPosition.TextContainer != endPosition.TextContainer)
             {
-                throw new ArgumentException(SR.Format(SR.InDifferentTextContainers, "startPosition", "endPosition"));
+                throw new ArgumentException(SR.Format(SR.InDifferentTextContainers, nameof(startPosition), "endPosition"));
             }
             if (startPosition.CompareTo(endPosition) > 0)
             {
-                throw new ArgumentException(SR.Format(SR.BadTextPositionOrder, "startPosition", "endPosition"));
+                throw new ArgumentException(SR.Format(SR.BadTextPositionOrder, nameof(startPosition), "endPosition"));
             }
         }
 

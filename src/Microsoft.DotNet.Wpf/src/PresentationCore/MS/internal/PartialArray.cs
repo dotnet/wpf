@@ -138,7 +138,7 @@ namespace MS.Internal
                 throw new ArgumentException(
                     SR.Format(
                         SR.Collection_CopyTo_IndexGreaterThanOrEqualToArrayLength, 
-                        "arrayIndex", 
+                        nameof(arrayIndex), 
                         "array"),
                         nameof(arrayIndex));
             }
@@ -148,7 +148,7 @@ namespace MS.Internal
                 throw new ArgumentException(
                     SR.Format(
                         SR.Collection_CopyTo_NumberOfElementsExceedsArrayLength,
-                        "arrayIndex",
+                        nameof(arrayIndex),
                         "array"));
             }           
             

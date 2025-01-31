@@ -350,7 +350,7 @@ namespace System.Windows
             ArgumentNullException.ThrowIfNull(resourceLocator);
 
             if (resourceLocator.OriginalString == null)
-                throw new ArgumentException(SR.Format(SR.ArgumentPropertyMustNotBeNull,"resourceLocator", "OriginalString"));
+                throw new ArgumentException(SR.Format(SR.ArgumentPropertyMustNotBeNull,nameof(resourceLocator), "OriginalString"));
 
             if (resourceLocator.IsAbsoluteUri == true)
                 throw new ArgumentException(SR.AbsoluteUriNotAllowed);
@@ -440,7 +440,7 @@ namespace System.Windows
             ArgumentNullException.ThrowIfNull(resourceLocator);
 
             if (resourceLocator.OriginalString == null)
-                throw new ArgumentException(SR.Format(SR.ArgumentPropertyMustNotBeNull,"resourceLocator", "OriginalString"));
+                throw new ArgumentException(SR.Format(SR.ArgumentPropertyMustNotBeNull,nameof(resourceLocator), "OriginalString"));
 
             if (resourceLocator.IsAbsoluteUri == true)
                 throw new ArgumentException(SR.AbsoluteUriNotAllowed);
@@ -577,7 +577,7 @@ namespace System.Windows
             ArgumentNullException.ThrowIfNull(uriResource);
 
             if (uriResource.OriginalString == null)
-                throw new ArgumentException(SR.Format(SR.ArgumentPropertyMustNotBeNull, "uriResource", "OriginalString"));
+                throw new ArgumentException(SR.Format(SR.ArgumentPropertyMustNotBeNull, nameof(uriResource), "OriginalString"));
 
             if (uriResource.IsAbsoluteUri == true && !BaseUriHelper.IsPackApplicationUri(uriResource))
             {
@@ -609,7 +609,7 @@ namespace System.Windows
             ArgumentNullException.ThrowIfNull(uriContent);
 
             if (uriContent.OriginalString == null)
-                throw new ArgumentException(SR.Format(SR.ArgumentPropertyMustNotBeNull, "uriContent", "OriginalString"));
+                throw new ArgumentException(SR.Format(SR.ArgumentPropertyMustNotBeNull, nameof(uriContent), "OriginalString"));
 
             if (uriContent.IsAbsoluteUri == true && !BaseUriHelper.IsPackApplicationUri(uriContent))
             {
@@ -638,7 +638,7 @@ namespace System.Windows
             ArgumentNullException.ThrowIfNull(uriRemote);
 
             if (uriRemote.OriginalString == null)
-                throw new ArgumentException(SR.Format(SR.ArgumentPropertyMustNotBeNull, "uriRemote", "OriginalString"));
+                throw new ArgumentException(SR.Format(SR.ArgumentPropertyMustNotBeNull, nameof(uriRemote), "OriginalString"));
 
             if (uriRemote.IsAbsoluteUri == true)
             {

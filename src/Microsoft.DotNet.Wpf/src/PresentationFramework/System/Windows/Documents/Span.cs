@@ -90,11 +90,11 @@ namespace System.Windows.Documents
             ArgumentNullException.ThrowIfNull(end);
             if (start.TextContainer != end.TextContainer)
             {
-                throw new ArgumentException(SR.Format(SR.InDifferentTextContainers, "start", "end"));
+                throw new ArgumentException(SR.Format(SR.InDifferentTextContainers, nameof(start), "end"));
             }
             if (start.CompareTo(end) > 0)
             {
-                throw new ArgumentException(SR.Format(SR.BadTextPositionOrder, "start", "end"));
+                throw new ArgumentException(SR.Format(SR.BadTextPositionOrder, nameof(start), "end"));
             }
 
             start.TextContainer.BeginChange();
@@ -107,7 +107,7 @@ namespace System.Windows.Documents
 
                 if (start.Paragraph != end.Paragraph)
                 {
-                    throw new ArgumentException(SR.Format(SR.InDifferentParagraphs, "start", "end"));
+                    throw new ArgumentException(SR.Format(SR.InDifferentParagraphs, nameof(start), "end"));
                 }
 
                 // If start or end positions have a Hyperlink ancestor, we cannot split them.

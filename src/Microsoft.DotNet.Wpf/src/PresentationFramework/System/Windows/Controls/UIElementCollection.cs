@@ -34,7 +34,7 @@ namespace System.Windows.Controls
         {
             if (visualParent == null)
             {
-                throw new ArgumentNullException(SR.Format(SR.Panel_NoNullVisualParent, "visualParent", this.GetType()));
+                throw new ArgumentNullException(SR.Format(SR.Panel_NoNullVisualParent, nameof(visualParent), this.GetType()));
             }
 
             _visualChildren = new VisualCollection(visualParent);

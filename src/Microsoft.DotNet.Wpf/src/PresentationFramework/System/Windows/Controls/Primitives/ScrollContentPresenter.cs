@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -8,20 +8,10 @@
 
 using MS.Internal;
 using MS.Utility;
-using System;
-using System.Collections;
 using System.ComponentModel;
-using System.Diagnostics;
-using System.Windows.Threading;
-using System.Windows;
-using System.Windows.Automation;
-using System.Windows.Automation.Provider;
 using System.Windows.Controls.Primitives;
-using System.Windows.Data;
 using System.Windows.Documents;
-using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Markup;
 
 namespace System.Windows.Controls
 {
@@ -349,7 +339,7 @@ namespace System.Windows.Controls
             //check if there is a TemplateChild on FrameworkElement
             if (base.TemplateChild == null)
             {
-                throw new ArgumentOutOfRangeException("index", index, SR.Visual_ArgumentOutOfRange);
+                throw new ArgumentOutOfRangeException(nameof(index), index, SR.Visual_ArgumentOutOfRange);
             }
             else
             {
@@ -362,7 +352,7 @@ namespace System.Windows.Controls
                         return _adornerLayer;
 
                     default:
-                        throw new ArgumentOutOfRangeException("index", index, SR.Visual_ArgumentOutOfRange);
+                        throw new ArgumentOutOfRangeException(nameof(index), index, SR.Visual_ArgumentOutOfRange);
                 }
             }
          }
@@ -578,13 +568,8 @@ namespace System.Windows.Controls
                 return Rect.Empty;
             }
 
-            // This is a false positive by PreSharp. visual cannot be null because of the 'if' check above
-#pragma warning disable 1634, 1691
-#pragma warning disable 56506
             // Compute the child's rect relative to (0,0) in our coordinate space.
             GeneralTransform childTransform = visual.TransformToAncestor(this);
-#pragma warning restore 56506
-#pragma warning restore 1634, 1691
 
             rectangle = childTransform.TransformBounds(rectangle);
 

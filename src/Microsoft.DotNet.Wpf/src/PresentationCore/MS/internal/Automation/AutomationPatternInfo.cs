@@ -7,10 +7,6 @@
 //
 // Description: class containing information about an automation property
 
-using System;
-using System.Diagnostics;
-using System.Windows;
-using System.Windows.Media;
 using System.Windows.Automation;
 using System.Windows.Automation.Peers;
 

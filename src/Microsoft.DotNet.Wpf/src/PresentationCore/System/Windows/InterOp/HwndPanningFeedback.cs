@@ -5,12 +5,7 @@
 //
 //
 
-using System;
-using System.Diagnostics;
 using System.Runtime.InteropServices;
-using System.Security;
-using System.Windows.Interop;
-using System.Windows.Media;
 using System.Windows.Threading;
 using MS.Win32;
 
@@ -49,7 +44,7 @@ namespace System.Windows.Interop
             {
                 if (_hwndSource != null)
                 {
-                    IntPtr handle = _hwndSource.CriticalHandle;
+                    IntPtr handle = _hwndSource.Handle;
                     if (handle != IntPtr.Zero)
                     {
                         return new HandleRef(_hwndSource, handle);

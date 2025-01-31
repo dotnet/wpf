@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -7,10 +7,7 @@
 
 
 using System;
-using System.Collections;
-using System.Text;
 using System.Runtime.InteropServices;
-using System.ComponentModel;
 using System.Windows.Automation;
 using System.Windows.Automation.Provider;
 using System.Windows;
@@ -87,7 +84,7 @@ namespace MS.Internal.AutomationProxies
             _createOnEvent = new WinEventTracker.ProxyRaiseEvents (RaiseEvents);
 
             // internally track some of the lv events
-            WinEventTracker.AddToNotificationList (_hwnd, new WinEventTracker.ProxyRaiseEvents (WindowsListView.GroupSpecificEvents), _groupEvents, 3);
+            WinEventTracker.AddToNotificationList(_hwnd, new WinEventTracker.ProxyRaiseEvents (WindowsListView.GroupSpecificEvents), _groupEvents);
         }
 
         #endregion Constructors
@@ -143,10 +140,7 @@ namespace MS.Internal.AutomationProxies
                 default :
                 {
                     ProxySimple el = new WindowsListView( hwnd, null, -1 );
-                    if (el != null)
-                    {
-                        el.DispatchEvents( eventId, idProp, idObject, idChild );
-                    }
+                    el?.DispatchEvents( eventId, idProp, idObject, idChild );
                     break;
                 }
             }
@@ -502,8 +496,8 @@ namespace MS.Internal.AutomationProxies
                         if (hwndHeader != IntPtr.Zero && SafeNativeMethods.IsWindowVisible (hwndHeader))
                         {
                             WindowsSysHeader header = (WindowsSysHeader) WindowsSysHeader.Create (hwndHeader, 0);
-                            WinEventTracker.EvtIdProperty[] aEvents = new WinEventTracker.EvtIdProperty[] { new WinEventTracker.EvtIdProperty(NativeMethods.EventObjectCreate, TablePattern.ColumnHeadersProperty) };
-                            WinEventTracker.AddToNotificationList(hwndHeader, header._createOnEvent, aEvents, 1);
+                            ReadOnlySpan<WinEventTracker.EvtIdProperty> aEvents = [new WinEventTracker.EvtIdProperty(NativeMethods.EventObjectCreate, TablePattern.ColumnHeadersProperty)];
+                            WinEventTracker.AddToNotificationList(hwndHeader, header._createOnEvent, aEvents);
                         }
                     }
                 }
@@ -511,8 +505,8 @@ namespace MS.Internal.AutomationProxies
 
             if (eventId == InvokePattern.InvokedEvent)
             {
-                WinEventTracker.EvtIdProperty[] aEvents = new WinEventTracker.EvtIdProperty[] { new WinEventTracker.EvtIdProperty(NativeMethods.EventObjectSelection, eventId) };
-                WinEventTracker.AddToNotificationList(_hwnd, _createOnEvent, aEvents, 1); 
+                ReadOnlySpan<WinEventTracker.EvtIdProperty> aEvents = [new WinEventTracker.EvtIdProperty(NativeMethods.EventObjectSelection, eventId)];
+                WinEventTracker.AddToNotificationList(_hwnd, _createOnEvent, aEvents); 
             }
 
             base.AdviseEventAdded (eventId, aidProps);
@@ -531,8 +525,8 @@ namespace MS.Internal.AutomationProxies
                         if (hwndHeader != IntPtr.Zero && SafeNativeMethods.IsWindowVisible (hwndHeader))
                         {
                             WindowsSysHeader header = (WindowsSysHeader) WindowsSysHeader.Create (hwndHeader, 0);
-                            WinEventTracker.EvtIdProperty[] aEvents = new WinEventTracker.EvtIdProperty[] { new WinEventTracker.EvtIdProperty(NativeMethods.EventObjectCreate, TablePattern.ColumnHeadersProperty) };
-                            WinEventTracker.RemoveToNotificationList (hwndHeader, aEvents, header._createOnEvent, 1);
+                            ReadOnlySpan<WinEventTracker.EvtIdProperty> aEvents = [new WinEventTracker.EvtIdProperty(NativeMethods.EventObjectCreate, TablePattern.ColumnHeadersProperty)];
+                            WinEventTracker.RemoveToNotificationList(hwndHeader, aEvents, header._createOnEvent);
                         }
                     }
                 }
@@ -540,8 +534,8 @@ namespace MS.Internal.AutomationProxies
 
             if (eventId == InvokePattern.InvokedEvent)
             {
-                WinEventTracker.EvtIdProperty[] aEvents = new WinEventTracker.EvtIdProperty[] { new WinEventTracker.EvtIdProperty(NativeMethods.EventObjectSelection, eventId) };
-                WinEventTracker.AddToNotificationList(_hwnd, _createOnEvent, aEvents, 1);
+                ReadOnlySpan<WinEventTracker.EvtIdProperty> aEvents = [new WinEventTracker.EvtIdProperty(NativeMethods.EventObjectSelection, eventId)];
+                WinEventTracker.AddToNotificationList(_hwnd, _createOnEvent, aEvents);
             }
 
             base.AdviseEventRemoved(eventId, aidProps);
@@ -745,12 +739,12 @@ namespace MS.Internal.AutomationProxies
 
             if (row < 0 || row >= maxRow)
             {
-                throw new ArgumentOutOfRangeException("row", row, SR.GridRowOutOfRange);
+                throw new ArgumentOutOfRangeException(nameof(row), row, SR.GridRowOutOfRange);
             }
 
             if (column < 0 || column >= maxColumn)
             {
-                throw new ArgumentOutOfRangeException("column", column, SR.GridColumnOutOfRange);
+                throw new ArgumentOutOfRangeException(nameof(column), column, SR.GridColumnOutOfRange);
             }
 
             // GetCell
@@ -1155,7 +1149,7 @@ namespace MS.Internal.AutomationProxies
                         if (_groupsCollection.Contains (hwnd))
                         {
                             _groupsCollection.Remove (hwnd);
-                            WinEventTracker.RemoveToNotificationList (hwnd, _groupEvents, null, 3);
+                            WinEventTracker.RemoveToNotificationList(hwnd, _groupEvents, null);
                         }
                     }
                     break;
@@ -1171,7 +1165,7 @@ namespace MS.Internal.AutomationProxies
                         if (_groupsCollection.Contains (hwnd) && !SafeNativeMethods.IsWindowVisible (hwnd) && !SafeNativeMethods.IsWindowEnabled (hwnd))
                         {
                             _groupsCollection.Remove (hwnd);
-                            WinEventTracker.RemoveToNotificationList (hwnd, _groupEvents, null, 3);
+                            WinEventTracker.RemoveToNotificationList(hwnd, _groupEvents, null);
                         }
                     }
                     break;
@@ -1404,11 +1398,12 @@ namespace MS.Internal.AutomationProxies
         static internal NativeMethods.LVHITTESTINFO_INTERNAL SubitemHitTest (IntPtr hwnd, int item, NativeMethods.Win32Point pt)
         {
             // Allocate a local LVHITTESTINFO struct.
-            NativeMethods.LVHITTESTINFO_INTERNAL hitTest = new NativeMethods.LVHITTESTINFO_INTERNAL ();
-
-            // Set the point of interest.
-            hitTest.pt = pt;
-            hitTest.iItem = item;
+            NativeMethods.LVHITTESTINFO_INTERNAL hitTest = new NativeMethods.LVHITTESTINFO_INTERNAL
+            {
+                // Set the point of interest.
+                pt = pt,
+                iItem = item
+            };
 
             int result = -1;
 
@@ -1820,11 +1815,12 @@ namespace MS.Internal.AutomationProxies
         // set listview item state
         private static bool SetItemState (IntPtr hwnd, int item, int stateMask, int state)
         {
-            NativeMethods.LVITEM lvitem = new NativeMethods.LVITEM ();
-
-            lvitem.mask = NativeMethods.LVIF_STATE;
-            lvitem.state = state;
-            lvitem.stateMask = stateMask;
+            NativeMethods.LVITEM lvitem = new NativeMethods.LVITEM
+            {
+                mask = NativeMethods.LVIF_STATE,
+                state = state,
+                stateMask = stateMask
+            };
 
             return XSendMessage.SetItem(hwnd, item, lvitem);
         }
@@ -2005,10 +2001,7 @@ namespace MS.Internal.AutomationProxies
                 el = wlv;
             }
 
-            if (el != null)
-            {
-                el.DispatchEvents(eventId, idProp, idObject, idChild);
-            }
+            el?.DispatchEvents(eventId, idProp, idObject, idChild);
 
             return;
         }

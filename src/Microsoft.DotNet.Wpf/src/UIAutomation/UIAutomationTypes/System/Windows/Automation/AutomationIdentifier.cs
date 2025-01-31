@@ -5,11 +5,9 @@
 // Description: Base class for Automation Idenfitiers (Property, Event, etc.)
 
 
-using System;
 using System.Collections;
 using System.Diagnostics;
 using MS.Internal.Automation;
-using MS.Internal.UIAutomationTypes.Interop;
 
 
 namespace System.Windows.Automation

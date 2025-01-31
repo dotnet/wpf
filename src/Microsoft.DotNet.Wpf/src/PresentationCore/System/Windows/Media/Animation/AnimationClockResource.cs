@@ -12,12 +12,7 @@
 //
 //
 
-using System;
-using System.Windows;
-using System.Windows.Media;
 using System.Windows.Media.Composition;
-using System.Diagnostics;
-using System.Runtime.InteropServices;
 
 namespace System.Windows.Media.Animation
 {

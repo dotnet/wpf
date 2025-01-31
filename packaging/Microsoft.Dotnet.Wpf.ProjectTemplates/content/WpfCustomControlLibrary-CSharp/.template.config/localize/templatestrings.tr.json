@@ -19,6 +19,8 @@
   "symbols/Framework/choices/net8.0/displayName": ".NET 8.0",
   "symbols/Framework/choices/net9.0/description": "Hedef net9.0",
   "symbols/Framework/choices/net9.0/displayName": ".NET 9.0",
+  "symbols/Framework/choices/net10.0/description": "Hedef net10.0",
+  "symbols/Framework/choices/net10.0/displayName": ".NET 10.0",
   "symbols/Framework/displayName": "Çerçeve",
   "symbols/langVersion/description": "Oluşturulan proje dosyasında langVersion'ı ayarlar",
   "symbols/langVersion/displayName": "Dil Sürümü",

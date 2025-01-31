@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -7,13 +7,11 @@
 //              bottomless area.
 //
 
-using System;                               // Object
 using System.Windows;                       // Size
 using System.Windows.Controls;              // ScrollViewer
 using System.Windows.Controls.Primitives;   // IScrollInfo
 using System.Windows.Documents;             // FlowDocument
 using System.Windows.Media;                 // Visual
-using System.Windows.Media.Imaging;         // RenderTargetBitmap
 using MS.Internal.PtsHost;                  // FlowDocumentPage
 using MS.Internal.Text;                     // TextDpi
 
@@ -159,10 +157,7 @@ namespace MS.Internal.Documents
                     // Connect to visual tree.
                     if (_pageVisual != _formatter.DocumentPage.Visual)
                     {
-                        if (_textView != null)
-                        {
-                            _textView.OnPageConnected();
-                        }
+                        _textView?.OnPageConnected();
                         if (_pageVisual != null)
                         {
                             RemoveVisualChild(_pageVisual);
@@ -186,10 +181,7 @@ namespace MS.Internal.Documents
                 {
                     if (_pageVisual != null)
                     {
-                        if (_textView != null)
-                        {
-                            _textView.OnPageDisconnected();
-                        }
+                        _textView?.OnPageDisconnected();
                         RemoveVisualChild(_pageVisual);
                         _pageVisual = null;
                     }
@@ -228,7 +220,7 @@ namespace MS.Internal.Documents
         {
             if (index != 0)
             {
-                throw new ArgumentOutOfRangeException("index", index, SR.Visual_ArgumentOutOfRange);
+                throw new ArgumentOutOfRangeException(nameof(index), index, SR.Visual_ArgumentOutOfRange);
             }
             return _pageVisual;
         }
@@ -388,10 +380,7 @@ namespace MS.Internal.Documents
             // Disconnect any content associated with the formatter.
             if (_pageVisual != null && !_suspendLayout)
             {
-                if (_textView != null)
-                {
-                    _textView.OnPageDisconnected();
-                }
+                _textView?.OnPageDisconnected();
                 RemoveVisualChild(_pageVisual);
                 _pageVisual = null;
             }
@@ -429,10 +418,7 @@ namespace MS.Internal.Documents
         /// </summary>
         void IScrollInfo.LineUp()
         {
-            if (_scrollData != null)
-            {
-                _scrollData.LineUp(this);
-            }
+            _scrollData?.LineUp(this);
         }
 
         /// <summary>
@@ -440,10 +426,7 @@ namespace MS.Internal.Documents
         /// </summary>
         void IScrollInfo.LineDown()
         {
-            if (_scrollData != null)
-            {
-                _scrollData.LineDown(this);
-            }
+            _scrollData?.LineDown(this);
         }
 
         /// <summary>
@@ -451,10 +434,7 @@ namespace MS.Internal.Documents
         /// </summary>
         void IScrollInfo.LineLeft()
         {
-            if (_scrollData != null)
-            {
-                _scrollData.LineLeft(this);
-            }
+            _scrollData?.LineLeft(this);
         }
 
         /// <summary>
@@ -462,10 +442,7 @@ namespace MS.Internal.Documents
         /// </summary>
         void IScrollInfo.LineRight()
         {
-            if (_scrollData != null)
-            {
-                _scrollData.LineRight(this);
-            }
+            _scrollData?.LineRight(this);
         }
 
         /// <summary>
@@ -473,10 +450,7 @@ namespace MS.Internal.Documents
         /// </summary>
         void IScrollInfo.PageUp()
         {
-            if (_scrollData != null)
-            {
-                _scrollData.PageUp(this);
-            }
+            _scrollData?.PageUp(this);
         }
 
         /// <summary>
@@ -484,10 +458,7 @@ namespace MS.Internal.Documents
         /// </summary>
         void IScrollInfo.PageDown()
         {
-            if (_scrollData != null)
-            {
-                _scrollData.PageDown(this);
-            }
+            _scrollData?.PageDown(this);
         }
 
         /// <summary>
@@ -495,10 +466,7 @@ namespace MS.Internal.Documents
         /// </summary>
         void IScrollInfo.PageLeft()
         {
-            if (_scrollData != null)
-            {
-                _scrollData.PageLeft(this);
-            }
+            _scrollData?.PageLeft(this);
         }
 
         /// <summary>
@@ -506,10 +474,7 @@ namespace MS.Internal.Documents
         /// </summary>
         void IScrollInfo.PageRight()
         {
-            if (_scrollData != null)
-            {
-                _scrollData.PageRight(this);
-            }
+            _scrollData?.PageRight(this);
         }
 
         /// <summary>
@@ -517,10 +482,7 @@ namespace MS.Internal.Documents
         /// </summary>
         void IScrollInfo.MouseWheelUp()
         {
-            if (_scrollData != null)
-            {
-                _scrollData.MouseWheelUp(this);
-            }
+            _scrollData?.MouseWheelUp(this);
         }
 
         /// <summary>
@@ -528,10 +490,7 @@ namespace MS.Internal.Documents
         /// </summary>
         void IScrollInfo.MouseWheelDown()
         {
-            if (_scrollData != null)
-            {
-                _scrollData.MouseWheelDown(this);
-            }
+            _scrollData?.MouseWheelDown(this);
         }
 
         /// <summary>
@@ -539,10 +498,7 @@ namespace MS.Internal.Documents
         /// </summary>
         void IScrollInfo.MouseWheelLeft()
         {
-            if (_scrollData != null)
-            {
-                _scrollData.MouseWheelLeft(this);
-            }
+            _scrollData?.MouseWheelLeft(this);
         }
 
         /// <summary>
@@ -550,10 +506,7 @@ namespace MS.Internal.Documents
         /// </summary>
         void IScrollInfo.MouseWheelRight()
         {
-            if (_scrollData != null)
-            {
-                _scrollData.MouseWheelRight(this);
-            }
+            _scrollData?.MouseWheelRight(this);
         }
 
         /// <summary>
@@ -561,10 +514,7 @@ namespace MS.Internal.Documents
         /// </summary>
         void IScrollInfo.SetHorizontalOffset(double offset)
         {
-            if (_scrollData != null)
-            {
-                _scrollData.SetHorizontalOffset(this, offset);
-            }
+            _scrollData?.SetHorizontalOffset(this, offset);
         }
 
         /// <summary>
@@ -572,10 +522,7 @@ namespace MS.Internal.Documents
         /// </summary>
         void IScrollInfo.SetVerticalOffset(double offset)
         {
-            if (_scrollData != null)
-            {
-                _scrollData.SetVerticalOffset(this, offset);
-            }
+            _scrollData?.SetVerticalOffset(this, offset);
         }
 
         /// <summary>
@@ -704,7 +651,7 @@ namespace MS.Internal.Documents
         {
             get
             {
-                return (_scrollData != null) ? _scrollData.ScrollOwner : null;
+                return _scrollData?.ScrollOwner;
             }
 
             set

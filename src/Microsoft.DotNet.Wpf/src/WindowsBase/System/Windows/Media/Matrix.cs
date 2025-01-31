@@ -2,22 +2,7 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-//
-
-using System;
-using System.Diagnostics;
-using System.ComponentModel;
-using System.ComponentModel.Design.Serialization;
-using System.Reflection;
 using MS.Internal;
-using MS.Internal.WindowsBase;
-using System.Text;
-using System.Collections;
-using System.Globalization;
-using System.Windows;
-using System.Windows.Media;
-using System.Runtime.InteropServices;
-using System.Security;
 
 // IMPORTANT
 //
@@ -770,7 +755,7 @@ namespace System.Windows.Media
         /// <param name='angle'>The angle to rotate specified in radians</param>
         internal static Matrix CreateRotationRadians(double angle)
         {
-            return CreateRotationRadians(angle, /* centerX = */ 0, /* centerY = */ 0);
+            return CreateRotationRadians(angle, centerX: 0, centerY: 0);
         }
 
         /// <summary>

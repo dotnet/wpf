@@ -10,12 +10,9 @@
 //  
 //
 
-using System;
-using System.Windows.Automation;
 using System.Runtime.InteropServices;
-using MS.Internal.Automation;
 
-namespace System.Windows.Automation 
+namespace System.Windows.Automation
 {
     /// <summary>
     /// Delegate to handle logical structure change events

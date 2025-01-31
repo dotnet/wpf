@@ -6,7 +6,6 @@
 //  Contents:  Value serializer for the RoutedEvent class
 //
 
-using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 
 namespace System.Windows.Markup

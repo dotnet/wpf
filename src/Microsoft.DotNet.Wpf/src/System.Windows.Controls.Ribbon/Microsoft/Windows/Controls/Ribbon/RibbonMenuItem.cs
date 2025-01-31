@@ -1,7 +1,25 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
-        
+
+
+#region Using declarations
+
+using System.Collections.Specialized;
+using System.Diagnostics;
+using System.Windows.Automation.Peers;
+using System.Windows.Controls.Primitives;
+using System.Windows.Input;
+using System.Windows.Media;
+using System.Windows.Threading;
+#if RIBBON_IN_FRAMEWORK
+using System.Windows.Controls.Ribbon.Primitives;
+using Microsoft.Windows.Controls;
+#else
+    using Microsoft.Windows.Automation.Peers;
+    using Microsoft.Windows.Controls.Ribbon.Primitives;
+#endif
+using MS.Internal;
 
 #if RIBBON_IN_FRAMEWORK
 namespace System.Windows.Controls.Ribbon
@@ -9,27 +27,6 @@ namespace System.Windows.Controls.Ribbon
 namespace Microsoft.Windows.Controls.Ribbon
 #endif
 {
-    #region Using declarations
-
-    using System;
-    using System.Collections.Specialized;
-    using System.Diagnostics;
-    using System.Windows;
-    using System.Windows.Automation.Peers;
-    using System.Windows.Controls;
-    using System.Windows.Controls.Primitives;
-    using System.Windows.Input;
-    using System.Windows.Media;
-    using System.Windows.Threading;
-#if RIBBON_IN_FRAMEWORK
-    using System.Windows.Controls.Ribbon.Primitives;
-    using Microsoft.Windows.Controls;
-#else
-    using Microsoft.Windows.Automation.Peers;
-    using Microsoft.Windows.Controls.Ribbon.Primitives;
-#endif
-    using MS.Internal;
-
     #endregion
 
     /// <summary>
@@ -726,10 +723,7 @@ namespace Microsoft.Windows.Controls.Ribbon
                 if (IsKeyboardFocusWithin)
                 {
                     ItemsControl parent = ItemsControl.ItemsControlFromItemContainer(this);
-                    if (parent != null)
-                    {
-                        parent.Focus();
-                    }
+                    parent?.Focus();
                 }
             }
 
@@ -1232,10 +1226,7 @@ namespace Microsoft.Windows.Controls.Ribbon
 
         internal void BringIndexIntoView(int index)
         {
-            if (_itemsHost != null)
-            {
-                _itemsHost.BringIndexIntoViewInternal(index);
-            }
+            _itemsHost?.BringIndexIntoViewInternal(index);
         }
 
         private static bool IsContainerFocusable(FrameworkElement container)
@@ -1246,10 +1237,7 @@ namespace Microsoft.Windows.Controls.Ribbon
         private static void OnIsCheckedChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             RibbonMenuItemAutomationPeer peer = UIElementAutomationPeer.FromElement((RibbonMenuItem)d) as RibbonMenuItemAutomationPeer;
-            if (peer != null)
-            {
-                peer.RaiseToggleStatePropertyChangedEvent((bool)e.OldValue, (bool)e.NewValue);
-            }
+            peer?.RaiseToggleStatePropertyChangedEvent((bool)e.OldValue, (bool)e.NewValue);
         }
 
         private static void OnIsSubmenuOpenChanged(DependencyObject sender, DependencyPropertyChangedEventArgs e)
@@ -1303,10 +1291,7 @@ namespace Microsoft.Windows.Controls.Ribbon
             menuItem.RibbonCurrentSelection = null;
 
             RibbonMenuItemAutomationPeer peer = UIElementAutomationPeer.FromElement(menuItem) as RibbonMenuItemAutomationPeer;
-            if (peer != null)
-            {
-                peer.RaiseExpandCollapseAutomationEvent((bool)e.OldValue, (bool)e.NewValue);
-            }
+            peer?.RaiseExpandCollapseAutomationEvent((bool)e.OldValue, (bool)e.NewValue);
         }
 
         private object UpdateDropDownPosition(object arg)

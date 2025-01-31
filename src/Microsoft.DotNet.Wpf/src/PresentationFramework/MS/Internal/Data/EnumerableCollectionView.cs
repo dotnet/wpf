@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -6,14 +6,10 @@
 // Description: Collection view over an IEnumerable.
 //
 
-using System;
 using System.Collections;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.ComponentModel;
-using System.Diagnostics;
-using System.Threading;
 using System.Windows;
 using System.Windows.Data;
 
@@ -554,10 +550,7 @@ namespace MS.Internal.Data
 
             // we're done with an enumerator - dispose it
             IDisposable id = ie as IDisposable;
-            if (id != null)
-            {
-                id.Dispose();
-            }
+            id?.Dispose();
         }
 
         // if the IEnumerable has changed, bring the snapshot up to date.

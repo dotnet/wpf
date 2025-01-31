@@ -14,7 +14,6 @@
 #if !DONOTREFPRINTINGASMMETA
 using System.Printing;
 #endif
-using System.Security;
 
 namespace System.Windows.Documents.Serialization
 {

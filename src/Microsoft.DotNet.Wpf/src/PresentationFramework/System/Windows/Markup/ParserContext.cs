@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -11,11 +11,8 @@ using System;
 using System.Reflection;
 using System.Collections;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Xml;
-using MS.Utility;
-using System.Diagnostics;
 using MS.Internal.Xaml.Parser;
 
 #if PBTCOMPILER
@@ -94,7 +91,7 @@ namespace System.Windows.Markup
         {
             if (xmlParserContext == null)
             {
-                throw new ArgumentNullException( "xmlParserContext" );
+                throw new ArgumentNullException( nameof(xmlParserContext));
             }
 
             _xmlLang     = xmlParserContext.XmlLang;
@@ -217,8 +214,7 @@ namespace System.Windows.Markup
             _currentFreezeStackFrame.IncrementRepeatCount();
 
             // Wait till the context needs XmlnsDictionary, create on first use.
-            if (_xmlnsDictionary != null)
-                _xmlnsDictionary.PushScope();
+            _xmlnsDictionary?.PushScope();
         }
 
         /// <summary>
@@ -251,8 +247,7 @@ namespace System.Windows.Markup
             }
 
             // Wait till the context needs XmlnsDictionary, create on first use.
-            if (_xmlnsDictionary != null)
-                _xmlnsDictionary.PopScope();
+            _xmlnsDictionary?.PopScope();
         }
 
         /// <summary>
@@ -282,7 +277,7 @@ namespace System.Windows.Markup
             set
             {
                 EndRepeat();
-                _xmlLang = (null == value ? String.Empty : value);
+                _xmlLang = (value ?? string.Empty);
             }
         }
 
@@ -423,7 +418,7 @@ namespace System.Windows.Markup
         {
             if (parserContext == null)
             {
-                throw new ArgumentNullException( "parserContext" );
+                throw new ArgumentNullException( nameof(parserContext));
             }
 
             XmlNamespaceManager xmlnsMgr = new XmlNamespaceManager(new NameTable());
@@ -640,23 +635,24 @@ namespace System.Windows.Markup
 #if !PBTCOMPILER
         internal ParserContext ScopedCopy(bool copyNameScopeStack)
         {
-            ParserContext context = new ParserContext();
+            ParserContext context = new ParserContext
+            {
+                _baseUri = _baseUri,
+                _skipJournaledProperties = _skipJournaledProperties,
+                _xmlLang = _xmlLang,
+                _xmlSpace = _xmlSpace,
+                _repeat = _repeat,
+                _lineNumber = _lineNumber,
+                _linePosition = _linePosition,
+                _isDebugBamlStream = _isDebugBamlStream,
+                _mapTable = _mapTable,
+                _xamlTypeMapper = _xamlTypeMapper,
+                _targetType = _targetType,
 
-            context._baseUri = _baseUri;
-            context._skipJournaledProperties = _skipJournaledProperties;
-            context._xmlLang = _xmlLang;
-            context._xmlSpace = _xmlSpace;
-            context._repeat = _repeat;
-            context._lineNumber = _lineNumber;
-            context._linePosition = _linePosition;
-            context._isDebugBamlStream = _isDebugBamlStream;
-            context._mapTable = _mapTable;
-            context._xamlTypeMapper = _xamlTypeMapper;
-            context._targetType = _targetType;
-
-            context._streamCreatedAssembly = _streamCreatedAssembly;
-            context._rootElement = _rootElement;
-            context._styleConnector = _styleConnector;
+                _streamCreatedAssembly = _streamCreatedAssembly,
+                _rootElement = _rootElement,
+                _styleConnector = _styleConnector
+            };
 
             // Copy the name scope stack, if necessary.
 
@@ -719,8 +715,8 @@ namespace System.Windows.Markup
             ParserContext context = ScopedCopy();
 
             // Deep copy only selected instance variables
-            context._mapTable = (_mapTable != null) ? _mapTable.Clone() : null;
-            context._xamlTypeMapper = (_xamlTypeMapper != null) ? _xamlTypeMapper.Clone() : null;
+            context._mapTable = _mapTable?.Clone();
+            context._xamlTypeMapper = _xamlTypeMapper?.Clone();
 
             // Connect the XamlTypeMapper and bamlmaptable
             context._xamlTypeMapper.MapTable = context._mapTable;
@@ -804,10 +800,7 @@ namespace System.Windows.Markup
         internal Freezable TryGetFreezable(string value)
         {
             Freezable freezable = null;
-            if (_freezeCache != null)
-            {
-                _freezeCache.TryGetValue(value, out freezable);
-            }
+            _freezeCache?.TryGetValue(value, out freezable);
 
             return freezable;
         }

@@ -1,20 +1,11 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-using System;
-using System.Diagnostics;
-using System.Windows;
 using System.Windows.Input.StylusWisp;
 using System.Windows.Input.Tracing;
-using System.Windows.Media;
 using System.Globalization;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Runtime.InteropServices;
-using System.Security;
-using MS.Internal;
-using MS.Internal.PresentationCore;                        // SecurityHelper
 using MS.Win32.Penimc;
 using MS.Win32;
 
@@ -355,10 +346,7 @@ namespace System.Windows.Input
                 StylusDeviceCollection styluses = _stylusDeviceCollection;
                 _stylusDeviceCollection = null;
 
-                if (styluses != null)
-                {
-                    styluses.Dispose();
-                }
+                styluses?.Dispose();
 
                 _penThread = null;
                 _isDisposalPending = false;

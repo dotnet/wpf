@@ -1,20 +1,12 @@
-// Licensed to the .NET Foundation under one or more agreements.
+ï»¿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
-
-
 
 using MS.Internal;
 using MS.Internal.Media;
 using MS.Internal.Media3D;
-using System;
-using System.Diagnostics;
-using System.Security;
 using System.Windows.Diagnostics;
 using System.Windows.Media.Composition;
-using System.Windows.Media;
-
-using SR=MS.Internal.PresentationCore.SR;
 
 namespace System.Windows.Media.Media3D
 {
@@ -174,10 +166,10 @@ namespace System.Windows.Media.Media3D
 
             // Stop over-invalidating _bboxSubgraph
             //
-            // We currently maintain a cache of both a ModelVisual3D’s content
+            // We currently maintain a cache of both a ModelVisual3Dâ€™s content
             // and subgraph bounds.  A better solution that would be both a 2D
             // and 3D win would be to stop invalidating _bboxSubgraph when a
-            // visual’s transform changes.
+            // visualâ€™s transform changes.
             owner.RenderChanged(/* sender = */ owner, EventArgs.Empty);
         }
 
@@ -995,7 +987,7 @@ namespace System.Windows.Media.Media3D
         /// </summary>
         protected virtual Visual3D GetVisual3DChild(int index)
         {
-           throw new ArgumentOutOfRangeException("index", index, SR.Visual_ArgumentOutOfRange);
+           throw new ArgumentOutOfRangeException(nameof(index), index, SR.Visual_ArgumentOutOfRange);
         }
 
         /// <summary>
@@ -1684,10 +1676,7 @@ namespace System.Windows.Media.Media3D
                 if (gAsVisual3D != null)
                 {
                     Transform3D transform = gAsVisual3D.Transform;
-                    if (transform != null)
-                    {
-                        transform.Append(ref m);
-                    }
+                    transform?.Append(ref m);
 
                     lastVisual3D = gAsVisual3D;
                     g = VisualTreeHelper.GetParent(gAsVisual3D);
@@ -1762,10 +1751,7 @@ namespace System.Windows.Media.Media3D
                 }
             }
 
-            if (finalTransform != null)
-            {
-                finalTransform.Freeze();
-            }
+            finalTransform?.Freeze();
 
             return finalTransform;
         }

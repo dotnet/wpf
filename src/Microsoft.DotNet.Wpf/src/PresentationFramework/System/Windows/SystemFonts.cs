@@ -2,16 +2,7 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-using System;
-using System.Collections;
-using System.ComponentModel;
-using System.Runtime.InteropServices;
 using System.Windows.Media;
-using System.Security;
-using System.Windows.Controls.Primitives;
-using Microsoft.Win32;
-using MS.Win32;
-using MS.Internal;
 
 namespace System.Windows
 {

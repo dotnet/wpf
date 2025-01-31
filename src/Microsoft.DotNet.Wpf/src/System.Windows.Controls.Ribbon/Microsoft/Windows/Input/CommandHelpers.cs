@@ -1,22 +1,13 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
-        
+
+using System.Windows;
+using System.Windows.Input;
 
 namespace Microsoft.Windows.Input
 {
-    #region Using declarations
-
-    using System.Windows;
-    using System.Windows.Input;
-    using System.Diagnostics;
-
-    #endregion Using declarations
-
-    #region CommandHelpers Class
-
     /// <summary>
-    ///     A helper class for executing Commands.   
+    ///  A helper class for executing Commands.
     /// </summary>
     internal static class CommandHelpers
     {
@@ -62,17 +53,11 @@ namespace Microsoft.Windows.Input
                     {
                         case CommandOperation.Preview:
                             previewCommand = command as IPreviewCommand;
-                            if (previewCommand != null)
-                            {
-                                previewCommand.Preview(previewParameter);
-                            }
+                            previewCommand?.Preview(previewParameter);
                             break;
                         case CommandOperation.CancelPreview:
                             previewCommand = command as IPreviewCommand;
-                            if (previewCommand != null)
-                            {
-                                previewCommand.CancelPreview();
-                            }
+                            previewCommand?.CancelPreview();
                             break;
                         case CommandOperation.Execute:
                             command.Execute(parameter);
@@ -123,6 +108,4 @@ namespace Microsoft.Windows.Input
         CancelPreview,
         Execute
     }
-
-    #endregion CommandHelpers Class
 }

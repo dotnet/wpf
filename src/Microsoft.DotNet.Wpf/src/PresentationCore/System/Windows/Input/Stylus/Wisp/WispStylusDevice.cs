@@ -1,17 +1,14 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
 using MS.Internal;
 using MS.Win32;
-using System.Diagnostics;
 using System.Globalization;
-using System.Security;
 using System.Windows.Input.StylusPlugIns;
 using System.Windows.Interop;
 using System.Windows.Media;
 using System.Windows.Threading;
-using SR = MS.Internal.PresentationCore.SR;
 
 namespace System.Windows.Input.StylusWisp
 {
@@ -249,10 +246,7 @@ namespace System.Windows.Input.StylusWisp
                 throw new InvalidOperationException(SR.Format(SR.Invalid_IInputElement, doStylusCapture.GetType()));
             }
 
-            if (doStylusCapture != null)
-            {
-                doStylusCapture.VerifyAccess();
-            }
+            doStylusCapture?.VerifyAccess();
 
             bool success = false;
 
@@ -363,13 +357,15 @@ namespace System.Windows.Input.StylusWisp
                                                                              InAir ? RawStylusActions.InAirMove : RawStylusActions.Move,
                                                                              TabletDevice.Id,
                                                                              Id,
-                                                                             data);
+                                                                             data)
+                        {
+                            Synchronized = true
+                        };
 
-
-                        report.Synchronized = true;
-
-                        InputReportEventArgs inputReportEventArgs = new InputReportEventArgs(StylusDevice, report);
-                        inputReportEventArgs.RoutedEvent = InputManager.PreviewInputReportEvent;
+                        InputReportEventArgs inputReportEventArgs = new InputReportEventArgs(StylusDevice, report)
+                        {
+                            RoutedEvent = InputManager.PreviewInputReportEvent
+                        };
 
                         _stylusLogic.InputManagerProcessInputEventArgs(inputReportEventArgs);
                     }
@@ -628,16 +624,20 @@ namespace System.Windows.Input.StylusWisp
                 // Send the LostStylusCapture and GotStylusCapture events.
                 if (oldStylusCapture != null)
                 {
-                    StylusEventArgs lostCapture = new StylusEventArgs(StylusDevice, timestamp);
-                    lostCapture.RoutedEvent = Stylus.LostStylusCaptureEvent;
-                    lostCapture.Source = oldStylusCapture;
+                    StylusEventArgs lostCapture = new StylusEventArgs(StylusDevice, timestamp)
+                    {
+                        RoutedEvent = Stylus.LostStylusCaptureEvent,
+                        Source = oldStylusCapture
+                    };
                     _stylusLogic.InputManagerProcessInputEventArgs(lostCapture);
                 }
                 if (_stylusCapture != null)
                 {
-                    StylusEventArgs gotCapture = new StylusEventArgs(StylusDevice, timestamp);
-                    gotCapture.RoutedEvent = Stylus.GotStylusCaptureEvent;
-                    gotCapture.Source = _stylusCapture;
+                    StylusEventArgs gotCapture = new StylusEventArgs(StylusDevice, timestamp)
+                    {
+                        RoutedEvent = Stylus.GotStylusCaptureEvent,
+                        Source = _stylusCapture
+                    };
                     _stylusLogic.InputManagerProcessInputEventArgs(gotCapture);
                 }
 
@@ -1692,8 +1692,10 @@ namespace System.Windows.Input.StylusWisp
                                                      actions,
                                                      (int)pt.X, (int)pt.Y, 0, IntPtr.Zero);
 
-                        InputReportEventArgs inputReportArgs = new InputReportEventArgs(StylusDevice, mouseInputReport);
-                        inputReportArgs.RoutedEvent = InputManager.PreviewInputReportEvent;
+                        InputReportEventArgs inputReportArgs = new InputReportEventArgs(StylusDevice, mouseInputReport)
+                        {
+                            RoutedEvent = InputManager.PreviewInputReportEvent
+                        };
                         _stylusLogic.InputManagerProcessInputEventArgs(inputReportArgs);
                     }
                 }

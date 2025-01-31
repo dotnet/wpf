@@ -1,31 +1,19 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-//
-//
-//
 // Description: D3DImage class
 //                  An ImageSource that displays a user created D3D surface
-//
 
 using MS.Internal;
 using MS.Internal.KnownBoxes;
-using MS.Internal.PresentationCore;
 using MS.Win32.PresentationCore;
-using System;
 using System.ComponentModel;
-using System.Diagnostics;
-using System.Runtime.InteropServices;
-using System.Windows;
 using System.Windows.Media;
 using System.Windows.Media.Composition;
 using System.Windows.Media.Imaging;
 using System.Windows.Threading;
-using System.Security;
 using System.Threading;
-
-using SR = MS.Internal.PresentationCore.SR;
 
 namespace System.Windows.Interop
 {
@@ -145,7 +133,7 @@ namespace System.Windows.Interop
             // In case the user passed in something like "(D3DResourceType)-1"
             if (backBufferType != D3DResourceType.IDirect3DSurface9)
             {
-                throw new ArgumentOutOfRangeException("backBufferType");
+                throw new ArgumentOutOfRangeException(nameof(backBufferType));
             }
 
             // Early-out if the current back buffer equals the new one. If the front buffer
@@ -247,7 +235,7 @@ namespace System.Windows.Interop
 
             if (timeout == Duration.Automatic)
             {
-                throw new ArgumentOutOfRangeException("timeout");
+                throw new ArgumentOutOfRangeException(nameof(timeout));
             }
 
             return LockImpl(timeout);
@@ -311,7 +299,7 @@ namespace System.Windows.Interop
                 throw new InvalidOperationException(SR.D3DImage_MustHaveBackBuffer);
             }
 
-            dirtyRect.ValidateForDirtyRect("dirtyRect", PixelWidth, PixelHeight);
+            dirtyRect.ValidateForDirtyRect(nameof(dirtyRect), PixelWidth, PixelHeight);
             if (dirtyRect.HasArea)
             {
                 // Unmanaged code will make sure that the rect is well-formed
@@ -747,14 +735,10 @@ namespace System.Windows.Interop
         /// </summary>
         private object SetIsFrontBufferAvailable(object isAvailableVersionPair)
         {
-            Pair pair = (Pair)isAvailableVersionPair;
-            uint version = (uint)pair.Second;
+            (bool isFrontBufferAvailable, uint version) = (Tuple<bool, uint>)isAvailableVersionPair;
 
-            if (version == _version)
-            {
-                bool isFrontBufferAvailable = (bool)pair.First;
+            if (_version == version)
                 SetValue(IsFrontBufferAvailablePropertyKey, isFrontBufferAvailable);
-            }
 
             // ...just because DispatcherOperationCallback requires returning an object
             return null;
@@ -771,11 +755,9 @@ namespace System.Windows.Interop
         // NOTE: Called from the render thread!We must execute the reaction on the UI thread.
         private void Callback(bool isFrontBufferAvailable, uint version)
         {
-            Dispatcher.BeginInvoke(
-                DispatcherPriority.Normal,
-                new DispatcherOperationCallback(SetIsFrontBufferAvailable),
-                new Pair(BooleanBoxes.Box(isFrontBufferAvailable), version)
-                );
+            Tuple<bool, uint> parameters = new(isFrontBufferAvailable, version);
+
+            Dispatcher.BeginInvoke(DispatcherPriority.Normal, new DispatcherOperationCallback(SetIsFrontBufferAvailable), parameters);
         }
 
         internal override void UpdateResource(DUCE.Channel channel, bool skipOnChannelCheck)

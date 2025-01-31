@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -7,10 +7,8 @@
 
 
 using System;
-using System.Collections;
 using System.Globalization;
 using System.Runtime.InteropServices;
-using System.ComponentModel;
 using System.Windows.Automation;
 using System.Windows.Automation.Provider;
 using System.Windows;
@@ -366,12 +364,12 @@ namespace MS.Internal.AutomationProxies
 
             if (row < 0 || row >= maxRow)
             {
-                throw new ArgumentOutOfRangeException("row", row, SR.GridRowOutOfRange);
+                throw new ArgumentOutOfRangeException(nameof(row), row, SR.GridRowOutOfRange);
             }
 
             if (column < 0 || column >= maxColumn)
             {
-                throw new ArgumentOutOfRangeException("column", column, SR.GridColumnOutOfRange);
+                throw new ArgumentOutOfRangeException(nameof(column), column, SR.GridColumnOutOfRange);
             }
 
             if (WindowsListView.IsDetailMode (_hwnd))
@@ -468,10 +466,11 @@ namespace MS.Internal.AutomationProxies
             if (index != -1)
             {
                 // get id of the group to which item belongs
-                NativeMethods.LVITEM_V6 item = new NativeMethods.LVITEM_V6 ();
-
-                item.mask = NativeMethods.LVIF_GROUPID;
-                item.iItem = index;
+                NativeMethods.LVITEM_V6 item = new NativeMethods.LVITEM_V6
+                {
+                    mask = NativeMethods.LVIF_GROUPID,
+                    iItem = index
+                };
                 if (XSendMessage.GetItem(hwnd, ref item))
                 {
                     WindowsListViewGroup group = new WindowsListViewGroup (hwnd, parent, item.iGroupID);

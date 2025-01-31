@@ -1,24 +1,16 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
 
 using MS.Internal;
 using MS.Internal.Controls;
-using MS.Internal.Documents;
 using MS.Internal.KnownBoxes;
 using MS.Internal.Telemetry.PresentationFramework;
-using MS.Utility;
-
-using System;
 using System.Collections;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Windows.Controls.Primitives;
 using System.ComponentModel;
-using System.Diagnostics;
-using System.Windows.Threading;
-using System.Windows.Documents;
 using System.Windows.Media;
 using System.Windows.Input;
 using System.Windows.Markup; // IAddChild, ContentPropertyAttribute
@@ -278,7 +270,7 @@ namespace System.Windows.Controls
             ToolBar toolBar = value as ToolBar;
             if (toolBar == null)
             {
-                throw new ArgumentException(SR.Format(SR.UnexpectedParameterType, value.GetType(), typeof(ToolBar)), "value");
+                throw new ArgumentException(SR.Format(SR.UnexpectedParameterType, value.GetType(), typeof(ToolBar)), nameof(value));
             }
 
             ToolBars.Add(toolBar);
@@ -481,7 +473,7 @@ namespace System.Windows.Controls
         {
             if (_toolBarsCollection == null)
             {
-                throw new ArgumentOutOfRangeException("index", index, SR.Visual_ArgumentOutOfRange);
+                throw new ArgumentOutOfRangeException(nameof(index), index, SR.Visual_ArgumentOutOfRange);
             }
             return _toolBarsCollection[index];
         }
@@ -666,10 +658,7 @@ namespace System.Windows.Controls
         {
             Point p = point;
             GeneralTransform transform = this.TransformToDescendant(toolBar);
-            if (transform != null)
-            {
-                transform.TryTransform(point, out p);
-            }
+            transform?.TryTransform(point, out p);
             return p;
         }
 

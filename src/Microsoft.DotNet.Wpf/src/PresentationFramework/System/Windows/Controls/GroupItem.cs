@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -8,16 +8,8 @@
 // Specs:       Data Styling.mht
 //
 
-using System;
-using System.Collections;
-using System.Collections.Specialized;
 using System.Windows.Media;
 using System.Windows.Controls.Primitives;
-using System.Windows.Threading;
-using System.Collections.Generic;
-using MS.Internal.Utility;
-using MS.Internal.Hashing.PresentationFramework;
-using System.Diagnostics;
 using MS.Internal;
 using System.Windows.Automation;
 
@@ -255,10 +247,7 @@ namespace System.Windows.Controls
                 // the ItemValueStorage DP for this container.
 
                 VirtualizingPanel vp = _itemsHost as VirtualizingPanel;
-                if (vp != null)
-                {
-                    vp.OnClearChildrenInternal();
-                }
+                vp?.OnClearChildrenInternal();
 
                 Generator.RemoveAllInternal(true /*saveRecycleQueue*/);
             }

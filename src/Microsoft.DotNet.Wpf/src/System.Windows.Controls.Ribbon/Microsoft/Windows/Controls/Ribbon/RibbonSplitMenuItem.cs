@@ -1,6 +1,13 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
+
+#region Using declarations
+
+using System.Windows.Controls.Primitives;
+using System.Windows.Data;
+using System.Windows.Input;
+using System.Windows.Media;
 
 #if RIBBON_IN_FRAMEWORK
 namespace System.Windows.Controls.Ribbon
@@ -8,18 +15,8 @@ namespace System.Windows.Controls.Ribbon
 namespace Microsoft.Windows.Controls.Ribbon
 #endif
 {
-    #region Using declarations
-
-    using System;
-    using System.Windows;
-    using System.Windows.Controls;
-    using System.Windows.Controls.Primitives;
-    using System.Windows.Data;
-    using System.Windows.Input;
-    using System.Windows.Media;
-
     #endregion
-    
+
     /// <summary>
     /// A variation of RibbonMenuItem which shows Checked state differently. 
     /// Its Submenu can be opened or closed independent of IsCheckable.
@@ -148,10 +145,7 @@ namespace Microsoft.Windows.Controls.Ribbon
         private static void OnDropDownToolTipPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             RibbonSplitMenuItem splitMenuItem = (RibbonSplitMenuItem)d;
-            if (splitMenuItem._partArrowButton != null)
-            {
-                splitMenuItem._partArrowButton.CoerceValue(FrameworkElement.ToolTipProperty);
-            }
+            splitMenuItem._partArrowButton?.CoerceValue(FrameworkElement.ToolTipProperty);
         }
 
         #endregion
@@ -273,8 +267,10 @@ namespace Microsoft.Windows.Controls.Ribbon
             // Bind to Button.IsPressed and set MenuItem.IsPressed manually.
             if (_partHeaderButton != null)
             {
-                Binding binding = new Binding("IsPressed");
-                binding.Source = _partHeaderButton;
+                Binding binding = new Binding("IsPressed")
+                {
+                    Source = _partHeaderButton
+                };
                 this.SetBinding(IsPressedInternalProperty, binding);
             }
         }

@@ -32,6 +32,7 @@ namespace System.Xaml
             {
                 return LimitedRead();
             }
+
             _firstRead = false;
             return true;
         }
@@ -79,23 +80,24 @@ namespace System.Xaml
         {
             get
             {
-                if (_lineInfoReader == null)
+                if (_lineInfoReader is null)
                 {
                     return false;
                 }
+
                 return _lineInfoReader.HasLineInfo;
             }
-
         }
 
         public int LineNumber
         {
             get
             {
-                if (_lineInfoReader == null)
+                if (_lineInfoReader is null)
                 {
                     return 0;
                 }
+
                 return _lineInfoReader.LineNumber;
             }
         }
@@ -104,10 +106,11 @@ namespace System.Xaml
         {
             get
             {
-                if (_lineInfoReader == null)
+                if (_lineInfoReader is null)
                 {
                     return 0;
                 }
+
                 return _lineInfoReader.LinePosition;
             }
         }
@@ -153,6 +156,7 @@ namespace System.Xaml
             {
                 _done = true;
             }
+
             _reader.Read();
             return !IsEof;
         }

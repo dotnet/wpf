@@ -5,15 +5,8 @@
 //
 //
 
-using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Diagnostics;
-using System.Windows;
 using System.Windows.Input.Manipulations;
-using System.Windows.Media;
-
-using MS.Internal;
 
 namespace System.Windows.Input
 {

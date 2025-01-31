@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -7,19 +7,10 @@
 //              Spec at Canvas.xml
 //
 
-using MS.Internal;
 using MS.Internal.Telemetry.PresentationFramework;
-using MS.Utility;
 using System.ComponentModel;
 
-using System.Diagnostics;
-using System.Reflection;
-using System.Windows.Threading;
-
 using System.Windows.Media;
-
-
-using System;
 
 using MS.Internal.PresentationFramework;
 
@@ -197,8 +188,7 @@ namespace System.Windows.Controls
             if(uie != null)
             {
                 Canvas p = VisualTreeHelper.GetParent(uie) as Canvas;
-                if(p != null)
-                    p.InvalidateArrange();
+                p?.InvalidateArrange();
             }
          }
 

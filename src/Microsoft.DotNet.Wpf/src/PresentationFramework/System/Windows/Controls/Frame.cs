@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -8,16 +8,9 @@
 //      It can use its own journal ("island frame") or its prent's, if available.
 //
 
-using System;
-using System.Net;
 using System.Collections;
 using System.ComponentModel;
-using System.Diagnostics;
-using System.Globalization;
 using System.Windows.Threading;
-using System.Security;
-
-using System.Windows;
 using System.Windows.Input;
 using System.Windows.Automation.Peers;
 using System.Windows.Media;
@@ -28,12 +21,7 @@ using MS.Internal;
 using MS.Internal.AppModel;
 using MS.Internal.Utility;
 using MS.Internal.KnownBoxes;
-using MS.Utility;
-using MS.Internal.Controls;
 using MS.Internal.Telemetry.PresentationFramework;
-using System.Collections.Generic;
-
-using SecurityHelper=MS.Internal.PresentationFramework.SecurityHelper;
 
 
 namespace System.Windows.Navigation
@@ -220,8 +208,7 @@ namespace System.Windows.Controls
             if (doContent != null)
             {
                 IInputElement focusedElement = FocusManager.GetFocusedElement(doContent) as IInputElement;
-                if (focusedElement != null)
-                    focusedElement.Focus();
+                focusedElement?.Focus();
             }
 
             if (ContentRendered != null)
@@ -608,12 +595,9 @@ namespace System.Windows.Controls
         {
             // Post the firing of ContentRendered as Input priority work item so
             // that ContentRendered will be fired after render query empties.
-            if (_contentRenderedCallback != null)
-            {
-                // Content was changed again before the previous rendering completed (or at least
-                // before the Dispatcher got to Input priority callbacks).
-                _contentRenderedCallback.Abort();
-            }
+            // Content was changed again before the previous rendering completed (or at least
+            // before the Dispatcher got to Input priority callbacks).
+            _contentRenderedCallback?.Abort();
             _contentRenderedCallback = Dispatcher.BeginInvoke(DispatcherPriority.Input,
                                    (DispatcherOperationCallback) delegate (object arg)
                                    {
@@ -993,7 +977,7 @@ namespace System.Windows.Controls
         {
             get
             {
-                IEnumerable backStack = _ownJournalScope == null ? null : _ownJournalScope.BackStack;
+                IEnumerable backStack = _ownJournalScope?.BackStack;
                 Debug.Assert(backStack == GetValue(BackStackProperty));
                 return backStack;
             }
@@ -1005,7 +989,7 @@ namespace System.Windows.Controls
         {
             get
             {
-                IEnumerable fwdStack = _ownJournalScope == null ? null : _ownJournalScope.ForwardStack;
+                IEnumerable fwdStack = _ownJournalScope?.ForwardStack;
                 Debug.Assert(fwdStack == GetValue(ForwardStackProperty));
                 return fwdStack;
             }
@@ -1215,10 +1199,7 @@ namespace System.Windows.Controls
                         Debug.Assert(JournalEntry.GetType().IsSerializable);
                     }
                 }
-                if (Journal != null)
-                {
-                    Journal.PruneKeepAliveEntries();
-                }
+                Journal?.PruneKeepAliveEntries();
             }
         };
 #pragma warning restore SYSLIB0050
@@ -1229,17 +1210,18 @@ namespace System.Windows.Controls
                 return null;
             }
 
-            FramePersistState state = new FramePersistState();
+            FramePersistState state = new FramePersistState
+            {
+                // Save a JournalEntry for the current content.
+                JournalEntry = _navigationService.MakeJournalEntry(JournalReason.NewContentNavigation),
+                // The current Content may be null or may not want to be journaled (=> JournalEntry=null).
+                // But we still need to save and then restore the NS GUID - there may be other JEs keyed
+                // by this GUID value.
+                // i. There is a somewhat similar case in ApplicationProxyInternal._GetSaveHistoryBytesDelegate().
+                NavSvcGuid = _navigationService.GuidId,
 
-            // Save a JournalEntry for the current content.
-            state.JournalEntry = _navigationService.MakeJournalEntry(JournalReason.NewContentNavigation);
-            // The current Content may be null or may not want to be journaled (=> JournalEntry=null).
-            // But we still need to save and then restore the NS GUID - there may be other JEs keyed
-            // by this GUID value.
-            // i. There is a somewhat similar case in ApplicationProxyInternal._GetSaveHistoryBytesDelegate().
-            state.NavSvcGuid = _navigationService.GuidId;
-
-            state.JournalOwnership = _journalOwnership;
+                JournalOwnership = _journalOwnership
+            };
             if (_ownJournalScope != null)
             {
                 Debug.Assert(_journalOwnership == JournalOwnership.OwnsJournal);
@@ -1268,10 +1250,7 @@ namespace System.Windows.Controls
                 _ownJournalScope.Journal = state.Journal;
             }
 
-            if(state.JournalEntry != null)
-            {
-                state.JournalEntry.Navigate(this, NavigationMode.Back);
-            }
+            state.JournalEntry?.Navigate(this, NavigationMode.Back);
         }
         #endregion IJournalState
 
@@ -1286,13 +1265,10 @@ namespace System.Windows.Controls
         {
             base.OnPreApplyTemplate();
 
-            if (_ownJournalScope != null)
-            {
-                // This causes the Journal instance to be created. BackStackProperty and ForwardStackProperty
-                // should be set before the navigation chrome data-binds to them but after any Journal is
-                // restored from FramePersistState.
-                _ownJournalScope.EnsureJournal();
-            }
+            // This causes the Journal instance to be created. BackStackProperty and ForwardStackProperty
+            // should be set before the navigation chrome data-binds to them but after any Journal is
+            // restored from FramePersistState.
+            _ownJournalScope?.EnsureJournal();
         }
 
         // Invalidate resources on the frame content if the content isn't
@@ -1343,10 +1319,7 @@ namespace System.Windows.Controls
             {
                 // Entries created for this frame in the parent's journal have to be removed.
                 JournalNavigationScope parentJns = GetParentJournal(false/*don't create*/);
-                if (parentJns != null)
-                {
-                    parentJns.Journal.RemoveEntries(_navigationService.GuidId);
-                }
+                parentJns?.Journal.RemoveEntries(_navigationService.GuidId);
 
                 _ownJournalScope = new JournalNavigationScope(this);
                 _navigationService.InvalidateJournalNavigationScope();

@@ -1,11 +1,6 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
-
-using System;
-using System.Collections.Generic;
-
-using MS.Internal.PresentationCore;
 
 namespace MS.Internal
 {
@@ -93,11 +88,11 @@ namespace MS.Internal
 
             if ( (object)key == null)
             {
-                throw new ArgumentNullException("key");
+                throw new ArgumentNullException(nameof(key));
             }
             if ( (object)resource == null)
             {
-                throw new ArgumentNullException("resource");
+                throw new ArgumentNullException(nameof(resource));
             }
 
             // note: [] throws, thus we should check if its in the dictionary first.
@@ -158,7 +153,7 @@ namespace MS.Internal
         {
             if ( (object)key == null)
             {
-                throw new ArgumentNullException("key");
+                throw new ArgumentNullException(nameof(key));
             }
 
             // note: [] throws, thus we should check if its in the dictionary first.
@@ -194,7 +189,7 @@ namespace MS.Internal
         {
             if ( (object)key == null)
             {
-                throw new ArgumentNullException("key");
+                throw new ArgumentNullException(nameof(key));
             }
 
             // note: [] throws, thus we should check if its in the dictionary first.

@@ -4,16 +4,10 @@
 
 //#define OLD_ISF
 
-using System;
-using System.Security;
-using System.Threading;
 using System.Runtime.InteropServices;
-using System.Runtime.ConstrainedExecution;
-using System.Windows;
 using System.Windows.Interop;
 using MS.Internal;
 using MS.Internal.PresentationCore;
-using MS.Win32;
 
 namespace MS.Win32.Penimc
 {

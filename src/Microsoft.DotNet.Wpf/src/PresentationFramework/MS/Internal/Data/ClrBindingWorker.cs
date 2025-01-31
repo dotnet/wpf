@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -6,23 +6,14 @@
 // Description: Defines ClrBindingWorker object, workhorse for CLR bindings
 //
 
-using System;
-using System.Collections;
 using System.Reflection;
-using System.Globalization;
 using System.Windows.Threading;
 using System.Threading;
 
 using System.ComponentModel;
-
-using System.Diagnostics;
 using System.Windows;
 using System.Windows.Controls; // Validation
 using System.Windows.Data;
-using System.Windows.Markup;     // for GetTypeFromName
-using MS.Internal.Controls; // Validation
-using MS.Internal.Utility;              // for GetTypeFromName
-using MS.Utility;
 
 namespace MS.Internal.Data
 {
@@ -205,10 +196,7 @@ namespace MS.Internal.Data
         internal override void DetachDataItem()
         {
             PW.DetachFromRootItem();
-            if (XmlWorker != null)
-            {
-                XmlWorker.DetachDataItem();
-            }
+            XmlWorker?.DetachDataItem();
 
             // cancel any pending async requests.  If it has already completed,
             // but is now waiting in the dispatcher queue, it will be ignored because
@@ -260,8 +248,7 @@ namespace MS.Internal.Data
 
         internal override void OnCurrentChanged(ICollectionView collectionView, EventArgs args)
         {
-            if (XmlWorker != null)
-                XmlWorker.OnCurrentChanged(collectionView, args);
+            XmlWorker?.OnCurrentChanged(collectionView, args);
             PW.OnCurrentChanged(collectionView);
         }
 
@@ -351,10 +338,7 @@ namespace MS.Internal.Data
             // this method is called when the last item in the path is replaced.
             // BindingGroup also wants to know about this.
             BindingGroup bindingGroup = parent.BindingGroup;
-            if (bindingGroup != null)
-            {
-                bindingGroup.UpdateTable(parent);
-            }
+            bindingGroup?.UpdateTable(parent);
 
             if (dependencySourcesChanged)
             {
@@ -414,10 +398,7 @@ namespace MS.Internal.Data
                     if (ParentBindingExpression.TargetWantsCrossThreadNotifications)
                     {
                         LiveShapingItem lsi = TargetElement as LiveShapingItem;
-                        if (lsi != null)
-                        {
-                            lsi.OnCrossThreadPropertyChange(TargetProperty);
-                        }
+                        lsi?.OnCrossThreadPropertyChange(TargetProperty);
                     }
 
                     Engine.Marshal(
@@ -547,10 +528,7 @@ namespace MS.Internal.Data
         internal void ReportBadXPath(TraceEventType traceType)
         {
             XmlBindingWorker xmlWorker = XmlWorker;
-            if (xmlWorker != null)
-            {
-                xmlWorker.ReportBadXPath(traceType);
-            }
+            xmlWorker?.ReportBadXPath(traceType);
         }
 
         //------------------------------------------------------
@@ -636,10 +614,7 @@ namespace MS.Internal.Data
 
             // abandon any previous request
             AsyncGetValueRequest pendingGetValueRequest = (AsyncGetValueRequest)GetValue(Feature.PendingGetValueRequest, null);
-            if (pendingGetValueRequest != null)
-            {
-                pendingGetValueRequest.Cancel();
-            }
+            pendingGetValueRequest?.Cancel();
 
             // issue the new request
             pendingGetValueRequest =
@@ -666,10 +641,7 @@ namespace MS.Internal.Data
             ClrBindingWorker worker = (ClrBindingWorker)request.Args[0];
 
             DataBindEngine engine = worker.Engine;
-            if (engine != null) // could be null if binding has been detached
-            {
-                engine.Marshal(CompleteGetValueLocalCallback, request);
-            }
+            engine?.Marshal(CompleteGetValueLocalCallback, request);
 
             return null;
         }
@@ -720,10 +692,7 @@ namespace MS.Internal.Data
 
             // abandon any previous request
             AsyncSetValueRequest pendingSetValueRequest = (AsyncSetValueRequest)GetValue(Feature.PendingSetValueRequest, null);
-            if (pendingSetValueRequest != null)
-            {
-                pendingSetValueRequest.Cancel();
-            }
+            pendingSetValueRequest?.Cancel();
 
             // issue the new request
             pendingSetValueRequest =
@@ -748,10 +717,7 @@ namespace MS.Internal.Data
             ClrBindingWorker worker = (ClrBindingWorker)request.Args[0];
 
             DataBindEngine engine = worker.Engine;
-            if (engine != null) // could be null if binding has been detached
-            {
-                engine.Marshal(CompleteSetValueLocalCallback, request);
-            }
+            engine?.Marshal(CompleteSetValueLocalCallback, request);
 
             return null;
         }

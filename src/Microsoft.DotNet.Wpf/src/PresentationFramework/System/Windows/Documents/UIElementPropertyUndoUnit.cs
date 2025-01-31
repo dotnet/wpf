@@ -9,8 +9,6 @@
 //  2. HorizontalAlignmentProperty sets on UIElement child of BlockUIContainer.
 //
 
-using System;
-using System.Windows;
 using MS.Internal;
 using MS.Internal.Documents;
 

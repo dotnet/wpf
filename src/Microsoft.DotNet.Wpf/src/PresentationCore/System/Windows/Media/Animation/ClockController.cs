@@ -1,23 +1,10 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-//
-
 using MS.Internal;
-using MS.Utility;
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Diagnostics;
-using System.Runtime.InteropServices;
 using System.Windows.Threading;
-using System.Windows;
-using System.Windows.Media.Composition;
-using System.Windows.Markup;
-
-using SR=MS.Internal.PresentationCore.SR;
 
 namespace System.Windows.Media.Animation
 {
@@ -290,7 +277,7 @@ namespace System.Windows.Media.Animation
             {
                 if (value < 0 || value > double.MaxValue || double.IsNaN(value))
                 {
-                    throw new ArgumentException(SR.Timing_InvalidArgFinitePositive, "value");
+                    throw new ArgumentException(SR.Timing_InvalidArgFinitePositive, nameof(value));
                 }
 
                 _owner.InternalSetSpeedRatio(value);

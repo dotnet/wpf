@@ -1,28 +1,13 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-
-using MS.Utility;
-using System;
 using System.ComponentModel;
-using System.Diagnostics;
-using System.Windows;
 using System.Windows.Media;
-using System.Runtime.CompilerServices;
-using System.Runtime.InteropServices;
-using System.Collections;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.IO;
-using System.Runtime.Serialization;
 using MS.Internal.Ink.InkSerializedFormat;
 using MS.Internal;
 using MS.Internal.Ink;
-using System.Reflection;
 using System.Windows.Input;
-
-using SR=MS.Internal.PresentationCore.SR;
 
 // Primary root namespace for TabletPC/Ink/Handwriting/Recognition in .NET
 
@@ -63,7 +48,7 @@ namespace System.Windows.Ink
             ArgumentNullException.ThrowIfNull(stylusPoints);
             if (stylusPoints.Count == 0)
             {
-                throw new ArgumentException(SR.InvalidStylusPointCollectionZeroCount, "stylusPoints");
+                throw new ArgumentException(SR.InvalidStylusPointCollectionZeroCount, nameof(stylusPoints));
             }
             ArgumentNullException.ThrowIfNull(drawingAttributes);
 
@@ -157,15 +142,15 @@ namespace System.Windows.Ink
 
             if (!transformMatrix.HasInverse)
             {
-                throw new ArgumentException(SR.MatrixNotInvertible, "transformMatrix");
+                throw new ArgumentException(SR.MatrixNotInvertible, nameof(transformMatrix));
             }
             else if ( MatrixHelper.ContainsNaN(transformMatrix))
             {
-                throw new ArgumentException(SR.InvalidMatrixContainsNaN, "transformMatrix");
+                throw new ArgumentException(SR.InvalidMatrixContainsNaN, nameof(transformMatrix));
             }
             else if ( MatrixHelper.ContainsInfinity(transformMatrix))
             {
-                throw new ArgumentException(SR.InvalidMatrixContainsInfinity, "transformMatrix");
+                throw new ArgumentException(SR.InvalidMatrixContainsInfinity, nameof(transformMatrix));
             }
             else
             {
@@ -599,7 +584,7 @@ namespace System.Windows.Ink
         {
             if (null == e)
             {
-                throw new ArgumentNullException("e", SR.EventArgIsNull);
+                throw new ArgumentNullException(nameof(e), SR.EventArgIsNull);
             }
 
             if (DrawingAttributesChanged != null)
@@ -630,7 +615,7 @@ namespace System.Windows.Ink
         {
             if (null == e)
             {
-                throw new ArgumentNullException("e", SR.EventArgIsNull);
+                throw new ArgumentNullException(nameof(e), SR.EventArgIsNull);
             }
 
             if (StylusPointsReplaced != null)
@@ -645,7 +630,7 @@ namespace System.Windows.Ink
         {
             if (null == e)
             {
-                throw new ArgumentNullException("e", SR.EventArgIsNull);
+                throw new ArgumentNullException(nameof(e), SR.EventArgIsNull);
             }
 
             if (StylusPointsChanged != null)
@@ -662,7 +647,7 @@ namespace System.Windows.Ink
         {
             if (null == e)
             {
-                throw new ArgumentNullException("e", SR.EventArgIsNull);
+                throw new ArgumentNullException(nameof(e), SR.EventArgIsNull);
             }
 
             if (PropertyDataChanged != null)
@@ -680,7 +665,7 @@ namespace System.Windows.Ink
         {
             if (null == e)
             {
-                throw new ArgumentNullException("e", SR.EventArgIsNull);
+                throw new ArgumentNullException(nameof(e), SR.EventArgIsNull);
             }
 
             if (Invalidated != null)

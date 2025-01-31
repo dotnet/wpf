@@ -10,11 +10,6 @@
 \***************************************************************************/
 
 using System;
-using System.Xml;
-using System.IO;
-using System.Text;
-using System.Collections;
-using System.ComponentModel;
 
 using System.Diagnostics;
 using System.Reflection;
@@ -579,10 +574,7 @@ namespace System.Windows.Markup
         {
             if (xamlDefAttributeNode.Name == BamlMapTable.NameString)
             {
-                if (BamlRecordWriter != null)
-                {
-                    BamlRecordWriter.WriteDefAttribute(xamlDefAttributeNode);
-                }
+                BamlRecordWriter?.WriteDefAttribute(xamlDefAttributeNode);
             }
             else
             {

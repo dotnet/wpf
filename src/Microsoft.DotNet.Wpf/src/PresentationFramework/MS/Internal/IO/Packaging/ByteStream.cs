@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -8,14 +8,10 @@
 //
 
 
-using System;
-using System.Diagnostics;
 using System.IO;
 using System.Runtime.InteropServices;
-using System.Runtime.InteropServices.ComTypes;      // for IStream
 using System.Windows;
 using MS.Win32;                                     // for NativeMethods
-using System.Security;                              // for marking critical methods
 
 namespace MS.Internal.IO.Packaging
 {
@@ -204,7 +200,7 @@ namespace MS.Internal.IO.Packaging
                     translatedSeekOrigin = NativeMethods.STREAM_SEEK_SET;
                     if (0 > offset)
                     {
-                        throw new ArgumentOutOfRangeException("offset",
+                        throw new ArgumentOutOfRangeException(nameof(offset),
                                                               SR.SeekNegative);
                     }
                     break;
@@ -266,14 +262,14 @@ namespace MS.Internal.IO.Packaging
             // count has to be positive number
             if (0 > count)
             {
-                throw new ArgumentOutOfRangeException("count",
+                throw new ArgumentOutOfRangeException(nameof(count),
                                                       SR.ReadCountNegative);
             }
 
             // offset has to be a positive number
             if (0 > offset)
             {
-                throw new ArgumentOutOfRangeException("offset",
+                throw new ArgumentOutOfRangeException(nameof(offset),
                                                       SR.BufferOffsetNegative);
             }
 
@@ -281,7 +277,7 @@ namespace MS.Internal.IO.Packaging
             // since all values are > 0, there is no chance of overflow
             if (!((buffer.Length > 0) && ((buffer.Length - offset) >= count)))
             {
-                throw new ArgumentException(SR.BufferTooSmall, "buffer");
+                throw new ArgumentException(SR.BufferTooSmall, nameof(buffer));
             }
             
             // offset == 0 is the normal case

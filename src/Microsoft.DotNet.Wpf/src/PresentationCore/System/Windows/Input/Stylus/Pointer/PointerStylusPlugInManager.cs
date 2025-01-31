@@ -1,24 +1,12 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
 
-using MS.Internal;
-using MS.Internal.PresentationCore;                        // SecurityHelper
-using MS.Utility;
-using MS.Win32;
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Runtime.InteropServices;
-using System.Security;
-using System.Windows;
-using System.Windows.Input;
 using System.Windows.Input.StylusPlugIns;
 using System.Windows.Interop;
 using System.Windows.Media;
 using System.Windows.Threading;
-using SR = MS.Internal.PresentationCore.SR;
 
 namespace System.Windows.Input.StylusPointer
 {
@@ -255,7 +243,7 @@ namespace System.Windows.Input.StylusPointer
             RawStylusInput originalRSI = rawStylusInputReport.RawStylusInput;
             // See if we have a plugin for the target of this input.
             StylusPlugInCollection targetPIC = null;
-            StylusPlugInCollection targetRtiPIC = (originalRSI != null) ? originalRSI.Target : null;
+            StylusPlugInCollection targetRtiPIC = originalRSI?.Target;
             bool updateEventPoints = false;
 
             // Make sure we use UIElement for target if non NULL and hit ContentElement.

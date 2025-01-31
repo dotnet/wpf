@@ -1,6 +1,18 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
+
+using System.ComponentModel;
+using System.Globalization;
+using System.IO;
+using System.Printing;
+using System.Printing.Interop;
+using System.Runtime.InteropServices;
+using System.Windows.Xps.Serialization;
+using System.Xml;
+using MS.Utility;
+using MS.Internal.PrintWin32Thunk;
+using MS.Internal.ReachFramework;
 
 /*++
 
@@ -17,22 +29,6 @@ Abstract:
 
 namespace MS.Internal.Printing.Configuration
 {
-    using System;
-    using System.Collections.Generic;
-    using System.ComponentModel;
-    using System.Globalization;
-    using System.IO;
-    using System.Printing;
-    using System.Printing.Interop;
-    using System.Runtime.InteropServices;
-    using System.Security;
-    using System.Windows.Xps.Serialization;
-    using System.Xml;
-    using MS.Utility;
-    using MS.Internal.PrintWin32Thunk;
-    using MS.Internal.ReachFramework;
-
-
     /// <summary>
     /// Managed PrintTicket provider class that inter-ops with unmanaged DDI driver
     /// </summary>
@@ -117,7 +113,7 @@ namespace MS.Internal.Printing.Configuration
                         PrintSchemaTags.Framework.PrintTicketRoot,
                         PTUtility.GetTextFromResource("FormatException.XMLNotWellFormed"),
                         xmlException.Message),
-                    "printTicket",
+                    nameof(printTicket),
                     xmlException);
             }
 
@@ -354,10 +350,7 @@ namespace MS.Internal.Printing.Configuration
 
         public override void Release()
         {
-            if (_deviceHandle != null)
-            {
-                _deviceHandle.Dispose();
-            }
+            _deviceHandle?.Dispose();
 
             this._deviceHandle = null;
             this._deviceName = null;
@@ -569,7 +562,7 @@ namespace MS.Internal.Printing.Configuration
 
                 default:
                 {
-                    throw new ArgumentOutOfRangeException("baseType");
+                    throw new ArgumentOutOfRangeException(nameof(baseType));
                 }
             }
 

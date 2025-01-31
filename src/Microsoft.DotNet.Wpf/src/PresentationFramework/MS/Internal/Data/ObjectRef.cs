@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -9,18 +9,12 @@
 // See spec at Data Binding.mht
 //
 
-using System;
-using System.Collections;
-using System.Diagnostics;
 using System.Globalization;
-using System.Reflection;
 using System.Windows;
 using System.Windows.Media;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Markup;
-using MS.Internal;
-using MS.Internal.Utility;
 
 namespace MS.Internal.Data
 {
@@ -490,7 +484,7 @@ namespace MS.Internal.Data
                     else
                     {
                         child = d as FrameworkElement;
-                        parent = ((child != null) ? child.Parent : null) as System.Windows.Controls.Primitives.GridViewRowPresenterBase;
+                        parent = (child?.Parent) as System.Windows.Controls.Primitives.GridViewRowPresenterBase;
                     }
 
                     if (child != null && parent != null &&

@@ -8,9 +8,6 @@
 //              which can be used in unmanaged world. 
 //
 
-
-using System;
-
 namespace MS.Internal.PtsHost
 {
     /// <summary>

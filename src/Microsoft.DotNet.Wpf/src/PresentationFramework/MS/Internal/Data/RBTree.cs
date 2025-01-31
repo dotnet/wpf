@@ -38,11 +38,7 @@
         3. Fingers.  Short-lived pointers to a position within the data structure.
 */
 
-using System;
 using System.Collections;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.IO;
 using System.Text;
 using System.Windows;   // SR
 using TypeConverterHelper = System.Windows.Markup.TypeConverterHelper;

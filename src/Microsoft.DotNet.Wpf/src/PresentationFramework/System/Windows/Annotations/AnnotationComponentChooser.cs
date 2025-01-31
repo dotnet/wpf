@@ -7,10 +7,6 @@
 //      AnnotationComponentChooser
 //
 
-using System;
-using System.Diagnostics;
-using System.Reflection;
-using System.Windows;
 using System.Windows.Controls;
 using MS.Internal.Annotations;
 using MS.Internal.Annotations.Component;

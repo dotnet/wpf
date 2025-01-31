@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -15,25 +15,12 @@
 
 
 --*/
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Diagnostics;
 using System.IO;
 using System.IO.Packaging;
 using System.Security.Cryptography.X509Certificates;
-using System.Windows.Media;
-using System.Windows.Xps.Serialization;
-using System.Text;              // for StringBuilder
-using System.Windows;
-using System.Windows.Xps;
-using System.Globalization;
 using System.Printing;
 
 using MS.Internal;
-
-using MS.Internal.IO.Packaging.Extensions;
 using Package = System.IO.Packaging.Package;
 using PackUriHelper = System.IO.Packaging.PackUriHelper;
 using PackageRelationship = System.IO.Packaging.PackageRelationship;
@@ -311,7 +298,7 @@ namespace System.Windows.Xps.Packaging
             ArgumentNullException.ThrowIfNull(contentType);
             if (0 == contentType.ToString().Length)
             {
-                throw new ArgumentException(SR.Format(SR.ReachPackaging_InvalidContentType, contentType), "contentType");
+                throw new ArgumentException(SR.Format(SR.ReachPackaging_InvalidContentType, contentType), nameof(contentType));
             }
             
             //Do not compress image Content Types
@@ -1191,7 +1178,7 @@ namespace System.Windows.Xps.Packaging
         {
             if (ContentType.Empty.AreTypeAndSubTypeEqual(contentType))
             {
-                throw new ArgumentException(SR.Format(SR.ReachPackaging_InvalidContentType, contentType), "contentType");
+                throw new ArgumentException(SR.Format(SR.ReachPackaging_InvalidContentType, contentType), nameof(contentType));
             }
 
             string key;

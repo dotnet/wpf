@@ -2,28 +2,11 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-//
-//
-
-using System;
-using System.IO;
-using System.Collections;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.ComponentModel.Design.Serialization;
-using System.Reflection;
 using MS.Internal;
 using MS.Win32.PresentationCore;
-using System.Security;
-using System.Diagnostics;
-using System.Windows.Media;
-using System.Globalization;
 using System.Runtime.InteropServices;
-using System.Windows;
-using System.Windows.Media.Animation;
 using System.Windows.Media.Composition;
-using SR=MS.Internal.PresentationCore.SR;
-using MS.Internal.PresentationCore;                        // SecurityHelper
 using System.Threading;
 
 namespace System.Windows.Media.Imaging
@@ -92,7 +75,7 @@ namespace System.Windows.Media.Imaging
             if (pixelFormat.Format == PixelFormatEnum.Extended)
             {
                 // We don't support third-party pixel formats yet.
-                throw new ArgumentException(SR.Effect_PixelFormat, "pixelFormat");
+                throw new ArgumentException(SR.Effect_PixelFormat, nameof(pixelFormat));
             }
 
             if (pixelWidth < 0)
@@ -181,7 +164,7 @@ namespace System.Windows.Media.Imaging
             //
             // Sanitize the dirty rect.
             //
-            dirtyRect.ValidateForDirtyRect("dirtyRect", _pixelWidth, _pixelHeight);
+            dirtyRect.ValidateForDirtyRect(nameof(dirtyRect), _pixelWidth, _pixelHeight);
             if (dirtyRect.HasArea)
             {
                 MILSwDoubleBufferedBitmap.AddDirtyRect(
@@ -245,7 +228,7 @@ namespace System.Windows.Media.Imaging
             TimeSpan timeoutSpan;
             if (timeout == Duration.Automatic)
             {
-                throw new ArgumentOutOfRangeException("timeout");
+                throw new ArgumentOutOfRangeException(nameof(timeout));
             }
             else if (timeout == Duration.Forever)
             {
@@ -913,7 +896,7 @@ namespace System.Windows.Media.Imaging
                     }
                     else
                     {
-                        throw new ArgumentException(SR.Image_InsufficientBufferSize, "sourceBufferSize");
+                        throw new ArgumentException(SR.Image_InsufficientBufferSize, nameof(sourceBufferSize));
                     }
                 }
 

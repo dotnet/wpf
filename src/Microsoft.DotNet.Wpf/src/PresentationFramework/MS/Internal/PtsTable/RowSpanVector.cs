@@ -8,8 +8,6 @@
 //
 
 
-using System;
-using System.Diagnostics;
 using System.Windows.Documents;
 
 namespace MS.Internal.PtsTable

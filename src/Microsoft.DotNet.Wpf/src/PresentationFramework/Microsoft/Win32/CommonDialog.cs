@@ -1,6 +1,14 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
+
+using System.Runtime.InteropServices;
+using System.Threading;
+using System.Windows;
+using System.Windows.Interop;
+
+using MS.Internal.Interop;
+using MS.Win32;
 
 //
 // 
@@ -17,17 +25,6 @@
 
 namespace Microsoft.Win32
 {
-    using System;
-    using System.Runtime.InteropServices;
-    using System.Security;
-    using System.Threading;
-    using System.Windows;
-    using System.Windows.Interop;
-
-    using MS.Internal.Interop;
-    using MS.Internal.PresentationFramework;
-    using MS.Win32;
-
     /// <summary>
     ///  An abstract base class for displaying common dialogs.
     /// </summary>
@@ -122,10 +119,7 @@ namespace Microsoft.Win32
             }
             finally
             {
-                if (tempParentHwnd != null)
-                {
-                    tempParentHwnd.Dispose();
-                }
+                tempParentHwnd?.Dispose();
             }
         }
 
@@ -155,7 +149,7 @@ namespace Microsoft.Win32
             }
 
             // Get the handle of the owner window using WindowInteropHelper.
-            IntPtr hwndOwner = (new WindowInteropHelper(owner)).CriticalHandle;
+            IntPtr hwndOwner = (new WindowInteropHelper(owner)).Handle;
 
             // Just in case, check if the window's handle is zero.
             if (hwndOwner == IntPtr.Zero)

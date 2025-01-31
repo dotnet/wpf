@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -8,22 +8,16 @@
 //
 
 using System.ComponentModel;
-using System.Diagnostics;
-using System.IO.Packaging;
-using System.Security;
-using System.Text;
 using System.Windows.Automation.Peers;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Markup;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using MS.Internal;
 using MS.Internal.AppModel;
 using System.Windows.Threading;
 
-using CommonDependencyProperty=MS.Internal.PresentationFramework.CommonDependencyPropertyAttribute;
-using SecurityHelper=MS.Internal.PresentationFramework.SecurityHelper;
+using CommonDependencyProperty = MS.Internal.PresentationFramework.CommonDependencyPropertyAttribute;
 
 namespace System.Windows.Documents
 {
@@ -590,8 +584,10 @@ namespace System.Windows.Documents
                     targetUri = FixedPage.GetLinkUri(sourceElement, targetUri);
                 }
 
-                RequestNavigateEventArgs navigateArgs = new RequestNavigateEventArgs(targetUri, targetWindow);
-                navigateArgs.Source = sourceElement;
+                RequestNavigateEventArgs navigateArgs = new RequestNavigateEventArgs(targetUri, targetWindow)
+                {
+                    Source = sourceElement
+                };
                 sourceElement.RaiseEvent(navigateArgs);
 
                 if (navigateArgs.Handled)
@@ -685,8 +681,7 @@ namespace System.Windows.Documents
             if (AutomationPeer.ListenerExists(AutomationEvents.InvokePatternOnInvoked))
             {
                 AutomationPeer peer = ContentElementAutomationPeer.CreatePeerForElement(this);
-                if (peer != null)
-                    peer.RaiseAutomationEvent(AutomationEvents.InvokePatternOnInvoked);
+                peer?.RaiseAutomationEvent(AutomationEvents.InvokePatternOnInvoked);
             }
 
             DoNavigation(this);

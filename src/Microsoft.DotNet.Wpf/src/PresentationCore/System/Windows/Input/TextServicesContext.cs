@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -8,17 +8,11 @@
 //
 //
 
-using System;
 using System.Runtime.InteropServices;
 using System.Threading;
 using System.Windows.Threading;
-using System.Security;
-using System.Diagnostics;
-using System.Collections;
-using MS.Utility;
 using MS.Win32;
 using MS.Internal;
-using MS.Internal.PresentationCore;                        // SecurityHelper
 
 namespace System.Windows.Input
 {
@@ -331,10 +325,7 @@ namespace System.Windows.Input
         {
             UnsafeNativeMethods.ITfThreadMgr threadmgr = ThreadManager;
 
-            if (threadmgr != null)
-            {
-                threadmgr.SetFocus(dim);
-            }
+            threadmgr?.SetFocus(dim);
         }
 
         // Start the transitory extestion for Cicero Level1/Level2 composition window support.
@@ -377,11 +368,8 @@ namespace System.Windows.Input
             {
                 UnsafeNativeMethods.ITfSource source;
                 source = _defaultTextStore.DocumentManager as UnsafeNativeMethods.ITfSource;
-                if (source != null)
-                {
-                    // DocumentManager only supports ITfSource on Longhorn, XP does not support it
-                    source.UnadviseSink(_defaultTextStore.TransitoryExtensionSinkCookie);
-                }
+                // DocumentManager only supports ITfSource on Longhorn, XP does not support it
+                source?.UnadviseSink(_defaultTextStore.TransitoryExtensionSinkCookie);
                 _defaultTextStore.TransitoryExtensionSinkCookie = UnsafeNativeMethods.TF_INVALID_COOKIE;
             }
 

@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -7,11 +7,10 @@
 //
 
 using MS.Internal;                  // Invariant.Assert
-using System.Windows.Controls;      // TextBlock
 using System.Windows.Markup; // ContentProperty
 using System.ComponentModel;        // DesignerSerializationVisibility
 
-namespace System.Windows.Documents 
+namespace System.Windows.Documents
 {
     /// <summary>
     /// Span element used for grouping other Inline elements.
@@ -55,17 +54,11 @@ namespace System.Windows.Documents
         /// </param>
         public Span(Inline childInline, TextPointer insertionPosition)
         {
-            if (insertionPosition != null)
-            {
-                insertionPosition.TextContainer.BeginChange();
-            }
+            insertionPosition?.TextContainer.BeginChange();
             try
             {
-                if (insertionPosition != null)
-                {
-                    // This will throw InvalidOperationException if schema validity is violated.
-                    insertionPosition.InsertInline(this);
-                }
+                // This will throw InvalidOperationException if schema validity is violated.
+                insertionPosition?.InsertInline(this);
 
                 if (childInline != null)
                 {
@@ -74,10 +67,7 @@ namespace System.Windows.Documents
             }
             finally
             {
-                if (insertionPosition != null)
-                {
-                    insertionPosition.TextContainer.EndChange();
-                }
+                insertionPosition?.TextContainer.EndChange();
             }
         }
 

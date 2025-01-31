@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -7,12 +7,9 @@
 //              pattern.  See WeakEventTable.cs for an overview.
 //
 
-using System;
 using System.Collections;       // ICollection
-using System.Collections.Generic; // List<T>
 using System.Collections.Specialized;   // HybridDictionary
 using System.ComponentModel;    // INotifyPropertyChanged
-using System.Diagnostics;       // Debug
 using System.Reflection;        // EventInfo
 using System.Windows;           // WeakEventManager
 
@@ -353,9 +350,9 @@ namespace MS.Internal.Data
                     // source has changed a particular property.  Notify targets
                     // who are listening either for this property or for all properties.
                     PropertyRecord pr = (PropertyRecord)_dict[propertyName];
-                    ListenerList<PropertyChangedEventArgs> listeners = (pr == null) ? null : pr.List;
+                    ListenerList<PropertyChangedEventArgs> listeners = pr?.List;
                     PropertyRecord genericRecord = (PropertyRecord)_dict[String.Empty];
-                    ListenerList<PropertyChangedEventArgs> genericListeners = (genericRecord == null) ? null : genericRecord.List;
+                    ListenerList<PropertyChangedEventArgs> genericListeners = genericRecord?.List;
 
                     if (genericListeners == null)
                     {
@@ -391,7 +388,7 @@ namespace MS.Internal.Data
                     // source has changed all properties.  Notify all targets.
                     // Use previously calculated combined list, if available.
                     PropertyRecord pr = (PropertyRecord)_dict[AllListenersKey];
-                    ListenerList<PropertyChangedEventArgs> pcList = (pr == null) ? null : pr.List;
+                    ListenerList<PropertyChangedEventArgs> pcList = pr?.List;
 
                     if (pcList == null)
                     {

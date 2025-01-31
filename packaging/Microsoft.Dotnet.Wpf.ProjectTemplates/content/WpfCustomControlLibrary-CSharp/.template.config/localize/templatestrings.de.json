@@ -19,6 +19,8 @@
   "symbols/Framework/choices/net8.0/displayName": ".NET 8.0",
   "symbols/Framework/choices/net9.0/description": "Ziel net9.0",
   "symbols/Framework/choices/net9.0/displayName": ".NET 9.0",
+  "symbols/Framework/choices/net10.0/description": "Ziel.-NET10.0",
+  "symbols/Framework/choices/net10.0/displayName": ".NET 10.0",
   "symbols/Framework/displayName": "Framework",
   "symbols/langVersion/description": "Legt „langVersion“ in der erstellten Projektdatei fest",
   "symbols/langVersion/displayName": "Sprachversion",

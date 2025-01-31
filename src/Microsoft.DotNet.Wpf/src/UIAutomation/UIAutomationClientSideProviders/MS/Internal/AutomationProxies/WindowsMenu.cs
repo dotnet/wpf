@@ -1,18 +1,13 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
 // Description: HWND-based Menu Proxy
 
-// PRESHARP: In order to avoid generating warnings about unkown message numbers and unknown pragmas.
-#pragma warning disable 1634, 1691
-
 using System;
 using System.Collections;
 using System.Globalization;
 using System.Text;
-using System.ComponentModel;
-using Accessibility;
 using System.Windows.Automation.Provider;
 using System.Windows.Automation;
 using System.Runtime.InteropServices;
@@ -462,7 +457,7 @@ namespace MS.Internal.AutomationProxies
             if (MenuRelatedEvent(eventId, aidProps))
             {
                 // Sytem wide event register with hwnd == IntPtr.Zero
-                WinEventTracker.AddToNotificationList(IntPtr.Zero, new WinEventTracker.ProxyRaiseEvents(MenuEvents), _menuEvents, _menuEvents.Length);
+                WinEventTracker.AddToNotificationList(IntPtr.Zero, new WinEventTracker.ProxyRaiseEvents(MenuEvents), _menuEvents);
 
                 // Keep counter of how many requests came so we will know when to remove ourselves from the notification list
                 // We need a counter since system wide events are not based on the hwnd.
@@ -483,7 +478,7 @@ namespace MS.Internal.AutomationProxies
                 --_eventListeners;
                 if (_eventListeners == 0 && MenuRelatedEvent (eventId, aidProps))
                 {
-                    WinEventTracker.RemoveToNotificationList (IntPtr.Zero, _menuEvents, new WinEventTracker.ProxyRaiseEvents (MenuEvents), _menuEvents.Length);
+                    WinEventTracker.RemoveToNotificationList(IntPtr.Zero, _menuEvents, new WinEventTracker.ProxyRaiseEvents(MenuEvents));
                 }
             }
         }
@@ -1266,8 +1261,6 @@ namespace MS.Internal.AutomationProxies
                                 UnsafeNativeMethods.TITLEBARINFO ti;
                                 if (!Misc.ProxyGetTitleBarInfo(_hwnd, out ti))
                                 {
-// Suppress Property get methods should not throw exceptions for internal getter
-#pragma warning suppress 6503
                                     throw new ElementNotAvailableException();
                                 }
 

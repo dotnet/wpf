@@ -6,9 +6,7 @@
 // Description: The root node of a TextContainer.
 //
 
-using System;
 using MS.Internal;
-using System.Collections;
 using System.Windows.Threading;
 
 namespace System.Windows.Documents

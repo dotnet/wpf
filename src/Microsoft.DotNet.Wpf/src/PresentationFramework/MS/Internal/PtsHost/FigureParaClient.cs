@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -7,14 +7,8 @@
 //              related data of paragraphs associated with figures.
 //
 
-using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Collections;
-using System.Diagnostics;
-using System.Security;
 using System.Windows;
-using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Documents;
 using MS.Internal.Documents;
@@ -50,10 +44,7 @@ namespace MS.Internal.PtsHost
                 SubpageHandle = IntPtr.Zero;
             }
 
-            if(_pageContext != null)
-            {
-                _pageContext.RemoveFloatingParaClient(this);
-            }
+            _pageContext?.RemoveFloatingParaClient(this);
 
             base.Dispose();
         }
@@ -144,12 +135,13 @@ namespace MS.Internal.PtsHost
             PTS.FSSUBPAGEDETAILS subpageDetails;
             PTS.Validate(PTS.FsQuerySubpageDetails(PtsContext.Context, _paraHandle, out subpageDetails));
 
-            PTS.FSRECT viewportSubpage = new PTS.FSRECT();
-
-            viewportSubpage.u = viewport.u - ContentRect.u;
-            viewportSubpage.v = viewport.v - ContentRect.v;
-            viewportSubpage.du = viewport.du;
-            viewportSubpage.dv = viewport.dv;
+            PTS.FSRECT viewportSubpage = new PTS.FSRECT
+            {
+                u = viewport.u - ContentRect.u,
+                v = viewport.v - ContentRect.v,
+                du = viewport.du,
+                dv = viewport.dv
+            };
 
             // Subpage content may be simple or complex -
             // depending of set of features used in the content of the subpage.

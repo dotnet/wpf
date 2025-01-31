@@ -12,14 +12,9 @@
 //     choose not to for our purposes.
 //
 
-using System;
-using System.Diagnostics;
 using System.Reflection;
-using System.Windows.Annotations.Storage;
 using System.Xml;
-using System.Xml.Schema;
 using System.Xml.Serialization;
-using MS.Internal;
 
 namespace MS.Internal.Annotations
 {

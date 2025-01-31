@@ -1,25 +1,14 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-//
-//
-
 using MS.Internal;
-using MS.Internal.Media;
 using MS.Internal.Media3D;
-using System;
 using System.ComponentModel;
-using System.ComponentModel.Design.Serialization;
-using System.Diagnostics;
-using System.Windows;
 using System.Windows.Diagnostics;
-using System.Windows.Media;
 using System.Windows.Media.Composition;
 using System.Windows.Markup;
 using System.Windows.Media.Effects;
-
-using SR=MS.Internal.PresentationCore.SR;
 
 namespace System.Windows.Media.Media3D
 {
@@ -343,10 +332,7 @@ namespace System.Windows.Media.Media3D
             child.SetParent(this);
 
             // set the inheritance context so databinding, etc... work
-            if (_inheritanceContextForChildren != null)
-            {
-                _inheritanceContextForChildren.ProvideSelfAsInheritanceContext(child, null);
-            }
+            _inheritanceContextForChildren?.ProvideSelfAsInheritanceContext(child, null);
 
             SetFlagsOnAllChannels(true, VisualProxyFlags.IsContentDirty);
 
@@ -396,10 +382,7 @@ namespace System.Windows.Media.Media3D
             child.SetParent(/* newParent = */ (Visual) null);  // CS0121: Call is ambigious without casting null to Visual.
 
             // remove the inheritance context
-            if (_inheritanceContextForChildren != null)
-            {
-                _inheritanceContextForChildren.RemoveSelfAsInheritanceContext(child, null);
-            }
+            _inheritanceContextForChildren?.RemoveSelfAsInheritanceContext(child, null);
 
             //
             // Remove the child on all channels this visual is marshalled to.

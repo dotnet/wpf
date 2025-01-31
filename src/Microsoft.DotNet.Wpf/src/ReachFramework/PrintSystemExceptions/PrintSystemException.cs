@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -9,13 +9,8 @@
 
         Print System exception objects declaration.
 --*/
-using System;
-using System.Collections;
-using System.Runtime.InteropServices;
 using System.Text;
-using System.Security; //SecurityCritical
 using System.Collections.ObjectModel;
-using System.Collections.Generic;
 
 
 using MS.Internal.PrintWin32Thunk.Win32ApiThunk;
@@ -412,10 +407,7 @@ namespace System.Printing
             System.Runtime.Serialization.StreamingContext   context
             )
         {
-            if (info != null)
-            {
-                info.AddValue("PrinterName", printerName);
-            }
+            info?.AddValue("PrinterName", printerName);
             base.GetObjectData(info, context);
         }
 #pragma warning restore SYSLIB0051 // Type or member is obsolete
@@ -579,10 +571,7 @@ namespace System.Printing
             System.Runtime.Serialization.StreamingContext   context
             )
         {
-            if (info != null)
-            {
-                info.AddValue("ServerName", serverName);
-            }
+            info?.AddValue("ServerName", serverName);
 
             base.GetObjectData(info, context);
         }
@@ -938,10 +927,7 @@ namespace System.Printing
             System.Runtime.Serialization.StreamingContext    context
             )
         {
-            if( info != null )
-            {
-                info.AddValue("JobId", jobId );
-            }
+            info?.AddValue("JobId", jobId );
             base.GetObjectData(info, context);
         }
 #pragma warning restore SYSLIB0051 // Type or member is obsolete

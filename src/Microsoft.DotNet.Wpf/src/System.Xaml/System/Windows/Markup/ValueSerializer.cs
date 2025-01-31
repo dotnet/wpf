@@ -3,14 +3,11 @@
 // See the LICENSE file in the project root for more information.
 
 using System.Collections;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Xaml;
 using System.Xaml.Replacements;
 using MS.Internal.Serialization;
-
-#pragma warning disable 1634, 1691  // suppressing PreSharp warnings
 
 namespace System.Windows.Markup
 {
@@ -109,7 +106,7 @@ namespace System.Windows.Markup
             ArgumentNullException.ThrowIfNull(type);
 
             object? value = s_valueSerializers[type];
-            if (value != null)
+            if (value is not null)
             {
                 // This uses s_valueSerializersLock's instance as a sentinal for null  (as opposed to not attempted yet).
                 return value == s_valueSerializersLock ? null : value as ValueSerializer;
@@ -123,7 +120,7 @@ namespace System.Windows.Markup
                 result = (ValueSerializer?)Activator.CreateInstance(attribute.ValueSerializerType);
             }
 
-            if (result == null)
+            if (result is null)
             {
                 if (type == typeof(string))
                 {
@@ -148,6 +145,7 @@ namespace System.Windows.Markup
                     }
                 }
             }
+
             lock (s_valueSerializersLock)
             {
                 // This uses s_valueSerializersLock's instance as a sentinal for null (as opposed to not attempted yet).
@@ -176,7 +174,7 @@ namespace System.Windows.Markup
             if (result is null or TypeConverterValueSerializer)
             {
                 TypeConverter converter = descriptor.Converter;
-                if (converter != null && converter.CanConvertTo(typeof(string)) && converter.CanConvertFrom(typeof(string)) &&
+                if (converter is not null && converter.CanConvertTo(typeof(string)) && converter.CanConvertFrom(typeof(string)) &&
                     converter is not ReferenceConverter)
                 {
                     result = new TypeConverterValueSerializer(converter);
@@ -196,10 +194,10 @@ namespace System.Windows.Markup
         /// <returns>The value serializer associated with the given type</returns>
         public static ValueSerializer? GetSerializerFor(Type type, IValueSerializerContext? context)
         {
-            if (context != null)
+            if (context is not null)
             {
                 ValueSerializer result = context.GetValueSerializerFor(type);
-                if (result != null)
+                if (result is not null)
                 {
                     return result;
                 }
@@ -218,10 +216,10 @@ namespace System.Windows.Markup
         /// <returns>A value serializer associated with the given property</returns>
         public static ValueSerializer? GetSerializerFor(PropertyDescriptor descriptor, IValueSerializerContext? context)
         {
-            if (context != null)
+            if (context is not null)
             {
                 ValueSerializer result = context.GetValueSerializerFor(descriptor);
-                if (result != null)
+                if (result is not null)
                 {
                     return result;
                 }
@@ -238,7 +236,7 @@ namespace System.Windows.Markup
             ArgumentNullException.ThrowIfNull(destinationType);
 
             string? text;
-            if (value == null)
+            if (value is null)
             {
                 text = SR.ToStringNull;
             }
@@ -246,6 +244,7 @@ namespace System.Windows.Markup
             {
                 text = value.GetType().FullName;
             }
+
             return new NotSupportedException(SR.Format(SR.ConvertToException, base.GetType().Name, text, destinationType.FullName));
         }
 
@@ -255,7 +254,7 @@ namespace System.Windows.Markup
         protected Exception GetConvertFromException(object? value)
         {
             string? text;
-            if (value == null)
+            if (value is null)
             {
                 text = SR.ToStringNull;
             }
@@ -263,6 +262,7 @@ namespace System.Windows.Markup
             {
                 text = value.GetType().FullName;
             }
+
             return new NotSupportedException(SR.Format(SR.ConvertFromException, base.GetType().Name, text));
         }
 

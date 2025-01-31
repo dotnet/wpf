@@ -2,14 +2,13 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
+using System;
+
 #if PBTCOMPILER
 namespace MS.Internal.Markup
 #else
-using System.Windows.Media;
-using MS.Internal;
 using System.Collections.Generic;
-
-using System;
+using MS.Internal;
 
 namespace System.Windows.Media
 #endif
@@ -277,397 +276,542 @@ namespace System.Windows.Media
         }
 #endif
 
-        /// Return the KnownColor from a color string.  If there's no match, KnownColor.UnknownColor
+        /// <summary>
+        /// Return the <see cref="KnownColor"/> from a color string. If there's no match, returns <see cref="KnownColor.UnknownColor"/>.
+        /// </summary>
+        /// <param name="colorString">The color name to parse from.</param>
+        /// <returns>The parsed <see cref="KnownColor"/> value or <see cref="KnownColor.UnknownColor"/> if no match.</returns>
         internal static KnownColor ColorStringToKnownColor(string colorString)
         {
-            if (null != colorString)
+            if (!string.IsNullOrEmpty(colorString))
             {
-                // We use invariant culture because we don't globalize our color names
-                string colorUpper = colorString.ToUpper(System.Globalization.CultureInfo.InvariantCulture);
+                // In case we're dealing with a lowercase character, we uppercase it
+                char firstChar = colorString[0];
+                if (firstChar >= 'a' && firstChar <= 'z')
+                    firstChar ^= (char)0x20;
 
-                // Use String.Equals because it does explicit equality
-                // StartsWith/EndsWith are culture sensitive and are 4-7 times slower than Equals
-
-                switch (colorUpper.Length)
+                switch (colorString.Length)
                 {
                     case 3:
-                        if (colorUpper.Equals("RED")) return KnownColor.Red;
-                        if (colorUpper.Equals("TAN")) return KnownColor.Tan;
+                        if (colorString.Equals("Red", StringComparison.OrdinalIgnoreCase))
+                            return KnownColor.Red;
+                        if (colorString.Equals("Tan", StringComparison.OrdinalIgnoreCase))
+                            return KnownColor.Tan;
                         break;
                     case 4:
-                    switch(colorUpper[0])
-                    {
-                        case 'A':
-                            if (colorUpper.Equals("AQUA")) return KnownColor.Aqua;
-                            break;
-                        case 'B':
-                            if (colorUpper.Equals("BLUE")) return KnownColor.Blue;
-                            break;
-                        case 'C':
-                            if (colorUpper.Equals("CYAN")) return KnownColor.Cyan;
-                            break;
-                        case 'G':
-                            if (colorUpper.Equals("GOLD")) return KnownColor.Gold;
-                            if (colorUpper.Equals("GRAY")) return KnownColor.Gray;
-                            break;
-                        case 'L':
-                            if (colorUpper.Equals("LIME")) return KnownColor.Lime;
-                            break;
-                        case 'N':
-                            if (colorUpper.Equals("NAVY")) return KnownColor.Navy;
-                            break;
-                        case 'P':
-                            if (colorUpper.Equals("PERU")) return KnownColor.Peru;
-                            if (colorUpper.Equals("PINK")) return KnownColor.Pink;
-                            if (colorUpper.Equals("PLUM")) return KnownColor.Plum;
-                            break;
-                        case 'S':
-                            if (colorUpper.Equals("SNOW")) return KnownColor.Snow;
-                            break;
-                        case 'T':
-                            if (colorUpper.Equals("TEAL")) return KnownColor.Teal;
-                            break;
-                    }
+                        switch (firstChar)
+                        {
+                            case 'A':
+                                if (colorString.Equals("Aqua", StringComparison.OrdinalIgnoreCase))
+                                    return KnownColor.Aqua;
+                                break;
+                            case 'B':
+                                if (colorString.Equals("Blue", StringComparison.OrdinalIgnoreCase))
+                                    return KnownColor.Blue;
+                                break;
+                            case 'C':
+                                if (colorString.Equals("Cyan", StringComparison.OrdinalIgnoreCase))
+                                    return KnownColor.Cyan;
+                                break;
+                            case 'G':
+                                if (colorString.Equals("Gold", StringComparison.OrdinalIgnoreCase))
+                                    return KnownColor.Gold;
+                                if (colorString.Equals("Gray", StringComparison.OrdinalIgnoreCase))
+                                    return KnownColor.Gray;
+                                break;
+                            case 'L':
+                                if (colorString.Equals("Lime", StringComparison.OrdinalIgnoreCase))
+                                    return KnownColor.Lime;
+                                break;
+                            case 'N':
+                                if (colorString.Equals("Navy", StringComparison.OrdinalIgnoreCase))
+                                    return KnownColor.Navy;
+                                break;
+                            case 'P':
+                                if (colorString.Equals("Peru", StringComparison.OrdinalIgnoreCase))
+                                    return KnownColor.Peru;
+                                if (colorString.Equals("Pink", StringComparison.OrdinalIgnoreCase))
+                                    return KnownColor.Pink;
+                                if (colorString.Equals("Plum", StringComparison.OrdinalIgnoreCase))
+                                    return KnownColor.Plum;
+                                break;
+                            case 'S':
+                                if (colorString.Equals("Snow", StringComparison.OrdinalIgnoreCase))
+                                    return KnownColor.Snow;
+                                break;
+                            case 'T':
+                                if (colorString.Equals("Teal", StringComparison.OrdinalIgnoreCase))
+                                    return KnownColor.Teal;
+                                break;
+                        }
                         break;
                     case 5:
-                    switch(colorUpper[0])
-                    {
-                        case 'A':
-                            if (colorUpper.Equals("AZURE")) return KnownColor.Azure;
-                            break;
-                        case 'B':
-                            if (colorUpper.Equals("BEIGE")) return KnownColor.Beige;
-                            if (colorUpper.Equals("BLACK")) return KnownColor.Black;
-                            if (colorUpper.Equals("BROWN")) return KnownColor.Brown;
-                            break;
-                        case 'C':
-                            if (colorUpper.Equals("CORAL")) return KnownColor.Coral;
-                            break;
-                        case 'G':
-                            if (colorUpper.Equals("GREEN")) return KnownColor.Green;
-                            break;
-                        case 'I':
-                            if (colorUpper.Equals("IVORY")) return KnownColor.Ivory;
-                            break;
-                        case 'K':
-                            if (colorUpper.Equals("KHAKI")) return KnownColor.Khaki;
-                            break;
-                        case 'L':
-                            if (colorUpper.Equals("LINEN")) return KnownColor.Linen;
-                            break;
-                        case 'O':
-                            if (colorUpper.Equals("OLIVE")) return KnownColor.Olive;
-                            break;
-                        case 'W':
-                            if (colorUpper.Equals("WHEAT")) return KnownColor.Wheat;
-                            if (colorUpper.Equals("WHITE")) return KnownColor.White;
-                            break;
-                    }
+                        switch (firstChar)
+                        {
+                            case 'A':
+                                if (colorString.Equals("Azure", StringComparison.OrdinalIgnoreCase))
+                                    return KnownColor.Azure;
+                                break;
+                            case 'B':
+                                if (colorString.Equals("Beige", StringComparison.OrdinalIgnoreCase))
+                                    return KnownColor.Beige;
+                                if (colorString.Equals("Black", StringComparison.OrdinalIgnoreCase))
+                                    return KnownColor.Black;
+                                if (colorString.Equals("Brown", StringComparison.OrdinalIgnoreCase))
+                                    return KnownColor.Brown;
+                                break;
+                            case 'C':
+                                if (colorString.Equals("Coral", StringComparison.OrdinalIgnoreCase))
+                                    return KnownColor.Coral;
+                                break;
+                            case 'G':
+                                if (colorString.Equals("Green", StringComparison.OrdinalIgnoreCase))
+                                    return KnownColor.Green;
+                                break;
+                            case 'I':
+                                if (colorString.Equals("Ivory", StringComparison.OrdinalIgnoreCase))
+                                    return KnownColor.Ivory;
+                                break;
+                            case 'K':
+                                if (colorString.Equals("Khaki", StringComparison.OrdinalIgnoreCase))
+                                    return KnownColor.Khaki;
+                                break;
+                            case 'L':
+                                if (colorString.Equals("Linen", StringComparison.OrdinalIgnoreCase))
+                                    return KnownColor.Linen;
+                                break;
+                            case 'O':
+                                if (colorString.Equals("Olive", StringComparison.OrdinalIgnoreCase))
+                                    return KnownColor.Olive;
+                                break;
+                            case 'W':
+                                if (colorString.Equals("Wheat", StringComparison.OrdinalIgnoreCase))
+                                    return KnownColor.Wheat;
+                                if (colorString.Equals("White", StringComparison.OrdinalIgnoreCase))
+                                    return KnownColor.White;
+                                break;
+                        }
                         break;
                     case 6:
-                    switch(colorUpper[0])
-                    {
-                        case 'B':
-                            if (colorUpper.Equals("BISQUE")) return KnownColor.Bisque;
-                            break;
-                        case 'I':
-                            if (colorUpper.Equals("INDIGO")) return KnownColor.Indigo;
-                            break;
-                        case 'M':
-                            if (colorUpper.Equals("MAROON")) return KnownColor.Maroon;
-                            break;
-                        case 'O':
-                            if (colorUpper.Equals("ORANGE")) return KnownColor.Orange;
-                            if (colorUpper.Equals("ORCHID")) return KnownColor.Orchid;
-                            break;
-                        case 'P':
-                            if (colorUpper.Equals("PURPLE")) return KnownColor.Purple;
-                            break;
-                        case 'S':
-                            if (colorUpper.Equals("SALMON")) return KnownColor.Salmon;
-                            if (colorUpper.Equals("SIENNA")) return KnownColor.Sienna;
-                            if (colorUpper.Equals("SILVER")) return KnownColor.Silver;
-                            break;
-                        case 'T':
-                            if (colorUpper.Equals("TOMATO")) return KnownColor.Tomato;
-                            break;
-                        case 'V':
-                            if (colorUpper.Equals("VIOLET")) return KnownColor.Violet;
-                            break;
-                        case 'Y':
-                            if (colorUpper.Equals("YELLOW")) return KnownColor.Yellow;
-                            break;
-                    }
+                        switch (firstChar)
+                        {
+                            case 'B':
+                                if (colorString.Equals("Bisque", StringComparison.OrdinalIgnoreCase))
+                                    return KnownColor.Bisque;
+                                break;
+                            case 'I':
+                                if (colorString.Equals("Indigo", StringComparison.OrdinalIgnoreCase))
+                                    return KnownColor.Indigo;
+                                break;
+                            case 'M':
+                                if (colorString.Equals("Maroon", StringComparison.OrdinalIgnoreCase))
+                                    return KnownColor.Maroon;
+                                break;
+                            case 'O':
+                                if (colorString.Equals("Orange", StringComparison.OrdinalIgnoreCase))
+                                    return KnownColor.Orange;
+                                if (colorString.Equals("Orchid", StringComparison.OrdinalIgnoreCase))
+                                    return KnownColor.Orchid;
+                                break;
+                            case 'P':
+                                if (colorString.Equals("Purple", StringComparison.OrdinalIgnoreCase))
+                                    return KnownColor.Purple;
+                                break;
+                            case 'S':
+                                if (colorString.Equals("Salmon", StringComparison.OrdinalIgnoreCase))
+                                    return KnownColor.Salmon;
+                                if (colorString.Equals("Sienna", StringComparison.OrdinalIgnoreCase))
+                                    return KnownColor.Sienna;
+                                if (colorString.Equals("Silver", StringComparison.OrdinalIgnoreCase))
+                                    return KnownColor.Silver;
+                                break;
+                            case 'T':
+                                if (colorString.Equals("Tomato", StringComparison.OrdinalIgnoreCase))
+                                    return KnownColor.Tomato;
+                                break;
+                            case 'V':
+                                if (colorString.Equals("Violet", StringComparison.OrdinalIgnoreCase))
+                                    return KnownColor.Violet;
+                                break;
+                            case 'Y':
+                                if (colorString.Equals("Yellow", StringComparison.OrdinalIgnoreCase))
+                                    return KnownColor.Yellow;
+                                break;
+                        }
                         break;
                     case 7:
-                    switch(colorUpper[0])
-                    {
-                        case 'C':
-                            if (colorUpper.Equals("CRIMSON")) return KnownColor.Crimson;
-                            break;
-                        case 'D':
-                            if (colorUpper.Equals("DARKRED")) return KnownColor.DarkRed;
-                            if (colorUpper.Equals("DIMGRAY")) return KnownColor.DimGray;
-                            break;
-                        case 'F':
-                            if (colorUpper.Equals("FUCHSIA")) return KnownColor.Fuchsia;
-                            break;
-                        case 'H':
-                            if (colorUpper.Equals("HOTPINK")) return KnownColor.HotPink;
-                            break;
-                        case 'M':
-                            if (colorUpper.Equals("MAGENTA")) return KnownColor.Magenta;
-                            break;
-                        case 'O':
-                            if (colorUpper.Equals("OLDLACE")) return KnownColor.OldLace;
-                            break;
-                        case 'S':
-                            if (colorUpper.Equals("SKYBLUE")) return KnownColor.SkyBlue;
-                            break;
-                        case 'T':
-                            if (colorUpper.Equals("THISTLE")) return KnownColor.Thistle;
-                            break;
-                    }
+                        switch (firstChar)
+                        {
+                            case 'C':
+                                if (colorString.Equals("Crimson", StringComparison.OrdinalIgnoreCase))
+                                    return KnownColor.Crimson;
+                                break;
+                            case 'D':
+                                if (colorString.Equals("DarkRed", StringComparison.OrdinalIgnoreCase))
+                                    return KnownColor.DarkRed;
+                                if (colorString.Equals("DimGray", StringComparison.OrdinalIgnoreCase))
+                                    return KnownColor.DimGray;
+                                break;
+                            case 'F':
+                                if (colorString.Equals("Fuchsia", StringComparison.OrdinalIgnoreCase))
+                                    return KnownColor.Fuchsia;
+                                break;
+                            case 'H':
+                                if (colorString.Equals("HotPink", StringComparison.OrdinalIgnoreCase))
+                                    return KnownColor.HotPink;
+                                break;
+                            case 'M':
+                                if (colorString.Equals("Magenta", StringComparison.OrdinalIgnoreCase))
+                                    return KnownColor.Magenta;
+                                break;
+                            case 'O':
+                                if (colorString.Equals("OldLace", StringComparison.OrdinalIgnoreCase))
+                                    return KnownColor.OldLace;
+                                break;
+                            case 'S':
+                                if (colorString.Equals("SkyBlue", StringComparison.OrdinalIgnoreCase))
+                                    return KnownColor.SkyBlue;
+                                break;
+                            case 'T':
+                                if (colorString.Equals("Thistle", StringComparison.OrdinalIgnoreCase))
+                                    return KnownColor.Thistle;
+                                break;
+                        }
                         break;
                     case 8:
-                    switch(colorUpper[0])
-                    {
-                        case 'C':
-                            if (colorUpper.Equals("CORNSILK")) return KnownColor.Cornsilk;
-                            break;
-                        case 'D':
-                            if (colorUpper.Equals("DARKBLUE")) return KnownColor.DarkBlue;
-                            if (colorUpper.Equals("DARKCYAN")) return KnownColor.DarkCyan;
-                            if (colorUpper.Equals("DARKGRAY")) return KnownColor.DarkGray;
-                            if (colorUpper.Equals("DEEPPINK")) return KnownColor.DeepPink;
-                            break;
-                        case 'H':
-                            if (colorUpper.Equals("HONEYDEW")) return KnownColor.Honeydew;
-                            break;
-                        case 'L':
-                            if (colorUpper.Equals("LAVENDER")) return KnownColor.Lavender;
-                            break;
-                        case 'M':
-                            if (colorUpper.Equals("MOCCASIN")) return KnownColor.Moccasin;
-                            break;
-                        case 'S':
-                            if (colorUpper.Equals("SEAGREEN")) return KnownColor.SeaGreen;
-                            if (colorUpper.Equals("SEASHELL")) return KnownColor.SeaShell;
-                            break;
-                    }
+                        switch (firstChar)
+                        {
+                            case 'C':
+                                if (colorString.Equals("Cornsilk", StringComparison.OrdinalIgnoreCase))
+                                    return KnownColor.Cornsilk;
+                                break;
+                            case 'D':
+                                if (colorString.Equals("DarkBlue", StringComparison.OrdinalIgnoreCase))
+                                    return KnownColor.DarkBlue;
+                                if (colorString.Equals("DarkCyan", StringComparison.OrdinalIgnoreCase))
+                                    return KnownColor.DarkCyan;
+                                if (colorString.Equals("DarkGray", StringComparison.OrdinalIgnoreCase))
+                                    return KnownColor.DarkGray;
+                                if (colorString.Equals("DeepPink", StringComparison.OrdinalIgnoreCase))
+                                    return KnownColor.DeepPink;
+                                break;
+                            case 'H':
+                                if (colorString.Equals("Honeydew", StringComparison.OrdinalIgnoreCase))
+                                    return KnownColor.Honeydew;
+                                break;
+                            case 'L':
+                                if (colorString.Equals("Lavender", StringComparison.OrdinalIgnoreCase))
+                                    return KnownColor.Lavender;
+                                break;
+                            case 'M':
+                                if (colorString.Equals("Moccasin", StringComparison.OrdinalIgnoreCase))
+                                    return KnownColor.Moccasin;
+                                break;
+                            case 'S':
+                                if (colorString.Equals("SeaGreen", StringComparison.OrdinalIgnoreCase))
+                                    return KnownColor.SeaGreen;
+                                if (colorString.Equals("SeaShell", StringComparison.OrdinalIgnoreCase))
+                                    return KnownColor.SeaShell;
+                                break;
+                        }
                         break;
                     case 9:
-                    switch(colorUpper[0])
-                    {
-                        case 'A':
-                            if (colorUpper.Equals("ALICEBLUE")) return KnownColor.AliceBlue;
-                            break;
-                        case 'B':
-                            if (colorUpper.Equals("BURLYWOOD")) return KnownColor.BurlyWood;
-                            break;
-                        case 'C':
-                            if (colorUpper.Equals("CADETBLUE")) return KnownColor.CadetBlue;
-                            if (colorUpper.Equals("CHOCOLATE")) return KnownColor.Chocolate;
-                            break;
-                        case 'D':
-                            if (colorUpper.Equals("DARKGREEN")) return KnownColor.DarkGreen;
-                            if (colorUpper.Equals("DARKKHAKI")) return KnownColor.DarkKhaki;
-                            break;
-                        case 'F':
-                            if (colorUpper.Equals("FIREBRICK")) return KnownColor.Firebrick;
-                            break;
-                        case 'G':
-                            if (colorUpper.Equals("GAINSBORO")) return KnownColor.Gainsboro;
-                            if (colorUpper.Equals("GOLDENROD")) return KnownColor.Goldenrod;
-                            break;
-                        case 'I':
-                            if (colorUpper.Equals("INDIANRED")) return KnownColor.IndianRed;
-                            break;
-                        case 'L':
-                            if (colorUpper.Equals("LAWNGREEN")) return KnownColor.LawnGreen;
-                            if (colorUpper.Equals("LIGHTBLUE")) return KnownColor.LightBlue;
-                            if (colorUpper.Equals("LIGHTCYAN")) return KnownColor.LightCyan;
-                            if (colorUpper.Equals("LIGHTGRAY")) return KnownColor.LightGray;
-                            if (colorUpper.Equals("LIGHTPINK")) return KnownColor.LightPink;
-                            if (colorUpper.Equals("LIMEGREEN")) return KnownColor.LimeGreen;
-                            break;
-                        case 'M':
-                            if (colorUpper.Equals("MINTCREAM")) return KnownColor.MintCream;
-                            if (colorUpper.Equals("MISTYROSE")) return KnownColor.MistyRose;
-                            break;
-                        case 'O':
-                            if (colorUpper.Equals("OLIVEDRAB")) return KnownColor.OliveDrab;
-                            if (colorUpper.Equals("ORANGERED")) return KnownColor.OrangeRed;
-                            break;
-                        case 'P':
-                            if (colorUpper.Equals("PALEGREEN")) return KnownColor.PaleGreen;
-                            if (colorUpper.Equals("PEACHPUFF")) return KnownColor.PeachPuff;
-                            break;
-                        case 'R':
-                            if (colorUpper.Equals("ROSYBROWN")) return KnownColor.RosyBrown;
-                            if (colorUpper.Equals("ROYALBLUE")) return KnownColor.RoyalBlue;
-                            break;
-                        case 'S':
-                            if (colorUpper.Equals("SLATEBLUE")) return KnownColor.SlateBlue;
-                            if (colorUpper.Equals("SLATEGRAY")) return KnownColor.SlateGray;
-                            if (colorUpper.Equals("STEELBLUE")) return KnownColor.SteelBlue;
-                            break;
-                        case 'T':
-                            if (colorUpper.Equals("TURQUOISE")) return KnownColor.Turquoise;
-                            break;
-                    }
+                        switch (firstChar)
+                        {
+                            case 'A':
+                                if (colorString.Equals("AliceBlue", StringComparison.OrdinalIgnoreCase))
+                                    return KnownColor.AliceBlue;
+                                break;
+                            case 'B':
+                                if (colorString.Equals("BurlyWood", StringComparison.OrdinalIgnoreCase))
+                                    return KnownColor.BurlyWood;
+                                break;
+                            case 'C':
+                                if (colorString.Equals("CadetBlue", StringComparison.OrdinalIgnoreCase))
+                                    return KnownColor.CadetBlue;
+                                if (colorString.Equals("Chocolate", StringComparison.OrdinalIgnoreCase))
+                                    return KnownColor.Chocolate;
+                                break;
+                            case 'D':
+                                if (colorString.Equals("DarkGreen", StringComparison.OrdinalIgnoreCase))
+                                    return KnownColor.DarkGreen;
+                                if (colorString.Equals("DarkKhaki", StringComparison.OrdinalIgnoreCase))
+                                    return KnownColor.DarkKhaki;
+                                break;
+                            case 'F':
+                                if (colorString.Equals("Firebrick", StringComparison.OrdinalIgnoreCase))
+                                    return KnownColor.Firebrick;
+                                break;
+                            case 'G':
+                                if (colorString.Equals("Gainsboro", StringComparison.OrdinalIgnoreCase))
+                                    return KnownColor.Gainsboro;
+                                if (colorString.Equals("Goldenrod", StringComparison.OrdinalIgnoreCase))
+                                    return KnownColor.Goldenrod;
+                                break;
+                            case 'I':
+                                if (colorString.Equals("IndianRed", StringComparison.OrdinalIgnoreCase))
+                                    return KnownColor.IndianRed;
+                                break;
+                            case 'L':
+                                if (colorString.Equals("LawnGreen", StringComparison.OrdinalIgnoreCase))
+                                    return KnownColor.LawnGreen;
+                                if (colorString.Equals("LightBlue", StringComparison.OrdinalIgnoreCase))
+                                    return KnownColor.LightBlue;
+                                if (colorString.Equals("LightCyan", StringComparison.OrdinalIgnoreCase))
+                                    return KnownColor.LightCyan;
+                                if (colorString.Equals("LightGray", StringComparison.OrdinalIgnoreCase))
+                                    return KnownColor.LightGray;
+                                if (colorString.Equals("LightPink", StringComparison.OrdinalIgnoreCase))
+                                    return KnownColor.LightPink;
+                                if (colorString.Equals("LimeGreen", StringComparison.OrdinalIgnoreCase))
+                                    return KnownColor.LimeGreen;
+                                break;
+                            case 'M':
+                                if (colorString.Equals("MintCream", StringComparison.OrdinalIgnoreCase))
+                                    return KnownColor.MintCream;
+                                if (colorString.Equals("MistyRose", StringComparison.OrdinalIgnoreCase))
+                                    return KnownColor.MistyRose;
+                                break;
+                            case 'O':
+                                if (colorString.Equals("OliveDrab", StringComparison.OrdinalIgnoreCase))
+                                    return KnownColor.OliveDrab;
+                                if (colorString.Equals("OrangeRed", StringComparison.OrdinalIgnoreCase))
+                                    return KnownColor.OrangeRed;
+                                break;
+                            case 'P':
+                                if (colorString.Equals("PaleGreen", StringComparison.OrdinalIgnoreCase))
+                                    return KnownColor.PaleGreen;
+                                if (colorString.Equals("PeachPuff", StringComparison.OrdinalIgnoreCase))
+                                    return KnownColor.PeachPuff;
+                                break;
+                            case 'R':
+                                if (colorString.Equals("RosyBrown", StringComparison.OrdinalIgnoreCase))
+                                    return KnownColor.RosyBrown;
+                                if (colorString.Equals("RoyalBlue", StringComparison.OrdinalIgnoreCase))
+                                    return KnownColor.RoyalBlue;
+                                break;
+                            case 'S':
+                                if (colorString.Equals("SlateBlue", StringComparison.OrdinalIgnoreCase))
+                                    return KnownColor.SlateBlue;
+                                if (colorString.Equals("SlateGray", StringComparison.OrdinalIgnoreCase))
+                                    return KnownColor.SlateGray;
+                                if (colorString.Equals("SteelBlue", StringComparison.OrdinalIgnoreCase))
+                                    return KnownColor.SteelBlue;
+                                break;
+                            case 'T':
+                                if (colorString.Equals("Turquoise", StringComparison.OrdinalIgnoreCase))
+                                    return KnownColor.Turquoise;
+                                break;
+                        }
                         break;
                     case 10:
-                    switch(colorUpper[0])
-                    {
-                        case 'A':
-                            if (colorUpper.Equals("AQUAMARINE")) return KnownColor.Aquamarine;
-                            break;
-                        case 'B':
-                            if (colorUpper.Equals("BLUEVIOLET")) return KnownColor.BlueViolet;
-                            break;
-                        case 'C':
-                            if (colorUpper.Equals("CHARTREUSE")) return KnownColor.Chartreuse;
-                            break;
-                        case 'D':
-                            if (colorUpper.Equals("DARKORANGE")) return KnownColor.DarkOrange;
-                            if (colorUpper.Equals("DARKORCHID")) return KnownColor.DarkOrchid;
-                            if (colorUpper.Equals("DARKSALMON")) return KnownColor.DarkSalmon;
-                            if (colorUpper.Equals("DARKVIOLET")) return KnownColor.DarkViolet;
-                            if (colorUpper.Equals("DODGERBLUE")) return KnownColor.DodgerBlue;
-                            break;
-                        case 'G':
-                            if (colorUpper.Equals("GHOSTWHITE")) return KnownColor.GhostWhite;
-                            break;
-                        case 'L':
-                            if (colorUpper.Equals("LIGHTCORAL")) return KnownColor.LightCoral;
-                            if (colorUpper.Equals("LIGHTGREEN")) return KnownColor.LightGreen;
-                            break;
-                        case 'M':
-                            if (colorUpper.Equals("MEDIUMBLUE")) return KnownColor.MediumBlue;
-                            break;
-                        case 'P':
-                            if (colorUpper.Equals("PAPAYAWHIP")) return KnownColor.PapayaWhip;
-                            if (colorUpper.Equals("POWDERBLUE")) return KnownColor.PowderBlue;
-                            break;
-                        case 'S':
-                            if (colorUpper.Equals("SANDYBROWN")) return KnownColor.SandyBrown;
-                            break;
-                        case 'W':
-                            if (colorUpper.Equals("WHITESMOKE")) return KnownColor.WhiteSmoke;
-                            break;
-                    }
+                        switch (firstChar)
+                        {
+                            case 'A':
+                                if (colorString.Equals("Aquamarine", StringComparison.OrdinalIgnoreCase))
+                                    return KnownColor.Aquamarine;
+                                break;
+                            case 'B':
+                                if (colorString.Equals("BlueViolet", StringComparison.OrdinalIgnoreCase))
+                                    return KnownColor.BlueViolet;
+                                break;
+                            case 'C':
+                                if (colorString.Equals("Chartreuse", StringComparison.OrdinalIgnoreCase))
+                                    return KnownColor.Chartreuse;
+                                break;
+                            case 'D':
+                                if (colorString.Equals("DarkOrange", StringComparison.OrdinalIgnoreCase))
+                                    return KnownColor.DarkOrange;
+                                if (colorString.Equals("DarkOrchid", StringComparison.OrdinalIgnoreCase))
+                                    return KnownColor.DarkOrchid;
+                                if (colorString.Equals("DarkSalmon", StringComparison.OrdinalIgnoreCase))
+                                    return KnownColor.DarkSalmon;
+                                if (colorString.Equals("DarkViolet", StringComparison.OrdinalIgnoreCase))
+                                    return KnownColor.DarkViolet;
+                                if (colorString.Equals("DodgerBlue", StringComparison.OrdinalIgnoreCase))
+                                    return KnownColor.DodgerBlue;
+                                break;
+                            case 'G':
+                                if (colorString.Equals("GhostWhite", StringComparison.OrdinalIgnoreCase))
+                                    return KnownColor.GhostWhite;
+                                break;
+                            case 'L':
+                                if (colorString.Equals("LightCoral", StringComparison.OrdinalIgnoreCase))
+                                    return KnownColor.LightCoral;
+                                if (colorString.Equals("LightGreen", StringComparison.OrdinalIgnoreCase))
+                                    return KnownColor.LightGreen;
+                                break;
+                            case 'M':
+                                if (colorString.Equals("MediumBlue", StringComparison.OrdinalIgnoreCase))
+                                    return KnownColor.MediumBlue;
+                                break;
+                            case 'P':
+                                if (colorString.Equals("PapayaWhip", StringComparison.OrdinalIgnoreCase))
+                                    return KnownColor.PapayaWhip;
+                                if (colorString.Equals("PowderBlue", StringComparison.OrdinalIgnoreCase))
+                                    return KnownColor.PowderBlue;
+                                break;
+                            case 'S':
+                                if (colorString.Equals("SandyBrown", StringComparison.OrdinalIgnoreCase))
+                                    return KnownColor.SandyBrown;
+                                break;
+                            case 'W':
+                                if (colorString.Equals("WhiteSmoke", StringComparison.OrdinalIgnoreCase))
+                                    return KnownColor.WhiteSmoke;
+                                break;
+                        }
                         break;
                     case 11:
-                    switch(colorUpper[0])
-                    {
-                        case 'D':
-                            if (colorUpper.Equals("DARKMAGENTA")) return KnownColor.DarkMagenta;
-                            if (colorUpper.Equals("DEEPSKYBLUE")) return KnownColor.DeepSkyBlue;
-                            break;
-                        case 'F':
-                            if (colorUpper.Equals("FLORALWHITE")) return KnownColor.FloralWhite;
-                            if (colorUpper.Equals("FORESTGREEN")) return KnownColor.ForestGreen;
-                            break;
-                        case 'G':
-                            if (colorUpper.Equals("GREENYELLOW")) return KnownColor.GreenYellow;
-                            break;
-                        case 'L':
-                            if (colorUpper.Equals("LIGHTSALMON")) return KnownColor.LightSalmon;
-                            if (colorUpper.Equals("LIGHTYELLOW")) return KnownColor.LightYellow;
-                            break;
-                        case 'N':
-                            if (colorUpper.Equals("NAVAJOWHITE")) return KnownColor.NavajoWhite;
-                            break;
-                        case 'S':
-                            if (colorUpper.Equals("SADDLEBROWN")) return KnownColor.SaddleBrown;
-                            if (colorUpper.Equals("SPRINGGREEN")) return KnownColor.SpringGreen;
-                            break;
-                        case 'T':
-                            if (colorUpper.Equals("TRANSPARENT")) return KnownColor.Transparent;
-                            break;
-                        case 'Y':
-                            if (colorUpper.Equals("YELLOWGREEN")) return KnownColor.YellowGreen;
-                            break;
-                    }
+                        switch (firstChar)
+                        {
+                            case 'D':
+                                if (colorString.Equals("DarkMagenta", StringComparison.OrdinalIgnoreCase))
+                                    return KnownColor.DarkMagenta;
+                                if (colorString.Equals("DeepSkyBlue", StringComparison.OrdinalIgnoreCase))
+                                    return KnownColor.DeepSkyBlue;
+                                break;
+                            case 'F':
+                                if (colorString.Equals("FloralWhite", StringComparison.OrdinalIgnoreCase))
+                                    return KnownColor.FloralWhite;
+                                if (colorString.Equals("ForestGreen", StringComparison.OrdinalIgnoreCase))
+                                    return KnownColor.ForestGreen;
+                                break;
+                            case 'G':
+                                if (colorString.Equals("GreenYellow", StringComparison.OrdinalIgnoreCase))
+                                    return KnownColor.GreenYellow;
+                                break;
+                            case 'L':
+                                if (colorString.Equals("LightSalmon", StringComparison.OrdinalIgnoreCase))
+                                    return KnownColor.LightSalmon;
+                                if (colorString.Equals("LightYellow", StringComparison.OrdinalIgnoreCase))
+                                    return KnownColor.LightYellow;
+                                break;
+                            case 'N':
+                                if (colorString.Equals("NavajoWhite", StringComparison.OrdinalIgnoreCase))
+                                    return KnownColor.NavajoWhite;
+                                break;
+                            case 'S':
+                                if (colorString.Equals("SaddleBrown", StringComparison.OrdinalIgnoreCase))
+                                    return KnownColor.SaddleBrown;
+                                if (colorString.Equals("SpringGreen", StringComparison.OrdinalIgnoreCase))
+                                    return KnownColor.SpringGreen;
+                                break;
+                            case 'T':
+                                if (colorString.Equals("Transparent", StringComparison.OrdinalIgnoreCase))
+                                    return KnownColor.Transparent;
+                                break;
+                            case 'Y':
+                                if (colorString.Equals("YellowGreen", StringComparison.OrdinalIgnoreCase))
+                                    return KnownColor.YellowGreen;
+                                break;
+                        }
                         break;
                     case 12:
-                    switch(colorUpper[0])
-                    {
-                        case 'A':
-                            if (colorUpper.Equals("ANTIQUEWHITE")) return KnownColor.AntiqueWhite;
-                            break;
-                        case 'D':
-                            if (colorUpper.Equals("DARKSEAGREEN")) return KnownColor.DarkSeaGreen;
-                            break;
-                        case 'L':
-                            if (colorUpper.Equals("LIGHTSKYBLUE")) return KnownColor.LightSkyBlue;
-                            if (colorUpper.Equals("LEMONCHIFFON")) return KnownColor.LemonChiffon;
-                            break;
-                        case 'M':
-                            if (colorUpper.Equals("MEDIUMORCHID")) return KnownColor.MediumOrchid;
-                            if (colorUpper.Equals("MEDIUMPURPLE")) return KnownColor.MediumPurple;
-                            if (colorUpper.Equals("MIDNIGHTBLUE")) return KnownColor.MidnightBlue;
-                            break;
-                    }
+                        switch (firstChar)
+                        {
+                            case 'A':
+                                if (colorString.Equals("AntiqueWhite", StringComparison.OrdinalIgnoreCase))
+                                    return KnownColor.AntiqueWhite;
+                                break;
+                            case 'D':
+                                if (colorString.Equals("DarkSeaGreen", StringComparison.OrdinalIgnoreCase))
+                                    return KnownColor.DarkSeaGreen;
+                                break;
+                            case 'L':
+                                if (colorString.Equals("LightSkyBlue", StringComparison.OrdinalIgnoreCase))
+                                    return KnownColor.LightSkyBlue;
+                                if (colorString.Equals("LemonChiffon", StringComparison.OrdinalIgnoreCase))
+                                    return KnownColor.LemonChiffon;
+                                break;
+                            case 'M':
+                                if (colorString.Equals("MediumOrchid", StringComparison.OrdinalIgnoreCase))
+                                    return KnownColor.MediumOrchid;
+                                if (colorString.Equals("MediumPurple", StringComparison.OrdinalIgnoreCase))
+                                    return KnownColor.MediumPurple;
+                                if (colorString.Equals("MidnightBlue", StringComparison.OrdinalIgnoreCase))
+                                    return KnownColor.MidnightBlue;
+                                break;
+                        }
                         break;
                     case 13:
-                    switch(colorUpper[0])
-                    {
-                        case 'D':
-                            if (colorUpper.Equals("DARKSLATEBLUE")) return KnownColor.DarkSlateBlue;
-                            if (colorUpper.Equals("DARKSLATEGRAY")) return KnownColor.DarkSlateGray;
-                            if (colorUpper.Equals("DARKGOLDENROD")) return KnownColor.DarkGoldenrod;
-                            if (colorUpper.Equals("DARKTURQUOISE")) return KnownColor.DarkTurquoise;
-                            break;
-                        case 'L':
-                            if (colorUpper.Equals("LIGHTSEAGREEN")) return KnownColor.LightSeaGreen;
-                            if (colorUpper.Equals("LAVENDERBLUSH")) return KnownColor.LavenderBlush;
-                            break;
-                        case 'P':
-                            if (colorUpper.Equals("PALEGOLDENROD")) return KnownColor.PaleGoldenrod;
-                            if (colorUpper.Equals("PALETURQUOISE")) return KnownColor.PaleTurquoise;
-                            if (colorUpper.Equals("PALEVIOLETRED")) return KnownColor.PaleVioletRed;
-                            break;
-                    }
+                        switch (firstChar)
+                        {
+                            case 'D':
+                                if (colorString.Equals("DarkSlateBlue", StringComparison.OrdinalIgnoreCase))
+                                    return KnownColor.DarkSlateBlue;
+                                if (colorString.Equals("DarkSlateGray", StringComparison.OrdinalIgnoreCase))
+                                    return KnownColor.DarkSlateGray;
+                                if (colorString.Equals("DarkGoldenrod", StringComparison.OrdinalIgnoreCase))
+                                    return KnownColor.DarkGoldenrod;
+                                if (colorString.Equals("DarkTurquoise", StringComparison.OrdinalIgnoreCase))
+                                    return KnownColor.DarkTurquoise;
+                                break;
+                            case 'L':
+                                if (colorString.Equals("LightSeaGreen", StringComparison.OrdinalIgnoreCase))
+                                    return KnownColor.LightSeaGreen;
+                                if (colorString.Equals("LavenderBlush", StringComparison.OrdinalIgnoreCase))
+                                    return KnownColor.LavenderBlush;
+                                break;
+                            case 'P':
+                                if (colorString.Equals("PaleGoldenrod", StringComparison.OrdinalIgnoreCase))
+                                    return KnownColor.PaleGoldenrod;
+                                if (colorString.Equals("PaleTurquoise", StringComparison.OrdinalIgnoreCase))
+                                    return KnownColor.PaleTurquoise;
+                                if (colorString.Equals("PaleVioletRed", StringComparison.OrdinalIgnoreCase))
+                                    return KnownColor.PaleVioletRed;
+                                break;
+                        }
                         break;
                     case 14:
-                    switch(colorUpper[0])
-                    {
-                        case 'B':
-                            if (colorUpper.Equals("BLANCHEDALMOND")) return KnownColor.BlanchedAlmond;
-                            break;
-                        case 'C':
-                            if (colorUpper.Equals("CORNFLOWERBLUE")) return KnownColor.CornflowerBlue;
-                            break;
-                        case 'D':
-                            if (colorUpper.Equals("DARKOLIVEGREEN")) return KnownColor.DarkOliveGreen;
-                            break;
-                        case 'L':
-                            if (colorUpper.Equals("LIGHTSLATEGRAY")) return KnownColor.LightSlateGray;
-                            if (colorUpper.Equals("LIGHTSTEELBLUE")) return KnownColor.LightSteelBlue;
-                            break;
-                        case 'M':
-                            if (colorUpper.Equals("MEDIUMSEAGREEN")) return KnownColor.MediumSeaGreen;
-                            break;
-                    }
+                        switch (firstChar)
+                        {
+                            case 'B':
+                                if (colorString.Equals("BlanchedAlmond", StringComparison.OrdinalIgnoreCase))
+                                    return KnownColor.BlanchedAlmond;
+                                break;
+                            case 'C':
+                                if (colorString.Equals("CornflowerBlue", StringComparison.OrdinalIgnoreCase))
+                                    return KnownColor.CornflowerBlue;
+                                break;
+                            case 'D':
+                                if (colorString.Equals("DarkOliveGreen", StringComparison.OrdinalIgnoreCase))
+                                    return KnownColor.DarkOliveGreen;
+                                break;
+                            case 'L':
+                                if (colorString.Equals("LightSlateGray", StringComparison.OrdinalIgnoreCase))
+                                    return KnownColor.LightSlateGray;
+                                if (colorString.Equals("LightSteelBlue", StringComparison.OrdinalIgnoreCase))
+                                    return KnownColor.LightSteelBlue;
+                                break;
+                            case 'M':
+                                if (colorString.Equals("MediumSeaGreen", StringComparison.OrdinalIgnoreCase))
+                                    return KnownColor.MediumSeaGreen;
+                                break;
+                        }
                         break;
                     case 15:
-                        if (colorUpper.Equals("MEDIUMSLATEBLUE")) return KnownColor.MediumSlateBlue;
-                        if (colorUpper.Equals("MEDIUMTURQUOISE")) return KnownColor.MediumTurquoise;
-                        if (colorUpper.Equals("MEDIUMVIOLETRED")) return KnownColor.MediumVioletRed;
+                        if (colorString.Equals("MediumSlateBlue", StringComparison.OrdinalIgnoreCase))
+                            return KnownColor.MediumSlateBlue;
+                        if (colorString.Equals("MediumTurquoise", StringComparison.OrdinalIgnoreCase))
+                            return KnownColor.MediumTurquoise;
+                        if (colorString.Equals("MediumVioletRed", StringComparison.OrdinalIgnoreCase))
+                            return KnownColor.MediumVioletRed;
                         break;
                     case 16:
-                        if (colorUpper.Equals("MEDIUMAQUAMARINE")) return KnownColor.MediumAquamarine;
+                        if (colorString.Equals("MediumAquamarine", StringComparison.OrdinalIgnoreCase))
+                            return KnownColor.MediumAquamarine;
                         break;
                     case 17:
-                        if (colorUpper.Equals("MEDIUMSPRINGGREEN")) return KnownColor.MediumSpringGreen;
+                        if (colorString.Equals("MediumSpringGreen", StringComparison.OrdinalIgnoreCase))
+                            return KnownColor.MediumSpringGreen;
                         break;
                     case 20:
-                        if (colorUpper.Equals("LIGHTGOLDENRODYELLOW")) return KnownColor.LightGoldenrodYellow;
+                        if (colorString.Equals("LightGoldenrodYellow", StringComparison.OrdinalIgnoreCase))
+                            return KnownColor.LightGoldenrodYellow;
                         break;
                 }
             }
+
             // colorString was null or not found
             return KnownColor.UnknownColor;
         }

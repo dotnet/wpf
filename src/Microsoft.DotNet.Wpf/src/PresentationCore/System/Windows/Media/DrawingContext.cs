@@ -5,15 +5,8 @@
 //
 //
 
-using System;
-using System.Windows;
 using System.Windows.Threading;
-
-using System.Windows.Media.Animation;
-using System.Windows.Media;
-using System.Diagnostics;
 using MS.Internal;
-using System.Runtime.InteropServices;
 
 using MS.Utility;
 

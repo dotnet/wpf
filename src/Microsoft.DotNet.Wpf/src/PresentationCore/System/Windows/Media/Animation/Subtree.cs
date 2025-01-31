@@ -1,13 +1,8 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
 //                                             
-
-using System;
-using System.Diagnostics;
-using System.Collections;
-using System.Collections.Generic;
 
 namespace System.Windows.Media.Animation
 {
@@ -101,7 +96,7 @@ namespace System.Windows.Media.Animation
                 // The next clock is possibly the first child of the current clock
                 ClockGroup currentClockGroup = _currentClock as ClockGroup;
 
-                Clock nextClock = (currentClockGroup == null) ? null : currentClockGroup.FirstChild;
+                Clock nextClock = currentClockGroup?.FirstChild;
 
                 // Skip the children if explicitly asked to do so, or if there aren't any
                 if (((_flags & SubtreeFlag.SkipSubtree) != 0) || (nextClock == null))

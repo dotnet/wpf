@@ -6,8 +6,6 @@
 // Description: The arguments sent when a Change event is fired in a TextContainer.
 //
 
-using System;
-
 namespace System.Windows.Documents
 {
     /// <summary>

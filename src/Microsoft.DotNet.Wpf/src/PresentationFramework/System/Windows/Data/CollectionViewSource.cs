@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -9,7 +9,6 @@
 // See spec at CollectionViewSource.mht
 //
 
-using System;
 using System.Collections;           // IEnumerable
 using System.Collections.ObjectModel;   // ObservableCollection<T>
 using System.Collections.Specialized;   // NotifyCollectionChanged*
@@ -950,7 +949,7 @@ namespace System.Windows.Data
                     (object x) =>
                     {
                         BindingExpressionBase beb = BindingOperations.GetBindingExpressionBase(this, SourceProperty);
-                        return (beb != null) ? beb.GetSourceItem(x) : null;
+                        return beb?.GetSourceItem(x);
                     });
 
                 if (viewRecord != null)

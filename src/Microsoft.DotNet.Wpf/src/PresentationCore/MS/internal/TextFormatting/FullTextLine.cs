@@ -1,29 +1,14 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-//
-//
-//
 //  Contents:  Complex implementation of TextLine
-//
-//
 
-using System;
 using System.Collections;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Globalization;
 using System.Reflection;
-using System.Security;
 using System.Windows;
 using System.Windows.Media;
 using System.Windows.Media.TextFormatting;
-using MS.Internal;
-using MS.Internal.Shaping;
-
-using SR = MS.Internal.PresentationCore.SR;
-
 
 namespace MS.Internal.TextFormatting
 {
@@ -176,8 +161,10 @@ namespace MS.Internal.TextFormatting
                 {
                     _statusFlags |= StatusFlags.IsJustified;
                 }
-                _metrics = new TextMetrics();
-                _metrics._pixelsPerDip = pixelsPerDip;
+                _metrics = new TextMetrics
+                {
+                    _pixelsPerDip = pixelsPerDip
+                };
                 _ploline = IntPtr.Zero;
             }
 
@@ -722,7 +709,7 @@ namespace MS.Internal.TextFormatting
                 }
 
                 if (collapsingPropertiesList == null || collapsingPropertiesList.Length == 0)
-                    throw new ArgumentNullException("collapsingPropertiesList");
+                    throw new ArgumentNullException(nameof(collapsingPropertiesList));
 
                 TextCollapsingProperties collapsingProp = collapsingPropertiesList[0];
                 double constraintWidth = collapsingProp.Width;

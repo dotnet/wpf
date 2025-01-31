@@ -1,25 +1,13 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-//
-//
-
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Windows;
-using System.Windows.Input;
-using System.Windows.Input.StylusWisp;
 using System.Windows.Media;
 using System.Windows.Media.Media3D;
 using System.Windows.Threading;
-using System.Security;
 using MS.Internal;
 using MS.Internal.KnownBoxes;
-using MS.Internal.PresentationCore;
 using MS.Utility;
-using SR = MS.Internal.PresentationCore.SR;
 using System.Windows.Input.Tracing;
 
 namespace System.Windows.Input
@@ -341,7 +329,7 @@ namespace System.Windows.Input
 
             if ((element != null) && (uiElement == null) && (contentElement == null) && (uiElement3D == null))
             {
-                throw new ArgumentException(SR.Format(SR.Invalid_IInputElement, element.GetType()), "element");
+                throw new ArgumentException(SR.Format(SR.Invalid_IInputElement, element.GetType()), nameof(element));
             }
 
             if (_captured != element)
@@ -949,8 +937,10 @@ namespace System.Windows.Input
         private TouchEventArgs CreateEventArgs(RoutedEvent routedEvent)
         {
             // review timestamps
-            TouchEventArgs touchEventArgs = new TouchEventArgs(this, Environment.TickCount);
-            touchEventArgs.RoutedEvent = routedEvent;
+            TouchEventArgs touchEventArgs = new TouchEventArgs(this, Environment.TickCount)
+            {
+                RoutedEvent = routedEvent
+            };
             return touchEventArgs;
         }
 
@@ -1142,10 +1132,7 @@ namespace System.Windows.Input
 
         private static void RemoveActiveDevice(TouchDevice device)
         {
-            if (_activeDevices != null)
-            {
-                _activeDevices.Remove(device);
-            }
+            _activeDevices?.Remove(device);
         }
 
         internal static TouchPointCollection GetTouchPoints(IInputElement relativeTo)

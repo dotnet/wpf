@@ -53,13 +53,13 @@ namespace System.Windows.Markup
         public override object ProvideValue(IServiceProvider serviceProvider)
         {
             // If a type was supplied, no context nor type name are needed
-            if (_type != null)
+            if (_type is not null)
             {
                 return _type;
             }
 
             // Validate the initialization.
-            if (_typeName == null)
+            if (_typeName is null)
             {
                 throw new InvalidOperationException(SR.MarkupExtensionTypeName);
             }
@@ -67,15 +67,14 @@ namespace System.Windows.Markup
             // Get the IXamlTypeResolver from the service provider
             ArgumentNullException.ThrowIfNull(serviceProvider);
 
-            IXamlTypeResolver xamlTypeResolver = serviceProvider.GetService(typeof(IXamlTypeResolver)) as IXamlTypeResolver;
-            if( xamlTypeResolver == null)
+            if (serviceProvider.GetService(typeof(IXamlTypeResolver)) is not IXamlTypeResolver xamlTypeResolver)
             {
                 throw new InvalidOperationException(SR.Format(SR.MarkupExtensionNoContext, GetType().Name, nameof(IXamlTypeResolver)));
             }
 
             // Get the type
             _type = xamlTypeResolver.Resolve(_typeName);
-            if (_type == null)
+            if (_type is null)
             {
                 throw new InvalidOperationException(SR.Format(SR.MarkupExtensionTypeNameBad, _typeName));
             }

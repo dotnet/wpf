@@ -4,6 +4,6 @@
     <IsShipping>false</IsShipping>
     <CLSCompliant>false</CLSCompliant>
     <CopyTransitiveReferences>true</CopyTransitiveReferences>
-    <DisableTransitiveProjectReferences>false</DisableTransitiveProjectReferences>
+    <DisableTransitiveProjectReferences>true</DisableTransitiveProjectReferences>
   </PropertyGroup>
 </Project>

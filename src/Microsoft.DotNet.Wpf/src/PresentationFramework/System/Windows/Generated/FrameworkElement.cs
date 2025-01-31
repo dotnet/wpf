@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -13,17 +13,11 @@
 
 using MS.Internal;
 using MS.Utility;
-
-using System;
 using System.Collections;
-using System.Diagnostics;
-using System.Security;
 using System.Windows.Controls;
 using System.Windows.Diagnostics;
 using System.Windows.Media;
 using System.Windows.Markup;
-
-using SR=System.Windows.SR;
 
 namespace System.Windows
 {
@@ -297,10 +291,7 @@ namespace System.Windows
             // to the dispatchers that the elements belong to.
             //
             this.VerifyAccess();
-            if(newParent != null)
-            {
-                newParent.VerifyAccess();
-            }
+            newParent?.VerifyAccess();
 
             // Logical Parent must first be dropped before you are attached to a newParent
             // This mitigates illegal tree state caused by logical child stealing as illustrated in bug 970706
@@ -339,7 +330,7 @@ namespace System.Windows
             ///////////////////
 
             // Invalidate relevant properties for this subtree
-            DependencyObject parent = (newParent != null) ? newParent : oldParent;
+            DependencyObject parent = newParent ?? oldParent;
             TreeWalkHelper.InvalidateOnTreeChange(/* fe = */ this, /* fce = */ null, parent, (newParent != null));
 
             // If no one has called BeginInit then mark the element initialized and fire Initialized event

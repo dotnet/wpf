@@ -9,26 +9,7 @@
 // Please see MilCodeGen.html for more information.
 //
 
-using MS.Internal;
-using MS.Internal.PresentationCore;
-using System;
-using System.IO;
-using System.Collections;
-using System.ComponentModel;
-using System.Net.Cache;
-using System.Runtime.InteropServices;
-using System.Windows.Threading;
-using System.Windows;
-using System.Windows.Media;
-using System.Windows.Media.Animation;
-using System.Windows.Media.Composition;
-using System.Windows.Media.Imaging;
-using System.Windows.Media.Media3D;
-using System.Diagnostics;
 // These types are aliased to match the unamanaged names used in interop
-using BOOL = System.UInt32;
-using WORD = System.UInt16;
-using Float = System.Single;
 
 namespace System.Windows.Media.Imaging
 {

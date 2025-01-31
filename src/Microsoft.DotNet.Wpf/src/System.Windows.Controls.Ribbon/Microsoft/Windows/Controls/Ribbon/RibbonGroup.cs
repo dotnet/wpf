@@ -1,38 +1,35 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
-        
+
+#region Using declarations
+
+using System.Collections.Generic;
+using System.Collections.Specialized;
+using System.Diagnostics;
+using System.Windows.Automation;
+using System.Windows.Automation.Peers;
+using System.Windows.Controls.Primitives;
+using System.Windows.Documents;
+using System.Windows.Input;
+using System.Windows.Media;
+using System.Windows.Media.Animation;
+using System.Windows.Threading;
+#if RIBBON_IN_FRAMEWORK
+using System.Windows.Controls.Ribbon.Primitives;
+using Microsoft.Windows.Controls;
+#else
+    using Microsoft.Windows.Automation.Peers;
+    using Microsoft.Windows.Controls.Ribbon.Primitives;
+#endif
+using MS.Internal;
+
 #if RIBBON_IN_FRAMEWORK
 namespace System.Windows.Controls.Ribbon
 #else
 namespace Microsoft.Windows.Controls.Ribbon
 #endif
 {
-    #region Using declarations
-
-    using System;
-    using System.Collections.Generic;
-    using System.Collections.Specialized;
-    using System.Diagnostics;
-    using System.Windows;
-    using System.Windows.Automation;
-    using System.Windows.Automation.Peers;
-    using System.Windows.Controls;
-    using System.Windows.Controls.Primitives;
-    using System.Windows.Documents;
-    using System.Windows.Input;
-    using System.Windows.Media;
-    using System.Windows.Media.Animation;
-    using System.Windows.Threading;
-#if RIBBON_IN_FRAMEWORK
-    using System.Windows.Controls.Ribbon.Primitives;
-    using Microsoft.Windows.Controls;
-#else
-    using Microsoft.Windows.Automation.Peers;
-    using Microsoft.Windows.Controls.Ribbon.Primitives;
-#endif
-    using MS.Internal;
-
     #endregion
 
     /// <summary>
@@ -209,10 +206,7 @@ namespace Microsoft.Windows.Controls.Ribbon
             if (info.WidthChanged)
             {
                 RibbonGroupsPanel groupsPanel = VisualTreeHelper.GetParent(this) as RibbonGroupsPanel;
-                if (groupsPanel != null)
-                {
-                    groupsPanel.OnChildGroupRenderSizeChanged(this, info.PreviousSize.Width);
-                }
+                groupsPanel?.OnChildGroupRenderSizeChanged(this, info.PreviousSize.Width);
             }
         }
 
@@ -638,10 +632,7 @@ namespace Microsoft.Windows.Controls.Ribbon
             RibbonHelper.SetContentAsToolTip(group, group.VisualChild, group.Header, (group.IsCollapsed && !group.IsDropDownOpen));
 
             RibbonGroupAutomationPeer peer = UIElementAutomationPeer.FromElement(group) as RibbonGroupAutomationPeer;
-            if (peer != null)
-            {
-                peer.RaiseExpandCollapseAutomationEvent((bool)e.OldValue, (bool)e.NewValue);
-            }
+            peer?.RaiseExpandCollapseAutomationEvent((bool)e.OldValue, (bool)e.NewValue);
         }
 
         private static object CoerceIsDropDownOpen(DependencyObject d, object baseValue)
@@ -999,10 +990,7 @@ namespace Microsoft.Windows.Controls.Ribbon
                 SetAppropriatePresenterVisibility(GroupSizeDefinitions[_sizeDefinitionIndex] is RibbonGroupSizeDefinition ? Visibility.Visible : Visibility.Collapsed);
 
                 RibbonGroupsPanel panel = TreeHelper.FindVisualAncestor<RibbonGroupsPanel>(this);
-                if (panel != null)
-                {
-                    panel.InvalidateCachedMeasure();
-                }
+                panel?.InvalidateCachedMeasure();
             }
 
             GroupSizeUpdatePending = false;

@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -9,13 +9,10 @@
 // See spec at Grouping.mht
 //
 
-using System;
 using System.Collections;       // IComparer
-using System.Collections.Generic;       // List<T>
 using System.Collections.ObjectModel;   // ObservableCollection
 using System.Collections.Specialized;   // INotifyCollectionChanged
 using System.ComponentModel;    // PropertyChangedEventArgs, GroupDescription
-using System.Diagnostics;       // Debug.Assert
 using System.Globalization;
 
 using System.Windows;
@@ -420,7 +417,7 @@ namespace MS.Internal.Data
 
             // create subgroups for each of the explicit names
             ObservableCollection<object> explicitNames =
-                        (groupDescription != null) ? groupDescription.GroupNames : null;
+                        groupDescription?.GroupNames;
             if (explicitNames != null)
             {
                 for (int k = 0, n = explicitNames.Count; k < n; ++k)
@@ -484,10 +481,7 @@ namespace MS.Internal.Data
             if (name == UseAsItemDirectly)
             {
                 // the item belongs to the group itself (not to any subgroups)
-                if (lsi != null)
-                {
-                    lsi.AddParentGroup(group);
-                }
+                lsi?.AddParentGroup(group);
 
                 if (loading)
                 {

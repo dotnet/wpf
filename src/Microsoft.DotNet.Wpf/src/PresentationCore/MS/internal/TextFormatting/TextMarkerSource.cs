@@ -10,18 +10,12 @@
 //
 
 
-using System;
-using System.Diagnostics;
-using System.Windows.Threading;
 using System.Text;
 using System.Globalization;
 
 using System.Windows;
 using System.Windows.Media;
 using System.Windows.Media.TextFormatting;
-using MS.Internal;
-
-using SR=MS.Internal.PresentationCore.SR;
 
 namespace MS.Internal.TextFormatting
 {

@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -10,16 +10,11 @@
 
 using MS.Internal;
 using MS.Internal.KnownBoxes;
-using System;
 using System.ComponentModel;
-using System.ComponentModel.Design.Serialization;
-using System.Diagnostics;
-using System.Windows;
 using System.Windows.Automation.Peers;
 using System.Windows.Media;
 using System.Windows.Media.Media3D;
 using System.Windows.Markup;
-using System.Windows.Threading;
 
 namespace System.Windows.Controls
 {
@@ -57,16 +52,17 @@ namespace System.Windows.Controls
         /// </summary>
         public Viewport3D()
         {
-            _viewport3DVisual = new Viewport3DVisual();
-
-            // The value for the Camera property and the Children property on Viewport3D
-            // will also be the value for these properties on the Viewport3DVisual we
-            // create as an internal Visual child.  This then will cause these values to
-            // be shared, which will break property inheritance, dynamic resource references
-            // and databinding.  To prevent this, we mark the internal
-            // Viewport3DVisual.CanBeInheritanceContext to be false, allowing Camera and
-            // Children to only pick up value context from the Viewport3D (this).
-            _viewport3DVisual.CanBeInheritanceContext = false;
+            _viewport3DVisual = new Viewport3DVisual
+            {
+                // The value for the Camera property and the Children property on Viewport3D
+                // will also be the value for these properties on the Viewport3DVisual we
+                // create as an internal Visual child.  This then will cause these values to
+                // be shared, which will break property inheritance, dynamic resource references
+                // and databinding.  To prevent this, we mark the internal
+                // Viewport3DVisual.CanBeInheritanceContext to be false, allowing Camera and
+                // Children to only pick up value context from the Viewport3D (this).
+                CanBeInheritanceContext = false
+            };
 
             this.AddVisualChild(_viewport3DVisual);
 
@@ -188,7 +184,7 @@ namespace System.Windows.Controls
                     return _viewport3DVisual;
 
                 default:
-                    throw new ArgumentOutOfRangeException("index", index, SR.Visual_ArgumentOutOfRange);
+                    throw new ArgumentOutOfRangeException(nameof(index), index, SR.Visual_ArgumentOutOfRange);
             }
         }
 
@@ -234,7 +230,7 @@ namespace System.Windows.Controls
 
             if (visual3D == null)
             {
-                throw new ArgumentException(SR.Format(SR.UnexpectedParameterType, value.GetType(), typeof(Visual3D)), "value");
+                throw new ArgumentException(SR.Format(SR.UnexpectedParameterType, value.GetType(), typeof(Visual3D)), nameof(value));
             }
 
             Children.Add(visual3D);

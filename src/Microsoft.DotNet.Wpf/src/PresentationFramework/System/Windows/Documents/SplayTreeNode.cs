@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -7,7 +7,6 @@
 //              tree.
 //
 
-using System;
 using MS.Internal;
 
 namespace System.Windows.Documents
@@ -215,11 +214,8 @@ namespace System.Windows.Documents
                 }
             }
 
-            if (previousNode != null)
-            {
-                // Splay to keep the tree balanced.
-                previousNode.Splay();
-            }
+            // Splay to keep the tree balanced.
+            previousNode?.Splay();
 
             return previousNode;
         }
@@ -268,11 +264,8 @@ namespace System.Windows.Documents
                 }
             }
 
-            if (nextNode != null)
-            {
-                // Splay to keep the tree balanced.
-                nextNode.Splay();
-            }
+            // Splay to keep the tree balanced.
+            nextNode?.Splay();
 
             return nextNode;
         }

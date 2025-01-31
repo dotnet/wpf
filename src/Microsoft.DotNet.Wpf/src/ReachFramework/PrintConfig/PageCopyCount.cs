@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -13,14 +13,7 @@ Abstract:
 
 --*/
 
-using System;
-using System.IO;
-using System.Collections;
-using System.Diagnostics;
 using System.Globalization;
-
-using System.Printing;
-using MS.Internal.Printing.Configuration;
 
 namespace MS.Internal.Printing.Configuration
 {
@@ -90,7 +83,7 @@ namespace MS.Internal.Printing.Configuration
             {
                 if (value <= 0)
                 {
-                    throw new ArgumentOutOfRangeException("value",
+                    throw new ArgumentOutOfRangeException(nameof(value),
                                   PTUtility.GetTextFromResource("ArgumentException.PositiveValue"));
                 }
 

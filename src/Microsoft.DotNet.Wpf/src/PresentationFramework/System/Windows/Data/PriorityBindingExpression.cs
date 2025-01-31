@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -10,27 +10,20 @@
 // See spec at Data Binding.mht
 //
 
-using System;
-using System.Collections;
 using System.Collections.ObjectModel;   // Collection<T>
-using System.Diagnostics;
-using System.Threading;
 using System.Windows.Controls;          // ValidationStep
-using System.Windows.Threading;
-using System.Windows.Markup;
 using MS.Internal;
 using MS.Internal.Data;
-using MS.Utility;
 
 namespace System.Windows.Data
 {
-/// <summary>
-///  Describes a collection of BindingExpressions attached to a single property.
-///     These behave as "priority" BindingExpressions, meaning that the property
-///     receives its value from the first BindingExpression in the collection that
-///     can produce a legal value.
-/// </summary>
-public sealed class PriorityBindingExpression : BindingExpressionBase
+    /// <summary>
+    ///  Describes a collection of BindingExpressions attached to a single property.
+    ///     These behave as "priority" BindingExpressions, meaning that the property
+    ///     receives its value from the first BindingExpression in the collection that
+    ///     can produce a legal value.
+    /// </summary>
+    public sealed class PriorityBindingExpression : BindingExpressionBase
 {
     //------------------------------------------------------
     //
@@ -84,10 +77,7 @@ public sealed class PriorityBindingExpression : BindingExpressionBase
     public override void UpdateTarget()
     {
         BindingExpressionBase bindExpr = ActiveBindingExpression;
-        if (bindExpr != null)
-        {
-            bindExpr.UpdateTarget();
-        }
+        bindExpr?.UpdateTarget();
     }
 
     /// <summary> Send the current value back to the source </summary>
@@ -95,10 +85,7 @@ public sealed class PriorityBindingExpression : BindingExpressionBase
     public override void UpdateSource()
     {
         BindingExpressionBase bindExpr = ActiveBindingExpression;
-        if (bindExpr != null)
-        {
-            bindExpr.UpdateSource();
-        }
+        bindExpr?.UpdateSource();
     }
 
 #region Expression overrides
@@ -151,7 +138,7 @@ public sealed class PriorityBindingExpression : BindingExpressionBase
         FrameworkPropertyMetadata fwMetaData = dp.GetMetadata(d.DependencyObjectType) as FrameworkPropertyMetadata;
 
         if ((fwMetaData != null && !fwMetaData.IsDataBindingAllowed) || dp.ReadOnly)
-            throw new ArgumentException(SR.Format(SR.PropertyNotBindable, dp.Name), "dp");
+            throw new ArgumentException(SR.Format(SR.PropertyNotBindable, dp.Name), nameof(dp));
 
         // create the BindingExpression
         PriorityBindingExpression bindExpr = new PriorityBindingExpression(binding, owner);
@@ -215,8 +202,7 @@ public sealed class PriorityBindingExpression : BindingExpressionBase
         for (int i = 0; i < count; ++i)
         {
             BindingExpressionBase b = MutableBindingExpressions[i];
-            if (b != null)
-                b.Detach();
+            b?.Detach();
         }
 
         ChangeSources(null);
@@ -417,10 +403,7 @@ public sealed class PriorityBindingExpression : BindingExpressionBase
     internal override void StoreValueInBindingGroup(object value, BindingGroup bindingGroup)
     {
         BindingExpressionBase bindExpr = ActiveBindingExpression;
-        if (bindExpr != null)
-        {
-            bindExpr.StoreValueInBindingGroup(value, bindingGroup);
-        }
+        bindExpr?.StoreValueInBindingGroup(value, bindingGroup);
     }
 
     /// <summary>

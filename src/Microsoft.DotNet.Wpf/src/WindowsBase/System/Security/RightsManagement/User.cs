@@ -2,27 +2,8 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-//
-//
-// Description:
-//  This class implements the UnsignedPublishLicense class 
-//   this class is the first step in the RightsManagement publishing process
-//
-//
-//
-//
-
-using System;
-using System.Collections;
-using System.Collections.Generic;           // for IEqualityComparer<T> generic interface.
-using System.Diagnostics;
-using System.Globalization;
-using System.Text;
-using System.Windows;
-
-using MS.Internal;                          // for Invariant
+using MS.Internal;
 using MS.Internal.Security.RightsManagement;
-using SecurityHelper = MS.Internal.WindowsBase.SecurityHelper;
 
 namespace System.Security.RightsManagement
 {
@@ -43,7 +24,7 @@ namespace System.Security.RightsManagement
 
             if (name.Trim().Length == 0)
             {
-                throw new ArgumentOutOfRangeException("name");
+                throw new ArgumentOutOfRangeException(nameof(name));
             }
 
             if ((authenticationType != AuthenticationType.Windows) &&
@@ -51,7 +32,7 @@ namespace System.Security.RightsManagement
                 (authenticationType != AuthenticationType.WindowsPassport) &&
                 (authenticationType != AuthenticationType.Internal))
             {
-                throw new ArgumentOutOfRangeException("authenticationType");
+                throw new ArgumentOutOfRangeException(nameof(authenticationType));
             }
 
             // We only support Anyone for the internal mode at the moment
@@ -60,7 +41,7 @@ namespace System.Security.RightsManagement
                 if (!CompareToAnyone(name) && !CompareToOwner(name))
                 {
                     // we only support Anyone as internal user 
-                    throw new ArgumentOutOfRangeException("name");
+                    throw new ArgumentOutOfRangeException(nameof(name));
                 }
             }
 

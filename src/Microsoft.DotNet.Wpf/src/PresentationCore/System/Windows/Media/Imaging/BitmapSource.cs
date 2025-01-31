@@ -1,29 +1,14 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-//
-//
-
-using System;
 using System.IO;
-using System.Collections;
-using System.ComponentModel;
-using System.ComponentModel.Design.Serialization;
-using System.Reflection;
 using MS.Internal;
-using System.Diagnostics;
-using System.Windows.Media;
-using System.Globalization;
-using System.Security;
-using System.Net;
 using System.Runtime.InteropServices;
-using System.Windows.Media.Animation;
 using System.Windows.Media.Composition;
 using MS.Win32;
-using System.IO.Packaging;
+
 using UnsafeNativeMethods = MS.Win32.PresentationCore.UnsafeNativeMethods;
-using SR = MS.Internal.PresentationCore.SR;
 
 namespace System.Windows.Media.Imaging
 {
@@ -655,7 +640,7 @@ namespace System.Windows.Media.Imaging
             ArgumentNullException.ThrowIfNull(pixels);
 
             if (pixels.Rank != 1)
-                throw new ArgumentException(SR.Collection_BadRank, "pixels");
+                throw new ArgumentException(SR.Collection_BadRank, nameof(pixels));
 
             if (offset < 0)
             {
@@ -726,7 +711,7 @@ namespace System.Windows.Media.Imaging
         internal void CriticalCopyPixels(Int32Rect sourceRect, IntPtr buffer, int bufferSize, int stride)
         {
             if (buffer == IntPtr.Zero)
-                throw new ArgumentNullException("buffer");
+                throw new ArgumentNullException(nameof(buffer));
 
             ArgumentOutOfRangeException.ThrowIfNegativeOrZero(stride);
 
@@ -909,8 +894,7 @@ namespace System.Windows.Media.Imaging
                             }
                             finally
                             {
-                                if (pIWicConverter != null)
-                                    pIWicConverter.Close();
+                                pIWicConverter?.Close();
                             }
                         }
                     }

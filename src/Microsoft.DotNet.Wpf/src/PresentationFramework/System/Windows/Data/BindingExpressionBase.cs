@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -14,23 +14,15 @@
 // BindingExpression.GetReference correctly
 //#define USE_ITEM_REFERENCE
 
-using System;
-using System.Collections.Generic;   // List<T>
 using System.Collections.ObjectModel;   // Collection<T>
 using System.ComponentModel;        // TypeConverter
-using System.Diagnostics;           // StackTrace
 using System.Globalization;         // CultureInfo
 using System.Threading;             // Thread
-
-using System.Windows;               // FrameworkElement
 using System.Windows.Controls;      // Validation
 using System.Windows.Markup;        // XmlLanguage
 using System.Windows.Threading;     // Dispatcher
 using MS.Internal;                  // Invariant.Assert
-using MS.Internal.Controls;         // ValidationErrorCollection
 using MS.Internal.Data;             // DataBindEngine
-using MS.Internal.KnownBoxes;       // BooleanBoxes
-using MS.Internal.Utility;          // TraceLog
 
 namespace System.Windows.Data
 {
@@ -1322,8 +1314,7 @@ namespace System.Windows.Data
                 // When the target is a TextBox with a composition in effect,
                 // do this asynchronously, to avoid confusing the composition's Undo stack
                 System.Windows.Controls.Primitives.TextBoxBase tbb = Target as System.Windows.Controls.Primitives.TextBoxBase;
-                MS.Internal.Documents.UndoManager undoManager = (tbb == null) ? null :
-                    tbb.TextContainer.UndoManager;
+                MS.Internal.Documents.UndoManager undoManager = tbb?.TextContainer.UndoManager;
                 if (undoManager != null &&
                     undoManager.OpenedUnit != null &&
                     undoManager.OpenedUnit.GetType() != typeof(System.Windows.Documents.TextParentUndoUnit))
@@ -2002,7 +1993,7 @@ namespace System.Windows.Data
 
         internal Dispatcher Dispatcher
         {
-            get { return (_engine != null) ? _engine.Dispatcher : null; }
+            get { return _engine?.Dispatcher; }
         }
 
         internal object Value
@@ -2055,10 +2046,7 @@ namespace System.Windows.Data
         internal void Attach(DependencyObject target, DependencyProperty dp)
         {
             // make sure we're on the right thread to access the target
-            if (target != null)
-            {
-                target.VerifyAccess();
-            }
+            target?.VerifyAccess();
 
             IsAttaching = true;
             AttachOverride(target, dp);
@@ -2197,14 +2185,6 @@ namespace System.Windows.Data
                 TypeConverter converter = DefaultValueConverter.GetConverter(dp.PropertyType);
                 if (converter != null && converter.CanConvertFrom(value.GetType()))
                 {
-                    // PreSharp uses message numbers that the C# compiler doesn't know about.
-                    // Disable the C# complaints, per the PreSharp documentation.
-                    #pragma warning disable 1634, 1691
-
-                    // PreSharp complains about catching NullReference (and other) exceptions.
-                    // It doesn't recognize that IsCriticalException() handles these correctly.
-                    #pragma warning disable 56500
-
                     try
                     {
                         result = converter.ConvertFrom(null, CultureInfo.InvariantCulture, value);
@@ -2222,9 +2202,6 @@ namespace System.Windows.Data
                     catch // non CLS compliant exception
                     {
                     }
-
-                    #pragma warning restore 56500
-                    #pragma warning restore 1634, 1691
                 }
 
                 if (!success)
@@ -2394,10 +2371,7 @@ namespace System.Windows.Data
             if (!skipBindingGroup)
             {
                 BindingGroup bindingGroup = BindingGroup;
-                if (bindingGroup != null)
-                {
-                    bindingGroup.AddValidationError(validationError);
-                }
+                bindingGroup?.AddValidationError(validationError);
             }
         }
 
@@ -2410,10 +2384,7 @@ namespace System.Windows.Data
             if (!skipBindingGroup)
             {
                 BindingGroup bindingGroup = BindingGroup;
-                if (bindingGroup != null)
-                {
-                    bindingGroup.RemoveValidationError(validationError);
-                }
+                bindingGroup?.RemoveValidationError(validationError);
             }
         }
 
@@ -2475,8 +2446,7 @@ namespace System.Windows.Data
             {
                 BindingExpressionBase bindExpr = bindingExpressions[i];
                 WeakDependencySource[] sources = (i==index) ? newSources :
-                                            (bindExpr != null) ? bindExpr.WeakSources :
-                                            null;
+                                            bindExpr?.WeakSources;
                 int m = (sources == null) ? 0 : sources.Length;
                 for (int j = 0; j < m; ++j)
                 {

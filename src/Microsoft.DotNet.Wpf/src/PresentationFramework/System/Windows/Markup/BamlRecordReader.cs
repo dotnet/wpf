@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -9,32 +9,17 @@
 *
 \***************************************************************************/
 
-using System;
 using System.Xml;
 using System.Xml.Serialization;
 using System.IO;
-using System.Text;
 using System.Collections;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Diagnostics;
 using System.Reflection;
-using System.Threading;
 using System.Globalization;
 using MS.Utility;
 using MS.Internal;
-using System.Runtime.InteropServices;
 using MS.Internal.Utility;
-using System.Windows;
 using System.Windows.Navigation;
-using System.Windows.Documents;
-using System.Windows.Controls;
-
-// Disabling 1634 and 1691:
-// In order to avoid generating warnings about unknown message numbers and
-// unknown pragmas when compiling C# source code with the C# compiler,
-// you need to disable warnings 1634 and 1691. (Presharp Documentation)
-#pragma warning disable 1634, 1691
 
 namespace System.Windows.Markup
 {
@@ -369,10 +354,7 @@ namespace System.Windows.Markup
         /// </summary>
         internal void Close()
         {
-            if (BamlStream != null)
-            {
-                BamlStream.Close();
-            }
+            BamlStream?.Close();
             EndOfDocument = true;
         }
 
@@ -2374,9 +2356,11 @@ namespace System.Windows.Markup
                 BamlAttributeInfoRecord attribInfo = MapTable.GetAttributeInfoFromId(memberId);
                 if (attribInfo != null)
                 {
-                    StaticExtension se = new StaticExtension();
-                    se.MemberType = MapTable.GetTypeFromId(attribInfo.OwnerTypeId);
-                    se.Member = attribInfo.Name;
+                    StaticExtension se = new StaticExtension
+                    {
+                        MemberType = MapTable.GetTypeFromId(attribInfo.OwnerTypeId),
+                        Member = attribInfo.Name
+                    };
                     valueObject = se.ProvideValue(null);
                 }
             }
@@ -2964,10 +2948,7 @@ namespace System.Windows.Markup
                         // "myStyle" also gets registered with the Window
                         // "myBrush" gets registered with the Style
                         INameScope nameScopePeek = ParserContext.NameScopeStack.Peek() as INameScope;
-                        if (nameScopePeek != null)
-                        {
-                            nameScopePeek.RegisterName(name, element);
-                        }
+                        nameScopePeek?.RegisterName(name, element);
                     }
                     else
                     {
@@ -3142,8 +3123,10 @@ namespace System.Windows.Markup
                 // arrays are a little different than other collections, because we wrap them in an array extension.
                 // Here we create an array extension and assign the element type based on the property.
 
-                ArrayExtension arrayExt = new ArrayExtension();
-                arrayExt.Type = context.ExpectedType.GetElementType();
+                ArrayExtension arrayExt = new ArrayExtension
+                {
+                    Type = context.ExpectedType.GetElementType()
+                };
                 holder.Collection = arrayExt;
             }
             else if (holder.DefaultCollection != null)
@@ -3819,9 +3802,8 @@ namespace System.Windows.Markup
 
             // Check if we have a Nullable type.  If so and the object being set is
             // not a Nullable or an expression, then attempt a conversion.
-            if (memberInfo is PropertyInfo)
+            if (memberInfo is PropertyInfo propertyInfo)
             {
-                PropertyInfo propertyInfo = (PropertyInfo)memberInfo;
                 value = OptionallyMakeNullable(propertyInfo.PropertyType, value, propertyInfo.Name);
 
                 propertyInfo.SetValue(parentObject, value, BindingFlags.Default, null, null
@@ -4436,10 +4418,7 @@ namespace System.Windows.Markup
             }
 
             UIElement uiElement = element as UIElement;
-            if (uiElement != null)
-            {
-                uiElement.SetPersistId(++_persistId);
-            }
+            uiElement?.SetPersistId(++_persistId);
 
             // The second consition is to handle events within standalone dictionaries.
             // We need to setup the component connector correctly in this case. Note
@@ -4878,7 +4857,7 @@ namespace System.Windows.Markup
                         // represent the explicit collection and the grandparent is that property's target.
                         element = GetElementValue(element, GrandParentObjectData,
                                                   holder.PropertyDefinition.DependencyProperty, ref isMarkupExtension);
-                        elementType = element == null ? null : element.GetType();
+                        elementType = element?.GetType();
                     }
 
                     // the element is an explicit collection if it is assignable to the expected type of the parent or
@@ -5350,10 +5329,7 @@ namespace System.Windows.Markup
             if (_parserContext.FreezeFreezables)
             {
                 Freezable f = element as Freezable;
-                if (f != null)
-                {
-                    f.Freeze();
-                }
+                f?.Freeze();
             }
         }
         internal void PreParsedBamlReset()
@@ -5506,7 +5482,7 @@ namespace System.Windows.Markup
             get
             {
                 ReaderContextStackData contextData = ParentContext;
-                return contextData == null ? null : contextData.ObjectData;
+                return contextData?.ObjectData;
             }
         }
 
@@ -5520,7 +5496,7 @@ namespace System.Windows.Markup
             get
             {
                 ReaderContextStackData contextData = GrandParentContext;
-                return contextData == null ? null : contextData.ObjectData;
+                return contextData?.ObjectData;
             }
         }
 

@@ -1,9 +1,7 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-//
-//
 // Description:
 //  This class provides access to the package properties of an RM-protected OPC
 //  document. The "package properties" are a subset of the standard OLE property
@@ -23,27 +21,13 @@
 //  It is the responsibility of the application to ensure that the properties in
 //  the OLE property set streams are synchronized with the properties in the
 //  OPC package.
-//
-//
-//
-//
-//
 
-using System;
 using System.IO;
 using System.IO.Packaging;
 using System.Runtime.InteropServices;
-using System.Windows;
-using System.Security; // SecurityCritical
-using System.Text;      //For UTF-8 encoding.
-
-using MS.Internal;
-using MS.Internal.Interop;
+using System.Text;
 using MS.Internal.IO.Packaging.CompoundFile;
-using MS.Internal.WindowsBase;  //for SecurityHelper.
-
-// Enable presharp pragma warning suppress directives.
-#pragma warning disable 1634, 1691
+using MS.Internal.WindowsBase;
 
 namespace MS.Internal.IO.Packaging
 {
@@ -599,7 +583,7 @@ namespace MS.Internal.IO.Packaging
                 }
                 finally
                 {
-#pragma warning suppress 6031 // suppressing a "by design" ignored return value
+                    // "by design" ignored return value
                     SafeNativeCompoundFileMethods.SafePropVariantClear(ref vals[0]);
                 }
             }
@@ -747,7 +731,7 @@ namespace MS.Internal.IO.Packaging
                 {
                     throw new ArgumentException(
                                 SR.Format(SR.InvalidDocumentPropertyType, propVal.GetType().ToString()),
-                                "propVal");
+                                nameof(propVal));
                 }
 
                 //
@@ -840,7 +824,7 @@ namespace MS.Internal.IO.Packaging
                     default:
                         throw new ArgumentException(
                             SR.Format(SR.UnknownDocumentProperty, fmtid.ToString(), propId),
-                            "propId"
+                            nameof(propId)
                             );
                 }
             }
@@ -859,7 +843,7 @@ namespace MS.Internal.IO.Packaging
                     default:
                         throw new ArgumentException(
                             SR.Format(SR.UnknownDocumentProperty, fmtid.ToString(), propId),
-                            "propId"
+                            nameof(propId)
                             );
                 }
             }
@@ -867,7 +851,7 @@ namespace MS.Internal.IO.Packaging
             {
                 throw new ArgumentException(
                     SR.Format(SR.UnknownDocumentProperty, fmtid.ToString(), propId),
-                    "fmtid"
+                    nameof(fmtid)
                     );
             }
         }

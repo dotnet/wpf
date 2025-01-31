@@ -1,17 +1,11 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
 
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Diagnostics;
-using System.Windows;
 using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
 
 namespace System.Windows.Controls
 {
@@ -76,7 +70,7 @@ namespace System.Windows.Controls
         /// <param name="newBinding">The new binding.</param>
         protected virtual void OnContentBindingChanged(BindingBase oldBinding, BindingBase newBinding)
         {
-            NotifyPropertyChanged("ContentBinding");
+            NotifyPropertyChanged(nameof(ContentBinding));
         }
 
         /// <summary>

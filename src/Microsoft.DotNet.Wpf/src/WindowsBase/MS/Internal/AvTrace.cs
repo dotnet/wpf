@@ -1,28 +1,17 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-
-/***************************************************************************\
-*
-*
-* This class wraps a System.Diagnostics.TraceSource.  The purpose of
-* wrapping is so that we can have a common point of enabling/disabling
-* without perf effect.  This is also where we standardize the output
-* we produce, to enable more effective trace filters, trace listeners,
-* and post-processing tools.
-*
-*
-\***************************************************************************/
+// This class wraps a System.Diagnostics.TraceSource.  The purpose of
+// wrapping is so that we can have a common point of enabling/disabling
+// without perf effect.  This is also where we standardize the output
+// we produce, to enable more effective trace filters, trace listeners,
+// and post-processing tools.
 
 #define TRACE
 
-using System;
-using System.Diagnostics;
 using System.Globalization;
-using System.Security;
 using System.Text;
-using System.Reflection;
 using System.Collections;
 using System.Windows;
 
@@ -371,16 +360,6 @@ namespace MS.Internal
             if (value == null)
                 return "<null>";
 
-            // PreSharp uses message numbers that the C# compiler doesn't know about.
-            // Disable the C# complaints, per the PreSharp documentation.
-            #pragma warning disable 1634, 1691
-
-            // PreSharp complains about catching NullReference (and other) exceptions.
-            // In this case, these are precisely the ones we want to catch the most,
-            // so that we can still print some kind of diagnostic information even
-            // about objects that implement ToString poorly.
-            #pragma warning disable 56500
-
             string result;
             try
             {
@@ -390,9 +369,6 @@ namespace MS.Internal
             {
                 result = "<unprintable>";
             }
-
-            #pragma warning restore 56500
-            #pragma warning restore 1634, 1691
 
             return AntiFormat(result);
         }
@@ -544,8 +520,7 @@ namespace MS.Internal
             object[] argstrs = new object[args.Length];
             for (int i = 0; i < args.Length; ++i)
             {
-                string s = args[i] as string;
-                argstrs[i] = (s != null) ? s : AvTrace.ToStringHelper(args[i]);
+                argstrs[i] = (args[i] is string s) ? s : AvTrace.ToStringHelper(args[i]);
             }
             _sb.AppendFormat( CultureInfo.InvariantCulture, message, argstrs );
         }

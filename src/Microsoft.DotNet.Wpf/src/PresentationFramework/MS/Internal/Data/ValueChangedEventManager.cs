@@ -26,15 +26,10 @@
     deliver the "event" to the listeners that are interested in that property.
 \****************************************************************************/
 
-using System;
 using System.Collections;               // ICollection
-using System.Collections.Generic;       // List<T>
 using System.Collections.Specialized;   // HybridDictionary
 using System.ComponentModel;            // PropertyDescriptor
-using System.Diagnostics;               // Debug
-using System.Reflection;                // MethodInfo
 using System.Windows;                   // WeakEventManager
-using MS.Internal.PresentationFramework; // SR
 
 namespace MS.Internal.Data
 {

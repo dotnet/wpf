@@ -12,6 +12,7 @@ using System.Runtime.InteropServices;
 using System.Windows.Threading;
 using MS.Internal;
 using MS.Internal.KnownBoxes;
+using MS.Win32;
 using MS.Internal.WindowsBase;
 
 using Windows.Win32;
@@ -53,8 +54,7 @@ namespace System.Windows
 
             _resourceName = resourceName.ToLowerInvariant();
             _hInstance = (HINSTANCE)Marshal.GetHINSTANCE(resourceAssembly.ManifestModule);
-            AssemblyName name = new(resourceAssembly.FullName);
-            _resourceManager = new ResourceManager($"{name.Name}.g", resourceAssembly);
+            _resourceManager = new ResourceManager($"{ReflectionUtils.GetAssemblyPartialName(resourceAssembly)}.g", resourceAssembly);
         }
 
         public void Show(bool autoClose)

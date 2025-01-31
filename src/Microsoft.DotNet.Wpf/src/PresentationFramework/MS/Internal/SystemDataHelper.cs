@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -6,9 +6,7 @@
 // Description: Helper methods for code that uses types from System.Data.
 //
 
-using System;
 using System.ComponentModel;
-using System.Diagnostics;
 using System.Reflection;
 
 namespace MS.Internal
@@ -55,7 +53,7 @@ namespace MS.Internal
         internal static object GetValue(object item, PropertyDescriptor pd, bool useFollowParent)
         {
             SystemDataExtensionMethods extensions = AssemblyHelper.ExtensionsForSystemData();
-            return (extensions != null) ? extensions.GetValue(item, pd, useFollowParent) : null;
+            return extensions?.GetValue(item, pd, useFollowParent);
         }
 
         // return true if DBNull is a valid value for the given item and column.

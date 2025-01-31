@@ -1,19 +1,13 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
 
 
 using MS.Internal;
-using MS.Utility;
 using MS.Internal.Documents;
-using System;
 using System.Collections;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.ComponentModel;
-using System.Diagnostics;
-using System.Windows.Threading;
 using System.Windows.Documents;
 using System.Windows.Media;
 
@@ -221,7 +215,7 @@ namespace System.Windows.Controls.Primitives
         {
             if (index < 0 || index > VisualChildrenCount-1)
             {
-                throw new ArgumentOutOfRangeException("index", index, SR.Visual_ArgumentOutOfRange);
+                throw new ArgumentOutOfRangeException(nameof(index), index, SR.Visual_ArgumentOutOfRange);
             }
 
             if (index == 0 && _bullet != null)

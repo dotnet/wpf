@@ -1,11 +1,8 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
-        
 
-using System;
-using System.Windows;
-using System.Windows.Controls;
+
 using System.Windows.Data;
 using System.Globalization;
 using System.Windows.Markup;
@@ -676,8 +673,10 @@ namespace Microsoft.Windows.Controls
 
         private static Binding CreateBinding(object item, string primaryTextPath)
         {
-            Binding binding = new Binding();
-            binding.Mode = BindingMode.OneWay;
+            Binding binding = new Binding
+            {
+                Mode = BindingMode.OneWay
+            };
 
             // Use xpath for xmlnodes (See Selector.PrepareItemValueBinding)
             if (AssemblyHelper.IsXmlNode(item))
@@ -714,10 +713,7 @@ namespace Microsoft.Windows.Controls
                 _charsEntered.Clear();
             }
 
-            if(_timeoutTimer != null)
-            {
-                _timeoutTimer.Stop();
-            }
+            _timeoutTimer?.Stop();
             _timeoutTimer = null;
 
         }

@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -9,20 +9,9 @@
 using MS.Internal;
 using MS.Internal.KnownBoxes;
 using MS.Internal.PresentationFramework;
-using MS.Utility;
-using System.Collections;
-using System.ComponentModel;
-using System.Threading;
-using System.Windows.Automation;
-using System.Windows.Automation.Provider;
-using System.Windows.Controls;
-using System.Windows;
 using System.Windows.Data;
 using System.Windows.Media;
-using System.Windows.Markup;
 using System.Windows.Input;
-using System;
-using System.Diagnostics;
 
 
 namespace System.Windows.Controls.Primitives
@@ -377,7 +366,7 @@ namespace System.Windows.Controls.Primitives
         {
             if (_visualChildren == null || _visualChildren[index] == null)
             {
-                throw new ArgumentOutOfRangeException("index", index, SR.Visual_ArgumentOutOfRange);
+                throw new ArgumentOutOfRangeException(nameof(index), index, SR.Visual_ArgumentOutOfRange);
             }
             return _visualChildren[index];
         }
@@ -518,22 +507,19 @@ namespace System.Windows.Controls.Primitives
                 offset.Y = isDirectionReversed ? decreaseButtonLength + thumbLength : 0.0;
                 pieceSize.Height = increaseButtonLength;
                 
-                if (IncreaseRepeatButton != null)
-                    IncreaseRepeatButton.Arrange(new Rect(offset, pieceSize));
+                IncreaseRepeatButton?.Arrange(new Rect(offset, pieceSize));
 
 
                 offset.Y = isDirectionReversed ? 0.0 : increaseButtonLength + thumbLength;
                 pieceSize.Height = decreaseButtonLength;
 
-                if (DecreaseRepeatButton != null)
-                    DecreaseRepeatButton.Arrange(new Rect(offset, pieceSize));
+                DecreaseRepeatButton?.Arrange(new Rect(offset, pieceSize));
 
 
                 offset.Y = isDirectionReversed ? decreaseButtonLength : increaseButtonLength;
                 pieceSize.Height = thumbLength;
 
-                if (Thumb != null)
-                    Thumb.Arrange(new Rect(offset, pieceSize));
+                Thumb?.Arrange(new Rect(offset, pieceSize));
 
                 ThumbCenterOffset = offset.Y + (thumbLength * 0.5);
             }
@@ -549,22 +535,19 @@ namespace System.Windows.Controls.Primitives
                 offset.X = isDirectionReversed ? increaseButtonLength + thumbLength : 0.0;
                 pieceSize.Width = decreaseButtonLength;
 
-                if (DecreaseRepeatButton != null)
-                    DecreaseRepeatButton.Arrange(new Rect(offset, pieceSize));
+                DecreaseRepeatButton?.Arrange(new Rect(offset, pieceSize));
 
 
                 offset.X = isDirectionReversed ? 0.0 : decreaseButtonLength + thumbLength;
                 pieceSize.Width = increaseButtonLength;
 
-                if (IncreaseRepeatButton != null)
-                    IncreaseRepeatButton.Arrange(new Rect(offset, pieceSize));
+                IncreaseRepeatButton?.Arrange(new Rect(offset, pieceSize));
 
 
                 offset.X = isDirectionReversed ? increaseButtonLength : decreaseButtonLength;
                 pieceSize.Width = thumbLength;
                 
-                if (Thumb != null)
-                    Thumb.Arrange(new Rect(offset, pieceSize));
+                Thumb?.Arrange(new Rect(offset, pieceSize));
 
                 ThumbCenterOffset = offset.X + (thumbLength * 0.5);
             }
@@ -694,9 +677,11 @@ namespace System.Windows.Controls.Primitives
         {
             if (!HasNonDefaultValue(target))
             {
-                Binding binding = new Binding();
-                binding.RelativeSource = RelativeSource.TemplatedParent;
-                binding.Path = new PropertyPath(source);
+                Binding binding = new Binding
+                {
+                    RelativeSource = RelativeSource.TemplatedParent,
+                    Path = new PropertyPath(source)
+                };
                 SetBinding(target, binding);
             }
         }
@@ -706,9 +691,11 @@ namespace System.Windows.Controls.Primitives
         {
             if (element != null && !element.HasNonDefaultValue(target))
             {
-                Binding binding = new Binding();
-                binding.Source = this.TemplatedParent;
-                binding.Path = new PropertyPath(source);
+                Binding binding = new Binding
+                {
+                    Source = this.TemplatedParent,
+                    Path = new PropertyPath(source)
+                };
                 element.SetBinding(target, binding);
             }
         }

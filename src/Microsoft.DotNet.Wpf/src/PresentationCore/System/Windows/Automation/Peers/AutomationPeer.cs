@@ -1,27 +1,14 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
 //#define ENABLE_AUTOMATIONPEER_LOGGING   // uncomment to include logging of various activities
 
-using System;
 using System.Collections;
-using System.Diagnostics;
-using System.Security;
-using System.Windows;
-using System.Windows.Interop;
-using System.Windows.Media;
 using System.Windows.Threading;
-using System.Collections.Generic;
-using System.Windows.Automation;
 using System.Windows.Automation.Provider;
-
 using MS.Internal;
 using MS.Internal.Automation;
-using MS.Internal.Media;
-using MS.Win32;
-
-using SR=MS.Internal.PresentationCore.SR;
 
 namespace System.Windows.Automation.Peers
 {
@@ -234,8 +221,10 @@ namespace System.Windows.Automation.Peers
 
         internal static HostedWindowWrapper CreateInternal(IntPtr hwnd)
         {
-            HostedWindowWrapper wrapper = new HostedWindowWrapper();
-            wrapper._hwnd = hwnd;
+            HostedWindowWrapper wrapper = new HostedWindowWrapper
+            {
+                _hwnd = hwnd
+            };
             return wrapper;
         }
 
@@ -2133,13 +2122,9 @@ namespace System.Windows.Automation.Peers
             if (!AncestorsInvalid)
             {
                 AncestorsInvalid = true;
-                if (EventsSource != null)
-                {
-                    EventsSource.InvalidateAncestorsRecursive();
-                }
+                EventsSource?.InvalidateAncestorsRecursive();
 
-                if (_parent != null)
-                    _parent.InvalidateAncestorsRecursive();
+                _parent?.InvalidateAncestorsRecursive();
             }
         }
 

@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -6,19 +6,11 @@
 // Description: TextServicesHost implementation.
 //
 
-using System;
 using System.Runtime.InteropServices;
 using System.Windows.Threading;
 using System.Threading;
-using System.Collections;
-using System.Diagnostics;
-using System.Windows.Media;
-using System.Windows.Input;
-using System.Windows.Documents;
 using MS.Win32;
 using MS.Internal;
-using MS.Internal.PresentationFramework;                   // SecurityHelper
-using System.Security;
 
 namespace System.Windows.Documents
 {
@@ -166,11 +158,8 @@ namespace System.Windows.Documents
             {
                 UnsafeNativeMethods.ITfSource source;
                 source = textstore.DocumentManager as UnsafeNativeMethods.ITfSource;
-                if (source != null)
-                {
-                    // DocumentManager only supports ITfSource on Longhorn, XP does not support it
-                    source.UnadviseSink(textstore.TransitoryExtensionSinkCookie);
-                }
+                // DocumentManager only supports ITfSource on Longhorn, XP does not support it
+                source?.UnadviseSink(textstore.TransitoryExtensionSinkCookie);
                 textstore.TransitoryExtensionSinkCookie = UnsafeNativeMethods.TF_INVALID_COOKIE;
             }
 

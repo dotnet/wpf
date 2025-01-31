@@ -2,19 +2,6 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-//
-//
-// Description:
-//   Definition of the CompoundFileStreamReference class.
-
-
-using System;
-using System.IO;
-using System.Text;                          // for StringBuilder
-
-using System.Windows;
-using MS.Internal.WindowsBase;
-
 namespace MS.Internal.IO.Packaging.CompoundFile
 {
     /// <summary>
@@ -145,13 +132,13 @@ namespace MS.Internal.IO.Packaging.CompoundFile
             //  it is not necessary since PathSeparatorAsString is a path symbol
             if (fullName.StartsWith(ContainerUtilities.PathSeparatorAsString, StringComparison.Ordinal))
                 throw new ArgumentException(
-                    SR.DelimiterLeading, "fullName");
+                    SR.DelimiterLeading, nameof(fullName));
 
             _fullName = fullName;
             string[] strings = ContainerUtilities.ConvertBackSlashPathToStringArrayPath(fullName);
             if (strings.Length == 0)
                 throw new ArgumentException(
-                    SR.CompoundFilePathNullEmpty, "fullName");
+                    SR.CompoundFilePathNullEmpty, nameof(fullName));
         }
 
         //------------------------------------------------------

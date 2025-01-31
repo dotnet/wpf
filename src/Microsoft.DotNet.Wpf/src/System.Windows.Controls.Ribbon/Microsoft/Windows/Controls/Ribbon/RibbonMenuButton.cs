@@ -1,7 +1,26 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
+
+#region Using declarations
+
+using System.Collections.Specialized;
+using System.Diagnostics;
+using System.Reflection;
+using System.Windows.Automation.Peers;
+using System.Windows.Controls.Primitives;
+using System.Windows.Input;
+using System.Windows.Media;
+using System.Windows.Threading;
+#if RIBBON_IN_FRAMEWORK
+using System.Windows.Controls.Ribbon.Primitives;
+using Microsoft.Windows.Controls;
+#else
+    using Microsoft.Windows.Automation.Peers;
+    using Microsoft.Windows.Controls.Ribbon.Primitives;
+#endif
+using MS.Internal;
 
 #if RIBBON_IN_FRAMEWORK
 namespace System.Windows.Controls.Ribbon
@@ -9,28 +28,6 @@ namespace System.Windows.Controls.Ribbon
 namespace Microsoft.Windows.Controls.Ribbon
 #endif
 {
-    #region Using declarations
-
-    using System;
-    using System.Collections.Specialized;
-    using System.Diagnostics;
-    using System.Reflection;
-    using System.Windows;
-    using System.Windows.Automation.Peers;
-    using System.Windows.Controls;
-    using System.Windows.Controls.Primitives;
-    using System.Windows.Input;
-    using System.Windows.Media;
-    using System.Windows.Threading;
-#if RIBBON_IN_FRAMEWORK
-    using System.Windows.Controls.Ribbon.Primitives;
-    using Microsoft.Windows.Controls;
-#else
-    using Microsoft.Windows.Automation.Peers;
-    using Microsoft.Windows.Controls.Ribbon.Primitives;
-#endif
-    using MS.Internal;
-
     #endregion
 
     /// <summary>
@@ -1048,10 +1045,7 @@ namespace Microsoft.Windows.Controls.Ribbon
 
         internal void BringIndexIntoView(int index)
         {
-            if (_itemsHost != null)
-            {
-                _itemsHost.BringIndexIntoViewInternal(index);
-            }
+            _itemsHost?.BringIndexIntoViewInternal(index);
         }
 
         private void OnDropDownOpened(EventArgs e)
@@ -1130,10 +1124,7 @@ namespace Microsoft.Windows.Controls.Ribbon
 
             // Raise UI Automation Events
             RibbonMenuButtonAutomationPeer peer = UIElementAutomationPeer.FromElement(this) as RibbonMenuButtonAutomationPeer;
-            if (peer != null)
-            {
-                peer.RaiseExpandCollapseAutomationEvent(!(bool)e.OldValue, !(bool)e.NewValue);
-            }
+            peer?.RaiseExpandCollapseAutomationEvent(!(bool)e.OldValue, !(bool)e.NewValue);
         }
 
         private static object CoerceIsDropDownOpen(DependencyObject d, object baseValue)
@@ -1495,10 +1486,7 @@ namespace Microsoft.Windows.Controls.Ribbon
                     // ...call PopMenuMode.
                     MethodInfo method = type.GetMethod("PopMenuMode", BindingFlags.NonPublic | BindingFlags.Instance);
                     Debug.Assert(method != null);
-                    if (method != null)
-                    {
-                        method.Invoke(this, null);
-                    }
+                    method?.Invoke(this, null);
                 }
             }
         }
@@ -1668,7 +1656,7 @@ namespace Microsoft.Windows.Controls.Ribbon
         {
             if (e.OriginalSource == this)
             {
-                RibbonHelper.SetKeyTipPlacementForButton(this, e, _partToggleButton == null ? null : _partToggleButton.Image);
+                RibbonHelper.SetKeyTipPlacementForButton(this, e, _partToggleButton?.Image);
             }
         }
 

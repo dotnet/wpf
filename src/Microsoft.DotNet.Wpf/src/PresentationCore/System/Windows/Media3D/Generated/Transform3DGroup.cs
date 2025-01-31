@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -10,31 +10,8 @@
 //
 
 using MS.Internal;
-using MS.Internal.Collections;
-using MS.Internal.PresentationCore;
-using MS.Utility;
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.ComponentModel.Design.Serialization;
-using System.Diagnostics;
-using System.Globalization;
-using System.Reflection;
-using System.Runtime.InteropServices;
-using System.Text;
-using System.Windows.Markup;
-using System.Windows.Media.Media3D.Converters;
-using System.Windows.Media;
-using System.Windows.Media.Animation;
 using System.Windows.Media.Composition;
-using System.Security;
-using SR=MS.Internal.PresentationCore.SR;
-using System.Windows.Media.Imaging;
 // These types are aliased to match the unamanaged names used in interop
-using BOOL = System.UInt32;
-using WORD = System.UInt16;
-using Float = System.Single;
 
 namespace System.Windows.Media.Media3D
 {
@@ -332,10 +309,7 @@ namespace System.Windows.Media.Media3D
 
                         // We're on a channel, which means our dependents are also on the channel.
                         DUCE.IResource addResource = item as DUCE.IResource;
-                        if (addResource != null)
-                        {
-                            addResource.AddRefOnChannel(channel);
-                        }
+                        addResource?.AddRefOnChannel(channel);
 
                         UpdateResource(channel, true /* skip on channel check */);
                     }
@@ -362,10 +336,7 @@ namespace System.Windows.Media.Media3D
 
                         // We're on a channel, which means our dependents are also on the channel.
                         DUCE.IResource releaseResource = item as DUCE.IResource;
-                        if (releaseResource != null)
-                        {
-                            releaseResource.ReleaseOnChannel(channel);
-                        }
+                        releaseResource?.ReleaseOnChannel(channel);
                     }
                 }
             }

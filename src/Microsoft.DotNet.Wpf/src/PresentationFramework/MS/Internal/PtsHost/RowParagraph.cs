@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -6,12 +6,8 @@
 //
 // Description: RowParagraph represents a single row in a table
 //
-using System;
-using System.Diagnostics;
-using System.Security;
 using System.Windows;
 using System.Windows.Documents;
-using MS.Internal.PtsTable;
 using MS.Internal.Text;
 using MS.Internal.PtsHost.UnsafeNativeMethods;
 
@@ -127,13 +123,14 @@ namespace MS.Internal.PtsHost
             GetRowHeight(out fskrowheight, out dvrAboveBelow);
 
             // initialize output parameter(s)
-            rowprops = new PTS.FSTABLEROWPROPS();
-
-            rowprops.fskrowbreak = PTS.FSKROWBREAKRESTRICTION.fskrowbreakAnywhere;
-            rowprops.fskrowheight = fskrowheight;
-            rowprops.dvrRowHeightRestriction = 0;
-            rowprops.dvrAboveRow = dvrAboveBelow;
-            rowprops.dvrBelowRow = dvrAboveBelow;
+            rowprops = new PTS.FSTABLEROWPROPS
+            {
+                fskrowbreak = PTS.FSKROWBREAKRESTRICTION.fskrowbreakAnywhere,
+                fskrowheight = fskrowheight,
+                dvrRowHeightRestriction = 0,
+                dvrAboveRow = dvrAboveBelow,
+                dvrBelowRow = dvrAboveBelow
+            };
 
 
             int cellSpacing = TextDpi.ToTextDpi(Table.InternalCellSpacing);

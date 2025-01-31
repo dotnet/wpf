@@ -1,15 +1,8 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Collections.Specialized;
-using System.ComponentModel;
-using System.Numerics;
 using System.Reflection;
 using System.Threading;
-using System.Windows.Input;
 
 namespace WinRT
 {
@@ -137,7 +130,7 @@ namespace WinRT
                 || type == typeof(string)
                 || type == typeof(Guid)
                 || type == typeof(object)
-                || type.GetCustomAttribute<WindowsRuntimeTypeAttribute>() is object;
+                || type.GetCustomAttribute<WindowsRuntimeTypeAttribute>() is not null;
         }
 
         public static bool TryGetCompatibleWindowsRuntimeTypeForVariantType(Type type, out Type compatibleType)
@@ -212,7 +205,7 @@ namespace WinRT
                 {
                     IInspectable inspectable = inspectablePtr;
                     string runtimeClassName = inspectable.GetRuntimeClassName(true);
-                    if (runtimeClassName is object)
+                    if (runtimeClassName is not null)
                     {
                         if (ProjectedRuntimeClassNames.Contains(runtimeClassName))
                         {

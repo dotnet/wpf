@@ -2,35 +2,13 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
+using System;
+using System.Runtime.InteropServices;
+using System.Diagnostics;
+using Microsoft.Win32.SafeHandles;
+
 namespace MS.Win32
 {
-    using Accessibility;
-    using System;
-    using System.Runtime.ConstrainedExecution;
-    using System.Runtime.InteropServices;
-    using System.Security;
-    using System.Collections;
-    using System.Diagnostics;
-    using System.IO;
-    using System.Text;
-    using MS.Win32;
-    using Microsoft.Win32.SafeHandles;
-
-
-#if WINDOWS_BASE
-    using MS.Internal.WindowsBase;
-#elif PRESENTATION_CORE
-    using MS.Internal.PresentationCore;
-#elif PRESENTATIONFRAMEWORK
-    using MS.Internal.PresentationFramework;
-#elif UIAUTOMATIONTYPES
-    using MS.Internal.UIAutomationTypes;
-#elif DRT
-    using MS.Internal.Drt;
-#else
-    using MS.Internal.YourAssemblyName;
-#endif
-
     internal partial class NativeMethods
     {
         // Translates Win32 error codes into HRESULTs.
@@ -1195,8 +1173,10 @@ namespace MS.Win32
             /// <returns></returns>
             public static HWND Cast(IntPtr h)
             {
-                HWND hTemp = new HWND();
-                hTemp.h = h;
+                HWND hTemp = new HWND
+                {
+                    h = h
+                };
                 return hTemp;
             }
 
@@ -1275,8 +1255,10 @@ namespace MS.Win32
             /// <returns></returns>
             public static HDC Cast(IntPtr h)
             {
-                HDC hTemp = new HDC();
-                hTemp.h = h;
+                HDC hTemp = new HDC
+                {
+                    h = h
+                };
                 return hTemp;
             }
 
@@ -1292,8 +1274,10 @@ namespace MS.Win32
             {
                 get
                 {
-                    HDC hTemp = new HDC();
-                    hTemp.h = IntPtr.Zero;
+                    HDC hTemp = new HDC
+                    {
+                        h = IntPtr.Zero
+                    };
                     return hTemp;
                 }
             }

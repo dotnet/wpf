@@ -2,15 +2,6 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-//
-//
-// Description: Storage for the "TraceLevel" attached property.
-//
-
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-
 namespace MS.Internal
 {
     /// <summary>
@@ -114,8 +105,7 @@ namespace MS.Internal
             public override int GetHashCode()
             {
 #if DEBUG
-                WeakReference wr = _element as WeakReference;
-                object element = (wr != null) ? wr.Target : _element;
+                object element = (_element is WeakReference wr) ? wr.Target : _element;
                 if (element != null)
                 {
                     int hashcode = element.GetHashCode();

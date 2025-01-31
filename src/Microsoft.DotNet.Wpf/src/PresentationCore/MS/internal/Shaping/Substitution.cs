@@ -7,9 +7,6 @@
 //
 //  Contents:  OpentTypeLayout substitution classes
 
-using System.Diagnostics;
-using System.Security;
-using System;
 using System.IO;
 
 namespace MS.Internal.Shaping

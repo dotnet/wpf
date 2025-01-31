@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -26,20 +26,12 @@
 //
 //
 
-
-// PRESHARP: In order to avoid generating warnings about unkown message numbers and unknown pragmas.
-#pragma warning disable 1634, 1691
-
 using System;
-using System.Text;
 using System.Windows.Automation;
 using System.Windows.Automation.Provider;
-using System.Runtime.InteropServices;
-using System.ComponentModel;
-using System.Collections;
+using System.Collections.Generic;
 using Accessibility;
 using System.Windows;
-using System.Windows.Input;
 using MS.Win32;
 
 namespace MS.Internal.AutomationProxies
@@ -248,12 +240,10 @@ namespace MS.Internal.AutomationProxies
             }
             else if (idProp == AutomationElement.AutomationIdProperty)
             {
-                // PerSharp/PreFast will flag this as a warning 6507/56507: Prefer 'string.IsNullOrEmpty(_sAutomationId)' over checks for null and/or emptiness.
                 // _sAutomationId being null is invalid, while being empty is a valid state.
                 // The use of IsNullOrEmpty while hide this.
-#pragma warning suppress 6507
                 System.Diagnostics.Debug.Assert(_sAutomationId != null, "_sAutomationId is null!");
-#pragma warning suppress 6507
+
                 return _sAutomationId.Length > 0 ? _sAutomationId : null;
             }
             else if (idProp == AutomationElement.IsOffscreenProperty)
@@ -595,22 +585,21 @@ namespace MS.Internal.AutomationProxies
                 }
             }
 
-            ArrayList alIn = new ArrayList(100);
-            ArrayList alOut = new ArrayList(100);
+            List<ClickablePoint.CPRect> listIn = new(100);
+            List<ClickablePoint.CPRect> listOut = new(100);
 
             // Get the mid point to start with
             pt.x = (rcItem.right - 1 + rcItem.left) / 2;
             pt.y = (rcItem.bottom - 1 + rcItem.top) / 2;
-            alOut.Add(new ClickablePoint.CPRect(ref rcItem, true));
+            listOut.Add(new ClickablePoint.CPRect(ref rcItem, true));
 
             // First go through all the children to exclude whatever is on top
-            ProxyFragment proxyFrag = this as ProxyFragment;
-            if (proxyFrag != null)
+            if (this is ProxyFragment proxyFrag)
             {
-                ClickablePoint.ExcludeChildren(proxyFrag, alIn, alOut);
+                ClickablePoint.ExcludeChildren(proxyFrag, listIn, listOut);
             }
 
-            return ClickablePoint.GetPoint(_hwnd, alIn, alOut, ref pt);
+            return ClickablePoint.GetPoint(_hwnd, listIn, listOut, ref pt);
         }
 
         internal string GetAccessibleName(int item)

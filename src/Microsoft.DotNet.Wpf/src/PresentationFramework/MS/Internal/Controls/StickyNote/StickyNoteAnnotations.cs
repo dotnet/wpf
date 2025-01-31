@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -12,26 +12,16 @@
 using MS.Internal;
 using MS.Internal.Annotations;
 using MS.Internal.Annotations.Component;
-using MS.Internal.Controls;
 using MS.Internal.Controls.StickyNote;
-using MS.Internal.KnownBoxes;
-using System;
 using System.Collections;
-using System.Collections.Generic;
-using System.Diagnostics;                           // Assert
 using System.Globalization;
-using System.IO;
 using System.Windows;
 using System.Windows.Annotations;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Threading;
 using System.Xml;
-using System.Windows.Documents;
 using MS.Internal.Documents;
-using MS.Internal.Annotations.Anchoring; //TextSelectionHelper
 using System.Windows.Controls.Primitives;   // IScrollInfo
 using MS.Utility;
 
@@ -953,7 +943,7 @@ namespace System.Windows.Controls
             }
             else
             {
-                throw new ArgumentException(SR.InvalidValueSpecified, "attachedAnnotation");
+                throw new ArgumentException(SR.InvalidValueSpecified, nameof(attachedAnnotation));
             }
         }
 
@@ -1298,7 +1288,7 @@ namespace System.Windows.Controls
             bool hasTextData = sncAnnotation.HasTextData;
             if (hasInkData && hasTextData)
             {
-                throw new ArgumentException(SR.InvalidStickyNoteAnnotation, "attachedAnnotation");
+                throw new ArgumentException(SR.InvalidStickyNoteAnnotation, nameof(attachedAnnotation));
             }
             else if (hasInkData)
             {

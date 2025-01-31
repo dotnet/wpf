@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -7,23 +7,9 @@
 * Purpose:  Public api for writing baml records to a stream
 *
 \***************************************************************************/
-using System;
-using System.Xml;
 using System.IO;
-using System.Windows;
-using System.Text;
 using System.Collections;
-using System.ComponentModel;
-using MS.Internal.Utility;
-using MS.Internal;
-
-using System.Diagnostics;
 using System.Reflection;
-using System.Windows.Controls;
-using System.Windows.Documents;
-using System.Windows.Threading;
-
-using MS.Utility;
 
 namespace System.Windows.Markup
 {
@@ -229,10 +215,12 @@ namespace System.Windows.Markup
                                                assemblyName,
                                                typeFullName,
                                                elementType,
-                                               serializerType);  
-            node.IsInjected = isInjected;
-            node.CreateUsingTypeConverter = useTypeConverter;
-            
+                                               serializerType)
+            {
+                IsInjected = isInjected,
+                CreateUsingTypeConverter = useTypeConverter
+            };
+
             _bamlRecordWriter.WriteElementStart(node);
         }
 

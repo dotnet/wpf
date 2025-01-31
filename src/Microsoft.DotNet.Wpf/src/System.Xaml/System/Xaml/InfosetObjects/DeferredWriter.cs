@@ -4,7 +4,6 @@
 
 #nullable disable
 
-using System.Diagnostics;
 using MS.Internal.Xaml.Context;
 
 namespace System.Xaml
@@ -96,6 +95,7 @@ namespace System.Xaml
                     {
                         _deferredWriter.WriteStartObject(xamlType);
                     }
+
                     _deferredTreeDepth += 1;
                     _handled = true;
                     break;
@@ -127,6 +127,7 @@ namespace System.Xaml
                     _deferredWriter = null;
                     _mode = DeferringMode.TemplateReady;
                 }
+
                 break;
 
             default:
@@ -140,13 +141,14 @@ namespace System.Xaml
             switch (_mode)
             {
             case DeferringMode.Off:
-                if (property.DeferringLoader != null)
+                if (property.DeferringLoader is not null)
                 {
                     _mode = DeferringMode.TemplateStarting;
 
                     // We assume in WriteValue that this property can never be multi-valued
                     Debug.Assert(!property.IsDirective && !property.IsUnknown);
                 }
+
                 break;
 
             case DeferringMode.TemplateReady:
@@ -209,6 +211,7 @@ namespace System.Xaml
                     _mode = DeferringMode.TemplateDeferring;
                     goto case DeferringMode.TemplateDeferring;
                 }
+
                 break;
 
             case DeferringMode.TemplateDeferring:
@@ -252,7 +255,7 @@ namespace System.Xaml
             {
                 if (disposing && !IsDisposed)
                 {
-                    if (_deferredWriter != null)
+                    if (_deferredWriter is not null)
                     {
                         _deferredWriter.Close();
                         _deferredWriter = null;
@@ -291,10 +294,7 @@ namespace System.Xaml
                 goto case DeferringMode.TemplateDeferring;
 
             case DeferringMode.TemplateDeferring:
-                if (_deferredLineInfoConsumer != null)
-                {
-                    _deferredLineInfoConsumer.SetLineInfo(lineNumber, linePosition);
-                }
+                _deferredLineInfoConsumer?.SetLineInfo(lineNumber, linePosition);
                 break;
 
             default:
@@ -312,7 +312,7 @@ namespace System.Xaml
         private void StartDeferredList()
         {
             // the list may have been created already by SetLineInfo
-            if (_deferredList == null)
+            if (_deferredList is null)
             {
                 _deferredList = new XamlNodeList(_context.SchemaContext);
                 _deferredWriter = _deferredList.Writer;

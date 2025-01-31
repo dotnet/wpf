@@ -1,21 +1,14 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-//
-// 
 // Description: Converters for IList<double>, IList<ushort>, IList<Point>
 //              IList<bool> and IList<char>. 
 
-
-using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.Globalization;
 using System.Text;
-using System.Windows;
 using MS.Internal;
-using SR=MS.Internal.PresentationCore.SR;
 
 namespace System.Windows.Media.Converters
 {
@@ -60,7 +53,7 @@ namespace System.Windows.Media.Converters
 
             if (null == s)
             {
-                throw new ArgumentException(SR.Format(SR.General_BadType, "ConvertFrom"), "value");
+                throw new ArgumentException(SR.Format(SR.General_BadType, "ConvertFrom"), nameof(value));
             }
 
             return ConvertFromCore(td, ci, s);            

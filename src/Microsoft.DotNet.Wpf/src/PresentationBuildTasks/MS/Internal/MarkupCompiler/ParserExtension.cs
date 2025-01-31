@@ -19,8 +19,6 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Reflection;
 using System.CodeDom;
-using System.CodeDom.Compiler;
-using System.ComponentModel;
 using MS.Utility;   // for SR
 
 namespace MS.Internal
@@ -517,7 +515,7 @@ namespace MS.Internal
                         xmlReader.MoveToAttribute(attrName);
                 }
             }
-            else if (!_compiler.IsBamlNeeded && !_compiler.ProcessingRootContext && _compiler.IsCompilingEntryPointClass && xmlReader.Depth > 0)
+            else if (!_compiler.IsBamlNeeded && _compiler.IsCompilingEntryPointClass && xmlReader.Depth > 0)
             {
                 if ((!localName.Equals(MarkupCompiler.CODETAG) &&
                      !localName.Equals($"{MarkupCompiler.CODETAG}Extension")) ||
@@ -764,9 +762,10 @@ namespace MS.Internal
                 if (addMapping)
                 {
                     ClrNamespaceAssemblyPair namespaceMapping = new ClrNamespaceAssemblyPair(xamlPIMappingNode.ClrNamespace,
-                                                                                             xamlPIMappingNode.AssemblyName);
-
-                    namespaceMapping.LocalAssembly = true;
+                                                                                             xamlPIMappingNode.AssemblyName)
+                    {
+                        LocalAssembly = true
+                    };
                     XamlTypeMapper.PITable[xamlPIMappingNode.XmlNamespace] = namespaceMapping;
                     XamlTypeMapper.InvalidateMappingCache(xamlPIMappingNode.XmlNamespace);
                     if (!_pass2 && BamlRecordWriter != null)

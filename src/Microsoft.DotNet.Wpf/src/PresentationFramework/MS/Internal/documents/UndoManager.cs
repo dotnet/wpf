@@ -8,17 +8,8 @@
 //     See spec at Undo spec.htm
 //
 
-using System;
 using System.Windows;
 using System.Collections;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.ComponentModel.Design;
-using System.Diagnostics;
-using MS.Utility;
-using System.Windows.Markup;
-using System.Windows.Documents;
-using System.Windows.Controls.Primitives;
 
 namespace MS.Internal.Documents
 {
@@ -105,7 +96,7 @@ namespace MS.Internal.Documents
             ArgumentNullException.ThrowIfNull(scope);
             ArgumentNullException.ThrowIfNull(undoManager);
 
-            if (undoManager is UndoManager && ((UndoManager)undoManager)._scope != null)
+            if (undoManager is not null && ((UndoManager)undoManager)._scope != null)
             {
                 throw new InvalidOperationException(SR.UndoManagerAlreadyAttached);
             }
@@ -115,7 +106,7 @@ namespace MS.Internal.Documents
 
             // Attach the service to the scope via private dependency property
             scope.SetValue(UndoManager.UndoManagerInstanceProperty, undoManager);
-            if (undoManager is UndoManager)
+            if (undoManager is not null)
             {
                 Debug.Assert(((UndoManager)undoManager)._scope == null);
                 ((UndoManager)undoManager)._scope = scope;
@@ -150,7 +141,7 @@ namespace MS.Internal.Documents
                 scope.ClearValue(UndoManager.UndoManagerInstanceProperty);
 
                 // Break the linkage to its scope
-                if (undoManager is UndoManager)
+                if (undoManager is not null)
                 {
                     Debug.Assert(((UndoManager)undoManager)._scope == scope);
                     ((UndoManager)undoManager)._scope = null;

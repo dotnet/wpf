@@ -1,12 +1,10 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
 // Description: Spinner Proxy
 
 using System;
-using System.Collections;
-using System.Text;
 using System.ComponentModel;
 using System.Globalization;
 using System.Windows.Automation;
@@ -280,10 +278,7 @@ namespace MS.Internal.AutomationProxies
             base.AdviseEventAdded(eventId, aidProps);
 
             // Need to also advise the edit portions of the spinner so that it can raise events.
-            if (_elEdit != null)
-            {
-                _elEdit.AdviseEventAdded(eventId, aidProps);
-            }
+            _elEdit?.AdviseEventAdded(eventId, aidProps);
         }
 
         internal override void AdviseEventRemoved(AutomationEvent eventId, AutomationProperty[] aidProps)
@@ -291,10 +286,7 @@ namespace MS.Internal.AutomationProxies
             base.AdviseEventRemoved(eventId, aidProps);
 
             // Need to also remove the advise from the edit portions of the spinner.
-            if (_elEdit != null)
-            {
-                _elEdit.AdviseEventRemoved(eventId, aidProps);
-            }
+            _elEdit?.AdviseEventRemoved(eventId, aidProps);
         }
 
         #endregion

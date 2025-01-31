@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -8,33 +8,22 @@
 // See spec at Data Binding.mht
 //
 
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Diagnostics;
 using System.Globalization;
-using System.Windows.Threading;
-using System.Threading;
 using System.Windows.Controls;
-using System.Windows.Input;         // FocusChangedEvent
-using System.Windows.Markup;
-using MS.Internal.Controls; // Validation
-using MS.Internal.KnownBoxes;
 using MS.Internal.Data;
-using MS.Utility;
 using MS.Internal;                  // Invariant.Assert
 
 namespace System.Windows.Data
 {
-/// <summary>
-///  Describes a collection of BindingExpressions attached to a single property.
-///     The inner BindingExpressions contribute their values to the MultiBindingExpression,
-///     which combines/converts them into a resultant final value.
-///     In the reverse direction, the target value is tranlated to
-///     a set of values that are fed back into the inner BindingExpressions.
-/// </summary>
-public sealed class MultiBindingExpression: BindingExpressionBase, IDataBindEngineClient
+    /// <summary>
+    ///  Describes a collection of BindingExpressions attached to a single property.
+    ///     The inner BindingExpressions contribute their values to the MultiBindingExpression,
+    ///     which combines/converts them into a resultant final value.
+    ///     In the reverse direction, the target value is tranlated to
+    ///     a set of values that are fed back into the inner BindingExpressions.
+    /// </summary>
+    public sealed class MultiBindingExpression: BindingExpressionBase, IDataBindEngineClient
 {
     //------------------------------------------------------
     //
@@ -168,7 +157,7 @@ public sealed class MultiBindingExpression: BindingExpressionBase, IDataBindEngi
         FrameworkPropertyMetadata fwMetaData = dp.GetMetadata(d.DependencyObjectType) as FrameworkPropertyMetadata;
 
         if ((fwMetaData != null && !fwMetaData.IsDataBindingAllowed) || dp.ReadOnly)
-            throw new ArgumentException(SR.Format(SR.PropertyNotBindable, dp.Name), "dp");
+            throw new ArgumentException(SR.Format(SR.PropertyNotBindable, dp.Name), nameof(dp));
 
         // create the BindingExpression
         MultiBindingExpression bindExpr = new MultiBindingExpression(binding, owner);

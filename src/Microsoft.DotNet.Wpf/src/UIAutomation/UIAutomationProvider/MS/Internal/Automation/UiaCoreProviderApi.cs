@@ -5,7 +5,6 @@
 // Description: Imports from unmanaged UiaCore DLL
 
 using System;
-using System.Security;
 using System.Windows.Automation;
 using System.Windows.Automation.Provider;
 using System.Runtime.InteropServices;

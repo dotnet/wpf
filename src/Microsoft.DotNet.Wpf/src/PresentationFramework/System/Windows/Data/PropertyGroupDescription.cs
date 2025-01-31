@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -9,12 +9,9 @@
 // See spec at Grouping.mht
 //
 
-using System;                   // StringComparison
 using System.Collections;       // IComparer
 using System.ComponentModel;    // [DefaultValue]
 using System.Globalization;     // CultureInfo
-using System.Reflection;        // PropertyInfo
-using System.Windows;           // SR
 using MS.Internal;              // XmlHelper
 
 namespace System.Windows.Data
@@ -126,7 +123,7 @@ namespace System.Windows.Data
             set
             {
                 UpdatePropertyName(value);
-                OnPropertyChanged("PropertyName");
+                OnPropertyChanged(nameof(PropertyName));
             }
         }
 
@@ -141,7 +138,7 @@ namespace System.Windows.Data
         public IValueConverter Converter
         {
             get { return _converter; }
-            set { _converter = value; OnPropertyChanged("Converter"); }
+            set { _converter = value; OnPropertyChanged(nameof(Converter)); }
         }
 
         /// <summary>
@@ -154,7 +151,7 @@ namespace System.Windows.Data
         public StringComparison StringComparison
         {
             get { return _stringComparison; }
-            set { _stringComparison = value; OnPropertyChanged("StringComparison"); }
+            set { _stringComparison = value; OnPropertyChanged(nameof(StringComparison)); }
         }
 
         /// <summary>

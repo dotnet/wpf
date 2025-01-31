@@ -9,13 +9,11 @@
 //
 
 using System.ComponentModel;    // TypeConverter
-using System.Windows.Controls;  // Border
 using System.Windows.Media;     // Brush
-using MS.Internal;              // DoubleUtil
 using MS.Internal.Text;         // Text DPI restrictions
 using MS.Internal.PtsHost.UnsafeNativeMethods; // PTS restrictions
 
-namespace System.Windows.Documents 
+namespace System.Windows.Documents
 {
     /// <summary>
     /// Block element - an abstract class, a base for elements allowed 

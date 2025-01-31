@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -6,11 +6,9 @@
 
 using System;
 using System.Text;
-using System.Collections;
 using System.Windows.Automation;
 using System.Windows.Automation.Provider;
 using System.Runtime.InteropServices;
-using System.ComponentModel;
 using System.Windows;
 using MS.Win32;
 
@@ -111,10 +109,7 @@ namespace MS.Internal.AutomationProxies
                 return;
             }
 
-            if (el != null)
-            {
-                el.DispatchEvents (eventId, idProp, idObject, idChild);
-            }
+            el?.DispatchEvents (eventId, idProp, idObject, idChild);
         }
 
         #endregion Proxy Create
@@ -348,20 +343,19 @@ namespace MS.Internal.AutomationProxies
         }
 
         // Builds a list of Win32 WinEvents to process a UIAutomation Event.
-        // Returns an array of Events to Set. The number of valid entries in this array pass back in cEvent.
-        protected override WinEventTracker.EvtIdProperty [] EventToWinEvent (AutomationEvent idEvent, out int cEvent)
+        protected override ReadOnlySpan<WinEventTracker.EvtIdProperty> EventToWinEvent(AutomationEvent idEvent)
         {
             if (idEvent == AutomationElement.StructureChangedEvent)
             {
-                cEvent = 3;
-                return new WinEventTracker.EvtIdProperty [3] {
-                    new WinEventTracker.EvtIdProperty (NativeMethods.EventObjectStateChange, idEvent),
-                    new WinEventTracker.EvtIdProperty (NativeMethods.EventObjectCreate, idEvent),
-                    new WinEventTracker.EvtIdProperty (NativeMethods.EventObjectDestroy, idEvent)
+                return new WinEventTracker.EvtIdProperty[3]
+                {
+                    new(NativeMethods.EventObjectStateChange, idEvent),
+                    new(NativeMethods.EventObjectCreate, idEvent),
+                    new(NativeMethods.EventObjectDestroy, idEvent)
                 };
             }
 
-            return base.EventToWinEvent (idEvent, out cEvent);
+            return base.EventToWinEvent(idEvent);
         }
 
         #endregion

@@ -12,9 +12,6 @@
 
 using System;
 using System.Xml;
-using System.IO;
-using System.Collections;
-using System.ComponentModel;
 
 using System.Diagnostics;
 using System.Reflection;
@@ -26,20 +23,19 @@ using System.Windows.Threading;
 
 #endif
 
-using MS.Utility;
 
 #if PBTCOMPILER
 namespace MS.Internal.Markup
 #else
 namespace System.Windows.Markup
 #endif
-{   
-        #region XamlNodeTypeDefitions
+{
+    #region XamlNodeTypeDefitions
 
-        /// <summary>
-        /// Identifier for XamlNodes
-        /// </summary>
-        internal enum XamlNodeType
+    /// <summary>
+    /// Identifier for XamlNodes
+    /// </summary>
+    internal enum XamlNodeType
         {
             /// <summary>
             /// Unknown Node
@@ -433,11 +429,11 @@ namespace System.Windows.Markup
             {
                 if (typeFullName == null)
                 {
-                    throw new ArgumentNullException("typeFullName");
+                    throw new ArgumentNullException(nameof(typeFullName));
                 }
                 if (propertyName == null)
                 {
-                    throw new ArgumentNullException("propertyName");
+                    throw new ArgumentNullException(nameof(propertyName));
                 }
                 
                 _propertyMember = propertyMember;
@@ -2212,11 +2208,11 @@ namespace System.Windows.Markup
             {
                 if (typeFullName == null)
                 {
-                    throw new ArgumentNullException("typeFullName");
+                    throw new ArgumentNullException(nameof(typeFullName));
                 }
                 if (propertyName == null)
                 {
-                    throw new ArgumentNullException("propertyName");
+                    throw new ArgumentNullException(nameof(propertyName));
                 }
                 
                 _propertyMember = propertyMember;

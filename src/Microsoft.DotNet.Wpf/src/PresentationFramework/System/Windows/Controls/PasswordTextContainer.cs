@@ -6,11 +6,8 @@
 // Description: Backing store for the PasswordBox control.
 //
 
-using System;
-using System.Windows.Threading;
 using System.Collections;
 using System.Security;
-using System.Diagnostics;
 using System.Windows.Documents;
 using MS.Internal;
 using MS.Internal.Documents;

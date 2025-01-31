@@ -2,16 +2,12 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-
+using System.Runtime.InteropServices;
+using Windows.Win32;
+using Windows.Win32.Foundation;
 
 namespace MS.Internal
 {
-    using System;
-    using System.Diagnostics;
-    using System.Runtime.InteropServices;
-    using Windows.Win32;
-    using Windows.Win32.Foundation;
-
     /// <summary>
     /// General utility class for macro-type functions.
     /// </summary>
@@ -53,10 +49,7 @@ namespace MS.Internal
             // Dispose can safely be called on an object multiple times.
             IDisposable t = disposable;
             disposable = default(T);
-            if (null != t)
-            {
-                t.Dispose();
-            }
+            t?.Dispose();
         }
         
         internal static void SafeRelease<T>(ref T comObject) where T : class

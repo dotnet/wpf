@@ -1,12 +1,5 @@
-using Standard;
 using Microsoft.Win32;
-using System.Collections;
-using System.Collections.ObjectModel; 
-using System.Collections.Generic;
-using System.Windows.Interop;
-using System.Windows.Media;
 using System.Windows.Appearance;
-using System.Diagnostics;
 
 
 namespace System.Windows;
@@ -28,13 +21,11 @@ internal static class ThemeManager
 
                 FluentThemeState newFluentThemeState = new FluentThemeState(Application.Current.ThemeMode.Value, useLightColors);
 
-                if (s_currentFluentThemeState == newFluentThemeState)
+                if (s_currentFluentThemeState != newFluentThemeState)
                 {
-                    return;
+                    AddOrUpdateThemeResources(Application.Current.Resources, GetThemeDictionary(Application.Current.ThemeMode));
                 }
-
-                AddOrUpdateThemeResources(Application.Current.Resources, GetThemeDictionary(Application.Current.ThemeMode));
-
+                
                 foreach (Window window in Application.Current.Windows)
                 {
                     if (window.ThemeMode == ThemeMode.None)

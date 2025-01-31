@@ -1,20 +1,16 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
 // Description: HWND-based Edit Box proxy
 
 using System;
-using System.Collections;
 using System.Diagnostics;
-using System.Globalization;
 using System.Text;
 using System.Runtime.InteropServices;
-using System.ComponentModel;
 using System.Windows;
 using System.Windows.Automation;
 using System.Windows.Automation.Provider;
-using System.Windows.Automation.Text;
 using MS.Win32;
 using NativeMethodsSetLastError = MS.Internal.UIAutomationClientSideProviders.NativeMethodsSetLastError;
 
@@ -254,9 +250,9 @@ namespace MS.Internal.AutomationProxies
         #region ProxyHwnd Overrides
 
         // Builds a list of Win32 WinEvents to process a UIAutomation Event.
-        protected override WinEventTracker.EvtIdProperty[] EventToWinEvent(AutomationEvent idEvent, out int cEvent)
+        protected override ReadOnlySpan<WinEventTracker.EvtIdProperty> EventToWinEvent(AutomationEvent idEvent)
         {
-            return base.EventToWinEvent(idEvent, out cEvent);
+            return base.EventToWinEvent(idEvent);
         }
 
         #endregion
@@ -706,9 +702,11 @@ namespace MS.Internal.AutomationProxies
             if (Misc.IsBitSet(WindowStyle, NativeMethods.WS_VSCROLL))
             {
                 // we call GetScrollInfo and return the size of the "page"
-                NativeMethods.ScrollInfo si = new NativeMethods.ScrollInfo();
-                si.cbSize = System.Runtime.InteropServices.Marshal.SizeOf(typeof(NativeMethods.ScrollInfo));
-                si.fMask = NativeMethods.SIF_ALL;
+                NativeMethods.ScrollInfo si = new NativeMethods.ScrollInfo
+                {
+                    cbSize = System.Runtime.InteropServices.Marshal.SizeOf(typeof(NativeMethods.ScrollInfo)),
+                    fMask = NativeMethods.SIF_ALL
+                };
                 bool ok = Misc.GetScrollInfo(WindowHandle, NativeMethods.SB_VERT, ref si);
                 linePerPage = ok ? si.nPage : 0;
                 if (IsMultiline && linePerPage <= 0)

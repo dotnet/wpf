@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -7,13 +7,6 @@
 // Description: OptimalBreakSession is unmanaged resouce handle to TextParagraphCache
 //
 
-using System;
-using System.Collections;
-using System.Windows;
-using System.Security;                  // SecurityCritical
-using System.Windows.Documents;
-using MS.Internal.Text;
-using MS.Internal.PtsHost.UnsafeNativeMethods;
 using System.Windows.Media.TextFormatting;
 
 namespace MS.Internal.PtsHost
@@ -44,15 +37,9 @@ namespace MS.Internal.PtsHost
         {
             try
             {
-                if(_textParagraphCache != null)
-                {
-                    _textParagraphCache.Dispose();
-                }
+                _textParagraphCache?.Dispose();
 
-                if(_optimalTextSource != null)
-                {
-                    _optimalTextSource.Dispose();
-                }
+                _optimalTextSource?.Dispose();
             }
             finally
             {
@@ -106,10 +93,7 @@ namespace MS.Internal.PtsHost
         /// </summary>
         public override void Dispose()
         {
-            if(_textBreakpoint != null)
-            {
-                _textBreakpoint.Dispose();
-            }
+            _textBreakpoint?.Dispose();
 
             base.Dispose();
         }

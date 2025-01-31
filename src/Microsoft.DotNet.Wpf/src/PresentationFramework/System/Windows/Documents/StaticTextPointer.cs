@@ -2,18 +2,14 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
+using MS.Internal;
+
 //
 // Description: Optimized minimal version of TextPointer that gets stored on the stack.
 //
 
 namespace System.Windows.Documents
 {
-    using System;
-    using MS.Internal;
-    using System.Threading;
-    using System.Windows;
-    using System.Collections;
-
     internal struct StaticTextPointer
     {
         //------------------------------------------------------

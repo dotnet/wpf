@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -7,21 +7,17 @@
 //   Managed equivalent of IFilter implemenation for Package
 //
 
-using System;
 using System.IO;
 using System.IO.Packaging;
 using System.Collections;
-using System.Diagnostics;               // For Assert
 using System.Runtime.InteropServices;   // For Marshal.ThrowExceptionForHR
 using System.Windows;                   // for ExceptionStringTable
 using Microsoft.Win32;                  // For RegistryKey
 using MS.Internal.Interop;              // For STAT_CHUNK, etc.
-using MS.Internal;                      // For ContentType
 using MS.Internal.Utility;              // For BindUriHelper
 
 using MS.Internal.IO.Packaging.Extensions;
 using Package = System.IO.Packaging.Package;
-using PackUriHelper = System.IO.Packaging.PackUriHelper;
 using InternalPackUriHelper = MS.Internal.IO.Packaging.PackUriHelper;
 
 namespace MS.Internal.IO.Packaging
@@ -322,10 +318,11 @@ namespace MS.Internal.IO.Packaging
 
                     IndexingFilterMarshaler corePropertiesFilterMarshaler
                         = new IndexingFilterMarshaler(
-                        new CorePropertiesFilter(_package.PackageProperties));
-
-                    // Avoid exception on end of chunks from part filter.
-                    corePropertiesFilterMarshaler.ThrowOnEndOfChunks = false;
+                        new CorePropertiesFilter(_package.PackageProperties))
+                        {
+                            // Avoid exception on end of chunks from part filter.
+                            ThrowOnEndOfChunks = false
+                        };
 
                     _currentFilter = corePropertiesFilterMarshaler;
                     _currentFilter.Init(_grfFlags, _cAttributes, _aAttributes);
@@ -416,10 +413,11 @@ namespace MS.Internal.IO.Packaging
                             }
 
                             IndexingFilterMarshaler xamlFilterMarshaler
-                                = new IndexingFilterMarshaler(new XamlFilter(_currentStream));
-
-                            // Avoid exception on end of chunks from part filter.
-                            xamlFilterMarshaler.ThrowOnEndOfChunks = false;
+                                = new IndexingFilterMarshaler(new XamlFilter(_currentStream))
+                                {
+                                    // Avoid exception on end of chunks from part filter.
+                                    ThrowOnEndOfChunks = false
+                                };
 
                             _currentFilter = xamlFilterMarshaler;
                             _currentFilter.Init(_grfFlags, _cAttributes, _aAttributes);
@@ -560,7 +558,7 @@ namespace MS.Internal.IO.Packaging
 
             // Get the string in value Extension of key \HKEY_CLASSES_ROOT\MIME\Database\Content Type\<MIME type>.
             RegistryKey mimeContentType = FindSubkey(Registry.ClassesRoot, _mimeContentTypeKey);
-            RegistryKey mimeTypeKey = (mimeContentType == null ? null : mimeContentType.OpenSubKey(contentType.ToString()));
+            RegistryKey mimeTypeKey = (mimeContentType?.OpenSubKey(contentType.ToString()));
             if (mimeTypeKey == null)
             {
                 return null;

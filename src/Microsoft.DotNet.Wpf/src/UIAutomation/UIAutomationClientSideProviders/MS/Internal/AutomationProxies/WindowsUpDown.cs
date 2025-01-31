@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -6,12 +6,8 @@
 
 using System;
 using System.Windows;
-using System.Collections;
-using System.ComponentModel;
 using System.Windows.Automation;
 using System.Windows.Automation.Provider;
-using System.Text;
-using System.Runtime.InteropServices;
 using MS.Win32;
 using NativeMethodsSetLastError = MS.Internal.UIAutomationClientSideProviders.NativeMethodsSetLastError;
 
@@ -89,10 +85,7 @@ namespace MS.Internal.AutomationProxies
                 WindowsUpDown wtv = new WindowsUpDown(hwnd, null, -1);
                 button = wtv.CreateSpinButtonItem(SpinItem.UpArrow);
             }
-            if (button != null)
-            {
-                button.DispatchEvents(NativeMethods.EventObjectInvoke, InvokePattern.InvokedEvent, idObject, idChild);
-            }
+            button?.DispatchEvents(NativeMethods.EventObjectInvoke, InvokePattern.InvokedEvent, idObject, idChild);
         }
 
         // Creates a list item RawElementBase Item

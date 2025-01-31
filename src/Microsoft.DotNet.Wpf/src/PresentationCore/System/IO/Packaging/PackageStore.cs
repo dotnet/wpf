@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -8,14 +8,8 @@
 //  Description:   Collection of packages to be used with PackWebRequest.
 //
 
-using System;
-using System.Collections;
 using System.Collections.Specialized;
-using System.IO;
-using System.IO.Packaging;
-using System.Security;
 using System.Windows.Navigation;
-using SecurityHelper=MS.Internal.SecurityHelper; 
 using MS.Internal.PresentationCore;     // for ExceptionStringTable
 
 namespace System.IO.Packaging
@@ -133,11 +127,8 @@ namespace System.IO.Packaging
 
             lock (_globalLock)
             {
-                if (_packages != null)
-                {
-                    // If the key doesn't exist, it is no op
-                    _packages.Remove(uri);
-                }
+                // If the key doesn't exist, it is no op
+                _packages?.Remove(uri);
             }
         }
 
@@ -151,7 +142,7 @@ namespace System.IO.Packaging
 
             if (!uri.IsAbsoluteUri)
             {
-                throw new ArgumentException(SR.UriMustBeAbsolute, "uri");
+                throw new ArgumentException(SR.UriMustBeAbsolute, nameof(uri));
             }
         }
         

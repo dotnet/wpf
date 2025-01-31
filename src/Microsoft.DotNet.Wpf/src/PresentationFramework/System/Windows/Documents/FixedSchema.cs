@@ -1,30 +1,21 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
 #region Using directives
 
-using System;
 using System.Collections;
-using System.Collections.Generic;
 using System.Text;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
 using System.Windows.Markup;
 using System.Xml;
 using System.IO;
 using System.IO.Packaging;
-using System.Xml.Schema;
-using System.Net;
 using System.Resources;
 using System.Reflection;
-using System.Globalization;
-using System.Security;
 using MS.Internal;
 
 #endregion
 
-using InternalPackUriHelper = MS.Internal.IO.Packaging.PackUriHelper;
 
 namespace System.Windows.Documents
 {
@@ -81,10 +72,11 @@ namespace System.Windows.Documents
             Uri baseUri
             )
         {
-            XmlTextReader xmlTextReader = new XmlEncodingEnforcingTextReader(objectStream);
-
-            xmlTextReader.ProhibitDtd = true;
-            xmlTextReader.Normalization = true;
+            XmlTextReader xmlTextReader = new XmlEncodingEnforcingTextReader(objectStream)
+            {
+                ProhibitDtd = true,
+                Normalization = true
+            };
 
             XmlReader xmlReader = xmlTextReader;
 
@@ -266,9 +258,10 @@ namespace System.Windows.Documents
 
         public virtual XmlReaderSettings GetXmlReaderSettings()
         {
-            XmlReaderSettings xmlReaderSettings = new XmlReaderSettings();
-
-            xmlReaderSettings.ValidationFlags = System.Xml.Schema.XmlSchemaValidationFlags.ProcessIdentityConstraints | System.Xml.Schema.XmlSchemaValidationFlags.ReportValidationWarnings;
+            XmlReaderSettings xmlReaderSettings = new XmlReaderSettings
+            {
+                ValidationFlags = System.Xml.Schema.XmlSchemaValidationFlags.ProcessIdentityConstraints | System.Xml.Schema.XmlSchemaValidationFlags.ReportValidationWarnings
+            };
 
             return xmlReaderSettings;
         }
@@ -351,9 +344,10 @@ namespace System.Windows.Documents
         {
             if (_xmlReaderSettings == null)
             {
-                _xmlReaderSettings = new XmlReaderSettings();
-
-                _xmlReaderSettings.ValidationFlags = System.Xml.Schema.XmlSchemaValidationFlags.ProcessIdentityConstraints | System.Xml.Schema.XmlSchemaValidationFlags.ReportValidationWarnings;
+                _xmlReaderSettings = new XmlReaderSettings
+                {
+                    ValidationFlags = System.Xml.Schema.XmlSchemaValidationFlags.ProcessIdentityConstraints | System.Xml.Schema.XmlSchemaValidationFlags.ReportValidationWarnings
+                };
 
                 MemoryStream xpsSchemaStream = new MemoryStream(XpsS0Schema.S0SchemaBytes);
                 MemoryStream dictionarySchemaStream = new MemoryStream(XpsS0Schema.DictionarySchemaBytes);
@@ -753,9 +747,10 @@ namespace System.Windows.Documents
         {
             if (_xmlReaderSettings == null)
             {
-                _xmlReaderSettings = new XmlReaderSettings();
-
-                _xmlReaderSettings.ValidationFlags = System.Xml.Schema.XmlSchemaValidationFlags.ProcessIdentityConstraints | System.Xml.Schema.XmlSchemaValidationFlags.ReportValidationWarnings;
+                _xmlReaderSettings = new XmlReaderSettings
+                {
+                    ValidationFlags = System.Xml.Schema.XmlSchemaValidationFlags.ProcessIdentityConstraints | System.Xml.Schema.XmlSchemaValidationFlags.ReportValidationWarnings
+                };
 
                 MemoryStream xpsSchemaStream = new MemoryStream(XpsDocStructSchema.SchemaBytes);
 

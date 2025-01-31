@@ -5,11 +5,10 @@
 // This file specifies various assembly level attributes.
 
 
-using System.Reflection;
 using System.Windows;
 using System.Windows.Markup;
 
-[assembly:ThemeInfo(
+[assembly: ThemeInfo(
     // Specifies the location of theme specific resources
     ResourceDictionaryLocation.SourceAssembly,
     // Specifies the location of non-theme specific resources:

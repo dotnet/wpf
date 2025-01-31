@@ -1,18 +1,11 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
 
-using MS.Utility;
-using System;
-using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Ink;
-using System.Windows.Media;
 using System.Windows.Input;
-using MS.Internal.Ink;
-
-using SR=MS.Internal.PresentationCore.SR;
 
 namespace MS.Internal.Ink
 {
@@ -91,7 +84,7 @@ namespace MS.Internal.Ink
         /// <param name="drawingAttributes">drawing attributes</param>
         internal StrokeNodeIterator(DrawingAttributes drawingAttributes)
             : this( null,   //stylusPoints
-                    StrokeNodeOperations.CreateInstance((drawingAttributes == null ? null : drawingAttributes.StylusShape)),
+                    StrokeNodeOperations.CreateInstance((drawingAttributes?.StylusShape)),
                     (drawingAttributes == null ? false : !drawingAttributes.IgnorePressure))  //usePressure
         {
         }

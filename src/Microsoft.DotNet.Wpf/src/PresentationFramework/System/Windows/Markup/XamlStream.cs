@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -8,18 +8,9 @@
 *           Doing async parsing on a separate thread.
 *
 \***************************************************************************/
-using System;
-using System.Xml;
 using System.IO;
-using System.Windows;
 using System.Collections;
-using System.ComponentModel;
-
-using System.Diagnostics;
-using System.Reflection;
 using System.Threading;
-
-using MS.Utility;
 
 
 #if PBTCOMPILER
@@ -169,7 +160,7 @@ namespace System.Windows.Markup
                 ||
                 (!( WritePosition >= ReadLength  )) )
             {
-                throw new ArgumentOutOfRangeException( "offset" );
+                throw new ArgumentOutOfRangeException( nameof(offset));
             }
 
             return WritePosition;
@@ -314,7 +305,7 @@ namespace System.Windows.Markup
                 ||
                (!(ReadPosition < ReadLength)))
             {
-                throw new ArgumentOutOfRangeException( "offset" );
+                throw new ArgumentOutOfRangeException( nameof(offset));
             }
 
             return ReadPosition;

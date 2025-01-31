@@ -4,10 +4,8 @@
 
 // Description: Implementation of an empty proxy provider
 
-using System;
 using System.Windows.Automation;
 using System.Windows.Automation.Provider;
-using MS.Win32;
 
 namespace MS.Internal.AutomationProxies
 {

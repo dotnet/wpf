@@ -1,38 +1,19 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-//
-//
-// Description:
-//   Class for manipulating storages in the container file.
-
-
-
-using System;
 using System.Collections;
-using System.ComponentModel; // For EditorBrowsable attribute
-using System.Diagnostics; // For Assert
-using System.Security;
-using System.IO;
-using System.Globalization;             //  CultureInfo.InvariantCulture
-
-
-using System.Windows;                 //  SR.[exception message]
 using MS.Internal.IO.Packaging.CompoundFile;
 using CU = MS.Internal.IO.Packaging.CompoundFile.ContainerUtilities;
-using MS.Internal; // for Invariant & CriticalExceptions
-using System.Runtime.InteropServices;        // COMException
-using MS.Internal.WindowsBase;
-
-#pragma warning disable 1634, 1691  // suppressing PreSharp warnings
+using MS.Internal;
+using System.Runtime.InteropServices;
 
 namespace System.IO.Packaging
 {
-/// <summary>
-/// This class holds the core information for a StorageInfo object.
-/// </summary>
-internal class StorageInfoCore
+    /// <summary>
+    /// This class holds the core information for a StorageInfo object.
+    /// </summary>
+    internal class StorageInfoCore
 {
     internal StorageInfoCore( 
         string nameStorage
@@ -539,7 +520,6 @@ public class StorageInfo
 
         Invariant.Assert(streamArray  != null);
 
-        #pragma warning suppress 6506 // Invariant.Assert(streamArray  != null)
         return (StreamInfo[])streamArray.ToArray(typeof(StreamInfo));
     }
 
@@ -569,7 +549,6 @@ public class StorageInfo
 
         Invariant.Assert(storageArray != null);
 
-        #pragma warning suppress 6506 // Invariant.Assert(streamArray  != null)
         return (StorageInfo[])storageArray.ToArray(typeof(StorageInfo));
     }
 
@@ -667,7 +646,6 @@ public class StorageInfo
                         | SafeNativeCompoundFileConstants.STGM_SHARE_EXCLUSIVE,
                     0,
                     0,
-                #pragma warning suppress 6506 // Invariant.Assert(null != newStorage)
                 out newStorage.safeIStorage );
             if( SafeNativeCompoundFileConstants.S_OK != nativeCallErrorCode )
             {
@@ -820,59 +798,56 @@ public class StorageInfo
 
         // Invalidate enumerators
         InvalidateEnumerators();
-        
-        // Remove the now-meaningless name, which also signifies disposed status.
-        if( deadElementWalking is StorageInfoCore )
-        {
-            StorageInfoCore deadStorageInfoCore = (StorageInfoCore)deadElementWalking;
 
-            // Erase this storage's existence
-            deadStorageInfoCore.storageName = null;
-            if( null != deadStorageInfoCore.safeIStorage )
+            // Remove the now-meaningless name, which also signifies disposed status.
+            if (deadElementWalking is StorageInfoCore deadStorageInfoCore)
             {
-                ((IDisposable) deadStorageInfoCore.safeIStorage).Dispose();
-                deadStorageInfoCore.safeIStorage = null;
-            }
-        }
-        else if( deadElementWalking is StreamInfoCore )
-        {
-            StreamInfoCore deadStreamInfoCore = (StreamInfoCore)deadElementWalking;
 
-            // Erase this stream's existence
-            deadStreamInfoCore.streamName = null;
-
-            try
-            {
-                if (null != deadStreamInfoCore.exposedStream)
+                // Erase this storage's existence
+                deadStorageInfoCore.storageName = null;
+                if (null != deadStorageInfoCore.safeIStorage)
                 {
-                    ((Stream)(deadStreamInfoCore.exposedStream)).Close();
+                    ((IDisposable)deadStorageInfoCore.safeIStorage).Dispose();
+                    deadStorageInfoCore.safeIStorage = null;
                 }
             }
-            catch(Exception e)
+            else if (deadElementWalking is StreamInfoCore deadStreamInfoCore)
             {
-                if(CriticalExceptions.IsCriticalException(e))
+
+                // Erase this stream's existence
+                deadStreamInfoCore.streamName = null;
+
+                try
                 {
-                    // PreSharp Warning 56500
-                    throw;
+                    if (null != deadStreamInfoCore.exposedStream)
+                    {
+                        ((Stream)(deadStreamInfoCore.exposedStream)).Close();
+                    }
                 }
-                else
+                catch (Exception e)
                 {
-                    // We don't care if there are any issues - 
-                    //  the user wanted this stream gone anyway.
+                    if (CriticalExceptions.IsCriticalException(e))
+                    {
+                        throw;
+                    }
+                    else
+                    {
+                        // We don't care if there are any issues - 
+                        //  the user wanted this stream gone anyway.
+                    }
+                }
+
+                deadStreamInfoCore.exposedStream = null;
+
+                if (null != deadStreamInfoCore.safeIStream)
+                {
+                    ((IDisposable)deadStreamInfoCore.safeIStream).Dispose();
+                    deadStreamInfoCore.safeIStream = null;
                 }
             }
 
-            deadStreamInfoCore.exposedStream = null;
-            
-            if( null != deadStreamInfoCore.safeIStream ) 
-            {
-                ((IDisposable) deadStreamInfoCore.safeIStream).Dispose();
-                deadStreamInfoCore.safeIStream = null;
-            }
-        }
-        
-        // Remove reference for destroyed element
-        core.elementInfoCores.Remove(elementNameInternal);
+            // Remove reference for destroyed element
+            core.elementInfoCores.Remove(elementNameInternal);
     }
     /// <summary>
     /// Looks for a storage element with the given name, retrieves its
@@ -1227,33 +1202,31 @@ public class StorageInfo
                 {
                     RecursiveStorageInfoCoreRelease( (StorageInfoCore)o );
                 }
-                else if( o is StreamInfoCore )
-                {
-                    StreamInfoCore streamRelease = (StreamInfoCore)o;
-
-                    try
+                else if (o is StreamInfoCore streamRelease)
                     {
-                        if (null != streamRelease.exposedStream)
+                        try
                         {
-                            ((Stream)(streamRelease.exposedStream)).Close();
+                            if (null != streamRelease.exposedStream)
+                            {
+                                ((Stream)(streamRelease.exposedStream)).Close();
+                            }
+                            streamRelease.exposedStream = null;
                         }
-                        streamRelease.exposedStream = null;
-                    }
-                    finally
-                    {
-                        // We need this release and null-out to happen even if we
-                        //  ran into problems with the clean-up code above.
-                        if( null != streamRelease.safeIStream)
+                        finally
                         {
-                            ((IDisposable) streamRelease.safeIStream).Dispose();
-                            streamRelease.safeIStream = null;
-                        }
+                            // We need this release and null-out to happen even if we
+                            //  ran into problems with the clean-up code above.
+                            if (null != streamRelease.safeIStream)
+                            {
+                                ((IDisposable)streamRelease.safeIStream).Dispose();
+                                streamRelease.safeIStream = null;
+                            }
 
-                        // Null name in core signifies the core object is disposed
-                        ((StreamInfoCore)o).streamName = null;
+                            // Null name in core signifies the core object is disposed
+                            ((StreamInfoCore)o).streamName = null;
+                        }
                     }
                 }
-            }
 
             // All child objects freed, clear out the enumerators
             InvalidateEnumerators( startCore );

@@ -195,7 +195,7 @@ namespace MS.Internal.Documents
         /// </summary>
         ReadOnlyCollection<Rect> IContentHost.GetRectangles(ContentElement child)
         {
-            return new ReadOnlyCollection<Rect>(new List<Rect>());
+            return ReadOnlyCollection<Rect>.Empty;
         }
 
         /// <summary>

@@ -1,0 +1,61 @@
+<Project Sdk="Microsoft.NET.Sdk" DefaultTargets="Codecov">
+
+  <PropertyGroup>
+    <!-- We need to specify a framework in order for the Restore target to work -->
+    <TargetFramework>netcoreapp3.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+      <PackageReference Include="Codecov" Version="$(CodecovVersion)" />
+      <PackageReference Include="ReportGenerator" Version="$(ReportGeneratorVersion)" />
+  </ItemGroup>
+  <Target Name="Codecov" DependsOnTargets="Restore">
+    <PropertyGroup>
+      <_CodecovPath>$(NuGetPackageRoot)codecov\$(CodecovVersion)\tools\Codecov.exe</_CodecovPath>
+      <_ReportGeneratorPath>$(NuGetPackageRoot)reportgenerator\$(ReportGeneratorVersion)\tools\net47\ReportGenerator.exe</_ReportGeneratorPath>
+
+      <!-- The name of the source branch of the pull request. Ideally this would include the fork name, such as
+        'sharwell:coverage-cleanup', but only the branch name itself is available, such as 'coverage-cleanup'. -->
+      <_BranchName Condition="'$(_BranchName)' == ''">$(SYSTEM_PULLREQUEST_SOURCEBRANCH)</_BranchName>
+      <_BranchName Condition="'$(_BranchName)' == ''">$(BUILD_SOURCEBRANCHNAME)</_BranchName>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <!-- [...\artifacts\bin\][project]\[configuration]\[framework]\coverage\[project].coverage-->
+      <_CoverageReports Include="$(ArtifactsBinDir)*\$(Configuration)\*\coverage\*.coverage" />
+    </ItemGroup>
+
+    <!-- Merge multiple coverlet reports into a single Cobertura report before uploading to codecov.io, in order to
+      reduce upload size and load on the codecov.io processing servers. -->
+    <Message Importance="high" Text="&quot;$(_ReportGeneratorPath)&quot; &quot;-reports:@(_CoverageReports)&quot; -targetdir:$(BaseOutputPath)coverage -reporttypes:Cobertura" />
+    <Exec Command="&quot;$(_ReportGeneratorPath)&quot; &quot;-reports:@(_CoverageReports)&quot; -targetdir:$(BaseOutputPath)coverage -reporttypes:Cobertura" />
+
+    <ItemGroup>
+      <!-- These are the best known interpretation of options defined in
+        https://github.com/codecov/codecov-exe/blob/master/Source/Codecov/Program/CommandLineOptions.cs -->
+      <_CodecovArgs Include="-f;$(BaseOutputPath)coverage\Cobertura.xml" />
+      <_CodecovArgs Include="-r;$(BUILD_REPOSITORY_NAME)" Condition="'$(BUILD_REPOSITORY_NAME)' != ''" />
+      <_CodecovArgs Include="--pr;$(SYSTEM_PULLREQUEST_PULLREQUESTNUMBER)" Condition="'$(SYSTEM_PULLREQUEST_PULLREQUESTNUMBER)' != ''" />
+      <_CodecovArgs Include="-b;$(BUILD_BUILDNUMBER)" Condition="'$(BUILD_BUILDNUMBER)' != ''" />
+      <_CodecovArgs Include="--branch;$(_BranchName)" Condition="'$(_BranchName)' != ''" />
+      <_CodecovArgs Include="-c;$(BUILD_SOURCEVERSION)" Condition="'$(BUILD_SOURCEVERSION)' != ''" />
+      <_CodecovArgs Include="-n;$(BUILD_DEFINITIONNAME)" Condition="'$(BUILD_DEFINITIONNAME)' != ''" />
+      <_CodecovArgs Include="-t;$(CodeCovToken)" Condition="'$(CodeCovToken)' != ''" />
+
+      <_CodecovFlags Include="$(Configuration)" Condition="'$(Configuration)' != ''" />
+      <_CodecovProductionFlags Include="@(_CodecovFlags)" />
+      <_CodecovProductionFlags Include="production" />
+      <_CodecovTestFlags Include="@(_CodecovFlags)" />
+      <_CodecovTestFlags Include="test" />
+    </ItemGroup>
+
+    <!-- Upload the coverage file with a 'production' flag, which will be filtered by codecov.io to production code -->
+    <Message Importance="high" Text="&quot;$(_CodecovPath)&quot; @(_CodecovArgs, ' ') --flag @(_CodecovProductionFlags, ',')" />
+    <Exec Command="&quot;$(_CodecovPath)&quot; @(_CodecovArgs, ' ') --flag @(_CodecovProductionFlags, ',')" />
+
+    <!-- Upload the coverage file with a 'test' flag, which will be filtered by codecov.io to test code -->
+    <Message Importance="high" Text="&quot;$(_CodecovPath)&quot; @(_CodecovArgs, ' ') --flag @(_CodecovTestFlags, ',')" />
+    <Exec Command="&quot;$(_CodecovPath)&quot; @(_CodecovArgs, ' ') --flag @(_CodecovTestFlags, ',')" />
+  </Target>
+
+</Project>

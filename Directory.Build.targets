@@ -1,5 +1,17 @@
 <Project>
+  <!-- Set code coverage properties that reference properties not available in Directory.Build.props -->
+  <PropertyGroup Condition="'$(Coverage)' == 'true'">
+    <CoverletOutput>$(TargetDir)coverage\$(MSBuildProjectName).coverage</CoverletOutput>
+  </PropertyGroup>
 
+  <Target Name="InstrumentModulesNoBuildBeforeTest" Condition="'$(CollectCoverage)' == 'true'" BeforeTargets="RunTests">
+    <CallTarget Targets="InstrumentModulesAfterBuild" />
+  </Target>
+
+  <Target Name="GenerateCoverageResultAfterTest" Condition="'$(CollectCoverage)' == 'true'" AfterTargets="RunTests">
+    <CallTarget Targets="GenerateCoverageResult" />
+  </Target>
+  
   <Import Project="$(WpfArcadeSdkTargets)"
           Condition="Exists('$(WpfArcadeSdkProps)') And Exists('$(WpfArcadeSdkTargets)')"/>
 

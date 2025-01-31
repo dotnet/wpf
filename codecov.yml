@@ -1,0 +1,35 @@
+# https://docs.codecov.io/docs/codecov-yaml
+# https://github.com/codecov/support/wiki/Codecov-Yaml
+
+coverage:
+  range: 20..80                   # 20 is red, 80 is green
+  round: down                     # always round down
+  precision: 5                    # highest level of decimal precision
+  status:
+    project:
+      default: false
+    patch:
+      default: false
+  fixes:
+    - "eng/::/"
+
+comment:
+  layout: "diff, flags"           # coverage difference, flags below
+
+flags:                            # which files to include in the reporting
+  production:
+    paths:
+      - src\Microsoft.DotNet.Wpf\src
+      - src\Microsoft.DotNet.Wpf\src\PresentationFramework
+      - src\Microsoft.DotNet.Wpf\src\PresentationCore
+      - src\Microsoft.DotNet.Wpf\src\PresentationUI
+      - src\Microsoft.DotNet.Wpf\src\ReachFramework
+      - src\Microsoft.DotNet.Wpf\src\System.Xaml
+  test:
+    paths:
+      - tests/
+      - src\Microsoft.DotNet.Wpf\tests\UnitTests\WindowsBase.Tests
+      - src\Microsoft.DotNet.Wpf\tests\UnitTests\PresentationCore.Tests
+      - src\Microsoft.DotNet.Wpf\tests\UnitTests\PresentationFramework.Fluent.Tests
+      - src\Microsoft.DotNet.Wpf\tests\UnitTests\System.Printing.Tests
+      - src\Microsoft.DotNet.Wpf\tests\UnitTests\System.Xaml.Tests

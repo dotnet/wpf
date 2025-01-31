@@ -2284,3 +2284,6 @@ dotnet_diagnostic.IDE0251.severity = suggestion
 
 # IDE1006: Naming Styles
 dotnet_diagnostic.IDE1006.severity = suggestion
+
+[**/Generated/*.*]
+generated_code = true

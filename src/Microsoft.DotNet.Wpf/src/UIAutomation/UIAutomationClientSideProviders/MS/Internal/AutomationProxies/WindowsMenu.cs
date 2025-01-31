@@ -457,7 +457,7 @@ namespace MS.Internal.AutomationProxies
             if (MenuRelatedEvent(eventId, aidProps))
             {
                 // Sytem wide event register with hwnd == IntPtr.Zero
-                WinEventTracker.AddToNotificationList(IntPtr.Zero, new WinEventTracker.ProxyRaiseEvents(MenuEvents), _menuEvents, _menuEvents.Length);
+                WinEventTracker.AddToNotificationList(IntPtr.Zero, new WinEventTracker.ProxyRaiseEvents(MenuEvents), _menuEvents);
 
                 // Keep counter of how many requests came so we will know when to remove ourselves from the notification list
                 // We need a counter since system wide events are not based on the hwnd.
@@ -478,7 +478,7 @@ namespace MS.Internal.AutomationProxies
                 --_eventListeners;
                 if (_eventListeners == 0 && MenuRelatedEvent (eventId, aidProps))
                 {
-                    WinEventTracker.RemoveToNotificationList (IntPtr.Zero, _menuEvents, new WinEventTracker.ProxyRaiseEvents (MenuEvents), _menuEvents.Length);
+                    WinEventTracker.RemoveToNotificationList(IntPtr.Zero, _menuEvents, new WinEventTracker.ProxyRaiseEvents(MenuEvents));
                 }
             }
         }

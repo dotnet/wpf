@@ -2,18 +2,15 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
+using System.Runtime.CompilerServices;
 using System.ComponentModel;
 using MS.Internal;
 
 using UnsafeNativeMethods = MS.Win32.PresentationCore.UnsafeNativeMethods;
-using System.Runtime.CompilerServices;
-
-using SR = MS.Internal.PresentationCore.SR;
-using UnsafeNativeMethods = MS.Win32.PresentationCore.UnsafeNativeMethods;
 
 namespace System.Windows.Media
 {
-    [System.Flags]
+    [Flags]
     internal enum PixelFormatFlags
     {
         BitsPerPixelMask        = 0x00FF,
@@ -142,7 +139,7 @@ namespace System.Windows.Media
     /// <summary>
     /// Pixel Format Definition for images and pixel-based surfaces
     /// </summary>
-    [TypeConverter (typeof(PixelFormatConverter))]
+    [TypeConverter(typeof(PixelFormatConverter))]
     [Serializable]
     public struct PixelFormat : IEquatable<PixelFormat>
     {
@@ -157,8 +154,8 @@ namespace System.Windows.Media
                 // will be the format enum value.
                 Guid guidWicPixelFormat = WICPixelFormatGUIDs.WICPixelFormatDontCare;
                 ReadOnlySpan<byte> pGuidPixelFormat = new(&guidPixelFormat, 15);
-                ReadOnlySpan<byte> pGuidBuiltIn = new(&guidWicPixelFormat, 15);         
-                
+                ReadOnlySpan<byte> pGuidBuiltIn = new(&guidWicPixelFormat, 15);
+
                 // If it looks like a built-in WIC pixel format, verify that the format enum value is known to us.
                 if (pGuidPixelFormat.SequenceEqual(pGuidBuiltIn) && ((byte*)&guidPixelFormat)[15] <= (byte)PixelFormatEnum.Cmyk32)
                 {
@@ -181,7 +178,7 @@ namespace System.Windows.Media
 
             _flags = GetPixelFormatFlagsFromEnum(format);
             _bitsPerPixel = GetBitsPerPixelFromEnum(format);
-            _guidFormat = PixelFormat.GetGuidFromFormat(format);
+            _guidFormat = GetGuidFromFormat(format);
         }
 
         /// <summary>
@@ -229,7 +226,7 @@ namespace System.Windows.Media
 
             _flags = GetPixelFormatFlagsFromEnum(_format);
             _bitsPerPixel = GetBitsPerPixelFromEnum(_format);
-            _guidFormat = PixelFormat.GetGuidFromFormat(_format);
+            _guidFormat = GetGuidFromFormat(_format);
         }
 
         private static Guid GetGuidFromFormat(PixelFormatEnum format) => format switch
@@ -274,7 +271,7 @@ namespace System.Windows.Media
         /// <summary>
         /// op_equality - returns whether or not the two pixel formats are equal
         /// </summary>
-        public static bool operator == (PixelFormat left, PixelFormat right)
+        public static bool operator ==(PixelFormat left, PixelFormat right)
         {
             return left.Guid == right.Guid;
         }
@@ -282,7 +279,7 @@ namespace System.Windows.Media
         /// <summary>
         /// op_inequality - returns whether or not the two pixel formats are not equal
         /// </summary>
-        public static bool operator != (PixelFormat left, PixelFormat right)
+        public static bool operator !=(PixelFormat left, PixelFormat right)
         {
             return left.Guid != right.Guid;
         }
@@ -364,7 +361,7 @@ namespace System.Windows.Media
 
                             byte[] channelMask = new byte[cbBytes];
 
-                            fixed (byte *pbChannelMask = channelMask)
+                            fixed (byte* pbChannelMask = channelMask)
                             {
                                 HRESULT.Check(UnsafeNativeMethods.WICPixelFormatInfo.GetChannelMask(
                                     pixelFormatInfo, i, cbBytes, pbChannelMask, out cbBytes));
@@ -397,7 +394,7 @@ namespace System.Windows.Media
             {
                 try
                 {
-                    Guid guidPixelFormat = this.Guid;
+                    Guid guidPixelFormat = _guidFormat;
 
                     int hr = UnsafeNativeMethods.WICImagingFactory.CreateComponentInfo(
                         myFactory.ImagingFactoryPtr,

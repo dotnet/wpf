@@ -3,6 +3,7 @@
 // See the LICENSE file in the project root for more information.
 
 using System.Runtime.CompilerServices;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using MS.Internal;
 
@@ -381,7 +382,7 @@ namespace System.Windows.Media
                     }
                 }
 
-                return masks;
+                return new ReadOnlyCollection<PixelFormatChannelMask>(masks);
             }
         }
 

@@ -1,12 +1,12 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 #nullable enable
 
 using System.Runtime.CompilerServices;
 using System.Reflection.Metadata;
 using System.Reflection;
+using System.Text;
 using System;
 
 namespace MS.Internal
@@ -17,9 +17,12 @@ namespace MS.Internal
     internal static class ReflectionUtils
     {
 #if !NETFX
+        private const string Version = ", Version=";
+        private const string PublicKeyToken = ", PublicKeyToken=";
+
         /// <summary>
-        ///  Retrieves the full assembly name by combining the <paramref name="partialName"/> passed in
-        ///  with everything else from <paramref name="assembly"/>.
+        /// Retrieves the full assembly name by combining the <paramref name="partialName"/> passed in
+        /// with everything else from <paramref name="assembly"/>.
         /// </summary>
         internal static string GetFullAssemblyNameFromPartialName(Assembly assembly, string partialName)
         {
@@ -33,7 +36,7 @@ namespace MS.Internal
 #endif
 
         /// <summary>
-        ///  Given an <paramref name="assembly"/>, returns the partial/simple name of the assembly.
+        /// Given an <paramref name="assembly"/>, returns the partial/simple name of the assembly.
         /// </summary>
 #if !NETFX
         internal static ReadOnlySpan<char> GetAssemblyPartialName(Assembly assembly)
@@ -80,5 +83,47 @@ namespace MS.Internal
             return name.Name ?? string.Empty;
 #endif
         }
+
+#if !NETFX
+        /// <summary>
+        /// Parses <see cref="Assembly.FullName"/> and retrieves "Version" and "PublicKeyToken" values from the original string.
+        /// This should only be passed a RuntimeAssembly to ensure proper functionality.
+        /// </summary>
+        /// <param name="assembly">The RuntimeAssembly which will provide properly formatted full name.</param>
+        /// <param name="version">If present, returns the value of Version portion, otherwise Empty result.</param>
+        /// <param name="token">If present, returns the value of PublicKeyToken portion. Empty result is returned when the value is "null" or not present.</param>
+        internal static void GetAssemblyVersionPlusToken(Assembly assembly, out ReadOnlySpan<char> assemblyVersion, out ReadOnlySpan<char> assemblyToken)
+        {
+            ArgumentNullException.ThrowIfNull(assembly, nameof(assembly));
+            ReadOnlySpan<char> assemblyName = assembly.FullName;
+
+            assemblyVersion = ReadOnlySpan<char>.Empty;
+            assemblyToken = ReadOnlySpan<char>.Empty;
+
+            // Parse Version section
+            int versionIndex = assemblyName.IndexOf(Version);
+            if (versionIndex != -1)
+            {
+                int tokenEnding = assemblyName.Slice(versionIndex + 1).IndexOf(',') + 1;
+                int tokenLength = tokenEnding == 0 ? assemblyName.Slice(versionIndex).Length : tokenEnding;
+
+                assemblyVersion = assemblyName.Slice(versionIndex + Version.Length, tokenLength - Version.Length);
+            }
+
+            // Parse PublicKeyToken section
+            int tokenIndex = assemblyName.IndexOf(PublicKeyToken);
+            if (tokenIndex != -1)
+            {
+                int tokenEnding = assemblyName.Slice(tokenIndex + 1).IndexOf(',') + 1;
+                int tokenLength = tokenEnding == 0 ? assemblyName.Slice(tokenIndex).Length : tokenEnding;
+
+                // PublicKeyToken is always 8 bytes (16 chars in HEX), in other cases it is gonna be "null",
+                // however it is simply faster to match it via Length as original parser does it than anything else
+                assemblyToken = assemblyName.Slice(tokenIndex + PublicKeyToken.Length, tokenLength - PublicKeyToken.Length);
+                if (assemblyToken.Length != 16)
+                    assemblyToken = ReadOnlySpan<char>.Empty;
+            }
+        }
+#endif
     }
 }

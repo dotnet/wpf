@@ -304,7 +304,7 @@ namespace System.Windows.Data
                 if (!CanCustomFilter)
                     throw new NotSupportedException(SR.BindingListCannotCustomFilter);
                 if (IsAddingNew || IsEditingItem)
-                    throw new InvalidOperationException(SR.Format(SR.MemberNotAllowedDuringAddOrEdit, "CustomFilter"));
+                    throw new InvalidOperationException(SR.Format(SR.MemberNotAllowedDuringAddOrEdit, nameof(CustomFilter)));
                 if (AllowsCrossThreadChanges)
                     VerifyAccess();
 
@@ -367,7 +367,7 @@ namespace System.Windows.Data
                 if (!CanGroup)
                     throw new NotSupportedException();
                 if (IsAddingNew || IsEditingItem)
-                    throw new InvalidOperationException(SR.Format(SR.MemberNotAllowedDuringAddOrEdit, "GroupBySelector"));
+                    throw new InvalidOperationException(SR.Format(SR.MemberNotAllowedDuringAddOrEdit, nameof(GroupBySelector)));
 
                 _group.GroupBySelector = value;
 

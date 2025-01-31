@@ -136,7 +136,7 @@ namespace System.Windows.Media.Imaging
             {
                 if (throwIfInvalid)
                 {
-                    throw new InvalidOperationException(SR.Format(SR.Image_NoArgument, "Source"));
+                    throw new InvalidOperationException(SR.Format(SR.Image_NoArgument, nameof(Source)));
                 }
                 return false;
             }
@@ -154,7 +154,7 @@ namespace System.Windows.Media.Imaging
             {
                 if (throwIfInvalid)
                 {
-                    throw new InvalidOperationException(SR.Format(SR.Image_NoArgument, "DestinationColorContext"));
+                    throw new InvalidOperationException(SR.Format(SR.Image_NoArgument, nameof(DestinationColorContext)));
                 }
                 return false;
             }

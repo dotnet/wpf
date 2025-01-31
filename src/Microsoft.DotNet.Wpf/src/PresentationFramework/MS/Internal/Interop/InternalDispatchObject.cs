@@ -116,7 +116,7 @@ namespace MS.Internal.Interop
         // We never expect to get a real method name here--see the explanation in GetMethods().
         if (name.StartsWith("[DISPID=", StringComparison.OrdinalIgnoreCase))
         {
-            int dispid = int.Parse(name.Substring(8, name.Length-9), CultureInfo.InvariantCulture);
+            int dispid = int.Parse(name.AsSpan(8, name.Length-9), CultureInfo.InvariantCulture);
             MethodInfo method;
             if (_dispId2MethodMap.TryGetValue(dispid, out method))
             {

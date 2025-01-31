@@ -76,7 +76,7 @@ namespace MS.Internal.AutomationProxies
                     IntPtr hwndParent = NativeMethodsSetLastError.GetAncestor (hwnd, NativeMethods.GA_PARENT);
                     if (hwndParent != IntPtr.Zero)
                     {
-                        if (Misc.GetClassName(hwndParent).IndexOf("SysListView32", StringComparison.Ordinal) >= 0)
+                        if (Misc.GetClassName(hwndParent).Contains("SysListView32", StringComparison.Ordinal))
                         {
                             // Notify the Listview that the header Change
                             WindowsListView wlv = (WindowsListView) WindowsListView.Create (hwndParent, 0);
@@ -245,7 +245,7 @@ namespace MS.Internal.AutomationProxies
             IntPtr hwndParent = NativeMethodsSetLastError.GetAncestor (_hwnd, NativeMethods.GA_PARENT);
             if (hwndParent != IntPtr.Zero)
             {
-                if (Misc.GetClassName(hwndParent).IndexOf("SysListView32", StringComparison.Ordinal) >= 0)
+                if (Misc.GetClassName(hwndParent).Contains("SysListView32", StringComparison.Ordinal))
                 {
                     // Determine the number of pixels or columns to scroll horizontally.
                     int pixels = 0;

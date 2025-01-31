@@ -15,12 +15,13 @@
 //                  AdviseEventAdded
 //                  AdviseEventRemoved
 
-using System;
-using System.Windows;
-using System.Windows.Automation;
 using System.Windows.Automation.Provider;
+using System.Runtime.InteropServices;
 using System.Collections.Generic;
+using System.Windows.Automation;
+using System.Windows;
 using MS.Win32;
+using System;
 
 namespace MS.Internal.AutomationProxies
 {

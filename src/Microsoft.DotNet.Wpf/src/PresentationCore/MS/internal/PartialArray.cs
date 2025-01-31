@@ -139,7 +139,7 @@ namespace MS.Internal
                     SR.Format(
                         SR.Collection_CopyTo_IndexGreaterThanOrEqualToArrayLength, 
                         nameof(arrayIndex), 
-                        "array"),
+                        nameof(array)),
                         nameof(arrayIndex));
             }
 
@@ -149,7 +149,7 @@ namespace MS.Internal
                     SR.Format(
                         SR.Collection_CopyTo_NumberOfElementsExceedsArrayLength,
                         nameof(arrayIndex),
-                        "array"));
+                        nameof(array)));
             }           
             
 

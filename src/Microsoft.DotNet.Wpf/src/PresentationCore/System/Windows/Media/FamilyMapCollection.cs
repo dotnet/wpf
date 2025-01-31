@@ -75,10 +75,10 @@ namespace System.Windows.Media
             ArgumentNullException.ThrowIfNull(array);
 
             if (index >= array.Length)
-                throw new ArgumentException(SR.Format(SR.Collection_CopyTo_IndexGreaterThanOrEqualToArrayLength, nameof(index), "array"));
+                throw new ArgumentException(SR.Format(SR.Collection_CopyTo_IndexGreaterThanOrEqualToArrayLength, nameof(index), nameof(array)));
 
             if (_count > array.Length - index)
-                throw new ArgumentException(SR.Format(SR.Collection_CopyTo_NumberOfElementsExceedsArrayLength, index, "array"));
+                throw new ArgumentException(SR.Format(SR.Collection_CopyTo_NumberOfElementsExceedsArrayLength, index, nameof(array)));
 
             if (_count != 0)
                 Array.Copy(_items, 0, array, index, _count);
@@ -96,10 +96,10 @@ namespace System.Windows.Media
                 throw new ArgumentException(SR.Format(SR.CannotConvertType, typeof(FamilyTypeface), elementType));
 
             if (index >= array.Length)
-                throw new ArgumentException(SR.Format(SR.Collection_CopyTo_IndexGreaterThanOrEqualToArrayLength, nameof(index), "array"));
+                throw new ArgumentException(SR.Format(SR.Collection_CopyTo_IndexGreaterThanOrEqualToArrayLength, nameof(index), nameof(array)));
 
             if (_count > array.Length - index)
-                throw new ArgumentException(SR.Format(SR.Collection_CopyTo_NumberOfElementsExceedsArrayLength, index, "array"));
+                throw new ArgumentException(SR.Format(SR.Collection_CopyTo_NumberOfElementsExceedsArrayLength, index, nameof(array)));
 
             if (_count != 0)
                 Array.Copy(_items, 0, array, index, _count);

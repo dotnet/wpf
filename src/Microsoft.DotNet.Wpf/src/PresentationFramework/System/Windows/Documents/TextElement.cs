@@ -121,7 +121,7 @@ namespace System.Windows.Documents
 
                 if (startNode != endNode)
                 {
-                    throw new ArgumentException(SR.Format(SR.InDifferentScope, nameof(start), "end"));
+                    throw new ArgumentException(SR.Format(SR.InDifferentScope, nameof(start), nameof(end)));
                 }
             }
 

@@ -689,11 +689,11 @@ namespace System.Windows.Media
                     FillRule fillRule = FillRule.Nonzero;
                     PathGeometry.FigureList list = new();
 
-                    int hr; //If we don't have dashArray, we call without it (its optional)
-                    if (dashArray is null)
+                    int hr;
+                    fixed (double* ptrDashArray = dashArray)
                     {
                         hr = UnsafeNativeMethods.MilCoreApi.MilUtility_PathGeometryWiden(&penData,
-                                                                                         null,
+                                                                                         ptrDashArray,
                                                                                          &pathData.Matrix,
                                                                                          pathData.FillRule,
                                                                                          pbPathData,
@@ -702,22 +702,6 @@ namespace System.Windows.Media
                                                                                          type == ToleranceType.Relative,
                                                                                          new PathGeometry.AddFigureToListDelegate(list.AddFigureToList),
                                                                                          out fillRule);
-                    }
-                    else // Pin the dashArray and use it, if we have one.
-                    {
-                        fixed (double* ptrDashArray = dashArray)
-                        {
-                            hr = UnsafeNativeMethods.MilCoreApi.MilUtility_PathGeometryWiden(&penData,
-                                                                                             ptrDashArray,
-                                                                                             &pathData.Matrix,
-                                                                                             pathData.FillRule,
-                                                                                             pbPathData,
-                                                                                             pathData.Size,
-                                                                                             tolerance,
-                                                                                             type == ToleranceType.Relative,
-                                                                                             new PathGeometry.AddFigureToListDelegate(list.AddFigureToList),
-                                                                                             out fillRule);
-                        }
                     }
 
                     if (hr == (int)MILErrors.WGXERR_BADNUMBER)

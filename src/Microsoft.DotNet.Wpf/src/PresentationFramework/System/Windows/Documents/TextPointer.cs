@@ -1750,7 +1750,7 @@ namespace System.Windows.Documents
             ArgumentNullException.ThrowIfNull(textBuffer);
             if (startIndex < 0)
             {
-                throw new ArgumentException(SR.Format(SR.NegativeValue, "startIndex"));
+                throw new ArgumentException(SR.Format(SR.NegativeValue, nameof(startIndex)));
             }
             if (startIndex > textBuffer.Length)
             {
@@ -1758,7 +1758,7 @@ namespace System.Windows.Documents
             }
             if (count < 0)
             {
-                throw new ArgumentException(SR.Format(SR.NegativeValue, "count"));
+                throw new ArgumentException(SR.Format(SR.NegativeValue, nameof(count)));
             }
             if (count > textBuffer.Length - startIndex)
             {

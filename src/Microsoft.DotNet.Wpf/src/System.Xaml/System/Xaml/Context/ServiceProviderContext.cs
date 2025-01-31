@@ -137,7 +137,7 @@ namespace MS.Internal.Xaml
                 if (property is null)
                 {
                     // we don't allow any property to be null
-                    throw new ArgumentException(SR.Format(SR.ValueInArrayIsNull, "properties"));
+                    throw new ArgumentException(SR.Format(SR.ValueInArrayIsNull, nameof(properties)));
                 }
             }
 
@@ -153,7 +153,7 @@ namespace MS.Internal.Xaml
                 if (type is null)
                 {
                     // we don't allow any type to be null
-                    throw new ArgumentException(SR.Format(SR.ValueInArrayIsNull, "types"));
+                    throw new ArgumentException(SR.Format(SR.ValueInArrayIsNull, nameof(types)));
                 }
             }
 
@@ -171,7 +171,7 @@ namespace MS.Internal.Xaml
                 if (property is null)
                 {
                     // we don't allow any property to be null
-                    throw new ArgumentException(SR.Format(SR.ValueInArrayIsNull, "properties"));
+                    throw new ArgumentException(SR.Format(SR.ValueInArrayIsNull, nameof(properties)));
                 }
             }
 
@@ -187,7 +187,7 @@ namespace MS.Internal.Xaml
                 if (type is null)
                 {
                     // we don't allow any type to be null
-                    throw new ArgumentException(SR.Format(SR.ValueInArrayIsNull, "types"));
+                    throw new ArgumentException(SR.Format(SR.ValueInArrayIsNull, nameof(types)));
                 }
             }
 
@@ -207,7 +207,7 @@ namespace MS.Internal.Xaml
                 if (property is null)
                 {
                     // we don't allow any property to be null
-                    throw new ArgumentException(SR.Format(SR.ValueInArrayIsNull, "properties"));
+                    throw new ArgumentException(SR.Format(SR.ValueInArrayIsNull, nameof(properties)));
                 }
             }
 

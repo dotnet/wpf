@@ -1749,7 +1749,7 @@ namespace MS.Internal.Automation
             ArgumentNullException.ThrowIfNull(text);
             if (text.Length == 0)
             {
-                throw new ArgumentException(SR.Format(SR.TextRangeProvider_EmptyStringParameter, "text"));
+                throw new ArgumentException(SR.Format(SR.TextRangeProvider_EmptyStringParameter, nameof(text)));
             }
 
             Normalize();

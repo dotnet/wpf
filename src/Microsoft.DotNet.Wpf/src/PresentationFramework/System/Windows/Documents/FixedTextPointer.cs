@@ -126,7 +126,7 @@ namespace System.Windows.Documents
             ArgumentNullException.ThrowIfNull(textBuffer);
             if (count < 0)
             {
-                throw new ArgumentException(SR.Format(SR.NegativeValue, "count"));
+                throw new ArgumentException(SR.Format(SR.NegativeValue, nameof(count)));
             }
 
             if (_flowPosition.GetPointerContext(direction) != TextPointerContext.Text)

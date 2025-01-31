@@ -103,7 +103,7 @@ namespace System.Windows.Annotations
 
             if (textPointer.TextContainer != this.Start.TextContainer)
             {
-                throw new ArgumentException(SR.Format(SR.NotInAssociatedTree, "textPointer"));
+                throw new ArgumentException(SR.Format(SR.NotInAssociatedTree, nameof(textPointer)));
             }
 
             // Correct position normalization on range boundary so that

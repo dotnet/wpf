@@ -305,7 +305,7 @@ namespace System.Windows.Media.Imaging
             SubscribeToCommittingBatchAndWritePostscript();
         }
 
-        private Void UnlockWithoutSubscribeToCommittingBatch()
+        private void UnlockWithoutSubscribeToCommittingBatch()
         {
             WritePreamble();
 
@@ -324,7 +324,7 @@ namespace System.Windows.Media.Imaging
             }
         }
 
-        private Void SubscribeToCommittingBatchAndWritePostscript()
+        private void SubscribeToCommittingBatchAndWritePostscript()
         {
             if (_hasDirtyRects)
             {

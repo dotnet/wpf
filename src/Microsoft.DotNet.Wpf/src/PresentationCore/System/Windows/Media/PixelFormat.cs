@@ -2,6 +2,7 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using MS.Internal;
 
@@ -62,7 +63,7 @@ namespace System.Windows.Media
         {
             get
             {
-                return _mask != null ? new PartialList<byte>((byte[])_mask.Clone()) : null;
+                return _mask != null ? new ReadOnlyCollection<byte>((byte[])_mask.Clone()) : null;
             }
         }
 
@@ -544,7 +545,7 @@ namespace System.Windows.Media
                     }
                 }
 
-                return new PartialList<PixelFormatChannelMask>(masks);
+                return new ReadOnlyCollection<PixelFormatChannelMask>(masks);
             }
         }
 

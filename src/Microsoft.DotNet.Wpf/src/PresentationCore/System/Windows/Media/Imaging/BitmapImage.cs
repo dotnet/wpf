@@ -72,7 +72,7 @@ namespace System.Windows.Media.Imaging
 
             if (UriSource == null && StreamSource == null)
             {
-                throw new InvalidOperationException(SR.Format(SR.Image_NeitherArgument, "UriSource", "StreamSource"));
+                throw new InvalidOperationException(SR.Format(SR.Image_NeitherArgument, nameof(UriSource), "StreamSource"));
             }
 
             // If the Uri is relative, use delay creation as the BaseUri could be set at a later point

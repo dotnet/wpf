@@ -1420,7 +1420,7 @@ namespace System.Windows.Documents
                 Type containerType = this.TextContainer.Parent.GetType();
                 if (!TextSchema.IsValidChildOfContainer(containerType, typeof(Paragraph)))
                 {
-                    throw new InvalidOperationException(SR.Format(SR.TextSchema_IllegalElement, "Paragraph", containerType));
+                    throw new InvalidOperationException(SR.Format(SR.TextSchema_IllegalElement, nameof(Paragraph), containerType));
                 }
             }
 

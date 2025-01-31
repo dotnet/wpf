@@ -1093,7 +1093,7 @@ namespace System.Windows
                         }
                         else
                         {
-                            throw new InvalidOperationException(SR.Format(SR.PropertyIsImmutable, "ResourceAssembly", "Application"));
+                            throw new InvalidOperationException(SR.Format(SR.PropertyIsImmutable, nameof(ResourceAssembly), "Application"));
                         }
                     }
                 }

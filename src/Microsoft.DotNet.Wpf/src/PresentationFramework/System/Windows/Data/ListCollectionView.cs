@@ -540,7 +540,7 @@ namespace System.Windows.Data
                 VerifyRefreshNotDeferred();
 
                 if (value != _newItemPlaceholderPosition && IsAddingNew)
-                    throw new InvalidOperationException(SR.Format(SR.MemberNotAllowedDuringTransaction, "NewItemPlaceholderPosition", "AddNew"));
+                    throw new InvalidOperationException(SR.Format(SR.MemberNotAllowedDuringTransaction, nameof(NewItemPlaceholderPosition), "AddNew"));
 
                 if (value != _newItemPlaceholderPosition && _isRemoving)
                 {

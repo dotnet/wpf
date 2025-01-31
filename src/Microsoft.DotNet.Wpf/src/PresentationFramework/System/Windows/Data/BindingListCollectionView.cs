@@ -427,7 +427,7 @@ namespace System.Windows.Data
                 VerifyRefreshNotDeferred();
 
                 if (value != _newItemPlaceholderPosition && IsAddingNew)
-                    throw new InvalidOperationException(SR.Format(SR.MemberNotAllowedDuringTransaction, "NewItemPlaceholderPosition", "AddNew"));
+                    throw new InvalidOperationException(SR.Format(SR.MemberNotAllowedDuringTransaction, nameof(NewItemPlaceholderPosition), "AddNew"));
 
                 if (value != _newItemPlaceholderPosition && _isRemoving)
                 {
@@ -1120,7 +1120,7 @@ namespace System.Windows.Data
         public bool? IsLiveSorting
         {
             get { return IsDataView ? (bool?)true : (bool?)null; }
-            set { throw new InvalidOperationException(SR.Format(SR.CannotChangeLiveShaping, "IsLiveSorting", "CanChangeLiveSorting")); }
+            set { throw new InvalidOperationException(SR.Format(SR.CannotChangeLiveShaping, nameof(IsLiveSorting), "CanChangeLiveSorting")); }
         }
 
         ///<summary>
@@ -1132,7 +1132,7 @@ namespace System.Windows.Data
         public bool? IsLiveFiltering
         {
             get { return IsDataView ? (bool?)true : (bool?)null; }
-            set { throw new InvalidOperationException(SR.Format(SR.CannotChangeLiveShaping, "IsLiveFiltering", "CanChangeLiveFiltering")); }
+            set { throw new InvalidOperationException(SR.Format(SR.CannotChangeLiveShaping, nameof(IsLiveFiltering), "CanChangeLiveFiltering")); }
         }
 
         ///<summary>

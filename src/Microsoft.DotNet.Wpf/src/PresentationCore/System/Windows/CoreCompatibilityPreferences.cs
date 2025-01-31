@@ -65,7 +65,7 @@ namespace System.Windows
                 {
                     if (_isSealed)
                     {
-                        throw new InvalidOperationException(SR.Format(SR.CompatibilityPreferencesSealed, "IsAltKeyRequiredInAccessKeyDefaultScope", "CoreCompatibilityPreferences"));
+                        throw new InvalidOperationException(SR.Format(SR.CompatibilityPreferencesSealed, nameof(IsAltKeyRequiredInAccessKeyDefaultScope), "CoreCompatibilityPreferences"));
                     }
 
                     _isAltKeyRequiredInAccessKeyDefaultScope = value;
@@ -105,7 +105,7 @@ namespace System.Windows
                 {
                     if (_isSealed)
                     {
-                        throw new InvalidOperationException(SR.Format(SR.CompatibilityPreferencesSealed, "IncludeAllInkInBoundingBox", "CoreCompatibilityPreferences"));
+                        throw new InvalidOperationException(SR.Format(SR.CompatibilityPreferencesSealed, nameof(IncludeAllInkInBoundingBox), "CoreCompatibilityPreferences"));
                     }
 
                     _includeAllInkInBoundingBox = value;

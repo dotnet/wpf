@@ -32,14 +32,6 @@ namespace Microsoft.Win32
     {
         //---------------------------------------------------
         //
-        // Constructors
-        //
-        //---------------------------------------------------
-        //#region Constructors
-        //#endregion Constructors
-
-        //---------------------------------------------------
-        //
         // Public Methods
         //
         //---------------------------------------------------
@@ -193,14 +185,6 @@ namespace Microsoft.Win32
 
         //---------------------------------------------------
         //
-        // Public Events
-        //
-        //---------------------------------------------------
-        //#region Public Events
-        //#endregion Public Events
-
-        //---------------------------------------------------
-        //
         // Protected Methods
         //
         //---------------------------------------------------
@@ -321,38 +305,6 @@ namespace Microsoft.Win32
         }
 
         #endregion Internal Methods
-
-        //---------------------------------------------------
-        //
-        // Internal Properties
-        //
-        //---------------------------------------------------
-        //#region Internal Properties
-        //#endregion Internal Properties
-
-        //---------------------------------------------------
-        //
-        // Internal Events
-        //
-        //---------------------------------------------------
-        //#region Internal Events
-        //#endregion Internal Events
-
-        //---------------------------------------------------
-        //
-        // Private Methods
-        //
-        //---------------------------------------------------
-        //#region Private Methods
-        //#endregion Private Methods
-
-        //---------------------------------------------------
-        //
-        // Protected Properties
-        //
-        //---------------------------------------------------
-        //#region Protected Properties
-        //#endregion Protected Properties
 
         //---------------------------------------------------
         //

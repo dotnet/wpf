@@ -2,13 +2,6 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-using MS.Internal;
-using MS.Internal.AppModel;
-using MS.Internal.Interop;
-using System.ComponentModel;
-using System.IO;
-using System.Windows;
-
 //
 //
 // Description:
@@ -19,16 +12,13 @@ using System.Windows;
 //              deferred to the derived classes.
 //
 
-using MS.Internal;
+using System.Runtime.InteropServices;
+using System.ComponentModel;
 using MS.Internal.AppModel;
 using MS.Internal.Interop;
-
-using System.Runtime.InteropServices;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Windows;
+using MS.Internal;
 using System.IO;
-using System;
 
 namespace Microsoft.Win32
 {
@@ -413,14 +403,6 @@ namespace Microsoft.Win32
 
         //---------------------------------------------------
         //
-        // Public Events
-        //
-        //---------------------------------------------------
-        // #region Public Events
-        // #endregion Public Events
-
-        //---------------------------------------------------
-        //
         // Protected Methods
         //
         //---------------------------------------------------
@@ -526,22 +508,6 @@ namespace Microsoft.Win32
         }
 
         #endregion
-
-        //---------------------------------------------------
-        //
-        // Internal Properties
-        //
-        //---------------------------------------------------
-        //#region Internal Properties
-        //#endregion Internal Properties
-
-        //---------------------------------------------------
-        //
-        // Internal Events
-        //
-        //---------------------------------------------------
-        //#region Internal Events
-        //#endregion Internal Events
 
         //---------------------------------------------------
         //

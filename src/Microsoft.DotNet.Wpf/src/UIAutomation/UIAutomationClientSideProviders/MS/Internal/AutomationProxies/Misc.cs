@@ -7,6 +7,7 @@
 using Microsoft.Win32.SafeHandles;
 using MS.Win32;
 using System;
+using System.Globalization;
 using System.ComponentModel;
 using System.Runtime.InteropServices;
 using System.Text;
@@ -1621,45 +1622,27 @@ namespace MS.Internal.AutomationProxies
             return UnsafeNativeMethods.SetWinEventHook(eventMin, eventMax, hmodWinEventProc, WinEventReentrancyFilter, idProcess, idThread, dwFlags);
         }
 
-        // this strips the mnemonic prefix for short cuts as well as leading spaces
-        // If we find && leave one & there.
-        internal static string StripMnemonic(string s)
+        /// <summary> Strips the mnemonic prefix for shortcuts as well as leading spaces. </summary>
+        /// <param name="value">The string to strip from.</param>
+        /// <returns> A <see langword="string"/> stripped of leading whitespaces / mnemonic prefix. </returns>
+        internal static string StripMnemonic(string value)
         {
-            // If there are no spaces or & then it's ok just return it
-            if (string.IsNullOrEmpty(s) || s.IndexOfAny(new char[2] { ' ', '&' }) < 0)
-            {
-                return s;
-            }
+            if (string.IsNullOrEmpty(value))
+                return value;
 
-            char[] ach = s.ToCharArray();
-            bool amper = false;
-            bool leadingSpace = false;
-            int dest = 0;
+            // Is there a '&' that we need to skip or ' ' that needs trimming?
+            int ampersandIndex = value.IndexOf('&');
+            if (value[0] != ' ' && ampersandIndex == -1)
+                return value;
 
-            for (int source = 0; source < ach.Length; source++)
-            {
-                // get rid of leading spaces
-                if (ach[source] == ' ' && leadingSpace == false)
-                {
-                    continue;
-                }
-                else
-                {
-                    leadingSpace = true;
-                }
+            // Trim leading whitespaces, check if we need to remove '&' as well
+            ReadOnlySpan<char> trimmed = value.AsSpan().TrimStart(' ');
+            if (ampersandIndex == -1)
+                return trimmed.ToString();
 
-                // get rid of &
-                if (ach[source] == '&' && amper == false)
-                {
-                    amper = true;
-                }
-                else
-                {
-                    ach[dest++] = ach[source];
-                }
-            }
-
-            return new string(ach, 0, dest);
+            // Update '&' index and slice it out
+            ampersandIndex -= (value.Length - trimmed.Length);
+            return string.Create(CultureInfo.InvariantCulture, stackalloc char[128], $"{trimmed.Slice(0, ampersandIndex)}{trimmed.Slice(ampersandIndex + 1)}");
         }
 
         internal static void ThrowWin32ExceptionsIfError(int errorCode)

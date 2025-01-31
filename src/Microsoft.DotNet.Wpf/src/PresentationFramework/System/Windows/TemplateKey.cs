@@ -48,7 +48,7 @@ namespace System.Windows
         {
             if (_dataType == null)
             {
-                throw new InvalidOperationException(SR.Format(SR.PropertyMustHaveValue, "DataType", this.GetType().Name));
+                throw new InvalidOperationException(SR.Format(SR.PropertyMustHaveValue, nameof(DataType), this.GetType().Name));
             }
 
             _initializing = false;
@@ -67,9 +67,9 @@ namespace System.Windows
             set
             {
                 if (!_initializing)
-                    throw new InvalidOperationException(SR.Format(SR.PropertyIsInitializeOnly, "DataType", this.GetType().Name));
+                    throw new InvalidOperationException(SR.Format(SR.PropertyIsInitializeOnly, nameof(DataType), this.GetType().Name));
                 if (_dataType != null && value != _dataType)
-                    throw new InvalidOperationException(SR.Format(SR.PropertyIsImmutable, "DataType", this.GetType().Name));
+                    throw new InvalidOperationException(SR.Format(SR.PropertyIsImmutable, nameof(DataType), this.GetType().Name));
 
                 Exception ex = ValidateDataType(value, "value");
                 if (ex != null)

@@ -86,8 +86,7 @@ namespace System.Windows.Controls
            {
                // When we are given a relative Uri path, expand to an absolute Uri by resolving
                // it against the Application's base Uri.  This would typically return a Pack Uri.
-               m_lastRequestedAbsoluteUri =
-                   BaseUriHelper.GetResolvedUri(BaseUriHelper.BaseUri, newValue);
+               m_lastRequestedAbsoluteUri = BaseUriHelper.GetResolvedUri(BaseUriHelper.PackAppBaseUri, newValue);
            }
 
            // Invalidate items that depend on the Source uri

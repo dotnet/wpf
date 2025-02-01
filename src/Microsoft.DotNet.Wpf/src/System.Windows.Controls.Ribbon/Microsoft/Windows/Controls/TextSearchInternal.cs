@@ -843,10 +843,8 @@ namespace Microsoft.Windows.Controls
         {
             get
             {
-                if (_dummyElement == null)
-                {
-                    _dummyElement = new DummyObject();
-                }
+                _dummyElement ??= new DummyObject();
+
                 return _dummyElement;
             }
         }
@@ -886,7 +884,7 @@ namespace Microsoft.Windows.Controls
         private DispatcherTimer _timeoutTimer;
 
         [ThreadStatic]
-        private static DummyObject _dummyElement = new DummyObject();
+        private static DummyObject _dummyElement;
 
         #endregion
 

@@ -121,7 +121,7 @@ namespace System.Windows.Controls.Primitives
                     }
                     else
                     {
-                        throw new InvalidOperationException(SR.Format(SR.InvalidItemContainer, this.GetType().Name, typeof(StatusBarItem).Name, typeof(Separator).Name, itemContainer));
+                        throw new InvalidOperationException(SR.Format(SR.InvalidItemContainer, this.GetType().Name, nameof(StatusBarItem), nameof(Separator), itemContainer));
                     }
                 }
             }

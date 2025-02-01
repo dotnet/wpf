@@ -13,8 +13,6 @@ using System.Text;
 using System.Windows.Markup;
 using System.Windows.Media.Converters;
 
-// These types are aliased to match the unamanaged names used in interop
-
 namespace System.Windows.Media
 {
     /// <summary>
@@ -878,7 +876,6 @@ namespace System.Windows.Media
         //
         //------------------------------------------------------
 
-
         /// <summary>
         /// Initializes a new instance that is empty.
         /// </summary>
@@ -933,12 +930,6 @@ namespace System.Windows.Media
                     }
                 }
             }
-
-
-
-
-
-
 
             WritePostscript();
         }

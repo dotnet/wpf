@@ -450,7 +450,7 @@ namespace MS.Internal.Automation
             if (requestedData == null)
             {
                 Debug.Assert(offsets == null && treeStructures == null, "if nothin found, all out params shoud be null");
-                return new UiaCacheResponse[] {}; // Return empty cacheresponse, not null.
+                return Array.Empty<UiaCacheResponse>(); // Return empty cacheresponse, not null.
             }
 
             Debug.Assert(offsets.Length == treeStructures.Length);
@@ -869,7 +869,7 @@ namespace MS.Internal.Automation
             CheckError(RawTextPattern_GetSelection(hobj, out arr));
             if (arr == null)
             {
-                return new SafeTextRangeHandle[] { };
+                return Array.Empty<SafeTextRangeHandle>();
             }
             SafeTextRangeHandle[] result = new SafeTextRangeHandle[arr.Length];
             for (int i = 0; i < arr.Length; i++)
@@ -885,7 +885,7 @@ namespace MS.Internal.Automation
             CheckError(RawTextPattern_GetVisibleRanges(hobj, out arr));
             if (arr == null)
             {
-                return new SafeTextRangeHandle[] { };
+                return Array.Empty<SafeTextRangeHandle>();
             }
             SafeTextRangeHandle[] result = new SafeTextRangeHandle[arr.Length];
             for (int i = 0; i < arr.Length; i++)

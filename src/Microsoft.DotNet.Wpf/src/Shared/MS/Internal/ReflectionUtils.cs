@@ -90,8 +90,8 @@ namespace MS.Internal
         /// This should only be passed a RuntimeAssembly to ensure proper functionality.
         /// </summary>
         /// <param name="assembly">The RuntimeAssembly which will provide properly formatted full name.</param>
-        /// <param name="version">If present, returns the value of Version portion, otherwise Empty result.</param>
-        /// <param name="token">If present, returns the value of PublicKeyToken portion. Empty result is returned when the value is "null" or not present.</param>
+        /// <param name="assemblyVersion">If present, returns the value of Version portion, otherwise Empty result.</param>
+        /// <param name="assemblyToken">If present, returns the value of PublicKeyToken portion. Empty result is returned when the value is "null" or not present.</param>
         internal static void GetAssemblyVersionPlusToken(Assembly assembly, out ReadOnlySpan<char> assemblyVersion, out ReadOnlySpan<char> assemblyToken)
         {
             ArgumentNullException.ThrowIfNull(assembly, nameof(assembly));

@@ -48,7 +48,12 @@ namespace System.Windows.Navigation
         ///     Flags: None
         ///     Default Value: null.
         /// </summary>
-        public static readonly DependencyProperty BaseUriProperty = DependencyProperty.RegisterAttached("BaseUri", typeof(Uri), typeof(BaseUriHelper), new PropertyMetadata(null));
+        public static readonly DependencyProperty BaseUriProperty =
+                    DependencyProperty.RegisterAttached(
+                                "BaseUri",
+                                typeof(Uri),
+                                typeof(BaseUriHelper),
+                                new PropertyMetadata(defaultValue: null));
 
         /// <summary>
         /// Get BaseUri for a dependency object inside a tree.

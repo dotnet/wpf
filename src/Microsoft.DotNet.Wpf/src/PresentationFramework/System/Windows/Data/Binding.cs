@@ -308,8 +308,7 @@ namespace System.Windows.Data
 
                 if (_ppath != null && _ppath.StartsWithStaticProperty)
                 {
-                    if (_sourceInUse == SourceProperties.None || _sourceInUse == SourceProperties.StaticSource ||
-                        FrameworkCompatibilityPreferences.TargetsDesktop_V4_0) 
+                    if (_sourceInUse == SourceProperties.None || _sourceInUse == SourceProperties.StaticSource)
                     {
                         // net 4.5 breaks static bindings - this is for compat
                         SourceReference = StaticSourceRef;

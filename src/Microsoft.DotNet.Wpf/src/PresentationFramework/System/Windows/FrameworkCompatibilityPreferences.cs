@@ -13,18 +13,6 @@ namespace System.Windows
 
         static FrameworkCompatibilityPreferences()
         {
-#if NETFX && !NETCOREAPP
-            _targetsDesktop_V4_0 = BinaryCompatibility.AppWasBuiltForFramework == TargetFrameworkId.NetFramework
-                && !BinaryCompatibility.TargetsAtLeast_Desktop_V4_5;
-#elif NETCOREAPP
-            // When building for NETCOREAPP, set this to false
-            // to indicate that quirks should be treated as if they are running on 
-            // .NET 4.5+
-            _targetsDesktop_V4_0 = false;
-#else
-            _targetsDesktop_V4_0 = false;
-#endif
-
             // user can use config file to set preferences
             NameValueCollection appSettings = null;
             try
@@ -46,19 +34,6 @@ namespace System.Windows
         }
 
         #endregion Constructor
-
-        #region TargetsDesktop_V4_0
-
-        // CLR's BinaryCompatibility class doesn't expose a convenient way to determine
-        // if the app targets 4.0 exactly.  We use that a lot, so encapsulate it here
-        static bool _targetsDesktop_V4_0;
-
-        internal static bool TargetsDesktop_V4_0
-        {
-            get { return _targetsDesktop_V4_0; }
-        }
-
-        #endregion TargetsDesktop_V4_0
 
         #region AreInactiveSelectionHighlightBrushKeysSupported
 

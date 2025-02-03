@@ -476,14 +476,6 @@ namespace System.Windows.Forms.Integration
 
             Debug.WriteLineIf(_traceHandle.TraceVerbose, String.Format(CultureInfo.CurrentCulture, "WindowsFormsHost({0}): BuildWindowCore (parent=0x{1:x8})", this.Name, hwndParent.Handle.ToInt32()));
 
-            // for 4.0 compat, create a Winforms.NativeWindow to swallow exceptions during WndProc
-            if (!CoreCompatibilityPreferences.TargetsAtLeast_Desktop_V4_5)
-            {
-                _dummyNativeWindow?.Dispose();
-                _dummyNativeWindow = new DummyNativeWindow(this);
-                _dummyNativeWindow.AssignHandle(hwndParent.Handle);
-            }
-
             _hwndParent = hwndParent;
             //For Keyboard interop
             ApplicationInterop.ThreadWindowsFormsHostList.Add(this);    //Keep track of this control, so it can get forwarded windows messages

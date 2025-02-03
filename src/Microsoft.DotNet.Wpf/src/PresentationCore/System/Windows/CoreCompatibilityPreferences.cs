@@ -33,18 +33,6 @@ namespace System.Windows
 
         #endregion Constructor
 
-        #region CLR compat flags
-
-        internal static bool TargetsAtLeast_Desktop_V4_5
-        {
-            get
-            {
-                return true;
-            }
-        }
-
-        #endregion CLR compat flags
-
         #region IsAltKeyRequiredInAccessKeyDefaultScope
 
         // We decided NOT to opt-in this feature by default.

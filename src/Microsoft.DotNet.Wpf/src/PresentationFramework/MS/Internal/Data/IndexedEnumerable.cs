@@ -241,7 +241,7 @@ namespace MS.Internal.Data
                 // moved beyond the end of the enumerator?
                 if (moveBy != 0)
                 {
-                    throw new ArgumentOutOfRangeException("index"); // validating the index argument
+                    throw new ArgumentOutOfRangeException(nameof(index)); // validating the index argument
                 }
 
                 CacheCurrentItem(index, _enumerator.Current);
@@ -318,7 +318,7 @@ namespace MS.Internal.Data
                     {
                         // The number of elements in the source ICollection is greater than
                         // the available space from index to the end of the destination array.
-                        throw new ArgumentException(SR.CopyToNotEnoughSpace, "index");
+                        throw new ArgumentException(SR.CopyToNotEnoughSpace, nameof(index));
                     }
                 }
             }

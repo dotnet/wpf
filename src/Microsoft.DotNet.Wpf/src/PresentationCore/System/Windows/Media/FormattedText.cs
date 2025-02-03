@@ -290,7 +290,7 @@ namespace System.Windows.Media
             int limit = startIndex + count;
 
             if (count < 0 || limit < startIndex || limit > _text.Length)
-                throw new ArgumentOutOfRangeException("count");
+                throw new ArgumentOutOfRangeException(nameof(count));
 
             return limit;
         }
@@ -1279,7 +1279,7 @@ namespace System.Windows.Media
         public void SetMaxTextWidths(double [] maxTextWidths)
         {
             if (maxTextWidths == null || maxTextWidths.Length <= 0)
-                throw new ArgumentNullException("maxTextWidths");
+                throw new ArgumentNullException(nameof(maxTextWidths));
             _maxTextWidths = maxTextWidths;
             InvalidateMetrics();
         }
@@ -1308,10 +1308,10 @@ namespace System.Windows.Media
             set
             {
                 if (value <= 0)
-                    throw new ArgumentOutOfRangeException("value", SR.Format(SR.PropertyMustBeGreaterThanZero, "MaxTextHeight"));
+                    throw new ArgumentOutOfRangeException(nameof(value), SR.Format(SR.PropertyMustBeGreaterThanZero, "MaxTextHeight"));
 
                 if (double.IsNaN(value))
-                    throw new ArgumentOutOfRangeException("value", SR.Format(SR.PropertyValueCannotBeNaN, "MaxTextHeight"));
+                    throw new ArgumentOutOfRangeException(nameof(value), SR.Format(SR.PropertyValueCannotBeNaN, "MaxTextHeight"));
 
                 _maxTextHeight = value;
                 InvalidateMetrics();

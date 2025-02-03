@@ -208,7 +208,7 @@ namespace MS.Internal.Media
             {
                 if (!allowNull)
                 {
-                    throw new ArgumentNullException("element");
+                    throw new ArgumentNullException(nameof(element));
                 }
 
                 return;

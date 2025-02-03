@@ -42,7 +42,7 @@ namespace System.Windows.Media.Effects
                 WritePreamble();
                 if (value < 0.0)
                 {
-                    throw new ArgumentOutOfRangeException("value", value, SR.Effect_ShaderEffectPadding);
+                    throw new ArgumentOutOfRangeException(nameof(value), value, SR.Effect_ShaderEffectPadding);
                 }
                 else
                 {
@@ -69,7 +69,7 @@ namespace System.Windows.Media.Effects
                 WritePreamble();
                 if (value < 0.0)
                 {
-                    throw new ArgumentOutOfRangeException("value", value, SR.Effect_ShaderEffectPadding);
+                    throw new ArgumentOutOfRangeException(nameof(value), value, SR.Effect_ShaderEffectPadding);
                 }
                 else
                 {
@@ -96,7 +96,7 @@ namespace System.Windows.Media.Effects
                 WritePreamble();
                 if (value < 0.0)
                 {
-                    throw new ArgumentOutOfRangeException("value", value, SR.Effect_ShaderEffectPadding);
+                    throw new ArgumentOutOfRangeException(nameof(value), value, SR.Effect_ShaderEffectPadding);
                 }
                 else
                 {
@@ -123,7 +123,7 @@ namespace System.Windows.Media.Effects
                 WritePreamble();
                 if (value < 0.0)
                 {
-                    throw new ArgumentOutOfRangeException("value", value, SR.Effect_ShaderEffectPadding);
+                    throw new ArgumentOutOfRangeException(nameof(value), value, SR.Effect_ShaderEffectPadding);
                 }
                 else
                 {
@@ -376,7 +376,7 @@ namespace System.Windows.Media.Effects
 
                 if (registerIndex >= registerMax || registerIndex < 0)
                 {
-                    throw new ArgumentException(SR.GetResourceString(srid), "dp");
+                    throw new ArgumentException(SR.GetResourceString(srid), nameof(dp));
                 }
 
                 if (t == typeof(float))
@@ -427,7 +427,7 @@ namespace System.Windows.Media.Effects
                     // Note that if the type of the brush is ImplicitInputBrush and the value is non null, the value is actually
                     // Effect.ImplicitInput. This is because ImplicitInputBrush is internal and the user can only get to the singleton
                     // Effect.ImplicitInput.
-                    throw new ArgumentException(SR.Effect_ShaderSamplerType, "dp");
+                    throw new ArgumentException(SR.Effect_ShaderSamplerType, nameof(dp));
                 }
             }
 

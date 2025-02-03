@@ -193,7 +193,7 @@ namespace System.Windows.Ink
         {
             if (Double.IsNaN(diameter) || diameter < DrawingAttributes.MinWidth || diameter > DrawingAttributes.MaxWidth)
             {
-                throw new ArgumentOutOfRangeException("diameter", SR.InvalidDiameter);
+                throw new ArgumentOutOfRangeException(nameof(diameter), SR.InvalidDiameter);
             }
             return HitTest(new Point[]{point}, new EllipseStylusShape(diameter, diameter, TapHitRotation));
         }
@@ -208,7 +208,7 @@ namespace System.Windows.Ink
         {
             if ((percentageWithinBounds < 0) || (percentageWithinBounds > 100))
             {
-                throw new System.ArgumentOutOfRangeException("percentageWithinBounds");
+                throw new System.ArgumentOutOfRangeException(nameof(percentageWithinBounds));
             }
 
             if (percentageWithinBounds == 0)
@@ -257,7 +257,7 @@ namespace System.Windows.Ink
 
             if ((percentageWithinLasso < 0) || (percentageWithinLasso > 100))
             {
-                throw new System.ArgumentOutOfRangeException("percentageWithinLasso");
+                throw new System.ArgumentOutOfRangeException(nameof(percentageWithinLasso));
             }
 
             if (percentageWithinLasso == 0)

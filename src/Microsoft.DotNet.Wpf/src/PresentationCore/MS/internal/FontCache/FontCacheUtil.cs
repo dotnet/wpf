@@ -493,7 +493,7 @@ namespace MS.Internal.FontCache
                         out faceIndex
                     ))
                 {
-                    throw new ArgumentException(SR.FaceIndexMustBePositiveOrZero, "fontUri");
+                    throw new ArgumentException(SR.FaceIndexMustBePositiveOrZero, nameof(fontUri));
                 }
 
                 // face index was specified in a fragment, we need to strip off fragment from the source Uri

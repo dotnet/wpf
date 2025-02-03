@@ -127,7 +127,7 @@ namespace System.Windows.Controls
             }
             else
             {
-                throw new ArgumentOutOfRangeException("pagesAcross");
+                throw new ArgumentOutOfRangeException(nameof(pagesAcross));
             }
         }
 
@@ -1010,7 +1010,7 @@ namespace System.Windows.Controls
             }
             else
             {
-                throw new ArgumentOutOfRangeException("pagesAcross");
+                throw new ArgumentOutOfRangeException(nameof(pagesAcross));
             }
         }
 
@@ -1928,7 +1928,7 @@ namespace System.Windows.Controls
             // Argument wasn't a valid int, throw an exception.
             if (!isValidArg)
             {
-                throw new ArgumentException(SR.DocumentViewerArgumentMustBeInteger, "data");
+                throw new ArgumentException(SR.DocumentViewerArgumentMustBeInteger, nameof(data));
             }
 
             dv.OnFitToMaxPagesAcrossCommand(columnValue);
@@ -1961,7 +1961,7 @@ namespace System.Windows.Controls
             // Argument wasn't a valid percent, throw an exception.
             if (zoomValue == DependencyProperty.UnsetValue)
             {
-                throw new ArgumentException(SR.DocumentViewerArgumentMustBePercentage, "data");
+                throw new ArgumentException(SR.DocumentViewerArgumentMustBePercentage, nameof(data));
             }
             dv.Zoom = (double)zoomValue;
         }

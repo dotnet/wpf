@@ -142,7 +142,7 @@ namespace System.IO.Packaging
 
             if (!uri.IsAbsoluteUri)
             {
-                throw new ArgumentException(SR.UriMustBeAbsolute, "uri");
+                throw new ArgumentException(SR.UriMustBeAbsolute, nameof(uri));
             }
         }
         

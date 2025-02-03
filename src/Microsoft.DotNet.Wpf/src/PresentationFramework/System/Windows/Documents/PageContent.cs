@@ -171,7 +171,7 @@ namespace System.Windows.Documents
             FixedPage fp = value as FixedPage;
             if (fp == null)
             {
-                throw new ArgumentException(SR.Format(SR.UnexpectedParameterType, value.GetType(), typeof(FixedPage)), "value");
+                throw new ArgumentException(SR.Format(SR.UnexpectedParameterType, value.GetType(), typeof(FixedPage)), nameof(value));
             }
 
             if (_child != null)

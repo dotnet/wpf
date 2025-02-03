@@ -451,9 +451,9 @@ namespace MS.Internal.AutomationProxies
             if ((eventId == NativeMethods.EventObjectSelection || eventId == NativeMethods.EventObjectSelectionAdd) && (idProp as AutomationProperty) == SelectionPattern.IsSelectionRequiredProperty)
             {
                 // This array must be kept in sync with the array in PropertyToWinEvent
-                WinEventTracker.EvtIdProperty[] aEvtIdProperties = new WinEventTracker.EvtIdProperty[] { new WinEventTracker.EvtIdProperty(NativeMethods.EventObjectSelection, SelectionPattern.IsSelectionRequiredProperty) };
+                ReadOnlySpan<WinEventTracker.EvtIdProperty> aEvtIdProperties = [new WinEventTracker.EvtIdProperty(NativeMethods.EventObjectSelection, SelectionPattern.IsSelectionRequiredProperty)];
 
-                WinEventTracker.RemoveToNotificationList(hwnd, aEvtIdProperties, null, aEvtIdProperties.Length);
+                WinEventTracker.RemoveToNotificationList(hwnd, aEvtIdProperties, null);
                 el = wlb;
             }
             else if (eventId == NativeMethods.EventObjectSelection || eventId == NativeMethods.EventObjectSelectionRemove || eventId == NativeMethods.EventObjectSelectionAdd)

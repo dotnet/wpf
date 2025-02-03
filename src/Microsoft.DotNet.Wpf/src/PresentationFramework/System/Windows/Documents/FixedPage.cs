@@ -185,7 +185,7 @@ namespace System.Windows.Documents
 
             if (uie == null)
             {
-                throw new ArgumentException(SR.Format(SR.UnexpectedParameterType, value.GetType(), typeof(UIElement)), "value");
+                throw new ArgumentException(SR.Format(SR.UnexpectedParameterType, value.GetType(), typeof(UIElement)), nameof(value));
             }
 
             Children.Add(uie);
@@ -705,7 +705,7 @@ namespace System.Windows.Documents
         {
             if (_uiElementCollection == null)
             {
-                throw new ArgumentOutOfRangeException("index", index, SR.Visual_ArgumentOutOfRange);
+                throw new ArgumentOutOfRangeException(nameof(index), index, SR.Visual_ArgumentOutOfRange);
             }
             return _uiElementCollection[index];
         }

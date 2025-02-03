@@ -768,7 +768,7 @@ namespace Microsoft.Internal.AlphaFlattener
         {
             if(maxEntries < 1)
             {
-                throw new ArgumentOutOfRangeException("maxEntries", maxEntries, string.Empty);
+                throw new ArgumentOutOfRangeException(nameof(maxEntries), maxEntries, string.Empty);
             }
 
             this.m_innerCache = new MS.Internal.Printing.MostFrequentlyUsedCache<string, CachePacket>(maxEntries);

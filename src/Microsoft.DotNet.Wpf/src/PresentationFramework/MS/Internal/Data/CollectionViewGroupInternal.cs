@@ -103,7 +103,7 @@ namespace MS.Internal.Data
 
                 if (oldIsBottomLevel != IsBottomLevel)
                 {
-                    OnPropertyChanged(new PropertyChangedEventArgs("IsBottomLevel"));
+                    OnPropertyChanged(new PropertyChangedEventArgs(nameof(IsBottomLevel)));
                 }
             }
         }
@@ -349,7 +349,7 @@ namespace MS.Internal.Data
             }
 
             // the loop should have found the index.  We shouldn't get here.
-            throw new ArgumentOutOfRangeException("index");
+            throw new ArgumentOutOfRangeException(nameof(index));
         }
 
         // return an enumerator over the leaves governed by this group

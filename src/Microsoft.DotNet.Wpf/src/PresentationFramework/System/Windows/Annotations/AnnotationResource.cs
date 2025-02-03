@@ -74,7 +74,7 @@ namespace System.Windows.Annotations
         public AnnotationResource(Guid id)
         {
             if (Guid.Empty.Equals(id))
-                throw new ArgumentException(SR.InvalidGuid, "id");
+                throw new ArgumentException(SR.InvalidGuid, nameof(id));
 
             // Guid is a struct and cannot be null
             _id = id;

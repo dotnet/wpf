@@ -574,7 +574,7 @@ namespace System.Windows.Controls
                 }
                 else
                 {
-                    throw new ArgumentOutOfRangeException("d", SR.Calendar_OnSelectedDateChanged_InvalidValue);
+                    throw new ArgumentOutOfRangeException(nameof(d), SR.Calendar_OnSelectedDateChanged_InvalidValue);
                 }
             }
             else

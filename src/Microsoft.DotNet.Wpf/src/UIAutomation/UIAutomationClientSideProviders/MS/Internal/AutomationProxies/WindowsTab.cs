@@ -316,10 +316,7 @@ namespace MS.Internal.AutomationProxies
                 {
                     // Register for UpDown ValueChange WinEvents, which will be
                     // translated to scrolling events for the tab control.
-                    WinEventTracker.AddToNotificationList(
-                        upDownHwnd,
-                        new WinEventTracker.ProxyRaiseEvents(UpDownControlRaiseEvents),
-                        _upDownEvents, 1);
+                    WinEventTracker.AddToNotificationList(upDownHwnd, new WinEventTracker.ProxyRaiseEvents(UpDownControlRaiseEvents), _upDownEvents);
                 }
             }
 
@@ -336,8 +333,7 @@ namespace MS.Internal.AutomationProxies
                 IntPtr upDownHwnd = GetUpDownHwnd();
                 if (upDownHwnd != IntPtr.Zero)
                 {
-                    WinEventTracker.RemoveToNotificationList(
-                        upDownHwnd, _upDownEvents, null, 1);
+                    WinEventTracker.RemoveToNotificationList(upDownHwnd, _upDownEvents, null);
                 }
             }
             base.AdviseEventRemoved(eventId, aidProps);
@@ -494,7 +490,7 @@ namespace MS.Internal.AutomationProxies
             }
             else if (horizontalPercent < 0 || horizontalPercent > 100)
             {
-                throw new ArgumentOutOfRangeException("horizontalPercent", SR.ScrollBarOutOfRange);
+                throw new ArgumentOutOfRangeException(nameof(horizontalPercent), SR.ScrollBarOutOfRange);
             }
 
             // Get up/down control's hwnd

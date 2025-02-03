@@ -70,13 +70,13 @@ namespace System.Windows
 
             if (!AnimationStorage.IsPropertyAnimatable(this, dp))
             {
-                throw new ArgumentException(SR.Format(SR.Animation_DependencyPropertyIsNotAnimatable, dp.Name, this.GetType()), "dp");
+                throw new ArgumentException(SR.Format(SR.Animation_DependencyPropertyIsNotAnimatable, dp.Name, this.GetType()), nameof(dp));
             }
 
             if (clock != null
                 && !AnimationStorage.IsAnimationValid(dp, clock.Timeline))
             {
-                throw new ArgumentException(SR.Format(SR.Animation_AnimationTimelineTypeMismatch, clock.Timeline.GetType(), dp.Name, dp.PropertyType), "clock");
+                throw new ArgumentException(SR.Format(SR.Animation_AnimationTimelineTypeMismatch, clock.Timeline.GetType(), dp.Name, dp.PropertyType), nameof(clock));
             }
 
             if (!HandoffBehaviorEnum.IsDefined(handoffBehavior))
@@ -135,13 +135,13 @@ namespace System.Windows
 
             if (!AnimationStorage.IsPropertyAnimatable(this, dp))
             {
-                throw new ArgumentException(SR.Format(SR.Animation_DependencyPropertyIsNotAnimatable, dp.Name, this.GetType()), "dp");
+                throw new ArgumentException(SR.Format(SR.Animation_DependencyPropertyIsNotAnimatable, dp.Name, this.GetType()), nameof(dp));
             }
 
             if (   animation != null
                 && !AnimationStorage.IsAnimationValid(dp, animation))
             {
-                throw new ArgumentException(SR.Format(SR.Animation_AnimationTimelineTypeMismatch, animation.GetType(), dp.Name, dp.PropertyType), "animation");
+                throw new ArgumentException(SR.Format(SR.Animation_AnimationTimelineTypeMismatch, animation.GetType(), dp.Name, dp.PropertyType), nameof(animation));
             }
 
             if (!HandoffBehaviorEnum.IsDefined(handoffBehavior))

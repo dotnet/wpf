@@ -113,7 +113,7 @@ namespace MS.Internal.Printing.Configuration
                         PrintSchemaTags.Framework.PrintTicketRoot,
                         PTUtility.GetTextFromResource("FormatException.XMLNotWellFormed"),
                         xmlException.Message),
-                    "printTicket",
+                    nameof(printTicket),
                     xmlException);
             }
 
@@ -562,7 +562,7 @@ namespace MS.Internal.Printing.Configuration
 
                 default:
                 {
-                    throw new ArgumentOutOfRangeException("baseType");
+                    throw new ArgumentOutOfRangeException(nameof(baseType));
                 }
             }
 

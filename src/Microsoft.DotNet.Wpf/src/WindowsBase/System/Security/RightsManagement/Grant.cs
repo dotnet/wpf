@@ -42,7 +42,7 @@ namespace System.Security.RightsManagement
                 (right != ContentRight.DocumentEdit)  &&
                 (right != ContentRight.Export))
             {
-                throw new ArgumentOutOfRangeException("right");                
+                throw new ArgumentOutOfRangeException(nameof(right));                
             }
 
             ArgumentOutOfRangeException.ThrowIfGreaterThan(validFrom, validUntil);

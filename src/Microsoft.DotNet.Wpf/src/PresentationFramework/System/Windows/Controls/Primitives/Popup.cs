@@ -1295,7 +1295,7 @@ namespace System.Windows.Controls.Primitives
             UIElement element = value as UIElement;
             if (element == null && value != null)
             {
-                throw new ArgumentException(SR.Format(SR.UnexpectedParameterType, value.GetType(), typeof(UIElement)), "value");
+                throw new ArgumentException(SR.Format(SR.UnexpectedParameterType, value.GetType(), typeof(UIElement)), nameof(value));
             }
 
             this.Child = element;

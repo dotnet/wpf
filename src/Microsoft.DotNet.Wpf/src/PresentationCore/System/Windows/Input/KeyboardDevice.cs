@@ -704,10 +704,7 @@ namespace System.Windows.Input
                         // we are now active.
                         _activeSource = keyboardInput.InputSource;
 
-                        if(toDeactivate != null)
-                        {
-                            toDeactivate.NotifyDeactivate();
-                        }
+                        toDeactivate?.NotifyDeactivate();
                     }
                 }
 

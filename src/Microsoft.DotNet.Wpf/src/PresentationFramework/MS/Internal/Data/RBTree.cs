@@ -655,7 +655,7 @@ namespace MS.Internal.Data
         {
             if (s.StartsWith("\"", StringComparison.Ordinal)) s = s.Substring(1);
             int index = s.IndexOf('(');
-            LeftSize = Int32.Parse(s.Substring(0, index), TypeConverterHelper.InvariantEnglishUS);
+            LeftSize = Int32.Parse(s.AsSpan(0, index), TypeConverterHelper.InvariantEnglishUS);
             s = s.Substring(index);
             this.LeftChild = LoadTree(ref s);
             this.LeftChild.Parent = this;

@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -810,10 +810,7 @@ namespace Microsoft.Windows.Controls.Ribbon.Primitives
 
             if (!fValid)
             {
-                if (ScrollOwner != null)
-                {
-                    ScrollOwner.InvalidateScrollInfo();
-                }
+                ScrollOwner?.InvalidateScrollInfo();
             }
         }
 
@@ -841,10 +838,7 @@ namespace Microsoft.Windows.Controls.Ribbon.Primitives
             {
                 if (ScrollData._scrollOwner != value)
                 {
-                    if (Ribbon != null)
-                    {
-                        Ribbon.NotifyTabHeadersScrollOwnerChanged(ScrollData._scrollOwner, value);
-                    }
+                    Ribbon?.NotifyTabHeadersScrollOwnerChanged(ScrollData._scrollOwner, value);
                     ScrollData._scrollOwner = value;
                 }
             }
@@ -931,7 +925,7 @@ namespace Microsoft.Windows.Controls.Ribbon.Primitives
 
         private void OnScrollChange()
         {
-            if (ScrollOwner != null) { ScrollOwner.InvalidateScrollInfo(); }
+            ScrollOwner?.InvalidateScrollInfo();
         }
 
         internal static double ComputeScrollOffsetWithMinimalScroll(

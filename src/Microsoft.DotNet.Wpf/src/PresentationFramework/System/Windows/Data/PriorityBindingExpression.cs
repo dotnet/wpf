@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -77,10 +77,7 @@ namespace System.Windows.Data
     public override void UpdateTarget()
     {
         BindingExpressionBase bindExpr = ActiveBindingExpression;
-        if (bindExpr != null)
-        {
-            bindExpr.UpdateTarget();
-        }
+        bindExpr?.UpdateTarget();
     }
 
     /// <summary> Send the current value back to the source </summary>
@@ -88,10 +85,7 @@ namespace System.Windows.Data
     public override void UpdateSource()
     {
         BindingExpressionBase bindExpr = ActiveBindingExpression;
-        if (bindExpr != null)
-        {
-            bindExpr.UpdateSource();
-        }
+        bindExpr?.UpdateSource();
     }
 
 #region Expression overrides
@@ -144,7 +138,7 @@ namespace System.Windows.Data
         FrameworkPropertyMetadata fwMetaData = dp.GetMetadata(d.DependencyObjectType) as FrameworkPropertyMetadata;
 
         if ((fwMetaData != null && !fwMetaData.IsDataBindingAllowed) || dp.ReadOnly)
-            throw new ArgumentException(SR.Format(SR.PropertyNotBindable, dp.Name), "dp");
+            throw new ArgumentException(SR.Format(SR.PropertyNotBindable, dp.Name), nameof(dp));
 
         // create the BindingExpression
         PriorityBindingExpression bindExpr = new PriorityBindingExpression(binding, owner);
@@ -208,8 +202,7 @@ namespace System.Windows.Data
         for (int i = 0; i < count; ++i)
         {
             BindingExpressionBase b = MutableBindingExpressions[i];
-            if (b != null)
-                b.Detach();
+            b?.Detach();
         }
 
         ChangeSources(null);
@@ -410,10 +403,7 @@ namespace System.Windows.Data
     internal override void StoreValueInBindingGroup(object value, BindingGroup bindingGroup)
     {
         BindingExpressionBase bindExpr = ActiveBindingExpression;
-        if (bindExpr != null)
-        {
-            bindExpr.StoreValueInBindingGroup(value, bindingGroup);
-        }
+        bindExpr?.StoreValueInBindingGroup(value, bindingGroup);
     }
 
     /// <summary>

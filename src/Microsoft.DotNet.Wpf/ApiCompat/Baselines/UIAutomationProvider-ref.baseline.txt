@@ -11,7 +11,6 @@ CannotRemoveAttribute : Attribute 'System.Runtime.InteropServices.InterfaceTypeA
 CannotRemoveAttribute : Attribute 'System.Runtime.InteropServices.InterfaceTypeAttribute' exists on 'System.Windows.Automation.Provider.IRawElementProviderFragment' in the contract but not the implementation.
 CannotRemoveAttribute : Attribute 'System.Runtime.InteropServices.InterfaceTypeAttribute' exists on 'System.Windows.Automation.Provider.IRawElementProviderFragmentRoot' in the contract but not the implementation.
 CannotRemoveAttribute : Attribute 'System.Runtime.InteropServices.InterfaceTypeAttribute' exists on 'System.Windows.Automation.Provider.IRawElementProviderHwndOverride' in the contract but not the implementation.
-CannotRemoveAttribute : Attribute 'System.Runtime.InteropServices.InterfaceTypeAttribute' exists on 'System.Windows.Automation.Provider.IRawElementProviderSimple' in the contract but not the implementation.
 CannotRemoveAttribute : Attribute 'System.Runtime.InteropServices.InterfaceTypeAttribute' exists on 'System.Windows.Automation.Provider.IScrollItemProvider' in the contract but not the implementation.
 CannotRemoveAttribute : Attribute 'System.Runtime.InteropServices.InterfaceTypeAttribute' exists on 'System.Windows.Automation.Provider.IScrollProvider' in the contract but not the implementation.
 CannotRemoveAttribute : Attribute 'System.Runtime.InteropServices.InterfaceTypeAttribute' exists on 'System.Windows.Automation.Provider.ISelectionItemProvider' in the contract but not the implementation.
@@ -20,10 +19,9 @@ CannotRemoveAttribute : Attribute 'System.Runtime.InteropServices.InterfaceTypeA
 CannotRemoveAttribute : Attribute 'System.Runtime.InteropServices.InterfaceTypeAttribute' exists on 'System.Windows.Automation.Provider.ITableItemProvider' in the contract but not the implementation.
 CannotRemoveAttribute : Attribute 'System.Runtime.InteropServices.InterfaceTypeAttribute' exists on 'System.Windows.Automation.Provider.ITableProvider' in the contract but not the implementation.
 CannotRemoveAttribute : Attribute 'System.Runtime.InteropServices.InterfaceTypeAttribute' exists on 'System.Windows.Automation.Provider.ITextProvider' in the contract but not the implementation.
-CannotRemoveAttribute : Attribute 'System.Runtime.InteropServices.InterfaceTypeAttribute' exists on 'System.Windows.Automation.Provider.ITextRangeProvider' in the contract but not the implementation.
 CannotRemoveAttribute : Attribute 'System.Runtime.InteropServices.InterfaceTypeAttribute' exists on 'System.Windows.Automation.Provider.IToggleProvider' in the contract but not the implementation.
 CannotRemoveAttribute : Attribute 'System.Runtime.InteropServices.InterfaceTypeAttribute' exists on 'System.Windows.Automation.Provider.ITransformProvider' in the contract but not the implementation.
 CannotRemoveAttribute : Attribute 'System.Runtime.InteropServices.InterfaceTypeAttribute' exists on 'System.Windows.Automation.Provider.IValueProvider' in the contract but not the implementation.
 CannotRemoveAttribute : Attribute 'System.Runtime.InteropServices.InterfaceTypeAttribute' exists on 'System.Windows.Automation.Provider.IVirtualizedItemProvider' in the contract but not the implementation.
 CannotRemoveAttribute : Attribute 'System.Runtime.InteropServices.InterfaceTypeAttribute' exists on 'System.Windows.Automation.Provider.IWindowProvider' in the contract but not the implementation.
-Total Issues: 27
+Total Issues: 25

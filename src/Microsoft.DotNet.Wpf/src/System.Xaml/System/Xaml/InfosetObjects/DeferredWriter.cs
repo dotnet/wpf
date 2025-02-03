@@ -294,11 +294,7 @@ namespace System.Xaml
                 goto case DeferringMode.TemplateDeferring;
 
             case DeferringMode.TemplateDeferring:
-                if (_deferredLineInfoConsumer is not null)
-                {
-                    _deferredLineInfoConsumer.SetLineInfo(lineNumber, linePosition);
-                }
-
+                _deferredLineInfoConsumer?.SetLineInfo(lineNumber, linePosition);
                 break;
 
             default:

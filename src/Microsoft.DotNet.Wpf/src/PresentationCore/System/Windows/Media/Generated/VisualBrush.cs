@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -278,7 +278,7 @@ namespace System.Windows.Media
                     Transform vRelativeTransform = RelativeTransform;
                     if (vRelativeTransform != null) ((DUCE.IResource)vRelativeTransform).AddRefOnChannel(channel);
                     Visual vVisual = Visual;
-                    if (vVisual != null) vVisual.AddRefOnChannelForCyclicBrush(this, channel);
+                    vVisual?.AddRefOnChannelForCyclicBrush(this, channel);
                     AddRefOnChannelAnimations(channel);
 
 
@@ -298,7 +298,7 @@ namespace System.Windows.Media
                     Transform vRelativeTransform = RelativeTransform;
                     if (vRelativeTransform != null) ((DUCE.IResource)vRelativeTransform).ReleaseOnChannel(channel);
                     Visual vVisual = Visual;
-                    if (vVisual != null) vVisual.ReleaseOnChannelForCyclicBrush(this, channel);
+                    vVisual?.ReleaseOnChannelForCyclicBrush(this, channel);
                     ReleaseOnChannelAnimations(channel);
 }
 }

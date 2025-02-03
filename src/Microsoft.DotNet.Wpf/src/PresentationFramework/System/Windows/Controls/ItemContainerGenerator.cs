@@ -166,7 +166,7 @@ namespace System.Windows.Controls
         ItemContainerGenerator IItemContainerGenerator.GetItemContainerGeneratorForPanel(Panel panel)
         {
             if (!panel.IsItemsHost)
-                throw new ArgumentException(SR.PanelIsNotItemsHost, "panel");
+                throw new ArgumentException(SR.PanelIsNotItemsHost, nameof(panel));
 
             // if panel came from an ItemsPresenter, use its generator
             ItemsPresenter ip = ItemsPresenter.FromPanel(panel);
@@ -270,9 +270,9 @@ namespace System.Windows.Controls
         private void Remove(GeneratorPosition position, int count, bool isRecycling)
         {
             if (position.Offset != 0)
-                throw new ArgumentException(SR.Format(SR.RemoveRequiresOffsetZero, position.Index, position.Offset), "position");
+                throw new ArgumentException(SR.Format(SR.RemoveRequiresOffsetZero, position.Index, position.Offset), nameof(position));
             if (count <= 0)
-                throw new ArgumentException(SR.Format(SR.RemoveRequiresPositiveCount, count), "count");
+                throw new ArgumentException(SR.Format(SR.RemoveRequiresPositiveCount, count), nameof(count));
 
             if (_itemMap == null)
             {
@@ -1161,10 +1161,7 @@ namespace System.Windows.Controls
                     for (int offset = 0;  offset < block.ContainerCount;  ++offset)
                     {
                         GroupItem gi = ((RealizedItemBlock)block).ContainerAt(offset) as GroupItem;
-                        if (gi != null)
-                        {
-                            gi.Generator.ChangeAlternationCount();
-                        }
+                        gi?.Generator.ChangeAlternationCount();
                     }
 
                     block = block.Next;
@@ -1954,7 +1951,7 @@ namespace System.Windows.Controls
                 else
                 {
                     CollectionView cv = Host.View.CollectionView;
-                    items = (cv == null) ? null : cv.Groups;
+                    items = cv?.Groups;
                     if (items == null)
                     {
                         items = Host.View;
@@ -2065,8 +2062,7 @@ namespace System.Windows.Controls
         {
             // Discard placeholder container.
             UnlinkContainerFromItem(groupItem, group);
-            if (_emptyGroupItems != null)
-                _emptyGroupItems.Remove(groupItem);
+            _emptyGroupItems?.Remove(groupItem);
 
             // inform layout as if the group just got added
             if (ItemsChanged != null)

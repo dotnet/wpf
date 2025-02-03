@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -606,7 +606,7 @@ namespace MS.Internal.Shaping
                 else if (!string.IsNullOrEmpty(targetFamilyName))
                 {
                     // The base Uri used for resolving target family names is the Uri of the composite font.
-                    Uri baseUri = (canonicalFamilyReference != null) ? canonicalFamilyReference.LocationUri : null;
+                    Uri baseUri = canonicalFamilyReference?.LocationUri;
 
                     // map to the target of the family map
                     cchAdvance = MapByFontFamilyName(

@@ -531,7 +531,7 @@ namespace System.Windows.Controls
         {
             if (index != 0)
             {
-                throw new ArgumentOutOfRangeException("index", index, SR.Visual_ArgumentOutOfRange); 
+                throw new ArgumentOutOfRangeException(nameof(index), index, SR.Visual_ArgumentOutOfRange); 
             }
             return TextBlock;
         }

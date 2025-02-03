@@ -295,8 +295,7 @@ namespace System.Windows.Controls
                 ||  AutomationPeer.ListenerExists(AutomationEvents.SelectionItemPatternOnElementRemovedFromSelection)   )
             {
                 ListBoxAutomationPeer peer = UIElementAutomationPeer.CreatePeerForElement(this) as ListBoxAutomationPeer;
-                if (peer != null)
-                    peer.RaiseSelectionEvents(e);
+                peer?.RaiseSelectionEvents(e);
             }
         }
 
@@ -886,10 +885,7 @@ namespace System.Windows.Controls
                 }
 
                 IDisposable d = enumerator as IDisposable;
-                if (d != null)
-                {
-                    d.Dispose();
-                }
+                d?.Dispose();
             }
             finally
             {
@@ -1029,7 +1025,7 @@ namespace System.Windows.Controls
         internal ItemInfo AnchorItemInternal
         {
             get { return _anchorItem; }
-            set { _anchorItem = (value != null) ? value.Clone() : null; }   // clone, so that adjustments to selection and anchor don't double-adjust
+            set { _anchorItem = value?.Clone(); }   // clone, so that adjustments to selection and anchor don't double-adjust
         }
 
         /// <summary>

@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -323,10 +323,7 @@ namespace System.Windows.Documents
         /// </summary>
         internal void OnEnterParentTree()
         {
-            if(Table != null)
-            {
-                Table.OnStructureChanged();
-            }
+            Table?.OnStructureChanged();
         }
 
         /// <summary>
@@ -341,10 +338,7 @@ namespace System.Windows.Documents
         /// </summary>
         internal void OnAfterExitParentTree(TableRow row)
         {
-            if(row.Table != null)
-            {
-                row.Table.OnStructureChanged();
-            }
+            row.Table?.OnStructureChanged();
         }
 
 
@@ -377,7 +371,7 @@ namespace System.Windows.Documents
         /// <summary>
         /// Table owner accessor
         /// </summary>
-        internal Table Table { get { return Row != null ? Row.Table : null; } }
+        internal Table Table { get { return Row?.Table; } }
 
         /// <summary>
         /// Cell's index in the parents collection.
@@ -566,17 +560,11 @@ namespace System.Windows.Documents
         {
             TableCell cell = (TableCell) d;
 
-            if(cell.Table != null)
-            {
-                cell.Table.OnStructureChanged();
-            }
+            cell.Table?.OnStructureChanged();
 
             // Update AutomaitonPeer.
             TableCellAutomationPeer peer = ContentElementAutomationPeer.FromElement(cell) as TableCellAutomationPeer;
-            if (peer != null)
-            {
-                peer.OnColumnSpanChanged((int)e.OldValue, (int)e.NewValue);
-            }
+            peer?.OnColumnSpanChanged((int)e.OldValue, (int)e.NewValue);
         }
 
         /// <summary>
@@ -586,17 +574,11 @@ namespace System.Windows.Documents
         {
             TableCell cell = (TableCell) d;
 
-            if(cell.Table != null)
-            {
-                cell.Table.OnStructureChanged();
-            }
+            cell.Table?.OnStructureChanged();
 
             // Update AutomaitonPeer.
             TableCellAutomationPeer peer = ContentElementAutomationPeer.FromElement(cell) as TableCellAutomationPeer;
-            if (peer != null)
-            {
-                peer.OnRowSpanChanged((int)e.OldValue, (int)e.NewValue);
-            }
+            peer?.OnRowSpanChanged((int)e.OldValue, (int)e.NewValue);
         }
 
         #endregion Property Invalidation 

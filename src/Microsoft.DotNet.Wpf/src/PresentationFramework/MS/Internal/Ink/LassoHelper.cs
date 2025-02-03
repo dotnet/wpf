@@ -148,10 +148,7 @@ namespace MS.Internal.Ink
             }
             finally
             {
-                if (dc != null)
-                {
-                    dc.Close();
-                }
+                dc?.Close();
             }
 
             // Add the new visual to the container.

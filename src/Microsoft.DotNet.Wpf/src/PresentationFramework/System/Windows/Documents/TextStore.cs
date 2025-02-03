@@ -949,11 +949,8 @@ namespace System.Windows.Documents
 
             // Convert to local coordinates.
             GeneralTransform transform = compositionTarget.RootVisual.TransformToDescendant(RenderScope);
-            if (transform != null)
-            {
-                // REVIEW: should we throw if the point could not be transformed?
-                transform.TryTransform(milPoint, out milPoint);
-            }
+            // REVIEW: should we throw if the point could not be transformed?
+            transform?.TryTransform(milPoint, out milPoint);
 
             // Validate layout information on TextView
             if (!view.Validate(milPoint))
@@ -1696,10 +1693,7 @@ namespace System.Windows.Documents
                 }
             }
 
-            if (_textservicesproperty != null)
-            {
-                _textservicesproperty.OnLayoutUpdated();
-            }
+            _textservicesproperty?.OnLayoutUpdated();
         }
 
         // Called as the selection changes.
@@ -3355,12 +3349,9 @@ namespace System.Windows.Documents
         {
             CompositionParentUndoUnit unit = PeekCompositionParentUndoUnit();
 
-            if (unit != null)
-            {
-                // We also put the caret at the end of the composition after
-                // redoing a composition undo.  So update the end position now.
-                unit.RecordRedoSelectionState(caretPosition, caretPosition);
-            }
+            // We also put the caret at the end of the composition after
+            // redoing a composition undo.  So update the end position now.
+            unit?.RecordRedoSelectionState(caretPosition, caretPosition);
         }
 
         // Repositions an ITextRange to comply with limitations on IME input.

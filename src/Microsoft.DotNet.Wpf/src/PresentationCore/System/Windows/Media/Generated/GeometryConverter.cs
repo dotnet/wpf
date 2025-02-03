@@ -50,7 +50,7 @@ namespace System.Windows.Media
                 {
                     if (!(context.Instance is Geometry))
                     {
-                        throw new ArgumentException(SR.Format(SR.General_Expected_Type, "Geometry"), "context");
+                        throw new ArgumentException(SR.Format(SR.General_Expected_Type, "Geometry"), nameof(context));
                     }
 
                     Geometry value = (Geometry)context.Instance;

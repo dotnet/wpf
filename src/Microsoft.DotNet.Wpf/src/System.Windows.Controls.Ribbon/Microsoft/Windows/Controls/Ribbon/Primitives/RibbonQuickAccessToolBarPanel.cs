@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -176,7 +176,7 @@ namespace Microsoft.Windows.Controls.Ribbon.Primitives
             UIElementCollection children = InternalChildren;
             List<UIElement> generatedItems = GeneratedChildren;
             int overflowIndex = 0;
-            RibbonQuickAccessToolBarOverflowPanel overflowPanel = QAT == null ? null : QAT.OverflowPanel;
+            RibbonQuickAccessToolBarOverflowPanel overflowPanel = QAT?.OverflowPanel;
 
             for (int i = 0; i < generatedItems.Count; i++)
             {
@@ -246,10 +246,7 @@ namespace Microsoft.Windows.Controls.Ribbon.Primitives
                     Dispatcher.BeginInvoke((Action)delegate()
                         {
                             UIElement parent = VisualTreeHelper.GetParent(this) as UIElement;
-                            if (parent != null)
-                            {
-                                parent.InvalidateMeasure();
-                            }
+                            parent?.InvalidateMeasure();
                         },
                         DispatcherPriority.Normal,
                         null);

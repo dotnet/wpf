@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -133,7 +133,7 @@ namespace MS.Internal.Annotations.Anchoring
 
             TextSelectionHelper.CheckSelection(selection, out start, out end, out textSegments);
             if (!(start is TextPointer))
-                throw new ArgumentException(SR.WrongSelectionType, "selection");
+                throw new ArgumentException(SR.WrongSelectionType, nameof(selection));
 
             ITextPointer elementStart;
             ITextPointer elementEnd;
@@ -143,10 +143,10 @@ namespace MS.Internal.Annotations.Anchoring
                 return null;
 
             if (elementStart.CompareTo(end) > 0)
-                throw new ArgumentException(SR.InvalidStartNodeForTextSelection, "startNode");
+                throw new ArgumentException(SR.InvalidStartNodeForTextSelection, nameof(startNode));
 
             if (elementEnd.CompareTo(start) < 0)
-                throw new ArgumentException(SR.InvalidStartNodeForTextSelection, "startNode");
+                throw new ArgumentException(SR.InvalidStartNodeForTextSelection, nameof(startNode));
 
             ContentLocatorPart part = new ContentLocatorPart(CharacterRangeElementName);
 
@@ -190,7 +190,7 @@ namespace MS.Internal.Annotations.Anchoring
             ArgumentNullException.ThrowIfNull(locatorPart);
 
             if (CharacterRangeElementName != locatorPart.PartType)
-                throw new ArgumentException(SR.Format(SR.IncorrectLocatorPartType, $"{locatorPart.PartType.Namespace}:{locatorPart.PartType.Name}"), "locatorPart");
+                throw new ArgumentException(SR.Format(SR.IncorrectLocatorPartType, $"{locatorPart.PartType.Namespace}:{locatorPart.PartType.Name}"), nameof(locatorPart));
 
             // First we extract the offset and length of the
             // text range from the locator part.
@@ -240,7 +240,7 @@ namespace MS.Internal.Annotations.Anchoring
             //we do not support 0 or negative length selection
             if (anchor.IsEmpty)
             {
-                throw new ArgumentException(SR.IncorrectAnchorLength, "locatorPart");
+                throw new ArgumentException(SR.IncorrectAnchorLength, nameof(locatorPart));
             }
 
             attachmentLevel = AttachmentLevel.Full;

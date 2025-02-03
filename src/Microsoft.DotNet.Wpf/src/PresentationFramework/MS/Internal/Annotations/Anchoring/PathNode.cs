@@ -153,8 +153,7 @@ namespace MS.Internal.Annotations.Anchoring
 
             // make all the children readonly so we do not need to 
             // lock the PathNode when getting the children
-            if (firstPathNode != null)
-                firstPathNode.FreezeChildren();
+            firstPathNode?.FreezeChildren();
 
             return firstPathNode;
         }

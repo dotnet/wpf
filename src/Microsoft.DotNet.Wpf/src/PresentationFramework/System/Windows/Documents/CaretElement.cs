@@ -104,7 +104,7 @@ namespace System.Windows.Documents
         {
             if (index != 0)
             {
-                throw new ArgumentOutOfRangeException("index", index, SR.Visual_ArgumentOutOfRange);
+                throw new ArgumentOutOfRangeException(nameof(index), index, SR.Visual_ArgumentOutOfRange);
             }
 
             return _caretElement;
@@ -861,11 +861,8 @@ namespace System.Windows.Documents
             if (layer == null)
             {
                 // There is no AdornerLayer available.  Clear cached value and exit.
-                if (_adornerLayer != null)
-                {
-                    // We're currently in a layer that doesn't exist.
-                    _adornerLayer.Remove(this);
-                }
+                // We're currently in a layer that doesn't exist.
+                _adornerLayer?.Remove(this);
 
                 _adornerLayer = null;
                 return;
@@ -877,11 +874,8 @@ namespace System.Windows.Documents
                 return;
             }
 
-            if (_adornerLayer != null)
-            {
-                // We're currently in the wrong layer.
-                _adornerLayer.Remove(this);
-            }
+            // We're currently in the wrong layer.
+            _adornerLayer?.Remove(this);
 
             // Add ourselves to the correct layer.
             _adornerLayer = layer;

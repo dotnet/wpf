@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -329,10 +329,7 @@ namespace System.Windows.Automation.Peers
                 this.OwningDataGrid.SelectedCells.Count == 1 && e.AddedCells.Count == 1)
             {
                 DataGridCellItemAutomationPeer cellPeer = GetCellItemPeer(e.AddedCells[0]);
-                if (cellPeer != null)
-                {
-                    cellPeer.RaiseAutomationEvent(AutomationEvents.SelectionItemPatternOnElementSelected);
-                }
+                cellPeer?.RaiseAutomationEvent(AutomationEvents.SelectionItemPatternOnElementSelected);
             }
             else
             {
@@ -342,10 +339,7 @@ namespace System.Windows.Automation.Peers
                     for (i = 0; i < e.AddedCells.Count; i++)
                     {
                         DataGridCellItemAutomationPeer cellPeer = GetCellItemPeer(e.AddedCells[i]);
-                        if (cellPeer != null)
-                        {
-                            cellPeer.RaiseAutomationEvent(AutomationEvents.SelectionItemPatternOnElementAddedToSelection);
-                        }
+                        cellPeer?.RaiseAutomationEvent(AutomationEvents.SelectionItemPatternOnElementAddedToSelection);
                     }
                 }
 
@@ -354,10 +348,7 @@ namespace System.Windows.Automation.Peers
                     for (i = 0; i < e.RemovedCells.Count; i++)
                     {
                         DataGridCellItemAutomationPeer cellPeer = GetCellItemPeer(e.RemovedCells[i]);
-                        if (cellPeer != null)
-                        {
-                            cellPeer.RaiseAutomationEvent(AutomationEvents.SelectionItemPatternOnElementRemovedFromSelection);
-                        }
+                        cellPeer?.RaiseAutomationEvent(AutomationEvents.SelectionItemPatternOnElementRemovedFromSelection);
                     }
                 }
             }
@@ -368,10 +359,7 @@ namespace System.Windows.Automation.Peers
         internal void RaiseAutomationRowInvokeEvents(DataGridRow row)
         {
             DataGridItemAutomationPeer dataGridItemAutomationPeer = FindOrCreateItemAutomationPeer(row.Item) as DataGridItemAutomationPeer;
-            if (dataGridItemAutomationPeer != null)
-            {
-                dataGridItemAutomationPeer.RaiseAutomationEvent(AutomationEvents.InvokePatternOnInvoked);
-            }
+            dataGridItemAutomationPeer?.RaiseAutomationEvent(AutomationEvents.InvokePatternOnInvoked);
         }
 
         // This method is called from DataGrid.OnBeginningEdit/OnCommittingEdit/OnCancelingEdit
@@ -382,10 +370,7 @@ namespace System.Windows.Automation.Peers
             if (dataGridItemAutomationPeer != null)
             {
                 DataGridCellItemAutomationPeer cellPeer = dataGridItemAutomationPeer.GetOrCreateCellItemPeer(column);
-                if (cellPeer != null)
-                {
-                    cellPeer.RaiseAutomationEvent(AutomationEvents.InvokePatternOnInvoked);
-                }
+                cellPeer?.RaiseAutomationEvent(AutomationEvents.InvokePatternOnInvoked);
             }
         }
 
@@ -402,10 +387,7 @@ namespace System.Windows.Automation.Peers
                 numSelected == 1 && numAdded == 1)
             {
                 ItemAutomationPeer peer = FindOrCreateItemAutomationPeer(this.OwningDataGrid.SelectedItem);
-                if (peer != null)
-                {
-                    peer.RaiseAutomationEvent(AutomationEvents.SelectionItemPatternOnElementSelected);
-                }
+                peer?.RaiseAutomationEvent(AutomationEvents.SelectionItemPatternOnElementSelected);
             }
             else
             {
@@ -415,10 +397,7 @@ namespace System.Windows.Automation.Peers
                     for (i = 0; i < e.AddedItems.Count; i++)
                     {
                         ItemAutomationPeer peer = FindOrCreateItemAutomationPeer(e.AddedItems[i]);
-                        if (peer != null)
-                        {
-                            peer.RaiseAutomationEvent(AutomationEvents.SelectionItemPatternOnElementAddedToSelection);
-                        }
+                        peer?.RaiseAutomationEvent(AutomationEvents.SelectionItemPatternOnElementAddedToSelection);
                     }
                 }
 
@@ -427,10 +406,7 @@ namespace System.Windows.Automation.Peers
                     for (i = 0; i < e.RemovedItems.Count; i++)
                     {
                         ItemAutomationPeer peer = FindOrCreateItemAutomationPeer(e.RemovedItems[i]);
-                        if (peer != null)
-                        {
-                            peer.RaiseAutomationEvent(AutomationEvents.SelectionItemPatternOnElementRemovedFromSelection);
-                        }
+                        peer?.RaiseAutomationEvent(AutomationEvents.SelectionItemPatternOnElementRemovedFromSelection);
                     }
                 }
             }

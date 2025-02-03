@@ -485,7 +485,7 @@ namespace System.Windows.Media
 
             if (!profileUri.IsAbsoluteUri)
             {
-                throw new ArgumentException(SR.UriNotAbsolute, "profileUri");
+                throw new ArgumentException(SR.UriNotAbsolute, nameof(profileUri));
             }
 
             _profileUri = profileUri;

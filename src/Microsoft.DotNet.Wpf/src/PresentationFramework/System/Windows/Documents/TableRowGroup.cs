@@ -65,7 +65,7 @@ namespace System.Windows.Documents
                 return;
             }
 
-            throw (new ArgumentException(SR.Format(SR.UnexpectedParameterType, value.GetType(), typeof(TableRow)), "value"));
+            throw (new ArgumentException(SR.Format(SR.UnexpectedParameterType, value.GetType(), typeof(TableRow)), nameof(value)));
         }
 
         /// <summary>
@@ -163,10 +163,7 @@ namespace System.Windows.Documents
         /// </summary>
         internal void OnEnterParentTree()
         {
-            if(Table != null)
-            {
-                Table.OnStructureChanged();
-            }
+            Table?.OnStructureChanged();
         }
 
         /// <summary>

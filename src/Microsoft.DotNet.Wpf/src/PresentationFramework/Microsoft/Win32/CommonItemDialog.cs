@@ -502,14 +502,6 @@ namespace Microsoft.Win32
 
         //---------------------------------------------------
         //
-        // Internal Events
-        //
-        //---------------------------------------------------
-        //#region Internal Events
-        //#endregion Internal Events
-
-        //---------------------------------------------------
-        //
         // Private Methods
         //
         //---------------------------------------------------
@@ -697,10 +689,10 @@ namespace Microsoft.Win32
         {
             public delegate bool OnOkCallback(IFileDialog dialog);
 
-            private IFileDialog _dialog;
+            private readonly IFileDialog _dialog;
 
-            private OnOkCallback _okCallback;
-            uint _eventCookie;
+            private readonly OnOkCallback _okCallback;
+            private readonly uint _eventCookie;
 
             public VistaDialogEvents(IFileDialog dialog, OnOkCallback okCallback)
             {

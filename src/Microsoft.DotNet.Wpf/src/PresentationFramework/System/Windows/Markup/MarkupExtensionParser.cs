@@ -1465,7 +1465,7 @@ namespace System.Windows.Markup
                 // if the prefix was "" then
                 // 1) normal properties resolve to the parent Tag namespace.
                 // 2) Attached properties resolve to the "" default namespace.
-#if NET
+#if !NETFX
                 if (!name.Contains('.'))
 #else
                 if (!name.Contains("."))

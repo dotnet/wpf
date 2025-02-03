@@ -518,7 +518,7 @@ namespace Microsoft.Build.Tasks.Windows
                                 collector.RootElementLinePosition = reader.LinePosition;
                             }
 
-#if NET
+#if !NETFX
                             if (reader.Name.Contains('.'))
 #else
                             if (reader.Name.Contains("."))

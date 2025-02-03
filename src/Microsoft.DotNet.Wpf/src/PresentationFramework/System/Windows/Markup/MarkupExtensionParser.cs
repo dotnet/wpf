@@ -1628,11 +1628,7 @@ namespace System.Windows.Markup
                     if (builder == null)
                     {
                         builder = new StringBuilder(value.Length);
-#if NET
-                        builder.Append(value.AsSpan(0,i));
-#else
-                        builder.Append(value.Substring(0,i));
-#endif
+                        builder.Append(value, 0, i);
                     }
                     noEscape = false;
                 }

@@ -2453,7 +2453,7 @@ namespace MS.Internal.AutomationProxies
                         {
                             // Take the remaining string from the Keyword
                             // Case Alt+Enter
-                            return sCanonicalsKeyword + menuRawText.Substring(pos + cKeyChars + 1, cMenuChars - (pos + cKeyChars + 1));
+                            return string.Concat(sCanonicalsKeyword, menuRawText.Substring(pos + cKeyChars + 1, cMenuChars - (pos + cKeyChars + 1)));
                         }
                     }
                 }
@@ -2475,7 +2475,7 @@ namespace MS.Internal.AutomationProxies
                 // Check that it is the form Fxx
                 if (pos < cChars - 1 && pos > 0 && menuText [pos] == 'f')
                 {
-                    int iKey = int.Parse(menuText.Substring(pos + 1, cChars - (pos + 1)), CultureInfo.InvariantCulture);
+                    int iKey = int.Parse(menuText.AsSpan(pos + 1, cChars - (pos + 1)), CultureInfo.InvariantCulture);
                     if (iKey > 0 && iKey <= 12)
                     {
                         return "F" + iKey.ToString(CultureInfo.CurrentCulture);

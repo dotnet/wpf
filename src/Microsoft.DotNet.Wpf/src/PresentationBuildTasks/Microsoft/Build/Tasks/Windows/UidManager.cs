@@ -505,7 +505,11 @@ namespace Microsoft.Build.Tasks.Windows
                                 collector.RootElementLinePosition = reader.LinePosition;
                             }
 
-                            if (reader.Name.IndexOf('.') >= 0)
+#if !NETFX
+                            if (reader.Name.Contains('.'))
+#else
+                            if (reader.Name.Contains("."))
+#endif
                             {
                                 // the name has a dot, which suggests it is a property tag.
                                 // we will ignore adding uid

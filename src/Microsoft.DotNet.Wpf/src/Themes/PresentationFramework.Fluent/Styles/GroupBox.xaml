@@ -10,13 +10,13 @@
     <Style x:Key="DefaultGroupBoxStyle" TargetType="{x:Type GroupBox}">
         <Setter Property="OverridesDefaultStyle" Value="True" />
         <Setter Property="Foreground" Value="{DynamicResource GroupBoxForeground}" />
-        <Setter Property="Padding" Value="{DynamicResource GroupBoxPadding}" />
+        <Setter Property="Padding" Value="{StaticResource GroupBoxPadding}" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type GroupBox}">
                     <Grid
                         Background="{TemplateBinding Background}"
-                        SnapsToDevicePixels="true">
+                        SnapsToDevicePixels="True">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto" />
                             <RowDefinition Height="*" />

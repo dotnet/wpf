@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -62,13 +62,7 @@ namespace System.Windows
 
         #region AreInactiveSelectionHighlightBrushKeysSupported
 
-#if NETFX && !NETCOREAPP
-        private static bool _areInactiveSelectionHighlightBrushKeysSupported = BinaryCompatibility.TargetsAtLeast_Desktop_V4_5 ? true : false;
-#elif NETCOREAPP
         private static bool _areInactiveSelectionHighlightBrushKeysSupported = true;
-#else
-        private static bool _areInactiveSelectionHighlightBrushKeysSupported = true;
-#endif
 
         public static bool AreInactiveSelectionHighlightBrushKeysSupported
         {
@@ -98,13 +92,7 @@ namespace System.Windows
 
         #region KeepTextBoxDisplaySynchronizedWithTextProperty
 
-#if NETFX && !NETCOREAPP
-        private static bool _keepTextBoxDisplaySynchronizedWithTextProperty = BinaryCompatibility.TargetsAtLeast_Desktop_V4_5 ? true : false;
-#elif NETCOREAPP
         private static bool _keepTextBoxDisplaySynchronizedWithTextProperty = true;
-#else
-        private static bool _keepTextBoxDisplaySynchronizedWithTextProperty = true;
-#endif
 
         /// <summary>
         /// In WPF 4.0, a TextBox can reach a state where its Text property

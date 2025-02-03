@@ -1465,9 +1465,11 @@ namespace System.Windows.Markup
                 // if the prefix was "" then
                 // 1) normal properties resolve to the parent Tag namespace.
                 // 2) Attached properties resolve to the "" default namespace.
-#pragma warning disable CA1847
+#if NET
+                if (!name.Contains('.'))
+#else
                 if (!name.Contains("."))
-#pragma warning restore CA1847
+#endif
                     attribNamespaceURI = parentURI;
                 else
                     attribNamespaceURI = _parserHelper.LookupNamespace("");
@@ -1626,9 +1628,11 @@ namespace System.Windows.Markup
                     if (builder == null)
                     {
                         builder = new StringBuilder(value.Length);
-#pragma warning disable CA1846
+#if NET
+                        builder.Append(value.AsSpan(0,i));
+#else
                         builder.Append(value.Substring(0,i));
-#pragma warning restore CA1846
+#endif
                     }
                     noEscape = false;
                 }

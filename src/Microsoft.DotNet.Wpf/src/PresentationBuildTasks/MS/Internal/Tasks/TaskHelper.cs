@@ -203,9 +203,11 @@ namespace MS.Internal.Tasks
             while (e.InnerException != null)
             {
                 Exception eInner = e.InnerException;
-#pragma warning disable CA2249
+#if NET
+                if (!e.Message.Contains(eInner.Message, StringComparison.Ordinal))
+#else
                 if (e.Message.IndexOf(eInner.Message, StringComparison.Ordinal) == -1)
-#pragma warning restore CA2249
+#endif
                 {
                     message += ", ";
                     message += eInner.Message;

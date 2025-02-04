@@ -19,7 +19,7 @@
         The platform/RID specific packages will be generated in their respective $(Platform) specific build phases
     -->
     <IsPackable>true</IsPackable>
-    <IsPackable Condition="('$(Platform)'!='AnyCPU' and '$(Platform)'!='Win32' and '$(Platform)'!='x86') and '$(CreateArchNeutralPackage)'=='true'">false</IsPackable>
+    <IsPackable Condition="('$(Platform)'!='AnyCPU' and '$(Platform)'!='Win32' and '$(Platform)'!='x86') and '$(CreateArchNeutralPackage)'=='true' and '$(DotNetBuild)' != 'true'">false</IsPackable>
   </PropertyGroup>
 
   <PropertyGroup>

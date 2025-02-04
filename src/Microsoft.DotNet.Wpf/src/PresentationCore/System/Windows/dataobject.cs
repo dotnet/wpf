@@ -8,6 +8,7 @@ using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Formats.Nrbf;
 using System.IO;
+using System.Private.Windows.Ole;
 using System.Runtime.InteropServices;
 using System.Runtime.InteropServices.ComTypes;
 using System.Runtime.Serialization;
@@ -1181,13 +1182,13 @@ namespace System.Windows
             }
 
             if (IsFormatEqual(format, DataFormats.FileDrop)
-                || IsFormatEqual(format, DataFormats.FileName)
-                || IsFormatEqual(format, DataFormats.FileNameW))
+                || IsFormatEqual(format, DataFormatNames.FileNameAnsi)
+                || IsFormatEqual(format, DataFormatNames.FileNameUnicode))
             {
                 return new string[] {
                                         DataFormats.FileDrop,
-                                        DataFormats.FileNameW,
-                                        DataFormats.FileName,
+                                        DataFormatNames.FileNameUnicode,
+                                        DataFormatNames.FileNameAnsi,
                 };
             }
 
@@ -1469,8 +1470,7 @@ namespace System.Windows
             {
                 hr = SaveStringToHandle(medium.unionmember, data.ToString(), false /* unicode */, doNotReallocate);
             }
-            else if (IsFormatEqual(format, DataFormats.UnicodeText)||
-                     IsFormatEqual(format, DataFormats.ApplicationTrust))
+            else if (IsFormatEqual(format, DataFormats.UnicodeText))
             {
                 hr = SaveStringToHandle(medium.unionmember, data.ToString(), true /* unicode */, doNotReallocate);
             }
@@ -1478,14 +1478,14 @@ namespace System.Windows
             {
                 hr = SaveFileListToHandle(medium.unionmember, (string[])data, doNotReallocate);
             }
-            else if (IsFormatEqual(format, DataFormats.FileName))
+            else if (IsFormatEqual(format, DataFormatNames.FileNameAnsi))
             {
                 string[] filelist;
 
                 filelist = (string[])data;
                 hr = SaveStringToHandle(medium.unionmember, filelist[0], false /* unicode */, doNotReallocate);
             }
-            else if (IsFormatEqual(format, DataFormats.FileNameW))
+            else if (IsFormatEqual(format, DataFormatNames.FileNameUnicode))
             {
                 string[] filelist;
 
@@ -2732,8 +2732,7 @@ namespace System.Windows
                     {
                         data = ReadStringFromHandle(hglobal, false);
                     }
-                    else if (IsFormatEqual(format, DataFormats.UnicodeText) ||
-                             IsFormatEqual(format, DataFormats.ApplicationTrust))
+                    else if (IsFormatEqual(format, DataFormats.UnicodeText))
                     {
                         data = ReadStringFromHandle(hglobal, true);
                     }
@@ -2741,11 +2740,11 @@ namespace System.Windows
                     {
                         data = (object)ReadFileListFromHandle(hglobal);
                     }
-                    else if (IsFormatEqual(format, DataFormats.FileName))
+                    else if (IsFormatEqual(format, DataFormatNames.FileNameAnsi))
                     {
                         data = new string[] { ReadStringFromHandle(hglobal, false) };
                     }
-                    else if (IsFormatEqual(format, DataFormats.FileNameW))
+                    else if (IsFormatEqual(format, DataFormatNames.FileNameUnicode))
                     {
                         data = new string[] { ReadStringFromHandle(hglobal, true) };
                     }

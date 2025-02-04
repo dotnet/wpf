@@ -43,7 +43,6 @@
     <SystemSecurityCryptographyXmlPackageVersion>10.0.0-preview.2.25102.2</SystemSecurityCryptographyXmlPackageVersion>
     <SystemSecurityPermissionsPackageVersion>10.0.0-preview.2.25102.2</SystemSecurityPermissionsPackageVersion>
     <SystemWindowsExtensionsPackageVersion>10.0.0-preview.2.25102.2</SystemWindowsExtensionsPackageVersion>
-    <SystemRuntimeCompilerServicesUnsafePackageVersion>6.0.0</SystemRuntimeCompilerServicesUnsafePackageVersion>
   </PropertyGroup>
   <!-- Docs / Intellisense -->
   <PropertyGroup>

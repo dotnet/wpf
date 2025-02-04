@@ -23,6 +23,14 @@
   <PropertyGroup>
     <MicrosoftPrivateWinformsVersion>10.0.0-preview.2.25102.1</MicrosoftPrivateWinformsVersion>
   </PropertyGroup>
+  <!-- Packages that come from https://github.com/dotnet/maintenance-packages need to be conditionally selected: https://github.com/dotnet/sdk/issues/45155 -->
+  <PropertyGroup Condition="'$(DotNetBuildSourceOnly)' == 'true'">
+    <SystemRuntimeCompilerServicesUnsafeVersion>6.1.1</SystemRuntimeCompilerServicesUnsafeVersion>
+  </PropertyGroup>
+  <!-- Packages that come from https://github.com/dotnet/maintenance-packages need to be conditionally selected: https://github.com/dotnet/sdk/issues/45155 -->
+  <PropertyGroup Condition="'$(DotNetBuildSourceOnly)' != 'true'">
+    <SystemRuntimeCompilerServicesUnsafeVersion>6.0.0</SystemRuntimeCompilerServicesUnsafeVersion>
+  </PropertyGroup>
   <!-- Packages that come from https://github.com/dotnet/runtime -->
   <PropertyGroup>
     <VSRedistCommonNetCoreSharedFrameworkx64100PackageVersion>10.0.0-preview.2.25102.2</VSRedistCommonNetCoreSharedFrameworkx64100PackageVersion>
@@ -43,7 +51,6 @@
     <SystemSecurityCryptographyXmlPackageVersion>10.0.0-preview.2.25102.2</SystemSecurityCryptographyXmlPackageVersion>
     <SystemSecurityPermissionsPackageVersion>10.0.0-preview.2.25102.2</SystemSecurityPermissionsPackageVersion>
     <SystemWindowsExtensionsPackageVersion>10.0.0-preview.2.25102.2</SystemWindowsExtensionsPackageVersion>
-    <SystemRuntimeCompilerServicesUnsafePackageVersion>6.0.0</SystemRuntimeCompilerServicesUnsafePackageVersion>
   </PropertyGroup>
   <!-- Docs / Intellisense -->
   <PropertyGroup>

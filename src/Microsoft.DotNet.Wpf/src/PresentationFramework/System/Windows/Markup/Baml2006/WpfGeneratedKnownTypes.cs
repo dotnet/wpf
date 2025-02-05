@@ -9,7 +9,7 @@ namespace System.Windows.Baml2006
 {
     partial class WpfSharedBamlSchemaContext : XamlSchemaContext
     {
-        const int KnownTypeCount = 759;
+        const int KnownTypeCount = 760;
 
 
         private WpfKnownType CreateKnownBamlType(short bamlNumber, bool isBamlType, bool useV3Rules)
@@ -775,6 +775,7 @@ namespace System.Windows.Baml2006
                 case 757: return Create_BamlType_XmlLanguageConverter(isBamlType, useV3Rules); // type converter
                 case 758: return Create_BamlType_XmlNamespaceMapping(isBamlType, useV3Rules);
                 case 759: return Create_BamlType_ZoomPercentageConverter(isBamlType, useV3Rules);
+                case 760: return Create_BamlType_BackEase(isBamlType, useV3Rules);
                 default:
                     throw new InvalidOperationException("Invalid BAML number");
             }
@@ -980,6 +981,7 @@ namespace System.Windows.Baml2006
                 case 897706848 : return Create_BamlType_TextBlock(isBamlType, useV3Rules);
                 case 905080928 : return Create_BamlType_FixedDocumentSequence(isBamlType, useV3Rules);
                 case 906240700 : return Create_BamlType_UserControl(isBamlType, useV3Rules);
+                case 907931051 : return Create_BamlType_BackEase(isBamlType, useV3Rules);
                 case 912040738 : return Create_BamlType_TextEffectCollection(isBamlType, useV3Rules);
                 case 916823320 : return Create_BamlType_InputDevice(isBamlType, useV3Rules);
                 case 921174220 : return Create_BamlType_TriggerCollection(isBamlType, useV3Rules);
@@ -12812,6 +12814,18 @@ namespace System.Windows.Baml2006
             {
                 DefaultConstructor = delegate () { return new System.Windows.Documents.ZoomPercentageConverter(); }
             };
+            bamlType.Freeze();
+            return bamlType;
+        }
+
+        [System.Runtime.CompilerServices.MethodImpl(System.Runtime.CompilerServices.MethodImplOptions.NoInlining)]
+        private WpfKnownType Create_BamlType_BackEase(bool isBamlType, bool useV3Rules)
+        {
+            var bamlType = new WpfKnownType(this, // SchemaContext
+                760, "BackEase",
+                typeof(System.Windows.Media.Animation.BackEase),
+                isBamlType, useV3Rules);
+            bamlType.DefaultConstructor = delegate () { return new System.Windows.Media.Animation.BackEase(); };
             bamlType.Freeze();
             return bamlType;
         }

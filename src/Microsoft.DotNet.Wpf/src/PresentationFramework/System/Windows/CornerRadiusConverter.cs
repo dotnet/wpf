@@ -121,7 +121,7 @@ namespace System.Windows
 
             if (!(value is CornerRadius))
             {
-                throw new ArgumentException(SR.Format(SR.UnexpectedParameterType, value.GetType(), typeof(CornerRadius)), "value");
+                throw new ArgumentException(SR.Format(SR.UnexpectedParameterType, value.GetType(), typeof(CornerRadius)), nameof(value));
             }
 
             CornerRadius cr = (CornerRadius)value;

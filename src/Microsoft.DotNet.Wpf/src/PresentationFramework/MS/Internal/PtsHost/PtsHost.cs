@@ -4076,10 +4076,7 @@ namespace MS.Internal.PtsHost
             try
             {
                 CellParaClient cellParaClient = PtsContext.HandleToObject(pfsCell) as CellParaClient;
-                if (cellParaClient != null)
-                {
-                    cellParaClient.Dispose();
-                }
+                cellParaClient?.Dispose();
             }
             catch (Exception e)
             {

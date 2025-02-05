@@ -500,11 +500,7 @@ namespace System.Xaml.Schema
                 {
                     if (knownMember is not null)
                     {
-                        if (knownMembers is not null)
-                        {
-                            knownMembers.Add(knownMember);
-                        }
-
+                        knownMembers?.Add(knownMember);
                         continue;
                     }
                     else if (skipKnownNegatives)

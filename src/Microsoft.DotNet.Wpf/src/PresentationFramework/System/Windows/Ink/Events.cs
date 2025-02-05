@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -303,14 +303,14 @@ namespace System.Windows.Controls
             ArgumentNullException.ThrowIfNull(strokes);
             if (strokes.Count < 1)
             {
-                throw new ArgumentException(SR.InvalidEmptyStrokeCollection, "strokes");
+                throw new ArgumentException(SR.InvalidEmptyStrokeCollection, nameof(strokes));
             }
             ArgumentNullException.ThrowIfNull(gestureRecognitionResults);
             List<GestureRecognitionResult> results = 
                 new List<GestureRecognitionResult>(gestureRecognitionResults);
             if (results.Count == 0)
             {
-                throw new ArgumentException(SR.InvalidEmptyArray, "gestureRecognitionResults");
+                throw new ArgumentException(SR.InvalidEmptyArray, nameof(gestureRecognitionResults));
             }
             _strokes = strokes;
             _gestureRecognitionResults = results;

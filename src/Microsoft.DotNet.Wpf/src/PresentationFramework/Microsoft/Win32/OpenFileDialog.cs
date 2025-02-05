@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -61,9 +61,6 @@ namespace Microsoft.Win32
         /// <exception cref="System.InvalidOperationException">
         /// Thrown if there are no filenames stored in the OpenFileDialog.
         /// </exception>
-        /// <Remarks>
-        ///     Callers must have FileDialogPermission(FileDialogPermissionAccess.Open) to call this API.
-        /// </Remarks>
         public Stream OpenFile()
         {
             string filename = CriticalItemName;
@@ -85,9 +82,6 @@ namespace Microsoft.Win32
         /// <exception cref="System.InvalidOperationException">
         /// Thrown if there are no filenames stored in the OpenFileDialog
         /// </exception>
-        /// <Remarks>
-        ///     Callers must have FileDialogPermission(FileDialogPermissionAccess.Open) to call this API.
-        /// </Remarks>
         public Stream[] OpenFiles()
         {
             // Cache ItemNames to avoid perf issues as per
@@ -124,9 +118,6 @@ namespace Microsoft.Win32
         /// <summary>
         ///  Resets all properties to their default values.
         /// </summary>
-        /// <Remarks>
-        ///     Callers must have FileIOPermission(PermissionState.Unrestricted) to call this API.
-        /// </Remarks>
         public override void Reset()
         {
 
@@ -206,22 +197,6 @@ namespace Microsoft.Win32
 
         //---------------------------------------------------
         //
-        // Public Events
-        //
-        //---------------------------------------------------
-        //#region Public Events
-        //#endregion Public Events
-
-        //---------------------------------------------------
-        //
-        // Protected Methods
-        //
-        //---------------------------------------------------
-        // #region Protected Methods
-        // #endregion Protected Methods
-
-        //---------------------------------------------------
-        //
         // Internal Methods
         //
         //---------------------------------------------------
@@ -233,22 +208,6 @@ namespace Microsoft.Win32
         }
 
         #endregion Internal Methods
-
-        //---------------------------------------------------
-        //
-        // Internal Properties
-        //
-        //---------------------------------------------------
-        //#region Internal Properties
-        //#endregion Internal Properties
-
-        //---------------------------------------------------
-        //
-        // Internal Events
-        //
-        //---------------------------------------------------
-        //#region Internal Events
-        //#endregion Internal Events
 
         //---------------------------------------------------
         //
@@ -277,21 +236,5 @@ namespace Microsoft.Win32
         }
 
         #endregion Private Methods
-
-        //---------------------------------------------------
-        //
-        // Private Properties
-        //
-        //---------------------------------------------------
-        //#region Private Properties
-        //#endregion Private Properties
-
-        //---------------------------------------------------
-        //
-        // Private Fields
-        //
-        //---------------------------------------------------
-        //#region Private Fields
-        //#endregion Private Fields        
     }
 }

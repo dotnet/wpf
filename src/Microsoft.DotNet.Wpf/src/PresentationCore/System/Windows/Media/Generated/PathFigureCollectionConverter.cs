@@ -50,7 +50,7 @@ namespace System.Windows.Media
                 {
                     if (!(context.Instance is PathFigureCollection))
                     {
-                        throw new ArgumentException(SR.Format(SR.General_Expected_Type, "PathFigureCollection"), "context");
+                        throw new ArgumentException(SR.Format(SR.General_Expected_Type, "PathFigureCollection"), nameof(context));
                     }
 
                     PathFigureCollection value = (PathFigureCollection)context.Instance;

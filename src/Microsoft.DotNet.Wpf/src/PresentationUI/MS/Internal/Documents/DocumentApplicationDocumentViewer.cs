@@ -300,10 +300,7 @@ namespace MS.Internal.Documents
         protected override void OnCancelPrintCommand()
         {
 #if !DONOTREFPRINTINGASMMETA
-            if (_documentWriter != null)
-            {
-                _documentWriter.CancelAsync();
-            }
+            _documentWriter?.CancelAsync();
 #endif // DONOTREFPRINTINGASMMETA
         }
 

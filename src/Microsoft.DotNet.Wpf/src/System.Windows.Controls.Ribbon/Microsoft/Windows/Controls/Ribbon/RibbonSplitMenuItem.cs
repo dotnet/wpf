@@ -145,10 +145,7 @@ namespace Microsoft.Windows.Controls.Ribbon
         private static void OnDropDownToolTipPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             RibbonSplitMenuItem splitMenuItem = (RibbonSplitMenuItem)d;
-            if (splitMenuItem._partArrowButton != null)
-            {
-                splitMenuItem._partArrowButton.CoerceValue(FrameworkElement.ToolTipProperty);
-            }
+            splitMenuItem._partArrowButton?.CoerceValue(FrameworkElement.ToolTipProperty);
         }
 
         #endregion

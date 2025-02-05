@@ -654,10 +654,7 @@ namespace MS.Internal.Data
                 {
                     ViewRecord vr = (ViewRecord)de.Value;
                     CollectionView cv = vr.View as CollectionView;
-                    if (cv != null)
-                    {
-                        cv.SetAllowsCrossThreadChanges(isSynchronized);
-                    }
+                    cv?.SetAllowsCrossThreadChanges(isSynchronized);
                 }
             }
         }

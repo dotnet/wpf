@@ -881,10 +881,7 @@ namespace System.Windows.Controls
             }
             else
             {
-                if (_isHandlerSuspended != null)
-                {
-                    _isHandlerSuspended.Remove(property);
-                }
+                _isHandlerSuspended?.Remove(property);
             }
         }
 
@@ -1127,7 +1124,7 @@ namespace System.Windows.Controls
                 }
                 else
                 {
-                    DatePickerDateValidationErrorEventArgs dateValidationError = new DatePickerDateValidationErrorEventArgs(new ArgumentOutOfRangeException("text", SR.Calendar_OnSelectedDateChanged_InvalidValue), text);
+                    DatePickerDateValidationErrorEventArgs dateValidationError = new DatePickerDateValidationErrorEventArgs(new ArgumentOutOfRangeException(nameof(text), SR.Calendar_OnSelectedDateChanged_InvalidValue), text);
                     OnDateValidationError(dateValidationError);
 
                     if (dateValidationError.ThrowException)

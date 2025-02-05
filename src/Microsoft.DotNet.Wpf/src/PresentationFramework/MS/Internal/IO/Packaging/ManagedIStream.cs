@@ -76,7 +76,7 @@ namespace MS.Internal.IO.Packaging
                     seekOrigin = SeekOrigin.End;
                     break;
                 default:
-                    throw new ArgumentOutOfRangeException("origin");
+                    throw new ArgumentOutOfRangeException(nameof(origin));
             }
             long position = _ioStream.Seek(offset, seekOrigin);
 

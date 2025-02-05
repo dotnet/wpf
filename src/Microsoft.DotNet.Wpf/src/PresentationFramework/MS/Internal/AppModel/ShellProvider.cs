@@ -24,12 +24,18 @@ namespace MS.Internal.AppModel
     #region Structs
 
     [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Unicode)]
-    internal struct COMDLG_FILTERSPEC
+    internal readonly struct COMDLG_FILTERSPEC
     {
         [MarshalAs(UnmanagedType.LPWStr)]
-        public string pszName;
+        public readonly string pszName;
         [MarshalAs(UnmanagedType.LPWStr)]
-        public string pszSpec;
+        public readonly string pszSpec;
+
+        public COMDLG_FILTERSPEC(string name, string spec)
+        {
+            pszName = name;
+            pszSpec = spec;
+        }
     }
 
     [StructLayout(LayoutKind.Sequential, Pack = 4)]

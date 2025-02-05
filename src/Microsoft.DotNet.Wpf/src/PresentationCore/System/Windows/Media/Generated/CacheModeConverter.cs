@@ -50,7 +50,7 @@ namespace System.Windows.Media
                 {
                     if (!(context.Instance is CacheMode))
                     {
-                        throw new ArgumentException(SR.Format(SR.General_Expected_Type, "CacheMode"), "context");
+                        throw new ArgumentException(SR.Format(SR.General_Expected_Type, "CacheMode"), nameof(context));
                     }
 
                     CacheMode value = (CacheMode)context.Instance;

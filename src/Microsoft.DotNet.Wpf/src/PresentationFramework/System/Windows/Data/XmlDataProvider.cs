@@ -74,7 +74,7 @@ namespace System.Windows.Data
                     _domSetDocument = null;
                     _source = value;
 
-                    OnPropertyChanged(new PropertyChangedEventArgs("Source"));
+                    OnPropertyChanged(new PropertyChangedEventArgs(nameof(Source)));
 
                     if (!IsRefreshDeferred)
                         Refresh();
@@ -115,7 +115,7 @@ namespace System.Windows.Data
                     _domSetDocument = value;
 
                     _source = null;
-                    OnPropertyChanged(new PropertyChangedEventArgs("Source"));
+                    OnPropertyChanged(new PropertyChangedEventArgs(nameof(Source)));
 
                     ChangeDocument(value); // set immediately so that next get_Document returns this value,
                                        // even when data provider is in deferred or asynch mode
@@ -143,7 +143,7 @@ namespace System.Windows.Data
                 if (_xPath != value)
                 {
                     _xPath = value;
-                    OnPropertyChanged(new PropertyChangedEventArgs("XPath"));
+                    OnPropertyChanged(new PropertyChangedEventArgs(nameof(XPath)));
 
                     if (!IsRefreshDeferred)
                         Refresh();
@@ -179,7 +179,7 @@ namespace System.Windows.Data
                 if (_nsMgr != value)
                 {
                     _nsMgr = value;
-                    OnPropertyChanged(new PropertyChangedEventArgs("XmlNamespaceManager"));
+                    OnPropertyChanged(new PropertyChangedEventArgs(nameof(XmlNamespaceManager)));
 
                     if (!IsRefreshDeferred)
                         Refresh();
@@ -394,8 +394,7 @@ namespace System.Windows.Data
             public void WriteXml(XmlWriter writer)
             {
                 XmlDocument doc = _host.DocumentForSerialization;
-                if (doc != null)
-                    doc.Save(writer);
+                doc?.Save(writer);
             }
 
             public void ReadXml(XmlReader reader)
@@ -435,8 +434,7 @@ namespace System.Windows.Data
                 if (_tryInlineDoc || (_savedDocument != null) || (_domSetDocument != null))
                 {
                     // if inline or assigned doc hasn't been parsed yet, wait for it
-                    if (_waitForInlineDoc != null)
-                        _waitForInlineDoc.WaitOne();
+                    _waitForInlineDoc?.WaitOne();
                     return _document;
                 }
                 return null;
@@ -459,8 +457,7 @@ namespace System.Windows.Data
             if (!_tryInlineDoc)
             {
                 _savedDocument = null;
-                if (_waitForInlineDoc != null)
-                    _waitForInlineDoc.Set();
+                _waitForInlineDoc?.Set();
                 return;
             }
 
@@ -504,8 +501,7 @@ namespace System.Windows.Data
 
                 // If serializer had to wait for the inline doc, it's available now.
                 // If there was an error, null will be returned for DocumentForSerialization.
-                if (_waitForInlineDoc != null)
-                    _waitForInlineDoc.Set();
+                _waitForInlineDoc?.Set();
             }
 
             // warn the user if the default xmlns wasn't set explicitly (bug 1006946)
@@ -707,7 +703,7 @@ namespace System.Windows.Data
                 if (_document != null)
                     Hook();
 
-                OnPropertyChanged(new PropertyChangedEventArgs("Document"));
+                OnPropertyChanged(new PropertyChangedEventArgs(nameof(Document)));
             }
         }
 
@@ -719,8 +715,7 @@ namespace System.Windows.Data
         {
             _tryInlineDoc = false;
             _savedDocument = null;
-            if (_waitForInlineDoc != null)
-                _waitForInlineDoc.Set();
+            _waitForInlineDoc?.Set();
         }
 
         private void Hook()

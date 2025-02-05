@@ -167,8 +167,7 @@ namespace System.Windows.Controls
                 if (AutomationPeer.ListenerExists(AutomationEvents.ToolTipClosed))
                 {
                     AutomationPeer peer = UIElementAutomationPeer.CreatePeerForElement(t);
-                    if (peer != null)
-                        peer.RaiseAutomationEvent(AutomationEvents.ToolTipClosed);
+                    peer?.RaiseAutomationEvent(AutomationEvents.ToolTipClosed);
                 }
             }
 
@@ -527,10 +526,7 @@ namespace System.Windows.Controls
 
         internal void ForceClose()
         {
-            if (_parentPopup != null)
-            {
-                _parentPopup.ForceClose();
-            }
+            _parentPopup?.ForceClose();
         }
 
         private void OnPopupCouldClose(object sender, EventArgs e)

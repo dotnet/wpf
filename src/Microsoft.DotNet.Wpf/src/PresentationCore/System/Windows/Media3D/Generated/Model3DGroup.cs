@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -330,10 +330,7 @@ namespace System.Windows.Media.Media3D
 
                         // We're on a channel, which means our dependents are also on the channel.
                         DUCE.IResource addResource = item as DUCE.IResource;
-                        if (addResource != null)
-                        {
-                            addResource.AddRefOnChannel(channel);
-                        }
+                        addResource?.AddRefOnChannel(channel);
 
                         UpdateResource(channel, true /* skip on channel check */);
                     }
@@ -360,10 +357,7 @@ namespace System.Windows.Media.Media3D
 
                         // We're on a channel, which means our dependents are also on the channel.
                         DUCE.IResource releaseResource = item as DUCE.IResource;
-                        if (releaseResource != null)
-                        {
-                            releaseResource.ReleaseOnChannel(channel);
-                        }
+                        releaseResource?.ReleaseOnChannel(channel);
                     }
                 }
             }

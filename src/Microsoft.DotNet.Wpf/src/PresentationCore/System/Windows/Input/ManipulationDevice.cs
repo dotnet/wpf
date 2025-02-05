@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -126,10 +126,7 @@ namespace System.Windows.Input
 
             RemoveAllManipulators();
 
-            if (_manipulationDevices != null)
-            {
-                _manipulationDevices.Remove(_target);
-            }
+            _manipulationDevices?.Remove(_target);
         }
 
         private void RemoveAllManipulators()
@@ -168,10 +165,7 @@ namespace System.Windows.Input
             VerifyAccess();
 
             manipulator.Updated -= OnManipulatorUpdated;
-            if (_manipulators != null)
-            {
-                _manipulators.Remove(manipulator);
-            }
+            _manipulators?.Remove(manipulator);
 
             // Removing a manipulator counts as an update
             OnManipulatorUpdated(manipulator, EventArgs.Empty);

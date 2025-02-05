@@ -1796,10 +1796,7 @@ namespace MS.Utility
 
         public void Clear()
         {
-            if (_listStore is not null)
-            {
-                _listStore.Clear();
-            }
+            _listStore?.Clear();
         }
 
         public bool Contains(T value)
@@ -1939,7 +1936,7 @@ namespace MS.Utility
                 _list = list;
 
                 FrugalListBase<T> store = _list._listStore;
-                _storeCompacter = (store is not null) ? store.NewCompacter(newCount) : null;
+                _storeCompacter = store?.NewCompacter(newCount);
             }
 
             public void Include(int start, int end)
@@ -2179,10 +2176,7 @@ namespace MS.Utility
 
         public void Clear()
         {
-            if (_listStore is not null)
-            {
-                _listStore.Clear();
-            }
+            _listStore?.Clear();
         }
 
         public bool Contains(T value)

@@ -50,7 +50,7 @@ namespace System.Windows.Media
                 {
                     if (!(context.Instance is Transform))
                     {
-                        throw new ArgumentException(SR.Format(SR.General_Expected_Type, "Transform"), "context");
+                        throw new ArgumentException(SR.Format(SR.General_Expected_Type, "Transform"), nameof(context));
                     }
 
                     Transform value = (Transform)context.Instance;

@@ -174,7 +174,7 @@ namespace System.Windows.Media.Imaging
                 case Rotation.Rotate270:
                     break;
                 default:
-                    throw new ArgumentException(SR.Image_SizeOptionsAngle, "rotation");
+                    throw new ArgumentException(SR.Image_SizeOptionsAngle, nameof(rotation));
             }
 
             BitmapSizeOptions sizeOptions = new BitmapSizeOptions

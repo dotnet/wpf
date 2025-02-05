@@ -85,11 +85,8 @@ namespace Microsoft.Build.Tasks.Windows
                 }
                 finally
                 {
-                    if (manifestReader != null)
-                    {
-                        // Close the manifest reader
-                        manifestReader.Close();
-                    }
+                    // Close the manifest reader
+                    manifestReader?.Close();
                 }
 
                 // NOTE:
@@ -121,11 +118,8 @@ namespace Microsoft.Build.Tasks.Windows
                 }
                 finally
                 {
-                    if (manifestWriter != null)
-                    {
-                        // Close the manifest writer
-                        manifestWriter.Close();
-                    }
+                    // Close the manifest writer
+                    manifestWriter?.Close();
                 }
 
             }

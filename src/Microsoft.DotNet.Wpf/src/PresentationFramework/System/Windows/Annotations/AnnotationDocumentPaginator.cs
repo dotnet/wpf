@@ -492,10 +492,7 @@ namespace System.Windows.Annotations
             /// </summary>
             public void OnChildDesiredSizeChanged(UIElement child)
             {
-                if (_basePage != null)
-                {
-                    _basePage.OnChildDesiredSizeChanged(child);
-                }
+                _basePage?.OnChildDesiredSizeChanged(child);
             }
 
 

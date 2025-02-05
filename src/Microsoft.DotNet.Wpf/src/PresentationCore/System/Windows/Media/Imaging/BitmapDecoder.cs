@@ -209,10 +209,7 @@ namespace System.Windows.Media.Imaging
             // of BitmapDecoder (such as JpegBitmapDecoder), those subclasses are constructed in
             // CreateFromUriOrStream, which also gets uriStream from SetupDecoderFromUriOrStream.
             //
-            if (_uriStream != null)
-            {
-                _uriStream.Close();
-            }
+            _uriStream?.Close();
         }
 
         /// <summary>

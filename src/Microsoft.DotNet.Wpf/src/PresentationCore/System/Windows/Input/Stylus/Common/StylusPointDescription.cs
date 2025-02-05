@@ -53,7 +53,7 @@ namespace System.Windows.Input
                 infos[RequiredYIndex].Id != StylusPointPropertyIds.Y ||
                 infos[RequiredPressureIndex].Id != StylusPointPropertyIds.NormalPressure)
             {
-                throw new ArgumentException(SR.InvalidStylusPointDescription, "stylusPointPropertyInfos");
+                throw new ArgumentException(SR.InvalidStylusPointDescription, nameof(stylusPointPropertyInfos));
             }
 
             //
@@ -69,7 +69,7 @@ namespace System.Windows.Input
             {
                 if (seenIds.Contains(infos[x].Id))
                 {
-                    throw new ArgumentException(SR.InvalidStylusPointDescriptionDuplicatesFound, "stylusPointPropertyInfos");
+                    throw new ArgumentException(SR.InvalidStylusPointDescriptionDuplicatesFound, nameof(stylusPointPropertyInfos));
                 }
                 if (infos[x].IsButton)
                 {
@@ -80,14 +80,14 @@ namespace System.Windows.Input
                     //this is not a button, make sure we haven't seen one before
                     if (buttonCount > 0)
                     {
-                        throw new ArgumentException(SR.InvalidStylusPointDescriptionButtonsMustBeLast, "stylusPointPropertyInfos");
+                        throw new ArgumentException(SR.InvalidStylusPointDescriptionButtonsMustBeLast, nameof(stylusPointPropertyInfos));
                     }
                 }
                 seenIds.Add(infos[x].Id);
             }
             if (buttonCount > MaximumButtonCount)
             {
-                throw new ArgumentException(SR.InvalidStylusPointDescriptionTooManyButtons, "stylusPointPropertyInfos");
+                throw new ArgumentException(SR.InvalidStylusPointDescriptionTooManyButtons, nameof(stylusPointPropertyInfos));
             }
 
             _buttonCount = buttonCount;

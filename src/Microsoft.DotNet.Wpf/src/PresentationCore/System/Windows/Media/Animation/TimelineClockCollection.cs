@@ -123,11 +123,8 @@ namespace System.Windows.Media.Animation
             {
                 List<Clock> list = clockGroup.InternalChildren;
 
-                if (list != null)
-                {
-                    // Get free parameter validation from Array.Copy
-                    list.CopyTo(array, index);
-                }
+                // Get free parameter validation from Array.Copy
+                list?.CopyTo(array, index);
             }
 
             // Need to perform parameter validation in the list == null case
@@ -285,7 +282,7 @@ namespace System.Windows.Media.Animation
 
                 if (list == null)
                 {
-                    throw new ArgumentOutOfRangeException("index");
+                    throw new ArgumentOutOfRangeException(nameof(index));
                 }
 
                 return list[index];

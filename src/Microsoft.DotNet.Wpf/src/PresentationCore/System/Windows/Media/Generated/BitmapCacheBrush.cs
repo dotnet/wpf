@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -368,7 +368,7 @@ namespace System.Windows.Media
                     BitmapCache vBitmapCache = BitmapCache;
                     if (vBitmapCache != null) ((DUCE.IResource)vBitmapCache).AddRefOnChannel(channel);
                     Visual vInternalTarget = InternalTarget;
-                    if (vInternalTarget != null) vInternalTarget.AddRefOnChannelForCyclicBrush(this, channel);
+                    vInternalTarget?.AddRefOnChannelForCyclicBrush(this, channel);
                     AddRefOnChannelAnimations(channel);
 
 
@@ -390,7 +390,7 @@ namespace System.Windows.Media
                     BitmapCache vBitmapCache = BitmapCache;
                     if (vBitmapCache != null) ((DUCE.IResource)vBitmapCache).ReleaseOnChannel(channel);
                     Visual vInternalTarget = InternalTarget;
-                    if (vInternalTarget != null) vInternalTarget.ReleaseOnChannelForCyclicBrush(this, channel);
+                    vInternalTarget?.ReleaseOnChannelForCyclicBrush(this, channel);
                     ReleaseOnChannelAnimations(channel);
 }
 }

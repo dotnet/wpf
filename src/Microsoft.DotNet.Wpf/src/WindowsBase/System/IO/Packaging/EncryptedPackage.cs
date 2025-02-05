@@ -498,10 +498,7 @@ namespace System.IO.Packaging
             }
             finally
             {
-                if (root != null)
-                {
-                    root.Close();
-                }
+                root?.Close();
             }
 
             return retval;
@@ -554,10 +551,7 @@ namespace System.IO.Packaging
             }
             finally
             {
-                if (root != null)
-                {
-                    root.Close();
-                }
+                root?.Close();
             }
 
             return retval;
@@ -574,15 +568,9 @@ namespace System.IO.Packaging
             // Since _package is only initialized when the client calls GetPackage, it might
             // not be set when the client calls Flush, so we have to check.
             //
-            if (_package != null)
-            {
-                _package.Flush();
-            }
+            _package?.Flush();
 
-            if (_packageStream != null)
-            {
-                _packageStream.Flush();
-            }
+            _packageStream?.Flush();
 
             Invariant.Assert(_root != null, "The envelope cannot be null");
 
@@ -1015,10 +1003,7 @@ namespace System.IO.Packaging
                         // might have opened the compound file just to look at the properties, and
                         // never even opened the package.
                         //
-                        if (_package != null)
-                        {
-                            _package.Close();
-                        }
+                        _package?.Close();
                     }
                     finally
                     {
@@ -1026,10 +1011,7 @@ namespace System.IO.Packaging
 
                         try
                         {
-                            if (_packageStream != null)
-                            {
-                                _packageStream.Close();
-                            }
+                            _packageStream?.Close();
                         }
                         finally
                         {
@@ -1037,10 +1019,7 @@ namespace System.IO.Packaging
 
                             try
                             {
-                                if (_packageProperties != null)
-                                {
-                                    _packageProperties.Dispose();
-                                }
+                                _packageProperties?.Dispose();
                             }
                             finally
                             {
@@ -1048,10 +1027,7 @@ namespace System.IO.Packaging
 
                                 try
                                 {
-                                    if (_root != null)
-                                    {
-                                        _root.Close();
-                                    }
+                                    _root?.Close();
                                 }
                                 finally
                                 {

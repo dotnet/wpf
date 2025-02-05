@@ -186,9 +186,9 @@ namespace MS.Internal.ComponentModel
                         }
                     }
                 }
-                else if (newDescriptors != null) 
+                else 
                 {
-                    newDescriptors.Add(prop);
+                    newDescriptors?.Add(prop);
                 }
             }
 

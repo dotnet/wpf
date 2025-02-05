@@ -249,10 +249,7 @@ namespace MS.Internal.Documents
                 false /*Sig Request Dialog*/);
                 dialog.ShowDialog(parentWindow);
 
-            if (dialog != null)
-            {
-                dialog.Dispose();
-            }
+            dialog?.Dispose();
         }
 
         /// <summary>
@@ -285,10 +282,7 @@ namespace MS.Internal.Documents
                     true /*Sig Request Dialog*/);
                     dialog.ShowDialog(parentWindow);
 
-                if (dialog != null)
-                {
-                    dialog.Dispose();
-                }
+                dialog?.Dispose();
             }
             else
             {
@@ -520,10 +514,7 @@ namespace MS.Internal.Documents
                 this);
             dialog.ShowDialog(NativeWindow.FromHandle(parentWindow));
 
-            if (dialog != null)
-            {
-                dialog.Dispose();
-            }
+            dialog?.Dispose();
         }
 
         /// <summary>

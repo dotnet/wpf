@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -111,8 +111,7 @@ namespace MS.Internal.AutomationProxies
                 WindowsStatic wtv = (WindowsStatic) Create (hwnd, 0);
                 // If wtv is null the window handle is invalid or no longer available (or something,
                 // Create eats the problem).
-                if (wtv != null)
-                    wtv.DispatchEvents (eventId, idProp, idObject, idChild);
+                wtv?.DispatchEvents (eventId, idProp, idObject, idChild);
             }
         }
 

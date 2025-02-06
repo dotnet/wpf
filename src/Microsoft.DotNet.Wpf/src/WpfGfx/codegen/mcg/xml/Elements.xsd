@@ -23,7 +23,7 @@
                   <!-- The namespace in which the element appears (e.g., "System.Windows") -->
                   <xs:attribute name="Namespace" type="xs:string" />
                   <!-- The path where the generator should output the code
-                       relative to %sdxroot%\wpf (e.g., "src\Core\CSharp\System\Windows\Generated")
+                       relative to %sdxroot%\wpf (e.g., "src\PresentationCore\System\Windows\Generated")
                        This path should end in a "\Generated" subdir by convention. -->
                   <xs:attribute name="ManagedDestinationDir" type="xs:string" />
                   <!-- Whether the element should implement the IAnimatable interface -->

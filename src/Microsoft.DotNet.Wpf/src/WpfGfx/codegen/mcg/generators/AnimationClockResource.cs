@@ -48,9 +48,9 @@ namespace MS.Internal.MilCodeGen.Generators
 
         public override void Go()
         {
-            // AnimationClockResources end up in src\Core\CSharp\system\windows\media\animation
+            // AnimationClockResources end up in src\PresentationCore\system\windows\media\animation
             string generatedPath = Path.Combine(_resourceModel.OutputDirectory,
-                                                "src\\Core\\CSharp\\system\\windows\\media\\animation\\generated");
+                                                "src\\PresentationCore\\System\\Windows\\Media\\Animation\\Generated");
 
             foreach (McgResource resource in _resourceModel.Resources)
             {

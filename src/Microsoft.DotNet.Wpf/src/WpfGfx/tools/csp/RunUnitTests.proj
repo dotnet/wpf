@@ -8,8 +8,7 @@
       <CspExe>@(CspBuildOutput)</CspExe>
       <CspExeDirectory>$([System.IO.Directory]::GetParent('$(CspExe)'))</CspExeDirectory>
     </PropertyGroup>
-    <Exec Command="tools\GenerateFiles.cmd" EnvironmentVariables="RepoRoot=$(RepoRoot);CspExePath=$(CspExeDirectory);WindowsSdkPath=$(TargetFrameworkSDKToolsDirectory)" />
-    <Exec Command="tools\GenerateElements.cmd" EnvironmentVariables="RepoRoot=$(RepoRoot);CspExePath=$(CspExeDirectory);WindowsSdkPath=$(TargetFrameworkSDKToolsDirectory)" />
+    <Exec Command="RunUnitTests.cmd" EnvironmentVariables="CspExePath=$(CspExeDirectory)" />
   </Target>
 
 </Project>

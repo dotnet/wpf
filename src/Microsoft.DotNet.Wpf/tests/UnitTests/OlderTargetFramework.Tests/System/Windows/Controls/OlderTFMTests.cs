@@ -1,6 +1,5 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
@@ -9,13 +8,13 @@ using System.Xml.Linq;
 
 namespace System.Windows.Controls
 {
-   public  class TFMTests
+    public class OlderTFMTests
     {
         private static string s_projectPath = "";
         private string _projectName = "";
         private static string s_projectFile = "";
+
         [Theory]
-        //[InlineData("net10.0")]
         [InlineData("net9.0")]
         [InlineData("net8.0")]
         [InlineData("net47")]
@@ -34,13 +33,10 @@ namespace System.Windows.Controls
                     // Define project name
                     _projectName = "WPFSampleApp" + targetFramework;
 
-                    //Install SDK
-                   // InstallSDK(targetFramework);
-
                     // Create a new project
                     CreateProject(targetFramework, _projectName);
 
-                    if(targetFramework.Contains("net48") || targetFramework.Contains("net481") || targetFramework.Contains("net472") || targetFramework.Contains("net471") || targetFramework.Contains("net47"))
+                    if (targetFramework.Contains("net48") || targetFramework.Contains("net481") || targetFramework.Contains("net472") || targetFramework.Contains("net471") || targetFramework.Contains("net47"))
                     {
                         ChangeTargetFramework(s_projectFile, targetFramework);
                     }
@@ -48,7 +44,7 @@ namespace System.Windows.Controls
                     string publishPath = Path.Combine(s_projectPath, "publish");
                     RunDotnetPublish(publishPath);
 
-                   // Launch the WPF application
+                    // Launch the WPF application
                     bool check = LaunchWPFApp(publishPath, _projectName);
                     if (check)
                     { Assert.True(true); }
@@ -68,21 +64,7 @@ namespace System.Windows.Controls
                 Assert.True(false);
             }
         }
-        // Helper method to write logs to a file
-        private static void WriteLog(string message)
-        {
-            string logFilePath = "C:\\TFMProjects\\logfile.txt"; // Change the path as needed
 
-            try
-            {
-                using StreamWriter writer = new StreamWriter(logFilePath, append: true);
-                writer.WriteLine($"{DateTime.Now}: {message}");
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"Error writing log: {ex.Message}");
-            }
-        }
         private static void CreateProject(string targetFramework, string projectName)
         {
             // Define project path
@@ -152,8 +134,7 @@ namespace System.Windows.Controls
         }
 
         private static void RunDotnetPublish(string publishPath)
-        {          
-           
+        {
             // Create project directory
             Directory.CreateDirectory(publishPath);
 
@@ -175,7 +156,7 @@ namespace System.Windows.Controls
                 UseShellExecute = false,
                 CreateNoWindow = true
             };
-            
+
             // Start the process
             using var process = Process.Start(startInfo);
             if (process != null)
@@ -184,29 +165,23 @@ namespace System.Windows.Controls
                 string output = process.StandardOutput.ReadToEnd();
                 string error = process.StandardError.ReadToEnd();
                 process.WaitForExit();
-
-                // Optionally log output and errors
-                WriteLog("The publish has log  :--------------------- " + output);
-                WriteLog("The publish has error  :--------------------- " + error);               
-                Console.WriteLine("The publish has log  :--------------------- "+output);
+                Console.WriteLine("The publish has log  :--------------------- " + output);
                 Console.WriteLine("The publish has error  :--------------------- " + error);
             }
 
             // Verify if the publish is successful
             if (Directory.Exists(publishPath))
             {
-                WriteLog(publishPath + " Publish successfull");
-                Console.WriteLine("Publish sucessfull.");
+                Console.WriteLine("Publish successfully.");
                 Assert.True(true);
             }
             else
             {
-                WriteLog(publishPath + " Publish failed");
                 Console.WriteLine("Publish failed.");
                 Assert.True(false);
             }
         }
-        
+
         private static bool LaunchWPFApp(string publishPath, string filenames)
         {
             string exePath = Path.Combine(publishPath, filenames + ".exe");
@@ -228,8 +203,8 @@ namespace System.Windows.Controls
             }
 
             // Optionally wait for a moment to ensure the app is up
-            Thread.Sleep(1000);
-            //process.WaitForExit();
+            Thread.Sleep(2000);
+
             // Close the main window of the process
             if (!process.CloseMainWindow())
             {
@@ -237,6 +212,7 @@ namespace System.Windows.Controls
                 process.Kill();
             }
             process.WaitForExit();
+
             // Check if the process has exited
             Assert.True(process.HasExited);
             return process.ExitCode == 0;
@@ -245,7 +221,7 @@ namespace System.Windows.Controls
 
         //Change the TFM to latest version of .Net
         private static void ChangeTargetFramework(string WpfProjectPath, string updateTargetFramework)
-        {           
+        {
             if (!File.Exists(WpfProjectPath))
             {
                 Console.WriteLine("Project file not found.");
@@ -255,7 +231,7 @@ namespace System.Windows.Controls
             // Load the project file
             XDocument doc = XDocument.Load(WpfProjectPath);
             XElement? propertyGroup = doc.Descendants("PropertyGroup").FirstOrDefault();
-          
+
             if (propertyGroup != null)
             {
                 // Add LangVersion for WPF Framework project type       
@@ -281,103 +257,5 @@ namespace System.Windows.Controls
                 Console.WriteLine("No PropertyGroup found in the project file.");
             }
         }
-
-        private static void InstallSDK(string targetFramework)
-        {
-            string rootPath = "D:\\FORK\\Harshita\\WPFMain\\wpf\\.dotnet";
-
-            string requiredSdkVersion = targetFramework;
-            if(requiredSdkVersion.Contains("net8.0"))
-            {
-                requiredSdkVersion = "8.0";
-            }
-            else if (requiredSdkVersion.Contains("net9.0"))
-            {
-                requiredSdkVersion = "9.0";
-            }
-            else if (requiredSdkVersion.Contains("net10.0"))
-            {
-                requiredSdkVersion = "10.0";
-            }
-            //else if (requiredSdkVersion.Contains("net471"))
-            //{
-            //    requiredSdkVersion = "5.0.400";
-            //}
-            //else if (requiredSdkVersion.Contains("net47"))
-            //{
-            //    requiredSdkVersion = "5.0.500";
-            //}
-            //else if (requiredSdkVersion.Contains("net9.0"))
-            //{
-            //    requiredSdkVersion = "5.0.600";
-            //}
-            //else if (requiredSdkVersion.Contains("net8.0"))
-            //{
-            //    requiredSdkVersion = "5.0.700";
-            //}
-            else
-            {
-                requiredSdkVersion = "";
-            }
-            // Check if the required SDK is installed
-            string createProjectCommand = $"dotnet-install.ps1 Channel {requiredSdkVersion}";
-            //isSdkInstalled = IsSdkInstalled(requiredSdkVersion);
-
-            // Start the process to create the project
-            ProcessStartInfo startInfo = new("cmd", "/c " + createProjectCommand)
-            {
-                WorkingDirectory = rootPath,
-                RedirectStandardOutput = true,
-                RedirectStandardError = true,
-                UseShellExecute = false,
-                CreateNoWindow = true
-            };
-            using Process? process = Process.Start(startInfo);
-            if (process == null)
-            {
-                Console.WriteLine("Failed to start the process.");
-                return;
-            }
-            process.WaitForExit();
-
-            // Read the output and error
-            string output = process.StandardOutput.ReadToEnd();
-            string error = process.StandardError.ReadToEnd();
-
-            bool check = IsSdkInstalled(requiredSdkVersion);
-            if(check)
-            {
-                WriteLog("SDK available ");
-            }
-            else
-            {
-                WriteLog("SDK not available");
-            }                
-        }
-
-        private static bool IsSdkInstalled(string requiredSdkVersion)
-        {
-            var processStartInfo = new ProcessStartInfo
-            {
-                FileName = "dotnet",
-                Arguments = "--list-sdks",
-                RedirectStandardOutput = true,
-                UseShellExecute = false,
-                CreateNoWindow = true
-            };
-
-            using var process = Process.Start(processStartInfo);
-           
-            if(process == null)
-            {
-                return false;
-            }
-            string output = process.StandardOutput.ReadToEnd();
-            WriteLog("SDK available " + output);
-            process.WaitForExit();
-            WriteLog("SDK required " + requiredSdkVersion);
-            return output.Contains(requiredSdkVersion);
-        }
-
     }
 }

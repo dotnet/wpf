@@ -141,7 +141,6 @@ namespace MS.Internal.MilCodeGen.Main
             [CommandLineArgumentAttribute(CommandLineArgumentType.Required)]
             public string outputDirectory;
 
-            public bool disableSd;
             public bool help;
         }
 
@@ -191,16 +190,6 @@ namespace MS.Internal.MilCodeGen.Main
             if (!File.Exists(parsedArgs.xsdFile))
             {
                 throw new FileNotFoundException("Schema not found", parsedArgs.xsdFile);
-            }
-
-            //
-            // Handle "-disableSd" option.
-            // NOTE: Side-effect.
-            //
-
-            if (parsedArgs.disableSd)
-            {
-                FileCodeSink.DisableSd();
             }
 
             //
@@ -264,7 +253,7 @@ namespace MS.Internal.MilCodeGen.Main
             // display usage
             Console.WriteLine(
                 [[inline]]
-                    Usage: -d:<file> -o:<dir> [-x:<file>] [-disableSD]
+                    Usage: -d:<file> -o:<dir> [-x:<file>]
 
                         Mil Code Generation Utility
 
@@ -272,7 +261,6 @@ namespace MS.Internal.MilCodeGen.Main
                     -o:<dir>            A target root directory for the generated files.  
                                         e.g. %SdxRoot%\wpf
                     -x:<file>           A schema file with which to validate the XML file.
-                    -disableSD          Disables use of Source Depot to check out the generated files.
 
                     Only one file of each type can be specified.
                 [[/inline]]

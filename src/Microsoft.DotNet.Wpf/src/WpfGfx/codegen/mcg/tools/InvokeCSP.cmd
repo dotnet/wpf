@@ -6,15 +6,9 @@
 
 setlocal enabledelayedexpansion
 
-set HostArch=%_BuildArch%
-if "%HostArch%"=="x86" set HostArch=i386
-set HostArch=i386
-
-set CspSrcPath=%_NtBinDir%\wpf\src\Graphics\tools\csp
-if "%CspExePath%" == "" set CspExePath=%_NTTREE%\wpf
 @echo %CspExePath%
 
-if not exist %CspExePath%\csp.exe echo GenerateFiles.cmd(0) : error : csp.exe not found (need to build in %CspSrcPath%)& goto :eof
+if not exist %CspExePath%\csp.exe echo GenerateFiles.cmd(0) : error : csp.exe not found (need to build in %CspExePath%)& goto :eof
 
 :: Run from parent directory (relative to GenerateFiles.cmd)
 pushd %~dp0\..

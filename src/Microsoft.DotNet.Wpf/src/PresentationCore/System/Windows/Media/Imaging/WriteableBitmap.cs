@@ -301,6 +301,12 @@ namespace System.Windows.Media.Imaging
         /// </summary>
         public void Unlock()
         {
+            UnlockWithoutSubscribeToCommittingBatch();
+            SubscribeToCommittingBatchAndWritePostscript();
+        }
+
+        private void UnlockWithoutSubscribeToCommittingBatch()
+        {
             WritePreamble();
 
             if (_lockCount == 0)
@@ -315,16 +321,19 @@ namespace System.Windows.Media.Imaging
                 // This makes the back buffer read-only.
                 _pBackBufferLock.Dispose();
                 _pBackBufferLock = null;
+            }
+        }
 
-                if (_hasDirtyRects)
-                {
-                    SubscribeToCommittingBatch();
+        private void SubscribeToCommittingBatchAndWritePostscript()
+        {
+            if (_hasDirtyRects)
+            {
+                SubscribeToCommittingBatch();
 
-                    //
-                    // Notify listeners that we have changed.
-                    //
-                    WritePostscript();
-                }
+                //
+                // Notify listeners that we have changed.
+                //
+                WritePostscript();
             }
         }
 
@@ -723,9 +732,11 @@ namespace System.Windows.Media.Imaging
 
             BeginInit();
 
-            _syncObject = source.SyncObject;
-            lock (_syncObject)
+            // We will change the _syncObject object in Lock()
+            var syncObject = _syncObject = source.SyncObject;
+            try
             {
+                Monitor.Enter(syncObject);
                 Guid formatGuid = source.Format.Guid;
 
                 SafeMILHandle internalPalette = new SafeMILHandle();
@@ -733,7 +744,7 @@ namespace System.Windows.Media.Imaging
                 {
                     internalPalette = source.Palette.InternalPalette;
                 }
-                
+
                 HRESULT.Check(MILSwDoubleBufferedBitmap.Create(
                     (uint)source.PixelWidth, // safe cast
                     (uint)source.PixelHeight, // safe cast
@@ -742,7 +753,7 @@ namespace System.Windows.Media.Imaging
                     ref formatGuid,
                     internalPalette,
                     out _pDoubleBufferedBitmap
-                    ));
+                ));
 
                 _pDoubleBufferedBitmap.UpdateEstimatedSize(
                     GetEstimatedSize(source.PixelWidth, source.PixelHeight, source.Format));
@@ -758,7 +769,17 @@ namespace System.Windows.Media.Imaging
                 }
                 finally
                 {
-                    Unlock();
+                    UnlockWithoutSubscribeToCommittingBatch();
+                    Monitor.Exit(syncObject);
+                }
+
+                SubscribeToCommittingBatchAndWritePostscript();
+            }
+            finally
+            {
+                if (Monitor.IsEntered(syncObject))
+                {
+                    Monitor.Exit(syncObject);
                 }
             }
 

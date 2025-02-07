@@ -242,7 +242,7 @@ namespace MS.Internal.MilCodeGen.Main
 
                     -d:<file>           An XML file describing the resources.
                     -o:<dir>            A target root directory for the generated files.  
-                                        e.g. %SdxRoot%\wpf
+                                        e.g. the root of the repo.
 
                     Only one file of each type can be specified.
                 [[/inline]]

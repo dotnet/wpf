@@ -15,8 +15,8 @@
 // 
 // Description:
 //      This generator builds the CResourceFactory class (as found 
-//      in %SDXROOT%\wpf\src\Graphics\core\uce\generated\resource-factory.h
-//      and %SDXROOT%\wpf\src\Graphics\core\uce\generated\resource-factory.cpp).
+//      in src\Microsoft.DotNet.Wpf\src\WpfGfx\core\uce\generated_resource_factory.h
+//      and src\Microsoft.DotNet.Wpf\src\WpfGfx\core\uce\generated_resource_factory.cpp).
 // 
 //---------------------------------------------------------------------------
 

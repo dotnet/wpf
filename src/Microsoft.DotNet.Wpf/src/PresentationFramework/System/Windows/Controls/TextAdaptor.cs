@@ -112,6 +112,9 @@ namespace MS.Internal.Automation
                 return Array.Empty<Rect>();
             }
 
+            start = start.CreatePointer();
+            end = end.CreatePointer();
+
             TextRangeAdaptor.MoveToInsertionPosition(start, LogicalDirection.Forward);
             TextRangeAdaptor.MoveToInsertionPosition(end, LogicalDirection.Backward);
 

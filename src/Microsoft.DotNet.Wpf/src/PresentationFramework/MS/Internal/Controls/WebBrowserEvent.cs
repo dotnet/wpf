@@ -141,15 +141,6 @@ namespace MS.Internal.Controls
         }
 
         /// <summary>
-        /// Determines whether a URI has a recognized and allowed URI scheme that we shouldn't block on navigation
-        /// attempts from the browser, regardless of whether we are partial trust or not.
-        /// </summary>
-        private static bool IsAllowedScriptScheme(Uri uri)
-        {
-            return uri != null && (uri.Scheme == "javascript" || uri.Scheme == "vbscript");
-        }
-
-        /// <summary>
         ///     Critical: This code extracts the IWebBrowser2, IHTMLDocument interface.
         ///     TreatAsSafe: This does not expose the interface.
         /// </summary>

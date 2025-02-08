@@ -36,5 +36,3 @@ public:
         __deref_out_ecount(1) CMilSlaveResource** ppResource
         );
 };
-
-

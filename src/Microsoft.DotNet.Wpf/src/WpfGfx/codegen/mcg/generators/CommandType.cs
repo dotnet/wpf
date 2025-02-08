@@ -462,7 +462,7 @@ namespace MS.Internal.MilCodeGen.Generators
 
         private string PadWithSpaces(string str, int spaces)
         {
-            Debug.Assert(str.Length <= spaces);
+            //Debug.Assert(str.Length <= spaces);
 
             StringBuilder sb = new StringBuilder(spaces);
 

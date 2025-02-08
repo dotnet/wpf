@@ -72,11 +72,8 @@ namespace MS.Internal.MilCodeGen.ResourceModel
                         [[inline]]
                             [[Helpers.ManagedStyle.WriteFileHeader(fileName,  @"wpf\src\Graphics\codegen\mcg\generators\PolySegmentTemplate.cs")]]
 
-                            using System;
                             using System.Collections;
-                            using System.Collections.Generic;
                             using System.ComponentModel;
-                            using System.Security.Permissions;
                             using System.Windows;
                             using System.Windows.Markup;
                             using System.Windows.Media.Animation;
@@ -84,9 +81,6 @@ namespace MS.Internal.MilCodeGen.ResourceModel
                             using System.Windows.Media.Composition;
                             using System.Reflection;
                             using MS.Internal;
-                            using System.Security;
-
-                            using SR=MS.Internal.PresentationCore.SR;
 
                             namespace System.Windows.Media
                             {
@@ -110,10 +104,7 @@ namespace MS.Internal.MilCodeGen.ResourceModel
                                     /// </summary>
                                     public [[instance.ClassName.Name]](IEnumerable<Point> points, bool isStroked)
                                     {
-                                        if (points == null)
-                                        {
-                                            throw new System.ArgumentNullException("points");
-                                        }
+                                        ArgumentNullException.ThrowIfNull(points);
 
                                         Points = new PointCollection(points);
                                         IsStroked = isStroked;
@@ -124,10 +115,7 @@ namespace MS.Internal.MilCodeGen.ResourceModel
                                     /// </summary>
                                     internal [[instance.ClassName.Name]](IEnumerable<Point> points, bool isStroked, bool isSmoothJoin)
                                     {
-                                        if (points == null)
-                                        {
-                                            throw new System.ArgumentNullException("points");
-                                        }
+                                        ArgumentNullException.ThrowIfNull(points);
 
                                         Points = new PointCollection(points);
                                         IsStroked = isStroked;

@@ -1165,7 +1165,7 @@ namespace System.Windows.Media.Imaging
             }
             catch
             {
-                bitmapStream.Close();
+                bitmapStream?.Close();
 
                 decoderHandle = null;
                 throw;

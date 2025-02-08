@@ -48,14 +48,6 @@ namespace MS.Internal.MilCodeGen.Runtime
             {
                 Directory.CreateDirectory(dir);
             }
-            
-            _fileCreated = !File.Exists(_filePath);
-
-            // If the file exists and is readonly attempt to check out the file.
-            if (!_fileCreated && ((File.GetAttributes(_filePath) & FileAttributes.ReadOnly) != 0))
-            {
-                TfFile(_filePath, "edit");
-            }
 
             _streamWriter = new StreamWriter(_filePath, false, Encoding.ASCII);
         }
@@ -77,40 +69,6 @@ namespace MS.Internal.MilCodeGen.Runtime
         {
             GC.SuppressFinalize(this);
             Dispose(true);
-        }
-
-        public static void DisableSd()
-        {
-            _disableSd = true;
-        }
-
-        public void TfFile(string filename, string op)
-        {
-            if (_tfOperation != "")
-            {
-                throw new Exception("Internal error");
-            }
-
-            _tfOperation = op;
-
-            if (_disableSd) return;
-
-            Process tfProcess = new Process();
-
-            tfProcess.StartInfo.FileName = "tf.cmd";
-            tfProcess.StartInfo.Arguments = op + " " + filename;
-            tfProcess.StartInfo.CreateNoWindow = true;
-            tfProcess.StartInfo.UseShellExecute = true;
-
-            tfProcess.Start();
-
-            tfProcess.WaitForExit();
-
-            if (0 != tfProcess.ExitCode)
-            {
-                throw new ApplicationException("Non-zero return code (" + tfProcess.ExitCode + ") encountered executing:\n"+
-                                               tfProcess.StartInfo.FileName + " " + tfProcess.StartInfo.Arguments);
-            }
         }
 
         #endregion Public Methods
@@ -153,12 +111,6 @@ namespace MS.Internal.MilCodeGen.Runtime
                         FlushCurrentLine();
                         _streamWriter.Close();
                         _streamWriter = null;
-                    }
-
-                    if (_fileCreated)
-                    {
-                        // If we created the file, we now need to Sd Add it
-                        TfFile(_filePath, "add");
                     }
 
                     LogCreation();
@@ -219,14 +171,8 @@ namespace MS.Internal.MilCodeGen.Runtime
         // Log the creation of this file, and any sd operations performed.
         private void LogCreation()
         {
-            string tf = "";
-            if (_tfOperation != "")
-            {
-                tf = " (and 'tf " + _tfOperation + "')";
-            }
-
             // Log the creation of this file
-            Console.WriteLine("\tCreated: {0}{1}", _filePath, tf);
+            Console.WriteLine("\tCreated: {0}", _filePath);
         }
         #endregion Private Methods
 
@@ -237,11 +183,7 @@ namespace MS.Internal.MilCodeGen.Runtime
         //------------------------------------------------------
 
         #region Private Fields
-        static bool _disableSd = false;
-        
         StreamWriter _streamWriter;
-        bool _fileCreated = true;
-        string _tfOperation = "";
         string _filePath;
         bool disposed = false;
         string _currentLine = "";

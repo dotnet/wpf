@@ -940,7 +940,6 @@ namespace MS.Internal.MilCodeGen.Generators
 
                         valueSerializerConvertTo =
                             [[inline]]
-							
                                 // When invoked by the serialization engine we can convert to string only for some instances
                                 if (!instance.CanSerializeToString())
                                 {

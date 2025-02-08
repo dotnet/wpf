@@ -1,3 +1,0 @@
-src\Core\CSharp\System\Windows\Generated\UIElement.cs
-src\Core\CSharp\System\Windows\Generated\UIElement3D.cs
-src\Core\CSharp\System\Windows\Generated\ContentElement.cs

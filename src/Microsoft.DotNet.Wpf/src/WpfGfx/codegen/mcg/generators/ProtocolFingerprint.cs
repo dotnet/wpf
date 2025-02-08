@@ -71,7 +71,7 @@ namespace MS.Internal.MilCodeGen.Generators
             string generatedPath = 
                 Path.Combine(
                     _resourceModel.OutputDirectory,
-                    "src\\WpfGfx\\Include"
+                    "src\\WpfGfx\\Include\\Generated"
                     );
 
             FileCodeSink cppFile = new FileCodeSink(generatedPath, "wgx_sdk_version.h");

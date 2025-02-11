@@ -23,13 +23,12 @@ namespace System.Windows.Media
         ///     Enumeration value to validate.
         /// </param>    
         /// <returns> 'true' if the enumeration contains a valid value, 'false' otherwise. </returns>
-        public static bool IsTextHintingModeValid(object valueObject)
+        public static bool IsToleranceTypeValid(object valueObject)
         {
-            TextHintingMode value = (TextHintingMode) valueObject;
+            ToleranceType value = (ToleranceType) valueObject;
 
-            return (value == TextHintingMode.Auto) || 
-                   (value == TextHintingMode.Fixed) || 
-                   (value == TextHintingMode.Animated);
+            return (value == ToleranceType.Absolute) || 
+                   (value == ToleranceType.Relative);
         }                                
     }
 }

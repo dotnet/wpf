@@ -288,6 +288,8 @@ namespace System.Windows.Controls
                 {
                     columnDefinitions.Owner = null;
                 }
+
+                _data.ColumnDefinitions = null;
                 
                 if (value is null)
                 {
@@ -332,6 +334,8 @@ namespace System.Windows.Controls
                 {
                     rowDefinitions.Owner = null;
                 }
+
+                _data.RowDefinitions = null;
 
                 if (value is null)
                 {

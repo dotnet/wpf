@@ -6,7 +6,6 @@
   <PropertyGroup Condition="'$(Coverage)' == 'true'">
     <!-- https://github.com/tonerdo/coverlet/issues/363 -->
     <DeterministicSourcePaths>false</DeterministicSourcePaths>
-    <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
   </PropertyGroup>
   
   <Import Project="$(WpfArcadeSdkTargets)"

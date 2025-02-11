@@ -507,6 +507,10 @@ namespace System.Windows.Controls
 
                 if (_owner is null)
                 {
+                    if ((value.RowDefinitions is not null) && (value.RowDefinitions.InternalItems is not null))
+                    {
+                        throw new ArgumentException(SR.Format(SR.GridCollection_InOtherCollection, nameof(value), nameof(RowDefinitionCollection)));
+                    }
                     _owner = value;
                     PrivateOnModified();
                     for (int i = 0; i < _size; i++)

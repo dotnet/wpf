@@ -276,7 +276,7 @@ namespace System.Windows.Documents
 
             if (item == null)
             {
-                throw new ArgumentException(SR.Format(SR.TableCollectionElementTypeExpected, typeof(TableColumn).Name), nameof(value));
+                throw new ArgumentException(SR.Format(SR.TableCollectionElementTypeExpected, nameof(TableColumn)), nameof(value));
             }
 
             return ((IList)_columnCollection).Add(value);

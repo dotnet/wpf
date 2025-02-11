@@ -20,11 +20,6 @@ flags:                            # which files to include in the reporting
   production:
     paths:
       - src\Microsoft.DotNet.Wpf\src
-      - src\Microsoft.DotNet.Wpf\src\PresentationFramework
-      - src\Microsoft.DotNet.Wpf\src\PresentationCore
-      - src\Microsoft.DotNet.Wpf\src\PresentationUI
-      - src\Microsoft.DotNet.Wpf\src\ReachFramework
-      - src\Microsoft.DotNet.Wpf\src\System.Xaml
   test:
     paths:
       - tests/

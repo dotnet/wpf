@@ -567,7 +567,7 @@ namespace MS.Internal.MilCodeGen.Generators
 
             codeSink.WriteBlock(
                 [[inline]]
-                    HRESULT [[dataType.DuceClass]]::RegisterNotifiers(CMilSlaveHandleTable *pHandleTable)
+                    HRESULT [[dataType.DuceClass]]::RegisterNotifiers(__in_ecount(1) CMilSlaveHandleTable *pHandleTable)
                     {
                         HRESULT hr = S_OK;
 

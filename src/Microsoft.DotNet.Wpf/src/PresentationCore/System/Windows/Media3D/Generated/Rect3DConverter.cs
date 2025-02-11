@@ -1,4 +1,4 @@
-﻿// Licensed to the .NET Foundation under one or more agreements.
+// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -9,8 +9,17 @@
 // Please see MilCodeGen.html for more information.
 //
 
+using MS.Internal;
+using MS.Internal.Collections;
+using MS.Utility;
+using System.Collections;
 using System.ComponentModel;
 using System.Globalization;
+using System.Text;
+using System.Windows.Markup;
+using System.Windows.Media.Media3D.Converters;
+using System.Windows.Media.Animation;
+using System.Windows.Media.Composition;
 
 namespace System.Windows.Media.Media3D
 {
@@ -75,9 +84,8 @@ namespace System.Windows.Media.Media3D
                 throw GetConvertFromException(value);
             }
 
-            String source = value as string;
 
-            if (source != null)
+            if (value is string source)
             {
                 return Rect3D.Parse(source);
             }

@@ -11,6 +11,7 @@
 
 using MS.Internal.KnownBoxes;
 using System.Globalization;
+using System.Windows.Media.Media3D;
 
 using MS.Internal.PresentationCore;
 

@@ -3,14 +3,11 @@
   <PropertyGroup Condition="'$(Coverage)' == 'true'">
     <CoverletOutput>$(TargetDir)coverage\$(MSBuildProjectName).coverage</CoverletOutput>
   </PropertyGroup>
-
-  <Target Name="InstrumentModulesNoBuildBeforeTest" Condition="'$(CollectCoverage)' == 'true'" BeforeTargets="RunTests">
-    <CallTarget Targets="InstrumentModulesAfterBuild" />
-  </Target>
-
-  <Target Name="GenerateCoverageResultAfterTest" Condition="'$(CollectCoverage)' == 'true'" AfterTargets="RunTests">
-    <CallTarget Targets="GenerateCoverageResult" />
-  </Target>
+  <PropertyGroup Condition="'$(Coverage)' == 'true'">
+    <!-- https://github.com/tonerdo/coverlet/issues/363 -->
+    <DeterministicSourcePaths>false</DeterministicSourcePaths>
+    <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
+  </PropertyGroup>
   
   <Import Project="$(WpfArcadeSdkTargets)"
           Condition="Exists('$(WpfArcadeSdkProps)') And Exists('$(WpfArcadeSdkTargets)')"/>
@@ -18,5 +15,5 @@
   <Import Sdk="Microsoft.DotNet.Arcade.Wpf.Sdk"
           Project="Sdk.targets"
           Condition="!Exists('$(WpfArcadeSdkProps)') Or !Exists('$(WpfArcadeSdkTargets)')"/>
-
+  <Import Project="eng/Testing.targets"/>
 </Project>

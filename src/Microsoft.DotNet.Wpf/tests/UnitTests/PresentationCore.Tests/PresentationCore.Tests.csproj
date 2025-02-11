@@ -23,13 +23,13 @@
 
   <ItemGroup>
     <PackageReference Include="Moq" Version="$(MoqPackageVersion)" />
-    <PackageReference Include="coverlet.msbuild" Version="$(CoverletMSBuildPackageVersion)" />
+    <PackageReference Include="coverlet.collector" Version="$(CoverletVersion)" GeneratePathProperty="true" PrivateAssets="all" />
     <PackageReference Include="xunit.stafact" Version="$(XUnitStaFactPackageVersion)" />
     <PackageReference Include="FluentAssertions" Version="$(FluentAssertionsVersion)" />
     <PackageReference Include="System.Configuration.ConfigurationManager" Version="$(SystemConfigurationConfigurationManagerPackageVersion)" />
     <PackageReference Include="System.Formats.Nrbf" Version="$(SystemFormatsNrbfVersion)" />
     <PackageReference Include="System.Runtime.Serialization.Formatters" Version="$(SystemRuntimeSerializationFormattersPackageVersion)" />
-    <PackageReference Include="System.Drawing.Common" Version="8.0.8" />
+    <PackageReference Include="System.Drawing.Common" Version="$(SystemDrawingCommonVersion)" />
   </ItemGroup>
 
 </Project>

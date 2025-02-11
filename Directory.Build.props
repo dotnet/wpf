@@ -21,31 +21,6 @@
     <WpfArcadeSdkProps>$(WpfArcadeSdkPath)Sdk\Sdk.props</WpfArcadeSdkProps>
     <WpfArcadeSdkTargets>$(WpfArcadeSdkPath)Sdk\Sdk.targets</WpfArcadeSdkTargets>
   </PropertyGroup>
-
-  <!-- For the purposes of generating code coverage as part of the build -->
-  <PropertyGroup Condition="'$(Coverage)' == 'true'">
-      <!-- Coverlet assumes PDB files exist on disk https://github.com/tonerdo/coverlet/issues/362 -->
-      <DebugType Condition="'$(DebugType)' == 'embedded'">portable</DebugType>
-      <!-- Coverlet's PDB check cannot handle deterministic source paths https://github.com/tonerdo/coverlet/issues/363 -->
-      <DeterministicSourcePaths>false</DeterministicSourcePaths>
-
-      <!-- Note: CoverletOutput references $(TargetDir) so it is set in Directory.Build.targets -->
-
-      <CollectCoverage>true</CollectCoverage>
-      <SingleHit>true</SingleHit> <!--see https://github.com/dotnet/machinelearning/pull/2843/files#r262544802-->
-      <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies> <!-- required due to https://github.com/tonerdo/coverlet/issues/72 -->
-      <CoverletOutputFormat>opencover</CoverletOutputFormat>
-      <Include>[System.Windows.*]*</Include>
-      <!-- Exclude only Obsolete and tagged with ExcludeFromCodeCoverage !!Avoid using this!! -->
-      <Exclude />
-      <ExcludeByAttribute>Obsolete,ExcludeFromCodeCoverage</ExcludeByAttribute>
-      <ExcludeByFile />
-  </PropertyGroup>
-
-  <!-- Make sure coverage targets are defined even in projects where coverlet is not installed -->
-  <Target Name="InstrumentModulesAfterBuild" />
-  <Target Name="GenerateCoverageResult" />
-
   <Import Project="$(WpfArcadeSdkProps)"
           Condition="Exists('$(WpfArcadeSdkProps)') And Exists('$(WpfArcadeSdkTargets)')"/>
 

@@ -43,8 +43,8 @@ namespace System.Windows.Media.Media3D
         public static readonly DependencyProperty ModelProperty =
             DependencyProperty.Register(
                     "Model",
-                    /* propertyType = */ typeof(Model3D),
-                    /* ownerType = */ typeof(ModelUIElement3D),
+                    propertyType: typeof(Model3D),
+                    ownerType: typeof(ModelUIElement3D),
                     new PropertyMetadata(ModelPropertyChanged),
                     (ValidateValueCallback) delegate { return MediaContext.CurrentMediaContext.WriteAccessEnabled; });
 

@@ -357,7 +357,7 @@ namespace System.Windows.Media.Imaging
                             sourceBufferStride, 
                             destinationX,
                             destinationY,
-                            /*backwardsCompat*/ false);
+                            backwardsCompat: false);
         }
         
         /// <summary>
@@ -385,7 +385,7 @@ namespace System.Windows.Media.Imaging
             int sourceBufferSize;
             Type elementType;
             ValidateArrayAndGetInfo(sourceBuffer,
-                                    /*backwardsCompat*/ false,
+                                    backwardsCompat: false,
                                     out elementSize,
                                     out sourceBufferSize,
                                     out elementType);
@@ -406,7 +406,7 @@ namespace System.Windows.Media.Imaging
                                     sourceBufferStride,
                                     destinationX,
                                     destinationY,
-                                    /*backwardsCompat*/ false);
+                                    backwardsCompat: false);
             }
         }
 
@@ -453,7 +453,7 @@ namespace System.Windows.Media.Imaging
                             stride,
                             destinationX,
                             destinationY,
-                            /*backwardsCompat*/ true);
+                            backwardsCompat: true);
         }
 
         /// <summary>
@@ -481,7 +481,7 @@ namespace System.Windows.Media.Imaging
             int sourceBufferSize;
             Type elementType;
             ValidateArrayAndGetInfo(pixels,
-                                    /*backwardsCompat*/ true,
+                                    backwardsCompat: true,
                                     out elementSize,
                                     out sourceBufferSize, 
                                     out elementType);
@@ -541,7 +541,7 @@ namespace System.Windows.Media.Imaging
                                         stride,
                                         destinationX,
                                         destinationY,
-                                        /*backwardsCompat*/ true);
+                                        backwardsCompat: true);
                     }
                 }
             }
@@ -1234,8 +1234,7 @@ namespace System.Windows.Media.Imaging
                     channel.SendCommand(
                         (byte*)&command,
                         sizeof(DUCE.MILCMD_DOUBLEBUFFEREDBITMAP),
-                        false /* sendInSeparateBatch */
-                        );
+                        sendInSeparateBatch: false);
                 }
             }
         }

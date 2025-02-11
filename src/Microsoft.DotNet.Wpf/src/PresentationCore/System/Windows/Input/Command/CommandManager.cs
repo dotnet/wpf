@@ -401,7 +401,7 @@ namespace System.Windows.Input
                 {
                     if (routedCommand.CriticalCanExecute(parameter,
                                                     target,
-                                                    inputEventArgs.UserInitiated /*trusted*/,
+                                                    trusted: inputEventArgs.UserInitiated,
                                                     out continueRouting))
                     {
                         // If the command can be executed, we never continue to route the
@@ -506,7 +506,7 @@ namespace System.Windows.Input
         {
             if ((sender != null) && (e != null) && (e.Command != null))
             {
-                CanExecuteRoutedEventArgs canExecuteArgs = new CanExecuteRoutedEventArgs(e.Command, null /* parameter */)
+                CanExecuteRoutedEventArgs canExecuteArgs = new CanExecuteRoutedEventArgs(e.Command, parameter: null)
                 {
                     RoutedEvent = CommandManager.CanExecuteEvent,
                     Source = sender
@@ -515,7 +515,7 @@ namespace System.Windows.Input
 
                 if (canExecuteArgs.CanExecute)
                 {
-                    ExecutedRoutedEventArgs executedArgs = new ExecutedRoutedEventArgs(e.Command, null /* parameter */)
+                    ExecutedRoutedEventArgs executedArgs = new ExecutedRoutedEventArgs(e.Command, parameter: null)
                     {
                         RoutedEvent = CommandManager.ExecutedEvent,
                         Source = sender

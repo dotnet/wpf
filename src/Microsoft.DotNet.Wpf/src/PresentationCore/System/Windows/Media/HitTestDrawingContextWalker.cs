@@ -48,7 +48,7 @@ namespace System.Windows.Media
             Point point1)
         {
             // PERF: Consider ways to reduce the allocation of Geometries during managed hit test and bounds passes.
-            DrawGeometry(null /* brush */, pen, new LineGeometry(point0, point1));
+            DrawGeometry(brush: null, pen, new LineGeometry(point0, point1));
         }
 
         /// <summary>
@@ -169,7 +169,7 @@ namespace System.Windows.Media
                 ImageSource = imageSource
             };
 
-            DrawGeometry(imageBrush, null /* pen */, new RectangleGeometry(rectangle));
+            DrawGeometry(imageBrush, pen: null, new RectangleGeometry(rectangle));
         }
 
         /// <summary>
@@ -188,10 +188,10 @@ namespace System.Windows.Media
             Rect rectangle)
         {
             // Hit test a rect with a VideoBrush once it exists.
-            // DrawGeometry(new VideoBrush(video), null /* pen */, new RectangleGeometry(rectangle));
+            // DrawGeometry(new VideoBrush(video), pen: null, new RectangleGeometry(rectangle));
 
             // PERF: Consider ways to reduce the allocation of Geometries during managed hit test and bounds passes.
-            DrawGeometry(Brushes.Black, null /* pen */, new RectangleGeometry(rectangle));
+            DrawGeometry(Brushes.Black, pen: null, new RectangleGeometry(rectangle));
         }
 
         #endregion Static Drawing Context Methods

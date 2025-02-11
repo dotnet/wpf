@@ -358,12 +358,12 @@ namespace System.Windows.Media
                 if (!_haveClip)
                 {
                     _haveClip = true;
-                    _clip = clipGeometry.GetBoundsInternal(null /* pen */, _transform);
+                    _clip = clipGeometry.GetBoundsInternal(pen: null, _transform);
                 }
                 else
                 {
                     // update current clip
-                    _clip.Intersect(clipGeometry.GetBoundsInternal(null /* pen */, _transform));
+                    _clip.Intersect(clipGeometry.GetBoundsInternal(pen: null, _transform));
                 }
             }
         }

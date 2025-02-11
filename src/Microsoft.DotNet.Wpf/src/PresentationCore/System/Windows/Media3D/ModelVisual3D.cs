@@ -115,8 +115,8 @@ namespace System.Windows.Media.Media3D
         public static readonly DependencyProperty ContentProperty =
             DependencyProperty.Register(
                     "Content",
-                    /* propertyType = */ typeof(Model3D),
-                    /* ownerType = */ typeof(ModelVisual3D),
+                    propertyType: typeof(Model3D),
+                    ownerType: typeof(ModelVisual3D),
                     new PropertyMetadata(ContentPropertyChanged),
                     (ValidateValueCallback) delegate { return MediaContext.CurrentMediaContext.WriteAccessEnabled; });
 

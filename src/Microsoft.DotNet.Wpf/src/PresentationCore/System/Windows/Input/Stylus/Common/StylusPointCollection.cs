@@ -500,7 +500,7 @@ namespace System.Windows.Input
                 for (int x = StylusPointDescription.RequiredCountOfProperties/*3*/; x < properties.Count; x++)
                 {
                     int value = stylusPoint.GetPropertyValue(properties[x]);
-                    newStylusPoint.SetPropertyValue(properties[x], value, false/*copy on write*/);
+                    newStylusPoint.SetPropertyValue(properties[x], value, copyBeforeWrite: false);
                 }
                 //bypass validation
                 ((List<StylusPoint>)newCollection.Items).Add(newStylusPoint);

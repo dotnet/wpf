@@ -215,7 +215,7 @@ jobs:
           /p:CodeCovToken=$(CODECOV_TOKEN)
           /bl:$(BUILD.SOURCESDIRECTORY)\artifacts\log\$(_BuildConfig)\CodeCoverage.binlog
         displayName: Upload coverage to codecov.io
-        condition: and(succeeded(), eq(variables._Coverage, 'true'), eq(variables['_Platform'], 'x64'), eq(variables['_BuildConfig'], 'Release'))
+        condition: and(succeeded(), eq(variables._Coverage, 'true'), eq(variables['_Platform'], 'x64'), eq(variables['_BuildConfig'], 'Debug'))
       # - task: PowerShell@2
       #   displayName: Install .NET Core
       #   inputs:

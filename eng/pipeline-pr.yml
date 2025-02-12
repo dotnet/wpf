@@ -206,7 +206,7 @@ jobs:
           testResultsFiles: '$(Build.SourcesDirectory)/artifacts/TestResults/$(_BuildConfig)/*.trx'
           mergeTestResults: true
           continueOnError: true
-        condition: and(eq(variables['_BuildConfig'], 'Release'), eq(variables['_Platform'], 'x64'))
+        condition: and(succeededOrFailed(), eq(variables['_BuildConfig'], 'Release'), eq(variables['_Platform'], 'x64'))
       
       # Upload code coverage data
       - script: $(Build.SourcesDirectory)/.dotnet/dotnet msbuild

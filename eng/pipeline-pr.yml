@@ -201,11 +201,11 @@ jobs:
       - task: PublishTestResults@2
         displayName: Publish XUnit Test Results
         inputs:
-          testResultsFormat: 'xUnit'
-          testResultsFiles: '*.xml'
+          testRunner: VSTest
+          testResultsFiles: '$(Build.SourcesDirectory)\artifacts\TestResults\$(_configuration)\*.trx'
           searchFolder: '$(Build.SourcesDirectory)/artifacts/TestResults/$(_BuildConfig)'
           mergeTestResults: true
-        continueOnError: true
+          continueOnError: true
         condition: and(eq(variables['_BuildConfig'], 'Release'), ne(variables['_Platform'], 'arm64'))
       
       # Upload code coverage data

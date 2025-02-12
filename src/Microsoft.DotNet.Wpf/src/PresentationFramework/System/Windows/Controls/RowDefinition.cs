@@ -507,9 +507,9 @@ namespace System.Windows.Controls
 
                 if (_owner is null)
                 {
-                    if ((value.RowDefinitions is not null) && (value.RowDefinitions.InternalItems is not null))
+                    if (value.RowDefinitions.Count > 0)
                     {
-                        throw new ArgumentException(SR.Format(SR.GridCollection_InOtherCollection, nameof(value), nameof(RowDefinitionCollection)));
+                        throw new ArgumentException(SR.Format(SR.GridCollection_InOtherCollection, nameof(Grid), nameof(RowDefinitionCollection)));
                     }
                     _owner = value;
                     PrivateOnModified();
@@ -533,7 +533,7 @@ namespace System.Windows.Controls
                 }
                 else
                 {
-                    throw new ArgumentException(SR.Format(SR.GridCollection_InOtherCollection, nameof(value), nameof(RowDefinitionCollection)));
+                    throw new ArgumentException(SR.Format(SR.GridCollection_InOtherCollection, nameof(RowDefinitionCollection), nameof(Grid)));
                 }
             }
         }

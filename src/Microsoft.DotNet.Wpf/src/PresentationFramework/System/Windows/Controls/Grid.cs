@@ -291,11 +291,7 @@ namespace System.Windows.Controls
 
                 _data.ColumnDefinitions = null;
                 
-                if (value is null)
-                {
-                    _data.ColumnDefinitions = new ColumnDefinitionCollection(this);
-                }
-                else
+                if (value is not null)
                 {
                     value.Owner = this;
                     _data.ColumnDefinitions = value;
@@ -337,11 +333,7 @@ namespace System.Windows.Controls
 
                 _data.RowDefinitions = null;
 
-                if (value is null)
-                {
-                    _data.RowDefinitions = new RowDefinitionCollection(this);
-                }
-                else
+                if (value is not null)
                 {
                     value.Owner = this;
                     _data.RowDefinitions = value;

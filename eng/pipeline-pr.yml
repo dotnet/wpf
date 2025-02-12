@@ -197,17 +197,16 @@ jobs:
           /p:Coverage=$(_Coverage)
         displayName: Run xUnit Tests
         continueOnError: true
-        condition: and(or(ne(variables['_HelixPipeline'], 'true'), and(eq(variables['_HelixPipeline'], 'true') ,eq(variables['_BuildConfig'], 'Release'), eq(variables['_PublicBuildPipeline'], 'true'), eq(variables['_ContinuousIntegrationTestsEnabled'], 'true'))), eq(variables['_Platform'], 'x64'))
+        condition: and(or(ne(variables['_HelixPipeline'], 'true'), and(eq(variables['_HelixPipeline'], 'true'), eq(variables['_PublicBuildPipeline'], 'true'), eq(variables['_ContinuousIntegrationTestsEnabled'], 'true'))), eq(variables['_Platform'], 'x64'))
 
       - task: PublishTestResults@2
         displayName: Publish XUnit Test Results
         inputs:
           testRunner: VSTest
-          testResultsFiles: '$(Build.SourcesDirectory)\artifacts\TestResults\$(_configuration)\*.trx'
-          searchFolder: '$(Build.SourcesDirectory)/artifacts/TestResults/$(_BuildConfig)'
+          testResultsFiles: '$(Build.SourcesDirectory)/artifacts/TestResults/$(_BuildConfig)/*.trx'
           mergeTestResults: true
           continueOnError: true
-        condition: and(eq(variables['_BuildConfig'], 'Release'), ne(variables['_Platform'], 'arm64'))
+        condition: and(eq(variables['_BuildConfig'], 'Release'), eq(variables['_Platform'], 'x64'))
       
       # Upload code coverage data
       - script: $(Build.SourcesDirectory)/.dotnet/dotnet msbuild
@@ -216,7 +215,7 @@ jobs:
           /p:CodeCovToken=$(CODECOV_TOKEN)
           /bl:$(BUILD.SOURCESDIRECTORY)\artifacts\log\$(_BuildConfig)\CodeCoverage.binlog
         displayName: Upload coverage to codecov.io
-        condition: and(succeeded(), eq(variables._Coverage, 'true'))
+        condition: and(succeeded(), eq(variables._Coverage, 'true'), eq(variables['_Platform'], 'x64'), eq(variables['_BuildConfig'], 'Release')
       # - task: PowerShell@2
       #   displayName: Install .NET Core
       #   inputs:

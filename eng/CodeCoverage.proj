@@ -16,7 +16,7 @@
   </ItemGroup>
   <Target Name="Codecov">
     <PropertyGroup>
-      <_CodecovPath>$(PkgCodecov)\tools\Codecov.exe</_CodecovPath>
+      <_CodecovPath>$(NuGetPackageRoot)codecov\$(CodecovVersion)\tools\Codecov.exe</_CodecovPath>
       <_ReportGeneratorPath>$(PkgReportGenerator)\tools\net47\ReportGenerator.exe</_ReportGeneratorPath>
     </PropertyGroup>
 

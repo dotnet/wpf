@@ -890,13 +890,10 @@ namespace System.Windows
                     _resources = value;
                 }
 
-                if (oldValue != null)
-                {
-                    // This app is no longer an owner for the old RD
-                    oldValue.RemoveOwner(this);
-                }
+                // This app is no longer an owner for the old RD
+                oldValue?.RemoveOwner(this);
 
-                if(_reloadFluentDictionary && !_resourcesInitialized)
+                if (_reloadFluentDictionary && !_resourcesInitialized)
                 {
                     if(value != null && ThemeMode != ThemeMode.None)
                     {
@@ -1635,15 +1632,9 @@ namespace System.Windows
                 // this will always be null in the browser hosted case since we we don't
                 // support Activate, Deactivate, and SessionEnding events in the
                 // browser scenario and thus we never create this hwndsource.
-                if (_parkingHwnd != null)
-                {
-                    _parkingHwnd.Dispose();
-                }
+                _parkingHwnd?.Dispose();
 
-                if (_events != null)
-                {
-                    _events.Dispose();
-                }
+                _events?.Dispose();
 
                 PreloadedPackages.Clear();
 

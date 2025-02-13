@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -97,10 +97,7 @@ namespace System.Windows.Data
             IEnumerator enumerator = Collection.GetEnumerator();
             bool result = enumerator.MoveNext();
             IDisposable d = enumerator as IDisposable;
-            if (d != null)
-            {
-                d.Dispose();
-            }
+            d?.Dispose();
 
             return result;
         }
@@ -347,8 +344,7 @@ namespace System.Windows.Data
             {
                 CollectionChangedEventManager.RemoveHandler(View, OnCollectionChanged);
 
-                if (_traceLog != null)
-                    _traceLog.Add("Unsubscribe to CollectionChange from {0}",
+                _traceLog?.Add("Unsubscribe to CollectionChange from {0}",
                             TraceLog.IdFor(View));
             }
 
@@ -363,8 +359,7 @@ namespace System.Windows.Data
             {
                 CollectionChangedEventManager.AddHandler(View, OnCollectionChanged);
 
-                if (_traceLog != null)
-                    _traceLog.Add("Subscribe to CollectionChange from {0}", TraceLog.IdFor(View));
+                _traceLog?.Add("Subscribe to CollectionChange from {0}", TraceLog.IdFor(View));
             }
 
             if (shouldRaiseChangeEvent) // it's as if this were a refresh of the container's collection

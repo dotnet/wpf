@@ -9,10 +9,6 @@
 // Please see MilCodeGen.html for more information.
 //
 
-#if PRESENTATION_CORE
-#else
-using SR=System.Windows.SR;
-#endif
 
 namespace System.Windows.Media.Effects
 {
@@ -22,7 +18,7 @@ namespace System.Windows.Media.Effects
     public enum KernelType
     {
         /// <summary>
-        ///     Gaussian - Use a Gaussian filter
+        ///     Gaussian - Use a Guassian filter
         /// </summary>
         Gaussian = 0,
 

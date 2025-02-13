@@ -1625,10 +1625,7 @@ namespace System.Windows.Markup
                         keyRecord = (IBamlDictionaryKey)deferKeyRecord.Record;
                     }
                     Debug.Assert(keyRecord != null, "Unknown key record type in defer load dictionary");
-                    if (keyRecord != null)
-                    {
-                        keyRecord.UpdateValuePosition((Int32)(position-endOfKeys), BinaryWriter);
-                    }
+                    keyRecord?.UpdateValuePosition((Int32)(position-endOfKeys), BinaryWriter);
                 }
                 WriteBamlRecord(deferRecord.Record,
                                 deferRecord.LineNumber,

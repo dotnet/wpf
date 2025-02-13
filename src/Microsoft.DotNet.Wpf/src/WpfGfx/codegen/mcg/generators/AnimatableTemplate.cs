@@ -65,20 +65,8 @@ namespace MS.Internal.MilCodeGen.ResourceModel
                     csFile.WriteBlock(
                         [[inline]]
                             [[Helpers.ManagedStyle.WriteFileHeader(filename, @"wpf\src\Graphics\codegen\mcg\generators\AnimatableTemplate.cs")]]
-                            
-                            using MS.Internal;
-                            using MS.Utility;
-                            using System;
-                            using System.Collections;
-                            using System.Collections.Generic;
-                            using System.Diagnostics;
-                            using System.Security;
-                            using System.Security.Permissions;
-                            using System.Windows.Threading;
-                            using System.Windows.Media.Animation;
-                            using System.Windows.Media.Composition;
 
-                            using SR = MS.Internal.PresentationCore.SR;
+                            using System.Windows.Media.Animation;
 
                             namespace [[instance.Namespace]]
                             {

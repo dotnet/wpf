@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -943,7 +943,7 @@ namespace System.Windows.Controls
             }
             else
             {
-                throw new ArgumentException(SR.InvalidValueSpecified, "attachedAnnotation");
+                throw new ArgumentException(SR.InvalidValueSpecified, nameof(attachedAnnotation));
             }
         }
 
@@ -1288,7 +1288,7 @@ namespace System.Windows.Controls
             bool hasTextData = sncAnnotation.HasTextData;
             if (hasInkData && hasTextData)
             {
-                throw new ArgumentException(SR.InvalidStickyNoteAnnotation, "attachedAnnotation");
+                throw new ArgumentException(SR.InvalidStickyNoteAnnotation, nameof(attachedAnnotation));
             }
             else if (hasInkData)
             {

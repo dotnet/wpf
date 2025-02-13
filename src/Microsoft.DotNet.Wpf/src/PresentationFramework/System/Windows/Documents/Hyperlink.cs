@@ -681,8 +681,7 @@ namespace System.Windows.Documents
             if (AutomationPeer.ListenerExists(AutomationEvents.InvokePatternOnInvoked))
             {
                 AutomationPeer peer = ContentElementAutomationPeer.CreatePeerForElement(this);
-                if (peer != null)
-                    peer.RaiseAutomationEvent(AutomationEvents.InvokePatternOnInvoked);
+                peer?.RaiseAutomationEvent(AutomationEvents.InvokePatternOnInvoked);
             }
 
             DoNavigation(this);

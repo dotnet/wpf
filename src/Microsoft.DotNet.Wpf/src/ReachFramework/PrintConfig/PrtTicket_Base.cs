@@ -1105,10 +1105,7 @@ namespace MS.Internal.Printing.Configuration
                     PrintTicketParameterNode.CreateParameterNode(this);
                 }
 
-                if (ParameterNode != null)
-                {
-                    ParameterNode.SetIntValue(value);
-                }
+                ParameterNode?.SetIntValue(value);
             }
         }
 
@@ -1161,10 +1158,7 @@ namespace MS.Internal.Printing.Configuration
                     PrintTicketParameterNode.CreateParameterNode(this);
                 }
 
-                if (ParameterNode != null)
-                {
-                    ParameterNode.SetStringValue(value, PrintSchemaXsiTypes.String);
-                }
+                ParameterNode?.SetStringValue(value, PrintSchemaXsiTypes.String);
             }
         }
 

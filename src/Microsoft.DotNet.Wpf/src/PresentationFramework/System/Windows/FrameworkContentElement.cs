@@ -273,11 +273,8 @@ namespace System.Windows
                 ResourceDictionary oldValue = ResourcesField.GetValue(this);
                 ResourcesField.SetValue(this, value);
 
-                if (oldValue != null)
-                {
-                    // This element is no longer an owner for the old RD
-                    oldValue.RemoveOwner(this);
-                }
+                // This element is no longer an owner for the old RD
+                oldValue?.RemoveOwner(this);
 
                 if (value != null)
                 {
@@ -1998,15 +1995,12 @@ namespace System.Windows
                 while(enumerator.MoveNext())
                 {
                     DependencyObject child =enumerator.Current as DependencyObject;
-                    if(child != null)
-                    {
-                        // CODE REVIEW (dwaynen)
-                        //
-                        // We assume we will only ever have a UIElement or a ContentElement
-                        // as a child of a FrameworkContentElement.  (Not a raw Visual.)
+                    // CODE REVIEW (dwaynen)
+                    //
+                    // We assume we will only ever have a UIElement or a ContentElement
+                    // as a child of a FrameworkContentElement.  (Not a raw Visual.)
 
-                        child.CoerceValue(property);
-                    }
+                    child?.CoerceValue(property);
                 }
             }
         }
@@ -2034,10 +2028,7 @@ namespace System.Windows
         private void EventHandlersStoreRemove(EventPrivateKey key, Delegate handler)
         {
             EventHandlersStore store = EventHandlersStore;
-            if (store != null)
-            {
-                store.Remove(key, handler);
-            }
+            store?.Remove(key, handler);
         }
 
         // Gettor and Settor for flag that indicates
@@ -2106,7 +2097,7 @@ namespace System.Windows
                 // Thus we support any indices in the range [-1, 65535).
                 if (value < -1 || value >= 0xFFFF)
                 {
-                    throw new ArgumentOutOfRangeException("value", SR.TemplateChildIndexOutOfRange);
+                    throw new ArgumentOutOfRangeException(nameof(value), SR.TemplateChildIndexOutOfRange);
                 }
 
                 uint childIndex = (value == -1) ? 0xFFFF : (uint)value;

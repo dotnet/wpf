@@ -848,7 +848,7 @@ namespace System.Windows
 
                 TypeAndSerializer typeAndSerializer = parserContext.XamlTypeMapper.GetTypeOnly(namespaceURI, name);
 
-                return (typeAndSerializer != null) ? typeAndSerializer.ObjectType : null;
+                return typeAndSerializer?.ObjectType;
             }
 
             else

@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -63,7 +63,7 @@ namespace System.Windows.Documents
                 return;
             }
 
-            throw (new ArgumentException(SR.Format(SR.UnexpectedParameterType, value.GetType(), typeof(TableCell)), "value"));
+            throw (new ArgumentException(SR.Format(SR.UnexpectedParameterType, value.GetType(), typeof(TableCell)), nameof(value)));
         }
 
         /// <summary>
@@ -155,10 +155,7 @@ namespace System.Windows.Documents
         /// </summary>
         internal void OnEnterParentTree()
         {
-            if (Table != null)
-            {
-                Table.OnStructureChanged();
-            }
+            Table?.OnStructureChanged();
         }
 
         /// <summary>
@@ -269,7 +266,7 @@ namespace System.Windows.Documents
         /// <summary>
         /// Table owner accessor
         /// </summary>
-        internal Table Table { get { return (RowGroup != null ? RowGroup.Table : null); } }
+        internal Table Table { get { return (RowGroup?.Table); } }
 
         /// <summary>
         /// Returns the row's cell collection

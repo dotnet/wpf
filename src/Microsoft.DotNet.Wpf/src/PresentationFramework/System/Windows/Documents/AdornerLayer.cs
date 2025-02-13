@@ -472,7 +472,7 @@ namespace System.Windows.Documents
                         if (index >= 0)
                         {
                             // Get the matrix transform out, skip all non affine transforms
-                            Transform transform = (adornerTransform != null) ? adornerTransform.AffineTransform : null;
+                            Transform transform = adornerTransform?.AffineTransform;
                             
                             ((Adorner)(_children[index])).AdornerTransform = transform;
                         }

@@ -247,7 +247,7 @@ namespace System.Windows
             Setter setter = targetObject as Setter;
             if (setter == null)
             {
-                throw new ArgumentNullException("targetObject");
+                throw new ArgumentNullException(nameof(targetObject));
             }
             ArgumentNullException.ThrowIfNull(eventArgs);
 

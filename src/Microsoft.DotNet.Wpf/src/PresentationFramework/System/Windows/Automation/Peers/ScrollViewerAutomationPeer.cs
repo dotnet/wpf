@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -151,11 +151,11 @@ namespace System.Windows.Automation.Peers
 
             if (scrollHorizontally && (horizontalPercent < 0.0) || (horizontalPercent > 100.0))
             {
-                throw new ArgumentOutOfRangeException("horizontalPercent", SR.Format(SR.ScrollViewer_OutOfRange, "horizontalPercent", horizontalPercent.ToString(CultureInfo.InvariantCulture), "0", "100"));
+                throw new ArgumentOutOfRangeException(nameof(horizontalPercent), SR.Format(SR.ScrollViewer_OutOfRange, "horizontalPercent", horizontalPercent.ToString(CultureInfo.InvariantCulture), "0", "100"));
             }
             if (scrollVertically && (verticalPercent < 0.0) || (verticalPercent > 100.0))
             {
-                throw new ArgumentOutOfRangeException("verticalPercent", SR.Format(SR.ScrollViewer_OutOfRange, "verticalPercent", verticalPercent.ToString(CultureInfo.InvariantCulture), "0", "100"));
+                throw new ArgumentOutOfRangeException(nameof(verticalPercent), SR.Format(SR.ScrollViewer_OutOfRange, "verticalPercent", verticalPercent.ToString(CultureInfo.InvariantCulture), "0", "100"));
             }
 
             if (scrollHorizontally)

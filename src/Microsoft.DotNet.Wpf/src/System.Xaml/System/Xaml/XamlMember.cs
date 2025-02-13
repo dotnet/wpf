@@ -771,7 +771,7 @@ namespace System.Xaml
             }
 
             PropertyInfo pi = UnderlyingMember as PropertyInfo;
-            return (pi is not null) ? pi.GetGetMethod(true) : null;
+            return pi?.GetGetMethod(true);
         }
 
         protected virtual MethodInfo LookupUnderlyingSetter()
@@ -792,7 +792,7 @@ namespace System.Xaml
             else
             {
                 EventInfo ei = UnderlyingMember as EventInfo;
-                return (ei is not null) ? ei.GetAddMethod(true) : null;
+                return ei?.GetAddMethod(true);
             }
         }
 

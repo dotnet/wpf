@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -357,14 +357,14 @@ namespace MS.Internal.IO.Packaging
             // Check argument.
             if (pszFileName == null || pszFileName == String.Empty)
             {
-                throw new ArgumentException(SR.FileNameNullOrEmpty, "pszFileName");
+                throw new ArgumentException(SR.FileNameNullOrEmpty, nameof(pszFileName));
             }
 
             // Convert mode information in flag.
             switch ((STGM_FLAGS)(dwMode & (int)STGM_FLAGS.MODE))
             {
                 case STGM_FLAGS.CREATE:
-                    throw new ArgumentException(SR.FilterLoadInvalidModeFlag, "dwMode");
+                    throw new ArgumentException(SR.FilterLoadInvalidModeFlag, nameof(dwMode));
 
                 default:
                     fileMode = FileMode.Open;
@@ -380,7 +380,7 @@ namespace MS.Internal.IO.Packaging
                     break;
 
                 default:
-                    throw new ArgumentException(SR.FilterLoadInvalidModeFlag, "dwMode");
+                    throw new ArgumentException(SR.FilterLoadInvalidModeFlag, nameof(dwMode));
             }
 
             // Sharing flags are ignored. Since managed filters do not have the equivalent

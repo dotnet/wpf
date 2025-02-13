@@ -211,10 +211,7 @@ namespace System.Windows.Media.Animation
                     // newly animated property will be passed across to the UCE.
                     Animatable a = d as Animatable;
 
-                    if (a != null)
-                    {
-                        a.RegisterForAsyncUpdateResource();
-                    }
+                    a?.RegisterForAsyncUpdateResource();
 
                     // If this AnimationStorage is a resource, add it to the
                     // channel now.
@@ -282,10 +279,7 @@ namespace System.Windows.Media.Animation
                     // across to the UCE.
                     Animatable a = d as Animatable;
 
-                    if (a != null)
-                    {
-                        a.RegisterForAsyncUpdateResource();
-                    }
+                    a?.RegisterForAsyncUpdateResource();
 
                     animatedPropertyMap[_dependencyProperty.GlobalIndex] = DependencyProperty.UnsetValue;
 

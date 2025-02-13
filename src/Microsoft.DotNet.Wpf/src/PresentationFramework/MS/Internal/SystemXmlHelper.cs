@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -67,7 +67,7 @@ namespace MS.Internal
         internal static string GetXmlTagName(object item, DependencyObject target)
         {
             SystemXmlExtensionMethods extensions = AssemblyHelper.ExtensionsForSystemXml();
-            return (extensions != null) ? extensions.GetXmlTagName(item, target) : null;
+            return extensions?.GetXmlTagName(item, target);
         }
 
         // find a node with the given string as its InnerText
@@ -82,7 +82,7 @@ namespace MS.Internal
         internal static object GetInnerText(object item)
         {
             SystemXmlExtensionMethods extensions = AssemblyHelper.ExtensionsForSystemXml();
-            return (extensions != null) ? extensions.GetInnerText(item) : null;
+            return extensions?.GetInnerText(item);
         }
     }
 }

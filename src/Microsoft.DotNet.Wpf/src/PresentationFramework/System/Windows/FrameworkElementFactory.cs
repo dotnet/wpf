@@ -100,7 +100,7 @@ namespace System.Windows
                 {
                     knownType = XamlReader.BamlSharedSchemaContext.GetKnownXamlType(_type) as WpfKnownType;
                 }
-                _knownTypeFactory = (knownType != null) ? knownType.DefaultConstructor : null;
+                _knownTypeFactory = knownType?.DefaultConstructor;
             }
         }
 

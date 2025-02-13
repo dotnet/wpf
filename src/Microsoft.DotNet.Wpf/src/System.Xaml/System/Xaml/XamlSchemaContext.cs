@@ -1393,10 +1393,7 @@ namespace System.Xaml
             private void OnAssemblyLoad(object sender, AssemblyLoadEventArgs args)
             {
                 XamlSchemaContext schemaContext = (XamlSchemaContext)schemaContextRef.Target;
-                if (schemaContext is not null)
-                {
-                    schemaContext.SchemaContextAssemblyLoadEventHandler(sender, args);
-                }
+                schemaContext?.SchemaContextAssemblyLoadEventHandler(sender, args);
             }
 
             public void Hook()

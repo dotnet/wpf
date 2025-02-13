@@ -273,7 +273,7 @@ namespace System.Windows.Documents
             FlowPosition fp = (FlowPosition)_flowPosition.Clone();
             if (!fp.Move(distance))
             {
-                throw new ArgumentException(SR.BadDistance, "distance");
+                throw new ArgumentException(SR.BadDistance, nameof(distance));
             }
 
             return new FixedTextPointer(true, gravity, fp);
@@ -393,7 +393,7 @@ namespace System.Windows.Documents
     
             if (!_flowPosition.Move(offset))
             {
-                throw new ArgumentException(SR.BadDistance, "offset");
+                throw new ArgumentException(SR.BadDistance, nameof(offset));
             }
             else
             {

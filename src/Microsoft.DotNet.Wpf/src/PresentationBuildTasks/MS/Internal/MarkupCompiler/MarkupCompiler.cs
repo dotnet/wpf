@@ -477,7 +477,7 @@ namespace MS.Internal
                 }
 
                 int pathEndIndex = SourceFileInfo.RelativeSourceFilePath.LastIndexOf(Path.DirectorySeparatorChar);
-                string targetPath = TargetPath + SourceFileInfo.RelativeSourceFilePath.Substring(0, pathEndIndex + 1);
+                string targetPath = string.Concat(TargetPath, SourceFileInfo.RelativeSourceFilePath.Substring(0, pathEndIndex + 1));
 
                 // Create if not already exists
                 if (targetPath.Length > 0 && !Directory.Exists(targetPath))
@@ -566,10 +566,7 @@ namespace MS.Internal
                 }
 
 
-                if (SourceFileInfo != null)
-                {
-                    SourceFileInfo.CloseStream();
-                }
+                SourceFileInfo?.CloseStream();
 
                 if (bamlStream != null)
                 {
@@ -1935,7 +1932,7 @@ namespace MS.Internal
             // Fetch the EventHandlerType from either the EventInfo or the MethodInfo
             // for the Add{Propertyname}Handler method's MethodInfo
             Type eventHandlerType = GetEventHandlerType(miEvent);
-            string [] typeArgsList = cc != null ? cc.GenericTypeArgs : null;
+            string [] typeArgsList = cc?.GenericTypeArgs;
 
             cdce.DelegateType = GenerateConstructedTypeReference(eventHandlerType, typeArgsList, eventTarget, eventTargetName, eventName);
             cdce.MethodName = eventHandler.Trim() + (subClassed ? HELPER : string.Empty);

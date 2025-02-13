@@ -2676,12 +2676,13 @@
       </Setter.Value>
     </Setter>
   </Style>
-  <Style TargetType="{x:Type Label}">
+  <Style x:Key="DefaultLabelStyle" TargetType="{x:Type Label}">
     <Setter Property="Padding" Value="0,0,0,4" />
     <Setter Property="Focusable" Value="False" />
     <Setter Property="Foreground" Value="{DynamicResource LabelForeground}" />
     <Setter Property="SnapsToDevicePixels" Value="True" />
   </Style>
+  <Style BasedOn="{StaticResource DefaultLabelStyle}" TargetType="{x:Type Label}" />
   <Style x:Key="DefaultListBoxStyle" TargetType="{x:Type ListBox}">
     <Setter Property="Background" Value="{DynamicResource ListBoxBackground}" />
     <Setter Property="Margin" Value="0" />

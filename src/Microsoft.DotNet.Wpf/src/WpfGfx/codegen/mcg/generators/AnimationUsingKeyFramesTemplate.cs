@@ -68,23 +68,15 @@ namespace MS.Internal.MilCodeGen.ResourceModel
                 string fullPath = Path.Combine(resourceModel.OutputDirectory, path);
 
                 string moduleReference = "";
-                string sridReference = 
-                            [[inline]]
-                                using SR=System.Windows.SR;
-                            [[/inline]];
 
                 // Duplicate AnimatedTypeHelpers class across Core/Framework causes name conflicts,
                 // requiring that they be split across two namespaces.
                 switch (instance.ModuleName)
                 {
-                    case @"Core\CSharp":
+                    case @"PresentationCore":
                         moduleReference = "using MS.Internal.PresentationCore;";
-                        sridReference = 
-                            [[inline]]
-                                using SR=MS.Internal.PresentationCore.SR;
-                            [[/inline]];
                         break;
-                    case "Framework":
+                    case "PresentationFramework":
                         moduleReference = "using MS.Internal.PresentationFramework;";
                         break;
                 }
@@ -95,21 +87,11 @@ namespace MS.Internal.MilCodeGen.ResourceModel
                         [[inline]]
                             [[Helpers.ManagedStyle.WriteFileHeader(fileName)]]
 
-                            using MS.Internal;
                             using MS.Internal.KnownBoxes;
-
-                            using System;
                             using System.Collections;
-                            using System.Collections.Generic;
                             using System.ComponentModel;
-                            using System.Diagnostics;
-                            using System.Windows;
                             using System.Windows.Markup;
-                            using System.Windows.Media.Animation;
-                            using System.Windows.Media.Media3D;   
-
-                            [[sridReference]]
-
+                            using System.Windows.Media.Media3D;
                             [[moduleReference]]
 
                             namespace System.Windows.Media.Animation
@@ -299,10 +281,7 @@ namespace MS.Internal.MilCodeGen.ResourceModel
                                     {
                                         WritePreamble();
 
-                                        if (child == null)
-                                        {
-                                            throw new ArgumentNullException("child");
-                                        }
+                                        ArgumentNullException.ThrowIfNull(child);
 
                                         AddChild(child);
 
@@ -324,7 +303,7 @@ namespace MS.Internal.MilCodeGen.ResourceModel
                                         }
                                         else
                                         {        
-                                            throw new ArgumentException(SR.Animation_ChildMustBeKeyFrame, "child");
+                                            throw new ArgumentException(SR.Animation_ChildMustBeKeyFrame, nameof(child));
                                         }
                                     }
 
@@ -343,10 +322,7 @@ namespace MS.Internal.MilCodeGen.ResourceModel
                                     /// null.</exception>
                                     void IAddChild.AddText(string childText)
                                     {
-                                        if (childText == null)
-                                        {
-                                            throw new ArgumentNullException("childText");
-                                        }
+                                        ArgumentNullException.ThrowIfNull(childText);
 
                                         AddText(childText);
                                     }
@@ -612,10 +588,7 @@ namespace MS.Internal.MilCodeGen.ResourceModel
                                         }
                                         set
                                         {
-                                            if (value == null)
-                                            {
-                                                throw new ArgumentNullException("value");
-                                            }
+                                            ArgumentNullException.ThrowIfNull(value);
                                             
                                             WritePreamble();
                                             
@@ -819,7 +792,7 @@ namespace MS.Internal.MilCodeGen.ResourceModel
                                         }
                                         
                                         int maxKeyFrameIndex = keyFrameCount - 1;
-                                        ArrayList unspecifiedBlocks = new ArrayList();
+                                        List<KeyTimeBlock> unspecifiedBlocks = new List<KeyTimeBlock>();
                                         bool hasPacedKeyTimes = false;
                                         
                                         //
@@ -886,8 +859,10 @@ namespace MS.Internal.MilCodeGen.ResourceModel
                                                             hasPacedKeyTimes = true;
                                                         }
                                                         
-                                                        KeyTimeBlock block = new KeyTimeBlock();
-                                                        block.BeginIndex = index;
+                                                        KeyTimeBlock block = new KeyTimeBlock
+                                                        {
+                                                            BeginIndex = index
+                                                        };
                                                        
                                                         // NOTE: We don't want to go all the way up to the
                                                         // last frame because if it is Uniform or Paced its
@@ -931,7 +906,7 @@ namespace MS.Internal.MilCodeGen.ResourceModel
                                         
                                         for (int j = 0; j < unspecifiedBlocks.Count; j++)
                                         {
-                                            KeyTimeBlock block = (KeyTimeBlock)unspecifiedBlocks[j];
+                                            KeyTimeBlock block = unspecifiedBlocks[j];
 
                                             TimeSpan blockBeginTime = TimeSpan.Zero;
                                             

@@ -333,10 +333,7 @@ namespace MS.Internal.PtsHost
                     PTS.IgnoreError(PTS.DestroyInstalledObjectsInfo(_contextPool[index].InstalledObjects));
                     // Explicitly dispose the penalty module object to ensure proper destruction
                     // order of PTSContext  and the penalty module (PTS context must be destroyed first).
-                    if (_contextPool[index].TextPenaltyModule != null)
-                    {
-                        _contextPool[index].TextPenaltyModule.Dispose();
-                    }
+                    _contextPool[index].TextPenaltyModule?.Dispose();
 
                     _contextPool.RemoveAt(index);
                 }
@@ -408,10 +405,7 @@ namespace MS.Internal.PtsHost
                         PTS.Validate(PTS.DestroyInstalledObjectsInfo(_contextPool[index].InstalledObjects));
                         // Explicitly dispose the penalty module object to ensure proper destruction
                         // order of PTSContext  and the penalty module (PTS context must be destroyed first).
-                        if (_contextPool[index].TextPenaltyModule != null)
-                        {
-                            _contextPool[index].TextPenaltyModule.Dispose();
-                        }
+                        _contextPool[index].TextPenaltyModule?.Dispose();
                         _contextPool.RemoveAt(index);
                         continue;
                     }

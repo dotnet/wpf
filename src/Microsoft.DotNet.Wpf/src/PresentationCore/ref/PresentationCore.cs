@@ -7012,14 +7012,14 @@ namespace System.Windows.Media
     public partial struct PixelFormat : System.IEquatable<System.Windows.Media.PixelFormat>
     {
         public int BitsPerPixel { get { throw null; } }
-        public System.Collections.Generic.IList<System.Windows.Media.PixelFormatChannelMask> Masks { get { throw null; } }
-        public override bool Equals(object obj) { throw null; }
-        public bool Equals(System.Windows.Media.PixelFormat pixelFormat) { throw null; }
+        public readonly System.Collections.Generic.IList<System.Windows.Media.PixelFormatChannelMask> Masks { get { throw null; } }
+        public override readonly bool Equals(object obj) { throw null; }
+        public readonly bool Equals(System.Windows.Media.PixelFormat pixelFormat) { throw null; }
         public static bool Equals(System.Windows.Media.PixelFormat left, System.Windows.Media.PixelFormat right) { throw null; }
-        public override int GetHashCode() { throw null; }
+        public override readonly int GetHashCode() { throw null; }
         public static bool operator ==(System.Windows.Media.PixelFormat left, System.Windows.Media.PixelFormat right) { throw null; }
         public static bool operator !=(System.Windows.Media.PixelFormat left, System.Windows.Media.PixelFormat right) { throw null; }
-        public override string ToString() { throw null; }
+        public override readonly string ToString() { throw null; }
     }
     public partial struct PixelFormatChannelMask
     {

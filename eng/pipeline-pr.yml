@@ -208,14 +208,10 @@ jobs:
           continueOnError: true
         condition: and(succeededOrFailed(), eq(variables['_BuildConfig'], 'Debug'), eq(variables['_Platform'], 'x64'))
       
-      # Upload code coverage data
-      - script: $(Build.SourcesDirectory)/.dotnet/dotnet msbuild
-          eng/CodeCoverage.proj
-          /p:Configuration=$(_BuildConfig)
-          /p:CodeCovToken=$(CODECOV_TOKEN)
-          /bl:$(BUILD.SOURCESDIRECTORY)\artifacts\log\$(_BuildConfig)\CodeCoverage.binlog
+        # Upload code coverage data
+      - script: dotnet msbuild -binaryLogger:artifacts\log\$(_configuration)\uploadCodeCov.binlog;ProjectImports=Embed -restore eng/CodeCoverage.proj
         displayName: Upload coverage to codecov.io
-        condition: and(succeededOrFailed(), eq(variables._Coverage, 'true'), eq(variables['_Platform'], 'x64'), eq(variables['_BuildConfig'], 'Debug'))
+        condition: and(succeeded(), eq(variables['_Coverage'], True))
       # - task: PowerShell@2
       #   displayName: Install .NET Core
       #   inputs:

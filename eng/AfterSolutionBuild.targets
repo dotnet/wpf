@@ -2,24 +2,4 @@
     <!-- Disabling currently in favour of enabling unit tests -->
     <!-- As of now, 10/07/23 DRTs are already running on build pipelines -->
     <!-- <Import Project="$(MSBuildThisFileDirectory)WpfArcadeSdk\tools\RunDrtsLocal.targets" Condition="'$(Test)'=='True'" /> -->
-  <Target Name="ReportCodeCoverage" AfterTargets="Test" Condition="'$(Configuration)' == 'Debug' and '$(CODECOV_TOKEN)' != ''">
-    <PropertyGroup>
-      <_CodecovPath>$(NuGetPackageRoot)codecov\$(CodecovVersion)\tools\Codecov.exe</_CodecovPath>
-    </PropertyGroup>
-
-    <ItemGroup>
-      <_CoverageReports Include="$(ArtifactsTestResultsDir)*.coverage" />
-
-      <_CodecovArgs Include="-f;@(_CoverageReports)" />
-      <_CodecovArgs Include="-r;$(QualifiedRepoName)" Condition="'$(QualifiedRepoName)' != ''" />
-      <_CodecovArgs Include="--pr;$(ghprbPullId)" Condition="'$(ghprbPullId)' != ''" />
-      <_CodecovArgs Include="-b;$(BUILD_NUMBER)" Condition="'$(BUILD_NUMBER)' != ''" />
-      <_CodecovArgs Include="--branch;$(ghprbTargetBranch)" Condition="'$(ghprbTargetBranch)' != ''" />
-      <_CodecovArgs Include="-c;$(ghprbActualCommit)" Condition="'$(ghprbActualCommit)' != ''" />
-      <_CodecovArgs Include="-n;$(JOB_NAME)" Condition="'$(JOB_NAME)' != ''" />
-      <_CodecovArgs Include="--flag;$(Configuration)" Condition="'$(Configuration)' != ''" />
-    </ItemGroup>
-
-    <!-- <Exec Command="&quot;$(_CodecovPath)&quot; @(_CodecovArgs, ' ')" /> -->
-  </Target>
 </Project>

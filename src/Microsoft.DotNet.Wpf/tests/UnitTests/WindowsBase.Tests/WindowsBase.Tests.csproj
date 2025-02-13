@@ -12,7 +12,6 @@
     <PackageReference Include="FluentAssertions" Version="$(FluentAssertionsVersion)" />
     <PackageReference Include="xunit.stafact" Version="$(XUnitStaFactPackageVersion)" />
     <PackageReference Include="Moq" Version="$(MoqPackageVersion)" />
-    <PackageReference Include="coverlet.collector" Version="$(CoverletVersion)" GeneratePathProperty="true" PrivateAssets="all" />
     <PackageReference Include="$(SystemIOPackagingPackage)" Version="$(SystemIOPackagingVersion)" />
     <PackageReference Include="System.Configuration.ConfigurationManager" Version="$(SystemConfigurationConfigurationManagerPackageVersion)" />
     <PackageReference Include="System.Private.Windows.Core.TestUtilities" Version="$(SystemPrivateWindowsCoreTestUtilitiesVersion)" />

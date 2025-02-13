@@ -23,7 +23,6 @@
 
   <ItemGroup>
     <PackageReference Include="Moq" Version="$(MoqPackageVersion)" />
-    <PackageReference Include="coverlet.collector" Version="$(CoverletVersion)" GeneratePathProperty="true" PrivateAssets="all" />
     <PackageReference Include="xunit.stafact" Version="$(XUnitStaFactPackageVersion)" />
     <PackageReference Include="FluentAssertions" Version="$(FluentAssertionsVersion)" />
     <PackageReference Include="System.Configuration.ConfigurationManager" Version="$(SystemConfigurationConfigurationManagerPackageVersion)" />

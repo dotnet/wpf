@@ -132,7 +132,6 @@ jobs:
           ${{ if eq(parameters.runAsPublic, 'true') }}:
             Build_Debug_x86:
               _BuildConfig: Debug
-              _Coverage: true
               # override some variables for debug
               # _SignType has to be real for package publishing to succeed - do not override to test.
           Build_Release_x86:

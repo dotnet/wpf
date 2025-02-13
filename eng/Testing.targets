@@ -1,4 +1,11 @@
 <Project>
+  <!-- Set code coverage properties that reference properties not available in Directory.Build.props -->
+  <PropertyGroup Condition="'$(Coverage)' == 'true'">
+    <CoverletOutput>$(TargetDir)coverage\$(MSBuildProjectName).coverage</CoverletOutput>
+    <!-- https://github.com/tonerdo/coverlet/issues/363 -->
+    <DeterministicSourcePaths>false</DeterministicSourcePaths>
+  </PropertyGroup>
+
   <PropertyGroup Condition="'$(IsTestProject)' == 'true'">
     <TestRunnerAdditionalArguments>$(TestRunnerAdditionalArguments) --blame</TestRunnerAdditionalArguments>
     <TestRunnerAdditionalArguments>$(TestRunnerAdditionalArguments) --blame-hang-dump-type full</TestRunnerAdditionalArguments>

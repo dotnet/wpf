@@ -22,9 +22,5 @@ flags:                            # which files to include in the reporting
       - src\Microsoft.DotNet.Wpf\src
   test:
     paths:
-      - tests/
-      - src\Microsoft.DotNet.Wpf\tests\UnitTests\WindowsBase.Tests
-      - src\Microsoft.DotNet.Wpf\tests\UnitTests\PresentationCore.Tests
-      - src\Microsoft.DotNet.Wpf\tests\UnitTests\PresentationFramework.Fluent.Tests
-      - src\Microsoft.DotNet.Wpf\tests\UnitTests\System.Printing.Tests
-      - src\Microsoft.DotNet.Wpf\tests\UnitTests\System.Xaml.Tests
+      - src\Microsoft.DotNet.Wpf\tests\
+

@@ -21,7 +21,7 @@
     <WpfArcadeSdkProps>$(WpfArcadeSdkPath)Sdk\Sdk.props</WpfArcadeSdkProps>
     <WpfArcadeSdkTargets>$(WpfArcadeSdkPath)Sdk\Sdk.targets</WpfArcadeSdkTargets>
   </PropertyGroup>
-  
+
   <Import Project="$(WpfArcadeSdkProps)"
           Condition="Exists('$(WpfArcadeSdkProps)') And Exists('$(WpfArcadeSdkTargets)')"/>
 

@@ -578,7 +578,7 @@ namespace MS.Internal.PtsHost
 
                 if (trackDetails.cParas == 0) 
                 {
-                    return new ReadOnlyCollection<ParagraphResult>(new List<ParagraphResult>(0));  
+                    return ReadOnlyCollection<ParagraphResult>.Empty;  
                 }
 
                 // Get list of paragraphs
@@ -604,7 +604,7 @@ namespace MS.Internal.PtsHost
                 // cBasicColumns == 0, means that subpage content is empty
                 if (subpageDetails.u.complex.cBasicColumns == 0) 
                 {
-                    return new ReadOnlyCollection<ParagraphResult>(new List<ParagraphResult>(0));
+                    return ReadOnlyCollection<ParagraphResult>.Empty;
                 }
 
                 // Retrieve description for each column.
@@ -618,7 +618,7 @@ namespace MS.Internal.PtsHost
 
                 if (trackDetails.cParas == 0) 
                 {
-                    return new ReadOnlyCollection<ParagraphResult>(new List<ParagraphResult>(0));
+                    return ReadOnlyCollection<ParagraphResult>.Empty;
                 }
 
                 // Get list of paragraphs
@@ -745,7 +745,7 @@ namespace MS.Internal.PtsHost
             // Floater always has one column, so we can skip getting a column from the text position range
             Invariant.Assert(columns != null && columns.Count <= 1, "Columns collection is null.");
             Invariant.Assert(floatingElements != null, "Floating element collection is null.");
-            ReadOnlyCollection<ParagraphResult> paragraphs = (columns.Count > 0) ? columns[0].Paragraphs : new ReadOnlyCollection<ParagraphResult>(new List<ParagraphResult>(0));
+            ReadOnlyCollection<ParagraphResult> paragraphs = (columns.Count > 0) ? columns[0].Paragraphs : ReadOnlyCollection<ParagraphResult>.Empty;
 
             if (paragraphs.Count > 0 || floatingElements.Count > 0)
             {

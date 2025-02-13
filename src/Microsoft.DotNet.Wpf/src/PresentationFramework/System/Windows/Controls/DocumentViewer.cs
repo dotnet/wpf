@@ -1177,7 +1177,7 @@ namespace System.Windows.Controls
             else
             {
                 //Return an empty collection (null is not valid).
-                pageViews = new ReadOnlyCollection<DocumentPageView>(new List<DocumentPageView>(0));
+                pageViews = ReadOnlyCollection<DocumentPageView>.Empty;
             }
 
             return pageViews;

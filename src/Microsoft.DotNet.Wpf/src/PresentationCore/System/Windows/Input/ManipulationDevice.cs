@@ -209,7 +209,7 @@ namespace System.Windows.Input
             }
             else
             {
-                return new ReadOnlyCollection<IManipulator>(new List<IManipulator>(2));
+                return ReadOnlyCollection<IManipulator>.Empty;
             }
         }
 

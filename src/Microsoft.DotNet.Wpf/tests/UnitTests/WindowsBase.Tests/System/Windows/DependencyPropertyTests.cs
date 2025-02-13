@@ -304,20 +304,20 @@ public class DependencyPropertyTests
         yield return new object?[] { " Register_String_Type_Type_ValidateFail_TestData4 ", typeof(int), typeof(DependencyObject), new PropertyMetadata(), 0 };
     }
 
-    // [Theory]
-    // [MemberData(nameof(Register_String_Type_Type_ValidateFail_TestData))]
-    // public void Register_InvokeStringTypeTypeValidateFail_Throws(string name, Type propertyType, Type ownerType, PropertyMetadata typeMetadata, object? expectedDefaultValue)
-    // {
-    //     int callCount = 0;
-    //     ValidateValueCallback validateValueCallback = value =>
-    //     {
-    //         Assert.Equal(expectedDefaultValue, value);
-    //         callCount++;
-    //         return false;
-    //     };
-    //     Assert.Throws<ArgumentException>(() => DependencyProperty.Register(name, propertyType, ownerType, typeMetadata, validateValueCallback));
-    //     Assert.Equal(1, callCount);
-    // }
+    [Theory]
+    [MemberData(nameof(Register_String_Type_Type_ValidateFail_TestData))]
+    public void Register_InvokeStringTypeTypeValidateFail_Throws(string name, Type propertyType, Type ownerType, PropertyMetadata typeMetadata, object? expectedDefaultValue)
+    {
+        int callCount = 0;
+        ValidateValueCallback validateValueCallback = value =>
+        {
+            Assert.Equal(expectedDefaultValue, value);
+            callCount++;
+            return false;
+        };
+        Assert.Throws<ArgumentException>(() => DependencyProperty.Register(name, propertyType, ownerType, typeMetadata, validateValueCallback));
+        Assert.Equal(1, callCount);
+    }
 
     public static IEnumerable<object?[]> RegisterAttached_String_Type_Type_TestData()
     {

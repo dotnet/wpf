@@ -8,7 +8,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Include="$(MSBuildThisFileDirectory)Shared\ModuleInitializer.cs" />  
+   	<Compile Include="$(MSBuildThisFileDirectory)Shared\ModuleInitializer.cs" />  
   </ItemGroup>
 
 </Project>

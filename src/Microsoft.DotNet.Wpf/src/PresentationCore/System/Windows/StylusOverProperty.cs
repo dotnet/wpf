@@ -49,9 +49,9 @@ namespace System.Windows
             {
                 ce.RaiseEvent(stylusEventArgs);
             }
-            else if (uie3D != null)
+            else
             {
-                uie3D.RaiseEvent(stylusEventArgs);
+                uie3D?.RaiseEvent(stylusEventArgs);
             }
         }
     }

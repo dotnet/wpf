@@ -275,10 +275,7 @@ namespace System.Windows.Media.Imaging
         {
             ReadPreamble();
 
-            if (_decoder != null)
-            {
-                _decoder.CheckOriginalWritable();
-            }
+            _decoder?.CheckOriginalWritable();
 
             // Demand Site Of Origin on the URI before usage of metadata.
             CheckIfSiteOfOrigin();

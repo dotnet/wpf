@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -184,7 +184,7 @@ namespace MS.Internal.Data
                     // if no explicit list, use the group description properties
                     groupingProperties = new Collection<string>();
                     ICollectionView icv = View as ICollectionView;
-                    ObservableCollection<GroupDescription> groupDescriptions = (icv != null) ? icv.GroupDescriptions : null;
+                    ObservableCollection<GroupDescription> groupDescriptions = icv?.GroupDescriptions;
 
                     if (groupDescriptions != null)
                     {

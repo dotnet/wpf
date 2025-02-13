@@ -48,10 +48,7 @@ namespace MS.Internal.PtsHost
         // ------------------------------------------------------------------
         public override void Dispose()
         {
-            if(_pageContext != null)
-            {
-                _pageContext.RemoveFloatingParaClient(this);
-            }
+            _pageContext?.RemoveFloatingParaClient(this);
 
             base.Dispose();
         }

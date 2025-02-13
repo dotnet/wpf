@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -200,7 +200,7 @@ namespace MS.Internal.Annotations.Component
                 // now get rid of reference from presentation context of annotation component to annotation adorner
                 AdornerPresentationContext p = component.PresentationContext as AdornerPresentationContext;
 
-                if (p != null) p.ResetInternalAnnotationAdorner();
+                p?.ResetInternalAnnotationAdorner();
 
                 // finally get rid of reference from annotation component to presentation context
                 component.PresentationContext = null;

@@ -372,10 +372,7 @@ namespace System.Windows
 
             while (reader.Read())
             {
-                if (lineInfoConsumer != null)
-                {
-                    lineInfoConsumer.SetLineInfo(lineInfo.LineNumber, lineInfo.LinePosition);
-                }
+                lineInfoConsumer?.SetLineInfo(lineInfo.LineNumber, lineInfo.LinePosition);
 
                 object newValue;
                 bool reProcessOnApply = ParseNode(reader, stack, sharedProperties, ref nameNumber, out newValue);
@@ -986,10 +983,7 @@ namespace System.Windows
                                     // events inside of a FramewokrTemplate
                                     if (!insideTemplate && frames.CurrentFrame.Property == XamlLanguage.ConnectionId)
                                     {
-                                        if (OwnerTemplate.StyleConnector != null)
-                                        {
-                                            OwnerTemplate.StyleConnector.Connect((int)xamlReader.Value, frames.CurrentFrame.Instance);
-                                        }
+                                        OwnerTemplate.StyleConnector?.Connect((int)xamlReader.Value, frames.CurrentFrame.Instance);
                                     }
                                     break;
                             }

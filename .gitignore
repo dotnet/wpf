@@ -345,3 +345,7 @@ ASALocalRun/
 Network Trash Folder
 Temporary Items
 .apdisk
+
+# Exceptions to the exclusions
+!src/Microsoft.DotNet.Wpf/src/WpfGfx/codegen/mcg/main/*.rsp
+!src/Microsoft.DotNet.Wpf/src/WpfGfx/tools/csp/**/*.rsp

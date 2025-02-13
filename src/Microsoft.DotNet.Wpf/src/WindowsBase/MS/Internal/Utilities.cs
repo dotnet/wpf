@@ -49,10 +49,7 @@ namespace MS.Internal
             // Dispose can safely be called on an object multiple times.
             IDisposable t = disposable;
             disposable = default(T);
-            if (null != t)
-            {
-                t.Dispose();
-            }
+            t?.Dispose();
         }
         
         internal static void SafeRelease<T>(ref T comObject) where T : class

@@ -1438,10 +1438,7 @@ namespace System.Windows.Input
                             // All mouse information is now restricted to this presentation source.
                             _inputSource = rawMouseInputReport.InputSource;
 
-                            if (toDeactivate != null)
-                            {
-                                toDeactivate.NotifyDeactivate();
-                            }
+                            toDeactivate?.NotifyDeactivate();
                         }
                     }
 

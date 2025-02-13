@@ -261,7 +261,7 @@ namespace MS.Internal.Data
                         if ((xdc = itemsSource as XmlDataCollection) == null)
                         {
                             ICollectionView icv = itemsSource as ICollectionView;
-                            xdc = ((icv != null) ? icv.SourceCollection : null) as XmlDataCollection;
+                            xdc = (icv?.SourceCollection) as XmlDataCollection;
                         }
 
                         if (xdc != null)
@@ -523,7 +523,7 @@ namespace MS.Internal.Data
                 if (TraceData.IsEnabled)
                 {
                     TraceData.TraceAndNotify(TraceEventType.Error, TraceData.CannotGetXmlNodeCollection, ParentBindingExpression,
-                        traceParameters: new object[] { (ContextNode != null) ? ContextNode.Name : null, XPath, ParentBindingExpression, xe },
+                        traceParameters: new object[] { ContextNode?.Name, XPath, ParentBindingExpression, xe },
                         eventParameters: new object[] { xe });
                 }
             }

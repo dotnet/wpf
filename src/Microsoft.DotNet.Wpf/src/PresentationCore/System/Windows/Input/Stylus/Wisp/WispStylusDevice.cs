@@ -246,10 +246,7 @@ namespace System.Windows.Input.StylusWisp
                 throw new InvalidOperationException(SR.Format(SR.Invalid_IInputElement, doStylusCapture.GetType()));
             }
 
-            if (doStylusCapture != null)
-            {
-                doStylusCapture.VerifyAccess();
-            }
+            doStylusCapture?.VerifyAccess();
 
             bool success = false;
 

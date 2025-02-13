@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -201,10 +201,7 @@ namespace System.Windows.Automation.Peers
             if (lvi == null)
             {
                 VirtualizingPanel itemsHost = _listview.ItemsHost as VirtualizingPanel;
-                if (itemsHost != null)
-                {
-                    itemsHost.BringIndexIntoView(row);
-                }
+                itemsHost?.BringIndexIntoView(row);
 
                 lvi = _listview.ItemContainerGenerator.ContainerFromIndex(row) as ListViewItem;
 
@@ -259,10 +256,7 @@ namespace System.Windows.Automation.Peers
             {
                 ListViewAutomationPeer peer = UIElementAutomationPeer.FromElement(_listview) as ListViewAutomationPeer;
                 Invariant.Assert(peer != null);
-                if (peer != null)
-                {
-                    peer.RaisePropertyChangedEvent(GridPatternIdentifiers.ColumnCountProperty, _oldColumnsCount, _owner.Columns.Count);
-                }
+                peer?.RaisePropertyChangedEvent(GridPatternIdentifiers.ColumnCountProperty, _oldColumnsCount, _owner.Columns.Count);
             }
 
             _oldColumnsCount = _owner.Columns.Count;

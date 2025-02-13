@@ -521,7 +521,7 @@ namespace MS.Internal.Printing.Configuration
             // Scaling percentage value must be non-negative. We do allow negative scaling offset values.
             if (squareScale < 0)
             {
-                throw new ArgumentOutOfRangeException("squareScale",
+                throw new ArgumentOutOfRangeException(nameof(squareScale),
                                                       PTUtility.GetTextFromResource("ArgumentException.NonNegativeValue"));
             }
 

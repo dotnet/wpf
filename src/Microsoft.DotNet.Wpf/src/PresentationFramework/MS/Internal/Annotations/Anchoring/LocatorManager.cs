@@ -346,7 +346,7 @@ namespace MS.Internal.Annotations.Anchoring
             }
             else
             {
-                throw new ArgumentException("Unsupported Selection", "selection");
+                throw new ArgumentException("Unsupported Selection", nameof(selection));
             }
 
             IList<ContentLocatorBase> returnLocators = null;

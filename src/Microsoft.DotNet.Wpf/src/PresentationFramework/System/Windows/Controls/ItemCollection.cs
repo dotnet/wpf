@@ -247,10 +247,7 @@ namespace System.Windows.Controls
                 throw new InvalidOperationException(SR.ItemsSourceInUse);
             }
 
-            if (_internalView != null)
-            {
-                _internalView.Clear();
-            }
+            _internalView?.Clear();
             ModelParent.ClearValue(ItemsControl.HasItemsPropertyKey);
         }
 
@@ -287,7 +284,7 @@ namespace System.Windows.Controls
         {
             ArgumentNullException.ThrowIfNull(array);
             if (array.Rank > 1)
-                throw new ArgumentException(SR.BadTargetArray, "array"); // array is multidimensional.
+                throw new ArgumentException(SR.BadTargetArray, nameof(array)); // array is multidimensional.
             ArgumentOutOfRangeException.ThrowIfNegative(index);
 
             // use the view instead of the collection, because it may have special sort/filter
@@ -1282,7 +1279,7 @@ namespace System.Windows.Controls
             get
             {
                 ICollectionViewLiveShaping cvls = _collectionView as ICollectionViewLiveShaping;
-                return (cvls != null) ? cvls.IsLiveSorting : null;
+                return cvls?.IsLiveSorting;
             }
             set
             {
@@ -1304,7 +1301,7 @@ namespace System.Windows.Controls
             get
             {
                 ICollectionViewLiveShaping cvls = _collectionView as ICollectionViewLiveShaping;
-                return (cvls != null) ? cvls.IsLiveFiltering : null;
+                return cvls?.IsLiveFiltering;
             }
             set
             {
@@ -1326,7 +1323,7 @@ namespace System.Windows.Controls
             get
             {
                 ICollectionViewLiveShaping cvls = _collectionView as ICollectionViewLiveShaping;
-                return (cvls != null) ? cvls.IsLiveGrouping : null;
+                return cvls?.IsLiveGrouping;
             }
             set
             {
@@ -1579,10 +1576,7 @@ namespace System.Windows.Controls
         internal override void GetCollectionChangedSources(int level, Action<int, object, bool?, List<string>> format, List<string> sources)
         {
             format(level, this, false, sources);
-            if (_collectionView != null)
-            {
-                _collectionView.GetCollectionChangedSources(level+1, format, sources);
-            }
+            _collectionView?.GetCollectionChangedSources(level+1, format, sources);
         }
 
 
@@ -1717,9 +1711,9 @@ namespace System.Windows.Controls
             }
 
             // with a new view, we have new live shaping behavior
-            OnPropertyChanged(new PropertyChangedEventArgs("IsLiveSorting"));
-            OnPropertyChanged(new PropertyChangedEventArgs("IsLiveFiltering"));
-            OnPropertyChanged(new PropertyChangedEventArgs("IsLiveGrouping"));
+            OnPropertyChanged(new PropertyChangedEventArgs(nameof(IsLiveSorting)));
+            OnPropertyChanged(new PropertyChangedEventArgs(nameof(IsLiveFiltering)));
+            OnPropertyChanged(new PropertyChangedEventArgs(nameof(IsLiveGrouping)));
         }
 
         void ApplySortFilterAndGroup()

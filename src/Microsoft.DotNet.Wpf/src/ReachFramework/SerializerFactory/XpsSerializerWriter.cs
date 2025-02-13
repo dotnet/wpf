@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -441,18 +441,12 @@ namespace System.Windows.Xps.Serialization
 
         private void xsw_WritingPrintTicketRequired(object sender, WritingPrintTicketRequiredEventArgs e)
         {
-            if (WritingPrintTicketRequired != null)
-            {
-                WritingPrintTicketRequired.Invoke(sender, e);
-            }
+            WritingPrintTicketRequired?.Invoke(sender, e);
         }
 
         private void xsw_WritingProgressChanged(object sender, WritingProgressChangedEventArgs e)
         {
-            if ( WritingProgressChanged != null)
-            {
-                WritingProgressChanged.Invoke(sender, e);
-            }
+            WritingProgressChanged?.Invoke(sender, e);
         }
 
         private void xsw_WritingCompleted(object sender, WritingCompletedEventArgs e)

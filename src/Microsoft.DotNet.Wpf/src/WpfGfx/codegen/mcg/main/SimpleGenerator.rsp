@@ -1,0 +1,14 @@
+-s:main\SimpleGenerator.cs
+-s:main\cmdline\IndentedWriter.cs
+-s:main\cmdline\Utility.cs
+-s:main\cmdline\CommandLineArguments.cs
+-s:Runtime\DelimitedList.cs
+-s:Runtime\OrList.cs
+-s:Runtime\CodeSink.cs
+-s:Runtime\FileCodeSink.cs
+-s:Runtime\StringCodeSink.cs
+-s:Runtime\ParameterList.cs
+-s:Runtime\GeneratorMethods.cs
+-s:ResourceModel\CG.cs
+-s:helpers\ManagedStyle.cs
+-s:helpers\Style.cs

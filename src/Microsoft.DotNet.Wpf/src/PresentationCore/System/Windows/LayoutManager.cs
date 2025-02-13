@@ -561,8 +561,7 @@ namespace System.Windows
         private static object UpdateLayoutCallback(object arg)
         {
             ContextLayoutManager ContextLayoutManager = arg as ContextLayoutManager;
-            if(ContextLayoutManager != null)
-                ContextLayoutManager.UpdateLayout();
+            ContextLayoutManager?.UpdateLayout();
             return null;
         }
 
@@ -1001,8 +1000,7 @@ namespace System.Windows
                     }
                     catch(System.OutOfMemoryException)
                     {
-                        if(lm != null)
-                            lm.setForceLayout(e);
+                        lm?.setForceLayout(e);
                         throw;
                     }
                 }

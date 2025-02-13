@@ -131,7 +131,7 @@ namespace System.Windows.Controls
         /// </summary>
         public object Item
         {
-            get { return (_info != null) ? _info.Item : null; }
+            get { return _info?.Item; }
         }
 
         /// <summary>

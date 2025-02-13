@@ -152,10 +152,7 @@ namespace Microsoft.Windows.Controls
                 WeakHashSet<DependencyObject> oldElementSet = null;
                 if (current._scopeToElementMap.TryGetValue(oldScope, out oldElementSet))
                 {
-                    if (oldElementSet != null)
-                    {
-                        oldElementSet.Remove(d);
-                    }
+                    oldElementSet?.Remove(d);
                 }
             }
             if (newScope != null)
@@ -1109,10 +1106,7 @@ namespace Microsoft.Windows.Controls
 
         private void ShowKeyTips()
         {
-            if (_showKeyTipsTimer != null)
-            {
-                _showKeyTipsTimer.Stop();
-            }
+            _showKeyTipsTimer?.Stop();
             if (State == KeyTipState.Pending)
             {
                 Debug.Assert(_currentGlobalScope != null);
@@ -1238,10 +1232,7 @@ namespace Microsoft.Windows.Controls
                 _currentWindow.LocationChanged -= new EventHandler(OnWindowLocationChanged);
             }
             _currentWindow = null;
-            if (_showKeyTipsTimer != null)
-            {
-                _showKeyTipsTimer.Stop();
-            }
+            _showKeyTipsTimer?.Stop();
             _focusRibbonOnKeyTipKeyUp = false;
             _modeEnterKey = Key.None;
             _probableModeEnterKey = Key.None;
@@ -1371,10 +1362,7 @@ namespace Microsoft.Windows.Controls
                 // Raise the ActivatingKeyTip event.
                 ActivatingKeyTipEventArgs activatingEventArgs = new ActivatingKeyTipEventArgs();
                 IInputElement inputElement = element as IInputElement;
-                if (inputElement != null)
-                {
-                    inputElement.RaiseEvent(activatingEventArgs);
-                }
+                inputElement?.RaiseEvent(activatingEventArgs);
 
                 // KeyTips could have been dismissed due to one
                 // of the event handler, hence check again.
@@ -1441,10 +1429,7 @@ namespace Microsoft.Windows.Controls
                     UnlinkKeyTipControlFromAdorner(adorner);
                     bool isScrollAdornerLayer = false;
                     AdornerLayer adornerLayer = GetAdornerLayer(adornedElement, out isScrollAdornerLayer);
-                    if (adornerLayer != null)
-                    {
-                        adornerLayer.Remove(adorner);
-                    }
+                    adornerLayer?.Remove(adorner);
                 }
                 element.ClearValue(KeyTipAdornerProperty);
                 element.ClearValue(KeyTipAdornerHolderProperty);
@@ -1471,10 +1456,7 @@ namespace Microsoft.Windows.Controls
                             foreach (object child in LogicalTreeHelper.GetChildren(currentAdornerLayer))
                             {
                                 KeyTipAdorner keyTipAdorner = child as KeyTipAdorner;
-                                if (keyTipAdorner != null)
-                                {
-                                    keyTipAdorner.NudgeIntoAdornerLayerBoundary(currentAdornerLayer);
-                                }
+                                keyTipAdorner?.NudgeIntoAdornerLayerBoundary(currentAdornerLayer);
                             }
                         }
                         _placementProcessingAdornerLayers.Clear();

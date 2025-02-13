@@ -263,10 +263,7 @@ namespace MS.Internal.Ink
             }
             finally
             {
-                if ( dc != null )
-                {
-                    dc.Close();
-                }
+                dc?.Close();
             }
 
             return drawingVisual;
@@ -420,10 +417,7 @@ namespace MS.Internal.Ink
             }
             finally
             {
-                if ( dc != null )
-                {
-                    dc.Close();
-                }
+                dc?.Close();
             }
 
             return penDrawing;
@@ -545,10 +539,7 @@ namespace MS.Internal.Ink
             }
             finally
             {
-                if ( dc != null )
-                {
-                    dc.Close();
-                }
+                dc?.Close();
             }
 
             return drawingGroup;

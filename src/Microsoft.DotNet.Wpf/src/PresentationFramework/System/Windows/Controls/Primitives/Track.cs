@@ -366,7 +366,7 @@ namespace System.Windows.Controls.Primitives
         {
             if (_visualChildren == null || _visualChildren[index] == null)
             {
-                throw new ArgumentOutOfRangeException("index", index, SR.Visual_ArgumentOutOfRange);
+                throw new ArgumentOutOfRangeException(nameof(index), index, SR.Visual_ArgumentOutOfRange);
             }
             return _visualChildren[index];
         }
@@ -507,22 +507,19 @@ namespace System.Windows.Controls.Primitives
                 offset.Y = isDirectionReversed ? decreaseButtonLength + thumbLength : 0.0;
                 pieceSize.Height = increaseButtonLength;
                 
-                if (IncreaseRepeatButton != null)
-                    IncreaseRepeatButton.Arrange(new Rect(offset, pieceSize));
+                IncreaseRepeatButton?.Arrange(new Rect(offset, pieceSize));
 
 
                 offset.Y = isDirectionReversed ? 0.0 : increaseButtonLength + thumbLength;
                 pieceSize.Height = decreaseButtonLength;
 
-                if (DecreaseRepeatButton != null)
-                    DecreaseRepeatButton.Arrange(new Rect(offset, pieceSize));
+                DecreaseRepeatButton?.Arrange(new Rect(offset, pieceSize));
 
 
                 offset.Y = isDirectionReversed ? decreaseButtonLength : increaseButtonLength;
                 pieceSize.Height = thumbLength;
 
-                if (Thumb != null)
-                    Thumb.Arrange(new Rect(offset, pieceSize));
+                Thumb?.Arrange(new Rect(offset, pieceSize));
 
                 ThumbCenterOffset = offset.Y + (thumbLength * 0.5);
             }
@@ -538,22 +535,19 @@ namespace System.Windows.Controls.Primitives
                 offset.X = isDirectionReversed ? increaseButtonLength + thumbLength : 0.0;
                 pieceSize.Width = decreaseButtonLength;
 
-                if (DecreaseRepeatButton != null)
-                    DecreaseRepeatButton.Arrange(new Rect(offset, pieceSize));
+                DecreaseRepeatButton?.Arrange(new Rect(offset, pieceSize));
 
 
                 offset.X = isDirectionReversed ? 0.0 : decreaseButtonLength + thumbLength;
                 pieceSize.Width = increaseButtonLength;
 
-                if (IncreaseRepeatButton != null)
-                    IncreaseRepeatButton.Arrange(new Rect(offset, pieceSize));
+                IncreaseRepeatButton?.Arrange(new Rect(offset, pieceSize));
 
 
                 offset.X = isDirectionReversed ? increaseButtonLength : decreaseButtonLength;
                 pieceSize.Width = thumbLength;
                 
-                if (Thumb != null)
-                    Thumb.Arrange(new Rect(offset, pieceSize));
+                Thumb?.Arrange(new Rect(offset, pieceSize));
 
                 ThumbCenterOffset = offset.X + (thumbLength * 0.5);
             }

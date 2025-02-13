@@ -113,10 +113,7 @@ namespace System.Windows.Threading
 
             // Note: a DispatcherObject that is not associated with a
             // dispatcher is considered to be free-threaded.
-            if(dispatcher != null)
-            {
-                dispatcher.VerifyAccess();
-            }
+            dispatcher?.VerifyAccess();
         }
 
         /// <summary>

@@ -15,6 +15,8 @@ using MS.Internal.PresentationCore;
 
 namespace System.Windows.Media.Animation
 {
+
+
     /// <summary>
     /// This class is used as part of a ByteKeyFrameCollection in
     /// conjunction with a KeyFrameByteAnimation to animate a
@@ -1245,4 +1247,5 @@ namespace System.Windows.Media.Animation
 
         #endregion
     }
+
 }

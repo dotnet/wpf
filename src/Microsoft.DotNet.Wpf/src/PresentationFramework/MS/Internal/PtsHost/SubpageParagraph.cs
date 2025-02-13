@@ -630,10 +630,7 @@ namespace MS.Internal.PtsHost
         // ------------------------------------------------------------------
         internal override void ClearUpdateInfo()
         {
-            if (_mainTextSegment != null)
-            {
-                _mainTextSegment.ClearUpdateInfo();
-            }
+            _mainTextSegment?.ClearUpdateInfo();
             base.ClearUpdateInfo();
         }
 
@@ -663,10 +660,7 @@ namespace MS.Internal.PtsHost
         // ------------------------------------------------------------------
         internal override void InvalidateFormatCache()
         {
-            if (_mainTextSegment != null)
-            {
-                _mainTextSegment.InvalidateFormatCache();
-            }
+            _mainTextSegment?.InvalidateFormatCache();
         }
 
         /// <summary>

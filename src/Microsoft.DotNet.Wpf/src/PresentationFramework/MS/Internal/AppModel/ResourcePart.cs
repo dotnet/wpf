@@ -28,7 +28,7 @@ namespace MS.Internal.AppModel
         {
             if (rmWrapper == null)
             {
-                throw new ArgumentNullException("rmWrapper");
+                throw new ArgumentNullException(nameof(rmWrapper));
             }
 
             _rmWrapper = rmWrapper;

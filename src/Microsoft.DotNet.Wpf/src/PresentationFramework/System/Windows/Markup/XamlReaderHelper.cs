@@ -2731,8 +2731,11 @@ namespace System.Windows.Markup
                 // if the prefix was "" then
                 // 1) normal properties resolve to the parent Tag namespace.
                 // 2) Attached properties resolve to the "" default namespace.
-                int dotIndex = name.IndexOf('.');
-                if (-1 == dotIndex)
+#if !NETFX
+                if (!name.Contains('.'))
+#else
+                if (!name.Contains("."))
+#endif
                     attribNamespaceURI = parentURI;
                 else
                     attribNamespaceURI = XmlReader.LookupNamespace("");
@@ -3700,7 +3703,7 @@ namespace System.Windows.Markup
                                             Debug.Assert(typeAndSerializer == null ||
                                                          typeAndSerializer.SerializerType == null ||
                                                          propertyType == typeAndSerializer.ObjectType);
-                                            serializerType = typeAndSerializer != null ? typeAndSerializer.SerializerType : null;
+                                            serializerType = typeAndSerializer?.SerializerType;
 
                                             CompileComplexProperty(dynamicObject, propertyType, serializerType,
                                                     depth, assemblyName, typeFullName, dynamicObjectName,

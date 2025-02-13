@@ -183,7 +183,7 @@ namespace System.Windows.Automation.Text
 
             if (value.GetType() != ai.Type)
             {
-                throw new ArgumentException(SR.Format(SR.TextAttributeValueWrongType, attribute, ai.Type.Name, value.GetType().Name), "value");
+                throw new ArgumentException(SR.Format(SR.TextAttributeValueWrongType, attribute, ai.Type.Name, value.GetType().Name), nameof(value));
             }
 
             // note: if we implement attributes whose values are logical elements, patterns,

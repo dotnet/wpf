@@ -308,10 +308,7 @@ namespace MS.Internal
                     }
                     finally
                     {
-                        if (dispatcherProcessingDisabled != null)
-                        {
-                            dispatcherProcessingDisabled.Value.Dispose();
-                        }
+                        dispatcherProcessingDisabled?.Dispose();
                     }
                 }
             }

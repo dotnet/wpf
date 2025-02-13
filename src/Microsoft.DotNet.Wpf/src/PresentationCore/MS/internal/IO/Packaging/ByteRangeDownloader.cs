@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -55,7 +55,7 @@ namespace MS.Internal.IO.Packaging
 
             if (tempFileName.Length <= 0)
             {
-                throw new ArgumentException(SR.InvalidTempFileName, "tempFileName");
+                throw new ArgumentException(SR.InvalidTempFileName, nameof(tempFileName));
             }
 
             _tempFileStream = File.Open(tempFileName, FileMode.Open, FileAccess.ReadWrite, FileShare.ReadWrite);
@@ -402,14 +402,14 @@ namespace MS.Internal.IO.Packaging
             // Ensure uri is correct scheme (http or https) Do case-sensitive comparison since Uri.Scheme contract is to return in lower case only.
             if (!string.Equals(requestedUri.Scheme, Uri.UriSchemeHttp, StringComparison.Ordinal) && !string.Equals(requestedUri.Scheme, Uri.UriSchemeHttps, StringComparison.Ordinal))
             {
-                throw new ArgumentException(SR.InvalidScheme, "requestedUri");
+                throw new ArgumentException(SR.InvalidScheme, nameof(requestedUri));
             }
 
             ArgumentNullException.ThrowIfNull(eventHandle);
 
             if (eventHandle.IsInvalid || eventHandle.IsClosed)
             {
-                throw new ArgumentException(SR.InvalidEventHandle, "eventHandle");
+                throw new ArgumentException(SR.InvalidEventHandle, nameof(eventHandle));
             }
 
             _requestedUri = requestedUri;
@@ -567,10 +567,7 @@ namespace MS.Internal.IO.Packaging
                 }
                 finally
                 {
-                    if (webResponse != null)
-                    {
-                        webResponse.Close();
-                    }
+                    webResponse?.Close();
 
                     // bytes requested are downloaded or errored out
                     //  inform the caller that these ranges are available

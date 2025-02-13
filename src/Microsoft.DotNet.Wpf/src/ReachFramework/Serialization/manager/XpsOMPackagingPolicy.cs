@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -734,26 +734,17 @@ namespace System.Windows.Xps.Packaging
             _currentFixedPageUri = null;
 
             _currentXpsImageRef = 0;
-            if (_imageResourceStream != null)
-            {
-                _imageResourceStream.Stream.Dispose();
-            }
+            _imageResourceStream?.Stream.Dispose();
             _imageResourceStream = null;
 
             _currentXpsColorContextRef = 0;
-            if (_colorContextResourceStream != null)
-            {
-                _colorContextResourceStream.Stream.Dispose();
-            }
+            _colorContextResourceStream?.Stream.Dispose();
             _colorContextResourceStream = null;
 
             _currentPageContentStream = null;
             _currentResourceStream = null;
 
-            if (_currentFixedPagePrintStream != null)
-            {
-                _currentFixedPagePrintStream.Dispose();
-            }
+            _currentFixedPagePrintStream?.Dispose();
             _currentFixedPagePrintStream = null;
             _currentPageContentXmlWriter = null;
             _currentResourceXmlWriter = null;

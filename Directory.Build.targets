@@ -1,13 +1,4 @@
 <Project>
-  <!-- Set code coverage properties that reference properties not available in Directory.Build.props -->
-  <PropertyGroup Condition="'$(Coverage)' == 'true'">
-    <CoverletOutput>$(TargetDir)coverage\$(MSBuildProjectName).coverage</CoverletOutput>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Coverage)' == 'true'">
-    <!-- https://github.com/tonerdo/coverlet/issues/363 -->
-    <DeterministicSourcePaths>false</DeterministicSourcePaths>
-  </PropertyGroup>
-  
   <Import Project="$(WpfArcadeSdkTargets)"
           Condition="Exists('$(WpfArcadeSdkProps)') And Exists('$(WpfArcadeSdkTargets)')"/>
 

@@ -17,7 +17,7 @@
   <Target Name="Codecov">
     <PropertyGroup>
       <_CodecovPath>$(NuGetPackageRoot)codecov\$(CodecovVersion)\tools\Codecov.exe</_CodecovPath>
-      <_ReportGeneratorPath>$(PkgReportGenerator)\tools\net47\ReportGenerator.exe</_ReportGeneratorPath>
+      <_ReportGeneratorPath>$(NuGetPackageRoot)reportgenerator\$(ReportGeneratorVersion)\tools\net47\ReportGenerator.exe</_ReportGeneratorPath>
     </PropertyGroup>
 
     <Message Importance="high" Text="&quot;$(_ReportGeneratorPath)&quot; -reports:$(ArtifactsDir)TestResults\**\coverage.opencover.xml -targetdir:$(ArtifactsDir)coverage -reporttypes:Cobertura" />

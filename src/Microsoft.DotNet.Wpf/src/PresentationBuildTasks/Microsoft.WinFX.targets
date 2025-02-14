@@ -205,7 +205,7 @@
         -->
         <PropertyGroup>
             <_IntellisenseOnlyCompile>false</_IntellisenseOnlyCompile>
-            <_IntellisenseOnlyCompile Condition="'$(BuildingProject)' != 'true'">true</_IntellisenseOnlyCompile>
+            <_IntellisenseOnlyCompile Condition="'$(BuildingProject)' != 'true' Or '$(DesignTimeBuild)' == 'true'">true</_IntellisenseOnlyCompile>
         </PropertyGroup>
 
         <MarkupCompilePass1

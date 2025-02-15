@@ -2677,7 +2677,6 @@
     </Setter>
   </Style>
   <Style x:Key="DefaultItemsControlStyle" TargetType="{x:Type ItemsControl}">
-    <Setter Property="Border.CornerRadius" Value="4" />
     <Setter Property="Template">
       <Setter.Value>
         <ControlTemplate TargetType="{x:Type ItemsControl}">
@@ -4829,7 +4828,6 @@
   </Style>
   <Style BasedOn="{StaticResource DefaultTreeViewItemStyle}" TargetType="{x:Type TreeViewItem}" />
   <Style x:Key="DefaultUserControlStyle" TargetType="{x:Type UserControl}">
-    <Setter Property="Border.CornerRadius" Value="4" />
     <Setter Property="Template">
       <Setter.Value>
         <ControlTemplate TargetType="{x:Type UserControl}">

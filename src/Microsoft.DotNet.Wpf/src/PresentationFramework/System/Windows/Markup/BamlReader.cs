@@ -1770,10 +1770,7 @@ namespace System.Windows.Markup
                     }
                     builder.Append('\\');
                 }
-                if (builder != null)
-                {
-                    builder.Append(value[i]);
-                }
+                builder?.Append(value[i]);
             }
 
             if (builder == null)

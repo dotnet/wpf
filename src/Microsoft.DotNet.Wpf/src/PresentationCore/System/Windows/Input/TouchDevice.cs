@@ -329,7 +329,7 @@ namespace System.Windows.Input
 
             if ((element != null) && (uiElement == null) && (contentElement == null) && (uiElement3D == null))
             {
-                throw new ArgumentException(SR.Format(SR.Invalid_IInputElement, element.GetType()), "element");
+                throw new ArgumentException(SR.Format(SR.Invalid_IInputElement, element.GetType()), nameof(element));
             }
 
             if (_captured != element)
@@ -1132,10 +1132,7 @@ namespace System.Windows.Input
 
         private static void RemoveActiveDevice(TouchDevice device)
         {
-            if (_activeDevices != null)
-            {
-                _activeDevices.Remove(device);
-            }
+            _activeDevices?.Remove(device);
         }
 
         internal static TouchPointCollection GetTouchPoints(IInputElement relativeTo)

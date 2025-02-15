@@ -422,10 +422,7 @@ namespace MS.Internal.Documents.Application
     {
         IDisposable provider = _provider as IDisposable;
 
-        if (provider != null)
-        {
-            provider.Dispose();
-        }
+        provider?.Dispose();
 
         _provider = null;
         

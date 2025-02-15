@@ -103,10 +103,7 @@ namespace MS.Internal.Media3D
 
             // store the inverse as well
             _transform2DInverse = (GeneralTransform)_transform2D.Inverse;
-            if (_transform2DInverse != null)
-            {
-                _transform2DInverse.Freeze();
-            }
+            _transform2DInverse?.Freeze();
 
             // make a copy of the camera and other values on the Viewport3D
             Viewport3DVisual viewport3D = (Viewport3DVisual)VisualTreeHelper.GetContainingVisual2D(visual3D);
@@ -122,10 +119,7 @@ namespace MS.Internal.Media3D
             _objectToViewport = visual3D.TransformToAncestor(viewport3D);
 
             // if the transform was not possible, it could be null - check before freezing
-            if (_objectToViewport != null)
-            {
-                _objectToViewport.Freeze();
-            }
+            _objectToViewport?.Freeze();
             
             // store the needed transformations for the various operations
             _worldTransformation = M3DUtil.GetWorldTransformationMatrix(visual3D);

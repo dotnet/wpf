@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -488,10 +488,7 @@ namespace System.Windows.Controls
         /// <param name="element"></param>
         protected void SetLogicalParent(UIElement element)
         {
-            if (_logicalParent != null)
-            {
-                _logicalParent.AddLogicalChild(element);
-            }
+            _logicalParent?.AddLogicalChild(element);
         }
 
         /// <summary>
@@ -500,10 +497,7 @@ namespace System.Windows.Controls
         /// <param name="element"></param>
         protected void ClearLogicalParent(UIElement element)
         {
-            if (_logicalParent != null)
-            {
-                _logicalParent.RemoveLogicalChild(element);
-            }
+            _logicalParent?.RemoveLogicalChild(element);
         }
 
         /// <summary>

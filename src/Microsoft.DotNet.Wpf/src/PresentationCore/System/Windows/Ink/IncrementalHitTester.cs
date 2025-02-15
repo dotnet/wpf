@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -39,7 +39,7 @@ namespace System.Windows.Ink
 
             if (IEnumerablePointHelper.GetCount(points) == 0)
             {
-                throw new System.ArgumentException(SR.EmptyArrayNotAllowedAsArgument, "points");
+                throw new System.ArgumentException(SR.EmptyArrayNotAllowedAsArgument, nameof(points));
             }
 
             if (false == _fValid)
@@ -62,7 +62,7 @@ namespace System.Windows.Ink
 
             if (stylusPoints.Count == 0)
             {
-                throw new System.ArgumentException(SR.EmptyArrayNotAllowedAsArgument, "stylusPoints");
+                throw new System.ArgumentException(SR.EmptyArrayNotAllowedAsArgument, nameof(stylusPoints));
             }
 
             if (false == _fValid)
@@ -253,10 +253,7 @@ namespace System.Windows.Ink
             {
                 StrokeInfo strokeInfo = _strokeInfos[x];
             
-                if (strokeInfo != null)
-                {
-                    strokeInfo.Detach();
-                }
+                strokeInfo?.Detach();
             }
 
             _strokeInfos = newStrokeInfos;

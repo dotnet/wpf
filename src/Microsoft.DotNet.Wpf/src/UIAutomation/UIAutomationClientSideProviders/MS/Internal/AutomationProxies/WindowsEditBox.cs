@@ -250,9 +250,9 @@ namespace MS.Internal.AutomationProxies
         #region ProxyHwnd Overrides
 
         // Builds a list of Win32 WinEvents to process a UIAutomation Event.
-        protected override WinEventTracker.EvtIdProperty[] EventToWinEvent(AutomationEvent idEvent, out int cEvent)
+        protected override ReadOnlySpan<WinEventTracker.EvtIdProperty> EventToWinEvent(AutomationEvent idEvent)
         {
-            return base.EventToWinEvent(idEvent, out cEvent);
+            return base.EventToWinEvent(idEvent);
         }
 
         #endregion

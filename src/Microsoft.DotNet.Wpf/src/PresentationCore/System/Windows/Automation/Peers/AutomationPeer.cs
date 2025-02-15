@@ -2122,13 +2122,9 @@ namespace System.Windows.Automation.Peers
             if (!AncestorsInvalid)
             {
                 AncestorsInvalid = true;
-                if (EventsSource != null)
-                {
-                    EventsSource.InvalidateAncestorsRecursive();
-                }
+                EventsSource?.InvalidateAncestorsRecursive();
 
-                if (_parent != null)
-                    _parent.InvalidateAncestorsRecursive();
+                _parent?.InvalidateAncestorsRecursive();
             }
         }
 

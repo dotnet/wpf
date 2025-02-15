@@ -2466,7 +2466,7 @@
                   <Storyboard>
                     <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenterBorder" Storyboard.TargetProperty="(Border.Visibility)">
                       <DiscreteObjectKeyFrame KeyTime="0" Value="{x:Static Visibility.Visible}" />
-                      <DiscreteObjectKeyFrame KeyTime="0:0:5" Value="{x:Static Visibility.Collapsed}" />
+                      <DiscreteObjectKeyFrame KeyTime="0:0:0.2" Value="{x:Static Visibility.Collapsed}" />
                     </ObjectAnimationUsingKeyFrames>
                     <DoubleAnimationUsingKeyFrames Storyboard.TargetName="AnimationFactorBorder" Storyboard.TargetProperty="Width">
                       <DiscreteDoubleKeyFrame KeyTime="0" Value="0.0" />
@@ -2670,11 +2670,13 @@
   </Style>
   <Style BasedOn="{StaticResource DefaultItemsControlStyle}" TargetType="{x:Type ItemsControl}" />
   <Style TargetType="{x:Type Label}">
+  <Style x:Key="DefaultLabelStyle" TargetType="{x:Type Label}">
     <Setter Property="Padding" Value="0,0,0,4" />
     <Setter Property="Focusable" Value="False" />
     <Setter Property="Foreground" Value="{DynamicResource LabelForeground}" />
     <Setter Property="SnapsToDevicePixels" Value="True" />
   </Style>
+  <Style BasedOn="{StaticResource DefaultLabelStyle}" TargetType="{x:Type Label}" />
   <Style x:Key="DefaultListBoxStyle" TargetType="{x:Type ListBox}">
     <Setter Property="Background" Value="{DynamicResource ListBoxBackground}" />
     <Setter Property="Margin" Value="0" />

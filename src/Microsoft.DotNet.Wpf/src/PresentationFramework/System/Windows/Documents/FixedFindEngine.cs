@@ -73,10 +73,7 @@ namespace System.Windows.Documents
             FixedDocumentSequence documentSequence = paginatorSource as FixedDocumentSequence;
             DynamicDocumentPaginator childPaginator = null;
 
-            if (documentSequence != null)
-            {
-                documentSequence.TranslatePageNumber(pageNumber, out childPaginator, out translatedPageNumber);
-            }
+            documentSequence?.TranslatePageNumber(pageNumber, out childPaginator, out translatedPageNumber);
             
             if (pageNumber - endPageNumber != 0)
             {

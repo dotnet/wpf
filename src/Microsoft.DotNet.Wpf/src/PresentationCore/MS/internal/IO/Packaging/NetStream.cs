@@ -139,7 +139,7 @@ namespace MS.Internal.IO.Packaging
             checked
             {
                 if (offset + count > buffer.Length)
-                    throw new ArgumentException(SR.IOBufferOverflow, "buffer");
+                    throw new ArgumentException(SR.IOBufferOverflow, nameof(buffer));
 
                 // make sure some data is in the stream - block until it is
                 int bytesAvailable = GetData(new Block(_position, count));
@@ -248,7 +248,7 @@ namespace MS.Internal.IO.Packaging
 
                     default:
                         {
-                            throw new ArgumentOutOfRangeException("origin", SR.SeekOriginInvalid);
+                            throw new ArgumentOutOfRangeException(nameof(origin), SR.SeekOriginInvalid);
                         }
                 }
             }
@@ -396,10 +396,8 @@ namespace MS.Internal.IO.Packaging
                             _disposed = true;
 
                             // release any blocked threads - Set() does not throw any exceptions
-                            if (_readEventHandles[(int)ReadEvent.FullDownloadReadEvent] != null)
-                                _readEventHandles[(int)ReadEvent.FullDownloadReadEvent].Set();
-                            if (_readEventHandles[(int)ReadEvent.ByteRangeReadEvent] != null)
-                                _readEventHandles[(int)ReadEvent.ByteRangeReadEvent].Set();
+                            _readEventHandles[(int)ReadEvent.FullDownloadReadEvent]?.Set();
+                            _readEventHandles[(int)ReadEvent.ByteRangeReadEvent]?.Set();
 
                             // Free ByteRangeDownloader
                             FreeByteRangeDownloader();
@@ -417,10 +415,7 @@ namespace MS.Internal.IO.Packaging
                             }
 
                             // Free Full Download
-                            if (_responseStream != null)
-                            {
-                                _responseStream.Close();
-                            }
+                            _responseStream?.Close();
 
                             FreeTempFile();
 #if DEBUG
@@ -1182,10 +1177,7 @@ namespace MS.Internal.IO.Packaging
                     finally
                     {
                         // FreeFullDownload
-                        if (_responseStream != null)
-                        {
-                            _responseStream.Close();
-                        }
+                        _responseStream?.Close();
                     }
                 }
                 finally

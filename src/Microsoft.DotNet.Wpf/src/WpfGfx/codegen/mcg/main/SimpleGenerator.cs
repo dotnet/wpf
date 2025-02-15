@@ -140,7 +140,6 @@ namespace MS.Internal.MilCodeGen.Main
             [CommandLineArgumentAttribute(CommandLineArgumentType.Required)]
             public string outputDirectory;
 
-            public bool disableSd;
             public bool help;
         }
 
@@ -185,16 +184,6 @@ namespace MS.Internal.MilCodeGen.Main
             if (!File.Exists(parsedArgs.xmlFile))
             {
                 throw new FileNotFoundException("XML file not found", parsedArgs.xmlFile);
-            }
-
-            //
-            // Handle "-disableSd" option.
-            // NOTE: Side-effect.
-            //
-
-            if (parsedArgs.disableSd)
-            {
-                FileCodeSink.DisableSd();
             }
 
             //
@@ -247,14 +236,13 @@ namespace MS.Internal.MilCodeGen.Main
             // display usage
             Console.WriteLine(
                 [[inline]]
-                    Usage: -d:<file> -o:<dir> [-x:<file>] [-disableSD]
+                    Usage: -d:<file> -o:<dir> [-x:<file>]
 
                         Mil Code Generation Utility
 
                     -d:<file>           An XML file describing the resources.
                     -o:<dir>            A target root directory for the generated files.  
-                                        e.g. %SdxRoot%\wpf
-                    -disableSD          Disables use of Source Depot to check out the generated files.
+                                        e.g. the root of the repo.
 
                     Only one file of each type can be specified.
                 [[/inline]]

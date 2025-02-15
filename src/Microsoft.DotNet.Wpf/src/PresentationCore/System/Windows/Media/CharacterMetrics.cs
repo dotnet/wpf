@@ -90,13 +90,13 @@ namespace System.Windows.Media
                 double[] metrics = ParseMetrics(value);
 
                 // Validate all the values before we assign to any field.
-                CompositeFontParser.VerifyNonNegativeMultiplierOfEm("BlackBoxWidth", ref metrics[(int)FieldIndex.BlackBoxWidth]);
-                CompositeFontParser.VerifyNonNegativeMultiplierOfEm("BlackBoxHeight", ref metrics[(int)FieldIndex.BlackBoxHeight]);
-                CompositeFontParser.VerifyMultiplierOfEm("Baseline", ref metrics[(int)FieldIndex.Baseline]);
-                CompositeFontParser.VerifyMultiplierOfEm("LeftSideBearing", ref metrics[(int)FieldIndex.LeftSideBearing]);
-                CompositeFontParser.VerifyMultiplierOfEm("RightSideBearing", ref metrics[(int)FieldIndex.RightSideBearing]);
-                CompositeFontParser.VerifyMultiplierOfEm("TopSideBearing", ref metrics[(int)FieldIndex.TopSideBearing]);
-                CompositeFontParser.VerifyMultiplierOfEm("BottomSideBearing", ref metrics[(int)FieldIndex.BottomSideBearing]);
+                CompositeFontParser.VerifyNonNegativeMultiplierOfEm(nameof(BlackBoxWidth), ref metrics[(int)FieldIndex.BlackBoxWidth]);
+                CompositeFontParser.VerifyNonNegativeMultiplierOfEm(nameof(BlackBoxHeight), ref metrics[(int)FieldIndex.BlackBoxHeight]);
+                CompositeFontParser.VerifyMultiplierOfEm(nameof(Baseline), ref metrics[(int)FieldIndex.Baseline]);
+                CompositeFontParser.VerifyMultiplierOfEm(nameof(LeftSideBearing), ref metrics[(int)FieldIndex.LeftSideBearing]);
+                CompositeFontParser.VerifyMultiplierOfEm(nameof(RightSideBearing), ref metrics[(int)FieldIndex.RightSideBearing]);
+                CompositeFontParser.VerifyMultiplierOfEm(nameof(TopSideBearing), ref metrics[(int)FieldIndex.TopSideBearing]);
+                CompositeFontParser.VerifyMultiplierOfEm(nameof(BottomSideBearing), ref metrics[(int)FieldIndex.BottomSideBearing]);
 
                 double horizontalAdvance = metrics[(int)FieldIndex.BlackBoxWidth]
                     + metrics[(int)FieldIndex.LeftSideBearing]

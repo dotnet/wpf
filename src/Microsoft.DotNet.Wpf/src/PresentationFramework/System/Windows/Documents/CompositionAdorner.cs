@@ -364,11 +364,8 @@ namespace System.Windows.Documents
 
             _adornerLayer = AdornerLayer.GetAdornerLayer(textView.RenderScope);
 
-            if (_adornerLayer != null)
-            {
-                // Add the CompositionAdorner to the scoping of AdornerLayer
-                _adornerLayer.Add(this);
-            }
+            // Add the CompositionAdorner to the scoping of AdornerLayer
+            _adornerLayer?.Add(this);
         }
 
         /// <summary>

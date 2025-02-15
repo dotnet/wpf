@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -88,8 +88,7 @@ namespace MS.Internal.Annotations.Component
                 component.RemoveAttachedAnnotation(attachedAnnotation);  // let the annotation component know
                 if (component.AttachedAnnotations.Count == 0)
                 { // if it has no more attached annotations, remove it
-                    if (component.PresentationContext != null)
-                        component.PresentationContext.RemoveFromHost(component, reorder);
+                    component.PresentationContext?.RemoveFromHost(component, reorder);
                 }
             }
         }

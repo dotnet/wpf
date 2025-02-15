@@ -2,25 +2,32 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
+//
+//
 // This file was generated, please do not edit it directly.
+//
 // Please see MilCodeGen.html for more information.
+//
 
 using MS.Internal;
+using MS.Internal.KnownBoxes;
+using MS.Internal.Collections;
 using MS.Utility;
 using System.Collections;
 using System.ComponentModel;
+using System.Globalization;
 using System.Text;
+using System.Windows.Media.Effects;
+using System.Windows.Media.Animation;
+using System.Windows.Media.Composition;
 using System.Windows.Markup;
 using System.Windows.Media.Converters;
-
-// These types are aliased to match the unamanaged names used in interop
 
 namespace System.Windows.Media
 {
     /// <summary>
     /// A collection of doubles.
     /// </summary>
-
     [TypeConverter(typeof(DoubleCollectionConverter))]
     [ValueSerializer(typeof(DoubleCollectionValueSerializer))] // Used by MarkupWriter
     public sealed partial class DoubleCollection : Freezable, IFormattable, IList, IList<double>
@@ -111,6 +118,8 @@ namespace System.Windows.Media
         /// </summary>
         public void Insert(int index, double value)
         {
+
+
             WritePreamble();
             _collection.Insert(index, value);
 
@@ -188,6 +197,8 @@ namespace System.Windows.Media
             }
             set
             {
+
+
                 WritePreamble();
                 _collection[ index ] = value;
 
@@ -524,7 +535,8 @@ namespace System.Windows.Media
             {
                 _collection.Add(sourceDoubleCollection._collection[i]);
             }
-}
+
+        }
         /// <summary>
         /// Implementation of Freezable.CloneCurrentValueCore()
         /// </summary>
@@ -542,7 +554,8 @@ namespace System.Windows.Media
             {
                 _collection.Add(sourceDoubleCollection._collection[i]);
             }
-}
+
+        }
         /// <summary>
         /// Implementation of Freezable.GetAsFrozenCore()
         /// </summary>
@@ -560,7 +573,8 @@ namespace System.Windows.Media
             {
                 _collection.Add(sourceDoubleCollection._collection[i]);
             }
-}
+
+        }
         /// <summary>
         /// Implementation of Freezable.GetCurrentValueAsFrozenCore()
         /// </summary>
@@ -578,7 +592,8 @@ namespace System.Windows.Media
             {
                 _collection.Add(sourceDoubleCollection._collection[i]);
             }
-}
+
+        }
 
 
         #endregion ProtectedMethods
@@ -769,6 +784,7 @@ namespace System.Windows.Media
 
             void IDisposable.Dispose()
             {
+
             }
 
             /// <summary>
@@ -909,6 +925,7 @@ namespace System.Windows.Media
 
             ArgumentNullException.ThrowIfNull(collection);
 
+
             ICollection<double> icollectionOfT = collection as ICollection<double>;
 
             if (icollectionOfT != null)
@@ -929,8 +946,11 @@ namespace System.Windows.Media
 
                     foreach (double item in collection)
                     {
+
                         _collection.Add(item);
                     }
+
+
                 }
             }
 

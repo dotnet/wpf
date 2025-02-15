@@ -1459,10 +1459,7 @@ namespace System.Windows.Controls
             if (viewer.Selection != null)
             {
                 CaretElement caretElement = viewer.Selection.CaretElement;
-                if (caretElement != null)
-                {
-                    caretElement.InvalidateVisual();
-                }
+                caretElement?.InvalidateVisual();
             }
         }
 

@@ -183,7 +183,7 @@ namespace MS.Internal.PtsHost
         {
             _textRunCache = new TextRunCache();
             TextFormatter textFormatter = StructuralCache.TextFormatterHost.TextFormatter;
-            TextLineBreak textLineBreak = lineBreakRecord != null ? lineBreakRecord.TextLineBreak : null;
+            TextLineBreak textLineBreak = lineBreakRecord?.TextLineBreak;
 
             OptimalTextSource optimalTextSource = new OptimalTextSource(StructuralCache.TextFormatterHost, ParagraphStartCharacterPosition, durTrack, textParaClient, _textRunCache);
             StructuralCache.TextFormatterHost.Context = optimalTextSource;

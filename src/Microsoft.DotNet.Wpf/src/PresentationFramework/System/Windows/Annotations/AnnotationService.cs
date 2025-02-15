@@ -132,7 +132,7 @@ namespace System.Windows.Annotations
             ArgumentNullException.ThrowIfNull(root);
 
             if (!(root is FrameworkElement || root is FrameworkContentElement))
-                throw new ArgumentException(SR.ParameterMustBeLogicalNode, "root");
+                throw new ArgumentException(SR.ParameterMustBeLogicalNode, nameof(root));
 
             Initialize(root);
         }
@@ -351,7 +351,7 @@ namespace System.Windows.Annotations
             ArgumentNullException.ThrowIfNull(element);
 
             if (!(element is FrameworkElement || element is FrameworkContentElement))
-                throw new ArgumentException(SR.ParameterMustBeLogicalNode, "element");
+                throw new ArgumentException(SR.ParameterMustBeLogicalNode, nameof(element));
 
             VerifyAccess();
 
@@ -386,7 +386,7 @@ namespace System.Windows.Annotations
             ArgumentNullException.ThrowIfNull(element);
 
             if (!(element is FrameworkElement || element is FrameworkContentElement))
-                throw new ArgumentException(SR.ParameterMustBeLogicalNode, "element");
+                throw new ArgumentException(SR.ParameterMustBeLogicalNode, nameof(element));
 
             VerifyAccess();
 

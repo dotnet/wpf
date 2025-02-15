@@ -1539,20 +1539,8 @@
   <data name="ReachOutOfRange" xml:space="preserve">
     <value>'{0}' index is beyond maximum '{1}'.</value>
   </data>
-  <data name="InvalidPermissionState" xml:space="preserve">
-    <value>Permission state is not valid.</value>
-  </data>
-  <data name="TargetNotWebBrowserPermissionLevel" xml:space="preserve">
-    <value>Target is not a WebBrowserPermission.</value>
-  </data>
-  <data name="TargetNotMediaPermissionLevel" xml:space="preserve">
-    <value>Target is not a MediaPermission.</value>
-  </data>
   <data name="BadXml" xml:space="preserve">
     <value>'{0}' attribute is not valid XML.</value>
-  </data>
-  <data name="InvalidPermissionLevel" xml:space="preserve">
-    <value>Permission level is not valid.</value>
   </data>
   <data name="XCRChoiceOnlyInAC" xml:space="preserve">
     <value>Choice is valid only in AlternateContent.</value>
@@ -1754,12 +1742,6 @@
   </data>
   <data name="Enumerator_VerifyContext" xml:space="preserve">
     <value>No current object to return.</value>
-  </data>
-  <data name="InvalidPermissionStateValue" xml:space="preserve">
-    <value>PermissionState value '{0}' is not valid for this Permission.</value>
-  </data>
-  <data name="InvalidPermissionType" xml:space="preserve">
-    <value>Permission type is not valid. Expected '{0}'.</value>
   </data>
   <data name="StringEmpty" xml:space="preserve">
     <value>Parameter cannot be a zero-length string.</value>

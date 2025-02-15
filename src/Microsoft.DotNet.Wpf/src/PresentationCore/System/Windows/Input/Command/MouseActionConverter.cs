@@ -87,7 +87,8 @@ namespace System.Windows.Input
             if (value is null || destinationType != typeof(string))
                 throw GetConvertToException(value, destinationType);
 
-            return (MouseAction)value switch
+            MouseAction mouseAction = (MouseAction)value;
+            return mouseAction switch
             {
                 MouseAction.None => string.Empty,
                 MouseAction.LeftClick => "LeftClick",
@@ -97,7 +98,7 @@ namespace System.Windows.Input
                 MouseAction.LeftDoubleClick => "LeftDoubleClick",
                 MouseAction.RightDoubleClick => "RightDoubleClick",
                 MouseAction.MiddleDoubleClick => "MiddleDoubleClick",
-                _ => throw new InvalidEnumArgumentException(nameof(value), (int)value, typeof(MouseAction))
+                _ => throw new InvalidEnumArgumentException(nameof(value), (int)mouseAction, typeof(MouseAction))
             };
         }
 

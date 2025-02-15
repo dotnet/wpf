@@ -427,11 +427,6 @@
         <target state="translated">V aktuálním stavu nelze zapsat poziční parametry. Modul pro zápis nemůže zapsat poziční parametry do formuláře atributů, protože modul pro zápis začal zapisovat elementy, a nemůže ani rozbalit poziční atributy z důvodu chybějícího výchozího konstruktoru pro rozšíření značek, které obsahuje tyto poziční parametry. Zkuste přesunout člena pozičních parametrů více dopředu v datovém proudu uzlu na místo, kde modul XamlXmlWriter ještě může zapisovat atributy.</target>
         <note />
       </trans-unit>
-      <trans-unit id="ExpectedLoadPermission">
-        <source>Expected permission of type XamlLoadPermission.</source>
-        <target state="translated">Bylo očekáváno oprávnění typu XamlLoadPermission.</target>
-        <note />
-      </trans-unit>
       <trans-unit id="ExpectedObjectMarkupInfo">
         <source>Expected value of type ObjectMarkupInfo.</source>
         <target state="translated">Byla očekávána hodnota typu ObjectMarkupInfo.</target>
@@ -560,16 +555,6 @@
       <trans-unit id="InvalidExpression">
         <source>Invalid expression: '{0}'</source>
         <target state="translated">Neplatný výraz: {0}</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="InvalidPermissionStateValue">
-        <source>PermissionState value '{0}' is not valid for this Permission.</source>
-        <target state="translated">Hodnota PermissionState {0} není pro toto oprávnění platná.</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="InvalidPermissionType">
-        <source>Permission type is not valid. Expected '{0}'.</source>
-        <target state="translated">Typ oprávnění je neplatný. Očekávaný typ je {0}.</target>
         <note />
       </trans-unit>
       <trans-unit id="InvalidTypeArgument">
@@ -1135,26 +1120,6 @@
       <trans-unit id="SchemaContextNull">
         <source>SchemaContext cannot be null.</source>
         <target state="translated">Hodnota SchemaContext nesmí být Null.</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="SecurityExceptionForSettingSandboxExternalToTrue">
-        <source>Cannot set SandboxExternalContent to true in partial trust.</source>
-        <target state="translated">Vlastnost SandboxExternalContent nelze nastavit na hodnotu true v částečném vztahu důvěryhodnosti.</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="SecurityXmlMissingAttribute">
-        <source>Invalid security XML. Missing expected attribute '{0}'.</source>
-        <target state="translated">Neplatné zabezpečení XML. Chybí očekávaný atribut {0}.</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="SecurityXmlUnexpectedTag">
-        <source>Invalid security XML. Unexpected tag '{0}', expected '{1}'.</source>
-        <target state="translated">Neplatné zabezpečení XML. Neočekávaná značka {0}, byla očekávána značka {1}.</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="SecurityXmlUnexpectedValue">
-        <source>Invalid security XML. Unexpected value '{0}' in attribute '{1}', expected '{2}'.</source>
-        <target state="translated">Neplatné zabezpečení XML. Neočekávaná hodnota {0} v atributu {1}, byla očekávána hodnota {2}.</target>
         <note />
       </trans-unit>
       <trans-unit id="ServiceTypeAlreadyAdded">

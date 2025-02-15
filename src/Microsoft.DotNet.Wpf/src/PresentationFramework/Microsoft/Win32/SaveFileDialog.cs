@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -60,9 +60,6 @@ namespace Microsoft.Win32
         /// <exception cref="System.InvalidOperationException">
         /// Thrown if there are no filenames stored in the SaveFileDialog.
         /// </exception>
-        /// <Remarks>
-        ///     Callers must have UIPermission.AllWindows to call this API.
-        /// </Remarks>
         public Stream OpenFile()
         {
 
@@ -87,9 +84,6 @@ namespace Microsoft.Win32
         /// <summary>
         ///  Resets all properties to their default values.
         /// </summary>
-        /// <Remarks>
-        ///     Callers must have UIPermission.AllWindows to call this API.
-        /// </Remarks>
         public override void Reset()
         {
 
@@ -124,9 +118,6 @@ namespace Microsoft.Win32
         ///  Gets or sets a value indicating whether the dialog box prompts the user for
         ///  permission to create a file if the user specifies a file that does not exist.
         /// </summary>
-        /// <Remarks>
-        ///     Callers must have UIPermission.AllWindows to call this API.
-        /// </Remarks>
         public bool CreatePrompt { get; set; }
 
         /// <summary>
@@ -156,28 +147,9 @@ namespace Microsoft.Win32
         /// Gets or sets a value indicating whether the Save As dialog box displays a 
         /// warning if the user specifies a file name that already exists.
         /// </summary>
-        /// <Remarks>
-        ///     Callers must have UIPermission.AllWindows to call this API.
-        /// </Remarks>
         public bool OverwritePrompt { get; set; }
 
         #endregion Public Properties
-
-        //---------------------------------------------------
-        //
-        // Public Events
-        //
-        //---------------------------------------------------
-        //#region Public Events
-        //#endregion Public Events
-
-        //---------------------------------------------------
-        //
-        // Protected Methods
-        //
-        //---------------------------------------------------
-        //#region Protected Methods
-        //#endregion Protected Methods
 
         //---------------------------------------------------
         //
@@ -252,22 +224,6 @@ namespace Microsoft.Win32
 
         //---------------------------------------------------
         //
-        // Internal Properties
-        //
-        //---------------------------------------------------
-        //#region Internal Properties
-        //#endregion Internal Properties
-
-        //---------------------------------------------------
-        //
-        // Internal Events
-        //
-        //---------------------------------------------------
-        //#region Internal Events
-        //#endregion Internal Events
-
-        //---------------------------------------------------
-        //
         // Private Methods
         //
         //---------------------------------------------------
@@ -314,21 +270,5 @@ namespace Microsoft.Win32
         }
 
         #endregion Private Methods
-
-        //---------------------------------------------------
-        //
-        // Private Properties
-        //
-        //---------------------------------------------------
-        //#region Private Properties
-        //#endregion Private Properties
-
-        //---------------------------------------------------
-        //
-        // Private Fields
-        //
-        //---------------------------------------------------
-        //#region Private Fields
-        //#endregion Private Fields
     }
 }

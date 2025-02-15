@@ -9,7 +9,11 @@
 // Please see MilCodeGen.html for more information.
 //
 
+using MS.Internal;
+using System.Runtime.InteropServices;
+using System.Windows.Threading;
 using System.Windows.Media.Animation;
+using System.Windows.Media.Composition;
 using System.Windows.Media.Effects;
 
 namespace System.Windows.Media
@@ -583,5 +587,6 @@ namespace System.Windows.Media
 
                 );
         }
-}
+
+    }
 }

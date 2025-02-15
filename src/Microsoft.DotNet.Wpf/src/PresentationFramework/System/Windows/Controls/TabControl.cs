@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -80,8 +80,7 @@ namespace System.Windows.Controls
             for (int i = 0; i < tabItemCollection.Count; i++)
             {
                 TabItem ti = tc.ItemContainerGenerator.ContainerFromIndex(i) as TabItem;
-                if (ti != null)
-                    ti.CoerceValue(TabItem.TabStripPlacementProperty);
+                ti?.CoerceValue(TabItem.TabStripPlacementProperty);
             }
         }
 
@@ -341,10 +340,7 @@ namespace System.Windows.Controls
                 {
                     // If keyboard focus is within the control, make sure it is going to the correct place
                     TabItem item = GetSelectedTabItem();
-                    if (item != null)
-                    {
-                        item.SetFocus();
-                    }
+                    item?.SetFocus();
                 }
                 UpdateSelectedContent();
             }
@@ -359,10 +355,7 @@ namespace System.Windows.Controls
                 {
                     // If keyboard focus is within the control, make sure it is going to the correct place
                     TabItem item = GetSelectedTabItem();
-                    if (item != null)
-                    {
-                        item.SetFocus();
-                    }
+                    item?.SetFocus();
                 }
                 base.OnSelectionChanged(e);
             }
@@ -373,8 +366,7 @@ namespace System.Windows.Controls
                 ||  AutomationPeer.ListenerExists(AutomationEvents.SelectionItemPatternOnElementRemovedFromSelection)   )
             {
                 TabControlAutomationPeer peer = UIElementAutomationPeer.CreatePeerForElement(this) as TabControlAutomationPeer;
-                if (peer != null)
-                    peer.RaiseSelectionEvents(e);
+                peer?.RaiseSelectionEvents(e);
             }
         }
 
@@ -392,8 +384,7 @@ namespace System.Windows.Controls
                 if (startIndex > Items.Count)
                     startIndex = 0;
                 TabItem nextTabItem = FindNextTabItem(startIndex, -1);
-                if (nextTabItem != null)
-                    nextTabItem.SetCurrentValueInternal(TabItem.IsSelectedProperty, MS.Internal.KnownBoxes.BooleanBoxes.TrueBox);
+                nextTabItem?.SetCurrentValueInternal(TabItem.IsSelectedProperty, MS.Internal.KnownBoxes.BooleanBoxes.TrueBox);
             }
         }
 

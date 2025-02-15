@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+ï»¿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -49,9 +49,9 @@ namespace MS.Internal.Ink
         /// <summary>
         /// Overrides SwitchToMode as the following expectations
         /// 19. From EraseByPoint To InkAndGesture
-        ///     After mode change ink is being collected. On StylusUp gesture event fires. If it’s not a gesture, StrokeCollected event fires.
+        ///     After mode change ink is being collected. On StylusUp gesture event fires. If itâ€™s not a gesture, StrokeCollected event fires.
         /// 20. From EraseByPoint To GestureOnly
-        ///     After mode change ink is being collected. On StylusUp gesture event fires. Stroke gets removed on StylusUp even if it’s not a gesture.
+        ///     After mode change ink is being collected. On StylusUp gesture event fires. Stroke gets removed on StylusUp even if itâ€™s not a gesture.
         /// 21. From EraseByPoint To Ink
         ///     Ink collection starts when changing the mode.
         /// 22. From EraseByPoint To EraseByStroke
@@ -61,9 +61,9 @@ namespace MS.Internal.Ink
         /// 24. From EraseByPoint To None
         ///     No erasing is performed after mode change.
         /// 25. From EraseByStroke To InkAndGesture
-        ///     After mode change ink is being collected. On StylusUp gesture event fires. If it’s not a gesture, StrokeCollected event fires.
+        ///     After mode change ink is being collected. On StylusUp gesture event fires. If itâ€™s not a gesture, StrokeCollected event fires.
         /// 26. From EraseByStroke To GestureOnly
-        ///     After mode change ink is being collected. On StylusUp gesture event fires. Stroke gets removed on StylusUp even if it’s not a gesture.
+        ///     After mode change ink is being collected. On StylusUp gesture event fires. Stroke gets removed on StylusUp even if itâ€™s not a gesture.
         /// 27. From EraseByStroke To EraseByPoint
         ///     After mode change PointErasing is performed.
         /// 28. From EraseByStroke To Ink
@@ -107,8 +107,7 @@ namespace MS.Internal.Ink
                 case InkCanvasEditingMode.Select:
                     {
                         // Make a copy of the current cached points.
-                        StylusPointCollection cachedPoints = _stylusPoints != null ? 
-                                                                _stylusPoints.Clone() : null;
+                        StylusPointCollection cachedPoints = _stylusPoints?.Clone();
 
                         // Commit the current behavior.
                         Commit(true);

@@ -1223,8 +1223,7 @@ namespace System.Windows.Markup.Primitives
 
         public void OnComponentChanged()
         {
-            if (_baseContext != null)
-                _baseContext.OnComponentChanged();
+            _baseContext?.OnComponentChanged();
         }
 
         public bool OnComponentChanging()

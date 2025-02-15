@@ -85,7 +85,7 @@ namespace System.Windows.Media
             Dictionary<ushort, bool> glyphsUsed = _collectedGlyphTypefaces[glyphTypeface];
             if (glyphsUsed == null)
             {
-                throw new ArgumentException(SR.GlyphTypefaceNotRecorded, "glyphTypeface");
+                throw new ArgumentException(SR.GlyphTypefaceNotRecorded, nameof(glyphTypeface));
             }
             return glyphsUsed.Keys;
         }

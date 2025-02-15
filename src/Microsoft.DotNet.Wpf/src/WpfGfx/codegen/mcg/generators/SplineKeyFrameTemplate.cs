@@ -138,10 +138,7 @@ namespace MS.Internal.MilCodeGen.ResourceModel
                                 public Spline[[instance.TypeName]]KeyFrame([[instance.TypeName]] value, KeyTime keyTime, KeySpline keySpline)
                                     : this()
                                 {
-                                    if (keySpline == null)
-                                    {
-                                        throw new ArgumentNullException("keySpline");
-                                    }
+                                    ArgumentNullException.ThrowIfNull(keySpline);
                                                 
                                     Value = value;
                                     KeyTime = keyTime;
@@ -213,10 +210,7 @@ namespace MS.Internal.MilCodeGen.ResourceModel
                                     }
                                     set
                                     {
-                                        if (value == null)
-                                        {
-                                            throw new ArgumentNullException("value");
-                                        }
+                                        ArgumentNullException.ThrowIfNull(value);
                                         SetValue(KeySplineProperty, value);
                                     }
                                 }
@@ -253,10 +247,10 @@ namespace MS.Internal.MilCodeGen.ResourceModel
             // requiring that they be split across two namespaces.
             switch (moduleName)
             {
-                case @"Core\CSharp":
+                case @"PresentationCore":
                     moduleReference = "using MS.Internal.PresentationCore;";
                     break;
-                case "Framework":
+                case "PresentationFramework":
                     moduleReference = "using MS.Internal.PresentationFramework;";
                     break;
             }
@@ -273,10 +267,8 @@ namespace MS.Internal.MilCodeGen.ResourceModel
 
                     using MS.Internal;
 
-                    using System;
                     using System.Collections;
                     using System.ComponentModel;
-                    using System.Diagnostics;
                     using System.Windows.Media;
                     using System.Windows.Media.Media3D;
 

@@ -2413,16 +2413,6 @@ Do you want to replace it?</source>
         <target state="translated">'{0}' 유형이 올바른 PageFunction 유형이 아닙니다.</target>
         <note />
       </trans-unit>
-      <trans-unit id="InvalidPermissionStateValue">
-        <source>PermissionState value '{0}' is not valid for this Permission.</source>
-        <target state="translated">PermissionState 값 '{0}'은(는) 이 권한에 대해 올바르지 않습니다.</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="InvalidPermissionType">
-        <source>Permission type is not valid. Expected '{0}'.</source>
-        <target state="translated">사용 권한 형식이 잘못되었습니다. '{0}'이(가) 필요합니다.</target>
-        <note />
-      </trans-unit>
       <trans-unit id="InvalidPoint">
         <source>Invalid Point value.</source>
         <target state="translated">Point 값이 잘못되었습니다.</target>
@@ -4755,7 +4745,7 @@ Do you want to replace it?</source>
       </trans-unit>
       <trans-unit id="ScrollBar_ContextMenu_Bottom">
         <source>Bottom</source>
-        <target state="translated">Bottom</target>
+        <target state="translated">맨 아래</target>
         <note />
       </trans-unit>
       <trans-unit id="ScrollBar_ContextMenu_LeftEdge">
@@ -4826,11 +4816,6 @@ Do you want to replace it?</source>
       <trans-unit id="ScrollViewer_OutOfRange">
         <source>'{0}' parameter has value '{1}', which is not in the valid range of '{2}' to '{3}'.</source>
         <target state="translated">'{0}' 매개 변수에 '{1}' 값이 있으며 해당 값이 유효한 '{2}' ~ '{3}' 범위에 있지 않습니다.</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="SecurityExceptionForSettingSandboxExternalToTrue">
-        <source>Cannot set SandboxExternalContent to true in partial trust.</source>
-        <target state="translated">부분 신뢰에서 SandboxExternalContent를 true로 설정할 수 없습니다.</target>
         <note />
       </trans-unit>
       <trans-unit id="SeekFailed">

@@ -122,10 +122,7 @@ namespace MS.Internal.PtsHost
                     dvr += mcsNew.Margin;
                 }
             }
-            if (mcsNew != null)
-            {
-                mcsNew.Dispose();
-            }
+            mcsNew?.Dispose();
         }
 
         //-------------------------------------------------------------------

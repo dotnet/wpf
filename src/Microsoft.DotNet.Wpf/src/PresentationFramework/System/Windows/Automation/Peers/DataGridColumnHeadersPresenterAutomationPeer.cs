@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -110,7 +110,7 @@ namespace System.Windows.Automation.Peers
                     }
 
                     // If the peer is null or dataItem.Header has changed, create a new peer.
-                    object dataItemHeader = dataItem == null ? null : dataItem.Header;
+                    object dataItemHeader = dataItem?.Header;
                     if (peer == null ||
                         !ItemsControl.EqualsEx(peer.Item, dataItemHeader))
                     {

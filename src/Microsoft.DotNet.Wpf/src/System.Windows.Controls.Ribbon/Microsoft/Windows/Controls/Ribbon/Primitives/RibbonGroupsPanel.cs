@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -53,7 +53,7 @@ namespace Microsoft.Windows.Controls.Ribbon.Primitives
             IProvideStarLayoutInfo provider = starLayoutInfoProvider as IProvideStarLayoutInfo;
             if (provider == null)
             {
-                throw new ArgumentException(Microsoft.Windows.Controls.SR.RibbonGroupsPanel_InvalidRegistrationParameter, "starLayoutInfoProvider");
+                throw new ArgumentException(Microsoft.Windows.Controls.SR.RibbonGroupsPanel_InvalidRegistrationParameter, nameof(starLayoutInfoProvider));
             }
             if (!_registeredStarLayoutProviders.Contains(provider))
             {
@@ -68,7 +68,7 @@ namespace Microsoft.Windows.Controls.Ribbon.Primitives
             IProvideStarLayoutInfo provider = starLayoutInfoProvider as IProvideStarLayoutInfo;
             if (provider == null)
             {
-                throw new ArgumentException(Microsoft.Windows.Controls.SR.RibbonGroupsPanel_InvalidRegistrationParameter, "starLayoutInfoProvider");
+                throw new ArgumentException(Microsoft.Windows.Controls.SR.RibbonGroupsPanel_InvalidRegistrationParameter, nameof(starLayoutInfoProvider));
             }
             if (_registeredStarLayoutProviders.Contains(provider))
             {

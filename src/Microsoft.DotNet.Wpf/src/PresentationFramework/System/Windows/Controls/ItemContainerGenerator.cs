@@ -2391,25 +2391,25 @@ namespace System.Windows.Controls
             switch (args.Action)
             {
                 case NotifyCollectionChangedAction.Add:
-                    if (args.NewItems.Count != 1)
+                    if (args.NewItems.Count < 1)
                         throw new NotSupportedException(SR.RangeActionsNotSupported);
-                    OnItemAdded(args.NewItems[0], args.NewStartingIndex);
+                    OnItemsAdded(args.NewItems, args.NewStartingIndex);
                     break;
 
                 case NotifyCollectionChangedAction.Remove:
-                    if (args.OldItems.Count != 1)
+                    if (args.OldItems.Count < 1)
                         throw new NotSupportedException(SR.RangeActionsNotSupported);
-                    OnItemRemoved(args.OldItems[0], args.OldStartingIndex);
+                    OnItemsRemoved(args.OldItems, args.OldStartingIndex);
                     break;
 
                 case NotifyCollectionChangedAction.Replace:
                     // Don't check arguments if app targets 4.0, for compat ( 726682)
                     if (!FrameworkCompatibilityPreferences.TargetsDesktop_V4_0)
                     {
-                        if (args.OldItems.Count != 1)
+                        if (args.OldItems.Count < 1)
                             throw new NotSupportedException(SR.RangeActionsNotSupported);
                     }
-                    OnItemReplaced(args.OldItems[0], args.NewItems[0], args.NewStartingIndex);
+                    OnItemsReplaced(args.OldItems, args.NewItems, args.NewStartingIndex);
                     break;
 
                 case NotifyCollectionChangedAction.Move:
@@ -2434,6 +2434,86 @@ namespace System.Windows.Controls
             if (traceLevel >= PresentationTraceLevel.High)
             {
                 Verify();
+            }
+        }
+
+        // Called when an items are added to the items collection
+        void OnItemsAdded(IList items, int index)
+        {
+            if (_itemMap == null)
+            {
+                // reentrant call (from RemoveAllInternal) shouldn't happen,
+                // but if it does, don't crash
+                Debug.Assert(false, "unexpected reentrant call to OnItemAdded");
+                return;
+            }
+
+            ValidateAndCorrectIndex(items[0], ref index);
+
+            GeneratorPosition position = new GeneratorPosition(-1, 0);
+
+            // find the block containing the new item
+            ItemBlock block = _itemMap.Next;
+            int offsetFromBlockStart = index;
+            int unrealizedItemsSkipped = 0;     // distance since last realized item
+            while (block != _itemMap && offsetFromBlockStart >= block.ItemCount)
+            {
+                offsetFromBlockStart -= block.ItemCount;
+                position.Index += block.ContainerCount;
+                unrealizedItemsSkipped = (block.ContainerCount > 0) ? 0 : unrealizedItemsSkipped + block.ItemCount;
+                block = block.Next;
+            }
+
+            position.Offset = unrealizedItemsSkipped + offsetFromBlockStart + 1;
+            // the position is now correct, except when pointing into a realized block;
+            // that case is fixed below
+
+            // if it's an unrealized block, add the item by bumping the count
+            UnrealizedItemBlock uib = block as UnrealizedItemBlock;
+            if (uib != null)
+            {
+                MoveItems(uib, offsetFromBlockStart, items.Count, uib, offsetFromBlockStart + 1, 0);
+                uib.ItemCount += items.Count;
+            }
+
+            // if the item can be added to a previous unrealized block, do so
+            else if ((offsetFromBlockStart == 0 || block == _itemMap) &&
+                    ((uib = block.Prev as UnrealizedItemBlock) != null))
+            {
+                uib.ItemCount += items.Count;
+            }
+
+            // otherwise, create a new unrealized block
+            else
+            {
+                uib = new UnrealizedItemBlock();
+                uib.ItemCount = items.Count;
+
+                // split the current realized block, if necessary
+                RealizedItemBlock rib;
+                if (offsetFromBlockStart > 0 && (rib = block as RealizedItemBlock) != null)
+                {
+                    RealizedItemBlock newBlock = new RealizedItemBlock();
+                    MoveItems(rib, offsetFromBlockStart, rib.ItemCount - offsetFromBlockStart, newBlock, 0, offsetFromBlockStart);
+                    newBlock.InsertAfter(rib);
+                    position.Index += block.ContainerCount;
+                    position.Offset = 1;
+                    block = newBlock;
+                }
+
+                uib.InsertBefore(block);
+            }
+
+            // tell generators what happened
+            if (MapChanged != null)
+            {
+                MapChanged(null, index, items.Count, uib, 0, 0);
+            }
+
+            // tell layout what happened
+            if (ItemsChanged != null)
+            {
+                ItemsChanged(this, new ItemsChangedEventArgs(NotifyCollectionChangedAction.Add, position, items.Count, 0));
             }
         }
 
@@ -2519,6 +2599,15 @@ namespace System.Windows.Controls
             }
         }
 
+        // Called when items are removed from the items collection
+        // TODO this could probably be improved
+        void OnItemsRemoved(IList items, int itemIndex)
+        {
+            foreach (var item in items)
+            {
+                OnItemRemoved(item, itemIndex);
+            }
+        }
 
         // Called when an item is removed from the items collection
         void OnItemRemoved(object item, int itemIndex)
@@ -2581,6 +2670,33 @@ namespace System.Windows.Controls
                 if (group != null)
                 {
                     Parent.OnSubgroupBecameEmpty(group);
+                }
+            }
+        }
+
+        // this could probably be optimized
+        void OnItemsReplaced(IList oldItems, IList newItems, int index)
+        {
+            // Handle replacements for the overlapping part
+            for (int i = 0; i < Math.Min(oldItems.Count, newItems.Count); i++)
+            {
+                OnItemReplaced(oldItems[i], newItems[i], index + i);
+            }
+
+            // Handle extra removals (oldItems has more elements)
+            if (oldItems.Count > newItems.Count)
+            {
+                for (int i = oldItems.Count - 1; i >= newItems.Count; i--)
+                {
+                    OnItemRemoved(oldItems[i], index + i);
+                }
+            }
+            // Handle extra additions (newItems has more elements)
+            else if (newItems.Count > oldItems.Count)
+            {
+                for (int i = oldItems.Count; i < newItems.Count; i++)
+                {
+                    OnItemAdded(newItems[i], index + i);
                 }
             }
         }

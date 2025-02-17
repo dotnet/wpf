@@ -105,6 +105,7 @@ namespace System.Windows
         public static readonly System.Windows.RoutedEvent DragOverEvent;
         public static readonly System.Windows.RoutedEvent DropEvent;
         public static readonly System.Windows.DependencyProperty FocusableProperty;
+        public static readonly System.Windows.DependencyProperty FocusableWhenNotEnabledProperty;
         public static readonly System.Windows.RoutedEvent GiveFeedbackEvent;
         public static readonly System.Windows.RoutedEvent GotFocusEvent;
         public static readonly System.Windows.RoutedEvent GotKeyboardFocusEvent;
@@ -199,6 +200,7 @@ namespace System.Windows
         [System.ComponentModel.DesignerSerializationVisibilityAttribute(System.ComponentModel.DesignerSerializationVisibility.Content)]
         public System.Windows.Input.CommandBindingCollection CommandBindings { get { throw null; } }
         public bool Focusable { get { throw null; } set { } }
+        public bool FocusableWhenNotEnabled { get { throw null; } set { } }
         public bool HasAnimatedProperties { get { throw null; } }
         [System.ComponentModel.DesignerSerializationVisibilityAttribute(System.ComponentModel.DesignerSerializationVisibility.Content)]
         public System.Windows.Input.InputBindingCollection InputBindings { get { throw null; } }
@@ -225,6 +227,7 @@ namespace System.Windows
         public event System.Windows.DragEventHandler DragOver { add { } remove { } }
         public event System.Windows.DragEventHandler Drop { add { } remove { } }
         public event System.Windows.DependencyPropertyChangedEventHandler FocusableChanged { add { } remove { } }
+        public event System.Windows.DependencyPropertyChangedEventHandler FocusableWhenNotEnabledChanged { add { } remove { } }
         public event System.Windows.GiveFeedbackEventHandler GiveFeedback { add { } remove { } }
         public event System.Windows.RoutedEventHandler GotFocus { add { } remove { } }
         public event System.Windows.Input.KeyboardFocusChangedEventHandler GotKeyboardFocus { add { } remove { } }
@@ -978,6 +981,7 @@ namespace System.Windows
     public partial interface IInputElement
     {
         bool Focusable { get; set; }
+        //bool FocusableWhenNotEnabled { get; set; }
         bool IsEnabled { get; }
         bool IsKeyboardFocused { get; }
         bool IsKeyboardFocusWithin { get; }
@@ -1375,6 +1379,7 @@ namespace System.Windows
         public static readonly System.Windows.RoutedEvent DropEvent;
         public static readonly System.Windows.DependencyProperty EffectProperty;
         public static readonly System.Windows.DependencyProperty FocusableProperty;
+        public static readonly System.Windows.DependencyProperty FocusableWhenNotEnabledProperty;
         public static readonly System.Windows.RoutedEvent GiveFeedbackEvent;
         public static readonly System.Windows.RoutedEvent GotFocusEvent;
         public static readonly System.Windows.RoutedEvent GotKeyboardFocusEvent;
@@ -1494,6 +1499,7 @@ namespace System.Windows
         public System.Windows.Size DesiredSize { get { throw null; } }
         public System.Windows.Media.Effects.Effect Effect { get { throw null; } set { } }
         public bool Focusable { get { throw null; } set { } }
+        public bool FocusableWhenNotEnabled { get { throw null; } set { } }
         public bool HasAnimatedProperties { get { throw null; } }
         protected internal virtual bool HasEffectiveKeyboardFocus { get { throw null; } }
         [System.ComponentModel.DesignerSerializationVisibilityAttribute(System.ComponentModel.DesignerSerializationVisibility.Content)]
@@ -1541,6 +1547,7 @@ namespace System.Windows
         public event System.Windows.DragEventHandler DragOver { add { } remove { } }
         public event System.Windows.DragEventHandler Drop { add { } remove { } }
         public event System.Windows.DependencyPropertyChangedEventHandler FocusableChanged { add { } remove { } }
+        public event System.Windows.DependencyPropertyChangedEventHandler FocusableWhenNotEnabledChanged { add { } remove { } }
         public event System.Windows.GiveFeedbackEventHandler GiveFeedback { add { } remove { } }
         public event System.Windows.RoutedEventHandler GotFocus { add { } remove { } }
         public event System.Windows.Input.KeyboardFocusChangedEventHandler GotKeyboardFocus { add { } remove { } }
@@ -1780,6 +1787,7 @@ namespace System.Windows
         public static readonly System.Windows.RoutedEvent DragOverEvent;
         public static readonly System.Windows.RoutedEvent DropEvent;
         public static readonly System.Windows.DependencyProperty FocusableProperty;
+        public static readonly System.Windows.DependencyProperty FocusableWhenNotEnabledProperty;
         public static readonly System.Windows.RoutedEvent GiveFeedbackEvent;
         public static readonly System.Windows.RoutedEvent GotFocusEvent;
         public static readonly System.Windows.RoutedEvent GotKeyboardFocusEvent;
@@ -1877,6 +1885,7 @@ namespace System.Windows
         [System.ComponentModel.DesignerSerializationVisibilityAttribute(System.ComponentModel.DesignerSerializationVisibility.Content)]
         public System.Windows.Input.CommandBindingCollection CommandBindings { get { throw null; } }
         public bool Focusable { get { throw null; } set { } }
+        public bool FocusableWhenNotEnabled { get { throw null; } set { } }
         [System.ComponentModel.DesignerSerializationVisibilityAttribute(System.ComponentModel.DesignerSerializationVisibility.Content)]
         public System.Windows.Input.InputBindingCollection InputBindings { get { throw null; } }
         public bool IsEnabled { get { throw null; } set { } }
@@ -1906,6 +1915,7 @@ namespace System.Windows
         public event System.Windows.DragEventHandler DragOver { add { } remove { } }
         public event System.Windows.DragEventHandler Drop { add { } remove { } }
         public event System.Windows.DependencyPropertyChangedEventHandler FocusableChanged { add { } remove { } }
+        public event System.Windows.DependencyPropertyChangedEventHandler FocusableWhenNotEnabledChanged { add { } remove { } }
         public event System.Windows.GiveFeedbackEventHandler GiveFeedback { add { } remove { } }
         public event System.Windows.RoutedEventHandler GotFocus { add { } remove { } }
         public event System.Windows.Input.KeyboardFocusChangedEventHandler GotKeyboardFocus { add { } remove { } }

@@ -1,0 +1,197 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:sys="clr-namespace:System;assembly=System.Runtime"
+                    xmlns:ut="clr-namespace:PresentationFramework.Fluent.Tests.TestUtilities">
+    <ResourceDictionary.MergedDictionaries>
+        
+        <ut:TestDictionary Name="Light">
+            <ut:TestDictionary.MergedDictionaries>
+                <ut:TestDictionary Source="/PresentationFramework.Fluent.Tests;component/ResourceTests/Data/Light.Test.xaml" />
+
+                <ut:TestDictionary Name="Default">
+                    <!-- Button Control Properties -->
+                    <SolidColorBrush x:Key="Button_Background" Color="{StaticResource ControlFillColorDefault}" />
+                    <SolidColorBrush x:Key="Button_Foreground" Color="{StaticResource TextFillColorPrimary}" />
+                    <!--<SolidColorBrush x:Key="Button_BorderBrush" Color="" />-->
+                    <Thickness x:Key="Button_BorderThickness">1</Thickness>
+                    <!--<sys:Double x:Key="Button_FontSize">14</sys:Double>-->
+                    <sys:Boolean x:Key="Button_IsTabStop">True</sys:Boolean>
+                    <Thickness x:Key="Button_Padding">11,5,11,6</Thickness>
+                    <HorizontalAlignment x:Key="Button_HorizontalContentAlignment">Center</HorizontalAlignment>
+                    <VerticalAlignment x:Key="Button_VerticalContentAlignment">Center</VerticalAlignment>
+                    <!-- <Cursor x:Key="Button_Cursor">Arrow</Cursor> -->
+                    <HorizontalAlignment x:Key="Button_HorizontalAlignment">Left</HorizontalAlignment>
+                    <VerticalAlignment x:Key="Button_VerticalAlignment">Center</VerticalAlignment>
+                    <Thickness x:Key="Button_Margin">0</Thickness>
+                    <sys:Boolean x:Key="Button_Focusable">True</sys:Boolean>
+                    
+                    <!-- Button : ContentBorder Properties -->
+                    <SolidColorBrush x:Key="ContentBorder_Background" Color="{StaticResource ControlFillColorDefault}" />
+                    <SolidColorBrush x:Key="ContentPresenter_Foreground" Color="{StaticResource TextFillColorPrimary}" />
+                    <!--<SolidColorBrush x:Key="ContentBorder_BorderBrush" Color="" />-->
+                    <Thickness x:Key="ContentBorder_BorderThickness">1</Thickness>
+                    <Thickness x:Key="ContentBorder_Padding">11,5,11,6</Thickness>
+                    <CornerRadius x:Key="ContentBorder_CornerRadius">4</CornerRadius>
+
+                    <HorizontalAlignment x:Key="ContentBorder_HorizontalAlignment">Left</HorizontalAlignment>
+                    <VerticalAlignment x:Key="ContentBorder_VerticalAlignment">Center</VerticalAlignment>
+                    <Thickness x:Key="ContentBorder_Margin">0</Thickness>
+
+                    <sys:Boolean x:Key="ContentBorder_Focusable">False</sys:Boolean>
+
+                    
+                    
+                    <!-- Button : ContentPresenter Properties -->
+                    <sys:Boolean x:Key="ContentPresenter_RecognizesAccessKey">False</sys:Boolean>
+                    <HorizontalAlignment x:Key="ContentPresenter_HorizontalAlignment">Center</HorizontalAlignment>
+                    <VerticalAlignment x:Key="ContentPresenter_VerticalAlignment">Center</VerticalAlignment>
+                    <Thickness x:Key="ContentPresenter_Margin">0</Thickness>
+                    <sys:Boolean x:Key="ContentPresenter_Focusable">False</sys:Boolean>
+                </ut:TestDictionary>
+
+                <ut:TestDictionary Name="Disabled">
+                    <!-- Button : ContentBorder Properties -->
+                    <SolidColorBrush x:Key="ContentBorder_Background" Color="{StaticResource ControlFillColorDisabled}" />
+                    <!--<SolidColorBrush x:Key="ContentBorder_BorderBrush" Color="" />-->
+
+                    <!-- Button : ContentPresenter Properties -->
+                    <SolidColorBrush x:Key="ContentPresenter_Foreground" Color="{StaticResource TextFillColorDisabled}" />
+                    <sys:Boolean x:Key="ContentPresenter_RecognizesAccessKey">False</sys:Boolean>
+                </ut:TestDictionary>
+
+            </ut:TestDictionary.MergedDictionaries>
+        </ut:TestDictionary>
+
+        <ut:TestDictionary Name="Dark">
+            <ut:TestDictionary.MergedDictionaries>
+                <ut:TestDictionary Source="/PresentationFramework.Fluent.Tests;component/ResourceTests/Data/Dark.Test.xaml" />
+
+                <ut:TestDictionary Name="Default">
+
+                     <!--Button Control Properties--> 
+
+                    <SolidColorBrush x:Key="Button_Background" Color="{StaticResource ControlFillColorDefault}" />
+                    <SolidColorBrush x:Key="Button_Foreground" Color="{StaticResource TextFillColorPrimary}" />
+                    <!--<SolidColorBrush x:Key="Button_BorderBrush" Color="" />-->
+                    <Thickness x:Key="Button_BorderThickness">1</Thickness>
+                    <sys:Double x:Key="Button_FontSize">14</sys:Double>
+                    <sys:Boolean x:Key="Button_IsTabStop">True</sys:Boolean>
+                    <Thickness x:Key="Button_Padding">11,5,11,6</Thickness>
+                    <HorizontalAlignment x:Key="Button_HorizontalContentAlignment">Center</HorizontalAlignment>
+                    <VerticalAlignment x:Key="Button_VerticalContentAlignment">Center</VerticalAlignment>
+
+                    <Cursor x:Key="Button_Curson">Arrow</Cursor>
+                    <HorizontalAlignment x:Key="Button_HorizontalAlignment">Left</HorizontalAlignment>
+                    <VerticalAlignment x:Key="Button_VerticalAlignment">Center</VerticalAlignment>
+                    <Thickness x:Key="Button_Margin">0</Thickness>
+
+                    <sys:Boolean x:Key="Button_Focusable">True</sys:Boolean>
+
+
+
+                     <!--Button : ContentBorder Properties--> 
+
+                    <SolidColorBrush x:Key="ContentBorder_Background" Color="{StaticResource ControlFillColorDefault}" />
+                    <SolidColorBrush x:Key="ContentPresenter_Foreground" Color="{StaticResource TextFillColorPrimary}" />
+                    <!--<SolidColorBrush x:Key="ContentBorder_BorderBrush" Color="" />-->
+                    <Thickness x:Key="ContentBorder_BorderThickness">1</Thickness>
+                    <Thickness x:Key="ContentBorder_Padding">11,5,11,6</Thickness>
+                    <CornerRadius x:Key="ContentBorder_CornerRadius">4</CornerRadius>
+
+                    <HorizontalAlignment x:Key="ContentBorder_HorizontalAlignment">Left</HorizontalAlignment>
+                    <VerticalAlignment x:Key="ContentBorder_VerticalAlignment">Center</VerticalAlignment>
+                    <Thickness x:Key="ContentBorder_Margin">0</Thickness>
+
+                    <sys:Boolean x:Key="ContentBorder_Focusable">False</sys:Boolean>
+
+
+
+                     <!--Button : ContentPresenter Properties--> 
+
+                    <sys:Boolean x:Key="ContentPresenter_RecognizesAccessKey">False</sys:Boolean>
+                    <HorizontalAlignment x:Key="ContentPresenter_HorizontalAlignment">Center</HorizontalAlignment>
+                    <VerticalAlignment x:Key="ContentPresenter_VerticalAlignment">Center</VerticalAlignment>
+                    <Thickness x:Key="ContentPresenter_Margin">0</Thickness>
+                    <sys:Boolean x:Key="ContentPresenter_Focusable">False</sys:Boolean>
+
+                </ut:TestDictionary>
+
+                <ut:TestDictionary Name="Disabled">
+
+                    <!--Button : ContentBorder Properties-->
+                    <SolidColorBrush x:Key="ContentBorder_Background" Color="{StaticResource ControlFillColorDisabled}" />
+                    <SolidColorBrush x:Key="ContentPresenter_Foreground" Color="{StaticResource TextFillColorDisabled}" />
+                    <!--<SolidColorBrush x:Key="ContentBorder_BorderBrush" Color="" />-->
+
+
+                     <!--Button : ContentPresenter Properties--> 
+                    <sys:Boolean x:Key="ContentPresenter_RecognizesAccessKey">False</sys:Boolean>
+
+                </ut:TestDictionary>
+
+            </ut:TestDictionary.MergedDictionaries>
+        </ut:TestDictionary>
+
+        <ut:TestDictionary Name="HC">
+            <ut:TestDictionary.MergedDictionaries>
+                <ut:TestDictionary Source="/PresentationFramework.Fluent.Tests;component/ResourceTests/Data/HC.Test.xaml" />
+
+                <ut:TestDictionary Name="Default">
+
+                    <!--Button Control Properties-->
+
+                    <SolidColorBrush x:Key="Button_Background" Color="{StaticResource SystemColorButtonFaceColor}" />
+                    <SolidColorBrush x:Key="Button_Foreground" Color="{StaticResource SystemColorButtonTextColor}" />
+                    <!--<SolidColorBrush x:Key="Button_BorderBrush" Color="" />-->
+                    <Thickness x:Key="Button_BorderThickness">1</Thickness>
+                    <sys:Double x:Key="Button_FontSize">14</sys:Double>
+                    <sys:Boolean x:Key="Button_IsTabStop">True</sys:Boolean>
+                    <Thickness x:Key="Button_Padding">11,5,11,6</Thickness>
+                    <HorizontalAlignment x:Key="Button_HorizontalContentAlignment">Center</HorizontalAlignment>
+                    <VerticalAlignment x:Key="Button_VerticalContentAlignment">Center</VerticalAlignment>
+
+                    <Cursor x:Key="Button_Curson">Arrow</Cursor>
+                    <HorizontalAlignment x:Key="Button_HorizontalAlignment">Left</HorizontalAlignment>
+                    <VerticalAlignment x:Key="Button_VerticalAlignment">Center</VerticalAlignment>
+                    <Thickness x:Key="Button_Margin">0</Thickness>
+
+                    <sys:Boolean x:Key="Button_Focusable">True</sys:Boolean>
+
+
+                    <!--Button : ContentBorder Properties-->
+                    <SolidColorBrush x:Key="ContentBorder_Background" Color="{StaticResource SystemColorButtonFaceColor}" />
+                    <SolidColorBrush x:Key="ContentPresenter_Foreground" Color="{StaticResource SystemColorButtonTextColor}" />
+                    <!--<SolidColorBrush x:Key="ContentBorder_BorderBrush" Color="" />-->
+                    <Thickness x:Key="ContentBorder_BorderThickness">1</Thickness>
+                    <Thickness x:Key="ContentBorder_Padding">11,5,11,6</Thickness>
+                    <CornerRadius x:Key="ContentBorder_CornerRadius">4</CornerRadius>
+
+                    <HorizontalAlignment x:Key="ContentBorder_HorizontalAlignment">Left</HorizontalAlignment>
+                    <VerticalAlignment x:Key="ContentBorder_VerticalAlignment">Center</VerticalAlignment>
+                    <Thickness x:Key="ContentBorder_Margin">0</Thickness>
+
+                    <sys:Boolean x:Key="ContentBorder_Focusable">False</sys:Boolean>
+
+                    <!--Button : ContentPresenter Properties-->
+                    <sys:Boolean x:Key="ContentPresenter_RecognizesAccessKey">False</sys:Boolean>
+                    <HorizontalAlignment x:Key="ContentPresenter_HorizontalAlignment">Center</HorizontalAlignment>
+                    <VerticalAlignment x:Key="ContentPresenter_VerticalAlignment">Center</VerticalAlignment>
+                    <Thickness x:Key="ContentPresenter_Margin">0</Thickness>
+                    <sys:Boolean x:Key="ContentPresenter_Focusable">False</sys:Boolean>
+
+                </ut:TestDictionary>
+
+                <ut:TestDictionary Name="Disabled">
+                    <!--Button : ContentBorder Properties-->
+                    <SolidColorBrush x:Key="ContentBorder_Background" Color="{StaticResource SystemColorWindowColor}" />
+                    <SolidColorBrush x:Key="ContentPresenter_Foreground" Color="{StaticResource SystemColorGrayTextColor}" />
+                    <!--<SolidColorBrush x:Key="ContentBorder_BorderBrush" Color="" />-->
+
+                    <!--Button : ContentPresenter Properties-->
+                    <sys:Boolean x:Key="ContentPresenter_RecognizesAccessKey">False</sys:Boolean>
+                </ut:TestDictionary>
+
+            </ut:TestDictionary.MergedDictionaries>
+        </ut:TestDictionary>
+    </ResourceDictionary.MergedDictionaries>
+</ResourceDictionary>

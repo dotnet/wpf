@@ -85,30 +85,20 @@ namespace System.Windows.Controls
             string prefix = string.Create(CultureInfo.InvariantCulture,
                 $"""
                  Version:1.0
-
                  StartHTML:00000097
-
                  EndHTML:{bytecountEndOfHtml:00000000}
-
                  StartFragment:00000133
-
                  EndFragment:{bytecountEndOfFragment:00000000}
-
                  <HTML>
-
                  <BODY>
-
                  <!--StartFragment-->
                  """);
             content.Insert(0, prefix);
             content.Append(
                 """
 
-
                 <!--EndFragment-->
-
                 </BODY>
-
                 </HTML>
                 """);
         }

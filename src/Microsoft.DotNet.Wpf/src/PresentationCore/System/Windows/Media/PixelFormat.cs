@@ -63,7 +63,7 @@ namespace System.Windows.Media
         {
             get
             {
-                return _mask != null ? new PartialList<byte>((byte[])_mask.Clone()) : null;
+                return _mask != null ? new ReadOnlyCollection<byte>((byte[])_mask.Clone()) : null;
             }
         }
 

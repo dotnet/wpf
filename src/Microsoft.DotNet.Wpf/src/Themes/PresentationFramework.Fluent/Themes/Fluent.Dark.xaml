@@ -469,6 +469,14 @@
   <!--  Flyout  -->
   <SolidColorBrush x:Key="FlyoutBackground" Color="{StaticResource AcrylicBackgroundFillColorDefault}" />
   <SolidColorBrush x:Key="FlyoutBorderBrush" Color="{StaticResource SurfaceStrokeColorFlyout}" />
+  <!--  Frame  -->
+  <SolidColorBrush x:Key="FrameBackground" Color="{StaticResource ApplicationBackgroundColor}" />
+  <SolidColorBrush x:Key="FrameForeground" Color="{StaticResource TextFillColorPrimary}" />
+  <SolidColorBrush x:Key="FrameMenuItemBackground" Color="Transparent" />
+  <SolidColorBrush x:Key="FrameMenuItemBorderBrush" Color="Transparent" />
+  <SolidColorBrush x:Key="FrameMenuItemBackgroundSelected" Color="{StaticResource SubtleFillColorTertiary}" />
+  <SolidColorBrush x:Key="FrameMenuItemForegroundDisabled" Color="{StaticResource TextFillColorDisabled}" />
+  <SolidColorBrush x:Key="FrameMenuItemDropDownGlyphForeground" Color="{StaticResource TextFillColorSecondary}" />
   <!--  HyperlinkButton  -->
   <SolidColorBrush x:Key="HyperlinkButtonBackground" Color="{StaticResource SubtleFillColorTransparent}" />
   <SolidColorBrush x:Key="HyperlinkButtonBackgroundPointerOver" Color="{StaticResource SubtleFillColorSecondary}" />
@@ -2642,14 +2650,153 @@
     </Setter>
   </Style>
   <Style BasedOn="{StaticResource DefaultExpanderStyle}" TargetType="{x:Type Expander}" />
-  <Style TargetType="{x:Type Frame}">
-    <Setter Property="Background" Value="Transparent" />
-    <Setter Property="NavigationUIVisibility" Value="Hidden" />
+  <JournalEntryUnifiedViewConverter x:Key="JournalEntryUnifiedViewConverter" />
+  <Thickness x:Key="FrameMenuItemBorderThickness">1</Thickness>
+  <system:String x:Key="FrameMenuItemChevronDownGlyph"></system:String>
+  <system:String x:Key="FrameMenuItemArrowLeftGlyph"></system:String>
+  <system:String x:Key="FrameMenuItemArrowRightGlyph"></system:String>
+  <system:String x:Key="FrameMenuiItemCurrentGlyph"></system:String>
+  <Style x:Key="NavigationWindowNavigationButtonJournalEntryStyle" TargetType="{x:Type MenuItem}">
+    <Setter Property="HorizontalContentAlignment" Value="{Binding HorizontalContentAlignment, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}" />
+    <Setter Property="VerticalContentAlignment" Value="{Binding VerticalContentAlignment, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}" />
+    <Setter Property="FocusVisualStyle" Value="{DynamicResource DefaultCollectionFocusVisualStyle}" />
+    <Setter Property="KeyboardNavigation.IsTabStop" Value="True" />
+    <Setter Property="Background" Value="{DynamicResource FrameMenuItemBackground}" />
+    <Setter Property="BorderBrush" Value="{DynamicResource FrameMenuItemBorderBrush}" />
+    <Setter Property="BorderThickness" Value="{StaticResource FrameMenuItemBorderThickness}" />
+    <Setter Property="Focusable" Value="True" />
+    <Setter Property="OverridesDefaultStyle" Value="True" />
+    <Setter Property="Header" Value="{Binding Path=(JournalEntry.Name)}" />
+    <Setter Property="Command" Value="NavigationCommands.NavigateJournal" />
+    <Setter Property="CommandTarget" Value="{Binding RelativeSource={RelativeSource AncestorType={x:Type Menu}}, Path=TemplatedParent}" />
+    <Setter Property="CommandParameter" Value="{Binding RelativeSource={RelativeSource Self}}" />
+    <Setter Property="JournalEntryUnifiedViewConverter.JournalEntryPosition" Value="{Binding (JournalEntryUnifiedViewConverter.JournalEntryPosition)}" />
+    <Setter Property="Template">
+      <Setter.Value>
+        <ControlTemplate TargetType="{x:Type MenuItem}">
+          <Border x:Name="Border" Margin="4" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" CornerRadius="6">
+            <Grid Margin="4,6">
+              <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" />
+              </Grid.ColumnDefinitions>
+              <ContentPresenter x:Name="Icon" Grid.Column="0" Margin="0,0,6,0" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="Center" Content="{TemplateBinding Icon}" />
+              <ContentPresenter x:Name="HeaderPresenter" Grid.Column="1" VerticalAlignment="Center" ContentSource="Header" Margin="{TemplateBinding Padding}" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" RecognizesAccessKey="True" TextElement.Foreground="{TemplateBinding Foreground}" />
+            </Grid>
+          </Border>
+          <ControlTemplate.Triggers>
+            <Trigger Property="IsHighlighted" Value="True">
+              <Setter TargetName="Border" Property="Background" Value="{DynamicResource FrameMenuItemBackgroundSelected}" />
+            </Trigger>
+            <Trigger Property="Header" Value="{x:Null}">
+              <Setter TargetName="Icon" Property="Margin" Value="0" />
+              <Setter TargetName="HeaderPresenter" Property="Visibility" Value="Collapsed" />
+            </Trigger>
+            <Trigger Property="JournalEntryUnifiedViewConverter.JournalEntryPosition" Value="Current">
+              <Setter TargetName="Icon" Property="Content">
+                <Setter.Value>
+                  <TextBlock Text="{StaticResource FrameMenuiItemCurrentGlyph}" FontFamily="{DynamicResource SymbolThemeFontFamily}" />
+                </Setter.Value>
+              </Setter>
+            </Trigger>
+            <MultiTrigger>
+              <MultiTrigger.Conditions>
+                <Condition Property="MenuItem.IsHighlighted" Value="True" />
+                <Condition Property="JournalEntryUnifiedViewConverter.JournalEntryPosition" Value="Forward" />
+              </MultiTrigger.Conditions>
+              <Setter TargetName="Icon" Property="Content">
+                <Setter.Value>
+                  <TextBlock Text="{StaticResource FrameMenuItemArrowRightGlyph}" FontFamily="{DynamicResource SymbolThemeFontFamily}" />
+                </Setter.Value>
+              </Setter>
+            </MultiTrigger>
+            <MultiTrigger>
+              <MultiTrigger.Conditions>
+                <Condition Property="MenuItem.IsHighlighted" Value="True" />
+                <Condition Property="JournalEntryUnifiedViewConverter.JournalEntryPosition" Value="Back" />
+              </MultiTrigger.Conditions>
+              <Setter TargetName="Icon" Property="Content">
+                <Setter.Value>
+                  <TextBlock Text="{StaticResource FrameMenuItemArrowLeftGlyph}" FontFamily="{DynamicResource SymbolThemeFontFamily}" />
+                </Setter.Value>
+              </Setter>
+            </MultiTrigger>
+            <Trigger Property="IsEnabled" Value="False">
+              <Setter Property="Foreground">
+                <Setter.Value>
+                  <SolidColorBrush Color="{DynamicResource FrameMenuItemForegroundDisabled}" />
+                </Setter.Value>
+              </Setter>
+            </Trigger>
+          </ControlTemplate.Triggers>
+        </ControlTemplate>
+      </Setter.Value>
+    </Setter>
+  </Style>
+  <ControlTemplate x:Key="FrameTemplateKey" TargetType="{x:Type Frame}">
+    <Border Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}">
+      <DockPanel>
+        <Menu Name="NavMenu" VerticalAlignment="Center" DockPanel.Dock="Top">
+          <MenuItem Background="Transparent" BorderBrush="Transparent" Command="NavigationCommands.BrowseBack" FontFamily="{DynamicResource SymbolThemeFontFamily}" Header="{StaticResource FrameMenuItemArrowLeftGlyph}" />
+          <MenuItem Background="Transparent" BorderBrush="Transparent" Command="NavigationCommands.BrowseForward" FontFamily="{DynamicResource SymbolThemeFontFamily}" Header="{StaticResource FrameMenuItemArrowRightGlyph}" />
+          <Separator />
+          <MenuItem x:Name="Arrow" SnapsToDevicePixels="False" HorizontalAlignment="Right" VerticalAlignment="Center" Foreground="{DynamicResource FrameMenuItemDropDownGlyphForeground}" ItemContainerStyle="{StaticResource NavigationWindowNavigationButtonJournalEntryStyle}" IsSubmenuOpen="{Binding Path=(MenuItem.IsSubmenuOpen),Mode=TwoWay,RelativeSource={RelativeSource TemplatedParent}}">
+            <MenuItem.Icon>
+              <TextBlock FontFamily="{DynamicResource SymbolThemeFontFamily}" Text="{StaticResource FrameMenuItemChevronDownGlyph}" />
+            </MenuItem.Icon>
+            <MenuItem.ItemsSource>
+              <MultiBinding Converter="{StaticResource JournalEntryUnifiedViewConverter}">
+                <MultiBinding.Bindings>
+                  <Binding RelativeSource="{RelativeSource TemplatedParent}" Path="BackStack" />
+                  <Binding RelativeSource="{RelativeSource TemplatedParent}" Path="ForwardStack" />
+                </MultiBinding.Bindings>
+              </MultiBinding>
+            </MenuItem.ItemsSource>
+          </MenuItem>
+        </Menu>
+        <ContentPresenter Name="PART_FrameCP" ClipToBounds="True" />
+      </DockPanel>
+    </Border>
+    <ControlTemplate.Triggers>
+      <MultiTrigger>
+        <MultiTrigger.Conditions>
+          <Condition Property="CanGoForward" Value="False" />
+          <Condition Property="CanGoBack" Value="False" />
+        </MultiTrigger.Conditions>
+        <Setter TargetName="NavMenu" Property="IsEnabled" Value="False" />
+      </MultiTrigger>
+    </ControlTemplate.Triggers>
+  </ControlTemplate>
+  <Style x:Key="DefaultFrameStyle" TargetType="{x:Type Frame}">
+    <Setter Property="Foreground" Value="{DynamicResource FrameForeground}" />
+    <Setter Property="Background" Value="{DynamicResource FrameBackground}" />
     <Setter Property="Padding" Value="0" />
     <Setter Property="Margin" Value="0" />
     <Setter Property="Focusable" Value="False" />
     <Setter Property="SnapsToDevicePixels" Value="True" />
+    <Setter Property="Template">
+      <Setter.Value>
+        <ControlTemplate TargetType="{x:Type Frame}">
+          <Border Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Padding="{TemplateBinding Padding}">
+            <ContentPresenter x:Name="PART_FrameCP" />
+          </Border>
+        </ControlTemplate>
+      </Setter.Value>
+    </Setter>
+    <Style.Triggers>
+      <Trigger Property="NavigationUIVisibility" Value="Visible">
+        <Setter Property="Template" Value="{StaticResource FrameTemplateKey}" />
+      </Trigger>
+      <MultiTrigger>
+        <MultiTrigger.Conditions>
+          <Condition Property="JournalOwnership" Value="OwnsJournal" />
+          <Condition Property="NavigationUIVisibility" Value="Automatic" />
+        </MultiTrigger.Conditions>
+        <Setter Property="Template" Value="{StaticResource FrameNavChromeTemplateKey}" />
+      </MultiTrigger>
+    </Style.Triggers>
   </Style>
+  <Style BasedOn="{StaticResource DefaultFrameStyle}" TargetType="{x:Type Frame}" />
   <Style x:Key="{x:Type GroupItem}" TargetType="{x:Type GroupItem}">
     <Setter Property="Template">
       <Setter.Value>

@@ -45,6 +45,7 @@
         <ResourceDictionary Source="pack://application:,,,/PresentationFramework.Fluent;component/Styles/TabControl.xaml" />
         <ResourceDictionary Source="pack://application:,,,/PresentationFramework.Fluent;component/Styles/TextBlock.xaml" />
         <ResourceDictionary Source="pack://application:,,,/PresentationFramework.Fluent;component/Styles/TextBox.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/PresentationFramework.Fluent;component/Styles/Thumb.xaml" />
         <ResourceDictionary Source="pack://application:,,,/PresentationFramework.Fluent;component/Styles/ToggleButton.xaml" />
         <ResourceDictionary Source="pack://application:,,,/PresentationFramework.Fluent;component/Styles/ToolBar.xaml" />
         <ResourceDictionary Source="pack://application:,,,/PresentationFramework.Fluent;component/Styles/ToolTip.xaml" />

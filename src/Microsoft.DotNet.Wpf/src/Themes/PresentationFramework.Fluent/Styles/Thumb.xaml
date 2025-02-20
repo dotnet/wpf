@@ -5,7 +5,7 @@
 
     <Style x:Key="DefaultThumbStyle" TargetType="{x:Type Thumb}">
         <Setter Property="Background" Value="{DynamicResource ThumbBackground}" />
-        <Setter Property="Border.CornerRadius" Value="4" />
+        <Setter Property="Border.CornerRadius" Value="{DynamicResource ControlCornerRadius}" />
         <Setter Property="SnapsToDevicePixels" Value="True" />
         <Setter Property="OverridesDefaultStyle" Value="True" />
         <Setter Property="IsTabStop" Value="False" />

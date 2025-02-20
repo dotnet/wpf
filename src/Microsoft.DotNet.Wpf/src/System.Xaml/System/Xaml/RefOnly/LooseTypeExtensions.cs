@@ -6,6 +6,7 @@
 
 using System.Reflection;
 using System.Windows.Markup;
+using MS.Internal;
 
 namespace System.Xaml
 {
@@ -42,8 +43,7 @@ namespace System.Xaml
             AssemblyName t2name = new AssemblyName(t2.Assembly.FullName);
             if (t1name.Name == t2name.Name)
             {
-                return t1name.CultureInfo.Equals(t2name.CultureInfo) &&
-                    SafeSecurityHelper.IsSameKeyToken(t1name.GetPublicKeyToken(), t2name.GetPublicKeyToken());
+                return t1name.CultureInfo.Equals(t2name.CultureInfo) && ReflectionUtils.IsSamePublicKeyToken(t1name.GetPublicKeyToken(), t2name.GetPublicKeyToken());
             }
 
             return IsWindowsBaseToSystemXamlComparison(t1.Assembly, t2.Assembly, t1name, t2name);
@@ -64,7 +64,7 @@ namespace System.Xaml
                 windowsBaseName = name2;
             }
 
-            return (windowsBaseName is not null && SafeSecurityHelper.IsSameKeyToken(windowsBaseName.GetPublicKeyToken(), WindowsBaseToken));
+            return (windowsBaseName is not null && ReflectionUtils.IsSamePublicKeyToken(windowsBaseName.GetPublicKeyToken(), WindowsBaseToken));
         }
 
         internal static bool IsAssemblyQualifiedNameAssignableFrom(Type t1, Type t2)

@@ -469,6 +469,12 @@
   <!--  Flyout  -->
   <SolidColorBrush x:Key="FlyoutBackground" Color="{StaticResource AcrylicBackgroundFillColorDefault}" />
   <SolidColorBrush x:Key="FlyoutBorderBrush" Color="{StaticResource SurfaceStrokeColorFlyout}" />
+  <!-- GridSplitter -->
+  <SolidColorBrush x:Key="GridsplitterBackground" Color="{StaticResource ControlAltFillColorTransparent}" />
+  <SolidColorBrush x:Key="GridsplitterBackgroundPointerOver" Color="{StaticResource ControlAltFillColorTertiary}" />
+  <SolidColorBrush x:Key="GridsplitterBackgroundPressed" Color="{StaticResource ControlAltFillColorQuarternary}" />
+  <SolidColorBrush x:Key="GridsplitterBackgroundDisabled" Color="{StaticResource ControlAltFillColorDisabled}" />
+  <SolidColorBrush x:Key="GridsplitterForeground" Color="{StaticResource ControlStrongFillColorDefault}" />
   <!--  HyperlinkButton  -->
   <SolidColorBrush x:Key="HyperlinkButtonBackground" Color="{StaticResource SubtleFillColorTransparent}" />
   <SolidColorBrush x:Key="HyperlinkButtonBackgroundPointerOver" Color="{StaticResource SubtleFillColorSecondary}" />
@@ -2652,6 +2658,50 @@
     <Setter Property="Focusable" Value="False" />
     <Setter Property="SnapsToDevicePixels" Value="True" />
   </Style>
+  <system:Double x:Key="GridsplitterThumbHeight">24</system:Double>
+  <system:Double x:Key="GridsplitterThumbWidth">4</system:Double>
+  <system:Double x:Key="GridsplitterThumbRadius">2</system:Double>
+  <system:Double x:Key="GridsplitterMinHeight">8</system:Double>
+  <system:Double x:Key="GridsplitterMinWidth">8</system:Double>
+  <Thickness x:Key="GridsplitterPadding">4</Thickness>
+  <Style x:Key="DefaultGridSplitterStyle" TargetType="{x:Type GridSplitter}">
+    <Setter Property="IsTabStop" Value="True" />
+    <Setter Property="HorizontalAlignment" Value="Stretch" />
+    <Setter Property="VerticalAlignment" Value="Stretch" />
+    <Setter Property="MinHeight" Value="{DynamicResource GridsplitterMinHeight}" />
+    <Setter Property="MinWidth" Value="{DynamicResource GridsplitterMinHeight}" />
+    <Setter Property="Padding" Value="{DynamicResource GridsplitterPadding}" />
+    <Setter Property="Foreground" Value="{DynamicResource GridsplitterForeground}" />
+    <Setter Property="Background" Value="{DynamicResource GridsplitterBackground}" />
+    <Setter Property="HorizontalContentAlignment" Value="Center" />
+    <Setter Property="VerticalContentAlignment" Value="Center" />
+    <Setter Property="Template">
+      <Setter.Value>
+        <ControlTemplate TargetType="{x:Type GridSplitter}">
+          <Border x:Name="RootGrid" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}">
+            <Rectangle x:Name="PART_Thumb" Width="{DynamicResource GridsplitterThumbWidth}" Height="{DynamicResource GridsplitterThumbHeight}" Margin="{TemplateBinding Padding}" Fill="{TemplateBinding Foreground}" RadiusX="{StaticResource GridsplitterThumbRadius}" RadiusY="{StaticResource GridsplitterThumbRadius}" />
+          </Border>
+          <ControlTemplate.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+              <Setter TargetName="RootGrid" Property="Background" Value="{DynamicResource GridsplitterBackgroundPointerOver}" />
+            </Trigger>
+            <Trigger Property="IsDragging" Value="True">
+              <Setter TargetName="RootGrid" Property="Background" Value="{DynamicResource GridsplitterBackgroundPressed}" />
+            </Trigger>
+            <Trigger Property="IsEnabled" Value="False">
+              <Setter TargetName="RootGrid" Property="Background" Value="{DynamicResource GridsplitterBackgroundDisabled}" />
+              <Setter TargetName="PART_Thumb" Property="Opacity" Value="0.45" />
+            </Trigger>
+            <Trigger Property="ResizeDirection" Value="Rows">
+              <Setter TargetName="PART_Thumb" Property="Width" Value="{DynamicResource GridsplitterThumbHeight}" />
+              <Setter TargetName="PART_Thumb" Property="Height" Value="{DynamicResource GridsplitterThumbWidth}" />
+            </Trigger>
+          </ControlTemplate.Triggers>
+        </ControlTemplate>
+      </Setter.Value>
+    </Setter>
+  </Style>
+  <Style BasedOn="{StaticResource DefaultGridSplitterStyle}" TargetType="{x:Type GridSplitter}" />
   <Style x:Key="{x:Type GroupItem}" TargetType="{x:Type GroupItem}">
     <Setter Property="Template">
       <Setter.Value>

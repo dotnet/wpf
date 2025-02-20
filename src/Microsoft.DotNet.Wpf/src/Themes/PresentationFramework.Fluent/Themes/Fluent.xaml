@@ -24,6 +24,7 @@
         <ResourceDictionary Source="pack://application:,,,/PresentationFramework.Fluent;component/Styles/Frame.xaml" />
         <ResourceDictionary Source="pack://application:,,,/PresentationFramework.Fluent;component/Styles/GroupItem.xaml" />
         <ResourceDictionary Source="pack://application:,,,/PresentationFramework.Fluent;component/Styles/HeaderedContentControl.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/PresentationFramework.Fluent;component/Styles/ItemsControl.xaml" />
         <ResourceDictionary Source="pack://application:,,,/PresentationFramework.Fluent;component/Styles/Label.xaml" />
         <ResourceDictionary Source="pack://application:,,,/PresentationFramework.Fluent;component/Styles/ListBox.xaml" />
         <ResourceDictionary Source="pack://application:,,,/PresentationFramework.Fluent;component/Styles/ListBoxItem.xaml" />
@@ -50,6 +51,7 @@
         <ResourceDictionary Source="pack://application:,,,/PresentationFramework.Fluent;component/Styles/ToolTip.xaml" />
         <ResourceDictionary Source="pack://application:,,,/PresentationFramework.Fluent;component/Styles/TreeView.xaml" />
         <ResourceDictionary Source="pack://application:,,,/PresentationFramework.Fluent;component/Styles/TreeViewItem.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/PresentationFramework.Fluent;component/Styles/UserControl.xaml" />
         <ResourceDictionary Source="pack://application:,,,/PresentationFramework.Fluent;component/Styles/Window.xaml" />
     </ResourceDictionary.MergedDictionaries>
 </ResourceDictionary>

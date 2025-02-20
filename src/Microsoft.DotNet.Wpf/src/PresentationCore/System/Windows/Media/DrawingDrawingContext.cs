@@ -931,11 +931,10 @@ namespace System.Windows.Media
             // Convert compact record to generic GuidelineSet.
             //
 
-            GuidelineSet guidelineCollection = new GuidelineSet(
-                null,                           // x guidelines
-                new double[] { coordinate, 0 }, // y guidelines
-                true                            // dynamic flag
-                );
+            GuidelineSet guidelineCollection = new(guidelinesX: ReadOnlySpan<double>.Empty,
+                                                   guidelinesY: [coordinate, 0],
+                                                   isDynamic: true);
+
             guidelineCollection.Freeze();
 
             //
@@ -977,15 +976,9 @@ namespace System.Windows.Media
             // Convert compact record to generic GuidelineSet.
             //
 
-            GuidelineSet guidelineCollection = new GuidelineSet(
-                null,                                   // x guidelines
-                new double[]
-                    {
-                        leadingCoordinate,
-                        offsetToDrivenCoordinate
-                    }, // y guidelines
-                true                                    // dynamic flag
-                );
+            GuidelineSet guidelineCollection = new(guidelinesX: ReadOnlySpan<double>.Empty,
+                                                   guidelinesY: [leadingCoordinate, offsetToDrivenCoordinate],
+                                                   isDynamic: true);
             guidelineCollection.Freeze();
 
             //

@@ -1993,7 +1993,6 @@ namespace System.Windows
             MimeObjectFactory.RegisterCore(MimeTypeMapper.HtmMime, htmlxappFactoryDelegate);
             MimeObjectFactory.RegisterCore(MimeTypeMapper.HtmlMime, htmlxappFactoryDelegate);
             MimeObjectFactory.RegisterCore(MimeTypeMapper.XbapMime, htmlxappFactoryDelegate);
-
         }
 
         // This function returns the resource stream including resource and content file.

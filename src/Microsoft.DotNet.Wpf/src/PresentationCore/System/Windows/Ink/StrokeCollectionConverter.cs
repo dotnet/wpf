@@ -133,7 +133,7 @@ namespace System.Windows
                     // in this case, we can't call Dispose since it will also close the underlying stream
                     // which strokecollection needs open to read in the constructor
                     MemoryStream stream = new MemoryStream();
-                    strokes.Save(stream, true/*compress*/);
+                    strokes.Save(stream, compress: true);
                     stream.Position = 0;
                     return new InstanceDescriptor(ci, new object[] { stream });
                 }

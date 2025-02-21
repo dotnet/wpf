@@ -77,7 +77,7 @@ namespace MS.Internal.Automation
             {
                 return null;
             }
-            return FindVisibleSibling ( parent, el, true /* Next */);
+            return FindVisibleSibling ( parent, el, searchForwards: true);
         }
 
         // Warning: Method is O(N). See FindVisibleSibling function for more information.
@@ -92,7 +92,7 @@ namespace MS.Internal.Automation
                 return null;
             }
 
-            return FindVisibleSibling ( parent, el, false /* Previous */);
+            return FindVisibleSibling ( parent, el, searchForwards: false);
         }
 
         internal static Visual GetRoot( Visual el )

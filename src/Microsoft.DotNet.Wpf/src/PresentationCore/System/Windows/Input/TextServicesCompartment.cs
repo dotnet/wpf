@@ -207,7 +207,7 @@ namespace System.Windows.Input
                 if (compartment == null)
                     return;
 
-                compartment.SetValue(0 /* clientid */, ref value);
+                compartment.SetValue(tid: 0, ref value);
                 Marshal.ReleaseComObject(compartment);
             }
         }

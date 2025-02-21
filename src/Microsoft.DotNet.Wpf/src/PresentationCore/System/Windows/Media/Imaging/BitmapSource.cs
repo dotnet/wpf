@@ -1251,7 +1251,7 @@ namespace System.Windows.Media.Imaging
                 // not set properly. Use IsValidForFinalizeCreation to validate, but don't throw
                 // if the validation fails.
                 if (_bitmapInit.IsInitAtLeastOnce &&
-                    IsValidForFinalizeCreation(/* throwIfInvalid = */ false))
+                    IsValidForFinalizeCreation(throwIfInvalid: false))
                 {
                     // FinalizeCreation() can throw because it usually makes pinvokes to things
                     // that return HRESULTs. Since firing the download events up the chain is

@@ -2403,7 +2403,7 @@ namespace System.Windows.Media
             if (_resourcesUpdatedHandlers != null)
             {
                 DUCE.ChannelSet channelSet = GetChannels();
-                _resourcesUpdatedHandlers(channelSet.Channel, false /* do not skip the "on channel" check */);
+                _resourcesUpdatedHandlers(channelSet.Channel, skipOnChannelCheck: false);
                 _resourcesUpdatedHandlers = null;
             }
         }

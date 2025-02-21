@@ -448,7 +448,7 @@ namespace System.Windows.Media.Media3D
         /// <returns>SLERP-interpolated quaternion between the two given quaternions.</returns>
         public static Quaternion Slerp(Quaternion from, Quaternion to, double t)
         {
-            return Slerp(from, to, t, /* useShortestPath = */ true);
+            return Slerp(from, to, t, useShortestPath: true);
         }
         
         /// <summary>

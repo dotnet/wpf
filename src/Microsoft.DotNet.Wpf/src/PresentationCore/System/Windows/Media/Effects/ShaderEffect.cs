@@ -775,7 +775,7 @@ namespace System.Windows.Media.Effects
                 AddRefOnChannelAnimations(channel);
 
 
-                UpdateResource(channel, true /* skip "on channel" check - we already know that we're on channel */ );
+                UpdateResource(channel, skipOnChannelCheck: true /* We already know that we're on channel */ );
             }
 
             return _duceResource.GetHandle(channel);

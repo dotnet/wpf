@@ -1,0 +1,40 @@
+<Project DefaultTargets="Codecov">
+  <PropertyGroup>
+    <Language>C#</Language>
+  </PropertyGroup>
+
+  <Import Sdk="Microsoft.NET.Sdk" Project="Sdk.props" />
+
+  <PropertyGroup>
+    <!-- We need to specify a framework in order for the Restore target to work -->
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Codecov" Version="$(CodecovVersion)" GeneratePathProperty="true" />
+    <PackageReference Include="ReportGenerator" Version="$(ReportGeneratorVersion)" GeneratePathProperty="true" />
+  </ItemGroup>
+  <Target Name="Codecov">
+    <PropertyGroup>
+      <_CodecovPath>$(NuGetPackageRoot)codecov\$(CodecovVersion)\tools\Codecov.exe</_CodecovPath>
+      <_ReportGeneratorPath>$(NuGetPackageRoot)reportgenerator\$(ReportGeneratorVersion)\tools\net47\ReportGenerator.exe</_ReportGeneratorPath>
+    </PropertyGroup>
+
+    <Message Importance="high" Text="&quot;$(_ReportGeneratorPath)&quot; -reports:$(ArtifactsDir)TestResults\**\coverage.opencover.xml -targetdir:$(ArtifactsDir)coverage -reporttypes:Cobertura" />
+    <Exec Command="&quot;$(_ReportGeneratorPath)&quot; -reports:$(ArtifactsDir)TestResults\**\coverage.opencover.xml -targetdir:$(ArtifactsDir)coverage -reporttypes:Cobertura" />
+
+    <ItemGroup>
+      <_CodecovArgs Include="-f;$(ArtifactsDir)coverage\Cobertura.xml" />
+
+      <!-- Report an error if the upload fails (currently disabled due to reliability issues) -->
+      <_CodecovArgs Include="--required" Condition="'False' == ''" />
+
+      <_CodecovFlags Include="$(Configuration)" Condition="'$(Configuration)' != ''" />
+    </ItemGroup>
+
+    <Message Importance="high" Text="&quot;$(_CodecovPath)&quot; @(_CodecovArgs, ' ') --flag @(_CodecovFlags, ',')" />
+    <Exec Command="&quot;$(_CodecovPath)&quot; @(_CodecovArgs, ' ') --flag @(_CodecovFlags, ',')" />
+  </Target>
+
+  <Import Sdk="Microsoft.NET.Sdk" Project="Sdk.targets" />
+</Project>

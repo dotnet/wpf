@@ -33,7 +33,7 @@ namespace WinRT
                 var sigMethod = helperType.GetMethod("GetGuidSignature", BindingFlags.Static | BindingFlags.Public);
                 if (sigMethod != null)
                 {
-                    return (string)sigMethod.Invoke(null, new Type[] { });
+                    return (string)sigMethod.Invoke(null, Array.Empty<Type>());
                 }
             }
 

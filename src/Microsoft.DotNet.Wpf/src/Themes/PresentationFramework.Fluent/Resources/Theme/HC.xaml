@@ -440,6 +440,7 @@
     <SolidColorBrush x:Key="NavigationWindowMenuItemBorderBrush" Color="Transparent" />
     <SolidColorBrush x:Key="NavigationWindowMenuItemBackgroundSelected" Color="{StaticResource SystemColorButtonFaceColor}" />
     <SolidColorBrush x:Key="NavigationWindowMenuItemForegroundDisabled" Color="{StaticResource SystemColorGrayTextColor}" />
+    <SolidColorBrush x:Key="NavigationWindowMenuItemDropDownGlyphForeground" Color="{StaticResource SystemColorGrayTextColor}" />
 
     <!-- Page -->
     <SolidColorBrush x:Key="PageForeground" Color="{StaticResource SystemColorWindowTextColor}" />

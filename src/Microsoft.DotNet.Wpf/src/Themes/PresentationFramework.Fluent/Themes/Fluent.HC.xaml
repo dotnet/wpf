@@ -443,6 +443,7 @@
   <SolidColorBrush x:Key="NavigationWindowMenuItemBorderBrush" Color="Transparent" />
   <SolidColorBrush x:Key="NavigationWindowMenuItemBackgroundSelected" Color="{StaticResource SystemColorButtonFaceColor}" />
   <SolidColorBrush x:Key="NavigationWindowMenuItemForegroundDisabled" Color="{StaticResource SystemColorGrayTextColor}" />
+  <SolidColorBrush x:Key="NavigationWindowMenuItemDropDownGlyphForeground" Color="{StaticResource SystemColorGrayTextColor}" />
   <!-- Page -->
   <SolidColorBrush x:Key="PageForeground" Color="{StaticResource SystemColorWindowTextColor}" />
   <SolidColorBrush x:Key="PageBackground" Color="Transparent" />
@@ -3216,7 +3217,7 @@
           <MenuItem Background="Transparent" BorderBrush="Transparent" Command="NavigationCommands.BrowseBack" FontFamily="{DynamicResource SymbolThemeFontFamily}" Header="{StaticResource NavigationWindowMenuItemArrowLeftGlyph}" />
           <MenuItem Background="Transparent" BorderBrush="Transparent" Command="NavigationCommands.BrowseForward" FontFamily="{DynamicResource SymbolThemeFontFamily}" Header="{StaticResource NavigationWindowMenuItemArrowRightGlyph}" />
           <Separator />
-          <MenuItem x:Name="Arrow" SnapsToDevicePixels="False" HorizontalAlignment="Right" VerticalAlignment="Center" Foreground="{DynamicResource ComboBoxDropDownGlyphForeground}" ItemContainerStyle="{StaticResource NavigationWindowNavigationButtonJournalEntryStyle}" IsSubmenuOpen="{Binding Path=(MenuItem.IsSubmenuOpen),Mode=TwoWay,RelativeSource={RelativeSource TemplatedParent}}">
+          <MenuItem x:Name="Arrow" SnapsToDevicePixels="False" HorizontalAlignment="Right" VerticalAlignment="Center" Foreground="{DynamicResource NavigationWindowMenuItemDropDownGlyphForeground}" ItemContainerStyle="{StaticResource NavigationWindowNavigationButtonJournalEntryStyle}" IsSubmenuOpen="{Binding Path=(MenuItem.IsSubmenuOpen),Mode=TwoWay,RelativeSource={RelativeSource TemplatedParent}}">
             <MenuItem.Icon>
               <TextBlock FontFamily="{DynamicResource SymbolThemeFontFamily}" Text="{StaticResource NavigationWindowMenuItemChevronDownGlyph}" />
             </MenuItem.Icon>

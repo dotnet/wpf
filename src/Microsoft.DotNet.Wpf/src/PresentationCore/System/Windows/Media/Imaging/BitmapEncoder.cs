@@ -74,7 +74,7 @@ namespace System.Windows.Media.Imaging
             if (containerFormat == Guid.Empty)
             {
                 throw new ArgumentException(
-                    SR.Format(SR.Image_GuidEmpty, "containerFormat"),
+                    SR.Format(SR.Image_GuidEmpty, nameof(containerFormat)),
                     nameof(containerFormat)
                     );
             }

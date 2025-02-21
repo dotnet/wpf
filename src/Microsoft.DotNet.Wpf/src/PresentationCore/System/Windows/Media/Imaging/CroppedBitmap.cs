@@ -152,7 +152,7 @@ namespace System.Windows.Media.Imaging
             {
                 if (throwIfInvalid)
                 {
-                    throw new InvalidOperationException(SR.Format(SR.Image_NoArgument, "Source"));
+                    throw new InvalidOperationException(SR.Format(SR.Image_NoArgument, nameof(Source)));
                 }
                 return false;
             }

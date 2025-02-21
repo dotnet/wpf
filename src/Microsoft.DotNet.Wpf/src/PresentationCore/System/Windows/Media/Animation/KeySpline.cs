@@ -57,7 +57,7 @@ namespace System.Windows.Media.Animation
             {
                 throw new ArgumentException(SR.Format(
                     SR.Animation_KeySpline_InvalidValue,
-                    "controlPoint1",
+                    nameof(controlPoint1),
                     controlPoint1));
             }
 
@@ -65,7 +65,7 @@ namespace System.Windows.Media.Animation
             {
                 throw new ArgumentException(SR.Format(
                     SR.Animation_KeySpline_InvalidValue,
-                    "controlPoint2",
+                    nameof(controlPoint2),
                     controlPoint2));
             }
 
@@ -167,7 +167,7 @@ namespace System.Windows.Media.Animation
                     {
                         throw new ArgumentException(SR.Format(
                             SR.Animation_KeySpline_InvalidValue,
-                            "ControlPoint1",
+                            nameof(ControlPoint1),
                             value));
                     }
 
@@ -199,7 +199,7 @@ namespace System.Windows.Media.Animation
                     {
                         throw new ArgumentException(SR.Format(
                             SR.Animation_KeySpline_InvalidValue,
-                            "ControlPoint2",
+                            nameof(ControlPoint2),
                             value));
                     }
 

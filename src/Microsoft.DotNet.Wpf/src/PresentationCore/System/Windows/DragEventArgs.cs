@@ -145,7 +145,7 @@ namespace System.Windows
             {
                 if (!DragDrop.IsValidDragDropEffects(value))
                 {
-                    throw new ArgumentException(SR.Format(SR.DragDrop_DragDropEffectsInvalid, "value"));
+                    throw new ArgumentException(SR.Format(SR.DragDrop_DragDropEffectsInvalid, nameof(value)));
                 }
 
                 _effects = value;

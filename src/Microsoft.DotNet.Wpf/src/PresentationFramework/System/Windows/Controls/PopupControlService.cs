@@ -581,11 +581,8 @@ namespace System.Windows.Controls
                 if (tooltip.IsOpen)
                 {
                     IInputElement element = owner as IInputElement;
-                    if (element != null)
-                    {
-                        // ** Public callout - re-entrancy is possible **//
-                        element.RaiseEvent(new ToolTipEventArgs(opening:false));
-                    }
+                    // ** Public callout - re-entrancy is possible **//
+                    element?.RaiseEvent(new ToolTipEventArgs(opening: false));
                 }
             }
             finally

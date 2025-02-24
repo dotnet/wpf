@@ -122,7 +122,7 @@ namespace MS.Internal.Data
                         return (dp != null) ? dp.Name :
                                 (pi != null) ? pi.Name :
                                 (pd != null) ? pd.Name :
-                                (dpa != null) ? dpa.PropertyName : null;
+                                dpa?.PropertyName;
 
                     case SourceValueType.Indexer:
                         // return the indexer string, e.g. "[foo]"
@@ -364,9 +364,9 @@ namespace MS.Internal.Data
                     {
                         ((DependencyObject)item).SetValue(dp, value);
                     }
-                    else if (dpa != null)
+                    else
                     {
-                        dpa.SetValue(item, value);
+                        dpa?.SetValue(item, value);
                     }
                     break;
 
@@ -688,8 +688,7 @@ namespace MS.Internal.Data
                 if (oldO == BindingExpression.StaticSource)
                 {
                     Type declaringType = (oldPI != null) ? oldPI.DeclaringType
-                                        : (oldPD != null) ? oldPD.ComponentType
-                                        : null;
+                                        : oldPD?.ComponentType;
                     if (declaringType != null)
                     {
                         StaticPropertyChangedEventManager.RemoveHandler(declaringType, OnStaticPropertyChanged, SVI[k].propertyName);
@@ -860,8 +859,7 @@ namespace MS.Internal.Data
                 if (newO == BindingExpression.StaticSource)
                 {
                     Type declaringType = (newPI != null) ? newPI.DeclaringType
-                                        : (newPD != null) ? newPD.ComponentType
-                                        : null;
+                                        : newPD?.ComponentType;
                     if (declaringType != null)
                     {
                         StaticPropertyChangedEventManager.AddHandler(declaringType, OnStaticPropertyChanged, SVI[k].propertyName);
@@ -915,7 +913,7 @@ namespace MS.Internal.Data
             // report cannot find info.  Ignore when in priority bindings.
             if (TraceData.IsEnabled)
             {
-                BindingExpression bindingExpression = (_host != null) ? _host.ParentBindingExpression : null;
+                BindingExpression bindingExpression = _host?.ParentBindingExpression;
                 if (bindingExpression == null || !bindingExpression.IsInPriorityBindingExpression)
                 {
                     if (!SystemXmlHelper.IsEmptyXmlDataCollection(parent))
@@ -1526,30 +1524,24 @@ namespace MS.Internal.Data
                     if (CriticalExceptions.IsCriticalApplicationException(ex))
                         throw;
                     BindingOperations.LogException(ex);
-                    if (_host != null)
-                        _host.ReportGetValueError(k, item, ex);
+                    _host?.ReportGetValueError(k, item, ex);
                 }
                 catch // non CLS compliant exception
                 {
-                    if (_host != null)
-                        _host.ReportGetValueError(k, item, new InvalidOperationException(SR.Format(SR.NonCLSException, "GetValue")));
+                    _host?.ReportGetValueError(k, item, new InvalidOperationException(SR.Format(SR.NonCLSException, "GetValue")));
                 }
 
                 // catch the pseudo-exception as well
                 if (o == IListIndexOutOfRange)
                 {
                     o = DependencyProperty.UnsetValue;
-                    if (_host != null)
-                        _host.ReportGetValueError(k, item, new ArgumentOutOfRangeException("index"));
+                    _host?.ReportGetValueError(k, item, new ArgumentOutOfRangeException("index"));
                 }
 
                 return o;
             }
 
-            if (_host != null)
-            {
-                _host.ReportRawValueErrors(k, item, info);
-            }
+            _host?.ReportRawValueErrors(k, item, info);
 
             return DependencyProperty.UnsetValue;
         }
@@ -1671,7 +1663,7 @@ namespace MS.Internal.Data
             SetPropertyInfo(_arySVS[Length - 1].info, out pi, out pd, out dp, out dpa);
 
             string columnName = (pd != null) ? pd.Name :
-                                (pi != null) ? pi.Name : null;
+                                pi?.Name;
 
             object arg = (columnName == "Item" && pi != null) ? _arySVS[Length - 1].args[0] : null;
 

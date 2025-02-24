@@ -4,6 +4,7 @@
 
 #nullable disable
 
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Reflection;
 using System.Threading;
@@ -358,7 +359,7 @@ namespace System.Xaml
                 EnsureReflector();
                 if (_reflector.DependsOn is null)
                 {
-                    _reflector.DependsOn = LookupDependsOn() ?? XamlType.EmptyList<XamlMember>.Value;
+                    _reflector.DependsOn = LookupDependsOn() ?? ReadOnlyCollection<XamlMember>.Empty;
                 }
 
                 return _reflector.DependsOn;
@@ -771,7 +772,7 @@ namespace System.Xaml
             }
 
             PropertyInfo pi = UnderlyingMember as PropertyInfo;
-            return (pi is not null) ? pi.GetGetMethod(true) : null;
+            return pi?.GetGetMethod(true);
         }
 
         protected virtual MethodInfo LookupUnderlyingSetter()
@@ -792,7 +793,7 @@ namespace System.Xaml
             else
             {
                 EventInfo ei = UnderlyingMember as EventInfo;
-                return (ei is not null) ? ei.GetAddMethod(true) : null;
+                return ei?.GetAddMethod(true);
             }
         }
 

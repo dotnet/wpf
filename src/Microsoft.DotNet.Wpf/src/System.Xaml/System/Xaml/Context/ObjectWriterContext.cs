@@ -527,7 +527,7 @@ namespace MS.Internal.Xaml.Context
 
         public XamlType GrandParentType
         {
-            get { return (_stack.PreviousPreviousFrame is not null) ? _stack.PreviousPreviousFrame.XamlType : null; }
+            get { return _stack.PreviousPreviousFrame?.XamlType; }
         }
 
         public XamlMember CurrentProperty
@@ -559,7 +559,7 @@ namespace MS.Internal.Xaml.Context
 
         public object GrandParentInstance
         {
-            get { return (_stack.PreviousPreviousFrame is not null) ? _stack.PreviousPreviousFrame.Instance : null; }
+            get { return _stack.PreviousPreviousFrame?.Instance; }
         }
 
         public object CurrentCollection
@@ -658,7 +658,7 @@ namespace MS.Internal.Xaml.Context
         // Used only for BeginInitHandler, in place of BaseUri.
         public Uri SourceBamlUri
         {
-            get { return _settings is not null ? _settings.SourceBamlUri : null; }
+            get { return _settings?.SourceBamlUri; }
         }
 
         // This specifically stores the start line number for a start object for consistency

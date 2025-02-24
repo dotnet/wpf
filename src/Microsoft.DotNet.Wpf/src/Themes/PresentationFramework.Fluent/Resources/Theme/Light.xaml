@@ -472,6 +472,13 @@
     <SolidColorBrush x:Key="FlyoutBackground" Color="{StaticResource AcrylicBackgroundFillColorDefault}" />
     <SolidColorBrush x:Key="FlyoutBorderBrush" Color="{StaticResource SurfaceStrokeColorFlyout}" />
 
+    <!-- GridSplitter -->
+    <SolidColorBrush x:Key="GridsplitterBackground" Color="{StaticResource ControlAltFillColorTransparent}" />
+    <SolidColorBrush x:Key="GridsplitterBackgroundPointerOver" Color="{StaticResource ControlAltFillColorTertiary}" />
+    <SolidColorBrush x:Key="GridsplitterBackgroundPressed" Color="{StaticResource ControlAltFillColorQuarternary}" />
+    <SolidColorBrush x:Key="GridsplitterBackgroundDisabled" Color="{StaticResource ControlAltFillColorDisabled}" />
+    <SolidColorBrush x:Key="GridsplitterForeground" Color="{StaticResource ControlStrongFillColorDefault}" />
+
     <!--  Hyperlink  -->
     <SolidColorBrush x:Key="HyperlinkForeground" Color="{StaticResource SystemAccentColorDark2}" />
     <SolidColorBrush x:Key="HyperlinkForegroundPointerOver" Color="{StaticResource SystemAccentColorDark3}" />
@@ -662,6 +669,9 @@
     <SolidColorBrush x:Key="TextControlBorderBrushDisabled" Color="{StaticResource ControlStrokeColorDefault}" />
     <SolidColorBrush x:Key="TextControlPlaceholderForeground" Color="{StaticResource TextFillColorSecondary}" />
     <SolidColorBrush x:Key="TextControlButtonForeground" Color="{StaticResource TextFillColorSecondary}" />
+
+    <!--  Thumb  -->
+    <SolidColorBrush x:Key="ThumbBackground" Color="{StaticResource ControlStrongFillColorDefault}" />
 
     <!--  ThumbRate  -->
     <SolidColorBrush x:Key="ThumbRateForeground" Color="{StaticResource SystemAccentColorDark1}" />

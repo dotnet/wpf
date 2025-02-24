@@ -118,7 +118,7 @@ namespace System.Windows.Media
             FontFamily fontFamily = value as FontFamily;
             if (fontFamily == null)
             {
-                throw new ArgumentException(SR.Format(SR.General_Expected_Type, "FontFamily"), "value");
+                throw new ArgumentException(SR.Format(SR.General_Expected_Type, "FontFamily"), nameof(value));
             }
 
             ArgumentNullException.ThrowIfNull(destinationType);

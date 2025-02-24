@@ -162,10 +162,7 @@ namespace System.Windows.Automation.Peers
         override internal void AddToParentProxyWeakRefCache()
         {
             ItemsControlAutomationPeer itemsControlAutomationPeer = ItemsControlAutomationPeer;
-            if(itemsControlAutomationPeer != null)
-            {
-                itemsControlAutomationPeer.AddProxyToWeakRefStorage(this.ElementProxyWeakReference, this);
-            }
+            itemsControlAutomationPeer?.AddProxyToWeakRefStorage(this.ElementProxyWeakReference, this);
         }
 
         /// <summary>

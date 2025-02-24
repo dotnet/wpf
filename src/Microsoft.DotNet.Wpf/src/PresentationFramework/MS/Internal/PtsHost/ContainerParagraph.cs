@@ -385,10 +385,7 @@ namespace MS.Internal.PtsHost
                             dcpPara += para.Cch;
                             para = para.Next;
                         }
-                        if (para != null)
-                        {
-                            para.SetUpdateInfo(PTS.FSKCHANGE.fskchInside, false);
-                        }
+                        para?.SetUpdateInfo(PTS.FSKCHANGE.fskchInside, false);
                     }
                     else
                     {

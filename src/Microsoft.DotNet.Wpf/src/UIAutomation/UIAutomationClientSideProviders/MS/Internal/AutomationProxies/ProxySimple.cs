@@ -29,7 +29,7 @@
 using System;
 using System.Windows.Automation;
 using System.Windows.Automation.Provider;
-using System.Collections;
+using System.Collections.Generic;
 using Accessibility;
 using System.Windows;
 using MS.Win32;
@@ -585,22 +585,21 @@ namespace MS.Internal.AutomationProxies
                 }
             }
 
-            ArrayList alIn = new ArrayList(100);
-            ArrayList alOut = new ArrayList(100);
+            List<ClickablePoint.CPRect> listIn = new(100);
+            List<ClickablePoint.CPRect> listOut = new(100);
 
             // Get the mid point to start with
             pt.x = (rcItem.right - 1 + rcItem.left) / 2;
             pt.y = (rcItem.bottom - 1 + rcItem.top) / 2;
-            alOut.Add(new ClickablePoint.CPRect(ref rcItem, true));
+            listOut.Add(new ClickablePoint.CPRect(ref rcItem, true));
 
             // First go through all the children to exclude whatever is on top
-            ProxyFragment proxyFrag = this as ProxyFragment;
-            if (proxyFrag != null)
+            if (this is ProxyFragment proxyFrag)
             {
-                ClickablePoint.ExcludeChildren(proxyFrag, alIn, alOut);
+                ClickablePoint.ExcludeChildren(proxyFrag, listIn, listOut);
             }
 
-            return ClickablePoint.GetPoint(_hwnd, alIn, alOut, ref pt);
+            return ClickablePoint.GetPoint(_hwnd, listIn, listOut, ref pt);
         }
 
         internal string GetAccessibleName(int item)

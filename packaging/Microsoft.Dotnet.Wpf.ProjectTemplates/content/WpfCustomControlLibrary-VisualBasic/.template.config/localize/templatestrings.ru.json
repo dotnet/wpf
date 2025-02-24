@@ -19,6 +19,8 @@
   "symbols/Framework/choices/net8.0/displayName": "NET 8.0",
   "symbols/Framework/choices/net9.0/description": "Целевая среда net9.0",
   "symbols/Framework/choices/net9.0/displayName": ".NET 9.0",
+  "symbols/Framework/choices/net10.0/description": "Целевая платформа .NET 10.0",
+  "symbols/Framework/choices/net10.0/displayName": ".NET 10.0",
   "symbols/Framework/displayName": "Платформа",
   "symbols/langVersion/description": "Задает свойство langVersion в созданном файле проекта",
   "symbols/langVersion/displayName": "Версия языка",

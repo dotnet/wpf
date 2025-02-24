@@ -12,6 +12,16 @@
 // Please see MilCodeGen.html for more information.
 //
 
+using System.Collections;
+using System.ComponentModel;
+using System.Windows;
+using System.Windows.Markup;
+using System.Windows.Media.Animation;
+using System.ComponentModel.Design.Serialization;
+using System.Windows.Media.Composition;
+using System.Reflection;
+using MS.Internal;
+
 namespace System.Windows.Media
 {
     #region PolyLineSegment

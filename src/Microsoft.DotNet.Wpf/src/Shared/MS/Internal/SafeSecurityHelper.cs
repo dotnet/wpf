@@ -58,39 +58,7 @@ namespace System.Xaml
         }
 #endif
 
-#if PRESENTATION_CORE || PRESENTATIONFRAMEWORK ||REACHFRAMEWORK || DEBUG
-
-#if !WINDOWS_BASE && !SYSTEM_XAML
-        /// <summary>
-        ///     Given an assembly, returns the partial name of the assembly.
-        /// </summary>
-        internal static string GetAssemblyPartialName(Assembly assembly)
-        {
-            AssemblyName name = new AssemblyName(assembly.FullName);
-            string partialName = name.Name;
-            return partialName ?? string.Empty;
-        }
-#endif
-
-#endif
-
 #if PRESENTATIONFRAMEWORK
-
-        /// <summary>
-        ///     Get the full assembly name by combining the partial name passed in
-        ///     with everything else from proto assembly.
-        /// </summary>
-        internal static string GetFullAssemblyNameFromPartialName(
-                                    Assembly protoAssembly,
-                                    string partialName)
-        {
-            AssemblyName name = new AssemblyName(protoAssembly.FullName)
-            {
-                Name = partialName
-            };
-            return name.FullName;
-        }
-
         internal static Point ClientToScreen(UIElement relativeTo, Point point)
         {
             GeneralTransform transform;

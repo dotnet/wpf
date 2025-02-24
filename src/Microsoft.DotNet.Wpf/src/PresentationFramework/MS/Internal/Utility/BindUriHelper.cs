@@ -112,7 +112,7 @@ namespace MS.Internal.Utility
                     {
                         NavigationService ns = null;
                         ns = element.GetValue(NavigationService.NavigationServiceProperty) as NavigationService;
-                        currentSource = (ns == null) ? null : ns.CurrentSource;
+                        currentSource = ns?.CurrentSource;
                     }
                 }
 

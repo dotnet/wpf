@@ -19,6 +19,8 @@
   "symbols/Framework/choices/net8.0/displayName": ".NET 8.0",
   "symbols/Framework/choices/net9.0/description": "目標 net9.0",
   "symbols/Framework/choices/net9.0/displayName": ".NET 9.0",
+  "symbols/Framework/choices/net10.0/description": "目標 net10.0",
+  "symbols/Framework/choices/net10.0/displayName": ".NET 10.0",
   "symbols/Framework/displayName": "架構",
   "symbols/langVersion/description": "在建立的專案檔中設定 langVersion",
   "symbols/langVersion/displayName": "語言版本",

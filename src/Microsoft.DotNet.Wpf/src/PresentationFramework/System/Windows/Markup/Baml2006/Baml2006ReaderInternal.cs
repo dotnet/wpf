@@ -34,9 +34,9 @@ namespace System.Windows.Baml2006
         #endregion
 
         // Return the full assembly name, this includes the assembly version
-        internal override ReadOnlySpan<char> GetAssemblyNameForNamespace(Assembly asm)
+        internal override ReadOnlySpan<char> GetAssemblyNameForNamespace(Assembly assembly)
         {
-            return asm.FullName;
+            return assembly.FullName;
         }
 
         // When processing ResourceDictionary.Source we may find a Uri that references the

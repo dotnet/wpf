@@ -87,7 +87,7 @@ namespace MS.Internal.AutomationProxies
             else if( eventId == AutomationElement.ToolTipClosedEvent )
             {
                 // subscribe to ToolTip specific events, keeping track of how many times the event has been added
-                WinEventTracker.AddToNotificationList( IntPtr.Zero, new WinEventTracker.ProxyRaiseEvents( OnToolTipEvents ), _toolTipEventIds, _toolTipEventIds.Length );
+                WinEventTracker.AddToNotificationList(IntPtr.Zero, new WinEventTracker.ProxyRaiseEvents(OnToolTipEvents), _toolTipEventIds);
                 _listenerCount++;
             }
         }
@@ -104,7 +104,7 @@ namespace MS.Internal.AutomationProxies
             {
                 // decrement the event counter
                 --_listenerCount;
-                WinEventTracker.RemoveToNotificationList( IntPtr.Zero, _toolTipEventIds, new WinEventTracker.ProxyRaiseEvents( OnToolTipEvents ), _toolTipEventIds.Length );
+                WinEventTracker.RemoveToNotificationList(IntPtr.Zero, _toolTipEventIds, new WinEventTracker.ProxyRaiseEvents(OnToolTipEvents));
             }
         }
 

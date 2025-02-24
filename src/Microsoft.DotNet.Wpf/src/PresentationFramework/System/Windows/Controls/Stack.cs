@@ -794,7 +794,7 @@ namespace System.Windows.Controls
         // At the time this method is called, scrolling state is in its new, valid state.
         private void OnScrollChange()
         {
-            if (ScrollOwner != null) { ScrollOwner.InvalidateScrollInfo(); }
+            ScrollOwner?.InvalidateScrollInfo();
         }
 
         private static void VerifyScrollingData(IStackMeasure measureElement, IStackMeasureScrollData scrollData, Size viewport, Size extent, Vector offset)
@@ -850,7 +850,7 @@ namespace System.Windows.Controls
                 parent = VisualTreeHelper.GetParent(dependencyObjectChild);
                 if (parent == null)
                 {
-                    throw new ArgumentException(SR.Stack_VisualInDifferentSubTree,"child");
+                    throw new ArgumentException(SR.Stack_VisualInDifferentSubTree,nameof(child));
                 }
             }
 

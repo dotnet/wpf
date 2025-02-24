@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -71,7 +71,7 @@ namespace MS.Internal.Documents
             }
             if (index < 0)
             {
-                throw new ArgumentOutOfRangeException("index", SR.TableCollectionOutOfRangeNeedNonNegNum);
+                throw new ArgumentOutOfRangeException(nameof(index), SR.TableCollectionOutOfRangeNeedNonNegNum);
             }
             if (array.Length - index < Size)
             {
@@ -103,7 +103,7 @@ namespace MS.Internal.Documents
             ArgumentNullException.ThrowIfNull(array);
             if (index < 0)
             {
-                throw new ArgumentOutOfRangeException("index", SR.TableCollectionOutOfRangeNeedNonNegNum);
+                throw new ArgumentOutOfRangeException(nameof(index), SR.TableCollectionOutOfRangeNeedNonNegNum);
             }
             if (array.Length - index < Size)
             {
@@ -453,7 +453,7 @@ namespace MS.Internal.Documents
 
             if (newItem == null)
             {
-                throw new ArgumentException(SR.Format(SR.TableCollectionElementTypeExpected, typeof(TItem).Name), "value");
+                throw new ArgumentException(SR.Format(SR.TableCollectionElementTypeExpected, typeof(TItem).Name), nameof(value));
             }
 
             this.Insert(index, newItem);
@@ -507,7 +507,7 @@ namespace MS.Internal.Documents
 
                 if (item == null)
                 {
-                    throw new ArgumentException(SR.Format(SR.TableCollectionElementTypeExpected, typeof(TItem).Name), "value");
+                    throw new ArgumentException(SR.Format(SR.TableCollectionElementTypeExpected, typeof(TItem).Name), nameof(value));
                 }
 
                 this[index] = item;

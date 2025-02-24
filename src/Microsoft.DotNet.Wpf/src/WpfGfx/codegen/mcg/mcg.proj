@@ -1,13 +1,15 @@
-<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="dogfood">
-  <Import Project="$(_NTDRIVE)$(_NTROOT)\wpf\src\Microsoft.Wpf.Product.Settings.targets" />
+<Project Sdk="Microsoft.Build.NoTargets">
 
-  <Target Name="Build">
-    <MSBuild Projects="$(WpfGraphicsRoot)\tools\csp\csp.csproj" />
-    <Exec Command="tools\GenerateFiles.cmd" />
-    <Exec Command="tools\GenerateElements.cmd" />
+  <Target Name="RunTool" BeforeTargets="AfterBuild">
+    <MSBuild Projects="..\..\tools\csp\csp.csproj" Targets="Restore;Build">
+      <Output TaskParameter="TargetOutputs" ItemName="CspBuildOutput" />
+    </MSBuild>
+    <PropertyGroup>
+      <CspExe>@(CspBuildOutput)</CspExe>
+      <CspExeDirectory>$([System.IO.Directory]::GetParent('$(CspExe)'))</CspExeDirectory>
+    </PropertyGroup>
+    <Exec Command="tools\GenerateFiles.cmd" EnvironmentVariables="RepoRoot=$(RepoRoot);CspExePath=$(CspExeDirectory);WindowsSdkPath=$(TargetFrameworkSDKToolsDirectory)" />
+    <Exec Command="tools\GenerateElements.cmd" EnvironmentVariables="RepoRoot=$(RepoRoot);CspExePath=$(CspExeDirectory);WindowsSdkPath=$(TargetFrameworkSDKToolsDirectory)" />
   </Target>
 
-  <Target Name="Rebuild" DependsOnTargets="Clean;Build" />
-
-  <Target Name="Clean" />
 </Project>

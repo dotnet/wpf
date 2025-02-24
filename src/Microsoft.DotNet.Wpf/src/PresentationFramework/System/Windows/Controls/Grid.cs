@@ -75,7 +75,7 @@ namespace System.Windows.Controls
                 return;
             }
 
-            throw (new ArgumentException(SR.Format(SR.Grid_UnexpectedParameterType, value.GetType(), typeof(UIElement)), "value"));
+            throw (new ArgumentException(SR.Format(SR.Grid_UnexpectedParameterType, value.GetType(), typeof(UIElement)), nameof(value)));
         }
 
         /// <summary>
@@ -315,7 +315,7 @@ namespace System.Windows.Controls
             {
                 if (_gridLinesRenderer == null)
                 {
-                    throw new ArgumentOutOfRangeException("index", index, SR.Visual_ArgumentOutOfRange);
+                    throw new ArgumentOutOfRangeException(nameof(index), index, SR.Visual_ArgumentOutOfRange);
                 }
                 return _gridLinesRenderer;
             }
@@ -661,10 +661,7 @@ namespace System.Windows.Controls
                     for (int i = 0, count = children.Count; i < count; ++i)
                     {
                         UIElement child = children[i];
-                        if (child != null)
-                        {
-                            child.Arrange(new Rect(arrangeSize));
-                        }
+                        child?.Arrange(new Rect(arrangeSize));
                     }
                 }
                 else
@@ -706,10 +703,7 @@ namespace System.Windows.Controls
 
                     //  update render bound on grid lines renderer visual
                     GridLinesRenderer gridLinesRenderer = EnsureGridLinesRenderer();
-                    if (gridLinesRenderer != null)
-                    {
-                        gridLinesRenderer.UpdateRenderBounds(arrangeSize);
-                    }
+                    gridLinesRenderer?.UpdateRenderBounds(arrangeSize);
                 }
             }
             finally
@@ -3874,8 +3868,8 @@ namespace System.Windows.Controls
             {
                 Debug.Assert(grid != null);
                 _currentEnumerator = -1;
-                _enumerator0 = new ColumnDefinitionCollection.Enumerator(grid.ExtData != null ? grid.ExtData.ColumnDefinitions : null);
-                _enumerator1 = new RowDefinitionCollection.Enumerator(grid.ExtData != null ? grid.ExtData.RowDefinitions : null);
+                _enumerator0 = new ColumnDefinitionCollection.Enumerator(grid.ExtData?.ColumnDefinitions);
+                _enumerator1 = new RowDefinitionCollection.Enumerator(grid.ExtData?.RowDefinitions);
                 // GridLineRenderer is NOT included into this enumerator.
                 _enumerator2Index = 0;
                 if (includeChildren)

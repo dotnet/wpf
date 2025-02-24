@@ -265,10 +265,7 @@ namespace System.Windows.Controls.Primitives
                 MaxLength = (horizontal ? stackDesiredSize.Width : stackDesiredSize.Height) + overflowExtent;
 
                 ToolBar toolbar = ToolBar;
-                if (toolbar != null)
-                {
-                    toolbar.SetValue(ToolBar.HasOverflowItemsPropertyKey, hasAlwaysOverflowItems || hasAsNeededOverflowItems);
-                }
+                toolbar?.SetValue(ToolBar.HasOverflowItemsPropertyKey, hasAlwaysOverflowItems || hasAsNeededOverflowItems);
             }
             else
             {
@@ -418,10 +415,7 @@ namespace System.Windows.Controls.Primitives
                     else
                     {
                         ItemContainerGenerator icg = Generator as ItemContainerGenerator;
-                        if (icg != null)
-                        {
-                            icg.Verify();
-                        }
+                        icg?.Verify();
                     }
                 }
             }
@@ -477,10 +471,7 @@ namespace System.Windows.Controls.Primitives
                     else
                     {
                         ItemContainerGenerator icg = Generator as ItemContainerGenerator;
-                        if (icg != null)
-                        {
-                            icg.Verify();
-                        }
+                        icg?.Verify();
                     }
                 }
             }
@@ -525,7 +516,7 @@ namespace System.Windows.Controls.Primitives
             get
             {
                 ToolBar tb = ToolBar;
-                return tb == null ? null : tb.ToolBarOverflowPanel;
+                return tb?.ToolBarOverflowPanel;
             }
         }
 

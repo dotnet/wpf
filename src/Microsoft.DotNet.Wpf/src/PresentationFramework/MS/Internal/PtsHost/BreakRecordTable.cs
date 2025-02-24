@@ -415,10 +415,7 @@ namespace MS.Internal.PtsHost
                 {
                     ((FlowDocumentPage)pageRef.Target).Dispose();
                 }
-                if (_breakRecords[index].BreakRecord != null)
-                {
-                    _breakRecords[index].BreakRecord.Dispose();
-                }
+                _breakRecords[index].BreakRecord?.Dispose();
                 // Remov the entry.
                 _breakRecords.RemoveAt(index);
                 index--;

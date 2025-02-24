@@ -408,10 +408,7 @@ namespace MS.Internal.Documents.Application
 
         //----------------------------------------------------------------------
         // Release Existing Locks (so we open with write)
-        if (Target != null)
-        {
-            Target.Close();
-        }
+        Target?.Close();
 
         //----------------------------------------------------------------------
         // Open Writable (if it fails re-open for Read)

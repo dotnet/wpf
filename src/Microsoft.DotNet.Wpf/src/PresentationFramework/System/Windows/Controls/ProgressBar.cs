@@ -101,10 +101,7 @@ namespace System.Windows.Controls
 
             // Invalidate automation peer
             ProgressBarAutomationPeer peer = UIElementAutomationPeer.FromElement(progressBar) as ProgressBarAutomationPeer;
-            if (peer != null)
-            {
-                peer.InvalidatePeer();
-            }
+            peer?.InvalidatePeer();
 
             progressBar.SetProgressBarGlowElementBrush();
 

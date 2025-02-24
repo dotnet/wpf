@@ -156,7 +156,7 @@ namespace Microsoft.Build.Tasks.Windows
         /// </summary>
         public string Culture
         {
-            get { return _culture != null ? _culture.ToLower(CultureInfo.InvariantCulture) : null; }
+            get { return _culture?.ToLower(CultureInfo.InvariantCulture); }
             set { _culture = value; }
         }
 

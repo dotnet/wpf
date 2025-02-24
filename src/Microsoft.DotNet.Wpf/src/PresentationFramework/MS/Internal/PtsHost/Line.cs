@@ -59,10 +59,7 @@ namespace MS.Internal.PtsHost
             Debug.Assert(_line != null, "Line has been already disposed.");
             try
             {
-                if (_line != null)
-                {
-                    _line.Dispose();
-                }
+                _line?.Dispose();
             }
             finally
             {

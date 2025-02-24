@@ -10,6 +10,9 @@
 
     <system:Double x:Key="ListViewItemMinHeight">40</system:Double>
     <system:Double x:Key="ListViewItemMinWidth">88</system:Double>
+    <Thickness x:Key="ListViewItemPadding">16,0,12,0</Thickness>
+    <Thickness x:Key="ListViewItemMargin">0,0,0,2</Thickness>
+
 
 
     <Style x:Key="DefaultListViewItemStyle" TargetType="{x:Type ListViewItem}">
@@ -19,8 +22,8 @@
         <Setter Property="MinHeight" Value="{StaticResource ListViewItemMinHeight}" />
         <Setter Property="MinWidth" Value="{StaticResource ListViewItemMinWidth}" />
         <Setter Property="BorderThickness" Value="1" />
-        <Setter Property="Margin" Value="0,0,0,2" />
-        <Setter Property="Padding" Value="16,0,12,0" />
+        <Setter Property="Margin" Value="{DynamicResource ListViewItemMargin}" />
+        <Setter Property="Padding" Value="{DynamicResource ListViewItemPadding}" />
         <Setter Property="HorizontalContentAlignment" Value="Stretch" />
         <Setter Property="VerticalContentAlignment" Value="Center" />
         <Setter Property="OverridesDefaultStyle" Value="True" />

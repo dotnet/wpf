@@ -48,7 +48,7 @@ namespace System.Windows.Input
 
             if (name.Length == 0)
             {
-                throw new ArgumentException(SR.StringEmpty, "name");
+                throw new ArgumentException(SR.StringEmpty, nameof(name));
             }
 
             ArgumentNullException.ThrowIfNull(ownerType);
@@ -399,10 +399,7 @@ namespace System.Windows.Input
                     else
                     {
                         targetAsUIElement3D = target as UIElement3D;
-                        if (targetAsUIElement3D != null)
-                        {
-                            targetAsUIElement3D.RaiseEvent(args, userInitiated);
-                        }
+                        targetAsUIElement3D?.RaiseEvent(args, userInitiated);
                     }                    
                 }
 
@@ -417,9 +414,9 @@ namespace System.Windows.Input
                     {
                         targetAsContentElement.RaiseEvent(args, userInitiated);
                     }
-                    else if (targetAsUIElement3D != null)
+                    else
                     {
-                        targetAsUIElement3D.RaiseEvent(args, userInitiated);
+                        targetAsUIElement3D?.RaiseEvent(args, userInitiated);
                     }
                 }
 

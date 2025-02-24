@@ -79,13 +79,13 @@ namespace MS.Internal.MilCodeGen.Generators
             string generatedPath = 
                 Path.Combine(
                     _resourceModel.OutputDirectory,
-                    "src\\Graphics\\Include\\Generated"
+                    "src\\WpfGfx\\Include\\Generated"
                     );
 
             string extensionPath =
                 Path.Combine(
                     _resourceModel.OutputDirectory,
-                    "src\\Graphics\\exts"
+                    "src\\WpfGfx\\exts"
                     );
 
             FileCodeSink enumFile = 
@@ -611,7 +611,7 @@ namespace MS.Internal.MilCodeGen.Generators
 
             m_enum.Write(
                 [[inline]]
-                    /* [[MilTypeAsHex(value)]] */ [[PadWithSpaces(command.TypeName, 45)]] = 0x[[value.ToString("x02")]],
+                    /* [[MilTypeAsHex(value)]] */ [[PadWithSpaces(command.TypeName, 55)]] = 0x[[value.ToString("x02")]],
                 [[/inline]]
                 );
 

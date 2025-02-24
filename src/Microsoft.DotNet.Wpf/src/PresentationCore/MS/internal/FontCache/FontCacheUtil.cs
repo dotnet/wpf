@@ -493,7 +493,7 @@ namespace MS.Internal.FontCache
                         out faceIndex
                     ))
                 {
-                    throw new ArgumentException(SR.FaceIndexMustBePositiveOrZero, "fontUri");
+                    throw new ArgumentException(SR.FaceIndexMustBePositiveOrZero, nameof(fontUri));
                 }
 
                 // face index was specified in a fragment, we need to strip off fragment from the source Uri
@@ -795,10 +795,8 @@ namespace MS.Internal.FontCache
             {
                 if (disposing)
                 {
-                    if (_viewHandle != null)
-                        _viewHandle.Dispose();
-                    if (_mappingHandle != null)
-                        _mappingHandle.Dispose();
+                    _viewHandle?.Dispose();
+                    _mappingHandle?.Dispose();
                 }
 
                 // We only handle flat disk files read only, should never be writeable.

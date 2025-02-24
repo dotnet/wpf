@@ -502,7 +502,7 @@ namespace System.Windows.Media.Media3D
                     // the IsVisualHostMaterialProperty should not be set on a MaterialGroup - verify that
                     if ((Boolean)matGroup.GetValue(Viewport2DVisual3D.IsVisualHostMaterialProperty))
                     {
-                        throw new ArgumentException(SR.Viewport2DVisual3D_MaterialGroupIsInteractiveMaterial, "material");
+                        throw new ArgumentException(SR.Viewport2DVisual3D_MaterialGroupIsInteractiveMaterial, nameof(material));
                     }
 
                     // iterate over the children and put them on the stack of materials to modify
@@ -526,7 +526,7 @@ namespace System.Windows.Media.Media3D
             // throw if there is more than 1 interactive material
             if (numMaterialsSwapped > 1)
             {
-                throw new ArgumentException(SR.Viewport2DVisual3D_MultipleInteractiveMaterials, "material");
+                throw new ArgumentException(SR.Viewport2DVisual3D_MultipleInteractiveMaterials, nameof(material));
             }
         }
        
@@ -827,7 +827,7 @@ namespace System.Windows.Media.Media3D
         /// </summary>
         protected override Visual3D GetVisual3DChild(int index)
         {
-           throw new ArgumentOutOfRangeException("index", index, SR.Visual_ArgumentOutOfRange);
+           throw new ArgumentOutOfRangeException(nameof(index), index, SR.Visual_ArgumentOutOfRange);
         }
 
         /// <summary>
@@ -859,7 +859,7 @@ namespace System.Windows.Media.Media3D
 
             if (index != 0 || visualChild == null)
             {
-                throw new ArgumentOutOfRangeException("index", index, SR.Visual_ArgumentOutOfRange);
+                throw new ArgumentOutOfRangeException(nameof(index), index, SR.Visual_ArgumentOutOfRange);
             }
             
             return visualChild;

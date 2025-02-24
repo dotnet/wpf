@@ -350,6 +350,13 @@
     <SolidColorBrush x:Key="FlyoutBackground" Color="{StaticResource SystemColorWindowColor}" />
     <SolidColorBrush x:Key="FlyoutBorderBrush" Color="{StaticResource SystemColorWindowTextColor}" />
 
+    <!-- GridSplitter -->
+    <SolidColorBrush x:Key="GridsplitterBackground" Color="Transparent" />
+    <SolidColorBrush x:Key="GridsplitterBackgroundPointerOver" Color="{StaticResource SystemColorHighlightTextColor}" />
+    <SolidColorBrush x:Key="GridsplitterBackgroundPressed" Color="{StaticResource SystemColorHighlightColor}" />
+    <SolidColorBrush x:Key="GridsplitterBackgroundDisabled" Color="{StaticResource SystemColorWindowColor}" />
+    <SolidColorBrush x:Key="GridsplitterForeground" Color="{StaticResource SystemColorButtonTextColor}" />
+
     <!--  Hyperlink  -->
     <SolidColorBrush x:Key="HyperlinkForeground" Color="{StaticResource SystemAccentColor}" />
     <SolidColorBrush x:Key="HyperlinkForegroundPointerOver" Color="{StaticResource SystemColorWindowTextColor}" />
@@ -541,6 +548,9 @@
     <SolidColorBrush x:Key="TextControlBorderBrushDisabled" Color="{StaticResource SystemColorGrayTextColor}" />
     <SolidColorBrush x:Key="TextControlPlaceholderForeground" Color="{StaticResource SystemColorGrayTextColor}" />
     <SolidColorBrush x:Key="TextControlButtonForeground" Color="{StaticResource SystemColorWindowTextColor}" />
+
+    <!--  Thumb  -->
+    <SolidColorBrush x:Key="ThumbBackground" Color="{StaticResource SystemColorButtonTextColor}" />
 
     <!--  ThumbRate  -->
     <SolidColorBrush x:Key="ThumbRateForeground" Color="{StaticResource SystemColorHighlightColor}" />

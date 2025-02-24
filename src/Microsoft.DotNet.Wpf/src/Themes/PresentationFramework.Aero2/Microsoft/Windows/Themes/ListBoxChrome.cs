@@ -288,10 +288,7 @@ namespace Microsoft.Windows.Themes
                 childArrangeRect.Height = finalSize.Height - borderY;
             }
 
-            if (Child != null)
-            {
-                Child.Arrange(childArrangeRect);
-            }
+            Child?.Arrange(childArrangeRect);
 
             return finalSize;
         }

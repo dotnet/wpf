@@ -122,7 +122,7 @@ namespace System.Windows.Media.Imaging
 
         internal void Init(Array array, Type type, VarEnum vt)
         {
-            varType = (ushort) vt;
+            varType = (ushort)vt;
             ca.cElems = 0;
             ca.pElems = IntPtr.Zero;
 
@@ -131,17 +131,16 @@ namespace System.Windows.Media.Imaging
             if (length > 0)
             {
                 long size = Marshal.SizeOf(type) * length;
-
-                IntPtr destPtr =IntPtr.Zero;
-                GCHandle handle = new GCHandle();
+                IntPtr destPtr = IntPtr.Zero;
 
                 try
                 {
-                    destPtr = Marshal.AllocCoTaskMem((int) size);
-                    handle = GCHandle.Alloc(array, GCHandleType.Pinned);
+                    destPtr = Marshal.AllocCoTaskMem((int)size);
+
                     unsafe
                     {
-                        CopyBytes((byte *) destPtr, (int)size, (byte *)handle.AddrOfPinnedObject(), (int)size);
+                        fixed (byte* sourcePtr = &MemoryMarshal.GetArrayDataReference(array))
+                            CopyBytes((byte*)destPtr, (int)size, sourcePtr, (int)size);
                     }
 
                     ca.cElems = (uint)length;
@@ -151,11 +150,6 @@ namespace System.Windows.Media.Imaging
                 }
                 finally
                 {
-                    if (handle.IsAllocated)
-                    {
-                        handle.Free();
-                    }
-
                     if (destPtr != IntPtr.Zero)
                     {
                         Marshal.FreeCoTaskMem(destPtr);

@@ -53,7 +53,7 @@ namespace System.Windows.Markup
         {
             if(null == assemblyNames)
             {
-                throw new ArgumentNullException( "assemblyNames" );
+                throw new ArgumentNullException( nameof(assemblyNames));
             }
 
             _assemblyNames = assemblyNames;
@@ -72,7 +72,7 @@ namespace System.Windows.Markup
         {
             if(null == assemblyNames)
             {
-                throw new ArgumentNullException( "assemblyNames" );
+                throw new ArgumentNullException( nameof(assemblyNames));
             }
 
             _assemblyNames = assemblyNames;
@@ -103,17 +103,17 @@ namespace System.Windows.Markup
         {
             if(null == xmlNamespace)
             {
-                throw new ArgumentNullException( "xmlNamespace" );
+                throw new ArgumentNullException( nameof(xmlNamespace));
             }
             if(null == localName)
             {
-                throw new ArgumentNullException( "localName" );
+                throw new ArgumentNullException( nameof(localName));
             }
 
             TypeAndSerializer typeAndSerializer =
                 GetTypeOnly(xmlNamespace,localName);
 
-            return typeAndSerializer != null ? typeAndSerializer.ObjectType : null;
+            return typeAndSerializer?.ObjectType;
         }
 
 #if !PBTCOMPILER
@@ -137,15 +137,15 @@ namespace System.Windows.Markup
         {
             if( null == xmlNamespace )
             {
-                throw new ArgumentNullException("xmlNamespace");
+                throw new ArgumentNullException(nameof(xmlNamespace));
             }
             if( null == clrNamespace )
             {
-                throw new ArgumentNullException("clrNamespace");
+                throw new ArgumentNullException(nameof(clrNamespace));
             }
             if( null == assemblyName )
             {
-                throw new ArgumentNullException("assemblyName");
+                throw new ArgumentNullException(nameof(assemblyName));
             }
 
             // Parameter validation : Check for String.Empty as well?
@@ -162,10 +162,7 @@ namespace System.Windows.Markup
             _piReverseTable[fullName] = xmlNamespace;
 
             // Add mapping to the SchemaContext
-            if (_schemaContext != null)
-            {
-                _schemaContext.SetMappingProcessingInstruction(xmlNamespace, pair);
-            }
+            _schemaContext?.SetMappingProcessingInstruction(xmlNamespace, pair);
         }
 #endif
         /// <summary>
@@ -183,11 +180,11 @@ namespace System.Windows.Markup
         {
             if( null == assemblyName )
             {
-                throw new ArgumentNullException("assemblyName");
+                throw new ArgumentNullException(nameof(assemblyName));
             }
             if( null == assemblyPath )
             {
-                throw new ArgumentNullException("assemblyPath");
+                throw new ArgumentNullException(nameof(assemblyPath));
             }
             if (assemblyPath == string.Empty)
             {
@@ -448,11 +445,11 @@ namespace System.Windows.Markup
 
             if(null == localName)
             {
-                throw new ArgumentNullException( "localName" );
+                throw new ArgumentNullException( nameof(localName));
             }
             if(null == xmlNamespace)
             {
-                throw new ArgumentNullException( "xmlNamespace" );
+                throw new ArgumentNullException( nameof(xmlNamespace));
             }
             if (owner != null && !ReflectionHelper.IsPublicType(owner))
             {
@@ -1403,6 +1400,7 @@ namespace System.Windows.Markup
 
                             if (null != memberInfo)
                             {
+#pragma warning disable IDE0031
                                 if (infoRecord != null)
                                 {
 #if !PBTCOMPILER
@@ -1414,6 +1412,7 @@ namespace System.Windows.Markup
 #endif
                                     infoRecord.SetPropertyMember(memberInfo);
                                 }
+#pragma warning restore IDE0031
                             }
                         }
                     }
@@ -1545,6 +1544,7 @@ namespace System.Windows.Markup
                                 memberInfo = PropertyInfoFromName(localName, baseType, tryInternal, true, out isInternal);
                             }
 
+#pragma warning disable IDE0031
                             if (null != memberInfo)
                             {
                                 if (infoRecord != null)
@@ -1559,6 +1559,7 @@ namespace System.Windows.Markup
                                     infoRecord.SetPropertyMember(memberInfo);
                                 }
                             }
+#pragma warning restore IDE0031
                         }
                     }
                 }
@@ -1782,7 +1783,7 @@ namespace System.Windows.Markup
 
             if(null == ownerType)
             {
-                throw new ArgumentNullException( "ownerType" );
+                throw new ArgumentNullException( nameof(ownerType));
             }
 
             return DependencyProperty.FromName(localName, ownerType);
@@ -2152,11 +2153,11 @@ namespace System.Windows.Markup
         {
             if (element == null)
             {
-                throw new ArgumentNullException( "element" );
+                throw new ArgumentNullException( nameof(element));
             }
             if (typeName == null)
             {
-                throw new ArgumentNullException( "typeName" );
+                throw new ArgumentNullException( nameof(typeName));
             }
 
             // Now map the prefix to an xml namespace uri
@@ -2172,7 +2173,7 @@ namespace System.Windows.Markup
             XmlnsDictionary prefixDictionary = element.GetValue(XmlAttributeProperties.XmlnsDictionaryProperty)
                                                as XmlnsDictionary;
 
-            object xmlNamespaceObject = (prefixDictionary != null) ? prefixDictionary[prefix] : null;
+            object xmlNamespaceObject = prefixDictionary?[prefix];
 
             // Then get the list of NamespaceMapEntry objects that maps the xml namespace uri to one
             // or more clr namespace / assembly pairs.  This should be stored on the root element
@@ -2481,7 +2482,7 @@ namespace System.Windows.Markup
 
         private static bool IsInternalAllowedOnType(Type type)
         {
-            bool isInternalAllowed = ReflectionHelper.LocalAssemblyName == type.Assembly.GetName().Name ||
+            bool isInternalAllowed = ReflectionHelper.LocalAssemblyName == ReflectionUtils.GetAssemblyPartialName(type.Assembly) ||
                                      IsFriendAssembly(type.Assembly);
             _hasInternals = _hasInternals || isInternalAllowed;
             return isInternalAllowed;
@@ -4227,13 +4228,13 @@ namespace System.Windows.Markup
         public NamespaceMapEntry(string xmlNamespace,string assemblyName,string clrNamespace)
         {
             if (xmlNamespace == null)
-                throw new ArgumentNullException("xmlNamespace");
+                throw new ArgumentNullException(nameof(xmlNamespace));
 
             if (assemblyName == null)
-                throw new ArgumentNullException("assemblyName");
+                throw new ArgumentNullException(nameof(assemblyName));
 
             if (clrNamespace == null)
-                throw new ArgumentNullException("clrNamespace");
+                throw new ArgumentNullException(nameof(clrNamespace));
 
             _xmlNamespace = xmlNamespace;
             _assemblyName = assemblyName;
@@ -4271,7 +4272,7 @@ namespace System.Windows.Markup
             {
                 if (value == null)
                 {
-                    throw new ArgumentNullException("value");
+                    throw new ArgumentNullException(nameof(value));
                 }
                 if (_xmlNamespace == null)
                 {
@@ -4290,7 +4291,7 @@ namespace System.Windows.Markup
             {
                 if (value == null)
                 {
-                    throw new ArgumentNullException("value");
+                    throw new ArgumentNullException(nameof(value));
                 }
                 if (_assemblyName == null)
                 {
@@ -4309,7 +4310,7 @@ namespace System.Windows.Markup
             {
                 if (value == null)
                 {
-                    throw new ArgumentNullException("value");
+                    throw new ArgumentNullException(nameof(value));
                 }
                 if (_clrNamespace == null)
                 {

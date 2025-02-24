@@ -353,6 +353,8 @@
     <SolidColorBrush x:Key="FlyoutBorderBrush" Color="{StaticResource SystemColorWindowTextColor}" />
 
     <!--  GroupBox  -->
+    <SolidColorBrush x:Key="GroupBoxBackground" Color="{StaticResource SystemColorButtonFaceColor}" />
+    <SolidColorBrush x:Key="GroupBoxBorderBrush" Color="{StaticResource SystemColorButtonTextColor}" />
     <SolidColorBrush x:Key="GroupBoxForeground" Color="{StaticResource SystemColorButtonTextColor}" />
 
     <!--  HyperlinkButton  -->

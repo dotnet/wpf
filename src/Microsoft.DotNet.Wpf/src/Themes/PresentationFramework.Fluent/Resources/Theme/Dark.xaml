@@ -100,8 +100,6 @@
     <Color x:Key="LayerOnAcrylicFillColorDefault">#09FFFFFF</Color>
     <Color x:Key="LayerOnAccentAcrylicFillColorDefault">#09FFFFFF</Color>
 
-    <Color x:Key="SystemBaseHighColor">#FFFFFFFF</Color>
-
     <!--  Fallback color for missing Acrylic used for e.g. Flyouts  -->
     <Color x:Key="AcrylicBackgroundFillColorDefault">#2C2C2C</Color>
 
@@ -261,7 +259,6 @@
     <SolidColorBrush x:Key="SystemFillColorSolidAttentionBackgroundBrush" Color="{StaticResource SystemFillColorSolidAttentionBackground}" />
     <SolidColorBrush x:Key="SystemFillColorSolidNeutralBackgroundBrush" Color="{StaticResource SystemFillColorSolidNeutralBackground}" />
 
-    <SolidColorBrush x:Key="SystemControlForegroundBaseHighBrush" Color="{StaticResource SystemBaseHighColor}" />
 
     <!--  Elevation border brushes  -->
 
@@ -480,7 +477,9 @@
     <SolidColorBrush x:Key="FlyoutBorderBrush" Color="{StaticResource SurfaceStrokeColorFlyout}" />
 
     <!--  GroupBox  -->
-    <SolidColorBrush x:Key="GroupBoxForeground" Color="{StaticResource SystemBaseHighColor}" />
+    <SolidColorBrush x:Key="GroupBoxBackground" Color="Transparent" />
+    <SolidColorBrush x:Key="GroupBoxBorderBrush" Color="Transparent" />
+    <SolidColorBrush x:Key="GroupBoxForeground" Color="{StaticResource TextFillColorPrimary}" />
 
     <!--  HyperlinkButton  -->
     <SolidColorBrush x:Key="HyperlinkButtonBackground" Color="{StaticResource SubtleFillColorTransparent}" />

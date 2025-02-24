@@ -29,3 +29,6 @@ using System.Diagnostics.CodeAnalysis;
 [assembly: SuppressMessage("Style", "IDE1006:Naming Styles", Justification = "Public API", Scope = "member", Target = "~F:System.Windows.DataObject.CopyingEvent")]
 [assembly: SuppressMessage("Style", "IDE1006:Naming Styles", Justification = "Public API", Scope = "member", Target = "~F:System.Windows.DataObject.PastingEvent")]
 [assembly: SuppressMessage("Style", "IDE1006:Naming Styles", Justification = "Public API", Scope = "member", Target = "~F:System.Windows.DataObject.SettingDataEvent")]
+[assembly: SuppressMessage("Usage", "CA2201:Do not raise reserved exception types", Justification = "Compat", Scope = "member", Target = "~M:System.Windows.Clipboard.IsCurrent(System.Windows.IDataObject)~System.Boolean")]
+[assembly: SuppressMessage("Usage", "CA2201:Do not raise reserved exception types", Justification = "Compat", Scope = "member", Target = "~M:System.Windows.DataObject.System#Runtime#InteropServices#ComTypes#IDataObject#EnumFormatEtc(System.Runtime.InteropServices.ComTypes.DATADIR)~System.Runtime.InteropServices.ComTypes.IEnumFORMATETC")]
+[assembly: SuppressMessage("Usage", "CA2201:Do not raise reserved exception types", Justification = "Compat", Scope = "member", Target = "~M:System.Windows.OleServicesContext.SetDispatcherThread")]

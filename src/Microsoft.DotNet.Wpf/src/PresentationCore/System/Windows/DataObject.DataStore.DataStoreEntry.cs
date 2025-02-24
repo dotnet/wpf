@@ -1,6 +1,8 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
+#nullable enable
+
 using System.Runtime.InteropServices.ComTypes;
 
 namespace System.Windows;
@@ -11,7 +13,7 @@ public sealed partial class DataObject
     {
         private class DataStoreEntry
         {
-            public DataStoreEntry(object data, bool autoConvert, DVASPECT aspect, int index)
+            public DataStoreEntry(object? data, bool autoConvert, DVASPECT aspect, int index)
             {
                 Data = data;
                 AutoConvert = autoConvert;
@@ -20,7 +22,7 @@ public sealed partial class DataObject
             }
 
             // Data object property.
-            public object Data { get; set; }
+            public object? Data { get; set; }
 
             // Auto convert proeprty.
             public bool AutoConvert { get; }

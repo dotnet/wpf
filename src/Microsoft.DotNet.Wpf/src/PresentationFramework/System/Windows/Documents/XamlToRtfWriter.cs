@@ -834,23 +834,7 @@ namespace System.Windows.Documents
             if (documentNode.Type == DocumentNodeType.dnHyperlink && !string.IsNullOrEmpty(documentNode.NavigateUri))
             {
                 _rtfBuilder.Append("{\\field{\\*\\fldinst { HYPERLINK \"");
-
-                // Unescape the escape sequences added in Xaml
-                documentNode.NavigateUri = BamlResourceContentUtil.UnescapeString(documentNode.NavigateUri);
-
-                // Add the additional backslash which rtf expected
-                for (int i = 0; i < documentNode.NavigateUri.Length; i++)
-                {
-                    if (documentNode.NavigateUri[i] == '\\')
-                    {
-                        _rtfBuilder.Append("\\\\");
-                    }
-                    else
-                    {
-                        _rtfBuilder.Append(documentNode.NavigateUri[i]);
-                    }
-                }
-
+                _rtfBuilder.Append(documentNode.NavigateUri);                
                 _rtfBuilder.Append("\" }}{\\fldrslt {");
             }
             else
@@ -3057,9 +3041,12 @@ namespace System.Windows.Documents
                                     case XamlAttribute.XANavigateUri:
                                         if (xamlTag == XamlTag.XTHyperlink && valueString.Length > 0)
                                         {
+                                            // Unescape the escape sequences added in Xaml
+                                            documentNode.NavigateUri = BamlResourceContentUtil.UnescapeString(valueString);
+                                            
                                             StringBuilder sb = new StringBuilder();
 
-                                            XamlParserHelper.AppendRTFText(sb, valueString, 0);
+                                            XamlParserHelper.AppendRTFText(sb, documentNode.NavigateUri, 0);
                                             documentNode.NavigateUri = sb.ToString();
                                         }
                                         break;

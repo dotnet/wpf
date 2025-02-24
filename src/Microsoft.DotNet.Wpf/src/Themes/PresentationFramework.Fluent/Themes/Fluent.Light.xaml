@@ -607,7 +607,8 @@
   <!--  TO DO  -->
   <!--  StatusBarItem  -->
   <SolidColorBrush x:Key="StatusBarItemBackground" Color="Transparent" />
-  <!-- <SolidColorBrush x:Key="StatusBarItemForeground" Color="{StaticResource TextFillColorPrimary}" /> -->
+  <SolidColorBrush x:Key="StatusBarItemForeground" Color="{StaticResource TextFillColorPrimary}" />
+  <SolidColorBrush x:Key="StatusBarItemBackgroundDisabled" Color="{StaticResource ControlFillColorDisabled}" />
   <SolidColorBrush x:Key="StatusBarItemForegroundDisabled" Color="{StaticResource TextFillColorDisabled}" />
   <!--  TabControl / TabView  -->
   <SolidColorBrush x:Key="TabViewBackground" Color="{StaticResource SubtleFillColorTransparent}" />
@@ -4007,6 +4008,7 @@
           <ControlTemplate.Triggers>
             <Trigger Property="IsEnabled" Value="False">
               <Setter Property="Foreground" Value="{DynamicResource StatusBarItemForegroundDisabled}" />
+              <Setter Property="Background" Value="{DynamicResource StatusBarItemBackgroundDisabled}" />
             </Trigger>
           </ControlTemplate.Triggers>
         </ControlTemplate>

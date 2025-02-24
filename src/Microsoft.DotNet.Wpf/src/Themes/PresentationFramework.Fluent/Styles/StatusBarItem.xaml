@@ -27,6 +27,7 @@
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsEnabled" Value="False">
                             <Setter Property="Foreground" Value="{DynamicResource StatusBarItemForegroundDisabled}"/>
+                            <Setter Property="Background" Value="{DynamicResource StatusBarItemBackgroundDisabled}"/>
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>

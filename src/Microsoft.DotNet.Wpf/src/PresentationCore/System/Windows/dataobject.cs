@@ -1,6 +1,8 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
+#nullable enable
+
 using MS.Win32;
 using System.Collections.Specialized;
 using System.ComponentModel;
@@ -16,6 +18,7 @@ using System.Text;
 using MS.Internal;
 
 using IComDataObject = System.Runtime.InteropServices.ComTypes.IDataObject;
+using System.Diagnostics.CodeAnalysis;
 
 // Description: Top-level class for data transfer for drag-drop and clipboard.
 //
@@ -33,7 +36,6 @@ public sealed partial class DataObject : IDataObject, IComDataObject
     private const int DV_E_LINDEX = unchecked((int)0x80040068);
     private const int DV_E_TYMED = unchecked((int)0x80040069);
     private const int DV_E_DVASPECT = unchecked((int)0x8004006B);
-    private const int OLE_E_NOTRUNNING = unchecked((int)0x80040005);
     private const int OLE_E_ADVISENOTSUPPORTED = unchecked((int)0x80040003);
     private const int DATA_S_SAMEFORMATETC = unchecked((int)0x00040130);
     private const int STG_E_MEDIUMFULL = unchecked((int)0x80030070);
@@ -120,7 +122,7 @@ public sealed partial class DataObject : IDataObject, IComDataObject
         ArgumentNullException.ThrowIfNull(format);
         ArgumentNullException.ThrowIfNull(data);
         _innerData = new DataStore();
-        SetData(format.FullName, data);
+        SetData(format.FullName!, data);
     }
 
     /// <summary>
@@ -163,7 +165,7 @@ public sealed partial class DataObject : IDataObject, IComDataObject
     ///  Retrieves the data associated with the specified data format, using an automated conversion parameter to
     ///  determine whether to convert the data to the format.
     /// </summary>
-    public object GetData(string format, bool autoConvert)
+    public object? GetData(string format, bool autoConvert)
     {
         ArgumentException.ThrowIfNullOrEmpty(format);
         return _innerData.GetData(format, autoConvert);
@@ -172,19 +174,19 @@ public sealed partial class DataObject : IDataObject, IComDataObject
     /// <summary>
     ///  Retrieves the data associated with the specified data format.
     /// </summary>
-    public object GetData(string format)
+    public object? GetData(string format)
     {
         ArgumentException.ThrowIfNullOrEmpty(format);
-        return GetData(format, true);
+        return GetData(format, autoConvert: true);
     }
 
     /// <summary>
     ///  Retrieves the data associated with the specified class type format.
     /// </summary>
-    public object GetData(Type format)
+    public object? GetData(Type format)
     {
         ArgumentNullException.ThrowIfNull(format);
-        return GetData(format.FullName);
+        return GetData(format.FullName!);
     }
 
     /// <summary>
@@ -193,7 +195,7 @@ public sealed partial class DataObject : IDataObject, IComDataObject
     public bool GetDataPresent(Type format)
     {
         ArgumentNullException.ThrowIfNull(format);
-        return GetDataPresent(format.FullName);
+        return GetDataPresent(format.FullName!);
     }
 
     /// <summary>
@@ -230,7 +232,7 @@ public sealed partial class DataObject : IDataObject, IComDataObject
     /// <summary>
     ///  Stores the specified data in this instance, using the class of the data for the format.
     /// </summary>
-    public void SetData(object data)
+    public void SetData(object? data)
     {
         ArgumentNullException.ThrowIfNull(data);
         _innerData.SetData(data);
@@ -239,7 +241,7 @@ public sealed partial class DataObject : IDataObject, IComDataObject
     /// <summary>
     ///  Stores the specified data and its associated format in this instance.
     /// </summary>
-    public void SetData(string format, object data)
+    public void SetData(string format, object? data)
     {
         ArgumentException.ThrowIfNullOrEmpty(format);
         ArgumentNullException.ThrowIfNull(data);
@@ -249,7 +251,7 @@ public sealed partial class DataObject : IDataObject, IComDataObject
     /// <summary>
     ///  Stores the specified data and its associated class type in this instance.
     /// </summary>
-    public void SetData(Type format, object data)
+    public void SetData(Type format, object? data)
     {
         ArgumentNullException.ThrowIfNull(format);
         ArgumentNullException.ThrowIfNull(data);
@@ -260,7 +262,7 @@ public sealed partial class DataObject : IDataObject, IComDataObject
     ///  Stores the specified data and its associated format in this instance, using the automatic conversion parameter
     ///  to specify whether the data can be converted to another format.
     /// </summary>
-    public void SetData(string format, object data, bool autoConvert)
+    public void SetData(string format, object? data, bool autoConvert)
     {
         ArgumentException.ThrowIfNullOrEmpty(format);
         ArgumentNullException.ThrowIfNull(data);
@@ -304,7 +306,7 @@ public sealed partial class DataObject : IDataObject, IComDataObject
     /// <summary>
     ///  Get audio data as Stream.
     /// </summary>
-    public Stream GetAudioStream() => GetData(DataFormats.WaveAudio, autoConvert: false) as Stream;
+    public Stream? GetAudioStream() => GetData(DataFormats.WaveAudio, autoConvert: false) as Stream;
 
     /// <summary>
     ///  Get file drop list data as Stream.
@@ -324,7 +326,7 @@ public sealed partial class DataObject : IDataObject, IComDataObject
     /// <summary>
     ///  Get image data as <see cref="BitmapSource"/>.
     /// </summary>
-    public BitmapSource GetImage() => GetData(DataFormats.Bitmap, autoConvert: true) as BitmapSource;
+    public BitmapSource? GetImage() => GetData(DataFormats.Bitmap, autoConvert: true) as BitmapSource;
 
     /// <summary>
     ///  Get text data which is the unicode text.
@@ -341,7 +343,7 @@ public sealed partial class DataObject : IDataObject, IComDataObject
             throw new InvalidEnumArgumentException(nameof(format), (int)format, typeof(TextDataFormat));
         }
 
-        return (string)GetData(DataFormats.ConvertToDataFormats(format), autoConvert: false)
+        return (string?)GetData(DataFormats.ConvertToDataFormats(format), autoConvert: false)
             ?? string.Empty;
     }
 
@@ -375,11 +377,11 @@ public sealed partial class DataObject : IDataObject, IComDataObject
             throw new ArgumentException(SR.Format(SR.DataObject_FileDropListIsEmpty, fileDropList));
         }
 
-        foreach (string fileDrop in fileDropList)
+        foreach (string? fileDrop in fileDropList)
         {
             try
             {
-                string filePath = Path.GetFullPath(fileDrop);
+                string filePath = Path.GetFullPath(fileDrop!);
             }
             catch (ArgumentException e)
             {
@@ -451,7 +453,7 @@ public sealed partial class DataObject : IDataObject, IComDataObject
         Marshal.ThrowExceptionForHR(NativeMethods.E_NOTIMPL);
     }
 
-    int IComDataObject.EnumDAdvise(out IEnumSTATDATA enumAdvise)
+    int IComDataObject.EnumDAdvise(out IEnumSTATDATA? enumAdvise)
     {
         if (_innerData is OleConverter converter)
         {
@@ -459,7 +461,7 @@ public sealed partial class DataObject : IDataObject, IComDataObject
         }
 
         enumAdvise = null;
-        return (OLE_E_ADVISENOTSUPPORTED);
+        return OLE_E_ADVISENOTSUPPORTED;
     }
 
     IEnumFORMATETC IComDataObject.EnumFormatEtc(DATADIR dwDirection)
@@ -476,7 +478,6 @@ public sealed partial class DataObject : IDataObject, IComDataObject
 
     int IComDataObject.GetCanonicalFormatEtc(ref FORMATETC pformatetcIn, out FORMATETC pformatetcOut)
     {
-        pformatetcOut = new FORMATETC();
         pformatetcOut = pformatetcIn;
         pformatetcOut.ptd = 0;
 
@@ -528,7 +529,7 @@ public sealed partial class DataObject : IDataObject, IComDataObject
             {
                 medium.tymed = TYMED.TYMED_ISTREAM;
 
-                IStream istream = null;
+                IStream? istream = null;
                 hr = Win32CreateStreamOnHGlobal(0, fDeleteOnRelease: true, ref istream);
                 if (NativeMethods.Succeeded(hr))
                 {
@@ -799,7 +800,7 @@ public sealed partial class DataObject : IDataObject, IComDataObject
     /// <summary>
     ///  Call Win32 UnsafeNativeMethods.CreateStreamOnHGlobal() with Win32 error checking.
     /// </summary>
-    private static int Win32CreateStreamOnHGlobal(nint hGlobal, bool fDeleteOnRelease, ref IStream istream)
+    private static int Win32CreateStreamOnHGlobal(nint hGlobal, bool fDeleteOnRelease, [NotNull] ref IStream? istream)
     {
         int hr = UnsafeNativeMethods.CreateStreamOnHGlobal(hGlobal, fDeleteOnRelease, ref istream);
         if (NativeMethods.Failed(hr))
@@ -911,10 +912,11 @@ public sealed partial class DataObject : IDataObject, IComDataObject
     /// <summary>
     ///  Call Win32 UnsafeNativeMethods.WideCharToMultiByte() with Win32 error checking.
     /// </summary>
-    internal static int Win32WideCharToMultiByte(string wideString, int wideChars, byte[] bytes, int byteCount)
+    internal static int Win32WideCharToMultiByte(string wideString, int wideChars, byte[]? bytes, int byteCount)
     {
         int win32Return = UnsafeNativeMethods.WideCharToMultiByte(0 /*CP_ACP*/, 0 /*flags*/, wideString, wideChars, bytes, byteCount, 0, 0);
         int win32Error = Marshal.GetLastWin32Error();
+
         if (win32Return == 0)
         {
             throw new Win32Exception(win32Error);
@@ -928,11 +930,6 @@ public sealed partial class DataObject : IDataObject, IComDataObject
     /// </summary>
     internal static string[] GetMappedFormats(string format)
     {
-        if (format is null)
-        {
-            return null;
-        }
-
         if (format == DataFormats.Text
             || format == DataFormats.UnicodeText
             || format == DataFormats.StringFormat)
@@ -1015,9 +1012,9 @@ public sealed partial class DataObject : IDataObject, IComDataObject
     }
 
     /// <summary>
-    ///  Returns true if the tymed is useable.
+    ///  Returns <see langword="true"/> if the tymed is useable.
     /// </summary>
-    private bool GetTymedUseable(TYMED tymed)
+    private static bool GetTymedUseable(TYMED tymed)
     {
         for (int i = 0; i < s_allowedTymeds.Length; i++)
         {
@@ -1093,7 +1090,7 @@ public sealed partial class DataObject : IDataObject, IComDataObject
     /// <summary>
     ///  Get the enhanced metafile handle from the metafile data object.
     /// </summary>
-    private nint GetEnhancedMetafileHandle(string format, object data)
+    private static nint GetEnhancedMetafileHandle(string format, object data)
     {
         if (format != DataFormats.EnhancedMetafile)
         {
@@ -1144,7 +1141,11 @@ public sealed partial class DataObject : IDataObject, IComDataObject
             return hr;
         }
 
-        object data = GetData(format);
+        if (GetData(format) is not object data)
+        {
+            Debug.Fail("DataObject.GetDataPresent returned true for a format, but then returned null for the data.");
+            return hr;
+        }
 
         // Set the default result with DV_E_TYMED.
         hr = DV_E_TYMED;
@@ -1174,7 +1175,7 @@ public sealed partial class DataObject : IDataObject, IComDataObject
     /// </summary>
     private int GetDataIntoOleStructsByTypeMedimHGlobal(string format, object data, ref STGMEDIUM medium, bool doNotReallocate)
     {
-        int hr = NativeMethods.E_FAIL;
+        int hr;
 
         if (data is Stream stream)
         {
@@ -1183,18 +1184,18 @@ public sealed partial class DataObject : IDataObject, IComDataObject
         else if (format == DataFormats.Html || format == DataFormats.Xaml)
         {
             // Save Html and Xaml data string as UTF8 encoding.
-            hr = SaveStringToHandleAsUtf8(medium.unionmember, data.ToString(), doNotReallocate);
+            hr = SaveStringToHandleAsUtf8(medium.unionmember, data.ToString() ?? "", doNotReallocate);
         }
         else if (format == DataFormats.Text
             || format == DataFormats.Rtf
             || format == DataFormats.OemText
             || format == DataFormats.CommaSeparatedValue)
         {
-            hr = SaveStringToHandle(medium.unionmember, data.ToString(), unicode: false, doNotReallocate);
+            hr = SaveStringToHandle(medium.unionmember, data.ToString() ?? "", unicode: false, doNotReallocate);
         }
         else if (format == DataFormats.UnicodeText)
         {
-            hr = SaveStringToHandle(medium.unionmember, data.ToString(), unicode: true, doNotReallocate);
+            hr = SaveStringToHandle(medium.unionmember, data.ToString() ?? "", unicode: true, doNotReallocate);
         }
         else if (format == DataFormats.FileDrop)
         {
@@ -1258,7 +1259,7 @@ public sealed partial class DataObject : IDataObject, IComDataObject
     /// <summary>
     ///  Populates Ole data structes from a dataObject that is TYMED_ISTREAM.
     /// </summary>
-    private int GetDataIntoOleStructsByTypeMedimIStream(string format, object data, ref STGMEDIUM medium)
+    private static int GetDataIntoOleStructsByTypeMedimIStream(string format, object data, ref STGMEDIUM medium)
     {
         IStream istream = (IStream)(Marshal.GetObjectForIUnknown(medium.unionmember));
         if (istream is null)
@@ -1331,7 +1332,7 @@ public sealed partial class DataObject : IDataObject, IComDataObject
     /// <summary>
     ///  Populates Ole data structes from a dataObject that is TYMED_ENHMF.
     /// </summary>
-    private int GetDataIntoOleStructsByTypeMediumEnhancedMetaFile(string format, object data, ref STGMEDIUM medium)
+    private static int GetDataIntoOleStructsByTypeMediumEnhancedMetaFile(string format, object data, ref STGMEDIUM medium)
     {
         int hr = NativeMethods.E_FAIL;
 
@@ -1360,8 +1361,8 @@ public sealed partial class DataObject : IDataObject, IComDataObject
 
     private int SaveObjectToHandle(nint handle, object data, bool doNotReallocate)
     {
-        using Stream stream = new MemoryStream();
-        using BinaryWriter binaryWriter = new BinaryWriter(stream);
+        using MemoryStream stream = new();
+        using BinaryWriter binaryWriter = new(stream);
 
         binaryWriter.Write(s_serializedObjectID);
         bool success = false;
@@ -1430,7 +1431,7 @@ public sealed partial class DataObject : IDataObject, IComDataObject
     /// </summary>
     private int SaveSystemBitmapSourceToHandle(nint handle, object data, bool doNotReallocate)
     {
-        BitmapSource bitmapSource = data as BitmapSource;
+        BitmapSource? bitmapSource = data as BitmapSource;
 
         if (bitmapSource is null && SystemDrawingHelper.IsBitmap(data))
         {
@@ -1460,10 +1461,8 @@ public sealed partial class DataObject : IDataObject, IComDataObject
     /// </summary>
     private int SaveSystemDrawingBitmapToHandle(nint handle, object data, bool doNotReallocate)
     {
-        object systemDrawingBitmap = SystemDrawingHelper.GetBitmap(data);
-
-        Invariant.Assert(systemDrawingBitmap is not null);
-
+        object? systemDrawingBitmap = SystemDrawingHelper.GetBitmap(data);
+        Invariant.AssertNotNull(systemDrawingBitmap);
         return SaveObjectToHandle(handle, systemDrawingBitmap, doNotReallocate);
     }
 
@@ -1701,7 +1700,7 @@ public sealed partial class DataObject : IDataObject, IComDataObject
     ///  <see langword="true"/> if the data is likely to be serializaed through CLR serialization
     /// </returns>
 #pragma warning disable SYSLIB0050
-    private static bool IsFormatAndDataSerializable(string format, object data) =>
+    private static bool IsFormatAndDataSerializable(string format, object? data) =>
         format == DataFormats.Serializable
             || data is ISerializable
             || (data is not null && data.GetType().IsSerializable);
@@ -1755,12 +1754,16 @@ public sealed partial class DataObject : IDataObject, IComDataObject
     /// <summary>
     ///  Ensure returning Bitmap(BitmapSource or System.Drawing.Bitmap) data that base
     ///  on the passed Bitmap format parameter.
-    ///  Bitmap data will be converted if the data mismatch with the format in case of
-    ///  autoConvert is "true", but return null if autoConvert is "false".
     /// </summary>
-    private static object EnsureBitmapDataFromFormat(string format, bool autoConvert, object data)
+    /// <remarks>
+    ///  <para>
+    ///   Bitmap data will be converted if the data mismatch with the format in case of
+    ///   autoConvert is "true", but return null if autoConvert is "false".
+    ///  </para>
+    /// </remarks>
+    private static object? EnsureBitmapDataFromFormat(string format, bool autoConvert, object? data)
     {
-        object bitmapData = data;
+        object? bitmapData = data;
 
         if (data is BitmapSource && format == SystemDrawingBitmapFormat)
         {

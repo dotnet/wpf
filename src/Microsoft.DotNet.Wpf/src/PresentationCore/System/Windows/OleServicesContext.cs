@@ -28,7 +28,7 @@ namespace System.Windows;
 internal class OleServicesContext
 {
     // This is a slot to store OleServicesContext class per thread.
-    private static readonly LocalDataStoreSlot _threadDataSlot = Thread.AllocateDataSlot();
+    private static readonly LocalDataStoreSlot s_threadDataSlot = Thread.AllocateDataSlot();
 
 #if DEBUG
     // Ref count of calls to OleInitialize/OleUnitialize.
@@ -46,31 +46,29 @@ internal class OleServicesContext
     }
 
     /// <summary>
-    /// Get the ole services context associated with the current Thread.
+    ///  Get the ole services context associated with the current Thread.
     /// </summary>
     internal static OleServicesContext CurrentOleServicesContext
     {
         get
         {
-            OleServicesContext oleServicesContext;
-
             // Get the ole services context from the Thread data slot.
-            oleServicesContext = (OleServicesContext)Thread.GetData(OleServicesContext._threadDataSlot);
+            OleServicesContext oleServicesContext = (OleServicesContext)Thread.GetData(s_threadDataSlot);
 
-            if (oleServicesContext == null)
+            if (oleServicesContext is null)
             {
                 // Create OleSErvicesContext instance.
                 oleServicesContext = new OleServicesContext();
 
                 // Save the ole services context into the UIContext data slot.
-                Thread.SetData(OleServicesContext._threadDataSlot, oleServicesContext);
+                Thread.SetData(s_threadDataSlot, oleServicesContext);
             }
 
             return oleServicesContext;
         }
     }
 
-    internal void EnsureThreadState()
+    internal static void EnsureThreadState()
     {
         if (Thread.CurrentThread.GetApartmentState() != ApartmentState.STA)
         {
@@ -79,7 +77,7 @@ internal class OleServicesContext
     }
 
     /// <summary>
-    /// OleSetClipboard - Call OLE Interopo OleSetClipboard()
+    ///  Call OLE Interopo OleSetClipboard()
     /// </summary>
     internal int OleSetClipboard(IComDataObject dataObject)
     {
@@ -92,7 +90,7 @@ internal class OleServicesContext
     }
 
     /// <summary>
-    /// OleGetClipboard - Call OLE Interop OleGetClipboard()
+    ///  Call OLE Interop OleGetClipboard()
     /// </summary>
     internal int OleGetClipboard(ref IComDataObject dataObject)
     {
@@ -105,7 +103,7 @@ internal class OleServicesContext
     }
 
     /// <summary>
-    /// OleFlushClipboard - Call OLE Interop OleFlushClipboard()
+    ///  Call OLE Interop OleFlushClipboard()
     /// </summary>
     internal int OleFlushClipboard()
     {
@@ -118,10 +116,9 @@ internal class OleServicesContext
     }
 
     /// <summary>
-    /// OleIsCurrentClipboard - OleIsCurrentClipboard only works for the data object 
-    /// used in the OleSetClipboard. This means that it can’t be called by the consumer 
-    /// of the data object to determine if the object that was on the clipboard at the 
-    /// previous OleGetClipboard call is still on the Clipboard.
+    ///  OleIsCurrentClipboard only works for the data object used in the OleSetClipboard. This means that it can’t be
+    ///  called by the consumer of the data object to determine if the object that was on the clipboard at the previous
+    ///  OleGetClipboard call is still on the Clipboard.
     /// </summary>
     internal int OleIsCurrentClipboard(IComDataObject dataObject)
     {
@@ -134,10 +131,13 @@ internal class OleServicesContext
     }
 
     /// <summary>
-    /// OleDoDragDrop - Call OLE Interop DoDragDrop()
-    /// Initiate OLE DragDrop
+    ///  Call OLE Interop DoDragDrop().  Initiate OLE DragDrop.
     /// </summary>
-    internal void OleDoDragDrop(IComDataObject dataObject, UnsafeNativeMethods.IOleDropSource dropSource, int allowedEffects, int[] finalEffect)
+    internal void OleDoDragDrop(
+        IComDataObject dataObject,
+        UnsafeNativeMethods.IOleDropSource dropSource,
+        int allowedEffects,
+        int[] finalEffect)
     {
         if (Thread.CurrentThread.GetApartmentState() != ApartmentState.STA)
         {
@@ -145,7 +145,7 @@ internal class OleServicesContext
         }
 
         InputManager inputManager = (InputManager)Dispatcher.CurrentDispatcher.InputManager;
-        if (inputManager != null)
+        if (inputManager is not null)
         {
             inputManager.InDragDrop = true;
         }
@@ -155,7 +155,7 @@ internal class OleServicesContext
         }
         finally
         {
-            if (inputManager != null)
+            if (inputManager is not null)
             {
                 inputManager.InDragDrop = false;
             }
@@ -163,7 +163,7 @@ internal class OleServicesContext
     }
 
     /// <summary>
-    /// OleRegisterDragDrop - Call OLE Interop RegisterDragDrop()
+    ///  Call OLE Interop RegisterDragDrop()
     /// </summary>
     internal int OleRegisterDragDrop(HandleRef windowHandle, UnsafeNativeMethods.IOleDropTarget dropTarget)
     {
@@ -176,7 +176,7 @@ internal class OleServicesContext
     }
 
     /// <summary>
-    /// OleRevokeDragDrop - Call OLE Interop RevokeDragDrop()
+    ///  Call OLE Interop RevokeDragDrop()
     /// </summary>
     internal int OleRevokeDragDrop(HandleRef windowHandle)
     {
@@ -189,8 +189,8 @@ internal class OleServicesContext
     }
 
     /// <summary>
-    /// SetDispatcherThread - Initialize OleServicesContext that will call Ole initialize for ole services(DragDrop and Clipboard)
-    /// and add the disposed event handler of Dispatcher to clean up resources and uninitalize Ole.
+    ///  Initialize OleServicesContext that will call Ole initialize for ole services(DragDrop and Clipboard)
+    ///  and add the disposed event handler of Dispatcher to clean up resources and uninitalize Ole.
     /// </summary>
     private void SetDispatcherThread()
     {
@@ -216,13 +216,14 @@ internal class OleServicesContext
     }
 
     /// <summary>
-    /// This is a callback when Dispatcher is shut down.
+    ///  This is a callback when the <see cref="Dispatcher"/> is shut down.
     /// </summary>
     /// <remarks>
-    /// This method must be called before shutting down the application
-    /// on the dispatcher thread.  It must be called by the same
-    /// thread running the dispatcher and the thread must have its
-    /// ApartmentState property set to ApartmentState.STA.
+    ///  <para>
+    ///   This method must be called before shutting down the application on the dispatcher thread. It must be called
+    ///   by the same thread running the dispatcher and the thread must have its ApartmentState property set to
+    ///   <see cref="ApartmentState.STA"/>.
+    ///  </para>
     /// </remarks>
     private void OnDispatcherShutdown(object sender, EventArgs args)
     {
@@ -248,9 +249,7 @@ internal class OleServicesContext
     // Wrapper for UnsafeNativeMethods.OleUninitialize, useful for debugging.
     private int OleUninitialize()
     {
-        int hr;
-
-        hr = UnsafeNativeMethods.OleUninitialize();
+        int hr = UnsafeNativeMethods.OleUninitialize();
 #if DEBUG
         _debugOleInitializeRefCount--;
         Invariant.Assert(_debugOleInitializeRefCount >= 0, "Unbalanced call to OleUnitialize!");

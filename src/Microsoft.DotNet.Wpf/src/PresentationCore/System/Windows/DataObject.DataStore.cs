@@ -1,6 +1,8 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
+#nullable enable
+
 using System.Collections;
 using System.IO;
 using System.Runtime.InteropServices.ComTypes;
@@ -21,15 +23,15 @@ public sealed partial class DataObject
         {
         }
 
-        public object GetData(string format) => GetData(format, autoConvert: true);
+        public object? GetData(string format) => GetData(format, autoConvert: true);
 
-        public object GetData(Type format) => GetData(format.FullName);
+        public object? GetData(Type format) => GetData(format.FullName!);
 
-        public object GetData(string format, bool autoConvert) => GetData(format, autoConvert, DVASPECT.DVASPECT_CONTENT, -1);
+        public object? GetData(string format, bool autoConvert) => GetData(format, autoConvert, DVASPECT.DVASPECT_CONTENT, -1);
 
         public bool GetDataPresent(string format) => GetDataPresent(format, autoConvert: true);
 
-        public bool GetDataPresent(Type format) => GetDataPresent(format.FullName);
+        public bool GetDataPresent(Type format) => GetDataPresent(format.FullName!);
 
         public bool GetDataPresent(string format, bool autoConvert) => GetDataPresent(format, autoConvert, DVASPECT.DVASPECT_CONTENT, -1);
 
@@ -52,7 +54,7 @@ public sealed partial class DataObject
 
             for (int baseFormatIndex = 0; baseFormatIndex < baseVar.Length; baseFormatIndex++)
             {
-                DataStoreEntry[] entries = (DataStoreEntry[])_data[baseVar[baseFormatIndex]];
+                DataStoreEntry[] entries = (DataStoreEntry[])_data[baseVar[baseFormatIndex]]!;
                 bool canAutoConvert = true;
 
                 for (int dataStoreIndex = 0; dataStoreIndex < entries.Length; dataStoreIndex++)
@@ -98,8 +100,10 @@ public sealed partial class DataObject
             return GetDistinctStrings(formats);
         }
 
-        public void SetData(object data)
+        public void SetData(object? data)
         {
+            ArgumentNullException.ThrowIfNull(data);
+
             if (data is ISerializable && !_data.ContainsKey(DataFormats.Serializable))
             {
                 SetData(DataFormats.Serializable, data);
@@ -108,11 +112,11 @@ public sealed partial class DataObject
             SetData(data.GetType(), data);
         }
 
-        public void SetData(string format, object data) => SetData(format, data, autoConvert: true);
+        public void SetData(string format, object? data) => SetData(format, data, autoConvert: true);
 
-        public void SetData(Type format, object data) => SetData(format.FullName, data);
+        public void SetData(Type format, object? data) => SetData(format.FullName!, data);
 
-        public void SetData(string format, object data, bool autoConvert)
+        public void SetData(string format, object? data, bool autoConvert)
         {
             // We do not have proper support for Dibs, so if the user explicitly asked
             // for Dib and provided a Bitmap object we can't convert.  Instead, publish as an HBITMAP
@@ -125,11 +129,11 @@ public sealed partial class DataObject
             SetData(format, data, autoConvert, DVASPECT.DVASPECT_CONTENT, 0);
         }
 
-        private object GetData(string format, bool autoConvert, DVASPECT aspect, int index)
+        private object? GetData(string format, bool autoConvert, DVASPECT aspect, int index)
         {
-            DataStoreEntry dataStoreEntry = FindDataStoreEntry(format, aspect, index);
-            object baseVar = dataStoreEntry?.Data;
-            object original = baseVar;
+            DataStoreEntry? dataStoreEntry = FindDataStoreEntry(format, aspect, index);
+            object? baseVar = dataStoreEntry?.Data;
+            object? original = baseVar;
 
             if (!autoConvert
                 || (dataStoreEntry is not null && !dataStoreEntry.AutoConvert)
@@ -144,7 +148,7 @@ public sealed partial class DataObject
                 {
                     if (format != mappedFormats[i])
                     {
-                        DataStoreEntry foundDataStoreEntry = FindDataStoreEntry(mappedFormats[i], aspect, index);
+                        DataStoreEntry? foundDataStoreEntry = FindDataStoreEntry(mappedFormats[i], aspect, index);
 
                         baseVar = foundDataStoreEntry?.Data;
 
@@ -189,9 +193,9 @@ public sealed partial class DataObject
                 return false;
             }
 
-            DataStoreEntry[] entries = (DataStoreEntry[])_data[format];
-            DataStoreEntry dse = null;
-            DataStoreEntry naturalDse = null;
+            DataStoreEntry[] entries = (DataStoreEntry[])_data[format]!;
+            DataStoreEntry? dse = null;
+            DataStoreEntry? naturalDse = null;
 
             // Find the entry with the given aspect and index
             for (int i = 0; i < entries.Length; i++)
@@ -220,12 +224,11 @@ public sealed partial class DataObject
             return dse is not null;
         }
 
-        private void SetData(string format, object data, bool autoConvert, DVASPECT aspect, int index)
+        private void SetData(string format, object? data, bool autoConvert, DVASPECT aspect, int index)
         {
             DataStoreEntry dse = new DataStoreEntry(data, autoConvert, aspect, index);
-            DataStoreEntry[] datalist = (DataStoreEntry[])_data[format];
 
-            if (datalist is null)
+            if (_data[format] is not DataStoreEntry[] datalist)
             {
                 datalist = new DataStoreEntry[1];
             }
@@ -240,11 +243,11 @@ public sealed partial class DataObject
             _data[format] = datalist;
         }
 
-        private DataStoreEntry FindDataStoreEntry(string format, DVASPECT aspect, int index)
+        private DataStoreEntry? FindDataStoreEntry(string format, DVASPECT aspect, int index)
         {
-            DataStoreEntry[] dataStoreEntries = (DataStoreEntry[])_data[format];
-            DataStoreEntry dataStoreEntry = null;
-            DataStoreEntry naturalDataStoreEntry = null;
+            DataStoreEntry[]? dataStoreEntries = _data[format] as DataStoreEntry[];
+            DataStoreEntry? dataStoreEntry = null;
+            DataStoreEntry? naturalDataStoreEntry = null;
 
             // Find the entry with the given aspect and index
             if (dataStoreEntries is not null)

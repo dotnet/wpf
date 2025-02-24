@@ -20,40 +20,19 @@ namespace System.Windows;
 
 public sealed partial class DataObject
 {
-    #region OleConverter Class
-
     /// <summary>
     /// OLE Converter.  This class embodies the nastiness required to convert from our
     /// managed types to standard OLE clipboard formats.
     /// </summary>
     private partial class OleConverter : IDataObject
     {
-        //------------------------------------------------------
-        //
-        //  Constructors
-        //
-        //------------------------------------------------------
-
-        #region Constructors
+        internal IComDataObject _innerData;
 
         public OleConverter(IComDataObject data)
         {
             _innerData = data;
         }
 
-        #endregion Constructors
-
-        //------------------------------------------------------
-        //
-        //  Public Methods
-        //
-        //------------------------------------------------------
-
-        #region Public Methods
-
-        //=------------------------------------------------------------------------=
-        // System.Windows.IDataObject
-        //=------------------------------------------------------------------------=
         public Object GetData(string format)
         {
             return GetData(format, true);
@@ -167,16 +146,6 @@ public sealed partial class DataObject
             SetData(format, data, true, DVASPECT.DVASPECT_CONTENT, 0);
         }
 
-        #endregion Public Methods
-
-        //------------------------------------------------------
-        //
-        //  Public Properties
-        //
-        //------------------------------------------------------
-
-        #region Public Properties
-
         /// <summary>
         /// Returns the data Object we are wrapping
         /// </summary>
@@ -187,28 +156,6 @@ public sealed partial class DataObject
                 return _innerData;
             }
         }
-
-        #endregion Public Properties
-
-        //------------------------------------------------------
-        //
-        //  Internal Fields
-        //
-        //------------------------------------------------------
-
-        #region Internal Fields
-
-        internal IComDataObject _innerData;
-
-        #endregion Internal Fields
-
-        //------------------------------------------------------
-        //
-        //  Private Methods
-        //
-        //------------------------------------------------------
-
-        #region Private Methods
 
         private Object GetData(string format, bool autoConvert, DVASPECT aspect, int index)
         {
@@ -712,6 +659,7 @@ public sealed partial class DataObject
             return value;
         }
 #pragma warning restore SYSLIB0011 // Type or member is obsolete
+
         /// <summary>
         /// Creates a new instance of BitmapSource that has been saved to the
         /// handle as the memory stream of BitmapSource.
@@ -901,8 +849,5 @@ public sealed partial class DataObject
                 Int32Rect.Empty,
                 null);
         }
-
-        #endregion Private Methods
     }
-    #endregion OleConverter Class
 }

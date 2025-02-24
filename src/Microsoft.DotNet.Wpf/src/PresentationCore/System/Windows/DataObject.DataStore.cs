@@ -7,43 +7,21 @@ using System.Runtime.InteropServices.ComTypes;
 using System.Runtime.Serialization;
 using MS.Internal;
 
-// Description: Top-level class for data transfer for drag-drop and clipboard.
-//
-// See spec at http://avalon/uis/Data%20Transfer%20clipboard%20dragdrop/Avalon%20Data%20Transfer%20Object.htm
-
 namespace System.Windows;
-
 
 public sealed partial class DataObject
 {
-    #region DataStore Class
-
     /// <summary>
     /// DataStore
     /// </summary>
     private partial class DataStore : IDataObject
     {
-        //------------------------------------------------------
-        //
-        //  Constructors
-        //
-        //------------------------------------------------------
-
-        #region Constructors
+        // Data hash table.
+        private Hashtable _data = new Hashtable();
 
         public DataStore()
         {
         }
-
-        #endregion Constructors
-
-        //------------------------------------------------------
-        //
-        //  Public Methods
-        //
-        //------------------------------------------------------
-
-        #region Public Methods
 
         public Object GetData(string format)
         {
@@ -197,16 +175,6 @@ public sealed partial class DataObject
 
             SetData(format, data, autoConvert, DVASPECT.DVASPECT_CONTENT, 0);
         }
-
-        #endregion Public Methods
-
-        //------------------------------------------------------
-        //
-        //  Private Methods
-        //
-        //------------------------------------------------------
-
-        #region Private Methods
 
         private Object GetData(string format, bool autoConvert, DVASPECT aspect, int index)
         {
@@ -409,21 +377,5 @@ public sealed partial class DataObject
 
             return data;
         }
-
-        #endregion Private Methods
-
-        //------------------------------------------------------
-        //
-        //  Private Fields
-        //
-        //------------------------------------------------------
-
-        #region Private Fields
-
-        // Data hash table.
-        private Hashtable _data = new Hashtable();
-
-        #endregion Private Fields
     }
-    #endregion DataStore Class
 }

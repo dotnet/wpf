@@ -23,19 +23,49 @@ using IComDataObject = System.Runtime.InteropServices.ComTypes.IDataObject;
 
 namespace System.Windows;
 
-#region DataObject Class
 /// <summary>
 /// Implements a basic data transfer mechanism.
 /// </summary>
 public sealed partial class DataObject : IDataObject, IComDataObject
 {
-    //------------------------------------------------------
-    //
-    //  Constructors
-    //
-    //------------------------------------------------------
+    private const string SystemDrawingBitmapFormat = "System.Drawing.Bitmap";
+    private const string SystemBitmapSourceFormat = "System.Windows.Media.Imaging.BitmapSource";
+    private const string SystemDrawingImagingMetafileFormat = "System.Drawing.Imaging.Metafile";
 
-    #region Constructors
+    private const int DV_E_FORMATETC = unchecked((int)0x80040064);
+    private const int DV_E_LINDEX = unchecked((int)0x80040068);
+    private const int DV_E_TYMED = unchecked((int)0x80040069);
+    private const int DV_E_DVASPECT = unchecked((int)0x8004006B);
+    private const int OLE_E_NOTRUNNING = unchecked((int)0x80040005);
+    private const int OLE_E_ADVISENOTSUPPORTED = unchecked((int)0x80040003);
+    private const int DATA_S_SAMEFORMATETC = unchecked((int)0x00040130);
+    private const int STG_E_MEDIUMFULL = unchecked((int)0x80030070);
+
+    // Const integer base size of the file drop list: "4 + 8 + 4 + 4"
+    private const int FILEDROPBASESIZE = 20;
+
+    // Allowed type medium.
+    private static readonly TYMED[] ALLOWED_TYMEDS = new TYMED[]
+    {
+        TYMED.TYMED_HGLOBAL,
+        TYMED.TYMED_ISTREAM,
+        TYMED.TYMED_ENHMF,
+        TYMED.TYMED_MFPICT,
+        TYMED.TYMED_GDI
+    };
+
+
+    // Inner data object of IDataObject.
+    private System.Windows.IDataObject _innerData;
+
+    // We use this to identify that a stream is actually a serialized object.  On read,
+    // we don't know if the contents of a stream were saved "raw" or if the stream is really
+    // pointing to a serialized object.  If we saved an object, we prefix it with this
+    // guid.
+    //
+    // FD9EA796-3B13-4370-A679-56106BB288FB
+    //
+    private static readonly byte[] _serializedObjectID = new Guid(0xFD9EA796, 0x3B13, 0x4370, 0xA6, 0x79, 0x56, 0x10, 0x6B, 0xB2, 0x88, 0xFB).ToByteArray();
 
     /// <summary>
     /// Initializes a new instance of the dataobject
@@ -144,16 +174,6 @@ public sealed partial class DataObject : IDataObject, IComDataObject
 
         _innerData = new OleConverter(data);
     }
-
-    #endregion Constructors
-
-    //------------------------------------------------------
-    //
-    //  Public Methods
-    //
-    //------------------------------------------------------
-
-    #region Public Methods
 
     /// <summary>
     /// Retrieves the data associated with the specified data
@@ -758,12 +778,6 @@ public sealed partial class DataObject : IDataObject, IComDataObject
         Marshal.ThrowExceptionForHR(NativeMethods.E_NOTIMPL);
     }
 
-    //......................................................
-    //
-    //  Events for Clipboard Extensibility
-    //
-    //......................................................
-
     #region Events for Clipboard Extensibility
 
     /// <summary>
@@ -893,16 +907,6 @@ public sealed partial class DataObject : IDataObject, IComDataObject
 
     #endregion Events for Clipboard Extensibility
 
-    #endregion Public Methods
-
-    //------------------------------------------------------
-    //
-    //  Public Properties
-    //
-    //------------------------------------------------------
-
-    #region Public Properties
-
     /// <summary>
     /// The DataObject.Copying event is raised when an editor
     /// has converted a content of selection into all appropriate
@@ -946,16 +950,6 @@ public sealed partial class DataObject : IDataObject, IComDataObject
                                            RoutingStrategy.Bubble, //
                                            typeof(DataObjectSettingDataEventHandler), //
                                            typeof(DataObject)); //
-
-    #endregion Public Properties
-
-    //------------------------------------------------------
-    //
-    //  Internal Methods
-    //
-    //------------------------------------------------------
-
-    #region Internal Methods
 
     /// <summary>
     /// Call Win32 UnsafeNativeMethods.GlobalAlloc() with Win32 error checking.
@@ -1214,18 +1208,6 @@ public sealed partial class DataObject : IDataObject, IComDataObject
 
         return new String[] { format };
     }
-
-    #endregion Internal Methods
-
-    //------------------------------------------------------
-    //
-    //  Private Methods
-    //
-    //------------------------------------------------------
-
-    #region Private Methods
-
-
 
     /// <summary>
     /// Behaves like IComDataObject.GetData and IComDataObject.GetDataHere,
@@ -2156,57 +2138,4 @@ public sealed partial class DataObject : IDataObject, IComDataObject
 
         return bitmapData;
     }
-
-    #endregion Private Methods
-
-    //------------------------------------------------------
-    //
-    //  Private Fields
-    //
-    //------------------------------------------------------
-
-    #region Private Fields
-
-    private const string SystemDrawingBitmapFormat = "System.Drawing.Bitmap";
-    private const string SystemBitmapSourceFormat = "System.Windows.Media.Imaging.BitmapSource";
-    private const string SystemDrawingImagingMetafileFormat = "System.Drawing.Imaging.Metafile";
-
-    private const int DV_E_FORMATETC     =       unchecked((int)0x80040064);
-    private const int DV_E_LINDEX        =       unchecked((int)0x80040068);
-    private const int DV_E_TYMED         =       unchecked((int)0x80040069);
-    private const int DV_E_DVASPECT      =       unchecked((int)0x8004006B);
-    private const int OLE_E_NOTRUNNING   =       unchecked((int)0x80040005);
-    private const int OLE_E_ADVISENOTSUPPORTED = unchecked((int)0x80040003);
-    private const int DATA_S_SAMEFORMATETC =     unchecked((int)0x00040130);
-    private const int STG_E_MEDIUMFULL   =       unchecked((int)0x80030070);
-
-    // Const integer base size of the file drop list: "4 + 8 + 4 + 4"
-    private const int FILEDROPBASESIZE   = 20;
-
-    // Allowed type medium.
-    private static readonly TYMED[] ALLOWED_TYMEDS = new TYMED[]
-    {
-        TYMED.TYMED_HGLOBAL,
-        TYMED.TYMED_ISTREAM,
-        TYMED.TYMED_ENHMF,
-        TYMED.TYMED_MFPICT,
-        TYMED.TYMED_GDI
-    };
-
-
-    // Inner data object of IDataObject.
-    private System.Windows.IDataObject _innerData;
-
-    // We use this to identify that a stream is actually a serialized object.  On read,
-    // we don't know if the contents of a stream were saved "raw" or if the stream is really
-    // pointing to a serialized object.  If we saved an object, we prefix it with this
-    // guid.
-    //
-    // FD9EA796-3B13-4370-A679-56106BB288FB
-    //
-    private static readonly byte[] _serializedObjectID = new Guid(0xFD9EA796, 0x3B13, 0x4370, 0xA6, 0x79, 0x56, 0x10, 0x6B, 0xB2, 0x88, 0xFB).ToByteArray();
-
-    #endregion Private Fields
 }
-
-#endregion DataObject Class

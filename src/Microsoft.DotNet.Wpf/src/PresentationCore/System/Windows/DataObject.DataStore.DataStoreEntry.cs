@@ -9,17 +9,12 @@ public sealed partial class DataObject
 {
     private partial class DataStore
     {
-        #region DataStoreEntry Class
-
         private class DataStoreEntry
         {
-            //------------------------------------------------------
-            //
-            //  Constructors
-            //
-            //------------------------------------------------------
-
-            #region Constructors
+            private Object _data;
+            private bool _autoConvert;
+            private DVASPECT _aspect;
+            private int _index;
 
             public DataStoreEntry(Object data, bool autoConvert, DVASPECT aspect, int index)
             {
@@ -28,16 +23,6 @@ public sealed partial class DataObject
                 this._aspect = aspect;
                 this._index = index;
             }
-
-            #endregion Constructors
-
-            //------------------------------------------------------
-            //
-            //  Public Properties
-            //
-            //------------------------------------------------------
-
-            #region Public Properties
 
             // Data object property.
             public Object Data
@@ -63,25 +48,6 @@ public sealed partial class DataObject
             {
                 get { return _index; }
             }
-
-            #endregion Public Properties
-
-            //------------------------------------------------------
-            //
-            //  Private Fields
-            //
-            //------------------------------------------------------
-
-            #region Private Fields
-
-            private Object _data;
-            private bool _autoConvert;
-            private DVASPECT _aspect;
-            private int _index;
-
-            #endregion Private Fields
         }
-
-        #endregion DataStoreEntry Class
     }
 }

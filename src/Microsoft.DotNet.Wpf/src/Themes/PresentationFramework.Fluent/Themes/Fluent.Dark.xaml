@@ -604,11 +604,13 @@
   <SolidColorBrush x:Key="SliderThumbBackgroundPointerOver" Color="{StaticResource SystemAccentColorLight2}" Opacity="0.9" />
   <!--  SnackBar  -->
   <SolidColorBrush x:Key="SnackBarBackground" Color="{StaticResource AcrylicBackgroundFillColorDefault}" />
-  <SolidColorBrush x:Key="SnackBarForeground" Color="{StaticResource TextFillColorPrimary}" />
+  <!-- <SolidColorBrush x:Key="SnackBarForeground" Color="{StaticResource TextFillColorPrimary}" /> -->
   <SolidColorBrush x:Key="SnackBarBorderBrush" Color="{StaticResource SurfaceStrokeColorFlyout}" />
   <!--  StatusBar  -->
   <!--  TO DO  -->
   <!--  StatusBarItem  -->
+  <SolidColorBrush x:Key="StatusBarItemBackground" Color="Transparent" />
+  <SolidColorBrush x:Key="StatusBarItemForeground" Color="{StaticResource TextFillColorPrimary}" />
   <SolidColorBrush x:Key="StatusBarItemForegroundDisabled" Color="{StaticResource TextFillColorDisabled}" />
   <!--  TabControl / TabView  -->
   <SolidColorBrush x:Key="TabViewBackground" Color="{StaticResource SubtleFillColorTransparent}" />
@@ -3993,19 +3995,20 @@
     <Setter Property="Padding" Value="12" />
     <Setter Property="Margin" Value="0" />
   </Style>
+  <Thickness x:Key="StatusBarItemPadding">4</Thickness>
   <Style x:Key="DefaultStatusBarItemStyle" TargetType="{x:Type StatusBarItem}">
-    <Setter Property="Padding" Value="3" />
-    <Setter Property="Background" Value="Transparent" />
+    <Setter Property="Padding" Value="{DynamicResource StatusBarItemPadding}" />
+    <Setter Property="Background" Value="{DynamicResource StatusBarItemBackground}" />
     <Setter Property="HorizontalContentAlignment" Value="Left" />
     <Setter Property="VerticalContentAlignment" Value="Center" />
     <Setter Property="Template">
       <Setter.Value>
         <ControlTemplate TargetType="{x:Type StatusBarItem}">
-          <Border Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Padding="{TemplateBinding Padding}" SnapsToDevicePixels="true">
+          <Border Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Padding="{TemplateBinding Padding}" SnapsToDevicePixels="True">
             <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
           </Border>
           <ControlTemplate.Triggers>
-            <Trigger Property="IsEnabled" Value="false">
+            <Trigger Property="IsEnabled" Value="False">
               <Setter Property="Foreground" Value="{DynamicResource StatusBarItemForegroundDisabled}" />
             </Trigger>
           </ControlTemplate.Triggers>

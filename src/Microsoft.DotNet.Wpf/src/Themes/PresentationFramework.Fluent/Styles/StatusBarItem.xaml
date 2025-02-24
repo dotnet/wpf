@@ -3,9 +3,11 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:system="clr-namespace:System;assembly=System.Runtime">
 
+    <Thickness x:Key="StatusBarItemPadding">4</Thickness>
+
     <Style x:Key="DefaultStatusBarItemStyle" TargetType="{x:Type StatusBarItem}">
-        <Setter Property="Padding" Value="3"/>
-        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="Padding" Value="{DynamicResource StatusBarItemPadding}"/>
+        <Setter Property="Background" Value="{DynamicResource StatusBarItemBackground}"/>
         <Setter Property="HorizontalContentAlignment" Value="Left"/>
         <Setter Property="VerticalContentAlignment" Value="Center"/>
         <Setter Property="Template">
@@ -16,14 +18,14 @@
                         BorderBrush="{TemplateBinding BorderBrush}"
                         BorderThickness="{TemplateBinding BorderThickness}"
                         Padding="{TemplateBinding Padding}"
-                        SnapsToDevicePixels="true">
+                        SnapsToDevicePixels="True">
                         <ContentPresenter 
                             HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
                             VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
                             SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"/>
                     </Border>
                     <ControlTemplate.Triggers>
-                        <Trigger Property="IsEnabled" Value="false">
+                        <Trigger Property="IsEnabled" Value="False">
                             <Setter Property="Foreground" Value="{DynamicResource StatusBarItemForegroundDisabled}"/>
                         </Trigger>
                     </ControlTemplate.Triggers>

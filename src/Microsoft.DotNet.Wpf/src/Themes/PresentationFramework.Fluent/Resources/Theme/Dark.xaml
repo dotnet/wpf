@@ -633,13 +633,15 @@
 
     <!--  SnackBar  -->
     <SolidColorBrush x:Key="SnackBarBackground" Color="{StaticResource AcrylicBackgroundFillColorDefault}" />
-    <SolidColorBrush x:Key="SnackBarForeground" Color="{StaticResource TextFillColorPrimary}" />
+    <!-- <SolidColorBrush x:Key="SnackBarForeground" Color="{StaticResource TextFillColorPrimary}" /> -->
     <SolidColorBrush x:Key="SnackBarBorderBrush" Color="{StaticResource SurfaceStrokeColorFlyout}" />
 
     <!--  StatusBar  -->
     <!--  TO DO  -->
 
     <!--  StatusBarItem  -->
+    <SolidColorBrush x:Key="StatusBarItemBackground" Color="Transparent" />
+    <SolidColorBrush x:Key="StatusBarItemForeground" Color="{StaticResource TextFillColorPrimary}" />
     <SolidColorBrush x:Key="StatusBarItemForegroundDisabled" Color="{StaticResource TextFillColorDisabled}" />
 
     <!--  TabControl / TabView  -->

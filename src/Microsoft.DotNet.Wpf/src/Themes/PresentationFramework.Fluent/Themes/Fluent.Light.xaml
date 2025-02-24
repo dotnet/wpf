@@ -474,7 +474,6 @@
   <SolidColorBrush x:Key="GridsplitterForeground" Color="{StaticResource ControlStrongFillColorDefault}" />
   <!--  Hyperlink  -->
   <SolidColorBrush x:Key="HyperlinkForeground" Color="{StaticResource SystemAccentColorDark2}" />
-  <SolidColorBrush x:Key="HyperlinkForegroundPointerOver" Color="{StaticResource SystemAccentColorDark3}" />
   <SolidColorBrush x:Key="HyperlinkForegroundDisabled" Color="{StaticResource TextFillColorDisabled}" />
   <!--  HyperlinkButton  -->
   <SolidColorBrush x:Key="HyperlinkButtonBackground" Color="{StaticResource SubtleFillColorTransparent}" />
@@ -2732,7 +2731,6 @@
     <Setter Property="TextDecorations" Value="Underline" />
     <Style.Triggers>
       <Trigger Property="IsMouseOver" Value="True">
-        <Setter Property="Foreground" Value="{DynamicResource HyperlinkBackgroundPointerOver}" />
         <Setter Property="TextDecorations" Value="None" />
       </Trigger>
       <Trigger Property="IsEnabled" Value="False">

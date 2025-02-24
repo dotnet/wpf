@@ -8,7 +8,6 @@
         <Setter Property="TextDecorations" Value="Underline" />        
         <Style.Triggers>
             <Trigger Property="IsMouseOver" Value="True">
-                <Setter Property="Foreground" Value="{DynamicResource HyperlinkBackgroundPointerOver}" />
                 <Setter Property="TextDecorations" Value="None" />
             </Trigger>           
             <Trigger Property="IsEnabled" Value="False">

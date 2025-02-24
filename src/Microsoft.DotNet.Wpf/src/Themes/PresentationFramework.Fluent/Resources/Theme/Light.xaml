@@ -481,7 +481,6 @@
 
     <!--  Hyperlink  -->
     <SolidColorBrush x:Key="HyperlinkForeground" Color="{StaticResource SystemAccentColorDark2}" />
-    <SolidColorBrush x:Key="HyperlinkForegroundPointerOver" Color="{StaticResource SystemAccentColorDark3}" />
     <SolidColorBrush x:Key="HyperlinkForegroundDisabled" Color="{StaticResource TextFillColorDisabled}" />
 
     <!--  HyperlinkButton  -->

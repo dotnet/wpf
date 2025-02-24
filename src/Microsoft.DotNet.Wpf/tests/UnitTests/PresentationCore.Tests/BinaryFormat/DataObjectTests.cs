@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
 namespace PresentationCore.Tests.BinaryFormat;
@@ -15,7 +15,6 @@ public class DataObjectTests
         testThread.SetApartmentState(ApartmentState.STA); // Set the thread to STA
         testThread.Start();
         testThread.Join(); // Wait for the thread to complete
-        
     }
 
     private void TestLogic(object value)
@@ -25,12 +24,12 @@ public class DataObjectTests
         dataObject.SetData(DataFormats.Serializable, value);
 
         Clipboard.SetDataObject(dataObject, true);
-        IDataObject ClipboardDataObject = Clipboard.GetDataObject();
+        IDataObject? ClipboardDataObject = Clipboard.GetDataObject();
         try
         {
-            if (ClipboardDataObject != null)
+            if (ClipboardDataObject is not null)
             {
-                Assert.Throws<System.Runtime.InteropServices.COMException>(() => ClipboardDataObject.GetData(DataFormats.Serializable));   
+                Assert.Throws<System.Runtime.InteropServices.COMException>(() => ClipboardDataObject.GetData(DataFormats.Serializable));
             }
             else
             {
@@ -48,9 +47,9 @@ public class DataObjectTests
         new SerializableData(),
         new Dictionary<int, string>(),
         new object(),
-        System.Drawing.Color.DeepSkyBlue, // Use a static property for Color
-        new System.Drawing.Pen(System.Drawing.Brushes.DeepSkyBlue, 1),
-        new System.Drawing.Bitmap(1, 1), // Use Bitmap instead of Image
+        Color.DeepSkyBlue, // Use a static property for Color
+        new Pen(Brushes.DeepSkyBlue, 1),
+        new Bitmap(1, 1), // Use Bitmap instead of Image
         new System.Drawing.Printing.PrintDocument(),
         new System.Drawing.Printing.PrinterSettings(),
         new System.Drawing.Printing.PageSettings(),
@@ -60,8 +59,7 @@ public class DataObjectTests
     };
 }
 
-
-[Serializable] 
+[Serializable]
 public class SerializableData
 {
     public string Name { get; set; }
@@ -82,8 +80,6 @@ public class SerializableData
         Salary = 50000.0;
         IsEmployed = true;
         Gender = 'M';
-        BinaryData = new byte[] { 1, 2, 3, 4, 5 }; // Example binary data
+        BinaryData = [1, 2, 3, 4, 5]; // Example binary data
     }
-    
-
 }

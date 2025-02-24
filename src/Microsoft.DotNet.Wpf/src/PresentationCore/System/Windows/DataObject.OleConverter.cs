@@ -1,6 +1,8 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
+#nullable enable
+
 using MS.Win32;
 using System.Formats.Nrbf;
 using System.IO;
@@ -17,6 +19,8 @@ using MS.Internal;
 using IComDataObject = System.Runtime.InteropServices.ComTypes.IDataObject;
 using System.Runtime.CompilerServices;
 
+using Windows.Win32.Graphics.Gdi;
+
 namespace System.Windows;
 
 public sealed partial class DataObject
@@ -26,31 +30,30 @@ public sealed partial class DataObject
     /// </summary>
     private partial class OleConverter : IDataObject
     {
-        internal IComDataObject _innerData;
+        private readonly IComDataObject _innerData;
 
-        public OleConverter(IComDataObject data)
-        {
-            _innerData = data;
-        }
+        public OleConverter(IComDataObject data) => _innerData = data;
 
-        public object GetData(string format) => GetData(format, autoConvert: true);
+        public object? GetData(string format) => GetData(format, autoConvert: true);
 
-        public object GetData(Type format) => GetData(format.FullName);
+        public object? GetData(Type format) => GetData(format.FullName ?? "");
 
-        public object GetData(string format, bool autoConvert) =>
+        public object? GetData(string format, bool autoConvert) =>
             GetData(format, autoConvert, DVASPECT.DVASPECT_CONTENT, -1);
 
         public bool GetDataPresent(string format) => GetDataPresent(format, autoConvert: true);
 
-        public bool GetDataPresent(Type format) => GetDataPresent(format.FullName);
+        public bool GetDataPresent(Type format) => GetDataPresent(format.FullName ?? "");
 
         public bool GetDataPresent(string format, bool autoConvert) =>
             GetDataPresent(format, autoConvert, DVASPECT.DVASPECT_CONTENT, -1);
 
         public string[] GetFormats() => GetFormats(autoConvert: true);
 
-        public void SetData(object data)
+        public void SetData(object? data)
         {
+            ArgumentNullException.ThrowIfNull(data);
+
             if (data is ISerializable)
             {
                 SetData(DataFormats.Serializable, data);
@@ -116,11 +119,11 @@ public sealed partial class DataObject
             return GetDistinctStrings(formats);
         }
 
-        public void SetData(string format, object data) => SetData(format, data, autoConvert: true);
+        public void SetData(string format, object? data) => SetData(format, data, autoConvert: true);
 
-        public void SetData(Type format, object data) => SetData(format.FullName, data);
+        public void SetData(Type format, object? data) => SetData(format.FullName!, data);
 
-        public void SetData(string format, object data, bool autoConvert)
+        public void SetData(string format, object? data, bool autoConvert)
         {
             throw new InvalidOperationException(SR.DataObject_CannotSetDataOnAFozenOLEDataDbject);
         }
@@ -130,10 +133,10 @@ public sealed partial class DataObject
         /// </summary>
         public IComDataObject OleDataObject => _innerData;
 
-        private object GetData(string format, bool autoConvert, DVASPECT aspect, int index)
+        private object? GetData(string format, bool autoConvert, DVASPECT aspect, int index)
         {
-            object current;
-            object original;
+            object? current;
+            object? original;
 
             current = GetDataFromBoundOleDataObject(format, aspect, index);
             original = current;
@@ -193,7 +196,7 @@ public sealed partial class DataObject
         /// <summary>
         ///  Uses IStream and retrieves the specified format from the bound IComDataObject.
         /// </summary>
-        private object GetDataFromOleIStream(string format, DVASPECT aspect, int index)
+        private object? GetDataFromOleIStream(string format, DVASPECT aspect, int index)
         {
             FORMATETC formatetc = new FORMATETC
             {
@@ -262,14 +265,14 @@ public sealed partial class DataObject
         /// <summary>
         ///  Retrieves the specified data type from the specified hglobal.
         /// </summary>
-        private object GetDataFromHGLOBAL(string format, nint hglobal)
+        private object? GetDataFromHGLOBAL(string format, nint hglobal)
         {
             if (hglobal == 0)
             {
                 return null;
             }
 
-            object data;
+            object? data;
 
             // Convert from OLE to IW objects
 
@@ -359,7 +362,7 @@ public sealed partial class DataObject
         /// <summary>
         ///  Uses HGLOBALs and retrieves the specified format from the bound IComDataObject.
         /// </summary>
-        private object GetDataFromOleHGLOBAL(string format, DVASPECT aspect, int index)
+        private object? GetDataFromOleHGLOBAL(string format, DVASPECT aspect, int index)
         {
             FORMATETC formatetc = new FORMATETC
             {
@@ -369,7 +372,7 @@ public sealed partial class DataObject
                 tymed = TYMED.TYMED_HGLOBAL
             };
 
-            object data = null;
+            object? data = null;
 
             if (NativeMethods.S_OK == QueryGetDataInner(ref formatetc))
             {
@@ -396,7 +399,7 @@ public sealed partial class DataObject
         ///  other sources that IStream and HGLOBAL. This is really just a place
         ///  to put the "special" formats like BITMAP, ENHMF, etc.
         /// </summary>
-        private object GetDataFromOleOther(string format, DVASPECT aspect, int index)
+        private object? GetDataFromOleOther(string format, DVASPECT aspect, int index)
         {
             FORMATETC formatetc = new FORMATETC();
             TYMED tymed = 0;
@@ -420,7 +423,7 @@ public sealed partial class DataObject
             formatetc.lindex = index;
             formatetc.tymed = tymed;
 
-            object data = null;
+            object? data = null;
 
             if (NativeMethods.S_OK == QueryGetDataInner(ref formatetc))
             {
@@ -438,7 +441,7 @@ public sealed partial class DataObject
                         else if (format == DataFormats.EnhancedMetafile)
                         {
                             // Get the metafile object form the enhanced metafile handle.
-                            data = SystemDrawingHelper.GetMetafileFromHemf(medium.unionmember);
+                            data = SystemDrawingHelper.GetMetafileFromHemf((HENHMETAFILE)medium.unionmember);
                         }
                     }
                 }
@@ -452,24 +455,14 @@ public sealed partial class DataObject
         }
 
         /// <summary>
-        ///  Extracts a managed Object from the innerData of the specified
-        ///  format. This is the base of the OLE to managed conversion.
+        ///  Extracts a managed Object from the innerData of the specified format.
+        ///  This is the base of the OLE to managed conversion.
         /// </summary>
-        private object GetDataFromBoundOleDataObject(string format, DVASPECT aspect, int index)
+        private object? GetDataFromBoundOleDataObject(string format, DVASPECT aspect, int index)
         {
-            object data;
-
-            data = null;
-
-            data = GetDataFromOleOther(format, aspect, index);
-            if (data == null)
-            {
-                data = GetDataFromOleHGLOBAL(format, aspect, index);
-            }
-            if (data == null)
-            {
-                data = GetDataFromOleIStream(format, aspect, index);
-            }
+            object? data = GetDataFromOleOther(format, aspect, index);
+            data ??= GetDataFromOleHGLOBAL(format, aspect, index);
+            data ??= GetDataFromOleIStream(format, aspect, index);
 
             return data;
         }
@@ -477,28 +470,22 @@ public sealed partial class DataObject
         /// <summary>
         ///  Creates an Stream from the data stored in handle.
         /// </summary>
-        private Stream ReadByteStreamFromHandle(nint handle, out bool isSerializedObject)
+        private MemoryStream ReadByteStreamFromHandle(nint handle, out bool isSerializedObject)
         {
-            nint ptr;
-
-            ptr = Win32GlobalLock(new HandleRef(this, handle));
+            nint ptr = Win32GlobalLock(new HandleRef(this, handle));
 
             try
             {
-                int size;
-                byte[] bytes;
-                int index;
-
-                size = NativeMethods.IntPtrToInt32(Win32GlobalSize(new HandleRef(this, handle)));
-                bytes = new byte[size];
+                int size = NativeMethods.IntPtrToInt32(Win32GlobalSize(new HandleRef(this, handle)));
+                byte[] bytes = new byte[size];
                 Marshal.Copy(ptr, bytes, 0, size);
-                index = 0;
+
+                int index = 0;
 
                 // The object here can either be a stream or a serialized
                 // object.  We identify a serialized object by writing the
                 // bytes for the guid serializedObjectID at the front
                 // of the stream.  Check for that here.
-                //
                 if (size > s_serializedObjectID.Length)
                 {
                     isSerializedObject = true;
@@ -533,10 +520,9 @@ public sealed partial class DataObject
         /// <summary>
         ///  Creates a new instance of the Object that has been persisted into the handle.
         /// </summary>
-#pragma warning disable SYSLIB0011 // Type or member is obsolete
-        private object ReadObjectFromHandle(nint handle, bool restrictDeserialization)
+        private object? ReadObjectFromHandle(nint handle, bool restrictDeserialization)
         {
-            object value = null;
+            object? value;
             Stream stream = ReadByteStreamFromHandle(handle, out bool isSerializedObject);
 
             if (isSerializedObject)
@@ -544,9 +530,9 @@ public sealed partial class DataObject
                 long startPosition = stream.Position;
                 try
                 {
-                    if (NrbfDecoder.Decode(stream, leaveOpen: true).TryGetFrameworkObject(out object val))
+                    if (NrbfDecoder.Decode(stream, leaveOpen: true).TryGetFrameworkObject(out value))
                     {
-                        return val;
+                        return value;
                     }
                 }
                 catch (Exception ex) when (!ex.IsCriticalException())
@@ -556,22 +542,23 @@ public sealed partial class DataObject
 
                 // Using Binary formatter
                 stream.Position = startPosition;
-                BinaryFormatter formatter;
-                formatter = new BinaryFormatter();
+#pragma warning disable SYSLIB0011 // BinaryFormatter is obsolete 
+#pragma warning disable CA2300 // Do not use insecure deserializer BinaryFormatter
+                BinaryFormatter formatter = new BinaryFormatter();
                 if (restrictDeserialization)
                 {
                     formatter.Binder = new TypeRestrictingSerializationBinder();
                 }
                 try
                 {
-#pragma warning disable SYSLIB0011 // BinaryFormatter is obsolete 
                     value = formatter.Deserialize(stream);
-#pragma warning restore SYSLIB0011 // BinaryFormatter is obsolete 
+#pragma warning restore CA2300
+#pragma warning restore SYSLIB0011
                 }
                 catch (RestrictedTypeDeserializationException)
                 {
-                    value = null;
                     // Couldn't parse for some reason, then need to add a type converter that round trips with string or byte[]
+                    value = null;
                 }
             }
             else
@@ -582,17 +569,14 @@ public sealed partial class DataObject
             return value;
         }
 
-#pragma warning restore SYSLIB0011 // Type or member is obsolete
         /// <summary>
         ///  Creates a new instance of BitmapSource that has been saved to the
         ///  handle as the memory stream of BitmapSource.
         /// </summary>
-        private BitmapFrame ReadBitmapSourceFromHandle(nint handle)
+        private BitmapFrame? ReadBitmapSourceFromHandle(nint handle)
         {
             // Read the bitmap stream from the handle
-            Stream bitmapStream = ReadByteStreamFromHandle(handle, out bool isSerializedObject);
-
-            if (bitmapStream is not null)
+            if (ReadByteStreamFromHandle(handle, out _) is { } bitmapStream)
             {
                 // Create BitmapSource instance from the bitmap stream
                 return BitmapFrame.Create(bitmapStream);
@@ -605,10 +589,10 @@ public sealed partial class DataObject
         ///  Parses the HDROP format and returns a list of strings using
         ///  the DragQueryFile function.
         /// </summary>
-        private string[] ReadFileListFromHandle(nint hdrop)
+        private string[]? ReadFileListFromHandle(nint hdrop)
         {
-            string[] files = null;
-            StringBuilder sb = new StringBuilder(NativeMethods.MAX_PATH);
+            string[]? files = null;
+            StringBuilder sb = new(NativeMethods.MAX_PATH);
 
             int count = UnsafeNativeMethods.DragQueryFile(new HandleRef(this, hdrop), unchecked((int)0xFFFFFFFF), null, 0);
             if (count > 0)
@@ -634,27 +618,23 @@ public sealed partial class DataObject
         /// </summary>
         private unsafe string ReadStringFromHandle(nint handle, bool unicode)
         {
-            string stringData = null;
-
             nint ptr = Win32GlobalLock(new HandleRef(this, handle));
             try
             {
-                stringData = unicode ? new string((char*)ptr) : new string((sbyte*)ptr);
+                return unicode ? new string((char*)ptr) : new string((sbyte*)ptr);
             }
             finally
             {
                 Win32GlobalUnlock(new HandleRef(this, handle));
             }
-
-            return stringData;
         }
 
         /// <summary>
         ///  Creates a string from the data stored in handle as UTF8.
         /// </summary>
-        private unsafe string ReadStringFromHandleUtf8(nint handle)
+        private unsafe string? ReadStringFromHandleUtf8(nint handle)
         {
-            string stringData = null;
+            string? stringData = null;
 
             int utf8ByteSize = NativeMethods.IntPtrToInt32(Win32GlobalSize(new HandleRef(this, handle)));
 

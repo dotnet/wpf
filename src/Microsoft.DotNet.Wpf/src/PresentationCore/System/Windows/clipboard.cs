@@ -6,6 +6,8 @@
 //
 // See spec at http://avalon/uis/Data%20Transfer%20clipboard%20dragdrop/Avalon%20Clipboard.htm
 
+#nullable enable
+
 using MS.Win32;
 using MS.Internal;
 using System.Collections.Specialized;
@@ -148,12 +150,12 @@ public static class Clipboard
     /// <summary>
     ///  Get audio data as Stream from Clipboard.
     /// </summary>
-    public static Stream GetAudioStream() => GetDataInternal(DataFormats.WaveAudio) as Stream;
+    public static Stream? GetAudioStream() => GetDataInternal(DataFormats.WaveAudio) as Stream;
 
     /// <summary>
     ///  Get data for the specified data format from Clipboard.
     /// </summary>
-    public static object GetData(string format)
+    public static object? GetData(string format)
     {
         ArgumentException.ThrowIfNullOrEmpty(format);
         return GetDataInternal(format);
@@ -177,7 +179,7 @@ public static class Clipboard
     /// <summary>
     ///  Get the image from Clipboard.
     /// </summary>
-    public static BitmapSource GetImage() => GetDataInternal(DataFormats.Bitmap) as BitmapSource;
+    public static BitmapSource? GetImage() => GetDataInternal(DataFormats.Bitmap) as BitmapSource;
 
     /// <summary>
     ///  Get text from Clipboard.
@@ -194,7 +196,7 @@ public static class Clipboard
             throw new InvalidEnumArgumentException(nameof(format), (int)format, typeof(TextDataFormat));
         }
 
-        string text = (string)GetDataInternal(DataFormats.ConvertToDataFormats(format));
+        string? text = GetDataInternal(DataFormats.ConvertToDataFormats(format)) as string;
         return text ?? string.Empty;
     }
 
@@ -238,11 +240,11 @@ public static class Clipboard
             throw new ArgumentException(SR.Format(SR.DataObject_FileDropListIsEmpty, fileDropList));
         }
 
-        foreach (string fileDrop in fileDropList)
+        foreach (string? fileDrop in fileDropList)
         {
             try
             {
-                string filePath = Path.GetFullPath(fileDrop);
+                string filePath = Path.GetFullPath(fileDrop!);
             }
             catch (ArgumentException)
             {
@@ -294,7 +296,7 @@ public static class Clipboard
     /// <summary>
     ///  Retrieves the data object that is currently on the system clipboard.
     /// </summary>
-    public static IDataObject GetDataObject() => GetDataObjectInternal();
+    public static IDataObject? GetDataObject() => GetDataObjectInternal();
 
     /// <summary>
     ///  Determines whether the data object previously placed on the clipboard
@@ -416,13 +418,13 @@ public static class Clipboard
         }
     }
 
-    private static IDataObject GetDataObjectInternal()
+    private static IDataObject? GetDataObjectInternal()
     {
         // Retry OLE operations several times as mitigation for clipboard locking issues in TS sessions.
 
         int i = OleRetryCount;
 
-        IComDataObject oleDataObject;
+        IComDataObject? oleDataObject;
         while (true)
         {
             oleDataObject = null;
@@ -441,7 +443,7 @@ public static class Clipboard
             Thread.Sleep(OleRetryDelay);
         }
 
-        IDataObject dataObject;
+        IDataObject? dataObject;
         if (oleDataObject is IDataObject iDataObject && !Marshal.IsComObject(oleDataObject))
         {
             dataObject = iDataObject;
@@ -490,14 +492,14 @@ public static class Clipboard
     }
 
     /// <summary>
-    /// Get the specified format from Clipboard.
+    ///  Get the specified format from Clipboard.
     /// </summary>
-    private static object GetDataInternal(string format) => GetDataObject() is { } dataObject
+    private static object? GetDataInternal(string format) => GetDataObject() is { } dataObject
         ? dataObject.GetData(format, IsDataFormatAutoConvert(format))
         : null;
 
     /// <summary>
-    /// Set the specified data into Clipboard.
+    ///  Set the specified data into Clipboard.
     /// </summary>
     private static void SetDataInternal(string format, object data)
     {

@@ -8,20 +8,16 @@ namespace System.Windows;
 
 public sealed partial class DataObject
 {
-    #region FormatEnumerator Class
-
     /// <summary>
     /// IEnumFORMATETC implementation for DataObject.
     /// </summary>
     private class FormatEnumerator : IEnumFORMATETC
     {
-        //------------------------------------------------------
-        //
-        //  Constructors
-        //
-        //------------------------------------------------------
+        // List of FORMATETC to enumerate.
+        private readonly FORMATETC[] _formats;
 
-        #region Constructors
+        // Current offset of the enumerator.
+        private int _current;
 
         // Creates a new enumerator instance.
         internal FormatEnumerator(DataObject dataObject)
@@ -72,16 +68,6 @@ public sealed partial class DataObject
             _current = formatEnumerator._current;
         }
 
-        #endregion Constructors
-
-        //------------------------------------------------------
-        //
-        //  Public Methods
-        //
-        //------------------------------------------------------
-
-        #region Public Methods
-
         // IEnumFORMATETC.Next implementation.
         public int Next(int celt, FORMATETC[] rgelt, int[] pceltFetched)
         {
@@ -128,25 +114,5 @@ public sealed partial class DataObject
         {
             ppenum = new FormatEnumerator(this);
         }
-
-        #endregion Public Methods
-
-        //------------------------------------------------------
-        //
-        //  Private Fields
-        //
-        //------------------------------------------------------
-
-        #region Private Fields
-
-        // List of FORMATETC to enumerate.
-        private readonly FORMATETC[] _formats;
-
-        // Current offset of the enumerator.
-        private int _current;
-
-        #endregion Private Fields
     }
-
-    #endregion FormatEnuerator Class
 }

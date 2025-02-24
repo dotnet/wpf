@@ -19,21 +19,35 @@ using IComDataObject = System.Runtime.InteropServices.ComTypes.IDataObject;
 
 namespace System.Windows;
 
-#region Clipboard class
-
 /// <summary>
 /// Provides methods to place data on and retrieve data from the system clipboard. 
 /// This class cannot be inherited.
 /// </summary>
 public static class Clipboard
 {
-    //------------------------------------------------------
-    //
-    //  Public Methods
-    //
-    //------------------------------------------------------
+    /// <summary>
+    /// The number of times to retry OLE clipboard operations.
+    /// </summary>
+    /// <remarks>
+    /// This is mitigation for clipboard locking issues in TS sessions.
+    /// </remarks>
+    private const int OleRetryCount = 10;
 
-    #region Public Methods
+    /// <summary>
+    /// The amount of time in milliseconds to sleep between retrying OLE clipboard operations.
+    /// </summary>
+    /// <remarks>
+    /// This is mitigation for clipboard locking issues in TS sessions. 
+    /// </remarks>
+    private const int OleRetryDelay = 100;
+
+    /// <summary>
+    /// The amount of time in milliseconds to sleep before flushing the clipboard after a set.
+    /// </summary>
+    /// <remarks>
+    /// This is mitigation for clipboard listener issues.
+    /// </remarks>
+    private const int OleFlushDelay = 10;
 
     /// <summary>
     /// Clear the system clipboard which the clipboard is emptied.
@@ -433,16 +447,6 @@ public static class Clipboard
         CriticalSetDataObject(data,copy);
     }
 
-    #endregion Public Methods
-
-    #region Internal Methods
-
-    //------------------------------------------------------
-    //
-    //  Internal Methods
-    //
-    //------------------------------------------------------
-
     /// <summary>
     /// Places data on the system Clipboard and uses copy to specify whether the data 
     /// should remain on the Clipboard after the application exits.
@@ -504,77 +508,6 @@ public static class Clipboard
 
             Flush();
         }
-    }
-
-    internal static bool IsClipboardPopulated()
-    {
-        return (GetDataObjectInternal() != null);
-    }
-
-    #endregion Internal Methods
-
-    //------------------------------------------------------
-    //
-    //  Private Methods
-    //
-    //------------------------------------------------------
-
-    #region Private Methods
-
-    /// <summary>
-    /// Calls IsDynamicCodePolicyEnabled to determine if DeviceGuard is enabled, then caches it so subsequent calls only return the cached value.
-    /// </summary>
-    private static bool IsDeviceGuardEnabled
-    {
-        get
-        {
-            if (_isDeviceGuardEnabled < 0) return false;
-            if (_isDeviceGuardEnabled > 0) return true;
-
-            bool isDynamicCodePolicyEnabled = IsDynamicCodePolicyEnabled();
-            _isDeviceGuardEnabled = isDynamicCodePolicyEnabled ? 1 : -1;
-
-            return isDynamicCodePolicyEnabled;
-        }
-    }
-
-    /// <summary>
-    /// Loads Wldp.dll and looks for WldpIsDynamicCodePolicyEnabled to determine whether DeviceGuard is enabled.
-    /// </summary>
-    private static bool IsDynamicCodePolicyEnabled()
-    {
-        bool isEnabled = false;
-
-        IntPtr hModule = IntPtr.Zero;
-        try
-        {
-            hModule = LoadLibraryHelper.SecureLoadLibraryEx(ExternDll.Wldp, IntPtr.Zero, UnsafeNativeMethods.LoadLibraryFlags.LOAD_LIBRARY_SEARCH_SYSTEM32);
-            if (hModule != IntPtr.Zero)
-            {
-                IntPtr entryPoint = UnsafeNativeMethods.GetProcAddressNoThrow(new HandleRef(null, hModule), "WldpIsDynamicCodePolicyEnabled");
-                if (entryPoint != IntPtr.Zero)
-                {
-                    int hResult = UnsafeNativeMethods.WldpIsDynamicCodePolicyEnabled(out isEnabled);
-
-                    if (hResult != NativeMethods.S_OK)
-                    {
-                        isEnabled = false;
-                    }
-                }
-            }
-        }
-        catch
-        {
-        }
-        finally
-        {
-            if (hModule != IntPtr.Zero)
-            {
-                UnsafeNativeMethods.FreeLibrary(hModule);
-            }
-        }
-
-        return isEnabled;
     }
 
     private static IDataObject GetDataObjectInternal()
@@ -723,44 +656,4 @@ public static class Clipboard
 
         return autoConvert;
     }
-
-    #endregion Private Methods
-
-    //------------------------------------------------------
-    //
-    //  Private Constants
-    //
-    //------------------------------------------------------
-
-    #region Private Constants
-
-    /// <summary>
-    /// The number of times to retry OLE clipboard operations.
-    /// </summary>
-    /// <remarks>
-    /// This is mitigation for clipboard locking issues in TS sessions.
-    /// </remarks>
-    private const int OleRetryCount = 10;
-
-    /// <summary>
-    /// The amount of time in milliseconds to sleep between retrying OLE clipboard operations.
-    /// </summary>
-    /// <remarks>
-    /// This is mitigation for clipboard locking issues in TS sessions. 
-    /// </remarks>
-    private const int OleRetryDelay = 100;
-
-    /// <summary>
-    /// The amount of time in milliseconds to sleep before flushing the clipboard after a set.
-    /// </summary>
-    /// <remarks>
-    /// This is mitigation for clipboard listener issues.
-    /// </remarks>
-    private const int OleFlushDelay = 10;
-
-    #endregion Private Constants
-
-    private static int _isDeviceGuardEnabled = 0;
 }
-
-#endregion Clipboard class

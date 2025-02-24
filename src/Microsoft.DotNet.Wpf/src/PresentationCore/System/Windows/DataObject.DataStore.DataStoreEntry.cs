@@ -11,43 +11,25 @@ public sealed partial class DataObject
     {
         private class DataStoreEntry
         {
-            private Object _data;
-            private bool _autoConvert;
-            private DVASPECT _aspect;
-            private int _index;
-
-            public DataStoreEntry(Object data, bool autoConvert, DVASPECT aspect, int index)
+            public DataStoreEntry(object data, bool autoConvert, DVASPECT aspect, int index)
             {
-                this._data = data;
-                this._autoConvert = autoConvert;
-                this._aspect = aspect;
-                this._index = index;
+                Data = data;
+                AutoConvert = autoConvert;
+                Aspect = aspect;
+                Index = index;
             }
 
             // Data object property.
-            public Object Data
-            {
-                get { return _data; }
-                set { _data = value; }
-            }
+            public object Data { get; set; }
 
             // Auto convert proeprty.
-            public bool AutoConvert
-            {
-                get { return _autoConvert; }
-            }
+            public bool AutoConvert { get; }
 
             // Aspect flag property.
-            public DVASPECT Aspect
-            {
-                get { return _aspect; }
-            }
+            public DVASPECT Aspect { get; }
 
             // Index property.
-            public int Index
-            {
-                get { return _index; }
-            }
+            public int Index { get; }
         }
     }
 }

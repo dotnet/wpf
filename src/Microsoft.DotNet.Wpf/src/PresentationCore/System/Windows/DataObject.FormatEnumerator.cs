@@ -9,7 +9,7 @@ namespace System.Windows;
 public sealed partial class DataObject
 {
     /// <summary>
-    /// IEnumFORMATETC implementation for DataObject.
+    ///  IEnumFORMATETC implementation for DataObject.
     /// </summary>
     private class FormatEnumerator : IEnumFORMATETC
     {
@@ -19,45 +19,43 @@ public sealed partial class DataObject
         // Current offset of the enumerator.
         private int _current;
 
-        // Creates a new enumerator instance.
         internal FormatEnumerator(DataObject dataObject)
         {
-            FORMATETC temp;
-            string[] formats;
+            string[] formats = dataObject.GetFormats();
+            _formats = new FORMATETC[formats is null ? 0 : formats.Length];
 
-            formats = dataObject.GetFormats();
-            _formats = new FORMATETC[formats == null ? 0 : formats.Length];
-
-            if (formats != null)
+            if (formats is null)
             {
-                for (int i = 0; i < formats.Length; i++)
+                return;
+            }
+
+            for (int i = 0; i < formats.Length; i++)
+            {
+                string format;
+
+                format = formats[i];
+                FORMATETC temp = new FORMATETC
                 {
-                    string format;
+                    cfFormat = (short)DataFormats.GetDataFormat(format).Id,
+                    dwAspect = DVASPECT.DVASPECT_CONTENT,
+                    ptd = 0,
+                    lindex = -1
+                };
 
-                    format = formats[i];
-                    temp = new FORMATETC
-                    {
-                        cfFormat = (short)DataFormats.GetDataFormat(format).Id,
-                        dwAspect = DVASPECT.DVASPECT_CONTENT,
-                        ptd = IntPtr.Zero,
-                        lindex = -1
-                    };
-
-                    if (IsFormatEqual(format, DataFormats.Bitmap))
-                    {
-                        temp.tymed = TYMED.TYMED_GDI;
-                    }
-                    else if (IsFormatEqual(format, DataFormats.EnhancedMetafile))
-                    {
-                        temp.tymed = TYMED.TYMED_ENHMF;
-                    }
-                    else
-                    {
-                        temp.tymed = TYMED.TYMED_HGLOBAL;
-                    }
-
-                    _formats[i] = temp;
+                if (format == DataFormats.Bitmap)
+                {
+                    temp.tymed = TYMED.TYMED_GDI;
                 }
+                else if (format == DataFormats.EnhancedMetafile)
+                {
+                    temp.tymed = TYMED.TYMED_ENHMF;
+                }
+                else
+                {
+                    temp.tymed = TYMED.TYMED_HGLOBAL;
+                }
+
+                _formats[i] = temp;
             }
         }
 
@@ -73,19 +71,19 @@ public sealed partial class DataObject
         {
             int fetched = 0;
 
-            if (rgelt == null)
+            if (rgelt is null)
             {
                 return NativeMethods.E_INVALIDARG;
             }
 
             for (int i = 0; i < celt && _current < _formats.Length; i++)
             {
-                rgelt[i] = _formats[this._current];
+                rgelt[i] = _formats[_current];
                 _current++;
                 fetched++;
             }
 
-            if (pceltFetched != null)
+            if (pceltFetched is not null)
             {
                 pceltFetched[0] = fetched;
             }
@@ -97,8 +95,7 @@ public sealed partial class DataObject
         public int Skip(int celt)
         {
             // Make sure we don't overflow on the skip.
-            _current = _current + (int)Math.Min(celt, Int32.MaxValue - _current);
-
+            _current += Math.Min(celt, int.MaxValue - _current);
             return (_current < _formats.Length) ? NativeMethods.S_OK : NativeMethods.S_FALSE;
         }
 

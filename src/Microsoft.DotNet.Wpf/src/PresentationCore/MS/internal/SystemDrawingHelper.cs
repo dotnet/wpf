@@ -1,11 +1,7 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
-//
-//
 // Description: Helper methods for code that uses types from System.Drawing.
-//
 
 using System.IO;
 
@@ -17,7 +13,7 @@ namespace MS.Internal
         internal static bool IsBitmap(object data)
         {
             SystemDrawingExtensionMethods extensions = AssemblyHelper.ExtensionsForSystemDrawing();
-            return (extensions != null) ? extensions.IsBitmap(data) : false;
+            return (extensions is not null) && extensions.IsBitmap(data);
         }
 
         // return true if the data is an Image
@@ -42,7 +38,7 @@ namespace MS.Internal
         }
 
         // Get the metafile from the handle of the enhanced metafile.
-        internal static Object GetMetafileFromHemf(IntPtr hMetafile)
+        internal static object GetMetafileFromHemf(IntPtr hMetafile)
         {
             SystemDrawingExtensionMethods extensions = AssemblyHelper.ExtensionsForSystemDrawing(force:true);
             return extensions?.GetMetafileFromHemf(hMetafile);
@@ -59,7 +55,7 @@ namespace MS.Internal
         // Also return its width and height.
         internal static IntPtr GetHBitmap(object data, out int width, out int height)
         {
-            SystemDrawingExtensionMethods extensions = AssemblyHelper.ExtensionsForSystemDrawing(force:true);
+            SystemDrawingExtensionMethods extensions = AssemblyHelper.ExtensionsForSystemDrawing(force: true);
             if (extensions != null)
             {
                 return extensions.GetHBitmap(data, out width, out height);

@@ -320,6 +320,7 @@
     <Compile Include="System\IO\Packaging\PackWebRequestFactory.cs" />
     <Compile Include="System\IO\Packaging\PackWebResponse.cs" />
     <Compile Include="System\Windows\DataObject.DataStore.cs" />
+    <Compile Include="System\Windows\DataObject.DataStore.DataStoreEntry.cs" />
     <Compile Include="System\Windows\DataObject.FormatEnumerator.cs" />
     <Compile Include="System\Windows\DataObject.OleConverter.cs" />
     <Compile Include="System\Windows\DataObject.OleConverter.RestrictedTypeDeserializationException.cs" />

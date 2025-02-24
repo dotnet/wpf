@@ -2636,9 +2636,9 @@
     <Setter Property="Focusable" Value="False" />
     <Setter Property="SnapsToDevicePixels" Value="True" />
   </Style>
-  <Thickness x:Key="GroupBoxPadding">0,0,0,15</Thickness>
+  <Thickness x:Key="GroupBoxPadding">0,0,0,16</Thickness>
   <system:Double x:Key="GroupBoxHeaderFontSize">20</system:Double>
-  <Thickness x:Key="GroupBoxHeaderMargin">0,4,0,20</Thickness>
+  <Thickness x:Key="GroupBoxHeaderMargin">0,4,0,12</Thickness>
   <Style x:Key="DefaultGroupBoxStyle" TargetType="{x:Type GroupBox}">
     <Setter Property="OverridesDefaultStyle" Value="True" />
     <Setter Property="Foreground" Value="{DynamicResource GroupBoxForeground}" />

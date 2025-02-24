@@ -3,9 +3,9 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:system="clr-namespace:System;assembly=System.Runtime">
 
-    <Thickness x:Key="GroupBoxPadding">0,0,0,15</Thickness>
+    <Thickness x:Key="GroupBoxPadding">0,0,0,16</Thickness>
     <system:Double x:Key="GroupBoxHeaderFontSize">20</system:Double>
-    <Thickness x:Key="GroupBoxHeaderMargin">0,4,0,20</Thickness>
+    <Thickness x:Key="GroupBoxHeaderMargin">0,4,0,12</Thickness>
 
     <Style x:Key="DefaultGroupBoxStyle" TargetType="{x:Type GroupBox}">
         <Setter Property="OverridesDefaultStyle" Value="True" />

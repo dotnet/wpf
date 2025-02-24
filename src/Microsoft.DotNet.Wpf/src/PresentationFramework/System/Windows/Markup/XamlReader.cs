@@ -1131,15 +1131,15 @@ namespace System.Windows.Markup
             return (root);
         }
 
-        static Uri GetBaseUri(Uri uri)
+        private static Uri GetBaseUri(Uri uri)
         {
-            if (uri == null)
+            if (uri is null)
             {
-                return MS.Internal.Utility.BindUriHelper.BaseUri;
+                return BaseUriHelper.PackAppBaseUri;
             }
-            else if (uri.IsAbsoluteUri == false)
+            else if (!uri.IsAbsoluteUri)
             {
-                return new Uri(MS.Internal.Utility.BindUriHelper.BaseUri, uri);
+                return new Uri(BaseUriHelper.PackAppBaseUri, uri);
             }
 
             return uri;

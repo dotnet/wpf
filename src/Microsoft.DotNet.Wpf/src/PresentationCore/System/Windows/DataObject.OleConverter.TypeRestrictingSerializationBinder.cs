@@ -10,8 +10,9 @@ public sealed partial class DataObject
     private partial class OleConverter
     {
         /// <summary>
-        /// This class is meant to restrict deserialization of managed objects during Ole conversion to only strings and arrays of primitives. 
-        /// A RestrictedTypeDeserializationException is thrown upon calling BinaryFormatter.Deserialized if a binder of this type is provided to the BinaryFormatter.
+        ///  This class is meant to restrict deserialization of managed objects during Ole conversion to only strings
+        ///  and arrays of primitives.  A RestrictedTypeDeserializationException is thrown upon calling
+        ///  BinaryFormatter.Deserialized if a binder of this type is provided to the BinaryFormatter.
         /// </summary>
         private class TypeRestrictingSerializationBinder : SerializationBinder
         {

@@ -26,3 +26,6 @@ using System.Diagnostics.CodeAnalysis;
 [assembly: SuppressMessage("Style", "IDE1006:Naming Styles", Justification = "Public API", Scope = "member", Target = "~F:System.Windows.DataFormats.WaveAudio")]
 [assembly: SuppressMessage("Style", "IDE1006:Naming Styles", Justification = "Public API", Scope = "member", Target = "~F:System.Windows.DataFormats.Xaml")]
 [assembly: SuppressMessage("Style", "IDE1006:Naming Styles", Justification = "Public API", Scope = "member", Target = "~F:System.Windows.DataFormats.XamlPackage")]
+[assembly: SuppressMessage("Style", "IDE1006:Naming Styles", Justification = "Public API", Scope = "member", Target = "~F:System.Windows.DataObject.CopyingEvent")]
+[assembly: SuppressMessage("Style", "IDE1006:Naming Styles", Justification = "Public API", Scope = "member", Target = "~F:System.Windows.DataObject.PastingEvent")]
+[assembly: SuppressMessage("Style", "IDE1006:Naming Styles", Justification = "Public API", Scope = "member", Target = "~F:System.Windows.DataObject.SettingDataEvent")]

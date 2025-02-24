@@ -1,6 +1,5 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 using System.IO;
 
@@ -18,10 +17,10 @@ namespace MS.Internal
         internal abstract bool IsMetafile(object data);
 
         // return the handle from a metafile
-        internal abstract IntPtr GetHandleFromMetafile(Object data);
+        internal abstract IntPtr GetHandleFromMetafile(object data);
 
         // Get the metafile from the handle of the enhanced metafile.
-        internal abstract Object GetMetafileFromHemf(IntPtr hMetafile);
+        internal abstract object GetMetafileFromHemf(IntPtr hMetafile);
 
         // Get a bitmap from the given data (either BitmapSource or Bitmap)
         internal abstract object GetBitmap(object data);

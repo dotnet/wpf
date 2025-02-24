@@ -472,7 +472,6 @@
   <!--  Hyperlink  -->
   <SolidColorBrush x:Key="HyperlinkForeground" Color="{StaticResource SystemAccentColorLight3}" />
   <SolidColorBrush x:Key="HyperlinkForegroundPointerOver" Color="{StaticResource SystemAccentColorLight3}" />
-  <SolidColorBrush x:Key="HyperlinkForegroundPressed" Color="{StaticResource SystemAccentColorLight2}" />
   <SolidColorBrush x:Key="HyperlinkForegroundDisabled" Color="{StaticResource TextFillColorDisabled}" />
   <!--  HyperlinkButton  -->
   <SolidColorBrush x:Key="HyperlinkButtonBackground" Color="{StaticResource SubtleFillColorTransparent}" />
@@ -2679,19 +2678,16 @@
       </Setter.Value>
     </Setter>
   </Style>
-  <sys:Boolean x:Key="HyperlinkUnderlineVisible">False</sys:Boolean>
   <Style x:Key="DefaultHyperlinkStyle" TargetType="Hyperlink">
-    <Setter Property="Foreground" Value="{DynamicResource HyperlinkButtonForeground}" />
+    <Setter Property="Foreground" Value="{DynamicResource HyperlinkForeground}" />
     <Setter Property="TextDecorations" Value="Underline" />
     <Style.Triggers>
       <Trigger Property="IsMouseOver" Value="True">
-        <Setter Property="Foreground" Value="{DynamicResource HyperlinkButtonBackgroundPointerOver}" />
+        <Setter Property="Foreground" Value="{DynamicResource HyperlinkBackgroundPointerOver}" />
+        <Setter Property="TextDecorations" Value="None" />
       </Trigger>
       <Trigger Property="IsEnabled" Value="False">
-        <Setter Property="Foreground" Value="{DynamicResource HyperlinkButtonForegroundDisabled}" />
-      </Trigger>
-      <Trigger Property="IsEnabled" Value="True">
-        <Setter Property="Cursor" Value="Hand" />
+        <Setter Property="Foreground" Value="{DynamicResource HyperlinkForegroundDisabled}" />
       </Trigger>
     </Style.Triggers>
   </Style>

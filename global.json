@@ -5,7 +5,7 @@
       "dotnet/x64": [
         "$(VSRedistCommonNetCoreSharedFrameworkx64100PackageVersion)"
       ],
-      "dotnet": [
+      "dotnet/x86": [
         "$(VSRedistCommonNetCoreSharedFrameworkx64100PackageVersion)"
       ]
     },

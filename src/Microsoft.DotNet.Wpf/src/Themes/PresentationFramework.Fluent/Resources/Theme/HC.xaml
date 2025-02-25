@@ -527,6 +527,11 @@
     <!--  StatusBar  -->
     <!--  TO DO  -->
 
+    <!--  StatusBarItem  -->
+    <SolidColorBrush x:Key="StatusBarItemBackground" Color="Transparent" />
+    <SolidColorBrush x:Key="StatusBarItemBackgroundDisabled" Color="{StaticResource SystemColorWindowColor}" />
+    <SolidColorBrush x:Key="StatusBarItemForegroundDisabled" Color="{StaticResource SystemColorGrayTextColor}" />
+
     <!--  TabControl / TabView  -->
     <SolidColorBrush x:Key="TabViewBackground" Color="{StaticResource SystemColorWindowColor}" />
     <SolidColorBrush x:Key="TabViewForeground" Color="{StaticResource SystemColorWindowTextColor}" />

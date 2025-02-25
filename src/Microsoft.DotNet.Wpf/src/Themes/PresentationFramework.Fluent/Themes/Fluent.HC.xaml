@@ -374,8 +374,8 @@
   <SolidColorBrush x:Key="GridsplitterBackgroundDisabled" Color="{StaticResource SystemColorWindowColor}" />
   <SolidColorBrush x:Key="GridsplitterForeground" Color="{StaticResource SystemColorButtonTextColor}" />
   <!--  Hyperlink  -->
-  <SolidColorBrush x:Key="HyperlinkForeground" Color="{StaticResource SystemAccentColor}" />
-  <SolidColorBrush x:Key="HyperlinkForegroundPointerOver" Color="{StaticResource SystemAccentColor}" />
+  <SolidColorBrush x:Key="HyperlinkForeground" Color="{StaticResource SystemColorHighlightTextColor}" />
+  <SolidColorBrush x:Key="HyperlinkForegroundPointerOver" Color="{StaticResource SystemColorHighlightTextColor}" />
   <SolidColorBrush x:Key="HyperlinkForegroundDisabled" Color="{StaticResource SystemColorGrayTextColor}" />
   <!--  HyperlinkButton  -->
   <SolidColorBrush x:Key="HyperlinkButtonBackground" Color="Transparent" />

@@ -381,7 +381,7 @@
   <!--  Hyperlink  -->
   <SolidColorBrush x:Key="HyperlinkForeground" Color="{StaticResource SystemColorHotlightColor}" />
   <SolidColorBrush x:Key="HyperlinkForegroundPointerOver" Color="{StaticResource SystemColorHotlightColor}" />
-  <SolidColorBrush x:Key="HyperlinkForegroundDisabled" Color="{StaticResource SystemColorGrayTextColor}" />  
+  <SolidColorBrush x:Key="HyperlinkForegroundDisabled" Color="{StaticResource SystemColorGrayTextColor}" />
   <!--  HyperlinkButton  -->
   <SolidColorBrush x:Key="HyperlinkButtonBackground" Color="Transparent" />
   <SolidColorBrush x:Key="HyperlinkButtonBackgroundPointerOver" Color="{StaticResource SystemColorWindowColor}" />
@@ -2715,7 +2715,7 @@
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="*" />
               </Grid.RowDefinitions>
-              <ContentPresenter Grid.Row="0" TextElement.FontSize="{DynamicResource GroupBoxHeaderFontSize}" Margin="{DynamicResource GroupBoxHeaderMargin}" ContentSource="Header" Foreground="{DynamicResource GroupBoxHeaderForeground}" RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+              <ContentPresenter Grid.Row="0" TextElement.FontSize="{DynamicResource GroupBoxHeaderFontSize}" Margin="{DynamicResource GroupBoxHeaderMargin}" ContentSource="Header" TextElement.Foreground="{DynamicResource GroupBoxHeaderForeground}" RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
               <ContentPresenter Grid.Row="1" Margin="{TemplateBinding Padding}" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
             </Grid>
           </Border>

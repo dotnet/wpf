@@ -32,7 +32,7 @@
                                 TextElement.FontSize="{DynamicResource GroupBoxHeaderFontSize}"
                                 Margin="{DynamicResource GroupBoxHeaderMargin}"
                                 ContentSource="Header"
-                                Foreground="{DynamicResource GroupBoxHeaderForeground}"
+                                TextElement.Foreground="{DynamicResource GroupBoxHeaderForeground}"
                                 RecognizesAccessKey="True"
                                 SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
                             <ContentPresenter

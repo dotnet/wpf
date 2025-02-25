@@ -2730,7 +2730,7 @@
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="*" />
               </Grid.RowDefinitions>
-              <ContentPresenter Grid.Row="0" TextElement.FontSize="{DynamicResource GroupBoxHeaderFontSize}" Margin="{DynamicResource GroupBoxHeaderMargin}" ContentSource="Header" Foreground="{DynamicResource GroupBoxHeaderForeground}" RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+              <ContentPresenter Grid.Row="0" TextElement.FontSize="{DynamicResource GroupBoxHeaderFontSize}" Margin="{DynamicResource GroupBoxHeaderMargin}" ContentSource="Header" TextElement.Foreground="{DynamicResource GroupBoxHeaderForeground}" RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
               <ContentPresenter Grid.Row="1" Margin="{TemplateBinding Padding}" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
             </Grid>
           </Border>

@@ -13,8 +13,7 @@
         <Setter Property="BorderThickness" Value="{DynamicResource GroupBoxBorderThickness}" />
         <Setter Property="Background" Value="{DynamicResource GroupBoxBackground}" />
         <Setter Property="BorderBrush" Value="{DynamicResource GroupBoxBorderBrush}" />
-        <Setter Property="Foreground" Value="{DynamicResource GroupBoxForeground}" />
-        <Setter Property="Padding" Value="{StaticResource GroupBoxPadding}" />
+        <Setter Property="Padding" Value="{DynamicResource GroupBoxPadding}" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type GroupBox}">
@@ -33,6 +32,7 @@
                                 TextElement.FontSize="{DynamicResource GroupBoxHeaderFontSize}"
                                 Margin="{DynamicResource GroupBoxHeaderMargin}"
                                 ContentSource="Header"
+                                Foreground="{DynamicResource GroupBoxHeaderForeground}"
                                 RecognizesAccessKey="True"
                                 SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
                             <ContentPresenter

@@ -472,7 +472,7 @@
   <!--  GroupBox  -->
   <SolidColorBrush x:Key="GroupBoxBackground" Color="Transparent" />
   <SolidColorBrush x:Key="GroupBoxBorderBrush" Color="Transparent" />
-  <SolidColorBrush x:Key="GroupBoxForeground" Color="{StaticResource TextFillColorPrimary}" />
+  <SolidColorBrush x:Key="GroupBoxHeaderForeground" Color="{StaticResource TextFillColorPrimary}" />
   <!--  HyperlinkButton  -->
   <SolidColorBrush x:Key="HyperlinkButtonBackground" Color="{StaticResource SubtleFillColorTransparent}" />
   <SolidColorBrush x:Key="HyperlinkButtonBackgroundPointerOver" Color="{StaticResource SubtleFillColorSecondary}" />
@@ -2665,8 +2665,7 @@
     <Setter Property="BorderThickness" Value="{DynamicResource GroupBoxBorderThickness}" />
     <Setter Property="Background" Value="{DynamicResource GroupBoxBackground}" />
     <Setter Property="BorderBrush" Value="{DynamicResource GroupBoxBorderBrush}" />
-    <Setter Property="Foreground" Value="{DynamicResource GroupBoxForeground}" />
-    <Setter Property="Padding" Value="{StaticResource GroupBoxPadding}" />
+    <Setter Property="Padding" Value="{DynamicResource GroupBoxPadding}" />
     <Setter Property="Template">
       <Setter.Value>
         <ControlTemplate TargetType="{x:Type GroupBox}">
@@ -2676,7 +2675,7 @@
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="*" />
               </Grid.RowDefinitions>
-              <ContentPresenter Grid.Row="0" TextElement.FontSize="{DynamicResource GroupBoxHeaderFontSize}" Margin="{DynamicResource GroupBoxHeaderMargin}" ContentSource="Header" RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+              <ContentPresenter Grid.Row="0" TextElement.FontSize="{DynamicResource GroupBoxHeaderFontSize}" Margin="{DynamicResource GroupBoxHeaderMargin}" ContentSource="Header" Foreground="{DynamicResource GroupBoxHeaderForeground}" RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
               <ContentPresenter Grid.Row="1" Margin="{TemplateBinding Padding}" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
             </Grid>
           </Border>

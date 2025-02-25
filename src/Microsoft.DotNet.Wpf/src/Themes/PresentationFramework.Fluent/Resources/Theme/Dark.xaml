@@ -479,7 +479,7 @@
     <!--  GroupBox  -->
     <SolidColorBrush x:Key="GroupBoxBackground" Color="Transparent" />
     <SolidColorBrush x:Key="GroupBoxBorderBrush" Color="Transparent" />
-    <SolidColorBrush x:Key="GroupBoxForeground" Color="{StaticResource TextFillColorPrimary}" />
+    <SolidColorBrush x:Key="GroupBoxHeaderForeground" Color="{StaticResource TextFillColorPrimary}" />
 
     <!--  HyperlinkButton  -->
     <SolidColorBrush x:Key="HyperlinkButtonBackground" Color="{StaticResource SubtleFillColorTransparent}" />

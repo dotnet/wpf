@@ -633,7 +633,7 @@
 
     <!--  SnackBar  -->
     <SolidColorBrush x:Key="SnackBarBackground" Color="{StaticResource AcrylicBackgroundFillColorDefault}" />
-    <!-- <SolidColorBrush x:Key="SnackBarForeground" Color="{StaticResource TextFillColorPrimary}" /> -->
+    <SolidColorBrush x:Key="SnackBarForeground" Color="{StaticResource TextFillColorPrimary}" />
     <SolidColorBrush x:Key="SnackBarBorderBrush" Color="{StaticResource SurfaceStrokeColorFlyout}" />
 
     <!--  StatusBar  -->

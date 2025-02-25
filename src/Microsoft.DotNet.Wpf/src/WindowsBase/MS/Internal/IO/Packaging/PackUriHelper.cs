@@ -45,7 +45,7 @@ namespace MS.Internal.IO.Packaging
         internal static bool IsPackUri(Uri uri)
         {
             return uri != null && 
-                string.Compare(uri.Scheme, System.IO.Packaging.PackUriHelper.UriSchemePack, StringComparison.OrdinalIgnoreCase) == 0;
+                string.Equals(uri.Scheme, System.IO.Packaging.PackUriHelper.UriSchemePack, StringComparison.OrdinalIgnoreCase);
         }
 
         /// <summary>
@@ -133,7 +133,7 @@ namespace MS.Internal.IO.Packaging
             partUriString = String.Empty;
 
             if (partUri == null)
-                return new ArgumentNullException("partUri");
+                return new ArgumentNullException(nameof(partUri));
 
             Exception argumentException = null;
 

@@ -65,13 +65,13 @@ namespace MS.Internal.IO.Packaging.CompoundFile
                                 VersionPair updaterVersion)
         {
             if (featureId == null)
-                throw new ArgumentNullException("featureId");
+                throw new ArgumentNullException(nameof(featureId));
             if (writerVersion == null)
-                throw new ArgumentNullException("writerVersion");
+                throw new ArgumentNullException(nameof(writerVersion));
             if (readerVersion == null)
-                throw new ArgumentNullException("readerVersion");
+                throw new ArgumentNullException(nameof(readerVersion));
             if (updaterVersion == null)
-                throw new ArgumentNullException("updaterVersion");
+                throw new ArgumentNullException(nameof(updaterVersion));
 
             if (featureId.Length == 0)
             {
@@ -109,7 +109,7 @@ namespace MS.Internal.IO.Packaging.CompoundFile
             {
                 if (value == null)
                 {
-                    throw new ArgumentNullException("value");
+                    throw new ArgumentNullException(nameof(value));
                 }
 
                 _reader = value;
@@ -129,7 +129,7 @@ namespace MS.Internal.IO.Packaging.CompoundFile
             {
                 if (value == null)
                 {
-                    throw new ArgumentNullException("value");
+                    throw new ArgumentNullException(nameof(value));
                 }
 
                 _writer = value;
@@ -150,7 +150,7 @@ namespace MS.Internal.IO.Packaging.CompoundFile
             {
                 if (value == null)
                 {
-                    throw new ArgumentNullException("value");
+                    throw new ArgumentNullException(nameof(value));
                 }
 
                 _updater = value;
@@ -367,7 +367,7 @@ namespace MS.Internal.IO.Packaging.CompoundFile
         {
             if (version == null)
             {
-                throw new ArgumentNullException("version");
+                throw new ArgumentNullException(nameof(version));
             }
 
             return (_reader <= version);
@@ -386,7 +386,7 @@ namespace MS.Internal.IO.Packaging.CompoundFile
         {
             if (version == null)
             {
-                throw new ArgumentNullException("version");
+                throw new ArgumentNullException(nameof(version));
             }
 
             return (_updater <= version);
@@ -436,7 +436,7 @@ namespace MS.Internal.IO.Packaging.CompoundFile
             {
                 if (reader == null)
                 {
-                    throw new ArgumentNullException("reader");
+                    throw new ArgumentNullException(nameof(reader));
                 }
 
                 FormatVersion ver = new FormatVersion();
@@ -508,7 +508,7 @@ namespace MS.Internal.IO.Packaging.CompoundFile
         {
             if (stream == null)
             {
-                throw new ArgumentNullException("stream");
+                throw new ArgumentNullException(nameof(stream));
             }
             // Suppress 56518 Local IDisposable object not disposed: 
             // Reason: The stream is not owned by the BlockManager, therefore we can 

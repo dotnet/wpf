@@ -1456,10 +1456,7 @@ namespace System.Windows.Controls
         private static void OnPanningModeChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             ScrollViewer sv = d as ScrollViewer;
-            if (sv != null)
-            {
-                sv.OnPanningModeChanged();
-            }
+            sv?.OnPanningModeChanged();
         }
 
         /// <summary>
@@ -2416,15 +2413,12 @@ namespace System.Windows.Controls
 
                     // Fire automation events if automation is active.
                     ScrollViewerAutomationPeer peer = UIElementAutomationPeer.FromElement(this) as ScrollViewerAutomationPeer;
-                    if(peer != null)
-                    {
-                        peer.RaiseAutomationEvents(oldExtentWidth,
+                    peer?.RaiseAutomationEvents(oldExtentWidth,
                                                    oldExtentHeight,
                                                    oldViewportWidth,
                                                    oldViewportHeight,
                                                    oldActualHorizontalOffset,
                                                    oldActualVerticalOffset);
-                    }
                 }
                 finally
                 {

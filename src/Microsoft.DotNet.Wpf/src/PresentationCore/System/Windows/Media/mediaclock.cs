@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -119,10 +119,10 @@ namespace System.Windows.Media
             if (_mediaPlayer != null)
             {
                 double? currentSpeedProperty = this.CurrentGlobalSpeed;
-                double currentSpeedValue = currentSpeedProperty.HasValue ? currentSpeedProperty.Value : 0;
+                double currentSpeedValue = currentSpeedProperty ?? 0;
 
                 TimeSpan? currentTimeProperty = this.CurrentTime;
-                TimeSpan currentTimeValue = currentTimeProperty.HasValue ? currentTimeProperty.Value : TimeSpan.Zero;
+                TimeSpan currentTimeValue = currentTimeProperty ?? TimeSpan.Zero;
 
                 // If speed was potentially changed to 0, make sure we set media's speed to 0 (e.g. pause) before
                 // setting the position to the target frame.  Otherwise, the media's scrubbing mechanism would

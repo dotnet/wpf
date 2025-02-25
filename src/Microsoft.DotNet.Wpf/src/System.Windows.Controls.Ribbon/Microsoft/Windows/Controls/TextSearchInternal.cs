@@ -713,10 +713,7 @@ namespace Microsoft.Windows.Controls
                 _charsEntered.Clear();
             }
 
-            if(_timeoutTimer != null)
-            {
-                _timeoutTimer.Stop();
-            }
+            _timeoutTimer?.Stop();
             _timeoutTimer = null;
 
         }

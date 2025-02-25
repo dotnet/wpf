@@ -524,21 +524,21 @@ namespace System.Windows.Interop
             {
                 throw new ArgumentException(
                     SR.HwndTarget_InvalidWindowHandle,
-                    "hwnd"
+                    nameof(hwnd)
                     );
             }
             else if (processId != Environment.ProcessId)
             {
                 throw new ArgumentException(
                     SR.HwndTarget_InvalidWindowProcess,
-                    "hwnd"
+                    nameof(hwnd)
                     );
             }
             else if (threadId != SafeNativeMethods.GetCurrentThreadId())
             {
                 throw new ArgumentException(
                     SR.HwndTarget_InvalidWindowThread,
-                    "hwnd"
+                    nameof(hwnd)
                     );
             }
 
@@ -1425,10 +1425,7 @@ namespace System.Windows.Interop
                 peer = UIElementAutomationPeer.GetRootAutomationPeer(root, handle);
             }
 
-            if (peer != null)
-            {
-                peer.AddToAutomationEventList();
-            }
+            peer?.AddToAutomationEventList();
 
             return peer;
         }

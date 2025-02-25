@@ -179,7 +179,7 @@ namespace MS.Internal.Annotations.Anchoring
             ArgumentNullException.ThrowIfNull(startNode);
 
             if (DataIdElementName != locatorPart.PartType)
-                throw new ArgumentException(SR.Format(SR.IncorrectLocatorPartType, $"{locatorPart.PartType.Namespace}:{locatorPart.PartType.Name}"), "locatorPart");
+                throw new ArgumentException(SR.Format(SR.IncorrectLocatorPartType, $"{locatorPart.PartType.Namespace}:{locatorPart.PartType.Name}"), nameof(locatorPart));
 
             // Initial value
             continueResolving = true;
@@ -188,7 +188,7 @@ namespace MS.Internal.Annotations.Anchoring
             string id = locatorPart.NameValuePairs[ValueAttributeName];
             if (id == null)
             {
-                throw new ArgumentException(SR.Format(SR.IncorrectLocatorPartType, $"{locatorPart.PartType.Namespace}:{locatorPart.PartType.Name}"), "locatorPart");
+                throw new ArgumentException(SR.Format(SR.IncorrectLocatorPartType, $"{locatorPart.PartType.Namespace}:{locatorPart.PartType.Name}"), nameof(locatorPart));
             }
 
             // and from the node to examine.

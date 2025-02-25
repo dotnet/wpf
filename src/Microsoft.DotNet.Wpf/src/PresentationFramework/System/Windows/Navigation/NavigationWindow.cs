@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -419,10 +419,7 @@ namespace System.Windows.Navigation
             // Get the root element of the style
             FrameworkElement root = (this.GetVisualChild(0)) as FrameworkElement;
 
-            if (_navigationService != null)
-            {
-                _navigationService.VisualTreeAvailable(root);
-            }
+            _navigationService?.VisualTreeAvailable(root);
 
             // did we just apply the framelet style?
             if ((root != null) && (root.Name == "NavigationBarRoot"))
@@ -623,7 +620,7 @@ namespace System.Windows.Navigation
             get
             {
                 VerifyContextAndObjectState( );
-                return (_navigationService == null ? null : _navigationService.CurrentSource);
+                return (_navigationService?.CurrentSource);
             }
         }
 
@@ -867,8 +864,7 @@ namespace System.Windows.Navigation
             base.OnClosed( args ) ;
 
             // detach the event handlers on the NC
-            if(_navigationService != null)
-                _navigationService.Dispose();
+            _navigationService?.Dispose();
         }
 
         #endregion Protected Methods

@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -744,10 +744,7 @@ namespace MS.Internal.PtsHost
             _pageContextOfThisPage.PageRect = new PTS.FSRECT(new Rect(_section.StructuralCache.CurrentFormatContext.PageSize));
 
             // Ensure we have no background work pending
-            if (_backgroundFormatOperation != null)
-            {
-                _backgroundFormatOperation.Abort();
-            }
+            _backgroundFormatOperation?.Abort();
 
             if (!_finitePage)
             {
@@ -805,10 +802,7 @@ namespace MS.Internal.PtsHost
 
             // Make sure that structural cache is in clean state after formatting
             // is done.
-            if (_section.StructuralCache != null)
-            {
-                _section.StructuralCache.ClearUpdateInfo(false);
-            }
+            _section.StructuralCache?.ClearUpdateInfo(false);
         }
 
         // ------------------------------------------------------------------

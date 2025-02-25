@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -501,10 +501,7 @@ namespace System.Windows.Automation.Peers
         override internal void AddToParentProxyWeakRefCache()
         {
             DataGridItemAutomationPeer owningItemPeer = this.OwningItemPeer;
-            if (owningItemPeer != null)
-            {
-                owningItemPeer.AddProxyToWeakRefStorage(this.ElementProxyWeakReference, this);
-            }
+            owningItemPeer?.AddProxyToWeakRefStorage(this.ElementProxyWeakReference, this);
         }
 
 
@@ -850,7 +847,7 @@ namespace System.Windows.Automation.Peers
             get
             {
                 DataGrid dataGrid = this.OwningDataGrid;
-                return (dataGrid != null) ? dataGrid.TryFindCell(Item, _column) : null;
+                return dataGrid?.TryFindCell(Item, _column);
             }
         }
 
@@ -894,7 +891,7 @@ namespace System.Windows.Automation.Peers
 
         internal object Item
         {
-            get {  return (_item == null) ? null : _item.Target; }
+            get {  return _item?.Target; }
         }
 
         private DataGridItemAutomationPeer OwningItemPeer

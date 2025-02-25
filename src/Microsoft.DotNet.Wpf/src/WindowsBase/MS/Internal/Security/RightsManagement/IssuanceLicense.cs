@@ -694,8 +694,8 @@ namespace MS.Internal.Security.RightsManagement
             checked { localeId = (int)locId; }
 
             // now we can build a ContentUser
-            return new LocalizedNameDescriptionPair(name == null ? null : name.ToString(),
-                                                                          description == null ? null : description.ToString());
+            return new LocalizedNameDescriptionPair(name?.ToString(),
+                                                                          description?.ToString());
         }
 
         private Nullable<KeyValuePair<string, string>> GetApplicationSpecificData(int index)
@@ -752,8 +752,8 @@ namespace MS.Internal.Security.RightsManagement
             Errors.ThrowOnErrorCode(hr);
 
             // build strings from the StringBuilder  instances 
-            string name = (tempName == null) ? null : tempName.ToString();
-            string value = (tempValue == null) ? null : tempValue.ToString();
+            string name = tempName?.ToString();
+            string value = tempValue?.ToString();
 
             KeyValuePair<string, string> result = new KeyValuePair<string, string>(name, value);
 
@@ -997,11 +997,11 @@ namespace MS.Internal.Security.RightsManagement
 
             RevocationPoint resultRevocationPoint = new RevocationPoint
             {
-                Id = (idTemp == null) ? null : idTemp.ToString(),
-                IdType = (idTypeTemp == null) ? null : idTypeTemp.ToString(),
+                Id = idTemp?.ToString(),
+                IdType = idTypeTemp?.ToString(),
                 Url = (urlTemp == null) ? null : new Uri(urlTemp.ToString()),
-                Name = (nameTemp == null) ? null : nameTemp.ToString(),
-                PublicKey = (publicKeyTemp == null) ? null : publicKeyTemp.ToString(),
+                Name = nameTemp?.ToString(),
+                PublicKey = publicKeyTemp?.ToString(),
                 Frequency = frequency
             };
 

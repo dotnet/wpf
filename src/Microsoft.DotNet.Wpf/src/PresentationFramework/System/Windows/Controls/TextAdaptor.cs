@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -112,6 +112,9 @@ namespace MS.Internal.Automation
                 return Array.Empty<Rect>();
             }
 
+            start = start.CreatePointer();
+            end = end.CreatePointer();
+
             TextRangeAdaptor.MoveToInsertionPosition(start, LogicalDirection.Forward);
             TextRangeAdaptor.MoveToInsertionPosition(end, LogicalDirection.Backward);
 
@@ -199,10 +202,7 @@ namespace MS.Internal.Automation
         internal void Select(ITextPointer start, ITextPointer end)
         {
             // Update the selection range
-            if (_textContainer.TextSelection != null)
-            {
-                _textContainer.TextSelection.Select(start, end);
-            }
+            _textContainer.TextSelection?.Select(start, end);
         }
 
         /// <summary>
@@ -263,10 +263,7 @@ namespace MS.Internal.Automation
                 }
 
                 FrameworkElement fe = renderScope as FrameworkElement;
-                if (fe != null)
-                {
-                    fe.BringIntoView(rangeVisibleBounds);
-                }
+                fe?.BringIntoView(rangeVisibleBounds);
             }
             else
             {
@@ -274,10 +271,7 @@ namespace MS.Internal.Automation
                 ITextPointer pointer = alignToTop ? start.CreatePointer() : end.CreatePointer();
                 pointer.MoveToElementEdge(alignToTop ? ElementEdge.AfterStart : ElementEdge.AfterEnd);
                 FrameworkContentElement element = pointer.GetAdjacentElement(LogicalDirection.Backward) as FrameworkContentElement;
-                if (element != null)
-                {
-                    element.BringIntoView();
-                }
+                element?.BringIntoView();
             }
         }
 

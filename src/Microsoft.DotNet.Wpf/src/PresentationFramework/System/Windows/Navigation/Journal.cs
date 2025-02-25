@@ -465,15 +465,9 @@ namespace System.Windows.Navigation
                     Debug.Assert(je.GetType().IsSerializable);
                     // There can be keep-alive JEs creates for child frames.
                     DataStreams jds = je.JEGroupState.JournalDataStreams;
-                    if (jds != null)
-                    {
-                        jds.PrepareForSerialization();
-                    }
+                    jds?.PrepareForSerialization();
 
-                    if (je.RootViewerState != null)
-                    {
-                        je.RootViewerState.PrepareForSerialization();
-                    }
+                    je.RootViewerState?.PrepareForSerialization();
                 }
             }
         }

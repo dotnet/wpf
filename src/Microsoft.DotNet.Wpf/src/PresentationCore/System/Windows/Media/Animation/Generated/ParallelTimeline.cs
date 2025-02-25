@@ -9,9 +9,14 @@
 // Please see MilCodeGen.html for more information.
 //
 
-// These types are aliased to match the unamanaged names used in interop
+using MS.Internal;
+using MS.Utility;
+using System.Collections;
+
 namespace System.Windows.Media.Animation
 {
+
+
     partial class ParallelTimeline : TimelineGroup
     {
         //------------------------------------------------------
@@ -76,6 +81,8 @@ namespace System.Windows.Media.Animation
         {
             return new ParallelTimeline();
         }
+
+
 
         #endregion ProtectedMethods
 

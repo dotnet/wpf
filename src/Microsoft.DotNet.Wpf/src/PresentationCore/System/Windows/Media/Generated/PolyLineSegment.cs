@@ -10,10 +10,23 @@
 //
 
 using MS.Internal;
-// These types are aliased to match the unamanaged names used in interop
+using MS.Internal.KnownBoxes;
+using MS.Internal.Collections;
+using MS.Utility;
+using System.Collections;
+using System.ComponentModel;
+using System.Globalization;
+using System.Text;
+using System.Windows.Media.Effects;
+using System.Windows.Media.Animation;
+using System.Windows.Media.Composition;
+using System.Windows.Markup;
+using System.Windows.Media.Converters;
 
 namespace System.Windows.Media
 {
+
+
     sealed partial class PolyLineSegment : PathSegment
     {
         //------------------------------------------------------
@@ -188,7 +201,6 @@ namespace System.Windows.Media
             // to make sure that they are not mutable, otherwise we will throw
             // if these get touched by more than one thread in the lifetime
             // of your app.
-
             Debug.Assert(s_Points == null || s_Points.IsFrozen,
                 "Detected context bound default value PolyLineSegment.s_Points (See OS Bug #947272).");
 
@@ -205,6 +217,8 @@ namespace System.Windows.Media
                                    /* isIndependentlyAnimated  = */ false,
                                    /* coerceValueCallback */ null);
         }
+
+
 
         #endregion Constructors
     }

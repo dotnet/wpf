@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -90,8 +90,7 @@ namespace MS.Internal.PtsHost
         internal void ClearDrawingContext()
         {
             DrawingContext ctx = this.RenderOpen();
-            if(ctx != null)
-                ctx.Close();               
+            ctx?.Close();               
         }
         
         //-------------------------------------------------------------------
@@ -125,7 +124,7 @@ namespace MS.Internal.PtsHost
             {
                 return host.GetRectangles(child);
             }
-            return new ReadOnlyCollection<Rect>(new List<Rect>(0));
+            return ReadOnlyCollection<Rect>.Empty;
         }
 
         /// <summary>
@@ -150,10 +149,7 @@ namespace MS.Internal.PtsHost
         void IContentHost.OnChildDesiredSizeChanged(UIElement child)
         {
             IContentHost host = _owner.Target as IContentHost;
-            if (host != null)
-            {
-                host.OnChildDesiredSizeChanged(child);
-            }
+            host?.OnChildDesiredSizeChanged(child);
         }
 
         #endregion IContentHost Members

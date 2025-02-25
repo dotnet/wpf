@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -112,11 +112,11 @@ namespace System.Windows.Forms.Integration
                     {
                         case SW.FlowDirection.RightToLeft:
                             adapter.RightToLeft = SWF.RightToLeft.Yes;
-                            if (propertyInfo != null) { propertyInfo.SetValue(childControl, true, null); }
+                            propertyInfo?.SetValue(childControl, true, null);
                             break;
                         case SW.FlowDirection.LeftToRight:
                             adapter.RightToLeft = SWF.RightToLeft.No;
-                            if (propertyInfo != null) { propertyInfo.SetValue(childControl, false, null); }
+                            propertyInfo?.SetValue(childControl, false, null);
                             break;
                     }
                 }

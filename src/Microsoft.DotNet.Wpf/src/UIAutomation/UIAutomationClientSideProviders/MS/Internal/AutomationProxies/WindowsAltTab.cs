@@ -79,10 +79,7 @@ namespace MS.Internal.AutomationProxies
             if (idObject != NativeMethods.OBJID_VSCROLL && idObject != NativeMethods.OBJID_HSCROLL)
             {
                 ProxySimple el = (ProxyHwnd) WindowsAltTab.Create(hwnd, 0);
-                if (el != null)
-                {
-                    el.DispatchEvents(eventId, idProp, idObject, idChild);
-                }
+                el?.DispatchEvents(eventId, idProp, idObject, idChild);
             }
         }
 

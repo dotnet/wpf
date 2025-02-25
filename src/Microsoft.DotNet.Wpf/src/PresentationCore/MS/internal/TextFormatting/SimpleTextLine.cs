@@ -585,10 +585,7 @@ namespace MS.Internal.TextFormatting
             int idealXRelativeToOrigin = _idealOffsetUnRounded;
             double y = origin.Y + Baseline;
 
-            if (drawingContext != null)
-            {
-                drawingContext.PushGuidelineY1(y);
-            }
+            drawingContext?.PushGuidelineY1(y);
 
             Rect boundingBox = Rect.Empty;
 
@@ -610,10 +607,7 @@ namespace MS.Internal.TextFormatting
             }
             finally
             {
-                if (drawingContext != null)
-                {
-                    drawingContext.Pop();
-                }
+                drawingContext?.Pop();
             }
 
             if(boundingBox.IsEmpty)

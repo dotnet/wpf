@@ -103,7 +103,7 @@ namespace MS.Internal.IO.Packaging.CompoundFile
             // what are we dealing with here?
             CompoundFileStreamReference streamReference = reference as CompoundFileStreamReference;
             if ((streamReference == null) && (!(reference is CompoundFileStorageReference)))
-                throw new ArgumentException(SR.UnknownReferenceSerialize, "reference");
+                throw new ArgumentException(SR.UnknownReferenceSerialize, nameof(reference));
 
             // first parse the path into strings
             string[] segments = ContainerUtilities.ConvertBackSlashPathToStringArrayPath(reference.FullName);

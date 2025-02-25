@@ -206,55 +206,37 @@ namespace System.Windows.Controls
         private static void OnIncreaseSmallCommand(object sender, ExecutedRoutedEventArgs e)
         {
             Slider slider = sender as Slider;
-            if (slider != null)
-            {
-                slider.OnIncreaseSmall();
-            }
+            slider?.OnIncreaseSmall();
         }
 
         private static void OnDecreaseSmallCommand(object sender, ExecutedRoutedEventArgs e)
         {
             Slider slider = sender as Slider;
-            if (slider != null)
-            {
-                slider.OnDecreaseSmall();
-            }
+            slider?.OnDecreaseSmall();
         }
 
         private static void OnMaximizeValueCommand(object sender, ExecutedRoutedEventArgs e)
         {
             Slider slider = sender as Slider;
-            if (slider != null)
-            {
-                slider.OnMaximizeValue();
-            }
+            slider?.OnMaximizeValue();
         }
 
         private static void OnMinimizeValueCommand(object sender, ExecutedRoutedEventArgs e)
         {
             Slider slider = sender as Slider;
-            if (slider != null)
-            {
-                slider.OnMinimizeValue();
-            }
+            slider?.OnMinimizeValue();
         }
 
         private static void OnIncreaseLargeCommand(object sender, ExecutedRoutedEventArgs e)
         {
             Slider slider = sender as Slider;
-            if (slider != null)
-            {
-                slider.OnIncreaseLarge();
-            }
+            slider?.OnIncreaseLarge();
         }
 
         private static void OnDecreaseLargeCommand(object sender, ExecutedRoutedEventArgs e)
         {
             Slider slider = sender as Slider;
-            if (slider != null)
-            {
-                slider.OnDecreaseLarge();
-            }
+            slider?.OnDecreaseLarge();
         }
 
         #endregion Commands
@@ -1353,7 +1335,7 @@ namespace System.Windows.Controls
 
             if (_autoToolTip != null)
             {
-                _autoToolTip.PlacementTarget = Track != null ? Track.Thumb : null;
+                _autoToolTip.PlacementTarget = Track?.Thumb;
             }
         }
 

@@ -27,16 +27,10 @@ call %~dp0\ParseMcgOpt.cmd %McgOpt%
 pushd %~dp0\..
 
 call %~dp0\SetClrPath.cmd
-set OutputDir=%SdxRoot%\wpf
-
-:: Check out generated files
-call %~dp0\tf_GeneratedFiles %OutputDir% %~dp0\GeneratedResources.txt edit 
+set OutputDir=%RepoRoot%\src\Microsoft.DotNet.Wpf
 
 :: Execute the MilCodeGen project
-call %~dp0\InvokeCSP.cmd %Options% -rsp:main\Resources.rsp -enableCsPrime -clrdir:%clr_ref_path% -r:%clr_ref_path%\System.Xml.dll -- %_SdFlag% -xmlFile:xml\Resource.xml -xsdFile:xml\Resource.xsd -o:%OutputDir%
-
-:: Revert any generated files which haven't changed
-if {%_NoRevertFlag%} EQU {} call %~dp0\tf_GeneratedFiles %OutputDir% %~dp0\GeneratedResources.txt revert -a
+call %~dp0\InvokeCSP.cmd %Options% -rsp:main\Resources.rsp -enableCsPrime -r:"System.Xml.dll" -- %_SdFlag% -xmlFile:xml\Resource.xml -xsdFile:xml\Resource.xsd -o:"%OutputDir%"
 
 popd
 endlocal

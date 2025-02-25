@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -347,10 +347,7 @@ namespace System.Windows.Controls
                 {
                     p.InvalidateMeasure();
                     ItemsPresenter itemsPresenter = VisualTreeHelper.GetParent(p) as ItemsPresenter;
-                    if (itemsPresenter != null)
-                    {
-                        itemsPresenter.InvalidateMeasure();
-                    }
+                    itemsPresenter?.InvalidateMeasure();
 
                     if (d is TreeView)
                     {

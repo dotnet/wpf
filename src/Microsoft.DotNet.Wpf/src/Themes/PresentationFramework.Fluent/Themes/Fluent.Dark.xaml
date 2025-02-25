@@ -475,6 +475,10 @@
   <SolidColorBrush x:Key="GridsplitterBackgroundPressed" Color="{StaticResource ControlAltFillColorQuarternary}" />
   <SolidColorBrush x:Key="GridsplitterBackgroundDisabled" Color="{StaticResource ControlAltFillColorDisabled}" />
   <SolidColorBrush x:Key="GridsplitterForeground" Color="{StaticResource ControlStrongFillColorDefault}" />
+  <!--  Hyperlink  -->
+  <SolidColorBrush x:Key="HyperlinkForeground" Color="{StaticResource SystemAccentColorLight3}" />
+  <SolidColorBrush x:Key="HyperlinkForegroundPointerOver" Color="{StaticResource SystemAccentColorLight3}" />
+  <SolidColorBrush x:Key="HyperlinkForegroundDisabled" Color="{StaticResource TextFillColorDisabled}" />
   <!--  HyperlinkButton  -->
   <SolidColorBrush x:Key="HyperlinkButtonBackground" Color="{StaticResource SubtleFillColorTransparent}" />
   <SolidColorBrush x:Key="HyperlinkButtonBackgroundPointerOver" Color="{StaticResource SubtleFillColorSecondary}" />
@@ -2726,6 +2730,20 @@
       </Setter.Value>
     </Setter>
   </Style>
+  <Style x:Key="DefaultHyperlinkStyle" TargetType="Hyperlink">
+    <Setter Property="Foreground" Value="{DynamicResource HyperlinkForeground}" />
+    <Setter Property="TextDecorations" Value="Underline" />
+    <Style.Triggers>
+      <Trigger Property="IsMouseOver" Value="True">
+        <Setter Property="Foreground" Value="{DynamicResource HyperlinkForegroundPointerOver}" />
+        <Setter Property="TextDecorations" Value="None" />
+      </Trigger>
+      <Trigger Property="IsEnabled" Value="False">
+        <Setter Property="Foreground" Value="{DynamicResource HyperlinkForegroundDisabled}" />
+      </Trigger>
+    </Style.Triggers>
+  </Style>
+  <Style TargetType="Hyperlink" BasedOn="{StaticResource DefaultHyperlinkStyle}" />
   <Style x:Key="DefaultItemsControlStyle" TargetType="{x:Type ItemsControl}">
     <Setter Property="Template">
       <Setter.Value>

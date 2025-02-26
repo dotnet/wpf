@@ -3508,7 +3508,7 @@
   <Style BasedOn="{StaticResource DefaultRepeatButtonStyle}" TargetType="{x:Type RepeatButton}" />
   <sys:Double x:Key="ResizeGripMinHeight" xmlns:sys="clr-namespace:System;assembly=System.Runtime">12</sys:Double>
   <sys:Double x:Key="ResizeGripMinWidth" xmlns:sys="clr-namespace:System;assembly=System.Runtime">12</sys:Double>
-  <sys:Double x:Key="ResizeGripIconSize" xmlns:sys="clr-namespace:System;assembly=System.Runtime">12.0</sys:Double>
+  <sys:Double x:Key="ResizeGripIconSize" xmlns:sys="clr-namespace:System;assembly=System.Runtime">8.0</sys:Double>
   <sys:String x:Key="ResizeGripIconGlyph" xmlns:sys="clr-namespace:System;assembly=System.Runtime"></sys:String>
   <Style x:Key="DefaultResizeGripStyle" TargetType="{x:Type ResizeGrip}">
     <Setter Property="OverridesDefaultStyle" Value="True" />
@@ -3521,7 +3521,7 @@
       <Setter.Value>
         <ControlTemplate TargetType="ResizeGrip">
           <Grid SnapsToDevicePixels="True" Background="{TemplateBinding Background}">
-            <TextBlock FontFamily="{DynamicResource SymbolThemeFontFamily}" Text="{StaticResource ResizeGripIconGlyph}" FontSize="{DynamicResource ResizeGripIconSize}" Foreground="{DynamicResource ResizeGripForeground}" Width="{TemplateBinding MinWidth}" Height="{TemplateBinding MinWidth}" />
+            <TextBlock FontFamily="{DynamicResource SymbolThemeFontFamily}" Text="{StaticResource ResizeGripIconGlyph}" FontSize="{DynamicResource ResizeGripIconSize}" Foreground="{DynamicResource ResizeGripForeground}" />
           </Grid>
         </ControlTemplate>
       </Setter.Value>

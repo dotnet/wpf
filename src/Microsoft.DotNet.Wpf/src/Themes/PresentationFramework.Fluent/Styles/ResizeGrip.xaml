@@ -5,7 +5,7 @@
 
     <sys:Double x:Key="ResizeGripMinHeight">12</sys:Double>
     <sys:Double x:Key="ResizeGripMinWidth">12</sys:Double>
-    <sys:Double x:Key="ResizeGripIconSize">12.0</sys:Double>
+    <sys:Double x:Key="ResizeGripIconSize">8.0</sys:Double>
     <sys:String x:Key="ResizeGripIconGlyph">&#xF169;</sys:String>
 
     <Style x:Key="DefaultResizeGripStyle" TargetType="{x:Type ResizeGrip}">
@@ -25,9 +25,7 @@
                             FontFamily="{DynamicResource SymbolThemeFontFamily}" 
                             Text="{StaticResource ResizeGripIconGlyph}" 
                             FontSize="{DynamicResource ResizeGripIconSize}" 
-                            Foreground="{DynamicResource ResizeGripForeground}" 
-                            Width="{TemplateBinding MinWidth}" 
-                            Height="{TemplateBinding MinWidth}"/>
+                            Foreground="{DynamicResource ResizeGripForeground}" />
                     </Grid>
                 </ControlTemplate>
             </Setter.Value>

@@ -1,102 +1,40 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
-//
-// 
-// Description: Manage the data format.
-//
-// See spec at http://avalon/uis/Data%20Transfer%20clipboard%20dragdrop/Avalon%20Data%20Transfer%20Object.htm 
-// 
-//
+using System.Private.Windows.Ole;
 
-using MS.Internal.PresentationCore;
+namespace System.Windows;
 
-namespace System.Windows
+/// <summary>
+///  Represents a data format type.
+/// </summary>
+public sealed class DataFormat : IDataFormat<DataFormat>
 {
-    #region DataFormat Class
-
     /// <summary>
-    /// Represents a data format type.
+    ///  Initializes a new instance of the DataFormat class and specifies format name and id.
     /// </summary>
-    public sealed class DataFormat
+    public DataFormat(string name, int id)
     {
-        //------------------------------------------------------
-        //
-        //  Constructors
-        //
-        //------------------------------------------------------
+        ArgumentNullException.ThrowIfNull(name);
 
-        #region Constructors
-
-        /// <summary>
-        /// Initializes a new instance of the DataFormat class and specifies format name and id.
-        /// </summary>
-        public DataFormat(string name, int id)
+        if (name.Length == 0)
         {
-            ArgumentNullException.ThrowIfNull(name);
-
-            if (name.Length == 0)
-            {
-                throw new ArgumentException(SR.DataObject_EmptyFormatNotAllowed); 
-            }
-
-            this._name = name;
-            this._id = id;
+            throw new ArgumentException(SR.DataObject_EmptyFormatNotAllowed); 
         }
 
-        #endregion Constructors
-
-        //------------------------------------------------------
-        //
-        //  Public Properties
-        //
-        //------------------------------------------------------
-
-        #region Public Properties
-
-        /// <summary>
-        /// Specifies the name of this format. 
-        /// This field is read-only.
-        /// </summary>
-        public string Name
-        {
-            get
-            {
-                return _name;
-            }
-        }
-
-        /// <summary>
-        /// Specifies the Id number for this format. 
-        /// This field is read-only.
-        /// </summary>
-        public int Id
-        {
-            get
-            {
-                return _id;
-            }
-        }
-
-        #endregion Public Properties
-
-        //------------------------------------------------------
-        //
-        //  Private Fields
-        //
-        //------------------------------------------------------
-
-        #region Private Fields
-
-        // The registered clipboard format name string.
-        readonly string _name;
-
-        // The registered clipboard format id.
-        readonly int _id;
-
-        #endregion Private Fields
+        Name = name;
+        Id = id;
     }
 
-    #endregion DataFormat Class
+    /// <summary>
+    ///  Specifies the name of this format.
+    /// </summary>
+    public string Name { get; }
+
+    /// <summary>
+    ///  Specifies the Id number for this format.
+    /// </summary>
+    public int Id { get; }
+
+    static DataFormat IDataFormat<DataFormat>.Create(string name, int id) => new(name, id);
 }

@@ -472,6 +472,10 @@
   <SolidColorBrush x:Key="GridsplitterBackgroundPressed" Color="{StaticResource ControlAltFillColorQuarternary}" />
   <SolidColorBrush x:Key="GridsplitterBackgroundDisabled" Color="{StaticResource ControlAltFillColorDisabled}" />
   <SolidColorBrush x:Key="GridsplitterForeground" Color="{StaticResource ControlStrongFillColorDefault}" />
+  <!--  GroupBox  -->
+  <SolidColorBrush x:Key="GroupBoxBackground" Color="Transparent" />
+  <SolidColorBrush x:Key="GroupBoxBorderBrush" Color="Transparent" />
+  <SolidColorBrush x:Key="GroupBoxHeaderForeground" Color="{StaticResource TextFillColorPrimary}" />
   <!--  Hyperlink  -->
   <SolidColorBrush x:Key="HyperlinkForeground" Color="{StaticResource SystemAccentColorDark2}" />
   <SolidColorBrush x:Key="HyperlinkForegroundPointerOver" Color="{StaticResource SystemAccentColorDark2}" />
@@ -2707,6 +2711,34 @@
     </Setter>
   </Style>
   <Style BasedOn="{StaticResource DefaultGridSplitterStyle}" TargetType="{x:Type GridSplitter}" />
+  <Thickness x:Key="GroupBoxPadding">0,0,0,16</Thickness>
+  <system:Double x:Key="GroupBoxHeaderFontSize">20</system:Double>
+  <Thickness x:Key="GroupBoxHeaderMargin">0,4,0,12</Thickness>
+  <Thickness x:Key="GroupBoxBorderThickness">0</Thickness>
+  <Style x:Key="DefaultGroupBoxStyle" TargetType="{x:Type GroupBox}">
+    <Setter Property="OverridesDefaultStyle" Value="True" />
+    <Setter Property="BorderThickness" Value="{DynamicResource GroupBoxBorderThickness}" />
+    <Setter Property="Background" Value="{DynamicResource GroupBoxBackground}" />
+    <Setter Property="BorderBrush" Value="{DynamicResource GroupBoxBorderBrush}" />
+    <Setter Property="Padding" Value="{DynamicResource GroupBoxPadding}" />
+    <Setter Property="Template">
+      <Setter.Value>
+        <ControlTemplate TargetType="{x:Type GroupBox}">
+          <Border BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" SnapsToDevicePixels="True">
+            <Grid>
+              <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+              </Grid.RowDefinitions>
+              <ContentPresenter Grid.Row="0" TextElement.FontSize="{DynamicResource GroupBoxHeaderFontSize}" Margin="{DynamicResource GroupBoxHeaderMargin}" ContentSource="Header" TextElement.Foreground="{DynamicResource GroupBoxHeaderForeground}" RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+              <ContentPresenter Grid.Row="1" Margin="{TemplateBinding Padding}" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+            </Grid>
+          </Border>
+        </ControlTemplate>
+      </Setter.Value>
+    </Setter>
+  </Style>
+  <Style BasedOn="{StaticResource DefaultGroupBoxStyle}" TargetType="{x:Type GroupBox}" />
   <Style x:Key="{x:Type GroupItem}" TargetType="{x:Type GroupItem}">
     <Setter Property="Template">
       <Setter.Value>

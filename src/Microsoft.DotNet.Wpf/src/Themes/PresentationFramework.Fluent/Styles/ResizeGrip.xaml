@@ -1,25 +1,33 @@
 <ResourceDictionary
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:sys="clr-namespace:System;assembly=System.Runtime">
+
+    <sys:Double x:Key="ResizeGripMinHeight">12</sys:Double>
+    <sys:Double x:Key="ResizeGripMinWidth">12</sys:Double>
+    <sys:Double x:Key="ResizeGripIconSize">12.0</sys:Double>
+    <sys:String x:Key="ResizeGripIconGlyph">&#xF169;</sys:String>
 
     <Style x:Key="DefaultResizeGripStyle" TargetType="{x:Type ResizeGrip}">
         <Setter Property="OverridesDefaultStyle" Value="True" />
-        <Setter Property="MinWidth" Value="{DynamicResource {x:Static SystemParameters.VerticalScrollBarWidthKey}}" />
-        <Setter Property="MinHeight" Value="{DynamicResource {x:Static SystemParameters.HorizontalScrollBarHeightKey}}" />
+        <Setter Property="MinWidth" Value="{DynamicResource ResizeGripMinWidth}" />
+        <Setter Property="MinHeight" Value="{DynamicResource ResizeGripMinHeight}" />
+        <Setter Property="Width" Value="{DynamicResource ResizeGripWidth}" />
+        <Setter Property="Height" Value="{DynamicResource ResizeGripHeight}" />
         <Setter Property="Background" Value="Transparent" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="ResizeGrip">
                     <Grid
-                        SnapsToDevicePixels="true"
+                        SnapsToDevicePixels="True"
                         Background="{TemplateBinding Background}">
                         <TextBlock 
                             FontFamily="{DynamicResource SymbolThemeFontFamily}" 
-                            Text="&#xF169;" 
-                            FontSize="12" 
+                            Text="{StaticResource ResizeGripIconGlyph}" 
+                            FontSize="{DynamicResource ResizeGripIconSize}" 
                             Foreground="{DynamicResource ResizeGripForeground}" 
-                            Width="15" 
-                            Height="15"/>
+                            Width="{TemplateBinding MinWidth}" 
+                            Height="{TemplateBinding MinWidth}"/>
                     </Grid>
                 </ControlTemplate>
             </Setter.Value>

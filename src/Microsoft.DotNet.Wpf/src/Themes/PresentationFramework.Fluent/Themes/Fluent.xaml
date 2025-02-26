@@ -36,6 +36,7 @@
         <ResourceDictionary Source="pack://application:,,,/PresentationFramework.Fluent;component/Styles/ProgressBar.xaml" />
         <ResourceDictionary Source="pack://application:,,,/PresentationFramework.Fluent;component/Styles/RadioButton.xaml" />
         <ResourceDictionary Source="pack://application:,,,/PresentationFramework.Fluent;component/Styles/RepeatButton.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/PresentationFramework.Fluent;component/Styles/ResizeGrip.xaml" />
         <ResourceDictionary Source="pack://application:,,,/PresentationFramework.Fluent;component/Styles/RichTextBox.xaml" />
         <ResourceDictionary Source="pack://application:,,,/PresentationFramework.Fluent;component/Styles/ScrollBar.xaml" />
         <ResourceDictionary Source="pack://application:,,,/PresentationFramework.Fluent;component/Styles/ScrollViewer.xaml" />

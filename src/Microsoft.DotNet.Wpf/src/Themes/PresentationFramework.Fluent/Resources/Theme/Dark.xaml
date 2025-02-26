@@ -100,8 +100,6 @@
     <Color x:Key="LayerOnAcrylicFillColorDefault">#09FFFFFF</Color>
     <Color x:Key="LayerOnAccentAcrylicFillColorDefault">#09FFFFFF</Color>
 
-    <Color x:Key="SystemBaseMediumLowColor">#66FFFFFF</Color>
-
     <!--  Fallback color for missing Acrylic used for e.g. Flyouts  -->
     <Color x:Key="AcrylicBackgroundFillColorDefault">#2C2C2C</Color>
 
@@ -260,8 +258,6 @@
     <SolidColorBrush x:Key="SystemFillColorNeutralBackgroundBrush" Color="{StaticResource SystemFillColorNeutralBackground}" />
     <SolidColorBrush x:Key="SystemFillColorSolidAttentionBackgroundBrush" Color="{StaticResource SystemFillColorSolidAttentionBackground}" />
     <SolidColorBrush x:Key="SystemFillColorSolidNeutralBackgroundBrush" Color="{StaticResource SystemFillColorSolidNeutralBackground}" />
-
-    <SolidColorBrush x:Key="SystemControlForegroundBaseMediumLowBrush" Color="{StaticResource SystemBaseMediumLowColor}" />
 
     <!--  Elevation border brushes  -->
 
@@ -620,7 +616,7 @@
     <SolidColorBrush x:Key="RepeatButtonForegroundDisabled" Color="{StaticResource TextFillColorDisabled}" />
 
     <!-- ResizeGrip -->
-    <SolidColorBrush x:Key="ResizeGripForeground" Color="{StaticResource SystemBaseMediumLowColor}" />
+    <SolidColorBrush x:Key="ResizeGripForeground" Color="{StaticResource ControlStrongFillColorDefault}" />
 
     <!-- ScrollBar -->
     <SolidColorBrush x:Key="ScrollBarTrackFill" Color="{StaticResource SubtleFillColorTransparent}" />

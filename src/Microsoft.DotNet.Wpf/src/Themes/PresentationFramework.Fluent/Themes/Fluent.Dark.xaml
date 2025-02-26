@@ -148,7 +148,6 @@
   <Color x:Key="LayerFillColorAlt">#0DFFFFFF</Color>
   <Color x:Key="LayerOnAcrylicFillColorDefault">#09FFFFFF</Color>
   <Color x:Key="LayerOnAccentAcrylicFillColorDefault">#09FFFFFF</Color>
-  <Color x:Key="SystemBaseMediumLowColor">#66FFFFFF</Color>
   <!--  Fallback color for missing Acrylic used for e.g. Flyouts  -->
   <Color x:Key="AcrylicBackgroundFillColorDefault">#2C2C2C</Color>
   <Color x:Key="LayerOnMicaBaseAltFillColorDefault">#733A3A3A</Color>
@@ -276,7 +275,6 @@
   <SolidColorBrush x:Key="SystemFillColorNeutralBackgroundBrush" Color="{StaticResource SystemFillColorNeutralBackground}" />
   <SolidColorBrush x:Key="SystemFillColorSolidAttentionBackgroundBrush" Color="{StaticResource SystemFillColorSolidAttentionBackground}" />
   <SolidColorBrush x:Key="SystemFillColorSolidNeutralBackgroundBrush" Color="{StaticResource SystemFillColorSolidNeutralBackground}" />
-  <SolidColorBrush x:Key="SystemControlForegroundBaseMediumLowBrush" Color="{StaticResource SystemBaseMediumLowColor}" />
   <!--  Elevation border brushes  -->
   <LinearGradientBrush x:Key="ControlElevationBorderBrush" MappingMode="Absolute" StartPoint="0,0" EndPoint="0,3">
     <!--<LinearGradientBrush.RelativeTransform>
@@ -592,7 +590,7 @@
   <SolidColorBrush x:Key="RepeatButtonForegroundPressed" Color="{StaticResource TextFillColorSecondary}" />
   <SolidColorBrush x:Key="RepeatButtonForegroundDisabled" Color="{StaticResource TextFillColorDisabled}" />
   <!-- ResizeGrip -->
-  <SolidColorBrush x:Key="ResizeGripForeground" Color="{StaticResource SystemBaseMediumLowColor}" />
+  <SolidColorBrush x:Key="ResizeGripForeground" Color="{StaticResource ControlStrongFillColorDefault}" />
   <!-- ScrollBar -->
   <SolidColorBrush x:Key="ScrollBarTrackFill" Color="{StaticResource SubtleFillColorTransparent}" />
   <SolidColorBrush x:Key="ScrollBarTrackStroke" Color="{StaticResource SubtleFillColorTransparent}" />
@@ -3508,16 +3506,22 @@
     </Setter>
   </Style>
   <Style BasedOn="{StaticResource DefaultRepeatButtonStyle}" TargetType="{x:Type RepeatButton}" />
+  <sys:Double x:Key="ResizeGripMinHeight" xmlns:sys="clr-namespace:System;assembly=System.Runtime">12</sys:Double>
+  <sys:Double x:Key="ResizeGripMinWidth" xmlns:sys="clr-namespace:System;assembly=System.Runtime">12</sys:Double>
+  <sys:Double x:Key="ResizeGripIconSize" xmlns:sys="clr-namespace:System;assembly=System.Runtime">12.0</sys:Double>
+  <sys:String x:Key="ResizeGripIconGlyph" xmlns:sys="clr-namespace:System;assembly=System.Runtime"></sys:String>
   <Style x:Key="DefaultResizeGripStyle" TargetType="{x:Type ResizeGrip}">
     <Setter Property="OverridesDefaultStyle" Value="True" />
-    <Setter Property="MinWidth" Value="{DynamicResource {x:Static SystemParameters.VerticalScrollBarWidthKey}}" />
-    <Setter Property="MinHeight" Value="{DynamicResource {x:Static SystemParameters.HorizontalScrollBarHeightKey}}" />
+    <Setter Property="MinWidth" Value="{DynamicResource ResizeGripMinWidth}" />
+    <Setter Property="MinHeight" Value="{DynamicResource ResizeGripMinHeight}" />
+    <Setter Property="Width" Value="{DynamicResource ResizeGripWidth}" />
+    <Setter Property="Height" Value="{DynamicResource ResizeGripHeight}" />
     <Setter Property="Background" Value="Transparent" />
     <Setter Property="Template">
       <Setter.Value>
         <ControlTemplate TargetType="ResizeGrip">
-          <Grid SnapsToDevicePixels="true" Background="{TemplateBinding Background}">
-            <TextBlock FontFamily="{DynamicResource SymbolThemeFontFamily}" Text="" FontSize="12" Foreground="{DynamicResource ResizeGripForeground}" Width="15" Height="15" />
+          <Grid SnapsToDevicePixels="True" Background="{TemplateBinding Background}">
+            <TextBlock FontFamily="{DynamicResource SymbolThemeFontFamily}" Text="{StaticResource ResizeGripIconGlyph}" FontSize="{DynamicResource ResizeGripIconSize}" Foreground="{DynamicResource ResizeGripForeground}" Width="{TemplateBinding MinWidth}" Height="{TemplateBinding MinWidth}" />
           </Grid>
         </ControlTemplate>
       </Setter.Value>

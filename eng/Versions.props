@@ -7,6 +7,7 @@
     <PreReleaseVersionLabel>preview</PreReleaseVersionLabel>
     <PreReleaseVersionIteration>3</PreReleaseVersionIteration>
     <VersionPrefix>$(MajorVersion).$(MinorVersion).$(PatchVersion)</VersionPrefix>
+    <UseVSTestRunner>true</UseVSTestRunner>
     <!--
       Set assembly version to align with major and minor version, as for the patches and revisions should be manually
       updated per assembly if it is serviced.
@@ -104,7 +105,8 @@
   <!-- Code Coverage -->
   <PropertyGroup>
     <CoverletMSBuildPackageVersion>3.1.2</CoverletMSBuildPackageVersion>
-    <CodecovVersion>1.9.0</CodecovVersion>
+    <CodecovVersion>1.12.3</CodecovVersion>
+    <CoverletVersion>3.1.2</CoverletVersion>
     <ReportGeneratorVersion>4.0.9</ReportGeneratorVersion>
   </PropertyGroup>
   <!-- External Analyzers -->

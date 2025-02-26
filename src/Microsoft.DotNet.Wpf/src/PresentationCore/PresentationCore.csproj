@@ -22,6 +22,7 @@
   <ItemGroup>
     <Compile Include="$(WpfCommonDir)\src\System\LocalAppContext.cs" />
     <Compile Include="$(WpfCommonDir)\src\System\AppContextDefaultValues.cs" />
+    <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="GlobalUsings.cs" />
     <Compile Include="System\AppContextDefaultValues.cs" />
   </ItemGroup>
@@ -315,6 +316,12 @@
     <Compile Include="System\IO\Packaging\PackWebRequest.cs" />
     <Compile Include="System\IO\Packaging\PackWebRequestFactory.cs" />
     <Compile Include="System\IO\Packaging\PackWebResponse.cs" />
+    <Compile Include="System\Windows\DataObject.DataStore.cs" />
+    <Compile Include="System\Windows\DataObject.DataStore.DataStoreEntry.cs" />
+    <Compile Include="System\Windows\DataObject.FormatEnumerator.cs" />
+    <Compile Include="System\Windows\DataObject.OleConverter.cs" />
+    <Compile Include="System\Windows\DataObject.OleConverter.RestrictedTypeDeserializationException.cs" />
+    <Compile Include="System\Windows\DataObject.OleConverter.TypeRestrictingSerializationBinder.cs" />
     <Compile Include="System\Windows\Generated\ContentElement.cs" />
     <Compile Include="System\Windows\Generated\TextDecoration.cs" />
     <Compile Include="System\Windows\Generated\TextDecorationCollection.cs" />
@@ -1436,6 +1443,10 @@
     <ProjectReference Include="$(WpfSourceDir)PresentationCore\ref\PresentationCore-ref.csproj">
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
     </ProjectReference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <MicrosoftPrivateWinFormsReference Include="System.Private.Windows.Core" />
   </ItemGroup>
 
   <!--

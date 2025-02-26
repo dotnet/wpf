@@ -196,7 +196,6 @@
   <SolidColorBrush x:Key="SystemFillColorNeutralBackgroundBrush" Color="{StaticResource SystemColorWindowColor}" />
   <SolidColorBrush x:Key="SystemFillColorSolidAttentionBackgroundBrush" Color="{StaticResource SystemColorWindowColor}" />
   <SolidColorBrush x:Key="SystemFillColorSolidNeutralBackgroundBrush" Color="{StaticResource SystemColorWindowColor}" />
-  <SolidColorBrush x:Key="SystemControlForegroundBaseHighBrush" Color="{StaticResource SystemColorButtonTextColor}" />
   <!--  Elevation border brushes  -->
   <SolidColorBrush x:Key="ControlElevationBorderBrush" Color="{StaticResource SystemColorWindowTextColor}" />
   <SolidColorBrush x:Key="CircleElevationBorderBrush" Color="{StaticResource SystemColorWindowTextColor}" />

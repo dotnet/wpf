@@ -216,7 +216,6 @@ public class ClipboardTests
     [WpfFact]
     public void SetData_Text_Format_AllUpper()
     {
-        // The fact that casing on input matters is likely incorrect, but behavior has been this way.
         Clipboard.SetData("TEXT", "Hello, World!");
         Clipboard.ContainsText().Should().BeTrue();
         Clipboard.ContainsData("TEXT").Should().BeTrue();

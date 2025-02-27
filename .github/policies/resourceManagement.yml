@@ -334,6 +334,8 @@ configuration:
           reviewer: dotnet/wpf-developers
       - requestReview:
           reviewer: Kuldeep-MS
+      - requestReview:
+          reviewer: Copilot
       description: Add PR Label to new Pull Requests
     - if:
       - payloadType: Issues

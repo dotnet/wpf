@@ -40,12 +40,13 @@ namespace MS.Internal
             _permanentCount = 0;
 
             // set up an empty list.
-            // the _begin and _end nodes are empty nodes marking the begin and
-            // end of the list.
+            // the _begin and _end nodes are empty nodes marking the begin and end of the list.
             _begin = new Node(default(K), default(V), false);
             _end = new Node(default(K), default(V), false);
-           _begin.Next = _end;
+
+            _begin.Next = _end;
             _end.Previous = _begin;
+
             _nodeLookup = new Dictionary<K, Node>();
         }
 
@@ -192,7 +193,9 @@ namespace MS.Internal
         private void RemoveOldest()
         {
             Node node = _begin.Next;
+
             _nodeLookup.Remove(node.Key);
+
             RemoveFromList(node);
         }
 
@@ -206,6 +209,7 @@ namespace MS.Internal
         {
             node.Next = _end;
             node.Previous = _end.Previous;
+
             node.Previous.Next = node;
             _end.Previous = node;
         }

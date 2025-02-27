@@ -715,10 +715,10 @@ namespace System.Windows.Markup
                 {
                     int i;
 
-                    i = ParseSubtag(ietfLanguageTag, reader, /* isPrimary */ true);
+                    i = ParseSubtag(ietfLanguageTag, reader, isPrimary: true);
                     while (i != -1)
                     {
-                        i = ParseSubtag(ietfLanguageTag, reader, /* isPrimary */ false);
+                        i = ParseSubtag(ietfLanguageTag, reader, isPrimary: false);
                     }
                 }
             }

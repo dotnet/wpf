@@ -259,6 +259,7 @@
     <SolidColorBrush x:Key="SystemFillColorSolidAttentionBackgroundBrush" Color="{StaticResource SystemFillColorSolidAttentionBackground}" />
     <SolidColorBrush x:Key="SystemFillColorSolidNeutralBackgroundBrush" Color="{StaticResource SystemFillColorSolidNeutralBackground}" />
 
+
     <!--  Elevation border brushes  -->
 
   <LinearGradientBrush x:Key="ControlElevationBorderBrush" MappingMode="RelativeToBoundingBox" StartPoint="0,1" EndPoint="0,0">
@@ -478,6 +479,16 @@
     <SolidColorBrush x:Key="GridsplitterBackgroundPressed" Color="{StaticResource ControlAltFillColorQuarternary}" />
     <SolidColorBrush x:Key="GridsplitterBackgroundDisabled" Color="{StaticResource ControlAltFillColorDisabled}" />
     <SolidColorBrush x:Key="GridsplitterForeground" Color="{StaticResource ControlStrongFillColorDefault}" />
+    
+    <!--  GroupBox  -->
+    <SolidColorBrush x:Key="GroupBoxBackground" Color="Transparent" />
+    <SolidColorBrush x:Key="GroupBoxBorderBrush" Color="Transparent" />
+    <SolidColorBrush x:Key="GroupBoxHeaderForeground" Color="{StaticResource TextFillColorPrimary}" />
+
+    <!--  Hyperlink  -->
+    <SolidColorBrush x:Key="HyperlinkForeground" Color="{StaticResource SystemAccentColorDark2}" />
+    <SolidColorBrush x:Key="HyperlinkForegroundPointerOver" Color="{StaticResource SystemAccentColorDark2}" />
+    <SolidColorBrush x:Key="HyperlinkForegroundDisabled" Color="{StaticResource TextFillColorDisabled}" />
 
     <!--  HyperlinkButton  -->
     <SolidColorBrush x:Key="HyperlinkButtonBackground" Color="{StaticResource SubtleFillColorTransparent}" />
@@ -608,6 +619,9 @@
     <!--  RatingControl  -->
     <SolidColorBrush x:Key="RatingControlSelectedForeground" Color="{StaticResource SystemAccentColorDark1}" />
 
+    <!-- ResizeGrip -->
+    <SolidColorBrush x:Key="ResizeGripForeground" Color="{StaticResource ControlStrongFillColorDefault}" />
+
     <!-- RepeatButton -->
     <SolidColorBrush x:Key="RepeatButtonBackground" Color="{StaticResource ControlFillColorDefault}" />
     <SolidColorBrush x:Key="RepeatButtonBackgroundPointerOver" Color="{StaticResource ControlFillColorSecondary}" />
@@ -642,6 +656,11 @@
 
     <!--  StatusBar  -->
     <!--  TO DO  -->
+
+    <!--  StatusBarItem  -->
+    <SolidColorBrush x:Key="StatusBarItemBackground" Color="Transparent" />
+    <SolidColorBrush x:Key="StatusBarItemBackgroundDisabled" Color="{StaticResource ControlFillColorDisabled}" />
+    <SolidColorBrush x:Key="StatusBarItemForegroundDisabled" Color="{StaticResource TextFillColorDisabled}" />
 
     <!--  TabControl / TabView  -->
     <SolidColorBrush x:Key="TabViewBackground" Color="{StaticResource SubtleFillColorTransparent}" />

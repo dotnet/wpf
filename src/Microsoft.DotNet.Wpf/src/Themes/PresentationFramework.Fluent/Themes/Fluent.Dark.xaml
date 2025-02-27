@@ -475,6 +475,14 @@
   <SolidColorBrush x:Key="GridsplitterBackgroundPressed" Color="{StaticResource ControlAltFillColorQuarternary}" />
   <SolidColorBrush x:Key="GridsplitterBackgroundDisabled" Color="{StaticResource ControlAltFillColorDisabled}" />
   <SolidColorBrush x:Key="GridsplitterForeground" Color="{StaticResource ControlStrongFillColorDefault}" />
+  <!--  GroupBox  -->
+  <SolidColorBrush x:Key="GroupBoxBackground" Color="Transparent" />
+  <SolidColorBrush x:Key="GroupBoxBorderBrush" Color="Transparent" />
+  <SolidColorBrush x:Key="GroupBoxHeaderForeground" Color="{StaticResource TextFillColorPrimary}" />
+  <!--  Hyperlink  -->
+  <SolidColorBrush x:Key="HyperlinkForeground" Color="{StaticResource SystemAccentColorLight3}" />
+  <SolidColorBrush x:Key="HyperlinkForegroundPointerOver" Color="{StaticResource SystemAccentColorLight3}" />
+  <SolidColorBrush x:Key="HyperlinkForegroundDisabled" Color="{StaticResource TextFillColorDisabled}" />
   <!--  HyperlinkButton  -->
   <SolidColorBrush x:Key="HyperlinkButtonBackground" Color="{StaticResource SubtleFillColorTransparent}" />
   <SolidColorBrush x:Key="HyperlinkButtonBackgroundPointerOver" Color="{StaticResource SubtleFillColorSecondary}" />
@@ -595,6 +603,8 @@
   <SolidColorBrush x:Key="RepeatButtonForeground" Color="{StaticResource TextFillColorPrimary}" />
   <SolidColorBrush x:Key="RepeatButtonForegroundPressed" Color="{StaticResource TextFillColorSecondary}" />
   <SolidColorBrush x:Key="RepeatButtonForegroundDisabled" Color="{StaticResource TextFillColorDisabled}" />
+  <!-- ResizeGrip -->
+  <SolidColorBrush x:Key="ResizeGripForeground" Color="{StaticResource ControlStrongFillColorDefault}" />
   <!-- ScrollBar -->
   <SolidColorBrush x:Key="ScrollBarTrackFill" Color="{StaticResource SubtleFillColorTransparent}" />
   <SolidColorBrush x:Key="ScrollBarTrackStroke" Color="{StaticResource SubtleFillColorTransparent}" />
@@ -614,6 +624,10 @@
   <SolidColorBrush x:Key="SnackBarBorderBrush" Color="{StaticResource SurfaceStrokeColorFlyout}" />
   <!--  StatusBar  -->
   <!--  TO DO  -->
+  <!--  StatusBarItem  -->
+  <SolidColorBrush x:Key="StatusBarItemBackground" Color="Transparent" />
+  <SolidColorBrush x:Key="StatusBarItemBackgroundDisabled" Color="{StaticResource ControlFillColorDisabled}" />
+  <SolidColorBrush x:Key="StatusBarItemForegroundDisabled" Color="{StaticResource TextFillColorDisabled}" />
   <!--  TabControl / TabView  -->
   <SolidColorBrush x:Key="TabViewBackground" Color="{StaticResource SubtleFillColorTransparent}" />
   <SolidColorBrush x:Key="TabViewForeground" Color="{StaticResource TextFillColorPrimary}" />
@@ -2702,6 +2716,34 @@
     </Setter>
   </Style>
   <Style BasedOn="{StaticResource DefaultGridSplitterStyle}" TargetType="{x:Type GridSplitter}" />
+  <Thickness x:Key="GroupBoxPadding">0,0,0,16</Thickness>
+  <system:Double x:Key="GroupBoxHeaderFontSize">20</system:Double>
+  <Thickness x:Key="GroupBoxHeaderMargin">0,4,0,12</Thickness>
+  <Thickness x:Key="GroupBoxBorderThickness">0</Thickness>
+  <Style x:Key="DefaultGroupBoxStyle" TargetType="{x:Type GroupBox}">
+    <Setter Property="OverridesDefaultStyle" Value="True" />
+    <Setter Property="BorderThickness" Value="{DynamicResource GroupBoxBorderThickness}" />
+    <Setter Property="Background" Value="{DynamicResource GroupBoxBackground}" />
+    <Setter Property="BorderBrush" Value="{DynamicResource GroupBoxBorderBrush}" />
+    <Setter Property="Padding" Value="{DynamicResource GroupBoxPadding}" />
+    <Setter Property="Template">
+      <Setter.Value>
+        <ControlTemplate TargetType="{x:Type GroupBox}">
+          <Border BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" SnapsToDevicePixels="True">
+            <Grid>
+              <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+              </Grid.RowDefinitions>
+              <ContentPresenter Grid.Row="0" TextElement.FontSize="{DynamicResource GroupBoxHeaderFontSize}" Margin="{DynamicResource GroupBoxHeaderMargin}" ContentSource="Header" TextElement.Foreground="{DynamicResource GroupBoxHeaderForeground}" RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+              <ContentPresenter Grid.Row="1" Margin="{TemplateBinding Padding}" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+            </Grid>
+          </Border>
+        </ControlTemplate>
+      </Setter.Value>
+    </Setter>
+  </Style>
+  <Style BasedOn="{StaticResource DefaultGroupBoxStyle}" TargetType="{x:Type GroupBox}" />
   <Style x:Key="{x:Type GroupItem}" TargetType="{x:Type GroupItem}">
     <Setter Property="Template">
       <Setter.Value>
@@ -2726,6 +2768,20 @@
       </Setter.Value>
     </Setter>
   </Style>
+  <Style x:Key="DefaultHyperlinkStyle" TargetType="Hyperlink">
+    <Setter Property="Foreground" Value="{DynamicResource HyperlinkForeground}" />
+    <Setter Property="TextDecorations" Value="Underline" />
+    <Style.Triggers>
+      <Trigger Property="IsMouseOver" Value="True">
+        <Setter Property="Foreground" Value="{DynamicResource HyperlinkForegroundPointerOver}" />
+        <Setter Property="TextDecorations" Value="None" />
+      </Trigger>
+      <Trigger Property="IsEnabled" Value="False">
+        <Setter Property="Foreground" Value="{DynamicResource HyperlinkForegroundDisabled}" />
+      </Trigger>
+    </Style.Triggers>
+  </Style>
+  <Style TargetType="Hyperlink" BasedOn="{StaticResource DefaultHyperlinkStyle}" />
   <Style x:Key="DefaultItemsControlStyle" TargetType="{x:Type ItemsControl}">
     <Setter Property="Template">
       <Setter.Value>
@@ -3571,6 +3627,26 @@
     </Setter>
   </Style>
   <Style BasedOn="{StaticResource DefaultRepeatButtonStyle}" TargetType="{x:Type RepeatButton}" />
+  <sys:Double x:Key="ResizeGripMinHeight" xmlns:sys="clr-namespace:System;assembly=System.Runtime">12</sys:Double>
+  <sys:Double x:Key="ResizeGripMinWidth" xmlns:sys="clr-namespace:System;assembly=System.Runtime">12</sys:Double>
+  <sys:Double x:Key="ResizeGripIconSize" xmlns:sys="clr-namespace:System;assembly=System.Runtime">8.0</sys:Double>
+  <sys:String x:Key="ResizeGripIconGlyph" xmlns:sys="clr-namespace:System;assembly=System.Runtime"></sys:String>
+  <Style x:Key="DefaultResizeGripStyle" TargetType="{x:Type ResizeGrip}">
+    <Setter Property="OverridesDefaultStyle" Value="True" />
+    <Setter Property="MinWidth" Value="{DynamicResource ResizeGripMinWidth}" />
+    <Setter Property="MinHeight" Value="{DynamicResource ResizeGripMinHeight}" />
+    <Setter Property="Background" Value="Transparent" />
+    <Setter Property="Template">
+      <Setter.Value>
+        <ControlTemplate TargetType="ResizeGrip">
+          <Grid SnapsToDevicePixels="True" Background="{TemplateBinding Background}">
+            <TextBlock FontFamily="{DynamicResource SymbolThemeFontFamily}" Text="{StaticResource ResizeGripIconGlyph}" FontSize="{DynamicResource ResizeGripIconSize}" Foreground="{DynamicResource ResizeGripForeground}" />
+          </Grid>
+        </ControlTemplate>
+      </Setter.Value>
+    </Setter>
+  </Style>
+  <Style BasedOn="{StaticResource DefaultResizeGripStyle}" TargetType="{x:Type ResizeGrip}" />
   <Thickness x:Key="RichTextBoxAccentBorderThemeThickness">0,0,0,1</Thickness>
   <Style x:Key="DefaultRichTextBoxStyle" TargetType="{x:Type RichTextBox}">
     <Setter Property="Foreground" Value="{DynamicResource TextControlForeground}" />
@@ -4058,6 +4134,29 @@
     <Setter Property="Padding" Value="12" />
     <Setter Property="Margin" Value="0" />
   </Style>
+  <Thickness x:Key="StatusBarItemPadding">4</Thickness>
+  <Style x:Key="DefaultStatusBarItemStyle" TargetType="{x:Type StatusBarItem}">
+    <Setter Property="Padding" Value="{DynamicResource StatusBarItemPadding}" />
+    <Setter Property="Background" Value="{DynamicResource StatusBarItemBackground}" />
+    <Setter Property="HorizontalContentAlignment" Value="Left" />
+    <Setter Property="VerticalContentAlignment" Value="Center" />
+    <Setter Property="Template">
+      <Setter.Value>
+        <ControlTemplate TargetType="{x:Type StatusBarItem}">
+          <Border Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Padding="{TemplateBinding Padding}" SnapsToDevicePixels="True">
+            <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+          </Border>
+          <ControlTemplate.Triggers>
+            <Trigger Property="IsEnabled" Value="False">
+              <Setter Property="Foreground" Value="{DynamicResource StatusBarItemForegroundDisabled}" />
+              <Setter Property="Background" Value="{DynamicResource StatusBarItemBackgroundDisabled}" />
+            </Trigger>
+          </ControlTemplate.Triggers>
+        </ControlTemplate>
+      </Setter.Value>
+    </Setter>
+  </Style>
+  <Style BasedOn="{StaticResource DefaultStatusBarItemStyle}" TargetType="{x:Type StatusBarItem}" />
   <!-- Styles when TabItems are on the Top -->
   <ControlTemplate x:Key="DefaultTopTabControlStyle" TargetType="{x:Type TabControl}">
     <Grid KeyboardNavigation.TabNavigation="Local">

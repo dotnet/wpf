@@ -142,7 +142,7 @@ namespace System.Windows.Media.Media3D
             //       null for the Camera.Transform below and account for it
             //       later.
 
-            Matrix3D viewMatrix = CreateViewMatrix(/* trasform = */ null, ref position, ref lookDirection, ref upDirection);
+            Matrix3D viewMatrix = CreateViewMatrix(transform: null, ref position, ref lookDirection, ref upDirection);
             Matrix3D invView = viewMatrix;
             invView.Invert();
             invView.MultiplyVector(ref rayDirection);

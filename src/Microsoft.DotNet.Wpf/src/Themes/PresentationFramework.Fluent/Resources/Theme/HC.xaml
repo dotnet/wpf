@@ -60,7 +60,7 @@
     <SolidColorBrush x:Key="AccentFillColorTertiaryBrush" Opacity="0.8" Color="{StaticResource SystemAccentColorDark1}" />
     <SolidColorBrush x:Key="AccentFillColorDisabledBrush" Color="{StaticResource SystemColorWindowColor}" />
 
-    <SolidColorBrush x:Key="SystemFillColorAttentionBrush" Color="{StaticResource SystemAccentColor}" />    
+    <SolidColorBrush x:Key="SystemFillColorAttentionBrush" Color="{StaticResource SystemAccentColor}" />  
 
 
     <!--  Brushes  -->
@@ -357,6 +357,16 @@
     <SolidColorBrush x:Key="GridsplitterBackgroundDisabled" Color="{StaticResource SystemColorWindowColor}" />
     <SolidColorBrush x:Key="GridsplitterForeground" Color="{StaticResource SystemColorButtonTextColor}" />
 
+    <!--  GroupBox  -->
+    <SolidColorBrush x:Key="GroupBoxBackground" Color="{StaticResource SystemColorButtonFaceColor}" />
+    <SolidColorBrush x:Key="GroupBoxBorderBrush" Color="{StaticResource SystemColorButtonTextColor}" />
+    <SolidColorBrush x:Key="GroupBoxHeaderForeground" Color="{StaticResource SystemColorButtonTextColor}" />
+
+    <!--  Hyperlink  -->
+    <SolidColorBrush x:Key="HyperlinkForeground" Color="{StaticResource SystemColorHotlightColor}" />
+    <SolidColorBrush x:Key="HyperlinkForegroundPointerOver" Color="{StaticResource SystemColorHotlightColor}" />
+    <SolidColorBrush x:Key="HyperlinkForegroundDisabled" Color="{StaticResource SystemColorGrayTextColor}" />
+
     <!--  HyperlinkButton  -->
     <SolidColorBrush x:Key="HyperlinkButtonBackground" Color="Transparent" />
     <SolidColorBrush x:Key="HyperlinkButtonBackgroundPointerOver" Color="{StaticResource SystemColorWindowColor}" />
@@ -498,6 +508,9 @@
     <SolidColorBrush x:Key="RepeatButtonForegroundPressed" Color="{StaticResource SystemColorHighlightColor}" />
     <SolidColorBrush x:Key="RepeatButtonForegroundDisabled" Color="{StaticResource SystemColorGrayTextColor}" />
 
+    <!-- ResizeGrip -->
+    <SolidColorBrush x:Key="ResizeGripForeground" Color="{StaticResource SystemColorButtonTextColor}" />
+
     <!-- ScrollBar -->
     <SolidColorBrush x:Key="ScrollBarTrackFill" Color="Transparent" />
     <SolidColorBrush x:Key="ScrollBarTrackStroke" Color="{StaticResource SystemColorWindowTextColor}" />
@@ -521,6 +534,11 @@
 
     <!--  StatusBar  -->
     <!--  TO DO  -->
+
+    <!--  StatusBarItem  -->
+    <SolidColorBrush x:Key="StatusBarItemBackground" Color="Transparent" />
+    <SolidColorBrush x:Key="StatusBarItemBackgroundDisabled" Color="{StaticResource SystemColorWindowColor}" />
+    <SolidColorBrush x:Key="StatusBarItemForegroundDisabled" Color="{StaticResource SystemColorGrayTextColor}" />
 
     <!--  TabControl / TabView  -->
     <SolidColorBrush x:Key="TabViewBackground" Color="{StaticResource SystemColorWindowColor}" />

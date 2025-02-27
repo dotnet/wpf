@@ -307,7 +307,7 @@ namespace MS.Internal
 
             AbbreviatedGeometryParser parser = new AbbreviatedGeometryParser();
 
-            parser.ParseToGeometryContext(context, pathString, 0 /* curIndex */);
+            parser.ParseToGeometryContext(context, pathString, startIndex: 0);
             
             PathGeometry pathGeometry = context.GetPathGeometry();
 

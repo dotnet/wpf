@@ -1301,7 +1301,7 @@ namespace System.Windows.Interop
 
         private void OnMonitorPowerEvent(object sender, MonitorPowerEventArgs eventArgs)
         {
-            OnMonitorPowerEvent(sender, eventArgs.PowerOn, /*paintOnWake*/true);
+            OnMonitorPowerEvent(sender, eventArgs.PowerOn, paintOnWake: true);
         }
 
         private void OnMonitorPowerEvent(object sender, bool powerOn, bool paintOnWake)
@@ -2588,7 +2588,7 @@ namespace System.Windows.Interop
                     // behavior. It is too early for the hwnd to paint, hence
                     // pass paintOnWake=false assuming that it will soon get
                     // a WM_PAINT message.
-                    hwndTarget.OnMonitorPowerEvent(null, _monitorOn, /*paintOnWake*/ false);
+                    hwndTarget.OnMonitorPowerEvent(null, _monitorOn, paintOnWake: false);
                 }
                 _hwndTargetCount++;
             }

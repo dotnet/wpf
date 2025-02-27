@@ -38,7 +38,7 @@ namespace System.Windows
         /// Format which is going to be added to the DataObject.
         /// </param>
         public DataObjectSettingDataEventArgs(IDataObject dataObject, string format) //
-            : base(System.Windows.DataObject.SettingDataEvent, /*isDragDrop:*/false)
+            : base(System.Windows.DataObject.SettingDataEvent, isDragDrop: false)
         {
             ArgumentNullException.ThrowIfNull(dataObject);
 

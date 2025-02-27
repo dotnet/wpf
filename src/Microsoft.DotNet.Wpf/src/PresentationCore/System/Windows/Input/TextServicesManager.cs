@@ -149,7 +149,7 @@ namespace System.Windows.Input
 
                 if (context != null)
                 {
-                    if (TextServicesKeystroke(context, keyArgs, true /* test */))
+                    if (TextServicesKeystroke(context, keyArgs, test: true))
                     {
                         keyArgs.MarkImeProcessed();
                     }
@@ -192,7 +192,7 @@ namespace System.Windows.Input
 
                     if (context != null)
                     {
-                        if (TextServicesKeystroke(context, keyArgs, false /* test */))
+                        if (TextServicesKeystroke(context, keyArgs, test: false))
                         {
                             keyArgs.Handled = true;
                         }

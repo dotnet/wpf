@@ -168,7 +168,7 @@ namespace System.Windows.Media
                 if (!rectangle.IsEmpty)
                 {
                     rectangle.Offset((Vector)glyphRun.BaselineOrigin);
-                    DrawGeometry(Brushes.Black, null /* pen */, new RectangleGeometry(rectangle));
+                    DrawGeometry(Brushes.Black, pen: null, new RectangleGeometry(rectangle));
                 }
             }
         }   

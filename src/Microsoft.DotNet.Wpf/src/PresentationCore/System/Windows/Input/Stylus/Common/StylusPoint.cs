@@ -134,7 +134,7 @@ namespace System.Windows.Input
                         // use SetPropertyValue, it validates buttons, but does not copy the 
                         // int[] on writes (since we pass the bool flag)
                         //
-                        SetPropertyValue(properties[i], additionalValues[j], false/*copy on write*/);
+                        SetPropertyValue(properties[i], additionalValues[j], copyBeforeWrite: false);
                     }
                 }
             } 

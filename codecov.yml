@@ -19,7 +19,7 @@ comment:
 flags:                            # which files to include in the reporting
   production:
     paths:
-      - src\Microsoft.DotNet.Wpf\src
+      - src/Microsoft.DotNet.Wpf/src
   test:
     paths:
-      - src\Microsoft.DotNet.Wpf\tests\
+      - src/Microsoft.DotNet.Wpf/tests/

@@ -195,7 +195,6 @@ jobs:
           /bl:$(Build.SourcesDirectory)\artifacts\log\$(_BuildConfig)\Test.binlog
           /p:Coverage=$(_Coverage)
         displayName: Run xUnit Tests
-        continueOnError: true
         condition: and(or(ne(variables['_HelixPipeline'], 'true'), and(eq(variables['_HelixPipeline'], 'true'), eq(variables['_PublicBuildPipeline'], 'true'), eq(variables['_ContinuousIntegrationTestsEnabled'], 'true'))), eq(variables['_Platform'], 'x64'))
 
       - task: PublishTestResults@2
@@ -204,7 +203,6 @@ jobs:
           testRunner: VSTest
           testResultsFiles: '$(Build.SourcesDirectory)/artifacts/TestResults/$(_BuildConfig)/*.trx'
           mergeTestResults: true
-          continueOnError: true
         condition: and(succeededOrFailed(), eq(variables['_BuildConfig'], 'Debug'), eq(variables['_Platform'], 'x64'))
       
         # Upload code coverage data

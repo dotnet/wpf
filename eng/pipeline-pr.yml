@@ -139,6 +139,7 @@ jobs:
           ${{ if eq(parameters.runAsPublic, 'true') }}:
             Build_Debug_x64:
               _BuildConfig: Debug
+              _Coverage: true
               # override some variables for debug
               # _SignType has to be real for package publishing to succeed - do not override to test.
               _Platform: x64
@@ -174,6 +175,7 @@ jobs:
           $(_OfficialBuildIdArgs)
           $(_PlatformArgs)
           $(_InternalRuntimeDownloadArgs)
+          /p:Coverage=$(_Coverage)
         displayName: Windows Build / Publish
         # This condition should be kept in sync with the condition for 'Run DRTs' step 
         #   When building on a regular pipeline (!_HelixPipeline), build as usual 
@@ -191,19 +193,22 @@ jobs:
           $(_PlatformArgs)
           $(_InternalRuntimeDownloadArgs)
           /bl:$(Build.SourcesDirectory)\artifacts\log\$(_BuildConfig)\Test.binlog
+          /p:Coverage=$(_Coverage)
         displayName: Run xUnit Tests
-        condition: and(or(ne(variables['_HelixPipeline'], 'true'), and(eq(variables['_HelixPipeline'], 'true') ,eq(variables['_BuildConfig'], 'Release'), eq(variables['_PublicBuildPipeline'], 'true'), eq(variables['_ContinuousIntegrationTestsEnabled'], 'true'))), ne(variables['_Platform'], 'arm64'))
+        condition: and(or(ne(variables['_HelixPipeline'], 'true'), and(eq(variables['_HelixPipeline'], 'true'), eq(variables['_PublicBuildPipeline'], 'true'), eq(variables['_ContinuousIntegrationTestsEnabled'], 'true'))), eq(variables['_Platform'], 'x64'))
 
       - task: PublishTestResults@2
         displayName: Publish XUnit Test Results
         inputs:
-          testResultsFormat: 'xUnit'
-          testResultsFiles: '*.xml'
-          searchFolder: '$(Build.SourcesDirectory)/artifacts/TestResults/$(_BuildConfig)'
+          testRunner: VSTest
+          testResultsFiles: '$(Build.SourcesDirectory)/artifacts/TestResults/$(_BuildConfig)/*.trx'
           mergeTestResults: true
-        continueOnError: true
-        condition: and(eq(variables['_BuildConfig'], 'Release'), ne(variables['_Platform'], 'arm64'))
-
+        condition: and(succeededOrFailed(), eq(variables['_BuildConfig'], 'Debug'), eq(variables['_Platform'], 'x64'))
+      
+        # Upload code coverage data
+      - script: dotnet msbuild -binaryLogger:artifacts\log\$(_configuration)\uploadCodeCov.binlog;ProjectImports=Embed -restore eng/CodeCoverage.proj
+        displayName: Upload coverage to codecov.io
+        condition: and(succeeded(), eq(variables['_Coverage'], True), eq(variables['_BuildConfig'], 'Debug'), eq(variables['_Platform'], 'x64'))
       # - task: PowerShell@2
       #   displayName: Install .NET Core
       #   inputs:

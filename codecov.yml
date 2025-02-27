@@ -1,0 +1,25 @@
+# https://docs.codecov.io/docs/codecov-yaml
+# https://github.com/codecov/support/wiki/Codecov-Yaml
+
+coverage:
+  range: 20..80                   # 20 is red, 80 is green
+  round: down                     # always round down
+  precision: 5                    # highest level of decimal precision
+  status:
+    project:
+      default: false
+    patch:
+      default: false
+  fixes:
+    - "eng/::/"
+
+comment:
+  layout: "diff, flags"           # coverage difference, flags below
+
+flags:                            # which files to include in the reporting
+  production:
+    paths:
+      - src/Microsoft.DotNet.Wpf/src
+  test:
+    paths:
+      - src/Microsoft.DotNet.Wpf/tests/

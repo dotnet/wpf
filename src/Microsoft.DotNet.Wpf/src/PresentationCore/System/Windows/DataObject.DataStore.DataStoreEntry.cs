@@ -3,8 +3,6 @@
 
 #nullable enable
 
-using System.Runtime.InteropServices.ComTypes;
-
 namespace System.Windows;
 
 public sealed partial class DataObject
@@ -13,12 +11,10 @@ public sealed partial class DataObject
     {
         private class DataStoreEntry
         {
-            public DataStoreEntry(object? data, bool autoConvert, DVASPECT aspect, int index)
+            public DataStoreEntry(object? data, bool autoConvert)
             {
                 Data = data;
                 AutoConvert = autoConvert;
-                Aspect = aspect;
-                Index = index;
             }
 
             // Data object property.
@@ -26,12 +22,6 @@ public sealed partial class DataObject
 
             // Auto convert proeprty.
             public bool AutoConvert { get; }
-
-            // Aspect flag property.
-            public DVASPECT Aspect { get; }
-
-            // Index property.
-            public int Index { get; }
         }
     }
 }

@@ -102,7 +102,7 @@ namespace System.Windows.Media
                     Transform.GetTransformValue(transform, out geometryMatrix);
 
                     boundsRect = EllipseGeometry.GetBoundsHelper(
-                        null /* no pen */,
+                        pen: null,
                         Matrix.Identity,
                         Center,
                         RadiusX,
@@ -310,12 +310,12 @@ namespace System.Windows.Media
 
             ByteStreamGeometryContext ctx = new ByteStreamGeometryContext();
 
-            ctx.BeginFigure(points[0], true /* is filled */, true /* is closed */);
+            ctx.BeginFigure(points[0], isFilled: true, isClosed: true);
 
             // i == 0, 3, 6, 9
             for (int i = 0; i < 12; i += 3)
             {
-                ctx.BezierTo(points[i + 1], points[i + 2], points[i + 3], true /* is stroked */, true /* is smooth join */);
+                ctx.BezierTo(points[i + 1], points[i + 2], points[i + 3], isStroked: true, isSmoothJoin: true);
             }
 
             ctx.Close();

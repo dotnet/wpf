@@ -92,7 +92,7 @@ namespace System.Windows.Media
                 // Remove the notification handlers.
                 //
 
-                oldContent.PropagateChangedHandler(ContentsChangedHandler, false /* remove */);
+                oldContent.PropagateChangedHandler(ContentsChangedHandler, adding: false);
 
 
                 //
@@ -110,7 +110,7 @@ namespace System.Windows.Media
             // 
 
             // Propagate notification handlers.
-            newContent?.PropagateChangedHandler(ContentsChangedHandler, true /* adding */);
+            newContent?.PropagateChangedHandler(ContentsChangedHandler, adding: true);
 
             _content = newContent;
 

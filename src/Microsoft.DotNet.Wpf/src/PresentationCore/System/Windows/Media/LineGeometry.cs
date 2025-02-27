@@ -244,8 +244,8 @@ namespace System.Windows.Media
 
             ByteStreamGeometryContext ctx = new ByteStreamGeometryContext();
 
-            ctx.BeginFigure(StartPoint, true /* is filled */, false /* is closed */);
-            ctx.LineTo(EndPoint, true /* is stroked */, false /* is smooth join */);
+            ctx.BeginFigure(StartPoint, isFilled: true, isClosed: false);
+            ctx.LineTo(EndPoint, isStroked: true, isSmoothJoin: false);
             
             ctx.Close();
             data.SerializedData = ctx.GetData();

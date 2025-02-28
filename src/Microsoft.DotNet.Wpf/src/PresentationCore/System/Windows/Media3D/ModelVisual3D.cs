@@ -77,7 +77,7 @@ namespace System.Windows.Media.Media3D
 
             if (visual3D == null)
             {
-                throw new System.ArgumentException(SR.Format(SR.Collection_BadType, this.GetType().Name, value.GetType().Name, typeof(Visual3D).Name));
+                throw new System.ArgumentException(SR.Format(SR.Collection_BadType, this.GetType().Name, value.GetType().Name, nameof(Visual3D)));
             }
 
             Children.Add(visual3D);

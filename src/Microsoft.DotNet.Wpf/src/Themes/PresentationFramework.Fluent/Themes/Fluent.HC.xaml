@@ -2633,6 +2633,7 @@
   <Style BasedOn="{StaticResource DefaultExpanderStyle}" TargetType="{x:Type Expander}" />
   <JournalEntryUnifiedViewConverter x:Key="JournalEntryUnifiedViewConverter" />
   <Thickness x:Key="FrameMenuItemBorderThickness">1</Thickness>
+  <Thickness x:Key="FramePadding">0</Thickness>
   <system:String x:Key="FrameMenuItemChevronDownGlyph"></system:String>
   <system:String x:Key="FrameMenuItemArrowLeftGlyph"></system:String>
   <system:String x:Key="FrameMenuItemArrowRightGlyph"></system:String>
@@ -2642,8 +2643,8 @@
     <Setter Property="VerticalContentAlignment" Value="{Binding VerticalContentAlignment, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}" />
     <Setter Property="FocusVisualStyle" Value="{DynamicResource DefaultCollectionFocusVisualStyle}" />
     <Setter Property="KeyboardNavigation.IsTabStop" Value="True" />
-    <Setter Property="Background" Value="{DynamicResource FrameMenuItemBackground}" />
-    <Setter Property="BorderBrush" Value="{DynamicResource FrameMenuItemBorderBrush}" />
+    <Setter Property="Background" Value="{StaticResource FrameMenuItemBackground}" />
+    <Setter Property="BorderBrush" Value="{StaticResource FrameMenuItemBorderBrush}" />
     <Setter Property="BorderThickness" Value="{StaticResource FrameMenuItemBorderThickness}" />
     <Setter Property="Focusable" Value="True" />
     <Setter Property="OverridesDefaultStyle" Value="True" />
@@ -2667,7 +2668,7 @@
           </Border>
           <ControlTemplate.Triggers>
             <Trigger Property="IsHighlighted" Value="True">
-              <Setter TargetName="Border" Property="Background" Value="{DynamicResource FrameMenuItemBackgroundSelected}" />
+              <Setter TargetName="Border" Property="Background" Value="{StaticResource FrameMenuItemBackgroundSelected}" />
             </Trigger>
             <Trigger Property="Header" Value="{x:Null}">
               <Setter TargetName="Icon" Property="Margin" Value="0" />
@@ -2703,11 +2704,7 @@
               </Setter>
             </MultiTrigger>
             <Trigger Property="IsEnabled" Value="False">
-              <Setter Property="Foreground">
-                <Setter.Value>
-                  <SolidColorBrush Color="{DynamicResource FrameMenuItemForegroundDisabled}" />
-                </Setter.Value>
-              </Setter>
+              <Setter TargetName="Icon" Property="TextElement.Foreground" Value="{StaticResource FrameMenuItemForegroundDisabled}" />
             </Trigger>
           </ControlTemplate.Triggers>
         </ControlTemplate>
@@ -2751,8 +2748,7 @@
   <Style x:Key="DefaultFrameStyle" TargetType="{x:Type Frame}">
     <Setter Property="Foreground" Value="{DynamicResource FrameForeground}" />
     <Setter Property="Background" Value="{DynamicResource FrameBackground}" />
-    <Setter Property="Padding" Value="0" />
-    <Setter Property="Margin" Value="0" />
+    <Setter Property="Padding" Value="{DynamicResource FramePadding}" />
     <Setter Property="Focusable" Value="False" />
     <Setter Property="SnapsToDevicePixels" Value="True" />
     <Setter Property="Template">
@@ -2773,7 +2769,7 @@
           <Condition Property="JournalOwnership" Value="OwnsJournal" />
           <Condition Property="NavigationUIVisibility" Value="Automatic" />
         </MultiTrigger.Conditions>
-        <Setter Property="Template" Value="{StaticResource FrameNavChromeTemplateKey}" />
+        <Setter Property="Template" Value="{StaticResource FrameTemplateKey}" />
       </MultiTrigger>
     </Style.Triggers>
   </Style>

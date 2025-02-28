@@ -22,28 +22,28 @@
   </PropertyGroup>
   <!-- Packages that come from https://github.com/dotnet/winforms -->
   <PropertyGroup>
-    <MicrosoftPrivateWinformsVersion>10.0.0-preview.3.25126.4</MicrosoftPrivateWinformsVersion>
+    <MicrosoftPrivateWinformsVersion>10.0.0-preview.3.25127.2</MicrosoftPrivateWinformsVersion>
   </PropertyGroup>
   <!-- Packages that come from https://github.com/dotnet/runtime -->
   <PropertyGroup>
-    <VSRedistCommonNetCoreSharedFrameworkx64100PackageVersion>10.0.0-preview.3.25125.16</VSRedistCommonNetCoreSharedFrameworkx64100PackageVersion>
-    <MicrosoftNETCoreAppRefVersion>10.0.0-preview.3.25125.16</MicrosoftNETCoreAppRefVersion>
-    <MicrosoftNETCoreAppRuntimewinx64Version>10.0.0-preview.3.25125.16</MicrosoftNETCoreAppRuntimewinx64Version>
-    <MicrosoftNETCorePlatformsVersion>10.0.0-preview.3.25125.16</MicrosoftNETCorePlatformsVersion>
-    <SystemCodeDomPackageVersion>10.0.0-preview.3.25125.16</SystemCodeDomPackageVersion>
-    <SystemConfigurationConfigurationManagerPackageVersion>10.0.0-preview.3.25125.16</SystemConfigurationConfigurationManagerPackageVersion>
-    <SystemDiagnosticsEventLogPackageVersion>10.0.0-preview.3.25125.16</SystemDiagnosticsEventLogPackageVersion>
-    <SystemDrawingCommonVersion>10.0.0-preview.3.25126.4</SystemDrawingCommonVersion>
-    <SystemDirectoryServicesVersion>10.0.0-preview.3.25125.16</SystemDirectoryServicesVersion>
-    <SystemFormatsNrbfVersion>10.0.0-preview.3.25125.16</SystemFormatsNrbfVersion>
-    <SystemIOPackagingVersion>10.0.0-preview.3.25125.16</SystemIOPackagingVersion>
-    <SystemReflectionMetadataLoadContextVersion>10.0.0-preview.3.25125.16</SystemReflectionMetadataLoadContextVersion>
+    <VSRedistCommonNetCoreSharedFrameworkx64100PackageVersion>10.0.0-preview.3.25126.4</VSRedistCommonNetCoreSharedFrameworkx64100PackageVersion>
+    <MicrosoftNETCoreAppRefVersion>10.0.0-preview.3.25126.4</MicrosoftNETCoreAppRefVersion>
+    <MicrosoftNETCoreAppRuntimewinx64Version>10.0.0-preview.3.25126.4</MicrosoftNETCoreAppRuntimewinx64Version>
+    <MicrosoftNETCorePlatformsVersion>10.0.0-preview.3.25126.4</MicrosoftNETCorePlatformsVersion>
+    <SystemCodeDomPackageVersion>10.0.0-preview.3.25126.4</SystemCodeDomPackageVersion>
+    <SystemConfigurationConfigurationManagerPackageVersion>10.0.0-preview.3.25126.4</SystemConfigurationConfigurationManagerPackageVersion>
+    <SystemDiagnosticsEventLogPackageVersion>10.0.0-preview.3.25126.4</SystemDiagnosticsEventLogPackageVersion>
+    <SystemDrawingCommonVersion>10.0.0-preview.3.25127.2</SystemDrawingCommonVersion>
+    <SystemDirectoryServicesVersion>10.0.0-preview.3.25126.4</SystemDirectoryServicesVersion>
+    <SystemFormatsNrbfVersion>10.0.0-preview.3.25126.4</SystemFormatsNrbfVersion>
+    <SystemIOPackagingVersion>10.0.0-preview.3.25126.4</SystemIOPackagingVersion>
+    <SystemReflectionMetadataLoadContextVersion>10.0.0-preview.3.25126.4</SystemReflectionMetadataLoadContextVersion>
     <SystemReflectionTypeExtensionsPackageVersion>4.6.0-preview4.19176.11</SystemReflectionTypeExtensionsPackageVersion>
-    <SystemResourcesExtensionsVersion>10.0.0-preview.3.25125.16</SystemResourcesExtensionsVersion>
-    <SystemRuntimeSerializationFormattersPackageVersion>10.0.0-preview.3.25125.16</SystemRuntimeSerializationFormattersPackageVersion>
-    <SystemSecurityCryptographyXmlPackageVersion>10.0.0-preview.3.25125.16</SystemSecurityCryptographyXmlPackageVersion>
-    <SystemSecurityPermissionsPackageVersion>10.0.0-preview.3.25125.16</SystemSecurityPermissionsPackageVersion>
-    <SystemWindowsExtensionsPackageVersion>10.0.0-preview.3.25125.16</SystemWindowsExtensionsPackageVersion>
+    <SystemResourcesExtensionsVersion>10.0.0-preview.3.25126.4</SystemResourcesExtensionsVersion>
+    <SystemRuntimeSerializationFormattersPackageVersion>10.0.0-preview.3.25126.4</SystemRuntimeSerializationFormattersPackageVersion>
+    <SystemSecurityCryptographyXmlPackageVersion>10.0.0-preview.3.25126.4</SystemSecurityCryptographyXmlPackageVersion>
+    <SystemSecurityPermissionsPackageVersion>10.0.0-preview.3.25126.4</SystemSecurityPermissionsPackageVersion>
+    <SystemWindowsExtensionsPackageVersion>10.0.0-preview.3.25126.4</SystemWindowsExtensionsPackageVersion>
   </PropertyGroup>
   <!-- Docs / Intellisense -->
   <PropertyGroup>

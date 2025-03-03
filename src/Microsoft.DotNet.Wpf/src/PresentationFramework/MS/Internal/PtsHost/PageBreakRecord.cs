@@ -131,7 +131,7 @@ namespace MS.Internal.PtsHost
             PtsContext ptsContext = null;
 
             // Do actual dispose only once.
-            if (Interlocked.CompareExchange(ref _disposed, 1, 0) == 0)
+            if (Interlocked.CompareExchange(ref _disposed, true, false) == false)
             {
                 // Dispose PTS break record.
                 // According to following article the entire reachable graph from 
@@ -183,7 +183,7 @@ namespace MS.Internal.PtsHost
         /// <summary>
         /// Whether object is already disposed.
         /// </summary>
-        private int _disposed;
+        private bool _disposed;
 
         #endregion Private Fields
     }

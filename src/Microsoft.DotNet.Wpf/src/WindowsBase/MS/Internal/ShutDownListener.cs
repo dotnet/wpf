@@ -116,9 +116,8 @@ namespace MS.Internal
         private void HandleShutDown(object sender, EventArgs e)
         {
             // The dispatcher and AppDomain events might arrive on separate threads
-            // at the same time.  The interlock assures that we only do the work
-            // once.
-            if (Interlocked.Exchange(ref _inShutDown, 1) == 0)
+            // at the same time. The interlock assures that we only do the work once.
+            if (Interlocked.Exchange(ref _inShutDown, true) == false)
             {
                 // ShutDown is a one-time event.  Stop listening (thus releasing
                 // references to the ShutDownListener).
@@ -146,6 +145,6 @@ namespace MS.Internal
 
         PrivateFlags _flags;
         WeakReference _dispatcherWR;
-        int _inShutDown;
+        bool _inShutDown;
     }
 }

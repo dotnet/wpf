@@ -248,6 +248,9 @@ dotnet_diagnostic.IDE0300.severity = suggestion
 # IDE1006: Naming Styles
 dotnet_diagnostic.IDE1006.severity = suggestion
 
+# SA1000: Spacing around keywords
+dotnet_diagnostic.SA1000.severity = suggestion
+
 # SA1400: Member should declare an access modifier
 dotnet_diagnostic.SA1400.severity = suggestion
 

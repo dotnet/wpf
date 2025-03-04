@@ -746,7 +746,7 @@ namespace System.Windows
             //Search for the value in the Merged Dictionaries
             if (_mergedDictionaries != null)
             {
-                for (int i = MergedDictionaries.Count - 1; (i > -1) && !result; i--)
+                for (int i = MergedDictionaries.Count - 1; i > -1; i--)
                 {
                     // Note that MergedDictionaries collection can also contain null values
                     ResourceDictionary mergedDictionary = MergedDictionaries[i];

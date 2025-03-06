@@ -160,7 +160,7 @@ namespace System.Windows.Xps.Serialization
             BitmapSource bitmapSource = (BitmapSource)value;
             if (bitmapSource == null)
             {
-                throw new ArgumentException(SR.Format(SR.MustBeOfType, "value", "BitmapSource"));
+                throw new ArgumentException(SR.Format(SR.MustBeOfType, nameof(value), "BitmapSource"));
             }
 
             //

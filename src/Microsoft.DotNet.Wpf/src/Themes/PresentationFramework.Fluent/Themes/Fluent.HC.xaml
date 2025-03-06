@@ -724,7 +724,7 @@
       <Setter.Value>
         <ControlTemplate TargetType="{x:Type ButtonBase}">
           <Border x:Name="ContentBorder" Width="{TemplateBinding Width}" Height="{TemplateBinding Height}" MinWidth="{TemplateBinding MinWidth}" MinHeight="{TemplateBinding MinHeight}" Padding="{TemplateBinding Padding}" HorizontalAlignment="{TemplateBinding HorizontalAlignment}" VerticalAlignment="{TemplateBinding VerticalAlignment}" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="{TemplateBinding Border.CornerRadius}">
-            <ContentPresenter x:Name="ContentPresenter" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}" Content="{TemplateBinding Content}" ContentTemplate="{TemplateBinding ContentTemplate}" TextElement.Foreground="{TemplateBinding Foreground}" />
+            <ContentPresenter x:Name="ContentPresenter" RecognizesAccessKey="True" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}" Content="{TemplateBinding Content}" ContentTemplate="{TemplateBinding ContentTemplate}" TextElement.Foreground="{TemplateBinding Foreground}" />
           </Border>
           <ControlTemplate.Triggers>
             <Trigger Property="IsMouseOver" Value="True">
@@ -1757,7 +1757,7 @@
           <Grid>
             <Border x:Name="rowHeaderBorder" Width="10" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="0,0,1,0">
               <StackPanel Orientation="Horizontal">
-                <ContentPresenter VerticalAlignment="Center" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                <ContentPresenter VerticalAlignment="Center" RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
                 <Control SnapsToDevicePixels="False" Template="{Binding ValidationErrorTemplate, RelativeSource={RelativeSource AncestorType={x:Type DataGridRow}}}" Visibility="{Binding (Validation.HasError), Converter={StaticResource BooleanToVisibilityConverter}, RelativeSource={RelativeSource AncestorType={x:Type DataGridRow}}}" />
               </StackPanel>
             </Border>
@@ -1833,7 +1833,7 @@
         <ControlTemplate TargetType="{x:Type DataGridColumnHeader}">
           <Grid>
             <Border x:Name="columnHeaderBorder" Padding="3,0,3,0" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="0,0,1,1">
-              <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+              <ContentPresenter RecognizesAccessKey="True" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
             </Border>
             <Thumb x:Name="PART_LeftHeaderGripper" HorizontalAlignment="Left" Style="{StaticResource ColumnHeaderGripperStyle}" />
             <Thumb x:Name="PART_RightHeaderGripper" HorizontalAlignment="Right" Style="{StaticResource ColumnHeaderGripperStyle}" />
@@ -2422,7 +2422,7 @@
               <!-- Dummy border to store Animation factor for expander -->
               <Border x:Name="AnimationFactorBorder" Width="0" Visibility="Collapsed" />
               <Border x:Name="ContentPresenterBorder" Background="{DynamicResource ExpanderContentBackground}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="1,0,1,1" CornerRadius="0,0,4,4" Visibility="Collapsed">
-                <ContentPresenter x:Name="ContentPresenter" Margin="{TemplateBinding Padding}" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}" Content="{TemplateBinding Content}" />
+                <ContentPresenter x:Name="ContentPresenter" RecognizesAccessKey="True" Margin="{TemplateBinding Padding}" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}" Content="{TemplateBinding Content}" />
                 <Border.Resources>
                   <TranslateTransform x:Key="HeightAnimationNegative">
                     <TranslateTransform.Y>
@@ -3473,7 +3473,7 @@
                 <!--  A seperate element is added since the two orthogonal state groups that cannot touch the same property  -->
                 <Border x:Name="PressedCheckGlyph" Width="4" Height="4" Background="{DynamicResource RadioButtonCheckGlyphFill}" BorderBrush="{DynamicResource CircleElevationBorderBrush}" CornerRadius="6" Opacity="0" UseLayoutRounding="False" />
               </Grid>
-              <ContentPresenter x:Name="ContentPresenter" Grid.Column="1" Margin="{TemplateBinding Padding}" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}" Content="{TemplateBinding Content}" ContentTemplate="{TemplateBinding ContentTemplate}" TextElement.Foreground="{TemplateBinding Foreground}" />
+              <ContentPresenter x:Name="ContentPresenter" Grid.Column="1" RecognizesAccessKey="True" Margin="{TemplateBinding Padding}" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}" Content="{TemplateBinding Content}" ContentTemplate="{TemplateBinding ContentTemplate}" TextElement.Foreground="{TemplateBinding Foreground}" />
             </Grid>
           </Border>
           <ControlTemplate.Triggers>

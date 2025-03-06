@@ -1233,7 +1233,6 @@
     <Compile Include="System\Windows\Media\Imaging\GifBitmapDecoder.cs" />
     <Compile Include="System\Windows\Media\Imaging\GifBitmapEncoder.cs" />
     <Compile Include="System\Windows\Media\Imaging\IconBitmapDecoder.cs" />
-    <Compile Include="System\Windows\Media\Imaging\ImagingCache.cs" />
     <Compile Include="System\Windows\Media\Imaging\InplaceBitmapMetadataWriter.cs" />
     <Compile Include="System\Windows\Media\Imaging\InteropBitmapSource.cs" />
     <Compile Include="System\Windows\Media\Imaging\JpegBitmapDecoder.cs" />
@@ -1249,6 +1248,7 @@
     <Compile Include="System\Windows\Media\Imaging\UnknownBitmapDecoder.cs" />
     <Compile Include="System\Windows\Media\Imaging\UnknownBitmapEncoder.cs" />
     <Compile Include="System\Windows\Media\Imaging\UnmanagedBitmapWrapper.cs" />
+    <Compile Include="System\Windows\Media\Imaging\WeakReferenceCache.cs" />
     <Compile Include="System\Windows\Media\Imaging\WmpBitmapDecoder.cs" />
     <Compile Include="System\Windows\Media\Imaging\WmpBitmapEncoder.cs" />
     <Compile Include="System\Windows\Media\Imaging\WriteableBitmap.cs" />

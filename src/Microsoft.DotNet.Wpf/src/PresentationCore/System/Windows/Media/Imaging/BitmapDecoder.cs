@@ -29,9 +29,6 @@ namespace System.Windows.Media.Imaging
 
         #region Constructors
 
-        static BitmapDecoder()
-        {
-        }
         /// <summary>
         /// Default constructor
         /// </summary>

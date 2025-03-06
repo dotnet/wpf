@@ -80,10 +80,11 @@ public:
         __in_ecount(1) const BrushContext *pBrushContext
         ) const
     {
-        // If a mapping mode is relative to the brush sizing bounds *and* those
-        // bounds have changed, then the realization context has changed.            
-        // If a mapping mode is absolute and we perform transformation operations
-        // on the brush, even then the sizing bounds gets changed and realization context has changed.
+        // If a mapping mode is relative to the brush
+        // *or* or when a relative transform is used 
+        // *and* bounds have changed, then the realization context has changed            
+        return  (   ((m_data.m_MappingMode == MilBrushMappingMode::RelativeToBoundingBox) 
+                    || (m_data.m_pRelativeTransform != NULL)) &&
 
         // Return true if the brush sizing bounds have changed
         //
@@ -92,7 +93,7 @@ public:
         // occur isn't straightforward (i.e., the brush sizing bounds aren't
         // in device space), and exact equality handles the case we need to optimize
         // for where a brush fills the exact same geometry more than once.                
-        return  ( !(IsExactlyEqualRectD(pBrushContext->rcWorldBrushSizingBounds, m_cachedBrushSizingBounds) ));
+        !(IsExactlyEqualRectD(pBrushContext->rcWorldBrushSizingBounds, m_cachedBrushSizingBounds) ));
 
     }
 

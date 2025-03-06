@@ -225,7 +225,7 @@ namespace System.Xaml.MS.Impl
                 xmlNamespaceList.Add(nsDef.XmlNamespace);
             }
 
-            string assemblyName = _fullyQualifyAssemblyName ? assembly.FullName : ReflectionUtils.GetAssemblyPartialName(assembly).ToString();
+            ReadOnlySpan<char> assemblyName = _fullyQualifyAssemblyName ? assembly.FullName : ReflectionUtils.GetAssemblyPartialName(assembly);
             foreach (KeyValuePair<string, IList<string>> clrToXmlNs in result)
             {
                 // Sort namespaces in preference order

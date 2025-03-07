@@ -1,3 +1,5 @@
+﻿using System.Diagnostics.CodeAnalysis;
+
 namespace System.IO.Packaging
 {
     public static partial class PackageStore
@@ -86,12 +88,16 @@ namespace System.Windows
         public static void SetAudio(byte[] audioBytes) { }
         public static void SetAudio(System.IO.Stream audioStream) { }
         public static void SetData(string format, object data) { }
+        public static void SetDataAsJson<T>(string format, T data) { }
         public static void SetDataObject(object data) { }
         public static void SetDataObject(object data, bool copy) { }
         public static void SetFileDropList(System.Collections.Specialized.StringCollection fileDropList) { }
         public static void SetImage(System.Windows.Media.Imaging.BitmapSource image) { }
         public static void SetText(string text) { }
         public static void SetText(string text, System.Windows.TextDataFormat format) { }
+        [CLSCompliant(false)]
+        public static bool TryGetData<T>(string format, Func<Reflection.Metadata.TypeName, Type> resolver, [NotNullWhen(true), MaybeNullWhen(false)] out T data) { throw null; }
+        public static bool TryGetData<T>(string format, [NotNullWhen(true), MaybeNullWhen(false)] out T data) { throw null; }
     }
     public partial class ContentElement : System.Windows.DependencyObject, System.Windows.IInputElement, System.Windows.Media.Animation.IAnimatable
     {
@@ -471,7 +477,7 @@ namespace System.Windows
         public static System.Windows.DataFormat GetDataFormat(int id) { throw null; }
         public static System.Windows.DataFormat GetDataFormat(string format) { throw null; }
     }
-    public sealed partial class DataObject : System.Runtime.InteropServices.ComTypes.IDataObject, System.Windows.IDataObject
+    public sealed partial class DataObject : System.Runtime.InteropServices.ComTypes.IDataObject, System.Windows.IDataObject, System.Windows.ITypedDataObject
     {
         public static readonly System.Windows.RoutedEvent CopyingEvent;
         public static readonly System.Windows.RoutedEvent PastingEvent;
@@ -524,6 +530,13 @@ namespace System.Windows
         void System.Runtime.InteropServices.ComTypes.IDataObject.GetDataHere(ref System.Runtime.InteropServices.ComTypes.FORMATETC formatetc, ref System.Runtime.InteropServices.ComTypes.STGMEDIUM medium) { }
         int System.Runtime.InteropServices.ComTypes.IDataObject.QueryGetData(ref System.Runtime.InteropServices.ComTypes.FORMATETC formatetc) { throw null; }
         void System.Runtime.InteropServices.ComTypes.IDataObject.SetData(ref System.Runtime.InteropServices.ComTypes.FORMATETC pFormatetcIn, ref System.Runtime.InteropServices.ComTypes.STGMEDIUM pmedium, bool fRelease) { }
+        public bool TryGetData<T>([NotNullWhen(true), MaybeNullWhen(false)] out T data) { throw null; }
+        public bool TryGetData<T>(string format, [NotNullWhen(true), MaybeNullWhen(false)] out T data) { throw null; }
+        public bool TryGetData<T>(string format, bool autoConvert, [NotNullWhen(true), MaybeNullWhen(false)] out T data) { throw null; }
+        [System.CLSCompliant(false)]
+        public bool TryGetData<T>(string format, Func<Reflection.Metadata.TypeName, Type> resolver, bool autoConvert, [NotNullWhen(true), MaybeNullWhen(false)] out T data) { throw null; }
+        public void SetDataAsJson<T>(T data) { }
+        public void SetDataAsJson<T>(string format, T data) { }
     }
     public sealed partial class DataObjectCopyingEventArgs : System.Windows.DataObjectEventArgs
     {
@@ -538,6 +551,14 @@ namespace System.Windows
         public bool CommandCancelled { get { throw null; } }
         public bool IsDragDrop { get { throw null; } }
         public void CancelCommand() { }
+    }
+    public static class DataObjectExtensions
+    {
+        public static bool TryGetData<T>(this IDataObject dataObject, [NotNullWhen(true), MaybeNullWhen(false)] out T data) { throw null; }
+        public static bool TryGetData<T>(this IDataObject dataObject, string format, [NotNullWhen(true), MaybeNullWhen(false)] out T data) { throw null; }
+        public static bool TryGetData<T>(this IDataObject dataObject, string format, bool autoConvert, [NotNullWhen(true), MaybeNullWhen(false)] out T data) { throw null; }
+        [CLSCompliant(false)]
+        public static bool TryGetData<T>(this IDataObject dataObject, string format, Func<Reflection.Metadata.TypeName, Type> resolver, bool autoConvert, [NotNullWhen(true), MaybeNullWhen(false)] out T data) { throw null; }
     }
     public sealed partial class DataObjectPastingEventArgs : System.Windows.DataObjectEventArgs
     {
@@ -1043,6 +1064,13 @@ namespace System.Windows
         void ReleaseMouseCapture();
         void ReleaseStylusCapture();
         void RemoveHandler(System.Windows.RoutedEvent routedEvent, System.Delegate handler);
+    }
+    public interface ITypedDataObject : System.Windows.IDataObject
+    {
+        bool TryGetData<T>([NotNullWhen(true), MaybeNullWhen(false)] out T data);
+        bool TryGetData<T>(string format, [NotNullWhen(true), MaybeNullWhen(false)] out T data);
+        bool TryGetData<T>(string format, bool autoConvert, [NotNullWhen(true), MaybeNullWhen(false)] out T data);
+        bool TryGetData<T>(string format, Func<Reflection.Metadata.TypeName, Type> resolver, bool autoConvert, [NotNullWhen(true), MaybeNullWhen(false)] out T data);
     }
     public partial class KeySplineConverter : System.ComponentModel.TypeConverter
     {

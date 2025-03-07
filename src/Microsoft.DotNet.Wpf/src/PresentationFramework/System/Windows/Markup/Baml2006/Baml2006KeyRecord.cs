@@ -71,7 +71,7 @@ namespace System.Windows.Baml2006
 
         public string KeyString
         {
-            get { return _data as String; }
+            get { return _data as string; }
         }
 
         public Type KeyType
@@ -86,6 +86,8 @@ namespace System.Windows.Baml2006
                 return _data as XamlNodeList;
             }
         }
+
+        public object DebuggerString => _data?.ToString();
 
         private List<Object> _resources;
         private object _data;

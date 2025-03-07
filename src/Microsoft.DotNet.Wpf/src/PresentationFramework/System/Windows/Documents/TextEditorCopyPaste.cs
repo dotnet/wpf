@@ -287,7 +287,7 @@ namespace System.Windows.Documents
                     {
                         // The copy command was not terminated by application
                         // One of reason should be the opening fail of Clipboard by the destroyed hwnd.
-                        Clipboard.CriticalSetDataObject(dataObject, true);
+                        Clipboard.SetDataObject(dataObject, copy: true);
                     }
                     catch (ExternalException)
                         when (!FrameworkCompatibilityPreferences.ShouldThrowOnCopyOrCutFailure)
@@ -333,7 +333,7 @@ namespace System.Windows.Documents
                     {
                         // The copy command was not terminated by application
                         // One of reason should be the opening fail of Clipboard by the destroyed hwnd.
-                        Clipboard.CriticalSetDataObject(dataObject, true);
+                        Clipboard.SetDataObject(dataObject, copy: true);
                     }
                     catch (ExternalException) 
                         when (!FrameworkCompatibilityPreferences.ShouldThrowOnCopyOrCutFailure)

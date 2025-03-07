@@ -2,13 +2,18 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
+//
+//
 // This file was generated, please do not edit it directly.
+//
 // Please see MilCodeGen.html for more information.
+//
 
+using MS.Internal.KnownBoxes;
 using System.Collections;
 using System.ComponentModel;
 using System.Windows.Markup;
-
+using System.Windows.Media.Media3D;
 using MS.Internal.PresentationCore;
 
 namespace System.Windows.Media.Animation
@@ -220,7 +225,7 @@ namespace System.Windows.Media.Animation
             }
             else
             {        
-                throw new ArgumentException(SR.Animation_ChildMustBeKeyFrame, "child");
+                throw new ArgumentException(SR.Animation_ChildMustBeKeyFrame, nameof(child));
             }
         }
 
@@ -695,8 +700,10 @@ namespace System.Windows.Media.Animation
                                 hasPacedKeyTimes = true;
                             }
 
-                            KeyTimeBlock block = new KeyTimeBlock();
-                            block.BeginIndex = index;
+                            KeyTimeBlock block = new KeyTimeBlock
+                            {
+                                BeginIndex = index
+                            };
 
                             // NOTE: We don't want to go all the way up to the
                             // last frame because if it is Uniform or Paced its

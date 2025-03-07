@@ -1,11 +1,8 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
 // Description: HWND-based Menu Proxy
-
-// PRESHARP: In order to avoid generating warnings about unkown message numbers and unknown pragmas.
-#pragma warning disable 1634, 1691
 
 using System;
 using System.Collections;
@@ -460,7 +457,7 @@ namespace MS.Internal.AutomationProxies
             if (MenuRelatedEvent(eventId, aidProps))
             {
                 // Sytem wide event register with hwnd == IntPtr.Zero
-                WinEventTracker.AddToNotificationList(IntPtr.Zero, new WinEventTracker.ProxyRaiseEvents(MenuEvents), _menuEvents, _menuEvents.Length);
+                WinEventTracker.AddToNotificationList(IntPtr.Zero, new WinEventTracker.ProxyRaiseEvents(MenuEvents), _menuEvents);
 
                 // Keep counter of how many requests came so we will know when to remove ourselves from the notification list
                 // We need a counter since system wide events are not based on the hwnd.
@@ -481,7 +478,7 @@ namespace MS.Internal.AutomationProxies
                 --_eventListeners;
                 if (_eventListeners == 0 && MenuRelatedEvent (eventId, aidProps))
                 {
-                    WinEventTracker.RemoveToNotificationList (IntPtr.Zero, _menuEvents, new WinEventTracker.ProxyRaiseEvents (MenuEvents), _menuEvents.Length);
+                    WinEventTracker.RemoveToNotificationList(IntPtr.Zero, _menuEvents, new WinEventTracker.ProxyRaiseEvents(MenuEvents));
                 }
             }
         }
@@ -1264,8 +1261,6 @@ namespace MS.Internal.AutomationProxies
                                 UnsafeNativeMethods.TITLEBARINFO ti;
                                 if (!Misc.ProxyGetTitleBarInfo(_hwnd, out ti))
                                 {
-// Suppress Property get methods should not throw exceptions for internal getter
-#pragma warning suppress 6503
                                     throw new ElementNotAvailableException();
                                 }
 
@@ -2458,7 +2453,7 @@ namespace MS.Internal.AutomationProxies
                         {
                             // Take the remaining string from the Keyword
                             // Case Alt+Enter
-                            return sCanonicalsKeyword + menuRawText.Substring(pos + cKeyChars + 1, cMenuChars - (pos + cKeyChars + 1));
+                            return string.Concat(sCanonicalsKeyword, menuRawText.Substring(pos + cKeyChars + 1, cMenuChars - (pos + cKeyChars + 1)));
                         }
                     }
                 }
@@ -2480,7 +2475,7 @@ namespace MS.Internal.AutomationProxies
                 // Check that it is the form Fxx
                 if (pos < cChars - 1 && pos > 0 && menuText [pos] == 'f')
                 {
-                    int iKey = int.Parse(menuText.Substring(pos + 1, cChars - (pos + 1)), CultureInfo.InvariantCulture);
+                    int iKey = int.Parse(menuText.AsSpan(pos + 1, cChars - (pos + 1)), CultureInfo.InvariantCulture);
                     if (iKey > 0 && iKey <= 12)
                     {
                         return "F" + iKey.ToString(CultureInfo.CurrentCulture);

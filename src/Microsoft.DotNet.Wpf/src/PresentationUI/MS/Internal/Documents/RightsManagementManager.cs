@@ -1,11 +1,10 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
 // Description: 
 //    DocumentRightsManagementManager is an internal API for Mongoose to deal
 //    with Rights Management.
-#pragma warning disable 1634, 1691 // Stops compiler from warning about unknown warnings
 
 using System;
 using System.Collections.Generic;
@@ -262,10 +261,7 @@ namespace MS.Internal.Documents
             _credManagerDialog = new CredentialManagerDialog(accountList, userAccount, this);
             result = _credManagerDialog.ShowDialog();
 
-            if (_credManagerDialog != null)
-            {
-                _credManagerDialog.Dispose();
-            }
+            _credManagerDialog?.Dispose();
 
             RightsManagementUser newDefaultUser = _rmProvider.GetDefaultCredentials();
 
@@ -357,11 +353,12 @@ namespace MS.Internal.Documents
             //we are enrolling.
             RMEnrollmentPage3 rmEnrollmentPage3 = new RMEnrollmentPage3();
 
-            RightsManagementEnrollThreadInfo rmEnrollThreadInfo = new RightsManagementEnrollThreadInfo();
-
-            //Setup Fields
-            rmEnrollThreadInfo.AccountType = accountType;
-            rmEnrollThreadInfo.ProgressForm = rmEnrollmentPage3;
+            RightsManagementEnrollThreadInfo rmEnrollThreadInfo = new RightsManagementEnrollThreadInfo
+            {
+                //Setup Fields
+                AccountType = accountType,
+                ProgressForm = rmEnrollmentPage3
+            };
 
             // Pass work off so UI doesn't block.
             // We use WaitCallback here because that is the delegate that is
@@ -403,10 +400,7 @@ namespace MS.Internal.Documents
                 RMPermissionsDialog rmPermissionsPage = new RMPermissionsDialog(rmLicense);
                 rmPermissionsPage.ShowDialog();
 
-                if (rmPermissionsPage != null)
-                {
-                    rmPermissionsPage.Dispose();
-                }
+                rmPermissionsPage?.Dispose();
             }
         }
 
@@ -544,10 +538,7 @@ namespace MS.Internal.Documents
             }
             finally
             {
-                if (rmPublish != null)
-                {
-                    rmPublish.Dispose();
-                }
+                rmPublish?.Dispose();
             }
 
             // If the status changed, call Evaluate to re-evaluate the RM
@@ -588,13 +579,10 @@ namespace MS.Internal.Documents
                 {
                     _rmProvider.RemoveCredentials(user);
 
-                    if (_credManagerDialog != null)
-                    {
-                        //Set the data source for the listbox
-                        _credManagerDialog.SetCredentialManagementList(
-                            GetCredentialManagementResourceList(),
-                            GetDefaultCredentialManagementResource());
-                    }
+                    //Set the data source for the listbox
+                    _credManagerDialog?.SetCredentialManagementList(
+                        GetCredentialManagementResourceList(),
+                        GetDefaultCredentialManagementResource());
                 }
                 catch (RightsManagementException exception)
                 {
@@ -624,13 +612,10 @@ namespace MS.Internal.Documents
         {
             ShowEnrollment();
 
-            if (_credManagerDialog != null)
-            {
-                //Set the data source for the listbox
-                _credManagerDialog.SetCredentialManagementList(
-                    GetCredentialManagementResourceList(),
-                    GetDefaultCredentialManagementResource());
-            }
+            //Set the data source for the listbox
+            _credManagerDialog?.SetCredentialManagementList(
+                GetCredentialManagementResourceList(),
+                GetDefaultCredentialManagementResource());
         }
 
         /// <summary>
@@ -1373,7 +1358,6 @@ namespace MS.Internal.Documents
             // the exception to allow it to be handled higher on the stack if it
             // is fatal (which includes all exceptions not specifically handled
             // by the error handler).
-#pragma warning suppress 56500 // suppress PreSharp Warning 56500: Avoid `swallowing errors by catching non-specific exceptions..
             catch (Exception exception)
             {
                 // This exception will be thrown if there is a problem

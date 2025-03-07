@@ -1,7 +1,7 @@
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
 
   <PropertyGroup>
-    <_PresentationBuildTasksTfm Condition="'$(MSBuildRuntimeType)' == 'Core'">net9.0</_PresentationBuildTasksTfm>
+    <_PresentationBuildTasksTfm Condition="'$(MSBuildRuntimeType)' == 'Core'">net10.0</_PresentationBuildTasksTfm>
     <_PresentationBuildTasksTfm Condition="'$(MSBuildRuntimeType)' != 'Core'">net472</_PresentationBuildTasksTfm>
     <_PresentationBuildTasksAssembly Condition="'$(_PresentationBuildTasksAssembly)'==''">$([MSBuild]::Unescape($([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\tools\$(_PresentationBuildTasksTfm)\PresentationBuildTasks.dll'))))</_PresentationBuildTasksAssembly>
   </PropertyGroup>

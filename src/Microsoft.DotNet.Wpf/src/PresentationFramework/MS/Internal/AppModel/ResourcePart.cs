@@ -1,24 +1,12 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
-
-//
-//
-// Description:
-// ResourcePart is an implementation of the abstract PackagePart class. It contains an override for GetStreamCore.
-//
 
 using System.IO.Packaging;
 using System.Windows;
 using System.IO;
 
 using MS.Internal.Resources;
-
-//In order to avoid generating warnings about unknown message numbers and 
-//unknown pragmas when compiling your C# source code with the actual C# compiler, 
-//you need to disable warnings 1634 and 1691. (Presharp Documentation)
-#pragma warning disable 1634, 1691
-
 
 namespace MS.Internal.AppModel
 {
@@ -40,7 +28,7 @@ namespace MS.Internal.AppModel
         {
             if (rmWrapper == null)
             {
-                throw new ArgumentNullException("rmWrapper");
+                throw new ArgumentNullException(nameof(rmWrapper));
             }
 
             _rmWrapper = rmWrapper;
@@ -146,7 +134,6 @@ namespace MS.Internal.AppModel
                         }
                     }
                 }
-#pragma warning disable 6502 // PRESharp - Catch statements should not have empty bodies
                 catch (System.Resources.MissingManifestResourceException)
                 {
                     // When the main assembly doesn't contain any resource (all the resources must come from satellite assembly)
@@ -156,8 +143,6 @@ namespace MS.Internal.AppModel
                     // If the main assembly does contain resource, but the resource with above _name does't exist, the above GetStream( )
                     // just returns null without exception.
                 }
-#pragma warning restore 6502
-
             }
 
             // Do not attempt to load the original file name here.  If the .baml does not exist or if this resource not

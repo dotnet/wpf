@@ -186,7 +186,7 @@ namespace MS.Internal.Csp
 
         private void ProcessLine(string line)
         {
-            line = line + "\n";
+            line += "\n";
             _current.Column = 0;
 
             if (_sourceDebuggingSupport) 

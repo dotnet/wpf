@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -133,7 +133,7 @@ namespace System.Windows.Documents
 
             if (fp == null)
             {
-                throw new ArgumentException(SR.Format(SR.UnexpectedParameterType, value.GetType(), typeof(PageContent)), "value");
+                throw new ArgumentException(SR.Format(SR.UnexpectedParameterType, value.GetType(), typeof(PageContent)), nameof(value));
             }
 
             if (fp.IsInitialized)
@@ -320,7 +320,7 @@ namespace System.Windows.Documents
             // Page number cannot be negative.
             if (pageNumber < 0)
             {
-                throw new ArgumentOutOfRangeException("pageNumber", SR.IDPNegativePageNumber);
+                throw new ArgumentOutOfRangeException(nameof(pageNumber), SR.IDPNegativePageNumber);
             }
 
             if (pageNumber < Pages.Count)
@@ -365,7 +365,7 @@ namespace System.Windows.Documents
             // Page number cannot be negative.
             if (pageNumber < 0)
             {
-                throw new ArgumentOutOfRangeException("pageNumber", SR.IDPNegativePageNumber);
+                throw new ArgumentOutOfRangeException(nameof(pageNumber), SR.IDPNegativePageNumber);
             }
 
             ArgumentNullException.ThrowIfNull(userState);
@@ -498,7 +498,7 @@ namespace System.Windows.Documents
                 fixedTextPointer = new FixedTextPointer(true, LogicalDirection.Forward, flowPosition);
             }
 
-            return (fixedTextPointer != null) ? fixedTextPointer : ContentPosition.Missing;
+            return fixedTextPointer ?? ContentPosition.Missing;
         }
 
 
@@ -931,8 +931,10 @@ namespace System.Windows.Documents
             {
                 pageStream = WpfWebRequestHelper.CreateRequestAndGetResponseStream(AbsoluteUriDoc, out mimeType);
 
-                ParserContext pc = new ParserContext();
-                pc.BaseUri = AbsoluteUriDoc;
+                ParserContext pc = new ParserContext
+                {
+                    BaseUri = AbsoluteUriDoc
+                };
 
                 XpsValidatingLoader loader = new XpsValidatingLoader();
                 if (validateOnly)
@@ -1169,10 +1171,7 @@ namespace System.Windows.Documents
             {
                 HighlightVisual hv = HighlightVisual.GetHighlightVisual(SyncGetPage(i, false /*forceReload*/));
 
-                if (hv != null)
-                {
-                    hv.InvalidateHighlights();
-                }
+                hv?.InvalidateHighlights();
             }
         }
 

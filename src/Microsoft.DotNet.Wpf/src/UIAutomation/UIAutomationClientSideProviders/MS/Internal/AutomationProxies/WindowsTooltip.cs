@@ -1,11 +1,8 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
 // Description: Tooltip Proxy
-
-// PRESHARP: In order to avoid generating warnings about unkown message numbers and unknown pragmas.
-#pragma warning disable 1634, 1691
 
 using System;
 using System.Windows.Automation;
@@ -90,7 +87,7 @@ namespace MS.Internal.AutomationProxies
             else if( eventId == AutomationElement.ToolTipClosedEvent )
             {
                 // subscribe to ToolTip specific events, keeping track of how many times the event has been added
-                WinEventTracker.AddToNotificationList( IntPtr.Zero, new WinEventTracker.ProxyRaiseEvents( OnToolTipEvents ), _toolTipEventIds, _toolTipEventIds.Length );
+                WinEventTracker.AddToNotificationList(IntPtr.Zero, new WinEventTracker.ProxyRaiseEvents(OnToolTipEvents), _toolTipEventIds);
                 _listenerCount++;
             }
         }
@@ -107,7 +104,7 @@ namespace MS.Internal.AutomationProxies
             {
                 // decrement the event counter
                 --_listenerCount;
-                WinEventTracker.RemoveToNotificationList( IntPtr.Zero, _toolTipEventIds, new WinEventTracker.ProxyRaiseEvents( OnToolTipEvents ), _toolTipEventIds.Length );
+                WinEventTracker.RemoveToNotificationList(IntPtr.Zero, _toolTipEventIds, new WinEventTracker.ProxyRaiseEvents(OnToolTipEvents));
             }
         }
 
@@ -211,7 +208,7 @@ namespace MS.Internal.AutomationProxies
                 int isDWMEnabled = 0; // DWM is not enabled
                 try
                 {
-#pragma warning suppress 56031 // No need to check return value; failure means it isn't enabled
+                    // No need to check return value; failure means it isn't enabled
                     UnsafeNativeMethods.DwmIsCompositionEnabled(out isDWMEnabled);
                 }
                 catch (DllNotFoundException)

@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -881,10 +881,7 @@ namespace System.Windows.Controls
             }
             else
             {
-                if (_isHandlerSuspended != null)
-                {
-                    _isHandlerSuspended.Remove(property);
-                }
+                _isHandlerSuspended?.Remove(property);
             }
         }
 
@@ -1091,8 +1088,10 @@ namespace System.Windows.Controls
 
         private BindingBase GetDatePickerBinding(DependencyProperty property)
         {
-            Binding binding = new Binding(property.Name);
-            binding.Source = this;
+            Binding binding = new Binding(property.Name)
+            {
+                Source = this
+            };
             return binding;
         }
 
@@ -1125,7 +1124,7 @@ namespace System.Windows.Controls
                 }
                 else
                 {
-                    DatePickerDateValidationErrorEventArgs dateValidationError = new DatePickerDateValidationErrorEventArgs(new ArgumentOutOfRangeException("text", SR.Calendar_OnSelectedDateChanged_InvalidValue), text);
+                    DatePickerDateValidationErrorEventArgs dateValidationError = new DatePickerDateValidationErrorEventArgs(new ArgumentOutOfRangeException(nameof(text), SR.Calendar_OnSelectedDateChanged_InvalidValue), text);
                     OnDateValidationError(dateValidationError);
 
                     if (dateValidationError.ThrowException)

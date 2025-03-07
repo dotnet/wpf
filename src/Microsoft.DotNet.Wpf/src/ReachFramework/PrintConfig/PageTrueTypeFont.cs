@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -102,8 +102,10 @@ namespace MS.Internal.Printing.Configuration
 
         internal static PrintCapabilityFeature NewFeatureCallback(InternalPrintCapabilities printCap)
         {
-            PageTrueTypeFontModeCapability cap = new PageTrueTypeFontModeCapability(printCap);
-            cap._trueTypeFontModes = new Collection<TrueTypeFontModeOption>();
+            PageTrueTypeFontModeCapability cap = new PageTrueTypeFontModeCapability(printCap)
+            {
+                _trueTypeFontModes = new Collection<TrueTypeFontModeOption>()
+            };
 
             return cap;
         }
@@ -250,7 +252,7 @@ namespace MS.Internal.Printing.Configuration
                 if (value < PrintSchema.TrueTypeFontModeEnumMin ||
                     value > PrintSchema.TrueTypeFontModeEnumMax)
                 {
-                    throw new ArgumentOutOfRangeException("value");
+                    throw new ArgumentOutOfRangeException(nameof(value));
                 }
 
                 this[PrintSchemaTags.Framework.OptionNameProperty] = (int)value;

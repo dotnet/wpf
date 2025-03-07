@@ -1,17 +1,11 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
-
-//
-// Description: a high-level tool for editing text based FrameworkElements.
-//
 
 using MS.Internal;
 using System.Xml;
 using System.IO;
 using System.Windows.Markup; // Parser
-
-#pragma warning disable 1634, 1691  // suppressing PreSharp warnings
 
 namespace System.Windows.Documents
 {
@@ -92,8 +86,8 @@ namespace System.Windows.Documents
 
             SetFlags(ignoreTextUnitBoundaries, Flags.IgnoreTextUnitBoundaries);
 
-            ValidationHelper.VerifyPosition(position1.TextContainer, position1, "position1");
-            ValidationHelper.VerifyPosition(position1.TextContainer, position2, "position2");
+            ValidationHelper.VerifyPosition(position1.TextContainer, position1, nameof(position1));
+            ValidationHelper.VerifyPosition(position1.TextContainer, position2, nameof(position2));
 
             TextRangeBase.Select(this, position1, position2);
         }
@@ -788,7 +782,6 @@ namespace System.Windows.Documents
             if (!TextSchema.IsCharacterProperty(formattingProperty) &&
                 !TextSchema.IsParagraphProperty(formattingProperty))
             {
-                #pragma warning suppress 6506 // formattingProperty is obviously not null
                 throw new ArgumentException(SR.Format(SR.TextEditorPropertyIsNotApplicableForTextFormatting, formattingProperty.Name));
             }
 
@@ -806,7 +799,7 @@ namespace System.Windows.Documents
             {
                 // We exclude checking thcickness values because we have special treatment for negative values
                 // in TextRangeEdit.SetParagraphProperty - negative values mean: "leave the value as is".
-                throw new ArgumentException(SR.Format(SR.TextEditorTypeOfParameterIsNotAppropriateForFormattingProperty, value == null ? "null" : value.GetType().Name, formattingProperty.Name), "value");
+                throw new ArgumentException(SR.Format(SR.TextEditorTypeOfParameterIsNotAppropriateForFormattingProperty, value == null ? "null" : value.GetType().Name, formattingProperty.Name), nameof(value));
             }
 
             // Check propertyValueAction validity
@@ -816,13 +809,13 @@ namespace System.Windows.Documents
                 propertyValueAction != PropertyValueAction.IncreaseByPercentageValue &&
                 propertyValueAction != PropertyValueAction.DecreaseByPercentageValue)
             {
-                throw new ArgumentException(SR.TextRange_InvalidParameterValue, "propertyValueAction");
+                throw new ArgumentException(SR.TextRange_InvalidParameterValue, nameof(propertyValueAction));
             }
             // Check if propertyValueAction is applicable to this property
             if (propertyValueAction != PropertyValueAction.SetValue &&
                 !TextSchema.IsPropertyIncremental(formattingProperty))
             {
-                throw new ArgumentException(SR.Format(SR.TextRange_PropertyCannotBeIncrementedOrDecremented, formattingProperty.Name), "propertyValueAction");
+                throw new ArgumentException(SR.Format(SR.TextRange_PropertyCannotBeIncrementedOrDecremented, formattingProperty.Name), nameof(propertyValueAction));
             }
 
             ApplyPropertyToTextVirtual(formattingProperty, value, applyToParagraphs, propertyValueAction);
@@ -857,7 +850,6 @@ namespace System.Windows.Documents
             if (!TextSchema.IsCharacterProperty(formattingProperty) &&
                 !TextSchema.IsParagraphProperty(formattingProperty))
             {
-                #pragma warning suppress 6506 // formattingProperty is obviously not null
                 throw new ArgumentException(SR.Format(SR.TextEditorPropertyIsNotApplicableForTextFormatting, formattingProperty.Name));
             }
 
@@ -1592,10 +1584,11 @@ namespace System.Windows.Documents
                     if (Paragraph.HasNoTextContent(paragraph))
                     {
                         // Use BlockUIContainer as a replacement of the current paragraph
-                        BlockUIContainer blockUIContainer = new BlockUIContainer(embeddedElement);
-
-                        // Translate embedded element's horizontal alignment property to the BlockUIContainer's text alignment
-                        blockUIContainer.TextAlignment = TextRangeEdit.GetTextAlignmentFromHorizontalAlignment(embeddedElement.HorizontalAlignment);
+                        BlockUIContainer blockUIContainer = new BlockUIContainer(embeddedElement)
+                        {
+                            // Translate embedded element's horizontal alignment property to the BlockUIContainer's text alignment
+                            TextAlignment = TextRangeEdit.GetTextAlignmentFromHorizontalAlignment(embeddedElement.HorizontalAlignment)
+                        };
 
                         // Replace paragraph with BlockUIContainer
                         paragraph.SiblingBlocks.InsertAfter(paragraph, blockUIContainer);

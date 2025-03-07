@@ -1,9 +1,6 @@
-// Licensed to the .NET Foundation under one or more agreements.
+ï»¿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
-
-// Allow use of presharp warning numbers [6518] unknown to the compiler
-#pragma warning disable 1634, 1691
 
 using System.Collections;
 using System.Collections.ObjectModel;
@@ -111,12 +108,10 @@ namespace MS.Internal.IO.Packaging.CompoundFile
             // does -not- close the underlying stream.
             //
 
-// Suppress 6518 Local IDisposable object not disposed: 
-// Reason: The stream is not owned by the BlockManager, therefore we cannot 
-// close the BinaryWriter, as that would Close the stream underneath.
-#pragma warning disable 6518
+            // The stream is not owned by the BlockManager, therefore we cannot 
+            // close the BinaryWriter, as that would Close the stream underneath.
+            // TODO: Use leaveOpen ctor
             BinaryReader utf8Reader = new BinaryReader(_publishLicenseStream, Encoding.UTF8);
-#pragma warning restore 6518
 
             //
             // There follows a variable-length header (not to be confused with the physical
@@ -217,12 +212,11 @@ namespace MS.Internal.IO.Packaging.CompoundFile
             // does -not- close the underlying stream.
             //
 
-// Suppress 6518 Local IDisposable object not disposed: 
-// Reason: The stream is not owned by the BlockManager, therefore we cannot 
-// close the BinaryWriter, as that would Close the stream underneath.
-#pragma warning disable 6518
+
+            // The stream is not owned by the BlockManager, therefore we cannot 
+            // close the BinaryWriter, as that would Close the stream underneath.
+            // TODO: Use leaveOpen ctor
             BinaryWriter utf8Writer = new BinaryWriter(_publishLicenseStream, Encoding.UTF8);
-#pragma warning restore 6518
 
             //
             // There follows a variable-length header (not to be confused with the physical
@@ -332,7 +326,7 @@ namespace MS.Internal.IO.Packaging.CompoundFile
             {
                 throw new ArgumentException(
                     SR.OnlyPassportOrWindowsAuthenticatedUsersAreAllowed,
-                    "user"
+                    nameof(user)
                     );
             }
 
@@ -423,12 +417,12 @@ namespace MS.Internal.IO.Packaging.CompoundFile
         /// <para>
         /// Returns true when the transform expects no further changes to its state.
         /// The contract is that if FixedSettings is false, an application can change
-        /// any of the transform’s properties with the promise that an exception will
+        /// any of the transformâ€™s properties with the promise that an exception will
         /// not be thrown.
         /// </para>
         /// <para>
         /// For the RightsManagementEncryptionTransform, FixedSettings becomes true the
-        /// first time the compound file code calls the object’s GetTransformedStream method.
+        /// first time the compound file code calls the objectâ€™s GetTransformedStream method.
         /// After that, any attempt to set the CryptoProvider property, or to call
         /// SavePublicLicense, throws InvalidOperationException.
         /// </para>
@@ -502,7 +496,7 @@ namespace MS.Internal.IO.Packaging.CompoundFile
 
                 if (!value.CanEncrypt && !value.CanDecrypt)
                 {
-                    throw new ArgumentException(SR.CryptoProviderIsNotReady, "value");
+                    throw new ArgumentException(SR.CryptoProviderIsNotReady, nameof(value));
                 }
 
                 _cryptoProvider = value;
@@ -754,10 +748,9 @@ namespace MS.Internal.IO.Packaging.CompoundFile
             ref bool stop
             )
         {
-            LoadUseLicenseForUserParams lulfup = param as LoadUseLicenseForUserParams;
-            if (lulfup == null)
+            if (param is not LoadUseLicenseForUserParams lulfup)
             {
-                throw new ArgumentException(SR.CallbackParameterInvalid, "param");
+                throw new ArgumentException(SR.CallbackParameterInvalid, nameof(param));
             }
 
             ContentUser userDesired = lulfup.User;
@@ -809,10 +802,9 @@ namespace MS.Internal.IO.Packaging.CompoundFile
             ref bool stop
             )
         {
-            ContentUser userToDelete = param as ContentUser;
-            if (userToDelete == null)
+            if (param is not ContentUser userToDelete)
             {
-                throw new ArgumentException(SR.CallbackParameterInvalid, "param");
+                throw new ArgumentException(SR.CallbackParameterInvalid, nameof(param));
             }
 
             ContentUser userFromStream = null;

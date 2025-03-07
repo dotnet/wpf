@@ -25,7 +25,7 @@ namespace MS.Internal.FontCache
         
         public IFontSource Create(string uriString)
         {
-            return new FontSource(new Uri(uriString), false);
+            return new FontSource(new Uri(uriString));
         }
     }
 
@@ -43,31 +43,29 @@ namespace MS.Internal.FontCache
 
         #region Constructors
 
-        public FontSource(Uri fontUri, bool skipDemand)
+        public FontSource(Uri fontUri)
         {
-            Initialize(fontUri, skipDemand, false, isInternalCompositeFont: false);
+            Initialize(fontUri, false, isInternalCompositeFont: false);
         }
 
-        public FontSource(Uri fontUri, bool skipDemand, bool isComposite)
+        public FontSource(Uri fontUri, bool isComposite)
         {
-            Initialize(fontUri, skipDemand, isComposite, isInternalCompositeFont: false);
+            Initialize(fontUri, isComposite, isInternalCompositeFont: false);
         }
 
         /// <summary>
         /// Allows WPF to construct its internal CompositeFonts from resource URIs.
         /// </summary>
         /// <param name="fontUri"></param>
-        /// <param name="skipDemand"></param>
         /// <param name="isComposite"></param>
-        public FontSource(Uri fontUri, bool skipDemand, bool isComposite, bool isInternalCompositeFont)
+        public FontSource(Uri fontUri, bool isComposite, bool isInternalCompositeFont)
         {
-            Initialize(fontUri, skipDemand, isComposite, isInternalCompositeFont);
+            Initialize(fontUri, isComposite, isInternalCompositeFont);
         }
 
-        private void Initialize(Uri fontUri, bool skipDemand, bool isComposite, bool isInternalCompositeFont)
+        private void Initialize(Uri fontUri, bool isComposite, bool isInternalCompositeFont)
         {
             _fontUri = fontUri;
-            _skipDemand = skipDemand;
             _isComposite = isComposite;
             _isInternalCompositeFont = isInternalCompositeFont;
             Invariant.Assert(_isInternalCompositeFont || _fontUri.IsAbsoluteUri);
@@ -87,7 +85,13 @@ namespace MS.Internal.FontCache
         /// <summary>
         /// Use this to ensure we don't call Uri.IsFile on a relative URI.
         /// </summary>
-        public bool IsFile { get { return !_isInternalCompositeFont && _fontUri.IsFile; } }
+        public bool IsFile
+        {
+            get
+            {
+                return !_isInternalCompositeFont && _fontUri.IsFile;
+            }
+        }
 
         public bool IsComposite
         {
@@ -162,9 +166,9 @@ namespace MS.Internal.FontCache
             byte[] bits;
 
             // Try our cache first.
-            lock (_resourceCache)
+            lock (s_resourceCache)
             {
-                bits = _resourceCache.Get(_fontUri);
+                bits = s_resourceCache.Get(_fontUri);
             }
 
             if (bits == null)
@@ -198,9 +202,9 @@ namespace MS.Internal.FontCache
                 fontStream?.Close();
             }
 
-            lock (_resourceCache)
+            lock (s_resourceCache)
             {
-                _resourceCache.Add(_fontUri, bits, false);
+                s_resourceCache.Add(_fontUri, bits, false);
             }
 
             return ByteArrayToUnmanagedStream(bits);
@@ -235,9 +239,9 @@ namespace MS.Internal.FontCache
             byte[] bits;
 
             // Try our cache first.
-            lock (_resourceCache)
+            lock (s_resourceCache)
             {
-                bits = _resourceCache.Get(_fontUri);
+                bits = s_resourceCache.Get(_fontUri);
             }
 
             if (bits != null)
@@ -351,8 +355,8 @@ namespace MS.Internal.FontCache
         {
             string fontFilename = _fontUri.OriginalString.Substring(_fontUri.OriginalString.LastIndexOf('/') + 1).ToLowerInvariant();
 
-            var fontResourceAssembly = Assembly.GetExecutingAssembly();
-            ResourceManager rm = new ResourceManager($"{fontResourceAssembly.GetName().Name}.g", fontResourceAssembly);
+            Assembly fontResourceAssembly = Assembly.GetExecutingAssembly();
+            ResourceManager rm = new($"{ReflectionUtils.GetAssemblyPartialName(fontResourceAssembly)}.g", fontResourceAssembly);
 
             return rm?.GetStream($"fonts/{fontFilename}");
         }
@@ -419,9 +423,7 @@ namespace MS.Internal.FontCache
 
         private Uri     _fontUri;
 
-        private bool    _skipDemand;
-
-        private static SizeLimitedCache<Uri, byte[]> _resourceCache = new SizeLimitedCache<Uri, byte[]>(MaximumCacheItems);
+        private static readonly SizeLimitedCache<Uri, byte[]> s_resourceCache = new(MaximumCacheItems);
 
         /// <summary>
         /// The maximum number of fonts downloaded from pack:// Uris.

@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -28,14 +28,10 @@ namespace System.Windows.Ink
             Rect bounds = Rect.Empty;
             foreach (Stroke stroke in this)
             {
-                // samgeo - Presharp issue
                 // Presharp gives a warning when get methods might deref a null.  It's complaining
                 // here that 'stroke'' could be null, but StrokeCollection never allows nulls to be added
                 // so this is not possible
-#pragma warning disable 1634, 1691
-#pragma warning suppress 6506
                 bounds.Union(stroke.GetBounds());
-#pragma warning restore 1634, 1691
             }
             return bounds;
         }
@@ -68,7 +64,7 @@ namespace System.Windows.Ink
         {
             if (Double.IsNaN(diameter) || diameter < DrawingAttributes.MinWidth || diameter > DrawingAttributes.MaxWidth)
             {
-                throw new ArgumentOutOfRangeException("diameter", SR.InvalidDiameter);
+                throw new ArgumentOutOfRangeException(nameof(diameter), SR.InvalidDiameter);
             }
             return PointHitTest(point, new EllipseStylusShape(diameter, diameter));
         }
@@ -86,7 +82,7 @@ namespace System.Windows.Ink
             ArgumentNullException.ThrowIfNull(lassoPoints);
             if ((percentageWithinLasso < 0) || (percentageWithinLasso > 100))
             {
-                throw new System.ArgumentOutOfRangeException("percentageWithinLasso");
+                throw new System.ArgumentOutOfRangeException(nameof(percentageWithinLasso));
             }
 
             if (IEnumerablePointHelper.GetCount(lassoPoints) < 3)
@@ -130,11 +126,8 @@ namespace System.Windows.Ink
                     }
                     finally
                     {
-                        if (strokeInfo != null)
-                        {
-                            //detach from event handlers, or else we leak.
-                            strokeInfo.Detach();
-                        }
+                        //detach from event handlers, or else we leak.
+                        strokeInfo?.Detach();
                     }
                 }
             }
@@ -156,7 +149,7 @@ namespace System.Windows.Ink
             // Check the input parameters
             if ((percentageWithinBounds < 0) || (percentageWithinBounds > 100))
             {
-                throw new System.ArgumentOutOfRangeException("percentageWithinBounds");
+                throw new System.ArgumentOutOfRangeException(nameof(percentageWithinBounds));
             }
             if (bounds.IsEmpty)
             {
@@ -167,17 +160,13 @@ namespace System.Windows.Ink
             StrokeCollection hits = new StrokeCollection();
             foreach (Stroke stroke in this)
             {
-                // samgeo - Presharp issue
                 // Presharp gives a warning when get methods might deref a null.  It's complaining
                 // here that 'stroke'' could be null, but StrokeCollection never allows nulls to be added
                 // so this is not possible
-#pragma warning disable 1634, 1691
-#pragma warning suppress 6506
                 if (true == stroke.HitTest(bounds, percentageWithinBounds))
                 {
                     hits.Add(stroke);
                 }
-#pragma warning restore 1634, 1691
             }
             return hits;
         }
@@ -209,18 +198,14 @@ namespace System.Windows.Ink
             StrokeCollection hits = new StrokeCollection();
             foreach (Stroke stroke in this)
             {
-                // samgeo - Presharp issue
                 // Presharp gives a warning when get methods might deref a null.  It's complaining
                 // here that 'stroke'' could be null, but StrokeCollection never allows nulls to be added
                 // so this is not possible
-#pragma warning disable 1634, 1691
-#pragma warning suppress 6506
                 if (erasingBounds.IntersectsWith(stroke.GetBounds()) &&
                     erasingStroke.HitTest(StrokeNodeIterator.GetIterator(stroke, stroke.DrawingAttributes)))
                 {
                     hits.Add(stroke);
                 }
-#pragma warning restore 1634, 1691
             }
 
             return hits;
@@ -398,7 +383,7 @@ namespace System.Windows.Ink
                     foreach (Stroke stroke in strokes)
                     {
                         stroke.DrawInternal(context, StrokeRenderer.GetHighlighterAttributes(stroke, stroke.DrawingAttributes),
-                                            false /*Don't draw selected stroke as hollow*/);
+                                            drawAsHollow: false);
                     }
                 }
                 finally
@@ -409,7 +394,7 @@ namespace System.Windows.Ink
 
             foreach(Stroke stroke in solidStrokes)
             {
-                stroke.DrawInternal(context, stroke.DrawingAttributes, false/*Don't draw selected stroke as hollow*/);
+                stroke.DrawInternal(context, stroke.DrawingAttributes, drawAsHollow: false);
             }
         }
         #endregion
@@ -438,7 +423,7 @@ namespace System.Windows.Ink
         {
             if ((percentageWithinLasso < 0) || (percentageWithinLasso > 100))
             {
-                throw new System.ArgumentOutOfRangeException("percentageWithinLasso");
+                throw new System.ArgumentOutOfRangeException(nameof(percentageWithinLasso));
             }
             return new IncrementalLassoHitTester(this, percentageWithinLasso);
         }

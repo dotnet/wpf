@@ -36,6 +36,7 @@ namespace System.Xaml
                 {
                     return true;   // This is the common/fast path
                 }
+
                 // else do the NONE node stuff
                 if (_currentNode.IsLineInfo)
                 {
@@ -45,7 +46,8 @@ namespace System.Xaml
                 {
                     break;
                 }
-            } while (_currentNode.NodeType == XamlNodeType.None);
+            }
+            while (_currentNode.NodeType == XamlNodeType.None);
 
             return !IsEof;
         }

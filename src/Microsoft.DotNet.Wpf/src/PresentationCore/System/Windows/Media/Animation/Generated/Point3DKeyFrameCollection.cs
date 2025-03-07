@@ -51,9 +51,10 @@ namespace System.Windows.Media.Animation
             {
                 if (s_emptyCollection == null)
                 {
-                    Point3DKeyFrameCollection emptyCollection = new Point3DKeyFrameCollection();
-
-                    emptyCollection._keyFrames = new List< Point3DKeyFrame>(0);
+                    Point3DKeyFrameCollection emptyCollection = new Point3DKeyFrameCollection
+                    {
+                        _keyFrames = new List<Point3DKeyFrame>(0)
+                    };
                     emptyCollection.Freeze();
 
                     s_emptyCollection = emptyCollection;

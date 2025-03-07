@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -30,9 +30,6 @@ using MS.Internal.PresentationFramework;                   // SafeSecurityHelper
 using System.Windows.Baml2006;
 using System.Xaml.Permissions;
 using System.Runtime.CompilerServices;
-
-// Disable pragma warnings to enable PREsharp pragmas
-#pragma warning disable 1634, 1691
 
 namespace System.Windows
 {
@@ -310,11 +307,8 @@ namespace System.Windows
             else
             {
                 DispatcherObject dispatcherObject = resource as DispatcherObject;
-                if (dispatcherObject != null)
-                {
-                    // The current thread may not have access to this object.
-                    dispatcherObject.VerifyAccess();
-                }
+                // The current thread may not have access to this object.
+                dispatcherObject?.VerifyAccess();
             }
 
             if (found && mustReturnDeferredResourceReference)
@@ -574,7 +568,7 @@ namespace System.Windows
                 }
                 else
                 {
-                    _assemblyName = SafeSecurityHelper.GetAssemblyPartialName(assembly);
+                    _assemblyName = ReflectionUtils.GetAssemblyPartialName(assembly).ToString();
                 }
             }
 
@@ -789,7 +783,7 @@ namespace System.Windows
                 }
 
                 assemblyName = sb.ToString();
-                string fullName = SafeSecurityHelper.GetFullAssemblyNameFromPartialName(_assembly, assemblyName);
+                string fullName = ReflectionUtils.GetFullAssemblyNameFromPartialName(_assembly, assemblyName);
 
                 assembly = null;
                 try
@@ -799,7 +793,6 @@ namespace System.Windows
                 // There is no Assembly.Exists API to determine if an Assembly exists.
                 // There is also no way to determine if an Assembly's format is good prior to loading it.
                 // So, the exception must be caught. assembly will continue to be null and returned.
-#pragma warning disable 6502
                 catch (FileNotFoundException)
                 {
                 }
@@ -816,7 +809,6 @@ namespace System.Windows
                         RuntimeHelpers.RunClassConstructor(knownTypeHelper.TypeHandle);
                     }
                 }
-#pragma warning restore 6502
             }
 
             /// <summary>
@@ -915,8 +907,6 @@ namespace System.Windows
                 // There is no ResourceManager.HasManifest in order to detect this case before an exception is thrown.
                 // Likewise, there is no way to know if loading a resource will fail prior to loading it.
                 // So, the exceptions must be caught. stream will continue to be null and handled accordingly later.
-#pragma warning disable 6502
-
                 catch (MissingManifestResourceException)
                 {
                     // No usable resources in the assembly
@@ -932,13 +922,13 @@ namespace System.Windows
                 }
 #endif
 
-#pragma warning restore 6502
-
                 if (stream != null)
                 {
-                    Baml2006ReaderSettings settings = new Baml2006ReaderSettings();
-                    settings.OwnsStream = true;
-                    settings.LocalAssembly = assembly;
+                    Baml2006ReaderSettings settings = new Baml2006ReaderSettings
+                    {
+                        OwnsStream = true,
+                        LocalAssembly = assembly
+                    };
 
                     // For system themes, we don't seem to be passing the BAML Uri to the Baml2006Reader
                     Baml2006Reader bamlReader = new Baml2006ReaderInternal(stream, new Baml2006SchemaContext(settings.LocalAssembly), settings);
@@ -1007,10 +997,6 @@ namespace System.Windows
         #endregion
 
         #region Value Changes
-
-        // The hwndNotify is referenced by the _hwndNotify static field, but
-        // PreSharp will think that the hwndNotify is local and should be disposed.
-#pragma warning disable 6518
 
         /// <summary>
         /// Ensures that a a notify-window is created corresponding to <see cref="ProcessDpiAwarenessContextValue"/>
@@ -1184,8 +1170,6 @@ namespace System.Windows
 
             return dpiScale;
         }
-
-#pragma warning restore 6518
 
     private static void OnThemeChanged()
         {
@@ -1801,7 +1785,7 @@ namespace System.Windows
             }
             else
             {
-                return _keyOrValue != null ? _keyOrValue.GetType() : null;
+                return _keyOrValue?.GetType();
             }
         }
 
@@ -1835,10 +1819,7 @@ namespace System.Windows
         {
             Debug.Assert(_inflatedList != null);
 
-            if (_inflatedList != null)
-            {
-                _inflatedList.Remove(listener);
-            }
+            _inflatedList?.Remove(listener);
         }
 
         #endregion Methods
@@ -2021,7 +2002,7 @@ namespace System.Windows
         internal override Type GetValueType()
         {
             object value = Value;
-            return value != null ? value.GetType() : null;
+            return value?.GetType();
         }
 
         #endregion Methods

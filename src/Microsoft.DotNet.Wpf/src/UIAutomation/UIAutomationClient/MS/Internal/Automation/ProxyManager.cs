@@ -1,11 +1,8 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
 // Description: Manages Win32 proxies
-
-// PRESHARP: In order to avoid generating warnings about unkown message numbers and unknown pragmas.
-#pragma warning disable 1634, 1691
 
 using System;
 using System.Windows.Automation;
@@ -174,15 +171,14 @@ namespace MS.Internal.Automation
                         {
                             proxyDescriptions[count++] = (ClientSideProviderDescription)o;
                         }
-                        else if (o is ClientSideProviderFactoryCallback)
+                        else if (o is ClientSideProviderFactoryCallback pfc)
                         {
-                            ClientSideProviderFactoryCallback pfc = (ClientSideProviderFactoryCallback)o;
                             proxyDescriptions[count++] = new ClientSideProviderDescription(pfc, null);
 
                         }
                         else
                         {
-                            foreach( Object o1 in (ArrayList) o )
+                            foreach (Object o1 in (ArrayList)o)
                             {
                                 proxyDescriptions[count++] = (ClientSideProviderDescription)o1;
                             }
@@ -359,14 +355,16 @@ namespace MS.Internal.Automation
             }
 
             AssemblyName ourAssembly = Assembly.GetAssembly(typeof(ProxyManager)).GetName();
-            
+
             // Attempt to discover the version of UIA that the caller is linked against,
             // and then use the correpsonding proxy dll version. If we can't do that,
             // we'll use the default version.
-            AssemblyName proxyAssemblyName = new AssemblyName();
-            proxyAssemblyName.Name = _defaultProxyAssembly;
-            proxyAssemblyName.Version = ourAssembly.Version;
-            proxyAssemblyName.CultureInfo = ourAssembly.CultureInfo;
+            AssemblyName proxyAssemblyName = new AssemblyName
+            {
+                Name = _defaultProxyAssembly,
+                Version = ourAssembly.Version,
+                CultureInfo = ourAssembly.CultureInfo
+            };
             proxyAssemblyName.SetPublicKeyToken( ourAssembly.GetPublicKeyToken() );
 
             if ( callingAssembly != null )
@@ -559,12 +557,10 @@ namespace MS.Internal.Automation
             if (count > 0)
             {
                 // Null and Empty string mean different things here.
-#pragma warning suppress 6507
                 if (imageName == null)
                     imageName = GetImageName(hwnd);
 
                 // Null and Empty string mean different things here.
-#pragma warning suppress 6507
                 if (imageName != null)
                 {
                     object entryOrArrayList;
@@ -645,7 +641,7 @@ namespace MS.Internal.Automation
                 ClientSideProviderDescription pi = (ClientSideProviderDescription)entry;
 
                 // Get the image name if necessary...
-#pragma warning suppress 6507 // Null and Empty string mean different things here.
+                // Null and Empty string mean different things here.
                 if (imageName == null && pi.ImageName != null)
                 {
                     imageName = GetImageName(hwnd);
@@ -668,14 +664,14 @@ namespace MS.Internal.Automation
                             break;
 
                         case ProxyScoping.PartialMatchApparentClassName:
-                            if (classNameForPartialMatch.IndexOf(pi.ClassName, StringComparison.Ordinal) >= 0)
+                            if (classNameForPartialMatch.Contains(pi.ClassName, StringComparison.Ordinal))
                             {
                                 factoryCallback = pi.ClientSideProviderFactoryCallback;
                             }
                             break;
 
                         case ProxyScoping.PartialMatchRealClassName:
-                            if (classNameForPartialMatch.IndexOf(pi.ClassName, StringComparison.Ordinal) >= 0
+                            if (classNameForPartialMatch.Contains(pi.ClassName, StringComparison.Ordinal)
                                 && ((pi.Flags & ClientSideProviderMatchIndicator.DisallowBaseClassNameMatch) == 0))
                             {
                                 factoryCallback = pi.ClientSideProviderFactoryCallback;

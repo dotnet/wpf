@@ -9,9 +9,11 @@
 // Please see MilCodeGen.html for more information.
 //
 
+using MS.Internal;
+using System.ComponentModel;
+using System.Globalization;
 using System.Windows.Markup;
-
-#pragma warning disable 1634, 1691  // suppressing PreSharp warnings
+using System.Windows.Media.Converters;
 
 namespace System.Windows.Media.Converters
 {
@@ -41,7 +43,7 @@ namespace System.Windows.Media.Converters
             }
 
             return true;
-}
+        }
 
         /// <summary>
         /// Converts a string into a Matrix.
@@ -56,19 +58,16 @@ namespace System.Windows.Media.Converters
             {
                 return base.ConvertFromString( value, context );
             }
-}
+        }
 
         /// <summary>
         /// Converts the value into a string.
         /// </summary>
         public override string ConvertToString(object value, IValueSerializerContext context)
         {
-            if (value is Matrix)
+            if (value is Matrix instance)
             {
-                Matrix instance = (Matrix) value;
 
-
-                #pragma warning suppress 6506 // instance is obviously not null
                 return instance.ConvertToString(null, System.Windows.Markup.TypeConverterHelper.InvariantEnglishUS);
             }
 

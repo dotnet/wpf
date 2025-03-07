@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -9,8 +9,6 @@ using System.Globalization;
 using System.Runtime.InteropServices;
 using System.Windows.Markup;
 using System.Windows.Media.Imaging;
-
-#pragma warning disable 1634, 1691  // suppressing PreSharp warnings
 
 namespace System.Windows.Media
 {
@@ -55,13 +53,11 @@ namespace System.Windows.Media
                 {
                     if (!(context.Instance is ImageSource))
                     {
-                        throw new ArgumentException(SR.Format(SR.General_Expected_Type, "ImageSource"), "context");
+                        throw new ArgumentException(SR.Format(SR.General_Expected_Type, "ImageSource"), nameof(context));
                     }
 
-                    #pragma warning suppress 6506 // context is obviously not null
                     ImageSource value = (ImageSource)context.Instance;
 
-                    #pragma warning suppress 6506 // value is obviously not null
                     return value.CanSerializeToString();
                 }
 
@@ -105,10 +101,8 @@ namespace System.Windows.Media
                         null
                         );
                 }
-                else if (value is byte[])
+                else if (value is byte[] bytes)
                 {
-                    byte[] bytes = (byte[])value;
-
                     if (bytes != null)
                     {
                         Stream memStream = null;
@@ -133,10 +127,8 @@ namespace System.Windows.Media
                             );
                     }
                 }
-                else if (value is Stream)
+                else if (value is Stream stream)
                 {
-                    Stream stream = (Stream)value;
-
                     return BitmapFrame.Create(
                         stream,
                         BitmapCreateOptions.None,
@@ -201,12 +193,10 @@ namespace System.Windows.Media
                     // When invoked by the serialization engine we can convert to string only for some instances
                     if (context != null && context.Instance != null)
                     {
-                        #pragma warning disable 6506
                         if (!instance.CanSerializeToString())
                         {
                             throw new NotSupportedException(SR.Converter_ConvertToNotSupported);
                         }
-                        #pragma warning restore 6506
                     }
 
                     // Delegate to the formatting/culture-aware ConvertToString method.

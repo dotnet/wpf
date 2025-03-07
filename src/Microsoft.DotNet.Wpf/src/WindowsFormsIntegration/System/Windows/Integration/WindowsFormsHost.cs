@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -180,10 +180,7 @@ namespace System.Windows.Forms.Integration
         {
             if (newScale != _currentScale)
             {
-                if (Child != null)
-                {
-                    Child.Scale(new System.Drawing.SizeF((float)(newScale.X / _currentScale.X), (float)(newScale.Y / _currentScale.Y)));
-                }
+                Child?.Scale(new System.Drawing.SizeF((float)(newScale.X / _currentScale.X), (float)(newScale.Y / _currentScale.Y)));
             }
             Vector returnScale = newScale;
             returnScale.X = (newScale.X == 0) ? _currentScale.X : newScale.X;
@@ -288,7 +285,7 @@ namespace System.Windows.Forms.Integration
             returnSize.Height = Math.Min(returnSize.Height, finalSize.Height);
             if (HostContainerInternal.BackgroundImage != null)
             {
-                _propertyMap.OnPropertyChanged(this, "Background", this.Background);
+                _propertyMap.OnPropertyChanged(this, nameof(Background), this.Background);
             }
             return returnSize;
         }
@@ -312,8 +309,6 @@ namespace System.Windows.Forms.Integration
             }
             set
             {
-#pragma warning disable 1634, 1691
-#pragma warning disable 56526
                 Control oldChild = Child;
                 SWF.Form form = value as SWF.Form;
                 if (form != null)
@@ -340,7 +335,6 @@ namespace System.Windows.Forms.Integration
                     _priorConstraint = new Size(double.NaN, double.NaN);
                 }
                 OnChildChanged(oldChild);
-#pragma warning restore 1634, 1691, 56526
             }
         }
 
@@ -419,7 +413,7 @@ namespace System.Windows.Forms.Integration
                 if (_cachedBackbrush != parentBrush)
                 {
                     _cachedBackbrush = parentBrush;
-                    _propertyMap.OnPropertyChanged(this, "Background", parentBrush);
+                    _propertyMap.OnPropertyChanged(this, nameof(Background), parentBrush);
                 }
             }
         }
@@ -485,10 +479,7 @@ namespace System.Windows.Forms.Integration
             // for 4.0 compat, create a Winforms.NativeWindow to swallow exceptions during WndProc
             if (!CoreCompatibilityPreferences.TargetsAtLeast_Desktop_V4_5)
             {
-                if (_dummyNativeWindow != null)
-                {
-                    _dummyNativeWindow.Dispose();
-                }
+                _dummyNativeWindow?.Dispose();
                 _dummyNativeWindow = new DummyNativeWindow(this);
                 _dummyNativeWindow.AssignHandle(hwndParent.Handle);
             }
@@ -512,10 +503,7 @@ namespace System.Windows.Forms.Integration
             //This line shouldn't be necessary since the list cleans itself, but it's good to be tidy.
             ApplicationInterop.ThreadWindowsFormsHostList.Remove(this);
 
-            if (HostContainerInternal != null)
-            {
-                HostContainerInternal.Dispose();
-            }
+            HostContainerInternal?.Dispose();
         }
 
         void ApplyAllProperties(object sender, RoutedEventArgs e)
@@ -540,19 +528,13 @@ namespace System.Windows.Forms.Integration
                     {
                         try
                         {
-                            if (_dummyNativeWindow != null)
-                            {
-                                _dummyNativeWindow.Dispose();
-                            }
+                            _dummyNativeWindow?.Dispose();
                             _hostContainerInternal.Dispose();
                             this.Loaded -= new RoutedEventHandler(ApplyAllProperties);
                         }
                         finally
                         {
-                            if (Child != null)
-                            {
-                                Child.Dispose();
-                            }
+                            Child?.Dispose();
                         }
                     }
                 }
@@ -708,10 +690,7 @@ namespace System.Windows.Forms.Integration
             base.OnPropertyChanged(e);
 
             // Invoke method currently set to handle this event
-            if (_propertyMap != null)
-            {
-                _propertyMap.OnPropertyChanged(this, e.Property.Name, e.NewValue);
-            }
+            _propertyMap?.OnPropertyChanged(this, e.Property.Name, e.NewValue);
         }
 
         /// <summary>
@@ -796,7 +775,7 @@ namespace System.Windows.Forms.Integration
             {
                 if (_host == null) { return base.Cursor; }
 
-                if (!_host.PropertyMap.PropertyMappedToEmptyTranslator("Cursor"))
+                if (!_host.PropertyMap.PropertyMappedToEmptyTranslator(nameof(Cursor)))
                 { return base.Cursor; }
 
                 bool forceCursorMapped = _host.PropertyMap.PropertyMappedToEmptyTranslator("ForceCursor");
@@ -1114,10 +1093,7 @@ namespace System.Windows.Forms.Integration
         {
             MethodInfo methodInfo = typeof(SWF.Control).GetMethod("OnParentRightToLeftChanged", BindingFlags.NonPublic | BindingFlags.Instance, null, new Type[] { typeof(EventArgs) }, null);
             Debug.Assert(methodInfo != null, "Couldn't find OnParentRightToLeftChanged method!");
-            if (methodInfo != null)
-            {
-                methodInfo.Invoke(control, new object[] { EventArgs.Empty });
-            }
+            methodInfo?.Invoke(control, new object[] { EventArgs.Empty });
         }
     }
     #endregion WinFormsAdapter

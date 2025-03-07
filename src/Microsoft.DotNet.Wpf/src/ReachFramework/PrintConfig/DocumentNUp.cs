@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -19,8 +19,6 @@ using System.Collections.ObjectModel;
 using System.Globalization;
 
 using System.Printing;
-
-#pragma warning disable 1634, 1691 // Allows suppression of certain PreSharp messages
 
 namespace MS.Internal.Printing.Configuration
 {
@@ -181,16 +179,15 @@ namespace MS.Internal.Printing.Configuration
                         option._pagesPerSheet = reader.GetCurrentPropertyIntValueWithException();
                     }
                     // We want to catch internal FormatException to skip recoverable XML content syntax error
-                    #pragma warning suppress 56502
-                    #if _DEBUG
+#if _DEBUG
                     catch (FormatException e)
-                    #else
+#else
                     catch (FormatException)
-                    #endif
+#endif
                     {
-                        #if _DEBUG
+#if _DEBUG
                         Trace.WriteLine("-Error- " + e.Message);
-                        #endif
+#endif
                     }
 
                     handled = true;
@@ -269,8 +266,10 @@ namespace MS.Internal.Printing.Configuration
 
         internal static PrintCapabilityFeature NewFeatureCallback(InternalPrintCapabilities printCap)
         {
-            JobNUpCapability cap = new JobNUpCapability(printCap);
-            cap._nUps = new Collection<NUpOption>();
+            JobNUpCapability cap = new JobNUpCapability(printCap)
+            {
+                _nUps = new Collection<NUpOption>()
+            };
 
             return cap;
         }
@@ -372,8 +371,10 @@ namespace MS.Internal.Printing.Configuration
 
         internal static PrintCapabilityFeature NewFeatureCallback(InternalPrintCapabilities printCap)
         {
-            NUpPresentationDirectionCapability cap = new NUpPresentationDirectionCapability(printCap);
-            cap._presentationDirections = new Collection<NUpPresentationDirectionOption>();
+            NUpPresentationDirectionCapability cap = new NUpPresentationDirectionCapability(printCap)
+            {
+                _presentationDirections = new Collection<NUpPresentationDirectionOption>()
+            };
 
             return cap;
         }
@@ -515,7 +516,7 @@ namespace MS.Internal.Printing.Configuration
             {
                 if (value <= 0)
                 {
-                    throw new ArgumentOutOfRangeException("value",
+                    throw new ArgumentOutOfRangeException(nameof(value),
                                   PTUtility.GetTextFromResource("ArgumentException.PositiveValue"));
                 }
 
@@ -532,10 +533,11 @@ namespace MS.Internal.Printing.Configuration
             {
                 if (_presentationDirection == null)
                 {
-                    _presentationDirection = new NUpPresentationDirectionSetting(this._ownerPrintTicket);
-
-                    // This is a sub-feature so we need to set its parent feature field
-                    _presentationDirection._parentFeature = this;
+                    _presentationDirection = new NUpPresentationDirectionSetting(this._ownerPrintTicket)
+                    {
+                        // This is a sub-feature so we need to set its parent feature field
+                        _parentFeature = this
+                    };
                 }
 
                 return _presentationDirection;
@@ -628,7 +630,7 @@ namespace MS.Internal.Printing.Configuration
                 if (value < PrintSchema.PagesPerSheetDirectionEnumMin ||
                     value > PrintSchema.PagesPerSheetDirectionEnumMax)
                 {
-                    throw new ArgumentOutOfRangeException("value");
+                    throw new ArgumentOutOfRangeException(nameof(value));
                 }
 
                 this[PrintSchemaTags.Framework.OptionNameProperty] = (int)value;

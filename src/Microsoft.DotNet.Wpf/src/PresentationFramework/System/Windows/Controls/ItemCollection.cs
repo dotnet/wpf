@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -247,10 +247,7 @@ namespace System.Windows.Controls
                 throw new InvalidOperationException(SR.ItemsSourceInUse);
             }
 
-            if (_internalView != null)
-            {
-                _internalView.Clear();
-            }
+            _internalView?.Clear();
             ModelParent.ClearValue(ItemsControl.HasItemsPropertyKey);
         }
 
@@ -287,7 +284,7 @@ namespace System.Windows.Controls
         {
             ArgumentNullException.ThrowIfNull(array);
             if (array.Rank > 1)
-                throw new ArgumentException(SR.BadTargetArray, "array"); // array is multidimensional.
+                throw new ArgumentException(SR.BadTargetArray, nameof(array)); // array is multidimensional.
             ArgumentOutOfRangeException.ThrowIfNegative(index);
 
             // use the view instead of the collection, because it may have special sort/filter
@@ -736,7 +733,6 @@ namespace System.Windows.Controls
             }
         }
 
-#pragma warning disable 1634, 1691  // about to use PreSharp message numbers - unknown to C#
         /// <summary>
         ///     Returns an object to be used in thread synchronization.
         /// </summary>
@@ -752,14 +748,12 @@ namespace System.Windows.Controls
                 if (IsUsingItemsSource)
                 {
                     // see discussion in XML comment above.
-                    #pragma warning suppress 6503 // "Property get methods should not throw exceptions."
                     throw new NotSupportedException(SR.ItemCollectionShouldUseInnerSyncRoot);
                 }
 
                 return _internalView.SyncRoot;
             }
         }
-#pragma warning restore 1634, 1691
 
         /// <summary>
         ///     Gets a value indicating whether the IList has a fixed size.
@@ -1285,7 +1279,7 @@ namespace System.Windows.Controls
             get
             {
                 ICollectionViewLiveShaping cvls = _collectionView as ICollectionViewLiveShaping;
-                return (cvls != null) ? cvls.IsLiveSorting : null;
+                return cvls?.IsLiveSorting;
             }
             set
             {
@@ -1307,7 +1301,7 @@ namespace System.Windows.Controls
             get
             {
                 ICollectionViewLiveShaping cvls = _collectionView as ICollectionViewLiveShaping;
-                return (cvls != null) ? cvls.IsLiveFiltering : null;
+                return cvls?.IsLiveFiltering;
             }
             set
             {
@@ -1329,7 +1323,7 @@ namespace System.Windows.Controls
             get
             {
                 ICollectionViewLiveShaping cvls = _collectionView as ICollectionViewLiveShaping;
-                return (cvls != null) ? cvls.IsLiveGrouping : null;
+                return cvls?.IsLiveGrouping;
             }
             set
             {
@@ -1582,10 +1576,7 @@ namespace System.Windows.Controls
         internal override void GetCollectionChangedSources(int level, Action<int, object, bool?, List<string>> format, List<string> sources)
         {
             format(level, this, false, sources);
-            if (_collectionView != null)
-            {
-                _collectionView.GetCollectionChangedSources(level+1, format, sources);
-            }
+            _collectionView?.GetCollectionChangedSources(level+1, format, sources);
         }
 
 
@@ -1720,9 +1711,9 @@ namespace System.Windows.Controls
             }
 
             // with a new view, we have new live shaping behavior
-            OnPropertyChanged(new PropertyChangedEventArgs("IsLiveSorting"));
-            OnPropertyChanged(new PropertyChangedEventArgs("IsLiveFiltering"));
-            OnPropertyChanged(new PropertyChangedEventArgs("IsLiveGrouping"));
+            OnPropertyChanged(new PropertyChangedEventArgs(nameof(IsLiveSorting)));
+            OnPropertyChanged(new PropertyChangedEventArgs(nameof(IsLiveFiltering)));
+            OnPropertyChanged(new PropertyChangedEventArgs(nameof(IsLiveGrouping)));
         }
 
         void ApplySortFilterAndGroup()
@@ -1978,17 +1969,12 @@ namespace System.Windows.Controls
         // be sure that we reference that member on the derived class.
         private new void VerifyRefreshNotDeferred()
         {
-            #pragma warning disable 1634, 1691 // about to use PreSharp message numbers - unknown to C#
-            #pragma warning disable 6503
             // If the Refresh is being deferred to change filtering or sorting of the
             // data by this CollectionView, then CollectionView will not reflect the correct
             // state of the underlying data.
 
             if (IsRefreshDeferred)
                 throw new InvalidOperationException(SR.NoCheckOrChangeWhenDeferred);
-
-            #pragma warning restore 6503
-            #pragma warning restore 1634, 1691
         }
 
         // SortDescription was added/removed to/from this ItemCollection.SortDescriptions, refresh CollView

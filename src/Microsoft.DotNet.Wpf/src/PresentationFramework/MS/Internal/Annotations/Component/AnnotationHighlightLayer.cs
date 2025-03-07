@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -876,13 +876,11 @@ namespace MS.Internal.Annotations.Component
                 if (_cachedTopOwner != TopOwner)
                 {
                     //remove it from the old owner children
-                    if (_cachedTopOwner != null)
-                        _cachedTopOwner.RemoveChild(this);
+                    _cachedTopOwner?.RemoveChild(this);
                     _cachedTopOwner = TopOwner;
 
                     //add it to the new owner children
-                    if (_cachedTopOwner != null)
-                        _cachedTopOwner.AddChild(this);
+                    _cachedTopOwner?.AddChild(this);
                 }
                 Fill = OwnerColor;
             }
@@ -894,8 +892,7 @@ namespace MS.Internal.Annotations.Component
             /// </summary>
             internal void Discard()
             {
-                if (TopOwner != null)
-                    TopOwner.RemoveChild(this);
+                TopOwner?.RemoveChild(this);
                 _activeOwners.Clear();
                 _owners.Clear();
             }

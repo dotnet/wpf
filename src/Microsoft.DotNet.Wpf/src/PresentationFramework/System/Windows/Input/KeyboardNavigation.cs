@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -495,8 +495,10 @@ namespace System.Windows.Input
                 Debug.Assert(adornedElement != null, "adornedElement should not be null");
                 Debug.Assert(focusVisualStyle != null, "focusVisual should not be null");
 
-                Control control = new Control();
-                control.Style = focusVisualStyle;
+                Control control = new Control
+                {
+                    Style = focusVisualStyle
+                };
                 _adorderChild = control;
                 IsClipEnabled = true;
                 IsHitTestVisible = false;
@@ -606,10 +608,12 @@ namespace System.Windows.Input
 
                                 rect = _hostToAdornedElement.TransformBounds(rect);
 
-                                Control control = new Control();
-                                control.Style = _focusVisualStyle;
-                                control.Width = rect.Width;
-                                control.Height = rect.Height;
+                                Control control = new Control
+                                {
+                                    Style = _focusVisualStyle,
+                                    Width = rect.Width,
+                                    Height = rect.Height
+                                };
                                 Canvas.SetLeft(control, rect.X);
                                 Canvas.SetTop(control, rect.Y);
                                 _canvasChildren.Add(control);
@@ -658,7 +662,7 @@ namespace System.Windows.Input
                 }
                 else
                 {
-                    throw new ArgumentOutOfRangeException("index", index, SR.Visual_ArgumentOutOfRange);
+                    throw new ArgumentOutOfRangeException(nameof(index), index, SR.Visual_ArgumentOutOfRange);
                 }
             }
 
@@ -800,10 +804,7 @@ namespace System.Windows.Input
             if (_focusVisualAdornerCache != null)
             {
                 AdornerLayer adornerlayer = VisualTreeHelper.GetParent(_focusVisualAdornerCache) as AdornerLayer;
-                if (adornerlayer != null)
-                {
-                    adornerlayer.Remove(_focusVisualAdornerCache);
-                }
+                adornerlayer?.Remove(_focusVisualAdornerCache);
                 _focusVisualAdornerCache = null;
             }
         }
@@ -1063,8 +1064,10 @@ namespace System.Windows.Input
                 }
                 else // FocusNavigationDirection
                 {
-                    TraversalRequest tr = new TraversalRequest(request.FocusNavigationDirection);
-                    tr.Wrapped = true;
+                    TraversalRequest tr = new TraversalRequest(request.FocusNavigationDirection)
+                    {
+                        Wrapped = true
+                    };
                     traversed = inputSink.TabInto(tr);
                 }
 
@@ -1072,7 +1075,7 @@ namespace System.Windows.Input
                 if (!traversed && firstElement != nextTab)
                 {
                     // Navigate to next element in the tree
-                    traversed = Navigate(nextTab, request, modifierKeys, firstElement == null ? nextTab : firstElement);
+                    traversed = Navigate(nextTab, request, modifierKeys, firstElement ?? nextTab);
                 }
 
                 return traversed;
@@ -1246,10 +1249,7 @@ namespace System.Windows.Input
             }
 
             Visual rootVisual = GetVisualRoot(visual);
-            if (rootVisual != null)
-            {
-                rootVisual.SetValue(ShowKeyboardCuesProperty, enable ? BooleanBoxes.TrueBox : BooleanBoxes.FalseBox);
-            }
+            rootVisual?.SetValue(ShowKeyboardCuesProperty, enable ? BooleanBoxes.TrueBox : BooleanBoxes.FalseBox);
         }
 
         internal static FocusNavigationDirection KeyToTraversalDirection(Key key)
@@ -2727,8 +2727,7 @@ namespace System.Windows.Input
                 else
                 {
                     ContentElement sourceContentElement = sourceElement as ContentElement;
-                    if (sourceContentElement != null)
-                        sourceContentElement.RemoveHandler(Keyboard.PreviewLostKeyboardFocusEvent, new KeyboardFocusChangedEventHandler(_LostFocus));
+                    sourceContentElement?.RemoveHandler(Keyboard.PreviewLostKeyboardFocusEvent, new KeyboardFocusChangedEventHandler(_LostFocus));
                 }
 
                 UIElement targetUIElement = targetElement as UIElement;
@@ -2737,11 +2736,8 @@ namespace System.Windows.Input
                 else
                 {
                     ContentElement targetContentElement = targetElement as ContentElement;
-                    if (targetContentElement != null)
-                    {
-                        // When Focus is changed we need to reset the base line
-                        targetContentElement.AddHandler(Keyboard.PreviewLostKeyboardFocusEvent, new KeyboardFocusChangedEventHandler(_LostFocus), true);
-                    }
+                    // When Focus is changed we need to reset the base line
+                    targetContentElement?.AddHandler(Keyboard.PreviewLostKeyboardFocusEvent, new KeyboardFocusChangedEventHandler(_LostFocus), true);
                 }
 
                 if (targetUIElement != null)
@@ -3093,7 +3089,7 @@ namespace System.Windows.Input
                     }
                 }
             }
-            return result != null ? result : partialResult;
+            return result ?? partialResult;
         }
 
         /// <summary>

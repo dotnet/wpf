@@ -1,8 +1,6 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
-
-#pragma warning disable 1634, 1691 // Allow suppression of certain presharp messages
 
 using MS.Internal;
 using MS.Win32;
@@ -61,7 +59,7 @@ namespace System.Windows.Media
                             return;
                         }
                         
-                        FromRawBytes(profileData, (int)cbProfileActual, /* dontThrowException = */ true);
+                        FromRawBytes(profileData, (int)cbProfileActual, dontThrowException: true);
                     }
 
                     break;
@@ -131,7 +129,7 @@ namespace System.Windows.Media
                         }
 
                         // Finally, fill in _colorContextHelper
-                        FromRawBytes(sRGBProfile, sRGBProfile.Length, /* dontThrowException = */ true);
+                        FromRawBytes(sRGBProfile, sRGBProfile.Length, dontThrowException: true);
                     }
                     else if (Invariant.Strict)
                     {
@@ -158,7 +156,7 @@ namespace System.Windows.Media
         /// <param name="profileUri">Specifies the URI of a color profile used by the newly created ColorContext.</param>
         public ColorContext(Uri profileUri)
         {
-            Initialize(profileUri, /* isStandardProfileUriNotFromUser = */ false);
+            Initialize(profileUri, isStandardProfileUriNotFromUser: false);
         }
 
         /// <summary>
@@ -181,7 +179,7 @@ namespace System.Windows.Media
                 case PixelFormatEnum.Bgra32:
                 case PixelFormatEnum.Pbgra32:
                 default:
-                    Initialize(GetStandardColorSpaceProfile(), /* isStandardProfileUriNotFromUser = */ true);
+                    Initialize(GetStandardColorSpaceProfile(), isStandardProfileUriNotFromUser: true);
                     break;
 
                 case PixelFormatEnum.Rgba64:
@@ -434,7 +432,6 @@ namespace System.Windows.Media
             }
             else if (obj1 != null && obj2 != null)
             {
-                #pragma warning disable 6506
                 return (
                     (context1._profileHeader.phSize == context2._profileHeader.phSize) &&
                     (context1._profileHeader.phCMMType == context2._profileHeader.phCMMType) &&
@@ -458,7 +455,6 @@ namespace System.Windows.Media
                     (context1._profileHeader.phIlluminant_2 == context2._profileHeader.phIlluminant_2) &&
                     (context1._profileHeader.phCreator == context2._profileHeader.phCreator)
                     );
-                #pragma warning restore 6506
             }
             else
             {
@@ -489,7 +485,7 @@ namespace System.Windows.Media
 
             if (!profileUri.IsAbsoluteUri)
             {
-                throw new ArgumentException(SR.UriNotAbsolute, "profileUri");
+                throw new ArgumentException(SR.UriNotAbsolute, nameof(profileUri));
             }
 
             _profileUri = profileUri;
@@ -596,7 +592,7 @@ namespace System.Windows.Media
 
                 if (numBytesRead < bufferSize)
                 {
-                    FromRawBytes(rawBytes, numBytesRead, /* dontThrowException = */ false);
+                    FromRawBytes(rawBytes, numBytesRead, dontThrowException: false);
 
                     using (FactoryMaker factoryMaker = new FactoryMaker())
                     {

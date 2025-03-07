@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -67,7 +67,7 @@ namespace System.Windows.Controls.Primitives
         {
             if (index != 0)
             {
-                throw new ArgumentOutOfRangeException("index", index, SR.Visual_ArgumentOutOfRange);
+                throw new ArgumentOutOfRangeException(nameof(index), index, SR.Visual_ArgumentOutOfRange);
             }
 
             return _transformDecorator;
@@ -247,34 +247,46 @@ namespace System.Windows.Controls.Primitives
         /// <param name="popup">The parent Popup.</param>
         internal void SetupLayoutBindings(Popup popup)
         {
-            Binding binding = new Binding("Width");
-            binding.Mode = BindingMode.OneWay;
-            binding.Source = popup;
+            Binding binding = new Binding("Width")
+            {
+                Mode = BindingMode.OneWay,
+                Source = popup
+            };
             _adornerDecorator.SetBinding(WidthProperty, binding);
 
-            binding = new Binding("Height");
-            binding.Mode = BindingMode.OneWay;
-            binding.Source = popup;
+            binding = new Binding("Height")
+            {
+                Mode = BindingMode.OneWay,
+                Source = popup
+            };
             _adornerDecorator.SetBinding(HeightProperty, binding);
 
-            binding = new Binding("MinWidth");
-            binding.Mode = BindingMode.OneWay;
-            binding.Source = popup;
+            binding = new Binding("MinWidth")
+            {
+                Mode = BindingMode.OneWay,
+                Source = popup
+            };
             _adornerDecorator.SetBinding(MinWidthProperty, binding);
 
-            binding = new Binding("MinHeight");
-            binding.Mode = BindingMode.OneWay;
-            binding.Source = popup;
+            binding = new Binding("MinHeight")
+            {
+                Mode = BindingMode.OneWay,
+                Source = popup
+            };
             _adornerDecorator.SetBinding(MinHeightProperty, binding);
 
-            binding = new Binding("MaxWidth");
-            binding.Mode = BindingMode.OneWay;
-            binding.Source = popup;
+            binding = new Binding("MaxWidth")
+            {
+                Mode = BindingMode.OneWay,
+                Source = popup
+            };
             _adornerDecorator.SetBinding(MaxWidthProperty, binding);
 
-            binding = new Binding("MaxHeight");
-            binding.Mode = BindingMode.OneWay;
-            binding.Source = popup;
+            binding = new Binding("MaxHeight")
+            {
+                Mode = BindingMode.OneWay,
+                Source = popup
+            };
             _adornerDecorator.SetBinding(MaxHeightProperty, binding);
         }
 

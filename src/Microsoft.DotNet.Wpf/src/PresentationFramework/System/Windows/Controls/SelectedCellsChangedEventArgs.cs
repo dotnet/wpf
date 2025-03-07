@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -42,8 +42,8 @@ namespace System.Windows.Controls
 
         internal SelectedCellsChangedEventArgs(DataGrid owner, VirtualizedCellInfoCollection addedCells, VirtualizedCellInfoCollection removedCells)
         {
-            _addedCells = (addedCells != null) ? addedCells : VirtualizedCellInfoCollection.MakeEmptyCollection(owner);
-            _removedCells = (removedCells != null) ? removedCells : VirtualizedCellInfoCollection.MakeEmptyCollection(owner);
+            _addedCells = addedCells ?? VirtualizedCellInfoCollection.MakeEmptyCollection(owner);
+            _removedCells = removedCells ?? VirtualizedCellInfoCollection.MakeEmptyCollection(owner);
 
             Debug.Assert(_addedCells.IsReadOnly, "_addedCells should have ended up as read-only.");
             Debug.Assert(_removedCells.IsReadOnly, "_removedCells should have ended up as read-only.");

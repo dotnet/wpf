@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -418,10 +418,7 @@ namespace MS.Internal.PtsHost
         /// </summary>
         internal void InvalidateFormatCache()
         {
-            if (_mainTextSegment != null)
-            {
-                _mainTextSegment.InvalidateFormatCache();
-            }
+            _mainTextSegment?.InvalidateFormatCache();
         }
 
         /// <summary>
@@ -429,10 +426,7 @@ namespace MS.Internal.PtsHost
         /// </summary>
         internal void ClearUpdateInfo()
         {
-            if (_mainTextSegment != null)
-            {
-                _mainTextSegment.ClearUpdateInfo();
-            }
+            _mainTextSegment?.ClearUpdateInfo();
         }
 
         /// <summary>
@@ -467,10 +461,7 @@ namespace MS.Internal.PtsHost
         /// </summary>
         internal void UpdateSegmentLastFormatPositions()
         {
-            if(_mainTextSegment != null)
-            {
-                _mainTextSegment.UpdateLastFormatPositions();
-            }
+            _mainTextSegment?.UpdateLastFormatPositions();
         }
 
         /// <summary>

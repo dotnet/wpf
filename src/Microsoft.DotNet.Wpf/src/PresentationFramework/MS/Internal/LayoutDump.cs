@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -42,10 +42,11 @@ namespace MS.Internal
         internal static string DumpLayoutAndVisualTreeToString(string tagName, Visual root)
         {
             StringWriter stringWriter = new StringWriter(CultureInfo.InvariantCulture);
-            XmlTextWriter writer = new XmlTextWriter(stringWriter);
-
-            writer.Formatting = Formatting.Indented;
-            writer.Indentation = 2;
+            XmlTextWriter writer = new XmlTextWriter(stringWriter)
+            {
+                Formatting = Formatting.Indented,
+                Indentation = 2
+            };
 
             DumpLayoutAndVisualTree(writer, tagName, root);
 
@@ -102,10 +103,11 @@ namespace MS.Internal
         internal static string DumpLayoutTreeToString(string tagName, UIElement root)
         {
             StringWriter stringWriter = new StringWriter(CultureInfo.InvariantCulture);
-            XmlTextWriter writer = new XmlTextWriter(stringWriter);
-
-            writer.Formatting = Formatting.Indented;
-            writer.Indentation = 2;
+            XmlTextWriter writer = new XmlTextWriter(stringWriter)
+            {
+                Formatting = Formatting.Indented,
+                Indentation = 2
+            };
 
             DumpLayoutTree(writer, tagName, root);
 

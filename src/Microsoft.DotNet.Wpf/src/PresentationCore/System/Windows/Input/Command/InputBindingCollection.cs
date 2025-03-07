@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -156,23 +156,14 @@ namespace System.Windows.Input
         {
             get
             {
-                // disable PreSharp warning about throwing exceptions in getter;
-                // this is allowed in an indexed property.  (First disable C#
-                // warning about unknown warning numbers.)
-                #pragma warning disable 1634, 1691
-                #pragma warning disable 6503
-
                 if (_innerBindingList != null)
                 {
                     return _innerBindingList[index];
                 }
                 else
                 {
-                    throw new ArgumentOutOfRangeException("index");
+                    throw new ArgumentOutOfRangeException(nameof(index));
                 }
-
-                #pragma warning restore 6503
-                #pragma warning restore 1634, 1691
             }
             set
             {
@@ -192,7 +183,7 @@ namespace System.Windows.Input
                 }
                 else
                 {
-                    throw new ArgumentOutOfRangeException("index");
+                    throw new ArgumentOutOfRangeException(nameof(index));
                 }
             }
         }
@@ -421,10 +412,7 @@ namespace System.Windows.Input
         /// <param name="index">start index in the current list to copy</param>
         public void CopyTo(InputBinding[] inputBindings, int index)
         {
-            if (_innerBindingList != null)
-            {
-                _innerBindingList.CopyTo(inputBindings, index);
-            }
+            _innerBindingList?.CopyTo(inputBindings, index);
         }
 #endregion Public
 

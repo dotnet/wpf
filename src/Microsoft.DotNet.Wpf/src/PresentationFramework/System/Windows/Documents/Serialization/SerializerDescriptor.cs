@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -79,15 +79,16 @@ namespace System.Windows.Documents.Serialization
                 throw new ArgumentException(SR.SerializerProviderDefaultFileExtensionNull);
             }
 
-            SerializerDescriptor sd = new SerializerDescriptor();
+            SerializerDescriptor sd = new SerializerDescriptor
+            {
+                _displayName = factoryInstance.DisplayName,
+                _manufacturerName = factoryInstance.ManufacturerName,
+                _manufacturerWebsite = factoryInstance.ManufacturerWebsite,
+                _defaultFileExtension = factoryInstance.DefaultFileExtension,
 
-            sd._displayName = factoryInstance.DisplayName;
-            sd._manufacturerName = factoryInstance.ManufacturerName;
-            sd._manufacturerWebsite = factoryInstance.ManufacturerWebsite;
-            sd._defaultFileExtension = factoryInstance.DefaultFileExtension;
-
-            // When this is called with an instantiated factory object, it must be loadable
-            sd._isLoadable = true;
+                // When this is called with an instantiated factory object, it must be loadable
+                _isLoadable = true
+            };
 
             Type factoryType = factoryInstance.GetType();
             sd._assemblyName = factoryType.Assembly.FullName;

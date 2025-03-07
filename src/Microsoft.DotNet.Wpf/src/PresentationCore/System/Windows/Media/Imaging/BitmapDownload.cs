@@ -1,8 +1,6 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
-
-#pragma warning disable 1634, 1691 // Allow suppression of certain presharp messages
 
 using System.IO;
 using System.Collections;
@@ -101,8 +99,10 @@ namespace System.Windows.Media.Imaging
                 }
             }
 
-            entry = new QueueEntry();
-            entry.decoders  = new List<WeakReference>();
+            entry = new QueueEntry
+            {
+                decoders = new List<WeakReference>()
+            };
 
             lock (_syncLock)
             {
@@ -123,14 +123,13 @@ namespace System.Windows.Media.Imaging
             {
                 string pathToUse = tmpFileName.ToString();
                 SafeFileHandle fileHandle = MS.Win32.UnsafeNativeMethods.CreateFile(
-                    pathToUse, 
-                    NativeMethods.GENERIC_READ | NativeMethods.GENERIC_WRITE, /* dwDesiredAccess */
-                    0,                                                        /* dwShare */
-                    null,                                                     /* lpSecurityAttributes */
-                    NativeMethods.CREATE_ALWAYS,                              /* dwCreationDisposition */
-                    NativeMethods.FILE_ATTRIBUTE_TEMPORARY | 
-                    NativeMethods.FILE_FLAG_DELETE_ON_CLOSE,                  /* dwFlagsAndAttributes */
-                    IntPtr.Zero                                               /* hTemplateFile */
+                    pathToUse,
+                    dwDesiredAccess: NativeMethods.GENERIC_READ | NativeMethods.GENERIC_WRITE,
+                    dwShareMode: 0,
+                    lpSecurityAttributes: null,
+                    dwCreationDisposition: NativeMethods.CREATE_ALWAYS,
+                    dwFlagsAndAttributes: NativeMethods.FILE_ATTRIBUTE_TEMPORARY | NativeMethods.FILE_FLAG_DELETE_ON_CLOSE,
+                    hTemplateFile: IntPtr.Zero
                     );
 
                 if (fileHandle.IsInvalid)
@@ -201,8 +200,6 @@ namespace System.Windows.Media.Imaging
                 {
                     QueueEntry entry = (QueueEntry)workQueue.Dequeue();
 
-                    #pragma warning disable 6500
-
                     // Catch all exceptions and marshal them to the correct thread
                     try
                     {
@@ -227,8 +224,6 @@ namespace System.Windows.Media.Imaging
                         //
                         entry = null;
                     }
-
-                    #pragma warning restore 6500
                 }
             }
         }
@@ -238,8 +233,6 @@ namespace System.Windows.Media.Imaging
         private static void ResponseCallback(IAsyncResult result)
         {
             QueueEntry entry = (QueueEntry)result.AsyncState;
-
-            #pragma warning disable 6500
 
             // Catch all exceptions and marshal them to the correct thread
             try
@@ -254,12 +247,10 @@ namespace System.Windows.Media.Imaging
                 // Signal
                 _waitEvent.Set();
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 MarshalException(entry, e);
             }
-
-            #pragma warning restore 6500
         }
 
         ///
@@ -270,18 +261,14 @@ namespace System.Windows.Media.Imaging
             QueueEntry entry = (QueueEntry)result.AsyncState;
             int bytesRead = 0;
 
-            #pragma warning disable 6500
-
             try
             {
                 bytesRead = entry.inputStream.EndRead(result);
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 MarshalException(entry, e);
             }
-
-            #pragma warning restore 6500
 
             if (bytesRead == 0)
             {

@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -73,10 +73,7 @@ namespace System.Windows.Controls
         /// </summary>
         void IScrollInfo.LineUp()
         {
-            if (_scrollData != null)
-            {
-                _scrollData.LineUp(this);
-            }
+            _scrollData?.LineUp(this);
         }
 
         /// <summary>
@@ -84,10 +81,7 @@ namespace System.Windows.Controls
         /// </summary>
         void IScrollInfo.LineDown()
         {
-            if (_scrollData != null)
-            {
-                _scrollData.LineDown(this);
-            }
+            _scrollData?.LineDown(this);
         }
 
         /// <summary>
@@ -95,10 +89,7 @@ namespace System.Windows.Controls
         /// </summary>
         void IScrollInfo.LineLeft()
         {
-            if (_scrollData != null)
-            {
-                _scrollData.LineLeft(this);
-            }
+            _scrollData?.LineLeft(this);
         }
 
         /// <summary>
@@ -106,10 +97,7 @@ namespace System.Windows.Controls
         /// </summary>
         void IScrollInfo.LineRight()
         {
-            if (_scrollData != null)
-            {
-                _scrollData.LineRight(this);
-            }
+            _scrollData?.LineRight(this);
         }
 
         /// <summary>
@@ -117,10 +105,7 @@ namespace System.Windows.Controls
         /// </summary>
         void IScrollInfo.PageUp()
         {
-            if (_scrollData != null)
-            {
-                _scrollData.PageUp(this);
-            }
+            _scrollData?.PageUp(this);
         }
 
         /// <summary>
@@ -128,10 +113,7 @@ namespace System.Windows.Controls
         /// </summary>
         void IScrollInfo.PageDown()
         {
-            if (_scrollData != null)
-            {
-                _scrollData.PageDown(this);
-            }
+            _scrollData?.PageDown(this);
         }
 
         /// <summary>
@@ -139,10 +121,7 @@ namespace System.Windows.Controls
         /// </summary>
         void IScrollInfo.PageLeft()
         {
-            if (_scrollData != null)
-            {
-                _scrollData.PageLeft(this);
-            }
+            _scrollData?.PageLeft(this);
         }
 
         /// <summary>
@@ -150,10 +129,7 @@ namespace System.Windows.Controls
         /// </summary>
         void IScrollInfo.PageRight()
         {
-            if (_scrollData != null)
-            {
-                _scrollData.PageRight(this);
-            }
+            _scrollData?.PageRight(this);
         }
 
         /// <summary>
@@ -161,10 +137,7 @@ namespace System.Windows.Controls
         /// </summary>
         void IScrollInfo.MouseWheelUp()
         {
-            if (_scrollData != null)
-            {
-                _scrollData.MouseWheelUp(this);
-            }
+            _scrollData?.MouseWheelUp(this);
         }
 
         /// <summary>
@@ -172,10 +145,7 @@ namespace System.Windows.Controls
         /// </summary>
         void IScrollInfo.MouseWheelDown()
         {
-            if (_scrollData != null)
-            {
-                _scrollData.MouseWheelDown(this);
-            }
+            _scrollData?.MouseWheelDown(this);
         }
 
         /// <summary>
@@ -183,10 +153,7 @@ namespace System.Windows.Controls
         /// </summary>
         void IScrollInfo.MouseWheelLeft()
         {
-            if (_scrollData != null)
-            {
-                _scrollData.MouseWheelLeft(this);
-            }
+            _scrollData?.MouseWheelLeft(this);
         }
 
         /// <summary>
@@ -194,10 +161,7 @@ namespace System.Windows.Controls
         /// </summary>
         void IScrollInfo.MouseWheelRight()
         {
-            if (_scrollData != null)
-            {
-                _scrollData.MouseWheelRight(this);
-            }
+            _scrollData?.MouseWheelRight(this);
         }
 
         /// <summary>
@@ -205,10 +169,7 @@ namespace System.Windows.Controls
         /// </summary>
         void IScrollInfo.SetHorizontalOffset(double offset)
         {
-            if (_scrollData != null)
-            {
-                _scrollData.SetHorizontalOffset(this, offset);
-            }
+            _scrollData?.SetHorizontalOffset(this, offset);
         }
 
         /// <summary>
@@ -216,10 +177,7 @@ namespace System.Windows.Controls
         /// </summary>
         void IScrollInfo.SetVerticalOffset(double offset)
         {
-            if (_scrollData != null)
-            {
-                _scrollData.SetVerticalOffset(this, offset);
-            }
+            _scrollData?.SetVerticalOffset(this, offset);
         }
 
         /// <summary>
@@ -380,7 +338,7 @@ namespace System.Windows.Controls
         {
             get
             {
-                return (_scrollData != null) ? _scrollData.ScrollOwner : null;
+                return _scrollData?.ScrollOwner;
             }
 
             set
@@ -1133,8 +1091,10 @@ namespace System.Windows.Controls
                 // Start up a timer.  Until the timer fires, we'll disable
                 // all background layout.  This leaves the TextBox responsive
                 // to user input.
-                _throttleBackgroundTimer = new DispatcherTimer(DispatcherPriority.Background);
-                _throttleBackgroundTimer.Interval = new TimeSpan(0, 0, _throttleBackgroundSeconds);
+                _throttleBackgroundTimer = new DispatcherTimer(DispatcherPriority.Background)
+                {
+                    Interval = new TimeSpan(0, 0, _throttleBackgroundSeconds)
+                };
                 _throttleBackgroundTimer.Tick += new EventHandler(OnThrottleBackgroundTimeout);
             }
             else

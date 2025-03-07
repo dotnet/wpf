@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -10,8 +10,6 @@ using MS.Internal;
 //      for FixedDocumentSequence. It is the base class for DocumentSequenceTextPointer and
 //      DocumentSequenceTextPointer.
 //
-
-#pragma warning disable 1634, 1691 // To enable presharp warning disables (#pragma suppress) below.
 
 namespace System.Windows.Documents
 {
@@ -412,7 +410,6 @@ namespace System.Windows.Documents
         {
             get
             {
-                #pragma warning suppress 56503
                 throw new NotImplementedException();
             }
         }
@@ -786,7 +783,7 @@ namespace System.Windows.Documents
             {
                 if (!xGapAwareScan(newTp, distance))
                 {
-                    throw new ArgumentException(SR.BadDistance, "distance");
+                    throw new ArgumentException(SR.BadDistance, nameof(distance));
                 }
             }
             return newTp;
@@ -844,7 +841,7 @@ namespace System.Windows.Documents
 
         internal static string ToString(DocumentSequenceTextPointer thisTp)
         {
-            return $"{(thisTp is DocumentSequenceTextPointer ? "DSTP" : "DSTN")} Id={thisTp.DebugId} B={thisTp.ChildBlock.DebugId} G={thisTp.ChildPointer.LogicalDirection}";
+            return $"{(thisTp is not null ? "DSTP" : "DSTN")} Id={thisTp.DebugId} B={thisTp.ChildBlock.DebugId} G={thisTp.ChildPointer.LogicalDirection}";
         }
 #endif
         #endregion Internal Methods

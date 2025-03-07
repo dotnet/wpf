@@ -195,9 +195,11 @@ namespace System.Windows
                 if (getValueCallback != null)
                 {
                     BaseValueSourceInternal valueSource;
-                    entry = new EffectiveValueEntry(dp);
-                    entry.Value = getValueCallback(this, out valueSource);
-                    entry.BaseValueSourceInternal = valueSource;
+                    entry = new EffectiveValueEntry(dp)
+                    {
+                        Value = getValueCallback(this, out valueSource),
+                        BaseValueSourceInternal = valueSource
+                    };
                     return entry;
                 }
             }
@@ -388,7 +390,7 @@ namespace System.Windows
                 }
                 else
                 {
-                    entry.SetCoercedValue(value, null, true /* skipBaseValueChecks */, entry.IsCoercedWithCurrentValue);
+                    entry.SetCoercedValue(value, null, skipBaseValueChecks: true, entry.IsCoercedWithCurrentValue);
                 }
 
                 _effectiveValues[entryIndex.Index] = entry;
@@ -414,7 +416,7 @@ namespace System.Windows
             PropertyMetadata metadata = SetupPropertyChange(dp);
 
             // Do standard property set
-            SetValueCommon(dp, value, metadata, false /* coerceWithDeferredReference */, false /* coerceWithCurrentValue */, OperationType.Unknown, false /* isInternal */);
+            SetValueCommon(dp, value, metadata, coerceWithDeferredReference: false, coerceWithCurrentValue: false, OperationType.Unknown, isInternal: false);
         }
 
         /// <summary>
@@ -440,7 +442,7 @@ namespace System.Windows
             PropertyMetadata metadata = SetupPropertyChange(dp);
 
             // Do standard property set
-            SetValueCommon(dp, value, metadata, false /* coerceWithDeferredReference */, true /* coerceWithCurrentValue */, OperationType.Unknown, false /* isInternal */);
+            SetValueCommon(dp, value, metadata, coerceWithDeferredReference: false, coerceWithCurrentValue: true, OperationType.Unknown, isInternal: false);
         }
 
         /// <summary>
@@ -482,7 +484,7 @@ namespace System.Windows
             PropertyMetadata metadata = SetupPropertyChange(dp);
 
             // Do standard property set
-            SetValueCommon(dp, value, metadata, false /* coerceWithDeferredReference */, false /* coerceWithCurrentValue */, OperationType.Unknown, true /* isInternal */);
+            SetValueCommon(dp, value, metadata, coerceWithDeferredReference: false, coerceWithCurrentValue: false, OperationType.Unknown, isInternal: true);
         }
 
         /// <summary>
@@ -502,7 +504,7 @@ namespace System.Windows
             PropertyMetadata metadata = SetupPropertyChange(dp);
 
             // Do standard property set
-            SetValueCommon(dp, value, metadata, false /* coerceWithDeferredReference */, true /* coerceWithCurrentValue */, OperationType.Unknown, true /* isInternal */);
+            SetValueCommon(dp, value, metadata, coerceWithDeferredReference: false, coerceWithCurrentValue: true, OperationType.Unknown, isInternal: true);
         }
 
         /// <summary>
@@ -514,7 +516,7 @@ namespace System.Windows
             PropertyMetadata metadata = SetupPropertyChange(dp);
 
             // Do standard property set
-            SetValueCommon(dp, deferredReference, metadata, true /* coerceWithDeferredReference */, false /* coerceWithCurrentValue */, OperationType.Unknown, false /* isInternal */);
+            SetValueCommon(dp, deferredReference, metadata, coerceWithDeferredReference: true, coerceWithCurrentValue: false, OperationType.Unknown, isInternal: false);
         }
 
         /// <summary>
@@ -526,7 +528,7 @@ namespace System.Windows
             PropertyMetadata metadata = SetupPropertyChange(dp);
 
             // Do standard property set
-            SetValueCommon(dp, deferredReference, metadata, true /* coerceWithDeferredReference */, true /* coerceWithCurrentValue */, OperationType.Unknown, false /* isInternal */);
+            SetValueCommon(dp, deferredReference, metadata, coerceWithDeferredReference: true, coerceWithCurrentValue: true, OperationType.Unknown, isInternal: false);
         }
 
         /// <summary>
@@ -538,7 +540,7 @@ namespace System.Windows
             PropertyMetadata metadata = SetupPropertyChange(dp);
 
             // Do standard property set
-            SetValueCommon(dp, value, metadata, false /* coerceWithDeferredReference */, false /* coerceWithCurrentValue */, OperationType.ChangeMutableDefaultValue, false /* isInternal */);
+            SetValueCommon(dp, value, metadata, coerceWithDeferredReference: false, coerceWithCurrentValue: false, OperationType.ChangeMutableDefaultValue, isInternal: false);
         }
 
         /// <summary>
@@ -568,7 +570,7 @@ namespace System.Windows
             PropertyMetadata metadata = SetupPropertyChange(key, out dp);
 
             // Do standard property set
-            SetValueCommon(dp, value, metadata, false /* coerceWithDeferredReference */, false /* coerceWithCurrentValue */, OperationType.Unknown, false /* isInternal */);
+            SetValueCommon(dp, value, metadata, coerceWithDeferredReference: false, coerceWithCurrentValue: false, OperationType.Unknown, isInternal: false);
         }
 
         /// <summary>
@@ -690,8 +692,10 @@ namespace System.Windows
             EffectiveValueEntry oldEntry;
             if (operationType == OperationType.ChangeMutableDefaultValue)
             {
-                oldEntry = new EffectiveValueEntry(dp, BaseValueSourceInternal.Default);
-                oldEntry.Value = value;
+                oldEntry = new EffectiveValueEntry(dp, BaseValueSourceInternal.Default)
+                {
+                    Value = value
+                };
             }
             else
             {
@@ -824,8 +828,7 @@ namespace System.Windows
         //
         internal bool ProvideSelfAsInheritanceContext( object value, DependencyProperty dp )
         {
-            DependencyObject doValue = value as DependencyObject;
-            if (doValue != null)
+            if (value is DependencyObject doValue)
             {
                 return ProvideSelfAsInheritanceContext(doValue, dp);
             }
@@ -869,8 +872,7 @@ namespace System.Windows
         //
         internal bool RemoveSelfAsInheritanceContext( object value, DependencyProperty dp )
         {
-            DependencyObject doValue = value as DependencyObject;
-            if (doValue != null)
+            if (value is DependencyObject doValue)
             {
                 return RemoveSelfAsInheritanceContext(doValue, dp);
             }
@@ -998,8 +1000,8 @@ namespace System.Windows
                     metadata,
                     oldEntry,
                     ref newEntry,
-                    false /* coerceWithDeferredReference */,
-                    false /* coerceWithCurrentValue */,
+                    coerceWithDeferredReference: false,
+                    coerceWithCurrentValue: false,
                     OperationType.Unknown);
         }
 
@@ -1089,10 +1091,10 @@ namespace System.Windows
                     entryIndex,
                     dp,
                     metadata,
-                    new EffectiveValueEntry() /* oldEntry */,
+                    oldEntry: new EffectiveValueEntry(),
                     ref newEntry,
-                    false /* coerceWithDeferredReference */,
-                    false /* coerceWithCurrentValue */,
+                    coerceWithDeferredReference: false,
+                    coerceWithCurrentValue: false,
                     OperationType.Unknown);
         }
 
@@ -1138,8 +1140,7 @@ namespace System.Windows
 
             // if the target is a Freezable, call FireChanged to kick off
             // notifications to the Freezable's parent chain.
-            Freezable freezable = this as Freezable;
-            if (freezable != null)
+            if (this is Freezable freezable)
             {
                 freezable.FireChanged();
             }
@@ -1179,17 +1180,19 @@ namespace System.Windows
 
             ArgumentNullException.ThrowIfNull(dp);
 
-            EffectiveValueEntry newEntry = new EffectiveValueEntry(dp, BaseValueSourceInternal.Unknown);
-            newEntry.IsCoercedWithCurrentValue = preserveCurrentValue;
+            EffectiveValueEntry newEntry = new EffectiveValueEntry(dp, BaseValueSourceInternal.Unknown)
+            {
+                IsCoercedWithCurrentValue = preserveCurrentValue
+            };
 
             UpdateEffectiveValue(
                     LookupEntry(dp.GlobalIndex),
                     dp,
                     dp.GetMetadata(DependencyObjectType),
-                    new EffectiveValueEntry() /* oldEntry */,
+                    oldEntry: new EffectiveValueEntry(),
                     ref newEntry,
-                    false /* coerceWithDeferredReference */,
-                    false /* coerceWithCurrentValue */,
+                    coerceWithDeferredReference: false,
+                    coerceWithCurrentValue: false,
                     OperationType.Unknown);
         }
 
@@ -1389,10 +1392,10 @@ namespace System.Windows
                     ref oldValue,
                     baseValue,
                     controlValue,
-                    null /*coerceValueCallback */,
+                    coerceValueCallback: null,
                     coerceWithDeferredReference,
                     coerceWithCurrentValue,
-                    false /*skipBaseValueChecks*/);
+                    skipBaseValueChecks: false);
 
                 // Make sure that the call out did not cause a change to entryIndex
                 entryIndex = CheckEntryIndex(entryIndex, targetIndex);
@@ -1414,11 +1417,11 @@ namespace System.Windows
                     ref oldEntry,
                     ref oldValue,
                     baseValue,
-                    null /* controlValue */,
+                    controlValue: null,
                     metadata.CoerceValueCallback,
                     coerceWithDeferredReference,
-                    false /* coerceWithCurrentValue */,
-                    false /*skipBaseValueChecks*/);
+                    coerceWithCurrentValue: false,
+                    skipBaseValueChecks: false);
 
                 // Make sure that the call out did not cause a change to entryIndex
                 entryIndex = CheckEntryIndex(entryIndex, targetIndex);
@@ -1448,11 +1451,11 @@ namespace System.Windows
                     ref oldEntry,
                     ref oldValue,
                     newEntry.GetFlattenedEntry(RequestFlags.FullyResolved).Value,
-                    null /*controlValue*/,
+                    controlValue: null,
                     dp.DesignerCoerceValueCallback,
-                    false /*coerceWithDeferredReference*/,
-                    false /*coerceWithCurrentValue*/,
-                    true /*skipBaseValueChecks*/);
+                    coerceWithDeferredReference: false,
+                    coerceWithCurrentValue: false,
+                    skipBaseValueChecks: true);
 
                 // Make sure that the call out did not cause a change to entryIndex
                 entryIndex = CheckEntryIndex(entryIndex, targetIndex);
@@ -1902,8 +1905,10 @@ namespace System.Windows
                 // (If local storage not Unset and not an Expression, return)
                 if (value != DependencyProperty.UnsetValue)
                 {
-                    newEntry = new EffectiveValueEntry(dp, BaseValueSourceInternal.Local);
-                    newEntry.Value = value;
+                    newEntry = new EffectiveValueEntry(dp, BaseValueSourceInternal.Local)
+                    {
+                        Value = value
+                    };
 
                     // Check if an Expression is set
                     if (oldLocalIsExpression)
@@ -2021,7 +2026,7 @@ namespace System.Windows
 
             if( e.Property == null )
             {
-                throw new ArgumentException(SR.Format(SR.ReferenceIsNull, "e.Property"), "e");
+                throw new ArgumentException(SR.Format(SR.ReferenceIsNull, "e.Property"), nameof(e));
             }
 
             if (e.IsAValueChange || e.IsASubPropertyChange || e.OperationType == OperationType.ChangeMutableDefaultValue)
@@ -2134,7 +2139,7 @@ namespace System.Windows
             EntryIndex entryIndex = LookupEntry(dp.GlobalIndex);
 
             // Call Forwarded
-            return ReadLocalValueEntry(entryIndex, dp, false /* allowDeferredReferences */);
+            return ReadLocalValueEntry(entryIndex, dp, allowDeferredReferences: false);
         }
 
         /// <summary>
@@ -2160,8 +2165,7 @@ namespace System.Windows
                 // localValue may still not be a DeferredReference, e.g.
                 // if it is an expression whose value is a DeferredReference.
                 // So a little more work is needed before converting the value.
-                DeferredReference dr = value as DeferredReference;
-                if (dr != null)
+                if (value is DeferredReference dr)
                 {
                     value = dr.GetValue(entry.BaseValueSourceInternal);
                 }
@@ -2197,7 +2201,7 @@ namespace System.Windows
                 DependencyProperty dp = DependencyProperty.RegisteredPropertyList.List[_effectiveValues[i].PropertyIndex];
                 if (dp != null)
                 {
-                    object localValue = ReadLocalValueEntry(new EntryIndex(i), dp, false /* allowDeferredReferences */);
+                    object localValue = ReadLocalValueEntry(new EntryIndex(i), dp, allowDeferredReferences: false);
                     if (localValue != DependencyProperty.UnsetValue)
                     {
                         snapshot[count++] = new LocalValueEntry(dp, localValue);
@@ -2623,11 +2627,10 @@ namespace System.Windows
                     DependencyProperty dp = DependencyProperty.RegisteredPropertyList.List[_effectiveValues[i].PropertyIndex];
                     if (dp != null)
                     {
-                        object localValue = ReadLocalValueEntry(new EntryIndex(i), dp, true /* allowDeferredReferences */);
+                        object localValue = ReadLocalValueEntry(new EntryIndex(i), dp, allowDeferredReferences: true);
                         if (localValue != DependencyProperty.UnsetValue)
                         {
-                            DependencyObject inheritanceChild = localValue as DependencyObject;
-                            if (inheritanceChild!= null && inheritanceChild.InheritanceContext == this)
+                            if (localValue is DependencyObject inheritanceChild && inheritanceChild.InheritanceContext == this)
                             {
                                 inheritanceChild.OnInheritanceContextChanged(args);
                             }
@@ -3049,7 +3052,7 @@ namespace System.Windows
 
             if (iHi <= 0)
             {
-                return new EntryIndex(0, false /* Found */);
+                return new EntryIndex(0, found: false);
             }
 
             // Do a binary search to find the value
@@ -3091,7 +3094,7 @@ namespace System.Windows
             }
             while (iLo < iHi);
 
-            return new EntryIndex(iLo, false /* Found */);
+            return new EntryIndex(iLo, found: false);
         }
 
         // insert the given entry at the given index
@@ -3282,8 +3285,10 @@ namespace System.Windows
             }
             else
             {
-                entry = new EffectiveValueEntry();
-                entry.PropertyIndex = targetIndex;
+                entry = new EffectiveValueEntry
+                {
+                    PropertyIndex = targetIndex
+                };
                 InsertEntry(entry, entryIndex.Index);
                 if (metadata != null && metadata.IsInherited)
                 {

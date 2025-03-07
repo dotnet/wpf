@@ -1,9 +1,6 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
-
-//
-//
 
 using System.Collections;
 using System.Collections.ObjectModel;
@@ -12,9 +9,6 @@ using MS.Win32.PresentationCore;
 using System.Globalization;
 using System.Runtime.InteropServices;
 using System.Text;
-using MS.Internal.PresentationCore;                        // SecurityHelper
-
-#pragma warning disable 1634, 1691  // suppressing PreSharp warnings
 
 namespace System.Windows.Media.Imaging
 {
@@ -135,7 +129,7 @@ namespace System.Windows.Media.Imaging
             {
                 _fixedSize = fixedSize;
                 _containerFormat = containerFormat;
-                _metadataBlocks = new ArrayList();
+                _metadataBlocks = new List<SafeMILHandle>();
             }
 
             internal BitmapMetadataBlockWriter(BitmapMetadataBlockWriter blockWriter, object syncObject)
@@ -144,9 +138,9 @@ namespace System.Windows.Media.Imaging
 
                 _fixedSize = blockWriter._fixedSize;
                 _containerFormat = blockWriter._containerFormat;
-                _metadataBlocks = new ArrayList();
+                _metadataBlocks = new List<SafeMILHandle>();
 
-                ArrayList metadataBlocks = blockWriter.MetadataBlocks;
+                List<SafeMILHandle> metadataBlocks = blockWriter.MetadataBlocks;
 
                 using (FactoryMaker factoryMaker = new FactoryMaker())
                 {
@@ -174,7 +168,7 @@ namespace System.Windows.Media.Imaging
                             {
                                 if (pIMetadataWriter != IntPtr.Zero)
                                 {
-                                    #pragma warning suppress 6031 // Return value ignored on purpose.
+                                    // Return value ignored on purpose.
                                     UnsafeNativeMethods.MILUnknown.Release(pIMetadataWriter);
                                 }
                             }
@@ -196,7 +190,7 @@ namespace System.Windows.Media.Imaging
                 out UInt32 count
             )
             {
-                count = (UInt32) _metadataBlocks.Count;
+                count = (UInt32)_metadataBlocks.Count;
 
                 return MS.Win32.NativeMethods.S_OK;
             }
@@ -216,7 +210,7 @@ namespace System.Windows.Media.Imaging
                     return (int) WinCodecErrors.WINCODEC_ERR_PROPERTYNOTFOUND;
                 }
 
-                SafeMILHandle metadataReader = (SafeMILHandle) _metadataBlocks[(int)index];
+                SafeMILHandle metadataReader = _metadataBlocks[(int)index];
 
                 Guid wicMetadataReader = MILGuidData.IID_IWICMetadataReader;
                 return UnsafeNativeMethods.MILUnknown.QueryInterface(
@@ -260,7 +254,7 @@ namespace System.Windows.Media.Imaging
 
                 Guid guidVendor = new Guid(MILGuidData.GUID_VendorMicrosoft);
 
-                ArrayList metadataBlocks = new ArrayList();
+                List<SafeMILHandle> metadataBlocks = new();
 
                 hr = UnsafeNativeMethods.WICMetadataBlockReader.GetCount(
                     pIBlockReader,
@@ -309,13 +303,10 @@ namespace System.Windows.Media.Imaging
                             }
                             finally
                             {
-                                if (pIMetadataReader != null)
-                                {
-                                    pIMetadataReader.Dispose();
-                                }
+                                pIMetadataReader?.Dispose();
                                 if (pIMetadataWriter != IntPtr.Zero)
                                 {
-                                    #pragma warning suppress 6031 // Return value ignored on purpose.
+                                    // Return value ignored on purpose.
                                     UnsafeNativeMethods.MILUnknown.Release(pIMetadataWriter);
                                 }
                             }
@@ -343,7 +334,7 @@ namespace System.Windows.Media.Imaging
                     return (int) WinCodecErrors.WINCODEC_ERR_PROPERTYNOTFOUND;
                 }
 
-                SafeMILHandle metadataWriter = (SafeMILHandle) _metadataBlocks[(int)index];
+                SafeMILHandle metadataWriter = _metadataBlocks[(int)index];
 
                 Guid wicMetadataWriter = MILGuidData.IID_IWICMetadataWriter;
                 return UnsafeNativeMethods.MILUnknown.QueryInterface(
@@ -426,12 +417,12 @@ namespace System.Windows.Media.Imaging
                     return (int) WinCodecErrors.WINCODEC_ERR_UNSUPPORTEDOPERATION;
                 }
 
-                _metadataBlocks.Remove(index);
+                _metadataBlocks.RemoveAt((int)index);
 
                 return MS.Win32.NativeMethods.S_OK;
             }
 
-            internal ArrayList MetadataBlocks
+            internal List<SafeMILHandle> MetadataBlocks
             {
                 get
                 {
@@ -439,9 +430,9 @@ namespace System.Windows.Media.Imaging
                 }
             }
 
-            private bool _fixedSize;
-            private Guid _containerFormat;
-            private ArrayList _metadataBlocks;
+            private readonly bool _fixedSize;
+            private readonly Guid _containerFormat;
+            private List<SafeMILHandle> _metadataBlocks;
         }
 
         //*************************************************************
@@ -523,7 +514,7 @@ namespace System.Windows.Media.Imaging
                 }
                 else
                 {
-                    SafeMILHandle metadataHandle = (SafeMILHandle) _metadataBlocks[(int)_index];
+                    SafeMILHandle metadataHandle = _metadataBlocks[(int)_index];
 
                     Guid wicMetadataReader = MILGuidData.IID_IWICMetadataReader;
                     int hr = UnsafeNativeMethods.MILUnknown.QueryInterface(
@@ -549,7 +540,7 @@ namespace System.Windows.Media.Imaging
 
                 if (newIndex > _metadataBlocks.Count)
                 {
-                    _index = (uint) _metadataBlocks.Count;
+                    _index = (uint)_metadataBlocks.Count;
                     return MS.Win32.NativeMethods.S_FALSE;
                 }
                 else
@@ -577,7 +568,7 @@ namespace System.Windows.Media.Imaging
                 return (int) WinCodecErrors.WINCODEC_ERR_UNSUPPORTEDOPERATION;
             }
 
-            private ArrayList _metadataBlocks;
+            private readonly List<SafeMILHandle> _metadataBlocks;
             private UInt32 _index;
         }
 
@@ -712,12 +703,12 @@ namespace System.Windows.Media.Imaging
                 {
                     if (blockWriter != IntPtr.Zero)
                     {
-                        #pragma warning suppress 6031 // Return value ignored on purpose.
+                        // Return value ignored on purpose.
                         UnsafeNativeMethods.MILUnknown.Release(blockWriter);
                     }
                     if (queryWriter != IntPtr.Zero)
                     {
-                        #pragma warning suppress 6031 // Return value ignored on purpose.
+                        // Return value ignored on purpose.
                         UnsafeNativeMethods.MILUnknown.Release(queryWriter);
                     }
                 }
@@ -761,12 +752,12 @@ namespace System.Windows.Media.Imaging
                 {
                     if (blockWriter != IntPtr.Zero)
                     {
-                        #pragma warning suppress 6031 // Return value ignored on purpose.
+                        // Return value ignored on purpose.
                         UnsafeNativeMethods.MILUnknown.Release(blockWriter);
                     }
                     if (queryWriter != IntPtr.Zero)
                     {
-                        #pragma warning suppress 6031 // Return value ignored on purpose.
+                        // Return value ignored on purpose.
                         UnsafeNativeMethods.MILUnknown.Release(queryWriter);
                     }
                 }
@@ -818,7 +809,7 @@ namespace System.Windows.Media.Imaging
             {
                 if (queryWriter != IntPtr.Zero)
                 {
-                    #pragma warning suppress 6031 // Return value ignored on purpose.
+                    // Return value ignored on purpose.
                     UnsafeNativeMethods.MILUnknown.Release(queryWriter);
                 }
             }
@@ -1045,10 +1036,8 @@ namespace System.Windows.Media.Imaging
                     BitmapMetadata metadata = value as BitmapMetadata;
                     Invariant.Assert(metadata != null);
 
-                    #pragma warning suppress 6506 // Invariant.Assert(metadata != null);
                     metadata.VerifyAccess();
 
-                    #pragma warning suppress 6506 // Invariant.Assert(metadata != null);
                     lock (metadata._syncObject)
                     {
                         lock (_syncObject)
@@ -1117,10 +1106,7 @@ namespace System.Windows.Media.Imaging
                     {
                         BitmapMetadata metadata = objValue as BitmapMetadata;
 
-                        if (metadata != null)
-                        {
-                            metadata.Freeze();
-                        }
+                        metadata?.Freeze();
                     }
 
                     return objValue;
@@ -1334,9 +1320,10 @@ namespace System.Windows.Media.Imaging
             set
             {
                 DateTime dt = System.Convert.ToDateTime(value, CultureInfo.InvariantCulture);
-                PROPVARIANT propVar= new PROPVARIANT();
-
-                propVar.varType = (ushort)VarEnum.VT_FILETIME;
+                PROPVARIANT propVar = new PROPVARIANT
+                {
+                    varType = (ushort)VarEnum.VT_FILETIME
+                };
                 long longFileTime = dt.ToFileTime();
                 propVar.filetime.dwLowDateTime = (Int32)longFileTime;
                 propVar.filetime.dwHighDateTime = (Int32)((longFileTime >> 32) & 0xFFFFFFFF);

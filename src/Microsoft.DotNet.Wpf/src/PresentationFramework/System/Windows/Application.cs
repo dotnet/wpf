@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -15,17 +15,13 @@
 //              to define global properties and maintain state across multiple pages of markup.
 //
 
-
-//In order to avoid generating warnings about unknown message numbers and unknown pragmas
-//when compiling your C# source code with the actual C# compiler, you need to disable
-//warnings 1634 and 1691. (From PreSharp Documentation)
-#pragma warning disable 1634, 1691
-
 using System.Collections;
 using System.Collections.Specialized;
 using System.ComponentModel;
 using System.IO;
 using System.Reflection;
+using System.Runtime.InteropServices;
+using System.Resources;
 using System.Threading;
 
 using System.IO.Packaging;
@@ -210,28 +206,6 @@ namespace System.Windows
             return RunInternal(window);
         }
 
-
-        /// <summary>
-        ///
-        /// </summary>
-        /// <param name="serviceType"></param>
-        /// <returns></returns>
-        internal object GetService(Type serviceType)
-        {
-            // this is called only from OleCmdHelper and it gets
-            // service for IBrowserCallbackServices which is internal.
-            // This call is made on the App thread.
-            //
-            VerifyAccess();
-            object service = null;
-
-            if (ServiceProvider != null)
-            {
-                service = ServiceProvider.GetService(serviceType);
-            }
-            return service;
-        }
-
         /// <summary>
         ///     Shutdown is called to programmatically shutdown an application.
         ///
@@ -390,9 +364,10 @@ namespace System.Windows
             //
             // Generate the ParserContext from packUri
             //
-            ParserContext pc = new ParserContext();
-
-            pc.BaseUri = currentUri;
+            ParserContext pc = new ParserContext
+            {
+                BaseUri = currentUri
+            };
 
             bool bCloseStream = true;  // Whether or not to close the stream after LoadBaml is done.
 
@@ -497,9 +472,11 @@ namespace System.Windows
             ContentType contentType = new ContentType(part.ContentType);
             Stream stream = part.GetSeekableStream();
 
-            ParserContext pc = new ParserContext();
-            pc.BaseUri = packUri;
-            pc.SkipJournaledProperties = bSkipJournaledProperties;
+            ParserContext pc = new ParserContext
+            {
+                BaseUri = packUri,
+                SkipJournaledProperties = bSkipJournaledProperties
+            };
 
             //
             // The stream must be a BAML or XAML stream.
@@ -913,13 +890,10 @@ namespace System.Windows
                     _resources = value;
                 }
 
-                if (oldValue != null)
-                {
-                    // This app is no longer an owner for the old RD
-                    oldValue.RemoveOwner(this);
-                }
+                // This app is no longer an owner for the old RD
+                oldValue?.RemoveOwner(this);
 
-                if(_reloadFluentDictionary && !_resourcesInitialized)
+                if (_reloadFluentDictionary && !_resourcesInitialized)
                 {
                     if(value != null && ThemeMode != ThemeMode.None)
                     {
@@ -1597,8 +1571,10 @@ namespace System.Windows
                     // this support when we can do breaking change. We need to understand what scenarios require
                     // the Application StartupUri to load content other than xaml/baml in the app resource or content file.
                     // If there are no interesting ones, we should remove this support.
-                    NavService = new NavigationService(null);
-                    NavService.AllowWindowNavigation = true;
+                    NavService = new NavigationService(null)
+                    {
+                        AllowWindowNavigation = true
+                    };
                     NavService.PreBPReady += new BPReadyEventHandler(OnPreBPReady);
                     NavService.Navigate(StartupUri);
                 }
@@ -1656,28 +1632,23 @@ namespace System.Windows
                 // this will always be null in the browser hosted case since we we don't
                 // support Activate, Deactivate, and SessionEnding events in the
                 // browser scenario and thus we never create this hwndsource.
-                if (_parkingHwnd != null)
-                {
-                    _parkingHwnd.Dispose();
-                }
+                _parkingHwnd?.Dispose();
 
-                if (_events != null)
-                {
-                    _events.Dispose();
-                }
+                _events?.Dispose();
 
                 PreloadedPackages.Clear();
-                AppSecurityManager.ClearSecurityManager();
 
                 _appIsShutdown = true; // mark app as shutdown
             }
         }
 
-        //
-        // This function is called from the public Run methods to start the application.
-        // ApplicationProxyInternal.Run method calls this method directly to bypass the check
-        // for browser hosted application in the public Run() method
-        //
+        /// <summary>
+        /// This function is called from the public Run methods to start the application.
+        /// </summary>
+        /// <param name="window"></param>
+        /// <returns></returns>
+        /// <exception cref="InvalidOperationException"></exception>
+        /// <exception cref="ArgumentException"></exception>
         internal int RunInternal(Window window)
         {
             VerifyAccess();
@@ -1775,10 +1746,11 @@ namespace System.Windows
             InvalidateResourceReferenceOnWindowCollection(NonAppWindowsInternal.Clone(), info);
         }
 
-        // Creates and returns a NavigationWindow for standalone cases
-        // For browser hosted cases, returns the existing RootBrowserWindow which
-        //   is created before the application.Run is called.
-        internal NavigationWindow GetAppWindow()
+        /// <summary>
+        /// Creates and returns a NavigationWindow for standalone cases
+        /// </summary>
+        /// <returns></returns>
+        internal static NavigationWindow GetAppWindow()
         {
             NavigationWindow appWin = new NavigationWindow();
 
@@ -1893,47 +1865,6 @@ namespace System.Windows
             }
         }
 
-        //This property indicates what type of an application was created. We use this
-        //to determine whether to update the address bar or not for toplevel navigations
-        //Since we don't currently have support to represent a proper relative uri
-        //for .xps or .deploy or browser hosted exes, we limit address bar
-        //updates to xaml navigations.
-        //In the future, IBrowserCallbackServices and this should be moved to use RootBrowserWindow
-        //instead of being in the application. For example,if a standalone window is created
-        //in the same application, we still try to use IBrowserCallbackServices in the
-        //standalone window. Need to ensure only RootBrowserWindow knows about browser hosting,
-        //rest of the appmodel code should be agnostic to hosting process.
-        //This will be cleaned up with the RootBrowserWindow cleanup.
-        internal MimeType MimeType
-        {
-            get { return _appMimeType; }
-            set { _appMimeType = value; }
-        }
-
-        // this is called from ApplicationProxyInternal, ProgressBarAppHelper, and ContainerActivationHelper.
-        // All of these are on the app thread
-        internal IServiceProvider ServiceProvider
-        {
-            private get
-            {
-                VerifyAccess();
-                if (_serviceProvider != null)
-                {
-                    return _serviceProvider;
-                }
-                else
-                {
-                    return null;
-                }
-            }
-            set
-            {
-                VerifyAccess();
-                _serviceProvider = value ;
-            }
-        }
-
-
         // is called by NavigationService to detect TopLevel container
         // We check there to call this only if NavigationService is on
         // the same thread as the Application
@@ -1955,10 +1886,7 @@ namespace System.Windows
         {
             get
             {
-                //If we are shutting down normally, Application.IsShuttingDown will be true. Be sure to check this first.
-                // If we are browser hosted, BrowserCallbackServices.IsShuttingDown checks to see if the browser is shutting us down,
-                // even if we may not be shutting down the Application yet. Check this to avoid reentrance issues between the time that
-                // browser is shutting us down and that Application.Shutdown (CriticalShutdown) is invoked.
+                // If we are shutting down normally, Application.IsShuttingDown will be true. Be sure to check this first.
                 if (_isShuttingDown)
                 {
                     return _isShuttingDown;
@@ -2287,8 +2215,6 @@ namespace System.Windows
                 {
                     Dispatcher.CriticalInvokeShutdown();
                 }
-
-                ServiceProvider = null;
             }
         }
 
@@ -2312,11 +2238,9 @@ namespace System.Windows
 
         private void ConfigAppWindowAndRootElement(object root, Uri uri)
         {
-            Window w = root as Window;
-            if (w == null)
+            if (root is not Window wnd)
             {
-                //Creates and returns a NavigationWindow for standalone cases
-                //For browser hosted cases, returns the RootBrowserWindow precreated by docobjhost
+                //Creates and returns a NavigationWindow
                 NavigationWindow appWin = GetAppWindow();
 
                 //Since we cancel PreBPReady event here, the other navigation events won't fire twice.
@@ -2338,9 +2262,9 @@ namespace System.Windows
                 // if Visibility has not been set, we set it to true
                 // Also check whether the window is already closed when we get here - applications could close the window
                 // in its constructor.
-                if (!w.IsVisibilitySet && !w.IsDisposed)
+                if (!wnd.IsVisibilitySet && !wnd.IsDisposed)
                 {
-                    w.Visibility = Visibility.Visible;
+                    wnd.Visibility = Visibility.Visible;
                 }
             }
         }
@@ -2512,9 +2436,6 @@ namespace System.Windows
         private ThemeMode                   _themeMode = ThemeMode.None;
         private bool                        _resourcesInitialized = false;
         private bool                        _reloadFluentDictionary = false;
-
-        private MimeType                    _appMimeType;
-        private IServiceProvider            _serviceProvider;
 
         private bool                        _appIsShutdown;
         private int                         _exitCode;

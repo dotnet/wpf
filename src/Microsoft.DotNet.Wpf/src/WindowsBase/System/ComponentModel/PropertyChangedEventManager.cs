@@ -381,7 +381,7 @@ namespace System.ComponentModel
                 if (dict == null)
                 {
                     // no entry in the hashtable - add a new one
-                    dict = new HybridDictionary(true /* case insensitive */);
+                    dict = new HybridDictionary(caseInsensitive: true);
 
                     this[source] = dict;
 

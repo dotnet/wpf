@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -14,8 +14,6 @@ using System.Globalization;
 using System.Reflection;
 using System.Windows.Markup;
 using MS.Internal.Data;
-
-#pragma warning disable 1634, 1691  // suppressing PreSharp warnings
 
 namespace System.Windows
 {
@@ -102,7 +100,6 @@ namespace System.Windows
                 return new PropertyPath((string)source, typeDescriptorContext);
             }
 
-            #pragma warning suppress 6506 // source is obviously not null
             throw new ArgumentException(SR.Format(SR.CannotConvertType, source.GetType().FullName, typeof(PropertyPath)));
         }
 
@@ -140,7 +137,7 @@ namespace System.Windows
             PropertyPath path = value as PropertyPath;
             if (path == null)
             {
-                throw new ArgumentException(SR.Format(SR.UnexpectedParameterType, value.GetType(), typeof(PropertyPath)), "value");
+                throw new ArgumentException(SR.Format(SR.UnexpectedParameterType, value.GetType(), typeof(PropertyPath)), nameof(value));
             }
 
             if (path.PathParameters.Count == 0)

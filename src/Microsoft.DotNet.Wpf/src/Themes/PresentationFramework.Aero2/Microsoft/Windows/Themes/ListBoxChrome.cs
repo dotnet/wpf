@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -149,8 +149,10 @@ namespace Microsoft.Windows.Themes
                 {
                     Duration duration = new Duration(TimeSpan.FromSeconds(0.2));
 
-                    DoubleAnimation da = new DoubleAnimation();
-                    da.Duration = duration;
+                    DoubleAnimation da = new DoubleAnimation
+                    {
+                        Duration = duration
+                    };
 
                     chrome.BorderOverlayPen.Brush.BeginAnimation(Brush.OpacityProperty, da);
                 }
@@ -286,10 +288,7 @@ namespace Microsoft.Windows.Themes
                 childArrangeRect.Height = finalSize.Height - borderY;
             }
 
-            if (Child != null)
-            {
-                Child.Arrange(childArrangeRect);
-            }
+            Child?.Arrange(childArrangeRect);
 
             return finalSize;
         }
@@ -471,9 +470,10 @@ namespace Microsoft.Windows.Themes
 
         private static Geometry GetBorderGeometry(Thickness thickness, Rect bounds)
         {
-            PathFigure borderFigure = new PathFigure();
-
-            borderFigure.StartPoint = new Point(bounds.Left, bounds.Top);
+            PathFigure borderFigure = new PathFigure
+            {
+                StartPoint = new Point(bounds.Left, bounds.Top)
+            };
             borderFigure.Segments.Add(new LineSegment(new Point(bounds.Left, bounds.Bottom), false));
             borderFigure.Segments.Add(new LineSegment(new Point(bounds.Right, bounds.Bottom), false));
             borderFigure.Segments.Add(new LineSegment(new Point(bounds.Right, bounds.Top), false));
@@ -482,9 +482,10 @@ namespace Microsoft.Windows.Themes
             PathGeometry borderGeometry = new PathGeometry();
             borderGeometry.Figures.Add(borderFigure);
 
-            borderFigure = new PathFigure();
-
-            borderFigure.StartPoint = new Point(bounds.Left + thickness.Left, bounds.Top + thickness.Top);
+            borderFigure = new PathFigure
+            {
+                StartPoint = new Point(bounds.Left + thickness.Left, bounds.Top + thickness.Top)
+            };
             borderFigure.Segments.Add(new LineSegment(new Point(bounds.Left + thickness.Left, bounds.Bottom - thickness.Bottom), false));
             borderFigure.Segments.Add(new LineSegment(new Point(bounds.Right - thickness.Right, bounds.Bottom - thickness.Bottom), false));
             borderFigure.Segments.Add(new LineSegment(new Point(bounds.Right - thickness.Right, bounds.Top + thickness.Top), false));
@@ -528,14 +529,17 @@ namespace Microsoft.Windows.Themes
                     {
                         if (_commonHoverBorderOverlay == null)
                         {
-                            Pen temp = new Pen();
+                            Pen temp = new Pen
+                            {
+                                Thickness = 1
+                            };
 
-                            temp.Thickness = 1;
-
-                            LinearGradientBrush brush = new LinearGradientBrush();
-                            brush.StartPoint = new Point(0, 0);
-                            brush.EndPoint = new Point(0, 20);
-                            brush.MappingMode = BrushMappingMode.Absolute;
+                            LinearGradientBrush brush = new LinearGradientBrush
+                            {
+                                StartPoint = new Point(0, 0),
+                                EndPoint = new Point(0, 20),
+                                MappingMode = BrushMappingMode.Absolute
+                            };
 
                             brush.GradientStops.Add(new GradientStop(Color.FromArgb(0xFF, 0x57, 0x94, 0xBF), 0.05));
                             brush.GradientStops.Add(new GradientStop(Color.FromArgb(0xFF, 0xB7, 0xD5, 0xEA), 0.07));
@@ -562,15 +566,17 @@ namespace Microsoft.Windows.Themes
                     {
                         if (_commonFocusedBorderOverlay == null)
                         {
-                            Pen temp = new Pen();
-                            
+                            Pen temp = new Pen
+                            {
+                                Thickness = 1
+                            };
 
-                            temp.Thickness = 1;
-
-                            LinearGradientBrush brush = new LinearGradientBrush();
-                            brush.StartPoint = new Point(0, 0);
-                            brush.EndPoint = new Point(0, 20);
-                            brush.MappingMode = BrushMappingMode.Absolute;
+                            LinearGradientBrush brush = new LinearGradientBrush
+                            {
+                                StartPoint = new Point(0, 0),
+                                EndPoint = new Point(0, 20),
+                                MappingMode = BrushMappingMode.Absolute
+                            };
 
                             brush.GradientStops.Add(new GradientStop(Color.FromArgb(0xFF, 0x3D, 0x7B, 0xAD), 0.05));
                             brush.GradientStops.Add(new GradientStop(Color.FromArgb(0xFF, 0xA4, 0xC9, 0xE3), 0.07));
@@ -597,9 +603,11 @@ namespace Microsoft.Windows.Themes
                     {
                         if (_commonDisabledBorderOverlay == null)
                         {
-                            Pen temp = new Pen();
-                            temp.Thickness = 1;
-                            temp.Brush = new SolidColorBrush(Color.FromRgb(0xAD, 0xB2, 0xB5));
+                            Pen temp = new Pen
+                            {
+                                Thickness = 1,
+                                Brush = new SolidColorBrush(Color.FromRgb(0xAD, 0xB2, 0xB5))
+                            };
                             temp.Freeze();
                             _commonDisabledBorderOverlay = temp;
                         }

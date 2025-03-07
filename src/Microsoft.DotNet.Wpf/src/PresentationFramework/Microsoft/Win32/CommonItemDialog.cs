@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -121,7 +121,7 @@ namespace Microsoft.Win32
             get
             {
                 // Avoid returning a null string - return String.Empty instead.
-                return _defaultDirectory == null ? String.Empty : _defaultDirectory;
+                return _defaultDirectory ?? string.Empty;
             }
             set
             {
@@ -160,7 +160,7 @@ namespace Microsoft.Win32
             get
             {
                 // Avoid returning a null string - return String.Empty instead.
-                return _initialDirectory == null ? String.Empty : _initialDirectory;
+                return _initialDirectory ?? string.Empty;
             }
             set
             {
@@ -179,7 +179,7 @@ namespace Microsoft.Win32
             get
             {
                 // Avoid returning a null string - return String.Empty instead.
-                return _rootDirectory == null ? String.Empty : _rootDirectory;
+                return _rootDirectory ?? string.Empty;
             }
             set
             {
@@ -218,7 +218,7 @@ namespace Microsoft.Win32
             get
             {
                 // Avoid returning a null string - return String.Empty instead.
-                return _title == null ? String.Empty : _title;
+                return _title ?? string.Empty;
             }
             set
             {
@@ -502,14 +502,6 @@ namespace Microsoft.Win32
 
         //---------------------------------------------------
         //
-        // Internal Events
-        //
-        //---------------------------------------------------
-        //#region Internal Events
-        //#endregion Internal Events
-
-        //---------------------------------------------------
-        //
         // Private Methods
         //
         //---------------------------------------------------
@@ -697,10 +689,10 @@ namespace Microsoft.Win32
         {
             public delegate bool OnOkCallback(IFileDialog dialog);
 
-            private IFileDialog _dialog;
+            private readonly IFileDialog _dialog;
 
-            private OnOkCallback _okCallback;
-            uint _eventCookie;
+            private readonly OnOkCallback _okCallback;
+            private readonly uint _eventCookie;
 
             public VistaDialogEvents(IFileDialog dialog, OnOkCallback okCallback)
             {

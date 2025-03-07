@@ -325,13 +325,11 @@ namespace MS.Internal
             }            
 
             /// <summary>
-            /// We lower case the results of ToString() because it returns the original
-            /// casing passed into the constructor.  ContentTypes that are equal (which
-            /// ignores casing) must have the same hash code.
+            /// ContentTypes that are equal (which ignores casing) must have the same hash code.
             /// </summary>
             public int GetHashCode(ContentType obj)
             {
-                return obj.ToString().ToUpperInvariant().GetHashCode();
+                return StringComparer.OrdinalIgnoreCase.GetHashCode(obj.ToString());
             }
         }
 
@@ -354,13 +352,11 @@ namespace MS.Internal
             }
 
             /// <summary>
-            /// We lower case the results of ToString() because it returns the original
-            /// casing passed into the constructor.  ContentTypes that are equal (which
-            /// ignores casing) must have the same hash code.
+            /// ContentTypes that are equal (which ignores casing) must have the same hash code.
             /// </summary>
             public int GetHashCode(ContentType obj)
             {
-                return obj._type.ToUpperInvariant().GetHashCode() ^ obj._subType.ToUpperInvariant().GetHashCode();
+                return StringComparer.OrdinalIgnoreCase.GetHashCode(obj._type) ^ StringComparer.OrdinalIgnoreCase.GetHashCode(obj._subType);
             }
         }
         #endregion Nested Classes
@@ -658,13 +654,15 @@ namespace MS.Internal
         private const char       _equalSeparator     = '=';
 
         //This array is sorted by the ascii value of these characters.
-        private static ReadOnlySpan<char> AllowedCharacters => [
-           '!' /*33*/, '#' /*35*/ , '$'  /*36*/,
-           '%' /*37*/, '&' /*38*/ , '\'' /*39*/,
-           '*' /*42*/, '+' /*43*/ , '-'  /*45*/,
-           '.' /*46*/, '^' /*94*/ , '_'  /*95*/,
-           '`' /*96*/, '|' /*124*/, '~'  /*126*/, 
-         ];
+        private static readonly char[] s_allowedCharacters = [
+        '!' /*33*/, '#' /*35*/ , '$'  /*36*/,
+        '%' /*37*/, '&' /*38*/ , '\'' /*39*/,
+        '*' /*42*/, '+' /*43*/ , '-'  /*45*/,
+        '.' /*46*/, '^' /*94*/ , '_'  /*95*/,
+        '`' /*96*/, '|' /*124*/, '~'  /*126*/,
+        ];
+
+        private static ReadOnlySpan<char> AllowedCharacters => s_allowedCharacters;
         
         //Linear White Space characters
         private static readonly char[] _linearWhiteSpaceChars = [

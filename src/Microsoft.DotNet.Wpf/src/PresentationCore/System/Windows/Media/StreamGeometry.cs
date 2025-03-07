@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -343,10 +343,12 @@ namespace System.Windows.Media
                 return Geometry.GetEmptyPathGeometryData();
             }
 
-            PathGeometryData data = new PathGeometryData();
-            data.FillRule = FillRule;
-            data.Matrix = CompositionResourceManager.TransformToMilMatrix3x2D(Transform);
-            data.SerializedData = _data;
+            PathGeometryData data = new PathGeometryData
+            {
+                FillRule = FillRule,
+                Matrix = CompositionResourceManager.TransformToMilMatrix3x2D(Transform),
+                SerializedData = _data
+            };
 
             return data;
         }
@@ -396,9 +398,7 @@ namespace System.Windows.Media
                     data.hTransform = hTransform;
                     data.FillRule = FillRule;
 
-                    byte[] pathDataToMarshal = _data == null ?
-                        Geometry.GetEmptyPathGeometryData().SerializedData :
-                        _data;
+                    byte[] pathDataToMarshal = _data ?? GetEmptyPathGeometryData().SerializedData;
 
                     unsafe
                     {
@@ -431,7 +431,7 @@ namespace System.Windows.Media
 
                 if (vTransform != null) ((DUCE.IResource)vTransform).AddRefOnChannel(channel);
 
-                UpdateResource(channel, true /* skip "on channel" check - we already know that we're on channel */ );
+                UpdateResource(channel, skipOnChannelCheck: true /* We already know that we're on channel */ );
             }
 
             return _duceResource.GetHandle(channel);

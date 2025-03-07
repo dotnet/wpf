@@ -51,9 +51,10 @@ namespace System.Windows.Media.Animation
             {
                 if (s_emptyCollection == null)
                 {
-                    Vector3DKeyFrameCollection emptyCollection = new Vector3DKeyFrameCollection();
-
-                    emptyCollection._keyFrames = new List< Vector3DKeyFrame>(0);
+                    Vector3DKeyFrameCollection emptyCollection = new Vector3DKeyFrameCollection
+                    {
+                        _keyFrames = new List<Vector3DKeyFrame>(0)
+                    };
                     emptyCollection.Freeze();
 
                     s_emptyCollection = emptyCollection;

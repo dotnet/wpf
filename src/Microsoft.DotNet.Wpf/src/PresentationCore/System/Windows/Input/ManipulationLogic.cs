@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -244,8 +244,10 @@ namespace System.Windows.Input
                 e.ApplyParameters(_inertiaProcessor);
 
                 // Setup a timer to tick the inertia to completion
-                _inertiaTimer = new DispatcherTimer();
-                _inertiaTimer.Interval = TimeSpan.FromMilliseconds(15);
+                _inertiaTimer = new DispatcherTimer
+                {
+                    Interval = TimeSpan.FromMilliseconds(15)
+                };
                 _inertiaTimer.Tick += new EventHandler(OnInertiaTick);
                 _inertiaTimer.Start();
             }
@@ -413,8 +415,10 @@ namespace System.Windows.Input
 
         private ManipulationStartingEventArgs RaiseStarting()
         {
-            ManipulationStartingEventArgs starting = new ManipulationStartingEventArgs(_manipulationDevice, Environment.TickCount);
-            starting.ManipulationContainer = _manipulationDevice.Target;
+            ManipulationStartingEventArgs starting = new ManipulationStartingEventArgs(_manipulationDevice, Environment.TickCount)
+            {
+                ManipulationContainer = _manipulationDevice.Target
+            };
 
             _manipulationDevice.ProcessManipulationInput(starting);
 
@@ -505,10 +509,7 @@ namespace System.Windows.Input
 
         internal void SetManipulationParameters(ManipulationParameters2D parameter)
         {
-            if (_manipulationProcessor != null)
-            {
-                _manipulationProcessor.SetParameters(parameter);
-            }
+            _manipulationProcessor?.SetParameters(parameter);
         }
 
         private void UpdateManipulators(ICollection<IManipulator> updatedManipulators)

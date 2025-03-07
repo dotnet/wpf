@@ -56,11 +56,10 @@ namespace MS.Internal.ComponentModel
         {
             if (_instance != null) 
             {
-                RuntimeNamePropertyAttribute nameAttr = GetAttributes()[typeof(RuntimeNamePropertyAttribute)] as RuntimeNamePropertyAttribute;
-                if (nameAttr != null && nameAttr.Name != null) 
+                if (GetAttributes()[typeof(RuntimeNamePropertyAttribute)] is RuntimeNamePropertyAttribute nameAttr && nameAttr.Name != null)
                 {
                     PropertyDescriptor nameProp = GetProperties()[nameAttr.Name];
-                    if (nameProp != null) 
+                    if (nameProp != null)
                     {
                         return nameProp.GetValue(_instance) as string;
                     }
@@ -97,8 +96,7 @@ namespace MS.Internal.ComponentModel
             {
                 foreach (Attribute attr in attributes) 
                 {
-                    PropertyFilterAttribute filterAttr = attr as PropertyFilterAttribute;
-                    if (filterAttr != null) 
+                    if (attr is PropertyFilterAttribute filterAttr)
                     {
                         filter = filterAttr.Filter;
                         break;
@@ -188,9 +186,9 @@ namespace MS.Internal.ComponentModel
                         }
                     }
                 }
-                else if (newDescriptors != null) 
+                else 
                 {
-                    newDescriptors.Add(prop);
+                    newDescriptors?.Add(prop);
                 }
             }
 

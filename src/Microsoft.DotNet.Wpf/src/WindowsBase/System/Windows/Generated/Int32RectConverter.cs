@@ -9,10 +9,11 @@
 // Please see MilCodeGen.html for more information.
 //
 
+using MS.Internal;
 using System.ComponentModel;
 using System.Globalization;
-
-#pragma warning disable 1634, 1691  // suppressing PreSharp warnings
+using System.Windows.Markup;
+using System.Windows.Converters;
 
 namespace System.Windows
 {
@@ -77,9 +78,8 @@ namespace System.Windows
                 throw GetConvertFromException(value);
             }
 
-            String source = value as string;
 
-            if (source != null)
+            if (value is string source)
             {
                 return Int32Rect.Parse(source);
             }
@@ -110,8 +110,6 @@ namespace System.Windows
                 if (destinationType == typeof(string))
                 {
                     // Delegate to the formatting/culture-aware ConvertToString method.
-
-                    #pragma warning suppress 6506 // instance is obviously not null
                     return instance.ConvertToString(null, culture);
                 }
             }

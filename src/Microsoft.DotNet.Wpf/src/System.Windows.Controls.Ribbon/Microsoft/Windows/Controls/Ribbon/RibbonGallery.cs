@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -351,8 +351,10 @@ namespace Microsoft.Windows.Controls.Ribbon
                     RibbonMenuItem filterItem = _filterMenuButton.ItemContainerGenerator.ContainerFromItem(filter) as RibbonMenuItem;
 
                     // Bind filterItem.IsChecked to true when Object.ReferenceEquals(this.CurrentFilter, filterItem.DataContext).
-                    MultiBinding isCheckedBinding = new MultiBinding();
-                    isCheckedBinding.Converter = new ReferentialEqualityConverter();
+                    MultiBinding isCheckedBinding = new MultiBinding
+                    {
+                        Converter = new ReferentialEqualityConverter()
+                    };
                     Binding currentFilterBinding = new Binding("CurrentFilter") { Source = this };
                     Binding myHeaderBinding = new Binding("DataContext") { Source = filterItem };
                     isCheckedBinding.Bindings.Add(currentFilterBinding);
@@ -1463,8 +1465,10 @@ namespace Microsoft.Windows.Controls.Ribbon
         private object GetSelectableValueFromItem(object item, ContentControl dummyElement)
         {
             bool useXml = item is XmlNode;
-            Binding itemBinding = new Binding();
-            itemBinding.Source = item;
+            Binding itemBinding = new Binding
+            {
+                Source = item
+            };
             if (useXml)
             {
                 itemBinding.XPath = SelectedValuePath;
@@ -2531,10 +2535,7 @@ namespace Microsoft.Windows.Controls.Ribbon
             {
                 RibbonGalleryCategory category = (RibbonGalleryCategory)gallery.ItemContainerGenerator.ContainerFromIndex(index);
 
-                if (category != null)
-                {
-                    category.NotifyPropertyChanged(e);
-                }
+                category?.NotifyPropertyChanged(e);
             }
         }
 

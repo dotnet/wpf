@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -11,9 +11,6 @@ using System.Windows.Media;
 using MS.Win32;
 using MS.Internal;
 using MS.Internal.Interop;
-
-// Disable pragma warnings to enable PREsharp pragmas
-#pragma warning disable 1634, 1691
 
 namespace System.Windows
 {
@@ -69,16 +66,16 @@ namespace System.Windows
     /// </summary>
     public static class SystemParameters
     {
-        public static event System.ComponentModel.PropertyChangedEventHandler StaticPropertyChanged;
+        public static event PropertyChangedEventHandler StaticPropertyChanged;
 
-        private static void OnPropertiesChanged(params string[] propertyNames)
+        private static void OnPropertiesChanged(params ReadOnlySpan<string> propertyNames)
         {
-            System.ComponentModel.PropertyChangedEventHandler handler = StaticPropertyChanged;
-            if (handler != null)
+            PropertyChangedEventHandler handler = StaticPropertyChanged;
+            if (handler is not null)
             {
-                for (int i=0; i<propertyNames.Length; ++i)
+                foreach (string propertyName in propertyNames)
                 {
-                    handler(null, new System.ComponentModel.PropertyChangedEventArgs(propertyNames[i]));
+                    handler.Invoke(null, new PropertyChangedEventArgs(propertyName));
                 }
             }
         }
@@ -91,13 +88,6 @@ namespace System.Windows
             OnPropertiesChanged(name);
             return true;
         }
-
-// Disable Warning 6503 Property get methods should not throw exceptions.
-// By design properties below throw Win32Exception if there is an error when calling the native method
-#pragma warning disable 6503
-
-// Win32Exception will get the last Win32 error code in case of errors, so we don't have to.
-#pragma warning disable 6523
 
         #region Accessibility Parameters
 
@@ -176,9 +166,10 @@ namespace System.Windows
                     {
                         _cacheValid[(int)CacheSlot.HighContrast] = true;
 
-                        NativeMethods.HIGHCONTRAST_I highContrast = new NativeMethods.HIGHCONTRAST_I();
-
-                        highContrast.cbSize = Marshal.SizeOf(typeof(NativeMethods.HIGHCONTRAST_I));
+                        NativeMethods.HIGHCONTRAST_I highContrast = new NativeMethods.HIGHCONTRAST_I
+                        {
+                            cbSize = Marshal.SizeOf(typeof(NativeMethods.HIGHCONTRAST_I))
+                        };
                         if (UnsafeNativeMethods.SystemParametersInfo(NativeMethods.SPI_GETHIGHCONTRAST, highContrast.cbSize, ref highContrast, 0))
                         {
                             _highContrast = (highContrast.dwFlags & NativeMethods.HCF_HIGHCONTRASTON) == NativeMethods.HCF_HIGHCONTRASTON;
@@ -5006,11 +4997,6 @@ namespace System.Windows
         }
         #endregion
 
-
-#pragma warning restore 6523
-
-#pragma warning restore 6503
-
         #region Cache and Implementation
 
         internal static void InvalidateCache()
@@ -5772,17 +5758,12 @@ namespace System.Windows
                             HandleRef desktopWnd = new HandleRef(null, IntPtr.Zero);
 
                             // Win32Exception will get the Win32 error code so we don't have to
-#pragma warning disable 6523
                             IntPtr dc = UnsafeNativeMethods.GetDC(desktopWnd);
 
-                            // Detecting error case from unmanaged call, required by PREsharp to throw a Win32Exception
-#pragma warning disable 6503
                             if (dc == IntPtr.Zero)
                             {
                                 throw new Win32Exception();
                             }
-#pragma warning restore 6503
-#pragma warning restore 6523
 
                             try
                             {

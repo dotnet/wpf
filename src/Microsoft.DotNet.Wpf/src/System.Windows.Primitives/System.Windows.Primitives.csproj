@@ -5,6 +5,7 @@
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <CLSCompliant>false</CLSCompliant>
     <Nullable>enable</Nullable>
+    <ChecksumAlgorithm>SHA256</ChecksumAlgorithm>
     <Platforms>x86;x64;arm64</Platforms>
 
     <!--
@@ -28,7 +29,6 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.Windows.CsWin32" Version="$(MicrosoftWindowsCsWin32PackageVersion)" PrivateAssets="all" />
-    <PackageReference Include="System.Runtime.CompilerServices.Unsafe" Version="$(SystemRuntimeCompilerServicesUnsafePackageVersion)" />
 
     <ProjectReference Include="$(WpfSourceDir)System.Windows.Primitives\ref\System.Windows.Primitives-ref.csproj">
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>

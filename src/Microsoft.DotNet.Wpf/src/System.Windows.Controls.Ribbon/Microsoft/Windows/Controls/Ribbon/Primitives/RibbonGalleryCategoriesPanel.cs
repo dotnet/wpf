@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -133,7 +133,7 @@ namespace Microsoft.Windows.Controls.Ribbon.Primitives
         // At the time this method is called, scrolling state is in its new, valid state.
         private void OnScrollChange()
         {
-            if (ScrollOwner != null) { ScrollOwner.InvalidateScrollInfo(); }
+            ScrollOwner?.InvalidateScrollInfo();
         }
 
         private void VerifyScrollingData(Size viewport, Size extent, Vector offset)
@@ -619,10 +619,7 @@ namespace Microsoft.Windows.Controls.Ribbon.Primitives
             {
                 TreeHelper.InvalidateMeasureForVisualAncestorPath(this, RibbonHelper.IsISupportStarLayout);
                 RibbonGallery gallery = this.Gallery;
-                if (gallery != null)
-                {
-                    gallery.InvalidateMeasureOnAllCategoriesPanel();
-                }
+                gallery?.InvalidateMeasureOnAllCategoriesPanel();
             }
         }
 
@@ -808,13 +805,9 @@ namespace Microsoft.Windows.Controls.Ribbon.Primitives
             {
                 return Rect.Empty;
             }
-#pragma warning disable 1634, 1691
-#pragma warning disable 56506
             // Compute the child's rect relative to (0,0) in our coordinate space.
-            // This is a false positive by PreSharp. visual cannot be null because of the 'if' check above
             GeneralTransform childTransform = visual.TransformToAncestor(this);
-#pragma warning restore 56506
-#pragma warning restore 1634, 1691
+
             rectangle = childTransform.TransformBounds(rectangle);
 
             // We can't do any work unless we're scrolling.

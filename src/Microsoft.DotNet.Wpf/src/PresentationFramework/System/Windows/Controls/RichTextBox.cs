@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -151,7 +151,7 @@ namespace System.Windows.Controls
 
             if (!(value is FlowDocument))
             {
-                throw new ArgumentException(SR.Format(SR.UnexpectedParameterType, value.GetType(), typeof(FlowDocument)), "value");
+                throw new ArgumentException(SR.Format(SR.UnexpectedParameterType, value.GetType(), typeof(FlowDocument)), nameof(value));
             }
 
             if (!_implicitDocument)
@@ -314,8 +314,10 @@ namespace System.Windows.Controls
         // Allocates the initial render scope for this control.
         internal override FrameworkElement CreateRenderScope()
         {
-            FlowDocumentView renderScope = new FlowDocumentView();
-            renderScope.Document = this.Document;
+            FlowDocumentView renderScope = new FlowDocumentView
+            {
+                Document = this.Document
+            };
 
             // Set a margin so that the BiDi Or Italic caret has room to render at the edges of content.
             // Otherwise, anti-aliasing or italic causes the caret to be partially clipped.
@@ -572,7 +574,7 @@ namespace System.Windows.Controls
                 ArgumentNullException.ThrowIfNull(value);
                 if (!Selection.Start.IsInSameDocument(value))
                 {
-                    throw new ArgumentException(SR.RichTextBox_PointerNotInSameDocument, "value");
+                    throw new ArgumentException(SR.RichTextBox_PointerNotInSameDocument, nameof(value));
                 }
                 Selection.SetCaretToPosition(value, value.LogicalDirection, /*allowStopAtLineEnd:*/true, /*allowStopNearSpace:*/false);
             }
@@ -798,10 +800,7 @@ namespace System.Windows.Controls
         {
             RichTextBox richTextBox = (RichTextBox)d;
 
-            if (richTextBox.Document != null)
-            {
-                richTextBox.Document.CoerceValue(IsEnabledProperty);
-            }
+            richTextBox.Document?.CoerceValue(IsEnabledProperty);
         }
 
         #endregion Private Methods

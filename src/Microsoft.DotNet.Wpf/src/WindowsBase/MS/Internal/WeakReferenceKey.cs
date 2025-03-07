@@ -27,11 +27,10 @@ namespace MS.Internal.Utility
             if (o == this)
                 return true;
 
-            WeakReferenceKey<T> key = o as WeakReferenceKey<T>;
-            if (key != null)
+            if (o is WeakReferenceKey<T> key)
             {
                 T item = this.Item;
-                
+
                 if (item == null)
                     return false;   // a stale key matches nothing (except itself)
 

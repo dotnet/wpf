@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -6,8 +6,6 @@
 //  Implementation of a helper class that provides a fully functional Stream on unmanaged ZLib in a fashion
 //  consistent with Office and RMA (see Creating Rights-Managed HTML Files at
 //  http://msdn.microsoft.com/library/default.asp?url=/library/en-us/rma/introduction.asp).
-
-#pragma warning disable 1634, 1691
 
 using System.IO;
 using System.IO.Compression;
@@ -220,10 +218,9 @@ namespace MS.Internal.IO.Packaging.CompoundFile
                     //  - emit the header
                     //  - write out to the _baseStream
 
-                    // Suppress 6518 Local IDisposable object not disposed: 
-                    // Reason: The stream is not owned by us, therefore we cannot 
+                    // The stream is not owned by us, therefore we cannot 
                     // close the BinaryWriter as it will Close the stream underneath.
-#pragma warning disable 6518
+                    // TODO: Use leaveOpen ctor
                     BinaryWriter writer = new BinaryWriter(sink);
                     int bytesRead;
                     while ((bytesRead = PackagingUtilities.ReliableRead(source, sourceBuf, 0, sourceBuf.Length)) > 0)
@@ -276,7 +273,6 @@ namespace MS.Internal.IO.Packaging.CompoundFile
                     if (gcSinkBuf.IsAllocated)
                         gcSinkBuf.Free();
                 }
-#pragma warning restore 6518
             }
             finally
             {

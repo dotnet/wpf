@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -530,7 +530,7 @@ namespace MS.Internal.AutomationProxies
                     object embeddedObject;
                     while (start < end && embeddedObjectOffset != -1)
                     {
-                        sbText.Append(text.Substring(start, embeddedObjectOffset - start));
+                        sbText.Append(text.AsSpan(start, embeddedObjectOffset - start));
                         range.SetRange(embeddedObjectOffset, end);
                         if (range.GetEmbeddedObject(out embeddedObject) == NativeMethods.S_OK && embeddedObject != null)
                         {
@@ -548,7 +548,7 @@ namespace MS.Internal.AutomationProxies
 
                     if (start < end)
                     {
-                        sbText.Append(text.Substring(start, end - start));
+                        sbText.Append(text.AsSpan(start, end - start));
                     }
 
                     text = sbText.ToString();
@@ -604,17 +604,21 @@ namespace MS.Internal.AutomationProxies
 
             bool fGotUnicode = true;
 
-            UnsafeNativeMethods.FORMATETC fetc = new UnsafeNativeMethods.FORMATETC();
-            fetc.cfFormat = DataObjectConstants.CF_UNICODETEXT;
-            fetc.ptd = IntPtr.Zero;
-            fetc.dwAspect = DataObjectConstants.DVASPECT_CONTENT;
-            fetc.lindex = -1;
-            fetc.tymed = DataObjectConstants.TYMED_HGLOBAL;
+            UnsafeNativeMethods.FORMATETC fetc = new UnsafeNativeMethods.FORMATETC
+            {
+                cfFormat = DataObjectConstants.CF_UNICODETEXT,
+                ptd = IntPtr.Zero,
+                dwAspect = DataObjectConstants.DVASPECT_CONTENT,
+                lindex = -1,
+                tymed = DataObjectConstants.TYMED_HGLOBAL
+            };
 
-            UnsafeNativeMethods.STGMEDIUM med = new UnsafeNativeMethods.STGMEDIUM();
-            med.tymed = DataObjectConstants.TYMED_HGLOBAL;
-            med.pUnkForRelease = IntPtr.Zero;
-            med.hGlobal = IntPtr.Zero;
+            UnsafeNativeMethods.STGMEDIUM med = new UnsafeNativeMethods.STGMEDIUM
+            {
+                tymed = DataObjectConstants.TYMED_HGLOBAL,
+                pUnkForRelease = IntPtr.Zero,
+                hGlobal = IntPtr.Zero
+            };
 
             hr = dataObject.GetData(ref fetc, ref med);
 

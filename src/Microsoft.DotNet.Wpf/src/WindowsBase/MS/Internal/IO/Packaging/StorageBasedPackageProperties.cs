@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -28,9 +28,6 @@ using System.Runtime.InteropServices;
 using System.Text;
 using MS.Internal.IO.Packaging.CompoundFile;
 using MS.Internal.WindowsBase;
-
-// Enable presharp pragma warning suppress directives.
-#pragma warning disable 1634, 1691
 
 namespace MS.Internal.IO.Packaging
 {
@@ -586,7 +583,7 @@ namespace MS.Internal.IO.Packaging
                 }
                 finally
                 {
-#pragma warning suppress 6031 // suppressing a "by design" ignored return value
+                    // "by design" ignored return value
                     SafeNativeCompoundFileMethods.SafePropVariantClear(ref vals[0]);
                 }
             }
@@ -734,7 +731,7 @@ namespace MS.Internal.IO.Packaging
                 {
                     throw new ArgumentException(
                                 SR.Format(SR.InvalidDocumentPropertyType, propVal.GetType().ToString()),
-                                "propVal");
+                                nameof(propVal));
                 }
 
                 //
@@ -827,7 +824,7 @@ namespace MS.Internal.IO.Packaging
                     default:
                         throw new ArgumentException(
                             SR.Format(SR.UnknownDocumentProperty, fmtid.ToString(), propId),
-                            "propId"
+                            nameof(propId)
                             );
                 }
             }
@@ -846,7 +843,7 @@ namespace MS.Internal.IO.Packaging
                     default:
                         throw new ArgumentException(
                             SR.Format(SR.UnknownDocumentProperty, fmtid.ToString(), propId),
-                            "propId"
+                            nameof(propId)
                             );
                 }
             }
@@ -854,7 +851,7 @@ namespace MS.Internal.IO.Packaging
             {
                 throw new ArgumentException(
                     SR.Format(SR.UnknownDocumentProperty, fmtid.ToString(), propId),
-                    "fmtid"
+                    nameof(fmtid)
                     );
             }
         }

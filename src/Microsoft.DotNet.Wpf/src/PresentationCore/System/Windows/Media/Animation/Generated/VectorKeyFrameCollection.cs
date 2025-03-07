@@ -51,9 +51,10 @@ namespace System.Windows.Media.Animation
             {
                 if (s_emptyCollection == null)
                 {
-                    VectorKeyFrameCollection emptyCollection = new VectorKeyFrameCollection();
-
-                    emptyCollection._keyFrames = new List< VectorKeyFrame>(0);
+                    VectorKeyFrameCollection emptyCollection = new VectorKeyFrameCollection
+                    {
+                        _keyFrames = new List<VectorKeyFrame>(0)
+                    };
                     emptyCollection.Freeze();
 
                     s_emptyCollection = emptyCollection;

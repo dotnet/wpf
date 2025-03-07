@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -803,10 +803,7 @@ namespace System.Windows.Documents
                             _structuralCache.InvalidateFormatCache(!affectsRender);
 
                             // Notify formatter about content invalidation.
-                            if (_formatter != null)
-                            {
-                                _formatter.OnContentInvalidated(!affectsRender);
-                            }
+                            _formatter?.OnContentInvalidated(!affectsRender);
                         }
                     }
                 }
@@ -927,7 +924,7 @@ namespace System.Windows.Documents
                 textPointer = null;
             }
             flowContentPosition = textPointer as TextPointer;
-            return (flowContentPosition != null) ? flowContentPosition : ContentPosition.Missing;
+            return flowContentPosition ?? ContentPosition.Missing;
         }
 
         /// <summary>
@@ -968,10 +965,7 @@ namespace System.Windows.Documents
                 _structuralCache.AddDirtyTextRange(dtr);
 
                 // Notify formatter about content invalidation.
-                if (_formatter != null)
-                {
-                    _formatter.OnContentInvalidated(true, childStart, childEnd);
-                }
+                _formatter?.OnContentInvalidated(true, childStart, childEnd);
             }
         }
 
@@ -1242,13 +1236,10 @@ namespace System.Windows.Documents
             if (fd._structuralCache != null && fd._structuralCache.IsFormattedOnce)
             {
                 // Notify formatter about content invalidation.
-                if (fd._formatter != null)
-                {
-                    // Any change of page metrics invalidates the layout.
-                    // Hence page metrics change is treated in the same way as ContentChanged
-                    // spanning entire content.
-                    fd._formatter.OnContentInvalidated(true);
-                }
+                // Any change of page metrics invalidates the layout.
+                // Hence page metrics change is treated in the same way as ContentChanged
+                // spanning entire content.
+                fd._formatter?.OnContentInvalidated(true);
 
                 // Fire notification about the PageSize change - needed in RichTextBox
                 if (fd.PageSizeChanged != null)
@@ -1510,10 +1501,7 @@ namespace System.Windows.Documents
                 }
 
                 // Notify formatter about content invalidation.
-                if (_formatter != null)
-                {
-                    _formatter.OnContentInvalidated(!args.AffectsRenderOnly, args.ITextPosition, segmentEnd);
-                }
+                _formatter?.OnContentInvalidated(!args.AffectsRenderOnly, args.ITextPosition, segmentEnd);
             }
             finally
             {

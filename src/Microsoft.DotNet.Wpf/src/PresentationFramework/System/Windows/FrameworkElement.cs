@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -23,15 +23,8 @@ using MS.Internal.KnownBoxes;
 using MS.Internal.PresentationFramework;    // SafeSecurityHelper
 using MS.Utility;
 
-// Disabling 1634 and 1691:
-// In order to avoid generating warnings about unknown message numbers and
-// unknown pragmas when compiling C# source code with the C# compiler,
-// you need to disable warnings 1634 and 1691. (Presharp Documentation)
-#pragma warning disable 1634, 1691
-
 namespace System.Windows
 {
-
     /// <summary>
     /// HorizontalAlignment - The HorizontalAlignment enum is used to describe
     /// how element is positioned or stretched horizontally within a parent's layout slot.
@@ -641,11 +634,11 @@ namespace System.Windows
         {
             if (_templateChild == null)
             {
-                throw new ArgumentOutOfRangeException("index", index, SR.Visual_ArgumentOutOfRange);
+                throw new ArgumentOutOfRangeException(nameof(index), index, SR.Visual_ArgumentOutOfRange);
             }
             if (index != 0)
             {
-                throw new ArgumentOutOfRangeException("index", index, SR.Visual_ArgumentOutOfRange);
+                throw new ArgumentOutOfRangeException(nameof(index), index, SR.Visual_ArgumentOutOfRange);
             }
             return _templateChild;
         }
@@ -712,13 +705,10 @@ namespace System.Windows
                 }
 
 
-                if (oldValue != null)
-                {
-                    // This element is no longer an owner for the old RD
-                    oldValue.RemoveOwner(this);
-                }
+                // This element is no longer an owner for the old RD
+                oldValue?.RemoveOwner(this);
 
-                if(this is Window window)
+                if (this is Window window)
                 {
                     window.AddFluentDictionary(value, out invalidateResources);
                 }
@@ -1767,7 +1757,7 @@ namespace System.Windows
 
                 DependencyObject parent = LogicalTreeHelper.GetParent(d);
 
-                d = (parent != null) ? parent : Helper.FindMentor(d.InheritanceContext);
+                d = parent ?? Helper.FindMentor(d.InheritanceContext);
             }
 
             scopeOwner = null;
@@ -2041,8 +2031,10 @@ namespace System.Windows
         internal Expression GetExpressionCore(DependencyProperty dp, PropertyMetadata metadata)
         {
             this.IsRequestingExpression = true;
-            EffectiveValueEntry entry = new EffectiveValueEntry(dp);
-            entry.Value = DependencyProperty.UnsetValue;
+            EffectiveValueEntry entry = new EffectiveValueEntry(dp)
+            {
+                Value = DependencyProperty.UnsetValue
+            };
             this.EvaluateBaseValueCore(dp, metadata, ref entry);
             this.IsRequestingExpression = false;
 
@@ -2501,7 +2493,7 @@ namespace System.Windows
             if (Parent == null)
             {
                 // Invalidate relevant properties for this subtree
-                DependencyObject parent = (newParent != null) ? newParent : oldParent;
+                DependencyObject parent = newParent ?? oldParent;
                 TreeWalkHelper.InvalidateOnTreeChange(this, null, parent, (newParent != null));
             }
 
@@ -3085,10 +3077,7 @@ namespace System.Windows
                     while (enumerator.MoveNext())
                     {
                         DependencyObject child = enumerator.Current as DependencyObject;
-                        if (child != null)
-                        {
-                            child.CoerceValue(property);
-                        }
+                        child?.CoerceValue(property);
                     }
                 }
             }
@@ -3297,8 +3286,10 @@ namespace System.Windows
         /// </summary>
         public void BringIntoView(Rect targetRectangle)
         {
-            RequestBringIntoViewEventArgs args = new RequestBringIntoViewEventArgs(this, targetRectangle);
-            args.RoutedEvent=RequestBringIntoViewEvent;
+            RequestBringIntoViewEventArgs args = new RequestBringIntoViewEventArgs(this, targetRectangle)
+            {
+                RoutedEvent = RequestBringIntoViewEvent
+            };
             RaiseEvent(args);
         }
 
@@ -4791,14 +4782,16 @@ namespace System.Windows
         /// </summary>
         protected internal override void OnRenderSizeChanged(SizeChangedInfo sizeInfo)
         {
-            SizeChangedEventArgs localArgs = new SizeChangedEventArgs(this, sizeInfo);
-            localArgs.RoutedEvent = SizeChangedEvent;
+            SizeChangedEventArgs localArgs = new SizeChangedEventArgs(this, sizeInfo)
+            {
+                RoutedEvent = SizeChangedEvent
+            };
 
             //first, invalidate ActualWidth and/or ActualHeight
             //Note: if any handler of invalidation will dirtyfy layout,
             //subsequent handlers will run on effectively dirty layouts
             //we only guarantee cleaning between elements, not between handlers here
-            if(sizeInfo.WidthChanged)
+            if (sizeInfo.WidthChanged)
             {
                 HasWidthEverChanged = true;
                 NotifyPropertyChange(new DependencyPropertyChangedEventArgs(ActualWidthProperty, _actualWidthMetadata, sizeInfo.PreviousSize.Width, sizeInfo.NewSize.Width));
@@ -5143,7 +5136,7 @@ namespace System.Windows
             FrameworkElement fe = element as FrameworkElement;
             element.InternalSetOffsetWorkaround(new Vector());
 
-            Transform additionalTransform = (fe == null ? null : fe.GetFlowDirectionTransform()); //rtl
+            Transform additionalTransform = (fe?.GetFlowDirectionTransform()); //rtl
 
             Transform renderTransform = element.RenderTransform;
             if(renderTransform == Transform.Identity)
@@ -5151,10 +5144,12 @@ namespace System.Windows
 
             // Create a TransformCollection and make sure it does not participate
             // in the InheritanceContext treeness because it is internal operation only.
-            TransformCollection ts = new TransformCollection();
-            ts.CanBeInheritanceContext = false;
+            TransformCollection ts = new TransformCollection
+            {
+                CanBeInheritanceContext = false
+            };
 
-            if(additionalTransform != null)
+            if (additionalTransform != null)
                 ts.Add(additionalTransform);
 
             if(renderTransform != null)
@@ -5162,8 +5157,10 @@ namespace System.Windows
 
             ts.Add(layoutTransform);
 
-            TransformGroup group = new TransformGroup();
-            group.Children = ts;
+            TransformGroup group = new TransformGroup
+            {
+                Children = ts
+            };
 
             element.InternalSetTransformWorkaround(group);
         }
@@ -5217,8 +5214,10 @@ namespace System.Windows
                 {
                     // Create a TransformGroup and make sure it does not participate
                     // in the InheritanceContext treeness because it is internal operation only.
-                    t = new TransformGroup();
-                    t.CanBeInheritanceContext = false;
+                    t = new TransformGroup
+                    {
+                        CanBeInheritanceContext = false
+                    };
                     t.Children.CanBeInheritanceContext = false;
 
                     if (additionalTransform != null)
@@ -5797,10 +5796,7 @@ namespace System.Windows
         internal override void AddSynchronizedInputPreOpportunityHandlerCore(EventRoute route, RoutedEventArgs args)
         {
             UIElement uiElement = this._templatedParent as UIElement;
-            if (uiElement != null)
-            {
-                uiElement.AddSynchronizedInputPreOpportunityHandler(route, args);
-            }
+            uiElement?.AddSynchronizedInputPreOpportunityHandler(route, args);
 
         }
 
@@ -6097,9 +6093,9 @@ namespace System.Windows
                         AddStyleHandlersToEventRoute(null, fce, route, args);
                     }
                 }
-                else if (uiElement3D != null)
+                else
                 {
-                    uiElement3D.AddToEventRoute(route, args);
+                    uiElement3D?.AddToEventRoute(route, args);
                 }
 
                 // Get model parent
@@ -6132,10 +6128,7 @@ namespace System.Windows
         internal void EventHandlersStoreRemove(EventPrivateKey key, Delegate handler)
         {
             EventHandlersStore store = EventHandlersStore;
-            if (store != null)
-            {
-                store.Remove(key, handler);
-            }
+            store?.Remove(key, handler);
         }
 
         // Gettor and Settor for flag that indicates if this
@@ -6246,7 +6239,7 @@ namespace System.Windows
                 // Thus we support any indices in the range [-1, 65535).
                 if (value < -1 || value >= 0xFFFF)
                 {
-                    throw new ArgumentOutOfRangeException("value", SR.TemplateChildIndexOutOfRange);
+                    throw new ArgumentOutOfRangeException(nameof(value), SR.TemplateChildIndexOutOfRange);
                 }
 
                 uint childIndex = (value == -1) ? 0xFFFF : (uint)value;

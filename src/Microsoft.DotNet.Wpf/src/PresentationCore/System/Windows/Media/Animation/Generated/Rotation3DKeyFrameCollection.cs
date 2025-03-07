@@ -51,9 +51,10 @@ namespace System.Windows.Media.Animation
             {
                 if (s_emptyCollection == null)
                 {
-                    Rotation3DKeyFrameCollection emptyCollection = new Rotation3DKeyFrameCollection();
-
-                    emptyCollection._keyFrames = new List< Rotation3DKeyFrame>(0);
+                    Rotation3DKeyFrameCollection emptyCollection = new Rotation3DKeyFrameCollection
+                    {
+                        _keyFrames = new List<Rotation3DKeyFrame>(0)
+                    };
                     emptyCollection.Freeze();
 
                     s_emptyCollection = emptyCollection;

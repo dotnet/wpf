@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -210,8 +210,10 @@ namespace MS.Internal.Printing.Configuration
 
         internal static PrintCapabilityFeature NewFeatureCallback(InternalPrintCapabilities printCap)
         {
-            JobStapleCapability cap = new JobStapleCapability(printCap);
-            cap._staplingOptions = new Collection<StaplingOption>();
+            JobStapleCapability cap = new JobStapleCapability(printCap)
+            {
+                _staplingOptions = new Collection<StaplingOption>()
+            };
 
             return cap;
         }
@@ -279,7 +281,7 @@ namespace MS.Internal.Printing.Configuration
                 if (value < PrintSchema.StaplingEnumMin ||
                     value > PrintSchema.StaplingEnumMax)
                 {
-                    throw new ArgumentOutOfRangeException("value");
+                    throw new ArgumentOutOfRangeException(nameof(value));
                 }
 
                 this[PrintSchemaTags.Framework.OptionNameProperty] = (int)value;

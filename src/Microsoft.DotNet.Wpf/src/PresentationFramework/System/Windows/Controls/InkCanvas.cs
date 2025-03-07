@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -104,22 +104,30 @@ namespace System.Windows.Controls
             defaultStyle.Setters.Add(new Setter(Stylus.IsTouchFeedbackEnabledProperty, false));
 
             // Set MinWidth to 350d if Width is set to Auto
-            Trigger trigger = new Trigger();
-            trigger.Property = WidthProperty;
-            trigger.Value = double.NaN;
-            Setter setter = new Setter();
-            setter.Property = MinWidthProperty;
-            setter.Value = 350d;
+            Trigger trigger = new Trigger
+            {
+                Property = WidthProperty,
+                Value = double.NaN
+            };
+            Setter setter = new Setter
+            {
+                Property = MinWidthProperty,
+                Value = 350d
+            };
             trigger.Setters.Add(setter);
             defaultStyle.Triggers.Add(trigger);
 
             // Set MinHeight to 250d if Height is set to Auto
-            trigger = new Trigger();
-            trigger.Property = HeightProperty;
-            trigger.Value = double.NaN;
-            setter = new Setter();
-            setter.Property = MinHeightProperty;
-            setter.Value = 250d;
+            trigger = new Trigger
+            {
+                Property = HeightProperty,
+                Value = double.NaN
+            };
+            setter = new Setter
+            {
+                Property = MinHeightProperty,
+                Value = 250d
+            };
             trigger.Setters.Add(setter);
             defaultStyle.Triggers.Add(trigger);
 
@@ -148,8 +156,10 @@ namespace System.Windows.Controls
             //
             // instance the DynamicRenderer and add it to the StylusPlugIns
             //
-            _dynamicRenderer = new DynamicRenderer();
-            _dynamicRenderer.Enabled = false;
+            _dynamicRenderer = new DynamicRenderer
+            {
+                Enabled = false
+            };
             this.StylusPlugIns.Add(_dynamicRenderer);
 
             //
@@ -367,7 +377,7 @@ namespace System.Windows.Controls
             if (    (_localAdornerDecorator == null)
                 ||  (index != 0))
             {
-                throw new ArgumentOutOfRangeException("index", index, SR.Visual_ArgumentOutOfRange);
+                throw new ArgumentOutOfRangeException(nameof(index), index, SR.Visual_ArgumentOutOfRange);
             }
 
             return _localAdornerDecorator;
@@ -632,11 +642,13 @@ namespace System.Windows.Controls
 
                     // Bind the InkCanvas.ActiveEditingModeProperty
                     // to SelectionAdorner.VisibilityProperty.
-                    Binding activeEditingModeBinding = new Binding();
-                    activeEditingModeBinding.Path = new PropertyPath(InkCanvas.ActiveEditingModeProperty);
-                    activeEditingModeBinding.Mode = BindingMode.OneWay;
-                    activeEditingModeBinding.Source = this;
-                    activeEditingModeBinding.Converter = new ActiveEditingMode2VisibilityConverter();
+                    Binding activeEditingModeBinding = new Binding
+                    {
+                        Path = new PropertyPath(InkCanvas.ActiveEditingModeProperty),
+                        Mode = BindingMode.OneWay,
+                        Source = this,
+                        Converter = new ActiveEditingMode2VisibilityConverter()
+                    };
                     _selectionAdorner.SetBinding(UIElement.VisibilityProperty, activeEditingModeBinding);
                 }
 
@@ -1828,7 +1840,7 @@ namespace System.Windows.Controls
                 Double.IsInfinity(point.X)||
                 Double.IsInfinity(point.Y) )
             {
-                    throw new ArgumentException(SR.InvalidPoint, "point");
+                    throw new ArgumentException(SR.InvalidPoint, nameof(point));
             }
 
 
@@ -2018,10 +2030,12 @@ namespace System.Windows.Controls
                     _inkPresenter = new InkPresenter();
 
                     // Bind the InkPresenter.Strokes to InkCanvas.Strokes
-                    Binding strokes = new Binding();
-                    strokes.Path = new PropertyPath(InkCanvas.StrokesProperty);
-                    strokes.Mode = BindingMode.OneWay;
-                    strokes.Source = this;
+                    Binding strokes = new Binding
+                    {
+                        Path = new PropertyPath(InkCanvas.StrokesProperty),
+                        Mode = BindingMode.OneWay,
+                        Source = this
+                    };
                     _inkPresenter.SetBinding(InkPresenter.StrokesProperty, strokes);
                 }
                 return _inkPresenter;
@@ -2185,10 +2199,12 @@ namespace System.Windows.Controls
                     _innerCanvas = new InkCanvasInnerCanvas(this);
 
                     // Bind the inner Canvas' Background to InkCanvas' Background
-                    Binding background = new Binding();
-                    background.Path = new PropertyPath(InkCanvas.BackgroundProperty);
-                    background.Mode = BindingMode.OneWay;
-                    background.Source = this;
+                    Binding background = new Binding
+                    {
+                        Path = new PropertyPath(InkCanvas.BackgroundProperty),
+                        Mode = BindingMode.OneWay,
+                        Source = this
+                    };
                     _innerCanvas.SetBinding(Panel.BackgroundProperty, background);
                 }
 

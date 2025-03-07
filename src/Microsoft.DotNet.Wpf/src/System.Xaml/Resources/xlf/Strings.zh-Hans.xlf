@@ -427,11 +427,6 @@
         <target state="translated">无法在当前状态下写入位置参数。编写器无法以特性的形式写入位置参数，因为编写器是为写入元素而启动的；编写器也无法展开位置参数，原因是包含位置参数的标记扩展中缺少默认构造函数。尝试在节点流中向前移动位置参数成员，将其放置在 XamlXmlWriter 仍可以写入特性的位置。</target>
         <note />
       </trans-unit>
-      <trans-unit id="ExpectedLoadPermission">
-        <source>Expected permission of type XamlLoadPermission.</source>
-        <target state="translated">类型 XamlLoadPermission 的预期权限。</target>
-        <note />
-      </trans-unit>
       <trans-unit id="ExpectedObjectMarkupInfo">
         <source>Expected value of type ObjectMarkupInfo.</source>
         <target state="translated">类型 ObjectMarkupInfo 的预期值。</target>
@@ -560,16 +555,6 @@
       <trans-unit id="InvalidExpression">
         <source>Invalid expression: '{0}'</source>
         <target state="translated">无效的表达式:“{0}”</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="InvalidPermissionStateValue">
-        <source>PermissionState value '{0}' is not valid for this Permission.</source>
-        <target state="translated">PermissionState 值“{0}”对于此 Permission 无效。</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="InvalidPermissionType">
-        <source>Permission type is not valid. Expected '{0}'.</source>
-        <target state="translated">权限类型无效。应为“{0}”。</target>
         <note />
       </trans-unit>
       <trans-unit id="InvalidTypeArgument">
@@ -1135,26 +1120,6 @@
       <trans-unit id="SchemaContextNull">
         <source>SchemaContext cannot be null.</source>
         <target state="translated">SchemaContext 不能为 null。</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="SecurityExceptionForSettingSandboxExternalToTrue">
-        <source>Cannot set SandboxExternalContent to true in partial trust.</source>
-        <target state="translated">无法在部分信任中将 SandboxExternalContent 设置为 true。</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="SecurityXmlMissingAttribute">
-        <source>Invalid security XML. Missing expected attribute '{0}'.</source>
-        <target state="translated">安全 XML 无效。缺少要求的特性“{0}”。</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="SecurityXmlUnexpectedTag">
-        <source>Invalid security XML. Unexpected tag '{0}', expected '{1}'.</source>
-        <target state="translated">安全 XML 无效。意外标记“{0}”，应为“{1}”。</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="SecurityXmlUnexpectedValue">
-        <source>Invalid security XML. Unexpected value '{0}' in attribute '{1}', expected '{2}'.</source>
-        <target state="translated">安全 XML 无效。特性“{1}”中的意外值“{0}”，应为“{2}”。</target>
         <note />
       </trans-unit>
       <trans-unit id="ServiceTypeAlreadyAdded">

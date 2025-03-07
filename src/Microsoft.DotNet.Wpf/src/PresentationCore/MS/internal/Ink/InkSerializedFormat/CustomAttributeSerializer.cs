@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -78,8 +78,6 @@ namespace MS.Internal.Ink.InkSerializedFormat
             // Presharp gives a warning when local IDisposable variables are not closed
             // in this case, we can't call Dispose since it will also close the underlying stream
             // which still needs to be written to
-#pragma warning disable 1634, 1691
-#pragma warning disable 6518
             BinaryWriter bw = new BinaryWriter(stream);
 
             // if this guid used the legacy internal attribute persistence APIs,
@@ -295,8 +293,6 @@ namespace MS.Internal.Ink.InkSerializedFormat
                     throw new InvalidOperationException(SR.InvalidEpInIsf);
                 }
             }
-#pragma warning restore 6518
-#pragma warning restore 1634, 1691
         }
 #if OLD_ISF
         /// <summary>
@@ -422,7 +418,7 @@ namespace MS.Internal.Ink.InkSerializedFormat
                 cb = SerializationHelper.Decode(stream, out uiTag);
                 tag = (KnownTagCache.KnownTagIndex)uiTag;
                 if (cb > cbTotal)
-                    throw new ArgumentException(SR.InvalidSizeSpecified, "cbSize");
+                    throw new ArgumentException(SR.InvalidSizeSpecified, nameof(cbSize));
 
                 cbTotal -= cb;
                 cbRead += cb;
@@ -432,14 +428,14 @@ namespace MS.Internal.Ink.InkSerializedFormat
 
             if (guid == Guid.Empty)
             {
-                throw new ArgumentException(StrokeCollectionSerializer.ISFDebugMessage("Custom Attribute tag embedded in ISF stream does not match guid table"), "tag");
+                throw new ArgumentException(StrokeCollectionSerializer.ISFDebugMessage("Custom Attribute tag embedded in ISF stream does not match guid table"), nameof(tag));
             }
 
             // Try and find the size
             uint size = GuidList.GetDataSizeIfKnownGuid(guid);
 
             if (size > cbTotal)
-                throw new ArgumentException(SR.InvalidSizeSpecified, "cbSize");
+                throw new ArgumentException(SR.InvalidSizeSpecified, nameof(cbSize));
 
             // if the size is 0
             if (0 == size)
@@ -459,7 +455,7 @@ namespace MS.Internal.Ink.InkSerializedFormat
                 uint bytesRead = (uint) stream.Read(bytes, 0, (int)cbInsize);
                 if (cbInsize != bytesRead)
                 {
-                    throw new ArgumentException(StrokeCollectionSerializer.ISFDebugMessage("Read different size from stream then expected"), "cbSize");
+                    throw new ArgumentException(StrokeCollectionSerializer.ISFDebugMessage("Read different size from stream then expected"), nameof(cbSize));
                 }
 
                 cbRead += cbInsize;
@@ -480,7 +476,7 @@ namespace MS.Internal.Ink.InkSerializedFormat
                 uint bytesRead = (uint) stream.Read(bytes, 0, (int)size);
                 if (size != bytesRead)
                 {
-                    throw new ArgumentException(StrokeCollectionSerializer.ISFDebugMessage("Read different size from stream then expected"), "cbSize");
+                    throw new ArgumentException(StrokeCollectionSerializer.ISFDebugMessage("Read different size from stream then expected"), nameof(cbSize));
                 }
 
                 using (MemoryStream subStream = new MemoryStream(bytes))
@@ -782,7 +778,7 @@ namespace MS.Internal.Ink.InkSerializedFormat
             {
                 if (!(value is System.Windows.Media.Color))
                 {
-                    throw new ArgumentException(SR.Format(SR.InvalidValueType, typeof(System.Windows.Media.Color)), "value");
+                    throw new ArgumentException(SR.Format(SR.InvalidValueType, typeof(System.Windows.Media.Color)), nameof(value));
                 }
             }
                 // int attributes
@@ -790,7 +786,7 @@ namespace MS.Internal.Ink.InkSerializedFormat
             {
                 if (!(value.GetType() == typeof(int)))
                 {
-                    throw new ArgumentException(SR.Format(SR.InvalidValueType, typeof(int)), "value");
+                    throw new ArgumentException(SR.Format(SR.InvalidValueType, typeof(int)), nameof(value));
                 }
             }
             else if (id == KnownIds.DrawingFlags)
@@ -798,7 +794,7 @@ namespace MS.Internal.Ink.InkSerializedFormat
                 // ignore validation of flags
                 if (value.GetType() != typeof(DrawingFlags))
                 {
-                    throw new ArgumentException(SR.Format(SR.InvalidValueType, typeof(DrawingFlags)), "value");
+                    throw new ArgumentException(SR.Format(SR.InvalidValueType, typeof(DrawingFlags)), nameof(value));
                 }
             }
             else if (id == KnownIds.StylusTip)
@@ -809,11 +805,11 @@ namespace MS.Internal.Ink.InkSerializedFormat
 
                 if ( !fStylusTipType && !fIntType )
                 {
-                    throw new ArgumentException(SR.Format(SR.InvalidValueType1, typeof(StylusTip), typeof(int)), "value");
+                    throw new ArgumentException(SR.Format(SR.InvalidValueType1, typeof(StylusTip), typeof(int)), nameof(value));
                 }
                 else if ( !StylusTipHelper.IsDefined((StylusTip)value) )
                 {
-                    throw new ArgumentException(SR.Format(SR.InvalidValueOfType, value, typeof(StylusTip)), "value");
+                    throw new ArgumentException(SR.Format(SR.InvalidValueOfType, value, typeof(StylusTip)), nameof(value));
                 }
             }
             else if (id == KnownIds.StylusTipTransform)
@@ -824,22 +820,22 @@ namespace MS.Internal.Ink.InkSerializedFormat
                 Type t = value.GetType();
                 if ( t != typeof(String) && t != typeof(Matrix) )
                 {
-                    throw new ArgumentException(SR.Format(SR.InvalidValueType1, typeof(String), typeof(Matrix)), "value");
+                    throw new ArgumentException(SR.Format(SR.InvalidValueType1, typeof(String), typeof(Matrix)), nameof(value));
                 }
                 else if ( t == typeof(Matrix) )
                 {
                     Matrix matrix = (Matrix)value;
                     if ( !matrix.HasInverse )
                     {
-                        throw new ArgumentException(SR.MatrixNotInvertible, "value");
+                        throw new ArgumentException(SR.MatrixNotInvertible, nameof(value));
                     }
                     if ( MatrixHelper.ContainsNaN(matrix))
                     {
-                        throw new ArgumentException(SR.InvalidMatrixContainsNaN, "value");
+                        throw new ArgumentException(SR.InvalidMatrixContainsNaN, nameof(value));
                     }
                     if ( MatrixHelper.ContainsInfinity(matrix))
                     {
-                        throw new ArgumentException(SR.InvalidMatrixContainsInfinity, "value");
+                        throw new ArgumentException(SR.InvalidMatrixContainsInfinity, nameof(value));
                     }
 }
             }
@@ -847,14 +843,14 @@ namespace MS.Internal.Ink.InkSerializedFormat
             {
                 if ( value.GetType() != typeof(bool))
                 {
-                    throw new ArgumentException(SR.Format(SR.InvalidValueType, typeof(bool)), "value");
+                    throw new ArgumentException(SR.Format(SR.InvalidValueType, typeof(bool)), nameof(value));
                 }
             }
             else if ( id == KnownIds.StylusHeight || id == KnownIds.StylusWidth )
             {
                 if ( value.GetType() != typeof(double) )
                 {
-                    throw new ArgumentException(SR.Format(SR.InvalidValueType, typeof(double)), "value");
+                    throw new ArgumentException(SR.Format(SR.InvalidValueType, typeof(double)), nameof(value));
                 }
 
                 double dVal = (double)value;
@@ -863,14 +859,14 @@ namespace MS.Internal.Ink.InkSerializedFormat
                 {
                     if ( Double.IsNaN(dVal) || dVal < DrawingAttributes.MinHeight || dVal > DrawingAttributes.MaxHeight)
                     {
-                        throw new ArgumentOutOfRangeException("value", SR.InvalidDrawingAttributesHeight);
+                        throw new ArgumentOutOfRangeException(nameof(value), SR.InvalidDrawingAttributesHeight);
                     }
                 }
                 else
                 {
                     if (Double.IsNaN(dVal) ||  dVal < DrawingAttributes.MinWidth || dVal > DrawingAttributes.MaxWidth)
                     {
-                        throw new ArgumentOutOfRangeException("value", SR.InvalidDrawingAttributesWidth);
+                        throw new ArgumentOutOfRangeException(nameof(value), SR.InvalidDrawingAttributesWidth);
                     }
                 }
             }
@@ -878,7 +874,7 @@ namespace MS.Internal.Ink.InkSerializedFormat
             {
                 if ( value.GetType() != typeof(byte) )
                 {
-                    throw new ArgumentException(SR.Format(SR.InvalidValueType, typeof(byte)), "value");
+                    throw new ArgumentException(SR.Format(SR.InvalidValueType, typeof(byte)), nameof(value));
                 }
 
                 double dVal = (double)value;
@@ -891,7 +887,7 @@ namespace MS.Internal.Ink.InkSerializedFormat
                     //      then it doesn't include embedded type information (it's always a byte array)
                     if ( value.GetType() != typeof(byte[]) )
                     {
-                        throw new ArgumentException(SR.Format(SR.InvalidValueType, typeof(byte[])), "value");
+                        throw new ArgumentException(SR.Format(SR.InvalidValueType, typeof(byte[])), nameof(value));
                     }
                 }
                 else

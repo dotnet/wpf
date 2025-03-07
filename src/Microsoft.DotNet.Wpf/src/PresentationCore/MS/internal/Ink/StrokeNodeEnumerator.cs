@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -84,7 +84,7 @@ namespace MS.Internal.Ink
         /// <param name="drawingAttributes">drawing attributes</param>
         internal StrokeNodeIterator(DrawingAttributes drawingAttributes)
             : this( null,   //stylusPoints
-                    StrokeNodeOperations.CreateInstance((drawingAttributes == null ? null : drawingAttributes.StylusShape)),
+                    StrokeNodeOperations.CreateInstance((drawingAttributes?.StylusShape)),
                     (drawingAttributes == null ? false : !drawingAttributes.IgnorePressure))  //usePressure
         {
         }
@@ -216,7 +216,7 @@ namespace MS.Internal.Ink
                 }
 
                 //we use previousIndex+1 because index can skip ahead
-                return new StrokeNode(_operations, previousIndex + 1, nodeData, lastNodeData, index == _stylusPoints.Count - 1 /*Is this the last node?*/);
+                return new StrokeNode(_operations, previousIndex + 1, nodeData, lastNodeData, isLastNode: index == _stylusPoints.Count - 1);
             }
         }
 

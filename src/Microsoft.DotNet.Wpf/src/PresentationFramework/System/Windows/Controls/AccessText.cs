@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -531,7 +531,7 @@ namespace System.Windows.Controls
         {
             if (index != 0)
             {
-                throw new ArgumentOutOfRangeException("index", index, SR.Visual_ArgumentOutOfRange); 
+                throw new ArgumentOutOfRangeException(nameof(index), index, SR.Visual_ArgumentOutOfRange); 
             }
             return TextBlock;
         }
@@ -553,9 +553,11 @@ namespace System.Windows.Controls
                 if (_accessKeyStyle == null)
                 {
                     Style accessKeyStyle = new Style(typeof(Run));
-                    Trigger trigger = new Trigger();
-                    trigger.Property = KeyboardNavigation.ShowKeyboardCuesProperty;
-                    trigger.Value = true;
+                    Trigger trigger = new Trigger
+                    {
+                        Property = KeyboardNavigation.ShowKeyboardCuesProperty,
+                        Value = true
+                    };
                     trigger.Setters.Add(new Setter(TextDecorationsProperty, System.Windows.TextDecorations.Underline));
                     accessKeyStyle.Triggers.Add(trigger);
                     accessKeyStyle.Seal();
@@ -585,8 +587,10 @@ namespace System.Windows.Controls
                             string keyText = StringInfo.GetNextTextElement(text, index + 1);
                             TextPointer keyEnd = navigator.GetPositionAtOffset(index + 1 + keyText.Length);
 
-                            _accessKey = new Run(keyText);
-                            _accessKey.Style = AccessKeyStyle;
+                            _accessKey = new Run(keyText)
+                            {
+                                Style = AccessKeyStyle
+                            };
 
                             RegisterAccessKey();
 

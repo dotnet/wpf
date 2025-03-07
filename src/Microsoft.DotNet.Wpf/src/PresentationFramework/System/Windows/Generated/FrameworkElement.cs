@@ -3,6 +3,7 @@
 // See the LICENSE file in the project root for more information.
 
 //
+//
 // This file was generated, please do not edit it directly.
 // 
 // This file was generated from the codegen template located at:
@@ -291,10 +292,7 @@ namespace System.Windows
             // to the dispatchers that the elements belong to.
             //
             this.VerifyAccess();
-            if(newParent != null)
-            {
-                newParent.VerifyAccess();
-            }
+            newParent?.VerifyAccess();
 
             // Logical Parent must first be dropped before you are attached to a newParent
             // This mitigates illegal tree state caused by logical child stealing as illustrated in bug 970706
@@ -333,7 +331,7 @@ namespace System.Windows
             ///////////////////
 
             // Invalidate relevant properties for this subtree
-            DependencyObject parent = (newParent != null) ? newParent : oldParent;
+            DependencyObject parent = newParent ?? oldParent;
             TreeWalkHelper.InvalidateOnTreeChange(/* fe = */ this, /* fce = */ null, parent, (newParent != null));
 
             // If no one has called BeginInit then mark the element initialized and fire Initialized event

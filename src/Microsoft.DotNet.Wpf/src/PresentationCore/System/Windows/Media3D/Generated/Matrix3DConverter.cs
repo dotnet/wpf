@@ -9,10 +9,17 @@
 // Please see MilCodeGen.html for more information.
 //
 
+using MS.Internal;
+using MS.Internal.Collections;
+using MS.Utility;
+using System.Collections;
 using System.ComponentModel;
 using System.Globalization;
-
-#pragma warning disable 1634, 1691  // suppressing PreSharp warnings
+using System.Text;
+using System.Windows.Markup;
+using System.Windows.Media.Media3D.Converters;
+using System.Windows.Media.Animation;
+using System.Windows.Media.Composition;
 
 namespace System.Windows.Media.Media3D
 {
@@ -77,9 +84,8 @@ namespace System.Windows.Media.Media3D
                 throw GetConvertFromException(value);
             }
 
-            String source = value as string;
 
-            if (source != null)
+            if (value is string source)
             {
                 return Matrix3D.Parse(source);
             }
@@ -110,8 +116,6 @@ namespace System.Windows.Media.Media3D
                 if (destinationType == typeof(string))
                 {
                     // Delegate to the formatting/culture-aware ConvertToString method.
-
-                    #pragma warning suppress 6506 // instance is obviously not null
                     return instance.ConvertToString(null, culture);
                 }
             }

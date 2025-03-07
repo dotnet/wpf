@@ -9,10 +9,19 @@
 // Please see MilCodeGen.html for more information.
 //
 
+using MS.Internal;
+using MS.Internal.KnownBoxes;
+using MS.Internal.Collections;
+using MS.Utility;
+using System.Collections;
 using System.ComponentModel;
 using System.Globalization;
-
-#pragma warning disable 1634, 1691  // suppressing PreSharp warnings
+using System.Text;
+using System.Windows.Media.Effects;
+using System.Windows.Media.Animation;
+using System.Windows.Media.Composition;
+using System.Windows.Markup;
+using System.Windows.Media.Converters;
 
 namespace System.Windows.Media
 {
@@ -77,9 +86,8 @@ namespace System.Windows.Media
                 throw GetConvertFromException(value);
             }
 
-            String source = value as string;
 
-            if (source != null)
+            if (value is string source)
             {
                 return DoubleCollection.Parse(source);
             }
@@ -110,8 +118,6 @@ namespace System.Windows.Media
                 if (destinationType == typeof(string))
                 {
                     // Delegate to the formatting/culture-aware ConvertToString method.
-
-                    #pragma warning suppress 6506 // instance is obviously not null
                     return instance.ConvertToString(null, culture);
                 }
             }

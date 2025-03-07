@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -86,8 +86,8 @@ namespace System.Windows.Controls
             // keeping the existing ContentPresenters
             //
 
-            Type oldType = (e.OldValue != null) ? e.OldValue.GetType() : null;
-            Type newType = (e.NewValue != null) ? e.NewValue.GetType() : null;
+            Type oldType = e.OldValue?.GetType();
+            Type newType = e.NewValue?.GetType();
 
             // DisconnectedItem doesn't count as a real type change
             if (e.NewValue == BindingExpressionBase.DisconnectedItem)
@@ -581,18 +581,21 @@ namespace System.Windows.Controls
 
             if ((binding = column.DisplayMemberBinding) != null)
             {
-                cell = new TextBlock();
-
-                // Needed this. Otherwise can't size to content at startup time.
-                // The reason is cell.Text is empty after the first round of measure.
-                cell.DataContext = Content;
+                cell = new TextBlock
+                {
+                    // Needed this. Otherwise can't size to content at startup time.
+                    // The reason is cell.Text is empty after the first round of measure.
+                    DataContext = Content
+                };
 
                 cell.SetBinding(TextBlock.TextProperty, binding);
             }
             else
             {
-                ContentPresenter cp = new ContentPresenter();
-                cp.Content = Content;
+                ContentPresenter cp = new ContentPresenter
+                {
+                    Content = Content
+                };
 
                 DataTemplate dt;
                 DataTemplateSelector dts;

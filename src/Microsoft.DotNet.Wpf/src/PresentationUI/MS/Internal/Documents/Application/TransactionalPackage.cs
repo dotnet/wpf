@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -82,7 +82,7 @@ namespace MS.Internal.Documents.Application
         {
             throw new ArgumentException(
                 SR.PackagingWriteNotSupported,
-                "workspace");
+                nameof(workspace));
         }
 
         Package temporaryPackage = Package.Open(
@@ -314,10 +314,7 @@ namespace MS.Internal.Documents.Application
     /// </remarks>
     protected override void FlushCore()
     {
-        if (_tempPackage != null)
-        {
-            _tempPackage.Flush();
-        }
+        _tempPackage?.Flush();
     }
 
     /// <summary>

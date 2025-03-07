@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -299,10 +299,12 @@ namespace System.Windows
         [System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Advanced)]
         public void PushBranchNode(object node, object source)
         {
-            BranchNode branchNode = new BranchNode();
-            branchNode.Node = node;
-            branchNode.Source = source;
-            
+            BranchNode branchNode = new BranchNode
+            {
+                Node = node,
+                Source = source
+            };
+
             (_branchNodeStack ??= new Stack<BranchNode>(1)).Push(branchNode);
         }
 
@@ -508,10 +510,7 @@ namespace System.Windows
             
             _routeItemList.Clear();
 
-            if (_branchNodeStack != null)
-            {
-                _branchNodeStack.Clear();
-            }
+            _branchNodeStack?.Clear();
 
             _sourceItemList.Clear();
         }

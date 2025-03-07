@@ -109,11 +109,12 @@ namespace System.Windows.Media.Animation
             DUCE.ResourceHandle handle,
             DUCE.Channel channel)
         {
-            DUCE.MILCMD_SIZERESOURCE cmd = new DUCE.MILCMD_SIZERESOURCE();
-
-            cmd.Type = MILCMD.MilCmdSizeResource;
-            cmd.Handle = handle;
-            cmd.Value = CurrentValue;
+            DUCE.MILCMD_SIZERESOURCE cmd = new DUCE.MILCMD_SIZERESOURCE
+            {
+                Type = MILCMD.MilCmdSizeResource,
+                Handle = handle,
+                Value = CurrentValue
+            };
 
             unsafe
             {

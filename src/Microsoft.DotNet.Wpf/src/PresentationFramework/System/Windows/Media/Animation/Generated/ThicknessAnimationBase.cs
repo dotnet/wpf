@@ -3,13 +3,13 @@
 // See the LICENSE file in the project root for more information.
 
 //
+//
 // This file was generated, please do not edit it directly.
 //
 // Please see MilCodeGen.html for more information.
 //
 
-// Allow use of presharp: #pragma warning suppress <nnnn>
-#pragma warning disable 1634, 1691
+using System.Windows.Media.Media3D;
 
 namespace System.Windows.Media.Animation
 {
@@ -133,10 +133,6 @@ namespace System.Windows.Media.Animation
 
             ArgumentNullException.ThrowIfNull(animationClock);
 
-            // We check for null above but presharp doesn't notice so we suppress the 
-            // warning here.
-
-#pragma warning suppress 6506
             if (animationClock.CurrentState == ClockState.Stopped)
             {
                 return defaultDestinationValue;

@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -85,9 +85,9 @@ namespace MS.Internal.Media
             {
                 visual.SetFlagsToRoot(value, flags);
             }
-            else if (visual3D != null)
+            else
             {
-                visual3D.SetFlagsToRoot(value, flags);
+                visual3D?.SetFlagsToRoot(value, flags);
             }
         }
 
@@ -186,7 +186,7 @@ namespace MS.Internal.Media
         /// </summary>
         internal static void EnsureNonNullVisual(DependencyObject element)
         {
-            EnsureVisual(element, /* allowNull = */ false);
+            EnsureVisual(element, allowNull: false);
         }
 
         /// <summary>
@@ -195,7 +195,7 @@ namespace MS.Internal.Media
         /// </summary>
         internal static void EnsureVisual(DependencyObject element)
         {
-            EnsureVisual(element, /* allowNull = */ true);
+            EnsureVisual(element, allowNull: true);
         }
 
         /// <summary>
@@ -208,7 +208,7 @@ namespace MS.Internal.Media
             {
                 if (!allowNull)
                 {
-                    throw new ArgumentNullException("element");
+                    throw new ArgumentNullException(nameof(element));
                 }
 
                 return;
@@ -281,7 +281,7 @@ namespace MS.Internal.Media
             {
                 Debug.Fail(String.Format(
                                "'{0}' is not a Visual or Visual3D. Caller is responsible for guaranteeing that element is a Visual type.",
-                               element != null ? element.GetType() : null));
+                               element?.GetType()));
             }
 
             return castSucceeded;

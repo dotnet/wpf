@@ -51,9 +51,10 @@ namespace System.Windows.Media.Animation
             {
                 if (s_emptyCollection == null)
                 {
-                    RectKeyFrameCollection emptyCollection = new RectKeyFrameCollection();
-
-                    emptyCollection._keyFrames = new List< RectKeyFrame>(0);
+                    RectKeyFrameCollection emptyCollection = new RectKeyFrameCollection
+                    {
+                        _keyFrames = new List<RectKeyFrame>(0)
+                    };
                     emptyCollection.Freeze();
 
                     s_emptyCollection = emptyCollection;

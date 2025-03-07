@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -71,11 +71,7 @@ namespace System.Windows
         {
             //we only support converting to / from a string
             string text = value as string;
-            // brianew - presharp issue
-            //   diabling the warning for not using IsNullOrEmpty on the string since
-            //   are using the two operations for differnt results.
-#pragma warning disable 1634, 1691
-#pragma warning disable 6507
+
             if (text != null)
             {
                 //always return an ink object
@@ -94,8 +90,6 @@ namespace System.Windows
                     return new StrokeCollection();
                 }
             }
-#pragma warning restore 6507
-#pragma warning restore 1634, 1691
             return base.ConvertFrom(context, culture, value);
         }
 
@@ -135,18 +129,13 @@ namespace System.Windows
                     //get a ref to the StrokeCollection objects constructor that takes a byte[]
                     ConstructorInfo ci = typeof(StrokeCollection).GetConstructor(new Type[] { typeof(Stream) });
 
-                    // samgeo - Presharp issue
                     // Presharp gives a warning when local IDisposable variables are not closed
                     // in this case, we can't call Dispose since it will also close the underlying stream
                     // which strokecollection needs open to read in the constructor
-#pragma warning disable 1634, 1691
-#pragma warning disable 6518
                     MemoryStream stream = new MemoryStream();
-                    strokes.Save(stream, true/*compress*/);
+                    strokes.Save(stream, compress: true);
                     stream.Position = 0;
                     return new InstanceDescriptor(ci, new object[] { stream });
-#pragma warning restore 6518
-#pragma warning restore 1634, 1691
                 }
             }
             return base.ConvertTo(context, culture, value, destinationType);

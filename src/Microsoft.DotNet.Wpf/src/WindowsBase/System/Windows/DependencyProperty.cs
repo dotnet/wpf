@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -11,8 +11,6 @@ using System.Windows.Markup;    // For ValueSerializerAttribute
 using MS.Internal.WindowsBase;
 using System.Windows.Threading; // For DispatcherObject
 using System.Runtime.CompilerServices;
-
-#pragma warning disable 1634, 1691  // suppressing PreSharp warnings
 
 namespace System.Windows
 {
@@ -143,8 +141,6 @@ namespace System.Windows
             }
 
             // Authorize registering type for read-only access, create key.
-            #pragma warning suppress 6506 // typeMetadata is never null, since we generate default metadata if none is provided.
-
             // Apply type-specific metadata to owner type only
             property.OverrideMetadata(ownerType, typeMetadata, authorizationKey);
 
@@ -244,7 +240,7 @@ namespace System.Windows
 
             if (name.Length == 0)
             {
-                throw new ArgumentException(SR.StringEmpty, "name");
+                throw new ArgumentException(SR.StringEmpty, nameof(name));
             }
 
             ArgumentNullException.ThrowIfNull(ownerType);
@@ -367,7 +363,7 @@ namespace System.Windows
             }
 
             ValidateDefaultValueCommon(defaultMetadata.DefaultValue, propertyType,
-                propertyName, validateValueCallback, /*checkThreadAffinity = */ true);
+                propertyName, validateValueCallback, checkThreadAffinity: true);
         }
 
         // Validate the given default value, used by PropertyMetadata.GetDefaultValue()
@@ -406,18 +402,16 @@ namespace System.Windows
                 // deriving from DispatcherObject are allowed - it is up to the user to
                 // make any custom types free-threaded.
 
-                DispatcherObject dispatcherObject = defaultValue as DispatcherObject;
 
-                if (dispatcherObject != null && dispatcherObject.Dispatcher != null)
+                if (defaultValue is DispatcherObject dispatcherObject && dispatcherObject.Dispatcher != null)
                 {
                     // Try to make the DispatcherObject free-threaded if it's an
                     // ISealable.
 
-                    ISealable valueAsISealable = dispatcherObject as ISealable;
 
-                    if (valueAsISealable != null && valueAsISealable.CanSeal)
+                    if (dispatcherObject is ISealable valueAsISealable && valueAsISealable.CanSeal)
                     {
-                        Invariant.Assert (!valueAsISealable.IsSealed,
+                        Invariant.Assert(!valueAsISealable.IsSealed,
                                "A Sealed ISealable must not have dispatcher affinity");
 
                         valueAsISealable.Seal();

@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -34,7 +34,7 @@ namespace Microsoft.Windows.Controls
             RibbonGroup ownerRibbonGroup)
             : base(adornedElement)
         {
-            PlacementTarget = (placementTarget == null ? adornedElement : placementTarget);
+            PlacementTarget = (placementTarget ?? adornedElement);
             HorizontalPlacement = horizontalPlacement;
             VerticalPlacement = verticalPlacement;
             HorizontalOffset = horizontalOffset;
@@ -51,7 +51,7 @@ namespace Microsoft.Windows.Controls
             if (index != 0 ||
                 _keyTipControl == null)
             {
-                throw new ArgumentOutOfRangeException("index");
+                throw new ArgumentOutOfRangeException(nameof(index));
             }
             return _keyTipControl;
         }
@@ -76,10 +76,7 @@ namespace Microsoft.Windows.Controls
 
         protected override Size ArrangeOverride(Size finalSize)
         {
-            if (_keyTipControl != null)
-            {
-                _keyTipControl.Arrange(new Rect(_keyTipControl.DesiredSize));
-            }
+            _keyTipControl?.Arrange(new Rect(_keyTipControl.DesiredSize));
             return finalSize;
         }
 

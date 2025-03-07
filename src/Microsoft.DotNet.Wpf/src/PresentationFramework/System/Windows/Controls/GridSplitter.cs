@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -389,16 +389,20 @@ namespace System.Windows.Controls
                 : base(gridSplitter)
             {
                 // Create a preview control to overlay on top of the GridSplitter
-                Control previewControl = new Control();
-                previewControl.Style = previewStyle;
-                previewControl.IsEnabled = false;
+                Control previewControl = new Control
+                {
+                    Style = previewStyle,
+                    IsEnabled = false
+                };
 
                 // Add a decorator to perform translations
-                Translation = new TranslateTransform();                
-                _decorator = new Decorator();
-                _decorator.Child = previewControl;
-                _decorator.RenderTransform = Translation;
- 
+                Translation = new TranslateTransform();
+                _decorator = new Decorator
+                {
+                    Child = previewControl,
+                    RenderTransform = Translation
+                };
+
                 this.AddVisualChild(_decorator);  
             }
 
@@ -417,7 +421,7 @@ namespace System.Windows.Controls
                 Debug.Assert(_decorator != null);
                 if(index != 0)
                 {
-                    throw new ArgumentOutOfRangeException("index", index, SR.Visual_ArgumentOutOfRange);
+                    throw new ArgumentOutOfRangeException(nameof(index), index, SR.Visual_ArgumentOutOfRange);
                 }
 
                 return _decorator;
@@ -490,10 +494,12 @@ namespace System.Windows.Controls
             if (grid != null)
             {
                 // Setup data used for resizing
-                _resizeData = new ResizeData();
-                _resizeData.Grid = grid;
-                _resizeData.ShowsPreview = ShowsPreview;
-                _resizeData.ResizeDirection = GetEffectiveResizeDirection();
+                _resizeData = new ResizeData
+                {
+                    Grid = grid,
+                    ShowsPreview = ShowsPreview,
+                    ResizeDirection = GetEffectiveResizeDirection()
+                };
                 _resizeData.ResizeBehavior = GetEffectiveResizeBehavior(_resizeData.ResizeDirection);
                 _resizeData.SplitterLength = Math.Min(ActualWidth, ActualHeight);
 

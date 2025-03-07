@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -1330,9 +1330,11 @@ namespace System.Windows.Controls
         {
             if (!HasNonDefaultValue(property))
             {
-                Binding binding = new Binding();
-                binding.RelativeSource = RelativeSource.TemplatedParent;
-                binding.Path = new PropertyPath(property);
+                Binding binding = new Binding
+                {
+                    RelativeSource = RelativeSource.TemplatedParent,
+                    Path = new PropertyPath(property)
+                };
                 SetBinding(property, binding);
             }
         }
@@ -1454,10 +1456,7 @@ namespace System.Windows.Controls
         private static void OnPanningModeChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             ScrollViewer sv = d as ScrollViewer;
-            if (sv != null)
-            {
-                sv.OnPanningModeChanged();
-            }
+            sv?.OnPanningModeChanged();
         }
 
         /// <summary>
@@ -1646,7 +1645,7 @@ namespace System.Windows.Controls
         {
             // If the original source is not from the same PresentationSource as of ScrollViewer,
             // then do not start the manipulation.
-            if (!PresentationSource.UnderSamePresentationSource(e.OriginalSource as DependencyObject, this))
+            if (!PresentationSource.IsUnderSamePresentationSource(e.OriginalSource as DependencyObject, this))
             {
                 return false;
             }
@@ -2402,9 +2401,11 @@ namespace System.Windows.Controls
                     new Size(ExtentWidth, ExtentHeight),
                     new Vector(ExtentWidth - oldExtentWidth, ExtentHeight - oldExtentHeight),
                     new Size(ViewportWidth, ViewportHeight),
-                    new Vector(ViewportWidth - oldViewportWidth, ViewportHeight - oldViewportHeight));
-                args.RoutedEvent = ScrollChangedEvent;
-                args.Source = this;
+                    new Vector(ViewportWidth - oldViewportWidth, ViewportHeight - oldViewportHeight))
+                {
+                    RoutedEvent = ScrollChangedEvent,
+                    Source = this
+                };
 
                 try
                 {
@@ -2412,15 +2413,12 @@ namespace System.Windows.Controls
 
                     // Fire automation events if automation is active.
                     ScrollViewerAutomationPeer peer = UIElementAutomationPeer.FromElement(this) as ScrollViewerAutomationPeer;
-                    if(peer != null)
-                    {
-                        peer.RaiseAutomationEvents(oldExtentWidth,
+                    peer?.RaiseAutomationEvents(oldExtentWidth,
                                                    oldExtentHeight,
                                                    oldViewportWidth,
                                                    oldViewportHeight,
                                                    oldActualHorizontalOffset,
                                                    oldActualVerticalOffset);
-                    }
                 }
                 finally
                 {
@@ -2677,12 +2675,16 @@ namespace System.Windows.Controls
 
             // Bind Actual HorizontalOffset to HorizontalScrollBar.Value
             // Bind Actual VerticalOffset to VerticalScrollbar.Value
-            Binding bindingHorizontalOffset = new Binding("HorizontalOffset");
-            bindingHorizontalOffset.Mode = BindingMode.OneWay;
-            bindingHorizontalOffset.RelativeSource = RelativeSource.TemplatedParent;
-            Binding bindingVerticalOffset = new Binding("VerticalOffset");
-            bindingVerticalOffset.Mode = BindingMode.OneWay;
-            bindingVerticalOffset.RelativeSource = RelativeSource.TemplatedParent;
+            Binding bindingHorizontalOffset = new Binding("HorizontalOffset")
+            {
+                Mode = BindingMode.OneWay,
+                RelativeSource = RelativeSource.TemplatedParent
+            };
+            Binding bindingVerticalOffset = new Binding("VerticalOffset")
+            {
+                Mode = BindingMode.OneWay,
+                RelativeSource = RelativeSource.TemplatedParent
+            };
 
             grid.SetValue(Grid.BackgroundProperty, new TemplateBindingExtension(BackgroundProperty));
             grid.AppendChild(gridColumn1);
@@ -2731,8 +2733,10 @@ namespace System.Windows.Controls
             corner.SetValue(Grid.RowProperty, 1);
             corner.SetResourceReference(Rectangle.FillProperty, SystemColors.ControlBrushKey);
 
-            template = new ControlTemplate(typeof(ScrollViewer));
-            template.VisualTree = grid;
+            template = new ControlTemplate(typeof(ScrollViewer))
+            {
+                VisualTree = grid
+            };
             template.Seal();
 
             return (template);

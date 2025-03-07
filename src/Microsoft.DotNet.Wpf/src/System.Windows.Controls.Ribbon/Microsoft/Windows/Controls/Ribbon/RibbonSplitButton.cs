@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -227,10 +227,7 @@ namespace Microsoft.Windows.Controls.Ribbon
         private static void OnDropDownToolTipPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             RibbonSplitButton splitButton = (RibbonSplitButton)d;
-            if (splitButton.PartToggleButton != null)
-            {
-                splitButton.PartToggleButton.CoerceValue(FrameworkElement.ToolTipProperty);
-            }
+            splitButton.PartToggleButton?.CoerceValue(FrameworkElement.ToolTipProperty);
         }
 
         #endregion
@@ -401,10 +398,7 @@ namespace Microsoft.Windows.Controls.Ribbon
             if (!IsCheckable && AutomationPeer.ListenerExists(AutomationEvents.InvokePatternOnInvoked))
             {
                 RibbonSplitButtonAutomationPeer peer = UIElementAutomationPeer.FromElement(this) as RibbonSplitButtonAutomationPeer;
-                if (peer != null)
-                {
-                    peer.RaiseInvokeAutomationEvent();
-                }
+                peer?.RaiseInvokeAutomationEvent();
             }
         }
 
@@ -414,10 +408,7 @@ namespace Microsoft.Windows.Controls.Ribbon
             if (splitButton.IsCheckable)
             {
                 RibbonSplitButtonAutomationPeer peer = UIElementAutomationPeer.FromElement(splitButton) as RibbonSplitButtonAutomationPeer;
-                if (peer != null)
-                {
-                    peer.RaiseToggleStatePropertyChangedEvent((bool)e.OldValue, (bool)e.NewValue);
-                }
+                peer?.RaiseToggleStatePropertyChangedEvent((bool)e.OldValue, (bool)e.NewValue);
             }
         }
 

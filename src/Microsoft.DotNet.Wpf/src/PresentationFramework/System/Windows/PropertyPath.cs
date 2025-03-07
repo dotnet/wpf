@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -784,14 +784,6 @@ namespace System.Windows
 
             if (tc != null && tc.CanConvertFrom(typeof(string)))
             {
-                // PreSharp uses message numbers that the C# compiler doesn't know about.
-                // Disable the C# complaints, per the PreSharp documentation.
-                #pragma warning disable 1634, 1691
-
-                // PreSharp complains about catching NullReference (and other) exceptions.
-                // It doesn't recognize that IsCritical[Application]Exception() handles these correctly.
-                #pragma warning disable 56500
-
                 try
                 {
                     value = tc.ConvertFromString(null, CultureInfo.InvariantCulture,
@@ -815,9 +807,6 @@ namespace System.Windows
                     if (throwOnError)
                         throw;
                 }
-
-                #pragma warning restore 56500
-                #pragma warning restore 1634, 1691
             }
 
             if (value == null && type.IsAssignableFrom(typeof(string)))
@@ -859,7 +848,7 @@ namespace System.Windows
 
                 TypeAndSerializer typeAndSerializer = parserContext.XamlTypeMapper.GetTypeOnly(namespaceURI, name);
 
-                return (typeAndSerializer != null) ? typeAndSerializer.ObjectType : null;
+                return typeAndSerializer?.ObjectType;
             }
 
             else

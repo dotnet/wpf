@@ -1,13 +1,10 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
 //
 // Description: Base class for content in text based FrameworkElement.
 //
-
-// Enable presharp pragma warning suppress directives.
-#pragma warning disable 1634, 1691
 
 using System.Collections;
 using System.ComponentModel;
@@ -111,9 +108,6 @@ namespace System.Windows.Documents
                 // extracted before the final insert.
 
                 SplayTreeNode startNode = start.GetScopingNode();
-                // Suppress presharp 6506: Parameter 'end' to this public method must be validated.
-                // We already validated it indirectly above, when calling ValidationHelper.VerifyPositionPair.
-                #pragma warning suppress 6506
                 SplayTreeNode endNode = end.GetScopingNode();
 
                 if (startNode == _textElementNode)
@@ -153,8 +147,6 @@ namespace System.Windows.Documents
                 }
                 else
                 {
-                    // Presharp doesn't understand that by design TextPointer.TextContainer can never be null.
-                    #pragma warning suppress 6506
                     if (tree == start.TextContainer)
                     {
                         //
@@ -188,8 +180,6 @@ namespace System.Windows.Documents
                             tree.EndChange();
                         }
 
-                        // Presharp doesn't understand that by design TextPointer.TextContainer can never be null.
-                        #pragma warning suppress 56506
                         start.TextContainer.BeginChange();
                         try
                         {
@@ -245,8 +235,6 @@ namespace System.Windows.Documents
                 {
                     tree = EnsureTextContainer();
 
-                    // Presharp doesn't understand that by design EnsureTextContainer can never return null.
-                    #pragma warning suppress 6506
                     tree.BeginChange();
                     try
                     {
@@ -262,8 +250,6 @@ namespace System.Windows.Documents
             {
                 tree = textPosition.TextContainer;
 
-                // Presharp doesn't understand that by design TextPointer.TextContainer can never be null.
-                #pragma warning suppress 56506
                 tree.BeginChange();
                 try
                 {
@@ -1108,10 +1094,7 @@ namespace System.Windows.Documents
                         // child.Current could be FrameworkElement, FrameworkContentElement,
                         //  or anything else.  Only recursively call self for FE & FCE.
                         TextElement child = children.Current as TextElement;
-                        if (child != null)
-                        {
-                            child.DeepEndInit();
-                        }
+                        child?.DeepEndInit();
                     }
                 }
 
@@ -1425,7 +1408,7 @@ namespace System.Windows.Documents
                 }
 
                 TextTreeTextElementNode node = _textElementNode.GetNextNode() as TextTreeTextElementNode;
-                return (node != null) ? node.TextElement : null;
+                return node?.TextElement;
             }
         }
 
@@ -1443,7 +1426,7 @@ namespace System.Windows.Documents
                 }
 
                 TextTreeTextElementNode node = _textElementNode.GetPreviousNode() as TextTreeTextElementNode;
-                return (node != null) ? node.TextElement : null;
+                return node?.TextElement;
             }
         }
 
@@ -1461,7 +1444,7 @@ namespace System.Windows.Documents
                 }
 
                 TextTreeTextElementNode node = _textElementNode.GetFirstContainedNode() as TextTreeTextElementNode;
-                return (node != null) ? node.TextElement : null;
+                return node?.TextElement;
             }
         }
 
@@ -1479,7 +1462,7 @@ namespace System.Windows.Documents
                 }
 
                 TextTreeTextElementNode node = _textElementNode.GetLastContainedNode() as TextTreeTextElementNode;
-                return (node != null) ? node.TextElement : null;
+                return node?.TextElement;
             }
         }
 

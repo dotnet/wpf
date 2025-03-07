@@ -1,12 +1,9 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
 // Description:
 //  This class provides api's to add/remove/verify signatures on an MMCF container.
-
-// Allow use of presharp warning numbers [6506] unknown to the compiler
-#pragma warning disable 1634, 1691
 
 using System.Security.Cryptography.Xml;                 // for SignedXml
 using System.Security.Cryptography.X509Certificates;    // for X509Certificate
@@ -88,7 +85,7 @@ namespace System.IO.Packaging
             ArgumentNullException.ThrowIfNull(signature);
 
             if (result < VerifyResult.Success || result > VerifyResult.NotSigned)
-                throw new System.ArgumentOutOfRangeException("result");
+                throw new System.ArgumentOutOfRangeException(nameof(result));
 
             _signature = signature;
             _result = result;
@@ -205,7 +202,7 @@ namespace System.IO.Packaging
                 ArgumentNullException.ThrowIfNull(value);
 
                 if (value.Length == 0)
-                    throw new ArgumentException(SR.UnsupportedHashAlgorithm, "value");
+                    throw new ArgumentException(SR.UnsupportedHashAlgorithm, nameof(value));
 
                 _hashAlgorithmString = value;
             }
@@ -224,7 +221,7 @@ namespace System.IO.Packaging
             set
             {
                 if ((value < CertificateEmbeddingOption.InCertificatePart) || (value > CertificateEmbeddingOption.NotEmbedded))
-                    throw new ArgumentOutOfRangeException("value");
+                    throw new ArgumentOutOfRangeException(nameof(value));
 
                 _certificateEmbeddingOption = value;
             }
@@ -480,14 +477,8 @@ namespace System.IO.Packaging
             bool embedCertificateInSignaturePart = (_certificateEmbeddingOption == CertificateEmbeddingOption.InSignaturePart);
 
             // convert cert to version2 - more functionality
-            X509Certificate2 exSigner = certificate as X509Certificate2;
-            if (exSigner == null)
+            if (certificate is not X509Certificate2 exSigner)
                 exSigner = new X509Certificate2(certificate.Handle);
-
-            //PRESHARP: Parameter to this public method must be validated:  A null-dereference can occur here.
-            //      Parameter 'exSigner' to this public method must be validated:  A null-dereference can occur here. 
-            //This is a false positive as the checks above can gurantee no null dereference will occur  
-#pragma warning disable 6506
 
             PackageDigitalSignature signature = null;
             PackagePart newSignaturePart = null;
@@ -556,7 +547,6 @@ namespace System.IO.Packaging
                 newSignaturePart.CreateRelationship(certificatePartName, TargetMode.Internal, CertificatePart.RelationshipType);
                 signature.SetCertificatePart(certPart);
             }
-#pragma warning restore 6506
 
             _container.Flush();
 
@@ -930,7 +920,7 @@ namespace System.IO.Packaging
                         if (_signatures.Count == 0)
                             DeleteOriginPart();
 
-                        throw new ArgumentException(SR.PartToSignMissing, "parts");
+                        throw new ArgumentException(SR.PartToSignMissing, nameof(parts));
                     }
                 }
             }
@@ -967,12 +957,12 @@ namespace System.IO.Packaging
                 {
                     // ensure they don't duplicate the reserved one
                     if (string.Equals(obj.Id, XTable.Get(XTable.ID.OpcAttrValue), StringComparison.Ordinal))
-                        throw new ArgumentException(SR.SignaturePackageObjectTagMustBeUnique, "signatureObjects");
+                        throw new ArgumentException(SR.SignaturePackageObjectTagMustBeUnique, nameof(signatureObjects));
 
                     // check for duplicates
                     //if (ids.Contains(obj.Id))
                     if (ids.Exists(new StringMatchPredicate(obj.Id).Match))
-                        throw new ArgumentException(SR.SignatureObjectIdMustBeUnique, "signatureObjects");
+                        throw new ArgumentException(SR.SignatureObjectIdMustBeUnique, nameof(signatureObjects));
                     else
                         ids.Add(obj.Id);
                 }
@@ -988,7 +978,7 @@ namespace System.IO.Packaging
                 }
                 catch (System.Xml.XmlException xmlException)
                 {
-                    throw new ArgumentException(SR.Format(SR.NotAValidXmlIdString, signatureId), "signatureId", xmlException);
+                    throw new ArgumentException(SR.Format(SR.NotAValidXmlIdString, signatureId), nameof(signatureId), xmlException);
                 }
             }
         }
@@ -1004,8 +994,7 @@ namespace System.IO.Packaging
                 return true;            // null means empty
 
             // see if it's really a collection as this is more efficient than enumerating
-            System.Collections.ICollection collection = enumerable as System.Collections.ICollection;
-            if (collection != null)
+            if (enumerable is System.Collections.ICollection collection)
             {
                 return (collection.Count == 0);
             }

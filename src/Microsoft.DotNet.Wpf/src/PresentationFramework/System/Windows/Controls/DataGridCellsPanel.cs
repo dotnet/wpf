@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -81,8 +81,7 @@ namespace System.Windows.Controls
                 // This makes sure that the ItemsPresenter and the DatagridCellsPresenter is invalidated even if this is an arrange pass.
                 this.ParentPresenter.InvalidateMeasure();
                 UIElement parent =  VisualTreeHelper.GetParent(this) as UIElement;
-                if (parent != null)
-                    parent.InvalidateMeasure();
+                parent?.InvalidateMeasure();
             }
 
             return measureSize;
@@ -1309,17 +1308,11 @@ namespace System.Windows.Controls
             }
 
             // Remove the clip on previous clipped child
-            if (arrangeState.OldClippedChild != null)
-            {
-                arrangeState.OldClippedChild.CoerceValue(ClipProperty);
-            }
+            arrangeState.OldClippedChild?.CoerceValue(ClipProperty);
 
             // Add the clip on new child to be clipped for the sake of frozen columns.
             _clippedChildForFrozenBehaviour = arrangeState.NewClippedChild;
-            if (_clippedChildForFrozenBehaviour != null)
-            {
-                _clippedChildForFrozenBehaviour.CoerceValue(ClipProperty);
-            }
+            _clippedChildForFrozenBehaviour?.CoerceValue(ClipProperty);
         }
 
         private void SetDataGridCellPanelWidth(IList children, double newWidth)
@@ -1357,8 +1350,10 @@ namespace System.Windows.Controls
         {
             IList children = RealizedChildren;
 
-            ArrangeState arrangeState = new ArrangeState();
-            arrangeState.ChildHeight = arrangeSize.Height;
+            ArrangeState arrangeState = new ArrangeState
+            {
+                ChildHeight = arrangeSize.Height
+            };
             DataGrid parentDataGrid = ParentDataGrid;
 
             /*

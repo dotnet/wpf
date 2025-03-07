@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -59,10 +59,7 @@ namespace System.Windows.Input
             ArgumentNullException.ThrowIfNull(element);
 
             ManipulationDevice device = ManipulationDevice.GetManipulationDevice(element);
-            if (device != null)
-            {
-                device.CompleteManipulation(/* withInertia = */ true);
-            }
+            device?.CompleteManipulation(withInertia: true);
         }
 
         /// <summary>
@@ -83,7 +80,7 @@ namespace System.Windows.Input
             ManipulationDevice device = ManipulationDevice.GetManipulationDevice(element);
             if (device != null)
             {
-                device.CompleteManipulation(/* withInertia = */ false);
+                device.CompleteManipulation(withInertia: false);
                 return true;
             }
 

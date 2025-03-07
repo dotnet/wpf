@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -97,10 +97,7 @@ namespace System.Windows.Controls
 
             ComboBox parent = ParentComboBox;
 
-            if (parent != null)
-            {
-                parent.NotifyComboBoxItemMouseDown(this);
-            }
+            parent?.NotifyComboBoxItemMouseDown(this);
 
             base.OnMouseLeftButtonDown(e);
         }
@@ -115,10 +112,7 @@ namespace System.Windows.Controls
 
             ComboBox parent = ParentComboBox;
 
-            if (parent != null)
-            {
-                parent.NotifyComboBoxItemMouseUp(this);
-            }
+            parent?.NotifyComboBoxItemMouseUp(this);
 
             base.OnMouseLeftButtonUp(e);
         }
@@ -133,10 +127,7 @@ namespace System.Windows.Controls
 
             ComboBox parent = ParentComboBox;
 
-            if (parent != null)
-            {
-                parent.NotifyComboBoxItemEnter(this);
-            }
+            parent?.NotifyComboBoxItemEnter(this);
 
             base.OnMouseEnter(e);
         }
@@ -183,10 +174,7 @@ namespace System.Windows.Controls
             
             ComboBox parent = ParentComboBox;
 
-            if (parent != null)
-            {
-                parent.NotifyComboBoxItemEnter(this);
-            }
+            parent?.NotifyComboBoxItemEnter(this);
 
             base.OnGotKeyboardFocus(e);
         }

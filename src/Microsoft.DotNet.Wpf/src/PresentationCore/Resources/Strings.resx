@@ -1210,12 +1210,6 @@
   <data name="InvalidPartName" xml:space="preserve">
     <value>The part name does not correspond to its content type.</value>
   </data>
-  <data name="InvalidPermissionStateValue" xml:space="preserve">
-    <value>PermissionState value '{0}' is not valid for this Permission.</value>
-  </data>
-  <data name="InvalidPermissionType" xml:space="preserve">
-    <value>Permission type is not valid. Expected '{0}'.</value>
-  </data>
   <data name="InvalidPressureValue" xml:space="preserve">
     <value>Pressure must be a value between 0 and 1.</value>
   </data>
@@ -2040,9 +2034,6 @@
   </data>
   <data name="SearchText" xml:space="preserve">
     <value>Search</value>
-  </data>
-  <data name="SecurityExceptionForSettingSandboxExternalToTrue" xml:space="preserve">
-    <value>Cannot set SandboxExternalContent to true in partial trust.</value>
   </data>
   <data name="SeekNegative" xml:space="preserve">
     <value>Cannot set seek pointer to a negative position.</value>

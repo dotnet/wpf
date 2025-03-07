@@ -136,37 +136,9 @@ namespace MS.Internal.Utility
             }
 
             return newUri;
-        }        
+        }
 
-        /// <summary>
-        /// Gets the referer to set as a header on the HTTP request.
-        /// We do not set the referer if we are navigating to a 
-        /// differnet security zone or to a different Uri scheme.
-        /// </summary>
-        internal static string GetReferer(Uri destinationUri)
-        {
-            string referer = null;
 
-            Uri sourceUri = MS.Internal.AppModel.SiteOfOriginContainer.BrowserSource;
-            if (sourceUri != null)
-            {
-                int sourceZone = MS.Internal.AppModel.CustomCredentialPolicy.MapUrlToZone(sourceUri);
-                int targetZone = MS.Internal.AppModel.CustomCredentialPolicy.MapUrlToZone(destinationUri);
-
-                // We don't send any referer when crossing zone
-                if (sourceZone == targetZone)
-                {
-                    // We don't send any referer when going cross-scheme
-                    if (string.Equals(sourceUri.Scheme, destinationUri.Scheme, StringComparison.OrdinalIgnoreCase))
-                    {
-                        // HTTPHeader requires the referer uri to be escaped. 
-                        referer = sourceUri.GetComponents(UriComponents.AbsoluteUri, UriFormat.UriEscaped);
-                    }
-                }
-            }
-
-            return referer;
-        }       
 
 
 #endif // PRESENTATION_CORE || PRESENTATIONFRAMEWORK

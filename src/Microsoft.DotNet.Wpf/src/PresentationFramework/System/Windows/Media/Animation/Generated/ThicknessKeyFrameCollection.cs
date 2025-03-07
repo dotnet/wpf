@@ -3,6 +3,7 @@
 // See the LICENSE file in the project root for more information.
 
 //
+//
 // This file was generated, please do not edit it directly.
 //
 // Please see MilCodeGen.html for more information.
@@ -50,9 +51,10 @@ namespace System.Windows.Media.Animation
             {
                 if (s_emptyCollection == null)
                 {
-                    ThicknessKeyFrameCollection emptyCollection = new ThicknessKeyFrameCollection();
-
-                    emptyCollection._keyFrames = new List< ThicknessKeyFrame>(0);
+                    ThicknessKeyFrameCollection emptyCollection = new ThicknessKeyFrameCollection
+                    {
+                        _keyFrames = new List<ThicknessKeyFrame>(0)
+                    };
                     emptyCollection.Freeze();
 
                     s_emptyCollection = emptyCollection;

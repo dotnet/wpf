@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -19,9 +19,6 @@ using MS.Win32;
 using MS.Internal.PresentationCore;
 
 using Microsoft.Win32.SafeHandles;
-
-// Since we disable PreSharp warnings in this file, we first need to disable warnings about unknown message numbers and unknown pragmas.
-#pragma warning disable 1634, 1691
 
 namespace MS.Internal.FontCache
 {
@@ -496,7 +493,7 @@ namespace MS.Internal.FontCache
                         out faceIndex
                     ))
                 {
-                    throw new ArgumentException(SR.FaceIndexMustBePositiveOrZero, "fontUri");
+                    throw new ArgumentException(SR.FaceIndexMustBePositiveOrZero, nameof(fontUri));
                 }
 
                 // face index was specified in a fragment, we need to strip off fragment from the source Uri
@@ -798,10 +795,8 @@ namespace MS.Internal.FontCache
             {
                 if (disposing)
                 {
-                    if (_viewHandle != null)
-                        _viewHandle.Dispose();
-                    if (_mappingHandle != null)
-                        _mappingHandle.Dispose();
+                    _viewHandle?.Dispose();
+                    _mappingHandle?.Dispose();
                 }
 
                 // We only handle flat disk files read only, should never be writeable.
@@ -817,12 +812,6 @@ namespace MS.Internal.FontCache
             {
                 unsafe
                 {
-                    // Disable PREsharp warning about not calling Marshal.GetLastWin32Error,
-                    // because we already check the handle for invalid value and
-                    // we are not particularly interested in specific Win32 error.
-
-#pragma warning disable 6523
-
                     long size;
 
                     using (SafeFileHandle fileHandle = UnsafeNativeMethods.CreateFile(
@@ -863,8 +852,6 @@ namespace MS.Internal.FontCache
                     _viewHandle = UnsafeNativeMethods.MapViewOfFileEx(_mappingHandle, UnsafeNativeMethods.FILE_MAP_READ, 0, 0, IntPtr.Zero, IntPtr.Zero);
                     if (_viewHandle.IsInvalid)
                         throw new IOException(SR.Format(SR.IOExceptionWithFileName, fileName));
-
-#pragma warning restore 6523
 
                     Initialize((byte*)_viewHandle.Memory, size, size, FileAccess.Read);
                 }

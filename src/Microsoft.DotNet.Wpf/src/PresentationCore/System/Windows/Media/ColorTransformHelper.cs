@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -57,12 +57,12 @@ namespace System.Windows.Media
         {
             if (sourceProfile == null || sourceProfile.IsInvalid)
             {
-                throw new ArgumentNullException("sourceProfile");
+                throw new ArgumentNullException(nameof(sourceProfile));
             }
 
             if (destinationProfile == null || destinationProfile.IsInvalid)
             {
-                throw new ArgumentNullException("destinationProfile");
+                throw new ArgumentNullException(nameof(destinationProfile));
             }
 
             IntPtr[] handles = new IntPtr[2];

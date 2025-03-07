@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -256,7 +256,7 @@ namespace System.Windows.Ink
                     StartListeningOnStrokeEvents(visual.Stroke);
 
                     // Attach it to the visual tree
-                    AttachVisual(visual, true/*buildingStrokeCollection*/);
+                    AttachVisual(visual, buildingStrokeCollection: true);
                 }
 
                 // Start listening on events from the stroke collection.
@@ -445,7 +445,7 @@ namespace System.Windows.Ink
                 StartListeningOnStrokeEvents(visual.Stroke);
 
                 // Attach it to the visual tree
-                AttachVisual(visual, false/*buildingStrokeCollection*/);
+                AttachVisual(visual, buildingStrokeCollection: false);
             }
 
             // Deal with removed strokes first
@@ -492,7 +492,7 @@ namespace System.Windows.Ink
             {
                 // The change requires reparenting the visual in the tree.
                 DetachVisual(visual);
-                AttachVisual(visual, false/*buildingStrokeCollection*/);
+                AttachVisual(visual, buildingStrokeCollection: false);
 
                 // Update the cached values
                 visual.CachedIsHighlighter = stroke.DrawingAttributes.IsHighlighter;
@@ -529,7 +529,7 @@ namespace System.Windows.Ink
             {
                 // Find or create a container visual for highlighter strokes of the color
                 ContainerVisual parent = GetContainerVisual(visual.Stroke.DrawingAttributes);
-                Debug.Assert(visual is StrokeVisual);
+                Debug.Assert(visual is not null);
 
                 //insert StrokeVisuals under any non-StrokeVisuals used for dynamic inking
                 int i = 0;
@@ -658,8 +658,10 @@ namespace System.Windows.Ink
                         _highlighters = new Dictionary<Color, HighlighterContainerVisual>();
                     }
 
-                    hcVisual = new HighlighterContainerVisual(color);
-                    hcVisual.Opacity = StrokeRenderer.HighlighterOpacity;
+                    hcVisual = new HighlighterContainerVisual(color)
+                    {
+                        Opacity = StrokeRenderer.HighlighterOpacity
+                    };
                     _highlightersRoot.Children.Add(hcVisual);
 
                     _highlighters.Add(color, hcVisual);

@@ -124,8 +124,7 @@ namespace System.Windows
             INameScope nameScope = obj as INameScope;
             if (nameScope == null)
             {
-                DependencyObject objAsDO = obj as DependencyObject;
-                if (objAsDO != null)
+                if (obj is DependencyObject objAsDO)
                 {
                     nameScope = GetNameScope(objAsDO);
                 }
@@ -260,11 +259,11 @@ namespace System.Windows
         {
             if (item.Key == null)
             {
-                throw new ArgumentException(SR.Format(SR.ReferenceIsNull, "item.Key"), "item");
+                throw new ArgumentException(SR.Format(SR.ReferenceIsNull, "item.Key"), nameof(item));
             }
             if (item.Value == null)
             {
-                throw new ArgumentException(SR.Format(SR.ReferenceIsNull, "item.Value"), "item");
+                throw new ArgumentException(SR.Format(SR.ReferenceIsNull, "item.Value"), nameof(item));
             }
 
             Add(item.Key, item.Value);
@@ -274,7 +273,7 @@ namespace System.Windows
         {
             if (item.Key == null)
             {
-                throw new ArgumentException(SR.Format(SR.ReferenceIsNull, "item.Key"), "item");
+                throw new ArgumentException(SR.Format(SR.ReferenceIsNull, "item.Key"), nameof(item));
             }
             return ContainsKey(item.Key);
         }
@@ -421,10 +420,7 @@ namespace System.Windows
 
             void IEnumerator.Reset()
             {
-                if (_enumerator != null)
-                {
-                    _enumerator.Reset();
-                }
+                _enumerator?.Reset();
             }
         }
         #endregion

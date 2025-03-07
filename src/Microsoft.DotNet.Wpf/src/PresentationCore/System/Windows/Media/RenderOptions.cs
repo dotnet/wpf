@@ -166,7 +166,7 @@ namespace System.Windows.Media
                                                 typeof(double), 
                                                 typeof(RenderOptions),
                                                 new UIPropertyMetadata(0.707),
-                                                /* ValidateValueCallback */ null);
+                                                validateValueCallback: null);
         
         /// <summary>
         /// Reads the attached property CacheInvalidationThresholdMinimum from the given object.
@@ -199,7 +199,7 @@ namespace System.Windows.Media
                                                 typeof(double), 
                                                 typeof(RenderOptions),
                                                 new UIPropertyMetadata(1.414),
-                                                /* ValidateValueCallback */ null);
+                                                validateValueCallback: null);
         
         /// <summary>
         /// Reads the attached property CacheInvalidationThresholdMaximum from the given object.

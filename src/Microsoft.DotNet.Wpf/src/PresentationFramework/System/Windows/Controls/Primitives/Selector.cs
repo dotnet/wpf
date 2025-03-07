@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -16,9 +16,6 @@ using MS.Internal.KnownBoxes;
 using MS.Internal.Controls;
 
 using BuildInfo = MS.Internal.PresentationFramework.BuildInfo;
-
-// Disable CS3001: Warning as Error: not CLS-compliant
-#pragma warning disable 3001
 
 namespace System.Windows.Controls.Primitives
 {
@@ -598,7 +595,7 @@ namespace System.Windows.Controls.Primitives
                 }
             }
 
-            Type selectedType = (value != null) ?  value.GetType() : null;
+            Type selectedType = value?.GetType();
             object selectedValue = value;
             DynamicValueConverter converter = new DynamicValueConverter(false);
 
@@ -746,10 +743,11 @@ namespace System.Windows.Controls.Primitives
             if (bindingExpr == null)
             {
                 // create the binding
-                binding = new Binding();
-
-                // Set source to null so binding does not use ambient DataContext
-                binding.Source = null;
+                binding = new Binding
+                {
+                    // Set source to null so binding does not use ambient DataContext
+                    Source = null
+                };
 
                 if (useXml)
                 {
@@ -999,8 +997,7 @@ namespace System.Windows.Controls.Primitives
                 if (item != null)
                 {
                     SelectorItemAutomationPeer itemPeer = selectorPeer.ItemPeers[item] as SelectorItemAutomationPeer;
-                    if (itemPeer != null)
-                        itemPeer.RaiseAutomationIsSelectedChanged(isSelected);
+                    itemPeer?.RaiseAutomationIsSelectedChanged(isSelected);
                 }
             }
         }
@@ -1767,9 +1764,10 @@ namespace System.Windows.Controls.Primitives
         /// </summary>
         private void InvokeSelectionChanged(List<ItemInfo> unselectedInfos, List<ItemInfo> selectedInfos)
         {
-            SelectionChangedEventArgs selectionChanged = new SelectionChangedEventArgs(unselectedInfos, selectedInfos);
-
-            selectionChanged.Source=this;
+            SelectionChangedEventArgs selectionChanged = new SelectionChangedEventArgs(unselectedInfos, selectedInfos)
+            {
+                Source = this
+            };
 
             OnSelectionChanged(selectionChanged);
         }
@@ -2420,8 +2418,7 @@ namespace System.Windows.Controls.Primitives
                                         selectedItems.Add(info);
                                     }
 
-                                    if (toRemove != null)
-                                        toRemove.Add(info);
+                                    toRemove?.Add(info);
                                 }
                             }
 
@@ -2695,10 +2692,7 @@ namespace System.Windows.Controls.Primitives
 
             public void Add(ItemInfo info)
             {
-                if (_set != null)
-                {
-                    _set.Add(info, info);
-                }
+                _set?.Add(info, info);
                 _list.Add(info);
 
                 if (info.IsResolved)    ++_resolvedCount;
@@ -2779,10 +2773,7 @@ namespace System.Windows.Controls.Primitives
             public void Clear()
             {
                 _list.Clear();
-                if (_set != null)
-                {
-                    _set.Clear();
-                }
+                _set?.Clear();
 
                 _resolvedCount = _unresolvedCount = 0;
             }

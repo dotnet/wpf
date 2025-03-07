@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -481,10 +481,7 @@ namespace System.Windows.Controls
         {
             CheckTemplateSource();
 
-            if (_itemContainerGenerator != null)
-            {
-                _itemContainerGenerator.Refresh();
-            }
+            _itemContainerGenerator?.Refresh();
         }
 
 
@@ -709,10 +706,7 @@ namespace System.Windows.Controls
         {
             Helper.CheckStyleAndStyleSelector("ItemContainer", ItemContainerStyleProperty, ItemContainerStyleSelectorProperty, this);
 
-            if (_itemContainerGenerator != null)
-            {
-                _itemContainerGenerator.Refresh();
-            }
+            _itemContainerGenerator?.Refresh();
         }
 
 
@@ -957,10 +951,7 @@ namespace System.Windows.Controls
 
         private void OnGroupStyleChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
-            if (_itemContainerGenerator != null)
-            {
-                _itemContainerGenerator.Refresh();
-            }
+            _itemContainerGenerator?.Refresh();
         }
 
 
@@ -1003,10 +994,7 @@ namespace System.Windows.Controls
         /// <param name="newGroupStyleSelector">The new value of the GroupStyleSelector property.</param>
         protected virtual void OnGroupStyleSelectorChanged(GroupStyleSelector oldGroupStyleSelector, GroupStyleSelector newGroupStyleSelector)
         {
-            if (_itemContainerGenerator != null)
-            {
-                _itemContainerGenerator.Refresh();
-            }
+            _itemContainerGenerator?.Refresh();
         }
 
         /// <summary>
@@ -1392,10 +1380,7 @@ namespace System.Windows.Controls
             }
 
             TreeViewItem treeViewItem = container as TreeViewItem;
-            if (treeViewItem != null)
-            {
-                treeViewItem.PrepareItemContainer(item, this);
-            }
+            treeViewItem?.PrepareItemContainer(item, this);
         }
 
         /// <summary>
@@ -1417,10 +1402,7 @@ namespace System.Windows.Controls
                 ClearContainerForItemOverride(container, item);
 
                 TreeViewItem treeViewItem = container as TreeViewItem;
-                if (treeViewItem != null)
-                {
-                    treeViewItem.ClearItemContainer(item, this);
-                }
+                treeViewItem?.ClearItemContainer(item, this);
             }
             else
             {
@@ -1516,10 +1498,7 @@ namespace System.Windows.Controls
         {
             base.BeginInit();
 
-            if (_items != null)
-            {
-                _items.BeginInit();
-            }
+            _items?.BeginInit();
         }
 
         /// <summary>
@@ -1529,10 +1508,7 @@ namespace System.Windows.Controls
         {
             if (IsInitPending)
             {
-                if (_items != null)
-                {
-                    _items.EndInit();
-                }
+                _items?.EndInit();
 
                 base.EndInit();
             }
@@ -1698,10 +1674,7 @@ namespace System.Windows.Controls
                 {
                     TextSearch instance = TextSearch.EnsureInstance(this);
 
-                    if (instance != null)
-                    {
-                        instance.DeleteLastCharacter();
-                    }
+                    instance?.DeleteLastCharacter();
                 }
             }
         }
@@ -1835,10 +1808,7 @@ namespace System.Windows.Controls
                 }
 
                 VirtualizingPanel itemsHost = ItemsHost as VirtualizingPanel;
-                if (itemsHost != null)
-                {
-                    itemsHost.BringIndexIntoView(info.Index);
-                }
+                itemsHost?.BringIndexIntoView(info.Index);
             }
 
             return null;
@@ -1896,7 +1866,7 @@ namespace System.Windows.Controls
                 MakeVisible(startingInfo, direction, out startingElement);
             }
 
-            object startingItem = (startingInfo != null) ? startingInfo.Item : null;
+            object startingItem = startingInfo?.Item;
 
             // When we get here if startingItem is non-null, it must be on the visible page.
             NavigateByLineInternal(startingItem,
@@ -1935,7 +1905,7 @@ namespace System.Windows.Controls
                 MakeVisible(startingInfo, direction, out startingElement);
             }
 
-            object startingItem = (startingInfo != null) ? startingInfo.Item : null;
+            object startingItem = startingInfo?.Item;
 
             // When we get here if startingItem is non-null, it must be on the visible page.
             FrameworkElement container;
@@ -2197,7 +2167,7 @@ namespace System.Windows.Controls
                 MakeVisible(startingInfo, direction, out startingElement);
             }
 
-            object startingItem = (startingInfo != null) ? startingInfo.Item : null;
+            object startingItem = startingInfo?.Item;
 
             // When we get here if startingItem is non-null, it must be on the visible page.
             NavigateByPageInternal(startingItem,
@@ -2243,7 +2213,7 @@ namespace System.Windows.Controls
                 MakeVisible(startingInfo, direction, out startingElement);
             }
 
-            object startingItem = (startingInfo != null) ? startingInfo.Item : null;
+            object startingItem = startingInfo?.Item;
 
             // When we get here if startingItem is non-null, it must be on the visible page.
             FrameworkElement container;
@@ -3808,10 +3778,7 @@ namespace System.Windows.Controls
         // refresh an ItemInfo
         internal void RefreshItemInfo(ItemInfo info)
         {
-            if (info != null)
-            {
-                info.Refresh(ItemContainerGenerator);
-            }
+            info?.Refresh(ItemContainerGenerator);
         }
 
         [DebuggerDisplay("Index: {Index}  Item: {Item}")]

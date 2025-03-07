@@ -22,6 +22,7 @@
   <ItemGroup>
     <Compile Include="$(WpfCommonDir)\src\System\LocalAppContext.cs" />
     <Compile Include="$(WpfCommonDir)\src\System\AppContextDefaultValues.cs" />
+    <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="GlobalUsings.cs" />
     <Compile Include="System\AppContextDefaultValues.cs" />
   </ItemGroup>
@@ -50,7 +51,6 @@
     <Compile Include="$(WpfSharedDir)\MS\Internal\FreezableOperations.cs" />
     <Compile Include="$(WpfSharedDir)\MS\Internal\PointUtil.cs" />
     <Compile Include="$(WpfSharedDir)\MS\Internal\MimeTypeMapper.cs" />
-    <Compile Include="$(WpfSharedDir)\MS\Internal\Pair.cs" />
     <Compile Include="$(WpfSharedDir)\MS\Internal\PartialList.cs" />
     <Compile Include="$(WpfSharedDir)\MS\Internal\LegacyPriorityQueue.cs" />
     <Compile Include="$(WpfSharedDir)\MS\Internal\SequentialUshortCollection.cs" />
@@ -139,7 +139,6 @@
     <Compile Include="MS\Internal\Automation\ElementProxy.cs" />
     <Compile Include="MS\Internal\Automation\ElementUtil.cs" />
     <Compile Include="MS\Internal\Automation\EventMap.cs" />
-    <Compile Include="MS\Internal\Automation\EventPropertyMap.cs" />
     <Compile Include="MS\Internal\Automation\ExpandCollapseProviderWrapper.cs" />
     <Compile Include="MS\Internal\Automation\GridItemProviderWrapper.cs" />
     <Compile Include="MS\Internal\Automation\GridProviderWrapper.cs" />
@@ -274,9 +273,12 @@
     <Compile Include="MS\Internal\Shaping\Substitution.cs" />
     <Compile Include="MS\Internal\Shaping\TypefaceMap.cs" />
     <Compile Include="MS\Internal\Shaping\UshortList2.cs" />
+    <Compile Include="MS\Internal\Text\TextInterface\DWriteInterfaces.cs" />
     <Compile Include="MS\Internal\Text\TextInterface\DWriteLoader.cs" />
     <Compile Include="MS\Internal\Text\TextInterface\DWriteUtil.cs" />
     <Compile Include="MS\Internal\Text\TextInterface\Factory.cs" />
+    <Compile Include="MS\Internal\Text\TextInterface\FontCollectionLoader.cs" />
+    <Compile Include="MS\Internal\Text\TextInterface\IFontSourceCollection.cs" />
     <Compile Include="MS\Internal\TextFormatting\Bidi.cs" />
     <Compile Include="MS\Internal\TextFormatting\CultureMapper.cs" />
     <Compile Include="MS\Internal\TextFormatting\DrawingState.cs" />
@@ -612,7 +614,6 @@
     <Compile Include="System\Windows\Input\Command\InputBindingCollection.cs" />
     <Compile Include="System\Windows\Input\Command\InputGesture.cs" />
     <Compile Include="System\Windows\Input\Command\InputGestureCollection.cs" />
-    <Compile Include="System\Windows\Input\Command\ISecureCommand.cs" />
     <Compile Include="System\Windows\Input\Command\KeyBinding.cs" />
     <Compile Include="System\Windows\Input\Command\KeyGesture.cs" />
     <Compile Include="System\Windows\Input\Command\KeyGestureConverter.cs" />
@@ -628,7 +629,6 @@
     <Compile Include="System\Windows\Input\Command\NavigationCommands.cs" />
     <Compile Include="System\Windows\Input\Command\RoutedCommand.cs" />
     <Compile Include="System\Windows\Input\Command\RoutedUICommand.cs" />
-    <Compile Include="System\Windows\Input\Command\SecureUICommand.cs" />
     <Compile Include="System\Windows\Input\Stylus\Common\DynamicRenderer.cs" />
     <Compile Include="System\Windows\Input\Stylus\Common\DynamicRendererThreadManager.cs" />
     <Compile Include="System\Windows\Input\Stylus\Common\MultiTouchSystemGestureLogic.cs" />
@@ -1440,6 +1440,10 @@
     <ProjectReference Include="$(WpfSourceDir)PresentationCore\ref\PresentationCore-ref.csproj">
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
     </ProjectReference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <MicrosoftPrivateWinFormsReference Include="System.Private.Windows.Core" />
   </ItemGroup>
 
   <!--

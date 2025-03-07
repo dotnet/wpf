@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -247,16 +247,14 @@ namespace System.Windows.Controls
                     &&  AutomationPeer.ListenerExists(AutomationEvents.SelectionItemPatternOnElementSelected)   )
                 {
                     TreeViewItemAutomationPeer peer = UIElementAutomationPeer.CreatePeerForElement(_selectedContainer) as TreeViewItemAutomationPeer;
-                    if (peer != null)
-                        peer.RaiseAutomationSelectionEvent(AutomationEvents.SelectionItemPatternOnElementSelected);
+                    peer?.RaiseAutomationSelectionEvent(AutomationEvents.SelectionItemPatternOnElementSelected);
                 }
 
                 if (    oldContainer != null
                     &&  AutomationPeer.ListenerExists(AutomationEvents.SelectionItemPatternOnElementRemovedFromSelection)   )
                 {
                     TreeViewItemAutomationPeer peer = UIElementAutomationPeer.CreatePeerForElement(oldContainer) as TreeViewItemAutomationPeer;
-                    if (peer != null)
-                        peer.RaiseAutomationSelectionEvent(AutomationEvents.SelectionItemPatternOnElementRemovedFromSelection);
+                    peer?.RaiseAutomationSelectionEvent(AutomationEvents.SelectionItemPatternOnElementRemovedFromSelection);
                 }
 
                 RoutedPropertyChangedEventArgs<object> e = new RoutedPropertyChangedEventArgs<object>(oldValue, newValue, SelectedItemChangedEvent);
@@ -314,8 +312,10 @@ namespace System.Windows.Controls
             if (bindingExpr == null)
             {
                 // create the binding
-                binding = new Binding();
-                binding.Source = null;
+                binding = new Binding
+                {
+                    Source = null
+                };
 
                 if (useXml)
                 {
@@ -699,9 +699,7 @@ namespace System.Windows.Controls
         {
             IInputElement originalFocusedElement = Keyboard.FocusedElement;
             ItemsControl parentItemsControl = ItemsControl.ItemsControlFromItemContainer(_selectedContainer);
-            ItemInfo startingInfo = (parentItemsControl != null)
-                ? parentItemsControl.ItemInfoFromContainer(_selectedContainer)
-                : null;
+            ItemInfo startingInfo = parentItemsControl?.ItemInfoFromContainer(_selectedContainer);
 
             FrameworkElement startingContainer = _selectedContainer.HeaderElement;
             if (startingContainer == null)

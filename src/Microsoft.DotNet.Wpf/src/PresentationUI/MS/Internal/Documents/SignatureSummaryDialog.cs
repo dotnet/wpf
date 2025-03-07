@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -230,41 +230,49 @@ namespace MS.Internal.Documents
 
             if (_showRequestDialog)
             {
-                Label nameHeader = new Label();
-                nameHeader.AutoSize = true;
-                nameHeader.Text = SR.DigSigSumColumnHeaderName;
-                nameHeader.Font = columnHeaderFont;
-                nameHeader.MinimumSize = new Size(IconWidth + SummaryNameTextWidth, 0);
-                nameHeader.MaximumSize = new Size(IconWidth + SummaryNameTextWidth, 0);
-                nameHeader.Margin = columnMargin;
-                nameHeader.Padding = columnPadding;
+                Label nameHeader = new Label
+                {
+                    AutoSize = true,
+                    Text = SR.DigSigSumColumnHeaderName,
+                    Font = columnHeaderFont,
+                    MinimumSize = new Size(IconWidth + SummaryNameTextWidth, 0),
+                    MaximumSize = new Size(IconWidth + SummaryNameTextWidth, 0),
+                    Margin = columnMargin,
+                    Padding = columnPadding
+                };
 
-                Label intentHeader = new Label();
-                intentHeader.AutoSize = true;
-                intentHeader.Text = SR.DigSigSumColumnHeaderIntent;
-                intentHeader.Font = columnHeaderFont;
-                intentHeader.MinimumSize = new Size(IntentTextWidth, 0);
-                intentHeader.MaximumSize = new Size(IntentTextWidth, 0);
-                intentHeader.Margin = columnMargin;
-                intentHeader.Padding = columnPadding;
+                Label intentHeader = new Label
+                {
+                    AutoSize = true,
+                    Text = SR.DigSigSumColumnHeaderIntent,
+                    Font = columnHeaderFont,
+                    MinimumSize = new Size(IntentTextWidth, 0),
+                    MaximumSize = new Size(IntentTextWidth, 0),
+                    Margin = columnMargin,
+                    Padding = columnPadding
+                };
 
-                Label locationHeader = new Label();
-                locationHeader.AutoSize = true;
-                locationHeader.Text = SR.DigSigSumColumnHeaderLocale;
-                locationHeader.Font = columnHeaderFont;
-                locationHeader.MinimumSize = new Size(LocaleTextWidth, 0);
-                locationHeader.MaximumSize = new Size(LocaleTextWidth, 0);
-                locationHeader.Margin = columnMargin;
-                locationHeader.Padding = columnPadding;
+                Label locationHeader = new Label
+                {
+                    AutoSize = true,
+                    Text = SR.DigSigSumColumnHeaderLocale,
+                    Font = columnHeaderFont,
+                    MinimumSize = new Size(LocaleTextWidth, 0),
+                    MaximumSize = new Size(LocaleTextWidth, 0),
+                    Margin = columnMargin,
+                    Padding = columnPadding
+                };
 
-                Label signByHeader = new Label();
-                signByHeader.AutoSize = true;
-                signByHeader.Text = SR.DigSigSumColumnHeaderSignBy;
-                signByHeader.Font = columnHeaderFont;
-                signByHeader.MinimumSize = new Size(SignByTextWidth, 0);
-                signByHeader.MaximumSize = new Size(SignByTextWidth, 0);
-                signByHeader.Margin = columnMargin;
-                signByHeader.Padding = columnPadding;
+                Label signByHeader = new Label
+                {
+                    AutoSize = true,
+                    Text = SR.DigSigSumColumnHeaderSignBy,
+                    Font = columnHeaderFont,
+                    MinimumSize = new Size(SignByTextWidth, 0),
+                    MaximumSize = new Size(SignByTextWidth, 0),
+                    Margin = columnMargin,
+                    Padding = columnPadding
+                };
 
                 _columnHeaderPanel.Controls.Add(nameHeader);
                 _columnHeaderPanel.Controls.Add(intentHeader);
@@ -274,24 +282,28 @@ namespace MS.Internal.Documents
             }
             else
             {
-                Label statusHeader = new Label();
-                statusHeader.AutoSize = true;
-                statusHeader.Text = SR.DigSigSumColumnHeaderSignatureStatus;
-                statusHeader.Font = columnHeaderFont;
-                statusHeader.MaximumSize = new Size(IconWidth + SummaryNameTextWidth,0);
-                statusHeader.MinimumSize = new Size(IconWidth + SummaryNameTextWidth, 0);
-                statusHeader.Margin = columnMargin;
-                statusHeader.Padding = columnPadding;
+                Label statusHeader = new Label
+                {
+                    AutoSize = true,
+                    Text = SR.DigSigSumColumnHeaderSignatureStatus,
+                    Font = columnHeaderFont,
+                    MaximumSize = new Size(IconWidth + SummaryNameTextWidth, 0),
+                    MinimumSize = new Size(IconWidth + SummaryNameTextWidth, 0),
+                    Margin = columnMargin,
+                    Padding = columnPadding
+                };
 
-                Label intentHeader = new Label();
-                intentHeader.AutoSize = true;
-                intentHeader.Text = SR.DigSigSumColumnHeaderIntent;
-                intentHeader.Font = columnHeaderFont;
-                intentHeader.MinimumSize = new Size(IntentTextWidth, 0);
-                intentHeader.MaximumSize = new Size(IntentTextWidth, 0);
-                intentHeader.Margin = columnMargin;
-                intentHeader.Padding = columnPadding;
-                
+                Label intentHeader = new Label
+                {
+                    AutoSize = true,
+                    Text = SR.DigSigSumColumnHeaderIntent,
+                    Font = columnHeaderFont,
+                    MinimumSize = new Size(IntentTextWidth, 0),
+                    MaximumSize = new Size(IntentTextWidth, 0),
+                    Margin = columnMargin,
+                    Padding = columnPadding
+                };
+
                 _columnHeaderPanel.Controls.Add(statusHeader);
                 _columnHeaderPanel.Controls.Add(intentHeader);
             }

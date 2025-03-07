@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 // Description: 
@@ -249,10 +249,7 @@ namespace MS.Internal.Documents
                 false /*Sig Request Dialog*/);
                 dialog.ShowDialog(parentWindow);
 
-            if (dialog != null)
-            {
-                dialog.Dispose();
-            }
+            dialog?.Dispose();
         }
 
         /// <summary>
@@ -285,10 +282,7 @@ namespace MS.Internal.Documents
                     true /*Sig Request Dialog*/);
                     dialog.ShowDialog(parentWindow);
 
-                if (dialog != null)
-                {
-                    dialog.Dispose();
-                }
+                dialog?.Dispose();
             }
             else
             {
@@ -520,10 +514,7 @@ namespace MS.Internal.Documents
                 this);
             dialog.ShowDialog(NativeWindow.FromHandle(parentWindow));
 
-            if (dialog != null)
-            {
-                dialog.Dispose();
-            }
+            dialog?.Dispose();
         }
 
         /// <summary>
@@ -786,14 +777,15 @@ namespace MS.Internal.Documents
         internal void OnAddRequestSignature(SignatureResources sigResources, DateTime dateTime)
         {
             //Use the SignatureResource to create Request Digitalsignature.
-            DigitalSignature digSigRequest = new DigitalSignature();
-
-            //Assign fields.
-            digSigRequest.SignatureState = SignatureStatus.NotSigned;
-            digSigRequest.SubjectName = sigResources._subjectName;
-            digSigRequest.Reason = sigResources._reason;
-            digSigRequest.Location = sigResources._location;
-            digSigRequest.SignedOn = dateTime;
+            DigitalSignature digSigRequest = new DigitalSignature
+            {
+                //Assign fields.
+                SignatureState = SignatureStatus.NotSigned,
+                SubjectName = sigResources._subjectName,
+                Reason = sigResources._reason,
+                Location = sigResources._location,
+                SignedOn = dateTime
+            };
 
             Guid spotId = DigitalSignatureProvider.AddRequestSignature(digSigRequest);
 
@@ -1025,10 +1017,11 @@ namespace MS.Internal.Documents
                 null);
 
             CertificateValidationThreadInfo threadInfo =
-                new CertificateValidationThreadInfo();
-
-            threadInfo.CertificateList = certificateList;
-            threadInfo.Operation = dispatcherOperation;
+                new CertificateValidationThreadInfo
+                {
+                    CertificateList = certificateList,
+                    Operation = dispatcherOperation
+                };
 
             Trace.SafeWrite(
                 Trace.Signatures,

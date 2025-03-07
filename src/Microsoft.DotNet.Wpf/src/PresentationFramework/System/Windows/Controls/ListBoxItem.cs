@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -14,7 +14,7 @@ using System.Windows.Input;
 using System.Windows.Controls.Primitives;
 
 // Disable CS3001: Warning as Error: not CLS-compliant
-#pragma warning disable 3001
+#pragma warning disable CS3001
 
 namespace System.Windows.Controls
 {
@@ -87,10 +87,7 @@ namespace System.Windows.Controls
             bool isSelected = (bool) e.NewValue;
 
             Selector parentSelector = listItem.ParentSelector;
-            if (parentSelector != null)
-            {
-                parentSelector.RaiseIsSelectedChangedAutomationEvent(listItem, isSelected);
-            }
+            parentSelector?.RaiseIsSelectedChangedAutomationEvent(listItem, isSelected);
 
             if (isSelected)
             {
@@ -273,10 +270,7 @@ namespace System.Windows.Controls
             if (Selector.UiGetIsSelectable(this) && Focus())
             {
                 ListBox parent = ParentListBox;
-                if (parent != null)
-                {
-                    parent.NotifyListItemClicked(this, mouseButton);
-                }
+                parent?.NotifyListItemClicked(this, mouseButton);
             }
         }
 
@@ -347,10 +341,7 @@ namespace System.Windows.Controls
 
             // If earlier, we decided to set focus to the old parent ListBox, do it here
             // after calling base so that the state for IsKeyboardFocusWithin is updated correctly.
-            if (oldItemsControl != null)
-            {
-                oldItemsControl.Focus();
-            }
+            oldItemsControl?.Focus();
         }
 
 

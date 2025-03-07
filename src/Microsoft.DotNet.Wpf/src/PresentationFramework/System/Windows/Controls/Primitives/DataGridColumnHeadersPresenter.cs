@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -329,10 +329,7 @@ namespace System.Windows.Controls.Primitives
             {
                 if (e.Property == DataGridColumn.HeaderProperty)
                 {
-                    if (HeaderCollection != null)
-                    {
-                        HeaderCollection.NotifyHeaderPropertyChanged(column, e);
-                    }
+                    HeaderCollection?.NotifyHeaderPropertyChanged(column, e);
                 }
                 else
                 {
@@ -350,10 +347,7 @@ namespace System.Windows.Controls.Primitives
                         (e.Property == DataGrid.ColumnHeaderStyleProperty || e.Property == DataGrid.ColumnHeaderHeightProperty) )
                     {
                         DataGridColumnHeader fillerColumnHeader = GetTemplateChild(ElementFillerColumnHeader) as DataGridColumnHeader;
-                        if (fillerColumnHeader != null)
-                        {
-                            fillerColumnHeader.NotifyPropertyChanged(d, e);
-                        }
+                        fillerColumnHeader?.NotifyPropertyChanged(d, e);
                     }
                 }
             }
@@ -751,8 +745,10 @@ namespace System.Windows.Controls.Primitives
         {
             Debug.Assert(_draggingSrcColumnHeader != null, "Dragging header is null");
 
-            DataGridColumnFloatingHeader floatingHeader = new DataGridColumnFloatingHeader();
-            floatingHeader.ReferenceHeader = _draggingSrcColumnHeader;
+            DataGridColumnFloatingHeader floatingHeader = new DataGridColumnFloatingHeader
+            {
+                ReferenceHeader = _draggingSrcColumnHeader
+            };
             return floatingHeader;
         }
 
@@ -782,8 +778,10 @@ namespace System.Windows.Controls.Primitives
         {
             Debug.Assert(_draggingSrcColumnHeader != null, "Dragging header is null");
 
-            DataGridColumnDropSeparator indicator = new DataGridColumnDropSeparator();
-            indicator.ReferenceHeader = _draggingSrcColumnHeader;
+            DataGridColumnDropSeparator indicator = new DataGridColumnDropSeparator
+            {
+                ReferenceHeader = _draggingSrcColumnHeader
+            };
             return indicator;
         }
 
@@ -820,10 +818,7 @@ namespace System.Windows.Controls.Primitives
             {
                 _columnHeaderDragIndicator.Visibility = Visibility.Collapsed;
                 DataGridColumnFloatingHeader floatingHeader = _columnHeaderDragIndicator as DataGridColumnFloatingHeader;
-                if (floatingHeader != null)
-                {
-                    floatingHeader.ClearHeader();
-                }
+                floatingHeader?.ClearHeader();
 
                 RemoveVisualChild(_columnHeaderDragIndicator);
             }

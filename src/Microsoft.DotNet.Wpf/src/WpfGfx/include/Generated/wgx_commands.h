@@ -1159,5 +1159,3 @@ typedef struct
     BOOL EnableClearType;
 } MILCMD_BITMAPCACHE;
 
-
-

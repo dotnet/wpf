@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -13,15 +13,6 @@
 * Reason for exclusion: obscure PTLS interface
 *
 **************************************************************************/
-
-
-//
-// Description: Provides PTS callbacks implementation / forwarding. 
-//
-#pragma warning disable 1634, 1691  // avoid generating warnings about unknown 
-// message numbers and unknown pragmas for PRESharp contol
-
-#pragma warning disable 6500        // Specifically disable warning about unhandled null reference and SEH exceptions.
 
 using System.Windows;
 using System.Windows.Documents;
@@ -1528,25 +1519,21 @@ namespace MS.Internal.PtsHost
                 {
                     TextBreakpoint textBreakpoint = textBreakpoints[breakIndex];
 
-#pragma warning disable 56518
-                    // Disable PRESharp warning 56518. LineBreakpoint is an UnmamangedHandle, that adds itself
+                    // LineBreakpoint is an UnmamangedHandle, that adds itself
                     // to HandleMapper that holds a reference to it. PTS manages lifetime of this object, and 
                     // calls Destroyline to get rid of it. Destroyline will call Dispose() on the object
                     // and remove it from HandleMapper.
                     LineBreakpoint lineBreakpoint = new LineBreakpoint(optimalBreakSession, textBreakpoint);
-#pragma warning restore 56518
 
                     TextLineBreak textLineBreakOut = textBreakpoint.GetTextLineBreak();
 
                     if(textLineBreakOut != null)
                     {
-#pragma warning disable 56518
-                // Disable PRESharp warning 6518. Line is an UnmamangedHandle, that adds itself
+                //Line is an UnmamangedHandle, that adds itself
                 // to HandleMapper that holds a reference to it. PTS manages lifetime of this object, and
                 // calls DestroyLineBreakRecord to get rid of it. DestroyLineBreakRecord will call Dispose() on the object
                 // and remove it from HandleMapper.
                         LineBreakRecord lineBreakRecord = new LineBreakRecord(optimalBreakSession.PtsContext, textLineBreakOut);
-#pragma warning disable 56518
 
                         rgfslinevariant[breakIndex].pfsbreakreclineclient = lineBreakRecord.Handle;
                     }
@@ -1978,17 +1965,15 @@ namespace MS.Internal.PtsHost
 
                 for(int objectIndex = 0; objectIndex < attachedObjects.Count; objectIndex++)
                 {
-                    if(attachedObjects[objectIndex] is FigureObject)
+                    if (attachedObjects[objectIndex] is FigureObject figureObject)
                     {
-                        FigureObject figureObject = (FigureObject) attachedObjects[objectIndex];
-
                         rgnmpAttachedObject[objectIndex] = figureObject.Para.Handle;
                         rgdcpAnchor[objectIndex] = figureObject.Dcp;
                         rgidobj[objectIndex] = PTS.fsidobjFigure;
                     }
                     else
                     {
-                        FloaterObject floaterObject = (FloaterObject) attachedObjects[objectIndex];
+                        FloaterObject floaterObject = (FloaterObject)attachedObjects[objectIndex];
 
                         rgnmpAttachedObject[objectIndex] = floaterObject.Para.Handle;
                         rgdcpAnchor[objectIndex] = floaterObject.Dcp;
@@ -2095,17 +2080,15 @@ namespace MS.Internal.PtsHost
 
                 for(int objectIndex = 0; objectIndex < attachedObjects.Count; objectIndex++)
                 {
-                    if(attachedObjects[objectIndex] is FigureObject)
+                    if (attachedObjects[objectIndex] is FigureObject figureObject)
                     {
-                        FigureObject figureObject = (FigureObject) attachedObjects[objectIndex];
-
                         rgnmpAttachedObject[objectIndex] = figureObject.Para.Handle;
                         rgdcpAnchor[objectIndex] = figureObject.Dcp;
                         rgidobj[objectIndex] = PTS.fsidobjFigure;
                     }
                     else
                     {
-                        FloaterObject floaterObject = (FloaterObject) attachedObjects[objectIndex];
+                        FloaterObject floaterObject = (FloaterObject)attachedObjects[objectIndex];
 
                         rgnmpAttachedObject[objectIndex] = floaterObject.Para.Handle;
                         rgdcpAnchor[objectIndex] = floaterObject.Dcp;
@@ -4093,10 +4076,7 @@ namespace MS.Internal.PtsHost
             try
             {
                 CellParaClient cellParaClient = PtsContext.HandleToObject(pfsCell) as CellParaClient;
-                if (cellParaClient != null)
-                {
-                    cellParaClient.Dispose();
-                }
+                cellParaClient?.Dispose();
             }
             catch (Exception e)
             {
@@ -4194,7 +4174,3 @@ namespace MS.Internal.PtsHost
         #endregion PTS callbacks
     }
 }
-
-#pragma warning enable 6500
-#pragma warning enable 1634, 1691
-

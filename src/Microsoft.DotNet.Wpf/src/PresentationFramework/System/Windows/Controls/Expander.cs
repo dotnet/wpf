@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -130,10 +130,7 @@ namespace System.Windows.Controls
 
             // Fire accessibility event
             ExpanderAutomationPeer peer = UIElementAutomationPeer.FromElement(ep) as ExpanderAutomationPeer;
-            if(peer != null)
-            {
-                peer.RaiseExpandCollapseAutomationEvent(!newValue, newValue);
-            }
+            peer?.RaiseExpandCollapseAutomationEvent(!newValue, newValue);
 
             if (newValue)
             {
@@ -268,9 +265,11 @@ namespace System.Windows.Controls
         /// </summary>
         protected virtual void OnExpanded()
         {
-            RoutedEventArgs args = new RoutedEventArgs();
-            args.RoutedEvent = Expander.ExpandedEvent;
-            args.Source = this;
+            RoutedEventArgs args = new RoutedEventArgs
+            {
+                RoutedEvent = Expander.ExpandedEvent,
+                Source = this
+            };
             RaiseEvent(args);
         }
 

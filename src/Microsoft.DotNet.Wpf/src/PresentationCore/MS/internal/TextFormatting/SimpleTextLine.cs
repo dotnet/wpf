@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -585,10 +585,7 @@ namespace MS.Internal.TextFormatting
             int idealXRelativeToOrigin = _idealOffsetUnRounded;
             double y = origin.Y + Baseline;
 
-            if (drawingContext != null)
-            {
-                drawingContext.PushGuidelineY1(y);
-            }
+            drawingContext?.PushGuidelineY1(y);
 
             Rect boundingBox = Rect.Empty;
 
@@ -610,10 +607,7 @@ namespace MS.Internal.TextFormatting
             }
             finally
             {
-                if (drawingContext != null)
-                {
-                    drawingContext.Pop();
-                }
+                drawingContext?.Pop();
             }
 
             if(boundingBox.IsEmpty)
@@ -1610,8 +1604,10 @@ namespace MS.Internal.TextFormatting
             // a complex character, we need to do the same thing as the full shaping path and draw a space for each tab.
             TextRun modifedTextRun = new TextCharacters(" ", textRun.Properties);
             CharacterBufferRange characterBufferRange = new CharacterBufferRange(modifedTextRun);
-            SimpleRun run = new SimpleRun(1, modifedTextRun, Flags.Tab, settings.Formatter, pixelsPerDip);
-            run.CharBufferReference = characterBufferRange.CharacterBufferReference;
+            SimpleRun run = new SimpleRun(1, modifedTextRun, Flags.Tab, settings.Formatter, pixelsPerDip)
+            {
+                CharBufferReference = characterBufferRange.CharacterBufferReference
+            };
             run.TextRun.Properties.Typeface.GetCharacterNominalWidthsAndIdealWidth(
                     characterBufferRange,
                     run.EmSize,
@@ -1661,9 +1657,11 @@ namespace MS.Internal.TextFormatting
         {
             Invariant.Assert(textRun is TextCharacters);
 
-            SimpleRun run = new SimpleRun(formatter, pixelsPerDip);
-            run.CharBufferReference = charBufferRange.CharacterBufferReference;
-            run.TextRun = textRun;
+            SimpleRun run = new SimpleRun(formatter, pixelsPerDip)
+            {
+                CharBufferReference = charBufferRange.CharacterBufferReference,
+                TextRun = textRun
+            };
 
             if (!run.TextRun.Properties.Typeface.CheckFastPathNominalGlyphs(
                 charBufferRange,

@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -73,10 +73,7 @@ namespace System.Windows.Documents
             FixedDocumentSequence documentSequence = paginatorSource as FixedDocumentSequence;
             DynamicDocumentPaginator childPaginator = null;
 
-            if (documentSequence != null)
-            {
-                documentSequence.TranslatePageNumber(pageNumber, out childPaginator, out translatedPageNumber);
-            }
+            documentSequence?.TranslatePageNumber(pageNumber, out childPaginator, out translatedPageNumber);
             
             if (pageNumber - endPageNumber != 0)
             {
@@ -370,10 +367,12 @@ namespace System.Windows.Documents
             //Wrap around a compatibility reader
             XmlReader xmlReader = new XmlCompatibilityReader(xmlTextReader, _predefinedNamespaces);
 
-            XmlReaderSettings settings = new XmlReaderSettings();
-            settings.IgnoreWhitespace = true;
-            settings.IgnoreComments = true;
-            settings.ProhibitDtd = true;
+            XmlReaderSettings settings = new XmlReaderSettings
+            {
+                IgnoreWhitespace = true,
+                IgnoreComments = true,
+                ProhibitDtd = true
+            };
 
             xmlReader = XmlReader.Create(xmlReader, settings);
 

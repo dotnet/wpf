@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -942,10 +942,7 @@ namespace System.Windows.Controls
                             {
                                 // case 2
                                 GridViewColumnHeader parentAsGVCH = parent as GridViewColumnHeader;
-                                if (parentAsGVCH != null)
-                                {
-                                    parentAsGVCH.ClearValue(ContentControl.ContentProperty);
-                                }
+                                parentAsGVCH?.ClearValue(ContentControl.ContentProperty);
                             }
                         }
                     }
@@ -962,8 +959,10 @@ namespace System.Windows.Controls
 
             if (headerContainer == null)
             {
-                headerContainer = new GridViewColumnHeader();
-                headerContainer.IsInternalGenerated = true;
+                headerContainer = new GridViewColumnHeader
+                {
+                    IsInternalGenerated = true
+                };
             }
 
             // Pass column reference to GridViewColumnHeader
@@ -1110,8 +1109,10 @@ namespace System.Windows.Controls
         // Create the last padding column header in GridViewHeaderRowPresenter
         private void AddPaddingColumnHeader()
         {
-            GridViewColumnHeader paddingHeader = new GridViewColumnHeader();
-            paddingHeader.IsInternalGenerated = true;
+            GridViewColumnHeader paddingHeader = new GridViewColumnHeader
+            {
+                IsInternalGenerated = true
+            };
             paddingHeader.SetValue(GridViewColumnHeader.RolePropertyKey, GridViewColumnHeaderRole.Padding);
 
             paddingHeader.Content = null;
@@ -1135,29 +1136,33 @@ namespace System.Windows.Controls
         // Create the indicator for column re-ordering
         private void AddIndicator()
         {
-            Separator indicator = new Separator();
-            indicator.Visibility = Visibility.Hidden;
+            Separator indicator = new Separator
+            {
+                Visibility = Visibility.Hidden,
 
-            // Indicator style:
-            //
-            // <Setter Property="Margin" Value="0" />
-            // <Setter Property="Width" Value="2" />
-            // <Setter Property="Template">
-            //   <Setter.Value>
-            //     <ControlTemplate TargetType="{x:Type Separator}">
-            //        <Border Background="#FF000080"/>
-            //     </ControlTemplate>
-            //   </Setter.Value>
-            // </Setter>
+                // Indicator style:
+                //
+                // <Setter Property="Margin" Value="0" />
+                // <Setter Property="Width" Value="2" />
+                // <Setter Property="Template">
+                //   <Setter.Value>
+                //     <ControlTemplate TargetType="{x:Type Separator}">
+                //        <Border Background="#FF000080"/>
+                //     </ControlTemplate>
+                //   </Setter.Value>
+                // </Setter>
 
-            indicator.Margin = new Thickness(0);
-            indicator.Width = 2.0;
+                Margin = new Thickness(0),
+                Width = 2.0
+            };
 
             FrameworkElementFactory border = new FrameworkElementFactory(typeof(Border));
             border.SetValue(Border.BackgroundProperty, new SolidColorBrush(Color.FromUInt32(0xFF000080)));
 
-            ControlTemplate template = new ControlTemplate(typeof(Separator));
-            template.VisualTree = border;
+            ControlTemplate template = new ControlTemplate(typeof(Separator))
+            {
+                VisualTree = border
+            };
             template.Seal();
 
             indicator.Template = template;
@@ -1519,10 +1524,7 @@ namespace System.Windows.Controls
             _draggingSrcHeader.SuppressClickEvent = true;
 
             // lock Columns during header dragging
-            if (Columns != null)
-            {
-                Columns.BlockWrite();
-            }
+            Columns?.BlockWrite();
 
             // Remove the old floating header,
             // then create & add the new one per the source header's type
@@ -1548,10 +1550,7 @@ namespace System.Windows.Controls
             _indicator.Visibility = Visibility.Hidden;
 
             // unlock Columns during header dragging
-            if (Columns != null)
-            {
-                Columns.UnblockWrite();
-            }
+            Columns?.UnblockWrite();
 
             // if cancelled, do nothing
             if (!isCancel)

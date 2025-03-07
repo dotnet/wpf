@@ -1,16 +1,10 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
-
-//
-//
 
 using MS.Internal;
 using MS.Win32.PresentationCore;
 using System.Runtime.InteropServices;
-using MS.Internal.PresentationCore;
-
-#pragma warning disable 1634, 1691  // suppressing PreSharp warnings
 
 //
 // This class wraps a PROPVARIANT type for interop with the unmanaged metadata APIs.  Only
@@ -128,7 +122,7 @@ namespace System.Windows.Media.Imaging
 
         internal void Init(Array array, Type type, VarEnum vt)
         {
-            varType = (ushort) vt;
+            varType = (ushort)vt;
             ca.cElems = 0;
             ca.pElems = IntPtr.Zero;
 
@@ -137,17 +131,16 @@ namespace System.Windows.Media.Imaging
             if (length > 0)
             {
                 long size = Marshal.SizeOf(type) * length;
-
-                IntPtr destPtr =IntPtr.Zero;
-                GCHandle handle = new GCHandle();
+                IntPtr destPtr = IntPtr.Zero;
 
                 try
                 {
-                    destPtr = Marshal.AllocCoTaskMem((int) size);
-                    handle = GCHandle.Alloc(array, GCHandleType.Pinned);
+                    destPtr = Marshal.AllocCoTaskMem((int)size);
+
                     unsafe
                     {
-                        CopyBytes((byte *) destPtr, (int)size, (byte *)handle.AddrOfPinnedObject(), (int)size);
+                        fixed (byte* sourcePtr = &MemoryMarshal.GetArrayDataReference(array))
+                            CopyBytes((byte*)destPtr, (int)size, sourcePtr, (int)size);
                     }
 
                     ca.cElems = (uint)length;
@@ -157,11 +150,6 @@ namespace System.Windows.Media.Imaging
                 }
                 finally
                 {
-                    if (handle.IsAllocated)
-                    {
-                        handle.Free();
-                    }
-
                     if (destPtr != IntPtr.Zero)
                     {
                         Marshal.FreeCoTaskMem(destPtr);
@@ -456,7 +444,7 @@ namespace System.Windows.Media.Imaging
 
                         for (uint i=0; i<ca.cElems; i++)
                         {
-                            #pragma warning suppress 6031 // Return value ignored on purpose.
+                            // Return value ignored on purpose.
                             UnsafeNativeMethods.MILUnknown.Release(Marshal.ReadIntPtr(punkPtr, (int) (i*sizeIntPtr)));
                         }
                     }
@@ -486,7 +474,7 @@ namespace System.Windows.Media.Imaging
             }
             else if (vt == VarEnum.VT_UNKNOWN)
             {
-                #pragma warning suppress 6031 // Return value ignored on purpose.
+                // Return value ignored on purpose.
                 UnsafeNativeMethods.MILUnknown.Release(punkVal);
             }
 

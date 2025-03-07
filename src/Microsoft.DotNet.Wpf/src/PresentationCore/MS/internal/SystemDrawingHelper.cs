@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -45,14 +45,14 @@ namespace MS.Internal
         internal static Object GetMetafileFromHemf(IntPtr hMetafile)
         {
             SystemDrawingExtensionMethods extensions = AssemblyHelper.ExtensionsForSystemDrawing(force:true);
-            return (extensions != null) ? extensions.GetMetafileFromHemf(hMetafile) : null;
+            return extensions?.GetMetafileFromHemf(hMetafile);
         }
 
         // Get a bitmap from the given data (either BitmapSource or Bitmap)
         internal static object GetBitmap(object data)
         {
             SystemDrawingExtensionMethods extensions = AssemblyHelper.ExtensionsForSystemDrawing(force:true);
-            return (extensions != null) ? extensions.GetBitmap(data) : null;
+            return extensions?.GetBitmap(data);
         }
 
         // Get a bitmap handle from the given data (either BitmapSource or Bitmap)
@@ -87,17 +87,14 @@ namespace MS.Internal
         internal static Stream GetCommentFromGifStream(Stream stream)
         {
             SystemDrawingExtensionMethods extensions = AssemblyHelper.ExtensionsForSystemDrawing(force:true);
-            return (extensions != null) ? extensions.GetCommentFromGifStream(stream) : null;
+            return extensions?.GetCommentFromGifStream(stream);
         }
 
         // write a metafile stream to the output stream in PNG format
         internal static void SaveMetafileToImageStream(MemoryStream metafileStream, Stream imageStream)
         {
             SystemDrawingExtensionMethods extensions = AssemblyHelper.ExtensionsForSystemDrawing(force:true);
-            if (extensions != null)
-            {
-                extensions.SaveMetafileToImageStream(metafileStream, imageStream);
-            }
+            extensions?.SaveMetafileToImageStream(metafileStream, imageStream);
         }
 
         //returns bitmap snapshot of selected area
@@ -105,7 +102,7 @@ namespace MS.Internal
         internal static object GetBitmapFromBitmapSource(object source)
         {
             SystemDrawingExtensionMethods extensions = AssemblyHelper.ExtensionsForSystemDrawing(force:true);
-            return (extensions != null) ? extensions.GetBitmapFromBitmapSource(source) : null;
+            return extensions?.GetBitmapFromBitmapSource(source);
         }
     }
 }

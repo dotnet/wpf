@@ -212,17 +212,6 @@ namespace MS.Internal.MilCodeGen.Generators
             // Create the file code sink for the file.
             using (FileCodeSink rdFile = BeginDrawingContextFile(rdid, fullManagedPath, renderDataDrawingContextFileName))
             {
-                StringCodeSink securityCriticalCS = new StringCodeSink();
-
-                securityCriticalCS.Write(
-                    [[inline]]
-                        /// <SecurityNote>
-                        ///    Critical:This code calls into unsafe code
-                        ///    TreatAsSafe: This code is ok to expose. Writing a record is a safe operation as long as the size and pointer are valid.
-                        /// </SecurityNote>
-                        [SecurityCritical,SecurityTreatAsSafe][[/inline]]
-                    );
-
                 rdFile.WriteBlock(
                     [[inline]]
 
@@ -233,7 +222,7 @@ namespace MS.Internal.MilCodeGen.Generators
                             /// </summary>
                             internal partial class RenderDataDrawingContext : DrawingContext
                             {
-                                [[WriteDrawingMethods(rdid, new WriteDrawingBodyDelegate(WriteRenderDataDrawingContextBody), "override", securityCriticalCS.ToString())]]
+                                [[WriteDrawingMethods(rdid, new WriteDrawingBodyDelegate(WriteRenderDataDrawingContextBody), "override", null)]]
                                 [[WriteUseAnimationMethods()]]
                             }
                         }
@@ -422,10 +411,7 @@ namespace MS.Internal.MilCodeGen.Generators
                     [[inline]]
 
                         {
-                            if (drawing != null)
-                            {
-                                drawing.WalkCurrentValue(this);
-                            }
+                            drawing?.WalkCurrentValue(this);
                         }
 
                     [[/inline]]
@@ -1262,12 +1248,6 @@ namespace MS.Internal.MilCodeGen.Generators
                     /// <summary>
                     /// MarshalToDUCE - Marshalling code to the DUCE
                     /// </summary>
-                    /// <SecurityNote>
-                    ///    Critical:Calls into unsafe code
-                    ///    TreatAsSafe: This code is ok to expose. Channels are safe to call with bad data.
-                    ///    They do not affect windows cross process or cross app domain
-                    /// </SecurityNote>
-                    [SecurityCritical,SecurityTreatAsSafe]
                     private void MarshalToDUCE(DUCE.Channel channel)
                     {
                         Debug.Assert(_duceResource.IsOnChannel(channel));
@@ -1458,12 +1438,6 @@ namespace MS.Internal.MilCodeGen.Generators
                                 /// DrawingContextWalk - Iterates this renderdata and call out to methods on the
                                 /// provided DrawingContext, passing the current values to their parameters.
                                 /// </summary>
-                                /// <SecurityNote>
-                                ///     Critical:This code calls into unsafe code
-                                ///     TreatAsSafe: This code is ok to expose. Writing to a channel is a safe operation.
-                                ///     Channels can deal with bad pointers.
-                                /// </SecurityNote>
-                                [SecurityCritical,SecurityTreatAsSafe]
                                 public void DrawingContextWalk(DrawingContextWalker ctx)
                                 [[WriteDrawingContextWalkBody(rdid, true /* Use current value of animations */)]]
 
@@ -1471,12 +1445,6 @@ namespace MS.Internal.MilCodeGen.Generators
                                 /// BaseValueDrawingContextWalk - Iterates this renderdata and call out to methods on the
                                 /// provided DrawingContext, passing base values and animations to their parameters.
                                 /// </summary>
-                                /// <SecurityNote>
-                                ///     Critical:This code calls into unsafe code
-                                ///     TreatAsSafe: This code is ok to expose. Writing to a channel is a safe operation.
-                                ///     Channels can deal with bad pointers.
-                                /// </SecurityNote>
-                                [SecurityCritical, SecurityTreatAsSafe]
                                 public void BaseValueDrawingContextWalk(DrawingContextWalker ctx)
                                 [[WriteDrawingContextWalkBody(rdid, false /* Use the base value & animations */)]]
                             }

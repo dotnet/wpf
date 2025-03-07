@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -22,12 +22,6 @@ using System.Reflection;
 using System.Globalization;
 using MS.Utility;
 using System.Collections.Specialized;
-
-// Disabling 1634 and 1691:
-// In order to avoid generating warnings about unknown message numbers and
-// unknown pragmas when compiling C# source code with the C# compiler,
-// you need to disable warnings 1634 and 1691. (Presharp Documentation)
-#pragma warning disable 1634, 1691
 
 #if !PBTCOMPILER
 
@@ -139,8 +133,10 @@ namespace System.Windows.Markup
 
             // push a rootLevel stack
             // For now always use InlineBlock.
-            TextFlowStackData textFlowStackData = new TextFlowStackData();
-            textFlowStackData.StripLeadingSpaces = true;
+            TextFlowStackData textFlowStackData = new TextFlowStackData
+            {
+                StripLeadingSpaces = true
+            };
 
             TextFlowStack.Push(textFlowStackData);
 
@@ -1467,8 +1463,7 @@ namespace System.Windows.Markup
             {
                 get
                 {
-                    DictionaryContextData dcd = _contextData as DictionaryContextData;
-                    if (dcd == null)
+                    if (_contextData is not DictionaryContextData dcd)
                     {
                         return _contextData as Type;
                     }
@@ -1951,8 +1946,10 @@ namespace System.Windows.Markup
 
             // Put an item on the context stack for this element.  The ContextType
             // may be modified by the call to CompileBamlTag.
-            ElementContextStackData elementContextStackData = new ElementContextStackData();
-            elementContextStackData.IsEmptyElement = isEmptyElement;
+            ElementContextStackData elementContextStackData = new ElementContextStackData
+            {
+                IsEmptyElement = isEmptyElement
+            };
 
             // If we have a parent stack, this context is the same as the parent
             // by default.
@@ -1964,8 +1961,10 @@ namespace System.Windows.Markup
             {
                 if(ShouldImplyContentProperty())
                 {
-                    ElementContextStackData CpaStackData = new ElementContextStackData();
-                    CpaStackData.ContextType = ElementContextType.Default;
+                    ElementContextStackData CpaStackData = new ElementContextStackData
+                    {
+                        ContextType = ElementContextType.Default
+                    };
                     ElementContextStack.Push(CpaStackData);
                     ParserContext.PushScope();
 
@@ -2732,8 +2731,11 @@ namespace System.Windows.Markup
                 // if the prefix was "" then
                 // 1) normal properties resolve to the parent Tag namespace.
                 // 2) Attached properties resolve to the "" default namespace.
-                int dotIndex = name.IndexOf('.');
-                if (-1 == dotIndex)
+#if !NETFX
+                if (!name.Contains('.'))
+#else
+                if (!name.Contains("."))
+#endif
                     attribNamespaceURI = parentURI;
                 else
                     attribNamespaceURI = XmlReader.LookupNamespace("");
@@ -2909,7 +2911,7 @@ namespace System.Windows.Markup
                             case AttributeContext.Unknown:
                                 WriteUnknownAttribute(attribNamespaceURI, attribLocalName,
                                                       attribValue, depth, parentTypeNamespace,
-                                                      unknownTagName == null ? parentType.Name : unknownTagName,
+                                                      unknownTagName ?? parentType.Name,
                                                       dynamicObject, resolvedProperties);
                                 break;
 
@@ -3125,8 +3127,7 @@ namespace System.Windows.Markup
                     ThrowException(nameof(SR.ParserNoDictionaryName));
                 }
 
-                DictionaryContextData dictionaryData = ParentContext.ContextData as DictionaryContextData;
-                if (dictionaryData != null)
+                if (ParentContext.ContextData is DictionaryContextData dictionaryData)
                 {
                     object key;
                     // Note that not all keys can be resolved at compile time.  For those that fail,
@@ -3199,9 +3200,8 @@ namespace System.Windows.Markup
                     propertyCanWrite = !((DependencyProperty)dynamicObject).ReadOnly;
                 }
 #endif
-                else if (dynamicObject is MethodInfo)
+                else if (dynamicObject is MethodInfo methodInfo)
                 {
-                    MethodInfo methodInfo = (MethodInfo)dynamicObject;
                     if (methodInfo.GetParameters().Length == 1)
                     {
                         methodInfo = methodInfo.DeclaringType.GetMethod(
@@ -3703,7 +3703,7 @@ namespace System.Windows.Markup
                                             Debug.Assert(typeAndSerializer == null ||
                                                          typeAndSerializer.SerializerType == null ||
                                                          propertyType == typeAndSerializer.ObjectType);
-                                            serializerType = typeAndSerializer != null ? typeAndSerializer.SerializerType : null;
+                                            serializerType = typeAndSerializer?.SerializerType;
 
                                             CompileComplexProperty(dynamicObject, propertyType, serializerType,
                                                     depth, assemblyName, typeFullName, dynamicObjectName,
@@ -3952,13 +3952,12 @@ namespace System.Windows.Markup
             // BamlRecordReader has secondary protection against nested property
             //  records, but the error message less friendly to users. ("'Property'
             //  record unexpected in BAML stream.")
-            ElementContextStackData parentTag = ElementContextStack.ParentContext as ElementContextStackData;
-            if( parentTag != null )
+            if (ElementContextStack.ParentContext is ElementContextStackData parentTag)
             {
-                if ( parentTag.ContextType == ElementContextType.PropertyComplex ||
+                if (parentTag.ContextType == ElementContextType.PropertyComplex ||
                      parentTag.ContextType == ElementContextType.PropertyArray ||
                      parentTag.ContextType == ElementContextType.PropertyIList ||
-                     parentTag.ContextType == ElementContextType.PropertyIDictionary )
+                     parentTag.ContextType == ElementContextType.PropertyIDictionary)
                 {
                     ThrowException(nameof(SR.ParserNestedComplexProp), complexPropName);
                 }
@@ -4566,8 +4565,10 @@ namespace System.Windows.Markup
             Type propertyBaseType = null;
 
             // Push a frame for GetPropertyComplex()
-            ElementContextStackData elementContextStackData = new ElementContextStackData();
-            elementContextStackData.ContextType = ElementContextType.Default;
+            ElementContextStackData elementContextStackData = new ElementContextStackData
+            {
+                ContextType = ElementContextType.Default
+            };
             ElementContextStack.Push(elementContextStackData);
 
             bool resolved = GetPropertyComplex(elementType.Name, contentPropertyName, namespaceUri,
@@ -5263,21 +5264,18 @@ namespace System.Windows.Markup
         {
             set
             {
-
                 Debug.Assert(null != XmlReader, "XmlReader is not yet set");
                 //check if it's a XmlCompatibilityReader first
-                XmlCompatibilityReader xmlCompatReader = XmlReader as XmlCompatibilityReader;
-                if (null != xmlCompatReader)
+                if (XmlReader is XmlCompatibilityReader xmlCompatReader)
                 {
                     xmlCompatReader.Normalization = true;
                 }
                 else
                 {
                     //now check for XmlTextReader
-                    XmlTextReader xmlTextReader = XmlReader as XmlTextReader;
 
                     // review, what if not the XmlTextReader.
-                    if (null != xmlTextReader)
+                    if (XmlReader is XmlTextReader xmlTextReader)
                     {
                         xmlTextReader.Normalization = true;
                     }

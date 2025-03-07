@@ -2,13 +2,26 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
+//
+//
 // This file was generated, please do not edit it directly.
+//
 // Please see MilCodeGen.html for more information.
+//
 
+using MS.Internal;
+using MS.Internal.KnownBoxes;
+using MS.Internal.Collections;
+using MS.Utility;
+using System.Collections;
 using System.ComponentModel;
 using System.Globalization;
-
-#pragma warning disable 1634, 1691  // suppressing PreSharp warnings
+using System.Text;
+using System.Windows.Media.Effects;
+using System.Windows.Media.Animation;
+using System.Windows.Media.Composition;
+using System.Windows.Markup;
+using System.Windows.Media.Converters;
 
 namespace System.Windows.Media
 {
@@ -52,12 +65,11 @@ namespace System.Windows.Media
                 {
                     if (!(context.Instance is PathFigureCollection))
                     {
-                        throw new ArgumentException(SR.Format(SR.General_Expected_Type, "PathFigureCollection"), "context");
+                        throw new ArgumentException(SR.Format(SR.General_Expected_Type, "PathFigureCollection"), nameof(context));
                     }
 
                     PathFigureCollection value = (PathFigureCollection)context.Instance;
 
-                    #pragma warning suppress 6506 // value is obviously not null
                     return value.CanSerializeToString();
                 }
 
@@ -87,9 +99,8 @@ namespace System.Windows.Media
                 throw GetConvertFromException(value);
             }
 
-            String source = value as string;
 
-            if (source != null)
+            if (value is string source)
             {
                 return PathFigureCollection.Parse(source);
             }
@@ -122,7 +133,6 @@ namespace System.Windows.Media
                     // When invoked by the serialization engine we can convert to string only for some instances
                     if (context != null && context.Instance != null)
                     {
-                        #pragma warning suppress 6506 // instance is obviously not null
                         if (!instance.CanSerializeToString())
                         {
                             throw new NotSupportedException(SR.Converter_ConvertToNotSupported);
@@ -130,8 +140,6 @@ namespace System.Windows.Media
                     }
 
                     // Delegate to the formatting/culture-aware ConvertToString method.
-
-                    #pragma warning suppress 6506 // instance is obviously not null
                     return instance.ConvertToString(null, culture);
                 }
             }

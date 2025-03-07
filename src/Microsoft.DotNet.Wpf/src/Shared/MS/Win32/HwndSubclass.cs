@@ -221,11 +221,11 @@ namespace MS.Win32
         {
             if(hwnd == IntPtr.Zero)
             {
-                throw new ArgumentNullException("hwnd");
+                throw new ArgumentNullException(nameof(hwnd));
             }
             if(subclass == IntPtr.Zero)
             {
-                throw new ArgumentNullException("subclass");
+                throw new ArgumentNullException(nameof(subclass));
             }
 
             int iForce = force ? 1 : 0;
@@ -376,7 +376,7 @@ namespace MS.Win32
         {
             if(hwnd == IntPtr.Zero)
             {
-                throw new ArgumentNullException("hwnd");
+                throw new ArgumentNullException(nameof(hwnd));
             }
             if(_bond != Bond.Unattached)
             {
@@ -398,9 +398,7 @@ namespace MS.Win32
             param.retVal = IntPtr.Zero;
             if (_bond == Bond.Attached)
             {
-                HwndWrapperHook hook= _hook.Target as HwndWrapperHook;
-
-                if (hook != null)
+                if (_hook.Target is HwndWrapperHook hook)
                 {
                     // make the call
                     param.retVal = hook(param.hwnd, param.msg, param.wParam, param.lParam, ref param.handled);

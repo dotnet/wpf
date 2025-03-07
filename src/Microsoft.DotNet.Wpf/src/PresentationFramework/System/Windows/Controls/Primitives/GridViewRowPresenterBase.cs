@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -123,7 +123,7 @@ namespace System.Windows.Controls.Primitives
         {
             if (_uiElementCollection == null)
             {
-                throw new ArgumentOutOfRangeException("index", index, SR.Visual_ArgumentOutOfRange);
+                throw new ArgumentOutOfRangeException(nameof(index), index, SR.Visual_ArgumentOutOfRange);
             }
             return _uiElementCollection[index];
         }
@@ -304,7 +304,7 @@ namespace System.Windows.Controls.Primitives
         {
             ItemsControl ic = ItemsControl.ItemsControlFromItemContainer(TemplatedParent);
 
-            return (ic != null) ? ic : (FrameworkElement)this;
+            return ic ?? (FrameworkElement)this;
         }
 
         // if and only if both conditions below are satisfied, row presenter visual is ready.

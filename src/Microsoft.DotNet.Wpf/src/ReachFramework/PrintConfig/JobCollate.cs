@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -207,8 +207,10 @@ namespace MS.Internal.Printing.Configuration
 
         internal static PrintCapabilityFeature NewFeatureCallback(InternalPrintCapabilities printCap)
         {
-            DocumentCollateCapability cap = new DocumentCollateCapability(printCap);
-            cap._collateOptions = new Collection<CollateOption>();
+            DocumentCollateCapability cap = new DocumentCollateCapability(printCap)
+            {
+                _collateOptions = new Collection<CollateOption>()
+            };
 
             return cap;
         }
@@ -276,7 +278,7 @@ namespace MS.Internal.Printing.Configuration
                 if (value < PrintSchema.CollationEnumMin ||
                     value > PrintSchema.CollationEnumMax)
                 {
-                    throw new ArgumentOutOfRangeException("value");
+                    throw new ArgumentOutOfRangeException(nameof(value));
                 }
 
                 this[PrintSchemaTags.Framework.OptionNameProperty] = (int)value;

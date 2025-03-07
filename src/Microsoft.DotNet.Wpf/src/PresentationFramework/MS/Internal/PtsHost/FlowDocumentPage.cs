@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+ï»¿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -292,7 +292,7 @@ namespace MS.Internal.PtsHost
                     ie = _ptsPage.InputHitTest(point);
                 }
             }
-            return (ie != null) ? ie : _structuralCache.FormattingOwner as IInputElement;
+            return ie ?? _structuralCache.FormattingOwner as IInputElement;
         }
 
         /// <summary>
@@ -367,7 +367,7 @@ namespace MS.Internal.PtsHost
                 else
                 {
                     // Return empty collection
-                    return new HostedElements(new ReadOnlyCollection<TextSegment>(new List<TextSegment>(0)));
+                    return new HostedElements(ReadOnlyCollection<TextSegment>.Empty);
                 }
             }
         }
@@ -392,7 +392,7 @@ namespace MS.Internal.PtsHost
         }
 
         /// <summary>
-        /// Called when a UIElement-derived class which is hosted by a IContentHost changes it’s DesiredSize
+        /// Called when a UIElement-derived class which is hosted by a IContentHost changes itâ€™s DesiredSize
         /// </summary>
         /// <param name="child">
         /// Child element whose DesiredSize has changed
@@ -572,7 +572,7 @@ namespace MS.Internal.PtsHost
 
             if (trackDetails.cParas == 0)
             {
-                return new ReadOnlyCollection<ParagraphResult>(new List<ParagraphResult>(0));
+                return ReadOnlyCollection<ParagraphResult>.Empty;
             }
 
             PTS.FSPARADESCRIPTION[] arrayParaDesc;
@@ -677,7 +677,7 @@ namespace MS.Internal.PtsHost
         //-------------------------------------------------------------------
         // Is this page already disposed?
         //-------------------------------------------------------------------
-        internal bool IsDisposed { get { return (_disposed != 0) || _structuralCache.PtsContext.Disposed; } }
+        internal bool IsDisposed { get { return _disposed || _structuralCache.PtsContext.Disposed; } }
 
         //-------------------------------------------------------------------
         // Size of content on page.
@@ -798,7 +798,7 @@ namespace MS.Internal.PtsHost
         private void Dispose(bool disposing)
         {
             // Do actual dispose only once.
-            if (Interlocked.CompareExchange(ref _disposed, 1, 0) == 0)
+            if (Interlocked.CompareExchange(ref _disposed, true, false) == false)
             {
                 if (disposing)
                 {
@@ -817,10 +817,7 @@ namespace MS.Internal.PtsHost
                     }
 
                     // Dispose PTS page
-                    if (_ptsPage != null)
-                    {
-                        _ptsPage.Dispose();
-                    }
+                    _ptsPage?.Dispose();
                 }
                 try
                 {
@@ -896,10 +893,7 @@ namespace MS.Internal.PtsHost
         //-------------------------------------------------------------------
         private void OnAfterFormatPage()
         {
-            if (_textView != null)
-            {
-                _textView.Invalidate();
-            }
+            _textView?.Invalidate();
             _visualNeedsUpdate = true;
         }
 
@@ -924,7 +918,7 @@ namespace MS.Internal.PtsHost
             Debug.Assert(e != null);
 
             // Validate that this function is only called when a TextContainer exists as complex content
-            Debug.Assert(_structuralCache.TextContainer is TextContainer);
+            Debug.Assert(_structuralCache.TextContainer is not null);
 
             TextPointer elementPosition = null;
 
@@ -941,8 +935,8 @@ namespace MS.Internal.PtsHost
             else
             {
                 // Else: search for e in the complex content
-                if (!(_structuralCache.TextContainer.Start is TextPointer) ||
-                    !(_structuralCache.TextContainer.End is TextPointer))
+                if (!(_structuralCache.TextContainer.Start is not null) ||
+                    !(_structuralCache.TextContainer.End is not null))
                 {
                     // Invalid TextContainer, don't search
                     return null;
@@ -1029,10 +1023,7 @@ namespace MS.Internal.PtsHost
         /// </summary>
         private void ValidateTextView()
         {
-            if (_textView != null)
-            {
-                _textView.OnUpdated();
-            }
+            _textView?.OnUpdated();
         }
 
         /// <summary>
@@ -1107,7 +1098,7 @@ namespace MS.Internal.PtsHost
         //-------------------------------------------------------------------
         // Is it already disposed?
         //-------------------------------------------------------------------
-        private int _disposed;
+        private bool _disposed;
 
         //-------------------------------------------------------------------
         // Max of dcpDepend for page
@@ -1212,7 +1203,7 @@ namespace MS.Internal.PtsHost
         }
 
         /// <summary>
-        /// Called when a UIElement-derived class which is hosted by a IContentHost changes it’s DesiredSize
+        /// Called when a UIElement-derived class which is hosted by a IContentHost changes itâ€™s DesiredSize
         /// </summary>
         /// <param name="child">
         /// Child element whose DesiredSize has changed

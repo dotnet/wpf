@@ -9,9 +9,11 @@
 // Please see MilCodeGen.html for more information.
 //
 
+using MS.Internal;
+using System.ComponentModel;
+using System.Globalization;
 using System.Windows.Markup;
-
-#pragma warning disable 1634, 1691  // suppressing PreSharp warnings
+using System.Windows.Converters;
 
 namespace System.Windows.Converters
 {
@@ -41,7 +43,7 @@ namespace System.Windows.Converters
             }
 
             return true;
-}
+        }
 
         /// <summary>
         /// Converts a string into a Vector.
@@ -56,19 +58,16 @@ namespace System.Windows.Converters
             {
                 return base.ConvertFromString( value, context );
             }
-}
+        }
 
         /// <summary>
         /// Converts the value into a string.
         /// </summary>
         public override string ConvertToString(object value, IValueSerializerContext context)
         {
-            if (value is Vector)
+            if (value is Vector instance)
             {
-                Vector instance = (Vector) value;
 
-
-                #pragma warning suppress 6506 // instance is obviously not null
                 return instance.ConvertToString(null, System.Windows.Markup.TypeConverterHelper.InvariantEnglishUS);
             }
 

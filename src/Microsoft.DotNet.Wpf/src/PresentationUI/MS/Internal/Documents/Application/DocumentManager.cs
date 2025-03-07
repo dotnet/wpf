@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -93,13 +93,14 @@ namespace MS.Internal.Documents.Application
         // because we have a fileToken we might be able to save
         _canSave = true;
 
-        PackageDocument doc = new PackageDocument(
-            new RightsDocument(
-            new FileDocument(fileToken)));
+            PackageDocument doc = new PackageDocument(
+                new RightsDocument(
+                new FileDocument(fileToken)))
+            {
+                Uri = source
+            };
 
-        doc.Uri = source;
-
-        return doc;
+            return doc;
     }
 
     /// <summary>
@@ -110,13 +111,14 @@ namespace MS.Internal.Documents.Application
     internal static PackageDocument CreateDefaultDocument(
         Uri source, Stream stream)
     {
-        PackageDocument doc = new PackageDocument(
-            new RightsDocument(
-            new FileDocument(stream)));
+            PackageDocument doc = new PackageDocument(
+                new RightsDocument(
+                new FileDocument(stream)))
+            {
+                Uri = source
+            };
 
-        doc.Uri = source;
-
-        return doc;
+            return doc;
     }
 
     /// <summary>
@@ -129,10 +131,7 @@ namespace MS.Internal.Documents.Application
         {
             IDisposable disposable = controller as IDisposable;
 
-            if (disposable != null)
-            {
-                disposable.Dispose();
-            }
+            disposable?.Dispose();
         }
     }
 

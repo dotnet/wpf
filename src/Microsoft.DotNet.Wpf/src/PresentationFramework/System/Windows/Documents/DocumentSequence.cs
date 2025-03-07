@@ -1,11 +1,6 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
-
-//
-// Description:
-//      Implements the FixedDocumentSequence element
-//
 
 using MS.Internal.Documents;
 using System.Collections;
@@ -17,8 +12,6 @@ using System.Windows.Threading;     // Dispatcher
 using System.Windows.Media;         // Visual
 using System.Windows.Markup; // IAddChild, ContentProperty
 using System.Windows.Navigation;
-
-#pragma warning disable 1634, 1691  // suppressing PreSharp warnings
 
 namespace System.Windows.Documents
 {
@@ -106,7 +99,7 @@ namespace System.Windows.Documents
 
             if (docRef == null)
             {
-                throw new ArgumentException(SR.Format(SR.UnexpectedParameterType, value.GetType(), typeof(DocumentReference)), "value");
+                throw new ArgumentException(SR.Format(SR.UnexpectedParameterType, value.GetType(), typeof(DocumentReference)), nameof(value));
             }
 
             if (docRef.IsInitialized)
@@ -246,7 +239,7 @@ namespace System.Windows.Documents
             // Page number cannot be negative.
             if (pageNumber < 0)
             {
-                throw new ArgumentOutOfRangeException("pageNumber", SR.IDPNegativePageNumber);
+                throw new ArgumentOutOfRangeException(nameof(pageNumber), SR.IDPNegativePageNumber);
             }
 
             DocumentPage innerDP = null;
@@ -271,7 +264,7 @@ namespace System.Windows.Documents
         {
             if (fixedDocPageNumber < 0)
             {
-                throw new ArgumentOutOfRangeException("fixedDocPageNumber", SR.IDPNegativePageNumber);
+                throw new ArgumentOutOfRangeException(nameof(fixedDocPageNumber), SR.IDPNegativePageNumber);
             }
 
             ArgumentNullException.ThrowIfNull(document);
@@ -296,7 +289,7 @@ namespace System.Windows.Documents
             // Page number cannot be negative.
             if (pageNumber < 0)
             {
-                throw new ArgumentOutOfRangeException("pageNumber", SR.IDPNegativePageNumber);
+                throw new ArgumentOutOfRangeException(nameof(pageNumber), SR.IDPNegativePageNumber);
             }
 
             ArgumentNullException.ThrowIfNull(userState);
@@ -320,11 +313,9 @@ namespace System.Windows.Documents
             // Because of that we are expecting one of 2 types here.
             DynamicDocumentPaginator childPaginator = null;
             ContentPosition childContentPosition = null;
-            if (contentPosition is DocumentSequenceTextPointer)
+            if (contentPosition is DocumentSequenceTextPointer dsTextPointer)
             {
-                DocumentSequenceTextPointer dsTextPointer = (DocumentSequenceTextPointer)contentPosition;
 
-                #pragma warning suppress 6506 // dsTextPointer is obviously not null
                 childPaginator = GetPaginator(dsTextPointer.ChildBlock.DocRef);
                 childContentPosition = dsTextPointer.ChildPointer as ContentPosition;
             }
@@ -355,10 +346,7 @@ namespace System.Windows.Documents
                 if (asyncRequest != null)
                 {
                     asyncRequest.Cancelled = true;
-                    if (asyncRequest.Page.ChildPaginator != null)
-                    {
-                        asyncRequest.Page.ChildPaginator.CancelAsync(asyncRequest);
-                    }
+                    asyncRequest.Page.ChildPaginator?.CancelAsync(asyncRequest);
                 }
             }
         }

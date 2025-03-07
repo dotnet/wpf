@@ -51,9 +51,10 @@ namespace System.Windows.Media.Animation
             {
                 if (s_emptyCollection == null)
                 {
-                    MatrixKeyFrameCollection emptyCollection = new MatrixKeyFrameCollection();
-
-                    emptyCollection._keyFrames = new List< MatrixKeyFrame>(0);
+                    MatrixKeyFrameCollection emptyCollection = new MatrixKeyFrameCollection
+                    {
+                        _keyFrames = new List<MatrixKeyFrame>(0)
+                    };
                     emptyCollection.Freeze();
 
                     s_emptyCollection = emptyCollection;

@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -11,11 +11,6 @@ using System.Windows;
 using System.Windows.Markup;
 
 using System.Windows.Navigation;
-
-//In order to avoid generating warnings about unknown message numbers and 
-//unknown pragmas when compiling your C# source code with the actual C# compiler, 
-//you need to disable warnings 1634 and 1691. (Presharp Documentation)
-#pragma warning disable 1634, 1691
 
 namespace MS.Internal.AppModel
 {
@@ -564,7 +559,7 @@ namespace MS.Internal.AppModel
             // Special case: doing fragment navigation or CustomContentState navigation
             // within a PF. Then don't create a new PF object!
             IDownloader idl = navigator as IDownloader;
-            NavigationService ns = idl != null ? idl.Downloader : null;
+            NavigationService ns = idl?.Downloader;
             Debug.Assert(ns != null, "Fragment navigation won't work when the INavigator doesn't have a NavigationService.");
 
             PageFunctionBase pageFunction =
@@ -700,10 +695,7 @@ namespace MS.Internal.AppModel
         {
             // Need to explicitly add a call to InitializeComponent() for Page
             IComponentConnector iComponentConnector = pageFunction as IComponentConnector;
-            if (iComponentConnector != null)
-            {
-                iComponentConnector.InitializeComponent();
-            }
+            iComponentConnector?.InitializeComponent();
         }
 
         #endregion

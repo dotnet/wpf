@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -155,8 +155,10 @@ namespace System.Windows.Markup
         /// </summary>summary>
         public BamlReader(Stream bamlStream)
         {
-            _parserContext = new ParserContext();
-            _parserContext.XamlTypeMapper = XmlParserDefaults.DefaultMapper;
+            _parserContext = new ParserContext
+            {
+                XamlTypeMapper = XmlParserDefaults.DefaultMapper
+            };
             _bamlRecordReader = new BamlRecordReader(bamlStream, _parserContext, false);
             _readState = ReadState.Initial;
             _bamlNodeType = BamlNodeType.None;
@@ -810,17 +812,19 @@ namespace System.Windows.Markup
             _parserContext.XmlnsDictionary[bamlRecord.Prefix] = bamlRecord.XmlNamespace;
             _prefixDictionary[bamlRecord.XmlNamespace] = bamlRecord.Prefix;
 
-            BamlPropertyInfo info = new BamlPropertyInfo();
-            info.Value = bamlRecord.XmlNamespace;
-            info.XmlNamespace = string.Empty;
-            info.ClrNamespace = string.Empty;
-            info.AssemblyName = string.Empty;
-            info.Prefix = "xmlns";
-            info.LocalName = bamlRecord.Prefix == null ? string.Empty : bamlRecord.Prefix;
-            info.Name = string.IsNullOrEmpty(bamlRecord.Prefix) ?
+            BamlPropertyInfo info = new BamlPropertyInfo
+            {
+                Value = bamlRecord.XmlNamespace,
+                XmlNamespace = string.Empty,
+                ClrNamespace = string.Empty,
+                AssemblyName = string.Empty,
+                Prefix = "xmlns",
+                LocalName = bamlRecord.Prefix ?? string.Empty,
+                Name = string.IsNullOrEmpty(bamlRecord.Prefix) ?
                                           "xmlns" :
-                                          $"xmlns:{bamlRecord.Prefix}";
-            info.RecordType = BamlRecordType.XmlnsProperty;
+                                          $"xmlns:{bamlRecord.Prefix}",
+                RecordType = BamlRecordType.XmlnsProperty
+            };
 
             AddToPropertyInfoCollection(info);
         }
@@ -1039,7 +1043,7 @@ namespace System.Windows.Markup
             {
                 Type declaringType = null;
                 _propertyDP = _bamlRecordReader.GetCustomDependencyPropertyValue(bamlRecord, out declaringType);
-                declaringType = declaringType == null ? _propertyDP.OwnerType : declaringType;
+                declaringType = declaringType ?? _propertyDP.OwnerType;
                 info.Value = $"{declaringType.Name}.{_propertyDP.Name}";
 
                 string xmlns = _parserContext.XamlTypeMapper.GetXmlNamespace(declaringType.Namespace,
@@ -1092,13 +1096,15 @@ namespace System.Windows.Markup
             BamlDefAttributeRecord bamlRecord = (BamlDefAttributeRecord)_currentBamlRecord;
             bamlRecord.Name = MapTable.GetStringFromStringId(bamlRecord.NameId);
 
-            BamlPropertyInfo info = new BamlPropertyInfo();
-            info.Value = bamlRecord.Value;
-            info.AssemblyName = string.Empty;
-            info.Prefix = (string)_prefixDictionary[XamlReaderHelper.DefinitionNamespaceURI];
-            info.XmlNamespace = XamlReaderHelper.DefinitionNamespaceURI;
-            info.ClrNamespace = string.Empty;
-            info.Name = bamlRecord.Name;
+            BamlPropertyInfo info = new BamlPropertyInfo
+            {
+                Value = bamlRecord.Value,
+                AssemblyName = string.Empty,
+                Prefix = (string)_prefixDictionary[XamlReaderHelper.DefinitionNamespaceURI],
+                XmlNamespace = XamlReaderHelper.DefinitionNamespaceURI,
+                ClrNamespace = string.Empty,
+                Name = bamlRecord.Name
+            };
             info.LocalName = info.Name;
             info.RecordType = BamlRecordType.DefAttribute;
 
@@ -1119,13 +1125,15 @@ namespace System.Windows.Markup
             BamlPresentationOptionsAttributeRecord bamlRecord = (BamlPresentationOptionsAttributeRecord)_currentBamlRecord;
             bamlRecord.Name = MapTable.GetStringFromStringId(bamlRecord.NameId);
 
-            BamlPropertyInfo info = new BamlPropertyInfo();
-            info.Value = bamlRecord.Value;
-            info.AssemblyName = string.Empty;
-            info.Prefix = (string)_prefixDictionary[XamlReaderHelper.PresentationOptionsNamespaceURI];
-            info.XmlNamespace = XamlReaderHelper.PresentationOptionsNamespaceURI;
-            info.ClrNamespace = string.Empty;
-            info.Name = bamlRecord.Name;
+            BamlPropertyInfo info = new BamlPropertyInfo
+            {
+                Value = bamlRecord.Value,
+                AssemblyName = string.Empty,
+                Prefix = (string)_prefixDictionary[XamlReaderHelper.PresentationOptionsNamespaceURI],
+                XmlNamespace = XamlReaderHelper.PresentationOptionsNamespaceURI,
+                ClrNamespace = string.Empty,
+                Name = bamlRecord.Name
+            };
             info.LocalName = info.Name;
             info.RecordType = BamlRecordType.PresentationOptionsAttribute;
 
@@ -1146,13 +1154,15 @@ namespace System.Windows.Markup
         {
             BamlDefAttributeKeyTypeRecord bamlRecord = (BamlDefAttributeKeyTypeRecord)_currentBamlRecord;
 
-            BamlPropertyInfo info = new BamlPropertyInfo();
-            info.Value = GetTypeValueString(bamlRecord.TypeId);
-            info.AssemblyName = string.Empty;
-            info.Prefix = (string)_prefixDictionary[XamlReaderHelper.DefinitionNamespaceURI];
-            info.XmlNamespace = XamlReaderHelper.DefinitionNamespaceURI;
-            info.ClrNamespace = string.Empty;
-            info.Name = XamlReaderHelper.DefinitionName;
+            BamlPropertyInfo info = new BamlPropertyInfo
+            {
+                Value = GetTypeValueString(bamlRecord.TypeId),
+                AssemblyName = string.Empty,
+                Prefix = (string)_prefixDictionary[XamlReaderHelper.DefinitionNamespaceURI],
+                XmlNamespace = XamlReaderHelper.DefinitionNamespaceURI,
+                ClrNamespace = string.Empty,
+                Name = XamlReaderHelper.DefinitionName
+            };
             info.LocalName = info.Name;
             info.RecordType = BamlRecordType.DefAttribute;
 
@@ -1262,13 +1272,15 @@ namespace System.Windows.Markup
 
                         // Add information to the key list to indicate we have a x:Key
                         // attribute
-                        info = new BamlKeyInfo();
-                        info.Value = stringKeyRecord.Value;
-                        info.AssemblyName = string.Empty;
-                        info.Prefix = (string)_prefixDictionary[XamlReaderHelper.DefinitionNamespaceURI];
-                        info.XmlNamespace = XamlReaderHelper.DefinitionNamespaceURI;
-                        info.ClrNamespace = string.Empty;
-                        info.Name = XamlReaderHelper.DefinitionName;
+                        info = new BamlKeyInfo
+                        {
+                            Value = stringKeyRecord.Value,
+                            AssemblyName = string.Empty,
+                            Prefix = (string)_prefixDictionary[XamlReaderHelper.DefinitionNamespaceURI],
+                            XmlNamespace = XamlReaderHelper.DefinitionNamespaceURI,
+                            ClrNamespace = string.Empty,
+                            Name = XamlReaderHelper.DefinitionName
+                        };
                         info.LocalName = info.Name;
                         info.RecordType = BamlRecordType.DefAttribute;
                         info.Offset = ((IBamlDictionaryKey)stringKeyRecord).ValuePosition;
@@ -1311,13 +1323,15 @@ namespace System.Windows.Markup
 
                         // Add information to the key list to indicate we have a x:Key
                         // attribute
-                        BamlKeyInfo info = new BamlKeyInfo();
-                        info.Value = typeName;
-                        info.AssemblyName = string.Empty;
-                        info.Prefix = typeExtensionPrefix;
-                        info.XmlNamespace = XamlReaderHelper.DefinitionNamespaceURI;
-                        info.ClrNamespace = string.Empty;
-                        info.Name = XamlReaderHelper.DefinitionName;
+                        BamlKeyInfo info = new BamlKeyInfo
+                        {
+                            Value = typeName,
+                            AssemblyName = string.Empty,
+                            Prefix = typeExtensionPrefix,
+                            XmlNamespace = XamlReaderHelper.DefinitionNamespaceURI,
+                            ClrNamespace = string.Empty,
+                            Name = XamlReaderHelper.DefinitionName
+                        };
                         info.LocalName = info.Name;
                         info.RecordType = BamlRecordType.DefAttribute;
                         info.Offset = ((IBamlDictionaryKey)typeKeyRecord).ValuePosition;
@@ -1381,13 +1395,15 @@ namespace System.Windows.Markup
             if (!dictKey.SharedSet)
                 return null;
 
-            BamlKeyInfo info = new BamlKeyInfo();
-            info.Value = dictKey.Shared.ToString();
-            info.AssemblyName = string.Empty;
-            info.Prefix = (string)_prefixDictionary[XamlReaderHelper.DefinitionNamespaceURI];
-            info.XmlNamespace = XamlReaderHelper.DefinitionNamespaceURI;
-            info.ClrNamespace = string.Empty;
-            info.Name = XamlReaderHelper.DefinitionShared;
+            BamlKeyInfo info = new BamlKeyInfo
+            {
+                Value = dictKey.Shared.ToString(),
+                AssemblyName = string.Empty,
+                Prefix = (string)_prefixDictionary[XamlReaderHelper.DefinitionNamespaceURI],
+                XmlNamespace = XamlReaderHelper.DefinitionNamespaceURI,
+                ClrNamespace = string.Empty,
+                Name = XamlReaderHelper.DefinitionShared
+            };
             info.LocalName = info.Name;
             info.RecordType = BamlRecordType.DefAttribute;
             info.Offset = dictKey.ValuePosition;
@@ -1670,13 +1686,15 @@ namespace System.Windows.Markup
 
             // At this point the markup string representing the MarkupExtension should
             // be complete, so set this as the value for this key.
-            BamlKeyInfo info = new BamlKeyInfo();
-            info.Value = markupString;
-            info.AssemblyName = string.Empty;
-            info.Prefix = (string)_prefixDictionary[XamlReaderHelper.DefinitionNamespaceURI];
-            info.XmlNamespace = XamlReaderHelper.DefinitionNamespaceURI;
-            info.ClrNamespace = string.Empty;
-            info.Name = XamlReaderHelper.DefinitionName;
+            BamlKeyInfo info = new BamlKeyInfo
+            {
+                Value = markupString,
+                AssemblyName = string.Empty,
+                Prefix = (string)_prefixDictionary[XamlReaderHelper.DefinitionNamespaceURI],
+                XmlNamespace = XamlReaderHelper.DefinitionNamespaceURI,
+                ClrNamespace = string.Empty,
+                Name = XamlReaderHelper.DefinitionName
+            };
             info.LocalName = info.Name;
             info.RecordType = BamlRecordType.DefAttribute;
             info.Offset = ((IBamlDictionaryKey)keyStartRecord).ValuePosition;
@@ -1752,10 +1770,7 @@ namespace System.Windows.Markup
                     }
                     builder.Append('\\');
                 }
-                if (builder != null)
-                {
-                    builder.Append(value[i]);
-                }
+                builder?.Append(value[i]);
             }
 
             if (builder == null)
@@ -1814,8 +1829,10 @@ namespace System.Windows.Markup
             _parserContext.IsDebugBamlStream = documentStartRecord.DebugBaml;
 
             // Push information on the node stack to indicate we have a start document
-            BamlNodeInfo nodeInfo = new BamlNodeInfo();
-            nodeInfo.RecordType = BamlRecordType.DocumentStart;
+            BamlNodeInfo nodeInfo = new BamlNodeInfo
+            {
+                RecordType = BamlRecordType.DocumentStart
+            };
             _nodeStack.Push(nodeInfo);
         }
 
@@ -1952,14 +1969,16 @@ namespace System.Windows.Markup
             GetAssemblyAndPrefixAndXmlns(typeInfo, out _assemblyName, out _prefix, out _xmlNamespace);
 
             // Push information on the node stack to indicate we have a start element
-            BamlNodeInfo nodeInfo = new BamlNodeInfo();
-            nodeInfo.Name = _name;
-            nodeInfo.LocalName = _localName;
-            nodeInfo.AssemblyName = _assemblyName;
-            nodeInfo.Prefix = _prefix;
-            nodeInfo.ClrNamespace = _clrNamespace;
-            nodeInfo.XmlNamespace = _xmlNamespace;
-            nodeInfo.RecordType = BamlRecordType.ElementStart;
+            BamlNodeInfo nodeInfo = new BamlNodeInfo
+            {
+                Name = _name,
+                LocalName = _localName,
+                AssemblyName = _assemblyName,
+                Prefix = _prefix,
+                ClrNamespace = _clrNamespace,
+                XmlNamespace = _xmlNamespace,
+                RecordType = BamlRecordType.ElementStart
+            };
 
             _useTypeConverter = bamlRecord.CreateUsingTypeConverter;
             _isInjected = bamlRecord.IsInjected;
@@ -2206,8 +2225,10 @@ namespace System.Windows.Markup
             NodeTypeInternal = BamlNodeType.StartConstructor;
 
             // Push information on the node stack to indicate we have a start array
-            BamlNodeInfo nodeInfo = new BamlNodeInfo();
-            nodeInfo.RecordType = BamlRecordType.ConstructorParametersStart;
+            BamlNodeInfo nodeInfo = new BamlNodeInfo
+            {
+                RecordType = BamlRecordType.ConstructorParametersStart
+            };
 
             _nodeStack.Push(nodeInfo);
         }
@@ -2266,13 +2287,15 @@ namespace System.Windows.Markup
                 // records that may occur within the corresponding value.
                 _currentKeyInfo = keyInfo;
 
-                BamlPropertyInfo info = new BamlPropertyInfo();
-                info.Value = keyInfo.Value;
-                info.AssemblyName = string.Empty;
-                info.Prefix = (string)_prefixDictionary[XamlReaderHelper.DefinitionNamespaceURI];
-                info.XmlNamespace = XamlReaderHelper.DefinitionNamespaceURI;
-                info.ClrNamespace = string.Empty;
-                info.Name = keyInfo.Name;
+                BamlPropertyInfo info = new BamlPropertyInfo
+                {
+                    Value = keyInfo.Value,
+                    AssemblyName = string.Empty,
+                    Prefix = (string)_prefixDictionary[XamlReaderHelper.DefinitionNamespaceURI],
+                    XmlNamespace = XamlReaderHelper.DefinitionNamespaceURI,
+                    ClrNamespace = string.Empty,
+                    Name = keyInfo.Name
+                };
                 info.LocalName = info.Name;
                 info.RecordType = BamlRecordType.DefAttribute;
 

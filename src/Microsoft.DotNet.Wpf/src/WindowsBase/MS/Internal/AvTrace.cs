@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -360,16 +360,6 @@ namespace MS.Internal
             if (value == null)
                 return "<null>";
 
-            // PreSharp uses message numbers that the C# compiler doesn't know about.
-            // Disable the C# complaints, per the PreSharp documentation.
-            #pragma warning disable 1634, 1691
-
-            // PreSharp complains about catching NullReference (and other) exceptions.
-            // In this case, these are precisely the ones we want to catch the most,
-            // so that we can still print some kind of diagnostic information even
-            // about objects that implement ToString poorly.
-            #pragma warning disable 56500
-
             string result;
             try
             {
@@ -379,9 +369,6 @@ namespace MS.Internal
             {
                 result = "<unprintable>";
             }
-
-            #pragma warning restore 56500
-            #pragma warning restore 1634, 1691
 
             return AntiFormat(result);
         }
@@ -408,7 +395,7 @@ namespace MS.Internal
                 else
                 {
                     // duplicate the formatting character
-                    sb.Append(s.Substring(index, formatIndex - index + 1));
+                    sb.Append(s.AsSpan(index, formatIndex - index + 1));
                     sb.Append(s[formatIndex]);
 
                     index = formatIndex + 1;
@@ -418,7 +405,7 @@ namespace MS.Internal
 
             if (index <= lengthMinus1)
             {
-                sb.Append(s.Substring(index));
+                sb.Append(s.AsSpan(index));
             }
 
             return sb.ToString();
@@ -533,8 +520,7 @@ namespace MS.Internal
             object[] argstrs = new object[args.Length];
             for (int i = 0; i < args.Length; ++i)
             {
-                string s = args[i] as string;
-                argstrs[i] = (s != null) ? s : AvTrace.ToStringHelper(args[i]);
+                argstrs[i] = (args[i] is string s) ? s : AvTrace.ToStringHelper(args[i]);
             }
             _sb.AppendFormat( CultureInfo.InvariantCulture, message, argstrs );
         }

@@ -51,9 +51,10 @@ namespace System.Windows.Media.Animation
             {
                 if (s_emptyCollection == null)
                 {
-                    BooleanKeyFrameCollection emptyCollection = new BooleanKeyFrameCollection();
-
-                    emptyCollection._keyFrames = new List< BooleanKeyFrame>(0);
+                    BooleanKeyFrameCollection emptyCollection = new BooleanKeyFrameCollection
+                    {
+                        _keyFrames = new List<BooleanKeyFrame>(0)
+                    };
                     emptyCollection.Freeze();
 
                     s_emptyCollection = emptyCollection;

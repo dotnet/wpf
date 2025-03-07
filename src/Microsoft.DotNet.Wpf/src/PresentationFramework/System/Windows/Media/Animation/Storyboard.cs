@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -29,10 +29,12 @@ namespace System.Windows.Media.Animation
 {
     static Storyboard()
     {
-        PropertyMetadata targetPropertyMetadata = new PropertyMetadata();
-        targetPropertyMetadata.FreezeValueCallback = TargetFreezeValueCallback;
+            PropertyMetadata targetPropertyMetadata = new PropertyMetadata
+            {
+                FreezeValueCallback = TargetFreezeValueCallback
+            };
 
-        TargetProperty = DependencyProperty.RegisterAttached("Target", typeof(DependencyObject), typeof(Storyboard), targetPropertyMetadata);
+            TargetProperty = DependencyProperty.RegisterAttached("Target", typeof(DependencyObject), typeof(Storyboard), targetPropertyMetadata);
     }
 
     /// <summary>
@@ -1585,10 +1587,7 @@ namespace System.Windows.Media.Animation
     {
         Clock clock = GetStoryboardClock(containingObject, false, InteractiveOperation.Pause);
 
-        if (clock != null)
-        {
-            clock.Controller.Pause();
-        }
+        clock?.Controller.Pause();
         
         if( TraceAnimation.IsEnabled )
         {
@@ -1632,10 +1631,7 @@ namespace System.Windows.Media.Animation
         {
             clock.Controller.Remove();
             HybridDictionary clocks = StoryboardClockTreesField.GetValue(containingObject);
-            if (clocks != null)
-            {
-                clocks.Remove(this);
-            }
+            clocks?.Remove(this);
         }
 
         if( TraceAnimation.IsEnabled )
@@ -1679,10 +1675,7 @@ namespace System.Windows.Media.Animation
     {
         Clock clock = GetStoryboardClock(containingObject, false, InteractiveOperation.Resume);
 
-        if (clock != null)
-        {
-            clock.Controller.Resume();
-        }
+        clock?.Controller.Resume();
 
         if( TraceAnimation.IsEnabled )
         {
@@ -1738,12 +1731,9 @@ namespace System.Windows.Media.Animation
     {
         Clock clock = GetStoryboardClock(containingObject, false, InteractiveOperation.Seek);
 
-        if (clock != null)
-        {
             // Seek is a public API as well, so its parameters should get validated there.
-            clock.Controller.Seek(offset, origin);
+            clock?.Controller.Seek(offset, origin);
         }
-    }
 
     /// <summary>
     ///     Given an object, look on the clock store for a clock that was
@@ -1789,12 +1779,9 @@ namespace System.Windows.Media.Animation
     {
         Clock clock = GetStoryboardClock(containingObject, false, InteractiveOperation.SeekAlignedToLastTick);
 
-        if (clock != null)
-        {
             // SeekAlignedToLastTick is a public API as well, so its parameters should get validated there.
-            clock.Controller.SeekAlignedToLastTick(offset, origin);
+            clock?.Controller.SeekAlignedToLastTick(offset, origin);
         }
-    }
 
     /// <summary>
     ///     Given an object, look on the clock store for a clock that was
@@ -1867,10 +1854,7 @@ namespace System.Windows.Media.Animation
     {
         Clock clock = GetStoryboardClock(containingObject, false, InteractiveOperation.SkipToFill);
 
-        if (clock != null)
-        {
-            clock.Controller.SkipToFill();
-        }
+        clock?.Controller.SkipToFill();
     }
 
     /// <summary>
@@ -1904,10 +1888,7 @@ namespace System.Windows.Media.Animation
     {
         Clock clock = GetStoryboardClock(containingObject, false, InteractiveOperation.Stop);
 
-        if (clock != null)
-        {
-            clock.Controller.Stop();
-        }
+        clock?.Controller.Stop();
 
         if( TraceAnimation.IsEnabled )
         {

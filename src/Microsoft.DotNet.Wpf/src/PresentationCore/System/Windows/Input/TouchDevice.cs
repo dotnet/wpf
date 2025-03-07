@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -329,7 +329,7 @@ namespace System.Windows.Input
 
             if ((element != null) && (uiElement == null) && (contentElement == null) && (uiElement3D == null))
             {
-                throw new ArgumentException(SR.Format(SR.Invalid_IInputElement, element.GetType()), "element");
+                throw new ArgumentException(SR.Format(SR.Invalid_IInputElement, element.GetType()), nameof(element));
             }
 
             if (_captured != element)
@@ -382,13 +382,13 @@ namespace System.Windows.Input
                         uiElement3D.IsHitTestVisibleChanged += OnReevaluateCapture;
                     }
 
-                    UpdateReverseInheritedProperty(/* capture = */ true, oldCapture, _captured);
+                    UpdateReverseInheritedProperty(capture: true, oldCapture, _captured);
 
                     if (oldCapture != null)
                     {
                         DependencyObject o = oldCapture as DependencyObject;
                         o.SetValue(UIElement.AreAnyTouchesCapturedPropertyKey,
-                            BooleanBoxes.Box(AreAnyTouchesCapturedOrDirectlyOver(oldCapture, /* isCapture = */ true)));
+                            BooleanBoxes.Box(AreAnyTouchesCapturedOrDirectlyOver(oldCapture, isCapture: true)));
                     }
                     if (_captured != null)
                     {
@@ -557,7 +557,7 @@ namespace System.Windows.Input
             // Refresh AreAnyTouchCapturesWithinProperty so that ReverseInherited flags are updated.
             if ((_capturedWithinTreeState != null) && !_capturedWithinTreeState.IsEmpty)
             {
-                UpdateReverseInheritedProperty(/* capture = */ true, _captured, _captured);
+                UpdateReverseInheritedProperty(capture: true, _captured, _captured);
             }
         }
 
@@ -633,7 +633,7 @@ namespace System.Windows.Input
             EventTrace.EasyTraceEvent(EventTrace.Keyword.KeywordInput | EventTrace.Keyword.KeywordPerf, EventTrace.Level.Info, EventTrace.Event.TouchDownReported, _deviceId);
 
             _isDown = true;
-            UpdateDirectlyOver(/* isSynchronize = */ false);
+            UpdateDirectlyOver(isSynchronize: false);
             bool handled = RaiseTouchDown();
             OnUpdated();
 
@@ -645,7 +645,7 @@ namespace System.Windows.Input
         {
             EventTrace.EasyTraceEvent(EventTrace.Keyword.KeywordInput | EventTrace.Keyword.KeywordPerf, EventTrace.Level.Info, EventTrace.Event.TouchMoveReported, _deviceId);
 
-            UpdateDirectlyOver(/* isSynchronize = */ false);
+            UpdateDirectlyOver(isSynchronize: false);
             bool handled = RaiseTouchMove();
             OnUpdated();
 
@@ -681,7 +681,7 @@ namespace System.Windows.Input
 
             bool handled = RaiseTouchUp();
             _isDown = false;
-            UpdateDirectlyOver(/* isSynchronize = */ false);
+            UpdateDirectlyOver(isSynchronize: false);
             OnUpdated();
 
             Touch.ReportFrame();
@@ -743,7 +743,7 @@ namespace System.Windows.Input
                 _activeSource.CompositionTarget != null &&
                 !_activeSource.CompositionTarget.IsDisposed)
             {
-                if (UpdateDirectlyOver(/* isSynchronize = */ true))
+                if (UpdateDirectlyOver(isSynchronize: true))
                 {
                     OnUpdated();
                     Touch.ReportFrame();
@@ -771,7 +771,7 @@ namespace System.Windows.Input
 
             if ((_directlyOverTreeState != null) && !_directlyOverTreeState.IsEmpty)
             {
-                UpdateReverseInheritedProperty(/* capture = */ false, _directlyOver, _directlyOver);
+                UpdateReverseInheritedProperty(capture: false, _directlyOver, _directlyOver);
             }
         }
 
@@ -893,13 +893,13 @@ namespace System.Windows.Input
                 newUIElement3D.IsHitTestVisibleChanged += OnReevaluateDirectlyOver;
             }
 
-            UpdateReverseInheritedProperty(/* capture = */ false, oldDirectlyOver, newDirectlyOver);
+            UpdateReverseInheritedProperty(capture: false, oldDirectlyOver, newDirectlyOver);
 
             if (oldDirectlyOver != null)
             {
                 DependencyObject o = oldDirectlyOver as DependencyObject;
                 o.SetValue(UIElement.AreAnyTouchesDirectlyOverPropertyKey,
-                            BooleanBoxes.Box(AreAnyTouchesCapturedOrDirectlyOver(oldDirectlyOver, /* isCapture = */ false)));
+                            BooleanBoxes.Box(AreAnyTouchesCapturedOrDirectlyOver(oldDirectlyOver, isCapture: false)));
             }
             if (newDirectlyOver != null)
             {
@@ -937,8 +937,10 @@ namespace System.Windows.Input
         private TouchEventArgs CreateEventArgs(RoutedEvent routedEvent)
         {
             // review timestamps
-            TouchEventArgs touchEventArgs = new TouchEventArgs(this, Environment.TickCount);
-            touchEventArgs.RoutedEvent = routedEvent;
+            TouchEventArgs touchEventArgs = new TouchEventArgs(this, Environment.TickCount)
+            {
+                RoutedEvent = routedEvent
+            };
             return touchEventArgs;
         }
 
@@ -1130,10 +1132,7 @@ namespace System.Windows.Input
 
         private static void RemoveActiveDevice(TouchDevice device)
         {
-            if (_activeDevices != null)
-            {
-                _activeDevices.Remove(device);
-            }
+            _activeDevices?.Remove(device);
         }
 
         internal static TouchPointCollection GetTouchPoints(IInputElement relativeTo)
@@ -1184,12 +1183,12 @@ namespace System.Windows.Input
 
         internal static IEnumerable<TouchDevice> GetCapturedTouches(IInputElement element, bool includeWithin)
         {
-            return GetCapturedOrOverTouches(element, includeWithin, /* isCapture = */ true);
+            return GetCapturedOrOverTouches(element, includeWithin, isCapture: true);
         }
 
         internal static IEnumerable<TouchDevice> GetTouchesOver(IInputElement element, bool includeWithin)
         {
-            return GetCapturedOrOverTouches(element, includeWithin, /* isCapture = */ false);
+            return GetCapturedOrOverTouches(element, includeWithin, isCapture: false);
         }
 
         private static bool IsWithin(IInputElement parent, IInputElement child)

@@ -59,6 +59,7 @@ namespace System.Xaml
             {
                 lineInfoAddDelegate = new XamlLineInfoAddDelegate(AddLineInfo);
             }
+
             _writer = new WriterDelegate(xamlNodeAddDelegate, lineInfoAddDelegate, _wrappedReader.SchemaContext);
 
             XamlNodeNextDelegate xamlNodeNextDelegate;
@@ -70,9 +71,10 @@ namespace System.Xaml
             {
                 xamlNodeNextDelegate = new XamlNodeNextDelegate(Next);
             }
+
             _internalReader = new ReaderDelegate(_wrappedReader.SchemaContext, xamlNodeNextDelegate, _wrappedReaderHasLineInfo);
 
-            //Standin so it won't start null
+            // Standin so it won't start null
             _currentNode = new XamlNode(XamlNode.InternalNodeType.StartOfStream);
         }
 
@@ -83,13 +85,16 @@ namespace System.Xaml
 
         public void StartThread(string threadName)
         {
-            if (_thread != null)
+            if (_thread is not null)
             {
                 throw new InvalidOperationException(SR.ThreadAlreadyStarted);
             }
+
             ParameterizedThreadStart start = new ParameterizedThreadStart(XamlReaderThreadStart);
-            _thread = new Thread(start);
-            _thread.Name = threadName;
+            _thread = new Thread(start)
+            {
+                Name = threadName
+            };
             _thread.Start();
         }
 
@@ -145,11 +150,13 @@ namespace System.Xaml
             {
                 return;
             }
+
             if (nodeType != XamlNodeType.None)
             {
                 AddToBuffer(new XamlNode(nodeType, data));
                 return;
             }
+
             Debug.Assert(XamlNode.IsEof_Helper(nodeType, data));
             AddToBuffer(new XamlNode(XamlNode.InternalNodeType.EndOfStream));
             _providerFullEvent.Set();
@@ -161,6 +168,7 @@ namespace System.Xaml
             {
                 return;
             }
+
             LineInfo lineInfo = new LineInfo(lineNumber, linePosition);
             XamlNode node = new XamlNode(lineInfo);
             AddToBuffer(node);
@@ -177,21 +185,23 @@ namespace System.Xaml
                 {
                     return _currentNode;
                 }
+
                 _providerFullEvent.WaitOne();   // Wait for provider to fill up.
                 SwapBuffers();
                 _dataReceivedEvent.Set();       // Let the Reader run.
             }
+
             _currentNode = _outgoing[_outIdx++];
 
             if (_currentNode.IsEof)
             {
-                if (_thread != null)
+                if (_thread is not null)
                 {
                     // If the input ended due to an (caught) exception on the background thread,
                     // then at the end of reading the input re-throw the exception on the
                     // foreground thread.
                     _thread.Join();
-                    if (_caughtException != null)
+                    if (_caughtException is not null)
                     {
                         Exception ex = _caughtException;
                         _caughtException = null;
@@ -218,8 +228,8 @@ namespace System.Xaml
                 {
                     done = true;
                 }
-
             }
+
             return _currentNode;
         }
 
@@ -228,17 +238,19 @@ namespace System.Xaml
             IXamlLineInfo xamlLineInfo = reader as IXamlLineInfo;
             IXamlLineInfoConsumer xamlLineInfoConsumer = writer as IXamlLineInfoConsumer;
             bool shouldPassLineNumberInfo = false;
-            if ((xamlLineInfo != null && xamlLineInfo.HasLineInfo)
-                && (xamlLineInfoConsumer != null && xamlLineInfoConsumer.ShouldProvideLineInfo))
+            if ((xamlLineInfo is not null && xamlLineInfo.HasLineInfo)
+                && (xamlLineInfoConsumer is not null && xamlLineInfoConsumer.ShouldProvideLineInfo))
             {
                 shouldPassLineNumberInfo = true;
             }
+
             while (reader.Read())
             {
                 if (IsDisposed)
                 {
                     break;
                 }
+
                 if (shouldPassLineNumberInfo)
                 {
                     if (xamlLineInfo.LineNumber != 0)
@@ -246,6 +258,7 @@ namespace System.Xaml
                         xamlLineInfoConsumer.SetLineInfo(xamlLineInfo.LineNumber, xamlLineInfo.LinePosition);
                     }
                 }
+
                 writer.WriteNode(reader);
             }
 

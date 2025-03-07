@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -902,8 +902,7 @@ namespace System.Windows
 
             //Notify Automation in case it is interested.
             AutomationPeer peer = uie.GetAutomationPeer();
-            if (peer != null)
-                peer.InvalidatePeer();
+            peer?.InvalidatePeer();
 
         }
 
@@ -1494,7 +1493,7 @@ namespace System.Windows
         {
             get
             {
-                return TouchDevice.GetCapturedTouches(this, /* includeWithin = */ false);
+                return TouchDevice.GetCapturedTouches(this, includeWithin: false);
             }
         }
 
@@ -1505,7 +1504,7 @@ namespace System.Windows
         {
             get
             {
-                return TouchDevice.GetCapturedTouches(this, /* includeWithin = */ true);
+                return TouchDevice.GetCapturedTouches(this, includeWithin: true);
             }
         }
 
@@ -1517,7 +1516,7 @@ namespace System.Windows
         {
             get
             {
-                return TouchDevice.GetTouchesOver(this, /* includeWithin = */ true);
+                return TouchDevice.GetTouchesOver(this, includeWithin: true);
             }
         }
 
@@ -1529,7 +1528,7 @@ namespace System.Windows
         {
             get
             {
-                return TouchDevice.GetTouchesOver(this, /* includeWithin = */ false);
+                return TouchDevice.GetTouchesOver(this, includeWithin: false);
             }
         }
 

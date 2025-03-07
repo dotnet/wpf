@@ -9,9 +9,17 @@
 // Please see MilCodeGen.html for more information.
 //
 
+using MS.Internal;
+using MS.Internal.Collections;
+using MS.Utility;
+using System.Collections;
+using System.ComponentModel;
+using System.Globalization;
+using System.Text;
 using System.Windows.Markup;
-
-#pragma warning disable 1634, 1691  // suppressing PreSharp warnings
+using System.Windows.Media.Media3D.Converters;
+using System.Windows.Media.Animation;
+using System.Windows.Media.Composition;
 
 namespace System.Windows.Media.Media3D.Converters
 {
@@ -41,7 +49,7 @@ namespace System.Windows.Media.Media3D.Converters
             }
 
             return true;
-}
+        }
 
         /// <summary>
         /// Converts a string into a Vector3DCollection.
@@ -56,19 +64,16 @@ namespace System.Windows.Media.Media3D.Converters
             {
                 return base.ConvertFromString( value, context );
             }
-}
+        }
 
         /// <summary>
         /// Converts the value into a string.
         /// </summary>
         public override string ConvertToString(object value, IValueSerializerContext context)
         {
-            if (value is Vector3DCollection)
+            if (value is Vector3DCollection instance)
             {
-                Vector3DCollection instance = (Vector3DCollection) value;
 
-
-                #pragma warning suppress 6506 // instance is obviously not null
                 return instance.ConvertToString(null, System.Windows.Markup.TypeConverterHelper.InvariantEnglishUS);
             }
 

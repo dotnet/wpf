@@ -429,11 +429,11 @@ namespace System.Windows.Markup
             {
                 if (typeFullName == null)
                 {
-                    throw new ArgumentNullException("typeFullName");
+                    throw new ArgumentNullException(nameof(typeFullName));
                 }
                 if (propertyName == null)
                 {
-                    throw new ArgumentNullException("propertyName");
+                    throw new ArgumentNullException(nameof(propertyName));
                 }
                 
                 _propertyMember = propertyMember;
@@ -2208,11 +2208,11 @@ namespace System.Windows.Markup
             {
                 if (typeFullName == null)
                 {
-                    throw new ArgumentNullException("typeFullName");
+                    throw new ArgumentNullException(nameof(typeFullName));
                 }
                 if (propertyName == null)
                 {
-                    throw new ArgumentNullException("propertyName");
+                    throw new ArgumentNullException(nameof(propertyName));
                 }
                 
                 _propertyMember = propertyMember;

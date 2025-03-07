@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -549,19 +549,18 @@ namespace System.Windows.Controls
                 if (docWriter != null && ia != null)
                 {
                     // Suspend layout on FlowDocumentView.
-                    if (RenderScope != null)
-                    {
-                        RenderScope.SuspendLayout();
-                    }
+                    RenderScope?.SuspendLayout();
 
                     // Store the current state of the document in the PrintingState
                     paginator = ((IDocumentPaginatorSource)Document).DocumentPaginator as FlowDocumentPaginator;
-                    _printingState = new FlowDocumentPrintingState();
-                    _printingState.XpsDocumentWriter = docWriter;
-                    _printingState.PageSize = paginator.PageSize;
-                    _printingState.PagePadding = Document.PagePadding;
-                    _printingState.IsSelectionEnabled = IsSelectionEnabled;
-                    _printingState.ColumnWidth = Document.ColumnWidth;
+                    _printingState = new FlowDocumentPrintingState
+                    {
+                        XpsDocumentWriter = docWriter,
+                        PageSize = paginator.PageSize,
+                        PagePadding = Document.PagePadding,
+                        IsSelectionEnabled = IsSelectionEnabled,
+                        ColumnWidth = Document.ColumnWidth
+                    };
 
                     // Since _printingState value is used to determine CanExecute state, we must invalidate that state.
                     CommandManager.InvalidateRequerySuggested();
@@ -613,10 +612,7 @@ namespace System.Windows.Controls
         protected virtual void OnCancelPrintCommand()
         {
 #if !DONOTREFPRINTINGASMMETA
-            if (_printingState != null)
-            {
-                _printingState.XpsDocumentWriter.CancelAsync();
-            }
+            _printingState?.XpsDocumentWriter.CancelAsync();
 #endif // DONOTREFPRINTINGASMMETA
         }
 
@@ -989,9 +985,11 @@ namespace System.Windows.Controls
                 RenderScope != null &&
                 Document.StructuralCache.TextContainer.TextSelection == null)
             {
-                _textEditor = new TextEditor(Document.StructuralCache.TextContainer, this, false);
-                _textEditor.IsReadOnly = !IsEditingEnabled;
-                _textEditor.TextView = textView;
+                _textEditor = new TextEditor(Document.StructuralCache.TextContainer, this, false)
+                {
+                    IsReadOnly = !IsEditingEnabled,
+                    TextView = textView
+                };
             }
 
             //restore AnnotationsService state
@@ -1051,10 +1049,7 @@ namespace System.Windows.Controls
             if (_printingState != null)
             {
                 // Resume layout on FlowDocumentView.
-                if (RenderScope != null)
-                {
-                    RenderScope.ResumeLayout();
-                }
+                RenderScope?.ResumeLayout();
 
                 // Enable TextSelection, if it was previously enabled.
                 if (_printingState.IsSelectionEnabled)
@@ -1107,10 +1102,7 @@ namespace System.Windows.Controls
                 // This supports navigating from baseURI#anchor to just baseURI.
                 if (args.TargetObject == document)
                 {
-                    if (_contentHost != null)
-                    {
-                        _contentHost.ScrollToHome();
-                    }
+                    _contentHost?.ScrollToHome();
                     args.Handled = true; // Mark the event as handled.
                 }
                 else if (args.TargetObject is UIElement)
@@ -1265,10 +1257,7 @@ namespace System.Windows.Controls
 
             // Document is also represented as Automation child. Need to invalidate peer to force update.
             FlowDocumentScrollViewerAutomationPeer peer = UIElementAutomationPeer.FromElement(this) as FlowDocumentScrollViewerAutomationPeer;
-            if (peer != null)
-            {
-                peer.InvalidatePeer();
-            }
+            peer?.InvalidatePeer();
         }
 
         /// <summary>
@@ -1303,9 +1292,11 @@ namespace System.Windows.Controls
         /// </summary>
         private void CreateTwoWayBinding(FrameworkElement fe, DependencyProperty dp, string propertyPath)
         {
-            Binding binding = new Binding(propertyPath);
-            binding.Mode = BindingMode.TwoWay;
-            binding.Source = this;
+            Binding binding = new Binding(propertyPath)
+            {
+                Mode = BindingMode.TwoWay,
+                Source = this
+            };
             fe.SetBinding(dp, binding);
         }
 
@@ -1466,59 +1457,35 @@ namespace System.Windows.Controls
             }
             else if (args.Command == _commandLineDown)
             {
-                if (viewer._contentHost != null)
-                {
-                    viewer._contentHost.LineDown();
-                }
+                viewer._contentHost?.LineDown();
             }
             else if (args.Command == _commandLineUp)
             {
-                if (viewer._contentHost != null)
-                {
-                    viewer._contentHost.LineUp();
-                }
+                viewer._contentHost?.LineUp();
             }
             else if (args.Command == _commandLineLeft)
             {
-                if (viewer._contentHost != null)
-                {
-                    viewer._contentHost.LineLeft();
-                }
+                viewer._contentHost?.LineLeft();
             }
             else if (args.Command == _commandLineRight)
             {
-                if (viewer._contentHost != null)
-                {
-                    viewer._contentHost.LineRight();
-                }
+                viewer._contentHost?.LineRight();
             }
             else if (args.Command == NavigationCommands.NextPage)
             {
-                if (viewer._contentHost != null)
-                {
-                    viewer._contentHost.PageDown();
-                }
+                viewer._contentHost?.PageDown();
             }
             else if (args.Command == NavigationCommands.PreviousPage)
             {
-                if (viewer._contentHost != null)
-                {
-                    viewer._contentHost.PageUp();
-                }
+                viewer._contentHost?.PageUp();
             }
             else if (args.Command == NavigationCommands.FirstPage)
             {
-                if (viewer._contentHost != null)
-                {
-                    viewer._contentHost.ScrollToHome();
-                }
+                viewer._contentHost?.ScrollToHome();
             }
             else if (args.Command == NavigationCommands.LastPage)
             {
-                if (viewer._contentHost != null)
-                {
-                    viewer._contentHost.ScrollToEnd();
-                }
+                viewer._contentHost?.ScrollToEnd();
             }
             else
             {
@@ -1765,10 +1732,7 @@ namespace System.Windows.Controls
             if (viewer.Selection != null)
             {
                 CaretElement caretElement = viewer.Selection.CaretElement;
-                if (caretElement != null)
-                {
-                    caretElement.InvalidateVisual();
-                }
+                caretElement?.InvalidateVisual();
             }
         }
 
@@ -1853,7 +1817,7 @@ namespace System.Windows.Controls
             }
             if (!(value is FlowDocument))
             {
-                throw new ArgumentException(SR.Format(SR.UnexpectedParameterType, value.GetType(), typeof(FlowDocument)), "value");
+                throw new ArgumentException(SR.Format(SR.UnexpectedParameterType, value.GetType(), typeof(FlowDocument)), nameof(value));
             }
             Document = value as FlowDocument;
         }

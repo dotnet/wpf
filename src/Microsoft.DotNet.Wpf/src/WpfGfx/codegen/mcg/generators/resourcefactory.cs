@@ -15,8 +15,8 @@
 // 
 // Description:
 //      This generator builds the CResourceFactory class (as found 
-//      in %SDXROOT%\wpf\src\Graphics\core\uce\generated\resource-factory.h
-//      and %SDXROOT%\wpf\src\Graphics\core\uce\generated\resource-factory.cpp).
+//      in src\Microsoft.DotNet.Wpf\src\WpfGfx\core\uce\generated_resource_factory.h
+//      and src\Microsoft.DotNet.Wpf\src\WpfGfx\core\uce\generated_resource_factory.cpp).
 // 
 //---------------------------------------------------------------------------
 
@@ -70,7 +70,7 @@ namespace MS.Internal.MilCodeGen.Generators
             string generatedPath = 
                 Path.Combine(
                     _resourceModel.OutputDirectory,
-                    "src\\Graphics\\core\\uce"
+                    "src\\WpfGfx\\core\\uce"
                     );
 
             FileCodeSink chFile = 

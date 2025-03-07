@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -261,7 +261,7 @@ namespace MS.Internal.Data
                         if ((xdc = itemsSource as XmlDataCollection) == null)
                         {
                             ICollectionView icv = itemsSource as ICollectionView;
-                            xdc = ((icv != null) ? icv.SourceCollection : null) as XmlDataCollection;
+                            xdc = (icv?.SourceCollection) as XmlDataCollection;
                         }
 
                         if (xdc != null)
@@ -394,8 +394,10 @@ namespace MS.Internal.Data
                                     ParentBindingExpression);
             }
 
-            QueriedCollection = new XmlDataCollection(XmlDataProvider);
-            QueriedCollection.XmlNamespaceManager = NamespaceManager;
+            QueriedCollection = new XmlDataCollection(XmlDataProvider)
+            {
+                XmlNamespaceManager = NamespaceManager
+            };
             QueriedCollection.SynchronizeCollection(nodes);
             return QueriedCollection;
         }
@@ -521,7 +523,7 @@ namespace MS.Internal.Data
                 if (TraceData.IsEnabled)
                 {
                     TraceData.TraceAndNotify(TraceEventType.Error, TraceData.CannotGetXmlNodeCollection, ParentBindingExpression,
-                        traceParameters: new object[] { (ContextNode != null) ? ContextNode.Name : null, XPath, ParentBindingExpression, xe },
+                        traceParameters: new object[] { ContextNode?.Name, XPath, ParentBindingExpression, xe },
                         eventParameters: new object[] { xe });
                 }
             }

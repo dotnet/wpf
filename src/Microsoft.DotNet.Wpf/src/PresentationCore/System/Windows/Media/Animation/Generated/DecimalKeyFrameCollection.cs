@@ -51,9 +51,10 @@ namespace System.Windows.Media.Animation
             {
                 if (s_emptyCollection == null)
                 {
-                    DecimalKeyFrameCollection emptyCollection = new DecimalKeyFrameCollection();
-
-                    emptyCollection._keyFrames = new List< DecimalKeyFrame>(0);
+                    DecimalKeyFrameCollection emptyCollection = new DecimalKeyFrameCollection
+                    {
+                        _keyFrames = new List<DecimalKeyFrame>(0)
+                    };
                     emptyCollection.Freeze();
 
                     s_emptyCollection = emptyCollection;

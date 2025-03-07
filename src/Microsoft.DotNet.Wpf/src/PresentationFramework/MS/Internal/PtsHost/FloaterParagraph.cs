@@ -1,13 +1,6 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
-
-// 
-// Description: FloaterParagraph class provides a wrapper floater objects.
-//
-
-#pragma warning disable 1634, 1691  // avoid generating warnings about unknown 
-// message numbers and unknown pragmas for PRESharp contol
 
 using System.Windows;
 using System.Windows.Documents;
@@ -85,14 +78,12 @@ namespace MS.Internal.PtsHost
         internal override void CreateParaclient(
             out IntPtr paraClientHandle)        // OUT: opaque to PTS paragraph client
         {
-#pragma warning disable 6518
-            // Disable PRESharp warning 6518. FloaterParaClient is an UnmamangedHandle, that adds itself
+            // FloaterParaClient is an UnmamangedHandle, that adds itself
             // to HandleMapper that holds a reference to it. PTS manages lifetime of this object, and 
             // calls DestroyParaclient to get rid of it. DestroyParaclient will call Dispose() on the object
             // and remove it from HandleMapper.
             FloaterParaClient paraClient =  new FloaterParaClient(this);
             paraClientHandle = paraClient.Handle;
-#pragma warning restore 6518
 
             // Create the main text segment
             if (_mainTextSegment == null)
@@ -120,9 +111,11 @@ namespace MS.Internal.PtsHost
             uint fswdirTrack,                       // IN:  direction of track
             out PTS.FSFLOATERPROPS fsfloaterprops)  // OUT: properties of the floater
         {
-            fsfloaterprops = new PTS.FSFLOATERPROPS();
-            fsfloaterprops.fFloat   = PTS.True;                     // Floater
-            fsfloaterprops.fskclear = PTS.WrapDirectionToFskclear((WrapDirection)Element.GetValue(Block.ClearFloatersProperty));
+            fsfloaterprops = new PTS.FSFLOATERPROPS
+            {
+                fFloat = PTS.True,                     // Floater
+                fskclear = PTS.WrapDirectionToFskclear((WrapDirection)Element.GetValue(Block.ClearFloatersProperty))
+            };
 
             // Get floater alignment from HorizontalAlignment of the floater element.
             switch (HorizontalAlignment)
@@ -190,12 +183,16 @@ namespace MS.Internal.PtsHost
             {
                 durFloaterWidth = dvrFloaterHeight = 0;
                 cPolygons = cVertices = 0;
-                fsfmtr = new PTS.FSFMTR();
-                fsfmtr.kstop = PTS.FSFMTRKSTOP.fmtrNoProgressOutOfSpace;
-                fsfmtr.fContainsItemThatStoppedBeforeFootnote = PTS.False;
-                fsfmtr.fForcedProgress = PTS.False;
-                fsbbox = new PTS.FSBBOX();
-                fsbbox.fDefined = PTS.False;
+                fsfmtr = new PTS.FSFMTR
+                {
+                    kstop = PTS.FSFMTRKSTOP.fmtrNoProgressOutOfSpace,
+                    fContainsItemThatStoppedBeforeFootnote = PTS.False,
+                    fForcedProgress = PTS.False
+                };
+                fsbbox = new PTS.FSBBOX
+                {
+                    fDefined = PTS.False
+                };
                 pbrkrecOut = IntPtr.Zero;
                 pfsFloatContent = IntPtr.Zero;
             }
@@ -229,9 +226,11 @@ namespace MS.Internal.PtsHost
                 specifiedWidth = CalculateWidth(TextDpi.FromTextDpi(durAvailable));
                 AdjustDurAvailable(specifiedWidth, ref durAvailable, out subpageWidth);
                 subpageHeight = Math.Max(1, dvrAvailable - (mbp.MBPTop + mbp.MBPBottom));
-                fsrcSubpageMargin = new PTS.FSRECT();
-                fsrcSubpageMargin.du = subpageWidth;
-                fsrcSubpageMargin.dv = subpageHeight;
+                fsrcSubpageMargin = new PTS.FSRECT
+                {
+                    du = subpageWidth,
+                    dv = subpageHeight
+                };
 
                 // Initialize column info. Floater always has just 1 column.
                 cColumns = 1;
@@ -400,8 +399,10 @@ namespace MS.Internal.PtsHost
                 dvrFloaterHeight = dvrAvailable + 1;
                 cPolygons = cVertices = 0;
                 fsfmtrbl = PTS.FSFMTRBL.fmtrblInterrupted;
-                fsbbox = new PTS.FSBBOX();
-                fsbbox.fDefined = PTS.False;
+                fsbbox = new PTS.FSBBOX
+                {
+                    fDefined = PTS.False
+                };
                 pfsFloatContent = IntPtr.Zero;
             }
             else
@@ -586,10 +587,7 @@ namespace MS.Internal.PtsHost
         // ------------------------------------------------------------------
         internal override void ClearUpdateInfo()
         {
-            if (_mainTextSegment != null)
-            {
-                _mainTextSegment.ClearUpdateInfo();
-            }
+            _mainTextSegment?.ClearUpdateInfo();
             base.ClearUpdateInfo();
         }
 
@@ -619,10 +617,7 @@ namespace MS.Internal.PtsHost
         // ------------------------------------------------------------------
         internal override void InvalidateFormatCache()
         {
-            if (_mainTextSegment != null)
-            {
-                _mainTextSegment.InvalidateFormatCache();
-            }
+            _mainTextSegment?.InvalidateFormatCache();
         }
 
         /// <summary>
@@ -926,6 +921,4 @@ namespace MS.Internal.PtsHost
         #endregion Private Fields
     }
 }
-
-#pragma warning enable 1634, 1691
 

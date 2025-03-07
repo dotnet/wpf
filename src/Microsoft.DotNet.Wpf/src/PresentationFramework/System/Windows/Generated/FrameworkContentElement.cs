@@ -3,10 +3,11 @@
 // See the LICENSE file in the project root for more information.
 
 //
+//
 // This file was generated, please do not edit it directly.
 // 
 // This file was generated from the codegen template located at:
-//     src\WpfGfx\codegen\mcg\generators\FrameworkElementTemplate.cs
+//     wpf\src\WpfGfx\codegen\mcg\generators\FrameworkElementTemplate.cs
 //
 // Please see MilCodeGen.html for more information.
 //
@@ -212,7 +213,7 @@ namespace System.Windows
                 {
                     if (exceptionThrown)
                     {
-                        // ILTN removal: make this more robust
+                        // Future: ILTN removal: make this more robust
                         // At the very least we should disconnect the child that we failed to add.
 
                         // Consider doing this...
@@ -291,10 +292,7 @@ namespace System.Windows
             // to the dispatchers that the elements belong to.
             //
             this.VerifyAccess();
-            if(newParent != null)
-            {
-                newParent.VerifyAccess();
-            }
+            newParent?.VerifyAccess();
 
             // Logical Parent must first be dropped before you are attached to a newParent
             // This mitigates illegal tree state caused by logical child stealing as illustrated in bug 970706
@@ -336,7 +334,7 @@ namespace System.Windows
             ///////////////////
 
             // Invalidate relevant properties for this subtree
-            DependencyObject parent = (newParent != null) ? newParent : oldParent;
+            DependencyObject parent = newParent ?? oldParent;
             TreeWalkHelper.InvalidateOnTreeChange(/* fe = */ null, /* fce = */ this, parent, (newParent != null));
 
             // If no one has called BeginInit then mark the element initialized and fire Initialized event
@@ -390,6 +388,7 @@ namespace System.Windows
                 // Clear the HasStyleChanged flag
                 HasStyleChanged = false;
                 HasStyleInvalidated = false;
+
             }
 
             // If this is a tree add operation update the ShouldLookupImplicitStyles
@@ -515,6 +514,7 @@ namespace System.Windows
             finally
             {
                 AncestorChangeInProgress = false;
+
             }
         }
 

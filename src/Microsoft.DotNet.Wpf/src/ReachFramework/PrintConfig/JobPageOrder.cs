@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -101,8 +101,10 @@ namespace MS.Internal.Printing.Configuration
 
         internal static PrintCapabilityFeature NewFeatureCallback(InternalPrintCapabilities printCap)
         {
-            JobPageOrderCapability cap = new JobPageOrderCapability(printCap);
-            cap._orderOptions = new Collection<PageOrderOption>();
+            JobPageOrderCapability cap = new JobPageOrderCapability(printCap)
+            {
+                _orderOptions = new Collection<PageOrderOption>()
+            };
 
             return cap;
         }
@@ -248,7 +250,7 @@ namespace MS.Internal.Printing.Configuration
                 if (value < PrintSchema.PageOrderEnumMin ||
                     value > PrintSchema.PageOrderEnumMax)
                 {
-                    throw new ArgumentOutOfRangeException("value");
+                    throw new ArgumentOutOfRangeException(nameof(value));
                 }
 
                 this[PrintSchemaTags.Framework.OptionNameProperty] = (int)value;

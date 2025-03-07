@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -151,7 +151,7 @@ namespace System.Windows.Media
         public override void LineTo(Point point, bool isStroked, bool isSmoothJoin)
         {
             PrepareToAddPoints(
-                        1 /*count*/,
+                        count: 1,
                         isStroked,
                         isSmoothJoin,
                         MIL_SEGMENT_TYPE.MilSegmentPolyLine);
@@ -165,7 +165,7 @@ namespace System.Windows.Media
         public override void QuadraticBezierTo(Point point1, Point point2, bool isStroked, bool isSmoothJoin)
         {
             PrepareToAddPoints(
-                        2 /*count*/,
+                        count: 2,
                         isStroked,
                         isSmoothJoin,
                         MIL_SEGMENT_TYPE.MilSegmentPolyQuadraticBezier);
@@ -180,7 +180,7 @@ namespace System.Windows.Media
         public override void BezierTo(Point point1, Point point2, Point point3, bool isStroked, bool isSmoothJoin)
         {
             PrepareToAddPoints(
-                        3 /*count*/,
+                        count: 3,
                         isStroked,
                         isSmoothJoin,
                         MIL_SEGMENT_TYPE.MilSegmentPolyBezier);
@@ -243,10 +243,11 @@ namespace System.Windows.Media
                 _currentFigure.Segments = _segments;
             }
 
-            ArcSegment segment = new ArcSegment();
-
-            segment.Point = point;
-            segment.Size = size;
+            ArcSegment segment = new ArcSegment
+            {
+                Point = point,
+                Size = size
+            };
 
             if (isLargeArc != s_defaultValueForArcSegmentIsLargeArc)
             {
@@ -376,49 +377,61 @@ namespace System.Windows.Media
                     case MIL_SEGMENT_TYPE.MilSegmentPolyLine:
                         if (count == 1)
                         {
-                            LineSegment lSegment = new LineSegment();
-                            lSegment.Point = _currentSegmentPoints[0];
+                            LineSegment lSegment = new LineSegment
+                            {
+                                Point = _currentSegmentPoints[0]
+                            };
                             segment = lSegment;
                         }
                         else
                         {
-                            PolyLineSegment pSegment = new PolyLineSegment();
-                            pSegment.Points = _currentSegmentPoints;
+                            PolyLineSegment pSegment = new PolyLineSegment
+                            {
+                                Points = _currentSegmentPoints
+                            };
                             segment = pSegment;
                         }
                         break;
                     case MIL_SEGMENT_TYPE.MilSegmentPolyBezier:
                         if (count == 3)
                         {
-                            BezierSegment bSegment = new BezierSegment();
-                            bSegment.Point1 = _currentSegmentPoints[0];
-                            bSegment.Point2 = _currentSegmentPoints[1];
-                            bSegment.Point3 = _currentSegmentPoints[2];
+                            BezierSegment bSegment = new BezierSegment
+                            {
+                                Point1 = _currentSegmentPoints[0],
+                                Point2 = _currentSegmentPoints[1],
+                                Point3 = _currentSegmentPoints[2]
+                            };
                             segment = bSegment;
                         }
                         else
                         {
                             Debug.Assert(count % 3 == 0);
 
-                            PolyBezierSegment pSegment = new PolyBezierSegment();
-                            pSegment.Points = _currentSegmentPoints;
+                            PolyBezierSegment pSegment = new PolyBezierSegment
+                            {
+                                Points = _currentSegmentPoints
+                            };
                             segment = pSegment;
                         }
                         break;
                     case MIL_SEGMENT_TYPE.MilSegmentPolyQuadraticBezier:
                         if (count == 2)
                         {
-                            QuadraticBezierSegment qSegment = new QuadraticBezierSegment();
-                            qSegment.Point1 = _currentSegmentPoints[0];
-                            qSegment.Point2 = _currentSegmentPoints[1];
+                            QuadraticBezierSegment qSegment = new QuadraticBezierSegment
+                            {
+                                Point1 = _currentSegmentPoints[0],
+                                Point2 = _currentSegmentPoints[1]
+                            };
                             segment = qSegment;
                         }
                         else
                         {
                             Debug.Assert(count % 2 == 0);
 
-                            PolyQuadraticBezierSegment pSegment = new PolyQuadraticBezierSegment();
-                            pSegment.Points = _currentSegmentPoints;
+                            PolyQuadraticBezierSegment pSegment = new PolyQuadraticBezierSegment
+                            {
+                                Points = _currentSegmentPoints
+                            };
                             segment = pSegment;
                         }
                         break;

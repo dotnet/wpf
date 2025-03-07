@@ -535,8 +535,7 @@ namespace System.Windows.Markup
                     for (int i = 0; i < record.RecordList.Count; i++)
                     {
                         ValueDeferRecord valueDeferRecord = (ValueDeferRecord)record.RecordList[i];
-                        IBamlDictionaryKey dictionaryKey = valueDeferRecord.Record as IBamlDictionaryKey;
-                        if (dictionaryKey != null)
+                        if (valueDeferRecord.Record is IBamlDictionaryKey dictionaryKey)
                         {
                             return dictionaryKey;
                         }
@@ -567,11 +566,10 @@ namespace System.Windows.Markup
                 // attribute is *NOT* a MarkupExtension.  A MarkupExtension would cause
                 // WriteKeyElementStart being called.
                 KeyDeferRecord keyRecord = (KeyDeferRecord)(_deferKeys[_deferKeys.Count-1]);
-                BamlDefAttributeKeyStringRecord defKeyRecord = keyRecord.Record as BamlDefAttributeKeyStringRecord;
-                if (defKeyRecord == null)
+                if (keyRecord.Record is not BamlDefAttributeKeyStringRecord defKeyRecord)
                 {
                     defKeyRecord =
-                        (BamlDefAttributeKeyStringRecord) BamlRecordManager.GetWriteRecord(BamlRecordType.DefAttributeKeyString);
+                        (BamlDefAttributeKeyStringRecord)BamlRecordManager.GetWriteRecord(BamlRecordType.DefAttributeKeyString);
                     TransferOldSharedData(keyRecord.Record as IBamlDictionaryKey, defKeyRecord as IBamlDictionaryKey);
                     keyRecord.Record = defKeyRecord;
                 }
@@ -1627,10 +1625,7 @@ namespace System.Windows.Markup
                         keyRecord = (IBamlDictionaryKey)deferKeyRecord.Record;
                     }
                     Debug.Assert(keyRecord != null, "Unknown key record type in defer load dictionary");
-                    if (keyRecord != null)
-                    {
-                        keyRecord.UpdateValuePosition((Int32)(position-endOfKeys), BinaryWriter);
-                    }
+                    keyRecord?.UpdateValuePosition((Int32)(position-endOfKeys), BinaryWriter);
                 }
                 WriteBamlRecord(deferRecord.Record,
                                 deferRecord.LineNumber,

@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -401,7 +401,7 @@ namespace System.Windows.Input
                 {
                     if (routedCommand.CriticalCanExecute(parameter,
                                                     target,
-                                                    inputEventArgs.UserInitiated /*trusted*/,
+                                                    trusted: inputEventArgs.UserInitiated,
                                                     out continueRouting))
                     {
                         // If the command can be executed, we never continue to route the
@@ -506,16 +506,20 @@ namespace System.Windows.Input
         {
             if ((sender != null) && (e != null) && (e.Command != null))
             {
-                CanExecuteRoutedEventArgs canExecuteArgs = new CanExecuteRoutedEventArgs(e.Command, null /* parameter */);
-                canExecuteArgs.RoutedEvent = CommandManager.CanExecuteEvent;
-                canExecuteArgs.Source = sender;
+                CanExecuteRoutedEventArgs canExecuteArgs = new CanExecuteRoutedEventArgs(e.Command, parameter: null)
+                {
+                    RoutedEvent = CommandManager.CanExecuteEvent,
+                    Source = sender
+                };
                 OnCanExecute(sender, canExecuteArgs);
 
                 if (canExecuteArgs.CanExecute)
                 {
-                    ExecutedRoutedEventArgs executedArgs = new ExecutedRoutedEventArgs(e.Command, null /* parameter */);
-                    executedArgs.RoutedEvent = CommandManager.ExecutedEvent;
-                    executedArgs.Source = sender;
+                    ExecutedRoutedEventArgs executedArgs = new ExecutedRoutedEventArgs(e.Command, parameter: null)
+                    {
+                        RoutedEvent = CommandManager.ExecutedEvent,
+                        Source = sender
+                    };
                     OnExecuted(sender, executedArgs);
 
                     if (executedArgs.Handled)

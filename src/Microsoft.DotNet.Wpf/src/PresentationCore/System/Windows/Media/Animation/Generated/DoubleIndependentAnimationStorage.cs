@@ -13,6 +13,7 @@
 //
 
 using System.Windows.Media.Composition;
+using System.Windows.Media.Media3D;
 
 namespace System.Windows.Media.Animation
 {

@@ -1,19 +1,6 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
-
-
-//
-// Description: ContainerParagraph represents continuous piece of backing 
-//              storage and consists of other paragraphs. Collection of 
-//              these paragraphs is stored  as double-linked list of 
-//              Paragraph objects. 
-//              A container paragraph is associated with a block element 
-//              and can be hosted by a section or another container paragraph.
-//
-
-#pragma warning disable 1634, 1691  // avoid generating warnings about unknown 
-// message numbers and unknown pragmas for PRESharp contol
 
 using System.Windows;
 using System.Windows.Documents;
@@ -398,10 +385,7 @@ namespace MS.Internal.PtsHost
                             dcpPara += para.Cch;
                             para = para.Next;
                         }
-                        if (para != null)
-                        {
-                            para.SetUpdateInfo(PTS.FSKCHANGE.fskchInside, false);
-                        }
+                        para?.SetUpdateInfo(PTS.FSKCHANGE.fskchInside, false);
                     }
                     else
                     {
@@ -441,14 +425,12 @@ namespace MS.Internal.PtsHost
         internal override void CreateParaclient(
             out IntPtr paraClientHandle)        // OUT: opaque to PTS paragraph client
         {
-#pragma warning disable 6518
-            // Disable PRESharp warning 6518. ContainerParaClient is an UnmamangedHandle, that adds itself
+            // ContainerParaClient is an UnmamangedHandle, that adds itself
             // to HandleMapper that holds a reference to it. PTS manages lifetime of this object, and 
             // calls DestroyParaclient to get rid of it. DestroyParaclient will call Dispose() on the object
             // and remove it from HandleMapper.
             ContainerParaClient paraClient =  new ContainerParaClient(this);
             paraClientHandle = paraClient.Handle;
-#pragma warning restore 6518
         }
 
         //-------------------------------------------------------------------
@@ -1243,10 +1225,11 @@ namespace MS.Internal.PtsHost
             DirtyTextRange dtr,
             int dcpContent)
         {
-            UpdateRecord ur = new UpdateRecord();
-
-            // (1) Initialize DTR
-            ur.Dtr = dtr;
+            UpdateRecord ur = new UpdateRecord
+            {
+                // (1) Initialize DTR
+                Dtr = dtr
+            };
 
             // (2) Find first paragraph affected by DTR
             BaseParagraph para = _firstChild;
@@ -1331,6 +1314,3 @@ namespace MS.Internal.PtsHost
         private bool _firstParaValidInUpdateMode;
     }
 }
-
-#pragma warning enable 1634, 1691
-

@@ -72,24 +72,17 @@ namespace MS.Internal.MilCodeGen.Helpers
                         AnimationClock clock,
                         HandoffBehavior handoffBehavior)
                     {
-                        if (dp == null)
-                        {
-                            throw new ArgumentNullException("dp");
-                        }
+                        ArgumentNullException.ThrowIfNull(dp);
 
                         if (!AnimationStorage.IsPropertyAnimatable(this, dp))
                         {
-                    #pragma warning disable 56506 // Suppress presharp warning: Parameter 'dp' to this public method must be validated:  A null-dereference can occur here.
-                            throw new ArgumentException(SR.Format(SR.Animation_DependencyPropertyIsNotAnimatable, dp.Name, this.GetType()), "dp");
-                    #pragma warning restore 56506
+                            throw new ArgumentException(SR.Format(SR.Animation_DependencyPropertyIsNotAnimatable, dp.Name, this.GetType()), nameof(dp));
                         }
 
                         if (clock != null
                             && !AnimationStorage.IsAnimationValid(dp, clock.Timeline))
                         {
-                    #pragma warning disable 56506 // Suppress presharp warning: Parameter 'dp' to this public method must be validated:  A null-dereference can occur here.
-                            throw new ArgumentException(SR.Format(SR.Animation_AnimationTimelineTypeMismatch, clock.Timeline.GetType(), dp.Name, dp.PropertyType), "clock");
-                    #pragma warning restore 56506
+                            throw new ArgumentException(SR.Format(SR.Animation_AnimationTimelineTypeMismatch, clock.Timeline.GetType(), dp.Name, dp.PropertyType), nameof(clock));
                         }
 
                         if (!HandoffBehaviorEnum.IsDefined(handoffBehavior))
@@ -144,22 +137,17 @@ namespace MS.Internal.MilCodeGen.Helpers
                     /// </param>
                     public void BeginAnimation(DependencyProperty dp, AnimationTimeline animation, HandoffBehavior handoffBehavior)
                     {
-                        if (dp == null)
-                        {
-                            throw new ArgumentNullException("dp");
-                        }
+                        ArgumentNullException.ThrowIfNull(dp);
 
                         if (!AnimationStorage.IsPropertyAnimatable(this, dp))
                         {
-                    #pragma warning disable 56506 // Suppress presharp warning: Parameter 'dp' to this public method must be validated:  A null-dereference can occur here.
-                            throw new ArgumentException(SR.Format(SR.Animation_DependencyPropertyIsNotAnimatable, dp.Name, this.GetType()), "dp");
-                    #pragma warning restore 56506
+                            throw new ArgumentException(SR.Format(SR.Animation_DependencyPropertyIsNotAnimatable, dp.Name, this.GetType()), nameof(dp));
                         }
 
                         if (   animation != null
                             && !AnimationStorage.IsAnimationValid(dp, animation))
                         {
-                            throw new ArgumentException(SR.Format(SR.Animation_AnimationTimelineTypeMismatch, animation.GetType(), dp.Name, dp.PropertyType), "animation");
+                            throw new ArgumentException(SR.Format(SR.Animation_AnimationTimelineTypeMismatch, animation.GetType(), dp.Name, dp.PropertyType), nameof(animation));
                         }
 
                         if (!HandoffBehaviorEnum.IsDefined(handoffBehavior))
@@ -203,10 +191,7 @@ namespace MS.Internal.MilCodeGen.Helpers
                     /// </returns>
                     public object GetAnimationBaseValue(DependencyProperty dp)
                     {
-                        if (dp == null)
-                        {
-                            throw new ArgumentNullException("dp");
-                        }
+                        ArgumentNullException.ThrowIfNull(dp);
                     
                         return this.GetValueEntry(
                                 LookupEntry(dp.GlobalIndex),
@@ -225,12 +210,6 @@ namespace MS.Internal.MilCodeGen.Helpers
                     /// <param name="dp"></param>
                     /// <param name="metadata"></param>
                     /// <param name="entry">EffectiveValueEntry computed by base</param>
-                    /// <SecurityNote>
-                    ///     Putting an InheritanceDemand as a defense-in-depth measure,
-                    ///     as this provides a hook to the property system that we don't
-                    ///     want exposed under PartialTrust.
-                    /// </SecurityNote>
-                    [UIPermissionAttribute(SecurityAction.InheritanceDemand, Window=UIPermissionWindow.AllWindows)]
                     internal sealed override void EvaluateAnimatedValueCore(
                             DependencyProperty  dp,
                             PropertyMetadata    metadata,
@@ -240,10 +219,7 @@ namespace MS.Internal.MilCodeGen.Helpers
                         {
                             AnimationStorage storage = AnimationStorage.GetStorage(this, dp);
 
-                            if (storage != null)
-                            {
-                                storage.EvaluateAnimatedValue(metadata, ref entry);                      
-                            }
+                            storage?.EvaluateAnimatedValue(metadata, ref entry);
                         }
                     }
 

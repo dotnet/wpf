@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -211,10 +211,7 @@ namespace System.Windows.Media.Animation
                     // newly animated property will be passed across to the UCE.
                     Animatable a = d as Animatable;
 
-                    if (a != null)
-                    {
-                        a.RegisterForAsyncUpdateResource();
-                    }
+                    a?.RegisterForAsyncUpdateResource();
 
                     // If this AnimationStorage is a resource, add it to the
                     // channel now.
@@ -282,10 +279,7 @@ namespace System.Windows.Media.Animation
                     // across to the UCE.
                     Animatable a = d as Animatable;
 
-                    if (a != null)
-                    {
-                        a.RegisterForAsyncUpdateResource();
-                    }
+                    a?.RegisterForAsyncUpdateResource();
 
                     animatedPropertyMap[_dependencyProperty.GlobalIndex] = DependencyProperty.UnsetValue;
 
@@ -399,10 +393,12 @@ namespace System.Windows.Media.Animation
                     {
                         // else entry has modifiers; preserve expression but throw away
                         // coerced & animated values, since we'll be recomputing an animated value
-                        newEntry = new EffectiveValueEntry();
-                        newEntry.BaseValueSourceInternal = oldEntry.BaseValueSourceInternal;
-                        newEntry.PropertyIndex = oldEntry.PropertyIndex;
-                        newEntry.HasExpressionMarker = oldEntry.HasExpressionMarker;
+                        newEntry = new EffectiveValueEntry
+                        {
+                            BaseValueSourceInternal = oldEntry.BaseValueSourceInternal,
+                            PropertyIndex = oldEntry.PropertyIndex,
+                            HasExpressionMarker = oldEntry.HasExpressionMarker
+                        };
 
                         value = oldEntry.ModifiedValue.BaseValue;
                         if (oldEntry.IsDeferredReference)
@@ -448,8 +444,8 @@ namespace System.Windows.Media.Animation
                                 metadata,
                                 oldEntry,
                                 ref newEntry,
-                                false /* coerceWithDeferredReference */,
-                                false /* coerceWithCurrentValue */,
+                                coerceWithDeferredReference: false,
+                                coerceWithCurrentValue: false,
                                 OperationType.Unknown);
 
                         if (_hadValidationError)

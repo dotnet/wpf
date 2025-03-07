@@ -10,12 +10,11 @@
 //
 
 using MS.Internal;
-using MS.Internal.PresentationCore;
+using MS.Internal.KnownBoxes;
 using MS.Utility;
 using System.ComponentModel;
 using System.Windows.Input;
-
-#pragma warning disable 1634, 1691  // suppressing PreSharp warnings
+using System.Windows.Media.Animation;
 
 namespace System.Windows
 {
@@ -397,7 +396,8 @@ namespace System.Windows
                     EventHandlersStoreField.ClearValue(this);
                     WriteFlag(CoreFlags.ExistsEventHandlersStore, false);
                 }
-}
+
+            }
         }
 
         /// <summary>

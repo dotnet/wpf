@@ -109,11 +109,12 @@ namespace System.Windows.Media.Animation
             DUCE.ResourceHandle handle,
             DUCE.Channel channel)
         {
-            DUCE.MILCMD_DOUBLERESOURCE cmd = new DUCE.MILCMD_DOUBLERESOURCE();
-
-            cmd.Type = MILCMD.MilCmdDoubleResource;
-            cmd.Handle = handle;
-            cmd.Value = CurrentValue;
+            DUCE.MILCMD_DOUBLERESOURCE cmd = new DUCE.MILCMD_DOUBLERESOURCE
+            {
+                Type = MILCMD.MilCmdDoubleResource,
+                Handle = handle,
+                Value = CurrentValue
+            };
 
             unsafe
             {

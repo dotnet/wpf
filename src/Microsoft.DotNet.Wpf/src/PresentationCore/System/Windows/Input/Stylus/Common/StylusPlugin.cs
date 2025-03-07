@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -190,7 +190,7 @@ namespace System.Windows.Input.StylusPlugIns
         {
             get
             {
-                return (_pic != null) ? _pic.Element : null;
+                return _pic?.Element;
             }
         }
 
@@ -219,10 +219,7 @@ namespace System.Windows.Input.StylusPlugIns
             set // on Dispatcher
             {
                 // Verify we are on the proper thread.
-                if (_pic != null)
-                {
-                    _pic.Element.VerifyAccess();
-                }
+                _pic?.Element.VerifyAccess();
 
                 if (value != __enabled)
                 {

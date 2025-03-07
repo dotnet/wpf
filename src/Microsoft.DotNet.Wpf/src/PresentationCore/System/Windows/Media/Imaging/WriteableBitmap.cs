@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -75,7 +75,7 @@ namespace System.Windows.Media.Imaging
             if (pixelFormat.Format == PixelFormatEnum.Extended)
             {
                 // We don't support third-party pixel formats yet.
-                throw new ArgumentException(SR.Effect_PixelFormat, "pixelFormat");
+                throw new ArgumentException(SR.Effect_PixelFormat, nameof(pixelFormat));
             }
 
             if (pixelWidth < 0)
@@ -164,7 +164,7 @@ namespace System.Windows.Media.Imaging
             //
             // Sanitize the dirty rect.
             //
-            dirtyRect.ValidateForDirtyRect("dirtyRect", _pixelWidth, _pixelHeight);
+            dirtyRect.ValidateForDirtyRect(nameof(dirtyRect), _pixelWidth, _pixelHeight);
             if (dirtyRect.HasArea)
             {
                 MILSwDoubleBufferedBitmap.AddDirtyRect(
@@ -228,7 +228,7 @@ namespace System.Windows.Media.Imaging
             TimeSpan timeoutSpan;
             if (timeout == Duration.Automatic)
             {
-                throw new ArgumentOutOfRangeException("timeout");
+                throw new ArgumentOutOfRangeException(nameof(timeout));
             }
             else if (timeout == Duration.Forever)
             {
@@ -357,7 +357,7 @@ namespace System.Windows.Media.Imaging
                             sourceBufferStride, 
                             destinationX,
                             destinationY,
-                            /*backwardsCompat*/ false);
+                            backwardsCompat: false);
         }
         
         /// <summary>
@@ -385,7 +385,7 @@ namespace System.Windows.Media.Imaging
             int sourceBufferSize;
             Type elementType;
             ValidateArrayAndGetInfo(sourceBuffer,
-                                    /*backwardsCompat*/ false,
+                                    backwardsCompat: false,
                                     out elementSize,
                                     out sourceBufferSize,
                                     out elementType);
@@ -397,24 +397,16 @@ namespace System.Windows.Media.Imaging
             }
 
             // Get the address of the data in the array by pinning it.
-            GCHandle arrayHandle = GCHandle.Alloc(sourceBuffer, GCHandleType.Pinned);
-            try
+            unsafe
             {
-                unsafe
-                {
-                    IntPtr buffer = arrayHandle.AddrOfPinnedObject();
+                fixed (byte* buffer = &MemoryMarshal.GetArrayDataReference(sourceBuffer))
                     WritePixelsImpl(sourceRect,
-                                    buffer,
+                                    (nint)buffer,
                                     sourceBufferSize,
                                     sourceBufferStride,
                                     destinationX,
                                     destinationY,
-                                    /*backwardsCompat*/ false);
-                }
-            }
-            finally
-            {
-                arrayHandle.Free();
+                                    backwardsCompat: false);
             }
         }
 
@@ -461,7 +453,7 @@ namespace System.Windows.Media.Imaging
                             stride,
                             destinationX,
                             destinationY,
-                            /*backwardsCompat*/ true);
+                            backwardsCompat: true);
         }
 
         /// <summary>
@@ -489,7 +481,7 @@ namespace System.Windows.Media.Imaging
             int sourceBufferSize;
             Type elementType;
             ValidateArrayAndGetInfo(pixels,
-                                    /*backwardsCompat*/ true,
+                                    backwardsCompat: true,
                                     out elementSize,
                                     out sourceBufferSize, 
                                     out elementType);
@@ -532,28 +524,25 @@ namespace System.Windows.Media.Imaging
                 sourceRect.Y = 0;
 
                 // Get the address of the data in the array by pinning it.
-                GCHandle arrayHandle = GCHandle.Alloc(pixels, GCHandleType.Pinned);
-                try
+                unsafe
                 {
-                    IntPtr buffer = arrayHandle.AddrOfPinnedObject();
-
-                    checked
+                    fixed (byte* buffer = &MemoryMarshal.GetArrayDataReference(pixels))
                     {
-                        buffer = new IntPtr(((long) buffer) + (long) offsetInBytes);
-                        sourceBufferSize -= offsetInBytes;
-                    }
+                        nint adjustedBuffer;
+                        checked
+                        {
+                            adjustedBuffer = new IntPtr(((long)buffer) + (long)offsetInBytes);
+                            sourceBufferSize -= offsetInBytes;
+                        }
 
-                    WritePixelsImpl(sourceRect,
-                                    buffer,
-                                    sourceBufferSize,
-                                    stride,
-                                    destinationX,
-                                    destinationY,
-                                    /*backwardsCompat*/ true);
-                }
-                finally
-                {
-                    arrayHandle.Free();
+                        WritePixelsImpl(sourceRect,
+                                        adjustedBuffer,
+                                        sourceBufferSize,
+                                        stride,
+                                        destinationX,
+                                        destinationY,
+                                        backwardsCompat: true);
+                    }
                 }
             }
         }
@@ -875,7 +864,7 @@ namespace System.Windows.Media.Imaging
                     }
                     else
                     {
-                        throw new ArgumentException(SR.Image_InsufficientBufferSize, "sourceBufferSize");
+                        throw new ArgumentException(SR.Image_InsufficientBufferSize, nameof(sourceBufferSize));
                     }
                 }
 
@@ -1245,8 +1234,7 @@ namespace System.Windows.Media.Imaging
                     channel.SendCommand(
                         (byte*)&command,
                         sizeof(DUCE.MILCMD_DOUBLEBUFFEREDBITMAP),
-                        false /* sendInSeparateBatch */
-                        );
+                        sendInSeparateBatch: false);
                 }
             }
         }

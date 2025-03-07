@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -661,9 +661,11 @@ namespace System.Windows.Controls.Primitives
         {
             if (!HasNonDefaultValue(target))
             {
-                Binding binding = new Binding();
-                binding.RelativeSource = RelativeSource.TemplatedParent;
-                binding.Path = new PropertyPath(source);
+                Binding binding = new Binding
+                {
+                    RelativeSource = RelativeSource.TemplatedParent,
+                    Path = new PropertyPath(source)
+                };
                 SetBinding(target, binding);
             }
         }
@@ -690,8 +692,10 @@ namespace System.Windows.Controls.Primitives
 
                 if (!HasNonDefaultValue(ReservedSpaceProperty) && parent.Track != null)
                 {
-                    Binding binding = new Binding();
-                    binding.Source = parent.Track.Thumb;
+                    Binding binding = new Binding
+                    {
+                        Source = parent.Track.Thumb
+                    };
 
                     if (parent.Orientation == Orientation.Horizontal)
                     {

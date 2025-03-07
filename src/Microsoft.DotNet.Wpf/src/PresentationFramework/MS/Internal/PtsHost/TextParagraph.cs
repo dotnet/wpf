@@ -1,15 +1,6 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
-
-
-//
-// Description: TextParagraph is a Paragraph representing continuous sequence
-//              of lines.
-//
-
-#pragma warning disable 1634, 1691  // avoid generating warnings about unknown
-// message numbers and unknown pragmas for PRESharp contol
 
 using System.Windows;
 using System.Windows.Documents;
@@ -123,14 +114,12 @@ namespace MS.Internal.PtsHost
         internal override void CreateParaclient(
             out IntPtr paraClientHandle)         
         {
-#pragma warning disable 6518
-            // Disable PRESharp warning 6518. TextParaClient is an UnmamangedHandle, that adds itself
+            // TextParaClient is an UnmamangedHandle, that adds itself
             // to HandleMapper that holds a reference to it. PTS manages lifetime of this object, and
             // calls DestroyParaclient to get rid of it. DestroyParaclient will call Dispose() on the object
             // and remove it from HandleMapper.
             TextParaClient paraClient = new TextParaClient(this);
             paraClientHandle = paraClient.Handle;
-#pragma warning restore 6518
         }
 
         /// <summary>
@@ -194,7 +183,7 @@ namespace MS.Internal.PtsHost
         {
             _textRunCache = new TextRunCache();
             TextFormatter textFormatter = StructuralCache.TextFormatterHost.TextFormatter;
-            TextLineBreak textLineBreak = lineBreakRecord != null ? lineBreakRecord.TextLineBreak : null;
+            TextLineBreak textLineBreak = lineBreakRecord?.TextLineBreak;
 
             OptimalTextSource optimalTextSource = new OptimalTextSource(StructuralCache.TextFormatterHost, ParagraphStartCharacterPosition, durTrack, textParaClient, _textRunCache);
             StructuralCache.TextFormatterHost.Context = optimalTextSource;
@@ -525,16 +514,16 @@ namespace MS.Internal.PtsHost
             StructuralCache.CurrentFormatContext.OnFormatLine();
 
             // Create and format line
-#pragma warning disable 6518
-            // Disable PRESharp warning 6518. Line is an UnmamangedHandle, that adds itself
+            // Line is an UnmamangedHandle, that adds itself
             // to HandleMapper that holds a reference to it. PTS manages lifetime of this object, and
             // calls DestroyLine to get rid of it. DestroyLine will call Dispose() on the object
             // and remove it from HandleMapper.
             Line line = new Line(StructuralCache.TextFormatterHost, paraClient, ParagraphStartCharacterPosition);
-#pragma warning restore 6518
 
-            Line.FormattingContext ctx = new Line.FormattingContext(true, fClearOnLeft, fClearOnRight, _textRunCache);
-            ctx.LineFormatLengthTarget = dcpLineIn;
+            Line.FormattingContext ctx = new Line.FormattingContext(true, fClearOnLeft, fClearOnRight, _textRunCache)
+            {
+                LineFormatLengthTarget = dcpLineIn
+            };
             FormatLineCore(line, pbrlineIn, ctx, dcp, durLine, durTrack, fTreatAsFirstInPara, dcp);
 
             // Retrieve line properties
@@ -545,13 +534,11 @@ namespace MS.Internal.PtsHost
 
             if(textLineBreak != null)
             {
-#pragma warning disable 56518
-                // Disable PRESharp warning 6518. Line is an UnmamangedHandle, that adds itself
+                // Line is an UnmamangedHandle, that adds itself
                 // to HandleMapper that holds a reference to it. PTS manages lifetime of this object, and
                 // calls DestroyLineBreakRecord to get rid of it. DestroyLineBreakRecord will call Dispose() on the object
                 // and remove it from HandleMapper.
                 LineBreakRecord lineBreakRecord = new LineBreakRecord(PtsContext, textLineBreak);
-#pragma warning disable 56518
 
                 ppbrlineOut = lineBreakRecord.Handle;
             }
@@ -711,13 +698,12 @@ namespace MS.Internal.PtsHost
             StructuralCache.CurrentFormatContext.OnFormatLine();
 
             // Create and format line
-#pragma warning disable 6518
-            // Disable PRESharp warning 6518. Line is an UnmamangedHandle, that adds itself
+            // Line is an UnmamangedHandle, that adds itself
             // to HandleMapper that holds a reference to it. PTS manages lifetime of this object, and
             // calls DestroyLine to get rid of it. DestroyLine will call Dispose() on the object
             // and remove it from HandleMapper.
             Line line = new Line(StructuralCache.TextFormatterHost, paraClient, ParagraphStartCharacterPosition);
-#pragma warning restore 6518
+
             Line.FormattingContext ctx = new Line.FormattingContext(true, fClearOnLeft, fClearOnRight, _textRunCache);
             FormatLineCore(line, pbrlineIn, ctx, dcp, durLine, durTrack, fTreatAsFirstInPara, dcp);
 
@@ -729,13 +715,11 @@ namespace MS.Internal.PtsHost
 
             if(textLineBreak != null)
             {
-#pragma warning disable 56518
-                // Disable PRESharp warning 6518. Line is an UnmamangedHandle, that adds itself
+                // Line is an UnmamangedHandle, that adds itself
                 // to HandleMapper that holds a reference to it. PTS manages lifetime of this object, and
                 // calls DestroyLineBreakRecord to get rid of it. DestroyLineBreakRecord will call Dispose() on the object
                 // and remove it from HandleMapper.
                 LineBreakRecord lineBreakRecord = new LineBreakRecord(PtsContext, textLineBreak);
-#pragma warning restore 56518
 
                 ppbrlineOut = lineBreakRecord.Handle;
             }
@@ -961,8 +945,7 @@ namespace MS.Internal.PtsHost
 
                 if(textElement is Figure && StructuralCache.CurrentFormatContext.FinitePage)
                 {
-#pragma warning disable 6518
-                    // Disable PRESharp warning 6518. FigureParagraph is passed to attached objects
+                    // FigureParagraph is passed to attached objects
                     // which will do following:
                     // a) store this object in TextParagraph._floaters collection. Later when
                     //    TextParagraph is disposed, all objects in _floaters collection will be
@@ -973,8 +956,6 @@ namespace MS.Internal.PtsHost
 
                     FigureParagraph figurePara = new FigureParagraph(textElement, StructuralCache);
 
-#pragma warning restore 6518
-
                     if (StructuralCache.CurrentFormatContext.IncrementalUpdate)
                     {
                         figurePara.SetUpdateInfo(PTS.FSKCHANGE.fskchNew, false);
@@ -984,8 +965,7 @@ namespace MS.Internal.PtsHost
                 }
                 else
                 {
-#pragma warning disable 6518
-                    // Disable PRESharp warning 6518. FigureParagraph is passed to attached objects
+                    // FigureParagraph is passed to attached objects
                     // which will do following:
                     // a) store this object in TextParagraph._floaters collection. Later when
                     //    TextParagraph is disposed, all objects in _floaters collection will be
@@ -995,8 +975,6 @@ namespace MS.Internal.PtsHost
                     // c) call Dipose() on this object during layout pass following removal of floater.
 
                     FloaterParagraph floaterPara = new FloaterParagraph(textElement, StructuralCache);
-
-#pragma warning restore 6518
 
                     if (StructuralCache.CurrentFormatContext.IncrementalUpdate)
                     {
@@ -1786,6 +1764,3 @@ namespace MS.Internal.PtsHost
         #endregion Private Fields
     }
 }
-
-#pragma warning enable 1634, 1691
-

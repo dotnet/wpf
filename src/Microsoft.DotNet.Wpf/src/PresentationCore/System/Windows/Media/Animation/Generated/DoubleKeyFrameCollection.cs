@@ -51,9 +51,10 @@ namespace System.Windows.Media.Animation
             {
                 if (s_emptyCollection == null)
                 {
-                    DoubleKeyFrameCollection emptyCollection = new DoubleKeyFrameCollection();
-
-                    emptyCollection._keyFrames = new List< DoubleKeyFrame>(0);
+                    DoubleKeyFrameCollection emptyCollection = new DoubleKeyFrameCollection
+                    {
+                        _keyFrames = new List<DoubleKeyFrame>(0)
+                    };
                     emptyCollection.Freeze();
 
                     s_emptyCollection = emptyCollection;

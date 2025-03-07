@@ -325,6 +325,7 @@
                                     CornerRadius="0,0,4,4"
                                     Visibility="Collapsed">
                                 <ContentPresenter x:Name="ContentPresenter"
+                                                  RecognizesAccessKey="True"
                                                   Margin="{TemplateBinding Padding}"
                                                   HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
                                                   VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
@@ -396,7 +397,7 @@
                                     <Storyboard>
                                         <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenterBorder" Storyboard.TargetProperty="(Border.Visibility)">
                                             <DiscreteObjectKeyFrame KeyTime="0" Value="{x:Static Visibility.Visible}" />
-                                            <DiscreteObjectKeyFrame KeyTime="0:0:5" Value="{x:Static Visibility.Collapsed}" />
+                                            <DiscreteObjectKeyFrame KeyTime="0:0:0.2" Value="{x:Static Visibility.Collapsed}" />
                                         </ObjectAnimationUsingKeyFrames>
                                         <DoubleAnimationUsingKeyFrames Storyboard.TargetName="AnimationFactorBorder" Storyboard.TargetProperty="Width">
                                             <DiscreteDoubleKeyFrame KeyTime="0" Value="0.0" />

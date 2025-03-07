@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -1469,8 +1469,7 @@ namespace System.Windows.Input
                     compartment = TextServicesCompartmentContext.Current.GetThreadCompartment(iminfo.Guid);
                 else if (iminfo.Scope == CompartmentScope.Global)
                     compartment = TextServicesCompartmentContext.Current.GetGlobalCompartment(iminfo.Guid);
-                if (compartment != null)
-                   compartment.UnadviseNotifySink();
+                compartment?.UnadviseNotifySink();
             }
         }
 
@@ -1574,9 +1573,11 @@ namespace System.Windows.Input
                 bCanShown  = true;
                 if (fShow)
                 {
-                    NativeMethods.REGISTERWORD regWord = new NativeMethods.REGISTERWORD();
-                    regWord.lpReading = null;
-                    regWord.lpWord = strRegister;
+                    NativeMethods.REGISTERWORD regWord = new NativeMethods.REGISTERWORD
+                    {
+                        lpReading = null,
+                        lpWord = strRegister
+                    };
                     UnsafeNativeMethods.ImmConfigureIME(new HandleRef(this, hkl), new HandleRef(this, HwndFromInputElement(element)), NativeMethods.IME_CONFIG_REGISTERWORD, ref regWord);
                 }
             }

@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -166,7 +166,7 @@ namespace System.Windows.Controls
         ItemContainerGenerator IItemContainerGenerator.GetItemContainerGeneratorForPanel(Panel panel)
         {
             if (!panel.IsItemsHost)
-                throw new ArgumentException(SR.PanelIsNotItemsHost, "panel");
+                throw new ArgumentException(SR.PanelIsNotItemsHost, nameof(panel));
 
             // if panel came from an ItemsPresenter, use its generator
             ItemsPresenter ip = ItemsPresenter.FromPanel(panel);
@@ -270,9 +270,9 @@ namespace System.Windows.Controls
         private void Remove(GeneratorPosition position, int count, bool isRecycling)
         {
             if (position.Offset != 0)
-                throw new ArgumentException(SR.Format(SR.RemoveRequiresOffsetZero, position.Index, position.Offset), "position");
+                throw new ArgumentException(SR.Format(SR.RemoveRequiresOffsetZero, position.Index, position.Offset), nameof(position));
             if (count <= 0)
-                throw new ArgumentException(SR.Format(SR.RemoveRequiresPositiveCount, count), "count");
+                throw new ArgumentException(SR.Format(SR.RemoveRequiresPositiveCount, count), nameof(count));
 
             if (_itemMap == null)
             {
@@ -1161,10 +1161,7 @@ namespace System.Windows.Controls
                     for (int offset = 0;  offset < block.ContainerCount;  ++offset)
                     {
                         GroupItem gi = ((RealizedItemBlock)block).ContainerAt(offset) as GroupItem;
-                        if (gi != null)
-                        {
-                            gi.Generator.ChangeAlternationCount();
-                        }
+                        gi?.Generator.ChangeAlternationCount();
                     }
 
                     block = block.Next;
@@ -1954,7 +1951,7 @@ namespace System.Windows.Controls
                 else
                 {
                     CollectionView cv = Host.View.CollectionView;
-                    items = (cv == null) ? null : cv.Groups;
+                    items = cv?.Groups;
                     if (items == null)
                     {
                         items = Host.View;
@@ -2055,7 +2052,8 @@ namespace System.Windows.Controls
 
             // add it to the list of placeholder items (this keeps it from being GC'd)
             if (_emptyGroupItems == null)
-                _emptyGroupItems = new ArrayList();
+                _emptyGroupItems = new List<EmptyGroupItem>();
+
             _emptyGroupItems.Add(emptyGroupItem);
         }
 
@@ -2064,8 +2062,7 @@ namespace System.Windows.Controls
         {
             // Discard placeholder container.
             UnlinkContainerFromItem(groupItem, group);
-            if (_emptyGroupItems != null)
-                _emptyGroupItems.Remove(groupItem);
+            _emptyGroupItems?.Remove(groupItem);
 
             // inform layout as if the group just got added
             if (ItemsChanged != null)
@@ -2489,8 +2486,10 @@ namespace System.Windows.Controls
             // otherwise, create a new unrealized block
             else
             {
-                uib = new UnrealizedItemBlock();
-                uib.ItemCount = 1;
+                uib = new UnrealizedItemBlock
+                {
+                    ItemCount = 1
+                };
 
                 // split the current realized block, if necessary
                 RealizedItemBlock rib;
@@ -2706,8 +2705,10 @@ namespace System.Windows.Controls
             // otherwise, create a new unrealized block
             else
             {
-                uib = new UnrealizedItemBlock();
-                uib.ItemCount = 1;
+                uib = new UnrealizedItemBlock
+                {
+                    ItemCount = 1
+                };
 
                 // split the current realized block, if necessary
                 if (offsetFromBlockStart > 0 && (rib = block as RealizedItemBlock) != null)
@@ -2792,7 +2793,7 @@ namespace System.Windows.Controls
         private ReadOnlyCollection<object> _itemsReadOnly;
         private GroupStyle      _groupStyle;
         private ItemContainerGenerator _parent;
-        private ArrayList       _emptyGroupItems;
+        private List<EmptyGroupItem> _emptyGroupItems;
         private int             _alternationCount;
 
         private Type            _containerType;     // type of containers on the recycle queue

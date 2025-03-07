@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -578,10 +578,7 @@ namespace System.Windows.Controls
             if (cellsPresenter != null)
             {
                 cellsPresenter.ClearValue(DataGridCellsPresenter.HeightProperty);
-                if (_owner != null)
-                {
-                    _owner.ItemAttachedStorage.ClearValue(Item, DataGridCellsPresenter.HeightProperty);
-                }
+                _owner?.ItemAttachedStorage.ClearValue(Item, DataGridCellsPresenter.HeightProperty);
             }
         }
 
@@ -597,10 +594,7 @@ namespace System.Windows.Controls
         protected internal virtual void OnColumnsChanged(ObservableCollection<DataGridColumn> columns, NotifyCollectionChangedEventArgs e)
         {
             DataGridCellsPresenter cellsPresenter = CellsPresenter;
-            if (cellsPresenter != null)
-            {
-                cellsPresenter.OnColumnsChanged(columns, e);
-            }
+            cellsPresenter?.OnColumnsChanged(columns, e);
         }
 
         #endregion
@@ -713,9 +707,8 @@ namespace System.Windows.Controls
                 row.DataGridOwner,
                 DataGrid.RowDetailsVisibilityModeProperty);
 
-            if (visibility is DataGridRowDetailsVisibilityMode)
+            if (visibility is DataGridRowDetailsVisibilityMode visibilityMode)
             {
-                var visibilityMode = (DataGridRowDetailsVisibilityMode)visibility;
                 var hasDetailsTemplate = row.DetailsTemplate != null || row.DetailsTemplateSelector != null;
                 var isRealItem = row.Item != CollectionView.NewItemPlaceholder;
                 switch (visibilityMode)
@@ -795,10 +788,7 @@ namespace System.Windows.Controls
             if (row.DetailsLoaded &&
                 d.GetValue(e.Property) == e.NewValue)
             {
-                if (row.DataGridOwner != null)
-                {
-                    row.DataGridOwner.OnUnloadingRowDetailsWrapper(row);
-                }
+                row.DataGridOwner?.OnUnloadingRowDetailsWrapper(row);
                 if (e.NewValue != null)
                 {
                     // Invoke LoadingRowDetails, but only after the details template is expanded (so DetailsElement will be available).
@@ -823,7 +813,7 @@ namespace System.Windows.Controls
         {
             var row = (DataGridRow)arg;
             var dataGrid = row.DataGridOwner;
-            var detailsElement = row.DetailsPresenter != null ? row.DetailsPresenter.DetailsElement : null;
+            var detailsElement = row.DetailsPresenter?.DetailsElement;
             if (dataGrid != null)
             {
                 var detailsEventArgs = new DataGridRowDetailsEventArgs(row, detailsElement);
@@ -933,10 +923,7 @@ namespace System.Windows.Controls
 
             if (DataGridHelper.ShouldNotifyDetailsPresenter(target))
             {
-                if (DetailsPresenter != null)
-                {
-                    DetailsPresenter.NotifyPropertyChanged(d, e);
-                }
+                DetailsPresenter?.NotifyPropertyChanged(d, e);
             }
 
             if (DataGridHelper.ShouldNotifyCellsPresenter(target) ||
@@ -944,10 +931,7 @@ namespace System.Windows.Controls
                 DataGridHelper.ShouldRefreshCellContent(target))
             {
                 DataGridCellsPresenter cellsPresenter = CellsPresenter;
-                if (cellsPresenter != null)
-                {
-                    cellsPresenter.NotifyPropertyChanged(d, propertyName, e, target);
-                }
+                cellsPresenter?.NotifyPropertyChanged(d, propertyName, e, target);
             }
 
             if (DataGridHelper.ShouldNotifyRowHeaders(target) && RowHeader != null)
@@ -1010,15 +994,9 @@ namespace System.Windows.Controls
                 RestoreAttachedItemValue(cellsPresenter, DataGridCellsPresenter.HeightProperty);
             }
 
-            if (DetailsPresenter != null)
-            {
-                DetailsPresenter.SyncProperties();
-            }
+            DetailsPresenter?.SyncProperties();
 
-            if (RowHeader != null)
-            {
-                RowHeader.SyncProperties();
-            }
+            RowHeader?.SyncProperties();
         }
 
         #endregion
@@ -1090,13 +1068,10 @@ namespace System.Windows.Controls
                 if (gridPeer != null)
                 {
                     DataGridItemAutomationPeer rowItemPeer = gridPeer.FindOrCreateItemAutomationPeer(row.DataContext) as DataGridItemAutomationPeer;
-                    if (rowItemPeer != null)
-                    {
-                        rowItemPeer.RaisePropertyChangedEvent(
+                    rowItemPeer?.RaisePropertyChangedEvent(
                             System.Windows.Automation.SelectionItemPatternIdentifiers.IsSelectedProperty,
                             (bool)e.OldValue,
                             isSelected);
-                    }
                 }
             }
 
@@ -1246,10 +1221,7 @@ namespace System.Windows.Controls
         internal void ScrollCellIntoView(int index)
         {
             DataGridCellsPresenter cellsPresenter = CellsPresenter;
-            if (cellsPresenter != null)
-            {
-                cellsPresenter.ScrollCellIntoView(index);
-            }
+            cellsPresenter?.ScrollCellIntoView(index);
         }
 
         #endregion
@@ -1262,10 +1234,7 @@ namespace System.Windows.Controls
         protected override Size ArrangeOverride(Size arrangeBounds)
         {
             DataGrid dataGrid = DataGridOwner;
-            if (dataGrid != null)
-            {
-                dataGrid.QueueInvalidateCellsPanelHorizontalOffset();
-            }
+            dataGrid?.QueueInvalidateCellsPanelHorizontalOffset();
 
             return base.ArrangeOverride(arrangeBounds);
         }

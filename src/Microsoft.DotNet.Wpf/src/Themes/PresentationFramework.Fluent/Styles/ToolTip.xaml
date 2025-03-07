@@ -21,6 +21,7 @@
         <Setter Property="TextBlock.TextAlignment" Value="Justify" />
         <Setter Property="TextElement.Foreground" Value="{DynamicResource ToolTipForeground}" />
         <Setter Property="Foreground" Value="{DynamicResource ToolTipForeground}" />
+        <Setter Property="FontWeight" Value="Normal"/>
         <Setter Property="Background" Value="{DynamicResource ToolTipBackground}" />
         <Setter Property="BorderBrush" Value="{DynamicResource ToolTipBorderBrush}" />
         <Setter Property="BorderThickness" Value="{DynamicResource ToolTipBorderThemeThickness}"/>

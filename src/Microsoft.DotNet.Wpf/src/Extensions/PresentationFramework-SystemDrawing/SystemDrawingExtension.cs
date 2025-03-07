@@ -1,6 +1,7 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
+
+#nullable enable
 
 // Description: Helper methods for code that uses types from System.Drawing.
 
@@ -16,61 +17,30 @@ using System.Windows.Media.Imaging;
 namespace MS.Internal
 {
     //FxCop can't tell that this class is instantiated via reflection, so suppress the FxCop warning.
-    [SuppressMessage("Microsoft.Performance","CA1812:AvoidUninstantiatedInternalClasses")]
+    [SuppressMessage("Microsoft.Performance", "CA1812:AvoidUninstantiatedInternalClasses")]
     internal class SystemDrawingExtension : SystemDrawingExtensionMethods
     {
-        // return true if the data is a bitmap
-        internal override bool IsBitmap(object data)
+        internal override bool IsBitmap(object? data) => data is Bitmap;
+
+        internal override bool IsImage(object? data) => data is Image;
+
+        internal override bool IsMetafile(object? data) => data is Metafile;
+
+        internal override nint GetHandleFromMetafile(object? data) => data switch
         {
-            return data is Bitmap;
-        }
+            Metafile metafile => metafile.GetHenhmetafile(),
+            _ => 0
+        };
 
-        // return true if the data is an Image
-        internal override bool IsImage(object data)
+        internal override object GetMetafileFromHemf(nint hMetafile) => new Metafile(hMetafile, deleteEmf: false);
+
+        internal override object? GetBitmap(object? data) => GetBitmapImpl(data);
+
+        internal override nint GetHBitmap(object? data, out int width, out int height)
         {
-            return data is Image;
-        }
+            Bitmap? bitmapData = GetBitmapImpl(data);
 
-        // return true if the data is a graphics metafile
-        internal override bool IsMetafile(object data)
-        {
-            return data is Metafile;
-        }
-
-        // return the handle from a metafile
-        internal override IntPtr GetHandleFromMetafile(Object data)
-        {
-            IntPtr hMetafile = IntPtr.Zero;
-            Metafile metafile = data as Metafile;
-
-            if (metafile != null)
-            {
-                // Get the Windows handle from the metafile object.
-                hMetafile = metafile.GetHenhmetafile();
-            }
-
-            return hMetafile;
-        }
-
-        // Get the metafile from the handle of the enhanced metafile.
-        internal override Object GetMetafileFromHemf(IntPtr hMetafile)
-        {
-            return new Metafile(hMetafile, false);
-        }
-
-        // Get a bitmap from the given data (either BitmapSource or Bitmap)
-        internal override object GetBitmap(object data)
-        {
-            return GetBitmapImpl(data);
-        }
-
-        // Get a bitmap handle from the given data (either BitmapSource or Bitmap)
-        // Also return its width and height.
-        internal override IntPtr GetHBitmap(object data, out int width, out int height)
-        {
-            Bitmap bitmapData = GetBitmapImpl(data);
-
-            if (bitmapData == null)
+            if (bitmapData is null)
             {
                 width = height = 0;
                 return IntPtr.Zero;
@@ -84,54 +54,45 @@ namespace MS.Internal
             return bitmapData.GetHbitmap();
         }
 
-        // Get a bitmap handle from a Bitmap
-        internal override IntPtr GetHBitmapFromBitmap(object data)
-        {
-            Bitmap bitmap = data as Bitmap;
-            return (bitmap != null) ? bitmap.GetHbitmap() : IntPtr.Zero;
-        }
+        internal override nint GetHBitmapFromBitmap(object? data) => data is Bitmap bitmap ? bitmap.GetHbitmap() : 0;
 
-        // Convert a metafile to HBitmap
-        internal override IntPtr ConvertMetafileToHBitmap(IntPtr handle)
+        internal override nint ConvertMetafileToHBitmap(nint handle)
         {
-            Metafile metafile = new Metafile(handle, false);
+            Metafile metafile = new(handle, deleteEmf: false);
 
             // Initialize the bitmap size to render the metafile.
             int bitmapheight = metafile.Size.Height;
-            int bitmapwidth =  metafile.Size.Width;
+            int bitmapwidth = metafile.Size.Width;
 
             // We use System.Drawing to render metafile into the bitmap.
             Bitmap bmp = new Bitmap(bitmapwidth, bitmapheight);
             Graphics graphics = Graphics.FromImage(bmp);
-            // graphics.FillRectangle(new System.Drawing.SolidBrush(System.Drawing.Color.White), 0, 0, bitmapwidth, bitmapheight);
             graphics.DrawImage(metafile, 0, 0, bitmapwidth, bitmapheight);
 
             return bmp.GetHbitmap();
         }
 
-        // return a stream for the ExifUserComment in the given Gif
         internal override Stream GetCommentFromGifStream(Stream stream)
         {
-            // Read the GIF header ...
-            Bitmap img = new Bitmap(stream);
-            // Read the comment as that is where the ISF is stored...
-            // for reference the tag is PropertyTagExifUserComment [0x9286] or 37510 (int)
-            PropertyItem piComment = img.GetPropertyItem(37510);
-            return new MemoryStream(piComment.Value);
+            // Read the GIF header
+            Bitmap bitmap = new(stream);
+
+            // Read the comment as that is where the ISF is stored.
+            // For reference the tag is PropertyTagExifUserComment [0x9286] or 37510 (int)
+            PropertyItem? piComment = bitmap.GetPropertyItem(37510);
+            return new MemoryStream(piComment!.Value!);
         }
 
-        // write a metafile stream to the output stream in PNG format
         internal override void SaveMetafileToImageStream(MemoryStream metafileStream, Stream imageStream)
         {
-            Metafile metafile = new Metafile(metafileStream);
+            Metafile metafile = new(metafileStream);
             metafile.Save(imageStream, ImageFormat.Png);
         }
 
         // Get a bitmap from the given data (either BitmapSource or Bitmap)
-        private static Bitmap GetBitmapImpl(object data)
+        private static Bitmap? GetBitmapImpl(object? data)
         {
-            BitmapSource bitmapSource = data as BitmapSource;
-            if (bitmapSource != null)
+            if (data is BitmapSource bitmapSource)
             {
                 // Convert BitmapSource to System.Drawing.Bitmap to get Win32 HBITMAP.
                 BitmapEncoder bitmapEncoder;
@@ -152,23 +113,18 @@ namespace MS.Internal
             }
         }
 
-        //returns bitmap snapshot of selected area
-        //this code takes a BitmapImage and converts it to a Bitmap so it can be put on the clipboard
         internal override object GetBitmapFromBitmapSource(object source)
         {
             BitmapSource contentImage = (BitmapSource)source;
             int imageWidth = (int)contentImage.Width;
             int imageHeight = (int)contentImage.Height;
 
-            Bitmap bitmapFinal = new Bitmap(
-                                        imageWidth,
-                                        imageHeight,
-                                        System.Drawing.Imaging.PixelFormat.Format32bppRgb);
+            Bitmap bitmapFinal = new(imageWidth, imageHeight, PixelFormat.Format32bppRgb);
 
             BitmapData bmData = bitmapFinal.LockBits(
-                                    new Rectangle(0, 0, imageWidth, imageHeight),
-                                    ImageLockMode.WriteOnly,
-                                    System.Drawing.Imaging.PixelFormat.Format32bppRgb);
+                new Rectangle(0, 0, imageWidth, imageHeight),
+                ImageLockMode.WriteOnly,
+                PixelFormat.Format32bppRgb);
 
             FormatConvertedBitmap formatConverter = new FormatConvertedBitmap();
             formatConverter.BeginInit();
@@ -177,10 +133,10 @@ namespace MS.Internal
             formatConverter.EndInit();
 
             formatConverter.CopyPixels(
-                        new Int32Rect(0, 0, imageWidth, imageHeight),
-                        bmData.Scan0,
-                        bmData.Stride * (bmData.Height - 1) + (bmData.Width * 4),
-                        bmData.Stride);
+                new Int32Rect(0, 0, imageWidth, imageHeight),
+                bmData.Scan0,
+                bmData.Stride * (bmData.Height - 1) + (bmData.Width * 4),
+                bmData.Stride);
 
             bitmapFinal.UnlockBits(bmData);
 

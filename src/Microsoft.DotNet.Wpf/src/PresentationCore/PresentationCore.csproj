@@ -127,6 +127,7 @@
     <Compile Include="MS\Internal\SystemDrawingHelper.cs" />
     <Compile Include="MS\Internal\UIElementHelper.cs" />
     <Compile Include="MS\Internal\UnicodeClasses.cs" />
+    <Compile Include="MS\Internal\WeakReferenceCache.cs" />
     <Compile Include="MS\Internal\WpfWebRequestHelper.cs" />
     <Compile Include="MS\Internal\AppModel\CookieHandler.cs" />
     <Compile Include="MS\Internal\AppModel\CustomCredentialPolicy.cs" />
@@ -1248,7 +1249,6 @@
     <Compile Include="System\Windows\Media\Imaging\UnknownBitmapDecoder.cs" />
     <Compile Include="System\Windows\Media\Imaging\UnknownBitmapEncoder.cs" />
     <Compile Include="System\Windows\Media\Imaging\UnmanagedBitmapWrapper.cs" />
-    <Compile Include="System\Windows\Media\Imaging\WeakReferenceCache.cs" />
     <Compile Include="System\Windows\Media\Imaging\WmpBitmapDecoder.cs" />
     <Compile Include="System\Windows\Media\Imaging\WmpBitmapEncoder.cs" />
     <Compile Include="System\Windows\Media\Imaging\WriteableBitmap.cs" />

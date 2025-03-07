@@ -61,7 +61,7 @@ namespace System.Windows.Media.Imaging
 
             if ((createOptions & BitmapCreateOptions.IgnoreImageCache) != 0)
             {
-                s_decoderCache.RemoveFromCache(bitmapUri);
+                s_decoderCache.Remove(bitmapUri);
             }
 
             BitmapDecoder decoder = CheckCache(bitmapUri, out clsId);
@@ -242,7 +242,7 @@ namespace System.Windows.Media.Imaging
                 {
                     if ((createOptions & BitmapCreateOptions.IgnoreImageCache) != 0)
                     {
-                        s_decoderCache.RemoveFromCache(finalUri);
+                        s_decoderCache.Remove(finalUri);
                     }
 
                     cachedDecoder = CheckCache(
@@ -1338,7 +1338,7 @@ namespace System.Windows.Media.Imaging
                 else
                 {
                     // Remove from the cache if bitmapDecoder is already been collected
-                    s_decoderCache.RemoveFromCache(uri);
+                    s_decoderCache.Remove(uri);
                 }
             }
 
@@ -1382,7 +1382,7 @@ namespace System.Windows.Media.Imaging
             if ((_uri != null) && (decoder == null) && _shouldCacheDecoder)
             {
                 // Add this decoder to the decoder cache
-                s_decoderCache.AddToCache((_baseUri == null) ? _uri : new Uri(_baseUri, _uri), new WeakReference<BitmapDecoder>(this));
+                s_decoderCache.Add((_baseUri == null) ? _uri : new Uri(_baseUri, _uri), new WeakReference<BitmapDecoder>(this));
             }
         }
 

@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -238,7 +238,7 @@ namespace System.Windows.Media.Imaging
                 else
                 {
                     // Remove from the cache if bitmapImage is already been collected
-                    s_imageCache.RemoveFromCache(uri);
+                    s_imageCache.Remove(uri);
                 }
             }
 
@@ -266,7 +266,7 @@ namespace System.Windows.Media.Imaging
                 // network are cached to disk at another level and are unaffected by the weak references.
                 //
 
-                s_imageCache.AddToCache(uri, new WeakReference<BitmapImage>(this));
+                s_imageCache.Add(uri, new WeakReference<BitmapImage>(this));
             }
         }
 
@@ -282,7 +282,7 @@ namespace System.Windows.Media.Imaging
 
             if ((CreateOptions & BitmapCreateOptions.IgnoreImageCache) != 0)
             {
-                s_imageCache.RemoveFromCache(uri);
+                s_imageCache.Remove(uri);
             }
 
             BitmapImage bitmapImage = CheckCache(uri);

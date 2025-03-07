@@ -1,18 +1,20 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
 #nullable enable
 
+using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 
-namespace System.Windows.Media.Imaging;
+namespace MS.Internal;
 
 /// <summary>
 /// Provides keyed-caching for different objects stored as weak references.
 /// </summary>
 /// <remarks>The cache operations are thread-safe.</remarks>
-internal sealed class WeakReferenceCache<K, V> where K : notnull
-                                               where V : class
+internal sealed class WeakReferenceCache<K, V>
+    where K : notnull
+    where V : class
 {
     /// <summary>
     /// Max number of elements stored in the cache.
@@ -25,7 +27,7 @@ internal sealed class WeakReferenceCache<K, V> where K : notnull
     /// <summary>
     /// Adds an object to cache
     /// </summary>
-    public void AddToCache(K key, WeakReference<V> value)
+    public void Add(K key, WeakReference<V> value)
     {
         lock (_cacheLock)
         {
@@ -62,7 +64,7 @@ internal sealed class WeakReferenceCache<K, V> where K : notnull
     /// <summary>
     /// Removes an object from cache
     /// </summary>
-    public void RemoveFromCache(K key)
+    public void Remove(K key)
     {
         lock (_cacheLock)
         {
@@ -74,7 +76,7 @@ internal sealed class WeakReferenceCache<K, V> where K : notnull
     /// <summary>
     /// Attempts to retrieve an object from cache
     /// </summary>
-    public bool TryGetValue(K key, out WeakReference<V>? value)
+    public bool TryGetValue(K key, [NotNullWhen(true)] out WeakReference<V>? value)
     {
         lock (_cacheLock)
         {

@@ -641,7 +641,6 @@
     <Color x:Key="ControlStrongFillColorDefault">#2D3236</Color>
     <Color x:Key="ControlStrongFillColorDisabled">#2D3236</Color>
 
-    <Color x:Key="SystemColorWindowColor">Transparent</Color>
     <Color x:Key="ControlSolidFillColorDefault">#2D3236</Color>
 
     <Color x:Key="SubtleFillColorTransparent">#2D3236</Color>

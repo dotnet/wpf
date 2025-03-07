@@ -266,7 +266,7 @@ namespace System.Windows.Media.Imaging
                 // network are cached to disk at another level and are unaffected by the weak references.
                 //
 
-                s_imageCache.Add(uri, new WeakReference<BitmapImage>(this));
+                s_imageCache.Add(uri, this);
             }
         }
 

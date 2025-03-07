@@ -27,7 +27,7 @@ internal sealed class WeakReferenceCache<K, V>
     /// <summary>
     /// Adds an object to cache
     /// </summary>
-    public void Add(K key, WeakReference<V> value)
+    public void Add(K key, V value)
     {
         lock (_cacheLock)
         {
@@ -57,7 +57,7 @@ internal sealed class WeakReferenceCache<K, V>
             }
 
             // add it
-            _cacheStore.Add(key, value);
+            _cacheStore.Add(key, new WeakReference<V>(value));
         }
     }
 

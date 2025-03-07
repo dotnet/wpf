@@ -1382,7 +1382,7 @@ namespace System.Windows.Media.Imaging
             if ((_uri != null) && (decoder == null) && _shouldCacheDecoder)
             {
                 // Add this decoder to the decoder cache
-                s_decoderCache.Add((_baseUri == null) ? _uri : new Uri(_baseUri, _uri), new WeakReference<BitmapDecoder>(this));
+                s_decoderCache.Add((_baseUri == null) ? _uri : new Uri(_baseUri, _uri), this);
             }
         }
 

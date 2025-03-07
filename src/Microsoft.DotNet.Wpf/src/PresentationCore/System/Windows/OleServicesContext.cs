@@ -68,66 +68,13 @@ internal class OleServicesContext
         }
     }
 
+    /// <summary>
+    ///  Ensure the current thread is STA and OLE is initialized.
+    /// </summary>
     internal static void EnsureThreadState()
     {
-        if (Thread.CurrentThread.GetApartmentState() != ApartmentState.STA)
-        {
-            throw new ThreadStateException(SR.OleServicesContext_ThreadMustBeSTA);
-        }
-    }
-
-    /// <summary>
-    ///  Call OLE Interopo OleSetClipboard()
-    /// </summary>
-    internal int OleSetClipboard(IComDataObject dataObject)
-    {
-        if (Thread.CurrentThread.GetApartmentState() != ApartmentState.STA)
-        {
-            throw new ThreadStateException(SR.OleServicesContext_ThreadMustBeSTA);
-        }
-
-        return UnsafeNativeMethods.OleSetClipboard(dataObject);
-    }
-
-    /// <summary>
-    ///  Call OLE Interop OleGetClipboard()
-    /// </summary>
-    internal int OleGetClipboard(ref IComDataObject dataObject)
-    {
-        if (Thread.CurrentThread.GetApartmentState() != ApartmentState.STA)
-        {
-            throw new ThreadStateException(SR.OleServicesContext_ThreadMustBeSTA);
-        }
-
-        return UnsafeNativeMethods.OleGetClipboard(ref dataObject);
-    }
-
-    /// <summary>
-    ///  Call OLE Interop OleFlushClipboard()
-    /// </summary>
-    internal int OleFlushClipboard()
-    {
-        if (Thread.CurrentThread.GetApartmentState() != ApartmentState.STA)
-        {
-            throw new ThreadStateException(SR.OleServicesContext_ThreadMustBeSTA);
-        }
-
-        return UnsafeNativeMethods.OleFlushClipboard();
-    }
-
-    /// <summary>
-    ///  OleIsCurrentClipboard only works for the data object used in the OleSetClipboard. This means that it can’t be
-    ///  called by the consumer of the data object to determine if the object that was on the clipboard at the previous
-    ///  OleGetClipboard call is still on the Clipboard.
-    /// </summary>
-    internal int OleIsCurrentClipboard(IComDataObject dataObject)
-    {
-        if (Thread.CurrentThread.GetApartmentState() != ApartmentState.STA)
-        {
-            throw new ThreadStateException(SR.OleServicesContext_ThreadMustBeSTA);
-        }
-
-        return UnsafeNativeMethods.OleIsCurrentClipboard(dataObject);
+        // Poke the CurrentOleServicesContext to ensure it is created, this will throw if the current thread is not STA.
+        _ = CurrentOleServicesContext;
     }
 
     /// <summary>

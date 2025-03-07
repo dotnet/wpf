@@ -3,219 +3,207 @@
 
 #nullable enable
 
-using MS.Win32;
 using System.Collections.Specialized;
 using System.ComponentModel;
+using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Private.Windows.Ole;
-using System.Runtime.InteropServices;
+using System.Reflection.Metadata;
 using System.Runtime.InteropServices.ComTypes;
-using System.Runtime.Serialization;
-using System.Runtime.Serialization.Formatters.Binary;
-using System.Windows.Interop;
 using System.Windows.Media.Imaging;
-using System.Text;
-using MS.Internal;
-
-using IComDataObject = System.Runtime.InteropServices.ComTypes.IDataObject;
-using System.Diagnostics.CodeAnalysis;
-
-// Description: Top-level class for data transfer for drag-drop and clipboard.
-//
-// See spec at http://avalon/uis/Data%20Transfer%20clipboard%20dragdrop/Avalon%20Data%20Transfer%20Object.htm
+using System.Windows.Ole;
+using HRESULT = Windows.Win32.Foundation.HRESULT;
+using BOOL = Windows.Win32.Foundation.BOOL;
+using Com = Windows.Win32.System.Com;
+using ComTypes = System.Runtime.InteropServices.ComTypes;
 
 namespace System.Windows;
 
-public sealed partial class DataObject : IDataObject, IComDataObject
+public sealed unsafe partial class DataObject :
+    ITypedDataObject,
+    IDataObjectInternal<DataObject, IDataObject>,
+    // Built-in COM interop chooses the first interface that implements an IID,
+    // we want the CsWin32 to be chosen over System.Runtime.InteropServices.ComTypes
+    // so it must come first.
+    Com.IDataObject.Interface,
+    ComTypes.IDataObject,
+    Com.IManagedWrapper<Com.IDataObject>,
+    IComVisibleDataObject
 {
-    private const string SystemDrawingBitmapFormat = "System.Drawing.Bitmap";
-    private const string SystemBitmapSourceFormat = "System.Windows.Media.Imaging.BitmapSource";
-    private const string SystemDrawingImagingMetafileFormat = "System.Drawing.Imaging.Metafile";
+    private readonly Composition _innerData;
+    private readonly bool _doNotUnwrap;
 
-    private const int DV_E_FORMATETC = unchecked((int)0x80040064);
-    private const int DV_E_LINDEX = unchecked((int)0x80040068);
-    private const int DV_E_TYMED = unchecked((int)0x80040069);
-    private const int DV_E_DVASPECT = unchecked((int)0x8004006B);
-    private const int OLE_E_ADVISENOTSUPPORTED = unchecked((int)0x80040003);
-    private const int DATA_S_SAMEFORMATETC = unchecked((int)0x00040130);
-    private const int STG_E_MEDIUMFULL = unchecked((int)0x80030070);
+    static DataObject IDataObjectInternal<DataObject, IDataObject>.Create() => new();
+    static DataObject IDataObjectInternal<DataObject, IDataObject>.Create(Com.IDataObject* dataObject) => new(dataObject);
+    static DataObject IDataObjectInternal<DataObject, IDataObject>.Create(object data) => new(data);
 
-    // Const integer base size of the file drop list: "4 + 8 + 4 + 4"
-    private const int FILEDROPBASESIZE = 20;
-
-    // Allowed type medium.
-    private static readonly TYMED[] s_allowedTymeds =
-    [
-        TYMED.TYMED_HGLOBAL,
-        TYMED.TYMED_ISTREAM,
-        TYMED.TYMED_ENHMF,
-        TYMED.TYMED_MFPICT,
-        TYMED.TYMED_GDI
-    ];
-
-
-    // Inner data object of IDataObject.
-    private readonly IDataObject _innerData;
-
-    // We use this to identify that a stream is actually a serialized object.  On read,
-    // we don't know if the contents of a stream were saved "raw" or if the stream is really
-    // pointing to a serialized object.  If we saved an object, we prefix it with this
-    // guid.
-    //
-    // FD9EA796-3B13-4370-A679-56106BB288FB
-    private static readonly byte[] s_serializedObjectID = new Guid(0xFD9EA796, 0x3B13, 0x4370, 0xA6, 0x79, 0x56, 0x10, 0x6B, 0xB2, 0x88, 0xFB).ToByteArray();
+    static IDataObjectInternal IDataObjectInternal<DataObject, IDataObject>.Wrap(IDataObject data) =>
+        new DataObjectAdapter(data);
 
     /// <summary>
     ///  Initializes a new instance of the <see cref="DataObject"/> class, which can store arbitrary data.
     /// </summary>
-    public DataObject() => _innerData = new DataStore();
+    public DataObject() => _innerData = Composition.Create();
 
     /// <summary>
     ///  Initializes a new instance of the <see cref="DataObject"/> class, containing the specified data.
     /// </summary>
-    public DataObject(object data)
-    {
-        ArgumentNullException.ThrowIfNull(data);
+    public DataObject(object data) => _innerData = Composition.Create<DataObject, IDataObject>(data);
 
-        if (data is IDataObject dataObject)
-        {
-            _innerData = dataObject;
-        }
-        else
-        {
-            if (data is IComDataObject oleDataObject)
-            {
-                _innerData = new OleConverter(oleDataObject);
-            }
-            else
-            {
-                _innerData = new DataStore();
-                SetData(data);
-            }
-        }
-    }
+    /// <inheritdoc cref="DataObject(object)"/>
+    /// <param name="doNotUnwrap">Do not allow unwrapping of nested data.</param>
+    private DataObject(object data, bool doNotUnwrap) : this(data)
+        => _doNotUnwrap = doNotUnwrap;
 
     /// <summary>
     ///  Initializes a new instance of the class, containing the specified data and its
     ///  associated format.
     /// </summary>
-    public DataObject(string format, object data)
-    {
-        ArgumentNullException.ThrowIfNull(format);
-
-        if (format == string.Empty)
-        {
-            throw new ArgumentException(SR.DataObject_EmptyFormatNotAllowed);
-        }
-
-        ArgumentNullException.ThrowIfNull(data);
-
-        _innerData = new DataStore();
-        SetData(format, data);
-    }
+    public DataObject(string format, object data) : this() =>
+        SetData(format, data.OrThrowIfNull());
 
     /// <summary>
     ///  Initializes a new instance of the class, containing the specified data and its associated format.
     /// </summary>
-    public DataObject(Type format, object data)
-    {
-        ArgumentNullException.ThrowIfNull(format);
-        ArgumentNullException.ThrowIfNull(data);
-        _innerData = new DataStore();
-        SetData(format.FullName!, data);
-    }
+    public DataObject(Type format, object data) : this() =>
+        SetData(format.FullName.OrThrowIfNull(), data.OrThrowIfNull());
 
     /// <summary>
     ///  Initializes a new instance of the class, containing the specified data and its associated format.
     /// </summary>
-    public DataObject(string format, object data, bool autoConvert)
-    {
-        ArgumentNullException.ThrowIfNull(format);
+    public DataObject(string format, object data, bool autoConvert) : this() =>
+        SetData(format, data.OrThrowIfNull(), autoConvert);
 
-        if (format == string.Empty)
+    /// <summary>
+    ///  Initializes a new instance of the <see cref="DataObject"/> class, with the raw <see cref="Com.IDataObject"/>
+    ///  and the managed data object the raw pointer is associated with.
+    /// </summary>
+    /// <remarks>
+    ///  <para>
+    ///   This method will add a reference to the <paramref name="data"/> pointer.
+    ///  </para>
+    /// </remarks>
+    /// <inheritdoc cref="DataObject(object)"/>
+    internal DataObject(Com.IDataObject* data) => _innerData = Composition.Create(data);
+
+    /// <summary>
+    ///  Special factory for the <see cref="Clipboard"/> to use.
+    /// </summary>
+    /// <remarks>
+    ///  <para>
+    ///   When constructing from the clipboard we only want to unwrap the nested data if it is an
+    ///   <see cref="IDataObject"/> on retrieving the data back from the clipboard. WinForms deals
+    ///   with this via a derived DataObject class, as it isn't sealed in WinForms.
+    ///  </para>
+    /// </remarks>
+    internal static DataObject CreateFromClipboard(object data) =>
+        new DataObject(data, doNotUnwrap: data is not IDataObject);
+
+    bool IDataObjectInternal<DataObject, IDataObject>.TryUnwrapUserDataObject([NotNullWhen(true)] out IDataObject? dataObject) =>
+        TryUnwrapUserDataObject(out dataObject);
+
+    internal bool TryUnwrapUserDataObject([NotNullWhen(true)] out IDataObject? dataObject)
+    {
+        if (_doNotUnwrap)
         {
-            throw new ArgumentException(SR.DataObject_EmptyFormatNotAllowed);
+            // We dont want to unwrap internally constructed DataObjects unless they were constructed from
+            // a user provided IDataObject.
+            dataObject = null;
+            return false;
         }
 
-        ArgumentNullException.ThrowIfNull(data);
+        dataObject = _innerData.ManagedDataObject switch
+        {
+            DataObject data => data,
+            DataObjectAdapter adapter => adapter.DataObject,
+            DataStore<WpfOleServices> => this,
+            _ => null
+        };
 
-        _innerData = new DataStore();
-        SetData(format, data, autoConvert);
-    }
-
-    /// <summary>
-    ///  Initializes a new instance of the class, with the specified
-    /// </summary>
-    internal DataObject(IDataObject data)
-    {
-        ArgumentNullException.ThrowIfNull(data);
-        _innerData = data;
-    }
-
-    /// <summary>
-    /// Initializes a new instance of the class, with the specified
-    /// </summary>
-    internal DataObject(IComDataObject data)
-    {
-        ArgumentNullException.ThrowIfNull(data);
-        _innerData = new OleConverter(data);
+        return dataObject is not null;
     }
 
     /// <summary>
     ///  Retrieves the data associated with the specified data format, using an automated conversion parameter to
     ///  determine whether to convert the data to the format.
     /// </summary>
-    public object? GetData(string format, bool autoConvert)
-    {
-        ArgumentException.ThrowIfNullOrEmpty(format);
-        return _innerData.GetData(format, autoConvert);
-    }
+    public object? GetData(string format, bool autoConvert) => _innerData.GetData(format, autoConvert);
 
     /// <summary>
     ///  Retrieves the data associated with the specified data format.
     /// </summary>
-    public object? GetData(string format)
-    {
-        ArgumentException.ThrowIfNullOrEmpty(format);
-        return GetData(format, autoConvert: true);
-    }
+    public object? GetData(string format) => GetData(format, autoConvert: true);
 
     /// <summary>
     ///  Retrieves the data associated with the specified class type format.
     /// </summary>
-    public object? GetData(Type format)
+    public object? GetData(Type format) => GetData(format.OrThrowIfNull().FullName.OrThrowIfNull());
+
+    /// <inheritdoc cref="Clipboard.TryGetData{T}(string, Func{TypeName, Type}, out T)"/>
+    [CLSCompliant(false)]
+    public bool TryGetData<T>(
+        string format,
+        Func<TypeName, Type?> resolver,
+        bool autoConvert,
+        [NotNullWhen(true), MaybeNullWhen(false)] out T data)
     {
-        ArgumentNullException.ThrowIfNull(format);
-        return GetData(format.FullName!);
+        data = default;
+        resolver.OrThrowIfNull();
+
+        return TryGetDataInternal(format, resolver, autoConvert, out data);
+    }
+
+    public bool TryGetData<T>(
+        string format,
+        bool autoConvert,
+        [NotNullWhen(true), MaybeNullWhen(false)] out T data) =>
+            TryGetDataInternal(format, resolver: null, autoConvert, out data);
+
+    public bool TryGetData<T>(
+        string format,
+        [NotNullWhen(true), MaybeNullWhen(false)] out T data) =>
+            TryGetDataInternal(format, resolver: null, autoConvert: true, out data);
+
+    public bool TryGetData<T>(
+        [NotNullWhen(true), MaybeNullWhen(false)] out T data) =>
+            TryGetDataInternal(typeof(T).FullName!, resolver: null, autoConvert: true, out data);
+
+    private bool TryGetDataInternal<T>(
+        string format,
+        Func<TypeName, Type?>? resolver,
+        bool autoConvert,
+        [NotNullWhen(true), MaybeNullWhen(false)] out T data)
+    {
+        data = default;
+
+        if (!ClipboardCore.IsValidTypeForFormat(typeof(T), format))
+        {
+            // Resolver implementation is specific to the overridden TryGetDataCore method,
+            // can't validate if a non-null resolver is required for unbounded types.
+            return false;
+        }
+
+        // Invoke the appropriate overload so we don't fail a null check on a nested object if the resolver is null.
+        return resolver is null
+            ? _innerData.TryGetData(format, autoConvert, out data)
+            : _innerData.TryGetData(format, resolver, autoConvert, out data);
     }
 
     /// <summary>
     ///  Determines whether data stored in this instance is associated with, or can be converted to, the specified format.
     /// </summary>
-    public bool GetDataPresent(Type format)
-    {
-        ArgumentNullException.ThrowIfNull(format);
-        return GetDataPresent(format.FullName!);
-    }
+    public bool GetDataPresent(Type format) => GetDataPresent(format.OrThrowIfNull().FullName.OrThrowIfNull());
 
     /// <summary>
     ///  Determines whether data stored in this instance is associated with the specified format, using an automatic
     ///  conversion parameter to determine whether to convert the data to the format.
     /// </summary>
-    public bool GetDataPresent(string format, bool autoConvert)
-    {
-        ArgumentException.ThrowIfNullOrEmpty(format);
-        return _innerData.GetDataPresent(format, autoConvert);
-    }
+    public bool GetDataPresent(string format, bool autoConvert) => _innerData.GetDataPresent(format, autoConvert);
 
     /// <summary>
     ///  Determines whether data stored in this instance is associated with, or can be converted to, the specified format.
     /// </summary>
-    public bool GetDataPresent(string format)
-    {
-        ArgumentException.ThrowIfNullOrEmpty(format);
-        return GetDataPresent(format, autoConvert: true);
-    }
+    public bool GetDataPresent(string format) => GetDataPresent(format, autoConvert: true);
 
     /// <summary>
     ///  Gets a list of all formats that data stored in this instance is associated with or can be converted to, using
@@ -232,42 +220,27 @@ public sealed partial class DataObject : IDataObject, IComDataObject
     /// <summary>
     ///  Stores the specified data in this instance, using the class of the data for the format.
     /// </summary>
-    public void SetData(object? data)
-    {
-        ArgumentNullException.ThrowIfNull(data);
-        _innerData.SetData(data);
-    }
+    public void SetData(object? data) => _innerData.SetData(data);
 
     /// <summary>
     ///  Stores the specified data and its associated format in this instance.
     /// </summary>
-    public void SetData(string format, object? data)
-    {
-        ArgumentException.ThrowIfNullOrEmpty(format);
-        ArgumentNullException.ThrowIfNull(data);
-        _innerData.SetData(format, data);
-    }
+    public void SetData(string format, object? data) => _innerData.SetData(format, data);
 
     /// <summary>
     ///  Stores the specified data and its associated class type in this instance.
     /// </summary>
-    public void SetData(Type format, object? data)
-    {
-        ArgumentNullException.ThrowIfNull(format);
-        ArgumentNullException.ThrowIfNull(data);
-        _innerData.SetData(format, data);
-    }
+    public void SetData(Type format, object? data) => _innerData.SetData(format, data);
 
     /// <summary>
     ///  Stores the specified data and its associated format in this instance, using the automatic conversion parameter
     ///  to specify whether the data can be converted to another format.
     /// </summary>
-    public void SetData(string format, object? data, bool autoConvert)
-    {
-        ArgumentException.ThrowIfNullOrEmpty(format);
-        ArgumentNullException.ThrowIfNull(data);
-        _innerData.SetData(format, data, autoConvert);
-    }
+    public void SetData(string format, object? data, bool autoConvert) =>
+        _innerData.SetData(format, autoConvert, data);
+
+    // WinForms and WPF have these defined in a different order.
+    void IDataObjectInternal.SetData(string format, bool autoConvert, object? data) => SetData(format, data, autoConvert);
 
 
     /// <summary>
@@ -313,14 +286,13 @@ public sealed partial class DataObject : IDataObject, IComDataObject
     /// </summary>
     public StringCollection GetFileDropList()
     {
-        StringCollection fileDropListCollection = [];
-
-        if (GetData(DataFormats.FileDrop, autoConvert: true) is string[] dropList)
+        StringCollection dropList = [];
+        if (GetData(DataFormatNames.FileDrop, autoConvert: true) is string[] strings)
         {
-            fileDropListCollection.AddRange(dropList);
+            dropList.AddRange(strings);
         }
 
-        return fileDropListCollection;
+        return dropList;
     }
 
     /// <summary>
@@ -370,31 +342,9 @@ public sealed partial class DataObject : IDataObject, IComDataObject
     /// </summary>
     public void SetFileDropList(StringCollection fileDropList)
     {
-        ArgumentNullException.ThrowIfNull(fileDropList);
-
-        if (fileDropList.Count == 0)
-        {
-            throw new ArgumentException(SR.Format(SR.DataObject_FileDropListIsEmpty, fileDropList));
-        }
-
-        foreach (string? fileDrop in fileDropList)
-        {
-            try
-            {
-                string filePath = Path.GetFullPath(fileDrop!);
-            }
-            catch (ArgumentException e)
-            {
-                throw new ArgumentException(SR.Format(SR.DataObject_FileDropListHasInvalidFileDropPath, e));
-            }
-        }
-
-        string[] fileDropListStrings;
-
-        fileDropListStrings = new string[fileDropList.Count];
-        fileDropList.CopyTo(fileDropListStrings, 0);
-
-        SetData(DataFormats.FileDrop, fileDropListStrings, autoConvert: true);
+        string[] strings = new string[fileDropList.OrThrowIfNull().Count];
+        fileDropList.CopyTo(strings, 0);
+        SetData(DataFormatNames.FileDrop, strings, autoConvert: true);
     }
 
     /// <summary>
@@ -428,192 +378,6 @@ public sealed partial class DataObject : IDataObject, IComDataObject
         }
 
         SetData(DataFormats.ConvertToDataFormats(format), textData, autoConvert: false);
-    }
-
-    int IComDataObject.DAdvise(ref FORMATETC pFormatetc, ADVF advf, IAdviseSink pAdvSink, out int pdwConnection)
-    {
-        if (_innerData is OleConverter converter)
-        {
-            return converter.OleDataObject.DAdvise(ref pFormatetc, advf, pAdvSink, out pdwConnection);
-        }
-
-        pdwConnection = 0;
-        return (NativeMethods.E_NOTIMPL);
-    }
-
-    void IComDataObject.DUnadvise(int dwConnection)
-    {
-        if (_innerData is OleConverter converter)
-        {
-            converter.OleDataObject.DUnadvise(dwConnection);
-            return;
-        }
-
-        // Throw the exception NativeMethods.E_NOTIMPL.
-        Marshal.ThrowExceptionForHR(NativeMethods.E_NOTIMPL);
-    }
-
-    int IComDataObject.EnumDAdvise(out IEnumSTATDATA? enumAdvise)
-    {
-        if (_innerData is OleConverter converter)
-        {
-            return converter.OleDataObject.EnumDAdvise(out enumAdvise);
-        }
-
-        enumAdvise = null;
-        return OLE_E_ADVISENOTSUPPORTED;
-    }
-
-    IEnumFORMATETC IComDataObject.EnumFormatEtc(DATADIR dwDirection)
-    {
-        if (_innerData is OleConverter converter)
-        {
-            return converter.OleDataObject.EnumFormatEtc(dwDirection);
-        }
-
-        return dwDirection == DATADIR.DATADIR_GET
-            ? (IEnumFORMATETC)new FormatEnumerator(this)
-            : throw new ExternalException(SR.Format(SR.DataObject_NotImplementedEnumFormatEtc, dwDirection), NativeMethods.E_NOTIMPL);
-    }
-
-    int IComDataObject.GetCanonicalFormatEtc(ref FORMATETC pformatetcIn, out FORMATETC pformatetcOut)
-    {
-        pformatetcOut = pformatetcIn;
-        pformatetcOut.ptd = 0;
-
-        if (pformatetcIn.lindex != -1)
-        {
-            return DV_E_LINDEX;
-        }
-
-        if (_innerData is OleConverter converter)
-        {
-            return converter.OleDataObject.GetCanonicalFormatEtc(ref pformatetcIn, out pformatetcOut);
-        }
-
-        return DATA_S_SAMEFORMATETC;
-    }
-
-    void IComDataObject.GetData(ref FORMATETC formatetc, out STGMEDIUM medium)
-    {
-        if (_innerData is OleConverter converter)
-        {
-            converter.OleDataObject.GetData(ref formatetc, out medium);
-            return;
-        }
-
-        int hr;
-
-        hr = DV_E_TYMED;
-
-        medium = new STGMEDIUM();
-
-        if (GetTymedUseable(formatetc.tymed))
-        {
-            if ((formatetc.tymed & TYMED.TYMED_HGLOBAL) != 0)
-            {
-                medium.tymed = TYMED.TYMED_HGLOBAL;
-
-                medium.unionmember = Win32GlobalAlloc(
-                    NativeMethods.GMEM_MOVEABLE | NativeMethods.GMEM_DDESHARE | NativeMethods.GMEM_ZEROINIT,
-                    1);
-
-                hr = OleGetDataUnrestricted(ref formatetc, ref medium, doNotReallocate: false);
-
-                if (NativeMethods.Failed(hr))
-                {
-                    Win32GlobalFree(new HandleRef(this, medium.unionmember));
-                }
-            }
-            else if ((formatetc.tymed & TYMED.TYMED_ISTREAM) != 0)
-            {
-                medium.tymed = TYMED.TYMED_ISTREAM;
-
-                IStream? istream = null;
-                hr = Win32CreateStreamOnHGlobal(0, fDeleteOnRelease: true, ref istream);
-                if (NativeMethods.Succeeded(hr))
-                {
-                    medium.unionmember = Marshal.GetComInterfaceForObject(istream, typeof(IStream));
-                    Marshal.ReleaseComObject(istream);
-
-                    hr = OleGetDataUnrestricted(ref formatetc, ref medium, doNotReallocate: false);
-
-                    if (NativeMethods.Failed(hr))
-                    {
-                        Marshal.Release(medium.unionmember);
-                    }
-                }
-            }
-            else
-            {
-                medium.tymed = formatetc.tymed;
-                hr = OleGetDataUnrestricted(ref formatetc, ref medium, doNotReallocate: false);
-            }
-        }
-
-        // Make sure we zero out that pointer if we don't support the format.
-        if (NativeMethods.Failed(hr))
-        {
-            medium.unionmember = 0;
-            Marshal.ThrowExceptionForHR(hr);
-        }
-    }
-
-    void IComDataObject.GetDataHere(ref FORMATETC formatetc, ref STGMEDIUM medium)
-    {
-        // This method is spec'd to accepted only limited number of tymed
-        // values, and it does not support multiple OR'd values.
-        if (medium.tymed is not TYMED.TYMED_ISTORAGE
-            and not TYMED.TYMED_ISTREAM
-            and not TYMED.TYMED_HGLOBAL
-            and not TYMED.TYMED_FILE)
-        {
-            Marshal.ThrowExceptionForHR(DV_E_TYMED);
-        }
-
-        int hr = OleGetDataUnrestricted(ref formatetc, ref medium, doNotReallocate: true);
-        if (NativeMethods.Failed(hr))
-        {
-            Marshal.ThrowExceptionForHR(hr);
-        }
-    }
-
-    int IComDataObject.QueryGetData(ref FORMATETC formatetc)
-    {
-        if (_innerData is OleConverter converter)
-        {
-            return converter.OleDataObject.QueryGetData(ref formatetc);
-        }
-
-        if (formatetc.dwAspect != DVASPECT.DVASPECT_CONTENT)
-        {
-            return DV_E_DVASPECT;
-        }
-
-        if (!GetTymedUseable(formatetc.tymed))
-        {
-            return (DV_E_TYMED);
-        }
-
-        if (formatetc.cfFormat == 0)
-        {
-            return NativeMethods.S_FALSE;
-        }
-
-        return GetDataPresent(DataFormats.GetDataFormat(formatetc.cfFormat).Name)
-            ? NativeMethods.S_OK
-            : DV_E_FORMATETC;
-    }
-
-    void IComDataObject.SetData(ref FORMATETC pFormatetcIn, ref STGMEDIUM pmedium, bool fRelease)
-    {
-        if (_innerData is OleConverter converter)
-        {
-            converter.OleDataObject.SetData(ref pFormatetcIn, ref pmedium, fRelease);
-            return;
-        }
-
-        Marshal.ThrowExceptionForHR(NativeMethods.E_NOTIMPL);
     }
 
     /// <summary>
@@ -782,1019 +546,96 @@ public sealed partial class DataObject : IDataObject, IComDataObject
             typeof(DataObjectSettingDataEventHandler),
             typeof(DataObject));
 
-    /// <summary>
-    /// Call Win32 UnsafeNativeMethods.GlobalAlloc() with Win32 error checking.
-    /// </summary>
-    internal static nint Win32GlobalAlloc(int flags, nint bytes)
-    {
-        nint win32Pointer = UnsafeNativeMethods.GlobalAlloc(flags, bytes);
-        int win32Error = Marshal.GetLastWin32Error();
-        if (win32Pointer == 0)
-        {
-            throw new Win32Exception(win32Error);
-        }
+    #region ComTypes.IDataObject
+    int ComTypes.IDataObject.DAdvise(ref FORMATETC pFormatetc, ADVF advf, IAdviseSink pAdvSink, out int pdwConnection) =>
+        _innerData.DAdvise(ref pFormatetc, advf, pAdvSink, out pdwConnection);
 
-        return win32Pointer;
-    }
+    void ComTypes.IDataObject.DUnadvise(int dwConnection) => _innerData.DUnadvise(dwConnection);
 
-    /// <summary>
-    ///  Call Win32 UnsafeNativeMethods.CreateStreamOnHGlobal() with Win32 error checking.
-    /// </summary>
-    private static int Win32CreateStreamOnHGlobal(nint hGlobal, bool fDeleteOnRelease, [NotNull] ref IStream? istream)
-    {
-        int hr = UnsafeNativeMethods.CreateStreamOnHGlobal(hGlobal, fDeleteOnRelease, ref istream);
-        if (NativeMethods.Failed(hr))
-        {
-            Marshal.ThrowExceptionForHR(hr);
-        }
+    int ComTypes.IDataObject.EnumDAdvise(out IEnumSTATDATA? enumAdvise) =>
+        _innerData.EnumDAdvise(out enumAdvise);
 
-        return hr;
-    }
+    IEnumFORMATETC ComTypes.IDataObject.EnumFormatEtc(DATADIR dwDirection) =>
+        _innerData.EnumFormatEtc(dwDirection);
 
-    /// <summary>
-    ///  Call Win32 UnsafeNativeMethods.GlobalFree() with Win32 error checking.
-    /// </summary>
-    internal static void Win32GlobalFree(HandleRef handle)
-    {
-        nint win32Pointer = UnsafeNativeMethods.GlobalFree(handle);
-        int win32Error = Marshal.GetLastWin32Error();
-        if (win32Pointer != 0)
-        {
-            throw new Win32Exception(win32Error);
-        }
-    }
+    int ComTypes.IDataObject.GetCanonicalFormatEtc(ref FORMATETC pformatetcIn, out FORMATETC pformatetcOut) =>
+        _innerData.GetCanonicalFormatEtc(ref pformatetcIn, out pformatetcOut);
 
-    /// <summary>
-    ///  Call Win32 UnsafeNativeMethods.GlobalReAlloc() with Win32 error checking.
-    /// </summary>
-    internal static nint Win32GlobalReAlloc(HandleRef handle, nint bytes, int flags)
-    {
-        nint win32Pointer = UnsafeNativeMethods.GlobalReAlloc(handle, bytes, flags);
-        int win32Error = Marshal.GetLastWin32Error();
-        if (win32Pointer == 0)
-        {
-            throw new Win32Exception(win32Error);
-        }
+    void ComTypes.IDataObject.GetData(ref FORMATETC formatetc, out STGMEDIUM medium) =>
+        _innerData.GetData(ref formatetc, out medium);
 
-        return win32Pointer;
-    }
+    void ComTypes.IDataObject.GetDataHere(ref FORMATETC formatetc, ref STGMEDIUM medium) =>
+        _innerData.GetDataHere(ref formatetc, ref medium);
 
-    /// <summary>
-    ///  Call Win32 UnsafeNativeMethods.GlobalLock() with Win32 error checking.
-    /// </summary>
-    internal static nint Win32GlobalLock(HandleRef handle)
-    {
-        nint win32Pointer = UnsafeNativeMethods.GlobalLock(handle);
-        int win32Error = Marshal.GetLastWin32Error();
-        if (win32Pointer == 0)
-        {
-            throw new Win32Exception(win32Error);
-        }
+    int ComTypes.IDataObject.QueryGetData(ref FORMATETC formatetc) =>
+        _innerData.QueryGetData(ref formatetc);
 
-        return win32Pointer;
-    }
+    void ComTypes.IDataObject.SetData(ref FORMATETC pFormatetcIn, ref STGMEDIUM pmedium, bool fRelease) =>
+        _innerData.SetData(ref pFormatetcIn, ref pmedium, fRelease);
+
+    #endregion
+
+    #region Com.IDataObject.Interface
+
+    HRESULT Com.IDataObject.Interface.DAdvise(Com.FORMATETC* pformatetc, uint advf, Com.IAdviseSink* pAdvSink, uint* pdwConnection) =>
+        _innerData.DAdvise(pformatetc, advf, pAdvSink, pdwConnection);
+
+    HRESULT Com.IDataObject.Interface.DUnadvise(uint dwConnection) =>
+        _innerData.DUnadvise(dwConnection);
+
+    HRESULT Com.IDataObject.Interface.EnumDAdvise(Com.IEnumSTATDATA** ppenumAdvise) =>
+        _innerData.EnumDAdvise(ppenumAdvise);
+
+    HRESULT Com.IDataObject.Interface.EnumFormatEtc(uint dwDirection, Com.IEnumFORMATETC** ppenumFormatEtc) =>
+        _innerData.EnumFormatEtc(dwDirection, ppenumFormatEtc);
+
+    HRESULT Com.IDataObject.Interface.GetData(Com.FORMATETC* pformatetcIn, Com.STGMEDIUM* pmedium) =>
+        _innerData.GetData(pformatetcIn, pmedium);
+
+    HRESULT Com.IDataObject.Interface.GetDataHere(Com.FORMATETC* pformatetc, Com.STGMEDIUM* pmedium) =>
+        _innerData.GetDataHere(pformatetc, pmedium);
+
+    HRESULT Com.IDataObject.Interface.QueryGetData(Com.FORMATETC* pformatetc) =>
+        _innerData.QueryGetData(pformatetc);
+
+    HRESULT Com.IDataObject.Interface.GetCanonicalFormatEtc(Com.FORMATETC* pformatectIn, Com.FORMATETC* pformatetcOut) =>
+        _innerData.GetCanonicalFormatEtc(pformatectIn, pformatetcOut);
+
+    HRESULT Com.IDataObject.Interface.SetData(Com.FORMATETC* pformatetc, Com.STGMEDIUM* pmedium, BOOL fRelease) =>
+        _innerData.SetData(pformatetc, pmedium, fRelease);
+    #endregion
+
+    /// <inheritdoc cref="SetDataAsJson{T}(string, T)"/>
+    public void SetDataAsJson<T>(T data) =>
+        _innerData.SetDataAsJson<T, DataObject>(data);
 
     /// <summary>
-    ///  Call Win32 UnsafeNativeMethods.GlobalUnlock() with Win32 error checking.
+    ///  Stores the data in the specified format using the <see cref="JsonSerializer"/>.
     /// </summary>
-    internal static void Win32GlobalUnlock(HandleRef handle)
-    {
-        bool win32Return = UnsafeNativeMethods.GlobalUnlock(handle);
-        int win32Error = Marshal.GetLastWin32Error();
-        if (!win32Return && win32Error != 0)
-        {
-            throw new Win32Exception(win32Error);
-        }
-    }
-
-    /// <summary>
-    ///  Call Win32 UnsafeNativeMethods.GlobalSize() with Win32 error checking.
-    /// </summary>
-    internal static nint Win32GlobalSize(HandleRef handle)
-    {
-        nint win32Pointer = UnsafeNativeMethods.GlobalSize(handle);
-
-        int win32Error = Marshal.GetLastWin32Error();
-        if (win32Pointer == 0)
-        {
-            throw new Win32Exception(win32Error);
-        }
-
-        return win32Pointer;
-    }
-
-    /// <summary>
-    ///  Call Win32 SafeNativeMethods.SelectObject() with Win32 error checking.
-    /// </summary>
-    internal static nint Win32SelectObject(HandleRef handleDC, nint handleObject)
-    {
-        nint handleOldObject = UnsafeNativeMethods.SelectObject(handleDC, handleObject);
-        if (handleOldObject == 0)
-        {
-            throw new Win32Exception();
-        }
-
-        return handleOldObject;
-    }
-
-    /// <summary>
-    /// Call Win32 UnsafeNativeMethods.BitBlt() with Win32 error checking.
-    /// </summary>
-    internal static void Win32BitBlt(HandleRef handledestination, int width, int height, HandleRef handleSource, int operationCode)
-    {
-        bool win32Return = UnsafeNativeMethods.BitBlt(handledestination, 0, 0, width, height, handleSource, 0, 0, operationCode);
-        if (!win32Return)
-        {
-            throw new Win32Exception();
-        }
-    }
-
-    /// <summary>
-    ///  Call Win32 UnsafeNativeMethods.WideCharToMultiByte() with Win32 error checking.
-    /// </summary>
-    internal static int Win32WideCharToMultiByte(string wideString, int wideChars, byte[]? bytes, int byteCount)
-    {
-        int win32Return = UnsafeNativeMethods.WideCharToMultiByte(0 /*CP_ACP*/, 0 /*flags*/, wideString, wideChars, bytes, byteCount, 0, 0);
-        int win32Error = Marshal.GetLastWin32Error();
-
-        if (win32Return == 0)
-        {
-            throw new Win32Exception(win32Error);
-        }
-
-        return win32Return;
-    }
-
-    /// <summary>
-    ///  Returns all the "synonyms" for the specified format.
-    /// </summary>
-    internal static string[] GetMappedFormats(string format)
-    {
-        if (format == DataFormats.Text
-            || format == DataFormats.UnicodeText
-            || format == DataFormats.StringFormat)
-        {
-            string[] arrayFormats =
-            [
-                DataFormats.Text,
-                DataFormats.UnicodeText,
-                DataFormats.StringFormat,
-            ];
-
-            return arrayFormats;
-        }
-
-        if (format == DataFormats.FileDrop
-            || format == DataFormatNames.FileNameAnsi
-            || format == DataFormatNames.FileNameUnicode)
-        {
-            return
-            [
-                DataFormats.FileDrop,
-                DataFormatNames.FileNameUnicode,
-                DataFormatNames.FileNameAnsi,
-            ];
-        }
-
-        // Get the System.Drawing.Bitmap string instead of getting it from typeof.
-        // So we won't load System.Drawing.dll module here.
-        if (format == DataFormats.Bitmap
-            || format == SystemBitmapSourceFormat
-            || format == SystemDrawingBitmapFormat)
-        {
-            return
-            [
-                DataFormats.Bitmap,
-                SystemDrawingBitmapFormat,
-                SystemBitmapSourceFormat
-            ];
-        }
-
-        return format == DataFormats.EnhancedMetafile || format == SystemDrawingImagingMetafileFormat
-            ? [DataFormats.EnhancedMetafile, SystemDrawingImagingMetafileFormat]
-            : [format];
-    }
-
-    /// <summary>
-    ///  Behaves like IComDataObject.GetData and IComDataObject.GetDataHere,
-    ///  except we make no restrictions TYMED values.
-    /// </summary>
-    private int OleGetDataUnrestricted(ref FORMATETC formatetc, ref STGMEDIUM medium, bool doNotReallocate)
-    {
-        if (_innerData is OleConverter converter)
-        {
-            converter.OleDataObject.GetDataHere(ref formatetc, ref medium);
-
-            return NativeMethods.S_OK;
-        }
-
-        return GetDataIntoOleStructs(ref formatetc, ref medium, doNotReallocate);
-    }
-
-    /// <summary>
-    ///  Retrieves a list of distinct strings from the array.
-    /// </summary>
-    private static string[] GetDistinctStrings(List<string> formats)
-    {
-        List<string> distinct = new(formats.Count);
-
-        for (int i = 0; i < formats.Count; i++)
-        {
-            string formatString = formats[i];
-
-            if (!distinct.Contains(formatString))
-            {
-                distinct.Add(formatString);
-            }
-        }
-
-        return [.. distinct];
-    }
-
-    /// <summary>
-    ///  Returns <see langword="true"/> if the tymed is useable.
-    /// </summary>
-    private static bool GetTymedUseable(TYMED tymed)
-    {
-        for (int i = 0; i < s_allowedTymeds.Length; i++)
-        {
-            if ((tymed & s_allowedTymeds[i]) != 0)
-            {
-                return true;
-            }
-        }
-
-        return false;
-    }
-
-    private nint GetCompatibleBitmap(object data)
-    {
-        nint hBitmap = SystemDrawingHelper.GetHBitmap(data, out int width, out int height);
-
-        if (hBitmap == 0)
-        {
-            return 0;
-        }
-
-        nint hBitmapNew;
-
-        try
-        {
-            // Get the screen DC.
-            nint hDC = UnsafeNativeMethods.GetDC(new HandleRef(this, 0));
-
-            // Create a compatible DC to render the source bitmap.
-            nint sourceDC = UnsafeNativeMethods.CreateCompatibleDC(new HandleRef(this, hDC));
-
-            // Select the original object from the current DC.
-            nint sourceObject = Win32SelectObject(new HandleRef(this, sourceDC), hBitmap);
-
-            // Create a compatible DC and a new compatible bitmap.
-            nint destinationDC = UnsafeNativeMethods.CreateCompatibleDC(new HandleRef(this, hDC));
-
-            // creates a bitmap with the device that is associated with the specified DC.
-            hBitmapNew = UnsafeNativeMethods.CreateCompatibleBitmap(new HandleRef(this, hDC), width, height);
-
-            // Select the new bitmap into a compatible DC and render the blt the original bitmap.
-            nint destinationObject = Win32SelectObject(new HandleRef(this, destinationDC), hBitmapNew);
-
-            try
-            {
-                // Bit-block transfer of the data onto the rectangle of pixels
-                // from the specified source device context into a destination device context.
-                Win32BitBlt(new HandleRef(this, destinationDC), width, height, new HandleRef(null, sourceDC), /* SRCCOPY */0x00CC0020);
-            }
-            finally
-            {
-                // Select the old device context.
-                Win32SelectObject(new HandleRef(this, sourceDC), sourceObject);
-                Win32SelectObject(new HandleRef(this, destinationDC), destinationObject);
-
-                // Clear the source and destination compatible DCs.
-                UnsafeNativeMethods.DeleteDC(new HandleRef(this, sourceDC));
-                UnsafeNativeMethods.DeleteDC(new HandleRef(this, destinationDC));
-
-                // release the screen DC
-                UnsafeNativeMethods.ReleaseDC(new HandleRef(this, 0), new HandleRef(this, hDC));
-            }
-        }
-        finally
-        {
-            // Delete the bitmap object.
-            UnsafeNativeMethods.DeleteObject(new HandleRef(this, hBitmap));
-        }
-
-        return hBitmapNew;
-    }
-
-    /// <summary>
-    ///  Get the enhanced metafile handle from the metafile data object.
-    /// </summary>
-    private static nint GetEnhancedMetafileHandle(string format, object data)
-    {
-        if (format != DataFormats.EnhancedMetafile)
-        {
-            return 0;
-        }
-
-        // Get the metafile handle from metafile data object.
-        if (SystemDrawingHelper.IsMetafile(data))
-        {
-            return SystemDrawingHelper.GetHandleFromMetafile(data);
-        }
-
-        if (data is MemoryStream memoryStream && memoryStream.GetBuffer() is { } buffer && buffer.Length != 0)
-        {
-            nint hEnhancedMetafile = NativeMethods.SetEnhMetaFileBits((uint)buffer.Length, buffer);
-            int win32Error = Marshal.GetLastWin32Error();
-
-            if (hEnhancedMetafile == 0)
-            {
-                // Throw the Win32 exception with GetLastWin32Error.
-                throw new Win32Exception(win32Error);
-            }
-        }
-
-        return 0;
-    }
-
-    /// <summary>
-    ///  Populates Ole datastructes from a WinForms dataObject. This is the core
-    ///  of WinForms to OLE conversion.
-    /// </summary>
-    private int GetDataIntoOleStructs(ref FORMATETC formatetc, ref STGMEDIUM medium, bool doNotReallocate)
-    {
-        int hr = DV_E_TYMED;
-
-        if (!GetTymedUseable(formatetc.tymed) || !GetTymedUseable(medium.tymed))
-        {
-            return hr;
-        }
-
-        string format = DataFormats.GetDataFormat(formatetc.cfFormat).Name;
-
-        // Set the default result with DV_E_FORMATETC.
-        hr = DV_E_FORMATETC;
-
-        if (!GetDataPresent(format))
-        {
-            return hr;
-        }
-
-        if (GetData(format) is not object data)
-        {
-            Debug.Fail("DataObject.GetDataPresent returned true for a format, but then returned null for the data.");
-            return hr;
-        }
-
-        // Set the default result with DV_E_TYMED.
-        hr = DV_E_TYMED;
-
-        if ((formatetc.tymed & TYMED.TYMED_HGLOBAL) != 0)
-        {
-            hr = GetDataIntoOleStructsByTypeMedimHGlobal(format, data, ref medium, doNotReallocate);
-        }
-        else if ((formatetc.tymed & TYMED.TYMED_GDI) != 0)
-        {
-            hr = GetDataIntoOleStructsByTypeMediumGDI(format, data, ref medium);
-        }
-        else if ((formatetc.tymed & TYMED.TYMED_ENHMF) != 0)
-        {
-            hr = GetDataIntoOleStructsByTypeMediumEnhancedMetaFile(format, data, ref medium);
-        }
-        else if ((formatetc.tymed & TYMED.TYMED_ISTREAM) != 0)
-        {
-            hr = GetDataIntoOleStructsByTypeMedimIStream(format, data, ref medium);
-        }
-
-        return hr;
-    }
-
-    /// <summary>
-    ///  Populates Ole data structes from a dataObject that is TYMED_HGLOBAL.
-    /// </summary>
-    private int GetDataIntoOleStructsByTypeMedimHGlobal(string format, object data, ref STGMEDIUM medium, bool doNotReallocate)
-    {
-        int hr;
-
-        if (data is Stream stream)
-        {
-            hr = SaveStreamToHandle(medium.unionmember, stream, doNotReallocate);
-        }
-        else if (format == DataFormats.Html || format == DataFormats.Xaml)
-        {
-            // Save Html and Xaml data string as UTF8 encoding.
-            hr = SaveStringToHandleAsUtf8(medium.unionmember, data.ToString() ?? "", doNotReallocate);
-        }
-        else if (format == DataFormats.Text
-            || format == DataFormats.Rtf
-            || format == DataFormats.OemText
-            || format == DataFormats.CommaSeparatedValue)
-        {
-            hr = SaveStringToHandle(medium.unionmember, data.ToString() ?? "", unicode: false, doNotReallocate);
-        }
-        else if (format == DataFormats.UnicodeText)
-        {
-            hr = SaveStringToHandle(medium.unionmember, data.ToString() ?? "", unicode: true, doNotReallocate);
-        }
-        else if (format == DataFormats.FileDrop)
-        {
-            hr = SaveFileListToHandle(medium.unionmember, (string[])data, doNotReallocate);
-        }
-        else if (format == DataFormatNames.FileNameAnsi)
-        {
-            string[] filelist = (string[])data;
-            hr = SaveStringToHandle(medium.unionmember, filelist[0], unicode: false, doNotReallocate);
-        }
-        else if (format == DataFormatNames.FileNameUnicode)
-        {
-            string[] filelist = (string[])data;
-            hr = SaveStringToHandle(medium.unionmember, filelist[0], unicode: true, doNotReallocate);
-        }
-        else if (format == DataFormats.Dib && SystemDrawingHelper.IsImage(data))
-        {
-            // GDI+ does not properly handle saving to DIB images.  Since the
-            // clipboard will take an HBITMAP and publish a Dib, we don't need
-            // to support this.
-            hr = DV_E_TYMED;
-        }
-        else if (format == typeof(BitmapSource).FullName)
-        {
-            // Save the System.Drawing.Bitmap or BitmapSource data to handle as BitmapSource
-            hr = SaveSystemBitmapSourceToHandle(medium.unionmember, data, doNotReallocate);
-        }
-        else if (format == SystemDrawingBitmapFormat)
-        {
-            // Save the System.Drawing.Bitmap or BitmapSource data to handle as System.Drawing.Bitmap
-            hr = SaveSystemDrawingBitmapToHandle(medium.unionmember, data, doNotReallocate);
-        }
-        else if (format == DataFormats.EnhancedMetafile || SystemDrawingHelper.IsMetafile(data))
-        {
-            // We don't need to support the enhanced metafile for TYMED.TYMED_HGLOBAL,
-            // since we directly support TYMED.TYMED_ENHMF.
-            hr = DV_E_TYMED;
-        }
-#pragma warning disable SYSLIB0050
-        else if (format == DataFormats.Serializable
-            || data is ISerializable
-            || (data is not null && data.GetType().IsSerializable))
-        {
-            hr = SaveObjectToHandle(medium.unionmember, data, doNotReallocate);
-        }
-#pragma warning restore SYSLIB0050
-        else
-        {
-            // Couldn't find the proper data for the current TYMED_HGLOBAL
-            hr = DV_E_TYMED;
-        }
-
-        if (hr == NativeMethods.S_OK)
-        {
-            medium.tymed = TYMED.TYMED_HGLOBAL;
-        }
-
-        return hr;
-    }
-
-    /// <summary>
-    ///  Populates Ole data structes from a dataObject that is TYMED_ISTREAM.
-    /// </summary>
-    private static int GetDataIntoOleStructsByTypeMedimIStream(string format, object data, ref STGMEDIUM medium)
-    {
-        IStream istream = (IStream)(Marshal.GetObjectForIUnknown(medium.unionmember));
-        if (istream is null)
-        {
-            return NativeMethods.E_INVALIDARG;
-        }
-
-        int hr = NativeMethods.E_FAIL;
-
-        try
-        {
-            // If the format is ISF, we should copy the data from the managed stream to the COM IStream object.
-            if (format == Ink.StrokeCollection.InkSerializedFormat)
-            {
-                if (data is Stream inkStream)
-                {
-                    nint size = (nint)inkStream.Length;
-
-                    byte[] buffer = new byte[NativeMethods.IntPtrToInt32(size)];
-                    inkStream.Position = 0;
-                    inkStream.ReadExactly(buffer);
-
-                    istream.Write(buffer, NativeMethods.IntPtrToInt32(size), 0);
-                    hr = NativeMethods.S_OK;
-                }
-            }
-        }
-        finally
-        {
-            Marshal.ReleaseComObject(istream);
-        }
-
-        if (NativeMethods.Succeeded(hr))
-        {
-            medium.tymed = TYMED.TYMED_ISTREAM;
-        }
-
-        return hr;
-    }
-
-    /// <summary>
-    ///  Populates Ole data structes from a dataObject that is TYMED_GDI.
-    /// </summary>
-    private int GetDataIntoOleStructsByTypeMediumGDI(string format, object data, ref STGMEDIUM medium)
-    {
-        int hr = NativeMethods.E_FAIL;
-
-        if (format == DataFormats.Bitmap && (SystemDrawingHelper.IsBitmap(data) || data is BitmapSource))
-        {
-            // Get the bitmap and save it.
-            nint hBitmap = GetCompatibleBitmap(data);
-
-            if (hBitmap != 0)
-            {
-                medium.tymed = TYMED.TYMED_GDI;
-                medium.unionmember = hBitmap;
-
-                hr = NativeMethods.S_OK;
-            }
-        }
-        else
-        {
-            // Couldn't find the proper data for the current TYMED_GDI
-            hr = DV_E_TYMED;
-        }
-
-        return hr;
-    }
-
-    /// <summary>
-    ///  Populates Ole data structes from a dataObject that is TYMED_ENHMF.
-    /// </summary>
-    private static int GetDataIntoOleStructsByTypeMediumEnhancedMetaFile(string format, object data, ref STGMEDIUM medium)
-    {
-        int hr = NativeMethods.E_FAIL;
-
-        if (format == DataFormats.EnhancedMetafile)
-        {
-            // Get the enhanced metafile handle from the metafile data
-            // and save the metafile handle.
-            nint hMetafile = GetEnhancedMetafileHandle(format, data);
-
-            if (hMetafile != 0)
-            {
-                medium.tymed = TYMED.TYMED_ENHMF;
-                medium.unionmember = hMetafile;
-
-                hr = NativeMethods.S_OK;
-            }
-        }
-        else
-        {
-            // Couldn't find the proper data for the current TYMED_ENHMF
-            hr = DV_E_TYMED;
-        }
-
-        return hr;
-    }
-
-    private int SaveObjectToHandle(nint handle, object data, bool doNotReallocate)
-    {
-        using MemoryStream stream = new();
-        using BinaryWriter binaryWriter = new(stream);
-
-        binaryWriter.Write(s_serializedObjectID);
-        bool success = false;
-
-        try
-        {
-            success = BinaryFormatWriter.TryWriteFrameworkObject(stream, data);
-        }
-        catch (Exception ex) when (!ex.IsCriticalException())
-        {
-            // Being extra cautious here, but the Try method above should never throw in normal circumstances.
-            Debug.Fail($"Unexpected exception writing binary formatted data. {ex.Message}");
-        }
-
-        if (!success)
-        {
-#pragma warning disable SYSLIB0011 // BinaryFormatter is obsolete
-            // Using Binary formatter
-            BinaryFormatter formatter = new();
-            formatter.Serialize(stream, data);
-#pragma warning restore SYSLIB0011 // BinaryFormatter is obsolete
-        }
-
-        return SaveStreamToHandle(handle, stream, doNotReallocate);
-    }
-
-    /// <summary>
-    ///  Saves stream out to handle.
-    /// </summary>
-    private int SaveStreamToHandle(nint handle, Stream stream, bool doNotReallocate)
-    {
-        if (handle == 0)
-        {
-            return (NativeMethods.E_INVALIDARG);
-        }
-
-        nint size = (nint)stream.Length;
-        int hr = EnsureMemoryCapacity(ref handle, NativeMethods.IntPtrToInt32(size), doNotReallocate);
-
-        if (NativeMethods.Failed(hr))
-        {
-            return hr;
-        }
-
-        nint ptr = Win32GlobalLock(new HandleRef(this, handle));
-
-        try
-        {
-            byte[] bytes;
-
-            bytes = new byte[NativeMethods.IntPtrToInt32(size)];
-            stream.Position = 0;
-            stream.ReadExactly(bytes);
-            Marshal.Copy(bytes, 0, ptr, NativeMethods.IntPtrToInt32(size));
-        }
-        finally
-        {
-            Win32GlobalUnlock(new HandleRef(this, handle));
-        }
-
-        return NativeMethods.S_OK;
-    }
-
-    /// <summary>
-    ///  Save the System.Drawing.Bitmap or BitmapSource data to handle as BitmapSource.
-    /// </summary>
-    private int SaveSystemBitmapSourceToHandle(nint handle, object data, bool doNotReallocate)
-    {
-        BitmapSource? bitmapSource = data as BitmapSource;
-
-        if (bitmapSource is null && SystemDrawingHelper.IsBitmap(data))
-        {
-            // Create BitmapSource instance from System.Drawing.Bitmap
-            nint hbitmap = SystemDrawingHelper.GetHBitmapFromBitmap(data);
-            bitmapSource = Imaging.CreateBitmapSourceFromHBitmap(
-                hbitmap,
-                0,
-                Int32Rect.Empty,
-                null);
-
-            UnsafeNativeMethods.DeleteObject(new HandleRef(this, hbitmap));
-        }
-
-        Invariant.Assert(bitmapSource is not null);
-
-        // Get BitmapSource stream to save it as the handle
-        new BmpBitmapEncoder().Frames.Add(BitmapFrame.Create(bitmapSource));
-        Stream bitmapStream = new MemoryStream();
-        new BmpBitmapEncoder().Save(bitmapStream);
-
-        return SaveStreamToHandle(handle, bitmapStream, doNotReallocate);
-    }
-
-    /// <summary>
-    ///  Save the System.Drawing.Bitmap or BitmapSource data to handle as System.Drawing.Bitmap.
-    /// </summary>
-    private int SaveSystemDrawingBitmapToHandle(nint handle, object data, bool doNotReallocate)
-    {
-        object? systemDrawingBitmap = SystemDrawingHelper.GetBitmap(data);
-        Invariant.AssertNotNull(systemDrawingBitmap);
-        return SaveObjectToHandle(handle, systemDrawingBitmap, doNotReallocate);
-    }
-
-    /// <summary>
-    ///  Saves a list of files out to the handle in HDROP format.
-    /// </summary>
-    private int SaveFileListToHandle(nint handle, string[] files, bool doNotReallocate)
-    {
-        if (files is null || files.Length < 1)
-        {
-            return NativeMethods.S_OK;
-        }
-
-        if (handle == 0)
-        {
-            return (NativeMethods.E_INVALIDARG);
-        }
-
-        if (Marshal.SystemDefaultCharSize == 1)
-        {
-            Invariant.Assert(false, "Expected the system default char size to be 2 for Unicode systems.");
-            return (NativeMethods.E_INVALIDARG);
-        }
-
-        nint currentPtr = 0;
-        int baseStructSize = FILEDROPBASESIZE;
-        int sizeInBytes = baseStructSize;
-
-        // First determine the size of the array
-        for (int i = 0; i < files.Length; i++)
-        {
-            sizeInBytes += (files[i].Length + 1) * 2;
-        }
-
-        // Add the extra 2bytes since it is unicode.
-        sizeInBytes += 2;
-
-        int hr = EnsureMemoryCapacity(ref handle, sizeInBytes, doNotReallocate);
-        if (NativeMethods.Failed(hr))
-        {
-            return hr;
-        }
-
-        nint basePtr = Win32GlobalLock(new HandleRef(this, handle));
-
-        try
-        {
-            currentPtr = basePtr;
-
-            // Write out the struct...
-            int[] structData = [baseStructSize, 0, 0, 0, 0];
-
-            structData[4] = unchecked((int)0xFFFFFFFF);
-
-            Marshal.Copy(structData, 0, currentPtr, structData.Length);
-
-            currentPtr = (nint)((long)currentPtr + baseStructSize);
-
-            // Write out the strings.
-            for (int i = 0; i < files.Length; i++)
-            {
-                // Write out the each of file as the unicode and increase the pointer.
-                UnsafeNativeMethods.CopyMemoryW(currentPtr, files[i], files[i].Length * 2);
-                currentPtr = (nint)((long)currentPtr + (files[i].Length * 2));
-
-                // Terminate the each of file string.
-                unsafe
-                {
-                    *(char*)currentPtr = '\0';
-                }
-
-                // Increase the current pointer by 2 since it is a unicode.
-                currentPtr = (nint)((long)currentPtr + 2);
-            }
-
-            // Terminate the string and add 2bytes since it is a unicode.
-            unsafe
-            {
-                *(char*)currentPtr = '\0';
-            }
-        }
-        finally
-        {
-            Win32GlobalUnlock(new HandleRef(this, handle));
-        }
-
-        return NativeMethods.S_OK;
-    }
-
-    /// <summary>
-    ///  Save string to handle. If unicode is set to true then the string is saved as unicode, else it is saves as DBCS.
-    /// </summary>
-    private int SaveStringToHandle(nint handle, string str, bool unicode, bool doNotReallocate)
-    {
-        if (handle == 0)
-        {
-            return (NativeMethods.E_INVALIDARG);
-        }
-
-        if (unicode)
-        {
-            int byteSize = (str.Length * 2 + 2);
-
-            int hr = EnsureMemoryCapacity(ref handle, byteSize, doNotReallocate);
-            if (NativeMethods.Failed(hr))
-            {
-                return hr;
-            }
-
-            nint ptr = Win32GlobalLock(new HandleRef(this, handle));
-
-            try
-            {
-                char[] chars = str.ToCharArray(0, str.Length);
-
-                UnsafeNativeMethods.CopyMemoryW(ptr, chars, chars.Length * 2);
-
-                // Terminate the string becasue of GlobalReAlloc GMEM_ZEROINIT will zero
-                // out only the bytes it adds to the memory object. It doesn't initialize
-                // any of the memory that existed before the call.
-                unsafe
-                {
-                    *(char*)(nint)((ulong)ptr + (ulong)chars.Length * 2) = '\0';
-                }
-            }
-            finally
-            {
-                Win32GlobalUnlock(new HandleRef(this, handle));
-            }
-        }
-        else
-        {
-            // Convert the unicode text to the ansi multi byte in case of the source unicode is available.
-            // WideCharToMultiByte will throw exception in case of passing 0 size of unicode.
-
-            int pinvokeSize = str.Length > 0 ? Win32WideCharToMultiByte(str, str.Length, null, 0) : 0;
-
-            byte[] strBytes = new byte[pinvokeSize];
-
-            if (pinvokeSize > 0)
-            {
-                Win32WideCharToMultiByte(str, str.Length, strBytes, strBytes.Length);
-            }
-
-            // Ensure memory allocation and copy multi byte data with the null terminate
-            int hr = EnsureMemoryCapacity(ref handle, pinvokeSize + 1, doNotReallocate);
-            if (NativeMethods.Failed(hr))
-            {
-                return hr;
-            }
-
-            nint ptr = Win32GlobalLock(new HandleRef(this, handle));
-
-            try
-            {
-                UnsafeNativeMethods.CopyMemory(ptr, strBytes, pinvokeSize);
-
-                Marshal.Copy(new byte[] { 0 }, 0, (nint)((long)ptr + pinvokeSize), 1);
-            }
-            finally
-            {
-                Win32GlobalUnlock(new HandleRef(this, handle));
-            }
-        }
-
-        return NativeMethods.S_OK;
-    }
-
-    /// <summary>
-    ///  Save string to handle as UTF8 encoding.
-    ///  Html and Xaml data format will be save as UTF8 encoding.
-    /// </summary>
-    private int SaveStringToHandleAsUtf8(nint handle, string str, bool doNotReallocate)
-    {
-        if (handle == 0)
-        {
-            return (NativeMethods.E_INVALIDARG);
-        }
-
-        // Create UTF8Encoding instance to convert the string to UFT8 from GetBytes.
-        UTF8Encoding utf8Encoding = new UTF8Encoding();
-
-        // Get the byte count to be UTF8 encoding.
-        int utf8ByteCount = utf8Encoding.GetByteCount(str);
-
-        // Create byte array and assign UTF8 encoding.
-        byte[] utf8Bytes = utf8Encoding.GetBytes(str);
-
-        int hr = EnsureMemoryCapacity(ref handle, utf8ByteCount + 1, doNotReallocate);
-        if (NativeMethods.Failed(hr))
-        {
-            return hr;
-        }
-
-        nint pointerUtf8 = Win32GlobalLock(new HandleRef(this, handle));
-
-        try
-        {
-            // Copy UTF8 encoding bytes to the memory.
-            UnsafeNativeMethods.CopyMemory(pointerUtf8, utf8Bytes, utf8ByteCount);
-
-            // Copy the null into the last of memory.
-            Marshal.Copy(new byte[] { 0 }, 0, (nint)((long)pointerUtf8 + utf8ByteCount), 1);
-        }
-        finally
-        {
-            Win32GlobalUnlock(new HandleRef(this, handle));
-        }
-
-        return NativeMethods.S_OK;
-    }
-
-    /// <summary>
-    ///  Return true if data is BitmapSource.
-    /// </summary>
-    private static bool IsDataSystemBitmapSource(object data) => data is BitmapSource;
-
-    /// <summary>
-    /// Determines if the format/data combination is likely to
-    /// be serialized. This is only likely, because this isn't a
-    /// clone of the logic to determine the serialization code
-    /// path. The idea is to determine if the format is likely
-    /// to be serialized and do an early security check. If that
-    /// check fails, then we will omit the format from the list
-    /// of available clipboard formats.
-    ///
-    /// Note: at the time of serialization the correct security
-    /// check will be performed, guaranteeing the security of
-    /// the data, however that will cause the clipboard to report
-    /// that there are no valid data items.
-    /// </summary>
-    /// <param name="format">Clipboard format to check</param>
-    /// <param name="data">Clipboard data to check</param>
-    /// <returns>
-    ///  <see langword="true"/> if the data is likely to be serializaed through CLR serialization
-    /// </returns>
-#pragma warning disable SYSLIB0050
-    private static bool IsFormatAndDataSerializable(string format, object? data) =>
-        format == DataFormats.Serializable
-            || data is ISerializable
-            || (data is not null && data.GetType().IsSerializable);
-#pragma warning restore SYSLIB0050
-
-    /// <summary>
-    ///  Ensures that a memory block is sized to match a specified byte count.
-    /// </summary>
-    /// <remarks>
-    /// Returns a pointer to the original memory block, a re-sized memory block,
-    /// or null if the original block has insufficient capacity and doNotReallocate
-    /// is true.
-    ///
-    /// Returns an HRESULT
-    ///  S_OK: success.
-    ///  STG_E_MEDIUMFULL: the original handle lacks capacity and doNotReallocate == true.  handle is null on exit.
-    ///  E_OUTOFMEMORY: could not re-size the handle.  handle is null on exit.
-    ///
-    /// If doNotReallocate is false, this method will always realloc the original
-    /// handle to fit minimumByteCount tightly.
-    /// </remarks>
-    private int EnsureMemoryCapacity(ref nint handle, int minimumByteCount, bool doNotReallocate)
-    {
-        int hr = NativeMethods.S_OK;
-
-        if (doNotReallocate)
-        {
-            int byteCount = NativeMethods.IntPtrToInt32(Win32GlobalSize(new HandleRef(this, handle)));
-            if (byteCount < minimumByteCount)
-            {
-                handle = 0;
-                hr = STG_E_MEDIUMFULL;
-            }
-        }
-        else
-        {
-            handle = Win32GlobalReAlloc(
-                new HandleRef(this, handle),
-                minimumByteCount,
-                NativeMethods.GMEM_MOVEABLE | NativeMethods.GMEM_DDESHARE | NativeMethods.GMEM_ZEROINIT);
-
-            if (handle == 0)
-            {
-                hr = NativeMethods.E_OUTOFMEMORY;
-            }
-        }
-
-        return hr;
-    }
-
-    /// <summary>
-    ///  Ensure returning Bitmap(BitmapSource or System.Drawing.Bitmap) data that base
-    ///  on the passed Bitmap format parameter.
-    /// </summary>
+    /// <param name="format">The format associated with the data. See <see cref="DataFormats"/> for predefined formats.</param>
+    /// <param name="data">The data to store.</param>
     /// <remarks>
     ///  <para>
-    ///   Bitmap data will be converted if the data mismatch with the format in case of
-    ///   autoConvert is "true", but return null if autoConvert is "false".
+    ///   The default behavior of <see cref="JsonSerializer"/> is used to serialize the data.
+    ///  </para>
+    ///  <para>
+    ///   See
+    ///   <see href="https://learn.microsoft.com/dotnet/standard/serialization/system-text-json/how-to#serialization-behavior"/>
+    ///   and <see href="https://learn.microsoft.com/dotnet/standard/serialization/system-text-json/reflection-vs-source-generation#metadata-collection"/>
+    ///   for more details on default <see cref="JsonSerializer"/> behavior.
+    ///  </para>
+    ///  <para>
+    ///   If custom JSON serialization behavior is needed, manually JSON serialize the data and then use SetData,
+    ///   or create a custom <see cref="Text.Json.Serialization.JsonConverter"/>, attach the
+    ///   <see cref="Text.Json.Serialization.JsonConverterAttribute"/>, and then recall this method.
+    ///   See <see href="https://learn.microsoft.com/dotnet/standard/serialization/system-text-json/converters-how-to"/> for more details
+    ///   on custom converters for JSON serialization.
     ///  </para>
     /// </remarks>
-    private static object? EnsureBitmapDataFromFormat(string format, bool autoConvert, object? data)
-    {
-        object? bitmapData = data;
-
-        if (data is BitmapSource && format == SystemDrawingBitmapFormat)
-        {
-            // Data is BitmapSource, but have the mismatched System.Drawing.Bitmap format
-            if (!autoConvert)
-            {
-                return null;
-            }
-
-            // Convert data from BitmapSource to SystemDrawingBitmap
-            bitmapData = SystemDrawingHelper.GetBitmap(data);
-        }
-        else if (SystemDrawingHelper.IsBitmap(data) && (format == DataFormats.Bitmap || format == SystemBitmapSourceFormat))
-        {
-            // Data is System.Drawing.Bitmap, but have the mismatched BitmapSource format
-            if (!autoConvert)
-            {
-                return null;
-            }
-
-            // Create BitmapSource instance from System.Drawing.Bitmap
-            nint hbitmap = SystemDrawingHelper.GetHBitmapFromBitmap(data);
-            bitmapData = Imaging.CreateBitmapSourceFromHBitmap(
-                hbitmap,
-                0,
-                Int32Rect.Empty,
-                null);
-
-            UnsafeNativeMethods.DeleteObject(new HandleRef(null, hbitmap));
-        }
-
-        return bitmapData;
-    }
+    /// <exception cref="ArgumentNullException"><paramref name="data"/> or <paramref name="format"/> is null.</exception>
+    /// <exception cref="ArgumentException">
+    ///  <paramref name="format"/> is empty, whitespace, or a predefined format -or- <paramref name="data"/> isa a DataObject.
+    /// </exception>
+    public void SetDataAsJson<T>(string format, T data) =>
+        _innerData.SetDataAsJson<T, DataObject>(data, format);
 }

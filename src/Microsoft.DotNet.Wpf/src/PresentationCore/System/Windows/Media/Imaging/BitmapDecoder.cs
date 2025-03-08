@@ -59,12 +59,16 @@ namespace System.Windows.Media.Imaging
 
             ArgumentNullException.ThrowIfNull(bitmapUri);
 
+            BitmapDecoder decoder = null;
             if ((createOptions & BitmapCreateOptions.IgnoreImageCache) != 0)
             {
                 s_decoderCache.Remove(bitmapUri);
             }
+            else
+            {
+                decoder = CheckCache(bitmapUri, out clsId);
+            }
 
-            BitmapDecoder decoder = CheckCache(bitmapUri, out clsId);
             if (decoder != null)
             {
                 _decoderHandle = decoder.InternalDecoder;
@@ -244,11 +248,10 @@ namespace System.Windows.Media.Imaging
                     {
                         s_decoderCache.Remove(finalUri);
                     }
-
-                    cachedDecoder = CheckCache(
-                        finalUri,
-                        out clsId
-                        );
+                    else
+                    {
+                        cachedDecoder = CheckCache(finalUri, out clsId);
+                    }
                 }
             }
 

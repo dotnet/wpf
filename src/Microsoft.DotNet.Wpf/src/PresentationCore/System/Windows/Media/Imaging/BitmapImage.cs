@@ -267,12 +267,15 @@ namespace System.Windows.Media.Imaging
             if (_baseUri != null)
                 uri = new Uri(_baseUri, UriSource);
 
+            BitmapImage bitmapImage = null;
             if ((CreateOptions & BitmapCreateOptions.IgnoreImageCache) != 0)
             {
                 s_imageCache.Remove(uri);
             }
-
-            BitmapImage bitmapImage = CheckCache(uri);
+            else
+            {
+                bitmapImage = CheckCache(uri);
+            }
 
             if (bitmapImage != null &&
                 bitmapImage.CheckAccess() &&

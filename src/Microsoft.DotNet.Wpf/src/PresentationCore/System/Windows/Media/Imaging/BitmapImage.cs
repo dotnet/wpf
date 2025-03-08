@@ -229,20 +229,7 @@ namespace System.Windows.Media.Imaging
         /// Check the cache for an existing BitmapImage
         private static BitmapImage CheckCache(Uri uri)
         {
-            if (uri is not null && s_imageCache.TryGetValue(uri, out WeakReference<BitmapImage> weakRef))
-            {
-                if (weakRef.TryGetTarget(out BitmapImage bitmapImage))
-                {
-                    return bitmapImage;
-                }
-                else
-                {
-                    // Remove from the cache if bitmapImage is already been collected
-                    s_imageCache.Remove(uri);
-                }
-            }
-
-            return null;
+            return uri is not null && s_imageCache.TryGetValue(uri, out BitmapImage bitmapImage) ? bitmapImage : null;
         }
 
         /// Insert BitmapImage in cache

@@ -9,7 +9,7 @@ using System.Threading;
 namespace MS.Internal;
 
 /// <summary>
-/// Provides keyed-caching for different objects stored as weak references.
+/// Provides keyed-caching for different objects stored as <see cref="WeakReference{V}"/>.
 /// </summary>
 /// <remarks>The cache operations are thread-safe.</remarks>
 internal sealed class WeakReferenceCache<K, V>
@@ -25,7 +25,7 @@ internal sealed class WeakReferenceCache<K, V>
     private readonly Lock _cacheLock = new();
 
     /// <summary>
-    /// Adds an object to cache
+    /// Adds an object to the cache.
     /// </summary>
     public void Add(K key, V value)
     {
@@ -62,7 +62,7 @@ internal sealed class WeakReferenceCache<K, V>
     }
 
     /// <summary>
-    /// Removes an object from cache
+    /// Removes an object from the cache.
     /// </summary>
     public void Remove(K key)
     {
@@ -74,13 +74,21 @@ internal sealed class WeakReferenceCache<K, V>
     }
 
     /// <summary>
-    /// Attempts to retrieve an object from cache
+    /// Attempts to retrieve an object from the cache.
     /// </summary>
-    public bool TryGetValue(K key, [NotNullWhen(true)] out WeakReference<V>? value)
+    /// <returns>Returns <see langword="true"/> in case the object exists in the cache and was retrieved alive, otherwise returns <see langword="false"/>.</returns>
+    /// <remarks>In case the <see cref="WeakReference{V}"/> was already collected, the entry is removed from the cache.</remarks>
+    public bool TryGetValue(K key, [NotNullWhen(true)] out V? value)
     {
         lock (_cacheLock)
         {
-            return _cacheStore.TryGetValue(key, out value);
+            if (!_cacheStore.TryGetValue(key, out WeakReference<V>? weakRef))
+            {
+                value = null;
+                return false;
+            }
+
+            return weakRef.TryGetTarget(out value) || !_cacheStore.Remove(key);
         }
     }
 }

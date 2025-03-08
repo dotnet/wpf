@@ -1322,23 +1322,15 @@ namespace System.Windows.Media.Imaging
         {
             clsId = Guid.Empty;
 
-            if (uri is not null && s_decoderCache.TryGetValue(uri, out WeakReference<BitmapDecoder> weakRef))
+            if (uri is not null && s_decoderCache.TryGetValue(uri, out BitmapDecoder bitmapDecoder))
             {
-                if (weakRef.TryGetTarget(out BitmapDecoder bitmapDecoder))
+                if (bitmapDecoder.CheckAccess())
                 {
-                    if (bitmapDecoder.CheckAccess())
+                    lock (bitmapDecoder.SyncObject)
                     {
-                        lock (bitmapDecoder.SyncObject)
-                        {
-                            clsId = GetCLSIDFromDecoder(bitmapDecoder.InternalDecoder, out string mimeTypes);
-                            return bitmapDecoder;
-                        }
+                        clsId = GetCLSIDFromDecoder(bitmapDecoder.InternalDecoder, out string mimeTypes);
+                        return bitmapDecoder;
                     }
-                }
-                else
-                {
-                    // Remove from the cache if bitmapDecoder is already been collected
-                    s_decoderCache.Remove(uri);
                 }
             }
 

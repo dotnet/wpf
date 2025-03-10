@@ -76,19 +76,37 @@
         x:Key="{x:Static ToolBar.ButtonStyleKey}"
         BasedOn="{StaticResource ToolBarButtonBaseStyle}"
         TargetType="{x:Type Button}" />
+
     <Style
         x:Key="{x:Static ToolBar.ToggleButtonStyleKey}"
-        BasedOn="{StaticResource ToolBarButtonBaseStyle}"
+        BasedOn="{StaticResource DefaultToggleButtonStyle}"
         TargetType="{x:Type ToggleButton}" />
+
     <Style
         x:Key="{x:Static ToolBar.CheckBoxStyleKey}"
-        BasedOn="{StaticResource ToolBarButtonBaseStyle}"
+        BasedOn="{StaticResource DefaultCheckBoxStyle}"
         TargetType="{x:Type CheckBox}" />
+
     <Style
         x:Key="{x:Static ToolBar.RadioButtonStyleKey}"
-        BasedOn="{StaticResource ToolBarButtonBaseStyle}"
+        BasedOn="{StaticResource DefaultRadioButtonStyle}"
         TargetType="{x:Type RadioButton}" />
 
+    <Style
+        x:Key="{x:Static ToolBar.ComboBoxStyleKey}"
+        BasedOn="{StaticResource DefaultComboBoxStyle}"
+        TargetType="{x:Type ComboBox}" />
+
+    <Style
+        x:Key="{x:Static ToolBar.MenuStyleKey}"
+        BasedOn="{StaticResource DefaultMenuStyle}"
+        TargetType="{x:Type Menu}" />
+
+    <Style
+        x:Key="{x:Static ToolBar.SeparatorStyleKey}"
+        BasedOn="{StaticResource DefaultSeparatorStyle}"
+        TargetType="{x:Type Separator}" />
+    
     <Style x:Key="{x:Static ToolBar.TextBoxStyleKey}" TargetType="{x:Type TextBox}">
         <Setter Property="KeyboardNavigation.TabNavigation" Value="None" />
         <Setter Property="FocusVisualStyle" Value="{x:Null}" />

@@ -8290,7 +8290,7 @@ namespace System.Windows.Controls
 
             try
             {
-                Clipboard.CriticalSetDataObject(dataObject, true /* Copy */);
+                Clipboard.SetDataObject(dataObject, copy: true);
             }
             catch (ExternalException)
             {

@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -32,24 +32,6 @@ namespace System.Windows
         }
 
         #endregion Constructor
-
-        #region CLR compat flags
-
-        internal static bool TargetsAtLeast_Desktop_V4_5
-        {
-            get
-            {
-#if NETFX && !NETCOREAPP
-                return BinaryCompatibility.TargetsAtLeast_Desktop_V4_5;
-#elif NETCOREAPP
-                return true;
-#else
-                return true;
-#endif
-            }
-        }
-
-        #endregion CLR compat flags
 
         #region IsAltKeyRequiredInAccessKeyDefaultScope
 

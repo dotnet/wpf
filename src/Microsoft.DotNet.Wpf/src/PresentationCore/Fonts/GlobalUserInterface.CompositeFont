@@ -1716,8 +1716,11 @@
             -->
             <!-- CHS -->
             <FontFamilyMap
-                Unicode     = "20000-2A6DF"
-                Language    = "zh-Hans"
+                Unicode     = "2EBF0-323AF"
+                Target      = "SimSun-ExtG"
+                Scale       = "1.0" />
+            <FontFamilyMap
+                Unicode     = "20000-2EBE0"
                 Target      = "SimSun-ExtB"
                 Scale       = "1.0" />
             <!-- CHT -->

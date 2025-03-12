@@ -1,15 +1,7 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
-//
-//
-// Description:
-// ResourceContainer is an implementation of the abstract Package class. 
-// It contains nontrivial overrides for GetPartCore and Exists.
-// Many of the methods on Package are not applicable to loading application 
-// resources, so the ResourceContainer implementations of these methods throw 
-// the NotSupportedException.
-// 
+using ResourceManagerWrapperLookup = System.Collections.Generic.Dictionary<string, MS.Internal.Resources.ResourceManagerWrapper>.AlternateLookup<System.ReadOnlySpan<char>>;
 
 using System.Windows.Navigation;
 using MS.Internal.Resources;
@@ -29,24 +21,22 @@ namespace MS.Internal.AppModel
     /// </summary>
     internal sealed class ResourceContainer : Package
     {
-        //------------------------------------------------------
-        //
-        //  Static Methods
-        //
-        //------------------------------------------------------
+        private static readonly Dictionary<string, ResourceManagerWrapper> s_registeredResourceManagers = new(StringComparer.Ordinal);
+        private static readonly ResourceManagerWrapperLookup s_registeredResourceManagersLookup = s_registeredResourceManagers.GetAlternateLookup<ReadOnlySpan<char>>();
 
-        #region Static Methods
+        private static ResourceManagerWrapper s_applicationResourceManagerWrapper;
+        private static bool s_assemblyLoadHandlerAttached;
 
         internal static ResourceManagerWrapper ApplicationResourceManagerWrapper
         {
             get
             {
-                if (s_applicationResourceManagerWrapper == null)
+                if (s_applicationResourceManagerWrapper is null)
                 {
                     // load main executable assembly
                     Assembly asmApplication = Application.ResourceAssembly;
 
-                    if (asmApplication != null)
+                    if (asmApplication is not null)
                     {
                         s_applicationResourceManagerWrapper = new ResourceManagerWrapper(asmApplication);
                     }
@@ -60,38 +50,21 @@ namespace MS.Internal.AppModel
         /// The FileShare mode to use for opening loose files. Currently this defaults to <see cref="FileShare.Read"/>
         /// Today it is not changed. If we decide that this should change in the future we can easily add a setter here.
         /// </summary>
-        internal static FileShare FileShare
-        {
-            get
-            {
-                return s_fileShare;
-            }
-        }
+        internal const FileShare FileShareMode = FileShare.Read;
 
-        #endregion
-
-        //------------------------------------------------------
-        //
-        //  Public Constructors
-        //
-        //------------------------------------------------------
-
-        #region Public Constructors
+        /// <summary>
+        /// The extension for .xaml resources.
+        /// </summary>
+        internal const string XamlExt = ".xaml";
+        /// <summary>
+        /// The extension for .baml resources.
+        /// </summary>
+        internal const string BamlExt = ".baml";
 
         /// <summary>
         /// Default Constructor
         /// </summary>
         internal ResourceContainer() : base(FileAccess.Read) { }
-
-        #endregion     
-
-        //------------------------------------------------------
-        //
-        //  Public Methods
-        //
-        //------------------------------------------------------
-
-        #region Public Methods
 
         /// <summary>
         /// This method always returns true.  This is because ResourceManager does not have a
@@ -108,29 +81,6 @@ namespace MS.Internal.AppModel
         {
             return true;
         }
-
-        #endregion
-
-        //------------------------------------------------------
-        //
-        //  Internal Constants
-        //
-        //------------------------------------------------------
-
-        #region Internal Constants
-
-        internal const string XamlExt = ".xaml";
-        internal const string BamlExt = ".baml";
-
-        #endregion
-
-        //------------------------------------------------------
-        //
-        //  Protected Methods
-        //
-        //------------------------------------------------------
-
-        #region Protected Methods
 
         /// <summary>
         /// This method creates a part containing the name of the resource and 
@@ -172,16 +122,6 @@ namespace MS.Internal.AppModel
                 return new ResourcePart(this, uri, partName, rmWrapper);
             }
         }
-
-        #endregion
-
-        //------------------------------------------------------
-        //
-        //  Private Methods
-        //
-        //------------------------------------------------------
-
-        #region Private Methods
 
         // AppDomain.AssemblyLoad event handler. Check whether the assembly's ResourceManager has
         // been added to the cache. If it has, we need to update the cache with the newly loaded dll.
@@ -258,21 +198,22 @@ namespace MS.Internal.AppModel
             ResourceManagerWrapper rmwResult = ApplicationResourceManagerWrapper;
             isContentFile = false;
 
-            BaseUriHelper.GetAssemblyNameAndPart(uri, out partName, out string assemblyName, out string assemblyVersion, out string assemblyToken);
+            BaseUriHelper.GetAssemblyNameAndPart(uri, out AssemblyPackageInfo assemblyPackage);
+            partName = assemblyPackage.PackagePartName.ToString();
 
-            if (!string.IsNullOrEmpty(assemblyName))
+            if (!assemblyPackage.AssemblyName.IsEmpty)
             {
                 // Create the key, in format of $"{assemblyName}{assemblyVersion}{assemblyToken}"
-                int totalLength = assemblyName.Length + assemblyVersion.Length + assemblyToken.Length;
+                int totalLength = assemblyPackage.AssemblyName.Length + assemblyPackage.AssemblyVersion.Length + assemblyPackage.AssemblyToken.Length;
                 Span<char> key = totalLength <= 256 ? stackalloc char[totalLength] : new char[totalLength];
-                assemblyName.AsSpan().ToLowerInvariant(key);
-                assemblyVersion.CopyTo(key.Slice(assemblyName.Length));
-                assemblyToken.CopyTo(key.Slice(assemblyName.Length + assemblyVersion.Length));
+                assemblyPackage.AssemblyName.ToLowerInvariant(key);
+                assemblyPackage.AssemblyVersion.CopyTo(key.Slice(assemblyPackage.AssemblyName.Length));
+                assemblyPackage.AssemblyToken.CopyTo(key.Slice(assemblyPackage.AssemblyName.Length + assemblyPackage.AssemblyVersion.Length));
 
                 // First time; add this to the dictionary and create the wrapper if its not the application entry assembly
                 if (!s_registeredResourceManagersLookup.TryGetValue(key.Slice(0, totalLength), out rmwResult))
                 {
-                    Assembly assembly = BaseUriHelper.GetLoadedAssembly(assemblyName, assemblyVersion, assemblyToken);
+                    Assembly assembly = BaseUriHelper.GetLoadedAssembly(assemblyPackage.AssemblyName, assemblyPackage.AssemblyVersion, assemblyPackage.AssemblyToken);
                     if (assembly.Equals(Application.ResourceAssembly))
                     {
                         // This Uri maps to Application Entry assembly even though it has ";component".
@@ -293,7 +234,7 @@ namespace MS.Internal.AppModel
                 {
                     // If this is not a resource from a component then it might be
                     // a content file and not an application resource.
-                    if (ContentFileHelper.IsContentFile(partName))
+                    if (ContentFileHelper.IsContentFile(assemblyPackage.PackagePartName))
                     {
                         isContentFile = true;
                         rmwResult = null;
@@ -308,33 +249,6 @@ namespace MS.Internal.AppModel
 
             return rmwResult;
         }
-
-        #endregion
-
-        //------------------------------------------------------
-        //
-        //  Private Fields
-        //
-        //------------------------------------------------------
-
-        #region Private Members
-
-        private static readonly Dictionary<string, ResourceManagerWrapper> s_registeredResourceManagers = new(StringComparer.Ordinal);
-        private static readonly Dictionary<string, ResourceManagerWrapper>.AlternateLookup<ReadOnlySpan<char>> s_registeredResourceManagersLookup = s_registeredResourceManagers.GetAlternateLookup<ReadOnlySpan<char>>();
-        private static readonly FileShare s_fileShare = FileShare.Read;
-
-        private static ResourceManagerWrapper s_applicationResourceManagerWrapper = null;
-        private static bool s_assemblyLoadHandlerAttached = false;
-
-        #endregion Private Members
-
-        //------------------------------------------------------
-        //
-        //  Uninteresting (but required) overrides
-        //
-        //------------------------------------------------------
-
-        #region Uninteresting (but required) overrides
 
         protected override PackagePart CreatePartCore(Uri uri, string contentType, CompressionOption compressionOption)
         {
@@ -355,7 +269,5 @@ namespace MS.Internal.AppModel
         {
             throw new NotSupportedException();
         }
-
-        #endregion
     }
 }

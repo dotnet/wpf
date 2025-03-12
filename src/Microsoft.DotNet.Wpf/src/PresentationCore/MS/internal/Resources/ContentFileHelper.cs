@@ -17,16 +17,12 @@ namespace MS.Internal.Resources
     // </summary>
     internal static class ContentFileHelper
     {
-        internal static bool IsContentFile(string partName)
+        internal static bool IsContentFile(ReadOnlySpan<char> partName)
         {
-            if (_contentFiles == null)
+            s_contentFiles ??= GetContentFiles(BaseUriHelper.ResourceAssembly);
+            if (s_contentFiles is not null && s_contentFiles.Count > 0)
             {
-                _contentFiles = GetContentFiles(BaseUriHelper.ResourceAssembly);
-            }
-
-            if (_contentFiles != null && _contentFiles.Count > 0)
-            {                
-                if (_contentFiles.Contains(partName))
+                if (s_contentFiles.GetAlternateLookup<ReadOnlySpan<char>>().Contains(partName))
                 {
                     return true;
                 }
@@ -75,6 +71,6 @@ namespace MS.Internal.Resources
             return contentFiles;
         }
 
-        private static HashSet<string> _contentFiles;
+        private static HashSet<string> s_contentFiles;
     }
 }

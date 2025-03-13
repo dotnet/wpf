@@ -25,11 +25,10 @@ namespace System.Windows.Media.Imaging
     /// </summary>
     public abstract class BitmapDecoder : DispatcherObject
     {
+        private static readonly WeakReferenceCache<Uri, BitmapDecoder> s_decoderCache = new();
+
         #region Constructors
 
-        static BitmapDecoder()
-        {
-        }
         /// <summary>
         /// Default constructor
         /// </summary>
@@ -60,12 +59,16 @@ namespace System.Windows.Media.Imaging
 
             ArgumentNullException.ThrowIfNull(bitmapUri);
 
+            BitmapDecoder decoder = null;
             if ((createOptions & BitmapCreateOptions.IgnoreImageCache) != 0)
             {
-                ImagingCache.RemoveFromDecoderCache(bitmapUri);
+                s_decoderCache.Remove(bitmapUri);
+            }
+            else
+            {
+                decoder = CheckCache(bitmapUri, out clsId);
             }
 
-            BitmapDecoder decoder = CheckCache(bitmapUri, out clsId);
             if (decoder != null)
             {
                 _decoderHandle = decoder.InternalDecoder;
@@ -237,21 +240,18 @@ namespace System.Windows.Media.Imaging
 
             if (uri != null)
             {
-                finalUri = (baseUri != null) ?
-                               System.Windows.Navigation.BaseUriHelper.GetResolvedUri(baseUri, uri) :
-                               uri;
+                finalUri = (baseUri != null) ? Navigation.BaseUriHelper.GetResolvedUri(baseUri, uri) : uri;
 
                 if (insertInDecoderCache)
                 {
                     if ((createOptions & BitmapCreateOptions.IgnoreImageCache) != 0)
                     {
-                        ImagingCache.RemoveFromDecoderCache(finalUri);
+                        s_decoderCache.Remove(finalUri);
                     }
-
-                    cachedDecoder = CheckCache(
-                        finalUri,
-                        out clsId
-                        );
+                    else
+                    {
+                        cachedDecoder = CheckCache(finalUri, out clsId);
+                    }
                 }
             }
 
@@ -1321,32 +1321,18 @@ namespace System.Windows.Media.Imaging
         }
 
         /// Check the cache to see if decoder already exists
-        private static BitmapDecoder CheckCache(
-            Uri uri,
-            out Guid clsId
-            )
+        private static BitmapDecoder CheckCache(Uri uri, out Guid clsId)
         {
             clsId = Guid.Empty;
-            string mimeTypes;
 
-            if (uri != null)
+            if (uri is not null && s_decoderCache.TryGetValue(uri, out BitmapDecoder bitmapDecoder))
             {
-                WeakReference weakRef = ImagingCache.CheckDecoderCache(uri) as WeakReference;
-                if (weakRef != null)
+                if (bitmapDecoder.CheckAccess())
                 {
-                    BitmapDecoder bitmapDecoder = weakRef.Target as BitmapDecoder;
-                    if ((bitmapDecoder != null) && bitmapDecoder.CheckAccess())
+                    lock (bitmapDecoder.SyncObject)
                     {
-                        lock (bitmapDecoder.SyncObject)
-                        {
-                            clsId = GetCLSIDFromDecoder(bitmapDecoder.InternalDecoder, out mimeTypes);
-                            return bitmapDecoder;
-                        }
-                    }
-                    // Remove from the cache if bitmapDecoder is already been collected
-                    if (bitmapDecoder == null)
-                    {
-                        ImagingCache.RemoveFromDecoderCache(uri);
+                        clsId = GetCLSIDFromDecoder(bitmapDecoder.InternalDecoder, out string mimeTypes);
+                        return bitmapDecoder;
                     }
                 }
             }
@@ -1391,10 +1377,7 @@ namespace System.Windows.Media.Imaging
             if ((_uri != null) && (decoder == null) && _shouldCacheDecoder)
             {
                 // Add this decoder to the decoder cache
-                ImagingCache.AddToDecoderCache(
-                    (_baseUri == null) ? _uri : new Uri(_baseUri, _uri),
-                    new WeakReference(this)
-                    );
+                s_decoderCache.Add((_baseUri == null) ? _uri : new Uri(_baseUri, _uri), this);
             }
         }
 

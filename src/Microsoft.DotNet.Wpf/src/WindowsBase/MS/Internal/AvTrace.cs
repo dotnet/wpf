@@ -40,24 +40,28 @@ namespace MS.Internal
             PresentationTraceSources.TraceRefresh += new TraceRefreshEventHandler(Refresh);
 
             // Fetch and cache the TraceSource from PresentationTraceSources
-            Initialize();
+            Initialize(IsWpfTracingEnabledInRegistry());
         }
 
+        /// <summary>
+        /// Performs thread-safe initialization of <see cref="s_enabledInRegistry"/> value.
+        /// </summary>
+        static AvTrace() => LoadWpfTracingSettings();
 
-        //
-        //  Refresh this trace source -- see if it needs to be enabled
-        //  because registry setting has changed or debugger is attached.
-        //
-        //  To re-read the config file, call System.Diagnostics.Trace.Refresh() .
-        //
 
+        /// <summary>
+        /// Refreshes this trace source. Checks again if it has been enabled
+        /// either because registry setting has changed or debugger has been attached.
+        /// <br/><br/>
+        ///  To re-read the config file, call <see cref="System.Diagnostics.Trace.Refresh"/>
+        /// </summary>
         public void Refresh()
         {
-            // Cause the registry to be re-read in case it's changed.
-            _enabledInRegistry = null;
+            // Re-read current WPF Trace settings from Registry in case it has changed.
+            bool isEnabledInRegistry = LoadWpfTracingSettings();
 
             // Re-initialize everything
-            Initialize();
+            Initialize(isEnabledInRegistry);
         }
 
         //
@@ -150,12 +154,12 @@ namespace MS.Internal
         //
         // Internal initialization
         //
-        void Initialize( )
+        private void Initialize(bool isEnabledInRegistry)
         {
             // Decide if we should actually create a TraceSource instance (doing so isn't free,
             // so we don't want to do it if we can avoid it).
 
-            if( ShouldCreateTraceSources() )
+            if(ShouldCreateTraceSources(isEnabledInRegistry))
             {
                 // Get TraceSource from the PresentationTraceSources
                 // (this call will indirectly create the TraceSource if one doesn't already exist)
@@ -164,7 +168,7 @@ namespace MS.Internal
                 // We go enabled if tracing is enabled in the registry, if
                 // PresentationTraceSources.Refresh has been called, or if we're in the debugger
                 // and the debugger is supposed to enable tracing.
-                _isEnabled = IsWpfTracingEnabledInRegistry() || _hasBeenRefreshed || _enabledByDebugger ;
+                _isEnabled = isEnabledInRegistry || _hasBeenRefreshed || _enabledByDebugger ;
             }
             else
             {
@@ -183,52 +187,34 @@ namespace MS.Internal
         //  the TraceSource.)
         //
 
-        static private bool ShouldCreateTraceSources()
+        private static bool ShouldCreateTraceSources(bool isEnabledInRegistry)
         {
-            if( IsWpfTracingEnabledInRegistry()
-                || IsDebuggerAttached()
-                || _hasBeenRefreshed
-              )
-            {
-                return true;
-            }
-
-            return false;
+            return isEnabledInRegistry || IsDebuggerAttached() || _hasBeenRefreshed;
         }
 
-
-
-        ///
-        ///  Read the registry to see if WPF tracing is allowed
-        ///
-
-        static internal bool IsWpfTracingEnabledInRegistry()
+        /// <summary> Initializes <see cref="s_enabledInRegistry"/> variable from Registry and returns the value. </summary>
+        /// <returns> A boolean value specifying whether WPF Tracing is enabled. </returns>
+        internal static bool LoadWpfTracingSettings()
         {
-            // First time this is called, initialize from the registry
+            // Initialize from the registry
+            bool enabled = false;
 
-            if( _enabledInRegistry == null )
-            {
-                bool enabled = false;
+            object keyValue = SecurityHelper.ReadRegistryValue(Registry.CurrentUser,
+                                                               @"Software\Microsoft\Tracing\WPF",
+                                                               "ManagedTracing");
 
-                object keyValue = SecurityHelper.ReadRegistryValue(
-                                                            Registry.CurrentUser,
-                                                            @"Software\Microsoft\Tracing\WPF",
-                                                            "ManagedTracing");
+            if (keyValue is int value && value == 1) //REG_DWORD
+                enabled = true;
 
-                if( keyValue is int && ((int) keyValue) == 1 )
-                {
-                    enabled = true;
-                }
+            // Update the static value
+            s_enabledInRegistry = enabled;
 
-                // Update the static.  Doing this last protects us from threading problems; worse case, multiple
-                // threads will set the same value into it.
-                _enabledInRegistry = enabled;
-            }
-
-            return (bool) _enabledInRegistry;
+            return enabled;
         }
 
-
+        /// <summary> Retrieves cached value from <see cref=" s_enabledInRegistry"/> to see whether WPF Tracing is enabled. </summary>
+        /// <returns> A boolean value specifying whether WPF Tracing is enabled. </returns>
+        internal static bool IsWpfTracingEnabledInRegistry() => s_enabledInRegistry;
 
         //
         // Check for an attached debugger.
@@ -488,8 +474,8 @@ namespace MS.Internal
         // Cache of TraceSource instance; real value resides in PresentationTraceSources.
         TraceSource _traceSource;
 
-        // Cache used by IsWpfTracingEnabledInRegistry
-        static Nullable<bool> _enabledInRegistry = null;
+        // Cache used by IsWpfTracingEnabledInRegistry, written by LoadWpfTracingSettings
+        private static volatile bool s_enabledInRegistry = false;
 
         static char[] FormatChars = new char[]{ '{', '}' };
     }

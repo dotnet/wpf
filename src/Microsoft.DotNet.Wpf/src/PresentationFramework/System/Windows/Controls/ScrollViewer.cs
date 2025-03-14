@@ -1615,13 +1615,13 @@ namespace System.Windows.Controls
                     double viewportHeight = ViewportHeight + 1d; // Using +1 to account for last partially visible item in viewport
                     if (viewport != null)
                     {
-                        _panningInfo.DeltaPerHorizontalOffet = (DoubleUtil.AreClose(viewportWidth, 0) ? 0 : viewport.ActualWidth / viewportWidth);
-                        _panningInfo.DeltaPerVerticalOffset = (DoubleUtil.AreClose(viewportHeight, 0) ? 0 : viewport.ActualHeight / viewportHeight);
+                        _panningInfo.DeltaPerHorizontalOffet = (DoubleUtil.IsZero(viewportWidth) ? 0 : viewport.ActualWidth / viewportWidth);
+                        _panningInfo.DeltaPerVerticalOffset = (DoubleUtil.IsZero(viewportHeight) ? 0 : viewport.ActualHeight / viewportHeight);
                     }
                     else
                     {
-                        _panningInfo.DeltaPerHorizontalOffet = (DoubleUtil.AreClose(viewportWidth, 0) ? 0 : ActualWidth / viewportWidth);
-                        _panningInfo.DeltaPerVerticalOffset = (DoubleUtil.AreClose(viewportHeight, 0) ? 0 : ActualHeight / viewportHeight);
+                        _panningInfo.DeltaPerHorizontalOffet = (DoubleUtil.IsZero(viewportWidth) ? 0 : ActualWidth / viewportWidth);
+                        _panningInfo.DeltaPerVerticalOffset = (DoubleUtil.IsZero(viewportHeight) ? 0 : ActualHeight / viewportHeight);
                     }
 
                     // Template bind other Scroll Manipulation properties if needed.
@@ -1749,7 +1749,7 @@ namespace System.Windows.Controls
                 {
                     unusedX = 0;
                 }
-                _panningInfo.InHorizontalFeedback = (!DoubleUtil.AreClose(unusedX, 0));
+                _panningInfo.InHorizontalFeedback = (!DoubleUtil.IsZero(unusedX));
 
                 double unusedY = _panningInfo.UnusedTranslation.Y;
                 if (!_panningInfo.InVerticalFeedback &&
@@ -1757,7 +1757,7 @@ namespace System.Windows.Controls
                 {
                     unusedY = 0;
                 }
-                _panningInfo.InVerticalFeedback = (!DoubleUtil.AreClose(unusedY, 0));
+                _panningInfo.InVerticalFeedback = (!DoubleUtil.IsZero(unusedY));
 
                 if (_panningInfo.InHorizontalFeedback || _panningInfo.InVerticalFeedback)
                 {
@@ -1778,7 +1778,7 @@ namespace System.Windows.Controls
             double offset = (isHorizontal ? HorizontalOffset : VerticalOffset);
             double scrollableLength = (isHorizontal ? ScrollableWidth : ScrollableHeight);
 
-            if (DoubleUtil.AreClose(scrollableLength, 0))
+            if (DoubleUtil.IsZero(scrollableLength))
             {
                 // If the Scrollable length in this direction is 0,
                 // then we should neither scroll nor report the boundary feedback
@@ -1814,7 +1814,7 @@ namespace System.Windows.Controls
 
             if (isHorizontal)
             {
-                if (!DoubleUtil.AreClose(delta, 0))
+                if (!DoubleUtil.IsZero(delta))
                 {
                     // if there is any delta left, then re-evalute the horizontal offset
                     ScrollToHorizontalOffset(_panningInfo.OriginalHorizontalOffset -
@@ -1824,7 +1824,7 @@ namespace System.Windows.Controls
             }
             else
             {
-                if (!DoubleUtil.AreClose(delta, 0))
+                if (!DoubleUtil.IsZero(delta))
                 {
                     // if there is any delta left, then re-evalute the vertical offset
                     ScrollToVerticalOffset(_panningInfo.OriginalVerticalOffset -

@@ -146,8 +146,6 @@ namespace System.Windows.Documents
             // Render the each of the composition string attribute from the attribute ranges.
             for (int i = 0; i < _attributeRanges.Count; i++)
             {
-                DoubleCollection dashArray;
-
                 // Get the composition attribute range from the attribute range lists
                 AttributeRange attributeRange = (AttributeRange)_attributeRanges[i];
 
@@ -186,14 +184,10 @@ namespace System.Windows.Documents
                 {
                     case UnsafeNativeMethods.TF_DA_LINESTYLE.TF_LS_DOT:
                         // Add the dot length and specify the start/end line cap as the round
-                        dashArray = new DoubleCollection();
-                        dashArray.Add(DotLength);
-                        dashArray.Add(DotLength);
-
-                        pen.DashStyle = new DashStyle(dashArray, 0);
-                        pen.DashCap = System.Windows.Media.PenLineCap.Round;
-                        pen.StartLineCap = System.Windows.Media.PenLineCap.Round;
-                        pen.EndLineCap = System.Windows.Media.PenLineCap.Round;
+                        pen.DashStyle = new DashStyle(new DoubleCollection(DotLength, DotLength), 0);
+                        pen.DashCap = PenLineCap.Round;
+                        pen.StartLineCap = PenLineCap.Round;
+                        pen.EndLineCap = PenLineCap.Round;
 
                         // Update the line height for the dot line. Dot line will be more thickness than
                         // other line to show it clearly.
@@ -205,21 +199,17 @@ namespace System.Windows.Documents
                         double dashLength = height * (lineBold ? BoldDashRatio : NormalDashRatio);
                         double dashGapLength = height * (lineBold ? BoldDashGapRatio : NormalDashGapRatio);
 
-                        // Add the dash and dash gap legth
-                        dashArray = new DoubleCollection();
-                        dashArray.Add(dashLength);
-                        dashArray.Add(dashGapLength);
-
-                        pen.DashStyle = new DashStyle(dashArray, 0);
-                        pen.DashCap = System.Windows.Media.PenLineCap.Round;
-                        pen.StartLineCap = System.Windows.Media.PenLineCap.Round;
-                        pen.EndLineCap = System.Windows.Media.PenLineCap.Round;
+                        // Add the dash and dash gap length
+                        pen.DashStyle = new DashStyle(new DoubleCollection(dashLength, dashGapLength), 0);
+                        pen.DashCap = PenLineCap.Round;
+                        pen.StartLineCap = PenLineCap.Round;
+                        pen.EndLineCap = PenLineCap.Round;
 
                         break;
 
                     case UnsafeNativeMethods.TF_DA_LINESTYLE.TF_LS_SOLID:
-                        pen.StartLineCap = System.Windows.Media.PenLineCap.Round;
-                        pen.EndLineCap = System.Windows.Media.PenLineCap.Round;
+                        pen.StartLineCap = PenLineCap.Round;
+                        pen.EndLineCap = PenLineCap.Round;
 
                         break;
 

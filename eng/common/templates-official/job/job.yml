@@ -31,6 +31,7 @@ jobs:
             PathtoPublish: '$(Build.ArtifactStagingDirectory)/artifacts'
             ArtifactName: ${{ coalesce(parameters.artifacts.publish.artifacts.name , 'Artifacts_$(Agent.Os)_$(_BuildConfig)') }}
             condition: always()
+            retryCountOnTaskFailure: 10 # for any logs being locked
             continueOnError: true
         - ${{ if and(ne(parameters.artifacts.publish.logs, 'false'), ne(parameters.artifacts.publish.logs, '')) }}:
           - output: pipelineArtifact
@@ -39,6 +40,7 @@ jobs:
             displayName: 'Publish logs'
             continueOnError: true
             condition: always()
+            retryCountOnTaskFailure: 10 # for any logs being locked
             sbomEnabled: false  # we don't need SBOM for logs
 
       - ${{ if eq(parameters.enablePublishBuildArtifacts, true) }}:

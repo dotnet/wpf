@@ -19,7 +19,7 @@
     <system:String x:Key="FrameMenuItemArrowRightGlyph">&#xE72A;</system:String>
     <system:String x:Key="FrameMenuiItemCurrentGlyph">&#xE915;</system:String>
 
-    <Style x:Key="NavigationWindowNavigationButtonJournalEntryStyle" TargetType="{x:Type MenuItem}">
+    <Style x:Key="FrameNavigationButtonJournalEntryStyle" TargetType="{x:Type MenuItem}">
         <Setter Property="HorizontalContentAlignment" Value="{Binding HorizontalContentAlignment, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}"/>
         <Setter Property="VerticalContentAlignment" Value="{Binding VerticalContentAlignment, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}"/>
         <Setter Property="FocusVisualStyle" Value="{DynamicResource DefaultCollectionFocusVisualStyle}" />
@@ -140,7 +140,7 @@
                         SnapsToDevicePixels="False"
                         HorizontalAlignment="Right"
                         VerticalAlignment="Center"                 
-                        ItemContainerStyle="{StaticResource NavigationWindowNavigationButtonJournalEntryStyle}"
+                        ItemContainerStyle="{StaticResource FrameNavigationButtonJournalEntryStyle}"
                         IsSubmenuOpen="{Binding Path=(MenuItem.IsSubmenuOpen),Mode=TwoWay,RelativeSource={RelativeSource TemplatedParent}}"  >
                         <MenuItem.Icon>
                             <TextBlock FontFamily="{DynamicResource SymbolThemeFontFamily}" Text="{StaticResource FrameMenuItemChevronDownGlyph}" />

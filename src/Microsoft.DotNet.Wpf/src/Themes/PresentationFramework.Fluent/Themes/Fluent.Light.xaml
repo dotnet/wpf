@@ -2684,7 +2684,7 @@
   <system:String x:Key="FrameMenuItemArrowLeftGlyph"></system:String>
   <system:String x:Key="FrameMenuItemArrowRightGlyph"></system:String>
   <system:String x:Key="FrameMenuiItemCurrentGlyph"></system:String>
-  <Style x:Key="NavigationWindowNavigationButtonJournalEntryStyle" TargetType="{x:Type MenuItem}">
+  <Style x:Key="FrameNavigationButtonJournalEntryStyle" TargetType="{x:Type MenuItem}">
     <Setter Property="HorizontalContentAlignment" Value="{Binding HorizontalContentAlignment, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}" />
     <Setter Property="VerticalContentAlignment" Value="{Binding VerticalContentAlignment, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}" />
     <Setter Property="FocusVisualStyle" Value="{DynamicResource DefaultCollectionFocusVisualStyle}" />
@@ -2764,7 +2764,7 @@
           <MenuItem Background="Transparent" BorderBrush="Transparent" Command="NavigationCommands.BrowseBack" FontFamily="{DynamicResource SymbolThemeFontFamily}" Header="{StaticResource FrameMenuItemArrowLeftGlyph}" />
           <MenuItem Background="Transparent" BorderBrush="Transparent" Command="NavigationCommands.BrowseForward" FontFamily="{DynamicResource SymbolThemeFontFamily}" Header="{StaticResource FrameMenuItemArrowRightGlyph}" />
           <Separator />
-          <MenuItem x:Name="Arrow" SnapsToDevicePixels="False" HorizontalAlignment="Right" VerticalAlignment="Center" ItemContainerStyle="{StaticResource NavigationWindowNavigationButtonJournalEntryStyle}" IsSubmenuOpen="{Binding Path=(MenuItem.IsSubmenuOpen),Mode=TwoWay,RelativeSource={RelativeSource TemplatedParent}}">
+          <MenuItem x:Name="Arrow" SnapsToDevicePixels="False" HorizontalAlignment="Right" VerticalAlignment="Center" ItemContainerStyle="{StaticResource FrameNavigationButtonJournalEntryStyle}" IsSubmenuOpen="{Binding Path=(MenuItem.IsSubmenuOpen),Mode=TwoWay,RelativeSource={RelativeSource TemplatedParent}}">
             <MenuItem.Icon>
               <TextBlock FontFamily="{DynamicResource SymbolThemeFontFamily}" Text="{StaticResource FrameMenuItemChevronDownGlyph}" />
             </MenuItem.Icon>

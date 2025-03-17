@@ -3174,6 +3174,9 @@
       </DockPanel>
     </Border>
     <ControlTemplate.Triggers>
+      <Trigger Property="ShowsNavigationUI" Value="False">
+        <Setter TargetName="NavChrome" Property="Visibility" Value="Collapsed" />
+      </Trigger>
       <MultiTrigger>
         <MultiTrigger.Conditions>
           <Condition Property="Window.ResizeMode" Value="CanResizeWithGrip" />

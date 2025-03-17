@@ -2664,10 +2664,9 @@
     <Setter Property="VerticalContentAlignment" Value="{Binding VerticalContentAlignment, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}" />
     <Setter Property="FocusVisualStyle" Value="{DynamicResource DefaultCollectionFocusVisualStyle}" />
     <Setter Property="KeyboardNavigation.IsTabStop" Value="True" />
-    <Setter Property="Background" Value="{StaticResource FrameMenuItemBackground}" />
-    <Setter Property="BorderBrush" Value="{StaticResource FrameMenuItemBorderBrush}" />
+    <Setter Property="Background" Value="{DynamicResource FrameMenuItemBackground}" />
+    <Setter Property="BorderBrush" Value="{DynamicResource FrameMenuItemBorderBrush}" />
     <Setter Property="BorderThickness" Value="{StaticResource FrameMenuItemBorderThickness}" />
-    <Setter Property="Border.CornerRadius" Value="{StaticResource ControlCornerRadius}" />
     <Setter Property="Focusable" Value="True" />
     <Setter Property="OverridesDefaultStyle" Value="True" />
     <Setter Property="Header" Value="{Binding Path=(JournalEntry.Name)}" />
@@ -2678,7 +2677,7 @@
     <Setter Property="Template">
       <Setter.Value>
         <ControlTemplate TargetType="{x:Type MenuItem}">
-          <Border x:Name="Border" Margin="4" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" CornerRadius="{TemplateBinding Border.CornerRadius}">
+          <Border x:Name="Border" Margin="4" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}">
             <Grid Margin="8">
               <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto" />
@@ -2690,7 +2689,7 @@
           </Border>
           <ControlTemplate.Triggers>
             <Trigger Property="IsHighlighted" Value="True">
-              <Setter TargetName="Border" Property="Background" Value="{StaticResource FrameMenuItemBackgroundSelected}" />
+              <Setter TargetName="Border" Property="Background" Value="{DynamicResource FrameMenuItemBackgroundSelected}" />
             </Trigger>
             <Trigger Property="Header" Value="{x:Null}">
               <Setter TargetName="Icon" Property="Margin" Value="0" />
@@ -2726,14 +2725,14 @@
               </Setter>
             </MultiTrigger>
             <Trigger Property="IsEnabled" Value="False">
-              <Setter TargetName="Icon" Property="TextElement.Foreground" Value="{StaticResource FrameMenuItemForegroundDisabled}" />
+              <Setter TargetName="Icon" Property="TextElement.Foreground" Value="{DynamicResource FrameMenuItemForegroundDisabled}" />
             </Trigger>
           </ControlTemplate.Triggers>
         </ControlTemplate>
       </Setter.Value>
     </Setter>
   </Style>
-  <ControlTemplate x:Key="DefaultFrameTemplateKey" TargetType="{x:Type Frame}">
+  <ControlTemplate x:Key="FrameTemplateKey" TargetType="{x:Type Frame}">
     <Border Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}">
       <DockPanel>
         <Menu Name="NavMenu" VerticalAlignment="Center" DockPanel.Dock="Top">
@@ -2784,14 +2783,14 @@
     </Setter>
     <Style.Triggers>
       <Trigger Property="NavigationUIVisibility" Value="Visible">
-        <Setter Property="Template" Value="{StaticResource DefaultFrameTemplateKey}" />
+        <Setter Property="Template" Value="{StaticResource FrameTemplateKey}" />
       </Trigger>
       <MultiTrigger>
         <MultiTrigger.Conditions>
           <Condition Property="JournalOwnership" Value="OwnsJournal" />
           <Condition Property="NavigationUIVisibility" Value="Automatic" />
         </MultiTrigger.Conditions>
-        <Setter Property="Template" Value="{StaticResource DefaultFrameTemplateKey}" />
+        <Setter Property="Template" Value="{StaticResource FrameTemplateKey}" />
       </MultiTrigger>
     </Style.Triggers>
   </Style>

@@ -62,6 +62,10 @@ Go to the csproj file and append this line at the bottom of it. `<Import Project
     <Import Project="$(WpfRepoRoot)\eng\wpf-debug.targets" />
 ```
 
+The default PlatformTarget of a sample application according the `wpf-debug.targets` is x64 and the default build of wpf repository using `./build.cmd` is x86. This leads to a mismatch in the binaries and may result in local binaries not getting picked up. To avoid this, either build the repo using the command `./build.cmd -plat x64` or specify the `PlatformTarget` of the sample application to x86.
+
+When building the repository, the artifacts' packaging folder does not differentiate between x64 and x86 binaries, causing one build to override the other. To prevent this, clean the repository when switching between x64 and x86 builds using the command `.\build.cmd -clean`.
+
 
 ### Testing Locally built WPF assemblies (excluding PresentationBuildTasks)
 This section of guide is intended to discuss the different approaches for ad-hoc testing of WPF assemblies,

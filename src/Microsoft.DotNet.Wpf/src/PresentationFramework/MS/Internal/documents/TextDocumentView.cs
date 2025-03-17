@@ -588,7 +588,7 @@ namespace MS.Internal.Documents
                 // Verify that layout information is valid. Cannot continue if not valid.
                 if (!IsValid)
                 {
-                    return new ReadOnlyCollection<TextSegment>(new List<TextSegment>());
+                    return ReadOnlyCollection<TextSegment>.Empty;
                 }
                 return this.TextSegmentsCore;
             }
@@ -3515,7 +3515,7 @@ namespace MS.Internal.Documents
         /// <summary>
         /// Cached collection of ColumnResults.
         /// </summary>
-        private static ReadOnlyCollection<ParagraphResult> _emptyParagraphCollection = new ReadOnlyCollection<ParagraphResult>(new List<ParagraphResult>(0));
+        private static ReadOnlyCollection<ParagraphResult> _emptyParagraphCollection = ReadOnlyCollection<ParagraphResult>.Empty;
 
         /// <summary>
         /// Cached collection of TextSegments.

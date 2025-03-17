@@ -367,7 +367,7 @@ namespace MS.Internal.PtsHost
                 else
                 {
                     // Return empty collection
-                    return new HostedElements(new ReadOnlyCollection<TextSegment>(new List<TextSegment>(0)));
+                    return new HostedElements(ReadOnlyCollection<TextSegment>.Empty);
                 }
             }
         }
@@ -572,7 +572,7 @@ namespace MS.Internal.PtsHost
 
             if (trackDetails.cParas == 0)
             {
-                return new ReadOnlyCollection<ParagraphResult>(new List<ParagraphResult>(0));
+                return ReadOnlyCollection<ParagraphResult>.Empty;
             }
 
             PTS.FSPARADESCRIPTION[] arrayParaDesc;
@@ -677,7 +677,7 @@ namespace MS.Internal.PtsHost
         //-------------------------------------------------------------------
         // Is this page already disposed?
         //-------------------------------------------------------------------
-        internal bool IsDisposed { get { return (_disposed != 0) || _structuralCache.PtsContext.Disposed; } }
+        internal bool IsDisposed { get { return _disposed || _structuralCache.PtsContext.Disposed; } }
 
         //-------------------------------------------------------------------
         // Size of content on page.
@@ -798,7 +798,7 @@ namespace MS.Internal.PtsHost
         private void Dispose(bool disposing)
         {
             // Do actual dispose only once.
-            if (Interlocked.CompareExchange(ref _disposed, 1, 0) == 0)
+            if (Interlocked.CompareExchange(ref _disposed, true, false) == false)
             {
                 if (disposing)
                 {
@@ -1098,7 +1098,7 @@ namespace MS.Internal.PtsHost
         //-------------------------------------------------------------------
         // Is it already disposed?
         //-------------------------------------------------------------------
-        private int _disposed;
+        private bool _disposed;
 
         //-------------------------------------------------------------------
         // Max of dcpDepend for page

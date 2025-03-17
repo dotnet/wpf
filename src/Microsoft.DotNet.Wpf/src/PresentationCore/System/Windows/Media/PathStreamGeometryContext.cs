@@ -151,7 +151,7 @@ namespace System.Windows.Media
         public override void LineTo(Point point, bool isStroked, bool isSmoothJoin)
         {
             PrepareToAddPoints(
-                        1 /*count*/,
+                        count: 1,
                         isStroked,
                         isSmoothJoin,
                         MIL_SEGMENT_TYPE.MilSegmentPolyLine);
@@ -165,7 +165,7 @@ namespace System.Windows.Media
         public override void QuadraticBezierTo(Point point1, Point point2, bool isStroked, bool isSmoothJoin)
         {
             PrepareToAddPoints(
-                        2 /*count*/,
+                        count: 2,
                         isStroked,
                         isSmoothJoin,
                         MIL_SEGMENT_TYPE.MilSegmentPolyQuadraticBezier);
@@ -180,7 +180,7 @@ namespace System.Windows.Media
         public override void BezierTo(Point point1, Point point2, Point point3, bool isStroked, bool isSmoothJoin)
         {
             PrepareToAddPoints(
-                        3 /*count*/,
+                        count: 3,
                         isStroked,
                         isSmoothJoin,
                         MIL_SEGMENT_TYPE.MilSegmentPolyBezier);

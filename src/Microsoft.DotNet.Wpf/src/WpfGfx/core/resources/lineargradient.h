@@ -80,9 +80,11 @@ public:
         __in_ecount(1) const BrushContext *pBrushContext
         ) const
     {
-                    // If a mapping mode is relative to the brush sizing bounds *and* those
-                    // bounds have changed, then the realization context has changed            
-        return  (   (m_data.m_MappingMode == MilBrushMappingMode::RelativeToBoundingBox) &&
+                    // If a mapping mode is relative to the brush
+                    // *or* or when a relative transform is used 
+                    // *and* bounds have changed, then the realization context has changed            
+        return  (   ((m_data.m_MappingMode == MilBrushMappingMode::RelativeToBoundingBox) 
+                    || (m_data.m_pRelativeTransform != NULL)) &&
 
                     // Return true if the brush sizing bounds have changed
                     //

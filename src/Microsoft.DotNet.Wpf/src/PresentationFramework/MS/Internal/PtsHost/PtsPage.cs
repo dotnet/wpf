@@ -705,7 +705,7 @@ namespace MS.Internal.PtsHost
         /// </remarks>
         private void Dispose(bool disposing)
         {
-            if (Interlocked.CompareExchange(ref _disposed, 1, 0) == 0)
+            if (Interlocked.CompareExchange(ref _disposed, true, false) == false)
             {
                 // Destroy PTS page.
                 // According to following article the entire reachable graph from 
@@ -1522,7 +1522,7 @@ namespace MS.Internal.PtsHost
         // ------------------------------------------------------------------
         // Is object already disposed.
         // ------------------------------------------------------------------
-        private int _disposed;
+        private bool _disposed;
 
         #endregion Private Fields
     }

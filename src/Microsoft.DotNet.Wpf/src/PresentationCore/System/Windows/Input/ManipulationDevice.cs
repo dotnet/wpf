@@ -209,7 +209,7 @@ namespace System.Windows.Input
             }
             else
             {
-                return new ReadOnlyCollection<IManipulator>(new List<IManipulator>(2));
+                return ReadOnlyCollection<IManipulator>.Empty;
             }
         }
 
@@ -340,7 +340,7 @@ namespace System.Windows.Input
                         // If a Complete is requested, then pass it along to the manipulation processor
                         if (deltaEventArgs.RequestedComplete)
                         {
-                            _manipulationLogic.Complete(/* withInertia = */ deltaEventArgs.RequestedInertia);
+                            _manipulationLogic.Complete(withInertia: deltaEventArgs.RequestedInertia);
                             _manipulationLogic.PushEventsToDevice();
                         }
                         else if (deltaEventArgs.RequestedCancel)
@@ -366,7 +366,7 @@ namespace System.Windows.Input
                         if (startedEventArgs.RequestedComplete)
                         {
                             // If a Complete is requested, pass it along to the manipulation processor
-                            _manipulationLogic.Complete(/* withInertia = */ false);
+                            _manipulationLogic.Complete(withInertia: false);
                             _manipulationLogic.PushEventsToDevice();
                         }
                         else if (startedEventArgs.RequestedCancel)

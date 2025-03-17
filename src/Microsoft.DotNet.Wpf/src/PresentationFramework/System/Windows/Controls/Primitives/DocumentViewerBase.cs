@@ -59,7 +59,7 @@ namespace System.Windows.Controls.Primitives
         protected DocumentViewerBase()
             : base()
         {
-            _pageViews = new ReadOnlyCollection<DocumentPageView>(new List<DocumentPageView>());
+            _pageViews = ReadOnlyCollection<DocumentPageView>.Empty;
             // By default text selection is enabled.
             SetFlags(true, Flags.IsSelectionEnabled);
         }

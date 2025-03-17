@@ -136,7 +136,7 @@ namespace System.Windows.Media
                 matrix,
                 tolerance,
                 type,
-                true); /* skip hollows */
+                skipHollows: true);
         }
         
         /// <summary>

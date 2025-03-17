@@ -38,7 +38,7 @@ namespace System.Windows
         /// <summary>
         /// Guards against multiple verifications of the switch values.
         /// </summary>
-        static int s_SwitchesVerified = 0;
+        private static bool s_switchesVerified = false;
 
         #endregion
 
@@ -183,7 +183,7 @@ namespace System.Windows
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         internal static void VerifySwitches(Dispatcher dispatcher)
         {
-            if (Interlocked.CompareExchange(ref s_SwitchesVerified, 1, 0) == 0)
+            if (Interlocked.CompareExchange(ref s_switchesVerified, true, false) == false)
             {
                 bool netFx47 = UseNetFx47CompatibleAccessibilityFeatures;
                 bool netFx471 = UseNetFx471CompatibleAccessibilityFeatures;

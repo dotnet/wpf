@@ -325,6 +325,7 @@
                                     CornerRadius="0,0,4,4"
                                     Visibility="Collapsed">
                                 <ContentPresenter x:Name="ContentPresenter"
+                                                  RecognizesAccessKey="True"
                                                   Margin="{TemplateBinding Padding}"
                                                   HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
                                                   VerticalAlignment="{TemplateBinding VerticalContentAlignment}"

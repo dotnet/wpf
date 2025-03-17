@@ -7,7 +7,7 @@
 
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
-    <Style TargetType="{x:Type Separator}">
+    <Style x:Key="DefaultSeparatorStyle" TargetType="{x:Type Separator}">
         <Setter Property="BorderBrush" Value="{DynamicResource SeparatorBorderBrush}" />
         <Setter Property="Background" Value="Transparent" />
         <Setter Property="Margin" Value="0" />
@@ -28,5 +28,7 @@
             </Setter.Value>
         </Setter>
     </Style>
+
+    <Style BasedOn="{StaticResource DefaultSeparatorStyle}" TargetType="{x:Type Separator}" />
 
 </ResourceDictionary>

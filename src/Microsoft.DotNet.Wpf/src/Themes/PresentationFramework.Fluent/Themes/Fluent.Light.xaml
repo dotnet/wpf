@@ -3445,7 +3445,7 @@
     </Border>
     <ControlTemplate.Triggers>
       <Trigger Property="ShowsNavigationUI" Value="False">
-        <Setter TargetName="NavChrome" Property="Visibility" Value="Collapsed" />
+        <Setter TargetName="NavMenu" Property="Visibility" Value="Collapsed" />
       </Trigger>
       <MultiTrigger>
         <MultiTrigger.Conditions>

@@ -74,6 +74,12 @@ namespace MS.Internal.MilCodeGen.Generators
                     List<string> extends = new List<string>();
                     string attributes = String.Empty;
 
+					// TODO: Add accessibility modifiers in McgType data model
+					if (resource.Name != "ImplicitInputBrush")
+						modifiers.Add("public");
+					else
+						modifiers.Add("internal");
+
                     if (resource.IsAbstract)
                     {
                         modifiers.Add("abstract");
@@ -116,8 +122,6 @@ namespace MS.Internal.MilCodeGen.Generators
                     {
                         extends.Add("IList");
                         extends.Add("IList<" + resource.CollectionType.ManagedName + ">");
-
-                        modifiers.Add("public");
 
                         if (resource.GenerateSerializerAttribute)
                         {

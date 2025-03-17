@@ -8,7 +8,7 @@ namespace System.Windows.Baml2006
 {
     partial class WpfSharedBamlSchemaContext: XamlSchemaContext
     {
-        const int KnownPropertyCount = 270;
+        const int KnownPropertyCount = 272;
 
 
         private WpfKnownMember CreateKnownMember(short bamlNumber)
@@ -284,6 +284,8 @@ namespace System.Windows.Baml2006
                 case 268: return Create_BamlProperty_XmlDataProvider_XmlSerializer();
                 case 269: return Create_BamlProperty_TextBox_IsReadOnly();
                 case 270: return Create_BamlProperty_RichTextBox_IsReadOnly();
+                case 271: return Create_BamlProperty_UIElement_FocusableWhenNotEnabled();
+                case 272: return Create_BamlProperty_ContentElement_FocusableWhenNotEnabled();
                 default:
                     throw new InvalidOperationException("Invalid BAML number");
             }
@@ -364,6 +366,7 @@ namespace System.Windows.Baml2006
                     switch(property)
                     {
                         case "Focusable": return GetKnownBamlMember(-18);
+                        case "FocusableWhenNotEnabled": return GetKnownBamlMember(-272);
                         default: return null;
                     }
                 case 3536639290:
@@ -694,6 +697,7 @@ namespace System.Windows.Baml2006
                     {
                         case "ClipToBounds": return GetKnownBamlMember(-131);
                         case "Focusable": return GetKnownBamlMember(-132);
+                        case "FocusableWhenNotEnabled": return GetKnownBamlMember(-271);
                         case "IsEnabled": return GetKnownBamlMember(-133);
                         case "RenderTransform": return GetKnownBamlMember(-134);
                         case "Visibility": return GetKnownBamlMember(-135);
@@ -2039,6 +2043,23 @@ namespace System.Windows.Baml2006
             {
                 TypeConverterType = typeof(System.ComponentModel.BooleanConverter)
             };
+            bamlMember.Freeze();
+            return bamlMember;
+        }
+
+        [System.Runtime.CompilerServices.MethodImpl(System.Runtime.CompilerServices.MethodImplOptions.NoInlining)]
+        private WpfKnownMember Create_BamlProperty_ContentElement_FocusableWhenNotEnabled()
+        {
+            Type type = typeof(System.Windows.ContentElement);
+            DependencyProperty  dp = System.Windows.ContentElement.FocusableWhenNotEnabledProperty;
+            var bamlMember = new WpfKnownMember( this,  // Schema Context
+                this.GetXamlType(typeof(System.Windows.ContentElement)), // DeclaringType
+                "FocusableWhenNotEnabled", // Name
+                dp, // DependencyProperty
+                false, // IsReadOnly
+                false // IsAttachable
+            );
+            bamlMember.TypeConverterType = typeof(System.ComponentModel.BooleanConverter);
             bamlMember.Freeze();
             return bamlMember;
         }
@@ -4144,6 +4165,23 @@ namespace System.Windows.Baml2006
             {
                 TypeConverterType = typeof(System.ComponentModel.BooleanConverter)
             };
+            bamlMember.Freeze();
+            return bamlMember;
+        }
+
+        [System.Runtime.CompilerServices.MethodImpl(System.Runtime.CompilerServices.MethodImplOptions.NoInlining)]
+        private WpfKnownMember Create_BamlProperty_UIElement_FocusableWhenNotEnabled()
+        {
+            Type type = typeof(System.Windows.UIElement);
+            DependencyProperty  dp = System.Windows.UIElement.FocusableWhenNotEnabledProperty;
+            var bamlMember = new WpfKnownMember( this,  // Schema Context
+                this.GetXamlType(typeof(System.Windows.UIElement)), // DeclaringType
+                "FocusableWhenNotEnabled", // Name
+                dp, // DependencyProperty
+                false, // IsReadOnly
+                false // IsAttachable
+            );
+            bamlMember.TypeConverterType = typeof(System.ComponentModel.BooleanConverter);
             bamlMember.Freeze();
             return bamlMember;
         }

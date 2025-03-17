@@ -340,9 +340,9 @@ namespace MS.Internal.Csp
         //------------------------------------------------------
 
         #region Private Fields
-        Assembly _assembly;
-        TempDirectory _tempDirectory;
-        bool _breakBeforeInvoke;
+        private Assembly _assembly;
+        private TempDirectory _tempDirectory;
+        private bool _breakBeforeInvoke;
         #endregion Private Fields
     }
 }

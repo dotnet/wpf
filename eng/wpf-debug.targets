@@ -16,9 +16,13 @@
     <RuntimeIdentifier Condition="'$(PlatformTarget)' != ''">win-$(PlatformTarget)</RuntimeIdentifier>
     
     <WpfArtifactsPackagesCommonPath>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)\..\'))\artifacts\packaging</WpfArtifactsPackagesCommonPath>
-    <WpfPlatformTargetArtifactsDirectory Condition="'$(PlatformTarget)'=='x64'">x64\</WpfPlatformTargetArtifactsDirectory>
     <WPFArtifactsPathSuffix Condition="'$(WpfConfig)'=='Debug'">.$(WpfConfig)</WPFArtifactsPathSuffix>
-    <WPFArtifactsPath>$(WpfArtifactsPackagesCommonPath)\$(WpfConfig)\$(WpfPlatformTargetArtifactsDirectory)Microsoft.DotNet.Wpf.GitHub$(WPFArtifactsPathSuffix)</WPFArtifactsPath>
+    <!-- 
+    Make sure that the build binaries match the platform target.
+    The default local build using ./build.cmd is x86 and if the platform target in the application is not specified, it takes x64 by default.
+    So if you are planning to use the default Platform target, consider building wpf using ./build.cmd -plat x64.
+    -->
+    <WPFArtifactsPath>$(WpfArtifactsPackagesCommonPath)\$(WpfConfig)\Microsoft.DotNet.Wpf.GitHub$(WPFArtifactsPathSuffix)</WPFArtifactsPath>
   </PropertyGroup>
 
   <ItemGroup>

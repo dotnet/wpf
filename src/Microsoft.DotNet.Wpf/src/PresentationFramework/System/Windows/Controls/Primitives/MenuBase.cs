@@ -502,7 +502,7 @@ namespace System.Windows.Controls.Primitives
                     }
                     else
                     {
-                        throw new InvalidOperationException(SR.Format(SR.InvalidItemContainer, this.GetType().Name, typeof(MenuItem).Name, typeof(Separator).Name, itemContainer));
+                        throw new InvalidOperationException(SR.Format(SR.InvalidItemContainer, this.GetType().Name, nameof(MenuItem), nameof(Separator), itemContainer));
                     }
                 }
             }

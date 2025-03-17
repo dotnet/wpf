@@ -22,6 +22,7 @@
   <ItemGroup>
     <Compile Include="$(WpfCommonDir)\src\System\LocalAppContext.cs" />
     <Compile Include="$(WpfCommonDir)\src\System\AppContextDefaultValues.cs" />
+    <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="GlobalUsings.cs" />
     <Compile Include="System\AppContextDefaultValues.cs" />
   </ItemGroup>
@@ -272,9 +273,12 @@
     <Compile Include="MS\Internal\Shaping\Substitution.cs" />
     <Compile Include="MS\Internal\Shaping\TypefaceMap.cs" />
     <Compile Include="MS\Internal\Shaping\UshortList2.cs" />
+    <Compile Include="MS\Internal\Text\TextInterface\DWriteInterfaces.cs" />
     <Compile Include="MS\Internal\Text\TextInterface\DWriteLoader.cs" />
     <Compile Include="MS\Internal\Text\TextInterface\DWriteUtil.cs" />
     <Compile Include="MS\Internal\Text\TextInterface\Factory.cs" />
+    <Compile Include="MS\Internal\Text\TextInterface\FontCollectionLoader.cs" />
+    <Compile Include="MS\Internal\Text\TextInterface\IFontSourceCollection.cs" />
     <Compile Include="MS\Internal\TextFormatting\Bidi.cs" />
     <Compile Include="MS\Internal\TextFormatting\CultureMapper.cs" />
     <Compile Include="MS\Internal\TextFormatting\DrawingState.cs" />
@@ -1436,6 +1440,10 @@
     <ProjectReference Include="$(WpfSourceDir)PresentationCore\ref\PresentationCore-ref.csproj">
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
     </ProjectReference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <MicrosoftPrivateWinFormsReference Include="System.Private.Windows.Core" />
   </ItemGroup>
 
   <!--

@@ -188,7 +188,7 @@ namespace System.Windows.Input
                 _settingGesture = true;
                 try
                 {
-                    Gesture = new KeyGesture(key, modifiers, /*validateGesture = */ false);
+                    Gesture = new KeyGesture(key, modifiers, validateGesture: false);
                 }
                 finally
                 {

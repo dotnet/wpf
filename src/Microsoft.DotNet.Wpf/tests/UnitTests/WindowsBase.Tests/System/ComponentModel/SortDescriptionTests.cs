@@ -88,6 +88,7 @@ public class SortDescriptionTests
 
         // Set same.
         description.PropertyName = value;
+        Assert.Equal(value, description.PropertyName);
     }
 
     [Theory]

@@ -375,8 +375,7 @@ namespace System.Windows
             if (templateRoot != null &&
                 typeof(FrameworkContentElement).IsAssignableFrom(templateRoot.Type))
             {
-                throw new ArgumentException(SR.Format(SR.VisualTreeRootIsFrameworkElement,
-                    typeof(FrameworkElement).Name, templateRoot.Type.Name));
+                throw new ArgumentException(SR.Format(SR.VisualTreeRootIsFrameworkElement, nameof(FrameworkElement), templateRoot.Type.Name));
             }
         }
 

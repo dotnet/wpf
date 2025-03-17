@@ -1,0 +1,34 @@
+<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:sys="clr-namespace:System;assembly=System.Runtime">
+
+    <sys:Double x:Key="ResizeGripMinHeight">12</sys:Double>
+    <sys:Double x:Key="ResizeGripMinWidth">12</sys:Double>
+    <sys:Double x:Key="ResizeGripIconSize">8.0</sys:Double>
+    <sys:String x:Key="ResizeGripIconGlyph">&#xF169;</sys:String>
+
+    <Style x:Key="DefaultResizeGripStyle" TargetType="{x:Type ResizeGrip}">
+        <Setter Property="OverridesDefaultStyle" Value="True" />
+        <Setter Property="MinWidth" Value="{DynamicResource ResizeGripMinWidth}" />
+        <Setter Property="MinHeight" Value="{DynamicResource ResizeGripMinHeight}" />
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="ResizeGrip">
+                    <Grid
+                        SnapsToDevicePixels="True"
+                        Background="{TemplateBinding Background}">
+                        <TextBlock 
+                            FontFamily="{DynamicResource SymbolThemeFontFamily}" 
+                            Text="{StaticResource ResizeGripIconGlyph}" 
+                            FontSize="{DynamicResource ResizeGripIconSize}" 
+                            Foreground="{DynamicResource ResizeGripForeground}" />
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style BasedOn="{StaticResource DefaultResizeGripStyle}" TargetType="{x:Type ResizeGrip}"/>
+</ResourceDictionary>

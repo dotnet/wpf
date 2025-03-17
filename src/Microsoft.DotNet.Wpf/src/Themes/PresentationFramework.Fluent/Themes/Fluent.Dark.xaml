@@ -562,6 +562,9 @@
   <SolidColorBrush x:Key="NavigationViewItemBackgroundSelectedLeftFluent" Color="{StaticResource ControlFillColorDefault}" />
   <SolidColorBrush x:Key="NavigationViewItemForegroundLeftFluent" Color="{StaticResource TextFillColorPrimary}" />
   <SolidColorBrush x:Key="NavigationViewItemForegroundPointerOverLeftFluent" Color="{StaticResource TextFillColorPrimary}" />
+  <!--  NavigationWindow  -->
+  <SolidColorBrush x:Key="NavigationWindowBackground" Color="{StaticResource ApplicationBackgroundColor}" />
+  <SolidColorBrush x:Key="NavigationWindowForeground" Color="{StaticResource TextFillColorPrimary}" />
   <!-- Page -->
   <SolidColorBrush x:Key="PageForeground" Color="{StaticResource TextFillColorPrimary}" />
   <SolidColorBrush x:Key="PageBackground" Color="{StaticResource SubtleFillColorTransparent}" />
@@ -3405,6 +3408,65 @@
     </Style.Triggers>
   </Style>
   <Style BasedOn="{StaticResource DefaultMenuItemStyle}" TargetType="{x:Type MenuItem}" />
+  <system:String x:Key="NavigationWindowMenuItemChevronDownGlyph"></system:String>
+  <system:String x:Key="NavigationWindowMenuItemArrowLeftGlyph"></system:String>
+  <system:String x:Key="NavigationWindowMenuItemArrowRightGlyph"></system:String>
+  <ControlTemplate x:Key="NavigationWindowTemplateKey" TargetType="{x:Type NavigationWindow}">
+    <Border Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}">
+      <DockPanel>
+        <Menu Name="NavMenu" VerticalAlignment="Center" DockPanel.Dock="Top">
+          <MenuItem Background="Transparent" BorderBrush="Transparent" Command="NavigationCommands.BrowseBack" FontFamily="{DynamicResource SymbolThemeFontFamily}" Header="{StaticResource NavigationWindowMenuItemArrowLeftGlyph}" />
+          <MenuItem Background="Transparent" BorderBrush="Transparent" Command="NavigationCommands.BrowseForward" FontFamily="{DynamicResource SymbolThemeFontFamily}" Header="{StaticResource NavigationWindowMenuItemArrowRightGlyph}" />
+          <Separator />
+          <MenuItem x:Name="Arrow" SnapsToDevicePixels="False" HorizontalAlignment="Right" VerticalAlignment="Center" ItemContainerStyle="{StaticResource FrameNavigationButtonJournalEntryStyle}" IsSubmenuOpen="{Binding Path=(MenuItem.IsSubmenuOpen),Mode=TwoWay,RelativeSource={RelativeSource TemplatedParent}}">
+            <MenuItem.Icon>
+              <TextBlock FontFamily="{DynamicResource SymbolThemeFontFamily}" Text="{StaticResource NavigationWindowMenuItemChevronDownGlyph}" />
+            </MenuItem.Icon>
+            <MenuItem.ItemsSource>
+              <MultiBinding Converter="{StaticResource JournalEntryUnifiedViewConverter}">
+                <MultiBinding.Bindings>
+                  <Binding RelativeSource="{RelativeSource TemplatedParent}" Path="(NavigationWindow.BackStack)" />
+                  <Binding RelativeSource="{RelativeSource TemplatedParent}" Path="(NavigationWindow.ForwardStack)" />
+                </MultiBinding.Bindings>
+              </MultiBinding>
+            </MenuItem.ItemsSource>
+          </MenuItem>
+        </Menu>
+        <Grid>
+          <AdornerDecorator>
+            <ContentPresenter Name="PART_NavWinCP" ClipToBounds="True" />
+          </AdornerDecorator>
+          <ResizeGrip x:Name="WindowResizeGrip" HorizontalAlignment="Right" VerticalAlignment="Bottom" Visibility="Collapsed" IsTabStop="False" />
+        </Grid>
+      </DockPanel>
+    </Border>
+    <ControlTemplate.Triggers>
+      <Trigger Property="ShowsNavigationUI" Value="False">
+        <Setter TargetName="NavMenu" Property="Visibility" Value="Collapsed" />
+      </Trigger>
+      <MultiTrigger>
+        <MultiTrigger.Conditions>
+          <Condition Property="Window.ResizeMode" Value="CanResizeWithGrip" />
+          <Condition Property="Window.WindowState" Value="Normal" />
+        </MultiTrigger.Conditions>
+        <Setter TargetName="WindowResizeGrip" Property="Visibility" Value="Visible" />
+      </MultiTrigger>
+      <MultiTrigger>
+        <MultiTrigger.Conditions>
+          <Condition Property="NavigationWindow.CanGoForward" Value="False" />
+          <Condition Property="NavigationWindow.CanGoBack" Value="False" />
+        </MultiTrigger.Conditions>
+        <Setter TargetName="NavMenu" Property="IsEnabled" Value="False" />
+      </MultiTrigger>
+    </ControlTemplate.Triggers>
+  </ControlTemplate>
+  <Style x:Key="DefaultNavigationWindowStyle" TargetType="{x:Type NavigationWindow}">
+    <Setter Property="Foreground" Value="{DynamicResource NavigationWindowForeground}" />
+    <Setter Property="Background" Value="{DynamicResource NavigationWindowBackground}" />
+    <Setter Property="OverridesDefaultStyle" Value="True" />
+    <Setter Property="Template" Value="{StaticResource NavigationWindowTemplateKey}" />
+  </Style>
+  <Style BasedOn="{StaticResource DefaultNavigationWindowStyle}" TargetType="{x:Type NavigationWindow}" />
   <Style x:Key="DefaultPageStyle" TargetType="{x:Type Page}">
     <Setter Property="Foreground" Value="{DynamicResource PageForeground}" />
     <Setter Property="Background" Value="{DynamicResource PageBackground}" />

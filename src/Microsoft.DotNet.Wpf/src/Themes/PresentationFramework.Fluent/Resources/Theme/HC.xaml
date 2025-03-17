@@ -458,6 +458,10 @@
     <SolidColorBrush x:Key="NavigationViewItemForegroundLeftFluent" Color="{StaticResource SystemColorWindowTextColor}" />
     <SolidColorBrush x:Key="NavigationViewItemForegroundPointerOverLeftFluent" Color="{StaticResource SystemColorWindowTextColor}" />
 
+    <!--  NavigationWindow  -->
+    <SolidColorBrush x:Key="NavigationWindowBackground" Color="{StaticResource SystemColorWindowColor}" />
+    <SolidColorBrush x:Key="NavigationWindowForeground" Color="{StaticResource SystemColorWindowTextColor}" />
+
     <!-- Page -->
     <SolidColorBrush x:Key="PageForeground" Color="{StaticResource SystemColorWindowTextColor}" />
     <SolidColorBrush x:Key="PageBackground" Color="Transparent" />

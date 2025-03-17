@@ -1,6 +1,6 @@
 using Microsoft.Win32;
 using System.Windows.Appearance;
-
+using System.Windows.Navigation;
 
 namespace System.Windows;
 
@@ -285,7 +285,14 @@ internal static class ThemeManager
         // We only apply Style on window, if the Window.Style has not already been set to avoid overriding users setting. 
         if (window.Style == null)
         {
-            window.SetResourceReference(FrameworkElement.StyleProperty, typeof(Window));
+            if(window is NavigationWindow)
+            {
+                window.SetResourceReference(FrameworkElement.StyleProperty, typeof(NavigationWindow));
+            }
+            else
+            {
+                window.SetResourceReference(FrameworkElement.StyleProperty, typeof(Window));
+            }            
         }
 
         window.SetImmersiveDarkMode(!useLightColors);

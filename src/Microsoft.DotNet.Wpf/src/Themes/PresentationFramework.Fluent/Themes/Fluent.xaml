@@ -35,6 +35,7 @@
         <ResourceDictionary Source="pack://application:,,,/PresentationFramework.Fluent;component/Styles/ListViewItem.xaml" />
         <ResourceDictionary Source="pack://application:,,,/PresentationFramework.Fluent;component/Styles/Menu.xaml" />
         <ResourceDictionary Source="pack://application:,,,/PresentationFramework.Fluent;component/Styles/MenuItem.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/PresentationFramework.Fluent;component/Styles/NavigationWindow.xaml" />
         <ResourceDictionary Source="pack://application:,,,/PresentationFramework.Fluent;component/Styles/Page.xaml" />
         <ResourceDictionary Source="pack://application:,,,/PresentationFramework.Fluent;component/Styles/PasswordBox.xaml" />
         <ResourceDictionary Source="pack://application:,,,/PresentationFramework.Fluent;component/Styles/ProgressBar.xaml" />

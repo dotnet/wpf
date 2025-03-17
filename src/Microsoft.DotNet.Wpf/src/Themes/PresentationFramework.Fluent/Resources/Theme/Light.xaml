@@ -481,7 +481,15 @@
     <!--  Flyout  -->
     <SolidColorBrush x:Key="FlyoutBackground" Color="{StaticResource AcrylicBackgroundFillColorDefault}" />
     <SolidColorBrush x:Key="FlyoutBorderBrush" Color="{StaticResource SurfaceStrokeColorFlyout}" />
-
+    
+    <!--  Frame  -->
+    <SolidColorBrush x:Key="FrameBackground" Color="Transparent" />
+    <SolidColorBrush x:Key="FrameForeground" Color="{StaticResource TextFillColorPrimary}" />
+    <SolidColorBrush x:Key="FrameMenuItemBackground" Color="Transparent" />
+    <SolidColorBrush x:Key="FrameMenuItemBorderBrush" Color="Transparent" />
+    <SolidColorBrush x:Key="FrameMenuItemBackgroundSelected" Color="{StaticResource SubtleFillColorTertiary}" />
+    <SolidColorBrush x:Key="FrameMenuItemForegroundDisabled" Color="{StaticResource TextFillColorDisabled}" />
+    
     <!-- GridSplitter -->
     <SolidColorBrush x:Key="GridsplitterBackground" Color="{StaticResource ControlAltFillColorTransparent}" />
     <SolidColorBrush x:Key="GridsplitterBackgroundPointerOver" Color="{StaticResource ControlAltFillColorTertiary}" />

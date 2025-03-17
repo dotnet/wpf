@@ -27,6 +27,7 @@
         <Setter Property="Background" Value="{StaticResource FrameMenuItemBackground}" />
         <Setter Property="BorderBrush" Value="{StaticResource FrameMenuItemBorderBrush}" />
         <Setter Property="BorderThickness" Value="{StaticResource FrameMenuItemBorderThickness}" />
+        <Setter Property="Border.CornerRadius" Value="{StaticResource ControlCornerRadius}" />
         <Setter Property="Focusable" Value="True" />
         <Setter Property="OverridesDefaultStyle" Value="True" />
         <Setter Property="Header" Value="{Binding Path=(JournalEntry.Name)}"/>
@@ -43,8 +44,8 @@
                         BorderThickness="{TemplateBinding BorderThickness}"
                         Background="{TemplateBinding Background}"
                         BorderBrush="{TemplateBinding BorderBrush}"
-                        CornerRadius="6">
-                        <Grid Margin="4,6">
+                        CornerRadius="{TemplateBinding Border.CornerRadius}">
+                        <Grid Margin="8">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="Auto" />
                                 <ColumnDefinition Width="*" />
@@ -52,7 +53,7 @@
                             <ContentPresenter
                                 x:Name="Icon"
                                 Grid.Column="0"
-                                Margin="0,0,6,0"
+                                Margin="0,0,8,0"
                                 SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
                                 VerticalAlignment="Center"
                                 Content="{TemplateBinding Icon}"/>
@@ -113,7 +114,7 @@
         </Setter>
     </Style>
 
-    <ControlTemplate x:Key="FrameTemplateKey" TargetType="{x:Type Frame}">
+    <ControlTemplate x:Key="DefaultFrameTemplateKey" TargetType="{x:Type Frame}">
         <Border 
             Background="{TemplateBinding Background}"
             BorderBrush="{TemplateBinding BorderBrush}"
@@ -141,7 +142,6 @@
                         SnapsToDevicePixels="False"
                         HorizontalAlignment="Right"
                         VerticalAlignment="Center"                 
-                        Foreground="{DynamicResource FrameMenuItemDropDownGlyphForeground}"
                         ItemContainerStyle="{StaticResource NavigationWindowNavigationButtonJournalEntryStyle}"
                         IsSubmenuOpen="{Binding Path=(MenuItem.IsSubmenuOpen),Mode=TwoWay,RelativeSource={RelativeSource TemplatedParent}}"  >
                         <MenuItem.Icon>
@@ -192,14 +192,14 @@
         </Setter>
         <Style.Triggers>
             <Trigger Property="NavigationUIVisibility" Value="Visible">
-                <Setter Property="Template" Value="{StaticResource FrameTemplateKey}"/>
+                <Setter Property="Template" Value="{StaticResource DefaultFrameTemplateKey}"/>
             </Trigger>
             <MultiTrigger>
                 <MultiTrigger.Conditions>
                     <Condition Property="JournalOwnership" Value="OwnsJournal"/>
                     <Condition Property="NavigationUIVisibility" Value="Automatic"/>
                 </MultiTrigger.Conditions>
-                <Setter Property="Template" Value="{StaticResource FrameTemplateKey}"/>
+                <Setter Property="Template" Value="{StaticResource DefaultFrameTemplateKey}"/>
             </MultiTrigger>
         </Style.Triggers>
     </Style>

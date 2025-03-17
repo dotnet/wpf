@@ -476,14 +476,12 @@
     <SolidColorBrush x:Key="FlyoutBorderBrush" Color="{StaticResource SurfaceStrokeColorFlyout}" />
 
     <!--  Frame  -->
-    <SolidColorBrush x:Key="FrameBackground" Color="{StaticResource ApplicationBackgroundColor}" />
+    <SolidColorBrush x:Key="FrameBackground" Color="Transparent" />
     <SolidColorBrush x:Key="FrameForeground" Color="{StaticResource TextFillColorPrimary}" />
     <SolidColorBrush x:Key="FrameMenuItemBackground" Color="Transparent" />
     <SolidColorBrush x:Key="FrameMenuItemBorderBrush" Color="Transparent" />
     <SolidColorBrush x:Key="FrameMenuItemBackgroundSelected" Color="{StaticResource SubtleFillColorTertiary}" />
     <SolidColorBrush x:Key="FrameMenuItemForegroundDisabled" Color="{StaticResource TextFillColorDisabled}" />
-    <SolidColorBrush x:Key="FrameMenuItemDropDownGlyphForeground" Color="{StaticResource TextFillColorSecondary}" />
-
 
     <!--  HyperlinkButton  -->
     <SolidColorBrush x:Key="HyperlinkButtonBackground" Color="{StaticResource SubtleFillColorTransparent}" />

@@ -470,13 +470,12 @@
   <SolidColorBrush x:Key="FlyoutBackground" Color="{StaticResource AcrylicBackgroundFillColorDefault}" />
   <SolidColorBrush x:Key="FlyoutBorderBrush" Color="{StaticResource SurfaceStrokeColorFlyout}" />
   <!--  Frame  -->
-  <SolidColorBrush x:Key="FrameBackground" Color="{StaticResource ApplicationBackgroundColor}" />
+  <SolidColorBrush x:Key="FrameBackground" Color="Transparent" />
   <SolidColorBrush x:Key="FrameForeground" Color="{StaticResource TextFillColorPrimary}" />
   <SolidColorBrush x:Key="FrameMenuItemBackground" Color="Transparent" />
   <SolidColorBrush x:Key="FrameMenuItemBorderBrush" Color="Transparent" />
   <SolidColorBrush x:Key="FrameMenuItemBackgroundSelected" Color="{StaticResource SubtleFillColorTertiary}" />
   <SolidColorBrush x:Key="FrameMenuItemForegroundDisabled" Color="{StaticResource TextFillColorDisabled}" />
-  <SolidColorBrush x:Key="FrameMenuItemDropDownGlyphForeground" Color="{StaticResource TextFillColorSecondary}" />
   <!--  HyperlinkButton  -->
   <SolidColorBrush x:Key="HyperlinkButtonBackground" Color="{StaticResource SubtleFillColorTransparent}" />
   <SolidColorBrush x:Key="HyperlinkButtonBackgroundPointerOver" Color="{StaticResource SubtleFillColorSecondary}" />
@@ -2665,6 +2664,7 @@
     <Setter Property="Background" Value="{StaticResource FrameMenuItemBackground}" />
     <Setter Property="BorderBrush" Value="{StaticResource FrameMenuItemBorderBrush}" />
     <Setter Property="BorderThickness" Value="{StaticResource FrameMenuItemBorderThickness}" />
+    <Setter Property="Border.CornerRadius" Value="{StaticResource ControlCornerRadius}" />
     <Setter Property="Focusable" Value="True" />
     <Setter Property="OverridesDefaultStyle" Value="True" />
     <Setter Property="Header" Value="{Binding Path=(JournalEntry.Name)}" />
@@ -2675,13 +2675,13 @@
     <Setter Property="Template">
       <Setter.Value>
         <ControlTemplate TargetType="{x:Type MenuItem}">
-          <Border x:Name="Border" Margin="4" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" CornerRadius="6">
-            <Grid Margin="4,6">
+          <Border x:Name="Border" Margin="4" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" CornerRadius="{TemplateBinding Border.CornerRadius}">
+            <Grid Margin="8">
               <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto" />
                 <ColumnDefinition Width="*" />
               </Grid.ColumnDefinitions>
-              <ContentPresenter x:Name="Icon" Grid.Column="0" Margin="0,0,6,0" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="Center" Content="{TemplateBinding Icon}" />
+              <ContentPresenter x:Name="Icon" Grid.Column="0" Margin="0,0,8,0" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="Center" Content="{TemplateBinding Icon}" />
               <ContentPresenter x:Name="HeaderPresenter" Grid.Column="1" VerticalAlignment="Center" ContentSource="Header" Margin="{TemplateBinding Padding}" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" RecognizesAccessKey="True" TextElement.Foreground="{TemplateBinding Foreground}" />
             </Grid>
           </Border>
@@ -2730,14 +2730,14 @@
       </Setter.Value>
     </Setter>
   </Style>
-  <ControlTemplate x:Key="FrameTemplateKey" TargetType="{x:Type Frame}">
+  <ControlTemplate x:Key="DefaultFrameTemplateKey" TargetType="{x:Type Frame}">
     <Border Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}">
       <DockPanel>
         <Menu Name="NavMenu" VerticalAlignment="Center" DockPanel.Dock="Top">
           <MenuItem Background="Transparent" BorderBrush="Transparent" Command="NavigationCommands.BrowseBack" FontFamily="{DynamicResource SymbolThemeFontFamily}" Header="{StaticResource FrameMenuItemArrowLeftGlyph}" />
           <MenuItem Background="Transparent" BorderBrush="Transparent" Command="NavigationCommands.BrowseForward" FontFamily="{DynamicResource SymbolThemeFontFamily}" Header="{StaticResource FrameMenuItemArrowRightGlyph}" />
           <Separator />
-          <MenuItem x:Name="Arrow" SnapsToDevicePixels="False" HorizontalAlignment="Right" VerticalAlignment="Center" Foreground="{DynamicResource FrameMenuItemDropDownGlyphForeground}" ItemContainerStyle="{StaticResource NavigationWindowNavigationButtonJournalEntryStyle}" IsSubmenuOpen="{Binding Path=(MenuItem.IsSubmenuOpen),Mode=TwoWay,RelativeSource={RelativeSource TemplatedParent}}">
+          <MenuItem x:Name="Arrow" SnapsToDevicePixels="False" HorizontalAlignment="Right" VerticalAlignment="Center" ItemContainerStyle="{StaticResource NavigationWindowNavigationButtonJournalEntryStyle}" IsSubmenuOpen="{Binding Path=(MenuItem.IsSubmenuOpen),Mode=TwoWay,RelativeSource={RelativeSource TemplatedParent}}">
             <MenuItem.Icon>
               <TextBlock FontFamily="{DynamicResource SymbolThemeFontFamily}" Text="{StaticResource FrameMenuItemChevronDownGlyph}" />
             </MenuItem.Icon>
@@ -2781,14 +2781,14 @@
     </Setter>
     <Style.Triggers>
       <Trigger Property="NavigationUIVisibility" Value="Visible">
-        <Setter Property="Template" Value="{StaticResource FrameTemplateKey}" />
+        <Setter Property="Template" Value="{StaticResource DefaultFrameTemplateKey}" />
       </Trigger>
       <MultiTrigger>
         <MultiTrigger.Conditions>
           <Condition Property="JournalOwnership" Value="OwnsJournal" />
           <Condition Property="NavigationUIVisibility" Value="Automatic" />
         </MultiTrigger.Conditions>
-        <Setter Property="Template" Value="{StaticResource FrameTemplateKey}" />
+        <Setter Property="Template" Value="{StaticResource DefaultFrameTemplateKey}" />
       </MultiTrigger>
     </Style.Triggers>
   </Style>

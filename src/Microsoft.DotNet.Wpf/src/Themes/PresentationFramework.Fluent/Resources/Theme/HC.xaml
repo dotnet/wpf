@@ -436,11 +436,6 @@
     <!--  NavigationWindow  -->
     <SolidColorBrush x:Key="NavigationWindowBackground" Color="{StaticResource SystemColorWindowColor}" />
     <SolidColorBrush x:Key="NavigationWindowForeground" Color="{StaticResource SystemColorWindowTextColor}" />
-    <SolidColorBrush x:Key="NavigationWindowMenuItemBackground" Color="Transparent" />
-    <SolidColorBrush x:Key="NavigationWindowMenuItemBorderBrush" Color="Transparent" />
-    <SolidColorBrush x:Key="NavigationWindowMenuItemBackgroundSelected" Color="{StaticResource SystemColorButtonFaceColor}" />
-    <SolidColorBrush x:Key="NavigationWindowMenuItemForegroundDisabled" Color="{StaticResource SystemColorGrayTextColor}" />
-    <SolidColorBrush x:Key="NavigationWindowMenuItemDropDownGlyphForeground" Color="{StaticResource SystemColorGrayTextColor}" />
 
     <!-- Page -->
     <SolidColorBrush x:Key="PageForeground" Color="{StaticResource SystemColorWindowTextColor}" />

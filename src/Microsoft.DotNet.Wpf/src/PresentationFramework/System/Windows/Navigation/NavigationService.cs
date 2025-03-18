@@ -2722,13 +2722,9 @@ namespace System.Windows.Navigation
             }
             catch (NotSupportedException)
             {
-                LaunchResult launched = LaunchResult.NotLaunched;
-
                 // Not supported exceptions are thrown for mailto: which we want to support.
                 // So we detect mailto: here.
-                launched = AppSecurityManager.SafeLaunchBrowserOnlyIfPossible(CurrentSource, resolvedDestinationUri, IsTopLevelContainer);
-
-                if (launched == LaunchResult.NotLaunched)
+                if (AppSecurityManager.SafeLaunchBrowserOnlyIfPossible(resolvedDestinationUri, IsTopLevelContainer) is LaunchResult.NotLaunched)
                     throw;
             }
             catch (SecurityException)
@@ -2964,7 +2960,7 @@ namespace System.Windows.Navigation
                         destinationUri.ToString());
                 }
 
-                AppSecurityManager.SafeLaunchBrowserDemandWhenUnsafe(CurrentSource, destinationUri, IsTopLevelContainer);
+                AppSecurityManager.SafeLaunchBrowserDemandWhenUnsafe(destinationUri, IsTopLevelContainer);
             }
             finally
             {

@@ -78,7 +78,7 @@ namespace MS.Internal
         {
             if (_switch.Enabled)
             {
-                System.Diagnostics.Trace.WriteLine(_switch.Description + " " + _switch.DisplayName + " : " + message);
+                System.Diagnostics.Trace.WriteLine($"{_switch.Description} {_switch.DisplayName} : {message}");
             }
         }
 
@@ -95,7 +95,7 @@ namespace MS.Internal
                 for (int i=0; i < st.FrameCount && i < Depth; i++)
                 {
                     System.Diagnostics.StackFrame sf = st.GetFrame(i);
-                    Trace(sf.GetMethod()+"+"+sf.GetILOffset().ToString(System.Globalization.CultureInfo.InvariantCulture));
+                    Trace($"{sf.GetMethod()}+{sf.GetILOffset().ToString(System.Globalization.CultureInfo.InvariantCulture)}");
                 }
 
                 Unindent();
@@ -121,7 +121,7 @@ namespace MS.Internal
 
         public IDisposable Indented(string message)
         {
-            System.Diagnostics.Trace.WriteLine(_switch.Description + " " + _switch.DisplayName + " : " + message);
+            System.Diagnostics.Trace.WriteLine($"{_switch.Description} {_switch.DisplayName} : {message}");
             System.Diagnostics.Trace.Indent();
             return (this);
         }

@@ -106,7 +106,7 @@ namespace System.Windows.Media
                 if (string.IsNullOrEmpty(location))
                     location = "./";
                 else if (Util.IsReferenceToWindowsFonts(location))
-                    location = "./" + location;
+                    location = $"./{location}";
 
                 fontLocation = new Uri(baseUri, location);
             }

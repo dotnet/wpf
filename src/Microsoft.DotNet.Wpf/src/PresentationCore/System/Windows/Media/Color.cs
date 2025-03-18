@@ -256,8 +256,8 @@ namespace System.Windows.Media
         }
 
         /// <summary>
-        /// Creates a string representation of this object based on the format string 
-        /// and IFormatProvider passed in.  
+        /// Creates a string representation of this object based on the format string
+        /// and IFormatProvider passed in.
         /// If the provider is null, the CurrentCulture is used.
         /// See the documentation for IFormattable for more information.
         /// </summary>
@@ -294,14 +294,13 @@ namespace System.Windows.Media
                 String uriString = safeUnescapedUri.GetComponents(UriComponents.SerializationInfoString, UriFormat.UriEscaped);
 
                 var sb = new StringBuilder();
-                sb.AppendFormat(provider, "{0}{1} ", Parsers.s_ContextColor, uriString);
-                sb.AppendFormat(provider,"{1:" + format + "}{0}",separator,scRgbColor.a);
-                for (int i = 0; i < nativeColorValue.Length; ++i )
+                sb.Append(provider, $"{Parsers.s_ContextColor}{uriString} {scRgbColor.a:R}{separator}");
+                for (int i= 0; i< nativeColorValue.Length; ++i )
                 {
-                    sb.AppendFormat(provider,"{0:" + format + "}",nativeColorValue[i]);
-                    if (i < nativeColorValue.Length - 1)
+                    sb.AppendFormat(provider, $"{{0:{format}}}", nativeColorValue[i]);
+                    if (i< nativeColorValue.GetLength(0)-1 )
                     {
-                        sb.AppendFormat(provider,"{0}",separator);
+                        sb.Append(provider, $"{separator}");
                     }
                 }
                 return sb.ToString();

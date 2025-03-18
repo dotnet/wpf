@@ -5,6 +5,7 @@
 using MS.Internal;
 using MS.Internal.Media;
 using MS.Internal.Media3D;
+using System.Globalization;
 using System.Windows.Diagnostics;
 using System.Windows.Media.Composition;
 
@@ -653,9 +654,8 @@ namespace System.Windows.Media.Media3D
             {
                 // This should never happen, users can not extend the abstract HitTestParameters3D class.
                 Invariant.Assert(false,
-                    String.Format(System.Globalization.CultureInfo.InvariantCulture,
-                        "'{0}' HitTestParameters3D are not supported on {1}.",
-                        hitTestParameters.GetType().Name, this.GetType().Name));
+                    string.Create(CultureInfo.InvariantCulture,
+                        $"'{hitTestParameters.GetType().Name}' HitTestParameters3D are not supported on {this.GetType().Name}."));
             }
         }
 

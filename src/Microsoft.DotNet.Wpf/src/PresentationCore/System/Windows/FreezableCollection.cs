@@ -1076,7 +1076,7 @@ namespace System.Windows
                     }
                     else
                     {
-                        Debug.Assert(_index == -2, "expected -2, got " + _index + "\n");
+                        Debug.Assert(_index == -2, $"expected -2, got {_index}\n");
                         throw new InvalidOperationException(SR.Enumerator_ReachedEnd);
                     }
                 }

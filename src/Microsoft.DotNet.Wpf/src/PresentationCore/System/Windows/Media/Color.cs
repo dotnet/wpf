@@ -297,7 +297,7 @@ namespace System.Windows.Media
                 sb.Append(provider, $"{Parsers.s_ContextColor}{uriString} {scRgbColor.a:R}{separator}");
                 for (int i= 0; i< nativeColorValue.Length; ++i )
                 {
-                    sb.Append(provider, $"{nativeColorValue[i]:R}");
+                    sb.AppendFormat(provider, $"{{0:{format}}}", nativeColorValue[i]);
                     if (i< nativeColorValue.GetLength(0)-1 )
                     {
                         sb.Append(provider, $"{separator}");

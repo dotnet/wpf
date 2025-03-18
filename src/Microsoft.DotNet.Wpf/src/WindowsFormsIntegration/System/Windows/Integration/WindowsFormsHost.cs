@@ -441,30 +441,6 @@ namespace System.Windows.Forms.Integration
 
         #endregion Keyboarding
 
-        #region NativeWindow
-
-        // In 4.0, we spun up a WinForms.NativeWindow to listen for WM_ACTIVATEAPP
-        // messages.  This was part of a failed attempt to make focus-restoration
-        // work correctly;   in 4.5 we solved the focus problems a different way
-        // that didn't need the NativeWindow.  However, the NativeWindow had a
-        // side-effect:  it swallows all exceptions.   For compat with 4.0, we
-        // re-introduce the NativeWindow.  We don't need it to do anything - it's
-        // only purpose is to swallow exceptions during WndProc so that 4.0 apps
-        // don't crash. (Dev11 475347)
-
-        private DummyNativeWindow _dummyNativeWindow;
-        private class DummyNativeWindow : NativeWindow, IDisposable
-        {
-            WindowsFormsHost _host;
-            public DummyNativeWindow(WindowsFormsHost host)
-            { _host = host; }
-
-            public void Dispose()
-            { this.ReleaseHandle(); }
-        }
-
-        #endregion NativeWindow
-
         #region Window Handling & Misc
         /// <internalonly>
         ///     Overrides the base class implementation of BuildWindowCore to build the hosted
@@ -476,18 +452,14 @@ namespace System.Windows.Forms.Integration
 
             Debug.WriteLineIf(_traceHandle.TraceVerbose, String.Format(CultureInfo.CurrentCulture, "WindowsFormsHost({0}): BuildWindowCore (parent=0x{1:x8})", this.Name, hwndParent.Handle.ToInt32()));
 
-            // for 4.0 compat, create a Winforms.NativeWindow to swallow exceptions during WndProc
-            if (!CoreCompatibilityPreferences.TargetsAtLeast_Desktop_V4_5)
-            {
-                _dummyNativeWindow?.Dispose();
-                _dummyNativeWindow = new DummyNativeWindow(this);
-                _dummyNativeWindow.AssignHandle(hwndParent.Handle);
-            }
-
             _hwndParent = hwndParent;
-            //For Keyboard interop
-            ApplicationInterop.ThreadWindowsFormsHostList.Add(this);    //Keep track of this control, so it can get forwarded windows messages
-            EnableWindowsFormsInterop();        //Start the forwarding of windows messages to all WFH controls on active windows
+
+            // For Keyboard interop
+
+            // Keep track of this control, so it can get forwarded windows messages
+            ApplicationInterop.ThreadWindowsFormsHostList.Add(this);
+            // Start the forwarding of windows messages to all WFH controls on active windows
+            EnableWindowsFormsInterop();
 
             UnsafeNativeMethods.SetParent(/* child = */ HostContainerInternal.Handle, /* parent = */ _hwndParent.Handle);
             return new HandleRef(HostContainerInternal, HostContainerInternal.Handle);
@@ -528,7 +500,6 @@ namespace System.Windows.Forms.Integration
                     {
                         try
                         {
-                            _dummyNativeWindow?.Dispose();
                             _hostContainerInternal.Dispose();
                             this.Loaded -= new RoutedEventHandler(ApplyAllProperties);
                         }

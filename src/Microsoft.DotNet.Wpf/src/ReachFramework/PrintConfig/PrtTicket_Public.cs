@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -521,7 +521,8 @@ namespace MS.Internal.Printing.Configuration
         /// <returns>the new FormatException instance</returns>
         internal static FormatException NewPTFormatException(string detailMsg, Exception innerException)
         {
-            return new FormatException($"{PrintSchemaTags.Framework.PrintTicketRoot} {PTUtility.GetTextFromResource("FormatException.XMLNotWellFormed")} {detailMsg}",
+            return new FormatException($"{PrintSchemaTags.Framework.PrintTicketRoot} " +
+                                            $"{PTUtility.GetTextFromResource("FormatException.XMLNotWellFormed")} {detailMsg}",
                                        innerException);
         }
 

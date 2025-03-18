@@ -107,7 +107,8 @@ namespace MS.Internal.Printing.Configuration
             catch (XmlException xmlException)
             {
                 throw new ArgumentException(
-                    $"{PrintSchemaTags.Framework.PrintTicketRoot} {PTUtility.GetTextFromResource("FormatException.XMLNotWellFormed")} {xmlException.Message}",
+                    $"{PrintSchemaTags.Framework.PrintTicketRoot} " +
+                        $"{PTUtility.GetTextFromResource("FormatException.XMLNotWellFormed")} {xmlException.Message}",
                     nameof(printTicket),
                     xmlException);
             }
@@ -373,13 +374,15 @@ namespace MS.Internal.Printing.Configuration
                 {
                     string deviceNamepace = string.Create(
                             CultureInfo.InvariantCulture,
-                            $"http://schemas.microsoft.com/windows/printing/oemdriverpt/netfx{BuildInfo.WCP_VERSION_SUFFIX}/{_driverName}/v{_driverVersion}");
+                            $"http://schemas.microsoft.com/windows/printing/oemdriverpt/netfx{BuildInfo.WCP_VERSION_SUFFIX}" +
+                                $"/{_driverName}/v{_driverVersion}");
 
                     if (!Uri.IsWellFormedUriString(deviceNamepace, UriKind.Absolute))
                     {
                         deviceNamepace = string.Create(
                             CultureInfo.InvariantCulture,
-                            $"http://schemas.microsoft.com/windows/printing/oemdriverpt/netfx{BuildInfo.WCP_VERSION_SUFFIX}/{Uri.EscapeDataString(_driverName)}/v{_driverVersion}");
+                            $"http://schemas.microsoft.com/windows/printing/oemdriverpt/netfx{BuildInfo.WCP_VERSION_SUFFIX}" +
+                                $"/{Uri.EscapeDataString(_driverName)}/v{_driverVersion}");
                     }
 
                     this._printTicketNamespace = deviceNamepace;

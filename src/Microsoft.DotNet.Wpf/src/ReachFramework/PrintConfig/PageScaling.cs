@@ -116,7 +116,11 @@ namespace MS.Internal.Printing.Configuration
         /// <returns>A string that represents this scaling option.</returns>
         public override string ToString()
         {
-            return $"{Value}: {((CustomScaleWidth != null) ? CustomScaleWidth.ToString() : "null")} x {((CustomScaleHeight != null) ? CustomScaleHeight.ToString() : "null")} x {((CustomSquareScale != null) ? CustomSquareScale.ToString() : "null")}";
+            const string nullString = "null";
+
+            return $"{Value}: {CustomScaleWidth?.ToString() ?? nullString} x " +
+                    $"{CustomScaleHeight?.ToString() ?? nullString} x " +
+                    $"{CustomSquareScale?.ToString() ?? nullString}";
         }
 
         #endregion Public Methods

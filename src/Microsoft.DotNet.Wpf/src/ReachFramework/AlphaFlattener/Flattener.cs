@@ -995,7 +995,8 @@ namespace Microsoft.Internal.AlphaFlattener
 
                 for (int i = 0; i < transparentCluster.Count; i++)
                 {
-                    Console.WriteLine($"Cluster {i + 1}: {DisplayList.LeftPad(transparentCluster[i].DebugBounds, 0)} {DisplayList.LeftPad(transparentCluster[i].DebugPrimitives, 0)} {transparentCluster[i].DebugRasterize}");
+                    Console.WriteLine($"Cluster {i + 1}: {DisplayList.LeftPad(transparentCluster[i].DebugBounds, 0)} " +
+                                        $"{DisplayList.LeftPad(transparentCluster[i].DebugPrimitives, 0)} {transparentCluster[i].DebugRasterize}");
                 }
 
                 Console.WriteLine();

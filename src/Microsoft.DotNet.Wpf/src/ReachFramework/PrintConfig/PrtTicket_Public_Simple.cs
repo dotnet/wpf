@@ -109,7 +109,8 @@ namespace System.Printing
         public override string ToString()
         {
             const string nullString = "Null";
-            return $"{PageMediaSizeName?.ToString() ?? nullString} ({Width?.ToString() ?? nullString} x {Height?.ToString() ?? nullString})";
+            return $"{PageMediaSizeName?.ToString() ?? nullString} " +
+                        $"({Width?.ToString() ?? nullString} x {Height?.ToString() ?? nullString})";
         }
         #endregion Public Methods
 
@@ -213,7 +214,9 @@ namespace System.Printing
         /// <returns>String that shows the page resolution setting.</returns>
         public override string ToString()
         {
-            return $"{X?.ToString() ?? "Null"} x {Y?.ToString() ?? "Null"} (QualitativeResolution: {QualitativeResolution?.ToString() ?? "Null"})";
+            const string nullString = "Null";
+            return $"{X?.ToString() ?? nullString} x {Y?.ToString() ?? nullString} " +
+                        $"(QualitativeResolution: {QualitativeResolution?.ToString() ?? nullString})";
         }
 
         #endregion Public Methods

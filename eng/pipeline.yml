@@ -167,7 +167,7 @@ jobs:
           $(_InternalRuntimeDownloadArgs)
           /bl:$(Build.SourcesDirectory)\artifacts\log\$(_BuildConfig)\Test.binlog
         displayName: Run xUnit Tests
-        condition: and(or(ne(variables['_HelixPipeline'], 'true'), and(eq(variables['_HelixPipeline'], 'true') ,eq(variables['_BuildConfig'], 'Release'), eq(variables['_PublicBuildPipeline'], 'true'), eq(variables['_ContinuousIntegrationTestsEnabled'], 'true'))), ne(variables['_Platform'], 'arm64'))
+        condition: and(or(ne(variables['_HelixPipeline'], 'true'), and(eq(variables['_HelixPipeline'], 'true') ,eq(variables['_BuildConfig'], 'Release'), eq(variables['_PublicBuildPipeline'], 'true'), eq(variables['_ContinuousIntegrationTestsEnabled'], 'true'))), eq(variables['_Platform'], 'x64'))
       - task: PublishTestResults@2
         displayName: Publish XUnit Test Results
         inputs:

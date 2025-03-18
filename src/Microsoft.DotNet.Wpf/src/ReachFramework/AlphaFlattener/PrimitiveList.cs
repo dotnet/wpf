@@ -56,8 +56,6 @@ namespace Microsoft.Internal.AlphaFlattener
             }
             else if (obj is Rect r)
             {
-                Rect r = (Rect) obj;
-
                 return $" [{LeftPad(r.Left, 6)} {LeftPad(r.Top, 6)} {LeftPad(r.Width, 6)} {LeftPad(r.Height, 6)}]";
             }
             else

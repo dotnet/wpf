@@ -2998,7 +2998,7 @@
               <Setter TargetName="RootGrid" Property="Background" Value="{DynamicResource GridsplitterBackgroundDisabled}" />
               <Setter TargetName="PART_Thumb" Property="Opacity" Value="0.45" />
             </Trigger>
-            <Trigger Property="ResizeDirection" Value="Rows">
+            <Trigger Property="Cursor" Value="SizeNS">
               <Setter TargetName="PART_Thumb" Property="Width" Value="{DynamicResource GridsplitterThumbHeight}" />
               <Setter TargetName="PART_Thumb" Property="Height" Value="{DynamicResource GridsplitterThumbWidth}" />
             </Trigger>

@@ -6,6 +6,7 @@ using MS.Internal;
 using MS.Internal.Interop;
 using MS.Utility;
 using MS.Win32;
+using System.Threading;
 using System.Windows.Interop;
 
 namespace System.Windows.Threading

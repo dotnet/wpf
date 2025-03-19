@@ -13,7 +13,7 @@ namespace System.Windows.Threading
     /// <remarks>
     ///     This is returned from DispatcherPriorityAwaitable.GetAwaiter()
     /// </remarks>
-    public struct DispatcherPriorityAwaiter : INotifyCompletion
+    public readonly struct DispatcherPriorityAwaiter : INotifyCompletion
     {
         /// <summary>
         ///     Creates an instance of DispatcherPriorityAwaiter that will
@@ -30,13 +30,7 @@ namespace System.Windows.Threading
         ///     This awaiter is just a proxy for queuing the continuations, it
         ///     never completes itself.
         /// </summary>
-        public bool IsCompleted
-        {
-            get
-            {
-                return false;
-            }
-        }
+        public bool IsCompleted => false;
 
         /// <summary>
         ///     This awaiter is just a proxy for queuing the continuations, it

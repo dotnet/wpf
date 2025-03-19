@@ -461,7 +461,7 @@ namespace MS.Internal.AutomationProxies
         }
         
         // Check if a point is within the client Rect of a window
-        static protected bool PtInClientRect (IntPtr hwnd, int x, int y)
+        protected static bool PtInClientRect (IntPtr hwnd, int x, int y)
         {
             NativeMethods.Win32Rect rc = new NativeMethods.Win32Rect ();
             if (!Misc.GetClientRect(hwnd, ref rc))
@@ -488,7 +488,7 @@ namespace MS.Internal.AutomationProxies
 
         // Get the access key of the associated label (if there is
         // an associated label).
-        static protected string GetLabelAccessKey(IntPtr hwnd)
+        protected static string GetLabelAccessKey(IntPtr hwnd)
         {
             string accessKey = string.Empty;
             IntPtr label = Misc.GetLabelhwnd(hwnd);

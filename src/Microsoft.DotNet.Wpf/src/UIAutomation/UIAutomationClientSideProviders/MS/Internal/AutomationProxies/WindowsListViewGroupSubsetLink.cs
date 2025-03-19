@@ -66,7 +66,7 @@ namespace MS.Internal.AutomationProxies
             }
 
             // Gets the bounding rectangle for this element
-            internal unsafe override Rect BoundingRectangle
+            internal override unsafe Rect BoundingRectangle
             {
                 get
                 {

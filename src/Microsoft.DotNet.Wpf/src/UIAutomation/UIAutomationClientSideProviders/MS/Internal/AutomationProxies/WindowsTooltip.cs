@@ -349,7 +349,7 @@ namespace MS.Internal.AutomationProxies
 
         #region Private Fields
 
-        private readonly static WinEventTracker.EvtIdProperty[] _toolTipEventIds = new WinEventTracker.EvtIdProperty[] 
+        private static readonly WinEventTracker.EvtIdProperty[] _toolTipEventIds = new WinEventTracker.EvtIdProperty[] 
         {
             new WinEventTracker.EvtIdProperty(NativeMethods.EVENT_OBJECT_HIDE, 0), 
             //see comment in OnToolTipEvents

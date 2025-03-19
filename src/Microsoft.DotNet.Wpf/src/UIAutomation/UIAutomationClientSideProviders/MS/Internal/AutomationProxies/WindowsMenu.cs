@@ -1108,7 +1108,7 @@ namespace MS.Internal.AutomationProxies
         private MenuType _type;
 
         // Menu-specific events
-        private readonly static WinEventTracker.EvtIdProperty [] _menuEvents = new WinEventTracker.EvtIdProperty [] {
+        private static readonly WinEventTracker.EvtIdProperty [] _menuEvents = new WinEventTracker.EvtIdProperty [] {
                 new WinEventTracker.EvtIdProperty(NativeMethods.EventSystemMenuPopupStart, ExpandCollapsePattern.ExpandCollapseStateProperty),
                 new WinEventTracker.EvtIdProperty(NativeMethods.EventSystemMenuPopupEnd, ExpandCollapsePattern.ExpandCollapseStateProperty),
                 new WinEventTracker.EvtIdProperty(NativeMethods.EventObjectInvoke, InvokePattern.InvokedEvent)

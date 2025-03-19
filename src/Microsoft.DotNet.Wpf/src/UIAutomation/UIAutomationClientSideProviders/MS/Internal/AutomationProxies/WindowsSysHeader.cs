@@ -293,12 +293,12 @@ namespace MS.Internal.AutomationProxies
         }
 
         // Map a header item
-        static private int OrderToIndex (IntPtr hwnd, int order)
+        private static int OrderToIndex (IntPtr hwnd, int order)
         {
             return Misc.ProxySendMessageInt(hwnd, NativeMethods.HDM_ORDERTOINDEX, new IntPtr(order), IntPtr.Zero);
         }
         // retrieve count of header items
-        static private int HeaderItemCount (IntPtr hwnd)
+        private static int HeaderItemCount (IntPtr hwnd)
         {
             return Misc.ProxySendMessageInt(hwnd, NativeMethods.HDM_GETITEMCOUNT, IntPtr.Zero, IntPtr.Zero);
         }

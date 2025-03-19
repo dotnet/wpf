@@ -856,7 +856,7 @@ namespace MS.Internal.AutomationProxies
         #region Selection Helper
 
         // detect if tab-control supports multiple selection
-        static internal bool SupportMultipleSelection (IntPtr hwnd)
+        internal static bool SupportMultipleSelection (IntPtr hwnd)
         {
             return Misc.IsBitSet(Misc.GetWindowStyle(hwnd), (NativeMethods.TCS_BUTTONS | NativeMethods.TCS_MULTISELECT));
         }
@@ -874,7 +874,7 @@ namespace MS.Internal.AutomationProxies
         private const int SpinControl = -2;
 
         // Updown specific events.
-        private readonly static WinEventTracker.EvtIdProperty[] _upDownEvents;
+        private static readonly WinEventTracker.EvtIdProperty[] _upDownEvents;
 
         #endregion
     }

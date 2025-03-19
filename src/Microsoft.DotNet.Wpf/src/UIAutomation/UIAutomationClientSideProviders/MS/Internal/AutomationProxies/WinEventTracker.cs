@@ -43,7 +43,7 @@ namespace MS.Internal.AutomationProxies
         // Param name="hwnd"
         // Param name="raiseEvents" - function to call to create a raw element
         // Param name="aEvtIdProp"
-        static internal void AddToNotificationList(IntPtr hwnd, ProxyRaiseEvents raiseEvents, ReadOnlySpan<EvtIdProperty> aEvtIdProp)
+        internal static void AddToNotificationList(IntPtr hwnd, ProxyRaiseEvents raiseEvents, ReadOnlySpan<EvtIdProperty> aEvtIdProp)
         {
             GetCallbackQueue();
 
@@ -53,7 +53,7 @@ namespace MS.Internal.AutomationProxies
 
 
         // Get the QueueProcessor so MSAA events can use it as well
-        static internal QueueProcessor GetCallbackQueue()
+        internal static QueueProcessor GetCallbackQueue()
         {
             lock (_queueLock)
             {
@@ -72,7 +72,7 @@ namespace MS.Internal.AutomationProxies
         // Param name="hwnd"
         // Param name="raiseEvents" - Callback, should be null for non system-wide events
         // Param name="aEvtIdProp"
-        static internal void RemoveToNotificationList(IntPtr hwnd, ReadOnlySpan<EvtIdProperty> aEvtIdProp, ProxyRaiseEvents raiseEvents)
+        internal static void RemoveToNotificationList(IntPtr hwnd, ReadOnlySpan<EvtIdProperty> aEvtIdProp, ProxyRaiseEvents raiseEvents)
         {
             // Remove the list of Event to Window List
             // NOTE: raiseEvents must be null in the case when event is not a system-wide event

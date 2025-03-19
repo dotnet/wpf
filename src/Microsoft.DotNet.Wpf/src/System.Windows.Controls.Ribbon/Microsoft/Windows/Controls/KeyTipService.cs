@@ -1296,7 +1296,7 @@ namespace Microsoft.Windows.Controls
         ///     AdornerLayer of ScrollContentPresenter if its
         ///     ScrollViewer has CanClipKeyTip set to false.
         /// </summary>
-        static private AdornerLayer GetAdornerLayer(Visual visual, out bool isScrollAdornerLayer)
+        private static AdornerLayer GetAdornerLayer(Visual visual, out bool isScrollAdornerLayer)
         {
             ArgumentNullException.ThrowIfNull(visual);
 

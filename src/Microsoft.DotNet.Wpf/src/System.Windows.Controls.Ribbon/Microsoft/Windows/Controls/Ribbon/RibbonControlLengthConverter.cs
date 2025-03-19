@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
 
@@ -26,8 +26,8 @@ namespace Microsoft.Windows.Controls.Ribbon
         private static string[] _unitStrings = { "auto", "px", "items", "*" };
 
         //  this array contains strings for unit types that are not present in the RibbonControlLengthUnitType enum
-        static private string[] _pixelUnitStrings = { "in", "cm", "pt" };
-        static private double[] _pixelUnitFactors = 
+        private static string[] _pixelUnitStrings = { "in", "cm", "pt" };
+        private static double[] _pixelUnitFactors = 
         { 
             96.0,             // Pixels per Inch
             96.0 / 2.54,      // Pixels per Centimeter

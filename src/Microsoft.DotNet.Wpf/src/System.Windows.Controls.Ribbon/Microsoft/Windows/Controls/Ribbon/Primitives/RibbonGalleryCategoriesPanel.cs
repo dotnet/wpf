@@ -154,7 +154,7 @@ namespace Microsoft.Windows.Controls.Ribbon.Primitives
             OnScrollChange();
         }
 
-        static private double ComputeScrollOffsetWithMinimalScroll(
+        private static double ComputeScrollOffsetWithMinimalScroll(
             double topView,
             double bottomView,
             double topChild,
@@ -194,7 +194,7 @@ namespace Microsoft.Windows.Controls.Ribbon.Primitives
         }
 
         // Returns an offset coerced into the [0, Extent - Viewport] range.
-        static private double CoerceOffset(double offset, double extent, double viewport)
+        private static double CoerceOffset(double offset, double extent, double viewport)
         {
             if (offset > extent - viewport) { offset = extent - viewport; }
             if (offset < 0) { offset = 0; }

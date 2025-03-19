@@ -1,4 +1,4 @@
-﻿// Licensed to the .NET Foundation under one or more agreements.
+// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -13,7 +13,7 @@ namespace System.Windows.Threading
     /// <remarks>
     ///     This is returned from DispatcherPriorityAwaitable.GetAwaiter()
     /// </remarks>
-    public readonly struct DispatcherPriorityAwaiter : INotifyCompletion
+    public struct DispatcherPriorityAwaiter : INotifyCompletion
     {
         /// <summary>
         ///     Creates an instance of DispatcherPriorityAwaiter that will
@@ -30,7 +30,13 @@ namespace System.Windows.Threading
         ///     This awaiter is just a proxy for queuing the continuations, it
         ///     never completes itself.
         /// </summary>
-        public bool IsCompleted => false;
+        public bool IsCompleted
+        {
+            get
+            {
+                return false;
+            }
+        }
 
         /// <summary>
         ///     This awaiter is just a proxy for queuing the continuations, it

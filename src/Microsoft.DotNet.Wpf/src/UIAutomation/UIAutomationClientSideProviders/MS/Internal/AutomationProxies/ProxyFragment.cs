@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -185,7 +185,7 @@ namespace MS.Internal.AutomationProxies
         #region Internal Methods
 
         // Recursively Raise an Event for all the sub elements
-        override internal void RecursiveRaiseEvents (object idProp, AutomationPropertyChangedEventArgs e)
+        internal override void RecursiveRaiseEvents (object idProp, AutomationPropertyChangedEventArgs e)
         {
             AutomationInteropProvider.RaiseAutomationPropertyChangedEvent (this, e);
             for (ProxySimple el = GetFirstChild (); el != null; el = this.GetNextSibling (el))
@@ -205,7 +205,7 @@ namespace MS.Internal.AutomationProxies
         #region Protected Methods
 
         // This method will return the leaf element that lives in ProxyFragment at Point(x,y)
-        static internal ProxySimple DrillDownFragment(ProxyFragment fragment, int x, int y)
+        internal static ProxySimple DrillDownFragment(ProxyFragment fragment, int x, int y)
         {
             System.Diagnostics.Debug.Assert(fragment != null, "DrillDownFragment: starting point is null");
 

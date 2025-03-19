@@ -499,7 +499,7 @@ namespace MS.Internal.AutomationProxies
         // This is important to know becuase:
         // Real styles will be provided by comboex
         // comboex supplies the edit
-        static internal IntPtr HostedByComboEx (IntPtr hwnd)
+        internal static IntPtr HostedByComboEx (IntPtr hwnd)
         {
             IntPtr hwndEx = NativeMethodsSetLastError.GetAncestor (hwnd, NativeMethods.GA_PARENT);
 
@@ -512,7 +512,7 @@ namespace MS.Internal.AutomationProxies
         }
 
         // Wrapper on top of Win32's GetComboInfo
-        static internal bool GetComboInfo(IntPtr hwnd, ref NativeMethods.COMBOBOXINFO cbInfo)
+        internal static bool GetComboInfo(IntPtr hwnd, ref NativeMethods.COMBOBOXINFO cbInfo)
         {
             bool result = Misc.GetComboBoxInfo(hwnd, ref cbInfo);
 
@@ -551,12 +551,12 @@ namespace MS.Internal.AutomationProxies
             return result;
         }
         // determin if the list portion of combo is dropped
-        static internal bool GetDroppedState (IntPtr hwnd)
+        internal static bool GetDroppedState (IntPtr hwnd)
         {
             return Misc.ProxySendMessageInt(hwnd, NativeMethods.CB_GETDROPPEDSTATE, IntPtr.Zero, IntPtr.Zero) != 0;
         }
         // expand the list portion
-        static internal void Expand (IntPtr hwnd)
+        internal static void Expand (IntPtr hwnd)
         {
             IntPtr hwndFocused = Misc.GetFocusedWindow();
 
@@ -571,7 +571,7 @@ namespace MS.Internal.AutomationProxies
             Misc.ProxySendMessage(hwnd, NativeMethods.CB_SHOWDROPDOWN, new IntPtr(1), IntPtr.Zero);
         }
         // collapse the list portion
-        static internal void Collapse (IntPtr hwnd)
+        internal static void Collapse (IntPtr hwnd)
         {
             Misc.ProxySendMessage(hwnd, NativeMethods.CB_SHOWDROPDOWN, new IntPtr(0), IntPtr.Zero);
         }
@@ -663,7 +663,7 @@ namespace MS.Internal.AutomationProxies
         }
 
         // detect if passed int window corresponds to the comboex
-        static private bool IsComboEx (IntPtr hwndEx)
+        private static bool IsComboEx (IntPtr hwndEx)
         {
             if (hwndEx == IntPtr.Zero)
             {
@@ -684,7 +684,7 @@ namespace MS.Internal.AutomationProxies
         // Retrieve the text of the list portion of Combo.
         // Or Text of the edit portion of ComboBoxEx32 (path -1 as index)
         // Use CB_XXX instead of LB_XXX, since CB_XXX will give us back text in ownerdrawn combo
-        static private string SpecialText (IntPtr hwnd, int index)
+        private static string SpecialText (IntPtr hwnd, int index)
         {
             if (index == -1)
             {
@@ -719,7 +719,7 @@ namespace MS.Internal.AutomationProxies
         }
 
         // Combo-specific events
-        static private void RaiseEvents (IntPtr hwnd, int eventId, object idProp, int idObject, int idChild)
+        private static void RaiseEvents (IntPtr hwnd, int eventId, object idProp, int idObject, int idChild)
         {
             // ------------------------------------------------------/////////////////////////////////////
             //

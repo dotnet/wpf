@@ -14,8 +14,8 @@ namespace MS.Internal.Data
 {
     internal class CommitManager
     {
-        private Set<BindingGroup> _bindingGroups = new Set<BindingGroup>();
-        private Set<BindingExpressionBase> _bindings = new Set<BindingExpressionBase>();
+        private readonly Set<BindingGroup> _bindingGroups = new Set<BindingGroup>();
+        private readonly Set<BindingExpressionBase> _bindings = new Set<BindingExpressionBase>();
 
         private static readonly List<BindingGroup> EmptyBindingGroupList = new List<BindingGroup>();
         private static readonly List<BindingExpressionBase> EmptyBindingList = new List<BindingExpressionBase>();

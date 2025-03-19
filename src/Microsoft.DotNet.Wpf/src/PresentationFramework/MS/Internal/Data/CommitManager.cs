@@ -17,8 +17,8 @@ namespace MS.Internal.Data
         private readonly HashSet<BindingGroup> _bindingGroups = new();
         private readonly HashSet<BindingExpressionBase> _bindings = new();
 
-        private static readonly List<BindingGroup> EmptyBindingGroupList = new List<BindingGroup>();
-        private static readonly List<BindingExpressionBase> EmptyBindingList = new List<BindingExpressionBase>();
+        private static readonly List<BindingGroup> s_emptyBindingGroupList = new();
+        private static readonly List<BindingExpressionBase> s_emptyBindingList = new();
 
         internal bool IsEmpty
         {
@@ -51,14 +51,14 @@ namespace MS.Internal.Data
             BindingGroup[] fullList = new BindingGroup[_bindingGroups.Count];
             _bindingGroups.CopyTo(fullList);
 
-            List<BindingGroup> list = EmptyBindingGroupList;
+            List<BindingGroup> list = s_emptyBindingGroupList;
 
             foreach (BindingGroup bindingGroup in fullList)
             {
                 DependencyObject owner = bindingGroup.Owner;
-                if (owner != null && IsInScope(element, owner))
+                if (owner is not null && IsInScope(element, owner))
                 {
-                    if (list == EmptyBindingGroupList)
+                    if (list == s_emptyBindingGroupList)
                     {
                         list = new List<BindingGroup>();
                     }
@@ -76,14 +76,14 @@ namespace MS.Internal.Data
             BindingExpressionBase[] fullList = new BindingExpressionBase[_bindings.Count];
             _bindings.CopyTo(fullList);
 
-            List<BindingExpressionBase> list = EmptyBindingList;
+            List<BindingExpressionBase> list = s_emptyBindingList;
 
             foreach (BindingExpressionBase binding in fullList)
             {
                 DependencyObject owner = binding.TargetElement;
-                if (owner != null && binding.IsEligibleForCommit && IsInScope(element, owner))
+                if (owner is not null && binding.IsEligibleForCommit && IsInScope(element, owner))
                 {
-                    if (list == EmptyBindingList)
+                    if (list == s_emptyBindingList)
                     {
                         list = new List<BindingExpressionBase>();
                     }

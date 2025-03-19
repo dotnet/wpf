@@ -24,7 +24,7 @@ namespace System.Windows.Interop
         /// <remarks>
         ///     Callers must have UnmanagedCode permission to call this API.
         /// </remarks>
-        unsafe public static BitmapSource CreateBitmapSourceFromHBitmap(
+        public static unsafe BitmapSource CreateBitmapSourceFromHBitmap(
             IntPtr bitmap,
             IntPtr palette,
             Int32Rect sourceRect,
@@ -42,7 +42,7 @@ namespace System.Windows.Interop
         /// <param name="sourceRect"></param>
         /// <param name="sizeOptions"></param>
         /// <param name="alphaOptions"></param>
-        unsafe internal static BitmapSource CriticalCreateBitmapSourceFromHBitmap(
+        internal static unsafe BitmapSource CriticalCreateBitmapSourceFromHBitmap(
             IntPtr bitmap,
             IntPtr palette,
             Int32Rect sourceRect,
@@ -66,7 +66,7 @@ namespace System.Windows.Interop
         /// <remarks>
         ///     Callers must have UnmanagedCode permission to call this API.
         /// </remarks>
-        unsafe public static BitmapSource CreateBitmapSourceFromHIcon(
+        public static unsafe BitmapSource CreateBitmapSourceFromHIcon(
             IntPtr icon,
             Int32Rect sourceRect,
             BitmapSizeOptions sizeOptions)
@@ -92,7 +92,7 @@ namespace System.Windows.Interop
         /// <remarks>
         ///     Callers must have UnmanagedCode permission to call this API.
         /// </remarks>
-        unsafe public static BitmapSource CreateBitmapSourceFromMemorySection(
+        public static unsafe BitmapSource CreateBitmapSourceFromMemorySection(
             IntPtr section,
             int pixelWidth,
             int pixelHeight,

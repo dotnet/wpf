@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
 //
@@ -25,7 +25,7 @@ namespace System.Windows.Media
         /// <summary>
         /// DrawingContextWalker implementations are never opened, so they shouldn't be closed.
         /// </summary>
-        public override sealed void Close()
+        public sealed override void Close()
         {
             Debug.Assert(false);
         }

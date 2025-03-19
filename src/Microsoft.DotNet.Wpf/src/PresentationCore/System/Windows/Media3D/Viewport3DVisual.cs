@@ -107,7 +107,7 @@ namespace System.Windows.Media.Media3D
         /// <summary>
         /// Re-exposes the Visual base class's corresponding VisualTreeHelper implementation as public method.
         /// </summary>
-        new public HitTestResult HitTest(Point point)
+        public new HitTestResult HitTest(Point point)
         {
             return base.HitTest(point);
         }
@@ -115,7 +115,7 @@ namespace System.Windows.Media.Media3D
         /// <summary>
         /// Re-exposes the Visual base class's corresponding VisualTreeHelper implementation as public method.
         /// </summary>
-        new public void HitTest(HitTestFilterCallback filterCallback, HitTestResultCallback resultCallback, HitTestParameters hitTestParameters)
+        public new void HitTest(HitTestFilterCallback filterCallback, HitTestResultCallback resultCallback, HitTestParameters hitTestParameters)
         {
             base.HitTest(filterCallback, resultCallback, hitTestParameters);
         }

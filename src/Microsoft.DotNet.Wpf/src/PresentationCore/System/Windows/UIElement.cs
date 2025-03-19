@@ -1611,7 +1611,7 @@ namespace System.Windows
         ///     Returns a non-null value when some framework implementation
         ///     of this method has a non-visual parent connection,
         /// </returns>
-        protected virtual internal DependencyObject GetUIParentCore()
+        protected internal virtual DependencyObject GetUIParentCore()
         {
             return null;
         }
@@ -2913,7 +2913,7 @@ namespace System.Windows
         /// Uid can be specified in xaml at any point using the xaml language attribute x:Uid.
         /// This is a long lasting (persisted in source) unique id for an element.
         /// </summary>
-        static public readonly DependencyProperty UidProperty =
+        public static readonly DependencyProperty UidProperty =
                     DependencyProperty.Register(
                                 "Uid",
                                 typeof(string),

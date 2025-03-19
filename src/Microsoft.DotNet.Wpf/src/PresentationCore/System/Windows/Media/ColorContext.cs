@@ -398,7 +398,7 @@ namespace System.Windows.Media
         /// <summary>
         /// Equals method
         /// </summary>
-        override public bool Equals(object obj)
+        public override bool Equals(object obj)
         {
             ColorContext context = obj as ColorContext;
 
@@ -408,7 +408,7 @@ namespace System.Windows.Media
         /// <summary>
         /// GetHashCode
         /// </summary>
-        override public int GetHashCode()
+        public override int GetHashCode()
         {
             // phDateTime_2 contains the minute and second that the profile was created. Obviously this 
             // is not a great hash, but the compiler forces us to implement this due to us implementing
@@ -794,7 +794,7 @@ namespace System.Windows.Media
 
         private const int _maximumColorContextLength = _bufferSizeIncrement * 32; // 32 Mb
 
-        private readonly static NativeMethods.COLORTYPE[] _colorTypeFromChannels =
+        private static readonly NativeMethods.COLORTYPE[] _colorTypeFromChannels =
             new NativeMethods.COLORTYPE[9] {
                 NativeMethods.COLORTYPE.COLOR_UNDEFINED,
                 NativeMethods.COLORTYPE.COLOR_UNDEFINED,

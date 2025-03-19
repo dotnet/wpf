@@ -270,7 +270,7 @@ namespace MS.Internal.Automation
         }
 
         private static Dictionary<int, EventInfo> _eventsTable;        // key=event id, data=listener count
-        private readonly static object _lock = new object();
+        private static readonly object _lock = new object();
     }
 }
 

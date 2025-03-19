@@ -146,7 +146,7 @@ namespace System.Windows.Media
         #endregion
 
         [DllImport(DllImport.MilCore)]
-        private extern static int /* HRESULT */ MILCreateEventProxy(ref EventProxyDescriptor pEPD, out SafeMILHandle ppEventProxy);
+        private static extern int /* HRESULT */ MILCreateEventProxy(ref EventProxyDescriptor pEPD, out SafeMILHandle ppEventProxy);
     }
     #endregion
 }

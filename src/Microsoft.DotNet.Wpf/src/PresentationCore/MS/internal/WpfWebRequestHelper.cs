@@ -104,7 +104,7 @@ namespace MS.Internal
     /// change behavior in SP1/v3.5, ConfigCachePolicy() is called separately by the code that previously
     /// relied on ConfigHttpWebRequest().
     /// </remarks>
-    static internal void ConfigCachePolicy(WebRequest request, bool isRefresh)
+    internal static void ConfigCachePolicy(WebRequest request, bool isRefresh)
     {
         HttpWebRequest httpRequest = request as HttpWebRequest;
         if (httpRequest != null)

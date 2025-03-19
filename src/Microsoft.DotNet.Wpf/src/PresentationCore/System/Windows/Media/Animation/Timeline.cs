@@ -680,7 +680,7 @@ namespace System.Windows.Media.Animation
         /// <returns>
         /// A Duration quantity representing the natural duration.
         /// </returns>
-        internal protected Duration GetNaturalDuration(Clock clock)
+        protected internal Duration GetNaturalDuration(Clock clock)
         {
             return GetNaturalDurationCore(clock);
         }

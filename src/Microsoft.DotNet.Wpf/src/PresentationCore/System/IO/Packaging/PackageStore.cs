@@ -155,8 +155,8 @@ namespace System.IO.Packaging
         // ListDictionary is the best fit for this scenarios; otherwise we should be using
         // Hashtable. HybridDictionary already has functionality of switching between
         //  ListDictionary and Hashtable depending on the size of the collection
-        static private HybridDictionary _packages;
-        static private readonly Object _globalLock;
+        private static HybridDictionary _packages;
+        private static readonly Object _globalLock;
 
         #endregion Private Fields
     }

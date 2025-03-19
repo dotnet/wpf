@@ -1,17 +1,15 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
-//
-// Description: CommitManager provides global services for committing dirty bindings.
-//
-
-using System.Windows;
-using System.Windows.Data;
 using System.Windows.Media;
+using System.Windows.Data;
+using System.Windows;
 
 namespace MS.Internal.Data;
 
+/// <summary>
+/// <see cref="CommitManager"/> provides global services for committing dirty bindings.
+/// </summary>
 internal sealed class CommitManager
 {
     private readonly HashSet<BindingGroup> _bindingGroups = new();

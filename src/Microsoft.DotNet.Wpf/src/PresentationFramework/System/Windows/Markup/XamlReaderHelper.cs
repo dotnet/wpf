@@ -5440,7 +5440,7 @@ namespace System.Windows.Markup
         // returns true if the current character is a whiteSpace character
         // \t\r\n\f
         // resuse CSSChar definitions
-        static internal bool IsWhiteSpace(char c)
+        internal static bool IsWhiteSpace(char c)
         {
             if (c == CSSChar.Tab || c == CSSChar.Return
                 || c == CSSChar.NewLine || c == CSSChar.FormFeed
@@ -5476,7 +5476,7 @@ namespace System.Windows.Markup
         }
 
         // Return true if the passed string is only whitespace
-        static internal bool IsWhitespace(string text)
+        internal static bool IsWhitespace(string text)
         {
             for (int i = 0; i < text.Length; i++)
             {

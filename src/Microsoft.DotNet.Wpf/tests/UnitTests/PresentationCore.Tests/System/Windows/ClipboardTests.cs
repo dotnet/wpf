@@ -9,8 +9,8 @@ using Color = System.Windows.Media.Color;
 
 namespace System.Windows;
 
-// Note: each registered Clipboard format is an OS singleton
-// and we should not run this test at the same time as other tests using the same format.
+// Note: the OS Clipboard is a system wide resource and all access should be done sequentially to avoid
+// collisions with other tests. We also retry as we cannot control other processes that may be using the clipboard.
 [Collection("Sequential")]
 [UISettings(MaxAttempts = 3)]
 public class ClipboardTests

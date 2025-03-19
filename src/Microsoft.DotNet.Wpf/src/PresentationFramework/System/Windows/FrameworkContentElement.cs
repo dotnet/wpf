@@ -849,7 +849,7 @@ namespace System.Windows
         /// This will make the culture pertain to the scope of the element where it is applied.  The
         /// XmlLanguage names follow the RFC 3066 standard. For example, U.S. English is "en-US".
         /// </summary>
-        static public readonly DependencyProperty LanguageProperty =
+        public static readonly DependencyProperty LanguageProperty =
                     FrameworkElement.LanguageProperty.AddOwner(
                                 typeof(FrameworkContentElement),
                                 new FrameworkPropertyMetadata(
@@ -908,7 +908,7 @@ namespace System.Windows
         }
 
         // If the cursor is changed, we may need to set the actual cursor.
-        static private void OnCursorChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        private static void OnCursorChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             FrameworkContentElement fce = ((FrameworkContentElement)d);
 
@@ -940,7 +940,7 @@ namespace System.Windows
         }
 
         // If the ForceCursor property changed, we may need to set the actual cursor.
-        static private void OnForceCursorChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        private static void OnForceCursorChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             FrameworkContentElement fce = ((FrameworkContentElement)d);
 
@@ -1292,7 +1292,7 @@ namespace System.Windows
         ///     building code will call the GetUIParentCore method to find the
         ///     next non-visual parent.
         /// </returns>
-        internal override sealed bool BuildRouteCore(EventRoute route, RoutedEventArgs args)
+        internal sealed override bool BuildRouteCore(EventRoute route, RoutedEventArgs args)
         {
             bool continuePastCoreTree = false;
 

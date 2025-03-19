@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -16,13 +16,13 @@ namespace System.Windows.Automation.Peers
         {}
 
         ///
-        override protected string GetClassNameCore()
+        protected override string GetClassNameCore()
         {
             return "Expander";
         }
 
         ///
-        override protected AutomationControlType GetAutomationControlTypeCore()
+        protected override AutomationControlType GetAutomationControlTypeCore()
         {
             return AutomationControlType.Group;
         }
@@ -49,14 +49,14 @@ namespace System.Windows.Automation.Peers
         }
 
         /// The expander should have Automation Keyboard focus whenever the actual focus is set in the toggle button
-        override protected bool HasKeyboardFocusCore()
+        protected override bool HasKeyboardFocusCore()
         {
             return ((!AccessibilitySwitches.UseNetFx47CompatibleAccessibilityFeatures && ((Expander)Owner).IsExpanderToggleButtonFocused) 
                     || base.HasKeyboardFocusCore());
         }
         
         ///
-        override public object GetPattern(PatternInterface pattern)
+        public override object GetPattern(PatternInterface pattern)
         {
             object iface = null;
             

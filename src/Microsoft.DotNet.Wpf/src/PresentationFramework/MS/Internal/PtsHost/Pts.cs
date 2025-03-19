@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -30,7 +30,7 @@ namespace MS.Internal.PtsHost.UnsafeNativeMethods
     // ----------------------------------------------------------------------
     // Wrapper for PTS APIs and data structures.
     // ----------------------------------------------------------------------
-    static internal class PTS
+    internal static class PTS
     {
         // ------------------------------------------------------------------
         // PTS return result validation.
@@ -3200,7 +3200,7 @@ internal static extern int FsDuplicatePageBreakRecord(
             out int topSpace);                  // OUT: top space due to collapsed margins
 
         [DllImport(DllImport.PresentationNative)]
-        internal static unsafe extern int FsCreateSubpageBottomless(
+        internal static extern unsafe int FsCreateSubpageBottomless(
             IntPtr pfsContext,                  // IN:  ptr to FS context
             IntPtr nSeg,                        // IN:  name of the segment to start from
             int fSuppressTopSpace,              // IN:  suppress top space?
@@ -3227,7 +3227,7 @@ internal static extern int FsDuplicatePageBreakRecord(
             out int fPageBecomesUninterruptible);// OUT: interruption is prohibited from now on
 
         [DllImport(DllImport.PresentationNative)]
-        internal static unsafe extern int FsUpdateBottomlessSubpage(
+        internal static extern unsafe int FsUpdateBottomlessSubpage(
             IntPtr pfsContext,                  // IN:  ptr to FS context
             IntPtr pfsSubpage,                  // IN:  ptr to the subpage
             IntPtr nmSeg,                       // IN:  name of the segment to start from
@@ -3297,7 +3297,7 @@ internal static extern int FsDuplicatePageBreakRecord(
             out int cFootnotes);                // OUT: number of footnotes
 
         [DllImport(DllImport.PresentationNative)]
-        internal static unsafe extern int FsGetSubpageFootnoteInfo(
+        internal static extern unsafe int FsGetSubpageFootnoteInfo(
             IntPtr pfsContext,                  // IN:  ptr to FS context
             IntPtr pSubpage,                    // IN:  ptr to the subpage
             int cArraySize,                     // IN:  size of FSFTNINFO array
@@ -3694,7 +3694,7 @@ FSERR FSAPI FsQueryCompositeColumnFootnoteList(
             out FSTRACKDETAILS pTrackDetails);  // OUT: track details
 
         [DllImport(DllImport.PresentationNative)]
-        internal static unsafe extern int FsQueryTrackParaList(
+        internal static extern unsafe int FsQueryTrackParaList(
             IntPtr pfsContext,                  // IN:  ptr to FS context
             IntPtr pTrack,                      // IN:  ptr to track
             int cParas,                         // IN:  size of array of para descriptions
@@ -3740,7 +3740,7 @@ FSERR FSAPI FsQueryCompositeColumnFootnoteList(
             out FSSUBTRACKDETAILS pSubTrackDetails);// OUT: subpage details
 
         [DllImport(DllImport.PresentationNative)]
-        internal static unsafe extern int FsQuerySubtrackParaList(
+        internal static extern unsafe int FsQuerySubtrackParaList(
             IntPtr pfsContext,                  // IN:  ptr to FS context
             IntPtr pSubTrack,                   // IN:  ptr to subtrack
             int cParas,                         // IN:  size of array of para descriptions
@@ -3754,7 +3754,7 @@ FSERR FSAPI FsQueryCompositeColumnFootnoteList(
             out FSTEXTDETAILS pTextDetails);    // OUT: text details
 
         [DllImport(DllImport.PresentationNative)]
-        internal static unsafe extern int FsQueryLineListSingle(
+        internal static extern unsafe int FsQueryLineListSingle(
             IntPtr pfsContext,                  // IN:  ptr to FS context
             IntPtr pPara,                       // IN:  ptr to text para
             int cLines,                         // IN:  size of array of line descriptions
@@ -3762,7 +3762,7 @@ FSERR FSAPI FsQueryCompositeColumnFootnoteList(
             out int cLineDesc);                 // OUT: actual number of lines
 
         [DllImport(DllImport.PresentationNative)]
-        internal static unsafe extern int FsQueryLineListComposite(
+        internal static extern unsafe int FsQueryLineListComposite(
             IntPtr pfsContext,                  // IN:  ptr to FS context
             IntPtr pPara,                       // IN:  ptr to text para
             int cElements,                      // IN:  size of array of line descriptions
@@ -3770,7 +3770,7 @@ FSERR FSAPI FsQueryCompositeColumnFootnoteList(
             out int cLineElements);             // OUT: actual number of lines
 
         [DllImport(DllImport.PresentationNative)]
-        internal static unsafe extern int FsQueryLineCompositeElementList(
+        internal static extern unsafe int FsQueryLineCompositeElementList(
             IntPtr pfsContext,                  // IN:  ptr to FS context
             IntPtr pLine,                       // IN:  ptr to line
             int cElements,                      // IN:  size of array of line elements
@@ -3787,7 +3787,7 @@ FSERR FSAPI FsQueryCompositeColumnFootnoteList(
 #endif
 
         [DllImport(DllImport.PresentationNative)]
-        internal static unsafe extern int FsQueryAttachedObjectList(
+        internal static extern unsafe int FsQueryAttachedObjectList(
             IntPtr pfsContext,                  // IN:  ptr to FS context
             IntPtr pPara,                       // IN:  ptr to text para
             int cAttachedObject,                // IN:  size of array of attached object descriptions
@@ -3795,7 +3795,7 @@ FSERR FSAPI FsQueryCompositeColumnFootnoteList(
             out int cAttachedObjectDesc);               // OUT: actual number of figures
 
         [DllImport(DllImport.PresentationNative)]
-        internal static unsafe extern int FsQueryFigureObjectDetails(
+        internal static extern unsafe int FsQueryFigureObjectDetails(
         			IntPtr pfsContext, /* IN: ptr to FS context						*/
         			IntPtr pPara,      /* IN: ptr to figure para						*/
         			out FSFIGUREDETAILS fsFigureDetails);			/* OUT: figure details							*/
@@ -3813,7 +3813,7 @@ FSERR FSAPI FsQueryCompositeColumnFootnoteList(
         // fstableobjquery.h
         // ------------------------------------------------------------------
         [DllImport(DllImport.PresentationNative)]
-        internal static unsafe extern int FsQueryTableObjDetails(
+        internal static extern unsafe int FsQueryTableObjDetails(
             IntPtr pfscontext,                          // IN:  
             IntPtr pfstableobj,                         // IN:  
             out FSTABLEOBJDETAILS pfstableobjdetails);  // OUT: 
@@ -3821,13 +3821,13 @@ FSERR FSAPI FsQueryCompositeColumnFootnoteList(
         // FsQueryTableObjFigureCountWord               //  -- MS Word specific 
         // FsQueryTableObjFigureListWord                //  -- MS Word specific 
         [DllImport(DllImport.PresentationNative)]
-        internal static unsafe extern int FsQueryTableObjTableProperDetails(
+        internal static extern unsafe int FsQueryTableObjTableProperDetails(
             IntPtr pfscontext,                          // IN:  
             IntPtr pfstableProper,                      // IN:  
             out FSTABLEDETAILS pfstabledetailsProper);  // OUT: 
 
         [DllImport(DllImport.PresentationNative)]
-        internal static unsafe extern int FsQueryTableObjRowList(
+        internal static extern unsafe int FsQueryTableObjRowList(
             IntPtr pfscontext,                          // IN:  
             IntPtr pfstableProper,                      // IN:  
             int cRows,                                  // IN:  
@@ -3835,13 +3835,13 @@ FSERR FSAPI FsQueryCompositeColumnFootnoteList(
             out int pcRowsActual);                      // OUT: 
 
         [DllImport(DllImport.PresentationNative)]
-        internal static unsafe extern int FsQueryTableObjRowDetails(
+        internal static extern unsafe int FsQueryTableObjRowDetails(
             IntPtr pfscontext,                          // IN:  
             IntPtr pfstablerow,                         // IN:  
             out FSTABLEROWDETAILS ptableorowdetails);   // OUT: 
 
         [DllImport(DllImport.PresentationNative)]
-        internal static unsafe extern int FsQueryTableObjCellList(
+        internal static extern unsafe int FsQueryTableObjCellList(
             IntPtr pfscontext,                          // IN:  
             IntPtr pfstablerow,                         // IN:  
             int cCells,                                 // IN:  
@@ -3885,7 +3885,7 @@ FSERR FSAPI FsQueryCompositeColumnFootnoteList(
         // FsTransformVector
 
         [DllImport(DllImport.PresentationNative)]
-        internal static unsafe extern int FsTransformRectangle(
+        internal static extern unsafe int FsTransformRectangle(
             uint fswdirIn,                          // IN:  
             ref FSRECT rectPage,                    // IN:  
             ref FSRECT rectTransform,
@@ -3893,7 +3893,7 @@ FSERR FSAPI FsQueryCompositeColumnFootnoteList(
             out FSRECT rectOut);
 
         [DllImport(DllImport.PresentationNative)]
-        internal static unsafe extern int FsTransformBbox(
+        internal static extern unsafe int FsTransformBbox(
             uint fswdirIn,                          // IN:  
             ref FSRECT rectPage,                    // IN:  
             ref FSBBOX bboxTransform,

@@ -973,7 +973,7 @@ namespace System.Windows.Controls
             }
         }
 
-        static private int CoerceOffsetToInteger(double offset, int numberOfItems)
+        private static int CoerceOffsetToInteger(double offset, int numberOfItems)
         {
             int iNewOffset;
 

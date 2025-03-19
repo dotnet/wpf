@@ -23,7 +23,7 @@ namespace System.Windows.Automation
             get { return handle == IntPtr.Zero; }
         }
 
-        override protected bool ReleaseHandle()
+        protected override bool ReleaseHandle()
         {
             Marshal.FreeCoTaskMem(handle);
             return true;

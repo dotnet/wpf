@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
 // Description: Client-side wrapper for RangeValue Pattern
@@ -170,7 +170,7 @@ namespace System.Windows.Automation
  
         #region Internal Methods
 
-        static internal object Wrap(AutomationElement el, SafePatternHandle hPattern, bool cached)
+        internal static object Wrap(AutomationElement el, SafePatternHandle hPattern, bool cached)
         {
             return new RangeValuePattern(el, hPattern, cached);
         }

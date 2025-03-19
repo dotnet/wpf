@@ -179,7 +179,7 @@ namespace System.Windows.Automation
 
         #region Internal Methods
 
-        static internal object Wrap(AutomationElement el, SafePatternHandle hPattern, bool cached)
+        internal static object Wrap(AutomationElement el, SafePatternHandle hPattern, bool cached)
         {
             return new ItemContainerPattern(el, hPattern);
         }

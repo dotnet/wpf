@@ -68,7 +68,7 @@ namespace MS.Win32
                 return hl.h != hr.h;
             }
 
-            override public bool Equals(object oCompare)
+            public override bool Equals(object oCompare)
             {
                 HWND hr = Cast((HWND)oCompare);
                 return h == hr.h;

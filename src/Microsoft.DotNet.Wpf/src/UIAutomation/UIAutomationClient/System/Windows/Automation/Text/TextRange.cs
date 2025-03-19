@@ -29,7 +29,7 @@ namespace System.Windows.Automation.Text
             get { return handle == IntPtr.Zero; }
         }
 
-        override protected bool ReleaseHandle()
+        protected override bool ReleaseHandle()
         {
             return UiaCoreApi.UiaTextRangeRelease(handle);
         }

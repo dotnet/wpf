@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -771,7 +771,7 @@ namespace System.Windows
                     (y >= _y) && (y - _height <= _y));
         }
 
-        static private Rect CreateEmptyRect()
+        private static Rect CreateEmptyRect()
         {
             Rect rect = new Rect
             {
@@ -789,7 +789,7 @@ namespace System.Windows
 
         #region Private Fields
 
-        private readonly static Rect s_empty = CreateEmptyRect();
+        private static readonly Rect s_empty = CreateEmptyRect();
 
         #endregion Private Fields
     }

@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -319,7 +319,7 @@ namespace MS.Win32
 
 
         [DllImport(ExternDll.User32, ExactSpelling=true, CharSet=CharSet.Auto)]
-        public extern static bool EnumThreadWindows(int dwThreadId, NativeMethods.EnumThreadWindowsCallback lpfn, HandleRef lParam);
+        public static extern bool EnumThreadWindows(int dwThreadId, NativeMethods.EnumThreadWindowsCallback lpfn, HandleRef lParam);
 
         [DllImport(ExternDll.Ole32, ExactSpelling=true, CharSet=CharSet.Auto, SetLastError=true)]
         public static extern int OleUninitialize();
@@ -2875,7 +2875,7 @@ namespace MS.Win32
             }
 
             // Convert a object[] into an array of VARIANT, allocated with CoTask allocators.
-            public unsafe static IntPtr ArrayToVARIANTVector(object[] args)
+            public static unsafe IntPtr ArrayToVARIANTVector(object[] args)
             {
                 IntPtr mem = IntPtr.Zero;
                 int i = 0;
@@ -2906,7 +2906,7 @@ namespace MS.Win32
             // Free a Variant array created with the above function
             /// <param name="mem">The allocated memory to be freed.</param>
             /// <param name="len">The length of the Variant vector to be cleared.</param>
-            public unsafe static void FreeVARIANTVector(IntPtr mem, int len)
+            public static unsafe void FreeVARIANTVector(IntPtr mem, int len)
             {
                 int hr = NativeMethods.S_OK;
                 byte* a = (byte*)(void*)mem;
@@ -3037,7 +3037,7 @@ namespace MS.Win32
         /// standard menus; they are not menus. To get the handle on a floating menu bar, use the Active Accessibility APIs.
         /// </remarks>
         [DllImport(ExternDll.User32, CallingConvention = CallingConvention.Winapi)]
-        internal extern static IntPtr GetMenu([In] HandleRef hWnd);
+        internal static extern IntPtr GetMenu([In] HandleRef hWnd);
 
 #if !DRT && !UIAUTOMATIONTYPES
 

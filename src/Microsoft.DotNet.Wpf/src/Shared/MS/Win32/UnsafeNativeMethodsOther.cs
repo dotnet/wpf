@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -150,7 +150,7 @@ namespace MS.Win32
 
 #if BASE_NATIVEMETHODS
         [DllImport(ExternDll.Kernel32, SetLastError = true, CharSet = CharSet.Auto, BestFitMapping = false, ThrowOnUnmappableChar = true)]
-        internal unsafe static extern SafeFileHandle CreateFile(
+        internal static extern unsafe SafeFileHandle CreateFile(
           string lpFileName,
           uint dwDesiredAccess,
           uint dwShareMode,
@@ -310,10 +310,10 @@ namespace MS.Win32
         internal static extern IntPtr UnsafeSendMessage(IntPtr hWnd, WindowMessage msg, IntPtr wParam, IntPtr lParam);
 
         [DllImport(ExternDll.User32,EntryPoint="RegisterPowerSettingNotification")]
-        unsafe internal static extern IntPtr RegisterPowerSettingNotification(IntPtr hRecipient, Guid *pGuid, int Flags);
+        internal static extern unsafe IntPtr RegisterPowerSettingNotification(IntPtr hRecipient, Guid *pGuid, int Flags);
 
         [DllImport(ExternDll.User32,EntryPoint="UnregisterPowerSettingNotification")]
-        unsafe internal static extern IntPtr UnregisterPowerSettingNotification(IntPtr hPowerNotify);
+        internal static extern unsafe IntPtr UnregisterPowerSettingNotification(IntPtr hPowerNotify);
 
 /*
         //
@@ -380,14 +380,14 @@ namespace MS.Win32
                 }
             }
 
-            override protected bool ReleaseHandle()
+            protected override bool ReleaseHandle()
             {
                 return UnsafeNativeMethods.UnmapViewOfFileNoThrow(new HandleRef(null, handle));
             }
         }
 
         [DllImport(ExternDll.Kernel32, SetLastError = true, CharSet = CharSet.Auto, BestFitMapping = false, ThrowOnUnmappableChar = true)]
-        internal unsafe static extern SafeFileMappingHandle CreateFileMapping(SafeFileHandle hFile, NativeMethods.SECURITY_ATTRIBUTES lpFileMappingAttributes, int flProtect, uint dwMaximumSizeHigh, uint dwMaximumSizeLow, string lpName);
+        internal static extern unsafe SafeFileMappingHandle CreateFileMapping(SafeFileHandle hFile, NativeMethods.SECURITY_ATTRIBUTES lpFileMappingAttributes, int flProtect, uint dwMaximumSizeHigh, uint dwMaximumSizeLow, string lpName);
 
         [DllImport(ExternDll.Kernel32, SetLastError = true)]
         internal static extern SafeViewOfFileHandle MapViewOfFileEx(SafeFileMappingHandle hFileMappingObject, int dwDesiredAccess, int dwFileOffsetHigh, int dwFileOffsetLow, IntPtr dwNumberOfBytesToMap, IntPtr lpBaseAddress);

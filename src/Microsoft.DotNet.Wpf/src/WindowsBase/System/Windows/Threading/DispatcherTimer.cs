@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -17,7 +17,7 @@ namespace System.Windows.Threading
         public DispatcherTimer() : this(DispatcherPriority.Background)  // NOTE: should be Priority Dispatcher.BackgroundPriority
         {
         }
-        
+
         /// <summary>
         ///     Creates a timer that uses the current thread's Dispatcher to
         ///     process the timer event at the specified priority.
@@ -29,7 +29,7 @@ namespace System.Windows.Threading
         {
             Initialize(Dispatcher.CurrentDispatcher, priority, TimeSpan.FromMilliseconds(0));
         }
-        
+
         /// <summary>
         ///     Creates a timer that uses the specified Dispatcher to
         ///     process the timer event at the specified priority.
@@ -76,7 +76,7 @@ namespace System.Windows.Threading
                 throw new ArgumentOutOfRangeException(nameof(interval), SR.TimeSpanPeriodOutOfRange_TooLarge);
 
             Initialize(dispatcher, priority, interval);
-            
+
             Tick += callback;
             Start();
         }
@@ -84,33 +84,24 @@ namespace System.Windows.Threading
         /// <summary>
         ///     Gets the dispatcher this timer is associated with.
         /// </summary>
-        public Dispatcher Dispatcher
-        {
-            get
-            {
-                return _dispatcher;
-            }
-        }
+        public Dispatcher Dispatcher => _dispatcher;
 
         /// <summary>
         ///     Gets or sets whether the timer is running.
         /// </summary>
         public bool IsEnabled
         {
-            get
-            {
-                return _isEnabled;
-            }
+            get => _isEnabled;
 
             set
             {
-                lock(_instanceLock)
+                lock (_instanceLock)
                 {
-                    if(!value && _isEnabled)
+                    if (!value && _isEnabled)
                     {
                         Stop();
                     }
-                    else if(value && !_isEnabled)
+                    else if (value && !_isEnabled)
                     {
                         Start();
                     }
@@ -123,52 +114,49 @@ namespace System.Windows.Threading
         /// </summary>
         public TimeSpan Interval
         {
-            get
-            {
-                return _interval;
-            }
+            get => _interval;
 
             set
             {
                 bool updateWin32Timer = false;
-                
+
                 if (value.TotalMilliseconds < 0)
                     throw new ArgumentOutOfRangeException(nameof(value), SR.TimeSpanPeriodOutOfRange_TooSmall);
 
                 if (value.TotalMilliseconds > Int32.MaxValue)
                     throw new ArgumentOutOfRangeException(nameof(value), SR.TimeSpanPeriodOutOfRange_TooLarge);
 
-                lock(_instanceLock)
+                lock (_instanceLock)
                 {
                     _interval = value;
 
-                    if(_isEnabled)
+                    if (_isEnabled)
                     {
                         _dueTimeInTicks = Environment.TickCount + (int)_interval.TotalMilliseconds;
                         updateWin32Timer = true;
                     }
                 }
 
-                if(updateWin32Timer)
+                if (updateWin32Timer)
                 {
                     _dispatcher.UpdateWin32Timer();
                 }
             }
         }
-        
+
         /// <summary>
         ///     Starts the timer.
         /// </summary>
         public void Start()
         {
-            lock(_instanceLock)
+            lock (_instanceLock)
             {
-                if(!_isEnabled)
-                {
-                    _isEnabled = true;
+                if (_isEnabled)
+                    return;
 
-                    Restart();
-                }
+                _isEnabled = true;
+
+                Restart();
             }
         }
 
@@ -178,29 +166,29 @@ namespace System.Windows.Threading
         public void Stop()
         {
             bool updateWin32Timer = false;
-            
-            lock(_instanceLock)
+
+            lock (_instanceLock)
             {
-                if(_isEnabled)
+                if (_isEnabled)
                 {
                     _isEnabled = false;
                     updateWin32Timer = true;
 
                     // If the operation is in the queue, abort it.
-                    if(_operation != null)
+                    if (_operation != null)
                     {
                         _operation.Abort();
                         _operation = null;
                     }
-}
+                }
             }
 
-            if(updateWin32Timer)
+            if (updateWin32Timer)
             {
                 _dispatcher.RemoveTimer(this);
             }
         }
-        
+
         /// <summary>
         ///     Occurs when the specified timer interval has elapsed and the
         ///     timer is enabled.
@@ -212,11 +200,7 @@ namespace System.Windows.Threading
         /// </summary>
         public object Tag
         {
-            get
-            {
-                return _tag;
-            }
-
+            get => _tag;
             set
             {
                 _tag = value;
@@ -228,7 +212,7 @@ namespace System.Windows.Threading
         {
             // Note: all callers of this have a "priority" parameter.
             Dispatcher.ValidatePriority(priority, "priority");
-            if(priority == DispatcherPriority.Inactive)
+            if (priority == DispatcherPriority.Inactive)
             {
                 throw new ArgumentException(SR.InvalidPriority, nameof(priority));
             }
@@ -237,10 +221,10 @@ namespace System.Windows.Threading
             _priority = priority;
             _interval = interval;
         }
-        
+
         private void Restart()
         {
-            lock(_instanceLock)
+            lock (_instanceLock)
             {
                 if (_operation != null)
                 {
@@ -254,9 +238,9 @@ namespace System.Windows.Threading
                     (DispatcherOperationCallback)(state => ((DispatcherTimer)state).FireTick()),
                     this);
 
-                
-                _dueTimeInTicks = Environment.TickCount + (int) _interval.TotalMilliseconds;
-                
+
+                _dueTimeInTicks = Environment.TickCount + (int)_interval.TotalMilliseconds;
+
                 if (_interval.TotalMilliseconds == 0 && _dispatcher.CheckAccess())
                 {
                     // shortcut - just promote the item now
@@ -267,14 +251,14 @@ namespace System.Windows.Threading
                     _dispatcher.AddTimer(this);
                 }
             }
-}
+        }
 
         internal void Promote() // called from Dispatcher
         {
-            lock(_instanceLock)
+            lock (_instanceLock)
             {
                 // Simply promote the operation to it's desired priority.
-                if(_operation != null)
+                if (_operation != null)
                 {
                     _operation.Priority = _priority;
                 }
@@ -285,32 +269,29 @@ namespace System.Windows.Threading
         {
             // The operation has been invoked, so forget about it.
             _operation = null;
-            
+
             // The dispatcher thread is calling us because item's priority
             // was changed from inactive to something else.
-            if(Tick != null)
-            {
-                Tick(this, EventArgs.Empty);
-            }
+            Tick?.Invoke(this, EventArgs.Empty);
 
             // If we are still enabled, start the timer again.
-            if(_isEnabled)
+            if (_isEnabled)
             {
                 Restart();
             }
 
             return null;
         }
-        
+
         // This is the object we use to synchronize access.
         private readonly object _instanceLock = new object();
-        
+
         // Note: We cannot BE a dispatcher-affinity object because we can be
         // created by a worker thread.  We are still associated with a
         // dispatcher (where we post the item) but we can be accessed
         // by any thread.
         private Dispatcher _dispatcher;
-        
+
         private DispatcherPriority _priority;  // NOTE: should be Priority
         private TimeSpan _interval;
         private object _tag;

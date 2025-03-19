@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
 //
@@ -844,7 +844,7 @@ namespace MS.Internal.Data
             return node;
         }
 
-        static protected int BlackHeight { get; set; }
+        protected static int BlackHeight { get; set; }
 
 #endif // DEBUG
         #endregion Debugging

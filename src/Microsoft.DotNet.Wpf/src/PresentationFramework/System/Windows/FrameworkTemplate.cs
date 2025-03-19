@@ -1615,7 +1615,7 @@ namespace System.Windows
 
 #if DEBUG
         // Debug counter for intelligent breakpoints.
-        static private int _globalDebugInstanceCounter = 0;
+        private static int _globalDebugInstanceCounter = 0;
         private int        _debugInstanceCounter;
 #endif
 

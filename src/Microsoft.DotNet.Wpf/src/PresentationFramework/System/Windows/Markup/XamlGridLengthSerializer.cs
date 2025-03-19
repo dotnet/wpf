@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
 //
@@ -170,7 +170,7 @@ namespace System.Windows.Markup
 
 
         // Parse a GridLength from a string given the CultureInfo.
-        static internal void FromString(
+        internal static void FromString(
                 string       s, 
                 CultureInfo  cultureInfo,
             out double       value,
@@ -248,7 +248,7 @@ namespace System.Windows.Markup
 #region Fields
 
         //  Note: keep this array in sync with the GridUnitType enum
-        static private string[] UnitStrings = { "auto", "px", "*" };
+        private static string[] UnitStrings = { "auto", "px", "*" };
 
 #endregion Fields
     }

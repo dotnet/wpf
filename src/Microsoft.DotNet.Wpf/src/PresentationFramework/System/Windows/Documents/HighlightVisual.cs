@@ -70,7 +70,7 @@ namespace System.Windows.Documents
         /// <summary>
         /// Draw highlight
         /// </summary>
-        override protected void OnRender(DrawingContext dc)
+        protected override void OnRender(DrawingContext dc)
         {
 #if DEBUG
             DocumentsTrace.FixedTextOM.Highlight.Trace("HightlightVisual Rendering");

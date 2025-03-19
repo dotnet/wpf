@@ -304,7 +304,7 @@ namespace System.Windows.Documents
         /// </summary>
         /// <param name="visual">Visual from which the treewalk begins</param>
         /// <returns>First AdornerLayer above given element, or null</returns>
-        static public AdornerLayer GetAdornerLayer(Visual visual)
+        public static AdornerLayer GetAdornerLayer(Visual visual)
         {
             ArgumentNullException.ThrowIfNull(visual);
 

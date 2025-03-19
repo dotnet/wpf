@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
 
@@ -104,7 +104,7 @@ namespace System.Windows.Controls
         /// <remarks>ListView will use this method to get an automationPeer for a given view 
         /// and default to the properties/patterns implemented by the view before going to 
         /// default fall-backs on ListView.</remarks>
-        internal protected virtual IViewAutomationPeer GetAutomationPeer(ListView parent)
+        protected internal virtual IViewAutomationPeer GetAutomationPeer(ListView parent)
         {
             return null;
         }

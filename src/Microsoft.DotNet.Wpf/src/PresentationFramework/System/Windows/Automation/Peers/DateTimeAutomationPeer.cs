@@ -449,7 +449,7 @@ namespace System.Windows.Automation.Peers
         }
 
         ///
-        override protected AutomationHeadingLevel GetHeadingLevelCore()
+        protected override AutomationHeadingLevel GetHeadingLevelCore()
         {
             AutomationPeer wrapperPeer = WrapperPeer;
             AutomationHeadingLevel headingLevel = AutomationHeadingLevel.None;
@@ -896,12 +896,12 @@ namespace System.Windows.Automation.Peers
 
         #endregion IVirtualizedItemProvider
 
-        override internal bool IsDataItemAutomationPeer()
+        internal override bool IsDataItemAutomationPeer()
         {
             return true;
         }
 
-        override internal void AddToParentProxyWeakRefCache()
+        internal override void AddToParentProxyWeakRefCache()
         {
             CalendarAutomationPeer owningCalendarPeer = FrameworkElementAutomationPeer.CreatePeerForElement(OwningCalendar) as CalendarAutomationPeer;
             owningCalendarPeer?.AddProxyToWeakRefStorage(this.ElementProxyWeakReference, this);

@@ -743,7 +743,7 @@ namespace System.Windows
         ///     The Current property enables the developer to always get to the application in
         ///     AppDomain in which they are running.
         /// </summary>
-        static public Application Current
+        public static Application Current
         {
             get
             {
@@ -2410,11 +2410,11 @@ namespace System.Windows
         //------------------------------------------------------
 
         #region Private Fields
-        static private object                           _globalLock;
-        static private bool                             _isShuttingDown;
-        static private bool                             _appCreatedInThisAppDomain;
-        static private Application                      _appInstance;
-        static private Assembly                         _resourceAssembly;
+        private static object                           _globalLock;
+        private static bool                             _isShuttingDown;
+        private static bool                             _appCreatedInThisAppDomain;
+        private static Application                      _appInstance;
+        private static Assembly                         _resourceAssembly;
 
         // Keep LoadBamlSyncInfo stack so that the Outer LoadBaml and Inner LoadBaml( ) for the same
         // Uri share the related information.

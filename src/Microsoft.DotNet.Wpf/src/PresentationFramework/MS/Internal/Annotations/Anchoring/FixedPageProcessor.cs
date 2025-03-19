@@ -313,7 +313,7 @@ namespace MS.Internal.Annotations.Anchoring
         ///     the passed in node; null is returned if the locator part cannot
         ///     be created for the node
         /// </returns>
-        static internal ContentLocatorPart CreateLocatorPart(int page)
+        internal static ContentLocatorPart CreateLocatorPart(int page)
         {
             Debug.Assert(page >= 0, "page can not be negative");
 

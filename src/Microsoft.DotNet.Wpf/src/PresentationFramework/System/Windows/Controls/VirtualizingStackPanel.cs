@@ -1745,7 +1745,7 @@ namespace System.Windows.Controls
         ///     Attached property for use on the ItemsControl that is the host for the items being
         ///     presented by this panel. Use this property to turn virtualization on/off.
         /// </summary>
-        public new static readonly DependencyProperty IsVirtualizingProperty =
+        public static new readonly DependencyProperty IsVirtualizingProperty =
             VirtualizingPanel.IsVirtualizingProperty;
 
         /// <summary>
@@ -1754,7 +1754,7 @@ namespace System.Windows.Controls
         ///
         ///     Note that this property can only be set before the panel has been initialized
         /// </summary>
-        public new static readonly DependencyProperty VirtualizationModeProperty =
+        public static new readonly DependencyProperty VirtualizationModeProperty =
             VirtualizingPanel.VirtualizationModeProperty;
 
         /// <summary>

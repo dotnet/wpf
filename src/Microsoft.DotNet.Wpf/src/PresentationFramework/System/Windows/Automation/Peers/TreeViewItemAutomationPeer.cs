@@ -16,19 +16,19 @@ namespace System.Windows.Automation.Peers
         }
 
         ///
-        override protected string GetClassNameCore()
+        protected override string GetClassNameCore()
         {
             return "TreeViewItem";
         }
 
         ///
-        override protected AutomationControlType GetAutomationControlTypeCore()
+        protected override AutomationControlType GetAutomationControlTypeCore()
         {
             return AutomationControlType.TreeItem;
         }
 
         ///
-        override public object GetPattern(PatternInterface patternInterface)
+        public override object GetPattern(PatternInterface patternInterface)
         {
             if (patternInterface == PatternInterface.ExpandCollapse)
             {
@@ -152,7 +152,7 @@ namespace System.Windows.Automation.Peers
         /// </summary>
         /// <param name="item"></param>
         /// <returns></returns>
-        protected override internal ItemAutomationPeer FindOrCreateItemAutomationPeer(object item)
+        protected internal override ItemAutomationPeer FindOrCreateItemAutomationPeer(object item)
         {
             ItemAutomationPeer peer = ItemPeers[item];
             AutomationPeer parentPeer = this;
@@ -215,13 +215,13 @@ namespace System.Windows.Automation.Peers
         }
 
         ///
-        override protected ItemAutomationPeer CreateItemAutomationPeer(object item)
+        protected override ItemAutomationPeer CreateItemAutomationPeer(object item)
         {
             return new TreeViewDataItemAutomationPeer(item, this, EventsSource as TreeViewDataItemAutomationPeer);
         }
 
         //
-        override internal IDisposable UpdateChildren()
+        internal override IDisposable UpdateChildren()
         {
             // To ensure that the Updation of children should be initiated from DataPeer so as to have the right parent value stored for children
             TreeViewDataItemAutomationPeer dataPeer = EventsSource as TreeViewDataItemAutomationPeer;

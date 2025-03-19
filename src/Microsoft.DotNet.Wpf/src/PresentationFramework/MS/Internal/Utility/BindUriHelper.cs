@@ -20,10 +20,10 @@ namespace MS.Internal.Utility
     internal  static partial  class BindUriHelper
     {
         private const string PLACEBOURI = "http://microsoft.com/";
-        static private Uri placeboBase = new Uri(PLACEBOURI);
+        private static Uri placeboBase = new Uri(PLACEBOURI);
         private const string FRAGMENTMARKER = "#";
         
-        static internal Uri GetResolvedUri(Uri originalUri)
+        internal static Uri GetResolvedUri(Uri originalUri)
         {
             return GetResolvedUri(null, originalUri);
         }                
@@ -65,7 +65,7 @@ namespace MS.Internal.Utility
         /// <param name="baseUri"></param>
         /// <param name="inputUri"></param>
         /// <returns></returns>
-        static internal Uri GetUriToNavigate(DependencyObject element, Uri baseUri, Uri inputUri)
+        internal static Uri GetUriToNavigate(DependencyObject element, Uri baseUri, Uri inputUri)
         {
             Uri uriToNavigate = inputUri;
 
@@ -135,13 +135,13 @@ namespace MS.Internal.Utility
             return uriToNavigate;
         }
 
-        static internal bool StartWithFragment(Uri uri)
+        internal static bool StartWithFragment(Uri uri)
         {
             return uri.OriginalString.StartsWith(FRAGMENTMARKER, StringComparison.Ordinal);
         }
 
         // Return Fragment string for a given uri without the leading #
-        static internal string GetFragment(Uri uri)
+        internal static string GetFragment(Uri uri)
         {
             Uri workuri = uri;
             string fragment = String.Empty;
@@ -167,7 +167,7 @@ namespace MS.Internal.Utility
         
         // In NavigationService we do not want to show users pack://application,,,/ with the
         // Source property or any event arguments.
-        static internal Uri GetUriRelativeToPackAppBase(Uri original)
+        internal static Uri GetUriRelativeToPackAppBase(Uri original)
         {
             if (original == null)
             {
@@ -181,7 +181,7 @@ namespace MS.Internal.Utility
             return relative;
         }
 
-        static internal bool IsXamlMimeType(ContentType mimeType)
+        internal static bool IsXamlMimeType(ContentType mimeType)
         {
             if (MimeTypeMapper.XamlMime.AreTypeAndSubTypeEqual(mimeType)
                 || MimeTypeMapper.FixedDocumentSequenceMime.AreTypeAndSubTypeEqual(mimeType) 

@@ -815,7 +815,7 @@ namespace System.Windows.Documents
         #region Private Fields
 
         // Whether or not selection changed during a Focus call
-        static private bool _selectionChanged;
+        private static bool _selectionChanged;
 
         #endregion Private Fields
     }

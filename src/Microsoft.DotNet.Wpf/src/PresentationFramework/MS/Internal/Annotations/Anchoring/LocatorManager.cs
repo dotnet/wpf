@@ -18,7 +18,7 @@ namespace MS.Internal.Annotations.Anchoring
     ///     controller for the Anchoring algorithms.  Most of the work is delegated
     ///     to processors.  LocatorManager maintains a registry of processors.
     /// </summary>
-    sealed internal class LocatorManager : DispatcherObject
+    internal sealed class LocatorManager : DispatcherObject
     {
         //------------------------------------------------------
         //

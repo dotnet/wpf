@@ -1732,7 +1732,7 @@ namespace System.Windows.Controls
         // tooltips instantly (where "continuous" and "instantly" are the
         // end-user's perception).   The value here is large enough to make the
         // "SafeAreaOnHyperlink" test pass.
-        static private int ShortDelay = 73;
+        private static int ShortDelay = 73;
 
         // pending ToolTip
         private ToolTip _pendingToolTip;

@@ -1413,7 +1413,7 @@ namespace System.Windows.Markup
         /// <returns>
         /// Always Returns true by default, since this is used by localization
         /// </returns>
-        sealed protected override bool AllowInternalType(Type type)
+        protected sealed override bool AllowInternalType(Type type)
         {
             return true;
         }

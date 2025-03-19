@@ -1367,7 +1367,7 @@ namespace System.Windows.Documents
             return lret;
         }
 
-        private unsafe static void StoreSurroundingText(IntPtr reconv, string surrounding)
+        private static unsafe void StoreSurroundingText(IntPtr reconv, string surrounding)
         {
             // Copy the string to the pointer right after the structure.
             byte* p = (byte*)reconv.ToPointer();

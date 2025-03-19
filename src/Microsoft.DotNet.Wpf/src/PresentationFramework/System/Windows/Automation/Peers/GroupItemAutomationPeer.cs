@@ -18,7 +18,7 @@ namespace System.Windows.Automation.Peers
         }
 
         ///
-        override protected string GetClassNameCore()
+        protected override string GetClassNameCore()
         {
             return "GroupItem";
         }
@@ -31,7 +31,7 @@ namespace System.Windows.Automation.Peers
         /// this collection describes the elements belonging to this GroupItem, we need the collection this
         /// GroupItem belongs to, so we look one level up using Parent.
         /// </remarks>
-        override protected int GetPositionInSetCore()
+        protected override int GetPositionInSetCore()
         {
             int positionInSet = base.GetPositionInSetCore();
 
@@ -60,7 +60,7 @@ namespace System.Windows.Automation.Peers
         /// this collection describes the elements belonging to this GroupItem, we need the collection this
         /// GroupItem belongs to, so we look one level up using Parent.
         /// </remarks>
-        override protected int GetSizeOfSetCore()
+        protected override int GetSizeOfSetCore()
         {
             int sizeOfSet = base.GetSizeOfSetCore();
 
@@ -82,13 +82,13 @@ namespace System.Windows.Automation.Peers
         }
 
         ///
-        override protected AutomationControlType GetAutomationControlTypeCore()
+        protected override AutomationControlType GetAutomationControlTypeCore()
         {
             return AutomationControlType.Group;
         }
 
         ///
-        override public object GetPattern(PatternInterface patternInterface)
+        public override object GetPattern(PatternInterface patternInterface)
         {
             if(patternInterface == PatternInterface.ExpandCollapse)
             {
@@ -304,7 +304,7 @@ namespace System.Windows.Automation.Peers
         }
 
 
-        override protected void SetFocusCore()
+        protected override void SetFocusCore()
         {
             GroupItem owner = (GroupItem)Owner;
             if (!AccessibilitySwitches.UseNetFx472CompatibleAccessibilityFeatures && owner.Expander != null)
@@ -333,7 +333,7 @@ namespace System.Windows.Automation.Peers
             }
         }
 
-        override protected bool HasKeyboardFocusCore()
+        protected override bool HasKeyboardFocusCore()
         {
             if (_expanderPeer != null)
             {

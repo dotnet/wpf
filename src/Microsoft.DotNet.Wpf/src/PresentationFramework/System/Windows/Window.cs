@@ -7667,7 +7667,7 @@ namespace System.Windows
 
         internal class HwndStyleManager : IDisposable
         {
-            static internal HwndStyleManager StartManaging(Window w, int Style, int StyleEx )
+            internal static HwndStyleManager StartManaging(Window w, int Style, int StyleEx )
             {
                 if (w.Manager == null)
                 {

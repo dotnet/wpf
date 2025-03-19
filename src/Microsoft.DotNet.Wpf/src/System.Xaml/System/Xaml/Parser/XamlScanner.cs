@@ -661,7 +661,7 @@ namespace MS.Internal.Xaml.Parser
             // The Name attribute
             foreach (XamlAttribute attr in _attributes)
             {
-                switch(attr.Kind)
+                switch (attr.Kind)
                 {
                 case ScannerAttributeKind.Name:
                     nameAttribute = attr;

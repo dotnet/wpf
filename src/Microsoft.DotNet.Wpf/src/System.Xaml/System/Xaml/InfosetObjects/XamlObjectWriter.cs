@@ -894,12 +894,12 @@ namespace System.Xaml
         {
             ThrowIfDisposed();
             ArgumentNullException.ThrowIfNull(namespaceDeclaration);
-            if(namespaceDeclaration.Prefix is null)
+            if (namespaceDeclaration.Prefix is null)
             {
                 throw new ArgumentException(SR.NamespaceDeclarationPrefixCannotBeNull);
             }
 
-            if(namespaceDeclaration.Namespace is null)
+            if (namespaceDeclaration.Namespace is null)
             {
                 throw new ArgumentException(SR.NamespaceDeclarationNamespaceCannotBeNull);
             }
@@ -2564,7 +2564,7 @@ namespace System.Xaml
             }
 
 #if DEBUG
-            if(token.Target.Property != token.TargetContext.ParentProperty)
+            if (token.Target.Property != token.TargetContext.ParentProperty)
             {
                 throw new XamlInternalException("Token's Target Property '{0}' != '{1}' the Token's Context parent Property");
             }

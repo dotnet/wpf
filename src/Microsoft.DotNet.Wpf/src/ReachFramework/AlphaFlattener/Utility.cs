@@ -83,7 +83,7 @@ namespace Microsoft.Internal.AlphaFlattener
         /// <summary>
         /// Apply transformation to Rect
         /// </summary>
-        static public Rect TransformRect(Rect r, Matrix t)
+        public static Rect TransformRect(Rect r, Matrix t)
         {
             if (t.IsIdentity)
             {
@@ -112,32 +112,32 @@ namespace Microsoft.Internal.AlphaFlattener
             return Math.Abs(value) < Epsilon;
         }
 
-        static public bool AreClose(double v1, double v2)
+        public static bool AreClose(double v1, double v2)
         {
             return IsZero(v1 - v2);
         }
 
-        static public bool AreClose(Point p1, Point p2)
+        public static bool AreClose(Point p1, Point p2)
         {
             return IsZero(p1.X - p2.X) && IsZero(p1.Y - p2.Y);
         }
 
-        static public bool AreClose(Vector v1, Vector v2)
+        public static bool AreClose(Vector v1, Vector v2)
         {
             return IsZero(v1.X - v2.X) && IsZero(v2.Y - v2.Y);
         }
 
-        static public bool AreClose(Size s1, Size s2)
+        public static bool AreClose(Size s1, Size s2)
         {
             return IsZero(s1.Width - s2.Width) && IsZero(s1.Height - s2.Height);
         }
 
-        static public bool AreClose(Rect r1, Rect r2)
+        public static bool AreClose(Rect r1, Rect r2)
         {
             return AreClose(r1.TopLeft, r2.TopLeft) && AreClose(r1.BottomRight, r2.BottomRight);
         }
 
-        static public bool IsMultipleOf(double v1, double v2)
+        public static bool IsMultipleOf(double v1, double v2)
         {
             if (IsZero(v2))
             {
@@ -151,7 +151,7 @@ namespace Microsoft.Internal.AlphaFlattener
             return (s >= 1) && IsZero(scale - s);
         }
 
-        static public bool IsScaleTranslate(Matrix transform)
+        public static bool IsScaleTranslate(Matrix transform)
         {
             return IsZero(transform.M12) && IsZero(transform.M21);
         }
@@ -160,7 +160,7 @@ namespace Microsoft.Internal.AlphaFlattener
         // y' = m12 * x + m22 * y + dy
         // When m11^2 + m12^2 = m21^2 + m22^2 and m11 * m21 + m12 * m22 = 0
         // Distance between any two points will be scaled by a constant
-        static public bool HasUniformScale(Matrix mat, out double scale)
+        public static bool HasUniformScale(Matrix mat, out double scale)
         {
             scale = 1;
 
@@ -352,7 +352,7 @@ namespace Microsoft.Internal.AlphaFlattener
         /// <summary>
         /// Apply transformation to Geometry
         /// </summary>
-        static public Geometry TransformGeometry(Geometry g, Matrix t)
+        public static Geometry TransformGeometry(Geometry g, Matrix t)
         {
             if (g == null)
             {
@@ -374,7 +374,7 @@ namespace Microsoft.Internal.AlphaFlattener
         /// <summary>
         /// Apply transformation to Geometry
         /// </summary>
-        static public Geometry TransformGeometry(Geometry g, Transform t)
+        public static Geometry TransformGeometry(Geometry g, Transform t)
         {
             if (g == null)
             {
@@ -393,7 +393,7 @@ namespace Microsoft.Internal.AlphaFlattener
             return newg;
         }
 
-        static public Geometry InverseTransformGeometry(Geometry g, Matrix mat)
+        public static Geometry InverseTransformGeometry(Geometry g, Matrix mat)
         {
             if ((g == null) || mat.IsIdentity)
             {
@@ -414,7 +414,7 @@ namespace Microsoft.Internal.AlphaFlattener
         /// mat is used to transform geometry bounds to world space to test for
         /// non-visible geometry.
         /// </remarks>
-        static public bool IsEmpty(Geometry shape, Matrix mat)
+        public static bool IsEmpty(Geometry shape, Matrix mat)
         {
             if (shape == null)
             {
@@ -443,7 +443,7 @@ namespace Microsoft.Internal.AlphaFlattener
             return false;
         }
 
-        static public PathGeometry GetAsPathGeometry(Geometry geo)
+        public static PathGeometry GetAsPathGeometry(Geometry geo)
         {
             PathGeometry pg = geo as PathGeometry;
 
@@ -455,7 +455,7 @@ namespace Microsoft.Internal.AlphaFlattener
             return pg;
         }
 
-        static public bool IsRectangle(Geometry geometry)
+        public static bool IsRectangle(Geometry geometry)
         {
             if (geometry.Transform != null && !IsScaleTranslate(geometry.Transform.Value))
             {
@@ -625,7 +625,7 @@ namespace Microsoft.Internal.AlphaFlattener
         }
 
 
-        static public double GetGeometryCost(Geometry g)
+        public static double GetGeometryCost(Geometry g)
         {
             StreamGeometry sg = g as StreamGeometry;
 
@@ -686,7 +686,7 @@ namespace Microsoft.Internal.AlphaFlattener
         /// <param name="one"></param>
         /// <param name="two"></param>
         /// <returns>True if Intersect(one, two) = two</returns>
-        static public bool FullyCovers(Geometry one, Geometry two)
+        public static bool FullyCovers(Geometry one, Geometry two)
         {
             Rect bounds1 = one.Bounds;
             Rect bounds2 = two.Bounds;
@@ -720,7 +720,7 @@ namespace Microsoft.Internal.AlphaFlattener
             return false;
         }
 
-        static public bool Covers(Geometry one, Geometry two)
+        public static bool Covers(Geometry one, Geometry two)
         {
             Rect bounds1 = one.Bounds;
             Rect bounds2 = two.Bounds;
@@ -751,7 +751,7 @@ namespace Microsoft.Internal.AlphaFlattener
         /// mat is used to estimate world-space size of the intersection, and return empty if
         /// intersection result is too small to be visible.
         /// </remarks>
-        static public Geometry Intersect(Geometry one, Geometry two, Matrix mat, out bool empty)
+        public static Geometry Intersect(Geometry one, Geometry two, Matrix mat, out bool empty)
         {
             empty = false;
 
@@ -801,7 +801,7 @@ namespace Microsoft.Internal.AlphaFlattener
         /// mat is used to estimate world-space size of the intersection, and return empty if
         /// intersection result is too small to be visible.
         /// </remarks>
-        static public Geometry Exclude(Geometry one, Geometry two, Matrix mat)
+        public static Geometry Exclude(Geometry one, Geometry two, Matrix mat)
         {
             if ((one == null) || (two == null))
             {
@@ -817,7 +817,7 @@ namespace Microsoft.Internal.AlphaFlattener
         /// <param name="clip"></param>
         /// <param name="rect"></param>
         /// <returns></returns>
-        static public bool Disjoint(Geometry clip, Rect rect)
+        public static bool Disjoint(Geometry clip, Rect rect)
         {
             // Null clip means no clipping
             if (clip == null)
@@ -966,7 +966,7 @@ namespace Microsoft.Internal.AlphaFlattener
 
         private const double Tolerance_960_dpi = 0.1;
 
-        static private Geometry Combine(Geometry one, Geometry two, GeometryCombineMode mode, Matrix mat)
+        private static Geometry Combine(Geometry one, Geometry two, GeometryCombineMode mode, Matrix mat)
         {
 #if DEBUG
             StopWatch.Start();
@@ -999,7 +999,7 @@ namespace Microsoft.Internal.AlphaFlattener
             }
         }
 
-        static private bool IsOnRectangle(Point start, Point p, Point q, int n)
+        private static bool IsOnRectangle(Point start, Point p, Point q, int n)
         {
             switch (n)
             {
@@ -1137,7 +1137,7 @@ namespace Microsoft.Internal.AlphaFlattener
         /// <param name="x"></param>
         /// <param name="y"></param>
         /// <returns></returns>
-        static public Color BlendColor(Color x, Color y)
+        public static Color BlendColor(Color x, Color y)
         {
             if (Configuration.ForceAlphaOpaque)
             {
@@ -1219,7 +1219,7 @@ namespace Microsoft.Internal.AlphaFlattener
         /// <param name="colorX"></param>
         /// <param name="opacity"></param>
         /// <param name="opacityOnly">Only use the alpha channel in the image</param>
-        static public void BlendOverColor(byte[] pixels, int count, Color colorX, double opacity, bool opacityOnly)
+        public static void BlendOverColor(byte[] pixels, int count, Color colorX, double opacity, bool opacityOnly)
         {
 /*          if (Configuration.ForceAlphaOpaque)
             {
@@ -1277,7 +1277,7 @@ namespace Microsoft.Internal.AlphaFlattener
         /// <param name="colorY"></param>
         /// <param name="opacity"></param>
         /// <param name="opacityOnly">Only use the alpha channel in the image</param>
-        static public void BlendUnderColor(byte[] pixels, int count, Color colorY, double opacity, bool opacityOnly)
+        public static void BlendUnderColor(byte[] pixels, int count, Color colorY, double opacity, bool opacityOnly)
         {
             Byte b  = colorY.A;
             Byte yR = colorY.R;
@@ -1329,7 +1329,7 @@ namespace Microsoft.Internal.AlphaFlattener
         /// <param name="opacityOnlyB"></param>
         /// <param name="count"></param>
         /// <param name="pixelsC">Output pixel array</param>
-        static public void BlendPixels(byte[] pixelsA, bool opacityOnlyA, byte[] pixelsB, bool opacityOnlyB, int count, byte[] pixelsC)
+        public static void BlendPixels(byte[] pixelsA, bool opacityOnlyA, byte[] pixelsB, bool opacityOnlyB, int count, byte[] pixelsC)
         {
             int p = 0;
 
@@ -1378,7 +1378,7 @@ namespace Microsoft.Internal.AlphaFlattener
         /// <param name="clipWidth"></param>
         /// <param name="clipHeight"></param>
         /// <returns>Returns array of clipped pixels.</returns>
-        static public byte[] ClipPixels(byte[] pixels, int width, int height, int x0, int y0, int clipWidth, int clipHeight)
+        public static byte[] ClipPixels(byte[] pixels, int width, int height, int x0, int y0, int clipWidth, int clipHeight)
         {
             Debug.Assert(
                 (x0 >= 0) &&

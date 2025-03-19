@@ -137,14 +137,14 @@ namespace Microsoft.Internal.AlphaFlattener
         /// <param name="width"></param>
         /// <param name="height"></param>
         /// <returns></returns>
-        static internal double RasterizationCost(double width, double height)
+        internal static double RasterizationCost(double width, double height)
         {
             return  1024 + width / 96 * RasterizationDPI *
                            height / 96 * RasterizationDPI *
                             3;
         }
 
-        static internal double RasterizationCost(double size)
+        internal static double RasterizationCost(double size)
         {
             return 1024 + size / 96 * RasterizationDPI * 3;
         }
@@ -2596,10 +2596,10 @@ namespace Microsoft.Internal.AlphaFlattener
 
         #region Static Methods
 
-        static private BrushProxy _blackBrush = new BrushProxy(Brushes.Black);
-        static private BrushProxy _whiteBrush = new BrushProxy(Brushes.White);
+        private static BrushProxy _blackBrush = new BrushProxy(Brushes.Black);
+        private static BrushProxy _whiteBrush = new BrushProxy(Brushes.White);
 
-        static public bool IsOpaqueWhite(Brush brush)
+        public static bool IsOpaqueWhite(Brush brush)
         {
             SolidColorBrush sb = brush as SolidColorBrush;
 
@@ -2616,7 +2616,7 @@ namespace Microsoft.Internal.AlphaFlattener
             return false;
         }
 
-        static public bool IsOpaqueBlack(Brush brush)
+        public static bool IsOpaqueBlack(Brush brush)
         {
             SolidColorBrush sb = brush as SolidColorBrush;
 
@@ -3503,7 +3503,7 @@ namespace Microsoft.Internal.AlphaFlattener
             }
         }
 
-        static public BrushProxy EmptyBrush
+        public static BrushProxy EmptyBrush
         {
             get
             {
@@ -3553,7 +3553,7 @@ namespace Microsoft.Internal.AlphaFlattener
         private ArrayList _brushList;
         private bool _opacityOnly;
 
-        static private BrushProxy s_EmptyBrush;
+        private static BrushProxy s_EmptyBrush;
         #endregion
     }
 
@@ -3939,7 +3939,7 @@ namespace Microsoft.Internal.AlphaFlattener
             return true;
         }
 
-        static private MyColor InterpolateColor(double offset, double i0, MyColor c0, double i1, MyColor c1)
+        private static MyColor InterpolateColor(double offset, double i0, MyColor c0, double i1, MyColor c1)
         {
             double di = i1 - i0;
 
@@ -4099,7 +4099,7 @@ namespace Microsoft.Internal.AlphaFlattener
 
         #region Private Methods
 
-        static private Geometry CreateRotatedRectangle(double x, double y, double w, double h, Matrix mat)
+        private static Geometry CreateRotatedRectangle(double x, double y, double w, double h, Matrix mat)
         {
             StreamGeometry geometry = new StreamGeometry();
 

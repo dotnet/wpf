@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
 /*++                                                                      
@@ -397,8 +397,8 @@ namespace System.Windows.Xps.Serialization
         /// <summary>
         /// Detect whether it is a complex property or not.
         /// </summary>
-        virtual
         public
+        virtual
         bool
         IsComplexProperty(
             PackageSerializationManager serializationManager
@@ -444,8 +444,8 @@ namespace System.Windows.Xps.Serialization
             return isComplex;
         }
 
-        virtual
         public
+        virtual
         bool 
         IsComplexValue(
                 PackageSerializationManager manager, 

@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
 
@@ -759,7 +759,7 @@ namespace System.Windows.Xps.Serialization
         /// <param name="resWriter"></param>
         /// <param name="bodyWriter"></param>
         /// <param name="fileName"></param>
-        static internal void SaveAsXml(Visual visual, System.Xml.XmlWriter resWriter, System.Xml.XmlWriter bodyWriter, String fileName)
+        internal static void SaveAsXml(Visual visual, System.Xml.XmlWriter resWriter, System.Xml.XmlWriter bodyWriter, String fileName)
         {
             // Check for testing hooks
             FrameworkElement el = visual as FrameworkElement;
@@ -823,7 +823,7 @@ namespace System.Windows.Xps.Serialization
         /// <param name="dc"></param>
         /// <param name="pageSize">Raw size of parent fixed page in pixels.  Does not account for margins</param>
         /// <param name="treeWalkProgress">Used to detect visual tree cycles caused by VisualBrush</param>
-        static internal void Walk(Visual visual, IMetroDrawingContext dc, Size pageSize, TreeWalkProgress treeWalkProgress)
+        internal static void Walk(Visual visual, IMetroDrawingContext dc, Size pageSize, TreeWalkProgress treeWalkProgress)
         {
             VisualTreeFlattener flattener = new VisualTreeFlattener(dc, pageSize, treeWalkProgress);
 
@@ -837,7 +837,7 @@ namespace System.Windows.Xps.Serialization
         /// <param name="geometry">Geometry to write</param>
         /// <param name="pageSize">Raw size of parent fixed page in pixels.  Does not account for margins</param>
         /// <returns>True if written as element, False if written as attribute</returns>
-        static internal bool WritePath(System.Xml.XmlWriter bodyWriter, Geometry geometry, Size pageSize)
+        internal static bool WritePath(System.Xml.XmlWriter bodyWriter, Geometry geometry, Size pageSize)
         {
             VisualSerializer vs = new VisualSerializer(null, bodyWriter, null);
 

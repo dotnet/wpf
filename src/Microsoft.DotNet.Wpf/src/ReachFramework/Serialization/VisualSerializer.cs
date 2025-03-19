@@ -960,7 +960,7 @@ namespace System.Windows.Xps.Serialization
             }
         }
 
-        static private bool IsUniformScale(Matrix mat)
+        private static bool IsUniformScale(Matrix mat)
         {
             if (mat.IsIdentity)
             {
@@ -1142,7 +1142,7 @@ namespace System.Windows.Xps.Serialization
         }
 
         // Check if brush and/or pen actually paint anything visible
-        static private bool Visible(Brush brush, Pen pen)
+        private static bool Visible(Brush brush, Pen pen)
         {
             if (brush != null)
             {
@@ -1163,7 +1163,7 @@ namespace System.Windows.Xps.Serialization
             return false;
         }
 
-        static private char Ord(bool b)
+        private static char Ord(bool b)
         {
             if (b)
             {
@@ -1175,7 +1175,7 @@ namespace System.Windows.Xps.Serialization
             }
         }
 
-        static private char Ord(SweepDirection d)
+        private static char Ord(SweepDirection d)
         {
             if (d == SweepDirection.Clockwise)
             {
@@ -1714,7 +1714,7 @@ namespace System.Windows.Xps.Serialization
         #region IMetroDrawingContext virtual methods override
 
         // Check for relative brush
-        static public bool NeedBounds(Brush b)
+        public static bool NeedBounds(Brush b)
         {
             if (b == null)
             {
@@ -1949,7 +1949,7 @@ namespace System.Windows.Xps.Serialization
         /// <summary>
         /// For translation only transform, extract out translation
         /// </summary>
-        static private Transform ExtractTranslation(Transform trans, out double dx, out double dy)
+        private static Transform ExtractTranslation(Transform trans, out double dx, out double dy)
         {
             dx = 0;
             dy = 0;

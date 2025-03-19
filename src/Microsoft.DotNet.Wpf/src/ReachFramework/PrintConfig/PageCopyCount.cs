@@ -107,7 +107,7 @@ namespace MS.Internal.Printing.Configuration
 
         #region Internal Methods
 
-        internal override sealed void SettingClearCallback()
+        internal sealed override void SettingClearCallback()
         {
         }
 

@@ -1445,8 +1445,8 @@ namespace System.Windows.Xps.Serialization
         private
         IDictionary     _typeNoneSerializableClrProperties;
 
-        static
         private
+        static
         Type[]          _xpsTypesRequiringXMLNS =
         {
             typeof(FixedDocumentSequence),

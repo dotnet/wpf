@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -159,7 +159,7 @@ namespace MS.Win32
         public static extern int RealGetWindowClass( NativeMethods.HWND hWnd, StringBuilder classname, int nMax );
 
         [DllImport("user32.dll", CharSet=CharSet.Auto)]
-        internal extern static bool IsChild( NativeMethods.HWND parent, NativeMethods.HWND child );
+        internal static extern bool IsChild( NativeMethods.HWND parent, NativeMethods.HWND child );
 
         public const int DWMWA_CLOAKED = 14;
 

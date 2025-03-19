@@ -671,7 +671,7 @@ namespace System.Windows.Threading
     ///     DispatcherOperation represents a delegate that has been
     ///     posted to the Dispatcher queue.
     /// </summary>
-    public sealed class DispatcherOperation<TResult> : DispatcherOperation
+    public class DispatcherOperation<TResult> : DispatcherOperation
     {
         internal DispatcherOperation(
             Dispatcher dispatcher,

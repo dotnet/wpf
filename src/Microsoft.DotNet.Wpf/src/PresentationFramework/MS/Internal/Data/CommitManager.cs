@@ -14,7 +14,11 @@ namespace MS.Internal.Data
 {
     internal class CommitManager
     {
-        #region Internal Methods
+        private Set<BindingGroup> _bindingGroups = new Set<BindingGroup>();
+        private Set<BindingExpressionBase> _bindings = new Set<BindingExpressionBase>();
+
+        private static readonly List<BindingGroup> EmptyBindingGroupList = new List<BindingGroup>();
+        private static readonly List<BindingExpressionBase> EmptyBindingList = new List<BindingExpressionBase>();
 
         internal bool IsEmpty
         {
@@ -123,30 +127,12 @@ namespace MS.Internal.Data
             return foundDirt;
         }
 
-        #endregion Internal Methods
-
-        #region Private Methods
-
         // return true if element is a descendant of ancestor
         private bool IsInScope(DependencyObject ancestor, DependencyObject element)
         {
             bool result = (ancestor == null) || VisualTreeHelper.IsAncestorOf(ancestor, element);
             return result;
         }
-
-        #endregion Private Methods
-
-        #region Private Data
-
-        private Set<BindingGroup> _bindingGroups = new Set<BindingGroup>();
-        private Set<BindingExpressionBase> _bindings = new Set<BindingExpressionBase>();
-        
-        private static readonly List<BindingGroup> EmptyBindingGroupList = new List<BindingGroup>();
-        private static readonly List<BindingExpressionBase> EmptyBindingList = new List<BindingExpressionBase>();
-
-        #endregion Private Data
-
-        #region Private types
 
         private class Set<T> : Dictionary<T, object>, IEnumerable<T>
         {
@@ -183,8 +169,6 @@ namespace MS.Internal.Data
                 return new List<T>(Keys);
             }
         }
-
-        #endregion Private types
     }
 }
 

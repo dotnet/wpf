@@ -1301,7 +1301,7 @@ namespace System.Windows.Markup
         private int                          _skipActionDepthCount = -1; // skip mode depth count.
         private XamlNodeType                 _skipActionToken = XamlNodeType.Unknown;
 
-        static private string []     _predefinedNamespaces = new string [3] {
+        private static string []     _predefinedNamespaces = new string [3] {
             XamlReaderHelper.DefinitionNamespaceURI,
             XamlReaderHelper.DefaultNamespaceURI,
             XamlReaderHelper.DefinitionMetroNamespaceURI

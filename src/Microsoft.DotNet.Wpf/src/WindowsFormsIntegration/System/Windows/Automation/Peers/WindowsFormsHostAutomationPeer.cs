@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
 using System.Windows.Automation.Provider;
@@ -15,21 +15,21 @@ namespace System.Windows.Automation.Peers
         {}
     
         ///
-        override protected string GetClassNameCore()
+        protected override string GetClassNameCore()
         {
             return "WindowsFormsHost";
         }
 
         ///
-        override protected AutomationControlType GetAutomationControlTypeCore()
+        protected override AutomationControlType GetAutomationControlTypeCore()
         {
             return AutomationControlType.Pane;
         }
 
         ///
-        override protected internal bool IsHwndHost { get { return true; }}
+        protected internal override bool IsHwndHost { get { return true; }}
 
-        override protected HostedWindowWrapper GetHostRawElementProviderCore()
+        protected override HostedWindowWrapper GetHostRawElementProviderCore()
         {
             HostedWindowWrapper host = null;
             

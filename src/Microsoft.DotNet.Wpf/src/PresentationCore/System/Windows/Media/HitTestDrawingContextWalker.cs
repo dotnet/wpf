@@ -30,7 +30,7 @@ namespace System.Windows.Media
         /// </summary>
         internal abstract bool IsHit { get; }
 
-        abstract internal IntersectionDetail IntersectionDetail { get; }
+        internal abstract IntersectionDetail IntersectionDetail { get; }
 
         #region Static Drawing Context Methods
 

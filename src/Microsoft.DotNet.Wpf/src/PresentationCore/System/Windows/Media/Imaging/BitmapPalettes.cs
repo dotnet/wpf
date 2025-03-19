@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -13,12 +13,12 @@ namespace System.Windows.Media.Imaging
     /// <summary>
     /// Pre-defined palette types
     /// </summary>
-    static public class BitmapPalettes
+    public static class BitmapPalettes
     {
         /// <summary>
         /// BlackAndWhite
         /// </summary>
-        static public Imaging.BitmapPalette BlackAndWhite
+        public static Imaging.BitmapPalette BlackAndWhite
         {
             get
             {
@@ -29,7 +29,7 @@ namespace System.Windows.Media.Imaging
         /// <summary>
         /// BlackAndWhiteTransparent
         /// </summary>
-        static public Imaging.BitmapPalette BlackAndWhiteTransparent
+        public static Imaging.BitmapPalette BlackAndWhiteTransparent
         {
             get
             {
@@ -40,7 +40,7 @@ namespace System.Windows.Media.Imaging
         /// <summary>
         /// Halftone8
         /// </summary>
-        static public Imaging.BitmapPalette Halftone8
+        public static Imaging.BitmapPalette Halftone8
         {
             get
             {
@@ -51,7 +51,7 @@ namespace System.Windows.Media.Imaging
         /// <summary>
         /// Halftone8Transparent
         /// </summary>
-        static public Imaging.BitmapPalette Halftone8Transparent
+        public static Imaging.BitmapPalette Halftone8Transparent
         {
             get
             {
@@ -62,7 +62,7 @@ namespace System.Windows.Media.Imaging
         /// <summary>
         /// Halftone27
         /// </summary>
-        static public Imaging.BitmapPalette Halftone27
+        public static Imaging.BitmapPalette Halftone27
         {
             get
             {
@@ -73,7 +73,7 @@ namespace System.Windows.Media.Imaging
         /// <summary>
         /// Halftone27Transparent
         /// </summary>
-        static public Imaging.BitmapPalette Halftone27Transparent
+        public static Imaging.BitmapPalette Halftone27Transparent
         {
             get
             {
@@ -85,7 +85,7 @@ namespace System.Windows.Media.Imaging
         /// <summary>
         /// Halftone64
         /// </summary>
-        static public Imaging.BitmapPalette Halftone64
+        public static Imaging.BitmapPalette Halftone64
         {
             get
             {
@@ -96,7 +96,7 @@ namespace System.Windows.Media.Imaging
         /// <summary>
         /// Halftone64Transparent
         /// </summary>
-        static public Imaging.BitmapPalette Halftone64Transparent
+        public static Imaging.BitmapPalette Halftone64Transparent
         {
             get
             {
@@ -107,7 +107,7 @@ namespace System.Windows.Media.Imaging
         /// <summary>
         /// Halftone125
         /// </summary>
-        static public Imaging.BitmapPalette Halftone125
+        public static Imaging.BitmapPalette Halftone125
         {
             get
             {
@@ -118,7 +118,7 @@ namespace System.Windows.Media.Imaging
         /// <summary>
         /// Halftone125Transparent
         /// </summary>
-        static public Imaging.BitmapPalette Halftone125Transparent
+        public static Imaging.BitmapPalette Halftone125Transparent
         {
             get
             {
@@ -129,7 +129,7 @@ namespace System.Windows.Media.Imaging
         /// <summary>
         /// Halftone216
         /// </summary>
-        static public Imaging.BitmapPalette Halftone216
+        public static Imaging.BitmapPalette Halftone216
         {
             get
             {
@@ -140,7 +140,7 @@ namespace System.Windows.Media.Imaging
         /// <summary>
         /// Halftone216Transparent
         /// </summary>
-        static public Imaging.BitmapPalette Halftone216Transparent
+        public static Imaging.BitmapPalette Halftone216Transparent
         {
             get
             {
@@ -151,7 +151,7 @@ namespace System.Windows.Media.Imaging
         /// <summary>
         /// Halftone252
         /// </summary>
-        static public Imaging.BitmapPalette Halftone252
+        public static Imaging.BitmapPalette Halftone252
         {
             get
             {
@@ -162,7 +162,7 @@ namespace System.Windows.Media.Imaging
         /// <summary>
         /// Halftone252Transparent
         /// </summary>
-        static public Imaging.BitmapPalette Halftone252Transparent
+        public static Imaging.BitmapPalette Halftone252Transparent
         {
             get
             {
@@ -173,7 +173,7 @@ namespace System.Windows.Media.Imaging
         /// <summary>
         /// Halftone256
         /// </summary>
-        static public Imaging.BitmapPalette Halftone256
+        public static Imaging.BitmapPalette Halftone256
         {
             get
             {
@@ -184,7 +184,7 @@ namespace System.Windows.Media.Imaging
         /// <summary>
         /// Halftone256Transparent
         /// </summary>
-        static public Imaging.BitmapPalette Halftone256Transparent
+        public static Imaging.BitmapPalette Halftone256Transparent
         {
             get
             {
@@ -195,7 +195,7 @@ namespace System.Windows.Media.Imaging
         /// <summary>
         /// Gray4
         /// </summary>
-        static public Imaging.BitmapPalette Gray4
+        public static Imaging.BitmapPalette Gray4
         {
             get
             {
@@ -206,7 +206,7 @@ namespace System.Windows.Media.Imaging
         /// <summary>
         /// Gray4Transparent
         /// </summary>
-        static public Imaging.BitmapPalette Gray4Transparent
+        public static Imaging.BitmapPalette Gray4Transparent
         {
             get
             {
@@ -217,7 +217,7 @@ namespace System.Windows.Media.Imaging
         /// <summary>
         /// Gray16
         /// </summary>
-        static public Imaging.BitmapPalette Gray16
+        public static Imaging.BitmapPalette Gray16
         {
             get
             {
@@ -228,7 +228,7 @@ namespace System.Windows.Media.Imaging
         /// <summary>
         /// Gray16Transparent
         /// </summary>
-        static public Imaging.BitmapPalette Gray16Transparent
+        public static Imaging.BitmapPalette Gray16Transparent
         {
             get
             {
@@ -239,7 +239,7 @@ namespace System.Windows.Media.Imaging
         /// <summary>
         /// Gray256
         /// </summary>
-        static public Imaging.BitmapPalette Gray256
+        public static Imaging.BitmapPalette Gray256
         {
             get
             {
@@ -250,7 +250,7 @@ namespace System.Windows.Media.Imaging
         /// <summary>
         /// Gray256Transparent
         /// </summary>
-        static public Imaging.BitmapPalette Gray256Transparent
+        public static Imaging.BitmapPalette Gray256Transparent
         {
             get
             {
@@ -261,7 +261,7 @@ namespace System.Windows.Media.Imaging
         /// <summary>
         /// WebPalette 
         /// </summary>
-        static public Imaging.BitmapPalette WebPalette
+        public static Imaging.BitmapPalette WebPalette
         {
             get
             {
@@ -272,7 +272,7 @@ namespace System.Windows.Media.Imaging
         /// <summary>
         /// WebpaletteTransparent
         /// </summary>
-        static public Imaging.BitmapPalette WebPaletteTransparent
+        public static Imaging.BitmapPalette WebPaletteTransparent
         {
             get
             {
@@ -280,7 +280,7 @@ namespace System.Windows.Media.Imaging
             }
         }
 
-        static internal Imaging.BitmapPalette FromMILPaletteType(WICPaletteType type, bool hasAlpha)
+        internal static Imaging.BitmapPalette FromMILPaletteType(WICPaletteType type, bool hasAlpha)
         {
             int key = (int)type;
 
@@ -319,7 +319,7 @@ namespace System.Windows.Media.Imaging
             return palette;
         }
 
-        static private Imaging.BitmapPalette[] transparentPalettes
+        private static Imaging.BitmapPalette[] transparentPalettes
         {
             get
             {
@@ -332,7 +332,7 @@ namespace System.Windows.Media.Imaging
             }
         }
 
-        static private Imaging.BitmapPalette[] opaquePalettes
+        private static Imaging.BitmapPalette[] opaquePalettes
         {
             get
             {
@@ -345,8 +345,8 @@ namespace System.Windows.Media.Imaging
             }
         }
         
-        static private Imaging.BitmapPalette[] s_transparentPalettes;
-        static private Imaging.BitmapPalette[] s_opaquePalettes;
+        private static Imaging.BitmapPalette[] s_transparentPalettes;
+        private static Imaging.BitmapPalette[] s_opaquePalettes;
 
         private const int c_maxPalettes = 64;
     }

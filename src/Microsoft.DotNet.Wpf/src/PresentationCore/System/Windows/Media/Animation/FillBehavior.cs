@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -54,7 +54,7 @@ namespace MS.Internal
     {
         private const int c_maxFillBehavior = (int)FillBehavior.Stop;
 
-        static internal bool IsValidFillBehavior(FillBehavior value)
+        internal static bool IsValidFillBehavior(FillBehavior value)
         {
             return (0 <= value && (int)value <= c_maxFillBehavior);
         }

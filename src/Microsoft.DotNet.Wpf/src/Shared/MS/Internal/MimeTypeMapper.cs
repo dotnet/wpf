@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -17,7 +17,7 @@ namespace MS.Internal
     internal static class MimeTypeMapper
     {
 
-        static internal ContentType GetMimeTypeFromUri(Uri uriSource)
+        internal static ContentType GetMimeTypeFromUri(Uri uriSource)
         {
             ContentType mimeType = ContentType.Empty;
 
@@ -73,7 +73,7 @@ namespace MS.Internal
         //
         // Call UrlMon API to get MimeType for a given extension.
         //
-        static private ContentType GetMimeTypeFromUrlMon(Uri uriSource)
+        private static ContentType GetMimeTypeFromUrlMon(Uri uriSource)
         {
             ContentType mimeType = ContentType.Empty;
 
@@ -104,7 +104,7 @@ namespace MS.Internal
             return mimeType;
         }
 
-        static private string GetDocument(Uri uri)
+        private static string GetDocument(Uri uri)
         {
             string docstring;
 
@@ -130,7 +130,7 @@ namespace MS.Internal
             return docstring;
         }
 
-        static internal string GetFileExtension(Uri uri)
+        internal static string GetFileExtension(Uri uri)
         {
             string docString = GetDocument(uri);
             string extensionWithDot = Path.GetExtension(docString);
@@ -144,7 +144,7 @@ namespace MS.Internal
             return extension;
         }
 
-        static internal bool IsHTMLMime(ContentType contentType)
+        internal static bool IsHTMLMime(ContentType contentType)
         {
             return (HtmlMime.AreTypeAndSubTypeEqual(contentType)
                 || HtmMime.AreTypeAndSubTypeEqual(contentType));

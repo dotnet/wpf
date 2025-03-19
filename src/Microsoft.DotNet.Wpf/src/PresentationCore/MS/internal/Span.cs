@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -438,8 +438,8 @@ namespace MS.Internal
             return true;
         }
 
-        static private Equals _referenceEquals = new Equals(Object.ReferenceEquals);
-        static private Equals _equals = new Equals(Object.Equals);
+        private static Equals _referenceEquals = new Equals(Object.ReferenceEquals);
+        private static Equals _equals = new Equals(Object.Equals);
 
         private FrugalStructList<Span>  _spans;
         private object                  _defaultObject;

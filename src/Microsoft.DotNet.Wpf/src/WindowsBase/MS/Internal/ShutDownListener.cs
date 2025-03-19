@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
 
@@ -80,7 +80,7 @@ namespace MS.Internal
         // derived class should override this method to inform the target that a shutdown
         // event has occurred.  This method might be called on any thread (e.g.
         // AppDomain.DomainUnload events are typically raised on worker threads).
-        abstract internal void OnShutDown(object target, object sender, EventArgs e);
+        internal abstract void OnShutDown(object target, object sender, EventArgs e);
 
         // stop listening for shutdown events
         internal void StopListening()

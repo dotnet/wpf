@@ -203,7 +203,7 @@ namespace System.Security.RightsManagement
         /// <summary>
         /// This method produces serialized Publish License XRML template.
         /// </summary>
-        override public string ToString()
+        public override string ToString()
         {
         
             using(IssuanceLicense issuanceLicense = new IssuanceLicense(

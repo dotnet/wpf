@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
 //
@@ -99,7 +99,7 @@ namespace MS.Internal.IO.Packaging
         /// <param name="offset">offset</param>
         /// <param name="count">count</param>
         /// <remarks>Common argument verification for Stream.Read()</remarks>
-        static internal void VerifyStreamReadArgs(Stream s, byte[] buffer, int offset, int count)
+        internal static void VerifyStreamReadArgs(Stream s, byte[] buffer, int offset, int count)
         {
             if (!s.CanRead)
                 throw new NotSupportedException(SR.ReadNotSupported);
@@ -133,7 +133,7 @@ namespace MS.Internal.IO.Packaging
         /// <param name="offset"></param>
         /// <param name="count"></param>
         /// <remarks>common argument verification for Stream.Write</remarks>
-        static internal void VerifyStreamWriteArgs(Stream s, byte[] buffer, int offset, int count)
+        internal static void VerifyStreamWriteArgs(Stream s, byte[] buffer, int offset, int count)
         {
             if (!s.CanWrite)
                 throw new NotSupportedException(SR.WriteNotSupported);

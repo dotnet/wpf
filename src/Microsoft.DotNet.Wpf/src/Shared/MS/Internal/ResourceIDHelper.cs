@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
 using System;
@@ -12,7 +12,7 @@ namespace MS.Internal
         // as ResourceID.
         // MarkupCompiler, ResXGen, Loader will call this method internally.
         //
-        static internal string GetResourceIDFromRelativePath(string relPath)
+        internal static string GetResourceIDFromRelativePath(string relPath)
         {
             // It is important that relPath not contain a fragment or query at this point
             //
@@ -31,7 +31,7 @@ namespace MS.Internal
         // This is the central place that returns right ResourceID for 
         // the passed SourceUri.
         //
-        static private string GetResourceIDFromUri(Uri baseUri, Uri sourceUri)
+        private static string GetResourceIDFromUri(Uri baseUri, Uri sourceUri)
         {
             string resourceID = String.Empty;
 

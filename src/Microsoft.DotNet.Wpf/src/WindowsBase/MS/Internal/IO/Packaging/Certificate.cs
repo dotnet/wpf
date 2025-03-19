@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
 // Description:
@@ -25,7 +25,7 @@ namespace MS.Internal.IO.Packaging
         /// <summary>
         /// Type of relationship to a Certificate Part
         /// </summary>
-        static internal string RelationshipType
+        internal static string RelationshipType
         {
             get
             {
@@ -36,7 +36,7 @@ namespace MS.Internal.IO.Packaging
         /// <summary>
         /// Prefix of auto-generated Certificate Part names
         /// </summary>
-        static internal string PartNamePrefix
+        internal static string PartNamePrefix
         {
             get
             {
@@ -47,7 +47,7 @@ namespace MS.Internal.IO.Packaging
         /// <summary>
         /// Extension of Certificate Part file names
         /// </summary>
-        static internal string PartNameExtension
+        internal static string PartNameExtension
         {
             get
             {
@@ -58,7 +58,7 @@ namespace MS.Internal.IO.Packaging
         /// <summary>
         /// ContentType of Certificate Parts
         /// </summary>
-        static internal ContentType ContentType
+        internal static ContentType ContentType
         {
             get
             {

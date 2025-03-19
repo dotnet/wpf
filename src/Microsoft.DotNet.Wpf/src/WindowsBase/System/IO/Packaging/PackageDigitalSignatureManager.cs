@@ -287,7 +287,7 @@ namespace System.IO.Packaging
         /// Type of default signature origin relationship
         /// </summary>
         /// <value></value>
-        static public String SignatureOriginRelationshipType
+        public static String SignatureOriginRelationshipType
         {
             get
             {
@@ -299,7 +299,7 @@ namespace System.IO.Packaging
         /// Default hash algorithm
         /// </summary>
         /// <value></value>
-        static public String DefaultHashAlgorithm
+        public static String DefaultHashAlgorithm
         {
             get
             {
@@ -836,7 +836,7 @@ namespace System.IO.Packaging
         /// </summary>
         /// <param name="hwndParent"></param>
         /// <returns>null if user cancels or no certificate could be located</returns>
-        static internal X509Certificate PromptForSigningCertificate(IntPtr hwndParent)
+        internal static X509Certificate PromptForSigningCertificate(IntPtr hwndParent)
         {
             X509Certificate2 X509cert = null;
 

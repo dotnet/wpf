@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
 // Description:
@@ -1052,7 +1052,7 @@ namespace MS.Internal.Security.RightsManagement
             return ownerLicense.ToString();
         }
 
-        static private string GetElementFromCertificateChain(
+        private static string GetElementFromCertificateChain(
             string certificateChain, int index)
         {
             Invariant.Assert(index >= 0);
@@ -1123,7 +1123,7 @@ namespace MS.Internal.Security.RightsManagement
         // in the CHK build only. So we should also preserve this method only in the CHK build.
         // Otherwise FxCop will complain: AvoidUncalledPrivateCode in the FREE built DLL.
 #if DEBUG
-        static private string GetBoundLicenseStringAttribute(
+        private static string GetBoundLicenseStringAttribute(
             SafeRightsManagementHandle queryHandle,
             string attributeType, 
             uint attributeIndex)
@@ -1160,7 +1160,7 @@ namespace MS.Internal.Security.RightsManagement
         }
 #endif
 
-        static private DateTime GetUnboundLicenseDateTimeAttribute(
+        private static DateTime GetUnboundLicenseDateTimeAttribute(
             SafeRightsManagementQueryHandle queryHandle,
             string attributeType,
             uint attributeIndex,
@@ -1197,7 +1197,7 @@ namespace MS.Internal.Security.RightsManagement
         // in the CHK build only. So we should also preserve this method only in the CHK build.
         // Otherwise FxCop will complain: AvoidUncalledPrivateCode in the FREE built DLL.
 #if DEBUG
-        static private DateTime GetBoundLicenseDateTimeAttribute(
+        private static DateTime GetBoundLicenseDateTimeAttribute(
             SafeRightsManagementHandle queryHandle,
             string attributeType,
             uint attributeIndex,
@@ -1447,7 +1447,7 @@ namespace MS.Internal.Security.RightsManagement
         }
 
         #region Debug
-        // We currently don�t use these two methods, but they may be useful in the future. 
+        // We currently don’t use these two methods, but they may be useful in the future. 
         // So we keep them in the debug build only, and changed them from internal methods 
         // to private methods to remove them from asmmeta files.
 #if DEBUG
@@ -1979,7 +1979,7 @@ namespace MS.Internal.Security.RightsManagement
 
         // the following 2 arrays are used for parsing and converting between String and Enum; 
         // therefore, the entries in the _rightEnums and the _rightNames must be in the same order. 
-        static private ContentRight[] _rightEnums = {
+        private static ContentRight[] _rightEnums = {
                                         ContentRight.View,
                                         ContentRight.Edit,
                                         ContentRight.Print,
@@ -1995,7 +1995,7 @@ namespace MS.Internal.Security.RightsManagement
                                         ContentRight.Export};
 
         // entries in this array must be in UPPERCASE, as we make such assumption during parsing                                         
-        static private string[] _rightNames = {
+        private static string[] _rightNames = {
                                         "VIEW",
                                         "EDIT",
                                         "PRINT",

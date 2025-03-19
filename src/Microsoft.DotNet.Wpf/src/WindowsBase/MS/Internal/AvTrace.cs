@@ -133,7 +133,7 @@ namespace MS.Internal
         // tracing to be enabled.
         //
 
-        static public void OnRefresh()
+        public static void OnRefresh()
         {
             _hasBeenRefreshed = true;
         }
@@ -182,7 +182,7 @@ namespace MS.Internal
         //  the TraceSource.)
         //
 
-        static private bool ShouldCreateTraceSources()
+        private static bool ShouldCreateTraceSources()
         {
             if( IsWpfTracingEnabledInRegistry()
                 || IsDebuggerAttached()
@@ -201,7 +201,7 @@ namespace MS.Internal
         ///  Read the registry to see if WPF tracing is allowed
         ///
 
-        static internal bool IsWpfTracingEnabledInRegistry()
+        internal static bool IsWpfTracingEnabledInRegistry()
         {
             // First time this is called, initialize from the registry
 
@@ -354,7 +354,7 @@ namespace MS.Internal
         //  an exception.
         //
 
-        static public string ToStringHelper(object value)
+        public static string ToStringHelper(object value)
         {
             if (value == null)
                 return "<null>";
@@ -427,7 +427,7 @@ namespace MS.Internal
         //  Return the type name for the given value
         //
 
-        static public string TypeName(object value)
+        public static string TypeName(object value)
         {
             if (value == null)
                 return "<null>";
@@ -440,7 +440,7 @@ namespace MS.Internal
         // individual GetHashCode implementations can be unreliable.
         //
 
-        static public int GetHashCodeHelper(object value )
+        public static int GetHashCodeHelper(object value )
         {
             try
             {
@@ -463,7 +463,7 @@ namespace MS.Internal
         // the null case.
         //
 
-        static public Type GetTypeHelper(object value)
+        public static Type GetTypeHelper(object value)
         {
             if (value == null)
             {

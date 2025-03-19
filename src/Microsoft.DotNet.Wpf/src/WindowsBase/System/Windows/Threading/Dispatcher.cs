@@ -6,6 +6,10 @@ using MS.Internal;
 using MS.Internal.Interop;
 using MS.Utility;
 using MS.Win32;
+using System.ComponentModel;
+using System.Diagnostics.CodeAnalysis;
+using System.Runtime.CompilerServices;
+using System.Runtime.InteropServices;
 using System.Threading;
 using System.Windows.Interop;
 

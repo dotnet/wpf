@@ -14,8 +14,8 @@ namespace MS.Internal.Data
 {
     internal class CommitManager
     {
-        private readonly Set<BindingGroup> _bindingGroups = new Set<BindingGroup>();
-        private readonly Set<BindingExpressionBase> _bindings = new Set<BindingExpressionBase>();
+        private readonly HashSet<BindingGroup> _bindingGroups = new();
+        private readonly HashSet<BindingExpressionBase> _bindings = new();
 
         private static readonly List<BindingGroup> EmptyBindingGroupList = new List<BindingGroup>();
         private static readonly List<BindingExpressionBase> EmptyBindingList = new List<BindingExpressionBase>();
@@ -47,9 +47,10 @@ namespace MS.Internal.Data
 
         internal List<BindingGroup> GetBindingGroupsInScope(DependencyObject element)
         {
-            // iterate over a copy of the full list - callouts can
-            // change the original list
-            List<BindingGroup> fullList = _bindingGroups.ToList();
+            // iterate over a copy of the full list - callouts can change the original list
+            BindingGroup[] fullList = new BindingGroup[_bindingGroups.Count];
+            _bindingGroups.CopyTo(fullList);
+
             List<BindingGroup> list = EmptyBindingGroupList;
 
             foreach (BindingGroup bindingGroup in fullList)
@@ -71,17 +72,16 @@ namespace MS.Internal.Data
 
         internal List<BindingExpressionBase> GetBindingsInScope(DependencyObject element)
         {
-            // iterate over a copy of the full list - calling TargetElement can
-            // change the original list
-            List<BindingExpressionBase> fullList = _bindings.ToList();
+            // iterate over a copy of the full list - calling TargetElement can change the original list
+            BindingExpressionBase[] fullList = new BindingExpressionBase[_bindings.Count];
+            _bindings.CopyTo(fullList);
+
             List<BindingExpressionBase> list = EmptyBindingList;
 
             foreach (BindingExpressionBase binding in fullList)
             {
                 DependencyObject owner = binding.TargetElement;
-                if (owner != null &&
-                    binding.IsEligibleForCommit &&
-                    IsInScope(element, owner))
+                if (owner != null && binding.IsEligibleForCommit && IsInScope(element, owner))
                 {
                     if (list == EmptyBindingList)
                     {
@@ -103,7 +103,9 @@ namespace MS.Internal.Data
             int count = _bindings.Count;
             if (count > 0)
             {
-                List<BindingExpressionBase> list = _bindings.ToList();
+                BindingExpressionBase[] list = new BindingExpressionBase[_bindings.Count];
+                _bindings.CopyTo(list);
+
                 foreach (BindingExpressionBase binding in list)
                 {
                     // fetching TargetElement may detach the binding, removing it from _bindings
@@ -115,7 +117,9 @@ namespace MS.Internal.Data
             count = _bindingGroups.Count;
             if (count > 0)
             {
-                List<BindingGroup> list = _bindingGroups.ToList();
+                BindingGroup[] list = new BindingGroup[_bindingGroups.Count];
+                _bindingGroups.CopyTo(list);
+
                 foreach (BindingGroup bindingGroup in list)
                 {
                     // fetching Owner may detach the binding group, removing it from _bindingGroups
@@ -132,42 +136,6 @@ namespace MS.Internal.Data
         {
             bool result = (ancestor == null) || VisualTreeHelper.IsAncestorOf(ancestor, element);
             return result;
-        }
-
-        private class Set<T> : Dictionary<T, object>, IEnumerable<T>
-        {
-            public Set()
-                : base()
-            {
-            }
-
-            public Set(IDictionary<T, object> other)
-                : base(other)
-            {
-            }
-
-            public Set(IEqualityComparer<T> comparer)
-                : base(comparer)
-            {
-            }
-
-            public void Add(T item)
-            {
-                if (!ContainsKey(item))
-                {
-                    Add(item, null);
-                }
-            }
-
-            IEnumerator<T> IEnumerable<T>.GetEnumerator()
-            {
-                return Keys.GetEnumerator();
-            }
-
-            public List<T> ToList()
-            {
-                return new List<T>(Keys);
-            }
         }
     }
 }

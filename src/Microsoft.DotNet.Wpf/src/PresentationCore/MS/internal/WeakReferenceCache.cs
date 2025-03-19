@@ -19,7 +19,8 @@ internal sealed class WeakReferenceCache<K, V>
     /// <summary>
     /// Max number of elements stored in the cache.
     /// </summary>
-    private const int MaxCacheSize = 300;
+    /// <remarks>This prime is chosen based on the internal table in runtime's HashHelpers.</remarks>
+    private const int MaxCacheSize = 353;
 
     private readonly Dictionary<K, WeakReference<V>> _cacheStore = new();
     private readonly Lock _cacheLock = new();

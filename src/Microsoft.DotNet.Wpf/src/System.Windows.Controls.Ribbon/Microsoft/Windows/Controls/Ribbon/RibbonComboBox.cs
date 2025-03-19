@@ -811,7 +811,7 @@ namespace Microsoft.Windows.Controls.Ribbon
             }
         }
 
-        object UpdateTextBoxCallback(object arg)
+        private object UpdateTextBoxCallback(object arg)
         {
             _updateTextBoxOperation = null;
 
@@ -832,7 +832,7 @@ namespace Microsoft.Windows.Controls.Ribbon
             return null;
         }
 
-        void UpdateTextBox(string matchedText, string newText)
+        private void UpdateTextBox(string matchedText, string newText)
         {
             // Replace the TextBox's text with the matched text and
             // select the text beyond what the user typed
@@ -1407,17 +1407,17 @@ namespace Microsoft.Windows.Controls.Ribbon
             }
         }
 
-        void OnGallerySelectionChanged(object sender, RoutedPropertyChangedEventArgs<object> e)
+        private void OnGallerySelectionChanged(object sender, RoutedPropertyChangedEventArgs<object> e)
         {
             UpdateSelectionProperties();
         }
 
-        void OnGalleryItemSelectionChanged(object sender, RoutedEventArgs e)
+        private void OnGalleryItemSelectionChanged(object sender, RoutedEventArgs e)
         {
             UpdateSelectionProperties();
         }
 
-        void OnGalleryHighlightChanged(object sender, EventArgs e)
+        private void OnGalleryHighlightChanged(object sender, EventArgs e)
         {
             // Note that the _firstGallery does not physically take keyboard focus.
 
@@ -1436,7 +1436,7 @@ namespace Microsoft.Windows.Controls.Ribbon
             }
         }
 
-        void OnGalleryGotKeyboardFocus(object sender, KeyboardFocusChangedEventArgs e)
+        private void OnGalleryGotKeyboardFocus(object sender, KeyboardFocusChangedEventArgs e)
         {
             // When on of the GalleryItems within the _firstGallery acquires Keyboard
             // focus reinstate focus to the parent based on the IsEditable mode

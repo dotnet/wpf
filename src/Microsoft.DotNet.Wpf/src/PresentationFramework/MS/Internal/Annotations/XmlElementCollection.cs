@@ -250,7 +250,7 @@ namespace MS.Internal.Annotations
 
         #region Private Fields
 
-        Dictionary<XmlDocument, int> _xmlDocsRefCounts;
+        private Dictionary<XmlDocument, int> _xmlDocsRefCounts;
 
         #endregion Private Fields
     }

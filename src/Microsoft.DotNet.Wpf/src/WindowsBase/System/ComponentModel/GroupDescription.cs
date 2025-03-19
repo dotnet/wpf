@@ -190,7 +190,7 @@ namespace System.ComponentModel
         //
         //------------------------------------------------------
 
-        void OnGroupNamesChanged(object sender, NotifyCollectionChangedEventArgs e)
+        private void OnGroupNamesChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
             OnPropertyChanged(new PropertyChangedEventArgs(nameof(GroupNames)));
         }
@@ -246,9 +246,9 @@ namespace System.ComponentModel
         //
         //------------------------------------------------------
 
-        ObservableCollection<object> _explicitGroupNames;
-        SortDescriptionCollection _sort;
-        IComparer _customSort;
+        private ObservableCollection<object> _explicitGroupNames;
+        private SortDescriptionCollection _sort;
+        private IComparer _customSort;
 
         #endregion Private fields
     }

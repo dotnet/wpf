@@ -10,11 +10,11 @@ namespace System.Xaml
     // It turns XamlWriter calls into nodes and passes them up to the
     // provided _addDelegate.
     //
-    class WriterDelegate : XamlWriter, IXamlLineInfoConsumer
+    internal class WriterDelegate : XamlWriter, IXamlLineInfoConsumer
     {
-        XamlNodeAddDelegate _addDelegate;
-        XamlLineInfoAddDelegate _addLineInfoDelegate;
-        XamlSchemaContext _schemaContext;
+        private XamlNodeAddDelegate _addDelegate;
+        private XamlLineInfoAddDelegate _addLineInfoDelegate;
+        private XamlSchemaContext _schemaContext;
 
         public WriterDelegate(XamlNodeAddDelegate add, XamlLineInfoAddDelegate addlineInfoDelegate, XamlSchemaContext xamlSchemaContext)
         {

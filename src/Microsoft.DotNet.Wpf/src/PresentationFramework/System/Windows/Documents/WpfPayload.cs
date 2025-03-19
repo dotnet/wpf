@@ -373,7 +373,7 @@ namespace System.Windows.Documents
             return xamlEntryPart;
         }
 
-        static int _wpfPayloadCount; // used to disambiguate between all acts of loading from different WPF payloads.
+        private static int _wpfPayloadCount; // used to disambiguate between all acts of loading from different WPF payloads.
 
         // -------------------------------------------------------------
         //

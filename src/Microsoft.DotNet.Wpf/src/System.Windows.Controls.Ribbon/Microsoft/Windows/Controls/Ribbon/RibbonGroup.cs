@@ -676,7 +676,7 @@ namespace Microsoft.Windows.Controls.Ribbon
             IsVisibleChanged += new DependencyPropertyChangedEventHandler(HandleIsVisibleChanged);
         }
 
-        void HandleIsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
+        private void HandleIsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
             RibbonHelper.DelayCoerceProperty(this, IsDropDownOpenProperty);
             IsVisibleChanged -= new DependencyPropertyChangedEventHandler(HandleIsVisibleChanged);
@@ -1546,7 +1546,7 @@ namespace Microsoft.Windows.Controls.Ribbon
                 RibbonGroup = group;
             }
 
-            RibbonGroup RibbonGroup
+            private RibbonGroup RibbonGroup
             {
                 get;
                 set;

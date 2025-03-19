@@ -19,7 +19,7 @@ using NativeMethodsSetLastError = MS.Internal.UIAutomationClientSideProviders.Na
 
 namespace MS.Internal.AutomationProxies
 {
-    static class Misc
+    internal static class Misc
     {
 
         //------------------------------------------------------

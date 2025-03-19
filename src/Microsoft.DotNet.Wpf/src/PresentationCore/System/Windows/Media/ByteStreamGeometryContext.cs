@@ -756,7 +756,7 @@ namespace System.Windows.Media
 
         private bool _disposed;
         private int _currChunkOffset;
-        FrugalStructList<byte []> _chunkList;
+        private FrugalStructList<byte []> _chunkList;
         private int _currOffset;
         private MIL_PATHGEOMETRY _currentPathGeometryData;
         private MIL_PATHFIGURE _currentPathFigureData;
@@ -770,7 +770,7 @@ namespace System.Windows.Media
         private const int c_maxChunkSize = 1024*1024;
 
         [ThreadStatic]
-        static byte[] _pooledChunk;
+        private static byte[] _pooledChunk;
 
         #endregion Fields
     }

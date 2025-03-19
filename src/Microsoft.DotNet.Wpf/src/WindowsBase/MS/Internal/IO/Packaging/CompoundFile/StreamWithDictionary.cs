@@ -13,8 +13,8 @@ namespace MS.Internal.IO.Packaging.CompoundFile
 {
     internal class StreamWithDictionary : Stream, IDictionary
     {
-        Stream baseStream;
-        IDictionary baseDictionary;
+        private Stream baseStream;
+        private IDictionary baseDictionary;
         private bool _disposed;         // keep track of if we are disposed
 
         internal StreamWithDictionary( Stream wrappedStream, IDictionary wrappedDictionary )

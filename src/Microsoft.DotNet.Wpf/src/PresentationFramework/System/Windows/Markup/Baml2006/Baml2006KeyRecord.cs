@@ -89,8 +89,8 @@ namespace System.Windows.Baml2006
 
         private List<Object> _resources;
         private object _data;
-        bool _shared;
-        bool _sharedSet;
+        private bool _shared;
+        private bool _sharedSet;
     }
 
     internal class StaticResource

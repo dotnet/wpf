@@ -77,7 +77,7 @@ namespace MS.Internal.Printing
             }
         }
 
-        class Entry {
+        private class Entry {
             public Entry(V value)
             {
                 Value = value;

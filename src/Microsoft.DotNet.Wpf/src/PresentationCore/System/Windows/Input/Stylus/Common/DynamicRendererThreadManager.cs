@@ -231,7 +231,7 @@ namespace System.Windows.Input.StylusPlugIns
         /// Handles disposing of internal object data.
         /// </summary>
         /// <param name="disposing">true when freeing managed and unmanaged resources; false if freeing just unmanaged resources.</param>
-        void Dispose(bool disposing)
+        private void Dispose(bool disposing)
         {
             if(!_disposed)
             {

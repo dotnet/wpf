@@ -11,7 +11,7 @@ namespace MS.Win32.Penimc
     Guid("75C6AAEE-2BA4-4008-B523-4F1E033FF049"),
     InterfaceType(ComInterfaceType.InterfaceIsIUnknown)
     ]
-    interface IPimcContext3
+    internal interface IPimcContext3
     {
         void ShutdownComm();
         void GetPacketDescriptionInfo(out int cProps, out int cButtons);
@@ -25,7 +25,7 @@ namespace MS.Win32.Penimc
     Guid("CEB1EF24-BB4E-498B-9DF7-12887ED0EB24"),
     InterfaceType(ComInterfaceType.InterfaceIsIUnknown)
     ]
-    interface IPimcTablet3
+    internal interface IPimcTablet3
     {
         void GetKey(out Int32 key);
         void GetName([MarshalAs(UnmanagedType.LPWStr)] out string name);
@@ -52,7 +52,7 @@ namespace MS.Win32.Penimc
     Guid(PimcConstants.IPimcManager3IID),
     InterfaceType(ComInterfaceType.InterfaceIsIUnknown)
     ]
-    interface IPimcManager3
+    internal interface IPimcManager3
     {
         void GetTabletCount(out UInt32 count);
         void GetTablet(UInt32 tablet, out IPimcTablet3 IPimcTablet);

@@ -305,14 +305,11 @@ namespace System.Printing
         ///<summary>
         ///
         ///</summary>
-        static
-        System.Resources.ResourceManager     printResourceManager;
+        private static System.Resources.ResourceManager     printResourceManager;
 
-        const
-        int  defaultWin32ErrorMessageLength = 256;
+        private const int  defaultWin32ErrorMessageLength = 256;
 
-        const
-        int  FormatMessageFromSystem = unchecked((int)0x00001000);
+        private const int  FormatMessageFromSystem = unchecked((int)0x00001000);
     };
 
     /// <summary>
@@ -808,9 +805,9 @@ namespace System.Printing
             }
 
 
-        Collection<String>  committedAttributes;
-        Collection<String>  failedAttributes;
-        String              printObjectName;
+        private Collection<String>  committedAttributes;
+        private Collection<String>  failedAttributes;
+        private String              printObjectName;
     };
 
     /// <summary>
@@ -1058,9 +1055,9 @@ namespace System.Printing
             this.jobId = (int)(info.GetValue("JobId", typeof(int)));
         }
 
-        int            jobId;
-        String         printQueueName;
-        String         jobContainer;
+        private int            jobId;
+        private String         printQueueName;
+        private String jobContainer;
     };
 
     /// <summary>

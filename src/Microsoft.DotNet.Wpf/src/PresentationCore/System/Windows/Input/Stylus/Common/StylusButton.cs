@@ -104,9 +104,9 @@ namespace System.Windows.Input
 
         /////////////////////////////////////////////////////////////////////
 
-        StylusDeviceBase    _stylusDevice;
-        string          _name;
-        Guid            _guid;
-        StylusButtonState _cachedButtonState = StylusButtonState.Up;
+        private StylusDeviceBase    _stylusDevice;
+        private string          _name;
+        private Guid            _guid;
+        private StylusButtonState _cachedButtonState = StylusButtonState.Up;
     }
 }

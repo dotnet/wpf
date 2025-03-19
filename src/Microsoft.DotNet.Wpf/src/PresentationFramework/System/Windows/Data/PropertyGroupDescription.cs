@@ -263,12 +263,12 @@ namespace System.Windows.Data
         //
         //------------------------------------------------------
 
-        string              _propertyName;
-        PropertyPath        _propertyPath;
-        IValueConverter     _converter;
-        StringComparison    _stringComparison = StringComparison.Ordinal;
-        static readonly IComparer _compareNameAscending = new NameComparer(ListSortDirection.Ascending);
-        static readonly IComparer _compareNameDescending = new NameComparer(ListSortDirection.Descending);
+        private string              _propertyName;
+        private PropertyPath        _propertyPath;
+        private IValueConverter     _converter;
+        private StringComparison    _stringComparison = StringComparison.Ordinal;
+        private static readonly IComparer _compareNameAscending = new NameComparer(ListSortDirection.Ascending);
+        private static readonly IComparer _compareNameDescending = new NameComparer(ListSortDirection.Descending);
 
         #endregion Private Fields
 
@@ -280,7 +280,7 @@ namespace System.Windows.Data
         //
         //------------------------------------------------------
 
-        class NameComparer : IComparer
+        private class NameComparer : IComparer
         {
             public NameComparer(ListSortDirection direction)
             {
@@ -302,7 +302,7 @@ namespace System.Windows.Data
                 return (_direction == ListSortDirection.Ascending) ? value : -value;
             }
 
-            ListSortDirection _direction;
+            private ListSortDirection _direction;
         }
 
         #endregion Private Types

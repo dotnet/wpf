@@ -82,8 +82,8 @@ namespace System.Windows.Media.Effects
             }
             
             return _imageEffectEmulation;
-        }        
+        }
 
-        BlurEffect _imageEffectEmulation;
+        private BlurEffect _imageEffectEmulation;
     }
 }

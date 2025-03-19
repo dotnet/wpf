@@ -16,7 +16,7 @@ using NativeMethodsSetLastError = MS.Internal.UIAutomationClientSideProviders.Na
 
 namespace MS.Internal.AutomationProxies
 {
-    class WindowsRichEdit : ProxyHwnd, IValueProvider, ITextProvider
+    internal class WindowsRichEdit : ProxyHwnd, IValueProvider, ITextProvider
     {
         // ------------------------------------------------------
         //
@@ -26,7 +26,7 @@ namespace MS.Internal.AutomationProxies
 
         #region Constructors
 
-        WindowsRichEdit (IntPtr hwnd, ProxyFragment parent, int style)
+        private WindowsRichEdit (IntPtr hwnd, ProxyFragment parent, int style)
             : base( hwnd, parent, style )
         {
             _type = WindowsEditBox.GetEditboxtype(hwnd);

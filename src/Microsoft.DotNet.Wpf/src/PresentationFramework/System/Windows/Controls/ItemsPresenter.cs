@@ -200,7 +200,7 @@ namespace System.Windows.Controls
         //------------------------------------------------------
 
         // initialize (called during measure, from ApplyTemplate)
-        void AttachToOwner()
+        private void AttachToOwner()
         {
             DependencyObject templatedParent = this.TemplatedParent;
             ItemsControl owner = templatedParent as ItemsControl;
@@ -254,7 +254,7 @@ namespace System.Windows.Controls
             Template = template;
         }
 
-        void UseGenerator(ItemContainerGenerator generator)
+        private void UseGenerator(ItemContainerGenerator generator)
         {
             if (generator == _generator)
                 return;
@@ -331,9 +331,9 @@ namespace System.Windows.Controls
         //
         //------------------------------------------------------
 
-        ItemsControl _owner;
-        ItemContainerGenerator _generator;
-        ItemsPanelTemplate _templateCache;
+        private ItemsControl _owner;
+        private ItemContainerGenerator _generator;
+        private ItemsPanelTemplate _templateCache;
     }
 }
 

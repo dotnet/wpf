@@ -23,7 +23,7 @@ using MS.Internal.PresentationCore;
 
 namespace MS.Internal.AppModel
 {
-    static class CookieHandler
+    internal static class CookieHandler
 {
     internal static void HandleWebRequest(WebRequest request)
     {

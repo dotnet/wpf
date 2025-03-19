@@ -36,7 +36,7 @@ namespace MS.Internal.AppModel
     //  wcp\host\inc\hostservices.idl
 
     [Flags]
-    enum HostingFlags
+    internal enum HostingFlags
     {
         hfHostedInIE = 1,   // Not mutually exclusive! See master definition in the IDL file.
         hfHostedInWebOC = 2,//

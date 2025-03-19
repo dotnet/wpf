@@ -838,8 +838,8 @@ namespace System.Windows.Data
         private bool    _tryInlineDoc = true;
         private bool    _isListening = false;
         private XmlIslandSerializer _xmlSerializer;
-        bool            _isAsynchronous = true;
-        bool            _inEndInit;
+        private bool _isAsynchronous = true;
+        private bool _inEndInit;
         private DispatcherOperationCallback _onCompletedCallback;
         private XmlNodeChangedEventHandler _nodeChangedHandler;
     }

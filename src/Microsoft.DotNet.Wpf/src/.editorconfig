@@ -173,9 +173,6 @@ dotnet_diagnostic.IDE0034.severity = suggestion
 # IDE0036: Order modifiers
 dotnet_diagnostic.IDE0036.severity = suggestion
 
-# IDE0040: Add accessibility modifiers
-dotnet_diagnostic.IDE0040.severity = suggestion
-
 # IDE0041: Use 'is null' check
 dotnet_diagnostic.IDE0041.severity = suggestion
 
@@ -250,10 +247,6 @@ dotnet_diagnostic.IDE1006.severity = suggestion
 
 # SA1000: Spacing around keywords
 dotnet_diagnostic.SA1000.severity = suggestion
-
-# SA1400: Member should declare an access modifier
-dotnet_diagnostic.SA1400.severity = suggestion
-
 # SYSLIB1045: Convert to 'GeneratedRegexAttribute'.
 dotnet_diagnostic.SYSLIB1045.severity = suggestion
 

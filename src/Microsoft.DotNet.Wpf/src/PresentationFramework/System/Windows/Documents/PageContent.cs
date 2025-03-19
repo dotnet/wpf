@@ -217,7 +217,7 @@ namespace System.Windows.Documents
                                 (Uri) null,
                                 new PropertyChangedCallback(OnSourceChanged)));
 
-        static void OnSourceChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        private static void OnSourceChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             PageContent p = (PageContent) d;
             p._pageRef = null;

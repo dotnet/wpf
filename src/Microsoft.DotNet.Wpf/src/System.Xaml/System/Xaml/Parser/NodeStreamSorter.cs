@@ -14,27 +14,24 @@ namespace MS.Internal.Xaml
 {
     internal class NodeStreamSorter: IEnumerator<XamlNode>
     {
-        XamlParserContext _context;
-        XamlXmlReaderSettings _settings;
-        IEnumerator<XamlNode> _source;
-        Queue<XamlNode> _buffer;
-        XamlNode _current;
+        private XamlParserContext _context;
+        private XamlXmlReaderSettings _settings;
+        private IEnumerator<XamlNode> _source;
+        private Queue<XamlNode> _buffer;
+        private XamlNode _current;
+        private ReorderInfo[] _sortingInfoArray;
+        private XamlNode[] _originalNodesInOrder;
+        private Dictionary<string, string> _xmlnsDictionary;
 
-        ReorderInfo[] _sortingInfoArray;
-        XamlNode[] _originalNodesInOrder;
-
-        Dictionary<string, string> _xmlnsDictionary;
-
-        class SeenCtorDirectiveFlags
+        private class SeenCtorDirectiveFlags
         {
             public bool SeenInstancingProperty;
             public bool SeenOutOfOrderCtorDirective;
         }
 
-        List<SeenCtorDirectiveFlags> _seenStack = new List<SeenCtorDirectiveFlags>();
-        int _startObjectDepth;
-
-        List<int> _moveList;
+        private List<SeenCtorDirectiveFlags> _seenStack = new List<SeenCtorDirectiveFlags>();
+        private int _startObjectDepth;
+        private List<int> _moveList;
 
         private void InitializeObjectFrameStack()
         {
@@ -64,19 +61,19 @@ namespace MS.Internal.Xaml
             _startObjectDepth -= 1;
         }
 
-        bool HaveSeenInstancingProperty
+        private bool HaveSeenInstancingProperty
         {
             get { return _seenStack[_startObjectDepth].SeenInstancingProperty; }
             set { _seenStack[_startObjectDepth].SeenInstancingProperty = value; }
         }
 
-        bool HaveSeenOutOfOrderCtorDirective
+        private bool HaveSeenOutOfOrderCtorDirective
         {
             get { return _seenStack[_startObjectDepth].SeenOutOfOrderCtorDirective; }
             set { _seenStack[_startObjectDepth].SeenOutOfOrderCtorDirective = value; }
         }
 
-        struct ReorderInfo
+        private struct ReorderInfo
         {
             public int Depth { get; set; }
             public int OriginalOrderIndex { get; set; }

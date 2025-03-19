@@ -2646,8 +2646,7 @@ namespace System.Windows
         // a dummy DO, used as the InheritanceContext when the dictionary's owner is
         // not itself a DO
         private static readonly DependencyObject DummyInheritanceContext = new DependencyObject();
-
-        XamlObjectIds _contextXamlObjectIds  = new XamlObjectIds();
+        private XamlObjectIds _contextXamlObjectIds  = new XamlObjectIds();
 
         private IXamlObjectWriterFactory _objectWriterFactory;
         private XamlObjectWriterSettings _objectWriterSettings;

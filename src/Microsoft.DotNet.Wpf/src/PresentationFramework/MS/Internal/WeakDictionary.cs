@@ -355,9 +355,9 @@ namespace MS.Internal
 
         #region Private Data
 
-        IWeakHashtable _hashTable = WeakHashtable.FromKeyType(typeof(TKey));
-        KeyCollection<TKey, TValue> _keys = null;
-        ValueCollection<TKey, TValue> _values = null;
+        private IWeakHashtable _hashTable = WeakHashtable.FromKeyType(typeof(TKey));
+        private KeyCollection<TKey, TValue> _keys = null;
+        private ValueCollection<TKey, TValue> _values = null;
 
         #endregion
     }

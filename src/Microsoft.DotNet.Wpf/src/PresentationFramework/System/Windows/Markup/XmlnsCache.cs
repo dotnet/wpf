@@ -450,9 +450,9 @@ namespace System.Windows.Markup
 #endif
 
 #if PBTCOMPILER
-        bool _localAssembly;
+        private bool _localAssembly;
 #endif
-        string _assemblyName;
-        string _clrNamespace;
+        private string _assemblyName;
+        private string _clrNamespace;
     }
 }

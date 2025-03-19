@@ -11,7 +11,7 @@ namespace System.Xaml
 {
     public static class AttachablePropertyServices
     {
-        static DefaultAttachedPropertyStore attachedProperties = new DefaultAttachedPropertyStore();
+        private static DefaultAttachedPropertyStore attachedProperties = new DefaultAttachedPropertyStore();
 
         public static int GetAttachedPropertyCount(object instance)
         {
@@ -116,9 +116,9 @@ namespace System.Xaml
         // global attached properties for types which don't implement IAttachedProperties or DO/Dependency Property
         // integration for their attached properties.
 
-        sealed class DefaultAttachedPropertyStore
+        private sealed class DefaultAttachedPropertyStore
         {
-            Lazy<ConditionalWeakTable<object, Dictionary<AttachableMemberIdentifier, object>>> instanceStorage =
+            private Lazy<ConditionalWeakTable<object, Dictionary<AttachableMemberIdentifier, object>>> instanceStorage =
                 new Lazy<ConditionalWeakTable<object, Dictionary<AttachableMemberIdentifier, object>>>();
 
             public void CopyPropertiesTo(object instance, KeyValuePair<AttachableMemberIdentifier, object>[] array, int index)

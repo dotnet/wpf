@@ -25,9 +25,7 @@ using System.Windows.Media.Converters;
 
 namespace System.Windows.Media
 {
-
-
-    abstract partial class ImageSource : Animatable, IFormattable, DUCE.IResource
+    public abstract partial class ImageSource : Animatable, IFormattable, DUCE.IResource
     {
         //------------------------------------------------------
         //

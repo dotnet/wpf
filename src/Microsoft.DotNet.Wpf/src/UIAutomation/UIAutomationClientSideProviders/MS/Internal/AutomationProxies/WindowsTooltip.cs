@@ -13,7 +13,7 @@ using MS.Win32;
 namespace MS.Internal.AutomationProxies
 {
     // Class definition for the WindowsTooltip proxy. 
-    class WindowsTooltip : ProxyHwnd
+    internal class WindowsTooltip : ProxyHwnd
     {
         // ------------------------------------------------------
         //
@@ -24,7 +24,7 @@ namespace MS.Internal.AutomationProxies
         #region Constructors
 
         // Contructor for the tooltip proxy class.
-        WindowsTooltip (IntPtr hwnd, ProxyFragment parent, int item)
+        private WindowsTooltip (IntPtr hwnd, ProxyFragment parent, int item)
             : base( hwnd, parent, item)
         {
             // Set the control type string to return properly the properties.

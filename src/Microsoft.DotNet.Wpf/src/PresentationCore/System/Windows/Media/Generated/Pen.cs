@@ -25,9 +25,7 @@ using System.Windows.Media.Converters;
 
 namespace System.Windows.Media
 {
-
-
-    sealed partial class Pen : Animatable, DUCE.IResource
+    public sealed partial class Pen : Animatable, DUCE.IResource
     {
         //------------------------------------------------------
         //

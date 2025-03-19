@@ -25,9 +25,7 @@ using System.Windows.Media.Converters;
 
 namespace System.Windows.Media
 {
-
-
-    sealed partial class PolyBezierSegment : PathSegment
+    public sealed partial class PolyBezierSegment : PathSegment
     {
         //------------------------------------------------------
         //

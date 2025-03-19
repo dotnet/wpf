@@ -243,7 +243,7 @@ namespace System.Windows.Input
         // add the handler to the CWT - this keeps the handler alive throughout
         // the lifetime of the target, without prolonging the lifetime of
         // the target
-        void AddHandlerToCWT(Delegate handler, ConditionalWeakTable<object, object> cwt)
+        private void AddHandlerToCWT(Delegate handler, ConditionalWeakTable<object, object> cwt)
         {
             object value;
             object target = handler.Target;
@@ -277,7 +277,7 @@ namespace System.Windows.Input
             }
         }
 
-        void RemoveHandlerFromCWT(Delegate handler, ConditionalWeakTable<object, object> cwt)
+        private void RemoveHandlerFromCWT(Delegate handler, ConditionalWeakTable<object, object> cwt)
         {
             object value;
             object target = handler.Target;
@@ -308,8 +308,8 @@ namespace System.Windows.Input
 
         #region Private Data
 
-        ConditionalWeakTable<object, object> _cwt = new ConditionalWeakTable<object, object>();
-        static readonly object StaticSource = new NamedObject("StaticSource");
+        private ConditionalWeakTable<object, object> _cwt = new ConditionalWeakTable<object, object>();
+        private static readonly object StaticSource = new NamedObject("StaticSource");
 
         #endregion Private Data
 
@@ -437,7 +437,7 @@ namespace System.Windows.Input
                 }
             }
 
-            void OnCanExecuteChanged(object sender, EventArgs e)
+            private void OnCanExecuteChanged(object sender, EventArgs e)
             {
                 // this protects against re-entrancy:  a purge happening
                 // while a CanExecuteChanged event is being delivered
@@ -469,10 +469,10 @@ namespace System.Windows.Input
                 }
             }
 
-            CanExecuteChangedEventManager _manager;
-            WeakReference _source;
-            WeakReference _originalHandler;
-            EventHandler _onCanExecuteChangedHandler;   // see remarks in the constructor
+            private CanExecuteChangedEventManager _manager;
+            private WeakReference _source;
+            private WeakReference _originalHandler;
+            private EventHandler _onCanExecuteChangedHandler;   // see remarks in the constructor
         }
 
         #endregion HandlerSink

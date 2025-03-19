@@ -55,7 +55,7 @@ namespace MS.Internal.KnownBoxes
             }
         }
 
-        double _width;
-        double _height;
+        private double _width;
+        private double _height;
     }
 }

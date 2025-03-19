@@ -15,9 +15,7 @@ using System.Net.Cache;
 
 namespace System.Windows.Media.Imaging
 {
-
-
-    sealed partial class TransformedBitmap : BitmapSource
+    public sealed partial class TransformedBitmap : BitmapSource
     {
         //------------------------------------------------------
         //

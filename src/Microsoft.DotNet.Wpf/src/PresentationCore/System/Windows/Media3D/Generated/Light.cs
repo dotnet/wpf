@@ -23,9 +23,7 @@ using System.Windows.Media.Composition;
 
 namespace System.Windows.Media.Media3D
 {
-
-
-    abstract partial class Light : Model3D
+    public abstract partial class Light : Model3D
     {
         //------------------------------------------------------
         //

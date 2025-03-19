@@ -20,7 +20,7 @@ namespace System.Windows
             Dispatcher.ShutdownFinished += _shutdownHandler;
         }
 
-        void OnDispatcherShutdown(object sender, EventArgs e)
+        private void OnDispatcherShutdown(object sender, EventArgs e)
         {
             if(_shutdownHandler != null)
                 Dispatcher.ShutdownFinished -= _shutdownHandler;

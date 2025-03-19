@@ -548,7 +548,7 @@ namespace MS.Internal.Shaping
         private int offset;
     }
 
-    struct AlternateSubstitutionSubtable
+    internal struct AlternateSubstitutionSubtable
     {
         private const int offsetFormat              = 0;
         private const int offsetCoverage            = 2;

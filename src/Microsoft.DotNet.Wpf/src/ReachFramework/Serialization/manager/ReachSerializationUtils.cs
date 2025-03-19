@@ -678,9 +678,8 @@ namespace System.Windows.Xps.Serialization
 
         }
 
-              
-        Size
-        SimulateFixedPageSize(
+
+        private Size SimulateFixedPageSize(
             Visual visual,
             PrintTicket printTicket
             )

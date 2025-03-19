@@ -41,7 +41,7 @@ namespace MS.Internal.AutomationProxies
 {
     // Base Class for all the Windows Control that supports navigation.
     // Implements the default behaviors
-    class ProxyFragment : ProxySimple, IRawElementProviderFragmentRoot
+    internal class ProxyFragment : ProxySimple, IRawElementProviderFragmentRoot
     {
         // ------------------------------------------------------
         //

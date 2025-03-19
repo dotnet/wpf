@@ -780,7 +780,7 @@ namespace Microsoft.Windows.Controls.Ribbon.Primitives
         private double _separatorOpacity;
         private const double _tabHeaderMinWidth = 30.0;
         private const double _desiredWidthEpsilon = 1e-10;
-        Pen _separatorPen = null;
+        private Pen _separatorPen = null;
 
         #endregion
 

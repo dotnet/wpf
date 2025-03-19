@@ -828,6 +828,6 @@ namespace MS.Internal.IO.Packaging
         //  Private Members
         //
         //------------------------------------------------------
-        const string _contentTypeQueryStringPrefix = "?ContentType=";
+        private const string _contentTypeQueryStringPrefix = "?ContentType=";
     }
 }

@@ -23,7 +23,7 @@ namespace MS.Internal
             }
         }
 
-        string _message;
+        private string _message;
     }
 }
 

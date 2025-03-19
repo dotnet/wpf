@@ -29,7 +29,7 @@ namespace MS.Internal.AutomationProxies
     //          List's parent
 
     // Combobox proxy
-    class WindowsComboBox : ProxyHwnd, IValueProvider, IExpandCollapseProvider
+    internal class WindowsComboBox : ProxyHwnd, IValueProvider, IExpandCollapseProvider
     {
 
         //------------------------------------------------------
@@ -40,7 +40,7 @@ namespace MS.Internal.AutomationProxies
 
         #region Constructor
 
-        WindowsComboBox (IntPtr hwnd, ProxyFragment parent, IntPtr hwndEx, int item)
+        private WindowsComboBox (IntPtr hwnd, ProxyFragment parent, IntPtr hwndEx, int item)
             : base(hwnd, parent, item)
         {
             _cControlType = ControlType.ComboBox;
@@ -862,7 +862,7 @@ namespace MS.Internal.AutomationProxies
         #region WindowsComboButton
 
         // Proxy for ComboBox button
-        class WindowsComboButton: ProxySimple, IInvokeProvider
+        private class WindowsComboButton: ProxySimple, IInvokeProvider
         {
             //------------------------------------------------------
             //

@@ -18,7 +18,7 @@ using System.Windows.Media.Animation;
 
 namespace System.Windows
 {
-    partial class UIElement3D 
+    public partial class UIElement3D 
     {
         static private readonly Type _typeofThis = typeof(UIElement3D);
 

@@ -30,8 +30,8 @@ namespace MS.Internal.Data
             _method(_arg);
         }
 
-        DispatcherOperationCallback _method;
-        object _arg;
-        int _cost;
+        private DispatcherOperationCallback _method;
+        private object _arg;
+        private int _cost;
     }
 }

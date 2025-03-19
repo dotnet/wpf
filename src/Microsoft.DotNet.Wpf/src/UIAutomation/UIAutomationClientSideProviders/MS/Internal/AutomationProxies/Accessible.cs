@@ -1405,7 +1405,7 @@ namespace MS.Internal.AutomationProxies
         // released, so we need a way to work with the existing code anyway; and this error
         // appears to be a side-effect of other security-related code in the Winforms impl
         // which Winforms really do not want to modify), we use this workaround.
-        static IAccessible WashPartialTrustWinformsAccessible(IAccessible old)
+        private static IAccessible WashPartialTrustWinformsAccessible(IAccessible old)
         {
             // Basic alg: get the parent, get all its children, then check each
             // one looking for the one that corresponds to the same element as the

@@ -1970,7 +1970,7 @@ namespace MS.Internal.Security.RightsManagement
         private SafeRightsManagementSessionHandle _hSession = null; // if this is zero, we are disposed
 
         // we preserve this so ve can remove certificates in case of temp activation             
-        UserActivationMode _userActivationMode = UserActivationMode.Permanent;
+        private UserActivationMode _userActivationMode = UserActivationMode.Permanent;
 
         private SafeRightsManagementEnvironmentHandle _envHandle = null;  // if this is null, we are disposed
 

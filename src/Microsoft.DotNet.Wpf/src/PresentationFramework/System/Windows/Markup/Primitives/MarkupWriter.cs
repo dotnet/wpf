@@ -202,7 +202,7 @@ namespace System.Windows.Markup.Primitives
             return result;
         }
 
-        const string clrUriPrefix = "clr-namespace:";
+        private const string clrUriPrefix = "clr-namespace:";
 
         /// <summary>
         /// Partially ordered lists. Elements are stored in order
@@ -1448,7 +1448,7 @@ namespace System.Windows.Markup.Primitives
         /// </summary>
         private class MarkupWriterContext : IValueSerializerContext
         {
-            Scope _scope;
+            private Scope _scope;
 
             internal MarkupWriterContext(Scope scope)
             {
@@ -1507,7 +1507,7 @@ namespace System.Windows.Markup.Primitives
         /// </summary>
         private class TypeValueSerializer : ValueSerializer
         {
-            Scope _scope;
+            private Scope _scope;
 
             public TypeValueSerializer(Scope scope)
             {
@@ -1551,7 +1551,7 @@ namespace System.Windows.Markup.Primitives
             private static Dictionary<string, string> DefaultPrefixes = new Dictionary<string, string>();
             private static readonly object SyncObject = new object();
 
-            static Dictionary<string, string> GetMappingsFor(Assembly assembly)
+            private static Dictionary<string, string> GetMappingsFor(Assembly assembly)
             {
                 Dictionary<string, string> namespaceToUri;
                 lock (SyncObject)

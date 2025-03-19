@@ -28,7 +28,7 @@ namespace System.Windows.Media
 
     [TypeConverter(typeof(GeometryConverter))]
     [ValueSerializer(typeof(GeometryValueSerializer))] // Used by MarkupWriter
-    abstract partial class Geometry : Animatable, IFormattable, DUCE.IResource
+    public abstract partial class Geometry : Animatable, IFormattable, DUCE.IResource
     {
         //------------------------------------------------------
         //

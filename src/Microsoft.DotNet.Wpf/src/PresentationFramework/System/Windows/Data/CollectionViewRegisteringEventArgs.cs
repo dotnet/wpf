@@ -22,6 +22,6 @@ namespace System.Windows.Data
             get { return _view; }
         }
 
-        CollectionView _view;
+        private CollectionView _view;
     }
 }

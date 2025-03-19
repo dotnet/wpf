@@ -979,7 +979,7 @@ namespace Microsoft.Windows.Controls.Ribbon
 
         #region Dropdown Resizing
 
-        void OnPopupResizeStarted(object sender, DragStartedEventArgs e)
+        private void OnPopupResizeStarted(object sender, DragStartedEventArgs e)
         {
             RibbonDropDownHelper.OnPopupResizeStarted(_itemsPresenter);
 
@@ -996,7 +996,7 @@ namespace Microsoft.Windows.Controls.Ribbon
             e.Handled = true;
         }
 
-        void OnPopupResize(object sender, DragDeltaEventArgs e)
+        private void OnPopupResize(object sender, DragDeltaEventArgs e)
         {
             RibbonDropDownHelper.ResizePopup(_itemsPresenter,
                 RibbonDropDownHelper.GetMinDropDownSize(_itemsHost, _popup, BorderThickness),
@@ -1163,7 +1163,7 @@ namespace Microsoft.Windows.Controls.Ribbon
             IsVisibleChanged += new DependencyPropertyChangedEventHandler(HandleIsVisibleChanged);
         }
 
-        void HandleIsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
+        private void HandleIsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
             RibbonHelper.DelayCoerceProperty(this, IsDropDownOpenProperty);
             IsVisibleChanged -= new DependencyPropertyChangedEventHandler(HandleIsVisibleChanged);

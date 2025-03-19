@@ -16,7 +16,7 @@ namespace System.Windows.Media
     {
         // bbox in inner coordinate space. Note that this bbox does not
         // contain the childrens extent.
-        IDrawingContent _content;
+        private IDrawingContent _content;
 
         /// <summary>
         /// HitTestCore implements precise hit testing against render contents

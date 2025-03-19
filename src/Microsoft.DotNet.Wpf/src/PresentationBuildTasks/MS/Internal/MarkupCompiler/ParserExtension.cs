@@ -914,7 +914,7 @@ namespace MS.Internal
             return _pass2;
         }
 
-        bool ProcessedRootElement
+        private bool ProcessedRootElement
         {
             get { return _processedRootElement; }
             set { _processedRootElement = value; }

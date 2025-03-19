@@ -539,12 +539,12 @@ namespace System.Windows.Markup
 
         #region Data
 
-        int _lineNumber = 0;
-        int _linePosition = 0;
-        object _keyContext = null;
-        string _uidContext = null;
-        string _nameContext = null;
-        Uri _baseUri = null;
+        private int _lineNumber = 0;
+        private int _linePosition = 0;
+        private object _keyContext = null;
+        private string _uidContext = null;
+        private string _nameContext = null;
+        private Uri _baseUri = null;
 
         #endregion Data
 

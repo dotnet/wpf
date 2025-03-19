@@ -593,7 +593,7 @@ namespace MS.Internal.Printing.Configuration
 
         private DevModeFields _dmFields;
 
-        SafeMemoryHandle _devMode;
+        private SafeMemoryHandle _devMode;
 
         #endregion
     }

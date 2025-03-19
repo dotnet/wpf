@@ -28,7 +28,7 @@ namespace System.Windows.Media
 
     [TypeConverter(typeof(CacheModeConverter))]
     [ValueSerializer(typeof(CacheModeValueSerializer))] // Used by MarkupWriter
-    abstract partial class CacheMode : Animatable, DUCE.IResource
+    public abstract partial class CacheMode : Animatable, DUCE.IResource
     {
         //------------------------------------------------------
         //

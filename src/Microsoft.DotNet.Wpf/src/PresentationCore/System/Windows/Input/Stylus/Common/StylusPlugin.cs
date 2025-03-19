@@ -315,8 +315,8 @@ namespace System.Windows.Input.StylusPlugIns
 
         // Enabled state is local to this plugin so we just use volatile versus creating a lock 
         // around it since we just read it from multiple thread and write from one.
-        volatile bool __enabled = true;
-        bool _activeForInput = false;
-        StylusPlugInCollection _pic = null;
-}
+        private volatile bool __enabled = true;
+        private bool _activeForInput = false;
+        private StylusPlugInCollection _pic = null;
+    }
 }

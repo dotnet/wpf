@@ -670,7 +670,7 @@ namespace System.Windows.Data
             get { return !IsEditingItem && !SourceList.IsFixedSize; }
         }
 
-        bool CanConstructItem
+        private bool CanConstructItem
         {
             get
             {
@@ -683,7 +683,7 @@ namespace System.Windows.Data
             }
         }
 
-        void EnsureItemConstructor()
+        private void EnsureItemConstructor()
         {
             if (!_isItemConstructorValid)
             {
@@ -742,7 +742,7 @@ namespace System.Windows.Data
             return AddNewCommon(newItem);
         }
 
-        object AddNewCommon(object newItem)
+        private object AddNewCommon(object newItem)
         {
             BindingOperations.AccessCollection(SourceList,
                 () =>
@@ -783,7 +783,7 @@ namespace System.Windows.Data
         // to adjust the position of the new item in the view (it should be adjacent
         // to the placeholder), and cache the new item for use by the other APIs
         // related to AddNew.  This method is called from ProcessCollectionChanged.
-        void BeginAddNew(object newItem, int index)
+        private void BeginAddNew(object newItem, int index)
         {
             Debug.Assert(_newItemIndex == -2 && _newItem == NoNewItem, "unexpected call to BeginAddNew");
 
@@ -895,7 +895,7 @@ namespace System.Windows.Data
             }
         }
 
-        void CommitNewForGrouping()
+        private void CommitNewForGrouping()
         {
             // for grouping we cannot pretend that the new item moves to a different position,
             // since it may actually appear in several new positions (belonging to several groups).
@@ -973,7 +973,7 @@ namespace System.Windows.Data
 
         // Common functionality used by CommitNew, CancelNew, and when the
         // new item is removed by Remove or Refresh.
-        object EndAddNew(bool cancel)
+        private object EndAddNew(bool cancel)
         {
             object newItem = _newItem;
 
@@ -1015,7 +1015,7 @@ namespace System.Windows.Data
             get { return IsAddingNew ? _newItem : null; }
         }
 
-        void SetNewItem(object item)
+        private void SetNewItem(object item)
         {
             if (!System.Windows.Controls.ItemsControl.EqualsEx(item, _newItem))
             {
@@ -1070,7 +1070,7 @@ namespace System.Windows.Data
             }
         }
 
-        void RemoveImpl(object item, int index)
+        private void RemoveImpl(object item, int index)
         {
             if (item == CollectionView.NewItemPlaceholder)
                 throw new InvalidOperationException(SR.RemovingPlaceholder);
@@ -1338,7 +1338,7 @@ namespace System.Windows.Data
             get { return _editItem; }
         }
 
-        void SetEditItem(object item)
+        private void SetEditItem(object item)
         {
             if (!System.Windows.Controls.ItemsControl.EqualsEx(item, _editItem))
             {
@@ -1450,7 +1450,7 @@ namespace System.Windows.Data
             }
         }
 
-        bool IsLiveShaping
+        private bool IsLiveShaping
         {
             get { return (IsLiveSorting==true) || (IsLiveFiltering==true) || (IsLiveGrouping==true); }
         }
@@ -1523,7 +1523,7 @@ namespace System.Windows.Data
             }
         }
 
-        void OnLivePropertyListChanged(object sender, NotifyCollectionChangedEventArgs e)
+        private void OnLivePropertyListChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
             if (IsLiveShaping)
             {
@@ -1803,7 +1803,7 @@ namespace System.Windows.Data
             ProcessCollectionChangedWithAdjustedIndex(args, adjustedOldIndex, adjustedNewIndex);
         }
 
-        void ProcessCollectionChangedWithAdjustedIndex(NotifyCollectionChangedEventArgs args, int adjustedOldIndex, int adjustedNewIndex)
+        private void ProcessCollectionChangedWithAdjustedIndex(NotifyCollectionChangedEventArgs args, int adjustedOldIndex, int adjustedNewIndex)
         {
             // Finding out the effective Action after filtering and sorting.
             //
@@ -2594,13 +2594,13 @@ namespace System.Windows.Data
             PrepareGroups();
         }
 
-        void OnLiveShapingDirty(object sender, EventArgs e)
+        private void OnLiveShapingDirty(object sender, EventArgs e)
         {
             IsLiveShapingDirty = true;
         }
 
         // rebuild the local array, called when a live-shaping property changes
-        void RebuildLocalArray()
+        private void RebuildLocalArray()
         {
             if (IsRefreshDeferred)
             {
@@ -2759,7 +2759,7 @@ namespace System.Windows.Data
             return (index < 0) ? index : index + delta;
         }
 
-        int MatchingSearch(object item, int index, IList ilFull, IList ilPartial)
+        private int MatchingSearch(object item, int index, IList ilFull, IList ilPartial)
         {
             // do a linear search of the full array, advancing
             // localIndex past elements that appear in the local array,
@@ -2921,7 +2921,7 @@ namespace System.Windows.Data
         #region Grouping
 
         // divide the data items into groups
-        void PrepareGroups()
+        private void PrepareGroups()
         {
             // if there's no grouping, there's nothing to do
             if (!_isGrouping)
@@ -2983,7 +2983,7 @@ namespace System.Windows.Data
 
 
         // For the Group to report collection changed
-        void OnGroupChanged(object sender, NotifyCollectionChangedEventArgs e)
+        private void OnGroupChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
             if (e.Action == NotifyCollectionChangedAction.Add)
             {
@@ -2997,7 +2997,7 @@ namespace System.Windows.Data
         }
 
         // The GroupDescriptions collection changed
-        void OnGroupByChanged(object sender, NotifyCollectionChangedEventArgs e)
+        private void OnGroupByChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
             if (IsAddingNew || IsEditingItem)
                 throw new InvalidOperationException(SR.Format(SR.MemberNotAllowedDuringAddOrEdit, "Grouping"));
@@ -3007,7 +3007,7 @@ namespace System.Windows.Data
         }
 
         // A group description for one of the subgroups changed
-        void OnGroupDescriptionChanged(object sender, EventArgs e)
+        private void OnGroupDescriptionChanged(object sender, EventArgs e)
         {
             if (IsAddingNew || IsEditingItem)
                 throw new InvalidOperationException(SR.Format(SR.MemberNotAllowedDuringAddOrEdit, "Grouping"));
@@ -3017,7 +3017,7 @@ namespace System.Windows.Data
         }
 
         // An item was inserted into the collection.  Update the groups.
-        void AddItemToGroups(object item, LiveShapingItem lsi)
+        private void AddItemToGroups(object item, LiveShapingItem lsi)
         {
             if (IsAddingNew && item == _newItem)
             {
@@ -3045,7 +3045,7 @@ namespace System.Windows.Data
         }
 
         // An item was removed from the collection.  Update the groups.
-        void RemoveItemFromGroups(object item)
+        private void RemoveItemFromGroups(object item)
         {
             if (CanGroupNamesChange || _group.RemoveFromSubgroups(item))
             {
@@ -3055,7 +3055,7 @@ namespace System.Windows.Data
         }
 
         // An item has moved.  Update the groups
-        void MoveItemWithinGroups(object item, LiveShapingItem lsi, int oldIndex, int newIndex)
+        private void MoveItemWithinGroups(object item, LiveShapingItem lsi, int oldIndex, int newIndex)
         {
             _group.MoveWithinSubgroups(item, lsi, InternalList, oldIndex, newIndex);
         }
@@ -3064,9 +3064,9 @@ namespace System.Windows.Data
 
         #region Live Shaping
 
-        const double LiveSortingDensityThreshold = 0.8;
+        private const double LiveSortingDensityThreshold = 0.8;
 
-        LiveShapingFlags GetLiveShapingFlags()
+        private LiveShapingFlags GetLiveShapingFlags()
         {
             LiveShapingFlags result = 0;
 
@@ -3225,7 +3225,7 @@ namespace System.Windows.Data
         }
 
         // changes from the LiveShaping list need indices adjusted for NewItemPlaceholder
-        void ProcessLiveShapingCollectionChange(NotifyCollectionChangedEventArgs args, int oldIndex, int newIndex)
+        private void ProcessLiveShapingCollectionChange(NotifyCollectionChangedEventArgs args, int oldIndex, int newIndex)
         {
             if (!IsGrouping && (NewItemPlaceholderPosition == NewItemPlaceholderPosition.AtBeginning))
             {
@@ -3252,7 +3252,7 @@ namespace System.Windows.Data
             }
         }
 
-        object ItemFrom(object o)
+        private object ItemFrom(object o)
         {
             LiveShapingItem lsi = o as LiveShapingItem;
             return (lsi == null) ? o : lsi.Item;
@@ -3328,11 +3328,11 @@ namespace System.Windows.Data
         private ObservableCollection<string>    _liveSortingProperties;
         private ObservableCollection<string>    _liveFilteringProperties;
         private ObservableCollection<string>    _liveGroupingProperties;
-        bool?                       _isLiveSorting = false;
-        bool?                       _isLiveFiltering = false;
-        bool?                       _isLiveGrouping = false;
-        bool                        _isLiveShapingDirty;
-        bool                        _isRemoving;
+        private bool?                       _isLiveSorting = false;
+        private bool?                       _isLiveFiltering = false;
+        private bool?                       _isLiveGrouping = false;
+        private bool                        _isLiveShapingDirty;
+        private bool                        _isRemoving;
 
         private const int           _unknownIndex = -1;
 

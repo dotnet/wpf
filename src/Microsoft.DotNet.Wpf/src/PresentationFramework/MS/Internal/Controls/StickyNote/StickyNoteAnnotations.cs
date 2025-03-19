@@ -1615,12 +1615,12 @@ namespace System.Windows.Controls
         /// <summary>
         /// the presentation context this sticky note is in
         /// </summary>
-        PresentationContext _presentationContext;
+        private PresentationContext _presentationContext;
 
         /// <summary>
         /// Offset from anchor point to sticky note icon
         /// </summary>
-        TranslateTransform _positionTransform = new TranslateTransform(0, 0);
+        private TranslateTransform _positionTransform = new TranslateTransform(0, 0);
 
         // A reference of the current attached annotation instance.
         private IAttachedAnnotation _attachedAnnotation;

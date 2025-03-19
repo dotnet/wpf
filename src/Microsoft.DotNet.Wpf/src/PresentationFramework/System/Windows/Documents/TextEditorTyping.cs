@@ -1673,7 +1673,7 @@ namespace System.Windows.Documents
             internal abstract void Do();
 
             // The TextEditor instance on which this input item applies.
-            TextEditor _textEditor;
+            private TextEditor _textEditor;
 
             protected TextEditor TextEditor
             {

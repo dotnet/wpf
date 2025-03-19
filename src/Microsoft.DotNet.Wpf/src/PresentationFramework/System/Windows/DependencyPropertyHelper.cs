@@ -149,11 +149,11 @@ namespace System.Windows
 
         #endregion Object overrides - required by FxCop
 
-        BaseValueSource _baseValueSource;
-        bool            _isExpression;
-        bool            _isAnimated;
-        bool            _isCoerced;
-        bool            _isCurrent;
+        private BaseValueSource _baseValueSource;
+        private bool            _isExpression;
+        private bool            _isAnimated;
+        private bool            _isCoerced;
+        private bool            _isCurrent;
     }
 
     /// <summary>

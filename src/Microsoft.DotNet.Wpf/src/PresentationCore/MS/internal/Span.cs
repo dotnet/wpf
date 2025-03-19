@@ -441,8 +441,8 @@ namespace MS.Internal
         static private Equals _referenceEquals = new Equals(Object.ReferenceEquals);
         static private Equals _equals = new Equals(Object.Equals);
 
-        FrugalStructList<Span>  _spans;
-        object                  _defaultObject;
+        private FrugalStructList<Span>  _spans;
+        private object                  _defaultObject;
         #endregion
     }
 
@@ -489,8 +489,8 @@ namespace MS.Internal
             _current = -1;
         }
 
-        SpanVector  _spans;
-        int         _current;    // current span
+        private SpanVector  _spans;
+        private int         _current;    // current span
     }
 
 
@@ -626,10 +626,10 @@ namespace MS.Internal
         #endregion
 
         #region Private members
-        SpanVector      _spans;         // vector of spans
-        SpanPosition    _spanPosition;  // index and cp of current span
-        int             _cp;            // current cp (may be greater than start of span)
-        int             _cch;           // distance from current cp to end of current span
+        private SpanVector      _spans;         // vector of spans
+        private SpanPosition    _spanPosition;  // index and cp of current span
+        private int             _cp;            // current cp (may be greater than start of span)
+        private int _cch;           // distance from current cp to end of current span
         #endregion
     }
 }

@@ -1029,13 +1029,13 @@ namespace System.Windows.Annotations.Storage
         // The xpath navigator used to navigate the annotations Xml stream
         private XPathNavigator _rootNavigator;
         // map that holds AnnotationId->Annotation
-        StoreAnnotationsMap _storeAnnotationsMap;
+        private StoreAnnotationsMap _storeAnnotationsMap;
         //list of ignored namespaces during XmlLoad
-        List<Uri> _ignoredNamespaces = new List<Uri>();
+        private List<Uri> _ignoredNamespaces = new List<Uri>();
 
-        //XmlCompatibilityReader - we need to hold that one open, so the underlying stream stays open too
+        // XmlCompatibilityReader - we need to hold that one open, so the underlying stream stays open too
         // if the store is disposed the reader will be disposed and the stream will be closed too.
-        XmlCompatibilityReader _xmlCompatibilityReader;
+        private XmlCompatibilityReader _xmlCompatibilityReader;
 
         ///
         ///Static fields

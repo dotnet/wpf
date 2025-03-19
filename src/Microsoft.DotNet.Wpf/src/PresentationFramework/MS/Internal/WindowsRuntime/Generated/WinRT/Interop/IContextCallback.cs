@@ -10,17 +10,17 @@ using WinRT.Interop;
 
 namespace WinRT.Interop
 {
-    struct ComCallData
+    internal struct ComCallData
     {
         public int dwDispid;
         public int dwReserved;
         public IntPtr pUserDefined;
     }
 
-    unsafe delegate int PFNCONTEXTCALL(ComCallData* data);
+    internal unsafe delegate int PFNCONTEXTCALL(ComCallData* data);
 
     [Guid("000001da-0000-0000-C000-000000000046")]
-    unsafe interface IContextCallback
+    internal unsafe interface IContextCallback
     {
         // The pUnk parameter is intentionally excluded here
         // since it is required to always be null.
@@ -36,7 +36,7 @@ namespace WinRT.Interop
 namespace ABI.WinRT.Interop
 {
     [Guid("000001da-0000-0000-C000-000000000046")]
-    class IContextCallback : global::WinRT.Interop.IContextCallback
+    internal class IContextCallback : global::WinRT.Interop.IContextCallback
     {
         [Guid("000001da-0000-0000-C000-000000000046")]
         internal struct Vftbl
@@ -48,7 +48,8 @@ namespace ABI.WinRT.Interop
                 ref Guid riid,
                 int iMethod,
                 IntPtr pUnk);
-            global::WinRT.Interop.IUnknownVftbl IUnknownVftbl;
+
+            private global::WinRT.Interop.IUnknownVftbl IUnknownVftbl;
             public _ContextCallback ContextCallback_4;
         }
         public static ObjectReference<Vftbl> FromAbi(IntPtr thisPtr) => ObjectReference<Vftbl>.FromAbi(thisPtr);

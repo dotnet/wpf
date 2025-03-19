@@ -16,15 +16,15 @@ namespace System.Windows.Markup
         //
         // NOTE:  If you add a field here, be sure to update ClearData
         //
-        ReaderFlags  _contextFlags;
-        object       _contextData;
-        object       _contextKey;
-        string        _uid;
-        string        _name;
-        object       _contentProperty;
-        Type         _expectedType;
-        short        _expectedTypeId;
-        bool         _createUsingTypeConverter;
+        private ReaderFlags  _contextFlags;
+        private object       _contextData;
+        private object       _contextKey;
+        private string        _uid;
+        private string        _name;
+        private object       _contentProperty;
+        private Type         _expectedType;
+        private short        _expectedTypeId;
+        private bool         _createUsingTypeConverter;
         //
         // NOTE:  If you add a field here, be sure to update ClearData
         //

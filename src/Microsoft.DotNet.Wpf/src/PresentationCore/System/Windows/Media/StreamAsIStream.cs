@@ -543,7 +543,7 @@ namespace System.Windows.Media
             return (StreamAsIStream.FromSD(ref pSD)).Revert();
         }
 
-        internal unsafe static int Seek(ref StreamDescriptor pSD, long offset, uint origin, long* plibNewPostion)
+        internal static unsafe int Seek(ref StreamDescriptor pSD, long offset, uint origin, long* plibNewPostion)
         {
             return (StreamAsIStream.FromSD(ref pSD)).Seek(offset, origin, plibNewPostion);
         }
@@ -664,7 +664,7 @@ namespace System.Windows.Media
         #endregion
 
         [DllImport(DllImport.MilCore)]//CASRemoval:
-        private extern static int /* HRESULT */ MILIStreamWrite(IntPtr pStream, [MarshalAs(UnmanagedType.LPArray, SizeParamIndex = 2)]byte[] buffer, uint cb, out uint cbWritten);
+        private static extern int /* HRESULT */ MILIStreamWrite(IntPtr pStream, [MarshalAs(UnmanagedType.LPArray, SizeParamIndex = 2)]byte[] buffer, uint cb, out uint cbWritten);
     }
     #endregion
 }

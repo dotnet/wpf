@@ -565,7 +565,7 @@ namespace System.Windows.Media.Media3D
         
         #region Internal Fields
 
-        internal readonly static Rect3D Infinite = CreateInfiniteRect3D();
+        internal static readonly Rect3D Infinite = CreateInfiniteRect3D();
         
         #endregion Internal Fields
         
@@ -654,7 +654,7 @@ namespace System.Windows.Media.Media3D
 
         #region Private Fields
 
-        private readonly static Rect3D s_empty = CreateEmptyRect3D();
+        private static readonly Rect3D s_empty = CreateEmptyRect3D();
 
         #endregion Private Fields
     }

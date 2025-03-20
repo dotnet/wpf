@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -44,7 +44,7 @@ namespace System.Windows.Automation
         #region Public Constants and Readonly Fields
 
         /// <summary>TableItem pattern</summary>
-        public static readonly new AutomationPattern Pattern = TableItemPatternIdentifiers.Pattern;
+        public static new readonly AutomationPattern Pattern = TableItemPatternIdentifiers.Pattern;
 
         /// <summary>Property ID: RowHeaderItems - Collection of all row headers for this cell</summary>
         public static readonly AutomationProperty RowHeaderItemsProperty = TableItemPatternIdentifiers.RowHeaderItemsProperty;
@@ -90,7 +90,7 @@ namespace System.Windows.Automation
         /// access the property via the Current accessor instead of
         /// Cached.
         /// </remarks>
-        new public TableItemPatternInformation Cached
+        public new TableItemPatternInformation Cached
         {
             get
             {
@@ -115,7 +115,7 @@ namespace System.Windows.Automation
         /// specified using a CacheRequest, access the property via the
         /// Cached accessor instead of Current.
         /// </remarks>
-        new public TableItemPatternInformation Current
+        public new TableItemPatternInformation Current
         {
             get
             {

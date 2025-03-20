@@ -158,7 +158,7 @@ namespace MS.Internal.AutomationProxies
         }
 
 
-        internal unsafe static bool EnumChildWindows(IntPtr hwnd, NativeMethods.EnumChildrenCallbackVoid lpEnumFunc, void* lParam)
+        internal static unsafe bool EnumChildWindows(IntPtr hwnd, NativeMethods.EnumChildrenCallbackVoid lpEnumFunc, void* lParam)
         {
             bool result = UnsafeNativeMethods.EnumChildWindows(hwnd, lpEnumFunc, lParam);
             int lastWin32Error = Marshal.GetLastWin32Error();
@@ -808,7 +808,7 @@ namespace MS.Internal.AutomationProxies
         // and that they are clipped by there parent.  For example this is called by the WindowsListBox.
         // In that case the hwnd is the list box and the itemRect would be a list item this code checks to see
         // if the item is scrolled out of view.
-        static internal bool IsItemVisible(IntPtr hwnd, ref NativeMethods.Win32Rect itemRect)
+        internal static bool IsItemVisible(IntPtr hwnd, ref NativeMethods.Win32Rect itemRect)
         {
             NativeMethods.Win32Rect clientRect = new NativeMethods.Win32Rect(0, 0, 0, 0);
             if (!GetClientRectInScreenCoordinates(hwnd, ref clientRect))
@@ -821,7 +821,7 @@ namespace MS.Internal.AutomationProxies
             return IntersectRect(ref intersection, ref clientRect, ref itemRect);
         }
 
-        static internal bool IsItemVisible(ref NativeMethods.Win32Rect parentRect, ref NativeMethods.Win32Rect itemRect)
+        internal static bool IsItemVisible(ref NativeMethods.Win32Rect parentRect, ref NativeMethods.Win32Rect itemRect)
         {
             NativeMethods.Win32Rect intersection = new NativeMethods.Win32Rect(0, 0, 0, 0);
 
@@ -830,7 +830,7 @@ namespace MS.Internal.AutomationProxies
             return IntersectRect(ref intersection, ref parentRect, ref itemRect);
         }
 
-        static internal bool IsItemVisible(ref NativeMethods.Win32Rect parentRect, ref Rect itemRect)
+        internal static bool IsItemVisible(ref NativeMethods.Win32Rect parentRect, ref Rect itemRect)
         {
             NativeMethods.Win32Rect itemRc = new NativeMethods.Win32Rect(itemRect);
             NativeMethods.Win32Rect intersection = new NativeMethods.Win32Rect(0, 0, 0, 0);
@@ -840,7 +840,7 @@ namespace MS.Internal.AutomationProxies
             return IntersectRect(ref intersection, ref parentRect, ref itemRc);
         }
 
-        static internal bool IsItemVisible(ref Rect parentRect, ref NativeMethods.Win32Rect itemRect)
+        internal static bool IsItemVisible(ref Rect parentRect, ref NativeMethods.Win32Rect itemRect)
         {
             NativeMethods.Win32Rect parentRc = new NativeMethods.Win32Rect(parentRect);
             NativeMethods.Win32Rect intersection = new NativeMethods.Win32Rect(0, 0, 0, 0);
@@ -850,7 +850,7 @@ namespace MS.Internal.AutomationProxies
             return IntersectRect(ref intersection, ref parentRc, ref itemRect);
         }
 
-        static internal bool IsItemVisible(ref Rect parentRect, ref Rect itemRect)
+        internal static bool IsItemVisible(ref Rect parentRect, ref Rect itemRect)
         {
             NativeMethods.Win32Rect itemRc = new NativeMethods.Win32Rect(itemRect);
             NativeMethods.Win32Rect parentRc = new NativeMethods.Win32Rect(parentRect);
@@ -1478,7 +1478,7 @@ namespace MS.Internal.AutomationProxies
         // This is implemented here to work around this behavior.
         // Fake keystroke are sent to a specific hwnd to force
         // Windows to give the focus to that hwnd.
-        static internal bool SetFocus(IntPtr hwnd)
+        internal static bool SetFocus(IntPtr hwnd)
         {
             // First Check for ComboLBox
             // Because it uses Keystrokes it dismisses the ComboLBox

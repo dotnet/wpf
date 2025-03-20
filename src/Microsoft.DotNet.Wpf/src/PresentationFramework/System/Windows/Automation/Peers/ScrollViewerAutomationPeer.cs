@@ -18,19 +18,19 @@ namespace System.Windows.Automation.Peers
         {}
     
         ///
-        override protected string GetClassNameCore()
+        protected override string GetClassNameCore()
         {
             return "ScrollViewer";
         }
 
         ///
-        override protected AutomationControlType GetAutomationControlTypeCore()
+        protected override AutomationControlType GetAutomationControlTypeCore()
         {
             return AutomationControlType.Pane;
         }
 
         ///
-        override protected bool IsControlElementCore()
+        protected override bool IsControlElementCore()
         {
             // Return false if ScrollViewer is part of a ControlTemplate, otherwise return the base method
             ScrollViewer sv = (ScrollViewer)Owner;
@@ -46,7 +46,7 @@ namespace System.Windows.Automation.Peers
         }
 
         /// 
-        override public object GetPattern(PatternInterface patternInterface)
+        public override object GetPattern(PatternInterface patternInterface)
         {
             if (patternInterface == PatternInterface.Scroll)
             {

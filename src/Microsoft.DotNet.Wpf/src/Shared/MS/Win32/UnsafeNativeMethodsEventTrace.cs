@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -61,7 +61,7 @@ namespace MS.Win32
                 );
 
         [StructLayout(LayoutKind.Sequential)]
-        unsafe internal struct EVENT_FILTER_DESCRIPTOR
+        internal unsafe struct EVENT_FILTER_DESCRIPTOR
         {
             public long Ptr;
             public int Size;

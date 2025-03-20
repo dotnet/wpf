@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -143,7 +143,7 @@ namespace System.Windows
 
         #region Private Methods
             
-        static private Size CreateEmptySize()
+        private static Size CreateEmptySize()
         {
             Size size = new Size
             {
@@ -159,7 +159,7 @@ namespace System.Windows
             
         #region Private Fields
 
-        private readonly static Size s_empty = CreateEmptySize();
+        private static readonly Size s_empty = CreateEmptySize();
 
         #endregion Private Fields
     }

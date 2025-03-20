@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -475,7 +475,7 @@ namespace System.Windows
         // FireChanged occurs.
         //
         [ThreadStatic]
-        static private EventStorage _eventStorage = null;
+        private static EventStorage _eventStorage = null;
 
         /// <summary>
         /// Property to access and intialize the thread static _eventStorage variable.
@@ -707,7 +707,7 @@ namespace System.Windows
         /// Freezable can't be frozen.</exception>
         //  Future Note: Consider removing if we move Freezables to DO's, and moving it into
         // SetFreezableContextCore directly.  What situations would remain for subclasses to need to call it?
-        static protected internal bool Freeze(Freezable freezable, bool isChecking)
+        protected internal static bool Freeze(Freezable freezable, bool isChecking)
         {
             if (freezable != null)
             {

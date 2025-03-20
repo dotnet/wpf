@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -642,7 +642,7 @@ namespace System.Xaml
                 XamlType declaringType = xamlProperty.DeclaringType;
 
                 MemberMarkupInfo memberInfo;
-                if((xamlProperty == declaringType.GetAliasedProperty(XamlLanguage.Lang)) && (propertyValue is string))
+                if ((xamlProperty == declaringType.GetAliasedProperty(XamlLanguage.Lang)) && (propertyValue is string))
                 {
                     memberInfo = new MemberMarkupInfo()
                     {
@@ -725,7 +725,7 @@ namespace System.Xaml
 
                 bool isPreviousItemValue = false;
                 IList<object> itemsList = context.Runtime.GetCollectionItems(propertyValue, xamlType);
-                for(int i = 0; i < itemsList.Count; i++)
+                for (int i = 0; i < itemsList.Count; i++)
                 {
                     var itemValue = itemsList[i];
 
@@ -801,20 +801,20 @@ namespace System.Xaml
             // 3. First element has leading whitespace
             private static bool ShouldUnwrapDueToWhitespace(string value, XamlType xamlType, bool isFirstElementOfCollection, bool isLastElementOfCollection)
             {
-                if(XamlXmlWriter.HasSignificantWhitespace(value))
+                if (XamlXmlWriter.HasSignificantWhitespace(value))
                 {
-                    if(xamlType.IsWhitespaceSignificantCollection)
+                    if (xamlType.IsWhitespaceSignificantCollection)
                     {
-                        if(XamlXmlWriter.ContainsConsecutiveInnerSpaces(value) ||
+                        if (XamlXmlWriter.ContainsConsecutiveInnerSpaces(value) ||
                            XamlXmlWriter.ContainsWhitespaceThatIsNotSpace(value))
                         {
                             return true;
                         }
-                        else if(XamlXmlWriter.ContainsTrailingSpace(value) && isLastElementOfCollection)
+                        else if (XamlXmlWriter.ContainsTrailingSpace(value) && isLastElementOfCollection)
                         {
                             return true;
                         }
-                        else if(XamlXmlWriter.ContainsLeadingSpace(value) && isFirstElementOfCollection)
+                        else if (XamlXmlWriter.ContainsLeadingSpace(value) && isFirstElementOfCollection)
                         {
                             return true;
                         }
@@ -1874,7 +1874,7 @@ namespace System.Xaml
                     foreach (var ap in props)
                     {
                         XamlType owningType = context.GetXamlType(ap.Key.DeclaringType);
-                        if(!owningType.IsVisibleTo(context.LocalAssembly))
+                        if (!owningType.IsVisibleTo(context.LocalAssembly))
                         {
                             continue;
                         }
@@ -2650,7 +2650,7 @@ namespace System.Xaml
             public XamlType LocalAssemblyAwareGetXamlType(Type clrType)
             {
                 XamlType result = GetXamlType(clrType);
-                if(!result.IsVisibleTo(LocalAssembly) && !typeof(Type).IsAssignableFrom(clrType))
+                if (!result.IsVisibleTo(LocalAssembly) && !typeof(Type).IsAssignableFrom(clrType))
                 {
                     throw new XamlObjectReaderException(SR.Format(SR.ObjectReader_TypeNotVisible, clrType.FullName));
                 }
@@ -2787,7 +2787,7 @@ namespace System.Xaml
             public bool IsPropertyReadVisible(XamlMember property)
             {
                 Type allowProtectedMemberOnType = null;
-                if(Settings.AllowProtectedMembersOnRoot && IsRoot)
+                if (Settings.AllowProtectedMembersOnRoot && IsRoot)
                 {
                     allowProtectedMemberOnType = RootType;
                 }
@@ -2798,7 +2798,7 @@ namespace System.Xaml
             public bool IsPropertyWriteVisible(XamlMember property)
             {
                 Type allowProtectedMemberOnType = null;
-                if(Settings.AllowProtectedMembersOnRoot && IsRoot)
+                if (Settings.AllowProtectedMembersOnRoot && IsRoot)
                 {
                     allowProtectedMemberOnType = RootType;
                 }

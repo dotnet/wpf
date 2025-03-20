@@ -38,7 +38,7 @@ namespace MS.Internal.Xaml.Context
             BaseUri = savedContext.BaseUri;
             // If the bottom of the stack is a (no XamlType) Value (reparse) then back-up onto it.
             // Otherwise add a blank frame to isolate template use from the saved context.
-            switch(savedContext.SaveContextType)
+            switch (savedContext.SaveContextType)
             {
             case SavedContextType.Template:
                 // Templates always need a root namescope, to isolate them from the rest of the doc

@@ -248,7 +248,7 @@ namespace System.Xaml.Schema
 
         private Type SearchAssembliesForShortName(string shortName)
         {
-            foreach(AssemblyNamespacePair assemblyNamespacePair in _assemblyNamespaces)
+            foreach (AssemblyNamespacePair assemblyNamespacePair in _assemblyNamespaces)
             {
                 Assembly asm = assemblyNamespacePair.Assembly;
                 if (asm is null)

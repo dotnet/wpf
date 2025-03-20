@@ -2309,7 +2309,7 @@ namespace System.Windows.Controls
             //
             // attempt to clear selection
             //
-            ChangeInkCanvasSelection(new StrokeCollection(), new UIElement[]{});
+            ChangeInkCanvasSelection(new StrokeCollection(), Array.Empty<UIElement>());
 
             return !InkCanvasSelection.HasSelection;
         }
@@ -2325,7 +2325,7 @@ namespace System.Windows.Controls
             if ( InkCanvasSelection.HasSelection )
             {
                 // Reset the current selection
-                CoreChangeSelection(new StrokeCollection(), new UIElement[] { }, raiseSelectionChangedEvent);
+                CoreChangeSelection(new StrokeCollection(), Array.Empty<UIElement>(), raiseSelectionChangedEvent);
             }
         }
 
@@ -2510,7 +2510,7 @@ namespace System.Windows.Controls
         {
             if (selectedElements == null)
             {
-                return new UIElement[]{};
+                return Array.Empty<UIElement>();
             }
 
             List<UIElement> elements = new List<UIElement>();

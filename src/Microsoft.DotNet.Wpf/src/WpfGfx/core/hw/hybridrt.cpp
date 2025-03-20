@@ -16,160 +16,154 @@
 
 #include "precomp.hpp"
 
-//+------------------------------------------------------------------------
-//
-//  Function:  CHybridSurfaceRenderTarget::Create
-//
-//  Synopsis:  1. Create the CD3DDeviceLevel1
-//             2. Check format support
-//             3. Create and initialize the CHybridSurfaceRenderTarget
-//
-//-------------------------------------------------------------------------
-HRESULT 
-CHybridSurfaceRenderTarget::Create(
+HRESULT CHybridSurfaceRenderTarget::CreateRenderTargetBitmap(
     __in_ecount_opt(1) CDisplaySet const *pDisplaySet,
     MilRTInitialization::Flags dwFlags,
-    FLOAT dpiX, FLOAT dpiY,
-    __deref_out_ecount(1) CHybridSurfaceRenderTarget **ppRenderTarget
-    ) 
+    UINT width,
+    UINT height,
+    MilPixelFormat::Enum format,
+    FLOAT dpiX, 
+    FLOAT dpiY,
+    IntermediateRTUsage usageInfo,
+    __deref_out_ecount(1) IMILRenderTargetBitmap **ppIRenderTargetBitmap
+) 
 {
     HRESULT hr = S_OK;
+    D3DDEVTYPE d3dDeviceType;
+    CD3DDeviceLevel1 *pD3DDevice = NULL;
+    CD3DDeviceManager *pD3DDeviceManager = NULL;
+    CBaseRenderTarget *pRenderTarget = NULL;
+    const CDisplay *pDisplay = NULL;
+    UINT uAdapter = 0;
+    CHwTextureRenderTarget *pTextureRT = NULL;
 
-    *ppRenderTarget = NULL;
+    DisplayId associatedDisplay;
+    CD3DDeviceManager::D3DDeviceCreationParameters CreateParams;
+    DynArrayIA<D3DDISPLAYMODEEX, 4> drgDisplayModes;
 
-    CDisplay *pDisplay = NULL;
-    D3DDEVTYPE type = D3DDEVTYPE_SW;
-
-    if (pDisplaySet && pDisplaySet->GetDisplayCount() > 0) 
+    //
+    // check whether any adapters don't support Hw acceleration or D3D is not
+    // available.
+    //
+    if (RenderOptions::IsSoftwareRenderingForcedForProcess() ||
+        !pDisplaySet || 
+        (!RenderOptions::IsHardwareAccelerationInRdpEnabled() && pDisplaySet->IsNonLocalDisplayPresent()) || 
+        !pDisplaySet->D3DObject())
     {
-        pDisplay = const_cast<CDisplay *>(pDisplaySet->Display(0));
-        type = D3DDEVTYPE_HAL;
+        if (dwFlags & MilRTInitialization::HardwareOnly)
+        {
+            IFC(WGXERR_INVALIDCALL);
+        }
+        else
+        {
+            dwFlags |= MilRTInitialization::SoftwareOnly;
+        }
+    }
+    
+    if (dwFlags & MilRTInitialization::UseRgbRast)
+    {
+        if (dwFlags & MilRTInitialization::HardwareOnly)
+        {
+            IFC(WGXERR_INVALIDCALL);
+        }
+        else 
+        {
+            d3dDeviceType = D3DDEVTYPE_SW;
+        }
+    }
+    else if (dwFlags & MilRTInitialization::SoftwareOnly)
+    {
+        d3dDeviceType = D3DDEVTYPE_SW;
+    }
+    else if (dwFlags & MilRTInitialization::HardwareOnly)
+    {
+        if (dwFlags & MilRTInitialization::UseRefRast)
+        {
+            d3dDeviceType = D3DDEVTYPE_REF;
+        }
+        else
+        {
+            d3dDeviceType = D3DDEVTYPE_HAL;
+        }
+    }
+    else
+    {
+        d3dDeviceType = D3DDEVTYPE_HAL;
     }
 
-    CD3DDeviceLevel1 *pD3DDevice = NULL;
+    if (d3dDeviceType == D3DDEVTYPE_SW)
+    {
+        MIL_THR(CSwRenderTargetBitmap::Create(
+            width,
+            height,
+            format,
+            dpiX,
+            dpiY,
+            DisplayId::None,
+            ppIRenderTargetBitmap
+            DBG_STEP_RENDERING_COMMA_PARAM(NULL) // pDisplayRTParent
+            ));
+        RRETURN(hr);
+    }
 
-    D3DPRESENT_PARAMETERS D3DPresentParams;
-    UINT AdapterOrdinalInGroup;
+    if (FAILED(pDisplaySet->GetDisplay(0, &pDisplay)) || pDisplay == NULL)
+    {
+        IFC(WGXERR_INTERNALERROR);
+    }
 
-    CD3DDeviceManager *pD3DDeviceManager = CD3DDeviceManager::Get();
+    pD3DDeviceManager = CD3DDeviceManager::Get();
     Assert(pDisplay->D3DObject()); // we should not get here with null pID3D
 
-    IFC(pD3DDeviceManager->GetD3DDeviceAndPresentParams(
-        NULL,
-        dwFlags,
-        pDisplay,
-        type,
-        &pD3DDevice,
-        &D3DPresentParams,
-        &AdapterOrdinalInGroup
-        ));
-
-    HRESULT const *phrTestGetDC;
-
-    IFC(pD3DDevice->CheckRenderTargetFormat(
-        D3DPresentParams.BackBufferFormat,
-        OUT &phrTestGetDC
-        ));
-
+    if (pDisplay)
     {
-        DisplayId associatedDisplay = pDisplay->GetDisplayId();
-
-        *ppRenderTarget = new CHybridSurfaceRenderTarget(
-            pD3DDevice,
-            D3DPresentParams,
-            associatedDisplay,
-            dpiX,
-            dpiY
-            );
-
-        IFCOOM(*ppRenderTarget);
-        (*ppRenderTarget)->AddRef(); // CHybridSurfaceRenderTarget::ctor sets ref count == 0
+        uAdapter = pDisplay->GetDisplayIndex();
     }
+    
+    IFC(pD3DDeviceManager->ComposeCreateParameters(
+            NULL,
+            dwFlags,
+            uAdapter,
+            d3dDeviceType,
+            &CreateParams
+        ));
+
+    D3DDISPLAYMODEEX *rgDisplayModes;
+    IFC(drgDisplayModes.AddMultiple(
+            CreateParams.NumberOfAdaptersInGroup,
+            &rgDisplayModes
+        ));
+    IFC(pD3DDeviceManager->GetDisplayMode(
+            &CreateParams,
+            rgDisplayModes
+        ));
+
+    D3DPRESENT_PARAMETERS PresentParameters;
+    pD3DDeviceManager->ComposePresentParameters(
+        rgDisplayModes[CreateParams.AdapterOrdinalInGroup],
+        CreateParams,
+        &PresentParameters
+        );
+    IFC(pD3DDeviceManager->CreateNewDevice(
+            &CreateParams,
+            &PresentParameters,
+            rgDisplayModes,
+            &pD3DDevice
+        ));
+
+    associatedDisplay = pDisplay->GetDisplayId();
+    IFC(CHwTextureRenderTarget::Create(
+            width,
+            height,
+            pD3DDevice,
+            associatedDisplay,
+            (usageInfo.flags & IntermediateRTUsage::ForBlending) ? true : false,
+            &pTextureRT
+        ));
+    *ppIRenderTargetBitmap = pTextureRT;
 
 Cleanup:
-    if (FAILED(hr))
-    {
-        ReleaseInterface(*ppRenderTarget);
-    }
     ReleaseInterfaceNoNULL(pD3DDevice);
-    pD3DDeviceManager->Release();
+    ReleaseInterfaceNoNULL(pD3DDeviceManager);
+    ReleaseInterfaceNoNULL(pRenderTarget);
     RRETURN(hr);
 }
-
-
-//+------------------------------------------------------------------------
-//
-//  Function:  CHybridSurfaceRenderTarget::HrFindInterface
-//
-//  Synopsis:  HrFindInterface implementation
-//
-//-------------------------------------------------------------------------
-STDMETHODIMP
-CHybridSurfaceRenderTarget::HrFindInterface(
-    __in_ecount(1) REFIID riid,
-    __deref_out void** ppvObject
-)
-{
-    AssertMsg(false, "CHybridSurfaceRenderTarget is not allowed to be QI'ed.");
-    RRETURN(E_NOINTERFACE);
-}
-
-//+------------------------------------------------------------------------
-//
-//  Function:  CHwDisplayRenderTarget::CHwDisplayRenderTarget
-//
-//  Synopsis:  ctor
-//
-//-------------------------------------------------------------------------
-CHybridSurfaceRenderTarget::CHybridSurfaceRenderTarget(
-    __inout_ecount(1) CD3DDeviceLevel1 *pD3DDevice,
-    __in_ecount(1) D3DPRESENT_PARAMETERS const &D3DPresentParams,
-    DisplayId associatedDisplay,
-    FLOAT dpiX, FLOAT dpiY
-    ) :
-    CHwSurfaceRenderTarget(
-        pD3DDevice,
-        D3DFormatToPixelFormat(D3DPresentParams.BackBufferFormat, TRUE),
-        D3DPresentParams.BackBufferFormat,
-        associatedDisplay
-    )
-{
-    m_DeviceTransform.Scale(dpiX, dpiY);
-}
-
-//+----------------------------------------------------------------------------
-//
-//  Member:    CHybridSurfaceRenderTarget::IsValid
-//
-//  Synopsis:  Returns FALSE when rendering with this render target or any use
-//             is no longer allowed.  Mode change is a common cause of of
-//             invalidation.
-//
-//-----------------------------------------------------------------------------
-
-bool
-CHybridSurfaceRenderTarget::IsValid() const
-{
-    return true;
-}
-
-
-#if DBG_STEP_RENDERING
-
-//+------------------------------------------------------------------------
-//
-//  Function:  CHwDisplayRenderTarget::ShowSteppedRendering
-//
-//  Synopsis:  Present the current backbuffer or the given texture
-//             when enabled in debug builds
-//
-//-------------------------------------------------------------------------
-
-void
-CHybridSurfaceRenderTarget::ShowSteppedRendering(
-    __in LPCTSTR pszRenderDesc,
-    __in_ecount(1) const ISteppedRenderingSurfaceRT *pRT
-    )
-{ }
-
-#endif DBG_STEP_RENDERING

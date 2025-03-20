@@ -123,9 +123,6 @@ dotnet_diagnostic.CA1859.severity = suggestion
 # CA2011: Do not assign property within its setter
 dotnet_diagnostic.CA2011.severity = suggestion
 
-# CA2019: ThreadStatic fields should not use inline initialization
-dotnet_diagnostic.CA2019.severity = suggestion
-
 # Should change all internal IntPtr/UIntPtr to nint/uint. IntPtr/UIntPtr no
 # longer do checked operations so they are now equivalent.
 # CA2020: Prevent behavioral change caused by built-in operators of IntPtr/UIntPtr

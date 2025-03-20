@@ -2,7 +2,6 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 
 using System.Collections.Specialized;
-using System.Runtime.InteropServices;
 using System.Windows.Interop;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
@@ -10,8 +9,8 @@ using Color = System.Windows.Media.Color;
 
 namespace System.Windows;
 
-// Note: each registered Clipboard format is an OS singleton
-// and we should not run this test at the same time as other tests using the same format.
+// Note: the OS Clipboard is a system wide resource and all access should be done sequentially to avoid
+// collisions with other tests. We also retry as we cannot control other processes that may be using the clipboard.
 [Collection("Sequential")]
 [UISettings(MaxAttempts = 3)]
 public class ClipboardTests
@@ -89,6 +88,18 @@ public class ClipboardTests
         action.Should().Throw<ArgumentNullException>().WithParameterName("audioStream");
     }
 
+    [WpfTheory(Skip = "Setting null in WinForms is allowed")]
+    [InlineData("format", null)]
+    [InlineData("format", 1)]
+    public void SetData_Invoke_GetReturnsExpected(string format, object? data)
+    {
+        // Setting null in WinForms is allowed, but really should be blocked.
+        // WinForms does allow setting "1" as data, WPF does, but gives back null currently.
+        Clipboard.SetData(format, data!);
+        Clipboard.GetData(format).Should().Be(data);
+        Clipboard.ContainsData(format).Should().BeTrue();
+    }
+
     [WpfTheory]
     // These three fail in WinForms, should probably fail in WPF as well.
     // [InlineData("")]
@@ -103,8 +114,8 @@ public class ClipboardTests
 
     [WpfFact]
     public void SetData_Null_Throws()
-    {
-        Action action = () => Clipboard.SetData("MyData", data: null!);
+        {
+            Action action = () => Clipboard.SetData("MyData", data: null!);
         action.Should().Throw<ArgumentNullException>().WithParameterName("data");
     }
 
@@ -119,6 +130,7 @@ public class ClipboardTests
     public void SetData_Int_GetReturnsExpected()
     {
         Clipboard.SetData("format", 1);
+        // WinForms allows setting "1" as data, WPF does, but gives back null currently.
         Clipboard.GetData("format").Should().Be(1);
         Clipboard.ContainsData("format").Should().BeTrue();
     }
@@ -142,8 +154,7 @@ public class ClipboardTests
     public void SetFileDropList_NullFilePaths_ThrowsArgumentNullException()
     {
         Action action = () => Clipboard.SetFileDropList(null!);
-        // Note: The name will change with the WinForms shared code.
-        action.Should().Throw<ArgumentNullException>().WithParameterName("fileDropList");
+        action.Should().Throw<ArgumentNullException>().WithParameterName("filePaths");
     }
 
     [WpfFact]
@@ -178,6 +189,7 @@ public class ClipboardTests
         bitmap.WritePixels(new Int32Rect(1, 2, 1, 1), colorData, 4, 0);
 
         Clipboard.SetImage(bitmap);
+
         Clipboard.ContainsImage().Should().BeTrue();
         InteropBitmap result = Clipboard.GetImage().Should().BeOfType<InteropBitmap>().Subject;
 
@@ -229,17 +241,12 @@ public class ClipboardTests
         formats = dataObject.GetFormats(autoConvert: false);
         formats.Should().BeEquivalentTo(["Text"]);
 
-        // CLIPBRD_E_BAD_DATA returned when trying to get clipboard data. This will no longer throw when using
-        // the shared clipboard code.
-        Action action = () => Clipboard.GetText().Should().BeEmpty();
-        action.Should().Throw<ExternalException>();
-        action = () => Clipboard.GetText(TextDataFormat.Text).Should().BeEmpty();
-        action.Should().Throw<ExternalException>();
-        action = () => Clipboard.GetText(TextDataFormat.UnicodeText).Should().BeEmpty();
-        action.Should().Throw<ExternalException>();
+        // CLIPBRD_E_BAD_DATA returned when trying to get clipboard data.
+        Clipboard.GetText().Should().BeEmpty();
+        Clipboard.GetText(TextDataFormat.Text).Should().BeEmpty();
+        Clipboard.GetText(TextDataFormat.UnicodeText).Should().BeEmpty();
 
         Clipboard.GetData("System.String").Should().BeNull();
-        action = () => Clipboard.GetData("TEXT").Should().BeNull();
-        action.Should().Throw<ExternalException>();
+        Clipboard.GetData("TEXT").Should().BeNull();
     }
 }

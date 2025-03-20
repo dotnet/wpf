@@ -238,7 +238,7 @@ namespace System.Windows
 
                 if ( IsSealed )
                 {
-                    throw new InvalidOperationException(SR.Format(SR.CannotChangeAfterSealed, "Template"));
+                    throw new InvalidOperationException(SR.Format(SR.CannotChangeAfterSealed, nameof(Template)));
                 }
 
                 _resources = value;
@@ -426,7 +426,7 @@ namespace System.Windows
         {
             if (_sealed)
             {
-                throw new InvalidOperationException(SR.Format(SR.CannotChangeAfterSealed, "Template"));
+                throw new InvalidOperationException(SR.Format(SR.CannotChangeAfterSealed, nameof(Template)));
             }
         }
 

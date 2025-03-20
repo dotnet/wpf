@@ -130,7 +130,7 @@ namespace System.Windows.Markup
                 }
                 else
                 {
-                    throw new ArgumentException(SR.Format(SR.MustBeOfType, "value", "SystemResourceKey or SystemThemeKey")); 
+                    throw new ArgumentException(SR.Format(SR.MustBeOfType, nameof(value), "SystemResourceKey or SystemThemeKey")); 
                 }
 
                 // System resource keys can be converted into a MarkupExtension (StaticExtension)

@@ -333,7 +333,7 @@ namespace System.Windows.Documents
                     {
                         // REVIEW: It would be better design if we reviewed all elements in the range before starting an insert.
                         // Otherwise, we might insert half the elements and then throw.
-                        throw new ArgumentException(SR.Format(SR.TextElementCollection_ItemHasUnexpectedType, "range", typeof(TextElementType).Name, typeof(TextElementType).Name), "value");
+                        throw new ArgumentException(SR.Format(SR.TextElementCollection_ItemHasUnexpectedType, nameof(range), typeof(TextElementType).Name, typeof(TextElementType).Name), "value");
                     }
 
                     Add(element);

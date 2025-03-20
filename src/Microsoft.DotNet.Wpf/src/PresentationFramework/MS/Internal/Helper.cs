@@ -497,21 +497,6 @@ namespace MS.Internal
             return xdc?.ParentXmlDataProvider;
         }
 
-#if CF_Envelope_Activation_Enabled
-        /// <summary>
-        /// Indicates whether our content is inside an old-style container
-        /// </summary>
-        /// <value></value>
-
-        internal static bool IsContainer
-        {
-            get
-            {
-                return BindUriHelper.Container != null;
-            }
-        }
-#endif
-
         /// <summary>
         /// Measure a simple element with a single child.
         /// </summary>

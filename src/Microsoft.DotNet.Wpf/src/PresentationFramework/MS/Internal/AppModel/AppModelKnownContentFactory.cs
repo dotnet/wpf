@@ -45,10 +45,8 @@ namespace MS.Internal.AppModel
             }
 
             // If this stream comes from a content file also throw
-            Uri partUri = PackUriHelper.GetPartUri(baseUri);
-            string partName, assemblyName, assemblyVersion, assemblyKey;
-            BaseUriHelper.GetAssemblyNameAndPart(partUri, out partName, out assemblyName, out assemblyVersion, out assemblyKey);
-            if (ContentFileHelper.IsContentFile(partName))
+            BaseUriHelper.GetAssemblyNameAndPart(PackUriHelper.GetPartUri(baseUri), out AssemblyPackageInfo assemblyInfo);
+            if (ContentFileHelper.IsContentFile(assemblyInfo.PackagePartName))
             {
                 throw new InvalidOperationException(SR.BamlIsNotSupportedOutsideOfApplicationResources);
             }

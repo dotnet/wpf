@@ -4346,18 +4346,18 @@ namespace System.Windows.Markup
         // Get BaseUri for the right elements.
         private Uri GetBaseUri( )
         {
-            Uri baseuri = ParserContext.BaseUri;
+            Uri baseUri = ParserContext.BaseUri;
 
-            if (baseuri == null)
+            if (baseUri is null)
             {
-                baseuri = BindUriHelper.BaseUri;
+                baseUri = BaseUriHelper.PackAppBaseUri;
             }
-            else if (baseuri.IsAbsoluteUri == false)
+            else if (!baseUri.IsAbsoluteUri)
             {
-                baseuri = new Uri(BindUriHelper.BaseUri, baseuri);
+                baseUri = new Uri(BaseUriHelper.PackAppBaseUri, baseUri);
             }
 
-            return baseuri;
+            return baseUri;
         }
 
 

@@ -63,27 +63,12 @@ namespace System.Windows.Ink
         /// if two ExtendedPropertyCollections are equal</summary>
         public static bool operator ==(ExtendedPropertyCollection first, ExtendedPropertyCollection second)
         {
-            // compare the GC ptrs for the obvious reference equality
-            if (((object)first == null && (object)second == null) ||
-                ((object)first == (object)second))
-            {
-                return true;
-            }
-            // otherwise, if one of the ptrs are null, but not the other then return false
-            else if ((object)first == null || (object)second == null)
-            {
-                return false;
-            }
-            // finally use the full `blown value-style comparison against the collection contents
-            else
-            {
-                return first.Equals(second);
-            }
+            return first is null ? second is null : ReferenceEquals(first, second) || first.Equals(second);
         }
 
         /// <summary>Overload of the not equals operator to determine if two
         /// ExtendedPropertyCollections have different key/value pairs</summary>
-        public static bool operator!=(ExtendedPropertyCollection first, ExtendedPropertyCollection second)
+        public static bool operator !=(ExtendedPropertyCollection first, ExtendedPropertyCollection second)
         {
             return !(first == second);
         }

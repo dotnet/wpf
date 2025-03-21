@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -86,18 +86,7 @@ namespace System.Windows.Ink
         /// two ExtendedProperty objects</summary>
         public static bool operator ==(ExtendedProperty first, ExtendedProperty second)
         {
-            if ((object)first == null && (object)second == null)
-            {
-                return true;
-            }
-            else if ((object)first == null || (object)second == null)
-            {
-                return false;
-            }
-            else
-            {
-                return first.Equals(second);
-            }
+            return first is null ? second is null : first.Equals(second);
         }
 
         /// <summary>Compare two custom attributes for Id and value inequality</summary>

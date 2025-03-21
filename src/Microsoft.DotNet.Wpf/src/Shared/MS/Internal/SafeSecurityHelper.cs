@@ -292,12 +292,7 @@ namespace System.Xaml
 
         public static bool operator ==(WeakRefKey left, WeakRefKey right)
         {
-            if (object.ReferenceEquals(left, null))
-            {
-                return object.ReferenceEquals(right, null);
-            }
-
-            return left.Equals(right);
+            return left is null ? right is null : left.Equals(right);
         }
 
         public static bool operator !=(WeakRefKey left, WeakRefKey right)

@@ -146,9 +146,6 @@ dotnet_diagnostic.CA2208.severity = suggestion
 # CA2219: Do not raise exceptions in finally clauses
 dotnet_diagnostic.CA2219.severity = suggestion
 
-# CA2242: Test for NaN correctly
-dotnet_diagnostic.CA2242.severity = suggestion
-
 # CA2300: Do not use insecure deserializer BinaryFormatter
 dotnet_diagnostic.CA2300.severity = suggestion
 

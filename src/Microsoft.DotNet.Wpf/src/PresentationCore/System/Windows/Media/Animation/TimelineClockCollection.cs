@@ -219,8 +219,7 @@ namespace System.Windows.Media.Animation
                 // Exact same object.
                 return true;
             }
-            else if (   Object.ReferenceEquals(objA, null)
-                     || Object.ReferenceEquals(objB, null))
+            else if (objA is null || objB is null)
             {
                 // One is null, the other isn't.
                 return false;

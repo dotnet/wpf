@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -102,10 +102,6 @@ namespace System.Windows.Media
         /// </summary>
         public static void SetRootDpi(Visual visual, DpiScale dpiInfo)
         {
-            if ((object)dpiInfo == null)
-            {
-                throw new NullReferenceException("dpiInfo cannot be null");
-            }
             if (visual.InternalVisualParent != null)
             {
                 throw new InvalidOperationException("UpdateDPI should only be called on the root of a Visual tree");

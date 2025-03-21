@@ -304,11 +304,7 @@ namespace System.Windows.Automation
         /// </remarks>
         public override bool Equals(object obj)
         {
-            AutomationElement el = obj as AutomationElement;
-            if (obj == null || el == null)
-                return false;
-
-            return Misc.Compare(this, el);
+            return obj is AutomationElement element && Misc.Compare(this, element);
         }
 
         /// <summary>
@@ -347,13 +343,7 @@ namespace System.Windows.Automation
         /// </remarks>
         public static bool operator ==(AutomationElement left, AutomationElement right)
         {
-            if ((object)left == null)
-                return (object)right == null;
-
-            if ((object)right == null)
-                return (object)left == null;
-
-            return left.Equals(right);
+            return left is null ? right is null : left.Equals(right);
         }
 
         /// <summary>

@@ -83,9 +83,7 @@ namespace MS.Internal.Printing.Configuration
         /// <returns>A string that represents this page resolution.</returns>
         public override string ToString()
         {
-            return ResolutionX.ToString(CultureInfo.CurrentCulture) + " x " +
-                   ResolutionY.ToString(CultureInfo.CurrentCulture) + " (Qualitative: " +
-                   QualitativeResolution.ToString() + ")";
+            return $"{ResolutionX} x {ResolutionY} (Qualitative: {QualitativeResolution})";
         }
 
         #endregion Public Methods
@@ -418,9 +416,7 @@ namespace MS.Internal.Printing.Configuration
         /// <returns>A string that represents this page resolution setting.</returns>
         public override string ToString()
         {
-            return ResolutionX.ToString(CultureInfo.CurrentCulture) + "x" +
-                   ResolutionY.ToString(CultureInfo.CurrentCulture) +
-                   "(qualitative: " + QualitativeResolution.ToString() + ")";
+            return $"{ResolutionX}x{ResolutionY}(qualitative: {QualitativeResolution})";
         }
 
         #endregion Public Methods

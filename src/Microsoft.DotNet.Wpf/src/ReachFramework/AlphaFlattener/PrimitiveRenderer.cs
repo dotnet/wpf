@@ -69,7 +69,7 @@ namespace Microsoft.Internal.AlphaFlattener
 
                     // Draw the stroking as filling widened path
 #if DEBUG
-                    FillGeometry(topPI, cur, desp + "_widen", null, null, start, inter, topBounds);
+                    FillGeometry(topPI, cur, $"{desp}_widen", null, null, start, inter, topBounds);
 #else
                     FillGeometry(topPI, cur, null, null, null, start, inter, topBounds);
 #endif
@@ -135,7 +135,7 @@ namespace Microsoft.Internal.AlphaFlattener
             }
 
             _dc.Comment(desp);
-            
+
             return _dc.DrawGlyphs(glyphrun, _clip, trans, _brush);
         }
 
@@ -171,7 +171,7 @@ namespace Microsoft.Internal.AlphaFlattener
                 _pen = value;
             }
         }
-        
+
         public List<int> Overlapping
         {
             set { _overlapping = value; }
@@ -224,15 +224,15 @@ namespace Microsoft.Internal.AlphaFlattener
 
             if ((op != '-') && t1.IndexOfAny(opers) >= 0)
             {
-                t1 = "(" + t1 + ")";
+                t1 = $"({t1})";
             }
 
             if (t2.IndexOfAny(opers) >= 0)
             {
-                t2 = "(" + t2 + ")";
+                t2 = $"({t2})";
             }
 
-            return t1 + op + t2;
+            return $"{t1}{op}{t2}";
         }
 #endif
 
@@ -241,11 +241,11 @@ namespace Microsoft.Internal.AlphaFlattener
         #region Private Methods
 
         private void RenderImage(
-            ImageProxy image, 
-            Rect       dest, 
-            Geometry   bounds, 
-            bool       clipToBounds, 
-            int        start, 
+            ImageProxy image,
+            Rect       dest,
+            Geometry   bounds,
+            bool       clipToBounds,
+            int        start,
             Matrix     trans,
             string     desp
             )
@@ -403,13 +403,13 @@ namespace Microsoft.Internal.AlphaFlattener
         // Recursive
         // _brush must be in world space
         private void FillGeometry(
-            PrimitiveInfo topPI, 
-            Geometry cur, 
-            string desp, 
-            Geometry curAlt, 
-            string despAlt, 
-            int start, 
-            Geometry inter, 
+            PrimitiveInfo topPI,
+            Geometry cur,
+            string desp,
+            Geometry curAlt,
+            string despAlt,
+            int start,
+            Geometry inter,
             Geometry topBounds
             )
         {

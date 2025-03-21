@@ -278,8 +278,7 @@ namespace MS.Internal.Printing.Configuration
         /// <returns>A string that represents this <see cref="NonNegativeIntParameterDefinition"/> object.</returns>
         public override string ToString()
         {
-            return ParameterName + ": min=" + MinValue + ", max=" + MaxValue +
-                   ", default=" + DefaultValue;
+            return $"{ParameterName}: min={MinValue}, max={MaxValue}, default={DefaultValue}";
         }
 
         #endregion Public Methods
@@ -466,8 +465,7 @@ namespace MS.Internal.Printing.Configuration
         /// <returns>A string that represents this <see cref="LengthParameterDefinition"/> object.</returns>
         public override string ToString()
         {
-            return ParameterName + ": min=" + MinValue + ", max=" + MaxValue +
-                   ", default=" + DefaultValue;
+            return $"{ParameterName}: min={MinValue}, max={MaxValue}, default={DefaultValue}";
         }
 
         #endregion Public Methods

@@ -67,7 +67,7 @@ namespace System.Windows.Markup
                     {
                         // Get the method member that defines the DependencyProperty
                         memberInfo = dp.OwnerType.GetMethod(
-                                     "Get" + dp.Name,
+                            $"Get{dp.Name}",
                                      BindingFlags.Public | BindingFlags.NonPublic |
                                      BindingFlags.Static | BindingFlags.FlattenHierarchy);
                     }

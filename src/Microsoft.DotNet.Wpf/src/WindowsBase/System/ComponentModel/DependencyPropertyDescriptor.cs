@@ -158,8 +158,8 @@ namespace System.ComponentModel
             }
             else
             {
-                if (ownerType.GetMethod("Get" + dependencyProperty.Name) == null &&
-                    ownerType.GetMethod("Set" + dependencyProperty.Name) == null)
+                if (ownerType.GetMethod($"Get{dependencyProperty.Name}") == null &&
+                    ownerType.GetMethod($"Set{dependencyProperty.Name}") == null)
                 {
                     return null;
                 }

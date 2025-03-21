@@ -113,6 +113,7 @@ HRESULT CHybridSurfaceRenderTarget::CreateRenderTargetBitmap(
 
     pD3DDeviceManager = CD3DDeviceManager::Get();
     Assert(pDisplay->D3DObject()); // we should not get here with null pID3D
+    IFC(pD3DDeviceManager->InitializeD3DReferences(pDisplay ? pDisplay->DisplaySet() : NULL));
 
     if (pDisplay)
     {

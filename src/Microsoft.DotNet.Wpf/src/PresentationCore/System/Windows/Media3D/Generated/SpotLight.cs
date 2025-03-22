@@ -96,7 +96,7 @@ namespace System.Windows.Media.Media3D
         {
             get
             {
-                return (Vector3D) GetValue(DirectionProperty);
+                return (Vector3D)GetValue(DirectionProperty);
             }
             set
             {
@@ -111,7 +111,7 @@ namespace System.Windows.Media.Media3D
         {
             get
             {
-                return (double) GetValue(OuterConeAngleProperty);
+                return (double)GetValue(OuterConeAngleProperty);
             }
             set
             {
@@ -126,7 +126,7 @@ namespace System.Windows.Media.Media3D
         {
             get
             {
-                return (double) GetValue(InnerConeAngleProperty);
+                return (double)GetValue(InnerConeAngleProperty);
             }
             set
             {

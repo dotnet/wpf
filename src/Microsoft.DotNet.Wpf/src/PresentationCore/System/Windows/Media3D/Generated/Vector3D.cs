@@ -85,7 +85,7 @@ namespace System.Windows.Media.Media3D
         /// </returns>
         /// <param name='vector1'>The first Vector3D to compare</param>
         /// <param name='vector2'>The second Vector3D to compare</param>
-        public static bool Equals (Vector3D vector1, Vector3D vector2)
+        public static bool Equals(Vector3D vector1, Vector3D vector2)
         {
             return vector1.X.Equals(vector2.X) &&
                    vector1.Y.Equals(vector2.Y) &&

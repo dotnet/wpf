@@ -78,7 +78,7 @@ namespace System.Windows.Media
         {
             get
             {
-                return (Uri) GetValue(SourceProperty);
+                return (Uri)GetValue(SourceProperty);
             }
             set
             {

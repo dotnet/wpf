@@ -230,7 +230,7 @@ namespace System.Windows.Media.Animation
             bool validateOrigin = false;
             bool validateDestination = false;
 
-            switch(_animationType)
+            switch (_animationType)
             {
                 case AnimationType.Automatic:
 

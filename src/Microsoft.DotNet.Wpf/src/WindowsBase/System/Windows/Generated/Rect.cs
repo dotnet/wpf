@@ -80,7 +80,7 @@ namespace System.Windows
         /// </returns>
         /// <param name='rect1'>The first Rect to compare</param>
         /// <param name='rect2'>The second Rect to compare</param>
-        public static bool Equals (Rect rect1, Rect rect2)
+        public static bool Equals(Rect rect1, Rect rect2)
         {
             if (rect1.IsEmpty)
             {

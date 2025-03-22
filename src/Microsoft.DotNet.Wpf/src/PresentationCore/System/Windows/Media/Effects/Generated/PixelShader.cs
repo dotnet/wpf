@@ -86,7 +86,7 @@ namespace System.Windows.Media.Effects
         {
             get
             {
-                return (Uri) GetValue(UriSourceProperty);
+                return (Uri)GetValue(UriSourceProperty);
             }
             set
             {
@@ -101,7 +101,7 @@ namespace System.Windows.Media.Effects
         {
             get
             {
-                return (ShaderRenderMode) GetValue(ShaderRenderModeProperty);
+                return (ShaderRenderMode)GetValue(ShaderRenderModeProperty);
             }
             set
             {

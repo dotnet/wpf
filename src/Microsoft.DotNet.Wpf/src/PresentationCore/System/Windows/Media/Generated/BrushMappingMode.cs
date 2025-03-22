@@ -31,5 +31,5 @@ namespace System.Windows.Media
         ///     bounding box measure.
         /// </summary>
         RelativeToBoundingBox = 1,
-    }   
+    }
 }

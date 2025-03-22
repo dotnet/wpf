@@ -95,7 +95,7 @@ namespace System.Windows.Media
         {
             get
             {
-                return (double) GetValue(OffsetProperty);
+                return (double)GetValue(OffsetProperty);
             }
             set
             {
@@ -110,7 +110,7 @@ namespace System.Windows.Media
         {
             get
             {
-                return (DoubleCollection) GetValue(DashesProperty);
+                return (DoubleCollection)GetValue(DashesProperty);
             }
             set
             {
@@ -188,7 +188,7 @@ namespace System.Windows.Media
 
 
                     // Copy this collection's elements (or their handles) to reserved data
-                    for(int i = 0; i < DashesCount; i++)
+                    for (int i = 0; i < DashesCount; i++)
                     {
                         Double resource = vDashes.Internal_GetItem(i);
                         channel.AppendCommandData(

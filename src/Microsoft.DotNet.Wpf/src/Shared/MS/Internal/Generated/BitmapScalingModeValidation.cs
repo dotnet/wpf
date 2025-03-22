@@ -33,6 +33,6 @@ namespace System.Windows.Media
                    (value == BitmapScalingMode.Linear) || 
                    (value == BitmapScalingMode.Fant) || 
                    (value == BitmapScalingMode.NearestNeighbor);
-        }                                
+        }
     }
 }

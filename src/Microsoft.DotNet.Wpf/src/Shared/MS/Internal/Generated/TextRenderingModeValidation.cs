@@ -31,6 +31,6 @@ namespace System.Windows.Media
                    (value == TextRenderingMode.Aliased) || 
                    (value == TextRenderingMode.Grayscale) || 
                    (value == TextRenderingMode.ClearType);
-        }                                
+        }
     }
 }

@@ -82,7 +82,7 @@ namespace System.Windows.Media.Media3D
         {
             get
             {
-                return (double) GetValue(FieldOfViewProperty);
+                return (double)GetValue(FieldOfViewProperty);
             }
             set
             {

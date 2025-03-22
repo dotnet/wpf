@@ -109,7 +109,7 @@ namespace System.Windows.Media
         {
             get
             {
-                return (ColorInterpolationMode) GetValue(ColorInterpolationModeProperty);
+                return (ColorInterpolationMode)GetValue(ColorInterpolationModeProperty);
             }
             set
             {
@@ -124,7 +124,7 @@ namespace System.Windows.Media
         {
             get
             {
-                return (BrushMappingMode) GetValue(MappingModeProperty);
+                return (BrushMappingMode)GetValue(MappingModeProperty);
             }
             set
             {
@@ -139,7 +139,7 @@ namespace System.Windows.Media
         {
             get
             {
-                return (GradientSpreadMethod) GetValue(SpreadMethodProperty);
+                return (GradientSpreadMethod)GetValue(SpreadMethodProperty);
             }
             set
             {
@@ -154,7 +154,7 @@ namespace System.Windows.Media
         {
             get
             {
-                return (GradientStopCollection) GetValue(GradientStopsProperty);
+                return (GradientStopCollection)GetValue(GradientStopsProperty);
             }
             set
             {

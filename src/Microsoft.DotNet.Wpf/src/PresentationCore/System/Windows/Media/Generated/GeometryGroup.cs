@@ -175,7 +175,7 @@ namespace System.Windows.Media
         {
             get
             {
-                return (FillRule) GetValue(FillRuleProperty);
+                return (FillRule)GetValue(FillRuleProperty);
             }
             set
             {
@@ -190,7 +190,7 @@ namespace System.Windows.Media
         {
             get
             {
-                return (GeometryCollection) GetValue(ChildrenProperty);
+                return (GeometryCollection)GetValue(ChildrenProperty);
             }
             set
             {
@@ -276,7 +276,7 @@ namespace System.Windows.Media
 
 
                     // Copy this collection's elements (or their handles) to reserved data
-                    for(int i = 0; i < ChildrenCount; i++)
+                    for (int i = 0; i < ChildrenCount; i++)
                     {
                         DUCE.ResourceHandle resource = ((DUCE.IResource)vChildren.Internal_GetItem(i)).GetHandle(channel);;
                         channel.AppendCommandData(

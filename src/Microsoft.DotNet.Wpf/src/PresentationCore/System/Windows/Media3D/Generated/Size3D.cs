@@ -85,7 +85,7 @@ namespace System.Windows.Media.Media3D
         /// </returns>
         /// <param name='size1'>The first Size3D to compare</param>
         /// <param name='size2'>The second Size3D to compare</param>
-        public static bool Equals (Size3D size1, Size3D size2)
+        public static bool Equals(Size3D size1, Size3D size2)
         {
             if (size1.IsEmpty)
             {

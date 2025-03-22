@@ -104,7 +104,7 @@ namespace System.Windows.Media.Imaging
         {
             get
             {
-                return (BitmapSource) GetValue(SourceProperty);
+                return (BitmapSource)GetValue(SourceProperty);
             }
             set
             {
@@ -119,7 +119,7 @@ namespace System.Windows.Media.Imaging
         {
             get
             {
-                return (Int32Rect) GetValue(SourceRectProperty);
+                return (Int32Rect)GetValue(SourceRectProperty);
             }
             set
             {
@@ -150,7 +150,7 @@ namespace System.Windows.Media.Imaging
         /// </summary>
         protected override void CloneCore(Freezable source)
         {
-            CroppedBitmap sourceCroppedBitmap = (CroppedBitmap) source;
+            CroppedBitmap sourceCroppedBitmap = (CroppedBitmap)source;
 
             // Set any state required before actual clone happens
             ClonePrequel(sourceCroppedBitmap);
@@ -167,7 +167,7 @@ namespace System.Windows.Media.Imaging
         /// </summary>
         protected override void CloneCurrentValueCore(Freezable source)
         {
-            CroppedBitmap sourceCroppedBitmap = (CroppedBitmap) source;
+            CroppedBitmap sourceCroppedBitmap = (CroppedBitmap)source;
 
             // Set any state required before actual clone happens
             ClonePrequel(sourceCroppedBitmap);
@@ -184,7 +184,7 @@ namespace System.Windows.Media.Imaging
         /// </summary>
         protected override void GetAsFrozenCore(Freezable source)
         {
-            CroppedBitmap sourceCroppedBitmap = (CroppedBitmap) source;
+            CroppedBitmap sourceCroppedBitmap = (CroppedBitmap)source;
 
             // Set any state required before actual clone happens
             ClonePrequel(sourceCroppedBitmap);
@@ -201,7 +201,7 @@ namespace System.Windows.Media.Imaging
         /// </summary>
         protected override void GetCurrentValueAsFrozenCore(Freezable source)
         {
-            CroppedBitmap sourceCroppedBitmap = (CroppedBitmap) source;
+            CroppedBitmap sourceCroppedBitmap = (CroppedBitmap)source;
 
             // Set any state required before actual clone happens
             ClonePrequel(sourceCroppedBitmap);

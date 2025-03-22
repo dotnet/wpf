@@ -119,7 +119,7 @@ namespace System.Windows.Media.Media3D
         {
             get
             {
-                return (Point3DCollection) GetValue(PositionsProperty);
+                return (Point3DCollection)GetValue(PositionsProperty);
             }
             set
             {
@@ -134,7 +134,7 @@ namespace System.Windows.Media.Media3D
         {
             get
             {
-                return (Vector3DCollection) GetValue(NormalsProperty);
+                return (Vector3DCollection)GetValue(NormalsProperty);
             }
             set
             {
@@ -149,7 +149,7 @@ namespace System.Windows.Media.Media3D
         {
             get
             {
-                return (PointCollection) GetValue(TextureCoordinatesProperty);
+                return (PointCollection)GetValue(TextureCoordinatesProperty);
             }
             set
             {
@@ -164,7 +164,7 @@ namespace System.Windows.Media.Media3D
         {
             get
             {
-                return (Int32Collection) GetValue(TriangleIndicesProperty);
+                return (Int32Collection)GetValue(TriangleIndicesProperty);
             }
             set
             {
@@ -246,7 +246,7 @@ namespace System.Windows.Media.Media3D
 
 
                     // Copy this collection's elements (or their handles) to reserved data
-                    for(int i = 0; i < PositionsCount; i++)
+                    for (int i = 0; i < PositionsCount; i++)
                     {
                         MilPoint3F resource = CompositionResourceManager.Point3DToMilPoint3F(vPositions.Internal_GetItem(i));
                         channel.AppendCommandData(
@@ -256,7 +256,7 @@ namespace System.Windows.Media.Media3D
                     }
 
                     // Copy this collection's elements (or their handles) to reserved data
-                    for(int i = 0; i < NormalsCount; i++)
+                    for (int i = 0; i < NormalsCount; i++)
                     {
                         MilPoint3F resource = CompositionResourceManager.Vector3DToMilPoint3F(vNormals.Internal_GetItem(i));
                         channel.AppendCommandData(
@@ -266,7 +266,7 @@ namespace System.Windows.Media.Media3D
                     }
 
                     // Copy this collection's elements (or their handles) to reserved data
-                    for(int i = 0; i < TextureCoordinatesCount; i++)
+                    for (int i = 0; i < TextureCoordinatesCount; i++)
                     {
                         Point resource = vTextureCoordinates.Internal_GetItem(i);
                         channel.AppendCommandData(
@@ -276,7 +276,7 @@ namespace System.Windows.Media.Media3D
                     }
 
                     // Copy this collection's elements (or their handles) to reserved data
-                    for(int i = 0; i < TriangleIndicesCount; i++)
+                    for (int i = 0; i < TriangleIndicesCount; i++)
                     {
                         Int32 resource = vTriangleIndices.Internal_GetItem(i);
                         channel.AppendCommandData(

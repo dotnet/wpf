@@ -31,5 +31,5 @@ namespace System.Windows.Media
         ///     again be disabled.
         /// </summary>
         Enabled = 1,
-    }   
+    }
 }

@@ -221,7 +221,7 @@ namespace System.Windows.Media
         {
             get
             {
-                return (Brush) GetValue(BrushProperty);
+                return (Brush)GetValue(BrushProperty);
             }
             set
             {
@@ -236,7 +236,7 @@ namespace System.Windows.Media
         {
             get
             {
-                return (Pen) GetValue(PenProperty);
+                return (Pen)GetValue(PenProperty);
             }
             set
             {
@@ -251,7 +251,7 @@ namespace System.Windows.Media
         {
             get
             {
-                return (Geometry) GetValue(GeometryProperty);
+                return (Geometry)GetValue(GeometryProperty);
             }
             set
             {

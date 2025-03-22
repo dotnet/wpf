@@ -132,7 +132,7 @@ namespace System.Windows.Media
         {
             get
             {
-                return (ImageSource) GetValue(ImageSourceProperty);
+                return (ImageSource)GetValue(ImageSourceProperty);
             }
             set
             {
@@ -147,7 +147,7 @@ namespace System.Windows.Media
         {
             get
             {
-                return (Rect) GetValue(RectProperty);
+                return (Rect)GetValue(RectProperty);
             }
             set
             {

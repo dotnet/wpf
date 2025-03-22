@@ -1309,7 +1309,7 @@ namespace MS.Internal.MilCodeGen.ResourceModel
 
                         bool fNoGeneration = true;
 
-                        for (int i=0; i<rgsCodeSections.Length; i++)
+                        for (int i = 0; i < rgsCodeSections.Length; i++)
                         {
                             if (ToBoolean(node, rgsCodeSections[i], false))
                             {

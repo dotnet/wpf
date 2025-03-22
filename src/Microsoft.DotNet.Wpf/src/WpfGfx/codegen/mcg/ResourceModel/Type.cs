@@ -282,7 +282,7 @@ namespace MS.Internal.MilCodeGen.ResourceModel
             {
                 return false;
             }
-        }        
+        }
 
         public string UnmanagedType(UnmanagedTypeType tt)
         {

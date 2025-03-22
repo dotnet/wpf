@@ -31,6 +31,6 @@ namespace System.Windows.Media
                    (value == PenLineCap.Square) || 
                    (value == PenLineCap.Round) || 
                    (value == PenLineCap.Triangle);
-        }                                
+        }
     }
 }

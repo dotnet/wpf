@@ -98,7 +98,7 @@ namespace System.Windows.Media
         {
             get
             {
-                return (double) GetValue(RadiusXProperty);
+                return (double)GetValue(RadiusXProperty);
             }
             set
             {
@@ -113,7 +113,7 @@ namespace System.Windows.Media
         {
             get
             {
-                return (double) GetValue(RadiusYProperty);
+                return (double)GetValue(RadiusYProperty);
             }
             set
             {
@@ -128,7 +128,7 @@ namespace System.Windows.Media
         {
             get
             {
-                return (Rect) GetValue(RectProperty);
+                return (Rect)GetValue(RectProperty);
             }
             set
             {

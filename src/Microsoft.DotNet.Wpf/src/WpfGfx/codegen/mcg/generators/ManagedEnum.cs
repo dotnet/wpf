@@ -92,7 +92,7 @@ namespace MS.Internal.MilCodeGen.Generators
                     );
 
                     first = false;
-                }        
+                }
 
 
                 //
@@ -103,7 +103,7 @@ namespace MS.Internal.MilCodeGen.Generators
                 
                 WriteEnumValidationFile(enumType, checkEnumValues);
             }
-        }        
+        }
 
         /// <summary>
         ///     Writes an enumerated type's header block and namespace block
@@ -175,7 +175,7 @@ namespace MS.Internal.MilCodeGen.Generators
                             public enum [[enumType.ManagedName]]
                             {
                                 [[enumValuesCS]]
-                            }   
+                            }
                      [[/inline]]
                      );
 
@@ -185,8 +185,8 @@ namespace MS.Internal.MilCodeGen.Generators
                         }
                     [[/inline]] 
                     );
-            }                
-        }        
+            }
+        }
 
         /// <summary>
         ///     This method writes the enum validation file that contains CheckIfValid 
@@ -230,13 +230,13 @@ namespace MS.Internal.MilCodeGen.Generators
                                     [[enumType.ManagedName]] value = ([[enumType.ManagedName]]) valueObject;
     
                                     return [[checkEnumValues]];
-                                }                                
+                                }
                             }
                         }
                     [[/inline]] 
                     );
             }
-        }    
+        }
         
         #endregion Public Methods        
     }

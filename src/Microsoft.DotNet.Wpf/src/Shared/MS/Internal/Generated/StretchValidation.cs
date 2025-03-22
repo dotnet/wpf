@@ -31,6 +31,6 @@ namespace System.Windows.Media
                    (value == Stretch.Fill) || 
                    (value == Stretch.Uniform) || 
                    (value == Stretch.UniformToFill);
-        }                                
+        }
     }
 }

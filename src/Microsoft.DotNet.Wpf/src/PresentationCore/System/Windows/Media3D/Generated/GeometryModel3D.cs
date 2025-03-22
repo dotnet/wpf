@@ -223,7 +223,7 @@ namespace System.Windows.Media.Media3D
         {
             get
             {
-                return (Geometry3D) GetValue(GeometryProperty);
+                return (Geometry3D)GetValue(GeometryProperty);
             }
             set
             {
@@ -238,7 +238,7 @@ namespace System.Windows.Media.Media3D
         {
             get
             {
-                return (Material) GetValue(MaterialProperty);
+                return (Material)GetValue(MaterialProperty);
             }
             set
             {
@@ -253,7 +253,7 @@ namespace System.Windows.Media.Media3D
         {
             get
             {
-                return (Material) GetValue(BackMaterialProperty);
+                return (Material)GetValue(BackMaterialProperty);
             }
             set
             {

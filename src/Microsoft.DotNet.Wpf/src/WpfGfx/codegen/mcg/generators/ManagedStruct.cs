@@ -188,7 +188,7 @@ namespace MS.Internal.MilCodeGen.Generators
                     /// </returns>
                     /// <param name='[[lowerName]]1'>The first [[resource.Name]] to compare</param>
                     /// <param name='[[lowerName]]2'>The second [[resource.Name]] to compare</param>
-                    public static bool Equals ([[resource.Name]] [[lowerName]]1, [[resource.Name]] [[lowerName]]2)
+                    public static bool Equals([[resource.Name]] [[lowerName]]1, [[resource.Name]] [[lowerName]]2)
                     {
                         [[equalsBody]]
                     }
@@ -362,7 +362,7 @@ namespace MS.Internal.MilCodeGen.Generators
                                 // Helper to get the numeric list separator for a given culture.
                                 // char separator = MS.Internal.TokenizerHelper.GetNumericListSeparator(provider);
 
-                                for (int i=0; i<_collection.Count; i++)
+                                for (int i = 0; i < _collection.Count; i++)
                                 {
                                     str.AppendFormat(
                                         provider,

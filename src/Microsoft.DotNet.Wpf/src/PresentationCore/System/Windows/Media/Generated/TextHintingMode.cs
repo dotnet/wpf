@@ -33,5 +33,5 @@ namespace System.Windows.Media
         ///     Animated - Rendering engine will render text for highest animated quality
         /// </summary>
         Animated = 2,
-    }   
+    }
 }

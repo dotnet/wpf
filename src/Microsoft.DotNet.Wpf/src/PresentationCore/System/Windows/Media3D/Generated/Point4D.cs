@@ -86,7 +86,7 @@ namespace System.Windows.Media.Media3D
         /// </returns>
         /// <param name='point1'>The first Point4D to compare</param>
         /// <param name='point2'>The second Point4D to compare</param>
-        public static bool Equals (Point4D point1, Point4D point2)
+        public static bool Equals(Point4D point1, Point4D point2)
         {
             return point1.X.Equals(point2.X) &&
                    point1.Y.Equals(point2.Y) &&

@@ -362,7 +362,7 @@ namespace MS.Internal.MilCodeGen.Generators
                     /// </summary>
                     protected override void [[method]]Core([[argType]] source)
                     {
-                        [[sourceType]] [[source]] = ([[sourceType]]) source;
+                        [[sourceType]] [[source]] = ([[sourceType]])source;
 
                         [[body]]
                     }
@@ -836,7 +836,7 @@ namespace MS.Internal.MilCodeGen.Generators
 
                     if (NeedsDucePropertyUpdate(resource, field))
                     {
-                        if(   (resource.Name == "VisualBrush" || resource.Name == "BitmapCacheBrush") 
+                        if (   (resource.Name == "VisualBrush" || resource.Name == "BitmapCacheBrush") 
                            && field.Type.ManagedName == "Visual")
                         {
                             cs.Write(
@@ -1388,7 +1388,7 @@ namespace MS.Internal.MilCodeGen.Generators
             {
                 getValue =
                     [[inline]]
-                        return ([[field.Type.ManagedName]]) GetValue([[field.DPPropertyName]]);
+                        return ([[field.Type.ManagedName]])GetValue([[field.DPPropertyName]]);
                     [[/inline]];
             }
             else
@@ -1588,7 +1588,7 @@ namespace MS.Internal.MilCodeGen.Generators
         /// <summary>
         /// WriteCollectionMarshal - this method produces a string in the form of:
         ///
-        /// for(int i = 0; i < pointCollectionCount; i++)
+        /// for (int i = 0; i < pointCollectionCount; i++)
         /// {
         ///     *((Point*)(pBuffer + cbPos)) = pointCollection.Internal_GetItem(i);
         ///     cbPos += sizeof(Point);
@@ -1654,7 +1654,7 @@ namespace MS.Internal.MilCodeGen.Generators
             return
                 [[inline]]
                         // Copy this collection's elements (or their handles) to reserved data
-                        for(int i = 0; i < [[countVariable]]; i++)
+                        for (int i = 0; i < [[countVariable]]; i++)
                         {
                             [[GetMarshalType(collectionType)]] resource = [[marshaledCollectionElement]];
                             channel.AppendCommandData(
@@ -2173,7 +2173,7 @@ namespace MS.Internal.MilCodeGen.Generators
                 {
                     addRefCollection =
                         [[inline]]
-                            for (int i=0; i<_collection.Count; i++)
+                            for (int i = 0; i < _collection.Count; i++)
                             {
                                 ((DUCE.IResource) _collection[i]).AddRefOnChannel(channel);
                             }
@@ -2316,7 +2316,7 @@ namespace MS.Internal.MilCodeGen.Generators
                 {
                     releaseCollection =
                         [[inline]]
-                            for (int i=0; i<_collection.Count; i++)
+                            for (int i = 0; i < _collection.Count; i++)
                             {
                                 ((DUCE.IResource) _collection[i]).ReleaseOnChannel(channel);
                             }

@@ -80,7 +80,7 @@ namespace System.Windows
         /// </returns>
         /// <param name='int32Rect1'>The first Int32Rect to compare</param>
         /// <param name='int32Rect2'>The second Int32Rect to compare</param>
-        public static bool Equals (Int32Rect int32Rect1, Int32Rect int32Rect2)
+        public static bool Equals(Int32Rect int32Rect1, Int32Rect int32Rect2)
         {
             if (int32Rect1.IsEmpty)
             {

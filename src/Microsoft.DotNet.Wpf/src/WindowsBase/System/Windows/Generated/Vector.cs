@@ -78,7 +78,7 @@ namespace System.Windows
         /// </returns>
         /// <param name='vector1'>The first Vector to compare</param>
         /// <param name='vector2'>The second Vector to compare</param>
-        public static bool Equals (Vector vector1, Vector vector2)
+        public static bool Equals(Vector vector1, Vector vector2)
         {
             return vector1.X.Equals(vector2.X) &&
                    vector1.Y.Equals(vector2.Y);

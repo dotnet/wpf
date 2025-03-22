@@ -26,5 +26,5 @@ namespace System.Windows.Media
         ///     Relative -
         /// </summary>
         Relative = 1,
-    }   
+    }
 }

@@ -125,7 +125,7 @@ namespace System.Windows.Media
         {
             get
             {
-                return (ImageSource) GetValue(ImageSourceProperty);
+                return (ImageSource)GetValue(ImageSourceProperty);
             }
             set
             {

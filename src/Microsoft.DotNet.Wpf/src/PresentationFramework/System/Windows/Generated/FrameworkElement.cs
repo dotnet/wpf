@@ -356,11 +356,11 @@ namespace System.Windows
 
 
             // Synchronize ForceInherit properties
-            if(_parent != null && _parent is ContentElement)
+            if (_parent != null && _parent is ContentElement)
             {
                 UIElement.SynchronizeForceInheritProperties(this, null, null, _parent);
             }
-            else if(oldParent is ContentElement)
+            else if (oldParent is ContentElement)
             {
                 UIElement.SynchronizeForceInheritProperties(this, null, null, oldParent);
             }
@@ -556,21 +556,21 @@ namespace System.Windows
                             return true;
                         }
                     }
-                    if(null != Style && Style.HasLoadedChangeHandler)
+                    if (null != Style && Style.HasLoadedChangeHandler)
                     {
                         return true;
                     }
-                    if(null != ThemeStyle && ThemeStyle.HasLoadedChangeHandler)
-                    {
-                        return true;
-                    }
-
-                    if(null != TemplateInternal && TemplateInternal.HasLoadedChangeHandler)
+                    if (null != ThemeStyle && ThemeStyle.HasLoadedChangeHandler)
                     {
                         return true;
                     }
 
-                    if(HasFefLoadedChangeHandler)
+                    if (null != TemplateInternal && TemplateInternal.HasLoadedChangeHandler)
+                    {
+                        return true;
+                    }
+
+                    if (HasFefLoadedChangeHandler)
                     {
                         return true;
                     }
@@ -582,17 +582,17 @@ namespace System.Windows
         {
             get
             {
-                if(null == TemplatedParent)
+                if (null == TemplatedParent)
                 {
                     return false;
                 }
                 FrameworkElementFactory fefRoot = BroadcastEventHelper.GetFEFTreeRoot(TemplatedParent);
-                if(null == fefRoot)
+                if (null == fefRoot)
                 {
                     return false;
                 }
                 FrameworkElementFactory fef = StyleHelper.FindFEF(fefRoot, TemplateChildIndex);
-                if(null == fef)
+                if (null == fef)
                 {
                     return false;
                 }
@@ -1173,13 +1173,13 @@ namespace System.Windows
         // Says if there is a loaded event pending
         internal object[] LoadedPending
         {
-            get { return (object[]) GetValue(LoadedPendingProperty); }
+            get { return (object[])GetValue(LoadedPendingProperty); }
         }
 
         // Says if there is an unloaded event pending
         internal object[] UnloadedPending
         {
-            get { return (object[]) GetValue(UnloadedPendingProperty); }
+            get { return (object[])GetValue(UnloadedPendingProperty); }
         }
 
         // Indicates if this instance has multiple inheritance contexts

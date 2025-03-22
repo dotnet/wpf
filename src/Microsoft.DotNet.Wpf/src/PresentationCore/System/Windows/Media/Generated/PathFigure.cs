@@ -78,7 +78,7 @@ namespace System.Windows.Media
         {
             get
             {
-                return (Point) GetValue(StartPointProperty);
+                return (Point)GetValue(StartPointProperty);
             }
             set
             {
@@ -93,7 +93,7 @@ namespace System.Windows.Media
         {
             get
             {
-                return (bool) GetValue(IsFilledProperty);
+                return (bool)GetValue(IsFilledProperty);
             }
             set
             {
@@ -108,7 +108,7 @@ namespace System.Windows.Media
         {
             get
             {
-                return (PathSegmentCollection) GetValue(SegmentsProperty);
+                return (PathSegmentCollection)GetValue(SegmentsProperty);
             }
             set
             {
@@ -123,7 +123,7 @@ namespace System.Windows.Media
         {
             get
             {
-                return (bool) GetValue(IsClosedProperty);
+                return (bool)GetValue(IsClosedProperty);
             }
             set
             {

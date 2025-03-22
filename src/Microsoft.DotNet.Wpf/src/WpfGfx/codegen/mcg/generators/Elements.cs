@@ -386,7 +386,7 @@ namespace MS.Internal.MilCodeGen.Generators
                         EnsureEventHandlersStore();
                         EventHandlersStore.AddRoutedEventHandler(routedEvent, handler, handledEventsToo);
 
-                        OnAddHandler (routedEvent, handler);
+                        OnAddHandler(routedEvent, handler);
                     }
 
                     /// <summary>
@@ -443,7 +443,7 @@ namespace MS.Internal.MilCodeGen.Generators
                         {
                             store.RemoveRoutedEventHandler(routedEvent, handler);
 
-                            OnRemoveHandler (routedEvent, handler);
+                            OnRemoveHandler(routedEvent, handler);
 
                             if (store.Count == 0)
                             {
@@ -500,7 +500,7 @@ namespace MS.Internal.MilCodeGen.Generators
                         // Add all class listeners for this [[element.Name]]
                         while (classListeners != null)
                         {
-                            for(int i = 0; i < classListeners.Handlers.Length; i++)
+                            for (int i = 0; i < classListeners.Handlers.Length; i++)
                             {
                                 route.Add(this, classListeners.Handlers[i].Handler, classListeners.Handlers[i].InvokeHandledEventsToo);
                             }
@@ -549,7 +549,7 @@ namespace MS.Internal.MilCodeGen.Generators
                     {
                         get
                         {
-                            if(!ReadFlag(CoreFlags.ExistsEventHandlersStore))
+                            if (!ReadFlag(CoreFlags.ExistsEventHandlersStore))
                             {
                                 return null;
                             }
@@ -754,7 +754,7 @@ namespace MS.Internal.MilCodeGen.Generators
         {
             return
                 [[inline]]
-                    if(!e.Handled)
+                    if (!e.Handled)
                     {
                         [[body]]
                     }
@@ -956,7 +956,7 @@ namespace MS.Internal.MilCodeGen.Generators
                     [[inline]]
                         private static void [[property.PropertyName]]_Changed(DependencyObject d, DependencyPropertyChangedEventArgs e)
                         {
-                            (([[element.Name]]) d).Raise[[property.PropertyName]]Changed(e);
+                            (([[element.Name]])d).Raise[[property.PropertyName]]Changed(e);
                         }
                     [[/inline]]);
             }

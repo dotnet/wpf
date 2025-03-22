@@ -70,7 +70,7 @@ namespace System.Windows
         {
             get
             {
-                return (Pen) GetValue(PenProperty);
+                return (Pen)GetValue(PenProperty);
             }
             set
             {
@@ -86,7 +86,7 @@ namespace System.Windows
         {
             get
             {
-                return (double) GetValue(PenOffsetProperty);
+                return (double)GetValue(PenOffsetProperty);
             }
             set
             {
@@ -102,7 +102,7 @@ namespace System.Windows
         {
             get
             {
-                return (TextDecorationUnit) GetValue(PenOffsetUnitProperty);
+                return (TextDecorationUnit)GetValue(PenOffsetUnitProperty);
             }
             set
             {
@@ -118,7 +118,7 @@ namespace System.Windows
         {
             get
             {
-                return (TextDecorationUnit) GetValue(PenThicknessUnitProperty);
+                return (TextDecorationUnit)GetValue(PenThicknessUnitProperty);
             }
             set
             {
@@ -134,7 +134,7 @@ namespace System.Windows
         {
             get
             {
-                return (TextDecorationLocation) GetValue(LocationProperty);
+                return (TextDecorationLocation)GetValue(LocationProperty);
             }
             set
             {

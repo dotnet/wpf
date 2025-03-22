@@ -91,7 +91,7 @@ namespace System.Windows.Media.Animation
         /// </summary>
         protected override void CloneCore(Freezable sourceFreezable)
         {
-            Vector3DKeyFrameCollection sourceCollection = (Vector3DKeyFrameCollection) sourceFreezable;
+            Vector3DKeyFrameCollection sourceCollection = (Vector3DKeyFrameCollection)sourceFreezable;
             base.CloneCore(sourceFreezable);
 
             int count = sourceCollection._keyFrames.Count;
@@ -112,7 +112,7 @@ namespace System.Windows.Media.Animation
         /// </summary>
         protected override void CloneCurrentValueCore(Freezable sourceFreezable)
         {
-            Vector3DKeyFrameCollection sourceCollection = (Vector3DKeyFrameCollection) sourceFreezable;
+            Vector3DKeyFrameCollection sourceCollection = (Vector3DKeyFrameCollection)sourceFreezable;
             base.CloneCurrentValueCore(sourceFreezable);
 
             int count = sourceCollection._keyFrames.Count;
@@ -133,7 +133,7 @@ namespace System.Windows.Media.Animation
         /// </summary>
         protected override void GetAsFrozenCore(Freezable sourceFreezable)
         {
-            Vector3DKeyFrameCollection sourceCollection = (Vector3DKeyFrameCollection) sourceFreezable;
+            Vector3DKeyFrameCollection sourceCollection = (Vector3DKeyFrameCollection)sourceFreezable;
             base.GetAsFrozenCore(sourceFreezable);
 
             int count = sourceCollection._keyFrames.Count;
@@ -154,7 +154,7 @@ namespace System.Windows.Media.Animation
         /// </summary>
         protected override void GetCurrentValueAsFrozenCore(Freezable sourceFreezable)
         {
-            Vector3DKeyFrameCollection sourceCollection = (Vector3DKeyFrameCollection) sourceFreezable;
+            Vector3DKeyFrameCollection sourceCollection = (Vector3DKeyFrameCollection)sourceFreezable;
             base.GetCurrentValueAsFrozenCore(sourceFreezable);
 
             int count = sourceCollection._keyFrames.Count;

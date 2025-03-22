@@ -496,10 +496,10 @@ namespace System.Windows.Media
         {
             base.OnInheritanceContextChangedCore(args);
 
-            for (int i=0; i<this.Count; i++)
+            for (int i = 0; i < this.Count; i++)
             {
                 DependencyObject inheritanceChild = _collection[i];
-                if (inheritanceChild!= null && inheritanceChild.InheritanceContext == this)
+                if (inheritanceChild != null && inheritanceChild.InheritanceContext == this)
                 {
                     inheritanceChild.OnInheritanceContextChanged(args);
                 }
@@ -615,7 +615,7 @@ namespace System.Windows.Media
         /// </summary>
         protected override void CloneCore(Freezable source)
         {
-            GeometryCollection sourceGeometryCollection = (GeometryCollection) source;
+            GeometryCollection sourceGeometryCollection = (GeometryCollection)source;
 
             base.CloneCore(source);
 
@@ -625,7 +625,7 @@ namespace System.Windows.Media
 
             for (int i = 0; i < count; i++)
             {
-                Geometry newValue = (Geometry) sourceGeometryCollection._collection[i].Clone();
+                Geometry newValue = (Geometry)sourceGeometryCollection._collection[i].Clone();
                 OnFreezablePropertyChanged(/* oldValue = */ null, newValue);
                 _collection.Add(newValue);
                 OnInsert(newValue);
@@ -637,7 +637,7 @@ namespace System.Windows.Media
         /// </summary>
         protected override void CloneCurrentValueCore(Freezable source)
         {
-            GeometryCollection sourceGeometryCollection = (GeometryCollection) source;
+            GeometryCollection sourceGeometryCollection = (GeometryCollection)source;
 
             base.CloneCurrentValueCore(source);
 
@@ -647,7 +647,7 @@ namespace System.Windows.Media
 
             for (int i = 0; i < count; i++)
             {
-                Geometry newValue = (Geometry) sourceGeometryCollection._collection[i].CloneCurrentValue();
+                Geometry newValue = (Geometry)sourceGeometryCollection._collection[i].CloneCurrentValue();
                 OnFreezablePropertyChanged(/* oldValue = */ null, newValue);
                 _collection.Add(newValue);
                 OnInsert(newValue);
@@ -659,7 +659,7 @@ namespace System.Windows.Media
         /// </summary>
         protected override void GetAsFrozenCore(Freezable source)
         {
-            GeometryCollection sourceGeometryCollection = (GeometryCollection) source;
+            GeometryCollection sourceGeometryCollection = (GeometryCollection)source;
 
             base.GetAsFrozenCore(source);
 
@@ -669,7 +669,7 @@ namespace System.Windows.Media
 
             for (int i = 0; i < count; i++)
             {
-                Geometry newValue = (Geometry) sourceGeometryCollection._collection[i].GetAsFrozen();
+                Geometry newValue = (Geometry)sourceGeometryCollection._collection[i].GetAsFrozen();
                 OnFreezablePropertyChanged(/* oldValue = */ null, newValue);
                 _collection.Add(newValue);
                 OnInsert(newValue);
@@ -681,7 +681,7 @@ namespace System.Windows.Media
         /// </summary>
         protected override void GetCurrentValueAsFrozenCore(Freezable source)
         {
-            GeometryCollection sourceGeometryCollection = (GeometryCollection) source;
+            GeometryCollection sourceGeometryCollection = (GeometryCollection)source;
 
             base.GetCurrentValueAsFrozenCore(source);
 
@@ -691,7 +691,7 @@ namespace System.Windows.Media
 
             for (int i = 0; i < count; i++)
             {
-                Geometry newValue = (Geometry) sourceGeometryCollection._collection[i].GetCurrentValueAsFrozen();
+                Geometry newValue = (Geometry)sourceGeometryCollection._collection[i].GetCurrentValueAsFrozen();
                 OnFreezablePropertyChanged(/* oldValue = */ null, newValue);
                 _collection.Add(newValue);
                 OnInsert(newValue);

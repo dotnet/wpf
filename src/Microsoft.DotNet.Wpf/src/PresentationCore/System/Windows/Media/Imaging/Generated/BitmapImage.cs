@@ -149,7 +149,7 @@ namespace System.Windows.Media.Imaging
         {
             get
             {
-                return (RequestCachePolicy) GetValue(UriCachePolicyProperty);
+                return (RequestCachePolicy)GetValue(UriCachePolicyProperty);
             }
             set
             {
@@ -164,7 +164,7 @@ namespace System.Windows.Media.Imaging
         {
             get
             {
-                return (Uri) GetValue(UriSourceProperty);
+                return (Uri)GetValue(UriSourceProperty);
             }
             set
             {
@@ -180,7 +180,7 @@ namespace System.Windows.Media.Imaging
         {
             get
             {
-                return (Stream) GetValue(StreamSourceProperty);
+                return (Stream)GetValue(StreamSourceProperty);
             }
             set
             {
@@ -195,7 +195,7 @@ namespace System.Windows.Media.Imaging
         {
             get
             {
-                return (int) GetValue(DecodePixelWidthProperty);
+                return (int)GetValue(DecodePixelWidthProperty);
             }
             set
             {
@@ -210,7 +210,7 @@ namespace System.Windows.Media.Imaging
         {
             get
             {
-                return (int) GetValue(DecodePixelHeightProperty);
+                return (int)GetValue(DecodePixelHeightProperty);
             }
             set
             {
@@ -225,7 +225,7 @@ namespace System.Windows.Media.Imaging
         {
             get
             {
-                return (Rotation) GetValue(RotationProperty);
+                return (Rotation)GetValue(RotationProperty);
             }
             set
             {
@@ -240,7 +240,7 @@ namespace System.Windows.Media.Imaging
         {
             get
             {
-                return (Int32Rect) GetValue(SourceRectProperty);
+                return (Int32Rect)GetValue(SourceRectProperty);
             }
             set
             {
@@ -255,7 +255,7 @@ namespace System.Windows.Media.Imaging
         {
             get
             {
-                return (BitmapCreateOptions) GetValue(CreateOptionsProperty);
+                return (BitmapCreateOptions)GetValue(CreateOptionsProperty);
             }
             set
             {
@@ -270,7 +270,7 @@ namespace System.Windows.Media.Imaging
         {
             get
             {
-                return (BitmapCacheOption) GetValue(CacheOptionProperty);
+                return (BitmapCacheOption)GetValue(CacheOptionProperty);
             }
             set
             {
@@ -301,7 +301,7 @@ namespace System.Windows.Media.Imaging
         /// </summary>
         protected override void CloneCore(Freezable source)
         {
-            BitmapImage sourceBitmapImage = (BitmapImage) source;
+            BitmapImage sourceBitmapImage = (BitmapImage)source;
 
             // Set any state required before actual clone happens
             ClonePrequel(sourceBitmapImage);
@@ -318,7 +318,7 @@ namespace System.Windows.Media.Imaging
         /// </summary>
         protected override void CloneCurrentValueCore(Freezable source)
         {
-            BitmapImage sourceBitmapImage = (BitmapImage) source;
+            BitmapImage sourceBitmapImage = (BitmapImage)source;
 
             // Set any state required before actual clone happens
             ClonePrequel(sourceBitmapImage);
@@ -335,7 +335,7 @@ namespace System.Windows.Media.Imaging
         /// </summary>
         protected override void GetAsFrozenCore(Freezable source)
         {
-            BitmapImage sourceBitmapImage = (BitmapImage) source;
+            BitmapImage sourceBitmapImage = (BitmapImage)source;
 
             // Set any state required before actual clone happens
             ClonePrequel(sourceBitmapImage);
@@ -352,7 +352,7 @@ namespace System.Windows.Media.Imaging
         /// </summary>
         protected override void GetCurrentValueAsFrozenCore(Freezable source)
         {
-            BitmapImage sourceBitmapImage = (BitmapImage) source;
+            BitmapImage sourceBitmapImage = (BitmapImage)source;
 
             // Set any state required before actual clone happens
             ClonePrequel(sourceBitmapImage);

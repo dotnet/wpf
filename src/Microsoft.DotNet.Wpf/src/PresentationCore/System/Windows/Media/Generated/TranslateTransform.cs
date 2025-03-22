@@ -91,7 +91,7 @@ namespace System.Windows.Media
         {
             get
             {
-                return (double) GetValue(XProperty);
+                return (double)GetValue(XProperty);
             }
             set
             {
@@ -106,7 +106,7 @@ namespace System.Windows.Media
         {
             get
             {
-                return (double) GetValue(YProperty);
+                return (double)GetValue(YProperty);
             }
             set
             {

@@ -29,6 +29,6 @@ namespace System.Windows.Media
 
             return (value == FillRule.EvenOdd) || 
                    (value == FillRule.Nonzero);
-        }                                
+        }
     }
 }

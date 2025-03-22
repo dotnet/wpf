@@ -106,7 +106,7 @@ namespace System.Windows.Media
         {
             get
             {
-                return (DoubleCollection) GetValue(GuidelinesXProperty);
+                return (DoubleCollection)GetValue(GuidelinesXProperty);
             }
             set
             {
@@ -121,7 +121,7 @@ namespace System.Windows.Media
         {
             get
             {
-                return (DoubleCollection) GetValue(GuidelinesYProperty);
+                return (DoubleCollection)GetValue(GuidelinesYProperty);
             }
             set
             {
@@ -136,7 +136,7 @@ namespace System.Windows.Media
         {
             get
             {
-                return (bool) GetValue(IsDynamicProperty);
+                return (bool)GetValue(IsDynamicProperty);
             }
             set
             {
@@ -211,7 +211,7 @@ namespace System.Windows.Media
 
 
                     // Copy this collection's elements (or their handles) to reserved data
-                    for(int i = 0; i < GuidelinesXCount; i++)
+                    for (int i = 0; i < GuidelinesXCount; i++)
                     {
                         Double resource = vGuidelinesX.Internal_GetItem(i);
                         channel.AppendCommandData(
@@ -221,7 +221,7 @@ namespace System.Windows.Media
                     }
 
                     // Copy this collection's elements (or their handles) to reserved data
-                    for(int i = 0; i < GuidelinesYCount; i++)
+                    for (int i = 0; i < GuidelinesYCount; i++)
                     {
                         Double resource = vGuidelinesY.Internal_GetItem(i);
                         channel.AppendCommandData(

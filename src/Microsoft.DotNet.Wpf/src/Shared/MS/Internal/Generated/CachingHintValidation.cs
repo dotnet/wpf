@@ -29,6 +29,6 @@ namespace System.Windows.Media
 
             return (value == CachingHint.Unspecified) || 
                    (value == CachingHint.Cache);
-        }                                
+        }
     }
 }

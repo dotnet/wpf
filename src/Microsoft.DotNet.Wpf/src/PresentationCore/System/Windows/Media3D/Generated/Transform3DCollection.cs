@@ -494,10 +494,10 @@ namespace System.Windows.Media.Media3D
         {
             base.OnInheritanceContextChangedCore(args);
 
-            for (int i=0; i<this.Count; i++)
+            for (int i = 0; i < this.Count; i++)
             {
                 DependencyObject inheritanceChild = _collection[i];
-                if (inheritanceChild!= null && inheritanceChild.InheritanceContext == this)
+                if (inheritanceChild != null && inheritanceChild.InheritanceContext == this)
                 {
                     inheritanceChild.OnInheritanceContextChanged(args);
                 }
@@ -613,7 +613,7 @@ namespace System.Windows.Media.Media3D
         /// </summary>
         protected override void CloneCore(Freezable source)
         {
-            Transform3DCollection sourceTransform3DCollection = (Transform3DCollection) source;
+            Transform3DCollection sourceTransform3DCollection = (Transform3DCollection)source;
 
             base.CloneCore(source);
 
@@ -623,7 +623,7 @@ namespace System.Windows.Media.Media3D
 
             for (int i = 0; i < count; i++)
             {
-                Transform3D newValue = (Transform3D) sourceTransform3DCollection._collection[i].Clone();
+                Transform3D newValue = (Transform3D)sourceTransform3DCollection._collection[i].Clone();
                 OnFreezablePropertyChanged(/* oldValue = */ null, newValue);
                 _collection.Add(newValue);
                 OnInsert(newValue);
@@ -635,7 +635,7 @@ namespace System.Windows.Media.Media3D
         /// </summary>
         protected override void CloneCurrentValueCore(Freezable source)
         {
-            Transform3DCollection sourceTransform3DCollection = (Transform3DCollection) source;
+            Transform3DCollection sourceTransform3DCollection = (Transform3DCollection)source;
 
             base.CloneCurrentValueCore(source);
 
@@ -645,7 +645,7 @@ namespace System.Windows.Media.Media3D
 
             for (int i = 0; i < count; i++)
             {
-                Transform3D newValue = (Transform3D) sourceTransform3DCollection._collection[i].CloneCurrentValue();
+                Transform3D newValue = (Transform3D)sourceTransform3DCollection._collection[i].CloneCurrentValue();
                 OnFreezablePropertyChanged(/* oldValue = */ null, newValue);
                 _collection.Add(newValue);
                 OnInsert(newValue);
@@ -657,7 +657,7 @@ namespace System.Windows.Media.Media3D
         /// </summary>
         protected override void GetAsFrozenCore(Freezable source)
         {
-            Transform3DCollection sourceTransform3DCollection = (Transform3DCollection) source;
+            Transform3DCollection sourceTransform3DCollection = (Transform3DCollection)source;
 
             base.GetAsFrozenCore(source);
 
@@ -667,7 +667,7 @@ namespace System.Windows.Media.Media3D
 
             for (int i = 0; i < count; i++)
             {
-                Transform3D newValue = (Transform3D) sourceTransform3DCollection._collection[i].GetAsFrozen();
+                Transform3D newValue = (Transform3D)sourceTransform3DCollection._collection[i].GetAsFrozen();
                 OnFreezablePropertyChanged(/* oldValue = */ null, newValue);
                 _collection.Add(newValue);
                 OnInsert(newValue);
@@ -679,7 +679,7 @@ namespace System.Windows.Media.Media3D
         /// </summary>
         protected override void GetCurrentValueAsFrozenCore(Freezable source)
         {
-            Transform3DCollection sourceTransform3DCollection = (Transform3DCollection) source;
+            Transform3DCollection sourceTransform3DCollection = (Transform3DCollection)source;
 
             base.GetCurrentValueAsFrozenCore(source);
 
@@ -689,7 +689,7 @@ namespace System.Windows.Media.Media3D
 
             for (int i = 0; i < count; i++)
             {
-                Transform3D newValue = (Transform3D) sourceTransform3DCollection._collection[i].GetCurrentValueAsFrozen();
+                Transform3D newValue = (Transform3D)sourceTransform3DCollection._collection[i].GetCurrentValueAsFrozen();
                 OnFreezablePropertyChanged(/* oldValue = */ null, newValue);
                 _collection.Add(newValue);
                 OnInsert(newValue);

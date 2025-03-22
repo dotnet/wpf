@@ -496,10 +496,10 @@ namespace System.Windows.Media
         {
             base.OnInheritanceContextChangedCore(args);
 
-            for (int i=0; i<this.Count; i++)
+            for (int i = 0; i < this.Count; i++)
             {
                 DependencyObject inheritanceChild = _collection[i];
-                if (inheritanceChild!= null && inheritanceChild.InheritanceContext == this)
+                if (inheritanceChild != null && inheritanceChild.InheritanceContext == this)
                 {
                     inheritanceChild.OnInheritanceContextChanged(args);
                 }
@@ -615,7 +615,7 @@ namespace System.Windows.Media
         /// </summary>
         protected override void CloneCore(Freezable source)
         {
-            TransformCollection sourceTransformCollection = (TransformCollection) source;
+            TransformCollection sourceTransformCollection = (TransformCollection)source;
 
             base.CloneCore(source);
 
@@ -625,7 +625,7 @@ namespace System.Windows.Media
 
             for (int i = 0; i < count; i++)
             {
-                Transform newValue = (Transform) sourceTransformCollection._collection[i].Clone();
+                Transform newValue = (Transform)sourceTransformCollection._collection[i].Clone();
                 OnFreezablePropertyChanged(/* oldValue = */ null, newValue);
                 _collection.Add(newValue);
                 OnInsert(newValue);
@@ -637,7 +637,7 @@ namespace System.Windows.Media
         /// </summary>
         protected override void CloneCurrentValueCore(Freezable source)
         {
-            TransformCollection sourceTransformCollection = (TransformCollection) source;
+            TransformCollection sourceTransformCollection = (TransformCollection)source;
 
             base.CloneCurrentValueCore(source);
 
@@ -647,7 +647,7 @@ namespace System.Windows.Media
 
             for (int i = 0; i < count; i++)
             {
-                Transform newValue = (Transform) sourceTransformCollection._collection[i].CloneCurrentValue();
+                Transform newValue = (Transform)sourceTransformCollection._collection[i].CloneCurrentValue();
                 OnFreezablePropertyChanged(/* oldValue = */ null, newValue);
                 _collection.Add(newValue);
                 OnInsert(newValue);
@@ -659,7 +659,7 @@ namespace System.Windows.Media
         /// </summary>
         protected override void GetAsFrozenCore(Freezable source)
         {
-            TransformCollection sourceTransformCollection = (TransformCollection) source;
+            TransformCollection sourceTransformCollection = (TransformCollection)source;
 
             base.GetAsFrozenCore(source);
 
@@ -669,7 +669,7 @@ namespace System.Windows.Media
 
             for (int i = 0; i < count; i++)
             {
-                Transform newValue = (Transform) sourceTransformCollection._collection[i].GetAsFrozen();
+                Transform newValue = (Transform)sourceTransformCollection._collection[i].GetAsFrozen();
                 OnFreezablePropertyChanged(/* oldValue = */ null, newValue);
                 _collection.Add(newValue);
                 OnInsert(newValue);
@@ -681,7 +681,7 @@ namespace System.Windows.Media
         /// </summary>
         protected override void GetCurrentValueAsFrozenCore(Freezable source)
         {
-            TransformCollection sourceTransformCollection = (TransformCollection) source;
+            TransformCollection sourceTransformCollection = (TransformCollection)source;
 
             base.GetCurrentValueAsFrozenCore(source);
 
@@ -691,7 +691,7 @@ namespace System.Windows.Media
 
             for (int i = 0; i < count; i++)
             {
-                Transform newValue = (Transform) sourceTransformCollection._collection[i].GetCurrentValueAsFrozen();
+                Transform newValue = (Transform)sourceTransformCollection._collection[i].GetCurrentValueAsFrozen();
                 OnFreezablePropertyChanged(/* oldValue = */ null, newValue);
                 _collection.Add(newValue);
                 OnInsert(newValue);

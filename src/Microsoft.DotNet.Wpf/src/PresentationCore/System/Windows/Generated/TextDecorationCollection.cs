@@ -475,10 +475,10 @@ namespace System.Windows
         {
             base.OnInheritanceContextChangedCore(args);
 
-            for (int i=0; i<this.Count; i++)
+            for (int i = 0; i < this.Count; i++)
             {
                 DependencyObject inheritanceChild = _collection[i];
-                if (inheritanceChild!= null && inheritanceChild.InheritanceContext == this)
+                if (inheritanceChild != null && inheritanceChild.InheritanceContext == this)
                 {
                     inheritanceChild.OnInheritanceContextChanged(args);
                 }
@@ -571,7 +571,7 @@ namespace System.Windows
         /// </summary>
         protected override void CloneCore(Freezable source)
         {
-            TextDecorationCollection sourceTextDecorationCollection = (TextDecorationCollection) source;
+            TextDecorationCollection sourceTextDecorationCollection = (TextDecorationCollection)source;
 
             base.CloneCore(source);
 
@@ -581,7 +581,7 @@ namespace System.Windows
 
             for (int i = 0; i < count; i++)
             {
-                TextDecoration newValue = (TextDecoration) sourceTextDecorationCollection._collection[i].Clone();
+                TextDecoration newValue = (TextDecoration)sourceTextDecorationCollection._collection[i].Clone();
                 OnFreezablePropertyChanged(/* oldValue = */ null, newValue);
                 _collection.Add(newValue);
 
@@ -593,7 +593,7 @@ namespace System.Windows
         /// </summary>
         protected override void CloneCurrentValueCore(Freezable source)
         {
-            TextDecorationCollection sourceTextDecorationCollection = (TextDecorationCollection) source;
+            TextDecorationCollection sourceTextDecorationCollection = (TextDecorationCollection)source;
 
             base.CloneCurrentValueCore(source);
 
@@ -603,7 +603,7 @@ namespace System.Windows
 
             for (int i = 0; i < count; i++)
             {
-                TextDecoration newValue = (TextDecoration) sourceTextDecorationCollection._collection[i].CloneCurrentValue();
+                TextDecoration newValue = (TextDecoration)sourceTextDecorationCollection._collection[i].CloneCurrentValue();
                 OnFreezablePropertyChanged(/* oldValue = */ null, newValue);
                 _collection.Add(newValue);
 
@@ -615,7 +615,7 @@ namespace System.Windows
         /// </summary>
         protected override void GetAsFrozenCore(Freezable source)
         {
-            TextDecorationCollection sourceTextDecorationCollection = (TextDecorationCollection) source;
+            TextDecorationCollection sourceTextDecorationCollection = (TextDecorationCollection)source;
 
             base.GetAsFrozenCore(source);
 
@@ -625,7 +625,7 @@ namespace System.Windows
 
             for (int i = 0; i < count; i++)
             {
-                TextDecoration newValue = (TextDecoration) sourceTextDecorationCollection._collection[i].GetAsFrozen();
+                TextDecoration newValue = (TextDecoration)sourceTextDecorationCollection._collection[i].GetAsFrozen();
                 OnFreezablePropertyChanged(/* oldValue = */ null, newValue);
                 _collection.Add(newValue);
 
@@ -637,7 +637,7 @@ namespace System.Windows
         /// </summary>
         protected override void GetCurrentValueAsFrozenCore(Freezable source)
         {
-            TextDecorationCollection sourceTextDecorationCollection = (TextDecorationCollection) source;
+            TextDecorationCollection sourceTextDecorationCollection = (TextDecorationCollection)source;
 
             base.GetCurrentValueAsFrozenCore(source);
 
@@ -647,7 +647,7 @@ namespace System.Windows
 
             for (int i = 0; i < count; i++)
             {
-                TextDecoration newValue = (TextDecoration) sourceTextDecorationCollection._collection[i].GetCurrentValueAsFrozen();
+                TextDecoration newValue = (TextDecoration)sourceTextDecorationCollection._collection[i].GetCurrentValueAsFrozen();
                 OnFreezablePropertyChanged(/* oldValue = */ null, newValue);
                 _collection.Add(newValue);
 

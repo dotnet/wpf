@@ -606,7 +606,7 @@ namespace MS.Internal.MilCodeGen.Helpers
 
             if (resource.CollectionType.IsFreezable)
             {
-                value = [[inline]]([[resource.CollectionType.Name]]) [[source]]._collection[i].[[method]]()[[/inline]];
+                value = [[inline]]([[resource.CollectionType.Name]])[[source]]._collection[i].[[method]]()[[/inline]];
             }
             else
             {
@@ -846,10 +846,10 @@ namespace MS.Internal.MilCodeGen.Helpers
                         {
                             base.OnInheritanceContextChangedCore(args);
 
-                            for (int i=0; i<this.Count; i++)
+                            for (int i = 0; i < this.Count; i++)
                             {
                                 DependencyObject inheritanceChild = _collection[i];
-                                if (inheritanceChild!= null && inheritanceChild.InheritanceContext == this)
+                                if (inheritanceChild != null && inheritanceChild.InheritanceContext == this)
                                 {
                                     inheritanceChild.OnInheritanceContextChanged(args);
                                 }

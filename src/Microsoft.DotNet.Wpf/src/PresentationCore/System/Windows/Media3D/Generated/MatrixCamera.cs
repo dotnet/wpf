@@ -89,7 +89,7 @@ namespace System.Windows.Media.Media3D
         {
             get
             {
-                return (Matrix3D) GetValue(ViewMatrixProperty);
+                return (Matrix3D)GetValue(ViewMatrixProperty);
             }
             set
             {
@@ -104,7 +104,7 @@ namespace System.Windows.Media.Media3D
         {
             get
             {
-                return (Matrix3D) GetValue(ProjectionMatrixProperty);
+                return (Matrix3D)GetValue(ProjectionMatrixProperty);
             }
             set
             {

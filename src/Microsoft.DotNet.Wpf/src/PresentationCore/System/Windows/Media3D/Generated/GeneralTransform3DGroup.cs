@@ -76,7 +76,7 @@ namespace System.Windows.Media.Media3D
         {
             get
             {
-                return (GeneralTransform3DCollection) GetValue(ChildrenProperty);
+                return (GeneralTransform3DCollection)GetValue(ChildrenProperty);
             }
             set
             {

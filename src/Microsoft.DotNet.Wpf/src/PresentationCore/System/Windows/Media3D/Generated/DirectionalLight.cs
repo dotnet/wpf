@@ -82,7 +82,7 @@ namespace System.Windows.Media.Media3D
         {
             get
             {
-                return (Vector3D) GetValue(DirectionProperty);
+                return (Vector3D)GetValue(DirectionProperty);
             }
             set
             {

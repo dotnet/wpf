@@ -77,7 +77,7 @@ namespace System.Windows.Media.Effects
         {
             get
             {
-                return (BitmapSource) GetValue(InputProperty);
+                return (BitmapSource)GetValue(InputProperty);
             }
             set
             {
@@ -92,7 +92,7 @@ namespace System.Windows.Media.Effects
         {
             get
             {
-                return (BrushMappingMode) GetValue(AreaToApplyEffectUnitsProperty);
+                return (BrushMappingMode)GetValue(AreaToApplyEffectUnitsProperty);
             }
             set
             {
@@ -107,7 +107,7 @@ namespace System.Windows.Media.Effects
         {
             get
             {
-                return (Rect) GetValue(AreaToApplyEffectProperty);
+                return (Rect)GetValue(AreaToApplyEffectProperty);
             }
             set
             {

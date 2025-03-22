@@ -98,7 +98,7 @@ namespace System.Windows.Media.Effects
         {
             get
             {
-                return (Color) GetValue(GlowColorProperty);
+                return (Color)GetValue(GlowColorProperty);
             }
             set
             {
@@ -113,7 +113,7 @@ namespace System.Windows.Media.Effects
         {
             get
             {
-                return (double) GetValue(GlowSizeProperty);
+                return (double)GetValue(GlowSizeProperty);
             }
             set
             {
@@ -128,7 +128,7 @@ namespace System.Windows.Media.Effects
         {
             get
             {
-                return (double) GetValue(NoiseProperty);
+                return (double)GetValue(NoiseProperty);
             }
             set
             {
@@ -143,7 +143,7 @@ namespace System.Windows.Media.Effects
         {
             get
             {
-                return (double) GetValue(OpacityProperty);
+                return (double)GetValue(OpacityProperty);
             }
             set
             {

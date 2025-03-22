@@ -78,7 +78,7 @@ namespace System.Windows.Media
         {
             get
             {
-                return (bool) GetValue(IsStrokedProperty);
+                return (bool)GetValue(IsStrokedProperty);
             }
             set
             {
@@ -93,7 +93,7 @@ namespace System.Windows.Media
         {
             get
             {
-                return (bool) GetValue(IsSmoothJoinProperty);
+                return (bool)GetValue(IsSmoothJoinProperty);
             }
             set
             {

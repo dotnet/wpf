@@ -93,7 +93,7 @@ namespace System.Windows.Media.Media3D
         /// </returns>
         /// <param name='quaternion1'>The first Quaternion to compare</param>
         /// <param name='quaternion2'>The second Quaternion to compare</param>
-        public static bool Equals (Quaternion quaternion1, Quaternion quaternion2)
+        public static bool Equals(Quaternion quaternion1, Quaternion quaternion2)
         {
             if (quaternion1.IsDistinguishedIdentity || quaternion2.IsDistinguishedIdentity)
             {

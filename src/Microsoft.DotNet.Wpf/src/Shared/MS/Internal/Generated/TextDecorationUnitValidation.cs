@@ -30,6 +30,6 @@ namespace System.Windows
             return (value == TextDecorationUnit.FontRecommended) || 
                    (value == TextDecorationUnit.FontRenderingEmSize) || 
                    (value == TextDecorationUnit.Pixel);
-        }                                
+        }
     }
 }

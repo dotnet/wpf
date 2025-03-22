@@ -31,5 +31,5 @@ namespace System.Windows
         ///     Pixel - The unit is one pixel
         /// </summary>
         Pixel = 2,
-    }   
+    }
 }

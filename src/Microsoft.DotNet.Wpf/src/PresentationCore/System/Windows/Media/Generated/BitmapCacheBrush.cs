@@ -198,7 +198,7 @@ namespace System.Windows.Media
         {
             get
             {
-                return (Visual) GetValue(TargetProperty);
+                return (Visual)GetValue(TargetProperty);
             }
             set
             {
@@ -213,7 +213,7 @@ namespace System.Windows.Media
         {
             get
             {
-                return (BitmapCache) GetValue(BitmapCacheProperty);
+                return (BitmapCache)GetValue(BitmapCacheProperty);
             }
             set
             {
@@ -230,7 +230,7 @@ namespace System.Windows.Media
         {
             get
             {
-                return (bool) GetValue(AutoLayoutContentProperty);
+                return (bool)GetValue(AutoLayoutContentProperty);
             }
             set
             {
@@ -245,7 +245,7 @@ namespace System.Windows.Media
         {
             get
             {
-                return (Visual) GetValue(InternalTargetProperty);
+                return (Visual)GetValue(InternalTargetProperty);
             }
             set
             {
@@ -263,7 +263,7 @@ namespace System.Windows.Media
         {
             get
             {
-                return (bool) GetValue(AutoWrapTargetProperty);
+                return (bool)GetValue(AutoWrapTargetProperty);
             }
             set
             {

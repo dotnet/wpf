@@ -36,5 +36,5 @@ namespace System.Windows.Media.Effects
         ///     BulgedUp - Use a bulged up edge profile
         /// </summary>
         BulgedUp = 3,
-    }   
+    }
 }

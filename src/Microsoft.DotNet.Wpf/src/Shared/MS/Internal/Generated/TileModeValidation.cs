@@ -32,6 +32,6 @@ namespace System.Windows.Media
                    (value == TileMode.FlipX) || 
                    (value == TileMode.FlipY) || 
                    (value == TileMode.FlipXY);
-        }                                
+        }
     }
 }

@@ -485,10 +485,10 @@ namespace System.Windows.Media
         {
             base.OnInheritanceContextChangedCore(args);
 
-            for (int i=0; i<this.Count; i++)
+            for (int i = 0; i < this.Count; i++)
             {
                 DependencyObject inheritanceChild = _collection[i];
-                if (inheritanceChild!= null && inheritanceChild.InheritanceContext == this)
+                if (inheritanceChild != null && inheritanceChild.InheritanceContext == this)
                 {
                     inheritanceChild.OnInheritanceContextChanged(args);
                 }
@@ -581,7 +581,7 @@ namespace System.Windows.Media
         /// </summary>
         protected override void CloneCore(Freezable source)
         {
-            PathFigureCollection sourcePathFigureCollection = (PathFigureCollection) source;
+            PathFigureCollection sourcePathFigureCollection = (PathFigureCollection)source;
 
             base.CloneCore(source);
 
@@ -591,7 +591,7 @@ namespace System.Windows.Media
 
             for (int i = 0; i < count; i++)
             {
-                PathFigure newValue = (PathFigure) sourcePathFigureCollection._collection[i].Clone();
+                PathFigure newValue = (PathFigure)sourcePathFigureCollection._collection[i].Clone();
                 OnFreezablePropertyChanged(/* oldValue = */ null, newValue);
                 _collection.Add(newValue);
 
@@ -603,7 +603,7 @@ namespace System.Windows.Media
         /// </summary>
         protected override void CloneCurrentValueCore(Freezable source)
         {
-            PathFigureCollection sourcePathFigureCollection = (PathFigureCollection) source;
+            PathFigureCollection sourcePathFigureCollection = (PathFigureCollection)source;
 
             base.CloneCurrentValueCore(source);
 
@@ -613,7 +613,7 @@ namespace System.Windows.Media
 
             for (int i = 0; i < count; i++)
             {
-                PathFigure newValue = (PathFigure) sourcePathFigureCollection._collection[i].CloneCurrentValue();
+                PathFigure newValue = (PathFigure)sourcePathFigureCollection._collection[i].CloneCurrentValue();
                 OnFreezablePropertyChanged(/* oldValue = */ null, newValue);
                 _collection.Add(newValue);
 
@@ -625,7 +625,7 @@ namespace System.Windows.Media
         /// </summary>
         protected override void GetAsFrozenCore(Freezable source)
         {
-            PathFigureCollection sourcePathFigureCollection = (PathFigureCollection) source;
+            PathFigureCollection sourcePathFigureCollection = (PathFigureCollection)source;
 
             base.GetAsFrozenCore(source);
 
@@ -635,7 +635,7 @@ namespace System.Windows.Media
 
             for (int i = 0; i < count; i++)
             {
-                PathFigure newValue = (PathFigure) sourcePathFigureCollection._collection[i].GetAsFrozen();
+                PathFigure newValue = (PathFigure)sourcePathFigureCollection._collection[i].GetAsFrozen();
                 OnFreezablePropertyChanged(/* oldValue = */ null, newValue);
                 _collection.Add(newValue);
 
@@ -647,7 +647,7 @@ namespace System.Windows.Media
         /// </summary>
         protected override void GetCurrentValueAsFrozenCore(Freezable source)
         {
-            PathFigureCollection sourcePathFigureCollection = (PathFigureCollection) source;
+            PathFigureCollection sourcePathFigureCollection = (PathFigureCollection)source;
 
             base.GetCurrentValueAsFrozenCore(source);
 
@@ -657,7 +657,7 @@ namespace System.Windows.Media
 
             for (int i = 0; i < count; i++)
             {
-                PathFigure newValue = (PathFigure) sourcePathFigureCollection._collection[i].GetCurrentValueAsFrozen();
+                PathFigure newValue = (PathFigure)sourcePathFigureCollection._collection[i].GetCurrentValueAsFrozen();
                 OnFreezablePropertyChanged(/* oldValue = */ null, newValue);
                 _collection.Add(newValue);
 
@@ -774,7 +774,7 @@ namespace System.Windows.Media
             // Helper to get the numeric list separator for a given culture.
             // char separator = MS.Internal.TokenizerHelper.GetNumericListSeparator(provider);
 
-            for (int i=0; i<_collection.Count; i++)
+            for (int i = 0; i < _collection.Count; i++)
             {
                 str.AppendFormat(
                     provider,

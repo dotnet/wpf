@@ -31,6 +31,6 @@ namespace System.Windows.Media
                    (value == GeometryCombineMode.Intersect) || 
                    (value == GeometryCombineMode.Xor) || 
                    (value == GeometryCombineMode.Exclude);
-        }                                
+        }
     }
 }

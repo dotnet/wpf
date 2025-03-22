@@ -29,6 +29,6 @@ namespace System.Windows.Media.Effects
 
             return (value == KernelType.Gaussian) || 
                    (value == KernelType.Box);
-        }                                
+        }
     }
 }

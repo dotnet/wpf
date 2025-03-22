@@ -30,6 +30,6 @@ namespace System.Windows.Media.Effects
             return (value == ShaderRenderMode.Auto) || 
                    (value == ShaderRenderMode.SoftwareOnly) || 
                    (value == ShaderRenderMode.HardwareOnly);
-        }                                
+        }
     }
 }

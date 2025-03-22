@@ -113,7 +113,7 @@ namespace System.Windows.Media.Animation
         /// </summary>
         protected override void CloneCore(Freezable sourceFreezable)
         {
-            DecimalAnimationUsingKeyFrames sourceAnimation = (DecimalAnimationUsingKeyFrames) sourceFreezable;
+            DecimalAnimationUsingKeyFrames sourceAnimation = (DecimalAnimationUsingKeyFrames)sourceFreezable;
             base.CloneCore(sourceFreezable);
 
             CopyCommon(sourceAnimation, /* isCurrentValueClone = */ false);
@@ -124,7 +124,7 @@ namespace System.Windows.Media.Animation
         /// </summary>
         protected override void CloneCurrentValueCore(Freezable sourceFreezable)
         {
-            DecimalAnimationUsingKeyFrames sourceAnimation = (DecimalAnimationUsingKeyFrames) sourceFreezable;
+            DecimalAnimationUsingKeyFrames sourceAnimation = (DecimalAnimationUsingKeyFrames)sourceFreezable;
             base.CloneCurrentValueCore(sourceFreezable);
 
             CopyCommon(sourceAnimation, /* isCurrentValueClone = */ true);
@@ -135,7 +135,7 @@ namespace System.Windows.Media.Animation
         /// </summary>
         protected override void GetAsFrozenCore(Freezable source)
         {
-            DecimalAnimationUsingKeyFrames sourceAnimation = (DecimalAnimationUsingKeyFrames) source;
+            DecimalAnimationUsingKeyFrames sourceAnimation = (DecimalAnimationUsingKeyFrames)source;
             base.GetAsFrozenCore(source);
 
             CopyCommon(sourceAnimation, /* isCurrentValueClone = */ false);
@@ -146,7 +146,7 @@ namespace System.Windows.Media.Animation
         /// </summary>
         protected override void GetCurrentValueAsFrozenCore(Freezable source)
         {
-            DecimalAnimationUsingKeyFrames sourceAnimation = (DecimalAnimationUsingKeyFrames) source;
+            DecimalAnimationUsingKeyFrames sourceAnimation = (DecimalAnimationUsingKeyFrames)source;
             base.GetCurrentValueAsFrozenCore(source);
 
             CopyCommon(sourceAnimation, /* isCurrentValueClone = */ true);
@@ -815,11 +815,11 @@ namespace System.Windows.Media.Animation
                                     || type == KeyTimeType.TimeSpan)
                                 {
                                     break;
-                                }   
+                                }
                                 else if (type == KeyTimeType.Paced)
                                 {
                                     hasPacedKeyTimes = true;
-                                }                                
+                                }
                             }
 
                             Debug.Assert(index < keyFrameCount, 
@@ -985,7 +985,7 @@ namespace System.Windows.Media.Animation
                 {
                     index++;
                 }
-            } 
+            }
             while (index < maxKeyFrameIndex);
         }
 

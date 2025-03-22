@@ -32,5 +32,5 @@ namespace System.Windows.Media
         ///     Right - Align contents towards the right of a space.
         /// </summary>
         Right = 2,
-    }   
+    }
 }

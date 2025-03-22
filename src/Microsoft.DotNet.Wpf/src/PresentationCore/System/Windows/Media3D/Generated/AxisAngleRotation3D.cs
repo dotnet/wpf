@@ -91,7 +91,7 @@ namespace System.Windows.Media.Media3D
         {
             get
             {
-                return (Vector3D) GetValue(AxisProperty);
+                return (Vector3D)GetValue(AxisProperty);
             }
             set
             {
@@ -106,7 +106,7 @@ namespace System.Windows.Media.Media3D
         {
             get
             {
-                return (double) GetValue(AngleProperty);
+                return (double)GetValue(AngleProperty);
             }
             set
             {

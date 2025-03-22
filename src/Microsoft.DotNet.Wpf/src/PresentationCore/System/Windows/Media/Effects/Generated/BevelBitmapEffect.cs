@@ -96,7 +96,7 @@ namespace System.Windows.Media.Effects
         {
             get
             {
-                return (double) GetValue(BevelWidthProperty);
+                return (double)GetValue(BevelWidthProperty);
             }
             set
             {
@@ -111,7 +111,7 @@ namespace System.Windows.Media.Effects
         {
             get
             {
-                return (double) GetValue(ReliefProperty);
+                return (double)GetValue(ReliefProperty);
             }
             set
             {
@@ -126,7 +126,7 @@ namespace System.Windows.Media.Effects
         {
             get
             {
-                return (double) GetValue(LightAngleProperty);
+                return (double)GetValue(LightAngleProperty);
             }
             set
             {
@@ -141,7 +141,7 @@ namespace System.Windows.Media.Effects
         {
             get
             {
-                return (double) GetValue(SmoothnessProperty);
+                return (double)GetValue(SmoothnessProperty);
             }
             set
             {
@@ -156,7 +156,7 @@ namespace System.Windows.Media.Effects
         {
             get
             {
-                return (EdgeProfile) GetValue(EdgeProfileProperty);
+                return (EdgeProfile)GetValue(EdgeProfileProperty);
             }
             set
             {

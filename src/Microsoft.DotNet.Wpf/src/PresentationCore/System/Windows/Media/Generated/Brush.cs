@@ -181,7 +181,7 @@ namespace System.Windows.Media
         {
             get
             {
-                return (double) GetValue(OpacityProperty);
+                return (double)GetValue(OpacityProperty);
             }
             set
             {
@@ -196,7 +196,7 @@ namespace System.Windows.Media
         {
             get
             {
-                return (Transform) GetValue(TransformProperty);
+                return (Transform)GetValue(TransformProperty);
             }
             set
             {
@@ -211,7 +211,7 @@ namespace System.Windows.Media
         {
             get
             {
-                return (Transform) GetValue(RelativeTransformProperty);
+                return (Transform)GetValue(RelativeTransformProperty);
             }
             set
             {

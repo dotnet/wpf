@@ -121,7 +121,7 @@ namespace System.Windows.Media.Imaging
         {
             get
             {
-                return (BitmapSource) GetValue(SourceProperty);
+                return (BitmapSource)GetValue(SourceProperty);
             }
             set
             {
@@ -136,7 +136,7 @@ namespace System.Windows.Media.Imaging
         {
             get
             {
-                return (Transform) GetValue(TransformProperty);
+                return (Transform)GetValue(TransformProperty);
             }
             set
             {
@@ -167,7 +167,7 @@ namespace System.Windows.Media.Imaging
         /// </summary>
         protected override void CloneCore(Freezable source)
         {
-            TransformedBitmap sourceTransformedBitmap = (TransformedBitmap) source;
+            TransformedBitmap sourceTransformedBitmap = (TransformedBitmap)source;
 
             // Set any state required before actual clone happens
             ClonePrequel(sourceTransformedBitmap);
@@ -184,7 +184,7 @@ namespace System.Windows.Media.Imaging
         /// </summary>
         protected override void CloneCurrentValueCore(Freezable source)
         {
-            TransformedBitmap sourceTransformedBitmap = (TransformedBitmap) source;
+            TransformedBitmap sourceTransformedBitmap = (TransformedBitmap)source;
 
             // Set any state required before actual clone happens
             ClonePrequel(sourceTransformedBitmap);
@@ -201,7 +201,7 @@ namespace System.Windows.Media.Imaging
         /// </summary>
         protected override void GetAsFrozenCore(Freezable source)
         {
-            TransformedBitmap sourceTransformedBitmap = (TransformedBitmap) source;
+            TransformedBitmap sourceTransformedBitmap = (TransformedBitmap)source;
 
             // Set any state required before actual clone happens
             ClonePrequel(sourceTransformedBitmap);
@@ -218,7 +218,7 @@ namespace System.Windows.Media.Imaging
         /// </summary>
         protected override void GetCurrentValueAsFrozenCore(Freezable source)
         {
-            TransformedBitmap sourceTransformedBitmap = (TransformedBitmap) source;
+            TransformedBitmap sourceTransformedBitmap = (TransformedBitmap)source;
 
             // Set any state required before actual clone happens
             ClonePrequel(sourceTransformedBitmap);

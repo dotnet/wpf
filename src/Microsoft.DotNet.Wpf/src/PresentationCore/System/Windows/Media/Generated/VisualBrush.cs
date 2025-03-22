@@ -136,7 +136,7 @@ namespace System.Windows.Media
         {
             get
             {
-                return (Visual) GetValue(VisualProperty);
+                return (Visual)GetValue(VisualProperty);
             }
             set
             {
@@ -153,7 +153,7 @@ namespace System.Windows.Media
         {
             get
             {
-                return (bool) GetValue(AutoLayoutContentProperty);
+                return (bool)GetValue(AutoLayoutContentProperty);
             }
             set
             {

@@ -80,7 +80,7 @@ namespace System.Windows.Media.Media3D
         {
             get
             {
-                return (double) GetValue(WidthProperty);
+                return (double)GetValue(WidthProperty);
             }
             set
             {

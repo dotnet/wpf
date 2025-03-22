@@ -408,7 +408,7 @@ namespace System.Windows.Media
         {
             get
             {
-                return (DrawingCollection) GetValue(ChildrenProperty);
+                return (DrawingCollection)GetValue(ChildrenProperty);
             }
             set
             {
@@ -423,7 +423,7 @@ namespace System.Windows.Media
         {
             get
             {
-                return (Geometry) GetValue(ClipGeometryProperty);
+                return (Geometry)GetValue(ClipGeometryProperty);
             }
             set
             {
@@ -438,7 +438,7 @@ namespace System.Windows.Media
         {
             get
             {
-                return (double) GetValue(OpacityProperty);
+                return (double)GetValue(OpacityProperty);
             }
             set
             {
@@ -453,7 +453,7 @@ namespace System.Windows.Media
         {
             get
             {
-                return (Brush) GetValue(OpacityMaskProperty);
+                return (Brush)GetValue(OpacityMaskProperty);
             }
             set
             {
@@ -468,7 +468,7 @@ namespace System.Windows.Media
         {
             get
             {
-                return (Transform) GetValue(TransformProperty);
+                return (Transform)GetValue(TransformProperty);
             }
             set
             {
@@ -483,7 +483,7 @@ namespace System.Windows.Media
         {
             get
             {
-                return (GuidelineSet) GetValue(GuidelineSetProperty);
+                return (GuidelineSet)GetValue(GuidelineSetProperty);
             }
             set
             {
@@ -498,7 +498,7 @@ namespace System.Windows.Media
         {
             get
             {
-                return (BitmapEffect) GetValue(BitmapEffectProperty);
+                return (BitmapEffect)GetValue(BitmapEffectProperty);
             }
             set
             {
@@ -513,7 +513,7 @@ namespace System.Windows.Media
         {
             get
             {
-                return (BitmapEffectInput) GetValue(BitmapEffectInputProperty);
+                return (BitmapEffectInput)GetValue(BitmapEffectInputProperty);
             }
             set
             {
@@ -618,7 +618,7 @@ namespace System.Windows.Media
 
 
                     // Copy this collection's elements (or their handles) to reserved data
-                    for(int i = 0; i < ChildrenCount; i++)
+                    for (int i = 0; i < ChildrenCount; i++)
                     {
                         DUCE.ResourceHandle resource = ((DUCE.IResource)vChildren.Internal_GetItem(i)).GetHandle(channel);;
                         channel.AppendCommandData(

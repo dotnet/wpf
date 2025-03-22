@@ -29,6 +29,6 @@ namespace System.Windows.Media
 
             return (value == SweepDirection.Counterclockwise) || 
                    (value == SweepDirection.Clockwise);
-        }                                
+        }
     }
 }

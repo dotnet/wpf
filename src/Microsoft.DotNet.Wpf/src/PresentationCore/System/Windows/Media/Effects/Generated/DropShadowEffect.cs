@@ -110,7 +110,7 @@ namespace System.Windows.Media.Effects
         {
             get
             {
-                return (double) GetValue(ShadowDepthProperty);
+                return (double)GetValue(ShadowDepthProperty);
             }
             set
             {
@@ -125,7 +125,7 @@ namespace System.Windows.Media.Effects
         {
             get
             {
-                return (Color) GetValue(ColorProperty);
+                return (Color)GetValue(ColorProperty);
             }
             set
             {
@@ -140,7 +140,7 @@ namespace System.Windows.Media.Effects
         {
             get
             {
-                return (double) GetValue(DirectionProperty);
+                return (double)GetValue(DirectionProperty);
             }
             set
             {
@@ -155,7 +155,7 @@ namespace System.Windows.Media.Effects
         {
             get
             {
-                return (double) GetValue(OpacityProperty);
+                return (double)GetValue(OpacityProperty);
             }
             set
             {
@@ -170,7 +170,7 @@ namespace System.Windows.Media.Effects
         {
             get
             {
-                return (double) GetValue(BlurRadiusProperty);
+                return (double)GetValue(BlurRadiusProperty);
             }
             set
             {
@@ -185,7 +185,7 @@ namespace System.Windows.Media.Effects
         {
             get
             {
-                return (RenderingBias) GetValue(RenderingBiasProperty);
+                return (RenderingBias)GetValue(RenderingBiasProperty);
             }
             set
             {

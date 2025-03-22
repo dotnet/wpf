@@ -26,5 +26,5 @@ namespace System.Windows.Media.Effects
         ///     Quality - Bias towards quality
         /// </summary>
         Quality = 1,
-    }   
+    }
 }

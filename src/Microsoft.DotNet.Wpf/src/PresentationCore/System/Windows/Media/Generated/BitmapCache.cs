@@ -96,7 +96,7 @@ namespace System.Windows.Media
         {
             get
             {
-                return (double) GetValue(RenderAtScaleProperty);
+                return (double)GetValue(RenderAtScaleProperty);
             }
             set
             {
@@ -111,7 +111,7 @@ namespace System.Windows.Media
         {
             get
             {
-                return (bool) GetValue(SnapsToDevicePixelsProperty);
+                return (bool)GetValue(SnapsToDevicePixelsProperty);
             }
             set
             {
@@ -126,7 +126,7 @@ namespace System.Windows.Media
         {
             get
             {
-                return (bool) GetValue(EnableClearTypeProperty);
+                return (bool)GetValue(EnableClearTypeProperty);
             }
             set
             {

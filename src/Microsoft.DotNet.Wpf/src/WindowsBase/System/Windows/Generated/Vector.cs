@@ -95,15 +95,9 @@ namespace System.Windows
         /// bool - true if the object is an instance of Vector and if it's equal to "this".
         /// </returns>
         /// <param name='o'>The object to compare to "this"</param>
-        public override bool Equals(object o)
+        public override readonly bool Equals(object o)
         {
-            if ((null == o) || !(o is Vector))
-            {
-                return false;
-            }
-
-            Vector value = (Vector)o;
-            return Vector.Equals(this,value);
+            return o is Vector other && Vector.Equals(this, other);
         }
 
         /// <summary>
@@ -117,7 +111,7 @@ namespace System.Windows
         /// bool - true if "value" is equal to "this".
         /// </returns>
         /// <param name='value'>The Vector to compare to "this"</param>
-        public bool Equals(Vector value)
+        public readonly bool Equals(Vector value)
         {
             return Vector.Equals(this, value);
         }
@@ -127,7 +121,7 @@ namespace System.Windows
         /// <returns>
         /// int - the HashCode for this Vector
         /// </returns>
-        public override int GetHashCode()
+        public override readonly int GetHashCode()
         {
             // Perform field-by-field XOR of HashCodes
             return X.GetHashCode() ^
@@ -177,7 +171,7 @@ namespace System.Windows
         /// </summary>
         public double X
         {
-            get
+            readonly get
             {
                 return _x;
             }
@@ -194,7 +188,7 @@ namespace System.Windows
         /// </summary>
         public double Y
         {
-            get
+            readonly get
             {
                 return _y;
             }

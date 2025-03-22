@@ -117,15 +117,9 @@ namespace System.Windows.Media
         /// bool - true if the object is an instance of Matrix and if it's equal to "this".
         /// </returns>
         /// <param name='o'>The object to compare to "this"</param>
-        public override bool Equals(object o)
+        public override readonly bool Equals(object o)
         {
-            if ((null == o) || !(o is Matrix))
-            {
-                return false;
-            }
-
-            Matrix value = (Matrix)o;
-            return Matrix.Equals(this,value);
+            return o is Matrix other && Matrix.Equals(this, other);
         }
 
         /// <summary>
@@ -139,7 +133,7 @@ namespace System.Windows.Media
         /// bool - true if "value" is equal to "this".
         /// </returns>
         /// <param name='value'>The Matrix to compare to "this"</param>
-        public bool Equals(Matrix value)
+        public readonly bool Equals(Matrix value)
         {
             return Matrix.Equals(this, value);
         }
@@ -149,7 +143,7 @@ namespace System.Windows.Media
         /// <returns>
         /// int - the HashCode for this Matrix
         /// </returns>
-        public override int GetHashCode()
+        public override readonly int GetHashCode()
         {
             if (IsDistinguishedIdentity)
             {

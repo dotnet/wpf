@@ -106,15 +106,9 @@ namespace System.Windows
         /// bool - true if the object is an instance of Int32Rect and if it's equal to "this".
         /// </returns>
         /// <param name='o'>The object to compare to "this"</param>
-        public override bool Equals(object o)
+        public override readonly bool Equals(object o)
         {
-            if ((null == o) || !(o is Int32Rect))
-            {
-                return false;
-            }
-
-            Int32Rect value = (Int32Rect)o;
-            return Int32Rect.Equals(this,value);
+            return o is Int32Rect other && Int32Rect.Equals(this, other);
         }
 
         /// <summary>
@@ -128,7 +122,7 @@ namespace System.Windows
         /// bool - true if "value" is equal to "this".
         /// </returns>
         /// <param name='value'>The Int32Rect to compare to "this"</param>
-        public bool Equals(Int32Rect value)
+        public readonly bool Equals(Int32Rect value)
         {
             return Int32Rect.Equals(this, value);
         }
@@ -138,7 +132,7 @@ namespace System.Windows
         /// <returns>
         /// int - the HashCode for this Int32Rect
         /// </returns>
-        public override int GetHashCode()
+        public override readonly int GetHashCode()
         {
             if (IsEmpty)
             {
@@ -208,7 +202,7 @@ namespace System.Windows
         /// </summary>
         public int X
         {
-            get
+            readonly get
             {
                 return _x;
             }
@@ -225,7 +219,7 @@ namespace System.Windows
         /// </summary>
         public int Y
         {
-            get
+            readonly get
             {
                 return _y;
             }
@@ -242,7 +236,7 @@ namespace System.Windows
         /// </summary>
         public int Width
         {
-            get
+            readonly get
             {
                 return _width;
             }
@@ -259,7 +253,7 @@ namespace System.Windows
         /// </summary>
         public int Height
         {
-            get
+            readonly get
             {
                 return _height;
             }

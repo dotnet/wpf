@@ -120,7 +120,7 @@ namespace System.Windows.Media.Media3D
         /// Note: If size is 0 this Rectangle still contains a 0 or 1 dimensional set
         /// of points, so this method should not be used to check for 0 area.
         /// </summary>
-        public bool IsEmpty
+        public readonly bool IsEmpty
         {
             get
             {
@@ -187,7 +187,7 @@ namespace System.Windows.Media.Media3D
         /// </summary>
         public double SizeX
         {
-            get
+            readonly get
             {
                 return _sizeX;
             }
@@ -212,7 +212,7 @@ namespace System.Windows.Media.Media3D
         /// </summary>
         public double SizeY
         {
-            get
+            readonly get
             {
                 return _sizeY;
             }
@@ -237,7 +237,7 @@ namespace System.Windows.Media.Media3D
         /// </summary>
         public double SizeZ
         {
-            get
+            readonly get
             {
                 return _sizeZ;
             }
@@ -262,7 +262,7 @@ namespace System.Windows.Media.Media3D
         /// </summary>
         public double X
         {
-            get
+            readonly get
             {
                 return _x;
             }
@@ -282,7 +282,7 @@ namespace System.Windows.Media.Media3D
         /// </summary>
         public double Y
         {
-            get
+            readonly get
             {
                 return _y;
             }
@@ -302,7 +302,7 @@ namespace System.Windows.Media.Media3D
         /// </summary>
         public double Z
         {
-            get
+            readonly get
             {
                 return _z;
             }

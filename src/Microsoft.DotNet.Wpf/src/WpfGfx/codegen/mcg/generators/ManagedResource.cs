@@ -1449,7 +1449,7 @@ namespace MS.Internal.MilCodeGen.Generators
                     /// </summary>
                     [[visibility]] [[field.Type.ManagedName]] [[field.PropertyName]]
                     {
-                        get
+                        readonly get
                         {
                             return [[fieldName]];
                         }

@@ -122,7 +122,7 @@ namespace System.Windows
         /// Note: If width or height are 0 this Rectangle still contains a 0 or 1 dimensional set
         /// of points, so this method should not be used to check for 0 area.
         /// </summary>
-        public bool IsEmpty
+        public readonly bool IsEmpty
         {
             get
             {
@@ -191,7 +191,7 @@ namespace System.Windows
         /// </summary>
         public double X
         {
-            get
+            readonly get
             {
                 return _x;
             }
@@ -213,7 +213,7 @@ namespace System.Windows
         /// </summary>
         public double Y
         {
-            get
+            readonly get
             {
                 return _y;
             }
@@ -235,7 +235,7 @@ namespace System.Windows
         /// </summary>
         public double Width
         {
-            get
+            readonly get
             {
                 return _width;
             }
@@ -262,7 +262,7 @@ namespace System.Windows
         /// </summary>
         public double Height
         {
-            get
+            readonly get
             {
                 return _height;
             }

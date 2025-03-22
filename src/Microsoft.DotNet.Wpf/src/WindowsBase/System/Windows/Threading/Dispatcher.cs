@@ -69,7 +69,7 @@ namespace System.Windows.Threading
         {
             lock (_globalLock)
             {
-                if (thread == null)
+                if (thread is null)
                 {
                     return null;
                 }
@@ -127,7 +127,7 @@ namespace System.Windows.Threading
 
                 // Stash this dispatcher as a "possible" dispatcher for the
                 // next call to FromThread.
-                if (dispatcher != null)
+                if (dispatcher is not null)
                 {
                     // We expect this call to be frequent so we want to
                     // avoid uneccesary allocations, such as a new
@@ -344,7 +344,7 @@ namespace System.Windows.Threading
             Dispatcher currentDispatcher = FromThread(Thread.CurrentThread);
 
             return
-                currentDispatcher == null
+                currentDispatcher is null
                 ? throw new InvalidOperationException(SR.DispatcherYieldNoAvailableDispatcher)
                 : new DispatcherPriorityAwaitable(currentDispatcher, priority);
         }
@@ -1857,7 +1857,7 @@ namespace System.Windows.Threading
                 }
 
                 operation?.Abort();
-            } while (operation != null);
+            } while (operation is not null);
 
             // clear out the fields that could be holding onto large graphs of objects.
             lock (_instanceLock)
@@ -1893,7 +1893,7 @@ namespace System.Windows.Threading
 
             lock (_instanceLock)
             {
-                if (_queue != null && operation._item.IsQueued)
+                if (_queue is not null && operation._item.IsQueued)
                 {
                     _queue.ChangeItemPriority(operation._item, priority);
                     notify = true;
@@ -1929,7 +1929,7 @@ namespace System.Windows.Threading
 
             lock (_instanceLock)
             {
-                if (_queue != null && operation._item.IsQueued)
+                if (_queue is not null && operation._item.IsQueued)
                 {
                     _queue.RemoveItem(operation._item);
                     operation._status = DispatcherOperationStatus.Aborted;
@@ -1988,7 +1988,7 @@ namespace System.Windows.Threading
                 RequestProcessing();
             }
 
-            if (op != null)
+            if (op is not null)
             {
                 bool eventlogged = false;
 
@@ -2087,7 +2087,7 @@ namespace System.Windows.Threading
             UnsafeNativeMethods.ITfMessagePump messagePump = GetMessagePump();
             try
             {
-                if (messagePump == null)
+                if (messagePump is null)
                 {
                     // We have foreground items to process.
                     // By posting a message, Win32 will service us fairly promptly.
@@ -2122,7 +2122,7 @@ namespace System.Windows.Threading
             }
             finally
             {
-                if (messagePump != null)
+                if (messagePump is not null)
                     Marshal.ReleaseComObject(messagePump);
             }
 
@@ -2147,7 +2147,7 @@ namespace System.Windows.Threading
                         threadManager = TextServicesLoader.Load();
 
                         // ThreadManager does not exist. No MessagePump yet.
-                        if (threadManager != null)
+                        if (threadManager is not null)
                         {
                             // QI ITfMessagePump.
                             messagePump = threadManager as UnsafeNativeMethods.ITfMessagePump;
@@ -2491,7 +2491,7 @@ namespace System.Windows.Threading
                     }
                 }
 
-                if (timers == null)
+                if (timers is null)
                 {
                     return;
                 }
@@ -2533,7 +2533,7 @@ namespace System.Windows.Threading
 
                     // Now that we are outside of the lock, promote the timer.
                     timer?.Promote();
-                } while (timer != null);
+                } while (timer is not null);
             }
             finally
             {
@@ -2695,7 +2695,7 @@ namespace System.Windows.Threading
 
             // The app can hook up an ExceptionFilter to avoid catching it.
             // ExceptionFilter will run REGARDLESS of whether there are exception handlers.
-            if (_unhandledExceptionFilter != null)
+            if (_unhandledExceptionFilter is not null)
             {
                 // The default requestCatch value that is passed in the args
                 // should be returned unchanged if filters don't set them explicitly.
@@ -2737,7 +2737,7 @@ namespace System.Windows.Threading
         {
             bool handled = false;
 
-            if (UnhandledException != null)
+            if (UnhandledException is not null)
             {
                 _unhandledExceptionEventArgs.Initialize(e, false);
 
@@ -2759,7 +2759,7 @@ namespace System.Windows.Threading
         }
 
         // This is called by DRT (via reflection) to see if there is a UnhandledException handler.
-        private bool HasUnhandledExceptionHandler => (UnhandledException != null);
+        private bool HasUnhandledExceptionHandler => (UnhandledException is not null);
 
         internal object WrappedInvoke(Delegate callback, object args, int numArgs, Delegate catchHandler)
         {
@@ -2768,9 +2768,9 @@ namespace System.Windows.Threading
 
         private object[] CombineParameters(object arg, object[] args)
         {
-            object[] parameters = new object[1 + (args == null ? 1 : args.Length)];
+            object[] parameters = new object[1 + (args is null ? 1 : args.Length)];
             parameters[0] = arg;
-            if (args != null)
+            if (args is not null)
             {
                 Array.Copy(args, 0, parameters, 1, args.Length);
             }

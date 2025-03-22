@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -6,9 +6,11 @@
 // Description: Parser for the Path of a (CLR) binding
 //
 
-using System.Collections;
+using System;
 using System.Text;          // StringBuilder
 using System.Windows;
+using System.Collections.Generic;
+
 using MS.Utility;           // FrugalList
 
 namespace MS.Internal.Data
@@ -56,13 +58,14 @@ namespace MS.Internal.Data
         }
     }
 
-    internal class PathParser
+    internal sealed class PathParser
     {
-        string _error;
-        public String Error { get { return _error; } }
-        void SetError(string id, params object[] args) { _error = SR.Format(SR.GetResourceString(id), args); }
+        private string _error;
+        public string Error => _error;
+        private void SetError(string id, params object[] args) => _error = SR.Format(SR.GetResourceString(id), args);
 
-        enum State { Init, DrillIn, Prop, Done };
+        private enum State { Init, DrillIn, Prop, Done };
+        private enum IndexerState { BeginParam, ParenString, ValueString, Done }
 
         // Each level of the path consists of
         //      a property or indexer:
@@ -80,7 +83,7 @@ namespace MS.Internal.Data
 
         public SourceValueInfo[] Parse(string path)
         {
-            _path = (path != null) ? path.Trim() : String.Empty;
+            _path = (path != null) ? path.Trim() : string.Empty;
             _n = _path.Length;
 
             if (_n == 0)
@@ -93,14 +96,14 @@ namespace MS.Internal.Data
             _index = 0;
             _drillIn = DrillIn.IfNeeded;
 
-            _al.Clear();
+            _sourceValueInfos.Clear();
             _error = null;
             _state = State.Init;
 
             while (_state != State.Done)
             {
                 char c = (_index < _n) ? _path[_index] : NullChar;
-                if (Char.IsWhiteSpace(c))
+                if (char.IsWhiteSpace(c))
                 {
                     ++_index;
                     continue;
@@ -138,48 +141,31 @@ namespace MS.Internal.Data
                                 break;
                             default:
                                 SetError(nameof(SR.PathSyntax), _path.Substring(0, _index), _path.Substring(_index));
-                                return EmptyInfo;
+                                return Array.Empty<SourceValueInfo>();
                         }
                         _state = State.Prop;
                         break;
 
                     case State.Prop:
-                        bool isIndexer = false;
                         switch (c)
                         {
-                            case '[':
-                                isIndexer = true;
+                            case '[': // Indexer follows
+                                AddIndexer();
                                 break;
-                            default:
+                            default: // Property follows
+                                AddProperty();
                                 break;
-                        }
-
-                        if (isIndexer)
-                            AddIndexer();
-                        else
-                            AddProperty();
+                        }                           
 
                         break;
                 }
             }
 
-
-            SourceValueInfo[] result;
-
-            if (_error == null)
-            {
-                result = new SourceValueInfo[_al.Count];
-                _al.CopyTo(result);
-            }
-            else
-            {
-                result = EmptyInfo;
-            }
-
-            return result;
+            // If an error has occurred, we return an empty array instead
+            return _error is null ? _sourceValueInfos.ToArray() : Array.Empty<SourceValueInfo>();
         }
 
-        void AddProperty()
+        private void AddProperty()
         {
             int start = _index;
             int level = 0;
@@ -216,15 +202,12 @@ namespace MS.Internal.Data
                 ? new SourceValueInfo(SourceValueType.Property, _drillIn, name)
                 : new SourceValueInfo(SourceValueType.Direct, _drillIn, (string)null);
 
-            _al.Add(info);
+            _sourceValueInfos.Add(info);
 
             StartNewLevel();
         }
 
-
-        enum IndexerState { BeginParam, ParenString, ValueString, Done }
-
-        void AddIndexer()
+        private void AddIndexer()
         {
             // indexer args are parsed by a (sub-) state machine with four
             // states.  The string is a comma-separated list of params, each
@@ -253,7 +236,7 @@ namespace MS.Internal.Data
                     return;
                 }
 
-                Char c = _path[_index++];
+                char c = _path[_index++];
 
                 // handle the escape character - set the flag for the next character
                 if (c == EscapeChar && !escaped)
@@ -276,7 +259,7 @@ namespace MS.Internal.Data
                             // '(' introduces optional paren string
                             state = IndexerState.ParenString;
                         }
-                        else if (Char.IsWhiteSpace(c))
+                        else if (char.IsWhiteSpace(c))
                         {
                             // ignore leading white space
                         }
@@ -324,7 +307,7 @@ namespace MS.Internal.Data
                                 --level;
                             }
                         }
-                        else if (Char.IsWhiteSpace(c))
+                        else if (char.IsWhiteSpace(c))
                         {
                             // add white space, but trim it later if it's trailing
                             valueStringBuilder.Append(c);
@@ -371,15 +354,13 @@ namespace MS.Internal.Data
             }
 
             // assemble the final result
-            SourceValueInfo info = new SourceValueInfo(
-                                        SourceValueType.Indexer,
-                                        _drillIn, paramList);
-            _al.Add(info);
+            SourceValueInfo info = new(SourceValueType.Indexer, _drillIn, paramList);
+            _sourceValueInfos.Add(info);
 
             StartNewLevel();
         }
 
-        void StartNewLevel()
+        private void StartNewLevel()
         {
             _state = (_index < _n) ? State.DrillIn : State.Done;
             _drillIn = DrillIn.Never;
@@ -390,15 +371,16 @@ namespace MS.Internal.Data
             return ch == '.' || ch == '/' || ch == '[' || ch == ']';
         }
 
-        State _state;
-        string _path;
-        int _index;
-        int _n;
-        DrillIn _drillIn;
-        ArrayList _al = new ArrayList();
-        const char NullChar = Char.MinValue;
-        const char EscapeChar = '^';
-        static SourceValueInfo[] EmptyInfo = Array.Empty<SourceValueInfo>();
+        private State _state;
+        private string _path;
+        private int _index;
+        private int _n;
+        private DrillIn _drillIn;
+
+        private const char NullChar = char.MinValue;
+        private const char EscapeChar = '^';
+
+        private readonly List<SourceValueInfo> _sourceValueInfos = new();
     }
 }
 

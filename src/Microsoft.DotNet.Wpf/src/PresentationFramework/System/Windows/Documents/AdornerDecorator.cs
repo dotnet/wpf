@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -205,7 +205,7 @@ namespace System.Windows.Documents
         {
             if (base.Child == null)
             {
-                throw new ArgumentOutOfRangeException("index", index, SR.Visual_ArgumentOutOfRange);
+                throw new ArgumentOutOfRangeException(nameof(index), index, SR.Visual_ArgumentOutOfRange);
             }
             else
             {
@@ -218,7 +218,7 @@ namespace System.Windows.Documents
                         return _adornerLayer;
 
                     default:
-                        throw new ArgumentOutOfRangeException("index", index, SR.Visual_ArgumentOutOfRange);
+                        throw new ArgumentOutOfRangeException(nameof(index), index, SR.Visual_ArgumentOutOfRange);
                 }
             }
         }
@@ -242,8 +242,8 @@ namespace System.Windows.Documents
         {
             get { return 6; }
         }
-        
-        readonly AdornerLayer _adornerLayer;
+
+        private readonly AdornerLayer _adornerLayer;
 
         #endregion Private Members
     }

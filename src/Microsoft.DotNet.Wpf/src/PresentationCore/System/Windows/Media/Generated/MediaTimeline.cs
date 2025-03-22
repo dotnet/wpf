@@ -9,12 +9,23 @@
 // Please see MilCodeGen.html for more information.
 //
 
+using MS.Internal;
+using MS.Internal.KnownBoxes;
+using MS.Internal.Collections;
+using MS.Utility;
+using System.Collections;
+using System.ComponentModel;
+using System.Globalization;
+using System.Text;
+using System.Windows.Media.Effects;
 using System.Windows.Media.Animation;
-// These types are aliased to match the unamanaged names used in interop
+using System.Windows.Media.Composition;
+using System.Windows.Markup;
+using System.Windows.Media.Converters;
 
 namespace System.Windows.Media
 {
-    partial class MediaTimeline : Timeline
+    public partial class MediaTimeline : Timeline
     {
         //------------------------------------------------------
         //
@@ -190,7 +201,6 @@ namespace System.Windows.Media
             // of your app.
 
 
-
             // Initializations
             Type typeofThis = typeof(MediaTimeline);
             SourceProperty =
@@ -203,6 +213,8 @@ namespace System.Windows.Media
                                    /* isIndependentlyAnimated  = */ false,
                                    /* coerceValueCallback */ null);
         }
+
+
 
         #endregion Constructors
     }

@@ -1185,7 +1185,7 @@ namespace MS.Internal.AutomationProxies
         }
 
         // Used by Toggle and Invoke...
-        void CallDoDefaultAction()
+        private void CallDoDefaultAction()
         {
             // Make sure that the control is enabled
             if (!SafeNativeMethods.IsWindowEnabled(_hwnd))
@@ -1220,13 +1220,13 @@ namespace MS.Internal.AutomationProxies
         //  Private Fields
         //
         //------------------------------------------------------
- 
+
         #region Private Fields
 
         //private delegate AutomationPattern PatternChecker(Accessible acc);
 
         // a struct holding an entry for the table below
-        struct RoleCtrlType
+        private struct RoleCtrlType
         {
             public RoleCtrlType(AccessibleRole role, ControlType ctrlType)
             {
@@ -1281,7 +1281,7 @@ namespace MS.Internal.AutomationProxies
         };
 
         // a struct holding an entry for the table below
-        struct CtrlTypePatterns
+        private struct CtrlTypePatterns
         {
             public CtrlTypePatterns(ControlType ctrlType, params AutomationPattern[] patterns)
             {

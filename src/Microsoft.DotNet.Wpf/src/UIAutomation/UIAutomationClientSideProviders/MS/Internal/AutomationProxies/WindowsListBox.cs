@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -16,7 +16,7 @@ using MS.Win32;
 namespace MS.Internal.AutomationProxies
 {
     // This class represents ListBox and ListBox with check buttons.
-    class WindowsListBox: ProxyHwnd, ISelectionProvider
+    internal class WindowsListBox: ProxyHwnd, ISelectionProvider
     {
         // ------------------------------------------------------
         //
@@ -124,10 +124,7 @@ namespace MS.Internal.AutomationProxies
 
                 default :
                     ProxySimple el = (ProxyHwnd)WindowsListBox.Create(hwnd, 0);
-                    if (el != null)
-                    {
-                        el.DispatchEvents(eventId, idProp, idObject, idChild);
-                    }
+                    el?.DispatchEvents(eventId, idProp, idObject, idChild);
                     break;
             }
         }
@@ -454,9 +451,9 @@ namespace MS.Internal.AutomationProxies
             if ((eventId == NativeMethods.EventObjectSelection || eventId == NativeMethods.EventObjectSelectionAdd) && (idProp as AutomationProperty) == SelectionPattern.IsSelectionRequiredProperty)
             {
                 // This array must be kept in sync with the array in PropertyToWinEvent
-                WinEventTracker.EvtIdProperty[] aEvtIdProperties = new WinEventTracker.EvtIdProperty[] { new WinEventTracker.EvtIdProperty(NativeMethods.EventObjectSelection, SelectionPattern.IsSelectionRequiredProperty) };
+                ReadOnlySpan<WinEventTracker.EvtIdProperty> aEvtIdProperties = [new WinEventTracker.EvtIdProperty(NativeMethods.EventObjectSelection, SelectionPattern.IsSelectionRequiredProperty)];
 
-                WinEventTracker.RemoveToNotificationList(hwnd, aEvtIdProperties, null, aEvtIdProperties.Length);
+                WinEventTracker.RemoveToNotificationList(hwnd, aEvtIdProperties, null);
                 el = wlb;
             }
             else if (eventId == NativeMethods.EventObjectSelection || eventId == NativeMethods.EventObjectSelectionRemove || eventId == NativeMethods.EventObjectSelectionAdd)
@@ -507,10 +504,7 @@ namespace MS.Internal.AutomationProxies
                 return;
             }
 
-            if (el != null)
-            {
-                el.DispatchEvents(eventId, idProp, idObject, idChild);
-            }
+            el?.DispatchEvents(eventId, idProp, idObject, idChild);
         }
 
         private static void RaiseEventsOnWindow(IntPtr hwnd, int eventId, object idProp, int idObject, int idChild)
@@ -538,10 +532,7 @@ namespace MS.Internal.AutomationProxies
                 }
             }
 
-            if (el != null)
-            {
-                el.DispatchEvents(eventId, idProp, idObject, idChild);
-            }
+            el?.DispatchEvents(eventId, idProp, idObject, idChild);
         }
 
         #region Selection Pattern Helpers
@@ -650,7 +641,7 @@ namespace MS.Internal.AutomationProxies
         #region ListBoxItem
 
         // Summary description for WindowsListboxItem.
-        class ListboxItem : ProxySimple, ISelectionItemProvider, IScrollItemProvider, IToggleProvider
+        private class ListboxItem : ProxySimple, ISelectionItemProvider, IScrollItemProvider, IToggleProvider
         {
             // ------------------------------------------------------
             //

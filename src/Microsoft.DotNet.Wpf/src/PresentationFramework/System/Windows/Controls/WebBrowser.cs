@@ -168,7 +168,7 @@ namespace System.Windows.Controls
         {
             if (string.IsNullOrEmpty(text))
             {
-                throw new ArgumentNullException("text");
+                throw new ArgumentNullException(nameof(text));
             }
 
             MemoryStream ms = new MemoryStream(text.Length);
@@ -255,7 +255,7 @@ namespace System.Windows.Controls
 
             if (string.IsNullOrEmpty(scriptName))
             {
-                throw new ArgumentNullException("scriptName");
+                throw new ArgumentNullException(nameof(scriptName));
             }
 
             UnsafeNativeMethods.IDispatchEx scriptObjectEx = null;
@@ -871,7 +871,7 @@ namespace System.Windows.Controls
 
             if (!source.IsAbsoluteUri)
             {
-                throw new ArgumentException(SR.AbsoluteUriOnly, "source");
+                throw new ArgumentException(SR.AbsoluteUriOnly, nameof(source));
             }
 
             // Resolve Pack://siteoforigin.
@@ -982,8 +982,7 @@ namespace System.Windows.Controls
         // Do not reference this directly. Use the AxIWebBrowser2 property instead since that
         // will cause the object to be instantiated if it is not already created.
         private UnsafeNativeMethods.IWebBrowser2  _axIWebBrowser2;
-
-        WebOCHostingAdaptor                       _hostingAdaptor;
+        private WebOCHostingAdaptor                       _hostingAdaptor;
 
         // To hook up events from the native WebBrowser
         private ConnectionPointCookie             _cookie;

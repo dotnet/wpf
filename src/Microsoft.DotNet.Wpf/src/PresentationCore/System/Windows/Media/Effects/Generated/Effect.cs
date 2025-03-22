@@ -9,13 +9,16 @@
 // Please see MilCodeGen.html for more information.
 //
 
+using MS.Internal;
+using MS.Utility;
+using System.Collections;
 using System.Windows.Media.Animation;
 using System.Windows.Media.Composition;
-// These types are aliased to match the unamanaged names used in interop
+using System.Windows.Media.Imaging;
 
 namespace System.Windows.Media.Effects
 {
-    abstract partial class Effect : Animatable, DUCE.IResource
+    public abstract partial class Effect : Animatable, DUCE.IResource
     {
         //------------------------------------------------------
         //
@@ -148,6 +151,7 @@ namespace System.Windows.Media.Effects
             // must already be in composition lock here
             return GetChannelCore(index);
         }
+
 
         #endregion Internal Methods
 

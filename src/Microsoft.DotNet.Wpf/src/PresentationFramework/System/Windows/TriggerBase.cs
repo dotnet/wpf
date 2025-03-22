@@ -250,14 +250,8 @@ namespace System.Windows
                 }
             }
 
-            if( _enterActions != null )
-            {
-                _enterActions.Seal(this);
-            }
-            if( _exitActions != null )
-            {
-                _exitActions.Seal(this);
-            }
+            _enterActions?.Seal(this);
+            _exitActions?.Seal(this);
 
             // Remove thread affinity so it can be accessed across threads
             DetachFromDispatcher();
@@ -390,7 +384,7 @@ namespace System.Windows
         private static readonly object Synchronized = new object();
 
         // Conditions
-        TriggerCondition[] _triggerConditions;
+        private TriggerCondition[] _triggerConditions;
 
         // Fields to implement DO's inheritance context
         private DependencyObject _inheritanceContext = null;

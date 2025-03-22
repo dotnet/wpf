@@ -177,11 +177,11 @@ namespace MS.Internal.Documents
                     case 0:
                         return _documentContainer;
                     default:
-                        throw new ArgumentOutOfRangeException("index", index, SR.Visual_ArgumentOutOfRange);
+                        throw new ArgumentOutOfRangeException(nameof(index), index, SR.Visual_ArgumentOutOfRange);
                 }
             }
 
-            throw new ArgumentOutOfRangeException("index", index, SR.Visual_ArgumentOutOfRange);
+            throw new ArgumentOutOfRangeException(nameof(index), index, SR.Visual_ArgumentOutOfRange);
         }
 
         /// <summary>
@@ -341,10 +341,7 @@ namespace MS.Internal.Documents
 
                 //Dispose our DocumentPageView.
                 IDisposable dpv = _documentPageView as IDisposable;
-                if (dpv != null)
-                {
-                    dpv.Dispose();
-                }
+                dpv?.Dispose();
             }
         }
 

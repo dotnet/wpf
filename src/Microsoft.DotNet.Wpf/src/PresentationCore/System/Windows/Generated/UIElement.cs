@@ -1,4 +1,4 @@
-﻿// Licensed to the .NET Foundation under one or more agreements.
+// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -11,7 +11,6 @@
 
 using MS.Internal;
 using MS.Internal.KnownBoxes;
-using MS.Internal.PresentationCore;
 using MS.Utility;
 using System.ComponentModel;
 using System.Windows.Input;
@@ -19,7 +18,7 @@ using System.Windows.Media.Animation;
 
 namespace System.Windows
 {
-    partial class UIElement : IAnimatable
+    public partial class UIElement : IAnimatable
     {
         static private readonly Type _typeofThis = typeof(UIElement);
 
@@ -70,13 +69,13 @@ namespace System.Windows
 
             if (!AnimationStorage.IsPropertyAnimatable(this, dp))
             {
-                throw new ArgumentException(SR.Format(SR.Animation_DependencyPropertyIsNotAnimatable, dp.Name, this.GetType()), "dp");
+                throw new ArgumentException(SR.Format(SR.Animation_DependencyPropertyIsNotAnimatable, dp.Name, this.GetType()), nameof(dp));
             }
 
             if (clock != null
                 && !AnimationStorage.IsAnimationValid(dp, clock.Timeline))
             {
-                throw new ArgumentException(SR.Format(SR.Animation_AnimationTimelineTypeMismatch, clock.Timeline.GetType(), dp.Name, dp.PropertyType), "clock");
+                throw new ArgumentException(SR.Format(SR.Animation_AnimationTimelineTypeMismatch, clock.Timeline.GetType(), dp.Name, dp.PropertyType), nameof(clock));
             }
 
             if (!HandoffBehaviorEnum.IsDefined(handoffBehavior))
@@ -135,13 +134,13 @@ namespace System.Windows
 
             if (!AnimationStorage.IsPropertyAnimatable(this, dp))
             {
-                throw new ArgumentException(SR.Format(SR.Animation_DependencyPropertyIsNotAnimatable, dp.Name, this.GetType()), "dp");
+                throw new ArgumentException(SR.Format(SR.Animation_DependencyPropertyIsNotAnimatable, dp.Name, this.GetType()), nameof(dp));
             }
 
             if (   animation != null
                 && !AnimationStorage.IsAnimationValid(dp, animation))
             {
-                throw new ArgumentException(SR.Format(SR.Animation_AnimationTimelineTypeMismatch, animation.GetType(), dp.Name, dp.PropertyType), "animation");
+                throw new ArgumentException(SR.Format(SR.Animation_AnimationTimelineTypeMismatch, animation.GetType(), dp.Name, dp.PropertyType), nameof(animation));
             }
 
             if (!HandoffBehaviorEnum.IsDefined(handoffBehavior))
@@ -213,10 +212,7 @@ namespace System.Windows
             {
                 AnimationStorage storage = AnimationStorage.GetStorage(this, dp);
 
-                if (storage != null)
-                {
-                    storage.EvaluateAnimatedValue(metadata, ref entry);                      
-                }
+                storage?.EvaluateAnimatedValue(metadata, ref entry);
             }
         }
 
@@ -594,7 +590,8 @@ namespace System.Windows
                     EventHandlersStoreField.ClearValue(this);
                     WriteFlag(CoreFlags.ExistsEventHandlersStore, false);
                 }
-}
+
+            }
         }
 
         /// <summary>

@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -293,11 +293,8 @@ namespace System.Windows.Interop
 
                             // Translate the point from the root to the visual.
                             GeneralTransform gDown = inputSource.RootVisual.TransformToDescendant(VisualTreeHelper.GetContainingVisual2D(containingVisual));
-                            if (gDown != null)
-                            {
-                                //  should we throw if the point could not be transformed?
-                                gDown.TryTransform(currentPosition, out currentPosition);
-                            }
+                            //  should we throw if the point could not be transformed?
+                            gDown?.TryTransform(currentPosition, out currentPosition);
 
                             points[cpt++] = currentPosition;
                         }
@@ -1473,7 +1470,7 @@ namespace System.Windows.Interop
         private NativeMethods.TRACKMOUSEEVENT _tme = new NativeMethods.TRACKMOUSEEVENT();
 
         // accessors into PresentationFramework classes
-        const string PresentationFrameworkAssemblyFullName = "PresentationFramework, Version=" + BuildInfo.WCP_VERSION + ", Culture=neutral, PublicKeyToken=" + BuildInfo.WCP_PUBLIC_KEY_TOKEN;
+        private const string PresentationFrameworkAssemblyFullName = "PresentationFramework, Version=" + BuildInfo.WCP_VERSION + ", Culture=neutral, PublicKeyToken=" + BuildInfo.WCP_PUBLIC_KEY_TOKEN;
         private static DependencyProperty WindowChromeWorkerProperty;
         private static MethodInfo GetEffectiveClientAreaMI;
 

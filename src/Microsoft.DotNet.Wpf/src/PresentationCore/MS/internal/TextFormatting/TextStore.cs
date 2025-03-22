@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -273,7 +273,7 @@ namespace MS.Internal.TextFormatting
                         // store up the run info in a span indexed by actual character index
                         runInfoVector.SetReference(cch, stringLength, runInfo);
 
-                        TextEffectCollection textEffects = (runInfo.Properties != null) ? runInfo.Properties.TextEffects : null;
+                        TextEffectCollection textEffects = runInfo.Properties?.TextEffects;
                         if (textEffects != null && textEffects.Count != 0)
                         {
                             SetTextEffectsVector(textEffectsVector, cch, runInfo, textEffects);
@@ -913,7 +913,7 @@ namespace MS.Internal.TextFormatting
                     int ich = resolvedLength;
                     do
                     {
-                        CultureInfo culture = CultureMapper.GetSpecificCulture(currentRunInfo.Properties == null ? null : currentRunInfo.Properties.CultureInfo);
+                        CultureInfo culture = CultureMapper.GetSpecificCulture(currentRunInfo.Properties?.CultureInfo);
                         DirectionClass europeanNumberOverride = _bidiState.GetEuropeanNumberClassOverride(culture);
 
                         //

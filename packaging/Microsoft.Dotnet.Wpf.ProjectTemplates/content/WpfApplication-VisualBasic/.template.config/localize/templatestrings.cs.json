@@ -19,6 +19,8 @@
   "symbols/Framework/choices/net8.0/displayName": ".NET 8.0",
   "symbols/Framework/choices/net9.0/description": "Target net9.0",
   "symbols/Framework/choices/net9.0/displayName": ".NET 9.0",
+  "symbols/Framework/choices/net10.0/description": "Cíl net10.0",
+  "symbols/Framework/choices/net10.0/displayName": ".NET 10.0",
   "symbols/Framework/displayName": "Framework",
   "symbols/langVersion/description": "Nastaví langVersion ve vytvořeném souboru projektu.",
   "symbols/langVersion/displayName": "Verze jazyka",

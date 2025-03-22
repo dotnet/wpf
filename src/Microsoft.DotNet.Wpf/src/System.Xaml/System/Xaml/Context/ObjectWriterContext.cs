@@ -17,13 +17,12 @@ namespace MS.Internal.Xaml.Context
         private XamlContextStack<ObjectWriterFrame> _stack;
 
         private object _rootInstance;
-
-        ServiceProviderContext _serviceProviderContext;
-        XamlRuntime _runtime;
-        int _savedDepth;     // The depth of the "saved" part this context is based on.
-        bool _nameResolutionComplete;
-        XamlObjectWriterSettings _settings;
-        List<NameScopeInitializationCompleteSubscriber> _nameScopeInitializationCompleteSubscribers;
+        private ServiceProviderContext _serviceProviderContext;
+        private XamlRuntime _runtime;
+        private int _savedDepth;     // The depth of the "saved" part this context is based on.
+        private bool _nameResolutionComplete;
+        private XamlObjectWriterSettings _settings;
+        private List<NameScopeInitializationCompleteSubscriber> _nameScopeInitializationCompleteSubscribers;
 
         public ObjectWriterContext(XamlSavedContext savedContext,
             XamlObjectWriterSettings settings, XAML3.INameScope rootNameScope, XamlRuntime runtime)
@@ -39,7 +38,7 @@ namespace MS.Internal.Xaml.Context
             BaseUri = savedContext.BaseUri;
             // If the bottom of the stack is a (no XamlType) Value (reparse) then back-up onto it.
             // Otherwise add a blank frame to isolate template use from the saved context.
-            switch(savedContext.SaveContextType)
+            switch (savedContext.SaveContextType)
             {
             case SavedContextType.Template:
                 // Templates always need a root namescope, to isolate them from the rest of the doc
@@ -527,7 +526,7 @@ namespace MS.Internal.Xaml.Context
 
         public XamlType GrandParentType
         {
-            get { return (_stack.PreviousPreviousFrame is not null) ? _stack.PreviousPreviousFrame.XamlType : null; }
+            get { return _stack.PreviousPreviousFrame?.XamlType; }
         }
 
         public XamlMember CurrentProperty
@@ -559,7 +558,7 @@ namespace MS.Internal.Xaml.Context
 
         public object GrandParentInstance
         {
-            get { return (_stack.PreviousPreviousFrame is not null) ? _stack.PreviousPreviousFrame.Instance : null; }
+            get { return _stack.PreviousPreviousFrame?.Instance; }
         }
 
         public object CurrentCollection
@@ -658,7 +657,7 @@ namespace MS.Internal.Xaml.Context
         // Used only for BeginInitHandler, in place of BaseUri.
         public Uri SourceBamlUri
         {
-            get { return _settings is not null ? _settings.SourceBamlUri : null; }
+            get { return _settings?.SourceBamlUri; }
         }
 
         // This specifically stores the start line number for a start object for consistency
@@ -1048,7 +1047,7 @@ namespace MS.Internal.Xaml.Context
 
         internal class NameScopeInitializationCompleteSubscriber
         {
-            List<XAML3.INameScopeDictionary> _nameScopeDictionaryList = new List<XAML3.INameScopeDictionary>();
+            private List<XAML3.INameScopeDictionary> _nameScopeDictionaryList = new List<XAML3.INameScopeDictionary>();
 
             public EventHandler Handler
             {
@@ -1063,7 +1062,7 @@ namespace MS.Internal.Xaml.Context
 
         private class StackWalkNameResolver : IXamlNameResolver
         {
-            List<XAML3.INameScopeDictionary> _nameScopeDictionaryList;
+            private List<XAML3.INameScopeDictionary> _nameScopeDictionaryList;
 
             public StackWalkNameResolver(List<XAML3.INameScopeDictionary> nameScopeDictionaryList)
             {

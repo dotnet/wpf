@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -97,14 +97,14 @@ namespace MS.Internal.Annotations.Anchoring
                 TextSelectionHelper.GetPointerPage(startPointer, out startPage);
                 start = TextSelectionHelper.GetPointForPointer(startPointer);
                 if (startPage == int.MinValue)
-                    throw new ArgumentException(SR.Format(SR.SelectionDoesNotResolveToAPage, "start"), "selection");
+                    throw new ArgumentException(SR.Format(SR.SelectionDoesNotResolveToAPage, "start"), nameof(selection));
 
                 int endPage = int.MinValue;
                 ITextPointer endPointer = segment.End.CreatePointer(LogicalDirection.Backward);
                 TextSelectionHelper.GetPointerPage(endPointer, out endPage);
                 end = TextSelectionHelper.GetPointForPointer(endPointer);
                 if (endPage == int.MinValue)
-                    throw new ArgumentException(SR.Format(SR.SelectionDoesNotResolveToAPage, "end"), "selection");
+                    throw new ArgumentException(SR.Format(SR.SelectionDoesNotResolveToAPage, "end"), nameof(selection));
 
                 int firstPage = pageEl.Count;
                 int numOfPages = endPage - startPage;
@@ -191,7 +191,7 @@ namespace MS.Internal.Annotations.Anchoring
             FixedPageProxy fp = startNode as FixedPageProxy;
 
             if (fp == null)
-                throw new ArgumentException(SR.StartNodeMustBeFixedPageProxy, "startNode");
+                throw new ArgumentException(SR.StartNodeMustBeFixedPageProxy, nameof(startNode));
 
             ContentLocatorPart part = new ContentLocatorPart(FixedTextElementName);
             if (fp.Segments.Count == 0)
@@ -279,7 +279,7 @@ namespace MS.Internal.Annotations.Anchoring
 
             if (docPage == null)
             {
-                throw new ArgumentException(SR.StartNodeMustBeDocumentPageViewOrFixedPage, "startNode");
+                throw new ArgumentException(SR.StartNodeMustBeDocumentPageViewOrFixedPage, nameof(startNode));
             }
 
             ArgumentNullException.ThrowIfNull(locatorPart);
@@ -491,32 +491,35 @@ namespace MS.Internal.Annotations.Anchoring
             ArgumentNullException.ThrowIfNull(locatorPart);
 
             if (FixedTextElementName != locatorPart.PartType)
-                throw new ArgumentException(SR.Format(SR.IncorrectLocatorPartType, $"{locatorPart.PartType.Namespace}:{locatorPart.PartType.Name}"), "locatorPart");
+                throw new ArgumentException(SR.Format(SR.IncorrectLocatorPartType, $"{locatorPart.PartType.Namespace}:{locatorPart.PartType.Name}"), nameof(locatorPart));
 
             string segmentValue = locatorPart.NameValuePairs[TextSelectionProcessor.SegmentAttribute + segmentNumber.ToString(NumberFormatInfo.InvariantInfo)];
             if (segmentValue == null)
                 throw new ArgumentException(SR.Format(SR.InvalidLocatorPart, TextSelectionProcessor.SegmentAttribute + segmentNumber.ToString(NumberFormatInfo.InvariantInfo)));
 
-            string[] values = segmentValue.Split(TextSelectionProcessor.Separator);
-            if (values.Length != 4)
+            ReadOnlySpan<char> segmentValueSpan = segmentValue.AsSpan();
+            Span<Range> splitRegions = stackalloc Range[5];
+
+            if (segmentValueSpan.Split(splitRegions, TextSelectionProcessor.Separator) != 4)
                 throw new ArgumentException(SR.Format(SR.InvalidLocatorPart, TextSelectionProcessor.SegmentAttribute + segmentNumber.ToString(NumberFormatInfo.InvariantInfo)));
-            start = GetPoint(values[0], values[1]);
-            end = GetPoint(values[2], values[3]);
+
+            start = GetPoint(segmentValueSpan[splitRegions[0]], segmentValueSpan[splitRegions[1]]);
+            end = GetPoint(segmentValueSpan[splitRegions[2]], segmentValueSpan[splitRegions[3]]);
         }
 
         /// <summary>
-        /// Calculate Point out of string X and Y values
+        /// Calculates <see cref="Point"/> out of X and Y values supplied as a <see cref="string"/>.
         /// </summary>
-        /// <param name="xstr">x string value</param>
-        /// <param name="ystr">y string value</param>
-        /// <returns></returns>
-        private Point GetPoint(string xstr, string ystr)
+        /// <param name="xValue">x string value</param>
+        /// <param name="yValue">y string value</param>
+        /// <returns>Initialized <see cref="Point"/> structure.</returns>
+        private static Point GetPoint(ReadOnlySpan<char> xValue, ReadOnlySpan<char> yValue)
         {
             Point point;
-            if (xstr != null && !String.IsNullOrEmpty(xstr.Trim()) && ystr != null && !String.IsNullOrEmpty(ystr.Trim()))
+            if (!xValue.Trim().IsEmpty && !yValue.Trim().IsEmpty)
             {
-                double x = Double.Parse(xstr, NumberFormatInfo.InvariantInfo);
-                double y = Double.Parse(ystr, NumberFormatInfo.InvariantInfo);
+                double x = double.Parse(xValue, NumberFormatInfo.InvariantInfo);
+                double y = double.Parse(yValue, NumberFormatInfo.InvariantInfo);
                 point = new Point(x, y);
             }
             else
@@ -652,9 +655,8 @@ namespace MS.Internal.Annotations.Anchoring
                 }
             }
 
-
-            int _page;
-            IList<PointSegment> _segments = new List<PointSegment>(1);
+            private int _page;
+            private IList<PointSegment> _segments = new List<PointSegment>(1);
         }
 
         /// <summary>

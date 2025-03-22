@@ -182,9 +182,9 @@ namespace MS.Internal.Csp
         //------------------------------------------------------
 
         #region Private Fields
-        string _dir = "";
-        bool disposed = false;
-        bool _leak = false;
+        private string _dir = "";
+        private bool disposed = false;
+        private bool _leak = false;
         #endregion Private Fields
     }
 }

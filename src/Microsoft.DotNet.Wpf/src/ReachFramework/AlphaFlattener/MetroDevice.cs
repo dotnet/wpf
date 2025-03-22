@@ -635,7 +635,7 @@ namespace Microsoft.Internal.AlphaFlattener
         {
             Toolbox.EmitEvent(EventTrace.Event.WClientDRXStartPageBegin);
 
-            String printTicketXMLStr = (ticket == null) ? null : ticket.ToXmlString();
+            String printTicketXMLStr = ticket?.ToXmlString();
 
             CaptureTicketSettings(ticket, printTicketXMLStr);
 
@@ -768,7 +768,7 @@ namespace Microsoft.Internal.AlphaFlattener
         {
             if(maxEntries < 1)
             {
-                throw new ArgumentOutOfRangeException("maxEntries", maxEntries, string.Empty);
+                throw new ArgumentOutOfRangeException(nameof(maxEntries), maxEntries, string.Empty);
             }
 
             this.m_innerCache = new MS.Internal.Printing.MostFrequentlyUsedCache<string, CachePacket>(maxEntries);
@@ -839,7 +839,7 @@ namespace Microsoft.Internal.AlphaFlattener
             return packet;
         }
 
-        class CachePacket
+        private class CachePacket
         {
             // "null" for any field means it hasn't been set yet.
             // This implies that the fields cannot have real values of "null".

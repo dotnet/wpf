@@ -351,7 +351,7 @@ namespace System.Windows.Data
             _objectInstance = value;
 
             // set the objectType by looking at the new value
-            SetObjectType((value != null) ? value.GetType() : null);
+            SetObjectType(value?.GetType());
 
             // raise this change event AFTER both oType and oInstance are updated
             OnPropertyChanged(s_instance);
@@ -372,7 +372,7 @@ namespace System.Windows.Data
             return false;
         }
 
-        void QueryWorker(object obj)
+        private void QueryWorker(object obj)
         {
             object      data    = null;
             Exception   e       = null; // exception to pass back to main thread
@@ -430,7 +430,7 @@ namespace System.Windows.Data
             OnQueryFinished(data, e, null, null);
         }
 
-        object CreateObjectInstance(out Exception e)
+        private object CreateObjectInstance(out Exception e)
         {
             object  instance = null;
             string  error   = null; // string that describes known error
@@ -500,7 +500,7 @@ namespace System.Windows.Data
             return instance;
         }
 
-        object InvokeMethodOnInstance(out Exception e)
+        private object InvokeMethodOnInstance(out Exception e)
         {
             object  data = null;
             string  error   = null; // string that describes known error
@@ -646,24 +646,24 @@ namespace System.Windows.Data
 
         #region Private Fields
 
-        Type _objectType;
-        object _objectInstance;
-        string _methodName;
-        DataSourceProvider _instanceProvider;
-        ParameterCollection _constructorParameters;
-        ParameterCollection _methodParameters;
-        bool _isAsynchronous = false;
+        private Type _objectType;
+        private object _objectInstance;
+        private string _methodName;
+        private DataSourceProvider _instanceProvider;
+        private ParameterCollection _constructorParameters;
+        private ParameterCollection _methodParameters;
+        private bool _isAsynchronous = false;
 
-        SourceMode _mode = SourceMode.NoSource;
-        bool _needNewInstance = true;   // set to true when ObjectType or ConstructorParameters change
+        private SourceMode _mode = SourceMode.NoSource;
+        private bool _needNewInstance = true;   // set to true when ObjectType or ConstructorParameters change
 
-        EventHandler _sourceDataChangedHandler;
+        private EventHandler _sourceDataChangedHandler;
 
-        const string s_instance = "ObjectInstance";
-        const string s_type = "ObjectType";
-        const string s_method = "MethodName";
-        const string s_async = "IsAsynchronous";
-        const BindingFlags s_invokeMethodFlags =
+        private const string s_instance = "ObjectInstance";
+        private const string s_type = "ObjectType";
+        private const string s_method = "MethodName";
+        private const string s_async = "IsAsynchronous";
+        private const BindingFlags s_invokeMethodFlags =
                             BindingFlags.Public |
                             BindingFlags.Instance |
                             BindingFlags.Static |

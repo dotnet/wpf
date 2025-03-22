@@ -113,9 +113,9 @@ namespace System.Windows.Media
     internal class StreamAsIStream
     {
         #region Instance Data
-        const int STREAM_SEEK_SET = 0x0;
-        const int STREAM_SEEK_CUR = 0x1;
-        const int STREAM_SEEK_END = 0x2;
+        private const int STREAM_SEEK_SET = 0x0;
+        private const int STREAM_SEEK_CUR = 0x1;
+        private const int STREAM_SEEK_END = 0x2;
 
         protected System.IO.Stream dataStream;
         private Exception _lastException;

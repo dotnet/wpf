@@ -130,10 +130,7 @@ namespace MS.Internal.Security.RightsManagement
                                 // Dispose call back handler 
                                 try
                                 {
-                                    if (_callbackHandler != null)
-                                    {
-                                        _callbackHandler.Dispose();
-                                    }
+                                    _callbackHandler?.Dispose();
                                 }
                                 finally
                                 {
@@ -330,7 +327,7 @@ namespace MS.Internal.Security.RightsManagement
                                     (certificateType != EnumerateLicenseFlags.RevocationListLid) &&
                                     (certificateType != EnumerateLicenseFlags.Expired))
             {
-                throw new ArgumentOutOfRangeException("certificateType");
+                throw new ArgumentOutOfRangeException(nameof(certificateType));
             }
 
             List<string> certificateIdList = new List<string>();
@@ -471,7 +468,7 @@ namespace MS.Internal.Security.RightsManagement
                 (enumerateLicenseFlags != EnumerateLicenseFlags.RevocationListLid) &&
                 (enumerateLicenseFlags != EnumerateLicenseFlags.Expired))
             {
-                throw new ArgumentOutOfRangeException("enumerateLicenseFlags");
+                throw new ArgumentOutOfRangeException(nameof(enumerateLicenseFlags));
             }
 
             int hr = 0;
@@ -1936,7 +1933,7 @@ namespace MS.Internal.Security.RightsManagement
                 }
             }
 
-            throw new ArgumentOutOfRangeException("right");
+            throw new ArgumentOutOfRangeException(nameof(right));
         }
 
         private List<CryptoProvider> CryptoProviderList
@@ -1973,7 +1970,7 @@ namespace MS.Internal.Security.RightsManagement
         private SafeRightsManagementSessionHandle _hSession = null; // if this is zero, we are disposed
 
         // we preserve this so ve can remove certificates in case of temp activation             
-        UserActivationMode _userActivationMode = UserActivationMode.Permanent;
+        private UserActivationMode _userActivationMode = UserActivationMode.Permanent;
 
         private SafeRightsManagementEnvironmentHandle _envHandle = null;  // if this is null, we are disposed
 

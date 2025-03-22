@@ -313,7 +313,7 @@ namespace MS.Internal.Documents
             }
             if (IsPageMissing)
             {
-                return new ReadOnlyCollection<GlyphRun>(new List<GlyphRun>());
+                return ReadOnlyCollection<GlyphRun>.Empty;
             }
             return _pageTextView.GetGlyphRuns(start, end);
         }
@@ -528,7 +528,7 @@ namespace MS.Internal.Documents
             {
                 if (!IsValid || IsPageMissing)
                 {
-                    return new ReadOnlyCollection<TextSegment>(new List<TextSegment>());
+                    return ReadOnlyCollection<TextSegment>.Empty;
                 }
                 return _pageTextView.TextSegments;
             }

@@ -702,7 +702,7 @@ namespace System.Windows
             dataObject = new DataObject();
             dataObject.SetData(format, data, autoConvert);
 
-            Clipboard.SetDataObject(dataObject, /*copy*/true);
+            Clipboard.SetDataObject(dataObject, copy: true);
         }
 
         /// <summary>

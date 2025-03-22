@@ -38,7 +38,7 @@ namespace System.Windows
         /// <summary>
         /// Guards against multiple verifications of the switch values.
         /// </summary>
-        static int s_SwitchesVerified = 0;
+        private static bool s_switchesVerified = false;
 
         #endregion
 
@@ -183,31 +183,19 @@ namespace System.Windows
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         internal static void VerifySwitches(Dispatcher dispatcher)
         {
-            if (Interlocked.CompareExchange(ref s_SwitchesVerified, 1, 0) == 0)
+            if (Interlocked.CompareExchange(ref s_switchesVerified, true, false) == false)
             {
+                bool netFx47 = UseNetFx47CompatibleAccessibilityFeatures;
+                bool netFx471 = UseNetFx471CompatibleAccessibilityFeatures;
+                bool netFx472 = UseNetFx472CompatibleAccessibilityFeatures;
+
                 // If a flag is set to false, we also must ensure the prior accessibility switches are also false.
                 // Otherwise we should inform the developer, via an exception, to enable all the flags.
-                var orderedFlagValues =
-                typeof(AccessibilitySwitches).GetProperties(System.Reflection.BindingFlags.Static | System.Reflection.BindingFlags.Public)
-                .Where(x => x.Name.EndsWith("CompatibleAccessibilityFeatures"))
-                .OrderBy(x => x.Name.Remove(x.Name.IndexOf("CompatibleAccessibilityFeatures", 0)), StringComparer.OrdinalIgnoreCase)
-                .Select(x => (bool)x.GetValue(null));
-
-                bool? lastFlag = null;
-                bool foundInvalidSwitchState = false;
-
-                foreach (var flag in orderedFlagValues)
-                {
-                    if (foundInvalidSwitchState = (!flag && lastFlag == true))
-                    {
-                        break;
-                    }
-
-                    lastFlag = flag;
-                }
-
-                if (foundInvalidSwitchState)
-                {
+                if (!((netFx47 == false && netFx471 == false && netFx472 == false) ||
+                      (netFx47 == false && netFx471 == false && netFx472 == true) ||
+                      (netFx47 == false && netFx471 == true && netFx472 == true) ||
+                      (netFx47 == true && netFx471 == true && netFx472 == true)))
+                { 
                     // Dispatch an EventLog and error throw so we get loaded UI, then the crash.
                     // This ensures the WER dialog shows.
                     DispatchOnError(dispatcher, SR.CombinationOfAccessibilitySwitchesNotSupported);

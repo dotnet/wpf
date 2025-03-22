@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -159,7 +159,7 @@ namespace System.Windows.Xps.Serialization
                 // Namespace related creation within the context
                 //
                 MetroSerializationNamespaceTable parentNamespaceTable =
-                serializableObjectParentContext != null ? serializableObjectParentContext.NamespaceTable : null;
+                serializableObjectParentContext?.NamespaceTable;
 
                 if (serializableObjectContext.NamespaceTable == null)
                 {
@@ -347,10 +347,7 @@ namespace System.Windows.Xps.Serialization
             _isReadOnlyValue = false;
             _namespaceTable  = null;
 
-            if (_propertiesCollection != null)
-            {
-                _propertiesCollection.Clear();
-            }
+            _propertiesCollection?.Clear();
 
             base.Clear();
         }
@@ -371,8 +368,10 @@ namespace System.Windows.Xps.Serialization
         bool                                 _isReadOnlyValue;
         private
         SerializablePropertyContext          _backingPropertyContext;
+        private
         static
         Stack                                _recycableSerializableObjectContexts;
+        private
         static
         object                               _stackLock = new Object();
 

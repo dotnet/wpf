@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -51,7 +51,7 @@ public class PriorityBinding : BindingBase, IAddChild
         if (binding != null)
             Bindings.Add(binding);
         else
-            throw new ArgumentException(SR.Format(SR.ChildHasWrongType, this.GetType().Name, "BindingBase", value.GetType().FullName), "value");
+            throw new ArgumentException(SR.Format(SR.ChildHasWrongType, this.GetType().Name, "BindingBase", value.GetType().FullName), nameof(value));
     }
 
     ///<summary>
@@ -127,12 +127,12 @@ public class PriorityBinding : BindingBase, IAddChild
         CheckSealed();
     }
 
-    //------------------------------------------------------
-    //
-    //  Private Fields
-    //
-    //------------------------------------------------------
+        //------------------------------------------------------
+        //
+        //  Private Fields
+        //
+        //------------------------------------------------------
 
-    BindingCollection       _bindingCollection;
+        private BindingCollection       _bindingCollection;
 }
 }

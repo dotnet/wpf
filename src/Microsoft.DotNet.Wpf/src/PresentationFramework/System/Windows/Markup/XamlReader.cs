@@ -366,10 +366,7 @@ namespace System.Windows.Markup
                         }
 
                         UIElement uiElement = args.Instance as UIElement;
-                        if (uiElement != null)
-                        {
-                            uiElement.SetPersistId(_persistId++);
-                        }
+                        uiElement?.SetPersistId(_persistId++);
 
                         DependencyObject dObject = args.Instance as DependencyObject;
                         if (dObject != null && _stack.CurrentFrame.XmlnsDictionary != null)
@@ -567,7 +564,7 @@ namespace System.Windows.Markup
             xamlReader.HandleAsyncQueueItem();
         }
 
-        const int AsyncLoopTimeout = (int)200;
+        private const int AsyncLoopTimeout = (int)200;
         /// <summary>
         /// called when in async mode when get a time slice to read and load the Tree
         /// </summary>
@@ -978,7 +975,7 @@ namespace System.Windows.Markup
             catch (Exception e)
             {
                 IUriContext uriContext = reader as IUriContext;
-                Uri baseUri = (uriContext != null) ? uriContext.BaseUri : null;
+                Uri baseUri = uriContext?.BaseUri;
                 // Don't wrap critical exceptions or already-wrapped exceptions.
                 if (MS.Internal.CriticalExceptions.IsCriticalException(e) || !ShouldReWrapException(e, baseUri))
                 {
@@ -1098,10 +1095,7 @@ namespace System.Windows.Markup
                 }
 
                 DependencyObject dObject = root as DependencyObject;
-                if (dObject != null)
-                {
-                    dObject.SetValue(BaseUriHelper.BaseUriProperty, readerSettings.BaseUri);
-                }
+                dObject?.SetValue(BaseUriHelper.BaseUriProperty, readerSettings.BaseUri);
 
                 Application app = root as Application;
                 if (app != null)
@@ -1137,7 +1131,7 @@ namespace System.Windows.Markup
             return (root);
         }
 
-        static Uri GetBaseUri(Uri uri)
+        private static Uri GetBaseUri(Uri uri)
         {
             if (uri == null)
             {

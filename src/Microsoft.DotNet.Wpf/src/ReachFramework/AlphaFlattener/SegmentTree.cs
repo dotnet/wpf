@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -37,11 +37,11 @@ namespace Microsoft.Internal.AlphaFlattener
 
     internal class SegmentTree
     {
-        double _min;
-        double _max;
-        SegmentTree _left;
-        SegmentTree _right;
-        List<int> _sList;
+        private double _min;
+        private double _max;
+        private SegmentTree _left;
+        private SegmentTree _right;
+        private List<int> _sList;
 
         /// <summary>
         /// Build a balanced Segment Tree from a sorted intersection list
@@ -69,10 +69,7 @@ namespace Microsoft.Internal.AlphaFlattener
         {
             if ((_min >= x0) && (_max <= x1)) // [_min.._max] is within [x0..x1]
             {
-                if (_sList != null)
-                {
-                    _sList.Remove(index);
-                }
+                _sList?.Remove(index);
             }
             else
             {
@@ -146,7 +143,7 @@ namespace Microsoft.Internal.AlphaFlattener
         protected Coordinate[] _yCoord;  // = null;
         protected int          _yCount;  // = 0;
 
-        static Coordinate[] RemoveDuplication(Coordinate[] values)
+        private static Coordinate[] RemoveDuplication(Coordinate[] values)
         {
             int last = 0;
             int len = values.Length;

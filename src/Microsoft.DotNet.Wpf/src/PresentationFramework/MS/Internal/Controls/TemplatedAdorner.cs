@@ -108,7 +108,7 @@ namespace MS.Internal.Controls
         {
             if (_child == null || index != 0)
             {
-                throw new ArgumentOutOfRangeException("index", index, SR.Visual_ArgumentOutOfRange);
+                throw new ArgumentOutOfRangeException(nameof(index), index, SR.Visual_ArgumentOutOfRange);
             }
 
             return _child;
@@ -160,10 +160,7 @@ namespace MS.Internal.Controls
 
             finalSize = base.ArrangeOverride(size);
 
-            if (_child != null)
-            {
-                _child.Arrange(new Rect(new Point(), finalSize));
-            }
+            _child?.Arrange(new Rect(new Point(), finalSize));
             return finalSize;
         }
 

@@ -2,21 +2,33 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
+//
+//
 // This file was generated, please do not edit it directly.
+//
 // Please see MilCodeGen.html for more information.
+//
 
+using MS.Internal;
+using MS.Internal.KnownBoxes;
 using MS.Internal.Collections;
 using MS.Utility;
 using System.Collections;
+using System.ComponentModel;
+using System.Globalization;
+using System.Text;
+using System.Windows.Media.Effects;
 using System.Windows.Media.Animation;
-
-// These types are aliased to match the unamanaged names used in interop
+using System.Windows.Media.Composition;
+using System.Windows.Markup;
+using System.Windows.Media.Converters;
 
 namespace System.Windows.Media
 {
     /// <summary>
     /// A collection of Transform objects.
     /// </summary>
+
     public sealed partial class TransformCollection : Animatable, IList, IList<Transform>
     {
         //------------------------------------------------------
@@ -241,6 +253,7 @@ namespace System.Windows.Media
 
                 if (!Object.ReferenceEquals(_collection[ index ], value))
                 {
+
                     Transform oldValue = _collection[ index ];
                     OnFreezablePropertyChanged(oldValue, value);
 
@@ -617,7 +630,8 @@ namespace System.Windows.Media
                 _collection.Add(newValue);
                 OnInsert(newValue);
             }
-}
+
+        }
         /// <summary>
         /// Implementation of Freezable.CloneCurrentValueCore()
         /// </summary>
@@ -638,7 +652,8 @@ namespace System.Windows.Media
                 _collection.Add(newValue);
                 OnInsert(newValue);
             }
-}
+
+        }
         /// <summary>
         /// Implementation of Freezable.GetAsFrozenCore()
         /// </summary>
@@ -659,7 +674,8 @@ namespace System.Windows.Media
                 _collection.Add(newValue);
                 OnInsert(newValue);
             }
-}
+
+        }
         /// <summary>
         /// Implementation of Freezable.GetCurrentValueAsFrozenCore()
         /// </summary>
@@ -680,7 +696,8 @@ namespace System.Windows.Media
                 _collection.Add(newValue);
                 OnInsert(newValue);
             }
-}
+
+        }
         /// <summary>
         /// Implementation of <see cref="System.Windows.Freezable.FreezeCore">Freezable.FreezeCore</see>.
         /// </summary>
@@ -784,6 +801,7 @@ namespace System.Windows.Media
 
             void IDisposable.Dispose()
             {
+
             }
 
             /// <summary>

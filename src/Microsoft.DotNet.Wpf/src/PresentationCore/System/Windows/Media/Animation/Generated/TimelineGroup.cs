@@ -10,11 +10,12 @@
 //
 
 using MS.Internal;
-// These types are aliased to match the unamanaged names used in interop
+using MS.Utility;
+using System.Collections;
 
 namespace System.Windows.Media.Animation
 {
-    abstract partial class TimelineGroup : Timeline
+    public abstract partial class TimelineGroup : Timeline
     {
         //------------------------------------------------------
         //
@@ -167,10 +168,9 @@ namespace System.Windows.Media.Animation
             // We check our static default fields which are of type Freezable
             // to make sure that they are not mutable, otherwise we will throw
             // if these get touched by more than one thread in the lifetime
-            // of your app
-
+            // of your app.
             Debug.Assert(s_Children == null || s_Children.IsFrozen,
-                "Detected context bound default value TimelineGroup.s_Children");
+                "Detected context bound default value TimelineGroup.s_Children (See OS Bug #947272).");
 
 
             // Initializations
@@ -185,6 +185,8 @@ namespace System.Windows.Media.Animation
                                    /* isIndependentlyAnimated  = */ false,
                                    /* coerceValueCallback */ null);
         }
+
+
 
         #endregion Constructors
     }

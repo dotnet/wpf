@@ -9,12 +9,21 @@
 // Please see MilCodeGen.html for more information.
 //
 
+using MS.Internal;
+using MS.Internal.Collections;
+using MS.Utility;
+using System.Collections;
+using System.ComponentModel;
+using System.Globalization;
+using System.Text;
+using System.Windows.Markup;
+using System.Windows.Media.Media3D.Converters;
+using System.Windows.Media.Animation;
 using System.Windows.Media.Composition;
-// These types are aliased to match the unamanaged names used in interop
 
 namespace System.Windows.Media.Media3D
 {
-    sealed partial class EmissiveMaterial : Material
+    public sealed partial class EmissiveMaterial : Material
     {
         //------------------------------------------------------
         //
@@ -62,6 +71,10 @@ namespace System.Windows.Media.Media3D
         }
         private static void BrushPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
+
+
+
+
             // The first change to the default value of a mutable collection property (e.g. GeometryGroup.Children) 
             // will promote the property value from a default value to a local value. This is technically a sub-property 
             // change because the collection was changed and not a new collection set (GeometryGroup.Children.
@@ -202,6 +215,7 @@ namespace System.Windows.Media.Media3D
         }
         internal override DUCE.ResourceHandle AddRefOnChannelCore(DUCE.Channel channel)
         {
+
                 if (_duceResource.CreateOrAddRefOnChannel(this, channel, System.Windows.Media.Composition.DUCE.ResourceType.TYPE_EMISSIVEMATERIAL))
                 {
                     Brush vBrush = Brush;
@@ -214,9 +228,11 @@ namespace System.Windows.Media.Media3D
                 }
 
                 return _duceResource.GetHandle(channel);
-}
+
+        }
         internal override void ReleaseOnChannelCore(DUCE.Channel channel)
         {
+
                 Debug.Assert(_duceResource.IsOnChannel(channel));
 
                 if (_duceResource.ReleaseOnChannel(channel))
@@ -225,8 +241,10 @@ namespace System.Windows.Media.Media3D
                     if (vBrush != null) ((DUCE.IResource)vBrush).ReleaseOnChannel(channel);
 
                     ReleaseOnChannelAnimations(channel);
-}
-}
+
+                }
+
+        }
         internal override DUCE.ResourceHandle GetHandleCore(DUCE.Channel channel)
         {
             // Note that we are in a lock here already.
@@ -325,7 +343,6 @@ namespace System.Windows.Media.Media3D
             // to make sure that they are not mutable, otherwise we will throw
             // if these get touched by more than one thread in the lifetime
             // of your app.
-
             Debug.Assert(s_Brush == null || s_Brush.IsFrozen,
                 "Detected context bound default value EmissiveMaterial.s_Brush (See OS Bug #947272).");
 
@@ -351,6 +368,8 @@ namespace System.Windows.Media.Media3D
                                    /* isIndependentlyAnimated  = */ false,
                                    /* coerceValueCallback */ null);
         }
+
+
 
         #endregion Constructors
     }

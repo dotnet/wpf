@@ -168,10 +168,7 @@ namespace Microsoft.Internal.AlphaFlattener
                     }
 #endif
 
-                    if (opacityMask != null)
-                    {
-                        opacityMask.ApplyTransform(transform);
-                    }
+                    opacityMask?.ApplyTransform(transform);
 
                     // Flatten sub-tree structure into a new DisplayList
                     fl.TreeFlatten(ntree, clip, transform, 1.0, null);
@@ -361,10 +358,7 @@ namespace Microsoft.Internal.AlphaFlattener
 #if DEBUG
             for (int i = 0; i < count; i ++)
             {
-                if (commands[i] != null)
-                {
-                    commands[i].SetID(i);
-                }
+                commands[i]?.SetID(i);
             }
 
             Console.WriteLine();
@@ -456,9 +450,9 @@ namespace Microsoft.Internal.AlphaFlattener
 
 #if DEBUG
 
-        static int vipID; // = 0;
+        private static int vipID; // = 0;
 
-        static void SerializeVisual(Visual visual, double width, double height, String filename)
+        private static void SerializeVisual(Visual visual, double width, double height, String filename)
         {
             FileStream    stream = new FileStream(filename, FileMode.Create, FileAccess.ReadWrite);
             XmlTextWriter writer = new System.Xml.XmlTextWriter(stream, System.Text.Encoding.UTF8)
@@ -696,7 +690,7 @@ namespace Microsoft.Internal.AlphaFlattener
                     {
                         // Blend it with brush underneath
                         BrushProxy blendedBrush = gp.Brush;
-                        BrushProxy blendedPenBrush = gp.Pen == null ? null : gp.Pen.StrokeBrush;
+                        BrushProxy blendedPenBrush = gp.Pen?.StrokeBrush;
 
                         if (blendedBrush != null)
                         {
@@ -961,7 +955,7 @@ namespace Microsoft.Internal.AlphaFlattener
 
 #if DEBUG
 
-        static bool HasUnmanagedCodePermission()
+        private static bool HasUnmanagedCodePermission()
         {
             return true;
         }

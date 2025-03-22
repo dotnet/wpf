@@ -128,7 +128,7 @@ namespace MS.Internal.Data
         #region Private Methods
 
         // return true if element is a descendant of ancestor
-        bool IsInScope(DependencyObject ancestor, DependencyObject element)
+        private bool IsInScope(DependencyObject ancestor, DependencyObject element)
         {
             bool result = (ancestor == null) || VisualTreeHelper.IsAncestorOf(ancestor, element);
             return result;
@@ -138,17 +138,17 @@ namespace MS.Internal.Data
 
         #region Private Data
 
-        Set<BindingGroup> _bindingGroups = new Set<BindingGroup>();
-        Set<BindingExpressionBase> _bindings = new Set<BindingExpressionBase>();
-
-        static readonly List<BindingGroup> EmptyBindingGroupList = new List<BindingGroup>();
-        static readonly List<BindingExpressionBase> EmptyBindingList = new List<BindingExpressionBase>();
+        private Set<BindingGroup> _bindingGroups = new Set<BindingGroup>();
+        private Set<BindingExpressionBase> _bindings = new Set<BindingExpressionBase>();
+        
+        private static readonly List<BindingGroup> EmptyBindingGroupList = new List<BindingGroup>();
+        private static readonly List<BindingExpressionBase> EmptyBindingList = new List<BindingExpressionBase>();
 
         #endregion Private Data
 
         #region Private types
 
-        class Set<T> : Dictionary<T, object>, IEnumerable<T>
+        private class Set<T> : Dictionary<T, object>, IEnumerable<T>
         {
             public Set()
                 : base()

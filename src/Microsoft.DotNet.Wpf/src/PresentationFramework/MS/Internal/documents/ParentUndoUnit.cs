@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -134,7 +134,7 @@ namespace MS.Internal.Documents
 
                 if (closeParent.OpenedUnit == null)
                 {
-                    throw new ArgumentException(SR.UndoUnitNotFound, "unit");
+                    throw new ArgumentException(SR.UndoUnitNotFound, nameof(unit));
                 }
 
                 if (closeParent != this)
@@ -600,7 +600,7 @@ namespace MS.Internal.Documents
         /// <returns>
         /// true if the unit is already in the parent chain, false otherwise
         /// </returns>
-        bool IsInParentUnitChain(IUndoUnit unit)
+        private bool IsInParentUnitChain(IUndoUnit unit)
         {
             if (unit is IParentUndoUnit)
             {

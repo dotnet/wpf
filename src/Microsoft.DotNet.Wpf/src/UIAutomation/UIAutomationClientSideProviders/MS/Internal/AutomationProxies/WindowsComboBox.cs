@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -29,7 +29,7 @@ namespace MS.Internal.AutomationProxies
     //          List's parent
 
     // Combobox proxy
-    class WindowsComboBox : ProxyHwnd, IValueProvider, IExpandCollapseProvider
+    internal class WindowsComboBox : ProxyHwnd, IValueProvider, IExpandCollapseProvider
     {
 
         //------------------------------------------------------
@@ -40,7 +40,7 @@ namespace MS.Internal.AutomationProxies
 
         #region Constructor
 
-        WindowsComboBox (IntPtr hwnd, ProxyFragment parent, IntPtr hwndEx, int item)
+        private WindowsComboBox (IntPtr hwnd, ProxyFragment parent, IntPtr hwndEx, int item)
             : base(hwnd, parent, item)
         {
             _cControlType = ControlType.ComboBox;
@@ -303,13 +303,11 @@ namespace MS.Internal.AutomationProxies
                         // subscribe to edit-specific notifications, that would be presented as combo le event
                         // ValueAsString, ValueAsObject, IsReadOnly
                         // create array containing events that user is interested in
-                        WinEventTracker.EvtIdProperty [] editPortionEvents;
-                        int counter;
+                        ReadOnlySpan<WinEventTracker.EvtIdProperty> editPortionEvents = CreateEditPortionEvents(aidProps);
 
-                        CreateEditPortionEvents (out editPortionEvents, out counter, aidProps);
-                        if ( counter > 0 )
+                        if (editPortionEvents.Length > 0)
                         {
-                            WinEventTracker.AddToNotificationList( cbInfo.hwndItem, new WinEventTracker.ProxyRaiseEvents( EditPortionEvents ), editPortionEvents, counter );
+                            WinEventTracker.AddToNotificationList(cbInfo.hwndItem, new WinEventTracker.ProxyRaiseEvents(EditPortionEvents), editPortionEvents);
                         }
                     }
                 }
@@ -341,13 +339,11 @@ namespace MS.Internal.AutomationProxies
                         // un-subscribe from edit-specific notifications
                         // ValueAsString, ValueAsObject, IsReadOnly
                         // create array containing events from which user wants to unsubscribe
-                        WinEventTracker.EvtIdProperty [] editPortionEvents;
-                        int counter;
+                        ReadOnlySpan<WinEventTracker.EvtIdProperty> editPortionEvents = CreateEditPortionEvents(aidProps);
 
-                        CreateEditPortionEvents (out editPortionEvents, out counter, aidProps);
-                        if ( counter > 0 )
+                        if (editPortionEvents.Length > 0)
                         {
-                            WinEventTracker.RemoveToNotificationList( cbInfo.hwndItem, editPortionEvents, null, counter );
+                            WinEventTracker.RemoveToNotificationList(cbInfo.hwndItem, editPortionEvents, null);
                         }
                     }
                 }
@@ -779,10 +775,7 @@ namespace MS.Internal.AutomationProxies
 
             }
 
-            if (el != null)
-            {
-                el.DispatchEvents (eventId, idProp, idObject, idChild);
-            }
+            el?.DispatchEvents (eventId, idProp, idObject, idChild);
         }
 
         // Handles combo's edit portion specific events
@@ -802,40 +795,37 @@ namespace MS.Internal.AutomationProxies
 
         // Return an array that contains combo's edit portion specific events
         // These events will be remapped as combo box events
-        private static void CreateEditPortionEvents (out WinEventTracker.EvtIdProperty [] editPortionEvents, out int counter, AutomationProperty [] aidProps)
+        private static ReadOnlySpan<WinEventTracker.EvtIdProperty> CreateEditPortionEvents(AutomationProperty[] aidProps)
         {
             // count how many events to pass back for the edit part of combo
             int c = 0;
-            foreach ( AutomationProperty p in aidProps )
+            foreach (AutomationProperty p in aidProps)
             {
-                if ( p == ValuePattern.ValueProperty || p == ValuePattern.IsReadOnlyProperty )
+                if (p == ValuePattern.ValueProperty || p == ValuePattern.IsReadOnlyProperty)
                 {
                     c++;
                 }
             }
 
+            // no events to pass
             if (c == 0)
-            {
-                editPortionEvents = null;
-                counter = 0;
-                return;
-            }
+                return ReadOnlySpan<WinEventTracker.EvtIdProperty>.Empty;
 
-            // allocate array with the number of events from above
-            editPortionEvents = new WinEventTracker.EvtIdProperty[c];
+            // allocate an array with the number of events from above
+            WinEventTracker.EvtIdProperty[] editPortionEvents = new WinEventTracker.EvtIdProperty[c];
 
             c = 0;
-            foreach ( AutomationProperty p in aidProps )
+            foreach (AutomationProperty p in aidProps)
             {
-                if ( p == ValuePattern.ValueProperty || p == ValuePattern.IsReadOnlyProperty )
+                if (p == ValuePattern.ValueProperty || p == ValuePattern.IsReadOnlyProperty)
                 {
-                    editPortionEvents[c]._idProp = p;
                     editPortionEvents[c]._evtId = (p == ValuePattern.ValueProperty) ? NativeMethods.EventObjectValueChange : NativeMethods.EventObjectStateChange;
+                    editPortionEvents[c]._idProp = p;
                     c++;
                 }
             }
 
-            counter = c;
+            return editPortionEvents;
         }
 
         // When _hwndEx is not IntPtr.Zero the control is a ComboBoxEx32 control.
@@ -872,7 +862,7 @@ namespace MS.Internal.AutomationProxies
         #region WindowsComboButton
 
         // Proxy for ComboBox button
-        class WindowsComboButton: ProxySimple, IInvokeProvider
+        private class WindowsComboButton: ProxySimple, IInvokeProvider
         {
             //------------------------------------------------------
             //

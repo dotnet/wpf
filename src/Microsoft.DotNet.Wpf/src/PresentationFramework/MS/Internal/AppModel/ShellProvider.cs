@@ -24,12 +24,18 @@ namespace MS.Internal.AppModel
     #region Structs
 
     [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Unicode)]
-    internal struct COMDLG_FILTERSPEC
+    internal readonly struct COMDLG_FILTERSPEC
     {
         [MarshalAs(UnmanagedType.LPWStr)]
-        public string pszName;
+        public readonly string pszName;
         [MarshalAs(UnmanagedType.LPWStr)]
-        public string pszSpec;
+        public readonly string pszSpec;
+
+        public COMDLG_FILTERSPEC(string name, string spec)
+        {
+            pszName = name;
+            pszSpec = spec;
+        }
     }
 
     [StructLayout(LayoutKind.Sequential, Pack = 4)]
@@ -115,7 +121,7 @@ namespace MS.Internal.AppModel
         InterfaceType(ComInterfaceType.InterfaceIsIUnknown),
         Guid(IID.ObjectArray),
     ]
-    interface IObjectCollection : IObjectArray
+    internal interface IObjectCollection : IObjectArray
     {
         #region IObjectArray redeclarations
         new uint GetCount();
@@ -268,7 +274,7 @@ namespace MS.Internal.AppModel
         InterfaceType(ComInterfaceType.InterfaceIsIUnknown),
         Guid(IID.ShellItem2),
     ]
-    interface IShellItem2 : IShellItem
+    internal interface IShellItem2 : IShellItem
     {
         #region IShellItem redeclarations
         [return: MarshalAs(UnmanagedType.Interface)]

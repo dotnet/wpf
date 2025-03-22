@@ -54,7 +54,7 @@ namespace System.Windows.Data
             Initialize();
         }
 
-        void Initialize()
+        private void Initialize()
         {
             _engine = DataBindEngine.CurrentDataBindEngine;
             _bindingExpressions = new BindingExpressionCollection();
@@ -277,7 +277,7 @@ namespace System.Windows.Data
         // If there are none, return false.    Otherwise return a superset of the
         // errors, and set isPure to true if the superset contains no errors from
         // any other source.  (This avoids allocations in the 90% case.)
-        bool GetValidationErrors(out ValidationErrorCollection superset, out bool isPure)
+        private bool GetValidationErrors(out ValidationErrorCollection superset, out bool isPure)
         {
             superset = null;
             isPure = true;
@@ -303,7 +303,7 @@ namespace System.Windows.Data
             return true;
         }
 
-        bool Belongs(ValidationError error)
+        private bool Belongs(ValidationError error)
         {
             BindingExpressionBase bb;
             return (error.BindingInError == this ||
@@ -313,7 +313,7 @@ namespace System.Windows.Data
                     );
         }
 
-        DataBindEngine Engine { get { return _engine; } }
+        private DataBindEngine Engine { get { return _engine; } }
 
         #endregion Public properties
 
@@ -338,10 +338,7 @@ namespace System.Windows.Data
                 for (int i=items.Count-1; i>=0; --i)
                 {
                     IEditableObject ieo = items[i] as IEditableObject;
-                    if (ieo != null)
-                    {
-                        ieo.BeginEdit();
-                    }
+                    ieo?.BeginEdit();
                 }
 
                 IsEditing = true;
@@ -382,10 +379,7 @@ namespace System.Windows.Data
             for (int i=items.Count-1; i>=0; --i)
             {
                 IEditableObject ieo = items[i] as IEditableObject;
-                if (ieo != null)
-                {
-                    ieo.CancelEdit();
-                }
+                ieo?.CancelEdit();
             }
 
             // update targets
@@ -493,7 +487,7 @@ namespace System.Windows.Data
             return result;
         }
 
-        bool TryGetValueImpl(object item, string propertyName, out object value)
+        private bool TryGetValueImpl(object item, string propertyName, out object value)
         {
             GetValueTableEntry entry = _getValueTable[item, propertyName];
             if (entry == null)
@@ -635,7 +629,7 @@ namespace System.Windows.Data
         }
 
         // check whether we've been detached from the owner
-        void CheckDetach(DependencyObject newOwner)
+        private void CheckDetach(DependencyObject newOwner)
         {
             if (newOwner != null || _inheritanceContext == NullInheritanceContext)
                 return;
@@ -644,9 +638,9 @@ namespace System.Windows.Data
             Engine.CommitManager.RemoveBindingGroup(this);
         }
 
-        bool IsEditing { get; set; }
+        private bool IsEditing { get; set; }
 
-        bool IsItemsValid
+        private bool IsItemsValid
         {
             get { return _isItemsValid; }
             set
@@ -725,10 +719,7 @@ namespace System.Windows.Data
         internal void AddBindingForProposedValue(BindingExpressionBase dependent, object item, string propertyName)
         {
             ProposedValueEntry entry = _proposedValueTable[item, propertyName];
-            if (entry != null)
-            {
-                entry.AddDependent(dependent);
-            }
+            entry?.AddDependent(dependent);
         }
 
         // add a validation error to the mentor's list
@@ -753,19 +744,19 @@ namespace System.Windows.Data
 
         // remove all errors raised at the given step, in preparation for running
         // the rules at that step
-        void ClearValidationErrors(ValidationStep validationStep)
+        private void ClearValidationErrors(ValidationStep validationStep)
         {
             ClearValidationErrorsImpl(validationStep, false);
         }
 
         // remove all errors affiliated with the BindingGroup
-        void ClearValidationErrors()
+        private void ClearValidationErrors()
         {
             ClearValidationErrorsImpl(ValidationStep.RawProposedValue, true);
         }
 
         // remove validation errors - the real work
-        void ClearValidationErrorsImpl(ValidationStep validationStep, bool allSteps)
+        private void ClearValidationErrorsImpl(ValidationStep validationStep, bool allSteps)
         {
             DependencyObject mentor = Helper.FindMentor(this);
             if (mentor == null)
@@ -800,7 +791,7 @@ namespace System.Windows.Data
         //------------------------------------------------------
 
         // rebuild the Items collection, if necessary
-        void EnsureItems()
+        private void EnsureItems()
         {
             if (IsItemsValid)
                 return;
@@ -869,10 +860,7 @@ namespace System.Windows.Data
                 if (IsEditing)
                 {
                     IEditableObject ieo = newItems[i].Target as IEditableObject;
-                    if (ieo != null)
-                    {
-                        ieo.BeginEdit();
-                    }
+                    ieo?.BeginEdit();
                 }
 
                 // the item may implement INotifyDataErrorInfo
@@ -891,7 +879,7 @@ namespace System.Windows.Data
         }
 
         // true if there is a validation rule that runs on data transfer
-        bool ValidatesOnDataTransfer
+        private bool ValidatesOnDataTransfer
         {
             get
             {
@@ -937,7 +925,7 @@ namespace System.Windows.Data
             ValidateOnDataTransfer();
         }
 
-        void OnDataContextChanged(object sender, DependencyPropertyChangedEventArgs e)
+        private void OnDataContextChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
             if (e.NewValue == BindingExpressionBase.DisconnectedItem)
                 return;
@@ -947,7 +935,7 @@ namespace System.Windows.Data
         }
 
         // run the data-transfer validation rules
-        void ValidateOnDataTransfer()
+        private void ValidateOnDataTransfer()
         {
             if (!ValidatesOnDataTransfer)
                 return;
@@ -1012,7 +1000,7 @@ namespace System.Windows.Data
         }
 
         // run the validation process up to the indicated step
-        bool UpdateAndValidate(ValidationStep validationStep)
+        private bool UpdateAndValidate(ValidationStep validationStep)
         {
             // if the group is attached to a container tied to the
             // NewItemPlaceholder, don't do anything.  Bindings and validation
@@ -1065,7 +1053,7 @@ namespace System.Windows.Data
         }
 
         // update the item-level validation errors arising from INotifyDataErrorInfo items
-        void UpdateNotifyDataErrors(INotifyDataErrorInfo indei, WeakReference itemWR)
+        private void UpdateNotifyDataErrors(INotifyDataErrorInfo indei, WeakReference itemWR)
         {
             // get the key for the item (its WeakReference from _itemsRW)
             if (itemWR == null)
@@ -1094,7 +1082,7 @@ namespace System.Windows.Data
         }
 
         // replace the validation errors for the given item with a set that matches the errors list
-        void UpdateNotifyDataErrorValidationErrors(WeakReference itemWR, List<object> errors)
+        private void UpdateNotifyDataErrorValidationErrors(WeakReference itemWR, List<object> errors)
         {
             // get the previous errors for this item
             List<ValidationError> itemErrors;
@@ -1147,7 +1135,7 @@ namespace System.Windows.Data
         }
 
         // apply conversions to each binding in the group
-        bool ObtainConvertedProposedValues()
+        private bool ObtainConvertedProposedValues()
         {
             bool result = true;
             for (int i=_bindingExpressions.Count-1; i>=0; --i)
@@ -1159,7 +1147,7 @@ namespace System.Windows.Data
         }
 
         // update the source value of each binding in the group
-        bool UpdateValues()
+        private bool UpdateValues()
         {
             bool result = true;
 
@@ -1183,7 +1171,7 @@ namespace System.Windows.Data
         }
 
         // check the validation rules for the current step
-        bool CheckValidationRules()
+        private bool CheckValidationRules()
         {
             bool result = true;
 
@@ -1240,7 +1228,7 @@ namespace System.Windows.Data
         }
 
         // commit all the source values
-        bool CommitValues()
+        private bool CommitValues()
         {
             bool result = true;
             IList items = Items;
@@ -1269,7 +1257,7 @@ namespace System.Windows.Data
 
         // find the index of an item in a list, where both the item and
         // the list use WeakReferences
-        static int FindIndexOf(WeakReference wr, IList<WeakReference> list)
+        private static int FindIndexOf(WeakReference wr, IList<WeakReference> list)
         {
             object item = wr.Target;
             if (item == null)
@@ -1277,7 +1265,7 @@ namespace System.Windows.Data
             return FindIndexOf(item, list);
         }
 
-        static int FindIndexOf(object item, IList<WeakReference> list)
+        private static int FindIndexOf(object item, IList<WeakReference> list)
         {
             for (int i=0, n=list.Count; i<n; ++i)
             {
@@ -1291,7 +1279,7 @@ namespace System.Windows.Data
         }
 
         // get the culture of the binding group's mentor
-        CultureInfo GetCulture()
+        private CultureInfo GetCulture()
         {
             if (_culture == null)
             {
@@ -1306,7 +1294,7 @@ namespace System.Windows.Data
         }
 
         // handle changes to the collection of binding expressions
-        void OnBindingsChanged(object sender, NotifyCollectionChangedEventArgs e)
+        private void OnBindingsChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
             BindingExpressionBase bindingExpr;
 
@@ -1342,7 +1330,7 @@ namespace System.Windows.Data
         }
 
         // explicitly remove a binding expression from the group
-        void RemoveBindingExpression(BindingExpressionBase exprBase)
+        private void RemoveBindingExpression(BindingExpressionBase exprBase)
         {
             // we actually remove all expressions belonging to the same root
             BindingExpressionBase root = exprBase.RootBindingExpression;
@@ -1376,7 +1364,7 @@ namespace System.Windows.Data
         }
 
         // remove all binding expressions from the group
-        void RemoveAllBindingExpressions()
+        private void RemoveAllBindingExpressions()
         {
             // we can't use the BindingExpressions collection - it has already
             // been cleared.  Instead, find the expressions that need work by
@@ -1389,7 +1377,7 @@ namespace System.Windows.Data
         }
 
         // preserve proposed values
-        void PreserveProposedValues(Collection<BindingExpressionBase.ProposedValue> proposedValues)
+        private void PreserveProposedValues(Collection<BindingExpressionBase.ProposedValue> proposedValues)
         {
             if (proposedValues == null)
                 return;
@@ -1402,7 +1390,7 @@ namespace System.Windows.Data
 
         // before beginning a validate/update pass, enable the proposed values
         // to participate
-        void PrepareProposedValuesForUpdate(DependencyObject mentor, bool isUpdating)
+        private void PrepareProposedValuesForUpdate(DependencyObject mentor, bool isUpdating)
         {
             int count = _proposedValueTable.Count;
             if (count == 0)
@@ -1447,7 +1435,7 @@ namespace System.Windows.Data
         }
 
         // after a validate/update pass, reset the proposed values and related state
-        void ResetProposedValuesAfterUpdate(DependencyObject mentor, bool isFullUpdate)
+        private void ResetProposedValuesAfterUpdate(DependencyObject mentor, bool isFullUpdate)
         {
             if (_proposedValueBindingExpressions != null)
             {
@@ -1484,7 +1472,7 @@ namespace System.Windows.Data
             }
         }
 
-        void NotifyCommitManager()
+        private void NotifyCommitManager()
         {
             if (Engine.IsShutDown)
                 return;
@@ -1506,7 +1494,7 @@ namespace System.Windows.Data
 
         #region Event handlers
 
-        void OnErrorsChanged(object sender, DataErrorsChangedEventArgs e)
+        private void OnErrorsChanged(object sender, DataErrorsChangedEventArgs e)
         {
             // if notification was on the right thread, just do the work (normal case)
             if (Dispatcher.Thread == Thread.CurrentThread)
@@ -1532,31 +1520,31 @@ namespace System.Windows.Data
         //
         //------------------------------------------------------
 
-        ValidationRuleCollection    _validationRules;
-        string                      _name;
-        bool                        _notifyOnValidationError;
-        bool                        _sharesProposedValues;
-        bool                        _validatesOnNotifyDataError = true;
+        private ValidationRuleCollection    _validationRules;
+        private string                      _name;
+        private bool                        _notifyOnValidationError;
+        private bool                        _sharesProposedValues;
+        private bool                        _validatesOnNotifyDataError = true;
 
-        DataBindEngine              _engine;
-        BindingExpressionCollection _bindingExpressions;
-        bool                        _isItemsValid;
-        ValidationStep              _validationStep = (ValidationStep)(-1);
-        GetValueTable               _getValueTable = new GetValueTable();
-        ProposedValueTable          _proposedValueTable = new ProposedValueTable();
-        BindingExpression[]         _proposedValueBindingExpressions;
-        Collection<WeakReference>   _itemsRW;
-        WeakReadOnlyCollection<object> _items;
-        CultureInfo                 _culture;
-        Dictionary<WeakReference, List<ValidationError>> _notifyDataErrors = new Dictionary<WeakReference, List<ValidationError>>();
+        private DataBindEngine _engine;
+        private BindingExpressionCollection _bindingExpressions;
+        private bool                        _isItemsValid;
+        private ValidationStep              _validationStep = (ValidationStep)(-1);
+        private GetValueTable               _getValueTable = new GetValueTable();
+        private ProposedValueTable          _proposedValueTable = new ProposedValueTable();
+        private BindingExpression[]         _proposedValueBindingExpressions;
+        private Collection<WeakReference>   _itemsRW;
+        private WeakReadOnlyCollection<object> _items;
+        private CultureInfo                 _culture;
+        private Dictionary<WeakReference, List<ValidationError>> _notifyDataErrors = new Dictionary<WeakReference, List<ValidationError>>();
 
         internal static readonly object DeferredTargetValue = new NamedObject("DeferredTargetValue");
         internal static readonly object DeferredSourceValue = new NamedObject("DeferredSourceValue");
 
         // Fields to implement DO's inheritance context
-        static WeakReference<DependencyObject> NullInheritanceContext = new WeakReference<DependencyObject>(null);
-        WeakReference<DependencyObject> _inheritanceContext = NullInheritanceContext;
-        bool                            _hasMultipleInheritanceContexts;
+        private static WeakReference<DependencyObject> NullInheritanceContext = new WeakReference<DependencyObject>(null);
+        private WeakReference<DependencyObject> _inheritanceContext = NullInheritanceContext;
+        private bool                            _hasMultipleInheritanceContexts;
 
         #endregion Private data
 
@@ -1716,7 +1704,7 @@ namespace System.Windows.Data
                 return (_table.Count > 0) ? _table[0] : null;
             }
 
-            Collection<GetValueTableEntry> _table = new Collection<GetValueTableEntry>();
+            private Collection<GetValueTableEntry> _table = new Collection<GetValueTableEntry>();
         }
 
         // a single entry in the GetValueTable
@@ -1786,10 +1774,10 @@ namespace System.Windows.Data
                 set { _value = value; }
             }
 
-            BindingExpressionBase   _bindingExpressionBase;
-            WeakReference   _itemWR;
-            string          _propertyName;
-            object          _value = BindingGroup.DeferredTargetValue;
+            private BindingExpressionBase   _bindingExpressionBase;
+            private WeakReference   _itemWR;
+            private string          _propertyName;
+            private object          _value = BindingGroup.DeferredTargetValue;
         }
 
 
@@ -1927,7 +1915,7 @@ namespace System.Windows.Data
                 return -1;
             }
 
-            Collection<ProposedValueEntry> _table = new Collection<ProposedValueEntry>();
+            private Collection<ProposedValueEntry> _table = new Collection<ProposedValueEntry>();
         }
 
         // a single entry in the ProposedValueTable
@@ -1965,17 +1953,17 @@ namespace System.Windows.Data
                 _dependents.Add(dependent);
             }
 
-            WeakReference _itemReference;
-            string _propertyName;
-            object _rawValue;
-            object _convertedValue;
-            ValidationError _error;
-            Binding _binding;
-            Collection<BindingExpressionBase> _dependents;
+            private WeakReference _itemReference;
+            private string _propertyName;
+            private object _rawValue;
+            private object _convertedValue;
+            private ValidationError _error;
+            private Binding _binding;
+            private Collection<BindingExpressionBase> _dependents;
         }
 
         // add some error-checking to ObservableCollection
-        class BindingExpressionCollection : ObservableCollection<BindingExpressionBase>
+        private class BindingExpressionCollection : ObservableCollection<BindingExpressionBase>
         {
             /// <summary>
             /// Called by base class Collection&lt;T&gt; when an item is added to list;

@@ -92,10 +92,7 @@ namespace System.Windows.Controls
             bool isSelected = (bool)e.NewValue;
 
             TabControl parentTabControl = tabItem.TabControlParent;
-            if (parentTabControl != null)
-            {
-                parentTabControl.RaiseIsSelectedChangedAutomationEvent(tabItem, isSelected);
-            }
+            parentTabControl?.RaiseIsSelectedChangedAutomationEvent(tabItem, isSelected);
 
             if (isSelected)
             {
@@ -546,7 +543,7 @@ namespace System.Windows.Controls
             DefaultValue = 0,
         }
 
-        BoolField _tabItemBoolFieldStore = BoolField.DefaultValue;
+        private BoolField _tabItemBoolFieldStore = BoolField.DefaultValue;
 
         #endregion Private Fields
 

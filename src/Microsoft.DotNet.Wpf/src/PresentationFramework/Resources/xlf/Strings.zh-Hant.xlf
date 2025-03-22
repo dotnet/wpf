@@ -2413,16 +2413,6 @@ Do you want to replace it?</source>
         <target state="translated">型別 '{0}' 不是有效的 PageFunction 型別。</target>
         <note />
       </trans-unit>
-      <trans-unit id="InvalidPermissionStateValue">
-        <source>PermissionState value '{0}' is not valid for this Permission.</source>
-        <target state="translated">PermissionState 值 '{0}' 對此權限無效。</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="InvalidPermissionType">
-        <source>Permission type is not valid. Expected '{0}'.</source>
-        <target state="translated">使用權限類型無效。應該是 '{0}'。</target>
-        <note />
-      </trans-unit>
       <trans-unit id="InvalidPoint">
         <source>Invalid Point value.</source>
         <target state="translated">無效的 Point 值。</target>
@@ -4826,11 +4816,6 @@ Do you want to replace it?</source>
       <trans-unit id="ScrollViewer_OutOfRange">
         <source>'{0}' parameter has value '{1}', which is not in the valid range of '{2}' to '{3}'.</source>
         <target state="translated">'{0}' 參數的值為 '{1}'，其不在 '{2}' 到 '{3}' 的有效範圍內。</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="SecurityExceptionForSettingSandboxExternalToTrue">
-        <source>Cannot set SandboxExternalContent to true in partial trust.</source>
-        <target state="translated">在部分信任的情況下，無法將 SandboxExternalContent 設定為 True。</target>
         <note />
       </trans-unit>
       <trans-unit id="SeekFailed">

@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -94,10 +94,7 @@ namespace System.Windows.Automation.Peers
                             if (_recentlyRealizedPeers != null && _recentlyRealizedPeers.Count > 0 && this.AncestorsInvalid)
                             {
                                 GroupItemAutomationPeer groupItemPeer = peer as GroupItemAutomationPeer;
-                                if (groupItemPeer != null)
-                                {
-                                    groupItemPeer.InvalidateGroupItemPeersContainingRecentlyRealizedPeers(_recentlyRealizedPeers);
-                                }
+                                groupItemPeer?.InvalidateGroupItemPeersContainingRecentlyRealizedPeers(_recentlyRealizedPeers);
                             }
                         }
                         else
@@ -213,10 +210,7 @@ namespace System.Windows.Automation.Peers
                 }
             }
 
-            if (peer != null)
-            {
-                peer.ReuseForItem(item);
-            }
+            peer?.ReuseForItem(item);
 
             return peer;
         }
@@ -380,10 +374,7 @@ namespace System.Windows.Automation.Peers
             {
                 peer = CreateItemAutomationPeer(item);
 
-                if (peer != null)
-                {
-                    peer.TrySetParentInfo(this);
-                }
+                peer?.TrySetParentInfo(this);
             }
 
             if (peer != null)
@@ -424,7 +415,7 @@ namespace System.Windows.Automation.Peers
             return _recyclableWrapperCache;
         }
 
-        // UpdateChildrenIntenal is called with ItemsInvalidateLimit to ensure we don�t fire unnecessary structure change events when items are just scrolled in/out of view in case of
+        // UpdateChildrenIntenal is called with ItemsInvalidateLimit to ensure we don’t fire unnecessary structure change events when items are just scrolled in/out of view in case of
         // virtualized controls.
         override internal IDisposable UpdateChildren()
         {
@@ -556,8 +547,8 @@ namespace System.Windows.Automation.Peers
                 }
             }
 
-            ItemsControlAutomationPeer _peer;
-            ItemPeersStorage<ItemAutomationPeer> _oldChildren;
+            private ItemsControlAutomationPeer _peer;
+            private ItemPeersStorage<ItemAutomationPeer> _oldChildren;
         }
     }
 
@@ -572,11 +563,9 @@ namespace System.Windows.Automation.Peers
             _usesHashCode = false;
             _count = 0;
 
-            if (_hashtable != null)
-                _hashtable.Clear();
+            _hashtable?.Clear();
 
-            if (_list != null)
-                _list.Clear();
+            _list?.Clear();
         }
 
         public T this[object item]
@@ -625,7 +614,7 @@ namespace System.Windows.Automation.Peers
                     if (_hashtable == null)
                         _hashtable = new WeakDictionary<object,T>();
 
-                    if(!_hashtable.ContainsKey(item) && value is T)
+                    if(!_hashtable.ContainsKey(item) && value is not null)
                         _hashtable[item] = value;
                     else
                         Debug.Assert(false,"it must not add already present Item");
@@ -634,7 +623,7 @@ namespace System.Windows.Automation.Peers
                 {
                     if (_list == null)
                         _list = new List<KeyValuePair<object, T>>();
-                    if(value is T)
+                    if(value is not null)
                         _list.Add(new KeyValuePair<object, T>(item, value));
                 }
 
@@ -786,9 +775,9 @@ namespace System.Windows.Automation.Peers
             }
         }
 
-        ItemsControl _itemsControl;
-        DependencyObject _container;
-        object _item;
+        private ItemsControl _itemsControl;
+        private DependencyObject _container;
+        private object _item;
     }
 }
 

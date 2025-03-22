@@ -221,11 +221,11 @@ namespace MS.Win32
         {
             if(hwnd == IntPtr.Zero)
             {
-                throw new ArgumentNullException("hwnd");
+                throw new ArgumentNullException(nameof(hwnd));
             }
             if(subclass == IntPtr.Zero)
             {
-                throw new ArgumentNullException("subclass");
+                throw new ArgumentNullException(nameof(subclass));
             }
 
             int iForce = force ? 1 : 0;
@@ -376,7 +376,7 @@ namespace MS.Win32
         {
             if(hwnd == IntPtr.Zero)
             {
-                throw new ArgumentNullException("hwnd");
+                throw new ArgumentNullException(nameof(hwnd));
             }
             if(_bond != Bond.Unattached)
             {
@@ -430,7 +430,7 @@ namespace MS.Win32
         /// <returns>
         ///     The value that is the result of processing the message.
         /// </returns>
-        IntPtr CallOldWindowProc(IntPtr oldWndProc, IntPtr hwnd, WindowMessage msg, IntPtr wParam, IntPtr lParam)
+        private IntPtr CallOldWindowProc(IntPtr oldWndProc, IntPtr hwnd, WindowMessage msg, IntPtr wParam, IntPtr lParam)
         {
             return UnsafeNativeMethods.CallWindowProc(oldWndProc, hwnd, (int)msg, wParam, lParam);
         }

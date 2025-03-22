@@ -1630,7 +1630,7 @@ namespace System.Windows.Markup
 
 #if !PBTCOMPILER
         // Helper method to throw an Exception.
-        void ThrowException(string id, string parameter)
+        private void ThrowException(string id, string parameter)
         {
             ApplicationException bamlException = new ApplicationException(
                                                      SR.Format(SR.GetResourceString(id), parameter));
@@ -1815,29 +1815,29 @@ namespace System.Windows.Markup
         // see if any advantage in breaking up or searching
         // by PropId, etc. instead of Hash. Hash is only used on compile
         // so leave null so Load doesn't take the hit.
-        Hashtable _objectHashTable = new Hashtable();
+        private Hashtable _objectHashTable = new Hashtable();
 
-        ArrayList _assemblyIdToInfo = new ArrayList(1);    // arrayList of Assemblies
-        ArrayList _typeIdToInfo = new ArrayList(0);    // arrayList of class Types
-        ArrayList _attributeIdToInfo = new ArrayList(10);   // arrayList of Attribute Ids
-        ArrayList _stringIdToInfo = new ArrayList(1);     // arrayList of String Info
+        private ArrayList _assemblyIdToInfo = new ArrayList(1);    // arrayList of Assemblies
+        private ArrayList _typeIdToInfo = new ArrayList(0);    // arrayList of class Types
+        private ArrayList _attributeIdToInfo = new ArrayList(10);   // arrayList of Attribute Ids
+        private ArrayList _stringIdToInfo = new ArrayList(1);     // arrayList of String Info
 
         // XamlTypeMapper associated with this map table.  There is always a one-to-one correspondence.
-        XamlTypeMapper _xamlTypeMapper;
+        private XamlTypeMapper _xamlTypeMapper;
 
         // The assembly record for the known types of controls
-        BamlAssemblyInfoRecord _knownAssemblyInfoRecord;
+        private BamlAssemblyInfoRecord _knownAssemblyInfoRecord;
 
 #if !PBTCOMPILER
         // Temporary cache of Known Type Converters for each baml reading session.
-        Hashtable _converterCache = null;
+        private Hashtable _converterCache = null;
 #endif
 
 #if !PBTCOMPILER
         // True if this instance of the BamlMapTable is being reused between
         // different parses.  This is done to maintain the ObjectHashTable so that
         // less reflection is done for types and properties.
-        bool   _reusingMapTable = false;
+        private bool   _reusingMapTable = false;
 #endif
 
         #endregion Data

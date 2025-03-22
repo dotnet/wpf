@@ -9,13 +9,23 @@
 // Please see MilCodeGen.html for more information.
 //
 
+using MS.Internal;
 using MS.Internal.KnownBoxes;
+using MS.Internal.Collections;
+using MS.Utility;
+using System.Collections;
+using System.ComponentModel;
+using System.Globalization;
+using System.Text;
+using System.Windows.Media.Effects;
+using System.Windows.Media.Animation;
 using System.Windows.Media.Composition;
-// These types are aliased to match the unamanaged names used in interop
+using System.Windows.Markup;
+using System.Windows.Media.Converters;
 
 namespace System.Windows.Media
 {
-    sealed partial class BitmapCacheBrush : Brush
+    public sealed partial class BitmapCacheBrush : Brush
     {
         //------------------------------------------------------
         //
@@ -63,6 +73,10 @@ namespace System.Windows.Media
         }
         private static void BitmapCachePropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
+
+
+
+
             // The first change to the default value of a mutable collection property (e.g. GeometryGroup.Children) 
             // will promote the property value from a default value to a local value. This is technically a sub-property 
             // change because the collection was changed and not a new collection set (GeometryGroup.Children.
@@ -359,6 +373,7 @@ namespace System.Windows.Media
         }
         internal override DUCE.ResourceHandle AddRefOnChannelCore(DUCE.Channel channel)
         {
+
                 if (_duceResource.CreateOrAddRefOnChannel(this, channel, System.Windows.Media.Composition.DUCE.ResourceType.TYPE_BITMAPCACHEBRUSH))
                 {
                     Transform vTransform = Transform;
@@ -368,7 +383,7 @@ namespace System.Windows.Media
                     BitmapCache vBitmapCache = BitmapCache;
                     if (vBitmapCache != null) ((DUCE.IResource)vBitmapCache).AddRefOnChannel(channel);
                     Visual vInternalTarget = InternalTarget;
-                    if (vInternalTarget != null) vInternalTarget.AddRefOnChannelForCyclicBrush(this, channel);
+                    vInternalTarget?.AddRefOnChannelForCyclicBrush(this, channel);
                     AddRefOnChannelAnimations(channel);
 
 
@@ -376,9 +391,11 @@ namespace System.Windows.Media
                 }
 
                 return _duceResource.GetHandle(channel);
-}
+
+        }
         internal override void ReleaseOnChannelCore(DUCE.Channel channel)
         {
+
                 Debug.Assert(_duceResource.IsOnChannel(channel));
 
                 if (_duceResource.ReleaseOnChannel(channel))
@@ -390,10 +407,12 @@ namespace System.Windows.Media
                     BitmapCache vBitmapCache = BitmapCache;
                     if (vBitmapCache != null) ((DUCE.IResource)vBitmapCache).ReleaseOnChannel(channel);
                     Visual vInternalTarget = InternalTarget;
-                    if (vInternalTarget != null) vInternalTarget.ReleaseOnChannelForCyclicBrush(this, channel);
+                    vInternalTarget?.ReleaseOnChannelForCyclicBrush(this, channel);
                     ReleaseOnChannelAnimations(channel);
-}
-}
+
+                }
+
+        }
         internal override DUCE.ResourceHandle GetHandleCore(DUCE.Channel channel)
         {
             // Note that we are in a lock here already.
@@ -503,8 +522,7 @@ namespace System.Windows.Media
             // We check our static default fields which are of type Freezable
             // to make sure that they are not mutable, otherwise we will throw
             // if these get touched by more than one thread in the lifetime
-            // of your app.  (Windows OS 
-
+            // of your app.
 
 
             // Initializations
@@ -556,6 +574,8 @@ namespace System.Windows.Media
                                    /* isIndependentlyAnimated  = */ false,
                                    /* coerceValueCallback */ null);
         }
+
+
 
         #endregion Constructors
     }

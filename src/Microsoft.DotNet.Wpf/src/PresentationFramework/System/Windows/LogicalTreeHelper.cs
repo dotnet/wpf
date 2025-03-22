@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -182,16 +182,10 @@ namespace System.Windows
         ArgumentNullException.ThrowIfNull(current);
 
         FrameworkElement fe = current as FrameworkElement;
-        if (fe != null)
-        {
-            fe.BringIntoView();
-        }
+        fe?.BringIntoView();
 
         FrameworkContentElement fce = current as FrameworkContentElement;
-        if (fce != null)
-        {
-            fce.BringIntoView();
-        }
+        fce?.BringIntoView();
     }
 
 /*
@@ -368,10 +362,7 @@ namespace System.Windows
             else
             {
                 FrameworkContentElement parentFCE = parent as FrameworkContentElement;
-                if (parentFCE != null)
-                {
-                    parentFCE.AddLogicalChild(child);
-                }
+                parentFCE?.AddLogicalChild(child);
             }
         }
     }
@@ -384,9 +375,9 @@ namespace System.Windows
             {
                 parentFE.AddLogicalChild(child);
             }
-            else if (parentFCE != null)
+            else
             {
-                parentFCE.AddLogicalChild(child);
+                parentFCE?.AddLogicalChild(child);
             }
         }
     }
@@ -403,10 +394,7 @@ namespace System.Windows
             else
             {
                 FrameworkContentElement parentFCE = parent as FrameworkContentElement;
-                if (parentFCE != null)
-                {
-                    parentFCE.RemoveLogicalChild(child);
-                }
+                parentFCE?.RemoveLogicalChild(child);
             }
         }
     }
@@ -479,7 +467,7 @@ namespace System.Windows
             return _enumerator;
         }
 
-        IEnumerator _enumerator;
+            private IEnumerator _enumerator;
 
 
         internal static EnumeratorWrapper Empty
@@ -495,7 +483,7 @@ namespace System.Windows
             }
         }
 
-        static EnumeratorWrapper _emptyInstance;
+            private static EnumeratorWrapper _emptyInstance;
     }
 }
 }

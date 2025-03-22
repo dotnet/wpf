@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
 using System.Runtime.InteropServices;
@@ -347,7 +347,7 @@ namespace System.Windows.Media.Imaging
             {
                 throw new System.ArgumentException(
                         SR.Format(SR.Effect_PixelFormat, pixelFormat),
-                        "pixelFormat"
+                        nameof(pixelFormat)
                         );
             }
 
@@ -403,9 +403,9 @@ namespace System.Windows.Media.Imaging
             UpdateCachedSettings();
         }
 
-        BitmapSource        _source;
-        BitmapCreateOptions _createOptions = BitmapCreateOptions.None;
-        BitmapCacheOption   _cacheOption = BitmapCacheOption.Default;
+        private BitmapSource        _source;
+        private BitmapCreateOptions _createOptions = BitmapCreateOptions.None;
+        private BitmapCacheOption   _cacheOption = BitmapCacheOption.Default;
     }
     #endregion // CachedBitmap
 }

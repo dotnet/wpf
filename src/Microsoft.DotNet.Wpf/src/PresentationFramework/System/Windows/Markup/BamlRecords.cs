@@ -777,14 +777,14 @@ namespace System.Windows.Markup
         // Cache of BamlRecords, used during read, to avoid lots of records from being
         // created.  If a record gets pinned (BamlRecord.IsPinned gets set), it is not re-used.
 
-        #if !PBTCOMPILER
-        BamlRecord[] _readCache = new BamlRecord[(int)BamlRecordType.LastRecordType];
-        #endif
+#if !PBTCOMPILER
+        private BamlRecord[] _readCache = new BamlRecord[(int)BamlRecordType.LastRecordType];
+#endif
 
         // Cache of BamlRecords, used during write, also to avoid lots of records
         // from being created.
 
-        BamlRecord[] _writeCache = null; //new BamlRecord[(int)BamlRecordType.LastRecordType];
+        private BamlRecord[] _writeCache = null; //new BamlRecord[(int)BamlRecordType.LastRecordType];
     }
 
     // The base of all baml records.  This gives a fixed size record that contains
@@ -1141,7 +1141,7 @@ namespace System.Windows.Markup
         // sync the type type of _recordSize below.
         internal const int MaxRecordSizeFieldLength = 4;
 
-        Int32          _recordSize = -1;   // we use a 7 bit encoded variable size
+        private Int32          _recordSize = -1;   // we use a 7 bit encoded variable size
 
 #endregion Data
     }
@@ -1246,9 +1246,9 @@ namespace System.Windows.Markup
 
 #region Data
 
-        string _prefix;
-        string _xmlNamespace;
-        short[] _assemblyIds;
+        private string _prefix;
+        private string _xmlNamespace;
+        private short[] _assemblyIds;
 
 #endregion Data
     }
@@ -1347,8 +1347,8 @@ namespace System.Windows.Markup
 #endregion Properties
 
 #region Data
-        string _xmlns;
-        string _clrns;
+        private string _xmlns;
+        private string _clrns;
 #endregion Data
 
     }
@@ -1392,10 +1392,10 @@ namespace System.Windows.Markup
             set { _value = value; }
         }
 
-#endregion Properties
+        #endregion Properties
 
 #region Data
-        string _value;
+        private string _value;
 #endregion Data
 
     }
@@ -1623,17 +1623,17 @@ namespace System.Windows.Markup
         internal const Int32 ValuePositionSize = 4;
 
         // Relative position in the stream where the value associated with this key starts
-        Int32 _valuePosition;
+        private Int32 _valuePosition;
 
         // Position in the stream where ValuePosition was written.  This is needed
         // when updating the ValuePosition.
-        Int64 _valuePositionPosition = -1;
+        private Int64 _valuePositionPosition = -1;
 
         // Actual object key used by a dictionary.  This is a Type object
-        object _keyObject = null;
+        private object _keyObject = null;
 
 #if !PBTCOMPILER
-        object[] _staticResourceValues;
+        private object[] _staticResourceValues;
 #endif
 
 #endregion Data
@@ -1814,20 +1814,20 @@ namespace System.Windows.Markup
         internal const Int32 ValuePositionSize = 4;
 
         // Relative position in the stream where the value associated with this key starts
-        Int32 _valuePosition;
+        private Int32 _valuePosition;
 
         // Position in the stream where ValuePosition was written.  This is needed
         // when updating the ValuePosition.
-        Int64 _valuePositionPosition = -1;
+        private Int64 _valuePositionPosition = -1;
 
         // Actual object key used by a dictionary.  This is the Value string
         // after conversion.
-        object _keyObject = null;
+        private object _keyObject = null;
 
-        Int16 _valueId;
+        private Int16 _valueId;
 
 #if !PBTCOMPILER
-        object[] _staticResourceValues;
+        private object[] _staticResourceValues;
 #endif
 
 #endregion Data
@@ -1915,9 +1915,9 @@ namespace System.Windows.Markup
 #endif
 
 #region Data
-        string _name;
-        Int16  _nameId;
-        BamlAttributeUsage _attributeUsage;
+        private string _name;
+        private Int16  _nameId;
+        private BamlAttributeUsage _attributeUsage;
 #endregion Data
 
     }
@@ -1992,8 +1992,8 @@ namespace System.Windows.Markup
 #endif
 
 #region Data
-        string _name;
-        Int16  _nameId;
+        private string _name;
+        private Int16 _nameId;
 #endregion Data
 
     }
@@ -2059,7 +2059,7 @@ namespace System.Windows.Markup
 #endif
 
 #region Data
-        short _attributeId = -1;
+        private short _attributeId = -1;
 #endregion Data
 
     }
@@ -2122,7 +2122,7 @@ namespace System.Windows.Markup
         #endregion Properties
 
         #region Data
-        short _stringId = 0;
+        private short _stringId = 0;
 
         #endregion Data
     }
@@ -2183,7 +2183,7 @@ namespace System.Windows.Markup
         #endregion Properties
 
         #region Data
-        short _typeId = 0;
+        private short _typeId = 0;
         #endregion Data
     }
 
@@ -2243,7 +2243,7 @@ namespace System.Windows.Markup
 
         #region Data
 
-        short _converterTypeId = 0;
+        private short _converterTypeId = 0;
 
         #endregion Data
     }
@@ -2305,7 +2305,7 @@ namespace System.Windows.Markup
 #endif
 
 #region Data
-        short  _attributeId = -1;
+        private short  _attributeId = -1;
 #endregion Data
 
 
@@ -2445,9 +2445,9 @@ namespace System.Windows.Markup
         #endregion Properties
 
         #region Data
-        short _attributeId = -1;
-        short _extensionTypeId = 0;
-        short _valueId = 0;
+        private short _attributeId = -1;
+        private short _extensionTypeId = 0;
+        private short _valueId = 0;
 
         private static readonly short ExtensionIdMask = 0x0FFF;
         private static readonly short TypeExtensionValueMask = 0x4000;
@@ -2668,12 +2668,12 @@ namespace System.Windows.Markup
             set { _typeContext = value; }
         }
 
-        short                  _valueId;
-        Type                   _valueType;
-        string                 _value;
-        string                 _valueMemberName;
-        Type                   _serializerType;
-        ITypeDescriptorContext _typeContext;
+        private short                  _valueId;
+        private Type                   _valueType;
+        private string                 _value;
+        private string                 _valueMemberName;
+        private Type                   _serializerType;
+        private ITypeDescriptorContext _typeContext;
     }
 
     //
@@ -2868,7 +2868,7 @@ namespace System.Windows.Markup
             set { _flags[_isRawEnumValueSetSection] = value ? 1 : 0; }
         }
 
-        object _valueObject;
+        private object _valueObject;
 
         // Allocate space in _flags.
         private static BitVector32.Section _isValueSetSection
@@ -2895,8 +2895,8 @@ namespace System.Windows.Markup
 
         internal static readonly short TypeIdValueMask = 0x4000;
 
-        short                  _attributeId = 0;
-        short                  _serializerTypeId = 0;
+        private short                  _attributeId = 0;
+        private short                  _serializerTypeId = 0;
 
 #endregion Data
     }
@@ -2987,7 +2987,7 @@ namespace System.Windows.Markup
         #endregion Properties
 
         #region Data
-        short _typeId = 0;
+        private short _typeId = 0;
         #endregion Data
     }
 
@@ -3113,7 +3113,7 @@ namespace System.Windows.Markup
 
 #region Data
 
-        short _attributeId = -1;
+        private short _attributeId = -1;
 
 #endregion Data
     }
@@ -3198,7 +3198,7 @@ namespace System.Windows.Markup
             set { Debug.Assert(value == -1, "Wrong size set for element record"); }
         }
 
-        Int32 _connectionId = -1;
+        private Int32 _connectionId = -1;
     }
 
     // An object record in the object tree.  This can be a CLR
@@ -3399,7 +3399,7 @@ namespace System.Windows.Markup
 #region Data
 
         // Id of the type of this object
-        string _runtimeName = null;
+        private string _runtimeName = null;
 
 #endregion Data
     }
@@ -3504,18 +3504,18 @@ namespace System.Windows.Markup
 
         // Size of the ContentSize field written out to the baml stream.  This
         // must be kept in sync with the size of the _contentSize field.
-        const Int64 ContentSizeSize = 4;
+        private const Int64 ContentSizeSize = 4;
 
         // Size of the content between the end of the start record and the
         // beginning of the end record for this element.
-        Int32 _contentSize = - 1;
+        private Int32 _contentSize = - 1;
 
         // Absolute position in the stream where ContentSize is written.
-        Int64 _contentSizePosition = -1;
+        private Int64 _contentSizePosition = -1;
 
 #if !PBTCOMPILER
 
-        byte[] _valuesBuffer;
+        private byte[] _valuesBuffer;
 
 #endif
 
@@ -3657,7 +3657,7 @@ namespace System.Windows.Markup
 
 #region Data
 
-        short _valueId = 0;
+        private short _valueId = 0;
 
         private static readonly byte TypeExtensionValueMask = 0x01;
         private static readonly byte StaticExtensionValueMask = 0x02;
@@ -3748,7 +3748,7 @@ namespace System.Windows.Markup
 
 #region Data
 
-        short _staticResourceId = -1;
+        private short _staticResourceId = -1;
 
 #if !PBTCOMPILER
         public override string ToString()
@@ -3826,7 +3826,7 @@ namespace System.Windows.Markup
 
 #region Data
 
-        short _attributeId = -1;
+        private short _attributeId = -1;
 
 #if !PBTCOMPILER
         public override string ToString()
@@ -3899,7 +3899,7 @@ namespace System.Windows.Markup
 #endregion Properties
 
 #region Data
-        Int16 _valueId;
+        private Int16 _valueId;
 #endregion Data
     }
 
@@ -3957,7 +3957,7 @@ namespace System.Windows.Markup
 
 #region Data
 
-        short _converterTypeId = 0;
+        private short _converterTypeId = 0;
 
 #endregion Data
     }
@@ -4076,10 +4076,10 @@ namespace System.Windows.Markup
 #endregion Properties
 
 #region Data
-        int         _maxAsyncRecords  = -1;
-        bool        _loadAsync = false;
-        long        _filePos = -1;
-        bool        _debugBaml = false;
+        private int         _maxAsyncRecords  = -1;
+        private bool        _loadAsync = false;
+        private long        _filePos = -1;
+        private bool        _debugBaml = false;
 #endregion Data
     }
 
@@ -4257,8 +4257,8 @@ namespace System.Windows.Markup
 
 #region Data
 
-        string   _assemblyFullName;
-        Assembly _assembly;
+        private string   _assemblyFullName;
+        private Assembly _assembly;
 
 #endregion Data
     }
@@ -4450,11 +4450,11 @@ namespace System.Windows.Markup
             UnusedThree          = 0x4,
         }
 
-        TypeInfoFlags _typeInfoFlags = 0;
-        short         _assemblyId = -1;
-        string        _typeFullName;
+        private TypeInfoFlags _typeInfoFlags = 0;
+        private short         _assemblyId = -1;
+        private string        _typeFullName;
 #if !PBTCOMPILER
-        Type          _type;
+        private Type          _type;
 #endif
 
 #endregion Data
@@ -4549,9 +4549,9 @@ namespace System.Windows.Markup
 
 #region Data
 
-        short _serializerTypeId = 0;
+        private short _serializerTypeId = 0;
 #if !PBTCOMPILER
-        Type _serializerType;
+        private Type _serializerType;
 #endif
 
 #endregion Data
@@ -4932,21 +4932,21 @@ namespace System.Windows.Markup
 
 #region Data
 
-        short _ownerId;
-        short _attributeId;
-        string _name;
+        private short _ownerId;
+        private short _attributeId;
+        private string _name;
 
 #if !PBTCOMPILER
-        Type               _ownerType = null;
-        RoutedEvent        _Event = null;
-        DependencyProperty _dp = null;
-        EventInfo          _ei = null;
-        PropertyInfo       _pi = null;
-        MethodInfo         _smi = null;
-        MethodInfo         _gmi = null;
+        private Type               _ownerType = null;
+        private RoutedEvent        _Event = null;
+        private DependencyProperty _dp = null;
+        private EventInfo          _ei = null;
+        private PropertyInfo       _pi = null;
+        private MethodInfo         _smi = null;
+        private MethodInfo         _gmi = null;
 #endif
 
-        object             _dpOrMiOrPi = null;   // MethodInfo, PropertyInfo or DependencyProperty
+        private object             _dpOrMiOrPi = null;   // MethodInfo, PropertyInfo or DependencyProperty
 
 #endregion Data
     }
@@ -5059,7 +5059,7 @@ namespace System.Windows.Markup
         }
 #endif
 
-        string _value ;
+        private string _value ;
 #endregion Data
     }
 
@@ -5117,7 +5117,7 @@ namespace System.Windows.Markup
         #endregion Properties
 
         #region Data
-        short _attributeId = -1;
+        private short _attributeId = -1;
         #endregion Data
     }
 
@@ -5179,8 +5179,8 @@ namespace System.Windows.Markup
             get { return 8; }
         }
 
-        uint _lineNumber;
-        uint _linePosition;
+        private uint _lineNumber;
+        private uint _linePosition;
 
 #endregion Properties
 
@@ -5241,7 +5241,7 @@ namespace System.Windows.Markup
             get { return 4; }
         }
 
-        uint _linePosition;
+        private uint _linePosition;
 
 #endregion Properties
 

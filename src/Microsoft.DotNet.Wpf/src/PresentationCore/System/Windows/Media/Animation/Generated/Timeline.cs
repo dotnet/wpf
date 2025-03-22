@@ -9,10 +9,13 @@
 // Please see MilCodeGen.html for more information.
 //
 
-// These types are aliased to match the unamanaged names used in interop
+using MS.Internal;
+using MS.Utility;
+using System.Collections;
+
 namespace System.Windows.Media.Animation
 {
-    abstract partial class Timeline : Animatable
+    public abstract partial class Timeline : Animatable
     {
         //------------------------------------------------------
         //
@@ -39,6 +42,9 @@ namespace System.Windows.Media.Animation
         {
             return (Timeline)base.CloneCurrentValue();
         }
+
+
+
 
         #endregion Public Methods
 

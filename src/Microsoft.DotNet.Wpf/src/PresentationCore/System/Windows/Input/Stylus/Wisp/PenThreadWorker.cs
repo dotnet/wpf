@@ -15,28 +15,28 @@ namespace System.Windows.Input
     internal sealed class PenThreadWorker
     {
          /// <summary>List of constants for PenImc</summary>
-        const int PenEventNone           = 0;
-        const int PenEventTimeout       = 1;
-        const int PenEventPenInRange    = 707;
-        const int PenEventPenOutOfRange = 708;
-        const int PenEventPenDown       = 709;
-        const int PenEventPenUp         = 710;
-        const int PenEventPackets       = 711;
-        const int PenEventSystem        = 714;
-        
-        const int MaxContextPerThread  = 31;  // (64 - 1) / 2 = 31.  Max handle limit for MsgWaitForMultipleMessageEx()
-        const int EventsFrequency       = 8;
+        private const int PenEventNone           = 0;
+        private const int PenEventTimeout       = 1;
+        private const int PenEventPenInRange    = 707;
+        private const int PenEventPenOutOfRange = 708;
+        private const int PenEventPenDown       = 709;
+        private const int PenEventPenUp         = 710;
+        private const int PenEventPackets       = 711;
+        private const int PenEventSystem        = 714;
 
-        IntPtr []             _handles = Array.Empty<IntPtr>();
+        private const int MaxContextPerThread  = 31;  // (64 - 1) / 2 = 31.  Max handle limit for MsgWaitForMultipleMessageEx()
+        private const int EventsFrequency       = 8;
 
-        WeakReference []      _penContexts = Array.Empty<WeakReference>();
+        private IntPtr []             _handles = Array.Empty<IntPtr>();
 
-        IPimcContext3 []       _pimcContexts = Array.Empty<IPimcContext3>();
+        private WeakReference []      _penContexts = Array.Empty<WeakReference>();
+
+        private IPimcContext3 []       _pimcContexts = Array.Empty<IPimcContext3>();
 
         /// <summary>
         /// A list of all WISP context COM object GIT keys that are locked via this thread.
         /// </summary>
-        UInt32[] _wispContextKeys = Array.Empty<UInt32>();
+        private UInt32[] _wispContextKeys = Array.Empty<UInt32>();
 
         private readonly IntPtr                _pimcResetHandle;
         private volatile bool                  __disposed;
@@ -62,7 +62,7 @@ namespace System.Windows.Input
         // Base class for all worker operations
         private abstract class WorkerOperation
         {
-            AutoResetEvent  _doneEvent;
+            private AutoResetEvent  _doneEvent;
 
             internal WorkerOperation()
             {
@@ -153,7 +153,7 @@ namespace System.Windows.Input
                 }
             }
 
-            TabletDeviceInfo[] _tabletDevicesInfo = Array.Empty<TabletDeviceInfo>();
+            private TabletDeviceInfo[] _tabletDevicesInfo = Array.Empty<TabletDeviceInfo>();
         }
 
         // Class that handles creating a context for a particular tablet device.        
@@ -209,9 +209,9 @@ namespace System.Windows.Input
                 }
             }
 
-            IntPtr _hwnd;
-            IPimcTablet3 _pimcTablet;
-            PenContextInfo _result = new PenContextInfo();
+            private IntPtr _hwnd;
+            private IPimcTablet3 _pimcTablet;
+            private PenContextInfo _result = new PenContextInfo();
         }
 
         /// <summary>
@@ -240,12 +240,12 @@ namespace System.Windows.Input
             /// <summary>
             /// The PenIMC tablet
             /// </summary>
-            IPimcTablet3 _tablet;
+            private IPimcTablet3 _tablet;
 
             /// <summary>
             /// The GIT key for the WISP COM object.
             /// </summary>
-            UInt32 _wispTabletKey;
+            private UInt32 _wispTabletKey;
         }
 
         /// <summary>
@@ -274,12 +274,12 @@ namespace System.Windows.Input
             /// <summary>
             /// The PenIMC tablet
             /// </summary>
-            IPimcTablet3 _tablet;
-            
+            private IPimcTablet3 _tablet;
+
             /// <summary>
             /// The GIT key for the WISP COM object.
             /// </summary>
-            UInt32 _wispTabletKey;
+            private UInt32 _wispTabletKey;
         }
 
         // Class that handles refreshing the cursor devices for a particular tablet device.        
@@ -316,9 +316,9 @@ namespace System.Windows.Input
                 }
             }
 
-            IPimcTablet3 _pimcTablet;
+            private IPimcTablet3 _pimcTablet;
 
-            StylusDeviceInfo[]  _stylusDevicesInfo = Array.Empty<StylusDeviceInfo>();
+            private StylusDeviceInfo[]  _stylusDevicesInfo = Array.Empty<StylusDeviceInfo>();
         }
 
         // Class that handles getting info about a specific tablet device.
@@ -358,8 +358,8 @@ namespace System.Windows.Input
                 }
             }
 
-            uint             _index;
-            TabletDeviceInfo _tabletDeviceInfo = new TabletDeviceInfo();
+            private uint             _index;
+            private TabletDeviceInfo _tabletDeviceInfo = new TabletDeviceInfo();
         }
         
         // Class that handles getting the current rect for a tablet device.
@@ -398,8 +398,8 @@ namespace System.Windows.Input
                 }
             }
 
-            IPimcTablet3          _pimcTablet;
-            TabletDeviceSizeInfo _tabletDeviceSizeInfo = new TabletDeviceSizeInfo(new Size( 1, 1), new Size( 1, 1));
+            private IPimcTablet3 _pimcTablet;
+            private TabletDeviceSizeInfo _tabletDeviceSizeInfo = new TabletDeviceSizeInfo(new Size( 1, 1), new Size( 1, 1));
         }
 
 
@@ -426,11 +426,11 @@ namespace System.Windows.Input
             {
                 _result = _penThreadWorker.AddPenContext(_newPenContext);
             }
-                    
-            PenContext      _newPenContext;
-            PenThreadWorker _penThreadWorker;
 
-            bool _result;
+            private PenContext _newPenContext;
+            private PenThreadWorker _penThreadWorker;
+
+            private bool _result;
         }
 
         // Class that handles getting the current rect for a tablet device.
@@ -456,11 +456,11 @@ namespace System.Windows.Input
             {
                 _result = _penThreadWorker.RemovePenContext(_penContextToRemove);
             }
-                    
-            PenContext  _penContextToRemove;
-            PenThreadWorker _penThreadWorker;
 
-            bool _result;
+            private PenContext  _penContextToRemove;
+            private PenThreadWorker _penThreadWorker;
+
+            private bool _result;
         }
 
 
@@ -710,7 +710,7 @@ namespace System.Windows.Input
         }
 
         /////////////////////////////////////////////////////////////////////
-        void FlushCache(bool goingOutOfRange)
+        private void FlushCache(bool goingOutOfRange)
         {
             // Force any cached move/inairmove data to be flushed if we have any.
             if (_cachedMoveData != null)
@@ -731,7 +731,7 @@ namespace System.Windows.Input
 
         /////////////////////////////////////////////////////////////////////
 
-        bool DoCacheEvent(int evt, PenContext penContext, int stylusPointerId, int [] data, int timestamp)
+        private bool DoCacheEvent(int evt, PenContext penContext, int stylusPointerId, int [] data, int timestamp)
         {
             // NOTE: Big assumption is that we always get other events between packets (ie don't get move
             // down position followed by move in up position).  We don't account for that here but it should

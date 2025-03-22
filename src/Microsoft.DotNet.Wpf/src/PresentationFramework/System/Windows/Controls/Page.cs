@@ -601,10 +601,7 @@ namespace System.Windows.Controls
             {
                 UIElement child = this.GetVisualChild(0) as UIElement;
 
-                if (child != null)
-                {
-                    child.Arrange(new Rect(new Point(), arrangeBounds));
-                }
+                child?.Arrange(new Rect(new Point(), arrangeBounds));
             }
             return arrangeBounds;
         }
@@ -950,7 +947,7 @@ namespace System.Windows.Controls
         #endregion Page Class
     }
 
-    class PageHelperObject
+    internal class PageHelperObject
     {
         //----------------------------------------------
         //

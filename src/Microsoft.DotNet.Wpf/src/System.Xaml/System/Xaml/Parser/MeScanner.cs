@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -14,7 +14,7 @@ namespace MS.Internal.Xaml.Parser
 {
     // Markup Extension Tokenizer AKA Scanner.
 
-    enum MeTokenType
+    internal enum MeTokenType
     {
         None,
         Open         = '{',
@@ -47,20 +47,20 @@ namespace MS.Internal.Xaml.Parser
         public const char Backslash = '\\';
         public const char NullChar = '\0';
 
-        enum StringState { Value, Type, Property };
+        private enum StringState { Value, Type, Property };
 
-        XamlParserContext _context;
-        string _inputText;
-        int _idx;
-        MeTokenType _token;
-        XamlType _tokenXamlType;
-        XamlMember _tokenProperty;
-        string _tokenNamespace;
-        string _tokenText;
-        StringState _state;
-        bool _hasTrailingWhitespace;
-        int _lineNumber;
-        int _startPosition;
+        private XamlParserContext _context;
+        private string _inputText;
+        private int _idx;
+        private MeTokenType _token;
+        private XamlType _tokenXamlType;
+        private XamlMember _tokenProperty;
+        private string _tokenNamespace;
+        private string _tokenText;
+        private StringState _state;
+        private bool _hasTrailingWhitespace;
+        private int _lineNumber;
+        private int _startPosition;
         private string _currentParameterName;
         private SpecialBracketCharacters _currentSpecialBracketCharacters;
 
@@ -205,7 +205,7 @@ namespace MS.Internal.Xaml.Parser
                 break;
             }
 
-            if(readString)
+            if (readString)
             {
                 if (_context.CurrentType.IsMarkupExtension
                     && _context.CurrentBracketModeParseParameters is not null
@@ -352,12 +352,12 @@ namespace MS.Internal.Xaml.Parser
             StringBuilder sb = new StringBuilder();
             char ch;
 
-            while(!IsAtEndOfInput)
+            while (!IsAtEndOfInput)
             {
                 ch = CurrentChar;
 
                 // handle escaping and quoting first.
-                if(escaped)
+                if (escaped)
                 {
                     sb.Append(Backslash);
                     sb.Append(ch);

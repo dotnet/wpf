@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -490,11 +490,11 @@ namespace MS.Internal
         internal static System.Windows.Data.XmlDataProvider XmlDataProviderForElement(DependencyObject d)
         {
             MS.Internal.Controls.IGeneratorHost host = Helper.GeneratorHostForElement(d);
-            System.Windows.Controls.ItemCollection ic = (host != null) ? host.View : null;
-            ICollectionView icv = (ic != null) ? ic.CollectionView : null;
+            System.Windows.Controls.ItemCollection ic = host?.View;
+            ICollectionView icv = ic?.CollectionView;
             MS.Internal.Data.XmlDataCollection xdc = (icv != null) ? icv.SourceCollection as MS.Internal.Data.XmlDataCollection : null;
 
-            return (xdc != null) ? xdc.ParentXmlDataProvider : null;
+            return xdc?.ParentXmlDataProvider;
         }
 
 #if CF_Envelope_Activation_Enabled
@@ -536,10 +536,7 @@ namespace MS.Internal
         {
             UIElement child = (VisualTreeHelper.GetChildrenCount(element) > 0) ? VisualTreeHelper.GetChild(element, 0) as UIElement : null;
 
-            if (child != null)
-            {
-                child.Arrange(new Rect(arrangeSize));
-            }
+            child?.Arrange(new Rect(arrangeSize));
 
             return arrangeSize;
         }
@@ -717,7 +714,7 @@ namespace MS.Internal
             }
         }
 
-        static EventHandler<System.Windows.Markup.XamlSetMarkupExtensionEventArgs> LookupSetMarkupExtensionHandler(Type type)
+        private static EventHandler<System.Windows.Markup.XamlSetMarkupExtensionEventArgs> LookupSetMarkupExtensionHandler(Type type)
         {
             if (typeof(Setter).IsAssignableFrom(type))
             {
@@ -838,10 +835,7 @@ namespace MS.Internal
             Debug.Assert(item != null);
             List<KeyValuePair<int, object>> itemValues = null;
 
-            if (itemValueStorage != null)
-            {
-                itemValueStorage.TryGetValue(item, out itemValues);
-            }
+            itemValueStorage?.TryGetValue(item, out itemValues);
 
             return itemValues;
         }
@@ -1244,8 +1238,8 @@ namespace MS.Internal
                 get { return (_valueSource & FullValueSource.IsCoercedWithCurrentValue) != 0; }
             }
 
-            object _value;
-            FullValueSource _valueSource;
+            private object _value;
+            private FullValueSource _valueSource;
         }
 
         #endregion
@@ -1521,7 +1515,7 @@ namespace MS.Internal
         //
         //------------------------------------------------------
 
-        static readonly Type   NullableType = Type.GetType("System.Nullable`1");
+        private static readonly Type   NullableType = Type.GetType("System.Nullable`1");
         // ItemValueStorage.  For each data item it stores a list of (DP, value) pairs that we want to preserve on the container.
         private static readonly UncommonField<WeakDictionary<object, List<KeyValuePair<int, object>>>> ItemValueStorageField =
                             new UncommonField<WeakDictionary<object, List<KeyValuePair<int, object>>>>();

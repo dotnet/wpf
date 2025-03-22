@@ -10,11 +10,22 @@
 //
 
 using MS.Internal;
-// These types are aliased to match the unamanaged names used in interop
+using MS.Internal.KnownBoxes;
+using MS.Internal.Collections;
+using MS.Utility;
+using System.Collections;
+using System.ComponentModel;
+using System.Globalization;
+using System.Text;
+using System.Windows.Media.Effects;
+using System.Windows.Media.Animation;
+using System.Windows.Media.Composition;
+using System.Windows.Markup;
+using System.Windows.Media.Converters;
 
 namespace System.Windows.Media
 {
-    sealed partial class GeneralTransformGroup : GeneralTransform
+    public sealed partial class GeneralTransformGroup : GeneralTransform
     {
         //------------------------------------------------------
         //
@@ -174,8 +185,7 @@ namespace System.Windows.Media
             // We check our static default fields which are of type Freezable
             // to make sure that they are not mutable, otherwise we will throw
             // if these get touched by more than one thread in the lifetime
-            // of your app. 
-
+            // of your app.
             Debug.Assert(s_Children == null || s_Children.IsFrozen,
                 "Detected context bound default value GeneralTransformGroup.s_Children (See OS Bug #947272).");
 
@@ -192,6 +202,8 @@ namespace System.Windows.Media
                                    /* isIndependentlyAnimated  = */ false,
                                    /* coerceValueCallback */ null);
         }
+
+
 
         #endregion Constructors
     }

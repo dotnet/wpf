@@ -32,8 +32,7 @@ namespace MS.Internal.Shaping
             return Table.GetUShort(offset + Index*sizeLookupRecord + offsetLookupIndex);
         }
 
-
-        const int MaximumContextualLookupNestingLevel = 16;
+        private const int MaximumContextualLookupNestingLevel = 16;
 
         public unsafe void ApplyContextualLookups(
             IOpenTypeFont           Font,           // Font access interface

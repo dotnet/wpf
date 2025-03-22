@@ -213,10 +213,7 @@ namespace System.Windows.Controls
 
             // Fire accessibility event
             ComboBoxAutomationPeer peer = UIElementAutomationPeer.FromElement(comboBox) as ComboBoxAutomationPeer;
-            if(peer != null)
-            {
-                peer.RaiseExpandCollapseAutomationEvent(oldValue, newValue);
-            }
+            peer?.RaiseExpandCollapseAutomationEvent(oldValue, newValue);
 
             if (newValue)
             {
@@ -236,10 +233,7 @@ namespace System.Windows.Controls
                             ComboBox cb = (ComboBox)arg;
                             cb.UpdateSelectionBoxItem();
 
-                            if (cb._clonedElement != null)
-                            {
-                                cb._clonedElement.CoerceValue(FrameworkElement.FlowDirectionProperty);
-                            }
+                            cb._clonedElement?.CoerceValue(FrameworkElement.FlowDirectionProperty);
 
                             return null;
                         },
@@ -572,8 +566,7 @@ namespace System.Windows.Controls
                 ||  AutomationPeer.ListenerExists(AutomationEvents.SelectionItemPatternOnElementRemovedFromSelection)   )
             {
                 ComboBoxAutomationPeer peer = UIElementAutomationPeer.CreatePeerForElement(this) as ComboBoxAutomationPeer;
-                if (peer != null)
-                    peer.RaiseSelectionEvents(e);
+                peer?.RaiseSelectionEvents(e);
             }
         }
 
@@ -617,8 +610,7 @@ namespace System.Windows.Controls
             ComboBoxAutomationPeer peer = UIElementAutomationPeer.FromElement(cb) as ComboBoxAutomationPeer;
             // Raise the propetyChangeEvent for Value if Automation Peer exist, the new Value must
             // be the one in SelctionBoxItem(selected value is the one user will care about)
-            if (peer != null)
-                peer.RaiseValuePropertyChangedEvent((string)e.OldValue, (string)e.NewValue);
+            peer?.RaiseValuePropertyChangedEvent((string)e.OldValue, (string)e.NewValue);
 
             cb.TextUpdated((string)e.NewValue, false);
         }
@@ -780,7 +772,7 @@ namespace System.Windows.Controls
             }
         }
 
-        object UpdateTextBoxCallback(object arg)
+        private object UpdateTextBoxCallback(object arg)
         {
             _updateTextBoxOperation = null;
 
@@ -801,7 +793,7 @@ namespace System.Windows.Controls
             return null;
         }
 
-        void UpdateTextBox(string matchedText, MatchedTextInfo matchedTextInfo)
+        private void UpdateTextBox(string matchedText, MatchedTextInfo matchedTextInfo)
         {
             // Replace the TextBox's text with the matched text and
             // select the text beyond what the user typed
@@ -1954,18 +1946,12 @@ namespace System.Windows.Controls
             set
             {
                 ComboBoxItem cbi = (_highlightedInfo != null) ? _highlightedInfo.Container as ComboBoxItem : null;
-                if (cbi != null)
-                {
-                    cbi.SetIsHighlighted(false);
-                }
+                cbi?.SetIsHighlighted(false);
 
                 _highlightedInfo = value;
 
                 cbi = (_highlightedInfo != null) ? _highlightedInfo.Container as ComboBoxItem : null;
-                if (cbi != null)
-                {
-                    cbi.SetIsHighlighted(true);
-                }
+                cbi?.SetIsHighlighted(true);
 
                 CoerceValue(IsSelectionBoxHighlightedProperty);
             }

@@ -548,10 +548,7 @@ namespace System.Windows
                 DependencyObject context = SingletonContext;
 
                 contextAsFreezable = context as Freezable;
-                if (contextAsFreezable != null)
-                {
-                    contextAsFreezable.GetChangeHandlersAndInvalidateSubProperties(ref calledHandlers);
-                }
+                contextAsFreezable?.GetChangeHandlersAndInvalidateSubProperties(ref calledHandlers);
 
                 if (SingletonContextProperty != null)
                 {
@@ -577,10 +574,7 @@ namespace System.Windows
                         if (currentDO != lastDO)
                         {
                             contextAsFreezable = currentDO as Freezable;
-                            if (contextAsFreezable != null)
-                            {
-                                contextAsFreezable.GetChangeHandlersAndInvalidateSubProperties(ref calledHandlers);
-                            }
+                            contextAsFreezable?.GetChangeHandlersAndInvalidateSubProperties(ref calledHandlers);
 
                             lastDO = currentDO;
                         }
@@ -1097,7 +1091,7 @@ namespace System.Windows
             // Make sure we actually removed something - if not throw an exception
             if (failed)
             {
-                throw new ArgumentException(SR.Freezable_NotAContext, "context");
+                throw new ArgumentException(SR.Freezable_NotAContext, nameof(context));
             }
         }
 
@@ -1458,7 +1452,7 @@ namespace System.Windows
 
             if (failed)
             {
-                throw new ArgumentException(SR.Freezable_UnregisteredHandler, "handler");
+                throw new ArgumentException(SR.Freezable_UnregisteredHandler, nameof(handler));
             }
         }
 
@@ -1899,10 +1893,10 @@ namespace System.Windows
                 }
             }
 
-            EventHandler[] _events;         // list of events
-            int _logSize;                   // the logical size of the list
-            int _physSize;                  // the allocated buffer size
-            bool _inUse;
+            private EventHandler[] _events;         // list of events
+            private int _logSize;                   // the logical size of the list
+            private int _physSize;                  // the allocated buffer size
+            private bool _inUse;
         }
 
         //------------------------------------------------------

@@ -14,7 +14,7 @@ using MS.Win32;
 namespace MS.Internal.AutomationProxies
 {
     // Implementation of the Hyperlink (SysLink) proxy.
-    class WindowsHyperlink: ProxyHwnd
+    internal class WindowsHyperlink: ProxyHwnd
     {
         // ------------------------------------------------------
         //
@@ -23,8 +23,8 @@ namespace MS.Internal.AutomationProxies
         // ------------------------------------------------------
 
         #region Constructors
-        
-        WindowsHyperlink (IntPtr hwnd, ProxyFragment parent, int item)
+
+        private WindowsHyperlink (IntPtr hwnd, ProxyFragment parent, int item)
             : base( hwnd, parent, item)
         {
             // Set the strings to return properly the properties.
@@ -122,18 +122,14 @@ namespace MS.Internal.AutomationProxies
         #region ProxyHwnd Interface
 
         // Builds a list of Win32 WinEvents to process a UIAutomation Event.
-        // Param name="idEvent", UIAuotmation event
-        // Param name="cEvent"out, number of winevent set in the array
-        // Returns an array of Events to Set. The number of valid entries in this array pass back in cEvent
-        protected override WinEventTracker.EvtIdProperty[] EventToWinEvent(AutomationEvent idEvent, out int cEvent)
+        protected override ReadOnlySpan<WinEventTracker.EvtIdProperty> EventToWinEvent(AutomationEvent idEvent)
         {
             if (idEvent == InvokePattern.InvokedEvent)
             {
-                cEvent = 1;
-                return new WinEventTracker.EvtIdProperty[1] { new WinEventTracker.EvtIdProperty(NativeMethods.EventSystemCaptureEnd, idEvent) };
+                return new WinEventTracker.EvtIdProperty[1] { new(NativeMethods.EventSystemCaptureEnd, idEvent) };
             }
 
-            return base.EventToWinEvent(idEvent, out cEvent);
+            return base.EventToWinEvent(idEvent);
         }
 
         #endregion ProxyHwnd Interface
@@ -344,7 +340,7 @@ namespace MS.Internal.AutomationProxies
     //------------------------------------------------------
 
     // Implementation of the PAW WindowsHyperlinkItem (SysLink) proxy.
-    class WindowsHyperlinkItem : ProxySimple, IInvokeProvider
+    internal class WindowsHyperlinkItem : ProxySimple, IInvokeProvider
     {
         // ------------------------------------------------------
         //

@@ -8,6 +8,7 @@ using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Formats.Nrbf;
 using System.IO;
+using System.Private.Windows.Ole;
 using System.Runtime.InteropServices;
 using System.Runtime.InteropServices.ComTypes;
 using System.Runtime.Serialization;
@@ -338,7 +339,7 @@ namespace System.Windows
         /// </summary>
         public bool ContainsAudio()
         {
-            return GetDataPresent(DataFormats.WaveAudio, /*autoConvert*/false);
+            return GetDataPresent(DataFormats.WaveAudio, autoConvert: false);
         }
 
         /// <summary>
@@ -346,7 +347,7 @@ namespace System.Windows
         /// </summary>
         public bool ContainsFileDropList()
         {
-            return GetDataPresent(DataFormats.FileDrop, /*autoConvert*/false);
+            return GetDataPresent(DataFormats.FileDrop, autoConvert: false);
         }
 
         /// <summary>
@@ -354,7 +355,7 @@ namespace System.Windows
         /// </summary>
         public bool ContainsImage()
         {
-            return GetDataPresent(DataFormats.Bitmap, /*autoConvert*/false);
+            return GetDataPresent(DataFormats.Bitmap, autoConvert: false);
         }
 
         /// <summary>
@@ -375,7 +376,7 @@ namespace System.Windows
                 throw new InvalidEnumArgumentException("format", (int)format, typeof(TextDataFormat));
             }
 
-            return GetDataPresent(DataFormats.ConvertToDataFormats(format), /*autoConvert*/false);
+            return GetDataPresent(DataFormats.ConvertToDataFormats(format), autoConvert: false);
         }
 
         /// <summary>
@@ -383,7 +384,7 @@ namespace System.Windows
         /// </summary>
         public Stream GetAudioStream()
         {
-            return GetData(DataFormats.WaveAudio, /*autoConvert*/false) as Stream;
+            return GetData(DataFormats.WaveAudio, autoConvert: false) as Stream;
         }
 
         /// <summary>
@@ -396,7 +397,7 @@ namespace System.Windows
 
             fileDropListCollection = new StringCollection();
 
-            fileDropList = GetData(DataFormats.FileDrop, /*autoConvert*/true) as string[];
+            fileDropList = GetData(DataFormats.FileDrop, autoConvert: true) as string[];
             if (fileDropList != null)
             {
                 fileDropListCollection.AddRange(fileDropList);
@@ -410,7 +411,7 @@ namespace System.Windows
         /// </summary>
         public BitmapSource GetImage()
         {
-            return GetData(DataFormats.Bitmap, /*autoConvert*/true) as BitmapSource;
+            return GetData(DataFormats.Bitmap, autoConvert: true) as BitmapSource;
         }
 
         /// <summary>
@@ -460,7 +461,7 @@ namespace System.Windows
         {
             ArgumentNullException.ThrowIfNull(audioStream);
 
-            SetData(DataFormats.WaveAudio, audioStream, /*autoConvert*/false);
+            SetData(DataFormats.WaveAudio, audioStream, autoConvert: false);
         }
 
         /// <summary>
@@ -492,7 +493,7 @@ namespace System.Windows
             fileDropListStrings = new string[fileDropList.Count];
             fileDropList.CopyTo(fileDropListStrings, 0);
 
-            SetData(DataFormats.FileDrop, fileDropListStrings, /*audoConvert*/true);
+            SetData(DataFormats.FileDrop, fileDropListStrings, autoConvert: true);
         }
 
         /// <summary>
@@ -502,7 +503,7 @@ namespace System.Windows
         {
             ArgumentNullException.ThrowIfNull(image);
 
-            SetData(DataFormats.Bitmap, image, /*audoConvert*/true);
+            SetData(DataFormats.Bitmap, image, autoConvert: true);
         }
 
         /// <summary>
@@ -527,7 +528,7 @@ namespace System.Windows
                 throw new InvalidEnumArgumentException("format", (int)format, typeof(TextDataFormat));
             }
 
-            SetData(DataFormats.ConvertToDataFormats(format), textData, /*audoConvert*/false);
+            SetData(DataFormats.ConvertToDataFormats(format), textData, autoConvert: false);
         }
 
         /// <summary>
@@ -645,7 +646,7 @@ namespace System.Windows
                                                            | NativeMethods.GMEM_ZEROINIT,
                                                           (IntPtr)1);
 
-                    hr = OleGetDataUnrestricted(ref formatetc, ref medium, false /* doNotReallocate */);
+                    hr = OleGetDataUnrestricted(ref formatetc, ref medium, doNotReallocate: false);
 
                     if (NativeMethods.Failed(hr))
                     {
@@ -657,13 +658,13 @@ namespace System.Windows
                     medium.tymed = TYMED.TYMED_ISTREAM;
 
                     IStream istream = null;
-                    hr = Win32CreateStreamOnHGlobal(IntPtr.Zero, true /*deleteOnRelease*/, ref istream);
+                    hr = Win32CreateStreamOnHGlobal(IntPtr.Zero, fDeleteOnRelease: true, ref istream);
                     if ( NativeMethods.Succeeded(hr) )
                     {
                         medium.unionmember = Marshal.GetComInterfaceForObject(istream, typeof(IStream));
                         Marshal.ReleaseComObject(istream);
 
-                        hr = OleGetDataUnrestricted(ref formatetc, ref medium, false /* doNotReallocate */);
+                        hr = OleGetDataUnrestricted(ref formatetc, ref medium, doNotReallocate: false);
 
                         if ( NativeMethods.Failed(hr) )
                         {
@@ -674,7 +675,7 @@ namespace System.Windows
                 else
                 {
                     medium.tymed = formatetc.tymed;
-                    hr = OleGetDataUnrestricted(ref formatetc, ref medium, false /* doNotReallocate */);
+                    hr = OleGetDataUnrestricted(ref formatetc, ref medium, doNotReallocate: false);
                 }
             }
 
@@ -702,7 +703,7 @@ namespace System.Windows
                 Marshal.ThrowExceptionForHR(DV_E_TYMED);
             }
 
-            int hr = OleGetDataUnrestricted(ref formatetc, ref medium, true /* doNotReallocate */);
+            int hr = OleGetDataUnrestricted(ref formatetc, ref medium, doNotReallocate: true);
             if (NativeMethods.Failed(hr))
             {
                 Marshal.ThrowExceptionForHR(hr);
@@ -1144,7 +1145,7 @@ namespace System.Windows
         /// </summary>
         internal static int Win32WideCharToMultiByte(string wideString, int wideChars, byte[] bytes, int byteCount)
         {
-            int win32Return = UnsafeNativeMethods.WideCharToMultiByte(0 /*CP_ACP*/, 0 /*flags*/, wideString, wideChars, bytes, byteCount, IntPtr.Zero, IntPtr.Zero);
+            int win32Return = UnsafeNativeMethods.WideCharToMultiByte(0 /*CP_ACP*/, flags: 0, wideString, wideChars, bytes, byteCount, IntPtr.Zero, IntPtr.Zero);
             int win32Error = Marshal.GetLastWin32Error();
             if (win32Return == 0)
             {
@@ -1181,13 +1182,13 @@ namespace System.Windows
             }
 
             if (IsFormatEqual(format, DataFormats.FileDrop)
-                || IsFormatEqual(format, DataFormats.FileName)
-                || IsFormatEqual(format, DataFormats.FileNameW))
+                || IsFormatEqual(format, DataFormatNames.FileNameAnsi)
+                || IsFormatEqual(format, DataFormatNames.FileNameUnicode))
             {
                 return new string[] {
                                         DataFormats.FileDrop,
-                                        DataFormats.FileNameW,
-                                        DataFormats.FileName,
+                                        DataFormatNames.FileNameUnicode,
+                                        DataFormatNames.FileNameAnsi,
                 };
             }
 
@@ -1467,30 +1468,29 @@ namespace System.Windows
                 || IsFormatEqual(format, DataFormats.OemText)
                 || IsFormatEqual(format, DataFormats.CommaSeparatedValue))
             {
-                hr = SaveStringToHandle(medium.unionmember, data.ToString(), false /* unicode */, doNotReallocate);
+                hr = SaveStringToHandle(medium.unionmember, data.ToString(), unicode: false, doNotReallocate);
             }
-            else if (IsFormatEqual(format, DataFormats.UnicodeText)||
-                     IsFormatEqual(format, DataFormats.ApplicationTrust))
+            else if (IsFormatEqual(format, DataFormats.UnicodeText))
             {
-                hr = SaveStringToHandle(medium.unionmember, data.ToString(), true /* unicode */, doNotReallocate);
+                hr = SaveStringToHandle(medium.unionmember, data.ToString(), unicode: true, doNotReallocate);
             }
             else if (IsFormatEqual(format, DataFormats.FileDrop))
             {
                 hr = SaveFileListToHandle(medium.unionmember, (string[])data, doNotReallocate);
             }
-            else if (IsFormatEqual(format, DataFormats.FileName))
+            else if (IsFormatEqual(format, DataFormatNames.FileNameAnsi))
             {
                 string[] filelist;
 
                 filelist = (string[])data;
-                hr = SaveStringToHandle(medium.unionmember, filelist[0], false /* unicode */, doNotReallocate);
+                hr = SaveStringToHandle(medium.unionmember, filelist[0], unicode: false, doNotReallocate);
             }
-            else if (IsFormatEqual(format, DataFormats.FileNameW))
+            else if (IsFormatEqual(format, DataFormatNames.FileNameUnicode))
             {
                 string[] filelist;
 
                 filelist = (string[])data;
-                hr = SaveStringToHandle(medium.unionmember, filelist[0], true /* unicode */, doNotReallocate);
+                hr = SaveStringToHandle(medium.unionmember, filelist[0], unicode: true, doNotReallocate);
             }
             else if (IsFormatEqual(format, DataFormats.Dib)
                 && SystemDrawingHelper.IsImage(data))
@@ -2732,8 +2732,7 @@ namespace System.Windows
                     {
                         data = ReadStringFromHandle(hglobal, false);
                     }
-                    else if (IsFormatEqual(format, DataFormats.UnicodeText) ||
-                             IsFormatEqual(format, DataFormats.ApplicationTrust))
+                    else if (IsFormatEqual(format, DataFormats.UnicodeText))
                     {
                         data = ReadStringFromHandle(hglobal, true);
                     }
@@ -2741,11 +2740,11 @@ namespace System.Windows
                     {
                         data = (object)ReadFileListFromHandle(hglobal);
                     }
-                    else if (IsFormatEqual(format, DataFormats.FileName))
+                    else if (IsFormatEqual(format, DataFormatNames.FileNameAnsi))
                     {
                         data = new string[] { ReadStringFromHandle(hglobal, false) };
                     }
-                    else if (IsFormatEqual(format, DataFormats.FileNameW))
+                    else if (IsFormatEqual(format, DataFormatNames.FileNameUnicode))
                     {
                         data = new string[] { ReadStringFromHandle(hglobal, true) };
                     }

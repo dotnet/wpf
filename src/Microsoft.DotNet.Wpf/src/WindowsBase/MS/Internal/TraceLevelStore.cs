@@ -152,8 +152,8 @@ namespace MS.Internal
                 return !key1.Equals(key2);
             }
 
-            object _element;            // lookup: direct ref.  In table: WeakRef
-            int _hashcode;              // cached, in case source is GC'd
+            private object _element;            // lookup: direct ref.  In table: WeakRef
+            private int _hashcode;              // cached, in case source is GC'd
         }
 
         #endregion Table Keys

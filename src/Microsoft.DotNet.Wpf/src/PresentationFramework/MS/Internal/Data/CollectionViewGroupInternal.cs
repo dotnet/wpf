@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -103,7 +103,7 @@ namespace MS.Internal.Data
 
                 if (oldIsBottomLevel != IsBottomLevel)
                 {
-                    OnPropertyChanged(new PropertyChangedEventArgs("IsBottomLevel"));
+                    OnPropertyChanged(new PropertyChangedEventArgs(nameof(IsBottomLevel)));
                 }
             }
         }
@@ -236,18 +236,12 @@ namespace MS.Internal.Data
                 for (int i = 0, n = ProtectedItems.Count; i < n; ++i)
                 {
                     CollectionViewGroupInternal subGroup = ProtectedItems[i] as CollectionViewGroupInternal;
-                    if (subGroup != null)
-                    {
-                        subGroup.Clear();
-                    }
+                    subGroup?.Clear();
                 }
             }
 
             ProtectedItems.Clear();
-            if (_nameToGroupMap != null)
-            {
-                _nameToGroupMap.Clear();
-            }
+            _nameToGroupMap?.Clear();
         }
 
         // return the index of the given item within the list of leaves governed
@@ -355,7 +349,7 @@ namespace MS.Internal.Data
             }
 
             // the loop should have found the index.  We shouldn't get here.
-            throw new ArgumentOutOfRangeException("index");
+            throw new ArgumentOutOfRangeException(nameof(index));
         }
 
         // return an enumerator over the leaves governed by this group
@@ -397,13 +391,10 @@ namespace MS.Internal.Data
                 if (comparer != null)
                 {
                     IListComparer ilc = comparer as IListComparer;
-                    if (ilc != null)
-                    {
-                        // reset the IListComparer before each search.  This cannot be done
-                        // any less frequently (e.g. in Root.AddToSubgroups), due to the
-                        // possibility that the item may appear in more than one subgroup.
-                        ilc.Reset();
-                    }
+                    // reset the IListComparer before each search.  This cannot be done
+                    // any less frequently (e.g. in Root.AddToSubgroups), due to the
+                    // possibility that the item may appear in more than one subgroup.
+                    ilc?.Reset();
 
                     for (index = low; index < high; ++index)
                     {
@@ -512,8 +503,7 @@ namespace MS.Internal.Data
         // the group's description has changed - notify parent
         protected virtual void OnGroupByChanged()
         {
-            if (Parent != null)
-                Parent.OnGroupByChanged();
+            Parent?.OnGroupByChanged();
         }
 
         /// <summary>
@@ -662,8 +652,8 @@ namespace MS.Internal.Data
                 return +1;
             }
 
-            int _index;
-            IList _list;
+            private int _index;
+            private IList _list;
         }
 
         #endregion Internal Types
@@ -722,7 +712,7 @@ namespace MS.Internal.Data
             unchecked { ++_version; }     // this invalidates enumerators
         }
 
-        void OnGroupByChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        private void OnGroupByChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
         {
             OnGroupByChanged();
         }
@@ -773,7 +763,7 @@ namespace MS.Internal.Data
                 DoReset();
             }
 
-            void DoReset()
+            private void DoReset()
             {
                 _version = _group._version;
                 _index = -1;
@@ -825,11 +815,11 @@ namespace MS.Internal.Data
                 }
             }
 
-            CollectionViewGroupInternal _group; // parent group
-            int _version;   // parent group's version at ctor
-            int _index;     // current index into Items
-            IEnumerator _subEnum;   // enumerator over current subgroup
-            object _current;   // current item
+            private CollectionViewGroupInternal _group; // parent group
+            private int _version;   // parent group's version at ctor
+            private int _index;     // current index into Items
+            private IEnumerator _subEnum;   // enumerator over current subgroup
+            private object _current;   // current item
         }
 
         // When removing a leaf item, ChangeCounts removes groups that become empty.

@@ -11,16 +11,17 @@
 
 using MS.Internal;
 using System.ComponentModel;
+using System.Globalization;
 using System.Windows.Markup;
 using System.Windows.Converters;
-// These types are aliased to match the unamanaged names used in interop
 
 namespace System.Windows
 {
+
     [Serializable]
     [TypeConverter(typeof(SizeConverter))]
     [ValueSerializer(typeof(SizeValueSerializer))] // Used by MarkupWriter
-    partial struct Size : IFormattable
+    public partial struct Size : IFormattable
     {
         //------------------------------------------------------
         //
@@ -247,6 +248,7 @@ namespace System.Windows
         /// </returns>
         public override string ToString()
         {
+
             // Delegate to the internal method which implements all ToString calls.
             return ConvertToString(null /* format string */, null /* format provider */);
         }
@@ -260,6 +262,7 @@ namespace System.Windows
         /// </returns>
         public string ToString(IFormatProvider provider)
         {
+
             // Delegate to the internal method which implements all ToString calls.
             return ConvertToString(null /* format string */, provider);
         }
@@ -275,6 +278,7 @@ namespace System.Windows
         /// </returns>
         string IFormattable.ToString(string format, IFormatProvider provider)
         {
+
             // Delegate to the internal method which implements all ToString calls.
             return ConvertToString(format, provider);
         }
@@ -331,6 +335,9 @@ namespace System.Windows
 
         internal double _width;
         internal double _height;
+
+
+
 
         #endregion Internal Fields
 

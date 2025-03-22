@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -21,7 +21,7 @@ using MS.Win32;
 
 namespace MS.Internal.AutomationProxies
 {
-    class NonClientArea: ProxyHwnd, IScrollProvider
+    internal class NonClientArea: ProxyHwnd, IScrollProvider
     {
         #region Constructors
 
@@ -50,10 +50,7 @@ namespace MS.Internal.AutomationProxies
                 }
             }
 
-            if (menuProxy != null)
-            {
-                menuProxy.AdviseEventAdded(eventId, aidProps);
-            }
+            menuProxy?.AdviseEventAdded(eventId, aidProps);
 
             base.AdviseEventAdded(eventId, aidProps);
         }
@@ -73,10 +70,7 @@ namespace MS.Internal.AutomationProxies
                 }
             }
 
-            if (menuProxy != null)
-            {
-                menuProxy.AdviseEventRemoved(eventId, aidProps);
-            }
+            menuProxy?.AdviseEventRemoved(eventId, aidProps);
 
             base.AdviseEventRemoved(eventId, aidProps);
         }
@@ -650,10 +644,7 @@ namespace MS.Internal.AutomationProxies
         private static void RaiseMenuEventsOnClient(IntPtr hwnd, int eventId, object idProp, int idObject, int idChild)
         {
             ProxySimple el = WindowsMenu.CreateMenuItemFromEvent(hwnd, eventId, idChild, idObject);
-            if (el != null)
-            {
-                el.DispatchEvents(eventId, idProp, idObject, idChild);
-            }
+            el?.DispatchEvents(eventId, idProp, idObject, idChild);
         }
 
         private static void RaiseEventsOnClient(IntPtr hwnd, int eventId, object idProp, int idObject, int idChild)
@@ -661,10 +652,7 @@ namespace MS.Internal.AutomationProxies
             if (Misc.GetClassName(hwnd) == "ComboLBox")
             {
                 ProxySimple el = (ProxySimple)WindowsListBox.Create(hwnd, idChild);
-                if (el != null)
-                {
-                    el.DispatchEvents(eventId, idProp, idObject, idChild);
-                }
+                el?.DispatchEvents(eventId, idProp, idObject, idChild);
             }
         }
 
@@ -688,10 +676,7 @@ namespace MS.Internal.AutomationProxies
                 if (scrollBar != null)
                 {
                     ProxySimple scrollBarBit = WindowsScrollBarBits.CreateFromChildId(hwnd, scrollBar, idChild, sbFlag);
-                    if (scrollBarBit != null)
-                    {
-                        scrollBarBit.DispatchEvents(eventId, idProp, idObject, idChild);
-                    }
+                    scrollBarBit?.DispatchEvents(eventId, idProp, idObject, idChild);
                 }
 
                 return;
@@ -732,10 +717,7 @@ namespace MS.Internal.AutomationProxies
                 el = (ProxyFragment)WindowsListBox.Create(hwnd, 0);
             }
 
-            if (el != null)
-            {
-                el.DispatchEvents(eventId, idProp, idObject, idChild);
-            }
+            el?.DispatchEvents(eventId, idProp, idObject, idChild);
         }
 
         private static void RaiseEventsOnWindow(IntPtr hwnd, int eventId, object idProp, int idObject, int idChild)

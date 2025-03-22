@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -979,7 +979,7 @@ namespace Microsoft.Windows.Controls.Ribbon
 
         #region Dropdown Resizing
 
-        void OnPopupResizeStarted(object sender, DragStartedEventArgs e)
+        private void OnPopupResizeStarted(object sender, DragStartedEventArgs e)
         {
             RibbonDropDownHelper.OnPopupResizeStarted(_itemsPresenter);
 
@@ -996,7 +996,7 @@ namespace Microsoft.Windows.Controls.Ribbon
             e.Handled = true;
         }
 
-        void OnPopupResize(object sender, DragDeltaEventArgs e)
+        private void OnPopupResize(object sender, DragDeltaEventArgs e)
         {
             RibbonDropDownHelper.ResizePopup(_itemsPresenter,
                 RibbonDropDownHelper.GetMinDropDownSize(_itemsHost, _popup, BorderThickness),
@@ -1045,10 +1045,7 @@ namespace Microsoft.Windows.Controls.Ribbon
 
         internal void BringIndexIntoView(int index)
         {
-            if (_itemsHost != null)
-            {
-                _itemsHost.BringIndexIntoViewInternal(index);
-            }
+            _itemsHost?.BringIndexIntoViewInternal(index);
         }
 
         private void OnDropDownOpened(EventArgs e)
@@ -1127,10 +1124,7 @@ namespace Microsoft.Windows.Controls.Ribbon
 
             // Raise UI Automation Events
             RibbonMenuButtonAutomationPeer peer = UIElementAutomationPeer.FromElement(this) as RibbonMenuButtonAutomationPeer;
-            if (peer != null)
-            {
-                peer.RaiseExpandCollapseAutomationEvent(!(bool)e.OldValue, !(bool)e.NewValue);
-            }
+            peer?.RaiseExpandCollapseAutomationEvent(!(bool)e.OldValue, !(bool)e.NewValue);
         }
 
         private static object CoerceIsDropDownOpen(DependencyObject d, object baseValue)
@@ -1169,7 +1163,7 @@ namespace Microsoft.Windows.Controls.Ribbon
             IsVisibleChanged += new DependencyPropertyChangedEventHandler(HandleIsVisibleChanged);
         }
 
-        void HandleIsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
+        private void HandleIsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
             RibbonHelper.DelayCoerceProperty(this, IsDropDownOpenProperty);
             IsVisibleChanged -= new DependencyPropertyChangedEventHandler(HandleIsVisibleChanged);
@@ -1492,10 +1486,7 @@ namespace Microsoft.Windows.Controls.Ribbon
                     // ...call PopMenuMode.
                     MethodInfo method = type.GetMethod("PopMenuMode", BindingFlags.NonPublic | BindingFlags.Instance);
                     Debug.Assert(method != null);
-                    if (method != null)
-                    {
-                        method.Invoke(this, null);
-                    }
+                    method?.Invoke(this, null);
                 }
             }
         }
@@ -1665,7 +1656,7 @@ namespace Microsoft.Windows.Controls.Ribbon
         {
             if (e.OriginalSource == this)
             {
-                RibbonHelper.SetKeyTipPlacementForButton(this, e, _partToggleButton == null ? null : _partToggleButton.Image);
+                RibbonHelper.SetKeyTipPlacementForButton(this, e, _partToggleButton?.Image);
             }
         }
 

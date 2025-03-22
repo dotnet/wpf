@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -77,7 +77,7 @@ namespace MS.Internal.Automation
             {
                 return null;
             }
-            return FindVisibleSibling ( parent, el, true /* Next */);
+            return FindVisibleSibling ( parent, el, searchForwards: true);
         }
 
         // Warning: Method is O(N). See FindVisibleSibling function for more information.
@@ -92,7 +92,7 @@ namespace MS.Internal.Automation
                 return null;
             }
 
-            return FindVisibleSibling ( parent, el, false /* Previous */);
+            return FindVisibleSibling ( parent, el, searchForwards: false);
         }
 
         internal static Visual GetRoot( Visual el )
@@ -156,7 +156,7 @@ namespace MS.Internal.Automation
             Point               pointClient = PointUtil.ScreenToClient( pointScreen, hwndSource );
             Point               pointRoot   = PointUtil.ClientToRoot(pointClient, hwndSource);
             PointHitTestResult  result      = VisualTreeUtils.AsNearestPointHitTestResult(VisualTreeHelper.HitTest(root, pointRoot));
-            Visual              visual      = (result != null) ? result.VisualHit : null;
+            Visual              visual      = result?.VisualHit;
 
 
             return visual;

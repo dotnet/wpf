@@ -111,7 +111,7 @@ namespace System.Windows.Markup
 #endif
         }
 
-        FormatVersion _bamlVersion;
+        private FormatVersion _bamlVersion;
     }
 }
 

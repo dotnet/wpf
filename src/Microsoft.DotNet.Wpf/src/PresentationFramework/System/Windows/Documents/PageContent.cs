@@ -73,10 +73,7 @@ namespace System.Windows.Documents
 #endif
 
 //             VerifyAccess();
-            if (_asyncOp != null)
-            {
-                _asyncOp.Wait();
-            }
+            _asyncOp?.Wait();
 
             FixedPage p = null;
 
@@ -174,7 +171,7 @@ namespace System.Windows.Documents
             FixedPage fp = value as FixedPage;
             if (fp == null)
             {
-                throw new ArgumentException(SR.Format(SR.UnexpectedParameterType, value.GetType(), typeof(FixedPage)), "value");
+                throw new ArgumentException(SR.Format(SR.UnexpectedParameterType, value.GetType(), typeof(FixedPage)), nameof(value));
             }
 
             if (_child != null)
@@ -220,7 +217,7 @@ namespace System.Windows.Documents
                                 (Uri) null,
                                 new PropertyChangedCallback(OnSourceChanged)));
 
-        static void OnSourceChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        private static void OnSourceChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             PageContent p = (PageContent) d;
             p._pageRef = null;

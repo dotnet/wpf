@@ -1048,7 +1048,7 @@ namespace MS.Internal.AutomationProxies
         #region Private Fields
 
         private const int _checkbox = -1;
-        bool _isComctrlV6OnOsVerV6orHigher;
+        private bool _isComctrlV6OnOsVerV6orHigher;
         #endregion Private Fields
     }
 }

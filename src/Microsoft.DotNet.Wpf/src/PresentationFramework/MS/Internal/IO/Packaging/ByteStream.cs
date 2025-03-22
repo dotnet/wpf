@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -200,7 +200,7 @@ namespace MS.Internal.IO.Packaging
                     translatedSeekOrigin = NativeMethods.STREAM_SEEK_SET;
                     if (0 > offset)
                     {
-                        throw new ArgumentOutOfRangeException("offset",
+                        throw new ArgumentOutOfRangeException(nameof(offset),
                                                               SR.SeekNegative);
                     }
                     break;
@@ -262,14 +262,14 @@ namespace MS.Internal.IO.Packaging
             // count has to be positive number
             if (0 > count)
             {
-                throw new ArgumentOutOfRangeException("count",
+                throw new ArgumentOutOfRangeException(nameof(count),
                                                       SR.ReadCountNegative);
             }
 
             // offset has to be a positive number
             if (0 > offset)
             {
-                throw new ArgumentOutOfRangeException("offset",
+                throw new ArgumentOutOfRangeException(nameof(offset),
                                                       SR.BufferOffsetNegative);
             }
 
@@ -277,7 +277,7 @@ namespace MS.Internal.IO.Packaging
             // since all values are > 0, there is no chance of overflow
             if (!((buffer.Length > 0) && ((buffer.Length - offset) >= count)))
             {
-                throw new ArgumentException(SR.BufferTooSmall, "buffer");
+                throw new ArgumentException(SR.BufferTooSmall, nameof(buffer));
             }
             
             // offset == 0 is the normal case
@@ -369,7 +369,7 @@ namespace MS.Internal.IO.Packaging
         }
 
         #endregion Internal Properties
-        
+
 
         //------------------------------------------------------
         //
@@ -381,12 +381,11 @@ namespace MS.Internal.IO.Packaging
         // This class does not control the life cycle of _securitySupressedIStream
         //  thus it should not dispose it when this class gets disposed
         //  the client code of this class should be the one that dispose _securitySupressedIStream
-        SecuritySuppressedIStream _securitySuppressedIStream;
-
-        FileAccess                 _access;
-        long                       _length = 0;
-        bool                       _isLengthInitialized = false;
-        bool                       _disposed = false;
+        private SecuritySuppressedIStream _securitySuppressedIStream;
+        private FileAccess                 _access;
+        private long                       _length = 0;
+        private bool                       _isLengthInitialized = false;
+        private bool                       _disposed = false;
 
         #endregion Private Fields
         

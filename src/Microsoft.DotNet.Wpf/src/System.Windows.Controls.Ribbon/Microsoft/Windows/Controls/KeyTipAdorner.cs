@@ -51,7 +51,7 @@ namespace Microsoft.Windows.Controls
             if (index != 0 ||
                 _keyTipControl == null)
             {
-                throw new ArgumentOutOfRangeException("index");
+                throw new ArgumentOutOfRangeException(nameof(index));
             }
             return _keyTipControl;
         }
@@ -76,10 +76,7 @@ namespace Microsoft.Windows.Controls
 
         protected override Size ArrangeOverride(Size finalSize)
         {
-            if (_keyTipControl != null)
-            {
-                _keyTipControl.Arrange(new Rect(_keyTipControl.DesiredSize));
-            }
+            _keyTipControl?.Arrange(new Rect(_keyTipControl.DesiredSize));
             return finalSize;
         }
 
@@ -378,7 +375,7 @@ namespace Microsoft.Windows.Controls
 
         #region Private Data
 
-        KeyTipControl _keyTipControl;
+        private KeyTipControl _keyTipControl;
         private TranslateTransform _keyTipTransform = new TranslateTransform(0, 0);
 
         private const double RibbonGroupKeyTipAxisNudgeSpace = 15;

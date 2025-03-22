@@ -560,7 +560,7 @@ namespace System.Windows.Xps.Packaging
         #endregion Private data
     }
 
-    class NodeComparer : IComparer<InterleavingNode>
+    internal class NodeComparer : IComparer<InterleavingNode>
     {
         #region Constructors
 

@@ -296,7 +296,7 @@ public class DependencyPropertyTests
 
     public static IEnumerable<object?[]> Register_String_Type_Type_ValidateFail_TestData()
     {
-        yield return new object?[] { " ", typeof(int), typeof(DependencyObjectTests), null, 0 };
+        yield return new object?[] { " ", typeof(int), typeof(DependencyObjectTest1), null, 0 };
         yield return new object?[] { " ", typeof(int), typeof(DependencyObject), new PropertyMetadata(), 0 };
         yield return new object?[] { "Register_String_Type_Type_ValidateFail_TestData1", typeof(string), typeof(DependencyObjectTests), null, null };
         yield return new object?[] { "Register_String_Type_Type_ValidateFail_TestData2", typeof(string), typeof(DependencyObject), new PropertyMetadata(), null };
@@ -1082,7 +1082,8 @@ public class DependencyPropertyTests
         Assert.NotNull(key.DependencyProperty);
         Assert.Same(key.DependencyProperty, key.DependencyProperty);
 
-        DependencyProperty property = key.DependencyProperty;        Assert.NotNull(property.DefaultMetadata);
+        DependencyProperty property = key.DependencyProperty;
+        Assert.NotNull(property.DefaultMetadata);
         Assert.Same(property.DefaultMetadata, property.DefaultMetadata);
         Assert.Null(property.DefaultMetadata.CoerceValueCallback);
         Assert.Equal(expectedDefaultValue, property.DefaultMetadata.DefaultValue);
@@ -1218,6 +1219,10 @@ public class DependencyPropertyTests
     }
 
     private class SubDispatcherObject : DispatcherObject
+    {
+    }
+
+    private sealed class DependencyObjectTest1
     {
     }
 }

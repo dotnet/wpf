@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -249,10 +249,7 @@ namespace System.Windows.Controls
             DependencyObject oldSite = (DependencyObject)e.OldValue;
             DependencyObject newSite = (DependencyObject)e.NewValue;
 
-            if (oldSite != null)
-            {
-                oldSite.ClearValue(ValidationAdornerSiteForProperty);
-            }
+            oldSite?.ClearValue(ValidationAdornerSiteForProperty);
 
             if (newSite != null)
             {
@@ -315,10 +312,7 @@ namespace System.Windows.Controls
             DependencyObject oldSiteFor = (DependencyObject)e.OldValue;
             DependencyObject newSiteFor = (DependencyObject)e.NewValue;
 
-            if (oldSiteFor != null)
-            {
-                oldSiteFor.ClearValue(ValidationAdornerSiteProperty);
-            }
+            oldSiteFor?.ClearValue(ValidationAdornerSiteProperty);
 
             if (newSiteFor != null)
             {
@@ -578,7 +572,7 @@ namespace System.Windows.Controls
             }
         }
 
-        static void OnValidationError(DependencyObject source, ValidationError validationError, ValidationErrorEventAction action)
+        private static void OnValidationError(DependencyObject source, ValidationError validationError, ValidationErrorEventAction action)
         {
             ValidationErrorEventArgs args = new ValidationErrorEventArgs(validationError, action);
 

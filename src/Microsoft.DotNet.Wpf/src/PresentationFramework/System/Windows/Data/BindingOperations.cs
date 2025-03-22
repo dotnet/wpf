@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -89,7 +89,7 @@ namespace System.Windows.Data
         public static BindingBase GetBindingBase(DependencyObject target, DependencyProperty dp)
         {
             BindingExpressionBase b = GetBindingExpressionBase(target, dp);
-            return (b != null) ? b.ParentBindingBase : null;
+            return b?.ParentBindingBase;
         }
 
         /// <summary>
@@ -569,10 +569,7 @@ namespace System.Windows.Data
         internal static void LogException(Exception ex)
         {
             ExceptionLogger logger = _exceptionLogger;
-            if (logger != null)
-            {
-                logger.LogException(ex);
-            }
+            logger?.LogException(ex);
         }
 
         private static ExceptionLogger _exceptionLogger;
@@ -593,7 +590,7 @@ namespace System.Windows.Data
 
             internal List<Exception> Log { get { return _log; } }
 
-            List<Exception> _log = new List<Exception>();
+            private List<Exception> _log = new List<Exception>();
         }
         #endregion Exception logging
     }

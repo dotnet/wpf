@@ -67,7 +67,7 @@ namespace MS.Internal.MilCodeGen.Generators
             string generatedPath = 
                 Path.Combine(
                     _resourceModel.OutputDirectory,
-                    "src\\Graphics\\core\\uce"
+                    "src\\WpfGfx\\core\\uce"
                     );
 
             FileCodeSink processMessageFile = new FileCodeSink(generatedPath, "generated_process_message.inl");

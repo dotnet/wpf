@@ -9,13 +9,16 @@
 // Please see MilCodeGen.html for more information.
 //
 
+using MS.Internal;
+using MS.Utility;
+using System.Collections;
 using System.Windows.Media.Animation;
 using System.Windows.Media.Composition;
-// These types are aliased to match the unamanaged names used in interop
+using System.Windows.Media.Imaging;
 
 namespace System.Windows.Media.Effects
 {
-    sealed partial class PixelShader : Animatable, DUCE.IResource
+    public sealed partial class PixelShader : Animatable, DUCE.IResource
     {
         //------------------------------------------------------
         //
@@ -146,6 +149,8 @@ namespace System.Windows.Media.Effects
             {
                 if (_duceResource.CreateOrAddRefOnChannel(this, channel, System.Windows.Media.Composition.DUCE.ResourceType.TYPE_PIXELSHADER))
                 {
+
+
                     AddRefOnChannelAnimations(channel);
 
 
@@ -163,8 +168,11 @@ namespace System.Windows.Media.Effects
 
                 if (_duceResource.ReleaseOnChannel(channel))
                 {
+
+
                     ReleaseOnChannelAnimations(channel);
-}
+
+                }
             }
         }
         DUCE.ResourceHandle DUCE.IResource.GetHandle(DUCE.Channel channel)
@@ -269,8 +277,7 @@ namespace System.Windows.Media.Effects
             // We check our static default fields which are of type Freezable
             // to make sure that they are not mutable, otherwise we will throw
             // if these get touched by more than one thread in the lifetime
-            // of your app. 
-
+            // of your app.
 
 
             // Initializations
@@ -294,6 +301,8 @@ namespace System.Windows.Media.Effects
                                    /* isIndependentlyAnimated  = */ false,
                                    /* coerceValueCallback */ null);
         }
+
+
 
         #endregion Constructors
     }

@@ -463,7 +463,7 @@ namespace MS.Internal.AppModel
 
         #region Private fields
 
-        PageFunctionBase _keepAlivePageFunction = null;
+        private PageFunctionBase _keepAlivePageFunction = null;
 
         #endregion
     }
@@ -559,7 +559,7 @@ namespace MS.Internal.AppModel
             // Special case: doing fragment navigation or CustomContentState navigation
             // within a PF. Then don't create a new PF object!
             IDownloader idl = navigator as IDownloader;
-            NavigationService ns = idl != null ? idl.Downloader : null;
+            NavigationService ns = idl?.Downloader;
             Debug.Assert(ns != null, "Fragment navigation won't work when the INavigator doesn't have a NavigationService.");
 
             PageFunctionBase pageFunction =
@@ -695,10 +695,7 @@ namespace MS.Internal.AppModel
         {
             // Need to explicitly add a call to InitializeComponent() for Page
             IComponentConnector iComponentConnector = pageFunction as IComponentConnector;
-            if (iComponentConnector != null)
-            {
-                iComponentConnector.InitializeComponent();
-            }
+            iComponentConnector?.InitializeComponent();
         }
 
         #endregion

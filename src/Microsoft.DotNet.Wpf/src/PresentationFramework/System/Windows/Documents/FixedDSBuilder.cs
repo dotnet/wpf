@@ -24,7 +24,7 @@ namespace System.Windows.Documents
     /// </summary>
     internal sealed class FixedDSBuilder
     {
-        class NameHashFixedNode
+        private class NameHashFixedNode
         {
             internal NameHashFixedNode(UIElement e, int i)
             {

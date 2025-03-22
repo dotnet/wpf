@@ -312,7 +312,7 @@ namespace MS.Internal.Controls
         #endregion IOleInPlaceSite
 
 
-        ActiveXHelper.ActiveXState HostState
+        private ActiveXHelper.ActiveXState HostState
         {
             get
             {

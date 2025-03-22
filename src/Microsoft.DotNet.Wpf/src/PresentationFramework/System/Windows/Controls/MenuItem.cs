@@ -957,10 +957,7 @@ namespace System.Windows.Controls
             }
             
             MenuItemAutomationPeer peer = UIElementAutomationPeer.FromElement(menuItem) as MenuItemAutomationPeer;
-            if (peer != null)
-            {
-                peer.RaiseToggleStatePropertyChangedEvent(oldValue, newValue);
-            }
+            peer?.RaiseToggleStatePropertyChangedEvent(oldValue, newValue);
         }
 
         /// <summary>
@@ -1383,8 +1380,7 @@ namespace System.Windows.Controls
             if (AutomationPeer.ListenerExists(AutomationEvents.InvokePatternOnInvoked))
             {
                 AutomationPeer peer = UIElementAutomationPeer.CreatePeerForElement(this);
-                if (peer != null)
-                    peer.RaiseAutomationEvent(AutomationEvents.InvokePatternOnInvoked);
+                peer?.RaiseAutomationEvent(AutomationEvents.InvokePatternOnInvoked);
             }
 
             // We have just caused all the popup windows to be hidden and queued for async
@@ -1805,10 +1801,7 @@ namespace System.Windows.Controls
                         if (IsKeyboardFocusWithin)
                         {
                             ItemsControl parent = ItemsControl.ItemsControlFromItemContainer(this);
-                            if (parent != null)
-                            {
-                                parent.Focus();
-                            }
+                            parent?.Focus();
                         }
                     }
                     else
@@ -2106,7 +2099,7 @@ namespace System.Windows.Controls
                     }
                     else
                     {
-                        throw new InvalidOperationException(SR.Format(SR.InvalidItemContainer, this.GetType().Name, typeof(MenuItem).Name, typeof(Separator).Name, itemContainer));
+                        throw new InvalidOperationException(SR.Format(SR.InvalidItemContainer, this.GetType().Name, nameof(MenuItem), nameof(Separator), itemContainer));
                     }
                 }
             }
@@ -2622,17 +2615,11 @@ namespace System.Windows.Controls
 
             set
             {
-                if (_currentSelection != null)
-                {
-                    _currentSelection.SetCurrentValueInternal(IsSelectedProperty, BooleanBoxes.FalseBox);
-                }
+                _currentSelection?.SetCurrentValueInternal(IsSelectedProperty, BooleanBoxes.FalseBox);
 
                 _currentSelection = value;
 
-                if (_currentSelection != null)
-                {
-                    _currentSelection.SetCurrentValueInternal(IsSelectedProperty, BooleanBoxes.TrueBox);
-                }
+                _currentSelection?.SetCurrentValueInternal(IsSelectedProperty, BooleanBoxes.TrueBox);
 
                 // NOTE: (Win32 disparity) If CurrentSelection changes to null
                 //       and the focus was within the old CurrentSelection, we
@@ -2708,9 +2695,8 @@ namespace System.Windows.Controls
 
         private MenuItem _currentSelection;
         private Popup _submenuPopup;
-
-        DispatcherTimer _openHierarchyTimer;
-        DispatcherTimer _closeHierarchyTimer;
+        private DispatcherTimer _openHierarchyTimer;
+        private DispatcherTimer _closeHierarchyTimer;
 
         private bool _userInitiatedPress;
         #endregion

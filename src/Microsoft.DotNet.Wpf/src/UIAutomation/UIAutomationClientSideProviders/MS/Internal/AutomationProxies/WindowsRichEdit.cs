@@ -16,7 +16,7 @@ using NativeMethodsSetLastError = MS.Internal.UIAutomationClientSideProviders.Na
 
 namespace MS.Internal.AutomationProxies
 {
-    class WindowsRichEdit : ProxyHwnd, IValueProvider, ITextProvider
+    internal class WindowsRichEdit : ProxyHwnd, IValueProvider, ITextProvider
     {
         // ------------------------------------------------------
         //
@@ -26,7 +26,7 @@ namespace MS.Internal.AutomationProxies
 
         #region Constructors
 
-        WindowsRichEdit (IntPtr hwnd, ProxyFragment parent, int style)
+        private WindowsRichEdit (IntPtr hwnd, ProxyFragment parent, int style)
             : base( hwnd, parent, style )
         {
             _type = WindowsEditBox.GetEditboxtype(hwnd);
@@ -530,7 +530,7 @@ namespace MS.Internal.AutomationProxies
                     object embeddedObject;
                     while (start < end && embeddedObjectOffset != -1)
                     {
-                        sbText.Append(text.Substring(start, embeddedObjectOffset - start));
+                        sbText.Append(text.AsSpan(start, embeddedObjectOffset - start));
                         range.SetRange(embeddedObjectOffset, end);
                         if (range.GetEmbeddedObject(out embeddedObject) == NativeMethods.S_OK && embeddedObject != null)
                         {
@@ -548,7 +548,7 @@ namespace MS.Internal.AutomationProxies
 
                     if (start < end)
                     {
-                        sbText.Append(text.Substring(start, end - start));
+                        sbText.Append(text.AsSpan(start, end - start));
                     }
 
                     text = sbText.ToString();

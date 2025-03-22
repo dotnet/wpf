@@ -660,7 +660,7 @@ namespace System.Windows.Annotations
             {
                 host = StyleHelper.FindNameInTemplateContent(fdr, "PART_ContentHost", fdr.TemplateInternal) as Decorator;
             }
-            return host != null ? host.Child : null;
+            return host?.Child;
         }
 
         private static IList<IAttachedAnnotation> GetSpannedAnnotationsForFlow(AnnotationService service, ITextSelection selection)
@@ -926,7 +926,7 @@ namespace System.Windows.Annotations
             {
                 SolidColorBrush brush = highlightBrush as SolidColorBrush;
                 if (brush == null)
-                    throw new ArgumentException(SR.InvalidHighlightColor, "highlightBrush");
+                    throw new ArgumentException(SR.InvalidHighlightColor, nameof(highlightBrush));
 
                 // Opacity less than 0 is treated as 0; greater than 1 is treated a 1.
                 byte alpha;
@@ -1082,7 +1082,7 @@ namespace System.Windows.Annotations
 
             if (!service.IsEnabled)
             {
-                throw new ArgumentException(SR.AnnotationServiceNotEnabled, "service");
+                throw new ArgumentException(SR.AnnotationServiceNotEnabled, nameof(service));
             }
 
             DocumentViewerBase viewer = service.Root as DocumentViewerBase;

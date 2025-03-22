@@ -104,7 +104,7 @@ namespace MS.Internal.Annotations
         #region Private Methods
 
         // fire an event for each item removed from the collection
-        void OnCollectionCleared(IEnumerable<AnnotationResource> list)
+        private void OnCollectionCleared(IEnumerable<AnnotationResource> list)
         {
             foreach (object item in list)
             {

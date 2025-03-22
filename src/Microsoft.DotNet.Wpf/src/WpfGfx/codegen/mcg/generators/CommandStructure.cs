@@ -89,7 +89,7 @@ namespace MS.Internal.MilCodeGen.Generators
             string generatedPath = 
                 Path.Combine(
                     _resourceModel.OutputDirectory,
-                    "src\\Graphics\\Include\\Generated"
+                    "src\\WpfGfx\\Include\\Generated"
                     );
 
             FileCodeSink cppFile = new FileCodeSink(generatedPath, "wgx_commands.h");;
@@ -156,11 +156,9 @@ namespace MS.Internal.MilCodeGen.Generators
                 [[inline]]
                     // This code is generated from mcg\generators\CommandStructure.cs
 
-                    using System;
                     using System.Windows.Media.Composition;
                     using System.Runtime.InteropServices;
                     using System.Windows.Media.Effects;
-                    using System.Security;
 
                     using BOOL = System.UInt32;
 

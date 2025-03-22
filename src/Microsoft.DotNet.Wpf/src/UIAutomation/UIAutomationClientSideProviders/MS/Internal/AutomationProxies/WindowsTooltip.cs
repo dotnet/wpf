@@ -13,7 +13,7 @@ using MS.Win32;
 namespace MS.Internal.AutomationProxies
 {
     // Class definition for the WindowsTooltip proxy. 
-    class WindowsTooltip : ProxyHwnd
+    internal class WindowsTooltip : ProxyHwnd
     {
         // ------------------------------------------------------
         //
@@ -24,7 +24,7 @@ namespace MS.Internal.AutomationProxies
         #region Constructors
 
         // Contructor for the tooltip proxy class.
-        WindowsTooltip (IntPtr hwnd, ProxyFragment parent, int item)
+        private WindowsTooltip (IntPtr hwnd, ProxyFragment parent, int item)
             : base( hwnd, parent, item)
         {
             // Set the control type string to return properly the properties.
@@ -87,7 +87,7 @@ namespace MS.Internal.AutomationProxies
             else if( eventId == AutomationElement.ToolTipClosedEvent )
             {
                 // subscribe to ToolTip specific events, keeping track of how many times the event has been added
-                WinEventTracker.AddToNotificationList( IntPtr.Zero, new WinEventTracker.ProxyRaiseEvents( OnToolTipEvents ), _toolTipEventIds, _toolTipEventIds.Length );
+                WinEventTracker.AddToNotificationList(IntPtr.Zero, new WinEventTracker.ProxyRaiseEvents(OnToolTipEvents), _toolTipEventIds);
                 _listenerCount++;
             }
         }
@@ -104,7 +104,7 @@ namespace MS.Internal.AutomationProxies
             {
                 // decrement the event counter
                 --_listenerCount;
-                WinEventTracker.RemoveToNotificationList( IntPtr.Zero, _toolTipEventIds, new WinEventTracker.ProxyRaiseEvents( OnToolTipEvents ), _toolTipEventIds.Length );
+                WinEventTracker.RemoveToNotificationList(IntPtr.Zero, _toolTipEventIds, new WinEventTracker.ProxyRaiseEvents(OnToolTipEvents));
             }
         }
 

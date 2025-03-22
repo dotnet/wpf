@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -206,10 +206,7 @@ namespace Microsoft.Windows.Controls.Ribbon
             if (info.WidthChanged)
             {
                 RibbonGroupsPanel groupsPanel = VisualTreeHelper.GetParent(this) as RibbonGroupsPanel;
-                if (groupsPanel != null)
-                {
-                    groupsPanel.OnChildGroupRenderSizeChanged(this, info.PreviousSize.Width);
-                }
+                groupsPanel?.OnChildGroupRenderSizeChanged(this, info.PreviousSize.Width);
             }
         }
 
@@ -635,10 +632,7 @@ namespace Microsoft.Windows.Controls.Ribbon
             RibbonHelper.SetContentAsToolTip(group, group.VisualChild, group.Header, (group.IsCollapsed && !group.IsDropDownOpen));
 
             RibbonGroupAutomationPeer peer = UIElementAutomationPeer.FromElement(group) as RibbonGroupAutomationPeer;
-            if (peer != null)
-            {
-                peer.RaiseExpandCollapseAutomationEvent((bool)e.OldValue, (bool)e.NewValue);
-            }
+            peer?.RaiseExpandCollapseAutomationEvent((bool)e.OldValue, (bool)e.NewValue);
         }
 
         private static object CoerceIsDropDownOpen(DependencyObject d, object baseValue)
@@ -682,7 +676,7 @@ namespace Microsoft.Windows.Controls.Ribbon
             IsVisibleChanged += new DependencyPropertyChangedEventHandler(HandleIsVisibleChanged);
         }
 
-        void HandleIsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
+        private void HandleIsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
             RibbonHelper.DelayCoerceProperty(this, IsDropDownOpenProperty);
             IsVisibleChanged -= new DependencyPropertyChangedEventHandler(HandleIsVisibleChanged);
@@ -996,10 +990,7 @@ namespace Microsoft.Windows.Controls.Ribbon
                 SetAppropriatePresenterVisibility(GroupSizeDefinitions[_sizeDefinitionIndex] is RibbonGroupSizeDefinition ? Visibility.Visible : Visibility.Collapsed);
 
                 RibbonGroupsPanel panel = TreeHelper.FindVisualAncestor<RibbonGroupsPanel>(this);
-                if (panel != null)
-                {
-                    panel.InvalidateCachedMeasure();
-                }
+                panel?.InvalidateCachedMeasure();
             }
 
             GroupSizeUpdatePending = false;
@@ -1555,7 +1546,7 @@ namespace Microsoft.Windows.Controls.Ribbon
                 RibbonGroup = group;
             }
 
-            RibbonGroup RibbonGroup
+            private RibbonGroup RibbonGroup
             {
                 get;
                 set;

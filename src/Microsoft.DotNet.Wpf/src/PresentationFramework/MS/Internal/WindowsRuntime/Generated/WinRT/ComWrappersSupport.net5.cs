@@ -137,7 +137,7 @@ namespace WinRT
             }
         }
 
-        unsafe class VtableEntriesCleanupScout
+        private unsafe class VtableEntriesCleanupScout
         {
             private readonly ComInterfaceEntry* _data;
 

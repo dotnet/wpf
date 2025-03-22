@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -348,10 +348,7 @@ namespace System.Windows.Media
             {
                 HwndTarget hwndTarget = target as HwndTarget;
 
-                if (hwndTarget != null)
-                {
-                    hwndTarget.InvalidateRenderMode();
-                }
+                hwndTarget?.InvalidateRenderMode();
             }
 
             return null;
@@ -1393,7 +1390,7 @@ namespace System.Windows.Media
         /// <summary>
         /// Called by the Dispatcher to let us know that we are going away.
         /// </summary>
-        void OnDestroyContext(object sender, EventArgs e)
+        private void OnDestroyContext(object sender, EventArgs e)
         {
             Debug.Assert(CheckAccess());
             Dispose();
@@ -2068,10 +2065,7 @@ namespace System.Windows.Media
                 // will wait until we have presented before committing this channel
                 //
 
-                if (Channel != null)
-                {
-                    Channel.CloseBatch();
-                }
+                Channel?.CloseBatch();
 
                 _needToCommitChannel = true;
                 _commitPendingAfterRender = true;
@@ -2409,7 +2403,7 @@ namespace System.Windows.Media
             if (_resourcesUpdatedHandlers != null)
             {
                 DUCE.ChannelSet channelSet = GetChannels();
-                _resourcesUpdatedHandlers(channelSet.Channel, false /* do not skip the "on channel" check */);
+                _resourcesUpdatedHandlers(channelSet.Channel, skipOnChannelCheck: false);
                 _resourcesUpdatedHandlers = null;
             }
         }

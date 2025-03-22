@@ -18,13 +18,13 @@ namespace System.Xaml
 
     internal class DeferringWriter : XamlWriter, IXamlLineInfoConsumer
     {
-        DeferringMode _mode;
-        bool _handled;
-        ObjectWriterContext _context;
-        XamlNodeList _deferredList;
-        XamlWriter _deferredWriter;
-        IXamlLineInfoConsumer _deferredLineInfoConsumer;
-        int _deferredTreeDepth;
+        private DeferringMode _mode;
+        private bool _handled;
+        private ObjectWriterContext _context;
+        private XamlNodeList _deferredList;
+        private XamlWriter _deferredWriter;
+        private IXamlLineInfoConsumer _deferredLineInfoConsumer;
+        private int _deferredTreeDepth;
 
         public DeferringWriter(ObjectWriterContext context)
         {
@@ -70,7 +70,7 @@ namespace System.Xaml
             WriteObject(xamlType, false, "WriteStartObject");
         }
 
-        void WriteObject(XamlType xamlType, bool fromMember, string methodName)
+        private void WriteObject(XamlType xamlType, bool fromMember, string methodName)
         {
             _handled = false;
             switch (_mode)
@@ -294,11 +294,7 @@ namespace System.Xaml
                 goto case DeferringMode.TemplateDeferring;
 
             case DeferringMode.TemplateDeferring:
-                if (_deferredLineInfoConsumer is not null)
-                {
-                    _deferredLineInfoConsumer.SetLineInfo(lineNumber, linePosition);
-                }
-
+                _deferredLineInfoConsumer?.SetLineInfo(lineNumber, linePosition);
                 break;
 
             default:

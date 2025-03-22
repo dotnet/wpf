@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -536,7 +536,7 @@ namespace System.Windows.Data
                         }
                     }
 
-                    OnPropertyChanged("NewItemPlaceholderPosition");
+                    OnPropertyChanged(nameof(NewItemPlaceholderPosition));
                 }
             }
         }
@@ -585,20 +585,14 @@ namespace System.Windows.Data
             MoveCurrentTo(newItem);
 
             ISupportInitialize isi = newItem as ISupportInitialize;
-            if (isi != null)
-            {
-                isi.BeginInit();
-            }
+            isi?.BeginInit();
 
             // DataView.AddNew calls BeginEdit on the new item, but other implementations
             // of IBL don't.  Make up for them.
             if (!IsDataView)
             {
                 IEditableObject ieo = newItem as IEditableObject;
-                if (ieo != null)
-                {
-                    ieo.BeginEdit();
-                }
+                ieo?.BeginEdit();
             }
 
             return newItem;
@@ -611,7 +605,7 @@ namespace System.Windows.Data
         // The index gives the adjusted position of the newItem in the view;  this
         // differs from its position in the source collection by 1 if we've added
         // a placeholder at the beginning.
-        void BeginAddNew(object newItem, int index)
+        private void BeginAddNew(object newItem, int index)
         {
             Debug.Assert(_newItemIndex == -2 && _newItem == NoNewItem, "unexpected call to BeginAddNew");
 
@@ -737,7 +731,7 @@ namespace System.Windows.Data
 
         // Common functionality used by CommitNew, CancelNew, and when the
         // new item is removed by Remove or Refresh.
-        object EndAddNew(bool cancel)
+        private object EndAddNew(bool cancel)
         {
             object newItem = _newItem;
 
@@ -757,15 +751,12 @@ namespace System.Windows.Data
             }
 
             ISupportInitialize isi = newItem as ISupportInitialize;
-            if (isi != null)
-            {
-                isi.EndInit();
-            }
+            isi?.EndInit();
 
             return newItem;
         }
 
-        NotifyCollectionChangedEventArgs ProcessCommitNew(int fromIndex, int toIndex)
+        private NotifyCollectionChangedEventArgs ProcessCommitNew(int fromIndex, int toIndex)
         {
             if (_isGrouping)
             {
@@ -798,7 +789,7 @@ namespace System.Windows.Data
             return result;
         }
 
-        void CommitNewForGrouping()
+        private void CommitNewForGrouping()
         {
             // for grouping we cannot pretend that the new item moves to a different position,
             // since it may actually appear in several new positions (belonging to several groups).
@@ -846,15 +837,15 @@ namespace System.Windows.Data
             get { return IsAddingNew ? _newItem : null; }
         }
 
-        void SetNewItem(object item)
+        private void SetNewItem(object item)
         {
             if (!System.Windows.Controls.ItemsControl.EqualsEx(item, _newItem))
             {
                 _newItem = item;
 
-                OnPropertyChanged("CurrentAddItem");
-                OnPropertyChanged("IsAddingNew");
-                OnPropertyChanged("CanRemove");
+                OnPropertyChanged(nameof(CurrentAddItem));
+                OnPropertyChanged(nameof(IsAddingNew));
+                OnPropertyChanged(nameof(CanRemove));
             }
         }
 
@@ -901,7 +892,7 @@ namespace System.Windows.Data
             }
         }
 
-        void RemoveImpl(object item, int index)
+        private void RemoveImpl(object item, int index)
         {
             if (item == CollectionView.NewItemPlaceholder)
                 throw new InvalidOperationException(SR.RemovingPlaceholder);
@@ -962,7 +953,7 @@ namespace System.Windows.Data
             VerifyRefreshNotDeferred();
 
             if (item == NewItemPlaceholder)
-                throw new ArgumentException(SR.CannotEditPlaceholder, "item");
+                throw new ArgumentException(SR.CannotEditPlaceholder, nameof(item));
 
             if (IsAddingNew)
             {
@@ -977,10 +968,7 @@ namespace System.Windows.Data
             SetEditItem(item);
 
             IEditableObject ieo = item as IEditableObject;
-            if (ieo != null)
-            {
-                ieo.BeginEdit();
-            }
+            ieo?.BeginEdit();
         }
 
         /// <summary>
@@ -1051,10 +1039,7 @@ namespace System.Windows.Data
             IEditableObject ieo = _editItem as IEditableObject;
             SetEditItem(null);
 
-            if (ieo != null)
-            {
-                ieo.CancelEdit();
-            }
+            ieo?.CancelEdit();
         }
 
         /// <summary>
@@ -1087,17 +1072,17 @@ namespace System.Windows.Data
             get { return _editItem; }
         }
 
-        void SetEditItem(object item)
+        private void SetEditItem(object item)
         {
             if (!System.Windows.Controls.ItemsControl.EqualsEx(item, _editItem))
             {
                 _editItem = item;
 
-                OnPropertyChanged("CurrentEditItem");
-                OnPropertyChanged("IsEditingItem");
-                OnPropertyChanged("CanCancelEdit");
-                OnPropertyChanged("CanAddNew");
-                OnPropertyChanged("CanRemove");
+                OnPropertyChanged(nameof(CurrentEditItem));
+                OnPropertyChanged(nameof(IsEditingItem));
+                OnPropertyChanged(nameof(CanCancelEdit));
+                OnPropertyChanged(nameof(CanAddNew));
+                OnPropertyChanged(nameof(CanRemove));
             }
         }
 
@@ -1162,7 +1147,7 @@ namespace System.Windows.Data
             set
             {
                 if (value == null)
-                    throw new ArgumentNullException("value");
+                    throw new ArgumentNullException(nameof(value));
 
 
                 if (value != _isLiveGrouping)
@@ -1170,7 +1155,7 @@ namespace System.Windows.Data
                     _isLiveGrouping = value;
                     RefreshOrDefer();
 
-                    OnPropertyChanged("IsLiveGrouping");
+                    OnPropertyChanged(nameof(IsLiveGrouping));
                 }
             }
         }
@@ -1241,7 +1226,7 @@ namespace System.Windows.Data
             }
         }
 
-        void OnLivePropertyListChanged(object sender, NotifyCollectionChangedEventArgs e)
+        private void OnLivePropertyListChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
             if (IsLiveGrouping == true)
             {
@@ -1420,7 +1405,7 @@ namespace System.Windows.Data
             PrepareCachedList();
         }
 
-        void PrepareCachedList()
+        private void PrepareCachedList()
         {
             if (AllowsCrossThreadChanges)
             {
@@ -1438,7 +1423,7 @@ namespace System.Windows.Data
         }
 
         // this must be called under read-access protection to InternalList
-        void RebuildLists()
+        private void RebuildLists()
         {
             lock(SyncRoot)
             {
@@ -1447,7 +1432,7 @@ namespace System.Windows.Data
             }
         }
 
-        void RebuildListsCore()
+        private void RebuildListsCore()
         {
             _cachedList = new ArrayList(InternalList);
             LiveShapingList lsList = _shadowList as LiveShapingList;
@@ -2230,7 +2215,7 @@ namespace System.Windows.Data
         #region Grouping
 
         // initialization for grouping that should happen before preparing the local array
-        void InitializeGrouping()
+        private void InitializeGrouping()
         {
             // discard old groups
             _group.Clear();
@@ -2243,7 +2228,7 @@ namespace System.Windows.Data
 
 
         // divide the data items into groups
-        void PrepareGroups()
+        private void PrepareGroups()
         {
             if (!_isGrouping)
                 return;
@@ -2305,7 +2290,7 @@ namespace System.Windows.Data
         }
 
         // For the Group to report collection changed
-        void OnGroupChanged(object sender, NotifyCollectionChangedEventArgs e)
+        private void OnGroupChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
             if (e.Action == NotifyCollectionChangedAction.Add)
             {
@@ -2319,7 +2304,7 @@ namespace System.Windows.Data
         }
 
         // The GroupDescriptions collection changed
-        void OnGroupByChanged(object sender, NotifyCollectionChangedEventArgs e)
+        private void OnGroupByChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
             if (IsAddingNew || IsEditingItem)
                 throw new InvalidOperationException(SR.Format(SR.MemberNotAllowedDuringAddOrEdit, "Grouping"));
@@ -2329,7 +2314,7 @@ namespace System.Windows.Data
         }
 
         // A group description for one of the subgroups changed
-        void OnGroupDescriptionChanged(object sender, EventArgs e)
+        private void OnGroupDescriptionChanged(object sender, EventArgs e)
         {
             if (IsAddingNew || IsEditingItem)
                 throw new InvalidOperationException(SR.Format(SR.MemberNotAllowedDuringAddOrEdit, "Grouping"));
@@ -2339,7 +2324,7 @@ namespace System.Windows.Data
         }
 
         // An item was inserted into the collection.  Update the groups.
-        void AddItemToGroups(object item)
+        private void AddItemToGroups(object item)
         {
             if (IsAddingNew && item == _newItem)
             {
@@ -2367,7 +2352,7 @@ namespace System.Windows.Data
         }
 
         // An item was removed from the collection.  Update the groups.
-        void RemoveItemFromGroups(object item)
+        private void RemoveItemFromGroups(object item)
         {
             if (CanGroupNamesChange || _group.RemoveFromSubgroups(item))
             {
@@ -2380,7 +2365,7 @@ namespace System.Windows.Data
 
         #region Live Shaping
 
-        LiveShapingFlags GetLiveShapingFlags()
+        private LiveShapingFlags GetLiveShapingFlags()
         {
             LiveShapingFlags result = 0;
 
@@ -2433,7 +2418,7 @@ namespace System.Windows.Data
             }
         }
 
-        void OnLiveShapingDirty(object sender, EventArgs e)
+        private void OnLiveShapingDirty(object sender, EventArgs e)
         {
             IsLiveShapingDirty = true;
         }
@@ -2563,7 +2548,7 @@ namespace System.Windows.Data
         private int                 _newItemIndex;  // position of _newItem in the source collection
         private NewItemPlaceholderPosition _newItemPlaceholderPosition;
         private List<Action>        _deferredActions;
-        bool                        _isRemoving;
+        private bool                _isRemoving;
         private bool?               _isLiveGrouping = false;
         private bool                _isLiveShapingDirty;
         private ObservableCollection<string>    _liveSortingProperties;

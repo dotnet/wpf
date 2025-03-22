@@ -17,7 +17,7 @@ namespace MS.Internal.AutomationProxies
     // This code works for vertical and horizontal scroll bars
     // both as part of the none client area or as a stand alone
     // scroll bar control.
-    class WindowsScrollBar: ProxyHwnd, IRangeValueProvider
+    internal class WindowsScrollBar: ProxyHwnd, IRangeValueProvider
     {
         // ------------------------------------------------------
         //
@@ -99,10 +99,7 @@ namespace MS.Internal.AutomationProxies
             {
                 // raise events for the children 
                 ProxySimple scrollBarBit = WindowsScrollBarBits.CreateFromChildId(hwnd, wtv, idChild, NativeMethods.SB_CTL);
-                if (scrollBarBit != null)
-                {
-                    scrollBarBit.DispatchEvents(eventId, idProp, idObject, idChild);
-                }
+                scrollBarBit?.DispatchEvents(eventId, idProp, idObject, idChild);
             }
         }
 

@@ -135,7 +135,7 @@ namespace MS.Internal.Data
         }
 
         // private types
-        struct SortPropertyInfo
+        private struct SortPropertyInfo
         {
             internal int index;
             internal PropertyPath info;
@@ -153,7 +153,7 @@ namespace MS.Internal.Data
                 }
             }
 
-            object GetValueFromCVI(CachedValueItem cvi)
+            private object GetValueFromCVI(CachedValueItem cvi)
             {
                 object value = cvi[index];
 
@@ -166,7 +166,7 @@ namespace MS.Internal.Data
                 return value;
             }
 
-            object GetValueCore(object o)
+            private object GetValueCore(object o)
             {
                 object value;
                 if (info == null)
@@ -192,7 +192,7 @@ namespace MS.Internal.Data
             }
         }
 
-        struct CachedValueItem
+        private struct CachedValueItem
         {
             public object OriginalItem
             {
@@ -226,9 +226,9 @@ namespace MS.Internal.Data
         }
 
         // Private Fields
-        SortPropertyInfo[] _fields;
-        SortDescriptionCollection _sortFields;
-        Comparer _comparer;
+        private SortPropertyInfo[] _fields;
+        private SortDescriptionCollection _sortFields;
+        private Comparer _comparer;
     }
 }
 

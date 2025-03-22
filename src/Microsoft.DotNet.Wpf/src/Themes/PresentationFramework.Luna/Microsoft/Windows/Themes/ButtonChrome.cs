@@ -368,10 +368,7 @@ namespace Microsoft.Windows.Themes
             childArrangeRect.Y = (finalSize.Height - childArrangeRect.Height) * 0.5;
 
             UIElement child = Child;
-            if (child != null)
-            {
-                child.Arrange(childArrangeRect);
-            }
+            child?.Arrange(childArrangeRect);
 
             return finalSize;
         }

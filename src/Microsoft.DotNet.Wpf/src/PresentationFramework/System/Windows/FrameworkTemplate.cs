@@ -375,8 +375,7 @@ namespace System.Windows
             if (templateRoot != null &&
                 typeof(FrameworkContentElement).IsAssignableFrom(templateRoot.Type))
             {
-                throw new ArgumentException(SR.Format(SR.VisualTreeRootIsFrameworkElement,
-                    typeof(FrameworkElement).Name, templateRoot.Type.Name));
+                throw new ArgumentException(SR.Format(SR.VisualTreeRootIsFrameworkElement, nameof(FrameworkElement), templateRoot.Type.Name));
             }
         }
 
@@ -419,10 +418,7 @@ namespace System.Windows
 
             //Let go of the TemplateContent object to reduce survived allocations.
             //Need to keep while parsing due to ambient lookup of DependencyPropertyConverter.
-            if (_templateHolder != null)
-            {
-                _templateHolder.ResetTemplateLoadData();
-            }
+            _templateHolder?.ResetTemplateLoadData();
         }
 
         // Subclasses need to call this method before any changes to their state.
@@ -983,10 +979,7 @@ namespace System.Windows
 
                 while (templateReader.Read())
                 {
-                    if (lineInfoConsumer != null)
-                    {
-                        lineInfoConsumer.SetLineInfo(lineInfo.LineNumber, lineInfo.LinePosition);
-                    }
+                    lineInfoConsumer?.SetLineInfo(lineInfo.LineNumber, lineInfo.LinePosition);
 
                     // We need to call the ObjectWriter first because x:Name & RNPA needs to be registered
                     // before we call InvalidateProperties.
@@ -1049,10 +1042,7 @@ namespace System.Windows
                             {
                                 if (Names.CurrentFrame.Property == XamlLanguage.ConnectionId)
                                 {
-                                    if (_styleConnector != null)
-                                    {
-                                        _styleConnector.Connect((int)templateReader.Value, Names.CurrentFrame.Instance);
-                                    }
+                                    _styleConnector?.Connect((int)templateReader.Value, Names.CurrentFrame.Instance);
                                 }
                             }
                             break;

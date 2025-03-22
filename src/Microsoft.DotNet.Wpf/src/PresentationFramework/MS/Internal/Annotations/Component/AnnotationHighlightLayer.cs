@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -492,7 +492,7 @@ namespace MS.Internal.Annotations.Component
             return null;
         }
 
-        void GetSpannedSegments(ITextPointer start, ITextPointer end, out int startSeg, out int endSeg)
+        private void GetSpannedSegments(ITextPointer start, ITextPointer end, out int startSeg, out int endSeg)
         {
             startSeg = -1;
             endSeg = -1;
@@ -876,13 +876,11 @@ namespace MS.Internal.Annotations.Component
                 if (_cachedTopOwner != TopOwner)
                 {
                     //remove it from the old owner children
-                    if (_cachedTopOwner != null)
-                        _cachedTopOwner.RemoveChild(this);
+                    _cachedTopOwner?.RemoveChild(this);
                     _cachedTopOwner = TopOwner;
 
                     //add it to the new owner children
-                    if (_cachedTopOwner != null)
-                        _cachedTopOwner.AddChild(this);
+                    _cachedTopOwner?.AddChild(this);
                 }
                 Fill = OwnerColor;
             }
@@ -894,8 +892,7 @@ namespace MS.Internal.Annotations.Component
             /// </summary>
             internal void Discard()
             {
-                if (TopOwner != null)
-                    TopOwner.RemoveChild(this);
+                TopOwner?.RemoveChild(this);
                 _activeOwners.Clear();
                 _owners.Clear();
             }
@@ -1218,8 +1215,8 @@ namespace MS.Internal.Annotations.Component
         /// <summary>
         /// A list of all HiglightSegments ordered by position
         /// </summary>
-        List<HighlightSegment> _segments;
-        bool _isFixedContainer = false;
+        private List<HighlightSegment> _segments;
+        private bool _isFixedContainer = false;
 
         #endregion Private Fields
     }

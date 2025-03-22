@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+ï»¿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -54,7 +54,7 @@ public class MultiBinding : BindingBase, IAddChild
         if (binding != null)
             Bindings.Add(binding);
         else
-            throw new ArgumentException(SR.Format(SR.ChildHasWrongType, this.GetType().Name, "BindingBase", value.GetType().FullName), "value");
+            throw new ArgumentException(SR.Format(SR.ChildHasWrongType, this.GetType().Name, "BindingBase", value.GetType().FullName), nameof(value));
     }
 
     ///<summary>
@@ -258,9 +258,9 @@ public class MultiBinding : BindingBase, IAddChild
     /// called whenever any exception is encountered when trying to update
     /// the value to the source. The application author can provide its own
     /// handler for handling exceptions here. If the delegate returns
-    ///     null - don’t throw an error or provide a ValidationError.
+    ///     null - donâ€™t throw an error or provide a ValidationError.
     ///     Exception - returns the exception itself, we will fire the exception using Async exception model.
-    ///     ValidationError - it will set itself as the BindingInError and add it to the element’s Validation errors.
+    ///     ValidationError - it will set itself as the BindingInError and add it to the elementâ€™s Validation errors.
     /// </summary>
     [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
     public UpdateSourceExceptionFilterCallback UpdateSourceExceptionFilter
@@ -440,12 +440,12 @@ public class MultiBinding : BindingBase, IAddChild
         CheckSealed();
     }
 
-    //------------------------------------------------------
-    //
-    //  Private Fields
-    //
-    //------------------------------------------------------
+        //------------------------------------------------------
+        //
+        //  Private Fields
+        //
+        //------------------------------------------------------
 
-    BindingCollection       _bindingCollection;
+        private BindingCollection       _bindingCollection;
 }
 }

@@ -94,7 +94,7 @@ namespace System.Windows.Data
             set
             {
                 _isInitialLoadEnabled = value;
-                OnPropertyChanged(new PropertyChangedEventArgs("IsInitialLoadEnabled"));
+                OnPropertyChanged(new PropertyChangedEventArgs(nameof(IsInitialLoadEnabled)));
             }
         }
 
@@ -377,13 +377,13 @@ namespace System.Windows.Data
                 completionWork(callbackArgs);
 
             // notify any listeners
-            OnPropertyChanged(new PropertyChangedEventArgs("Data"));
+            OnPropertyChanged(new PropertyChangedEventArgs(nameof(Data)));
             if (DataChanged != null)
             {
                 DataChanged(this, EventArgs.Empty);
             }
             if (errorChanged)
-                OnPropertyChanged(new PropertyChangedEventArgs("Error"));
+                OnPropertyChanged(new PropertyChangedEventArgs(nameof(Error)));
         }
 
         #endregion Private Methods
@@ -431,7 +431,7 @@ namespace System.Windows.Data
         private Exception _error;
         private Dispatcher _dispatcher;
 
-        static readonly DispatcherOperationCallback UpdateWithNewResultCallback = new DispatcherOperationCallback(UpdateWithNewResult);
+        private static readonly DispatcherOperationCallback UpdateWithNewResultCallback = new DispatcherOperationCallback(UpdateWithNewResult);
 }
 }
 

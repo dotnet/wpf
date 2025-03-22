@@ -61,7 +61,7 @@ namespace MS.Internal.Ink.InkSerializedFormat
         /// </summary>
         /// <param name="guid"></param>
         /// <returns></returns>
-        KnownTagCache.KnownTagIndex FindCustomTag(Guid guid)
+        private KnownTagCache.KnownTagIndex FindCustomTag(Guid guid)
         {
             int i;
 
@@ -107,7 +107,7 @@ namespace MS.Internal.Ink.InkSerializedFormat
         /// </summary>
         /// <param name="tag"></param>
         /// <returns></returns>
-        static Guid FindKnownGuid(KnownTagCache.KnownTagIndex tag)
+        private static Guid FindKnownGuid(KnownTagCache.KnownTagIndex tag)
         {
             if (tag < KnownIdCache.KnownGuidBaseIndex)
             {
@@ -131,7 +131,7 @@ namespace MS.Internal.Ink.InkSerializedFormat
         /// </summary>
         /// <param name="tag"></param>
         /// <returns></returns>
-        Guid FindCustomGuid(KnownTagCache.KnownTagIndex tag)
+        private Guid FindCustomGuid(KnownTagCache.KnownTagIndex tag)
         {
             if ((int)tag < (int)KnownIdCache.CustomGuidBaseIndex)
             {

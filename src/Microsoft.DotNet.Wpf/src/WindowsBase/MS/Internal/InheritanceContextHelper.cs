@@ -23,10 +23,7 @@ namespace MS.Internal
             DependencyObject context,
             DependencyObject newValue )
         {
-            if (context != null)
-            {
-                context.ProvideSelfAsInheritanceContext(newValue, null);
-            }
+            context?.ProvideSelfAsInheritanceContext(newValue, null);
         }
 
         //--------------------------------------------------------------------

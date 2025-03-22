@@ -9,10 +9,16 @@
 // Please see MilCodeGen.html for more information.
 //
 
-// These types are aliased to match the unamanaged names used in interop
+using MS.Internal;
+using MS.Utility;
+using System.Collections;
+using System.Windows.Media.Animation;
+using System.Windows.Media.Composition;
+using System.Windows.Media.Imaging;
+
 namespace System.Windows.Media.Effects
 {
-    sealed partial class BlurBitmapEffect : BitmapEffect
+    public sealed partial class BlurBitmapEffect : BitmapEffect
     {
         //------------------------------------------------------
         //
@@ -222,6 +228,8 @@ namespace System.Windows.Media.Effects
                                    /* isIndependentlyAnimated  = */ false,
                                    /* coerceValueCallback */ null);
         }
+
+
 
         #endregion Constructors
     }

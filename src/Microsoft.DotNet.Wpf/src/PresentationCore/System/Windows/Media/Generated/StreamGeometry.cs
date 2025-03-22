@@ -9,12 +9,23 @@
 // Please see MilCodeGen.html for more information.
 //
 
+using MS.Internal;
 using MS.Internal.KnownBoxes;
-// These types are aliased to match the unamanaged names used in interop
+using MS.Internal.Collections;
+using MS.Utility;
+using System.Collections;
+using System.ComponentModel;
+using System.Globalization;
+using System.Text;
+using System.Windows.Media.Effects;
+using System.Windows.Media.Animation;
+using System.Windows.Media.Composition;
+using System.Windows.Markup;
+using System.Windows.Media.Converters;
 
 namespace System.Windows.Media
 {
-    sealed partial class StreamGeometry : Geometry
+    public sealed partial class StreamGeometry : Geometry
     {
         //------------------------------------------------------
         //
@@ -180,8 +191,7 @@ namespace System.Windows.Media
             // We check our static default fields which are of type Freezable
             // to make sure that they are not mutable, otherwise we will throw
             // if these get touched by more than one thread in the lifetime
-            // of your app. 
-
+            // of your app.
 
 
             // Initializations
@@ -196,6 +206,8 @@ namespace System.Windows.Media
                                    /* isIndependentlyAnimated  = */ false,
                                    /* coerceValueCallback */ null);
         }
+
+
 
         #endregion Constructors
     }

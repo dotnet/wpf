@@ -891,10 +891,7 @@ namespace System.Windows.Xps.Packaging
         DisposeXpsDocument(
             )
         {
-            if(_opcPackage != null)
-            {
-                _opcPackage.Close();
-            }
+            _opcPackage?.Close();
         }
 
         internal
@@ -934,9 +931,9 @@ namespace System.Windows.Xps.Packaging
 
         private XpsThumbnail   _thumbnail;
 
-        private Package        _opcPackage; 
+        private Package        _opcPackage;
 
-        bool _disposed = false;
+        private bool _disposed = false;
 
         #endregion Private data
 

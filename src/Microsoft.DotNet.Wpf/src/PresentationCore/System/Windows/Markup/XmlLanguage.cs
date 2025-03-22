@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -715,10 +715,10 @@ namespace System.Windows.Markup
                 {
                     int i;
 
-                    i = ParseSubtag(ietfLanguageTag, reader, /* isPrimary */ true);
+                    i = ParseSubtag(ietfLanguageTag, reader, isPrimary: true);
                     while (i != -1)
                     {
-                        i = ParseSubtag(ietfLanguageTag, reader, /* isPrimary */ false);
+                        i = ParseSubtag(ietfLanguageTag, reader, isPrimary: false);
                     }
                 }
             }
@@ -790,7 +790,7 @@ namespace System.Windows.Markup
 
         static private void ThrowParseException(string ietfLanguageTag)
         {
-             throw new ArgumentException(SR.Format(SR.XmlLangMalformed, ietfLanguageTag), "ietfLanguageTag");
+             throw new ArgumentException(SR.Format(SR.XmlLangMalformed, ietfLanguageTag), nameof(ietfLanguageTag));
         }
 
         // throws if there is a non-7-bit ascii character

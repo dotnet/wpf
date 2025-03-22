@@ -774,7 +774,7 @@ namespace System.Windows.Documents
         //      2. level1Index
         //      3. pathPrefix.
         //
-        FixedNode _NewFixedNode(int pageIndex, int nestingLevel, int level1Index, int[] pathPrefix, int childIndex)
+        private FixedNode _NewFixedNode(int pageIndex, int nestingLevel, int level1Index, int[] pathPrefix, int childIndex)
         {
             if (nestingLevel == 1)
             {
@@ -852,10 +852,7 @@ namespace System.Windows.Documents
                     GeneralTransform transform = glyph2.TransformToVisual(glyph1);
                     Point prevPt = LTR1 ? box1.TopRight : box1.TopLeft;
                     Point currentPt = LTR2 ? box2.TopLeft : box2.TopRight;
-                    if (transform != null)
-                    {
-                        transform.TryTransform(currentPt, out currentPt);
-                    }
+                    transform?.TryTransform(currentPt, out currentPt);
 
                     if (IsSameLine(currentPt.Y - prevPt.Y, box1.Height, box2.Height))
                     {

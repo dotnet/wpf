@@ -10,11 +10,15 @@
 //
 
 using MS.Internal;
-// These types are aliased to match the unamanaged names used in interop
+using MS.Utility;
+using System.Collections;
+using System.Windows.Media.Animation;
+using System.Windows.Media.Composition;
+using System.Windows.Media.Imaging;
 
 namespace System.Windows.Media.Effects
 {
-    sealed partial class BitmapEffectGroup : BitmapEffect
+    public sealed partial class BitmapEffectGroup : BitmapEffect
     {
         //------------------------------------------------------
         //
@@ -187,9 +191,9 @@ namespace System.Windows.Media.Effects
             // We check our static default fields which are of type Freezable
             // to make sure that they are not mutable, otherwise we will throw
             // if these get touched by more than one thread in the lifetime
-            // of your app. 
+            // of your app.
             Debug.Assert(s_Children == null || s_Children.IsFrozen,
-                "Detected context bound default value BitmapEffectGroup.s_Children");
+                "Detected context bound default value BitmapEffectGroup.s_Children (See OS Bug #947272).");
 
 
             // Initializations
@@ -204,6 +208,8 @@ namespace System.Windows.Media.Effects
                                    /* isIndependentlyAnimated  = */ false,
                                    /* coerceValueCallback */ null);
         }
+
+
 
         #endregion Constructors
     }

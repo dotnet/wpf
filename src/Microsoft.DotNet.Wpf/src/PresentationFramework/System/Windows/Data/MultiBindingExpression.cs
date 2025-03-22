@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -157,7 +157,7 @@ namespace System.Windows.Data
         FrameworkPropertyMetadata fwMetaData = dp.GetMetadata(d.DependencyObjectType) as FrameworkPropertyMetadata;
 
         if ((fwMetaData != null && !fwMetaData.IsDataBindingAllowed) || dp.ReadOnly)
-            throw new ArgumentException(SR.Format(SR.PropertyNotBindable, dp.Name), "dp");
+            throw new ArgumentException(SR.Format(SR.PropertyNotBindable, dp.Name), nameof(dp));
 
         // create the BindingExpression
         MultiBindingExpression bindExpr = new MultiBindingExpression(binding, owner);
@@ -167,8 +167,8 @@ namespace System.Windows.Data
         return bindExpr;
     }
 
-    // Attach to things that may require tree context (parent, root, etc.)
-    void AttachToContext(bool lastChance)
+        // Attach to things that may require tree context (parent, root, etc.)
+        private void AttachToContext(bool lastChance)
     {
         DependencyObject target = TargetElement;
         if (target == null)
@@ -603,7 +603,7 @@ namespace System.Windows.Data
         return success;
     }
 
-    object GetValuesForChildBindings(object rawValue)
+        private object GetValuesForChildBindings(object rawValue)
     {
         if (Converter == null)
         {
@@ -973,20 +973,20 @@ namespace System.Windows.Data
         get { return _list; }
     }
 
-    IMultiValueConverter Converter
+        private IMultiValueConverter Converter
     {
         get { return _converter; }
         set { _converter = value; }
     }
 
-    //------------------------------------------------------
-    //
-    //  Private Methods
-    //
-    //------------------------------------------------------
+        //------------------------------------------------------
+        //
+        //  Private Methods
+        //
+        //------------------------------------------------------
 
-    // Create a BindingExpression for position i
-    BindingExpressionBase AttachBindingExpression(int i, bool replaceExisting)
+        // Create a BindingExpression for position i
+        private BindingExpressionBase AttachBindingExpression(int i, bool replaceExisting)
     {
         DependencyObject target = TargetElement;
         if (target == null)
@@ -1096,14 +1096,14 @@ namespace System.Windows.Data
         Update();
     }
 
-#region Value
+        #region Value
 
-    /// <summary> Force a data transfer from source(s) to target </summary>
-    /// <param name="includeInnerBindings">
-    ///     use true to propagate UpdateTarget call to all inner BindingExpressions;
-    ///     use false to avoid forcing data re-transfer from one-time inner BindingExpressions
-    /// </param>
-    void UpdateTarget(bool includeInnerBindings)
+        /// <summary> Force a data transfer from source(s) to target </summary>
+        /// <param name="includeInnerBindings">
+        ///     use true to propagate UpdateTarget call to all inner BindingExpressions;
+        ///     use false to avoid forcing data re-transfer from one-time inner BindingExpressions
+        /// </param>
+        private void UpdateTarget(bool includeInnerBindings)
     {
         TransferIsDeferred = true;
 
@@ -1122,8 +1122,8 @@ namespace System.Windows.Data
         NeedsUpdate = false;
     }
 
-    // transfer a value from the source to the target
-    void Transfer()
+        // transfer a value from the source to the target
+        private void Transfer()
     {
         // required state for transfer
         if (    NeedsDataTransfer       // Transfer is needed
@@ -1134,8 +1134,8 @@ namespace System.Windows.Data
         }
     }
 
-    // transfer a value from the source to the target
-    void TransferValue()
+        // transfer a value from the source to the target
+        private void TransferValue()
     {
         IsInTransfer = true;
         NeedsDataTransfer = false;
@@ -1358,7 +1358,7 @@ namespace System.Windows.Data
         IsInTransfer = false;
     }
 
-    void OnTargetUpdated()
+        private void OnTargetUpdated()
     {
         if (NotifyOnTargetUpdated)
         {
@@ -1381,7 +1381,7 @@ namespace System.Windows.Data
         }
     }
 
-    void OnSourceUpdated()
+        private void OnSourceUpdated()
     {
         if (NotifyOnSourceUpdated)
         {
@@ -1420,17 +1420,17 @@ namespace System.Windows.Data
         return UpdateValue();
     }
 
-#endregion Value
+        #endregion Value
 
-    //------------------------------------------------------
-    //
-    //  Private Fields
-    //
-    //------------------------------------------------------
+        //------------------------------------------------------
+        //
+        //  Private Fields
+        //
+        //------------------------------------------------------
 
-    Collection<BindingExpressionBase>  _list = new Collection<BindingExpressionBase>();
-    IMultiValueConverter    _converter;
-    object[]                _tempValues;
-    Type[]                  _tempTypes;
+        private Collection<BindingExpressionBase>  _list = new Collection<BindingExpressionBase>();
+        private IMultiValueConverter    _converter;
+        private object[]                _tempValues;
+        private Type[]                  _tempTypes;
 }
 }

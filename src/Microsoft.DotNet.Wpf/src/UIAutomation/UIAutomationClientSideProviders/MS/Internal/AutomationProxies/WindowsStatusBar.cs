@@ -13,7 +13,7 @@ using MS.Win32;
 
 namespace MS.Internal.AutomationProxies
 {
-    class WindowsStatusBar : ProxyHwnd, IGridProvider, IRawElementProviderHwndOverride
+    internal class WindowsStatusBar : ProxyHwnd, IGridProvider, IRawElementProviderHwndOverride
     {
         // ------------------------------------------------------
         //
@@ -253,12 +253,12 @@ namespace MS.Internal.AutomationProxies
             // NOTE: Status bar has only 1 row
             if (row != 0)
             {
-                throw new ArgumentOutOfRangeException("row", row, SR.GridRowOutOfRange);
+                throw new ArgumentOutOfRangeException(nameof(row), row, SR.GridRowOutOfRange);
             }
 
             if (column < 0 || column >= Count)
             {
-                throw new ArgumentOutOfRangeException("column", column, SR.GridColumnOutOfRange);
+                throw new ArgumentOutOfRangeException(nameof(column), column, SR.GridColumnOutOfRange);
             }
 
             return CreateStatusBarPane(column);
@@ -407,7 +407,7 @@ namespace MS.Internal.AutomationProxies
 
         #region WindowsStatusBarPane 
 
-        class WindowsStatusBarPane : ProxySimple, IGridItemProvider, IValueProvider
+        private class WindowsStatusBarPane : ProxySimple, IGridItemProvider, IValueProvider
         {
 
             // ------------------------------------------------------
@@ -633,7 +633,7 @@ namespace MS.Internal.AutomationProxies
 
         #region WindowsStatusBarPaneChildOverrideProxy
 
-        class WindowsStatusBarPaneChildOverrideProxy : ProxyHwnd, IGridItemProvider
+        private class WindowsStatusBarPaneChildOverrideProxy : ProxyHwnd, IGridItemProvider
         {
             // ------------------------------------------------------
             //
@@ -739,7 +739,7 @@ namespace MS.Internal.AutomationProxies
 
         #region StatusBarGrip
 
-        class StatusBarGrip: ProxyFragment
+        private class StatusBarGrip: ProxyFragment
         {
             // ------------------------------------------------------
             //

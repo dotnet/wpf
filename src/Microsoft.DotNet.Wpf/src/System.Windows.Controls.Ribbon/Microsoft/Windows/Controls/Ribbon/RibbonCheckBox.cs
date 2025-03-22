@@ -502,7 +502,7 @@ namespace Microsoft.Windows.Controls.Ribbon
 
         // Packed boolean information
         private BitVector32 _bits = new BitVector32(0);
-        Border _checkBorder = null;
+        private Border _checkBorder = null;
         private const string CheckBorderTemplatePart = "PART_CheckBorder";
 
         #endregion Private Data

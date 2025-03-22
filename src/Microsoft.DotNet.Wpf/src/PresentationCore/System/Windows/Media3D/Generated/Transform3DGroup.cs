@@ -10,12 +10,20 @@
 //
 
 using MS.Internal;
+using MS.Internal.Collections;
+using MS.Utility;
+using System.Collections;
+using System.ComponentModel;
+using System.Globalization;
+using System.Text;
+using System.Windows.Markup;
+using System.Windows.Media.Media3D.Converters;
+using System.Windows.Media.Animation;
 using System.Windows.Media.Composition;
-// These types are aliased to match the unamanaged names used in interop
 
 namespace System.Windows.Media.Media3D
 {
-    sealed partial class Transform3DGroup : Transform3D
+    public sealed partial class Transform3DGroup : Transform3D
     {
         //------------------------------------------------------
         //
@@ -56,6 +64,10 @@ namespace System.Windows.Media.Media3D
 
         private static void ChildrenPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
+
+
+
+
             // The first change to the default value of a mutable collection property (e.g. GeometryGroup.Children) 
             // will promote the property value from a default value to a local value. This is technically a sub-property 
             // change because the collection was changed and not a new collection set (GeometryGroup.Children.
@@ -237,8 +249,11 @@ namespace System.Windows.Media.Media3D
         }
         internal override DUCE.ResourceHandle AddRefOnChannelCore(DUCE.Channel channel)
         {
+
                 if (_duceResource.CreateOrAddRefOnChannel(this, channel, System.Windows.Media.Composition.DUCE.ResourceType.TYPE_TRANSFORM3DGROUP))
                 {
+
+
                     Transform3DCollection vChildren = Children;
 
                     if (vChildren != null)
@@ -256,13 +271,17 @@ namespace System.Windows.Media.Media3D
                 }
 
                 return _duceResource.GetHandle(channel);
-}
+
+        }
         internal override void ReleaseOnChannelCore(DUCE.Channel channel)
         {
+
                 Debug.Assert(_duceResource.IsOnChannel(channel));
 
                 if (_duceResource.ReleaseOnChannel(channel))
                 {
+
+
                     Transform3DCollection vChildren = Children;
 
                     if (vChildren != null)
@@ -274,8 +293,10 @@ namespace System.Windows.Media.Media3D
                         }
                     }
                     ReleaseOnChannelAnimations(channel);
-}
-}
+
+                }
+
+        }
         internal override DUCE.ResourceHandle GetHandleCore(DUCE.Channel channel)
         {
             // Note that we are in a lock here already.
@@ -309,10 +330,7 @@ namespace System.Windows.Media.Media3D
 
                         // We're on a channel, which means our dependents are also on the channel.
                         DUCE.IResource addResource = item as DUCE.IResource;
-                        if (addResource != null)
-                        {
-                            addResource.AddRefOnChannel(channel);
-                        }
+                        addResource?.AddRefOnChannel(channel);
 
                         UpdateResource(channel, true /* skip on channel check */);
                     }
@@ -339,10 +357,7 @@ namespace System.Windows.Media.Media3D
 
                         // We're on a channel, which means our dependents are also on the channel.
                         DUCE.IResource releaseResource = item as DUCE.IResource;
-                        if (releaseResource != null)
-                        {
-                            releaseResource.ReleaseOnChannel(channel);
-                        }
+                        releaseResource?.ReleaseOnChannel(channel);
                     }
                 }
             }
@@ -424,7 +439,6 @@ namespace System.Windows.Media.Media3D
             // to make sure that they are not mutable, otherwise we will throw
             // if these get touched by more than one thread in the lifetime
             // of your app.
-
             Debug.Assert(s_Children == null || s_Children.IsFrozen,
                 "Detected context bound default value Transform3DGroup.s_Children (See OS Bug #947272).");
 
@@ -441,6 +455,8 @@ namespace System.Windows.Media.Media3D
                                    /* isIndependentlyAnimated  = */ false,
                                    /* coerceValueCallback */ null);
         }
+
+
 
         #endregion Constructors
     }

@@ -110,7 +110,7 @@ namespace MS.Internal
 
         #region Private Data
 
-        WeakHashtable _hashTable = new WeakHashtable();
+        private WeakHashtable _hashTable = new WeakHashtable();
 
         #endregion
     }

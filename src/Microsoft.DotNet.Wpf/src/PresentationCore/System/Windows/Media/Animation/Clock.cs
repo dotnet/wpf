@@ -486,7 +486,7 @@ namespace System.Windows.Media.Animation
         {
             Debug.Assert(!IsTimeManager);
 
-            return _currentTime.HasValue ? _currentTime.Value : TimeSpan.Zero;
+            return _currentTime ?? TimeSpan.Zero;
         }
 
         /// <summary>
@@ -1949,8 +1949,7 @@ namespace System.Windows.Media.Animation
             RepeatBehavior repeatBehavior = _timeline.RepeatBehavior;
 
             // Apply speed and offset, convert down to TimeSpan
-            TimeSpan beginTimeForOffsetComputation = _currentIterationBeginTime.HasValue ? _currentIterationBeginTime.Value
-                                                                                         : _beginTime.Value;
+            TimeSpan beginTimeForOffsetComputation = _currentIterationBeginTime ?? _beginTime.Value;
             TimeSpan offsetFromBegin = MultiplyTimeSpan(parentTime - beginTimeForOffsetComputation, _appliedSpeedRatio);
 
             // This may be set redundantly in one case, but simplifies code
@@ -2806,7 +2805,7 @@ namespace System.Windows.Media.Animation
 
             if (parentIntervalCollection.Intersects(fillPeriod))  // We enter or leave Fill period
             {
-                TimeSpan relativeBeginTime = _currentIterationBeginTime.HasValue ? _currentIterationBeginTime.Value : _beginTime.Value;
+                TimeSpan relativeBeginTime = _currentIterationBeginTime ?? _beginTime.Value;
                 ComputeCurrentFillInterval(parentIntervalCollection,
                                            relativeBeginTime, endOfActivePeriod.Value,
                                            _currentDuration, _appliedSpeedRatio,
@@ -2833,7 +2832,7 @@ namespace System.Windows.Media.Animation
             Duration postFillDuration)
         {
             // Make sure that our periodic function is aligned to the boundary of the current iteration, regardless of prior slip
-            TimeSpan relativeBeginTime = _currentIterationBeginTime.HasValue ? _currentIterationBeginTime.Value : _beginTime.Value;
+            TimeSpan relativeBeginTime = _currentIterationBeginTime ?? _beginTime.Value;
             
             RaiseCurrentTimeInvalidated();
 
@@ -3178,7 +3177,7 @@ namespace System.Windows.Media.Animation
             // With these limitations, we can easily preview our CurrentTime:
             if (_beginTime.HasValue && currentParentTimePT >= _beginTime.Value)
             {
-                TimeSpan relativeBeginTimePT = _currentIterationBeginTime.HasValue ? _currentIterationBeginTime.Value : _beginTime.Value;
+                TimeSpan relativeBeginTimePT = _currentIterationBeginTime ?? _beginTime.Value;
                 TimeSpan previewCurrentOffsetPT = currentParentTimePT - relativeBeginTimePT;  // This is our time offset (not yet scaled by speed)
                 TimeSpan previewCurrentTimeLT = MultiplyTimeSpan(previewCurrentOffsetPT, _appliedSpeedRatio);  // This is what our time would be
 
@@ -3704,13 +3703,10 @@ namespace System.Windows.Media.Animation
                 current = current._parent;  
             }
 
-            if (_timeManager != null)
-            {
-                // If we get here from within a Tick, this will force MediaContext to perform another subsequent Tick
-                // on the TimeManager.  This will apply the requested interactive operations, so their results will
-                // immediately become visible.
-                _timeManager.SetDirty();
-            }
+            // If we get here from within a Tick, this will force MediaContext to perform another subsequent Tick
+            // on the TimeManager.  This will apply the requested interactive operations, so their results will
+            // immediately become visible.
+            _timeManager?.SetDirty();
         }
 
 
@@ -3829,10 +3825,7 @@ namespace System.Windows.Media.Animation
         // This wrapper is invoked anytime we invalidate the _beginTime
         private void UpdateSyncBeginTime()
         {
-            if (_syncData != null)
-            {
-                _syncData.UpdateClockBeginTime();
-            }
+            _syncData?.UpdateClockBeginTime();
         }
 
         private void VerifyNeedsTicksWhenActive()
@@ -4309,10 +4302,7 @@ namespace System.Windows.Media.Animation
             {
                 Clock child = (Clock)children[index].Target;
 
-                if (child != null)
-                {
-                    child.BuildInfoRecursive(builder, 1);
-                }
+                child?.BuildInfoRecursive(builder, 1);
             }
         }
 
@@ -4484,7 +4474,7 @@ namespace System.Windows.Media.Animation
         internal int                _childIndex;
         internal int                _depth;
 
-        static Int64                 s_TimeSpanTicksPerSecond = TimeSpan.FromSeconds(1).Ticks;
+        private static Int64        s_TimeSpanTicksPerSecond = TimeSpan.FromSeconds(1).Ticks;
 
         #endregion // Linking data
 

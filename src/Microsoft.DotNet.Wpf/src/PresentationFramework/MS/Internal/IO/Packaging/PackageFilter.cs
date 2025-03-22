@@ -258,7 +258,7 @@ namespace MS.Internal.IO.Packaging
         {
             throw new NotImplementedException(SR.FilterBindRegionNotImplemented);
         }
-        
+
         #endregion IFilter methods
 
         #region Private methods
@@ -275,7 +275,7 @@ namespace MS.Internal.IO.Packaging
         /// with InvalidCastException, COMException and IOException, are `swallowed by this method.
         /// </para>
         /// </remarks>
-        IFilter GetFilterFromClsid(Guid clsid)
+        private IFilter GetFilterFromClsid(Guid clsid)
         {
             Type filterType = Type.GetTypeFromCLSID(clsid);
             IFilter filter;
@@ -558,7 +558,7 @@ namespace MS.Internal.IO.Packaging
 
             // Get the string in value Extension of key \HKEY_CLASSES_ROOT\MIME\Database\Content Type\<MIME type>.
             RegistryKey mimeContentType = FindSubkey(Registry.ClassesRoot, _mimeContentTypeKey);
-            RegistryKey mimeTypeKey = (mimeContentType == null ? null : mimeContentType.OpenSubKey(contentType.ToString()));
+            RegistryKey mimeTypeKey = (mimeContentType?.OpenSubKey(contentType.ToString()));
             if (mimeTypeKey == null)
             {
                 return null;
@@ -639,22 +639,20 @@ namespace MS.Internal.IO.Packaging
         // get a valid path (see method MakeRegistryPath).
 
         // The following path contains the IFilter IID, which can be found in the public SDK file filter.h.
-        readonly string[] _IFilterAddinPath = new string[]
+        private readonly string[] _IFilterAddinPath = new string[]
             {
                 "CLSID",
                 null,  // file type GUID expected
                 "PersistentAddinsRegistered",
                 "{89BCB740-6119-101A-BCB7-00DD010655AF}"
             };
-
-        readonly string[] _mimeContentTypeKey = new string[]
+        private readonly string[] _mimeContentTypeKey = new string[]
             {
                 "MIME",
                 "Database",
                 "Content Type"
             };
-
-        readonly string[] _persistentHandlerKey = 
+        private readonly string[] _persistentHandlerKey = 
             {
                 null,  // extension string expected
                 "PersistentHandler"

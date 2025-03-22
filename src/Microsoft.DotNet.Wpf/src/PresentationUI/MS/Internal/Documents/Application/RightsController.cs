@@ -23,7 +23,7 @@ namespace MS.Internal.Documents.Application
     /// interface are expected to use the IChainOfResponsibiltyNode method before
     /// calling into the IDocumentController methods to avoid runtime errors.
     /// </remarks>
-    class RightsController : IDocumentController, IDisposable
+    internal class RightsController : IDocumentController, IDisposable
 {
     #region IDocumentController Members
     //--------------------------------------------------------------------------
@@ -422,10 +422,7 @@ namespace MS.Internal.Documents.Application
     {
         IDisposable provider = _provider as IDisposable;
 
-        if (provider != null)
-        {
-            provider.Dispose();
-        }
+        provider?.Dispose();
 
         _provider = null;
         

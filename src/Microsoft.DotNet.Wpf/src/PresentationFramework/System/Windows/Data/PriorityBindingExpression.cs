@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -77,10 +77,7 @@ namespace System.Windows.Data
     public override void UpdateTarget()
     {
         BindingExpressionBase bindExpr = ActiveBindingExpression;
-        if (bindExpr != null)
-        {
-            bindExpr.UpdateTarget();
-        }
+        bindExpr?.UpdateTarget();
     }
 
     /// <summary> Send the current value back to the source </summary>
@@ -88,10 +85,7 @@ namespace System.Windows.Data
     public override void UpdateSource()
     {
         BindingExpressionBase bindExpr = ActiveBindingExpression;
-        if (bindExpr != null)
-        {
-            bindExpr.UpdateSource();
-        }
+        bindExpr?.UpdateSource();
     }
 
 #region Expression overrides
@@ -144,7 +138,7 @@ namespace System.Windows.Data
         FrameworkPropertyMetadata fwMetaData = dp.GetMetadata(d.DependencyObjectType) as FrameworkPropertyMetadata;
 
         if ((fwMetaData != null && !fwMetaData.IsDataBindingAllowed) || dp.ReadOnly)
-            throw new ArgumentException(SR.Format(SR.PropertyNotBindable, dp.Name), "dp");
+            throw new ArgumentException(SR.Format(SR.PropertyNotBindable, dp.Name), nameof(dp));
 
         // create the BindingExpression
         PriorityBindingExpression bindExpr = new PriorityBindingExpression(binding, owner);
@@ -208,8 +202,7 @@ namespace System.Windows.Data
         for (int i = 0; i < count; ++i)
         {
             BindingExpressionBase b = MutableBindingExpressions[i];
-            if (b != null)
-                b.Detach();
+            b?.Detach();
         }
 
         ChangeSources(null);
@@ -410,10 +403,7 @@ namespace System.Windows.Data
     internal override void StoreValueInBindingGroup(object value, BindingGroup bindingGroup)
     {
         BindingExpressionBase bindExpr = ActiveBindingExpression;
-        if (bindExpr != null)
-        {
-            bindExpr.StoreValueInBindingGroup(value, bindingGroup);
-        }
+        bindExpr?.StoreValueInBindingGroup(value, bindingGroup);
     }
 
     /// <summary>
@@ -495,15 +485,15 @@ namespace System.Windows.Data
         get { return _list; }
     }
 
-    //------------------------------------------------------
-    //
-    //  Private Methods
-    //
-    //------------------------------------------------------
+        //------------------------------------------------------
+        //
+        //  Private Methods
+        //
+        //------------------------------------------------------
 
 
-    // Create a BindingExpression for position i
-    BindingExpressionBase AttachBindingExpression(int i, bool replaceExisting)
+        // Create a BindingExpression for position i
+        private BindingExpressionBase AttachBindingExpression(int i, bool replaceExisting)
     {
         DependencyObject target = TargetElement;
         if (target == null)
@@ -521,8 +511,8 @@ namespace System.Windows.Data
         return bindExpr;
     }
 
-    // Re-evaluate the choice of active BindingExpression
-    void ChooseActiveBindingExpression(DependencyObject target)
+        // Re-evaluate the choice of active BindingExpression
+        private void ChooseActiveBindingExpression(DependencyObject target)
     {
         int i, count = MutableBindingExpressions.Count;
         for (i = 0; i < count; ++i)
@@ -598,17 +588,17 @@ namespace System.Windows.Data
     }
 
 
-    //------------------------------------------------------
-    //
-    //  Private Fields
-    //
-    //------------------------------------------------------
+        //------------------------------------------------------
+        //
+        //  Private Fields
+        //
+        //------------------------------------------------------
 
-    const int   NoActiveBindingExpressions        = -1;  // no BindingExpressions work, all are attentive
-    const int   UnknownActiveBindingExpression    = -2;  // need to determine active BindingExpression
+        private const int   NoActiveBindingExpressions        = -1;  // no BindingExpressions work, all are attentive
+        private const int   UnknownActiveBindingExpression    = -2;  // need to determine active BindingExpression
 
-    Collection<BindingExpressionBase>  _list = new Collection<BindingExpressionBase>();
-    int         _activeIndex            = UnknownActiveBindingExpression;
-    bool        _isInInvalidateBinding  = false;
+        private Collection<BindingExpressionBase>  _list = new Collection<BindingExpressionBase>();
+        private int         _activeIndex            = UnknownActiveBindingExpression;
+        private bool        _isInInvalidateBinding  = false;
 }
 }

@@ -311,10 +311,10 @@ namespace System.Windows.Markup
                                                                    XamlNodeType.PropertyIDictionaryEnd,
                                                                };
 
-            XamlNodeType _token;
-            int _lineNumber;
-            int _linePosition;
-            int _depth;
+            private XamlNodeType _token;
+            private int _lineNumber;
+            private int _linePosition;
+            private int _depth;
         }
 
 
@@ -399,8 +399,8 @@ namespace System.Windows.Markup
                 _text = text;
             }
 
-            string _text;
-            Type   _converterType = null;
+            private string _text;
+            private Type   _converterType = null;
         }
 
 
@@ -429,11 +429,11 @@ namespace System.Windows.Markup
             {
                 if (typeFullName == null)
                 {
-                    throw new ArgumentNullException("typeFullName");
+                    throw new ArgumentNullException(nameof(typeFullName));
                 }
                 if (propertyName == null)
                 {
-                    throw new ArgumentNullException("propertyName");
+                    throw new ArgumentNullException(nameof(propertyName));
                 }
                 
                 _propertyMember = propertyMember;
@@ -516,12 +516,12 @@ namespace System.Windows.Markup
             }
 
 
-            object     _propertyMember;
-            string     _assemblyName;
-            string     _typeFullName;
-            string     _propName;
-            Type       _validType;
-            Type       _declaringType;
+            private object     _propertyMember;
+            private string     _assemblyName;
+            private string     _typeFullName;
+            private string     _propName;
+            private Type       _validType;
+            private Type       _declaringType;
         }
 
         /// <summary>
@@ -664,11 +664,11 @@ namespace System.Windows.Markup
                 set { _defaultTargetType = value; }
             }
 
-            short _extensionTypeId;
-            string _value;
-            bool _isValueNestedExtension;
-            bool _isValueTypeExtension;
-            Type _defaultTargetType;
+            private short _extensionTypeId;
+            private string _value;
+            private bool _isValueNestedExtension;
+            private bool _isValueTypeExtension;
+            private Type _defaultTargetType;
         }
 
         /// <summary>
@@ -893,21 +893,21 @@ namespace System.Windows.Markup
                 get { return _complexAsSimple; }
             }
 
-            string             _value;
-            BamlAttributeUsage _attributeUsage;
-            bool               _complexAsSimple;
-            bool               _isDefinitionName;
+            private string             _value;
+            private BamlAttributeUsage _attributeUsage;
+            private bool               _complexAsSimple;
+            private bool               _isDefinitionName;
 
             // Variables for holding property info when this property's value is
             // resolved using the attributes of another property.
-            Type               _valueDeclaringType;
-            string             _valuePropertyName;
-            Type               _valuePropertyType;
-            object             _valuePropertyMember;
-            bool               _hasValueId = false;
-            short              _valueId = 0;
-            string             _memberName = null;
-            Type               _defaultTargetType;
+            private Type               _valueDeclaringType;
+            private string             _valuePropertyName;
+            private Type               _valuePropertyType;
+            private object             _valuePropertyMember;
+            private bool               _hasValueId = false;
+            private short              _valueId = 0;
+            private string             _memberName = null;
+            private Type               _defaultTargetType;
         }
 
         /// <summary>
@@ -991,11 +991,11 @@ namespace System.Windows.Markup
                 get { return _valueSerializerTypeAssemblyName;}
             }
 
-            string    _valueTypeFullname;
-            string    _valueTypeAssemblyName;
-            Type      _valueElementType;
-            string    _valueSerializerTypeFullName;
-            string    _valueSerializerTypeAssemblyName;
+            private string    _valueTypeFullname;
+            private string    _valueTypeAssemblyName;
+            private Type      _valueElementType;
+            private string    _valueSerializerTypeFullName;
+            private string    _valueSerializerTypeAssemblyName;
         }
 
         /// <summary>
@@ -1062,13 +1062,13 @@ namespace System.Windows.Markup
                 set { _ownerTypeFullName = value; }
             }
 
-            string _ownerTypeFullName;
+            private string _ownerTypeFullName;
 #endif
-            string _xmlNamespace;
+            private string _xmlNamespace;
 
-            string _name;
+            private string _name;
 
-            BamlAttributeUsage _attributeUsage;
+            private BamlAttributeUsage _attributeUsage;
         }
      
         /// <summary>
@@ -1205,14 +1205,14 @@ namespace System.Windows.Markup
                 set { _isInjected = value; }
             }
 
-            string _assemblyName;
-            string _typeFullName;
-            Type   _elementType;
-            Type   _serializerType;
-            bool   _isEmptyElement;
-            bool   _needsDictionaryKey;
-            bool   _useTypeConverter;
-            bool   _isInjected;
+            private string _assemblyName;
+            private string _typeFullName;
+            private Type   _elementType;
+            private Type   _serializerType;
+            private bool   _isEmptyElement;
+            private bool   _needsDictionaryKey;
+            private bool   _useTypeConverter;
+            private bool   _isInjected;
         }
 
         /// <summary>
@@ -1297,9 +1297,9 @@ namespace System.Windows.Markup
                 get { return _valueElementType;}
             }
 
-            string    _valueTypeFullname;
-            string    _valueTypeAssemblyName;
-            Type      _valueElementType;
+            private string    _valueTypeFullname;
+            private string    _valueTypeAssemblyName;
+            private Type      _valueElementType;
         }
 #endif
 
@@ -1359,7 +1359,7 @@ namespace System.Windows.Markup
                 get { return _content; }
             }
 
-            string _content;
+            private string _content;
         }
 
 
@@ -1391,7 +1391,7 @@ namespace System.Windows.Markup
                 get { return _value;}
             }
 
-            string _value;
+            private string _value;
         }
         
         /// <summary>
@@ -1423,7 +1423,7 @@ namespace System.Windows.Markup
                 get { return _xmlNamespace;}
             }
 
-            string _xmlNamespace;
+            private string _xmlNamespace;
         }
             
         /// <summary>
@@ -1466,8 +1466,8 @@ namespace System.Windows.Markup
 
 #endif  // PBTCOMPILER
 
-            string _localName;
-            string _xmlNamespace;
+            private string _localName;
+            private string _xmlNamespace;
         }
 
 #if !PBTCOMPILER
@@ -1528,10 +1528,10 @@ namespace System.Windows.Markup
                 get { return _routedEventName;}
             }
 
-            RoutedEvent    _routedEvent;
-            string         _assemblyName;
-            string         _typeFullName;
-            string         _routedEventName;
+            private RoutedEvent    _routedEvent;
+            private string         _assemblyName;
+            private string         _typeFullName;
+            private string         _routedEventName;
         }
 
 #endif
@@ -1573,8 +1573,8 @@ namespace System.Windows.Markup
                 get { return _xmlNamespace;}
             }
 
-            string _prefix;
-            string _xmlNamespace;
+            private string _prefix;
+            private string _xmlNamespace;
         }
 
 
@@ -1628,9 +1628,9 @@ namespace System.Windows.Markup
 #endif
             }
 
-            string _xmlns;
-            string _clrns;
-            string _assy;
+            private string _xmlns;
+            private string _clrns;
+            private string _assy;
         }
 
       
@@ -1763,14 +1763,14 @@ namespace System.Windows.Markup
 #endif
 
             private Type _listenerType;
-            bool _isStyleSetterEvent;
-            bool _isTemplateEvent;
-            bool _isOriginatingEvent = true;
-            bool _isSameScope;
-            string _localAssemblyName;
-            Int32 _connectionId;
-            string _eventName;
-            MemberInfo _eventMember;
+            private bool _isStyleSetterEvent;
+            private bool _isTemplateEvent;
+            private bool _isOriginatingEvent = true;
+            private bool _isSameScope;
+            private string _localAssemblyName;
+            private Int32 _connectionId;
+            private string _eventName;
+            private MemberInfo _eventMember;
 #endif
         }
 
@@ -1943,7 +1943,7 @@ namespace System.Windows.Markup
             /// </summary>
             internal bool IsCompact { get { return _compact; } }
 
-            bool _compact;
+            private bool _compact;
         }
 
         /// <summary>
@@ -1986,8 +1986,8 @@ namespace System.Windows.Markup
                 get { return _isEmptyElement; }
             }
 
-            XmlReader _xmlReader;
-            bool _isEmptyElement;
+            private XmlReader _xmlReader;
+            private bool _isEmptyElement;
 #endif
         }
 
@@ -2050,8 +2050,8 @@ namespace System.Windows.Markup
                 get { return _attributeUsage; }
             }
 
-            BamlAttributeUsage _attributeUsage;
-            string _name;
+            private BamlAttributeUsage _attributeUsage;
+            private string _name;
         }
 
         /// <summary>
@@ -2091,8 +2091,8 @@ namespace System.Windows.Markup
                 get { return _valueType; }
             }
 
-            string  _assemblyName;
-            Type    _valueType;
+            private string  _assemblyName;
+            private Type    _valueType;
         }
 
         /// <summary>
@@ -2135,7 +2135,7 @@ namespace System.Windows.Markup
             //    get { return BamlAttributeUsage.Default; }
             //}
 
-            string _name;
+            private string _name;
         }        
 
         /// <summary>
@@ -2208,11 +2208,11 @@ namespace System.Windows.Markup
             {
                 if (typeFullName == null)
                 {
-                    throw new ArgumentNullException("typeFullName");
+                    throw new ArgumentNullException(nameof(typeFullName));
                 }
                 if (propertyName == null)
                 {
-                    throw new ArgumentNullException("propertyName");
+                    throw new ArgumentNullException(nameof(propertyName));
                 }
                 
                 _propertyMember = propertyMember;
@@ -2278,12 +2278,12 @@ namespace System.Windows.Markup
                 }
             }
 
-            Type   _declaringType;
-            Type   _validType;
-            object _propertyMember;
-            string _assemblyName;
-            string _typeFullName;
-            string _propName;
+            private Type   _declaringType;
+            private Type   _validType;
+            private object _propertyMember;
+            private string _assemblyName;
+            private string _typeFullName;
+            private string _propName;
         }
         #endregion  XamlNodeTypeDefitions
 }

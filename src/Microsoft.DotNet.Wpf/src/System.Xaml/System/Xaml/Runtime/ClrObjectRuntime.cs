@@ -15,7 +15,7 @@ using XAML3 = System.Windows.Markup;
 
 namespace MS.Internal.Xaml.Runtime
 {
-    class ClrObjectRuntime : XamlRuntime
+    internal class ClrObjectRuntime : XamlRuntime
     {
         private bool _ignoreCanConvert;
         private bool _isWriter;
@@ -34,7 +34,7 @@ namespace MS.Internal.Xaml.Runtime
 
         private static Exception UnwrapTargetInvocationException(Exception e)
         {
-            if(e is TargetInvocationException && e.InnerException is not null)
+            if (e is TargetInvocationException && e.InnerException is not null)
             {
                 return e.InnerException;
             }
@@ -248,17 +248,17 @@ namespace MS.Internal.Xaml.Runtime
             object value;
             try
             {
-                if(property.IsDirective)
+                if (property.IsDirective)
                 {
                     value = CreateInstance(property.Type, null);
                 }
-                else if(!failIfWriteOnly)
+                else if (!failIfWriteOnly)
                 {
                     try
                     {
                         value = GetValue(property, obj);
                     }
-                    catch(NotSupportedException)
+                    catch (NotSupportedException)
                     {
                         value = null;
                     }
@@ -268,9 +268,9 @@ namespace MS.Internal.Xaml.Runtime
                     value = GetValue(property, obj);
                 }
             }
-            catch(Exception e)
+            catch (Exception e)
             {
-                if(CriticalExceptions.IsCriticalException(e))
+                if (CriticalExceptions.IsCriticalException(e))
                 {
                     throw;
                 }
@@ -290,16 +290,16 @@ namespace MS.Internal.Xaml.Runtime
         {
             try
             {
-                if(property.IsDirective)
+                if (property.IsDirective)
                 {
                     return;
                 }
 
                 SetValue(property, inst, value);
             }
-            catch(Exception e)
+            catch (Exception e)
             {
-                if(CriticalExceptions.IsCriticalException(e))
+                if (CriticalExceptions.IsCriticalException(e))
                 {
                     throw;
                 }
@@ -319,9 +319,9 @@ namespace MS.Internal.Xaml.Runtime
             {
                 collectionType.Invoker.AddToCollection(collection, value);
             }
-            catch(Exception e)
+            catch (Exception e)
             {
-                if(CriticalExceptions.IsCriticalException(e))
+                if (CriticalExceptions.IsCriticalException(e))
                 {
                     throw;
                 }
@@ -336,9 +336,9 @@ namespace MS.Internal.Xaml.Runtime
             {
                 dictionaryType.Invoker.AddToDictionary(collection, key, value);
             }
-            catch(Exception e)
+            catch (Exception e)
             {
-                if(CriticalExceptions.IsCriticalException(e))
+                if (CriticalExceptions.IsCriticalException(e))
                 {
                     throw;
                 }
@@ -467,9 +467,9 @@ namespace MS.Internal.Xaml.Runtime
                     connector.Connect(connectionId, instance);
                 }
             }
-            catch(Exception e)
+            catch (Exception e)
             {
-                if(CriticalExceptions.IsCriticalException(e))
+                if (CriticalExceptions.IsCriticalException(e))
                 {
                     throw;
                 }
@@ -494,9 +494,9 @@ namespace MS.Internal.Xaml.Runtime
                     }
                 }
             }
-            catch(Exception e)
+            catch (Exception e)
             {
-                if(CriticalExceptions.IsCriticalException(e))
+                if (CriticalExceptions.IsCriticalException(e))
                 {
                     throw;
                 }
@@ -512,9 +512,9 @@ namespace MS.Internal.Xaml.Runtime
                 object val = me.ProvideValue(serviceProvider);
                 return val;
             }
-            catch(Exception e)
+            catch (Exception e)
             {
-                if(CriticalExceptions.IsCriticalException(e))
+                if (CriticalExceptions.IsCriticalException(e))
                 {
                     throw;
                 }
@@ -532,9 +532,9 @@ namespace MS.Internal.Xaml.Runtime
                     uriContext.BaseUri = baseUri;
                 }
             }
-            catch(Exception e)
+            catch (Exception e)
             {
-                if(CriticalExceptions.IsCriticalException(e))
+                if (CriticalExceptions.IsCriticalException(e))
                 {
                     throw;
                 }
@@ -562,9 +562,9 @@ namespace MS.Internal.Xaml.Runtime
             {
                 iXmlSerial.ReadXml(reader);
             }
-            catch(Exception e)
+            catch (Exception e)
             {
-                if(CriticalExceptions.IsCriticalException(e))
+                if (CriticalExceptions.IsCriticalException(e))
                 {
                     throw;
                 }
@@ -585,7 +585,7 @@ namespace MS.Internal.Xaml.Runtime
             try
             {
                 XamlDeferringLoader converter = GetConverterInstance(deferringLoader);
-                if(converter is null)
+                if (converter is null)
                 {
                     throw new XamlObjectWriterException(SR.Format(SR.DeferringLoaderInstanceNull, deferringLoader));
                 }

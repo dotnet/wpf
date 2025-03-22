@@ -9,13 +9,23 @@
 // Please see MilCodeGen.html for more information.
 //
 
+using MS.Internal;
+using MS.Internal.KnownBoxes;
+using MS.Internal.Collections;
+using MS.Utility;
+using System.Collections;
+using System.ComponentModel;
+using System.Globalization;
+using System.Text;
+using System.Windows.Media.Effects;
 using System.Windows.Media.Animation;
 using System.Windows.Media.Composition;
-// These types are aliased to match the unamanaged names used in interop
+using System.Windows.Markup;
+using System.Windows.Media.Converters;
 
 namespace System.Windows.Media
 {
-    abstract partial class ImageSource : Animatable, IFormattable, DUCE.IResource
+    public abstract partial class ImageSource : Animatable, IFormattable, DUCE.IResource
     {
         //------------------------------------------------------
         //
@@ -217,6 +227,7 @@ namespace System.Windows.Media
         {
             return base.ToString();
         }
+
 
         #endregion Internal Properties
 

@@ -157,7 +157,7 @@ namespace MS.Internal.IO.Packaging.CompoundFile
                 translatedSeekOrigin = SafeNativeCompoundFileConstants.STREAM_SEEK_SET;
                 if( 0 > offset )
                 {
-                    throw new ArgumentOutOfRangeException("offset",
+                    throw new ArgumentOutOfRangeException(nameof(offset),
                         SR.SeekNegative);
                 }
                 break;
@@ -195,7 +195,7 @@ namespace MS.Internal.IO.Packaging.CompoundFile
 
         if( 0 > newLength )
         {
-            throw new ArgumentOutOfRangeException("newLength",
+            throw new ArgumentOutOfRangeException(nameof(newLength),
                 SR.StreamLengthNegative);
         }
         
@@ -341,8 +341,8 @@ namespace MS.Internal.IO.Packaging.CompoundFile
     //  Private Members
     //
     //------------------------------------------------------
-    IStream _safeIStream;
-    FileAccess access;
+    private IStream _safeIStream;
+    private FileAccess access;
 
     /// <summary>
     /// If only this stream object is held open, and the rest of the container
@@ -350,6 +350,6 @@ namespace MS.Internal.IO.Packaging.CompoundFile
     /// tree open because the CLR GC doesn't realize that our IStream has
     /// a dependency on the rest of the container object tree.
     /// </summary>
-    StreamInfo backReference;
+    private StreamInfo backReference;
 }
 }

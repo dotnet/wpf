@@ -59,7 +59,7 @@ namespace System.Windows.Media
                             return;
                         }
                         
-                        FromRawBytes(profileData, (int)cbProfileActual, /* dontThrowException = */ true);
+                        FromRawBytes(profileData, (int)cbProfileActual, dontThrowException: true);
                     }
 
                     break;
@@ -129,7 +129,7 @@ namespace System.Windows.Media
                         }
 
                         // Finally, fill in _colorContextHelper
-                        FromRawBytes(sRGBProfile, sRGBProfile.Length, /* dontThrowException = */ true);
+                        FromRawBytes(sRGBProfile, sRGBProfile.Length, dontThrowException: true);
                     }
                     else if (Invariant.Strict)
                     {
@@ -156,7 +156,7 @@ namespace System.Windows.Media
         /// <param name="profileUri">Specifies the URI of a color profile used by the newly created ColorContext.</param>
         public ColorContext(Uri profileUri)
         {
-            Initialize(profileUri, /* isStandardProfileUriNotFromUser = */ false);
+            Initialize(profileUri, isStandardProfileUriNotFromUser: false);
         }
 
         /// <summary>
@@ -179,7 +179,7 @@ namespace System.Windows.Media
                 case PixelFormatEnum.Bgra32:
                 case PixelFormatEnum.Pbgra32:
                 default:
-                    Initialize(GetStandardColorSpaceProfile(), /* isStandardProfileUriNotFromUser = */ true);
+                    Initialize(GetStandardColorSpaceProfile(), isStandardProfileUriNotFromUser: true);
                     break;
 
                 case PixelFormatEnum.Rgba64:
@@ -485,7 +485,7 @@ namespace System.Windows.Media
 
             if (!profileUri.IsAbsoluteUri)
             {
-                throw new ArgumentException(SR.UriNotAbsolute, "profileUri");
+                throw new ArgumentException(SR.UriNotAbsolute, nameof(profileUri));
             }
 
             _profileUri = profileUri;
@@ -592,7 +592,7 @@ namespace System.Windows.Media
 
                 if (numBytesRead < bufferSize)
                 {
-                    FromRawBytes(rawBytes, numBytesRead, /* dontThrowException = */ false);
+                    FromRawBytes(rawBytes, numBytesRead, dontThrowException: false);
 
                     using (FactoryMaker factoryMaker = new FactoryMaker())
                     {

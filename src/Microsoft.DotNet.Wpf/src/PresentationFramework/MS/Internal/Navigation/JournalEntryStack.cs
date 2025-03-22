@@ -41,7 +41,7 @@ namespace System.Windows.Navigation
             return _ljese;
         }
 
-        LimitedJournalEntryStackEnumerable _ljese;
+        private LimitedJournalEntryStackEnumerable _ljese;
         protected JournalEntryFilter _filter;
         public event NotifyCollectionChangedEventHandler CollectionChanged;
         public abstract IEnumerator GetEnumerator();
@@ -140,13 +140,13 @@ namespace System.Windows.Navigation
             }
         }
 
-        Journal _journal;
-        int _start;
-        int _delta;
-        int _next;
-        JournalEntry _current;
-        JournalEntryFilter _filter;
-        int _version;
+        private Journal _journal;
+        private int _start;
+        private int _delta;
+        private int _next;
+        private JournalEntry _current;
+        private JournalEntryFilter _filter;
+        private int _version;
     }
 
     internal class LimitedJournalEntryStackEnumerable : IEnumerable, INotifyCollectionChanged

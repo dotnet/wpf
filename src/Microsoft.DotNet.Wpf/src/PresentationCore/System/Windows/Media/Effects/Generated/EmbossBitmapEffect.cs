@@ -9,10 +9,16 @@
 // Please see MilCodeGen.html for more information.
 //
 
-// These types are aliased to match the unamanaged names used in interop
+using MS.Internal;
+using MS.Utility;
+using System.Collections;
+using System.Windows.Media.Animation;
+using System.Windows.Media.Composition;
+using System.Windows.Media.Imaging;
+
 namespace System.Windows.Media.Effects
 {
-    sealed partial class EmbossBitmapEffect : BitmapEffect
+    public sealed partial class EmbossBitmapEffect : BitmapEffect
     {
         //------------------------------------------------------
         //
@@ -205,8 +211,7 @@ namespace System.Windows.Media.Effects
             // We check our static default fields which are of type Freezable
             // to make sure that they are not mutable, otherwise we will throw
             // if these get touched by more than one thread in the lifetime
-            // of your app
-
+            // of your app.
 
 
             // Initializations
@@ -230,6 +235,8 @@ namespace System.Windows.Media.Effects
                                    /* isIndependentlyAnimated  = */ true,
                                    /* coerceValueCallback */ null);
         }
+
+
 
         #endregion Constructors
     }

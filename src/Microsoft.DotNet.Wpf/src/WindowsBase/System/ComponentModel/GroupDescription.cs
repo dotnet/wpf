@@ -135,7 +135,7 @@ namespace System.ComponentModel
             {
                 _customSort = value;
                 SetSortDescriptions(null);
-                OnPropertyChanged(new PropertyChangedEventArgs("CustomSort"));
+                OnPropertyChanged(new PropertyChangedEventArgs(nameof(CustomSort)));
             }
         }
 
@@ -190,9 +190,9 @@ namespace System.ComponentModel
         //
         //------------------------------------------------------
 
-        void OnGroupNamesChanged(object sender, NotifyCollectionChangedEventArgs e)
+        private void OnGroupNamesChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
-            OnPropertyChanged(new PropertyChangedEventArgs("GroupNames"));
+            OnPropertyChanged(new PropertyChangedEventArgs(nameof(GroupNames)));
         }
 
         // set new SortDescription collection; rehook collection change notification handler
@@ -215,7 +215,7 @@ namespace System.ComponentModel
 
             if (raiseChangeEvent)
             {
-                OnPropertyChanged(new PropertyChangedEventArgs("SortDescriptions"));
+                OnPropertyChanged(new PropertyChangedEventArgs(nameof(SortDescriptions)));
             }
         }
 
@@ -228,11 +228,11 @@ namespace System.ComponentModel
                 if (_customSort != null)
                 {
                     _customSort = null;
-                    OnPropertyChanged(new PropertyChangedEventArgs("CustomSort"));
+                    OnPropertyChanged(new PropertyChangedEventArgs(nameof(CustomSort)));
                 }
             }
 
-            OnPropertyChanged(new PropertyChangedEventArgs("SortDescriptions"));
+            OnPropertyChanged(new PropertyChangedEventArgs(nameof(SortDescriptions)));
         }
 
 
@@ -246,9 +246,9 @@ namespace System.ComponentModel
         //
         //------------------------------------------------------
 
-        ObservableCollection<object> _explicitGroupNames;
-        SortDescriptionCollection _sort;
-        IComparer _customSort;
+        private ObservableCollection<object> _explicitGroupNames;
+        private SortDescriptionCollection _sort;
+        private IComparer _customSort;
 
         #endregion Private fields
     }

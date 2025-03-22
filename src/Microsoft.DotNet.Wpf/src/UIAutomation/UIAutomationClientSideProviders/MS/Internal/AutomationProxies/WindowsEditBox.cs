@@ -20,7 +20,7 @@ namespace MS.Internal.AutomationProxies
     // For example the EM_LINEINDEX message converts a line number to it's starting character position.
     // Perhaps not the best choice but we use it to be consistent.
 
-    class WindowsEditBox : ProxyHwnd, IValueProvider, ITextProvider
+    internal class WindowsEditBox : ProxyHwnd, IValueProvider, ITextProvider
     {
         // ------------------------------------------------------
         //
@@ -250,9 +250,9 @@ namespace MS.Internal.AutomationProxies
         #region ProxyHwnd Overrides
 
         // Builds a list of Win32 WinEvents to process a UIAutomation Event.
-        protected override WinEventTracker.EvtIdProperty[] EventToWinEvent(AutomationEvent idEvent, out int cEvent)
+        protected override ReadOnlySpan<WinEventTracker.EvtIdProperty> EventToWinEvent(AutomationEvent idEvent)
         {
-            return base.EventToWinEvent(idEvent, out cEvent);
+            return base.EventToWinEvent(idEvent);
         }
 
         #endregion

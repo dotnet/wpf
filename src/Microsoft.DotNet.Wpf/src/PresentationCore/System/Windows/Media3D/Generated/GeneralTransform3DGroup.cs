@@ -10,11 +10,20 @@
 //
 
 using MS.Internal;
-// These types are aliased to match the unamanaged names used in interop
+using MS.Internal.Collections;
+using MS.Utility;
+using System.Collections;
+using System.ComponentModel;
+using System.Globalization;
+using System.Text;
+using System.Windows.Markup;
+using System.Windows.Media.Media3D.Converters;
+using System.Windows.Media.Animation;
+using System.Windows.Media.Composition;
 
 namespace System.Windows.Media.Media3D
 {
-    sealed partial class GeneralTransform3DGroup : GeneralTransform3D
+    public sealed partial class GeneralTransform3DGroup : GeneralTransform3D
     {
         //------------------------------------------------------
         //
@@ -175,7 +184,6 @@ namespace System.Windows.Media.Media3D
             // to make sure that they are not mutable, otherwise we will throw
             // if these get touched by more than one thread in the lifetime
             // of your app.
-
             Debug.Assert(s_Children == null || s_Children.IsFrozen,
                 "Detected context bound default value GeneralTransform3DGroup.s_Children (See OS Bug #947272).");
 
@@ -192,6 +200,8 @@ namespace System.Windows.Media.Media3D
                                    /* isIndependentlyAnimated  = */ false,
                                    /* coerceValueCallback */ null);
         }
+
+
 
         #endregion Constructors
     }

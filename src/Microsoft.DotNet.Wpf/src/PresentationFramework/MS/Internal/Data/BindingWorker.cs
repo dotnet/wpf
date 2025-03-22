@@ -105,7 +105,7 @@ namespace MS.Internal.Data
         //
         //------------------------------------------------------
 
-        BindingExpression _bindingExpression;
+        private BindingExpression _bindingExpression;
 
         #region Uncommon Values
 
@@ -127,7 +127,8 @@ namespace MS.Internal.Data
         internal void SetValue(Feature id, object value) { _values.SetValue((int)id, value); }
         internal void SetValue(Feature id, object value, object defaultValue) { if (Object.Equals(value, defaultValue)) _values.ClearValue((int)id); else _values.SetValue((int)id, value); }
         internal void ClearValue(Feature id) { _values.ClearValue((int)id); }
-        UncommonValueTable _values;
+
+        private UncommonValueTable _values;
 
         #endregion Uncommon Values
     }

@@ -281,6 +281,7 @@ namespace System.Windows
         {
             DependencyObject d = fe;
 
+#pragma warning disable IDE0031
             if (newTemplate != null)
             {
                 newTemplate.Seal();
@@ -299,6 +300,7 @@ namespace System.Windows
                     StyleHelper.CheckForCyclicReferencesInStyleAndTemplateTriggers(templateProperty, newTemplate, style, themeStyle);
                 }
 #endif
+#pragma warning restore IDE0031
             }
 
             // Update the template cache
@@ -355,10 +357,7 @@ namespace System.Windows
             // Seal template nodes (if exists)
 
 
-            if (frameworkTemplate != null)
-            {
-                frameworkTemplate.ProcessTemplateBeforeSeal();
-            }
+            frameworkTemplate?.ProcessTemplateBeforeSeal();
 
 
             if (templateRoot != null)
@@ -373,10 +372,7 @@ namespace System.Windows
             }
 
             // Seal triggers
-            if (triggers != null)
-            {
-                triggers.Seal();
-            }
+            triggers?.Seal();
 
             // Seal Resource Dictionary
             if (resources != null)
@@ -1443,7 +1439,7 @@ namespace System.Windows
 
             if (oldStyle != null)
             {
-                HybridDictionary instanceValues = (styleData != null) ? styleData[(int)InstanceStyleData.InstanceValues] : null;
+                HybridDictionary instanceValues = styleData?[(int)InstanceStyleData.InstanceValues];
                 ReleaseInstanceDataForDataTriggers(dataField, instanceValues, oldStyle, oldFrameworkTemplate );
                 if (oldStyle.HasInstanceValues)
                 {
@@ -1454,7 +1450,7 @@ namespace System.Windows
             }
             else if (oldFrameworkTemplate != null)
             {
-                HybridDictionary instanceValues = (styleData != null) ? styleData[(int)InstanceStyleData.InstanceValues] : null;
+                HybridDictionary instanceValues = styleData?[(int)InstanceStyleData.InstanceValues];
                 ReleaseInstanceDataForDataTriggers(dataField, instanceValues, oldStyle, oldFrameworkTemplate );
                 if (oldFrameworkTemplate.HasInstanceValues)
                 {
@@ -1465,7 +1461,7 @@ namespace System.Windows
             }
             else
             {
-                HybridDictionary instanceValues = (styleData != null) ? styleData[(int)InstanceStyleData.InstanceValues] : null;
+                HybridDictionary instanceValues = styleData?[(int)InstanceStyleData.InstanceValues];
                 ReleaseInstanceDataForDataTriggers(dataField, instanceValues, oldStyle, oldFrameworkTemplate );
             }
         }
@@ -2164,10 +2160,7 @@ namespace System.Windows
             }
 
             // Clear the NameMap property on the root of the generated subtree
-            if (rootNode != null)
-            {
-                rootNode.ClearValue(NameScope.NameScopeProperty);
-            }
+            rootNode?.ClearValue(NameScope.NameScopeProperty);
 
             // Detach the generated tree from the conatiner
             DetachGeneratedSubTree(feContainer, fceContainer);
@@ -2221,7 +2214,7 @@ namespace System.Windows
 
             FrameworkObject container = new FrameworkObject(feContainer, fceContainer);
 
-            HybridDictionary instanceValues = (instanceData != null) ? instanceData[(int)InstanceStyleData.InstanceValues] : null;
+            HybridDictionary instanceValues = instanceData?[(int)InstanceStyleData.InstanceValues];
             int[] childIndices = new int[templateChain.Count];
 
             // Assumes that styleChain[0] is the root of the templated subtree
@@ -2917,11 +2910,11 @@ namespace System.Windows
             FrameworkContentElement fceContainer;
             Helper.DowncastToFEorFCE(container, out feContainer, out fceContainer, true);
 
-            HybridDictionary[] styleData = (dataField != null) ? dataField.GetValue(container) : null;
-            HybridDictionary instanceValues = (styleData != null) ? styleData[(int)InstanceStyleData.InstanceValues] : null;
+            HybridDictionary[] styleData = dataField?.GetValue(container);
+            HybridDictionary instanceValues = styleData?[(int)InstanceStyleData.InstanceValues];
             InstanceValueKey key = new InstanceValueKey(childIndex, dp.GlobalIndex, i);
 
-            object value = (instanceValues != null)? instanceValues[key] : null;
+            object value = instanceValues?[key];
             bool isRequestingExpression = (feChild != null) ? feChild.IsRequestingExpression : fceChild.IsRequestingExpression;
 
             if (value == null)
@@ -2978,10 +2971,7 @@ namespace System.Windows
                 {
                     expr = value as Expression;
                     // if the instance value is an expression, attach it
-                    if (expr != null)
-                    {
-                        expr.OnAttach(child, dp);
-                    }
+                    expr?.OnAttach(child, dp);
                 }
             }
 
@@ -3379,8 +3369,8 @@ namespace System.Windows
                 FrugalStructList<ContainerDependent> newContainerDependents;
 
                 Debug.Assert(feContainer != null);
-                oldFactory = (oldFrameworkTemplate != null) ? oldFrameworkTemplate.VisualTree : null;
-                newFactory = (newFrameworkTemplate != null) ? newFrameworkTemplate.VisualTree : null;
+                oldFactory = oldFrameworkTemplate?.VisualTree;
+                newFactory = newFrameworkTemplate?.VisualTree;
 
                 canBuildVisualTree = (oldFrameworkTemplate != null) ? oldFrameworkTemplate.CanBuildVisualTree : false;
                 hasTemplateGeneratedSubTree = feContainer.HasTemplateGeneratedSubTree;
@@ -5518,8 +5508,8 @@ namespace System.Windows
             {
                 if (fe != null)
                     fe.WriteInternalFlag(InternalFlags.IsInitialized, true);
-                else if (fce != null)
-                    fce.WriteInternalFlag(InternalFlags.IsInitialized, true);
+                else
+                    fce?.WriteInternalFlag(InternalFlags.IsInitialized, true);
             }
 
             // get the desired expression
@@ -5530,8 +5520,8 @@ namespace System.Windows
             {
                 if (fe != null)
                     fe.WriteInternalFlag(InternalFlags.IsInitialized, false);
-                else if (fce != null)
-                    fce.WriteInternalFlag(InternalFlags.IsInitialized, false);
+                else
+                    fce?.WriteInternalFlag(InternalFlags.IsInitialized, false);
             }
 
             return result;
@@ -5890,7 +5880,7 @@ namespace System.Windows
             // compare the state and reference values directly.)
             object referenceValue = Value;
             string referenceString = referenceValue as String;
-            Type stateType = (state != null) ? state.GetType() : null;
+            Type stateType = state?.GetType();
 
             if (referenceString != null && stateType != null &&
                 stateType != typeof(String))
@@ -6134,9 +6124,9 @@ namespace System.Windows
         }
 
         // the origin of the instance value in the container's style:
-        int _childIndex;    // the childIndex of the target element
-        int _dpIndex;       // the global index of the target DP
-        int _index;         // the index in the ItemStructList<ChildValueLookup>
+        private int _childIndex;    // the childIndex of the target element
+        private int _dpIndex;       // the global index of the target DP
+        private int _index;         // the index in the ItemStructList<ChildValueLookup>
     }
 
     #endregion DataStructures

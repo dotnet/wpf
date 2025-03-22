@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -133,12 +133,12 @@ namespace System.Windows.Markup
 
         string IXmlNamespaceResolver.LookupPrefix( string namespaceName )
         {
-            return (_readerAsResolver is null) ? null : _readerAsResolver.LookupPrefix( namespaceName );
+            return _readerAsResolver?.LookupPrefix( namespaceName );
         }
 
         IDictionary<string, string> IXmlNamespaceResolver.GetNamespacesInScope ( XmlNamespaceScope scope )
         {
-            return (_readerAsResolver is null) ? null : _readerAsResolver.GetNamespacesInScope( scope );
+            return _readerAsResolver?.GetNamespacesInScope( scope );
         }
 
         public override void ResolveEntity()
@@ -158,7 +158,7 @@ namespace System.Windows.Markup
         {
             try
             {
-                if(disposing)
+                if (disposing)
                 {
                     ((IDisposable)_reader).Dispose();
                 }

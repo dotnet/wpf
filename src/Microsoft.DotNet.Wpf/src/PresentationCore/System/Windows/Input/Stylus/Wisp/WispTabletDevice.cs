@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -346,10 +346,7 @@ namespace System.Windows.Input
                 StylusDeviceCollection styluses = _stylusDeviceCollection;
                 _stylusDeviceCollection = null;
 
-                if (styluses != null)
-                {
-                    styluses.Dispose();
-                }
+                styluses?.Dispose();
 
                 _penThread = null;
                 _isDisposalPending = false;
@@ -421,11 +418,11 @@ namespace System.Windows.Input
             }
         }
 
-        PenThread _penThread; // Hold ref on worker thread we use to talk to wisptis.
+        private PenThread _penThread; // Hold ref on worker thread we use to talk to wisptis.
 
         protected Size _cancelSize = Size.Empty;
 
-        StylusDeviceCollection _stylusDeviceCollection;
+        private StylusDeviceCollection _stylusDeviceCollection;
 
         private bool _isDisposalPending;
 

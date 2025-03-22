@@ -12,11 +12,10 @@
 using System.IO;
 using System.ComponentModel;
 using System.Net.Cache;
-// These types are aliased to match the unamanaged names used in interop
 
 namespace System.Windows.Media.Imaging
 {
-    sealed partial class BitmapImage : BitmapSource
+    public sealed partial class BitmapImage : BitmapSource
     {
         //------------------------------------------------------
         //
@@ -485,8 +484,7 @@ namespace System.Windows.Media.Imaging
             // We check our static default fields which are of type Freezable
             // to make sure that they are not mutable, otherwise we will throw
             // if these get touched by more than one thread in the lifetime
-            // of your app. 
-
+            // of your app.
 
 
             // Initializations
@@ -573,6 +571,8 @@ namespace System.Windows.Media.Imaging
                                    /* isIndependentlyAnimated  = */ false,
                                    /* coerceValueCallback */ new CoerceValueCallback(CoerceCacheOption));
         }
+
+
 
         #endregion Constructors
     }

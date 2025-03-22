@@ -17,7 +17,7 @@ using Microsoft.Win32.SafeHandles;
 
 namespace MS.Internal.AutomationProxies
 {
-    class QueueProcessor
+    internal class QueueProcessor
     {
         // ------------------------------------------------------
         //
@@ -167,7 +167,7 @@ namespace MS.Internal.AutomationProxies
     #region QueueItem Abstract Class
 
     // Abstract class for worker objects queued to the QueueProcessor class
-    abstract class QueueItem
+    internal abstract class QueueItem
     {
         // ------------------------------------------------------
         //

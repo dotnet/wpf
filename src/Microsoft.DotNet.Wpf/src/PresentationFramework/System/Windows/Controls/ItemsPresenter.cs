@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -200,7 +200,7 @@ namespace System.Windows.Controls
         //------------------------------------------------------
 
         // initialize (called during measure, from ApplyTemplate)
-        void AttachToOwner()
+        private void AttachToOwner()
         {
             DependencyObject templatedParent = this.TemplatedParent;
             ItemsControl owner = templatedParent as ItemsControl;
@@ -220,7 +220,7 @@ namespace System.Windows.Controls
                 if (parentIP != null)
                     owner = parentIP.Owner;
 
-                generator = (parentGI != null) ? parentGI.Generator : null;
+                generator = parentGI?.Generator;
             }
 
             _owner = owner;
@@ -228,7 +228,7 @@ namespace System.Windows.Controls
 
             // create the panel, based either on ItemsControl.ItemsPanel or GroupStyle.Panel
             ItemsPanelTemplate template = null;
-            GroupStyle groupStyle = (_generator != null) ? _generator.GroupStyle : null;
+            GroupStyle groupStyle = _generator?.GroupStyle;
             if (groupStyle != null)
             {
                 // If GroupStyle.Panel is set then we dont honor ItemsControl.IsVirtualizing
@@ -249,12 +249,12 @@ namespace System.Windows.Controls
             else
             {
                 // Its a leaf-level ItemsPresenter, therefore pick ItemsControl.ItemsPanel
-                template = (_owner != null) ? _owner.ItemsPanel : null;
+                template = _owner?.ItemsPanel;
             }
             Template = template;
         }
 
-        void UseGenerator(ItemContainerGenerator generator)
+        private void UseGenerator(ItemContainerGenerator generator)
         {
             if (generator == _generator)
                 return;
@@ -285,10 +285,7 @@ namespace System.Windows.Controls
                 // If our logical parent is a ScrollViewer then the visual parent is a ScrollContentPresenter.
                 ScrollContentPresenter scp = VisualTreeHelper.GetParent(this) as ScrollContentPresenter;
 
-                if (scp != null)
-                {
-                    scp.HookupScrollingComponents();
-                }
+                scp?.HookupScrollingComponents();
             }
         }
 
@@ -334,9 +331,9 @@ namespace System.Windows.Controls
         //
         //------------------------------------------------------
 
-        ItemsControl _owner;
-        ItemContainerGenerator _generator;
-        ItemsPanelTemplate _templateCache;
+        private ItemsControl _owner;
+        private ItemContainerGenerator _generator;
+        private ItemsPanelTemplate _templateCache;
     }
 }
 

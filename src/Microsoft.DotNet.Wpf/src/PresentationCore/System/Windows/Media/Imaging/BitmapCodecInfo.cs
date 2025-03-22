@@ -489,7 +489,7 @@ namespace System.Windows.Media.Imaging
         private bool _isBuiltIn;
 
         /// Codec info handle
-        SafeMILHandle _codecInfoHandle;
+        private SafeMILHandle _codecInfoHandle;
 
         #endregion
     }

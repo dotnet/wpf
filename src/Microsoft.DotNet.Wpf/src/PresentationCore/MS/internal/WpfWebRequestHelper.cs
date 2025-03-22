@@ -39,8 +39,8 @@ namespace MS.Internal
     ///   - PackWebRequestFactory
     ///   - MimeObjectFactory
     /// </summary>
-    static class WpfWebRequestHelper
-{
+    internal static class WpfWebRequestHelper
+    {
     internal static WebRequest CreateRequest(Uri uri)
     {
         // Ideally we would want to use RegisterPrefix and WebRequest.Create.

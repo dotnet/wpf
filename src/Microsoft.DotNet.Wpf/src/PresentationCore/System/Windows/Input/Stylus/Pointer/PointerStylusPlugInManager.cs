@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -196,7 +196,7 @@ namespace System.Windows.Input.StylusPointer
         /// </summary>
         /// <param name="pt">The point to test</param>
         /// <returns>The plugin collection that passes the test or null if none do.</returns>
-        StylusPlugInCollection HittestPlugInCollection(Point pt)
+        private StylusPlugInCollection HittestPlugInCollection(Point pt)
         {
             foreach (StylusPlugInCollection plugInCollection in _plugInCollectionList)
             {
@@ -243,7 +243,7 @@ namespace System.Windows.Input.StylusPointer
             RawStylusInput originalRSI = rawStylusInputReport.RawStylusInput;
             // See if we have a plugin for the target of this input.
             StylusPlugInCollection targetPIC = null;
-            StylusPlugInCollection targetRtiPIC = (originalRSI != null) ? originalRSI.Target : null;
+            StylusPlugInCollection targetRtiPIC = originalRSI?.Target;
             bool updateEventPoints = false;
 
             // Make sure we use UIElement for target if non NULL and hit ContentElement.
@@ -646,7 +646,7 @@ namespace System.Windows.Input.StylusPointer
 
         internal PresentationSource _inputSource;
 
-        List<StylusPlugInCollection> _plugInCollectionList = new List<StylusPlugInCollection>();
+        private List<StylusPlugInCollection> _plugInCollectionList = new List<StylusPlugInCollection>();
 
         [ThreadStatic]
         private static StylusPlugInCollection _activeMousePlugInCollection;

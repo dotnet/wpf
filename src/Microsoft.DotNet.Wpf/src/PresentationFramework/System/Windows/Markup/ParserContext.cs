@@ -91,7 +91,7 @@ namespace System.Windows.Markup
         {
             if (xmlParserContext == null)
             {
-                throw new ArgumentNullException( "xmlParserContext" );
+                throw new ArgumentNullException( nameof(xmlParserContext));
             }
 
             _xmlLang     = xmlParserContext.XmlLang;
@@ -214,8 +214,7 @@ namespace System.Windows.Markup
             _currentFreezeStackFrame.IncrementRepeatCount();
 
             // Wait till the context needs XmlnsDictionary, create on first use.
-            if (_xmlnsDictionary != null)
-                _xmlnsDictionary.PushScope();
+            _xmlnsDictionary?.PushScope();
         }
 
         /// <summary>
@@ -248,8 +247,7 @@ namespace System.Windows.Markup
             }
 
             // Wait till the context needs XmlnsDictionary, create on first use.
-            if (_xmlnsDictionary != null)
-                _xmlnsDictionary.PopScope();
+            _xmlnsDictionary?.PopScope();
         }
 
         /// <summary>
@@ -420,7 +418,7 @@ namespace System.Windows.Markup
         {
             if (parserContext == null)
             {
-                throw new ArgumentNullException( "parserContext" );
+                throw new ArgumentNullException( nameof(parserContext));
             }
 
             XmlNamespaceManager xmlnsMgr = new XmlNamespaceManager(new NameTable());
@@ -717,8 +715,8 @@ namespace System.Windows.Markup
             ParserContext context = ScopedCopy();
 
             // Deep copy only selected instance variables
-            context._mapTable = (_mapTable != null) ? _mapTable.Clone() : null;
-            context._xamlTypeMapper = (_xamlTypeMapper != null) ? _xamlTypeMapper.Clone() : null;
+            context._mapTable = _mapTable?.Clone();
+            context._xamlTypeMapper = _xamlTypeMapper?.Clone();
 
             // Connect the XamlTypeMapper and bamlmaptable
             context._xamlTypeMapper.MapTable = context._mapTable;
@@ -802,10 +800,7 @@ namespace System.Windows.Markup
         internal Freezable TryGetFreezable(string value)
         {
             Freezable freezable = null;
-            if (_freezeCache != null)
-            {
-                _freezeCache.TryGetValue(value, out freezable);
-            }
+            _freezeCache?.TryGetValue(value, out freezable);
 
             return freezable;
         }
@@ -835,9 +830,8 @@ namespace System.Windows.Markup
         private Stack                   _nameScopeStack;
         private List<object[]>          _staticResourcesStack;
 
-        object                                      _rootElement;  // RootElement for the Page scoping [temporary, should be
-                                                                   // something like page name or baseUri]
-
+        // RootElement for the Page scoping [temporary, should be something like page name or baseUri]
+        private object                  _rootElement;
 #endif
 
         /// <summary>
@@ -942,10 +936,10 @@ namespace System.Windows.Markup
             // state changes.  That information is tracked by _repeatCount.
             private int _repeatCount;
         }
-            
+
         // First frame is maintained off of the _freezeStack to avoid allocating
         // a Stack<FreezeStackFlag> for the common case where Freeze isn't specified.
-        FreezeStackFrame _currentFreezeStackFrame;
+        private FreezeStackFrame _currentFreezeStackFrame;
 
 #if !PBTCOMPILER
         // When cloning, it isn't necessary to copy this cache of freezables.

@@ -10,17 +10,24 @@
 //
 
 using MS.Internal;
+using MS.Internal.Collections;
+using MS.Utility;
+using System.Collections;
 using System.ComponentModel;
+using System.Globalization;
+using System.Text;
 using System.Windows.Markup;
 using System.Windows.Media.Media3D.Converters;
-// These types are aliased to match the unamanaged names used in interop
+using System.Windows.Media.Animation;
+using System.Windows.Media.Composition;
 
 namespace System.Windows.Media.Media3D
 {
+
     [Serializable]
     [TypeConverter(typeof(Rect3DConverter))]
     [ValueSerializer(typeof(Rect3DValueSerializer))] // Used by MarkupWriter
-    partial struct Rect3D : IFormattable
+    public partial struct Rect3D : IFormattable
     {
         //------------------------------------------------------
         //
@@ -263,6 +270,7 @@ namespace System.Windows.Media.Media3D
         /// </returns>
         public override string ToString()
         {
+
             // Delegate to the internal method which implements all ToString calls.
             return ConvertToString(null /* format string */, null /* format provider */);
         }
@@ -276,6 +284,7 @@ namespace System.Windows.Media.Media3D
         /// </returns>
         public string ToString(IFormatProvider provider)
         {
+
             // Delegate to the internal method which implements all ToString calls.
             return ConvertToString(null /* format string */, provider);
         }
@@ -291,6 +300,7 @@ namespace System.Windows.Media.Media3D
         /// </returns>
         string IFormattable.ToString(string format, IFormatProvider provider)
         {
+
             // Delegate to the internal method which implements all ToString calls.
             return ConvertToString(format, provider);
         }
@@ -355,6 +365,9 @@ namespace System.Windows.Media.Media3D
         internal double _sizeX;
         internal double _sizeY;
         internal double _sizeZ;
+
+
+
 
         #endregion Internal Fields
 

@@ -472,7 +472,7 @@ namespace System.Windows.Documents
                         if (index >= 0)
                         {
                             // Get the matrix transform out, skip all non affine transforms
-                            Transform transform = (adornerTransform != null) ? adornerTransform.AffineTransform : null;
+                            Transform transform = adornerTransform?.AffineTransform;
                             
                             ((Adorner)(_children[index])).AdornerTransform = transform;
                         }
@@ -964,7 +964,7 @@ namespace System.Windows.Documents
             get { return 4; }
         }
 
-        GeneralTransform GetProposedTransform(Adorner adorner, GeneralTransform sourceTransform)
+        private GeneralTransform GetProposedTransform(Adorner adorner, GeneralTransform sourceTransform)
         {
             // Flip horizontally if Right to Left.
             if (adorner.FlowDirection != this.FlowDirection)

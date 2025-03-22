@@ -11,12 +11,21 @@
 
 using MS.Internal;
 using MS.Internal.KnownBoxes;
+using MS.Internal.Collections;
+using MS.Utility;
+using System.Collections;
+using System.ComponentModel;
+using System.Globalization;
+using System.Text;
+using System.Windows.Media.Effects;
 using System.Windows.Media.Animation;
-// These types are aliased to match the unamanaged names used in interop
+using System.Windows.Media.Composition;
+using System.Windows.Markup;
+using System.Windows.Media.Converters;
 
 namespace System.Windows.Media
 {
-    sealed partial class PathFigure : Animatable
+    public sealed partial class PathFigure : Animatable
     {
         //------------------------------------------------------
         //
@@ -252,7 +261,6 @@ namespace System.Windows.Media
             // to make sure that they are not mutable, otherwise we will throw
             // if these get touched by more than one thread in the lifetime
             // of your app.
-
             Debug.Assert(s_Segments == null || s_Segments.IsFrozen,
                 "Detected context bound default value PathFigure.s_Segments (See OS Bug #947272).");
 
@@ -296,6 +304,8 @@ namespace System.Windows.Media
                                    /* isIndependentlyAnimated  = */ false,
                                    /* coerceValueCallback */ null);
         }
+
+
 
         #endregion Constructors
     }

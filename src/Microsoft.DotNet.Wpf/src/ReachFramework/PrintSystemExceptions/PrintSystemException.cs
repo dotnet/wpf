@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -305,14 +305,11 @@ namespace System.Printing
         ///<summary>
         ///
         ///</summary>
-        static
-        System.Resources.ResourceManager     printResourceManager;
+        private static System.Resources.ResourceManager     printResourceManager;
 
-        const
-        int  defaultWin32ErrorMessageLength = 256;
+        private const int  defaultWin32ErrorMessageLength = 256;
 
-        const
-        int  FormatMessageFromSystem = unchecked((int)0x00001000);
+        private const int  FormatMessageFromSystem = unchecked((int)0x00001000);
     };
 
     /// <summary>
@@ -407,10 +404,7 @@ namespace System.Printing
             System.Runtime.Serialization.StreamingContext   context
             )
         {
-            if (info != null)
-            {
-                info.AddValue("PrinterName", printerName);
-            }
+            info?.AddValue("PrinterName", printerName);
             base.GetObjectData(info, context);
         }
 #pragma warning restore SYSLIB0051 // Type or member is obsolete
@@ -574,10 +568,7 @@ namespace System.Printing
             System.Runtime.Serialization.StreamingContext   context
             )
         {
-            if (info != null)
-            {
-                info.AddValue("ServerName", serverName);
-            }
+            info?.AddValue("ServerName", serverName);
 
             base.GetObjectData(info, context);
         }
@@ -814,9 +805,9 @@ namespace System.Printing
             }
 
 
-        Collection<String>  committedAttributes;
-        Collection<String>  failedAttributes;
-        String              printObjectName;
+        private Collection<String>  committedAttributes;
+        private Collection<String>  failedAttributes;
+        private String              printObjectName;
     };
 
     /// <summary>
@@ -933,10 +924,7 @@ namespace System.Printing
             System.Runtime.Serialization.StreamingContext    context
             )
         {
-            if( info != null )
-            {
-                info.AddValue("JobId", jobId );
-            }
+            info?.AddValue("JobId", jobId );
             base.GetObjectData(info, context);
         }
 #pragma warning restore SYSLIB0051 // Type or member is obsolete
@@ -1067,9 +1055,9 @@ namespace System.Printing
             this.jobId = (int)(info.GetValue("JobId", typeof(int)));
         }
 
-        int            jobId;
-        String         printQueueName;
-        String         jobContainer;
+        private int            jobId;
+        private String         printQueueName;
+        private String jobContainer;
     };
 
     /// <summary>

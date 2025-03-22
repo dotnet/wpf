@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -315,7 +315,7 @@ namespace MS.Internal.Controls
             }
             else
             {
-                throw new ArgumentOutOfRangeException("index",
+                throw new ArgumentOutOfRangeException(nameof(index),
                             SR.ItemCollectionRemoveArgumentOutOfRange);
             }
         }
@@ -698,7 +698,7 @@ namespace MS.Internal.Controls
 
         // check that item is not already parented
         // throws an exception if already parented
-        DependencyObject AssertPristineModelChild(object item)
+        private DependencyObject AssertPristineModelChild(object item)
         {
             DependencyObject node = item as DependencyObject;
             if (node == null)
@@ -718,7 +718,7 @@ namespace MS.Internal.Controls
         }
 
         // NOTE: Only change the item's logical links if the host is a Visual (bug 986386)
-        void SetModelParent(object item)
+        private void SetModelParent(object item)
         {
             // to avoid the unnecessary, expensive code in AddLogicalChild, check for DO first
             if ((ModelParentFE != null) && (item is DependencyObject))
@@ -726,7 +726,7 @@ namespace MS.Internal.Controls
         }
 
         // if item implements IModelTree, clear model parent
-        void ClearModelParent(object item)
+        private void ClearModelParent(object item)
         {
             // ClearModelParent is also called for items that are not a DependencyObject;
             // to avoid the unnecessary, expensive code in RemoveLogicalChild, check for DO first
@@ -854,10 +854,10 @@ namespace MS.Internal.Controls
         //
         //------------------------------------------------------
 
-        SortDescriptionCollection _sort;
-        ArrayList _viewList, _rawList;
-        ItemCollection _itemCollection;
-        bool _isModified;
-        bool _currentElementWasRemoved = false; // true if we need to MoveCurrencyOffDeletedElement
+        private SortDescriptionCollection _sort;
+        private ArrayList _viewList, _rawList;
+        private ItemCollection _itemCollection;
+        private bool _isModified;
+        private bool _currentElementWasRemoved = false; // true if we need to MoveCurrencyOffDeletedElement
     }
 }

@@ -213,8 +213,8 @@ namespace MS.Internal.Data
         //
         //------------------------------------------------------
 
-        WeakReference _weakRef;
-        int _hashCode;  // cache target's hashcode, lest it get GC'd out from under us
+        private WeakReference _weakRef;
+        private int _hashCode;  // cache target's hashcode, lest it get GC'd out from under us
     }
 
     #endregion WeakRefKey
@@ -317,9 +317,9 @@ namespace MS.Internal.Data
             _isInitialized = true;
         }
 
-        ICollectionView _view;
-        int _version;
-        bool _isInitialized = false;
+        private ICollectionView _view;
+        private int _version;
+        private bool _isInitialized = false;
     }
 
     #endregion ViewRecord
@@ -349,8 +349,7 @@ namespace MS.Internal.Data
         }
 
         public SynchronizationInfo SynchronizationInfo;
-
-        WeakReference _wrViewTable = ViewManager.NullWeakRef;
+        private WeakReference _wrViewTable = ViewManager.NullWeakRef;
     }
 
     internal struct SynchronizationInfo
@@ -427,10 +426,9 @@ namespace MS.Internal.Data
 
 
         public static readonly SynchronizationInfo None = new SynchronizationInfo(null, null);
-
-        object _context;
-        MethodInfo _callbackMethod;
-        WeakReference _callbackTarget;
+        private object _context;
+        private MethodInfo _callbackMethod;
+        private WeakReference _callbackTarget;
     }
 
     #endregion CollectionRecord
@@ -444,7 +442,7 @@ namespace MS.Internal.Data
         // survive a longer period of inactivity, but also means
         // the collection will live past its normal lifetime a longer time.
         // There's a tradeoff between robustness and perceived leaking.
-        const int InactivityThreshold = 2;
+        private const int InactivityThreshold = 2;
 
         //------------------------------------------------------
         //
@@ -619,7 +617,7 @@ namespace MS.Internal.Data
 
         // return the CollectionRecord for the given collection.  If one doesn't
         // exist yet, create it and raise the CollectionRegistering event
-        CollectionRecord EnsureCollectionRecord(object collection, Func<object, object> GetSourceItem = null)
+        private CollectionRecord EnsureCollectionRecord(object collection, Func<object, object> GetSourceItem = null)
         {
             CollectionRecord cr = this[collection];
             if (cr == null)
@@ -654,10 +652,7 @@ namespace MS.Internal.Data
                 {
                     ViewRecord vr = (ViewRecord)de.Value;
                     CollectionView cv = vr.View as CollectionView;
-                    if (cv != null)
-                    {
-                        cv.SetAllowsCrossThreadChanges(isSynchronized);
-                    }
+                    cv?.SetAllowsCrossThreadChanges(isSynchronized);
                 }
             }
         }
@@ -844,9 +839,8 @@ namespace MS.Internal.Data
             }
         }
 
-        HybridDictionary _inactiveViewTables = new HybridDictionary();
-
-        static object StaticObject = new object();
+        private HybridDictionary _inactiveViewTables = new HybridDictionary();
+        private static object StaticObject = new object();
         internal static WeakReference StaticWeakRef = new WeakReference(StaticObject);
         internal static WeakReference NullWeakRef = new WeakReference(null);
     }

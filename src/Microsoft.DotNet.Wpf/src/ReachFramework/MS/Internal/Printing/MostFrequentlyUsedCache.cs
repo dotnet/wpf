@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -10,7 +10,7 @@ namespace MS.Internal.Printing
         {
             if(maxEntries <= 0)
             {
-                throw new ArgumentOutOfRangeException("maxEntries", maxEntries, string.Empty);
+                throw new ArgumentOutOfRangeException(nameof(maxEntries), maxEntries, string.Empty);
             }
             
             this._dictionary = new Dictionary<K, Entry>(maxEntries);
@@ -77,7 +77,7 @@ namespace MS.Internal.Printing
             }
         }
 
-        class Entry {
+        private class Entry {
             public Entry(V value)
             {
                 Value = value;

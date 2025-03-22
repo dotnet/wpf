@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -63,7 +63,7 @@ namespace System.Windows.Controls
         {
             if (!(value is UIElement))
             {
-                throw new ArgumentException (SR.Format(SR.UnexpectedParameterType, value.GetType(), typeof(UIElement)), "value");
+                throw new ArgumentException (SR.Format(SR.UnexpectedParameterType, value.GetType(), typeof(UIElement)), nameof(value));
             }
 
             if (this.Child != null)
@@ -171,7 +171,7 @@ namespace System.Windows.Controls
             if (    (_child == null)
                 ||  (index != 0))
             {
-                throw new ArgumentOutOfRangeException("index", index, SR.Visual_ArgumentOutOfRange);
+                throw new ArgumentOutOfRangeException(nameof(index), index, SR.Visual_ArgumentOutOfRange);
             }
             
             return _child;
@@ -204,10 +204,7 @@ namespace System.Windows.Controls
         protected override Size ArrangeOverride(Size arrangeSize)
         {
             UIElement child = Child;
-            if (child != null)
-            {
-                child.Arrange(new Rect(arrangeSize));
-            }
+            child?.Arrange(new Rect(arrangeSize));
             return (arrangeSize);
         }
 
@@ -223,7 +220,7 @@ namespace System.Windows.Controls
 
         #region Private Members
 
-        UIElement _child;
+        private UIElement _child;
         #endregion Private Members
     }
 }

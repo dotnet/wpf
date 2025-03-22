@@ -11,16 +11,17 @@
 
 using MS.Internal;
 using System.ComponentModel;
+using System.Globalization;
 using System.Windows.Markup;
 using System.Windows.Converters;
-// These types are aliased to match the unamanaged names used in interop
 
 namespace System.Windows
 {
+
     [Serializable]
     [TypeConverter(typeof(Int32RectConverter))]
     [ValueSerializer(typeof(Int32RectValueSerializer))] // Used by MarkupWriter
-    partial struct Int32Rect : IFormattable
+    public partial struct Int32Rect : IFormattable
     {
         //------------------------------------------------------
         //
@@ -216,7 +217,8 @@ namespace System.Windows
             {
                 _x = value;
             }
-}
+
+        }
 
         /// <summary>
         ///     Y - int.  Default value is 0.
@@ -232,7 +234,8 @@ namespace System.Windows
             {
                 _y = value;
             }
-}
+
+        }
 
         /// <summary>
         ///     Width - int.  Default value is 0.
@@ -248,7 +251,8 @@ namespace System.Windows
             {
                 _width = value;
             }
-}
+
+        }
 
         /// <summary>
         ///     Height - int.  Default value is 0.
@@ -264,7 +268,8 @@ namespace System.Windows
             {
                 _height = value;
             }
-}
+
+        }
 
         #endregion Public Properties
 
@@ -317,6 +322,7 @@ namespace System.Windows
         /// </returns>
         public override string ToString()
         {
+
             // Delegate to the internal method which implements all ToString calls.
             return ConvertToString(null /* format string */, null /* format provider */);
         }
@@ -330,6 +336,7 @@ namespace System.Windows
         /// </returns>
         public string ToString(IFormatProvider provider)
         {
+
             // Delegate to the internal method which implements all ToString calls.
             return ConvertToString(null /* format string */, provider);
         }
@@ -345,6 +352,7 @@ namespace System.Windows
         /// </returns>
         string IFormattable.ToString(string format, IFormatProvider provider)
         {
+
             // Delegate to the internal method which implements all ToString calls.
             return ConvertToString(format, provider);
         }
@@ -405,6 +413,9 @@ namespace System.Windows
         internal int _y;
         internal int _width;
         internal int _height;
+
+
+
 
         #endregion Internal Fields
 

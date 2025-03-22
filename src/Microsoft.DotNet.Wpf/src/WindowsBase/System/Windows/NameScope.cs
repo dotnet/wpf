@@ -182,7 +182,7 @@ namespace System.Windows
 
         #endregion Data
 
-        IEnumerator<KeyValuePair<string, object>> GetEnumerator()
+        private IEnumerator<KeyValuePair<string, object>> GetEnumerator()
         {
             return new Enumerator(this._nameMap);
         }
@@ -259,11 +259,11 @@ namespace System.Windows
         {
             if (item.Key == null)
             {
-                throw new ArgumentException(SR.Format(SR.ReferenceIsNull, "item.Key"), "item");
+                throw new ArgumentException(SR.Format(SR.ReferenceIsNull, "item.Key"), nameof(item));
             }
             if (item.Value == null)
             {
-                throw new ArgumentException(SR.Format(SR.ReferenceIsNull, "item.Value"), "item");
+                throw new ArgumentException(SR.Format(SR.ReferenceIsNull, "item.Value"), nameof(item));
             }
 
             Add(item.Key, item.Value);
@@ -273,7 +273,7 @@ namespace System.Windows
         {
             if (item.Key == null)
             {
-                throw new ArgumentException(SR.Format(SR.ReferenceIsNull, "item.Key"), "item");
+                throw new ArgumentException(SR.Format(SR.ReferenceIsNull, "item.Key"), nameof(item));
             }
             return ContainsKey(item.Key);
         }
@@ -370,9 +370,9 @@ namespace System.Windows
         #endregion
 
         #region class Enumerator
-        class Enumerator : IEnumerator<KeyValuePair<string, object>>
+        private class Enumerator : IEnumerator<KeyValuePair<string, object>>
         {
-            IDictionaryEnumerator _enumerator;
+            private IDictionaryEnumerator _enumerator;
             
             public Enumerator(HybridDictionary nameMap)
             {
@@ -420,10 +420,7 @@ namespace System.Windows
 
             void IEnumerator.Reset()
             {
-                if (_enumerator != null)
-                {
-                    _enumerator.Reset();
-                }
+                _enumerator?.Reset();
             }
         }
         #endregion

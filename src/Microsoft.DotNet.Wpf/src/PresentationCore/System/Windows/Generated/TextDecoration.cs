@@ -9,13 +9,14 @@
 // Please see MilCodeGen.html for more information.
 //
 
+using System.Collections;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
-// These types are aliased to match the unamanaged names used in interop
+using MS.Utility;
 
 namespace System.Windows
 {
-    sealed partial class TextDecoration : Animatable
+    public sealed partial class TextDecoration : Animatable
     {
         //------------------------------------------------------
         //
@@ -259,8 +260,7 @@ namespace System.Windows
             // We check our static default fields which are of type Freezable
             // to make sure that they are not mutable, otherwise we will throw
             // if these get touched by more than one thread in the lifetime
-            // of your app.  (Windows OS 
-
+            // of your app.
 
 
             // Initializations
@@ -311,6 +311,8 @@ namespace System.Windows
                                    /* isIndependentlyAnimated  = */ false,
                                    /* coerceValueCallback */ null);
         }
+
+
 
         #endregion Constructors
     }

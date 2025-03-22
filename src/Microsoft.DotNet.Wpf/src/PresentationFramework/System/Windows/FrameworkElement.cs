@@ -634,11 +634,11 @@ namespace System.Windows
         {
             if (_templateChild == null)
             {
-                throw new ArgumentOutOfRangeException("index", index, SR.Visual_ArgumentOutOfRange);
+                throw new ArgumentOutOfRangeException(nameof(index), index, SR.Visual_ArgumentOutOfRange);
             }
             if (index != 0)
             {
-                throw new ArgumentOutOfRangeException("index", index, SR.Visual_ArgumentOutOfRange);
+                throw new ArgumentOutOfRangeException(nameof(index), index, SR.Visual_ArgumentOutOfRange);
             }
             return _templateChild;
         }
@@ -705,13 +705,10 @@ namespace System.Windows
                 }
 
 
-                if (oldValue != null)
-                {
-                    // This element is no longer an owner for the old RD
-                    oldValue.RemoveOwner(this);
-                }
+                // This element is no longer an owner for the old RD
+                oldValue?.RemoveOwner(this);
 
-                if(this is Window window)
+                if (this is Window window)
                 {
                     window.AddFluentDictionary(value, out invalidateResources);
                 }
@@ -3080,10 +3077,7 @@ namespace System.Windows
                     while (enumerator.MoveNext())
                     {
                         DependencyObject child = enumerator.Current as DependencyObject;
-                        if (child != null)
-                        {
-                            child.CoerceValue(property);
-                        }
+                        child?.CoerceValue(property);
                     }
                 }
             }
@@ -5142,7 +5136,7 @@ namespace System.Windows
             FrameworkElement fe = element as FrameworkElement;
             element.InternalSetOffsetWorkaround(new Vector());
 
-            Transform additionalTransform = (fe == null ? null : fe.GetFlowDirectionTransform()); //rtl
+            Transform additionalTransform = (fe?.GetFlowDirectionTransform()); //rtl
 
             Transform renderTransform = element.RenderTransform;
             if(renderTransform == Transform.Identity)
@@ -5802,10 +5796,7 @@ namespace System.Windows
         internal override void AddSynchronizedInputPreOpportunityHandlerCore(EventRoute route, RoutedEventArgs args)
         {
             UIElement uiElement = this._templatedParent as UIElement;
-            if (uiElement != null)
-            {
-                uiElement.AddSynchronizedInputPreOpportunityHandler(route, args);
-            }
+            uiElement?.AddSynchronizedInputPreOpportunityHandler(route, args);
 
         }
 
@@ -6102,9 +6093,9 @@ namespace System.Windows
                         AddStyleHandlersToEventRoute(null, fce, route, args);
                     }
                 }
-                else if (uiElement3D != null)
+                else
                 {
-                    uiElement3D.AddToEventRoute(route, args);
+                    uiElement3D?.AddToEventRoute(route, args);
                 }
 
                 // Get model parent
@@ -6137,10 +6128,7 @@ namespace System.Windows
         internal void EventHandlersStoreRemove(EventPrivateKey key, Delegate handler)
         {
             EventHandlersStore store = EventHandlersStore;
-            if (store != null)
-            {
-                store.Remove(key, handler);
-            }
+            store?.Remove(key, handler);
         }
 
         // Gettor and Settor for flag that indicates if this
@@ -6251,7 +6239,7 @@ namespace System.Windows
                 // Thus we support any indices in the range [-1, 65535).
                 if (value < -1 || value >= 0xFFFF)
                 {
-                    throw new ArgumentOutOfRangeException("value", SR.TemplateChildIndexOutOfRange);
+                    throw new ArgumentOutOfRangeException(nameof(value), SR.TemplateChildIndexOutOfRange);
                 }
 
                 uint childIndex = (value == -1) ? 0xFFFF : (uint)value;

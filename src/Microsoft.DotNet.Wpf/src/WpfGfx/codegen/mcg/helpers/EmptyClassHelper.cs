@@ -63,7 +63,6 @@ namespace MS.Internal.MilCodeGen.Helpers
 
             return
                 [[inline]]
-                    using System;
                     using System.Windows.Media.Animation;
                     using System.Windows.Media.Composition;
 

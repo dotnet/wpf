@@ -64,14 +64,14 @@ namespace Microsoft.Windows.Controls.Ribbon
         private Dictionary<int, int> _tabDisplayIndexToIndexMap = new Dictionary<int, int>(); // A map from display index to collection index of tab items.
         private double _mouseWheelCumulativeDelta = 0; // The aggregate of mouse wheel delta since the last mouse wheel tab selection change.
         private const double MouseWheelSelectionChangeThreshold = 100; // The threshold of mouse wheel delta to change tab selection.
-        UIElement _qatTopHost = null;   // ContentPresenter hosting QuickAccessToolBar
-        UIElement _titleHost = null;    // ContentPresenter hosting the Title
-        UIElement _helpPaneHost = null; // ContentPresenter hosting the HelpPaneContent
-        ItemsPresenter _itemsPresenter = null;
+        private UIElement _qatTopHost = null;   // ContentPresenter hosting QuickAccessToolBar
+        private UIElement _titleHost = null;    // ContentPresenter hosting the Title
+        private UIElement _helpPaneHost = null; // ContentPresenter hosting the HelpPaneContent
+        private ItemsPresenter _itemsPresenter = null;
         private bool _inContextMenu = false;
         private bool _retainFocusOnEscape = false;
-        KeyTipService.KeyTipFocusEventHandler _keyTipEnterFocusHandler = null;
-        KeyTipService.KeyTipFocusEventHandler _keyTipExitRestoreFocusHandler = null;
+        private KeyTipService.KeyTipFocusEventHandler _keyTipEnterFocusHandler = null;
+        private KeyTipService.KeyTipFocusEventHandler _keyTipExitRestoreFocusHandler = null;
 
         private const string ContextualTabGroupItemsControlTemplateName = "PART_ContextualTabGroupItemsControl";
         private const string TitlePanelTemplateName = "PART_TitlePanel";
@@ -986,10 +986,7 @@ namespace Microsoft.Windows.Controls.Ribbon
                             if (newSelectedIndex >= 0)
                             {
                                 SelectedIndex = newSelectedIndex;
-                                if (_tabHeaderItemsControl != null)
-                                {
-                                    _tabHeaderItemsControl.ScrollIntoView(SelectedIndex);
-                                }
+                                _tabHeaderItemsControl?.ScrollIntoView(SelectedIndex);
                             }
                         }
                     }
@@ -1004,10 +1001,7 @@ namespace Microsoft.Windows.Controls.Ribbon
                             if (newSelectedIndex >= 0)
                             {
                                 SelectedIndex = newSelectedIndex;
-                                if (_tabHeaderItemsControl != null)
-                                {
-                                    _tabHeaderItemsControl.ScrollIntoView(SelectedIndex);
-                                }
+                                _tabHeaderItemsControl?.ScrollIntoView(SelectedIndex);
                             }
                         }
                     }
@@ -1080,10 +1074,7 @@ namespace Microsoft.Windows.Controls.Ribbon
             }
 
             RibbonTab container = element as RibbonTab;
-            if (container != null)
-            {
-                container.PrepareRibbonTab();
-            }
+            container?.PrepareRibbonTab();
         }
         /// <summary>
         ///     Gets called when items change on this itemscontrol.
@@ -1279,10 +1270,7 @@ namespace Microsoft.Windows.Controls.Ribbon
             if (selectedTab != null)
             {
                 RibbonTabAutomationPeer peer = UIElementAutomationPeer.CreatePeerForElement(selectedTab) as RibbonTabAutomationPeer;
-                if (peer != null)
-                {
-                    peer.RaiseTabExpandCollapseAutomationEvent((bool)e.OldValue, (bool)e.NewValue);
-                }
+                peer?.RaiseTabExpandCollapseAutomationEvent((bool)e.OldValue, (bool)e.NewValue);
             }
         }
 
@@ -1338,10 +1326,7 @@ namespace Microsoft.Windows.Controls.Ribbon
 
             // Raise UI Automation Events
             RibbonAutomationPeer peer = UIElementAutomationPeer.FromElement(ribbon) as RibbonAutomationPeer;
-            if (peer != null)
-            {
-                peer.RaiseExpandCollapseAutomationEvent(!(bool)e.OldValue, !(bool)e.NewValue);
-            }
+            peer?.RaiseExpandCollapseAutomationEvent(!(bool)e.OldValue, !(bool)e.NewValue);
 
         }
 
@@ -1489,10 +1474,7 @@ namespace Microsoft.Windows.Controls.Ribbon
         private static void OnNotifyContextualTabGroupPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             Ribbon ribbon = (Ribbon)d;
-            if (ribbon.ContextualTabGroupItemsControl != null)
-            {
-                ribbon.ContextualTabGroupItemsControl.NotifyPropertyChanged(e);
-            }
+            ribbon.ContextualTabGroupItemsControl?.NotifyPropertyChanged(e);
         }
 
         private static void OnNotifyTabHeaderPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
@@ -1502,10 +1484,7 @@ namespace Microsoft.Windows.Controls.Ribbon
             for (int i = 0; i < itemCount; i++)
             {
                 RibbonTab ribbonTab = ribbon.ItemContainerGenerator.ContainerFromIndex(i) as RibbonTab;
-                if (ribbonTab != null)
-                {
-                    ribbonTab.NotifyPropertyChanged(e);
-                }
+                ribbonTab?.NotifyPropertyChanged(e);
             }
         }
 
@@ -1715,19 +1694,13 @@ namespace Microsoft.Windows.Controls.Ribbon
             if (ribbon._tabHeaderItemsControl != null)
             {
                 RibbonTabHeadersPanel tabHeadersPanel = ribbon._tabHeaderItemsControl.InternalItemsHost as RibbonTabHeadersPanel;
-                if (tabHeadersPanel != null)
-                {
-                    tabHeadersPanel.OnNotifyRibbonBorderBrushChanged();
-                }
+                tabHeadersPanel?.OnNotifyRibbonBorderBrushChanged();
             }
             RibbonContextualTabGroupItemsControl contextualItemsControl = ribbon.ContextualTabGroupItemsControl;
             if (contextualItemsControl != null)
             {
                 RibbonContextualTabGroupsPanel contextualTabHeadersPanel = contextualItemsControl.InternalItemsHost as RibbonContextualTabGroupsPanel;
-                if (contextualTabHeadersPanel != null)
-                {
-                    contextualTabHeadersPanel.OnNotifyRibbonBorderBrushChanged();
-                }
+                contextualTabHeadersPanel?.OnNotifyRibbonBorderBrushChanged();
             }
         }
 

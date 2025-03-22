@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -28,19 +28,8 @@ namespace Microsoft.Win32
     /// <summary>
     ///  An abstract base class for displaying common dialogs.
     /// </summary>
-    /// <Remarks>
-    ///     InheritanceDemand for UIPermission (UIPermissionWindow.AllWindows)
-    /// </Remarks>
     public abstract class CommonDialog
     {
-        //---------------------------------------------------
-        //
-        // Constructors
-        //
-        //---------------------------------------------------
-        //#region Constructors
-        //#endregion Constructors
-
         //---------------------------------------------------
         //
         // Public Methods
@@ -60,10 +49,7 @@ namespace Microsoft.Win32
         ///  performs initialization tasks for all common dialogs and then
         ///  calls RunDialog.
         /// </summary>
-        /// <Remarks>
-        ///     Callers must have UIPermission(UIPermissionWindow.AllWindows) to call this API.
-        /// </Remarks>
-        public virtual Nullable<bool> ShowDialog()
+        public virtual bool? ShowDialog()
         {
             CheckPermissionsToShowDialog();
 
@@ -119,20 +105,14 @@ namespace Microsoft.Win32
             }
             finally
             {
-                if (tempParentHwnd != null)
-                {
-                    tempParentHwnd.Dispose();
-                }
+                tempParentHwnd?.Dispose();
             }
         }
 
         /// <summary>
         ///  Runs a common dialog box, with the owner as the given Window
         /// </summary>
-        /// <Remarks>
-        ///     Callers must have UIPermission(UIPermissionWindow.AllWindows) to call this API.
-        /// </Remarks>
-        public Nullable<bool> ShowDialog(Window owner)
+        public bool? ShowDialog(Window owner)
         {
             CheckPermissionsToShowDialog();
 
@@ -202,14 +182,6 @@ namespace Microsoft.Win32
         }
 
         #endregion Public Properties
-
-        //---------------------------------------------------
-        //
-        // Public Events
-        //
-        //---------------------------------------------------
-        //#region Public Events
-        //#endregion Public Events
 
         //---------------------------------------------------
         //
@@ -336,38 +308,6 @@ namespace Microsoft.Win32
 
         //---------------------------------------------------
         //
-        // Internal Properties
-        //
-        //---------------------------------------------------
-        //#region Internal Properties
-        //#endregion Internal Properties
-
-        //---------------------------------------------------
-        //
-        // Internal Events
-        //
-        //---------------------------------------------------
-        //#region Internal Events
-        //#endregion Internal Events
-
-        //---------------------------------------------------
-        //
-        // Private Methods
-        //
-        //---------------------------------------------------
-        //#region Private Methods
-        //#endregion Private Methods
-
-        //---------------------------------------------------
-        //
-        // Protected Properties
-        //
-        //---------------------------------------------------
-        //#region Protected Properties
-        //#endregion Protected Properties
-
-        //---------------------------------------------------
-        //
         // Private Fields
         //
         //---------------------------------------------------
@@ -376,7 +316,7 @@ namespace Microsoft.Win32
         // Private variable used to store data for the Tag property
         private object _userData;
 
-        private Thread _thread = Thread.CurrentThread;
+        private readonly Thread _thread = Thread.CurrentThread;
 
         /// <summary>
         ///  The owner hwnd passed into the dialog is stored as a private

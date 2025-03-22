@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -15,7 +15,7 @@ using MS.Win32;
 namespace MS.Internal.AutomationProxies
 {
     // Toolbar proxy
-    class WindowsToolbar: ProxyHwnd
+    internal class WindowsToolbar: ProxyHwnd
     {
         // ------------------------------------------------------
         //
@@ -99,10 +99,7 @@ namespace MS.Internal.AutomationProxies
                     }
                 }
                 // Ends up calling CreateToolbarItem which can return null
-                if (proxySimple != null)
-                {
-                    proxySimple.DispatchEvents(eventId, idProp, idObject, idChild);
-                }
+                proxySimple?.DispatchEvents(eventId, idProp, idObject, idChild);
             }
         }
 
@@ -346,7 +343,7 @@ namespace MS.Internal.AutomationProxies
     #region ToolbarItem
 
     // Proxy for each button in a toolbar
-    class ToolbarItem : ProxySimple, IInvokeProvider, IToggleProvider
+    internal class ToolbarItem : ProxySimple, IInvokeProvider, IToggleProvider
     {
         // ------------------------------------------------------
         //

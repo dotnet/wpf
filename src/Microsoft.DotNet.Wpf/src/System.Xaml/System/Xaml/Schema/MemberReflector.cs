@@ -4,6 +4,7 @@
 
 #nullable disable
 
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Reflection;
 using System.Threading;
@@ -95,7 +96,7 @@ namespace System.Xaml.Schema
                     unknownReflector._typeConverter.Value = null;
                     unknownReflector._valueSerializer.Value = null;
 
-                    unknownReflector.DependsOn = XamlType.EmptyList<XamlMember>.Value;
+                    unknownReflector.DependsOn = ReadOnlyCollection<XamlMember>.Empty;
                     unknownReflector.Invoker = XamlMemberInvoker.UnknownInvoker;
                     unknownReflector.Type = XamlLanguage.Object;
 

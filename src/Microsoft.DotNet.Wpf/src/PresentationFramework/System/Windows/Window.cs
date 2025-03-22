@@ -1272,12 +1272,9 @@ namespace System.Windows
                     }
 
                     // Update OwnerWindows of the previous owner
-                    if (_ownerWindow != null)
-                    {
-                        // using OwnedWindowsInternl b/c we want to modifying the
-                        // underlying collection
-                        _ownerWindow.OwnedWindowsInternal.Remove(this);
-                    }
+                    // using OwnedWindowsInternl b/c we want to modifying the
+                    // underlying collection
+                    _ownerWindow?.OwnedWindowsInternal.Remove(this);
                 }
 
                 // Update parent handle. If value is null, then make parent
@@ -1296,12 +1293,9 @@ namespace System.Windows
                 SetOwnerHandle(_ownerWindow != null ? _ownerWindow.Handle: IntPtr.Zero);
 
                 // Update OwnerWindows of the new owner
-                if (_ownerWindow != null)
-                {
-                    // using OwnedWindowsInternl b/c we want to modifying the
-                    // underlying collection
-                    _ownerWindow.OwnedWindowsInternal.Add(this);
-                }
+                // using OwnedWindowsInternl b/c we want to modifying the
+                // underlying collection
+                _ownerWindow?.OwnedWindowsInternal.Add(this);
             }
         }
 
@@ -2086,8 +2080,7 @@ namespace System.Windows
             if (doContent != null)
             {
                 IInputElement focusedElement = FocusManager.GetFocusedElement(doContent) as IInputElement;
-                if (focusedElement != null)
-                    focusedElement.Focus();
+                focusedElement?.Focus();
             }
 
             EventHandler handler = (EventHandler)Events[EVENT_CONTENTRENDERED];
@@ -3535,12 +3528,9 @@ namespace System.Windows
         {
             // Post the firing of ContentRendered as Input priority work item so
             // that ContentRendered will be fired after render query empties.
-            if (_contentRenderedCallback != null)
-            {
-                // Content was changed again before the previous rendering completed (or at least
-                // before the Dispatcher got to Input priority callbacks).
-                _contentRenderedCallback.Abort();
-            }
+            // Content was changed again before the previous rendering completed (or at least
+            // before the Dispatcher got to Input priority callbacks).
+            _contentRenderedCallback?.Abort();
             _contentRenderedCallback = Dispatcher.BeginInvoke(DispatcherPriority.Input,
                                    (DispatcherOperationCallback) delegate (object arg)
                                    {
@@ -3746,7 +3736,7 @@ namespace System.Windows
             }
         }
 
-        IntPtr GetCurrentMonitorFromMousePosition()
+        private IntPtr GetCurrentMonitorFromMousePosition()
         {
             // center on the screen on which the mouse is on
             NativeMethods.POINT pt = default;
@@ -4282,10 +4272,7 @@ namespace System.Windows
                 {
                     // Either Explorer's created a new button or it's time to try again.
                     // Stop deferring updates to the Taskbar.
-                    if (_taskbarRetryTimer != null)
-                    {
-                        _taskbarRetryTimer.Stop();
-                    }
+                    _taskbarRetryTimer?.Stop();
 
                     // We'll receive WM_TASKBARBUTTONCREATED at times other than when the Window was created,
                     //    e.g. Explorer restarting, in response to ShowInTaskbar=true, etc.
@@ -4831,10 +4818,7 @@ namespace System.Windows
                 //This will schedule a deferred update of bounding rectangle and
                 //corresponding notification to the Automation layer.
                 AutomationPeer peer = UIElementAutomationPeer.FromElement(this);
-                if(peer != null)
-                {
-                    peer.InvalidatePeer();
-                }
+                peer?.InvalidatePeer();
 }
 
             return false;
@@ -6895,10 +6879,7 @@ namespace System.Windows
         }
         private void ClearRootVisual()
         {
-            if (_swh != null)
-            {
-                _swh.ClearRootVisual();
-            }
+            _swh?.ClearRootVisual();
         }
 
 
@@ -7068,23 +7049,17 @@ namespace System.Windows
         private static void OnStaticManipulationInertiaStarting(object sender, ManipulationInertiaStartingEventArgs e)
         {
             Window window = sender as Window;
-            if (window != null)
-            {
-                // Transitioning from direct manipulation to inertia, animate the window
-                // back to its original position.
-                window.EndPanningFeedback(true);
-            }
+            // Transitioning from direct manipulation to inertia, animate the window
+            // back to its original position.
+            window?.EndPanningFeedback(true);
         }
 
         private static void OnStaticManipulationCompleted(object sender, ManipulationCompletedEventArgs e)
         {
             Window window = sender as Window;
-            if (window != null)
-            {
-                // A complete was encountered. If this was a forced complete, snap the window
-                // back to its original position.
-                window.EndPanningFeedback(false);
-            }
+            // A complete was encountered. If this was a forced complete, snap the window
+            // back to its original position.
+            window?.EndPanningFeedback(false);
         }
 
         /// <summary>
@@ -7121,11 +7096,8 @@ namespace System.Windows
         /// </summary>
         private void EndPanningFeedback(bool animateBack)
         {
-            if (_swh != null)
-            {
-                // Restore the window to its original position
-                _swh.EndPanningFeedback(animateBack);
-            }
+            // Restore the window to its original position
+            _swh?.EndPanningFeedback(animateBack);
             _currentPanningTarget = null;
             _prePanningLocation = new Point(double.NaN, double.NaN);
         }
@@ -7133,7 +7105,7 @@ namespace System.Windows
         /// <summary>
         ///     Method to compensate a point for PanningFeedback.
         /// </summary>
-        Point CompensateForPanningFeedback(Point point)
+        private Point CompensateForPanningFeedback(Point point)
         {
             if (!double.IsNaN(_prePanningLocation.X) && !double.IsNaN(_prePanningLocation.Y) && (_swh != null))
             {
@@ -7337,7 +7309,7 @@ namespace System.Windows
         // the mouse of over the resizegrip control
         private Control                 _resizeGripControl;
 
-        Point _prePanningLocation = new Point(double.NaN, double.NaN);
+        private Point _prePanningLocation = new Point(double.NaN, double.NaN);
 
         // static objects for Events
         private static readonly object EVENT_SOURCEINITIALIZED = new object();
@@ -7376,7 +7348,7 @@ namespace System.Windows
                                           new FrameworkPropertyMetadata((IWindowService)null,
                                           FrameworkPropertyMetadataOptions.Inherits | FrameworkPropertyMetadataOptions.OverridesInheritanceBehavior));
 
-        DispatcherOperation         _contentRenderedCallback;
+        private DispatcherOperation _contentRenderedCallback;
 
         private WeakReference _currentPanningTarget;
 
@@ -7671,12 +7643,9 @@ namespace System.Windows
                         _panningFeedback = new HwndPanningFeedback(_sourceWindow);
                     }
 
-                    if (_panningFeedback != null)
-                    {
-                        // Update the window position
-                        _panningFeedback.UpdatePanningFeedback(totalOverpanOffset, animate);
-                    }
-                }
+                // Update the window position
+                _panningFeedback?.UpdatePanningFeedback(totalOverpanOffset, animate);
+            }
 
                 /// <summary>
                 ///     Return the window back to its original position.

@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -133,7 +133,7 @@ namespace System.Windows.Interop
             // In case the user passed in something like "(D3DResourceType)-1"
             if (backBufferType != D3DResourceType.IDirect3DSurface9)
             {
-                throw new ArgumentOutOfRangeException("backBufferType");
+                throw new ArgumentOutOfRangeException(nameof(backBufferType));
             }
 
             // Early-out if the current back buffer equals the new one. If the front buffer
@@ -235,7 +235,7 @@ namespace System.Windows.Interop
 
             if (timeout == Duration.Automatic)
             {
-                throw new ArgumentOutOfRangeException("timeout");
+                throw new ArgumentOutOfRangeException(nameof(timeout));
             }
 
             return LockImpl(timeout);
@@ -299,7 +299,7 @@ namespace System.Windows.Interop
                 throw new InvalidOperationException(SR.D3DImage_MustHaveBackBuffer);
             }
 
-            dirtyRect.ValidateForDirtyRect("dirtyRect", PixelWidth, PixelHeight);
+            dirtyRect.ValidateForDirtyRect(nameof(dirtyRect), PixelWidth, PixelHeight);
             if (dirtyRect.HasArea)
             {
                 // Unmanaged code will make sure that the rect is well-formed
@@ -717,8 +717,7 @@ namespace System.Windows.Interop
                 channel.SendCommand(
                     (byte*)&data,
                     sizeof(DUCE.MILCMD_D3DIMAGE_PRESENT),
-                    true /* sendInSeparateBatch */
-                    );
+                    sendInSeparateBatch: true);
             }
 
             _isDirty = false;
@@ -805,8 +804,7 @@ namespace System.Windows.Interop
                     channel.SendCommand(
                         (byte*)&data,
                         sizeof(DUCE.MILCMD_D3DIMAGE),
-                        false /* sendInSeparateBatch */
-                        );
+                        sendInSeparateBatch: false);
                 }
 
                 // Presents only happen on the async channel so don't let RTB flip this bit
@@ -824,7 +822,7 @@ namespace System.Windows.Interop
             {
                 AddRefOnChannelAnimations(channel);
 
-                UpdateResource(channel, true /* skip "on channel" check - we already know that we're on channel */ );
+                UpdateResource(channel, skipOnChannelCheck: true /* We already know that we're on channel */ );
                 
                 // If we are being put onto the asynchronous compositor channel in
                 // a dirty state, we need to subscribe to the commit batch event.

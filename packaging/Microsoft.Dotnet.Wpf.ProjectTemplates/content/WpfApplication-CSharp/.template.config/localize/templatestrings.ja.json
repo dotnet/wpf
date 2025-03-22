@@ -19,6 +19,8 @@
   "symbols/Framework/choices/net8.0/displayName": ".NET 8.0",
   "symbols/Framework/choices/net9.0/description": "ターゲット net9.0",
   "symbols/Framework/choices/net9.0/displayName": ".NET 9.0",
+  "symbols/Framework/choices/net10.0/description": "ターゲット net10.0",
+  "symbols/Framework/choices/net10.0/displayName": ".NET 10.0",
   "symbols/Framework/displayName": "フレームワーク",
   "symbols/langVersion/description": "作成されたプロジェクト ファイルで langVersion を設定します",
   "symbols/langVersion/displayName": "言語バージョン",

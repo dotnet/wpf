@@ -256,7 +256,7 @@ namespace System.Windows.Ink
                     StartListeningOnStrokeEvents(visual.Stroke);
 
                     // Attach it to the visual tree
-                    AttachVisual(visual, true/*buildingStrokeCollection*/);
+                    AttachVisual(visual, buildingStrokeCollection: true);
                 }
 
                 // Start listening on events from the stroke collection.
@@ -445,7 +445,7 @@ namespace System.Windows.Ink
                 StartListeningOnStrokeEvents(visual.Stroke);
 
                 // Attach it to the visual tree
-                AttachVisual(visual, false/*buildingStrokeCollection*/);
+                AttachVisual(visual, buildingStrokeCollection: false);
             }
 
             // Deal with removed strokes first
@@ -492,7 +492,7 @@ namespace System.Windows.Ink
             {
                 // The change requires reparenting the visual in the tree.
                 DetachVisual(visual);
-                AttachVisual(visual, false/*buildingStrokeCollection*/);
+                AttachVisual(visual, buildingStrokeCollection: false);
 
                 // Update the cached values
                 visual.CachedIsHighlighter = stroke.DrawingAttributes.IsHighlighter;
@@ -529,7 +529,7 @@ namespace System.Windows.Ink
             {
                 // Find or create a container visual for highlighter strokes of the color
                 ContainerVisual parent = GetContainerVisual(visual.Stroke.DrawingAttributes);
-                Debug.Assert(visual is StrokeVisual);
+                Debug.Assert(visual is not null);
 
                 //insert StrokeVisuals under any non-StrokeVisuals used for dynamic inking
                 int i = 0;

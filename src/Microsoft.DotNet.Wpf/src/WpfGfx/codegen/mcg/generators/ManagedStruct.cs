@@ -101,7 +101,7 @@ namespace MS.Internal.MilCodeGen.Generators
                     /// <returns>
                     /// int - the HashCode for this [[resource.Name]]
                     /// </returns>
-                    public override int GetHashCode()
+                    public override readonly int GetHashCode()
                     {
                         [[getHashCodeBody]]
                     }
@@ -204,15 +204,9 @@ namespace MS.Internal.MilCodeGen.Generators
                     /// bool - true if the object is an instance of [[resource.Name]] and if it's equal to "this".
                     /// </returns>
                     /// <param name='o'>The object to compare to "this"</param>
-                    public override bool Equals(object o)
+                    public override readonly bool Equals(object o)
                     {
-                        if ((null == o) || !(o is [[resource.Name]]))
-                        {
-                            return false;
-                        }
-
-                        [[resource.Name]] value = ([[resource.Name]])o;
-                        return [[resource.Name]].Equals(this,value);
+                        return o is [[resource.Name]] other && [[resource.Name]].Equals(this, other);
                     }
 
                     /// <summary>
@@ -226,7 +220,7 @@ namespace MS.Internal.MilCodeGen.Generators
                     /// bool - true if "value" is equal to "this".
                     /// </returns>
                     /// <param name='value'>The [[resource.Name]] to compare to "this"</param>
-                    public bool Equals([[resource.Name]] value)
+                    public readonly bool Equals([[resource.Name]] value)
                     {
                         return [[resource.Name]].Equals(this, value);
                     }

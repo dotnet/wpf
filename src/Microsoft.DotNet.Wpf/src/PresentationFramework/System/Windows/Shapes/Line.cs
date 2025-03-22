@@ -7,16 +7,8 @@
 // Implementation of Line shape element.
 //
 
-using System.Windows.Shapes;
-using System.Diagnostics;
-using System.Windows.Threading;
-
-using System.Windows;
 using System.Windows.Media;
 using System.ComponentModel;
-using MS.Internal;
-
-using System;
 
 namespace System.Windows.Shapes
 {

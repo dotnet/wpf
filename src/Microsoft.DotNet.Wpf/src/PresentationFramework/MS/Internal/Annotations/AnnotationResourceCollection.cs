@@ -9,15 +9,9 @@
 //              is used specifically for AnnotationResources.
 //
 
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.ComponentModel;
-using System.Diagnostics;
 using System.Windows.Annotations;
-using System.Windows.Data;
 
 namespace MS.Internal.Annotations
 {
@@ -110,7 +104,7 @@ namespace MS.Internal.Annotations
         #region Private Methods
 
         // fire an event for each item removed from the collection
-        void OnCollectionCleared(IEnumerable<AnnotationResource> list)
+        private void OnCollectionCleared(IEnumerable<AnnotationResource> list)
         {
             foreach (object item in list)
             {

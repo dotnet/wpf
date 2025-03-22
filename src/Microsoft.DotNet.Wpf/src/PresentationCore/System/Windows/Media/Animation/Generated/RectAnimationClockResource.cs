@@ -9,13 +9,7 @@
 // Please see MilCodeGen.html for more information.
 //
 
-using System;
-using System.Windows;
-using System.Windows.Media;
 using System.Windows.Media.Composition;
-using System.Diagnostics;
-using System.Runtime.InteropServices;
-using System.Security;
 
 namespace System.Windows.Media.Animation
 {
@@ -115,11 +109,12 @@ namespace System.Windows.Media.Animation
             DUCE.ResourceHandle handle,
             DUCE.Channel channel)
         {
-            DUCE.MILCMD_RECTRESOURCE cmd = new DUCE.MILCMD_RECTRESOURCE();
-
-            cmd.Type = MILCMD.MilCmdRectResource;
-            cmd.Handle = handle;
-            cmd.Value = CurrentValue;
+            DUCE.MILCMD_RECTRESOURCE cmd = new DUCE.MILCMD_RECTRESOURCE
+            {
+                Type = MILCMD.MilCmdRectResource,
+                Handle = handle,
+                Value = CurrentValue
+            };
 
             unsafe
             {

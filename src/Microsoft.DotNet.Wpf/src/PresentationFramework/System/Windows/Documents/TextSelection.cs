@@ -1,6 +1,16 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
+
+using MS.Internal;
+using System.Globalization;
+using System.Windows.Controls.Primitives;  // TextBoxBase
+using System.Windows.Input;
+using System.Windows.Media;
+using System.Windows.Threading;
+using System.IO;
+using MS.Win32;
+using System.Windows.Controls;
 
 //
 // Description: Holds and manipulates the text selection state for TextEditor.
@@ -8,19 +18,6 @@
 
 namespace System.Windows.Documents
 {
-    using MS.Internal;
-    using System.Collections.Generic;
-    using System.Globalization;
-    using System.Windows.Controls.Primitives;  // TextBoxBase
-    using System.Windows.Input;
-    using System.Windows.Media;
-    using System.Windows.Threading;
-    using System.Threading;
-    using System.Security;
-    using System.IO;
-    using MS.Win32;
-    using System.Windows.Controls;
-
     /// <summary>
     /// The TextSelection class encapsulates selection state for the RichTextBox
     /// control.  It has no public constructor, but is exposed via a public
@@ -210,14 +207,8 @@ namespace System.Windows.Documents
                 // from false to true.
                 if (!_IsChanged && value)
                 {
-                    if (this.TextStore != null)
-                    {
-                        this.TextStore.OnSelectionChange();
-                    }
-                    if (this.ImmComposition != null)
-                    {
-                        this.ImmComposition.OnSelectionChange();
-                    }
+                    this.TextStore?.OnSelectionChange();
+                    this.ImmComposition?.OnSelectionChange();
                 }
 
                 _IsChanged = value;
@@ -229,15 +220,9 @@ namespace System.Windows.Documents
         void ITextRange.NotifyChanged(bool disableScroll, bool skipEvents)
         {
             // Notify text store about selection movement.
-            if (this.TextStore != null)
-            {
-                this.TextStore.OnSelectionChanged();
-            }
+            this.TextStore?.OnSelectionChanged();
             // Notify ImmComposition about selection movement.
-            if (this.ImmComposition != null)
-            {
-                this.ImmComposition.OnSelectionChanged();
-            }
+            this.ImmComposition?.OnSelectionChanged();
 
             if (!skipEvents)
             {
@@ -746,10 +731,7 @@ namespace System.Windows.Documents
                 // Stress bug#1583327 indicate that _caretElement can be set to null by
                 // detaching. So the below code is caching the caret element instance locally.
                 CaretElement caretElement = _caretElement;
-                if (caretElement != null)
-                {
-                    caretElement.OnTextViewUpdated();
-                }
+                caretElement?.OnTextViewUpdated();
             }
 
             if (_pendingUpdateCaretStateCallback)
@@ -2422,8 +2404,10 @@ namespace System.Windows.Documents
             if (_caretElement == null)
             {
                 // Create new caret
-                _caretElement = new CaretElement(_textEditor, isBlinkEnabled);
-                _caretElement.IsSelectionActive = isSelectionActive;
+                _caretElement = new CaretElement(_textEditor, isBlinkEnabled)
+                {
+                    IsSelectionActive = isSelectionActive
+                };
 
                 // Check the current input language to draw the BiDi caret in case of BiDi language
                 // like as Arabic or Hebrew input language.
@@ -2797,7 +2781,7 @@ namespace System.Windows.Documents
         // Flag set true after scheduling a callback to UpdateCaretStateWorker.
         // Used to prevent unbounded callback allocations on the Dispatcher queue --
         // we fold redundant update requests into a single queue item.
-        bool _pendingUpdateCaretStateCallback;
+        private bool _pendingUpdateCaretStateCallback;
 
         #endregion Private Fields
     }

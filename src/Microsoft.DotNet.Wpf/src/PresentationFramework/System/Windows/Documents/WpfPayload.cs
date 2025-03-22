@@ -1,6 +1,19 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
+
+using MS.Internal; // Invariant
+using MS.Internal.IO.Packaging;
+using System.Xml;
+using System.Windows.Markup; // TypeConvertContext, ParserContext
+using System.Windows.Controls; // Image
+using System.Globalization; // CultureInfo
+
+using System.Windows.Media; // ImageSource
+using System.Windows.Media.Imaging; // BitmapEncoder
+using System.IO; // MemoryStream
+using System.IO.Packaging; // Package
+using System.Threading; // Interlocked.Increment
 
 //
 // Description: Helper class for creating and accessing WPF Payloads in packages
@@ -20,25 +33,6 @@
 
 namespace System.Windows.Documents
 {
-    using MS.Internal; // Invariant
-    using MS.Internal.IO.Packaging;
-    using System;
-    using System.Xml;
-    using System.Windows.Markup; // TypeConvertContext, ParserContext
-    using System.Windows.Controls; // Image
-    using System.Collections.Generic; // List
-    using System.ComponentModel; // TYpeDescriptor
-    using System.Globalization; // CultureInfo
-
-    using System.Windows.Media; // ImageSource
-    using System.Windows.Media.Imaging; // BitmapEncoder
-    using System.IO; // MemoryStream
-    using System.IO.Packaging; // Package
-    using System.Threading; // Interlocked.Increment
-    using System.Security; // SecurityCritical, SecurityTreatAsSafe attributes
-    using MS.Internal.PresentationFramework; // SecurityHelper
-
-    using InternalPackUriHelper = MS.Internal.IO.Packaging.PackUriHelper;
     // An object supporting flow content packaging with images and other resources.
     /// <summary>
     /// WpfPayload is a class providing services for creating,
@@ -326,8 +320,10 @@ namespace System.Windows.Documents
                     PackageStore.AddPackage(packageUri, wpfPayload.Package); // Register the package
 
                     // Set this temporary uri as a base uri for xaml parser
-                    ParserContext parserContext = new ParserContext();
-                    parserContext.BaseUri = entryPartUri;
+                    ParserContext parserContext = new ParserContext
+                    {
+                        BaseUri = entryPartUri
+                    };
 
                     // Call xaml parser
                     xamlObject = XamlReader.Load(xamlEntryPart.GetSeekableStream(), parserContext, useRestrictiveXamlReader: true);
@@ -377,7 +373,7 @@ namespace System.Windows.Documents
             return xamlEntryPart;
         }
 
-        static int _wpfPayloadCount; // used to disambiguate between all acts of loading from different WPF payloads.
+        private static int _wpfPayloadCount; // used to disambiguate between all acts of loading from different WPF payloads.
 
         // -------------------------------------------------------------
         //

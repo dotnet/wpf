@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -7,33 +7,20 @@
 //   base Parser class that parses XML markup into an Avalon Element Tree
 //
 
-using System;
 using System.Xml;
 using System.IO;
-using System.IO.Packaging;
-using System.Windows;
 using System.ComponentModel;
-using System.Collections;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Reflection;
 
 using MS.Utility;
-using System.Security;
 using System.Text;
-using System.ComponentModel.Design.Serialization;
-using System.Globalization;
-using System.Windows.Markup.Primitives;
 using MS.Internal;
-
-using MS.Internal.IO.Packaging;
 using System.Windows.Baml2006;
-using System.Threading;
 using System.Windows.Threading;
 using System.Xaml;
 using System.Xaml.Permissions;
 using System.Windows.Navigation;
 using MS.Internal.Xaml.Context;
+using System.Runtime.CompilerServices;
 
 namespace System.Windows.Markup
 {
@@ -304,8 +291,10 @@ namespace System.Windows.Markup
                 parserContext = new ParserContext();
             }
 
-            XmlTextReader reader = new XmlTextReader(stream, XmlNodeType.Document, parserContext);
-            reader.DtdProcessing = DtdProcessing.Prohibit;
+            XmlTextReader reader = new XmlTextReader(stream, XmlNodeType.Document, parserContext)
+            {
+                DtdProcessing = DtdProcessing.Prohibit
+            };
             return LoadAsync(reader, parserContext, useRestrictiveXamlReader);
         }
 
@@ -351,10 +340,12 @@ namespace System.Windows.Markup
                 }
             }
             _baseUri = parserContext.BaseUri;
-            System.Xaml.XamlXmlReaderSettings settings = new System.Xaml.XamlXmlReaderSettings();
-            settings.IgnoreUidsOnPropertyElements = true;
-            settings.BaseUri = parserContext.BaseUri;
-            settings.ProvideLineInfo = true;
+            System.Xaml.XamlXmlReaderSettings settings = new System.Xaml.XamlXmlReaderSettings
+            {
+                IgnoreUidsOnPropertyElements = true,
+                BaseUri = parserContext.BaseUri,
+                ProvideLineInfo = true
+            };
             XamlSchemaContext schemaContext = parserContext.XamlTypeMapper != null ?
                 parserContext.XamlTypeMapper.SchemaContext : GetWpfSchemaContext();
 
@@ -375,10 +366,7 @@ namespace System.Windows.Markup
                         }
 
                         UIElement uiElement = args.Instance as UIElement;
-                        if (uiElement != null)
-                        {
-                            uiElement.SetPersistId(_persistId++);
-                        }
+                        uiElement?.SetPersistId(_persistId++);
 
                         DependencyObject dObject = args.Instance as DependencyObject;
                         if (dObject != null && _stack.CurrentFrame.XmlnsDictionary != null)
@@ -511,7 +499,7 @@ namespace System.Windows.Markup
 
         internal static XamlParseException WrapException(Exception e, IXamlLineInfo lineInfo, Uri baseUri)
         {
-            Exception baseException = (e.InnerException == null) ? e : e.InnerException;
+            Exception baseException = e.InnerException ?? e;
             if (baseException is System.Windows.Markup.XamlParseException)
             {
                 var xe = ((System.Windows.Markup.XamlParseException)baseException);
@@ -528,9 +516,8 @@ namespace System.Windows.Markup
                 System.Xaml.XamlException xe = (System.Xaml.XamlException)e;
                 return new XamlParseException(xe.Message, xe.LineNumber, xe.LinePosition, baseUri, baseException);
             }
-            else if (e is XmlException)
+            else if (e is XmlException xe)
             {
-                XmlException xe = (XmlException)e;
                 return new XamlParseException(xe.Message, xe.LineNumber, xe.LinePosition, baseUri, baseException);
             }
             else
@@ -577,7 +564,7 @@ namespace System.Windows.Markup
             xamlReader.HandleAsyncQueueItem();
         }
 
-        const int AsyncLoopTimeout = (int)200;
+        private const int AsyncLoopTimeout = (int)200;
         /// <summary>
         /// called when in async mode when get a time slice to read and load the Tree
         /// </summary>
@@ -732,9 +719,11 @@ namespace System.Windows.Markup
         #region Internal Methods
         internal static XamlObjectWriterSettings CreateObjectWriterSettings()
         {
-            XamlObjectWriterSettings owSettings = new XamlObjectWriterSettings();
-            owSettings.IgnoreCanConvert = true;
-            owSettings.PreferUnconvertedDictionaryKeys = true;
+            XamlObjectWriterSettings owSettings = new XamlObjectWriterSettings
+            {
+                IgnoreCanConvert = true,
+                PreferUnconvertedDictionaryKeys = true
+            };
             return owSettings;
         }
 
@@ -760,15 +749,19 @@ namespace System.Windows.Markup
 
         internal static Baml2006ReaderSettings CreateBamlReaderSettings()
         {
-            Baml2006ReaderSettings brSettings = new Baml2006ReaderSettings();
-            brSettings.IgnoreUidsOnPropertyElements = true;
+            Baml2006ReaderSettings brSettings = new Baml2006ReaderSettings
+            {
+                IgnoreUidsOnPropertyElements = true
+            };
             return brSettings;
         }
 
         internal static XamlSchemaContextSettings CreateSchemaContextSettings()
         {
-            XamlSchemaContextSettings xscSettings = new XamlSchemaContextSettings();
-            xscSettings.SupportMarkupExtensionsWithDuplicateArity = true;
+            XamlSchemaContextSettings xscSettings = new XamlSchemaContextSettings
+            {
+                SupportMarkupExtensionsWithDuplicateArity = true
+            };
             return xscSettings;
         }
 
@@ -892,10 +885,12 @@ namespace System.Windows.Markup
                     }
                 }
 
-                System.Xaml.XamlXmlReaderSettings settings = new System.Xaml.XamlXmlReaderSettings();
-                settings.IgnoreUidsOnPropertyElements = true;
-                settings.BaseUri = parserContext.BaseUri;
-                settings.ProvideLineInfo = true;
+                System.Xaml.XamlXmlReaderSettings settings = new System.Xaml.XamlXmlReaderSettings
+                {
+                    IgnoreUidsOnPropertyElements = true,
+                    BaseUri = parserContext.BaseUri,
+                    ProvideLineInfo = true
+                };
 
                 XamlSchemaContext schemaContext = parserContext.XamlTypeMapper != null ?
                     parserContext.XamlTypeMapper.SchemaContext : GetWpfSchemaContext();
@@ -943,7 +938,7 @@ namespace System.Windows.Markup
 
             // In some cases, the application constructor is not run prior to loading,
             // causing the loader not to recognize URIs beginning with "pack:" or "application:".
-            MS.Internal.WindowsBase.SecurityHelper.RunClassConstructor(typeof(System.Windows.Application));
+            RuntimeHelpers.RunClassConstructor(typeof(Application).TypeHandle);
 
             EventTrace.EasyTraceEvent(EventTrace.Keyword.KeywordXamlBaml | EventTrace.Keyword.KeywordPerf, EventTrace.Event.WClientParseXamlBegin, parserContext.BaseUri);
 
@@ -980,7 +975,7 @@ namespace System.Windows.Markup
             catch (Exception e)
             {
                 IUriContext uriContext = reader as IUriContext;
-                Uri baseUri = (uriContext != null) ? uriContext.BaseUri : null;
+                Uri baseUri = uriContext?.BaseUri;
                 // Don't wrap critical exceptions or already-wrapped exceptions.
                 if (MS.Internal.CriticalExceptions.IsCriticalException(e) || !ShouldReWrapException(e, baseUri))
                 {
@@ -1100,10 +1095,7 @@ namespace System.Windows.Markup
                 }
 
                 DependencyObject dObject = root as DependencyObject;
-                if (dObject != null)
-                {
-                    dObject.SetValue(BaseUriHelper.BaseUriProperty, readerSettings.BaseUri);
-                }
+                dObject?.SetValue(BaseUriHelper.BaseUriProperty, readerSettings.BaseUri);
 
                 Application app = root as Application;
                 if (app != null)
@@ -1139,7 +1131,7 @@ namespace System.Windows.Markup
             return (root);
         }
 
-        static Uri GetBaseUri(Uri uri)
+        private static Uri GetBaseUri(Uri uri)
         {
             if (uri == null)
             {
@@ -1155,15 +1147,19 @@ namespace System.Windows.Markup
 
         private static WpfSharedBamlSchemaContext CreateBamlSchemaContext()
         {
-            XamlSchemaContextSettings settings = new XamlSchemaContextSettings();
-            settings.SupportMarkupExtensionsWithDuplicateArity = true;
+            XamlSchemaContextSettings settings = new XamlSchemaContextSettings
+            {
+                SupportMarkupExtensionsWithDuplicateArity = true
+            };
             return new WpfSharedBamlSchemaContext(settings);
         }
 
         private static WpfSharedXamlSchemaContext CreateXamlSchemaContext(bool useV3Rules)
         {
-            XamlSchemaContextSettings settings = new XamlSchemaContextSettings();
-            settings.SupportMarkupExtensionsWithDuplicateArity = true;
+            XamlSchemaContextSettings settings = new XamlSchemaContextSettings
+            {
+                SupportMarkupExtensionsWithDuplicateArity = true
+            };
             return new WpfSharedXamlSchemaContext(settings, useV3Rules);
         }
 

@@ -11,37 +11,21 @@
 
 using MS.Internal;
 using MS.Internal.Collections;
-using MS.Internal.PresentationCore;
 using MS.Utility;
-using System;
 using System.Collections;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.ComponentModel.Design.Serialization;
-using System.Diagnostics;
 using System.Globalization;
-using System.Reflection;
-using System.Runtime.InteropServices;
 using System.Text;
 using System.Windows.Markup;
 using System.Windows.Media.Media3D.Converters;
-using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Media.Composition;
-using System.Security;
-using SR=MS.Internal.PresentationCore.SR;
-using System.Windows.Media.Imaging;
-// These types are aliased to match the unamanaged names used in interop
-using BOOL = System.UInt32;
-using WORD = System.UInt16;
-using Float = System.Single;
 
 namespace System.Windows.Media.Media3D
 {
     /// <summary>
     /// A collection of Point3Ds.
     /// </summary>
-
     [TypeConverter(typeof(Point3DCollectionConverter))]
     [ValueSerializer(typeof(Point3DCollectionValueSerializer))] // Used by MarkupWriter
     public sealed partial class Point3DCollection : Freezable, IFormattable, IList, IList<Point3D>
@@ -132,6 +116,8 @@ namespace System.Windows.Media.Media3D
         /// </summary>
         public void Insert(int index, Point3D value)
         {
+
+
             WritePreamble();
             _collection.Insert(index, value);
 
@@ -209,6 +195,8 @@ namespace System.Windows.Media.Media3D
             }
             set
             {
+
+
                 WritePreamble();
                 _collection[ index ] = value;
 
@@ -545,7 +533,8 @@ namespace System.Windows.Media.Media3D
             {
                 _collection.Add(sourcePoint3DCollection._collection[i]);
             }
-}
+
+        }
         /// <summary>
         /// Implementation of Freezable.CloneCurrentValueCore()
         /// </summary>
@@ -563,7 +552,8 @@ namespace System.Windows.Media.Media3D
             {
                 _collection.Add(sourcePoint3DCollection._collection[i]);
             }
-}
+
+        }
         /// <summary>
         /// Implementation of Freezable.GetAsFrozenCore()
         /// </summary>
@@ -581,7 +571,8 @@ namespace System.Windows.Media.Media3D
             {
                 _collection.Add(sourcePoint3DCollection._collection[i]);
             }
-}
+
+        }
         /// <summary>
         /// Implementation of Freezable.GetCurrentValueAsFrozenCore()
         /// </summary>
@@ -599,7 +590,8 @@ namespace System.Windows.Media.Media3D
             {
                 _collection.Add(sourcePoint3DCollection._collection[i]);
             }
-}
+
+        }
 
 
         #endregion ProtectedMethods
@@ -793,6 +785,7 @@ namespace System.Windows.Media.Media3D
 
             void IDisposable.Dispose()
             {
+
             }
 
             /// <summary>
@@ -933,6 +926,7 @@ namespace System.Windows.Media.Media3D
 
             ArgumentNullException.ThrowIfNull(collection);
 
+
             ICollection<Point3D> icollectionOfT = collection as ICollection<Point3D>;
 
             if (icollectionOfT != null)
@@ -953,8 +947,11 @@ namespace System.Windows.Media.Media3D
 
                     foreach (Point3D item in collection)
                     {
+
                         _collection.Add(item);
                     }
+
+
                 }
             }
 

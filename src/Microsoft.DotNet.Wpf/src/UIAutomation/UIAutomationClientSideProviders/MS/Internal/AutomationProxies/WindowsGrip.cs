@@ -5,19 +5,13 @@
 // Description: Windows Button Proxy
 
 using System;
-using System.Collections;
-using System.Text;
-using System.Runtime.InteropServices;
 using System.Windows;
-using System.Windows.Automation;
-using System.Windows.Automation.Provider;
-using System.ComponentModel;
 using MS.Win32;
 
 
 namespace MS.Internal.AutomationProxies
 {
-    class WindowsGrip: ProxyFragment
+    internal class WindowsGrip: ProxyFragment
     {
         // ------------------------------------------------------
         //

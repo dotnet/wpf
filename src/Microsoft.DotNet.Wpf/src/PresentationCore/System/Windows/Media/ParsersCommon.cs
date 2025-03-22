@@ -2,23 +2,13 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-//
 //  Synopsis: Implements class Parsers for internal use of type converters
 //
 //            This file contains all the code that is shared between PresentationBuildTasks and PresentationCore
-//
-//            Changes to this file will likely result in a compiler update. 
-//
+//            Changes to this file will likely result in a compiler update.
 
 using System;
-using System.Collections;
-using System.Collections.Specialized;
-using System.Diagnostics;
-using MS.Internal;
-using System.ComponentModel;
-using System.Globalization;
-using System.IO; 
-
+using System.IO;
 
 #if PRESENTATION_CORE
 
@@ -27,16 +17,14 @@ using System.Windows.Media.Media3D;
 using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
 using System.Windows;
-
-using SR=MS.Internal.PresentationCore.SR;
-using MS.Internal.Media; 
+using MS.Internal.Media;
 using TypeConverterHelper = System.Windows.Markup.TypeConverterHelper;
 
 namespace MS.Internal
 
 #elif PBTCOMPILER
 
-using MS.Utility ;
+using MS.Utility;
 using MS.Internal.Markup;
 using TypeConverterHelper = MS.Internal.Markup.TypeConverterHelper;
 
@@ -178,27 +166,27 @@ namespace MS.Internal.Markup
     /// </summary>
     sealed internal class AbbreviatedGeometryParser
     {
-        const bool      AllowSign    = true;
-        const bool      AllowComma   = true;
-        const bool      IsFilled     = true;
-        const bool      IsClosed     = true;
-        const bool      IsStroked    = true;
-        const bool      IsSmoothJoin = true;
+        private const bool      AllowSign    = true;
+        private const bool      AllowComma   = true;
+        private const bool      IsFilled     = true;
+        private const bool      IsClosed     = true;
+        private const bool      IsStroked    = true;
+        private const bool      IsSmoothJoin = true;
+
+        private IFormatProvider _formatProvider;
         
-        IFormatProvider _formatProvider;
+        private string          _pathString;        // Input string to be parsed
+        private int             _pathLength;
+        private int             _curIndex;          // Location to read next character from 
+        private bool            _figureStarted;     // StartFigure is effective
         
-        string          _pathString;        // Input string to be parsed
-        int             _pathLength;
-        int             _curIndex;          // Location to read next character from 
-        bool            _figureStarted;     // StartFigure is effective
+        private Point           _lastStart;         // Last figure starting point
+        private Point           _lastPoint;         // Last point
+        private Point           _secondLastPoint;   // The point before last point
         
-        Point           _lastStart;         // Last figure starting point
-        Point           _lastPoint;         // Last point
-        Point           _secondLastPoint;   // The point before last point
-        
-        char            _token;             // Non whitespace character returned by ReadToken
-        
-        StreamGeometryContext _context;
+        private char            _token;             // Non whitespace character returned by ReadToken
+
+        private StreamGeometryContext _context;
         
         /// <summary>
         /// Throw unexpected token exception
@@ -208,7 +196,7 @@ namespace MS.Internal.Markup
             throw new System.FormatException(SR.Format(SR.Parser_UnexpectedToken, _pathString, _curIndex - 1));
         }
 
-        bool More()
+        private bool More()
         {
             return _curIndex < _pathLength;
         }
@@ -302,8 +290,8 @@ namespace MS.Internal.Markup
             
             return false;
         }
-        
-        void SkipDigits(bool signAllowed)
+
+        private void SkipDigits(bool signAllowed)
         {
             // Allow for a sign
             if (signAllowed && More() && ((_pathString[_curIndex] == '-') || _pathString[_curIndex] == '+'))
@@ -346,7 +334,7 @@ namespace MS.Internal.Markup
         /// Read a floating point number
         /// </summary>
         /// <returns></returns>
-        double ReadNumber(bool allowComma)
+        private double ReadNumber(bool allowComma)
         {
             if (!IsNumber(allowComma))
             {
@@ -448,12 +436,12 @@ namespace MS.Internal.Markup
                 }
             }
         }
-        
+
         /// <summary>
         /// Read a bool: 1 or 0
         /// </summary>
         /// <returns></returns>
-        bool ReadBool()
+        private bool ReadBool()
         {
             SkipWhiteSpace(AllowComma);
 

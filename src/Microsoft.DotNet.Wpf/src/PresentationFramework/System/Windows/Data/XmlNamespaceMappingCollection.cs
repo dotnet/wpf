@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -9,12 +9,9 @@
 //              WCP DataSources.mht
 //
 
-using System;
 using System.Collections; // IEnumerator
-using System.Collections.Generic; // ICollection<T>
 using System.Xml;
 using System.Windows.Markup;
-using MS.Utility;
 
 namespace System.Windows.Data
 {
@@ -51,7 +48,7 @@ namespace System.Windows.Data
         {
             XmlNamespaceMapping mapping = value as XmlNamespaceMapping;
             if (mapping == null)
-                throw new ArgumentException(SR.Format(SR.RequiresXmlNamespaceMapping, value.GetType().FullName), "value");
+                throw new ArgumentException(SR.Format(SR.RequiresXmlNamespaceMapping, value.GetType().FullName), nameof(value));
 
             Add(mapping);
         }

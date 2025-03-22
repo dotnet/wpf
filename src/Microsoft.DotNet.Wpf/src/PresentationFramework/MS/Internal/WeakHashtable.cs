@@ -1,7 +1,9 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
+
+using System.Collections;
 
 // This was ripped from the BCL's WeakHashtable and the namespace was changed.
 //
@@ -10,10 +12,6 @@
 
 namespace MS.Internal
 {
-    using System;
-    using System.Collections;
-    using System.Diagnostics;
-
     /// <devdoc>
     ///     This is a hashtable that stores object keys as weak references.
     ///     It monitors memory usage and will periodically scavenge the
@@ -61,7 +59,7 @@ namespace MS.Internal
         public object UnwrapKey(object key)
         {
             EqualityWeakReference keyRef = key as EqualityWeakReference;
-            return (keyRef != null) ? keyRef.Target : null;
+            return keyRef?.Target;
         }
 
         /// <devdoc>

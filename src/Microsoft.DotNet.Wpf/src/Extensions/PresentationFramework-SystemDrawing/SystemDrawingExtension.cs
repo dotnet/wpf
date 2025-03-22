@@ -5,15 +5,12 @@
 // Description: Helper methods for code that uses types from System.Drawing.
 
 using System;
-using System.Security;
 using System.Diagnostics.CodeAnalysis;
 using System.Drawing;
 using System.Drawing.Imaging;
-using System.Drawing.Printing;
 using System.IO;
 
 using System.Windows;
-using System.Windows.Media;
 using System.Windows.Media.Imaging;
 
 namespace MS.Internal

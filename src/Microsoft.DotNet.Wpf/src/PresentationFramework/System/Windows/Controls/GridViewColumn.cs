@@ -4,7 +4,6 @@
 
 
 using System.ComponentModel;        // DesignerSerializationVisibility
-using System.Diagnostics;
 using System.Windows.Data;          // BindingBase
 using System.Windows.Markup;        // [ContentProperty]
 
@@ -715,7 +714,7 @@ namespace System.Windows.Controls
         }
 
         // Fields to implement DO's inheritance context
-        DependencyObject _inheritanceContext;
+        private DependencyObject _inheritanceContext;
 
         #endregion InheritanceContext
 

@@ -2,7 +2,6 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-using System;
 using System.Globalization;
 
 namespace System.Windows.Input
@@ -105,9 +104,9 @@ namespace System.Windows.Input
 
         /////////////////////////////////////////////////////////////////////
 
-        StylusDeviceBase    _stylusDevice;
-        string          _name;
-        Guid            _guid;
-        StylusButtonState _cachedButtonState = StylusButtonState.Up;
+        private StylusDeviceBase    _stylusDevice;
+        private string          _name;
+        private Guid            _guid;
+        private StylusButtonState _cachedButtonState = StylusButtonState.Up;
     }
 }

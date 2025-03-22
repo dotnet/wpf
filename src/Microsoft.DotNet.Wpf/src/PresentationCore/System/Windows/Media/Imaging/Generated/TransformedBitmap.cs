@@ -9,30 +9,13 @@
 // Please see MilCodeGen.html for more information.
 //
 
-using MS.Internal;
-using MS.Internal.PresentationCore;
-using System;
 using System.IO;
-using System.Collections;
 using System.ComponentModel;
 using System.Net.Cache;
-using System.Runtime.InteropServices;
-using System.Windows.Threading;
-using System.Windows;
-using System.Windows.Media;
-using System.Windows.Media.Animation;
-using System.Windows.Media.Composition;
-using System.Windows.Media.Imaging;
-using System.Windows.Media.Media3D;
-using System.Diagnostics;
-// These types are aliased to match the unamanaged names used in interop
-using BOOL = System.UInt32;
-using WORD = System.UInt16;
-using Float = System.Single;
 
 namespace System.Windows.Media.Imaging
 {
-    sealed partial class TransformedBitmap : BitmapSource
+    public sealed partial class TransformedBitmap : BitmapSource
     {
         //------------------------------------------------------
         //
@@ -73,6 +56,7 @@ namespace System.Windows.Media.Imaging
 
         private static void SourcePropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
+
             TransformedBitmap target = ((TransformedBitmap) d);
 
 
@@ -100,6 +84,7 @@ namespace System.Windows.Media.Imaging
         }
         private static void TransformPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
+
             TransformedBitmap target = ((TransformedBitmap) d);
 
 
@@ -332,8 +317,7 @@ namespace System.Windows.Media.Imaging
             // We check our static default fields which are of type Freezable
             // to make sure that they are not mutable, otherwise we will throw
             // if these get touched by more than one thread in the lifetime
-            // of your app. 
-
+            // of your app.
             Debug.Assert(s_Source == null || s_Source.IsFrozen,
                 "Detected context bound default value TransformedBitmap.s_Source (See OS Bug #947272).");
 
@@ -363,6 +347,8 @@ namespace System.Windows.Media.Imaging
                                    /* isIndependentlyAnimated  = */ false,
                                    /* coerceValueCallback */ new CoerceValueCallback(CoerceTransform));
         }
+
+
 
         #endregion Constructors
     }

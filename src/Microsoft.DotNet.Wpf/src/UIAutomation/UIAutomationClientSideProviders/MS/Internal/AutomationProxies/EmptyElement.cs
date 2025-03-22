@@ -4,15 +4,13 @@
 
 // Description: Implementation of an empty proxy provider
 
-using System;
 using System.Windows.Automation;
 using System.Windows.Automation.Provider;
-using MS.Win32;
 
 namespace MS.Internal.AutomationProxies
 {
     // Empty proxy provider
-    class EmptyElement : IRawElementProviderSimple
+    internal class EmptyElement : IRawElementProviderSimple
     {
         //------------------------------------------------------
         //
@@ -62,18 +60,18 @@ namespace MS.Internal.AutomationProxies
         #endregion Interface IRawElementProviderSimple
     }
 
-    
+
     // Empty GridItem cell implementation
-    sealed class EmptyGridItem : EmptyElement,
+    internal sealed class EmptyGridItem : EmptyElement,
         IRawElementProviderSimple,
         IGridItemProvider
     {
         #region Data
-        readonly int _row;
-        readonly int _column;
-        readonly int _rowSpan;
-        readonly int _columnSpan;
-        IRawElementProviderSimple _containingGrid;
+        private readonly int _row;
+        private readonly int _column;
+        private readonly int _rowSpan;
+        private readonly int _columnSpan;
+        private IRawElementProviderSimple _containingGrid;
         #endregion Data
 
         #region Constructor

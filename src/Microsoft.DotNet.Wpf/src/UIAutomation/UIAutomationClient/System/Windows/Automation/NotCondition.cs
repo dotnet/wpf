@@ -3,9 +3,7 @@
 // See the LICENSE file in the project root for more information.
 
 
-using System;
 using MS.Internal.Automation;
-using System.Windows.Automation;
 
 namespace System.Windows.Automation
 {
@@ -72,10 +70,10 @@ namespace System.Windows.Automation
         //  Private Fields
         //
         //------------------------------------------------------
- 
+
         #region Private Fields
 
-        Condition _condition;
+        private Condition _condition;
 
         #endregion Private Fields
     }

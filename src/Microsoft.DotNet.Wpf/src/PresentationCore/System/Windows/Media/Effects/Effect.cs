@@ -4,13 +4,6 @@
 
 //
 
-using System;
-using System.Diagnostics;
-using System.Windows;
-using System.Windows.Media;
-using System.Security;
-using SecurityHelper=MS.Internal.SecurityHelper; 
-
 namespace System.Windows.Media.Effects
 {
     /// <summary>

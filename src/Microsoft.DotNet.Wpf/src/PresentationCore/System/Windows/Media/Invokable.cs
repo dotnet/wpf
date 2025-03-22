@@ -4,9 +4,6 @@
 
 //
 
-using System.Windows.Media;
-using System;
-
 namespace System.Windows.Media
 {
     #region IInvokable

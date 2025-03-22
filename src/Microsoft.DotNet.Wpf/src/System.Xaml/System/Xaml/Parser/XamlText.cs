@@ -4,8 +4,6 @@
 
 #nullable disable
 
-using System;
-using System.Diagnostics;
 using System.Text;
 using System.Xaml;
 
@@ -14,13 +12,13 @@ namespace MS.Internal.Xaml.Parser
     [DebuggerDisplay("{Text}")]
     internal class XamlText
     {
-        private const Char SPACE = ' ';
-        private const Char NEWLINE = '\n';
-        private const Char RETURN = '\r';
-        private const Char TAB = '\t';
-        private const Char OPENCURLIE = '{';
-        private const Char CLOSECURLIE = '}';
-        private const String ME_ESCAPE = "{}";
+        private const char SPACE = ' ';
+        private const char NEWLINE = '\n';
+        private const char RETURN = '\r';
+        private const char TAB = '\t';
+        private const char OPENCURLIE = '{';
+        private const char CLOSECURLIE = '}';
+        private const string ME_ESCAPE = "{}";
         private const string RETURN_STRING = "\r";
 
         private StringBuilder _sb;
@@ -55,11 +53,12 @@ namespace MS.Internal.Xaml.Parser
         {
             get
             {
-                String text = Text;
+                string text = Text;
                 if (text.StartsWith(ME_ESCAPE, false, TypeConverterHelper.InvariantEnglishUS))
                 {
                     return text.Remove(0, ME_ESCAPE.Length);
                 }
+
                 return text;
             }
         }
@@ -103,6 +102,7 @@ namespace MS.Internal.Xaml.Parser
                     // See XamlScanner.EnqueueAnotherAttribute for the fixed call.
                     text = text.Replace(RETURN_STRING, "");
                 }
+
                 _sb.Append(text);
             }
             else if (newTextIsWhitespace)
@@ -147,6 +147,7 @@ namespace MS.Internal.Xaml.Parser
                 {
                     _sb.Append(SPACE);
                 }
+
                 _sb.Append(trimmed);
 
                 // Always leave trailing WS, if it was present.
@@ -157,6 +158,7 @@ namespace MS.Internal.Xaml.Parser
                     _sb.Append(SPACE);
                 }
             }
+
             _isWhiteSpaceOnly = _isWhiteSpaceOnly && newTextIsWhitespace;
         }
 
@@ -171,23 +173,25 @@ namespace MS.Internal.Xaml.Parser
                         return false;
                     return true;
                 }
+
                 return false;
             }
         }
 
         // ===========================================================
 
-        static bool IsWhitespace(string text)
+        private static bool IsWhitespace(string text)
         {
             for (int i=0; i<text.Length; i++)
             {
                 if (!IsWhitespaceChar(text[i]))
                     return false;
             }
+
             return true;
         }
 
-        static bool IsWhitespaceChar(Char ch)
+        private static bool IsWhitespaceChar(char ch)
         {
             return (ch == SPACE || ch == TAB || ch == NEWLINE || ch == RETURN);
         }
@@ -195,7 +199,7 @@ namespace MS.Internal.Xaml.Parser
         // This removes all leading and trailing whitespace, and it
         // collapses any internal runs of whitespace to a single space.
         //
-        static string CollapseWhitespace(string text)
+        private static string CollapseWhitespace(string text)
         {
             StringBuilder sb = new StringBuilder(text.Length);
             int firstIdx=0;
@@ -234,13 +238,16 @@ namespace MS.Internal.Xaml.Parser
                             }
                         }
                     }
+
                     if (!skipSpace)
                     {
                         sb.Append(SPACE);
                     }
                 }
+
                 firstIdx = advancingIdx;
             }
+
             return sb.ToString();
         }
 
@@ -259,7 +266,7 @@ namespace MS.Internal.Xaml.Parser
         // ---- Asian newline suppression code ------
 
         // this code was modeled from the 3.5 XamlReaderHelper.cs
-        static bool HasSurroundingEastAsianChars(int start, int end, string text)
+        private static bool HasSurroundingEastAsianChars(int start, int end, string text)
         {
             Debug.Assert(start > 0);
             Debug.Assert(end < text.Length);
@@ -291,19 +298,20 @@ namespace MS.Internal.Xaml.Parser
                     return true;
                 }
             }
+
             return false;
         }
 
-        static int ComputeUnicodeScalarValue(int takeOneIdx, int takeTwoIdx, string text)
+        private static int ComputeUnicodeScalarValue(int takeOneIdx, int takeTwoIdx, string text)
         {
             int unicodeScalarValue=0;
             bool isSurrogate = false;
 
-            Char highChar = text[takeTwoIdx];
-            if (Char.IsHighSurrogate(highChar))
+            char highChar = text[takeTwoIdx];
+            if (char.IsHighSurrogate(highChar))
             {
-                Char lowChar = text[takeTwoIdx + 1];
-                if (Char.IsLowSurrogate(lowChar))
+                char lowChar = text[takeTwoIdx + 1];
+                if (char.IsLowSurrogate(lowChar))
                 {
                     isSurrogate = true;
                     unicodeScalarValue = (((highChar & 0x03FF) << 10) | (lowChar & 0x3FF)) + 0x1000;
@@ -314,10 +322,11 @@ namespace MS.Internal.Xaml.Parser
             {
                 unicodeScalarValue = text[takeOneIdx];
             }
+
             return unicodeScalarValue;
         }
 
-        struct CodePointRange
+        private struct CodePointRange
         {
             public readonly int Min;
             public readonly int Max;
@@ -328,7 +337,7 @@ namespace MS.Internal.Xaml.Parser
             }
         }
 
-        static CodePointRange[] EastAsianCodePointRanges = new CodePointRange[]
+        private static CodePointRange[] EastAsianCodePointRanges = new CodePointRange[]
         {
             new CodePointRange ( 0x1100, 0x11FF ),     // Hangul
             new CodePointRange ( 0x2E80, 0x2FD5 ),     // CJK and KangXi Radicals
@@ -357,7 +366,7 @@ namespace MS.Internal.Xaml.Parser
         };
 
         // taken directly from WPF 3.5
-        static bool IsEastAsianCodePoint(int unicodeScalarValue)
+        private static bool IsEastAsianCodePoint(int unicodeScalarValue)
         {
             for (int i = 0; i < EastAsianCodePointRanges.Length; i++)
             {
@@ -367,6 +376,7 @@ namespace MS.Internal.Xaml.Parser
                         return true;
                 }
             }
+
             return false;
         }
     }

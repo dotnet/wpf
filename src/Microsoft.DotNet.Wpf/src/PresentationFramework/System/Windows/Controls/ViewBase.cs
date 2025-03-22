@@ -3,7 +3,6 @@
 // See the LICENSE file in the project root for more information.
 
 
-using System.Diagnostics;       // Debug
 using System.Windows.Automation.Peers;     // IViewAutomationPeer
 
 
@@ -94,7 +93,7 @@ namespace System.Windows.Controls
         }
 
         // Fields to implement DO's inheritance context
-        DependencyObject _inheritanceContext;
+        private DependencyObject _inheritanceContext;
 
         #endregion InheritanceContext
 

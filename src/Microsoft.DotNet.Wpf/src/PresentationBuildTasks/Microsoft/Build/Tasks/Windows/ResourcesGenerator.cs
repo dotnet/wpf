@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -11,11 +11,6 @@
 
 using System;
 using System.IO;
-using System.Collections;
-
-using System.Globalization;
-using System.Diagnostics;
-using System.Reflection;
 using System.Resources;
 using System.Runtime.InteropServices;
 
@@ -23,13 +18,8 @@ using Microsoft.Build.Framework;
 using Microsoft.Build.Utilities;
 
 using MS.Utility;
-using Microsoft.Build.Tasks.Windows;
 using MS.Internal;
 using MS.Internal.Tasks;
-
-// Since we disable PreSharp warnings in this file, PreSharp warning is unknown to C# compiler.
-// We first need to disable warnings about unknown message numbers and unknown pragmas.
-#pragma warning disable 1634, 1691
 
 namespace Microsoft.Build.Tasks.Windows
 {
@@ -207,7 +197,6 @@ namespace Microsoft.Build.Tasks.Windows
             }
             catch (Exception e)
             {
-                // PreSharp Complaint 6500 - do not handle null-ref or SEH exceptions.
                 if (e is NullReferenceException || e is SEHException)
                 {
                     throw;
@@ -227,13 +216,11 @@ namespace Microsoft.Build.Tasks.Windows
                     return false;
                 }
             }
-#pragma warning disable 6500
             catch   // Non-cls compliant errors
             {
                 Log.LogErrorWithCodeFromResources(nameof(SR.NonClsError));
                 return false;
             }
-#pragma warning restore 6500
 
             return true;
         }
@@ -344,7 +331,7 @@ namespace Microsoft.Build.Tasks.Windows
             string sourceDir,
             bool   requestExtensionChange)
         {
-            string relPath = String.Empty;
+            string relPath;
 
             // Please note the subtle distinction between <Link /> and <LogicalName />. 
             // <Link /> is treated as a fully resolvable path and is put through the same 
@@ -356,7 +343,7 @@ namespace Microsoft.Build.Tasks.Windows
             // said in most of the regular scenarios using <Link /> or <Logical /> will result in 
             // the same resourceId being picked.
 
-            if (!String.IsNullOrEmpty(logicalName))
+            if (!string.IsNullOrEmpty(logicalName))
             {
                 // Use the LogicalName when there is one
                 logicalName = ReplaceXAMLWithBAML(filePath, logicalName, requestExtensionChange);

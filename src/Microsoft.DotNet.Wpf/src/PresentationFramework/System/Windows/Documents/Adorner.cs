@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -8,11 +8,8 @@
 //              See spec at AdornerLayer Spec.htm
 // 
 
-using System;
-using System.Collections;
 using System.Windows.Data;
 using System.Windows.Media;
-using System.Windows.Input;
 using System.Windows.Threading;
 using MS.Internal; // DoubleUtil
 
@@ -77,10 +74,7 @@ namespace System.Windows.Documents
             for (int i = 0; i < count; i++)
             {
                 UIElement ch = this.GetVisualChild(i) as UIElement;
-                if (ch != null)
-                {
-                    ch.Measure(desiredSize);
-                }
+                ch?.Measure(desiredSize);
             }
 
             return desiredSize;
@@ -213,9 +207,11 @@ namespace System.Windows.Documents
         private static object CreateFlowDirectionBinding(object o)
         {
             Adorner adorner = (Adorner)o;
-            Binding binding = new Binding("FlowDirection");
-            binding.Mode = BindingMode.OneWay;
-            binding.Source = adorner.AdornedElement;
+            Binding binding = new Binding("FlowDirection")
+            {
+                Mode = BindingMode.OneWay,
+                Source = adorner.AdornedElement
+            };
             adorner.SetBinding(FlowDirectionProperty, binding);
 
             return null;

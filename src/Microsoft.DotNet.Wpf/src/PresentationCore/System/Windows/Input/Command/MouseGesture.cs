@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -13,9 +13,6 @@
 //
 //
 
-using System;
-using System.Windows.Input;
-using System.Windows;
 using System.Windows.Markup;
 using System.ComponentModel;
 
@@ -94,7 +91,7 @@ namespace System.Windows.Input
                 if (_mouseAction != value)
                 {
                     _mouseAction = (MouseAction)value;
-                    OnPropertyChanged("MouseAction");
+                    OnPropertyChanged(nameof(MouseAction));
                 }
             }
         }
@@ -116,7 +113,7 @@ namespace System.Windows.Input
                 if (_modifiers != value)
                 {
                     _modifiers = (ModifierKeys)value;
-                    OnPropertyChanged("Modifiers");
+                    OnPropertyChanged(nameof(Modifiers));
                 }
             }
         }

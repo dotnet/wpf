@@ -26,8 +26,6 @@ namespace System.Windows.Input.Manipulations
         /// <summary>
         /// Gets a ManipulationVelocities2D with all velocities set to zero.
         /// </summary>
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Security", "CA2104:DoNotDeclareReadOnlyMutableReferenceTypes",
-            Justification="ManipulationVelocities2D is immutable.")]
         public static readonly ManipulationVelocities2D Zero = new ManipulationVelocities2D(0, 0, 0, 0);
 
         /// <summary>

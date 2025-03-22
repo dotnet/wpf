@@ -8,18 +8,13 @@
 // For type converter spec please reference typeconverter.asp
 //
 
-using System;
 using System.ComponentModel; // for TypeConverter
 using System.Globalization; // for CultureInfo
 using System.Reflection;
-using MS.Utility;
-using MS.Internal;
-using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using System.Windows.Markup;
 using System.Windows.Documents; // EditingCommands
-using System.ComponentModel.Design.Serialization;
 
 namespace System.Windows.Input
 {
@@ -805,8 +800,8 @@ namespace System.Windows.Input
             return null;
         }
 
-        #if DEBUG
-        static void VerifyCommandDoesntExist( Type type, string name )
+#if DEBUG
+        private static void VerifyCommandDoesntExist( Type type, string name )
         {
             PropertyInfo propertyInfo = type.GetProperty(name, BindingFlags.Public | BindingFlags.Static);
             System.Diagnostics.Debug.Assert( propertyInfo == null, "KnownCommand isn't known to CommandConverter.GetKnownCommand" );

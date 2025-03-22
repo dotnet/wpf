@@ -3,6 +3,7 @@
 // See the LICENSE file in the project root for more information.
 
 //
+//
 // This file was generated, please do not edit it directly.
 // 
 // This file was generated from the codegen template located at:
@@ -13,17 +14,11 @@
 
 using MS.Internal;
 using MS.Utility;
-
-using System;
 using System.Collections;
-using System.Diagnostics;
-using System.Security;
 using System.Windows.Controls;
 using System.Windows.Diagnostics;
 using System.Windows.Media;
 using System.Windows.Markup;
-
-using SR=System.Windows.SR;
 
 namespace System.Windows
 {
@@ -297,10 +292,7 @@ namespace System.Windows
             // to the dispatchers that the elements belong to.
             //
             this.VerifyAccess();
-            if(newParent != null)
-            {
-                newParent.VerifyAccess();
-            }
+            newParent?.VerifyAccess();
 
             // Logical Parent must first be dropped before you are attached to a newParent
             // This mitigates illegal tree state caused by logical child stealing as illustrated in bug 970706
@@ -339,7 +331,7 @@ namespace System.Windows
             ///////////////////
 
             // Invalidate relevant properties for this subtree
-            DependencyObject parent = (newParent != null) ? newParent : oldParent;
+            DependencyObject parent = newParent ?? oldParent;
             TreeWalkHelper.InvalidateOnTreeChange(/* fe = */ this, /* fce = */ null, parent, (newParent != null));
 
             // If no one has called BeginInit then mark the element initialized and fire Initialized event
@@ -873,7 +865,7 @@ namespace System.Windows
         }
 
         // connect to a new mentor
-        void ConnectMentor(DependencyObject mentor)
+        private void ConnectMentor(DependencyObject mentor)
         {
             FrameworkObject foMentor = new FrameworkObject(mentor);
 
@@ -907,7 +899,7 @@ namespace System.Windows
         }
 
         // disconnect from an old mentor
-        void DisconnectMentor(DependencyObject mentor)
+        private void DisconnectMentor(DependencyObject mentor)
         {
             FrameworkObject foMentor = new FrameworkObject(mentor);
 
@@ -957,7 +949,7 @@ namespace System.Windows
         }
 
         // handle the Loaded event from the mentor
-        void OnMentorLoaded(object sender, RoutedEventArgs e)
+        private void OnMentorLoaded(object sender, RoutedEventArgs e)
         {
             FrameworkObject foMentor = new FrameworkObject((DependencyObject)sender);
 
@@ -971,7 +963,7 @@ namespace System.Windows
         }
 
         // handle the Unloaded event from the mentor
-        void OnMentorUnloaded(object sender, RoutedEventArgs e)
+        private void OnMentorUnloaded(object sender, RoutedEventArgs e)
         {
             FrameworkObject foMentor = new FrameworkObject((DependencyObject)sender);
 
@@ -984,7 +976,7 @@ namespace System.Windows
             BroadcastEventHelper.BroadcastUnloadedSynchronously(this, IsLoaded);
         }
 
-        void ConnectLoadedEvents(ref FrameworkObject foMentor, bool isLoaded)
+        private void ConnectLoadedEvents(ref FrameworkObject foMentor, bool isLoaded)
         {
             if (foMentor.IsValid)
             {
@@ -999,7 +991,7 @@ namespace System.Windows
             }
         }
 
-        void DisconnectLoadedEvents(ref FrameworkObject foMentor, bool isLoaded)
+        private void DisconnectLoadedEvents(ref FrameworkObject foMentor, bool isLoaded)
         {
             if (foMentor.IsValid)
             {
@@ -1015,7 +1007,7 @@ namespace System.Windows
         }
 
         // handle the InheritedPropertyChanged event from the mentor
-        void OnMentorInheritedPropertyChanged(object sender, InheritedPropertyChangedEventArgs e)
+        private void OnMentorInheritedPropertyChanged(object sender, InheritedPropertyChangedEventArgs e)
         {
             TreeWalkHelper.InvalidateOnInheritablePropertyChange(
                     this, null,
@@ -1024,7 +1016,7 @@ namespace System.Windows
         }
 
         // handle the ResourcesChanged event from the mentor
-        void OnMentorResourcesChanged(object sender, EventArgs e)
+        private void OnMentorResourcesChanged(object sender, EventArgs e)
         {
             TreeWalkHelper.InvalidateOnResourcesChange(
                     this, null,

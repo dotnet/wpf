@@ -4,9 +4,6 @@
 
 #nullable disable
 
-using System.Collections.Generic;
-using System.Diagnostics;
-
 namespace System.Xaml
 {
     // provides a place to Write a list of Xaml nodes
@@ -17,10 +14,10 @@ namespace System.Xaml
 
     public class XamlNodeList
     {
-        List<XamlNode> _nodeList;
-        bool _readMode;
-        XamlWriter _writer;
-        bool _hasLineInfo;
+        private List<XamlNode> _nodeList;
+        private bool _readMode;
+        private XamlWriter _writer;
+        private bool _hasLineInfo;
 
         public XamlNodeList(XamlSchemaContext schemaContext)
         {
@@ -59,10 +56,12 @@ namespace System.Xaml
             {
                 throw new XamlException(SR.CloseXamlWriterBeforeReading);
             }
-            if (_writer.SchemaContext == null)
+
+            if (_writer.SchemaContext is null)
             {
                 throw new XamlException(SR.SchemaContextNotInitialized);
             }
+
             return new ReaderMultiIndexDelegate(_writer.SchemaContext, Index, _nodeList.Count, _hasLineInfo);
         }
 
@@ -76,6 +75,7 @@ namespace System.Xaml
                     _nodeList.Add(node);
                     return;
                 }
+
                 Debug.Assert(XamlNode.IsEof_Helper(nodeType, data));
                 _readMode = true;
             }
@@ -106,6 +106,7 @@ namespace System.Xaml
             {
                 throw new XamlException(SR.CloseXamlWriterBeforeReading);
             }
+
             return _nodeList[idx];
         }
 

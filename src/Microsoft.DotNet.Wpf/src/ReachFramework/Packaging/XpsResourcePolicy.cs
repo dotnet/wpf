@@ -14,8 +14,6 @@
                                                   
                                                                              
 --*/
-using System;
-using System.Collections.Generic;
 using System.Windows.Xps.Serialization;
 
 namespace System.Windows.Xps.Packaging

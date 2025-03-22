@@ -6,9 +6,7 @@
 // Description: Convert between index and a list of values.
 //
 
-using System;
 using System.Collections;
-using System.Collections.Generic;
 using System.Globalization;
 using System.Windows.Data;
 using System.Windows.Markup;
@@ -56,6 +54,6 @@ namespace System.Windows.Controls
             return _values.IndexOf(o);
         }
 
-        List<object> _values = new List<object>();
+        private List<object> _values = new List<object>();
     }
 }

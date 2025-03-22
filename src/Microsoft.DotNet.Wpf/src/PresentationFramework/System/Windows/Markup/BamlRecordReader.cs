@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -9,32 +9,17 @@
 *
 \***************************************************************************/
 
-using System;
 using System.Xml;
 using System.Xml.Serialization;
 using System.IO;
-using System.Text;
 using System.Collections;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Diagnostics;
 using System.Reflection;
-using System.Threading;
 using System.Globalization;
 using MS.Utility;
 using MS.Internal;
-using System.Runtime.InteropServices;
 using MS.Internal.Utility;
-using System.Windows;
 using System.Windows.Navigation;
-using System.Windows.Documents;
-using System.Windows.Controls;
-
-// Disabling 1634 and 1691:
-// In order to avoid generating warnings about unknown message numbers and
-// unknown pragmas when compiling C# source code with the C# compiler,
-// you need to disable warnings 1634 and 1691. (Presharp Documentation)
-#pragma warning disable 1634, 1691
 
 namespace System.Windows.Markup
 {
@@ -369,10 +354,7 @@ namespace System.Windows.Markup
         /// </summary>
         internal void Close()
         {
-            if (BamlStream != null)
-            {
-                BamlStream.Close();
-            }
+            BamlStream?.Close();
             EndOfDocument = true;
         }
 
@@ -546,12 +528,12 @@ namespace System.Windows.Markup
             }
         }
 
-        void ReadDocumentStartRecord(BamlDocumentStartRecord documentStartRecord)
+        private void ReadDocumentStartRecord(BamlDocumentStartRecord documentStartRecord)
         {
             IsDebugBamlStream = documentStartRecord.DebugBaml;
         }
 
-        void ReadDocumentEndRecord()
+        private void ReadDocumentEndRecord()
         {
             Debug.Assert(0 == ReaderContextStack.Count); // if not zero we missed an EndElement
             SetPropertyValueToParent(false /*fromStartTag*/);
@@ -2374,9 +2356,11 @@ namespace System.Windows.Markup
                 BamlAttributeInfoRecord attribInfo = MapTable.GetAttributeInfoFromId(memberId);
                 if (attribInfo != null)
                 {
-                    StaticExtension se = new StaticExtension();
-                    se.MemberType = MapTable.GetTypeFromId(attribInfo.OwnerTypeId);
-                    se.Member = attribInfo.Name;
+                    StaticExtension se = new StaticExtension
+                    {
+                        MemberType = MapTable.GetTypeFromId(attribInfo.OwnerTypeId),
+                        Member = attribInfo.Name
+                    };
                     valueObject = se.ProvideValue(null);
                 }
             }
@@ -2964,10 +2948,7 @@ namespace System.Windows.Markup
                         // "myStyle" also gets registered with the Window
                         // "myBrush" gets registered with the Style
                         INameScope nameScopePeek = ParserContext.NameScopeStack.Peek() as INameScope;
-                        if (nameScopePeek != null)
-                        {
-                            nameScopePeek.RegisterName(name, element);
-                        }
+                        nameScopePeek?.RegisterName(name, element);
                     }
                     else
                     {
@@ -3142,8 +3123,10 @@ namespace System.Windows.Markup
                 // arrays are a little different than other collections, because we wrap them in an array extension.
                 // Here we create an array extension and assign the element type based on the property.
 
-                ArrayExtension arrayExt = new ArrayExtension();
-                arrayExt.Type = context.ExpectedType.GetElementType();
+                ArrayExtension arrayExt = new ArrayExtension
+                {
+                    Type = context.ExpectedType.GetElementType()
+                };
                 holder.Collection = arrayExt;
             }
             else if (holder.DefaultCollection != null)
@@ -3819,9 +3802,8 @@ namespace System.Windows.Markup
 
             // Check if we have a Nullable type.  If so and the object being set is
             // not a Nullable or an expression, then attempt a conversion.
-            if (memberInfo is PropertyInfo)
+            if (memberInfo is PropertyInfo propertyInfo)
             {
-                PropertyInfo propertyInfo = (PropertyInfo)memberInfo;
                 value = OptionallyMakeNullable(propertyInfo.PropertyType, value, propertyInfo.Name);
 
                 propertyInfo.SetValue(parentObject, value, BindingFlags.Default, null, null
@@ -3892,7 +3874,7 @@ namespace System.Windows.Markup
 
         // Called when we are in the context of a constructor and an object end record is
         // encounted.  Add the newly created object to the parameter list.
-        void SetConstructorParameter(object o)
+        private void SetConstructorParameter(object o)
         {
             Debug.Assert(null != CurrentContext &&
                 ReaderFlags.ConstructorParams == CurrentContext.ContextType);
@@ -4034,7 +4016,7 @@ namespace System.Windows.Markup
 
         // Name is self-explanatory -- this is used to create CLR objects and such that aren't
         // underneath Elements (those are handled by ParseProperty above).
-        object GetObjectFromString(Type type, string s, short converterTypeId)
+        private object GetObjectFromString(Type type, string s, short converterTypeId)
         {
             object o = DependencyProperty.UnsetValue;
             o = ParserContext.XamlTypeMapper.ParseProperty(null, type,string.Empty, null,
@@ -4362,7 +4344,7 @@ namespace System.Windows.Markup
         }
 
         // Get BaseUri for the right elements.
-        Uri GetBaseUri( )
+        private Uri GetBaseUri( )
         {
             Uri baseuri = ParserContext.BaseUri;
 
@@ -4436,10 +4418,7 @@ namespace System.Windows.Markup
             }
 
             UIElement uiElement = element as UIElement;
-            if (uiElement != null)
-            {
-                uiElement.SetPersistId(++_persistId);
-            }
+            uiElement?.SetPersistId(++_persistId);
 
             // The second consition is to handle events within standalone dictionaries.
             // We need to setup the component connector correctly in this case. Note
@@ -4878,7 +4857,7 @@ namespace System.Windows.Markup
                         // represent the explicit collection and the grandparent is that property's target.
                         element = GetElementValue(element, GrandParentObjectData,
                                                   holder.PropertyDefinition.DependencyProperty, ref isMarkupExtension);
-                        elementType = element == null ? null : element.GetType();
+                        elementType = element?.GetType();
                     }
 
                     // the element is an explicit collection if it is assignable to the expected type of the parent or
@@ -5350,10 +5329,7 @@ namespace System.Windows.Markup
             if (_parserContext.FreezeFreezables)
             {
                 Freezable f = element as Freezable;
-                if (f != null)
-                {
-                    f.Freeze();
-                }
+                f?.Freeze();
             }
         }
         internal void PreParsedBamlReset()
@@ -5506,7 +5482,7 @@ namespace System.Windows.Markup
             get
             {
                 ReaderContextStackData contextData = ParentContext;
-                return contextData == null ? null : contextData.ObjectData;
+                return contextData?.ObjectData;
             }
         }
 
@@ -5520,7 +5496,7 @@ namespace System.Windows.Markup
             get
             {
                 ReaderContextStackData contextData = GrandParentContext;
-                return contextData == null ? null : contextData.ObjectData;
+                return contextData?.ObjectData;
             }
         }
 
@@ -5569,7 +5545,7 @@ namespace System.Windows.Markup
             set { _componentConnector = value; }
         }
 
-        ReaderStream XamlReaderStream
+        private ReaderStream XamlReaderStream
         {
             get { return _xamlReaderStream; }
         }
@@ -5604,7 +5580,7 @@ namespace System.Windows.Markup
             get { return _bamlStream.Position; }
         }
 
-        Int64 StreamLength
+        private Int64 StreamLength
         {
             get { return _bamlStream.Length; }
         }
@@ -5628,32 +5604,32 @@ namespace System.Windows.Markup
 #region Data
 
         // state vars
-        IComponentConnector          _componentConnector;
-        object                       _rootElement;
-        bool                         _bamlAsForest;
-        bool                         _isRootAlreadyLoaded;
-        ArrayList                    _rootList;
-        ParserContext                _parserContext;   // XamlTypeMapper, namespace state, lang/space values
-        TypeConvertContext           _typeConvertContext;
-        int                          _persistId;
-        ParserStack                  _contextStack = new ParserStack();
-        XamlParseMode                _parseMode = XamlParseMode.Synchronous;
-        int                          _maxAsyncRecords;
+        private IComponentConnector          _componentConnector;
+        private object                       _rootElement;
+        private bool                         _bamlAsForest;
+        private bool                         _isRootAlreadyLoaded;
+        private ArrayList                    _rootList;
+        private ParserContext                _parserContext;   // XamlTypeMapper, namespace state, lang/space values
+        private TypeConvertContext           _typeConvertContext;
+        private int                          _persistId;
+        private ParserStack                  _contextStack = new ParserStack();
+        private XamlParseMode                _parseMode = XamlParseMode.Synchronous;
+        private int                          _maxAsyncRecords;
         // end of state vars
 
-        Stream                       _bamlStream;
-        ReaderStream                 _xamlReaderStream;
-        BamlBinaryReader             _binaryReader;
-        BamlRecordManager            _bamlRecordManager;
-        BamlRecord                   _preParsedBamlRecordsStart = null;
-        BamlRecord                   _preParsedIndexRecord = null;
-        bool                         _endOfDocument = false;
-        bool                         _buildTopDown = true;
+        private Stream                       _bamlStream;
+        private ReaderStream                 _xamlReaderStream;
+        private BamlBinaryReader             _binaryReader;
+        private BamlRecordManager            _bamlRecordManager;
+        private BamlRecord                   _preParsedBamlRecordsStart = null;
+        private BamlRecord                   _preParsedIndexRecord = null;
+        private bool                         _endOfDocument = false;
+        private bool                         _buildTopDown = true;
 
         // The outer BRR, when this one is nested.
-        BamlRecordReader             _previousBamlRecordReader;
+        private BamlRecordReader             _previousBamlRecordReader;
 
-        static List<ReaderContextStackData> _stackDataFactoryCache = new List<ReaderContextStackData>();
+        private static List<ReaderContextStackData> _stackDataFactoryCache = new List<ReaderContextStackData>();
 
 #endregion Data
     }

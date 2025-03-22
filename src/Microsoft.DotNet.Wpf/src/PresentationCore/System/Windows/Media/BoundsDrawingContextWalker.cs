@@ -12,21 +12,7 @@
 //
 
 using MS.Internal;
-using System;
-using System.ComponentModel;
-using System.Collections;
-using System.Collections.Generic;
-using System.ComponentModel.Design.Serialization;
-using System.Diagnostics;
-using System.Runtime.InteropServices;
-using System.Windows;
-using System.Windows.Media;
-using System.Windows.Media.Animation;
-using System.Windows.Media.Composition;
 using System.Windows.Media.Effects;
-using System.Windows.Media.Imaging;
-using System.Windows.Media.Media3D;
-using System.Security;
 
 namespace System.Windows.Media
 {
@@ -372,12 +358,12 @@ namespace System.Windows.Media
                 if (!_haveClip)
                 {
                     _haveClip = true;
-                    _clip = clipGeometry.GetBoundsInternal(null /* pen */, _transform);
+                    _clip = clipGeometry.GetBoundsInternal(pen: null, _transform);
                 }
                 else
                 {
                     // update current clip
-                    _clip.Intersect(clipGeometry.GetBoundsInternal(null /* pen */, _transform));
+                    _clip.Intersect(clipGeometry.GetBoundsInternal(pen: null, _transform));
                 }
             }
         }

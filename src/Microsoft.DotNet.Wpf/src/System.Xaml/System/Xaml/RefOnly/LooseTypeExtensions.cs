@@ -9,10 +9,10 @@ using System.Windows.Markup;
 
 namespace System.Xaml
 {
-    static class LooseTypeExtensions
+    internal static class LooseTypeExtensions
     {
-        const string WindowsBase = "WindowsBase";
-        static readonly byte[] WindowsBaseToken = { 49, 191, 56, 86, 173, 54, 78, 53 };
+        private const string WindowsBase = "WindowsBase";
+        private static readonly byte[] WindowsBaseToken = { 49, 191, 56, 86, 173, 54, 78, 53 };
 
         // Note: this is a version-tolerant comparison, i.e. the types are considered equal if their
         // names, namespaces, assembly short names, culture infos, and public keys match.
@@ -32,10 +32,12 @@ namespace System.Xaml
             {
                 return false;
             }
+
             if (t1.Assembly.FullName == t2.Assembly.FullName)
             {
                 return true;
             }
+
             AssemblyName t1name = new AssemblyName(t1.Assembly.FullName);
             AssemblyName t2name = new AssemblyName(t2.Assembly.FullName);
             if (t1name.Name == t2name.Name)
@@ -43,12 +45,13 @@ namespace System.Xaml
                 return t1name.CultureInfo.Equals(t2name.CultureInfo) &&
                     SafeSecurityHelper.IsSameKeyToken(t1name.GetPublicKeyToken(), t2name.GetPublicKeyToken());
             }
+
             return IsWindowsBaseToSystemXamlComparison(t1.Assembly, t2.Assembly, t1name, t2name);
         }
 
         // When doing a version-tolerant comparison against System.Xaml types, we also need to
         // support references to types that were type-forwarded from WindowsBase.
-        static bool IsWindowsBaseToSystemXamlComparison(Assembly a1, Assembly a2,
+        private static bool IsWindowsBaseToSystemXamlComparison(Assembly a1, Assembly a2,
             AssemblyName name1, AssemblyName name2)
         {
             AssemblyName windowsBaseName = null;
@@ -60,12 +63,13 @@ namespace System.Xaml
             {
                 windowsBaseName = name2;
             }
-            return (windowsBaseName != null && SafeSecurityHelper.IsSameKeyToken(windowsBaseName.GetPublicKeyToken(), WindowsBaseToken));
+
+            return (windowsBaseName is not null && SafeSecurityHelper.IsSameKeyToken(windowsBaseName.GetPublicKeyToken(), WindowsBaseToken));
         }
 
         internal static bool IsAssemblyQualifiedNameAssignableFrom(Type t1, Type t2)
         {
-            if (t1 == null || t2 == null)
+            if (t1 is null || t2 is null)
             {
                 return false;
             }
@@ -102,9 +106,9 @@ namespace System.Xaml
             return true;
         }
 
-        static bool LooselyImplementInterface(Type t, Type interfaceType)
+        private static bool LooselyImplementInterface(Type t, Type interfaceType)
         {
-            for (Type type = t; type != null; type = type.BaseType)
+            for (Type type = t; type is not null; type = type.BaseType)
             {
                 Type[] interfaces = type.GetInterfaces();
                 for (int i = 0; i < interfaces.Length; i++)
@@ -116,28 +120,30 @@ namespace System.Xaml
                     }
                 }
             }
+
             return false;
         }
 
-        static bool IsLooseSubClassOf(Type t1, Type t2)
+        private static bool IsLooseSubClassOf(Type t1, Type t2)
         {
-            if (t1 == null || t2 == null)
+            if (t1 is null || t2 is null)
             {
                 return false;
             }
 
             if (AssemblyQualifiedNameEquals(t1, t2))
             {
-                return false; //strictly testing for sub-class
+                return false; // strictly testing for sub-class
             }
 
-            for(Type baseType = t1.BaseType; baseType != null; baseType = baseType.BaseType)
+            for (Type baseType = t1.BaseType; baseType is not null; baseType = baseType.BaseType)
             {
                 if (AssemblyQualifiedNameEquals(baseType, t2))
                 {
                     return true;
                 }
             }
+
             return false;
         }
     }

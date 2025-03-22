@@ -9,19 +9,12 @@
 // Please see MilCodeGen.html for more information.
 //
 
-using MS.Internal;
-
-using System;
-using System.Collections;
-using System.ComponentModel;
-using System.Diagnostics;
-using System.Windows.Media;
 using System.Windows.Media.Media3D;
-
-using MS.Internal.PresentationCore;
 
 namespace System.Windows.Media.Animation
 {
+
+
     /// <summary>
     /// This class is used as part of a BooleanKeyFrameCollection in
     /// conjunction with a KeyFrameBooleanAnimation to animate a
@@ -2981,4 +2974,5 @@ namespace System.Windows.Media.Animation
 
         #endregion
     }                 
+
 }

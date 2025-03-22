@@ -5,13 +5,7 @@
 //
 //
 
-using System;
-using System.Diagnostics;
-using System.Windows;
 using MS.Internal.Media3D;
-using System.ComponentModel.Design.Serialization;
-using System.Windows.Markup;
-using CultureInfo = System.Globalization.CultureInfo;
 
 namespace System.Windows.Media.Media3D
 {
@@ -148,7 +142,7 @@ namespace System.Windows.Media.Media3D
             //       null for the Camera.Transform below and account for it
             //       later.
 
-            Matrix3D viewMatrix = CreateViewMatrix(/* trasform = */ null, ref position, ref lookDirection, ref upDirection);
+            Matrix3D viewMatrix = CreateViewMatrix(transform: null, ref position, ref lookDirection, ref upDirection);
             Matrix3D invView = viewMatrix;
             invView.Invert();
             invView.MultiplyVector(ref rayDirection);

@@ -12,40 +12,22 @@
 using MS.Internal;
 using MS.Internal.KnownBoxes;
 using MS.Internal.Collections;
-using MS.Internal.PresentationCore;
 using MS.Utility;
-using System;
 using System.Collections;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Diagnostics;
 using System.Globalization;
-using System.Reflection;
-using System.Runtime.InteropServices;
-using System.ComponentModel.Design.Serialization;
 using System.Text;
-using System.Windows;
-using System.Windows.Media;
 using System.Windows.Media.Effects;
-using System.Windows.Media.Media3D;
 using System.Windows.Media.Animation;
 using System.Windows.Media.Composition;
-using System.Windows.Media.Imaging;
 using System.Windows.Markup;
 using System.Windows.Media.Converters;
-using System.Security;
-using SR=MS.Internal.PresentationCore.SR;
-// These types are aliased to match the unamanaged names used in interop
-using BOOL = System.UInt32;
-using WORD = System.UInt16;
-using Float = System.Single;
 
 namespace System.Windows.Media
 {
     /// <summary>
     /// A collection of Vectors.
     /// </summary>
-
     [TypeConverter(typeof(VectorCollectionConverter))]
     [ValueSerializer(typeof(VectorCollectionValueSerializer))] // Used by MarkupWriter
     public sealed partial class VectorCollection : Freezable, IFormattable, IList, IList<Vector>
@@ -136,6 +118,8 @@ namespace System.Windows.Media
         /// </summary>
         public void Insert(int index, Vector value)
         {
+
+
             WritePreamble();
             _collection.Insert(index, value);
 
@@ -213,6 +197,8 @@ namespace System.Windows.Media
             }
             set
             {
+
+
                 WritePreamble();
                 _collection[ index ] = value;
 
@@ -549,7 +535,8 @@ namespace System.Windows.Media
             {
                 _collection.Add(sourceVectorCollection._collection[i]);
             }
-}
+
+        }
         /// <summary>
         /// Implementation of Freezable.CloneCurrentValueCore()
         /// </summary>
@@ -567,7 +554,8 @@ namespace System.Windows.Media
             {
                 _collection.Add(sourceVectorCollection._collection[i]);
             }
-}
+
+        }
         /// <summary>
         /// Implementation of Freezable.GetAsFrozenCore()
         /// </summary>
@@ -585,7 +573,8 @@ namespace System.Windows.Media
             {
                 _collection.Add(sourceVectorCollection._collection[i]);
             }
-}
+
+        }
         /// <summary>
         /// Implementation of Freezable.GetCurrentValueAsFrozenCore()
         /// </summary>
@@ -603,7 +592,8 @@ namespace System.Windows.Media
             {
                 _collection.Add(sourceVectorCollection._collection[i]);
             }
-}
+
+        }
 
 
         #endregion ProtectedMethods
@@ -796,6 +786,7 @@ namespace System.Windows.Media
 
             void IDisposable.Dispose()
             {
+
             }
 
             /// <summary>
@@ -936,6 +927,7 @@ namespace System.Windows.Media
 
             ArgumentNullException.ThrowIfNull(collection);
 
+
             ICollection<Vector> icollectionOfT = collection as ICollection<Vector>;
 
             if (icollectionOfT != null)
@@ -956,8 +948,11 @@ namespace System.Windows.Media
 
                     foreach (Vector item in collection)
                     {
+
                         _collection.Add(item);
                     }
+
+
                 }
             }
 

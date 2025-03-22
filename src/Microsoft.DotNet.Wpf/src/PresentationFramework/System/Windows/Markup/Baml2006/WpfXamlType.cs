@@ -2,12 +2,9 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-using System;
-using System.Collections.Generic;
 using System.Xaml;
 using System.Xaml.Schema;
 using System.Collections;
-using System.Diagnostics;
 using System.Reflection;
 using System.Collections.Concurrent;
 
@@ -24,11 +21,11 @@ namespace System.Windows.Baml2006
             V3Rules     = 0x0002
         }
 
-        const int ConcurrencyLevel = 1;
+        private const int ConcurrencyLevel = 1;
         // ConcurrentDictionary's capacity should not be divisible by a small prime.
         // ConcurrentDictionary grows by doing 2 * capacity + 1 and finding the first that isn't 
         //   divisible by 2,3,5,7.  Anything less than 11 would be inefficient in growing
-        const int Capacity = 11;
+        private const int Capacity = 11;
 
         // In the "reading from BAML" senario we don't sperate Attachable from non-attachable.
         // BAML is pre-approved by the compiler so we don't have to worry about incorrect usage

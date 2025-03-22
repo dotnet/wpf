@@ -1,17 +1,9 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
 using System.Reflection;
 using System.Runtime.InteropServices;
-using System.Numerics;
-using System.Security.Cryptography;
-using System.Text;
 using System.Linq.Expressions;
-using System.Collections.Concurrent;
 using WinRT.Interop;
 
 #pragma warning disable 0169 // The field 'xxx' is never used
@@ -322,15 +314,12 @@ namespace WinRT
         public static unsafe void CopyManagedArray(Array array, IntPtr data)
         {
             if (array is null)
-            {
                 return;
-            }
-            var length = array.Length;
-            var byte_length = length * Marshal.SizeOf<T>();
-            var array_handle = GCHandle.Alloc(array, GCHandleType.Pinned);
-            var array_data = array_handle.AddrOfPinnedObject();
-            Buffer.MemoryCopy(array_data.ToPointer(), data.ToPointer(), byte_length, byte_length);
-            array_handle.Free();
+
+            int byte_length = array.Length * Marshal.SizeOf<T>();
+
+            fixed (void* array_data = &MemoryMarshal.GetArrayDataReference(array))
+                Buffer.MemoryCopy(array_data, data.ToPointer(), byte_length, byte_length);
         }
 
         public static void DisposeMarshalerArray(object box)

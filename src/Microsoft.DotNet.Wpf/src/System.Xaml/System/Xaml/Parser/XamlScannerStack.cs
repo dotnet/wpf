@@ -4,8 +4,6 @@
 
 #nullable disable
 
-using System.Collections.Generic;
-using System.Diagnostics;
 using System.Xaml;
 
 namespace MS.Internal.Xaml.Parser
@@ -27,7 +25,7 @@ namespace MS.Internal.Xaml.Parser
 
     internal class XamlScannerStack
     {
-        Stack<XamlScannerFrame> _stack;
+        private Stack<XamlScannerFrame> _stack;
 
         public XamlScannerStack()
         {
@@ -88,6 +86,5 @@ namespace MS.Internal.Xaml.Parser
                 _stack.Peek().InContent = value;
             }
         }
-
     }
 }

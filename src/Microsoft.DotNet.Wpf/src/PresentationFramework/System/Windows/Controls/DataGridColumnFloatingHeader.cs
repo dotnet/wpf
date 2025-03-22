@@ -1,14 +1,10 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
 
-using System;
-using System.Windows;
 using System.Windows.Controls.Primitives;
 using System.Windows.Media;
-
-using MS.Internal;
 
 namespace System.Windows.Controls
 {
@@ -121,9 +117,10 @@ namespace System.Windows.Controls
         {
             if (_referenceHeader != null && _visualBrushCanvas != null)
             {
-                VisualBrush visualBrush = new VisualBrush(_referenceHeader);
-
-                visualBrush.ViewboxUnits = BrushMappingMode.Absolute;
+                VisualBrush visualBrush = new VisualBrush(_referenceHeader)
+                {
+                    ViewboxUnits = BrushMappingMode.Absolute
+                };
 
                 double width = Width;
                 if (double.IsNaN(width))

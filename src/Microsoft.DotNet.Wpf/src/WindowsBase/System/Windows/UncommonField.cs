@@ -2,16 +2,11 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-using System;
-using System.Diagnostics;
 using System.Runtime.CompilerServices;
 using MS.Internal.KnownBoxes;
 
 namespace System.Windows
 {
-    /// <summary>
-    ///
-    /// </summary>
     internal class UncommonField<T>
     {
         /// <summary>
@@ -114,7 +109,7 @@ namespace System.Windows
 
             EntryIndex entryIndex = instance.LookupEntry(_globalIndex);
 
-            instance.UnsetEffectiveValue(entryIndex, null /* dp */, null /* metadata */);
+            instance.UnsetEffectiveValue(entryIndex, dp: null, metadata: null);
         }
 
         internal int GlobalIndex

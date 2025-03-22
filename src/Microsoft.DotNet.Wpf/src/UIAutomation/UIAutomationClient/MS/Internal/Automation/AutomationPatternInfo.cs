@@ -4,7 +4,6 @@
 
 // Description: class containing information about an automation property
 
-using System;
 using System.Windows.Automation;
 
 namespace MS.Internal.Automation

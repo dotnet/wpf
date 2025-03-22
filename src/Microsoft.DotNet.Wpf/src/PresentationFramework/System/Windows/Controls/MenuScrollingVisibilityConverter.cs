@@ -6,14 +6,8 @@
 // Description: Used to show or hide arrow buttons in scrolling menus.
 //
 
-using System;
 using System.Globalization;
-using System.Windows;
-using System.Windows.Automation.Provider;
-using System.Windows.Controls;
-using System.Windows.Controls.Primitives;
 using System.Windows.Data;
-using System.Windows.Media;
 using MS.Internal;
 
 namespace System.Windows.Controls

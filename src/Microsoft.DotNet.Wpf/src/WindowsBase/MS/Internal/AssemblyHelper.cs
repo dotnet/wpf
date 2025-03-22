@@ -2,10 +2,7 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-//
-//
 // Description: services for code that potentially loads uncommon assemblies.
-//
 
 /*
     Most of the WPF codebase uses types from WPF's own assemblies or from certain
@@ -22,12 +19,8 @@
     loading the extension assembly.
 */
 
-using System;
-using System.IO;                    // FileNotFoundException
-using System.Reflection;            // Assembly
-using System.Security;              // 
-
-using MS.Internal.WindowsBase;      // BuildInfo
+using System.Reflection;
+using MS.Internal.WindowsBase;
 
 namespace MS.Internal
 {
@@ -105,7 +98,7 @@ namespace MS.Internal
 
         #region System.Drawing
 
-        static SystemDrawingExtensionMethods _systemDrawingExtensionMethods;
+        private static SystemDrawingExtensionMethods _systemDrawingExtensionMethods;
 
         // load the extension class for System.Drawing
         internal static SystemDrawingExtensionMethods ExtensionsForSystemDrawing(bool force=false)
@@ -123,7 +116,7 @@ namespace MS.Internal
 
         #region System.Xml
 
-        static SystemXmlExtensionMethods _systemXmlExtensionMethods;
+        private static SystemXmlExtensionMethods _systemXmlExtensionMethods;
 
         // load the extension class for System.Xml
         internal static SystemXmlExtensionMethods ExtensionsForSystemXml(bool force=false)
@@ -141,7 +134,7 @@ namespace MS.Internal
 
         #region System.Xml.Linq
 
-        static SystemXmlLinqExtensionMethods _systemXmlLinqExtensionMethods;
+        private static SystemXmlLinqExtensionMethods _systemXmlLinqExtensionMethods;
 
         // load the extension class for System.XmlLinq
         internal static SystemXmlLinqExtensionMethods ExtensionsForSystemXmlLinq(bool force=false)
@@ -159,7 +152,7 @@ namespace MS.Internal
 
         #region System.Data
 
-        static SystemDataExtensionMethods _systemDataExtensionMethods;
+        private static SystemDataExtensionMethods _systemDataExtensionMethods;
 
         // load the extension class for System.Data
         internal static SystemDataExtensionMethods ExtensionsForSystemData(bool force=false)
@@ -177,7 +170,7 @@ namespace MS.Internal
 
         #region System.Core
 
-        static SystemCoreExtensionMethods _systemCoreExtensionMethods;
+        private static SystemCoreExtensionMethods _systemCoreExtensionMethods;
 
         // load the extension class for System.Core
         internal static SystemCoreExtensionMethods ExtensionsForSystemCore(bool force=false)

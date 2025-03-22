@@ -3,48 +3,21 @@
 // See the LICENSE file in the project root for more information.
 
 //
+//
 // This file was generated, please do not edit it directly.
 //
 // Please see MilCodeGen.html for more information.
 //
-//---------------------------------------------------------------------------
 
 using MS.Internal;
-using MS.Internal.KnownBoxes;
-using MS.Internal.Collections;
-using MS.Internal.PresentationCore;
 using MS.Utility;
-using System;
 using System.Collections;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Diagnostics;
-using System.Globalization;
-using System.Reflection;
-using System.Runtime.InteropServices;
-using System.ComponentModel.Design.Serialization;
-using System.Text;
-using System.Windows;
-using System.Windows.Media;
-using System.Windows.Media.Media3D;
-using System.Windows.Media.Animation;
-using System.Windows.Media.Composition;
-using System.Windows.Media.Imaging;
-using System.Windows.Markup;
-using System.Windows.Media.Converters;
-using System.Security;
-using SR=MS.Internal.PresentationCore.SR;
-// These types are aliased to match the unamanaged names used in interop
-using BOOL = System.UInt32;
-using WORD = System.UInt16;
-using Float = System.Single;
 
 namespace System.Windows.Media.Animation
 {
     /// <summary>
     /// A collection of Timeline objects.
     /// </summary>
-
 
     public sealed partial class TimelineCollection : Animatable, IList, IList<Timeline>
     {
@@ -922,66 +895,60 @@ namespace System.Windows.Media.Animation
 
             WritePreamble();
 
-            if (collection != null)
+            ArgumentNullException.ThrowIfNull(collection);
+
+            bool needsItemValidation = true;
+            ICollection<Timeline> icollectionOfT = collection as ICollection<Timeline>;
+
+            if (icollectionOfT != null)
             {
-                bool needsItemValidation = true;
-                ICollection<Timeline> icollectionOfT = collection as ICollection<Timeline>;
+                _collection = new FrugalStructList<Timeline>(icollectionOfT);
+            }
+            else
+            {
+                ICollection icollection = collection as ICollection;
 
-                if (icollectionOfT != null)
+                if (icollection != null) // an IC but not and IC<T>
                 {
-                    _collection = new FrugalStructList<Timeline>(icollectionOfT);
+                    _collection = new FrugalStructList<Timeline>(icollection);
                 }
-                else
-                {       
-                    ICollection icollection = collection as ICollection;
-
-                    if (icollection != null) // an IC but not and IC<T>
-                    {
-                        _collection = new FrugalStructList<Timeline>(icollection);
-                    }
-                    else // not a IC or IC<T> so fall back to the slower Add
-                    {
-                        _collection = new FrugalStructList<Timeline>();
-
-                        foreach (Timeline item in collection)
-                        {
-                            if (item == null)
-                            {
-                                throw new System.ArgumentException(SR.Collection_NoNull);
-                            }
-                            Timeline newValue = item;
-                            OnFreezablePropertyChanged(/* oldValue = */ null, newValue);
-                            _collection.Add(newValue);
-
-                        }
-
-                        needsItemValidation = false;
-                    }
-                }
-
-                if (needsItemValidation)
+                else // not a IC or IC<T> so fall back to the slower Add
                 {
+                    _collection = new FrugalStructList<Timeline>();
+
                     foreach (Timeline item in collection)
                     {
                         if (item == null)
                         {
                             throw new System.ArgumentException(SR.Collection_NoNull);
                         }
-                        OnFreezablePropertyChanged(/* oldValue = */ null, item);
+                        Timeline newValue = item;
+                        OnFreezablePropertyChanged(/* oldValue = */ null, newValue);
+                        _collection.Add(newValue);
 
                     }
+
+                    needsItemValidation = false;
                 }
-
-
-                WritePostscript();
             }
-            else
+
+            if (needsItemValidation)
             {
-                throw new ArgumentNullException("collection");
+                foreach (Timeline item in collection)
+                {
+                    if (item == null)
+                    {
+                        throw new System.ArgumentException(SR.Collection_NoNull);
+                    }
+                    OnFreezablePropertyChanged(/* oldValue = */ null, item);
+
+                }
             }
+
+
+            WritePostscript();
         }
 
         #endregion Constructors
-
     }
 }

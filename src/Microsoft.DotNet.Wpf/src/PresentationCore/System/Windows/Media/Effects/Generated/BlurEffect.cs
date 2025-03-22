@@ -10,37 +10,15 @@
 //
 
 using MS.Internal;
-using MS.Internal.Collections;
-using MS.Internal.KnownBoxes;
-using MS.Internal.PresentationCore;
 using MS.Utility;
-using System;
 using System.Collections;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Diagnostics;
-using System.Globalization;
-using System.Reflection;
-using System.Runtime.InteropServices;
-using System.ComponentModel.Design.Serialization;
-using System.Text;
-using System.Windows;
-using System.Windows.Media;
-using System.Windows.Media.Media3D;
 using System.Windows.Media.Animation;
 using System.Windows.Media.Composition;
 using System.Windows.Media.Imaging;
-using System.Windows.Markup;
-using System.Security;
-using SR = MS.Internal.PresentationCore.SR;
-// These types are aliased to match the unamanaged names used in interop
-using BOOL = System.UInt32;
-using WORD = System.UInt16;
-using Float = System.Single;
 
 namespace System.Windows.Media.Effects
 {
-    sealed partial class BlurEffect : Effect
+    public sealed partial class BlurEffect : Effect
     {
         //------------------------------------------------------
         //
@@ -81,21 +59,21 @@ namespace System.Windows.Media.Effects
 
         private static void RadiusPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            BlurEffect target = ((BlurEffect)d);
+            BlurEffect target = ((BlurEffect) d);
 
 
             target.PropertyChanged(RadiusProperty);
         }
         private static void KernelTypePropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            BlurEffect target = ((BlurEffect)d);
+            BlurEffect target = ((BlurEffect) d);
 
 
             target.PropertyChanged(KernelTypeProperty);
         }
         private static void RenderingBiasPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            BlurEffect target = ((BlurEffect)d);
+            BlurEffect target = ((BlurEffect) d);
 
 
             target.PropertyChanged(RenderingBiasProperty);
@@ -111,7 +89,7 @@ namespace System.Windows.Media.Effects
         {
             get
             {
-                return (double)GetValue(RadiusProperty);
+                return (double) GetValue(RadiusProperty);
             }
             set
             {
@@ -126,7 +104,7 @@ namespace System.Windows.Media.Effects
         {
             get
             {
-                return (KernelType)GetValue(KernelTypeProperty);
+                return (KernelType) GetValue(KernelTypeProperty);
             }
             set
             {
@@ -141,7 +119,7 @@ namespace System.Windows.Media.Effects
         {
             get
             {
-                return (RenderingBias)GetValue(RenderingBiasProperty);
+                return (RenderingBias) GetValue(RenderingBiasProperty);
             }
             set
             {
@@ -215,24 +193,33 @@ namespace System.Windows.Media.Effects
         }
         internal override DUCE.ResourceHandle AddRefOnChannelCore(DUCE.Channel channel)
         {
-            if (_duceResource.CreateOrAddRefOnChannel(this, channel, System.Windows.Media.Composition.DUCE.ResourceType.TYPE_BLUREFFECT))
-            {
-                AddRefOnChannelAnimations(channel);
+
+                if (_duceResource.CreateOrAddRefOnChannel(this, channel, System.Windows.Media.Composition.DUCE.ResourceType.TYPE_BLUREFFECT))
+                {
 
 
-                UpdateResource(channel, true /* skip "on channel" check - we already know that we're on channel */ );
-            }
+                    AddRefOnChannelAnimations(channel);
 
-            return _duceResource.GetHandle(channel);
+
+                    UpdateResource(channel, true /* skip "on channel" check - we already know that we're on channel */ );
+                }
+
+                return _duceResource.GetHandle(channel);
+
         }
         internal override void ReleaseOnChannelCore(DUCE.Channel channel)
         {
-            Debug.Assert(_duceResource.IsOnChannel(channel));
 
-            if (_duceResource.ReleaseOnChannel(channel))
-            {
-                ReleaseOnChannelAnimations(channel);
-            }
+                Debug.Assert(_duceResource.IsOnChannel(channel));
+
+                if (_duceResource.ReleaseOnChannel(channel))
+                {
+
+
+                    ReleaseOnChannelAnimations(channel);
+
+                }
+
         }
         internal override DUCE.ResourceHandle GetHandleCore(DUCE.Channel channel)
         {
@@ -356,6 +343,8 @@ namespace System.Windows.Media.Effects
                                    /* isIndependentlyAnimated  = */ false,
                                    /* coerceValueCallback */ null);
         }
+
+
 
         #endregion Constructors
     }

@@ -1,6 +1,10 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
+
+using MS.Internal;
+using MS.Internal.Documents;
+using System.Windows.Documents.Internal; // ColumnResizeAdorner
 
 //
 // Description: Internal static class representing a group of methods
@@ -9,12 +13,6 @@
 
 namespace System.Windows.Documents
 {
-    using System;
-    using MS.Internal;
-    using MS.Internal.Documents;
-    using System.Collections.Generic;
-    using System.Windows.Documents.Internal; // ColumnResizeAdorner
-
     /// <summary>
     /// Internal static class representing a group of methods for table editing
     /// </summary>
@@ -658,8 +656,10 @@ namespace System.Windows.Documents
             Invariant.Assert(paragraph != null, "Expecting non-null paragraph at insertionPosition");
 
             // Build a table with a given number of rows and columns
-            Table table = new Table();
-            table.CellSpacing = 0;
+            Table table = new Table
+            {
+                CellSpacing = 0
+            };
             TableRowGroup rowGroup = new TableRowGroup();
             for (int rowIndex = 0; rowIndex < rowCount; rowIndex++)
             {
@@ -667,9 +667,11 @@ namespace System.Windows.Documents
 
                 for (int columnIndex = 0; columnIndex < columnCount; columnIndex++)
                 {
-                    TableCell cell = new TableCell(new Paragraph());
-                    cell.BorderThickness = GetCellBorder(1, rowIndex, columnIndex, 1, 1, rowCount, columnCount);
-                    cell.BorderBrush = System.Windows.Media.Brushes.Black;
+                    TableCell cell = new TableCell(new Paragraph())
+                    {
+                        BorderThickness = GetCellBorder(1, rowIndex, columnIndex, 1, 1, rowCount, columnCount),
+                        BorderBrush = System.Windows.Media.Brushes.Black
+                    };
                     row.Cells.Add(cell);
                 }
                 rowGroup.Rows.Add(row);

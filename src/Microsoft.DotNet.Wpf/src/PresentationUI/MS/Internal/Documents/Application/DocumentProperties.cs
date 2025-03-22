@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -7,12 +7,8 @@
 
 using System;
 using System.Drawing;
-using System.Globalization;
 using System.IO;
 using System.IO.Packaging;                  // For Package
-using System.Security;                      // For CriticalData
-using System.Windows.TrustUI;               // For string resources
-using System.Windows.Xps.Packaging;         // For XpsDocument
 
 namespace MS.Internal.Documents.Application
 {
@@ -36,7 +32,7 @@ namespace MS.Internal.Documents.Application
         {
             ArgumentNullException.ThrowIfNull(uri);
 
-            _uri = new SecurityCriticalData<Uri>(uri);
+            _uri = uri;
         }
         #endregion Constructors
 
@@ -98,10 +94,11 @@ namespace MS.Internal.Documents.Application
         {
             get
             {
-                if (_filename == null && _uri.Value != null)
+                if (_filename is null && _uri is not null)
                 {
-                    _filename = Path.GetFileName(_uri.Value.LocalPath);
+                    _filename = Path.GetFileName(_uri.LocalPath);
                 }
+
                 return _filename;
             }
         }
@@ -318,10 +315,7 @@ namespace MS.Internal.Documents.Application
             DocumentPropertiesDialog dialog = null;
             dialog = new DocumentPropertiesDialog();
             dialog.ShowDialog();
-            if (dialog != null)
-            {
-                dialog.Dispose();
-            }
+            dialog?.Dispose();
         }
         #endregion Internal Methods
 
@@ -337,16 +331,16 @@ namespace MS.Internal.Documents.Application
         private void AcquireData()
         {
             // Ensure URI exists.
-            if (_uri.Value == null)
+            if (_uri is null)
             {
                 return;
             }
 
             // Determine if the URI represents a file
-            if (_uri.Value.IsFile)
+            if (_uri.IsFile)
             {
                 // Determine the full path and assert for file permission
-                string filePath = _uri.Value.LocalPath;
+                string filePath = _uri.LocalPath;
 
                 // Get the FileInfo for the current file
                 FileInfo fileInfo = new FileInfo(filePath);
@@ -402,7 +396,7 @@ namespace MS.Internal.Documents.Application
         //------------------------------------------------------
         #region Private Fields
         private static DocumentProperties       _current = null;
-        private SecurityCriticalData<Uri> _uri;
+        private Uri _uri;
 
         /// <summary>
         /// The properties in the XpsPackage (OPC).

@@ -1,35 +1,15 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-//
-//
-#pragma warning disable 1634, 1691 // Allow suppression of certain presharp messages
-
-using System;
 using System.IO;
 using System.IO.Packaging;
-using System.Collections;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.ComponentModel.Design.Serialization;
 using System.Collections.ObjectModel;
-using System.Reflection;
-using System.Security;
-using System.Text.RegularExpressions;
 using MS.Internal;
-using MS.Internal.AppModel;
 using MS.Win32.PresentationCore;
 using Microsoft.Win32.SafeHandles;
-using System.Diagnostics;
-using System.Windows.Media;
-using System.Globalization;
-using System.Runtime.InteropServices;
-using System.Threading;
 using System.Windows.Threading;
-using System.Windows.Media.Imaging;
-using MS.Internal.PresentationCore;                        // SecurityHelper
-using SR=MS.Internal.PresentationCore.SR;
+using MS.Internal.PresentationCore;
 using System.Net;
 using System.Net.Cache;
 using System.Text;
@@ -229,10 +209,7 @@ namespace System.Windows.Media.Imaging
             // of BitmapDecoder (such as JpegBitmapDecoder), those subclasses are constructed in
             // CreateFromUriOrStream, which also gets uriStream from SetupDecoderFromUriOrStream.
             //
-            if (_uriStream != null)
-            {
-                _uriStream.Close();
-            }
+            _uriStream?.Close();
         }
 
         /// <summary>
@@ -1089,12 +1066,10 @@ namespace System.Windows.Media.Imaging
                     }
                     else
                     {
-                        #pragma warning disable 6518
                         // We don't have an absolute URI, so we don't necessarily know
                         // if it is a file, but we'll have to assume it is and try to
                         // create a stream from the original string.
                         bitmapStream = new System.IO.FileStream(uri.OriginalString, FileMode.Open, FileAccess.Read, FileShare.Read);
-                        #pragma warning restore 6518
                     }
 
                     uriStream = bitmapStream;
@@ -1190,13 +1165,10 @@ namespace System.Windows.Media.Imaging
             }
             catch
             {
-                bitmapStream.Close();
-                #pragma warning disable 6500
+                bitmapStream?.Close();
 
                 decoderHandle = null;
                 throw;
-
-                #pragma warning restore 6500
             }
             finally
             {

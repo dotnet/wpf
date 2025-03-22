@@ -8,9 +8,7 @@
         dialog.
 */
 
-using System;
 using System.Globalization;
-using System.Windows;
 
 namespace System.Windows.Controls
 {

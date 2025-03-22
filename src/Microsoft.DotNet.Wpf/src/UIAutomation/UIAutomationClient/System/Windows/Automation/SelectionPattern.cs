@@ -4,10 +4,6 @@
 
 // Description: Client-side wrapper for Selection Pattern
 
-using System;
-using System.Collections;
-using System.Windows.Automation.Provider;
-using System.ComponentModel;
 using MS.Internal.Automation;
 
 namespace System.Windows.Automation

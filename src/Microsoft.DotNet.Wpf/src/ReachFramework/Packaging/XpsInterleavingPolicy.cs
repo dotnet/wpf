@@ -11,11 +11,8 @@
         implementation.
 
 --*/
-using System;
 using System.Collections;
-using System.Collections.Generic;
 using System.IO.Packaging;
-using System.Windows.Xps.Serialization;
 
 namespace System.Windows.Xps.Packaging
 {
@@ -563,7 +560,7 @@ namespace System.Windows.Xps.Packaging
         #endregion Private data
     }
 
-    class NodeComparer : IComparer<InterleavingNode>
+    internal class NodeComparer : IComparer<InterleavingNode>
     {
         #region Constructors
 

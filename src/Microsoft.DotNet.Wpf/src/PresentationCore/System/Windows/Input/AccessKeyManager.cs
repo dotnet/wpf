@@ -2,22 +2,10 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-//
-//
-
-using System;
 using System.Collections;
-using System.Collections.Generic;
 using System.Globalization;
-using System.Threading;
-using System.Windows.Media;
 using System.Windows.Interop;
 using MS.Internal;
-using System.Diagnostics;
-using System.Windows;
-using System.Security;
-
-using SR=MS.Internal.PresentationCore.SR;
 
 namespace System.Windows.Input
 {
@@ -276,7 +264,7 @@ namespace System.Windows.Input
 
                 if (invokeUIElement != null)
                 {
-                    AccessKeyEventArgs args = new AccessKeyEventArgs(key, !oneUIElement || existsElsewhere /* == isMultiple */,userInitiated);
+                    AccessKeyEventArgs args = new AccessKeyEventArgs(key, isMultiple: !oneUIElement || existsElsewhere, userInitiated);
                     try
                     {
                         invokeUIElement.InvokeAccessKey(args);
@@ -304,7 +292,7 @@ namespace System.Windows.Input
 
             if ((text != null) && (text.Length > 0))
             {
-                if (ProcessKeyForSender(e.OriginalSource, text, false /* existsElsewhere */,e.UserInitiated) != ProcessKeyResult.NoMatch)
+                if (ProcessKeyForSender(e.OriginalSource, text, existsElsewhere: false,e.UserInitiated) != ProcessKeyResult.NoMatch)
                 {
                     e.Handled = true;
                 }
@@ -329,7 +317,7 @@ namespace System.Windows.Input
 
             if (text != null)
             {
-                if (ProcessKeyForSender(e.OriginalSource, text, false /* existsElsewhere */,e.UserInitiated) != ProcessKeyResult.NoMatch)
+                if (ProcessKeyForSender(e.OriginalSource, text, existsElsewhere: false,e.UserInitiated) != ProcessKeyResult.NoMatch)
                 {
                     e.Handled = true;
                 }

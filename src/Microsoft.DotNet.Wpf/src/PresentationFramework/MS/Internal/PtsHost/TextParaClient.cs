@@ -9,17 +9,11 @@
 //
 
 
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Diagnostics;
-using System.Security;
 using System.Windows;
 using System.Windows.Media;
 using System.Windows.Media.TextFormatting;
 using System.Windows.Documents;
-using MS.Internal;
 using MS.Internal.Documents;
 using MS.Internal.Text;
 
@@ -345,7 +339,7 @@ namespace MS.Internal.PtsHost
 #if TEXTPANELLAYOUTDEBUG
             TextPanelDebug.IncrementCounter("TextPara.GetLines", TextPanelDebug.Category.TextView);
 #endif
-            ReadOnlyCollection<LineResult> lines = new ReadOnlyCollection<LineResult>(new List<LineResult>(0));
+            ReadOnlyCollection<LineResult> lines = ReadOnlyCollection<LineResult>.Empty;
 
             // Query paragraph details
             PTS.FSTEXTDETAILS textDetails;

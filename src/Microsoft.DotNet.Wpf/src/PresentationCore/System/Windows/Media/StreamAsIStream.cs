@@ -1,25 +1,12 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-//
-#pragma warning disable 1634, 1691 // Allow suppression of certain presharp messages
-
-using System.Windows.Media;
-using System.Security;
-using System;
 using MS.Internal;
 using MS.Win32;
-using System.Buffers;
-using System.Reflection;
-using System.Collections;
-using System.Diagnostics;
 using System.Runtime.InteropServices;
-using MS.Internal.PresentationCore;
 
-using SR=MS.Internal.PresentationCore.SR;
-using UnsafeNativeMethods=MS.Win32.PresentationCore.UnsafeNativeMethods;
-
+using UnsafeNativeMethods = MS.Win32.PresentationCore.UnsafeNativeMethods;
 
 namespace System.Windows.Media
 {
@@ -126,9 +113,9 @@ namespace System.Windows.Media
     internal class StreamAsIStream
     {
         #region Instance Data
-        const int STREAM_SEEK_SET = 0x0;
-        const int STREAM_SEEK_CUR = 0x1;
-        const int STREAM_SEEK_END = 0x2;
+        private const int STREAM_SEEK_SET = 0x0;
+        private const int STREAM_SEEK_CUR = 0x1;
+        private const int STREAM_SEEK_END = 0x2;
 
         protected System.IO.Stream dataStream;
         private Exception _lastException;
@@ -168,8 +155,6 @@ namespace System.Windows.Media
         {
             stream = IntPtr.Zero;
 
-            #pragma warning disable 6500
-
             try
             {
                 Verify();
@@ -181,15 +166,11 @@ namespace System.Windows.Media
                 return SecurityHelper.GetHRForException(e);
             }
 
-            #pragma warning restore 6500
-
             return NativeMethods.E_NOTIMPL;
         }
 
         public int Commit(uint grfCommitFlags)
         {
-            #pragma warning disable 6500
-
             try
             {
                 Verify();
@@ -204,8 +185,6 @@ namespace System.Windows.Media
                 return SecurityHelper.GetHRForException(e);
             }
 
-            #pragma warning restore 6500
-
             return NativeMethods.S_OK;
         }
 
@@ -219,8 +198,6 @@ namespace System.Windows.Media
 
             cbWritten = 0;
             cbRead = 0;
-
-            #pragma warning disable 6500
 
             try
             {
@@ -265,15 +242,11 @@ namespace System.Windows.Media
                 return SecurityHelper.GetHRForException(e);
             }
 
-            #pragma warning restore 6500
-
             return hr;
         }
 
         public int LockRegion(long libOffset, long cb, uint dwLockType)
         {
-            #pragma warning disable 6500
-
             try
             {
                 Verify();
@@ -285,16 +258,12 @@ namespace System.Windows.Media
                 return SecurityHelper.GetHRForException(e);
             }
 
-            #pragma warning restore 6500
-
             return NativeMethods.E_NOTIMPL;
         }
 
         public int Read(Span<byte> buffer, out uint cbRead)
         {
             cbRead = 0;
-
-            #pragma warning disable 6500
 
             try
             {
@@ -310,15 +279,11 @@ namespace System.Windows.Media
                 return SecurityHelper.GetHRForException(e);
             }
 
-            #pragma warning restore 6500
-
             return NativeMethods.S_OK;
         }
 
         public int Revert()
         {
-            #pragma warning disable 6500
-
             try
             {
                 Verify();
@@ -330,15 +295,11 @@ namespace System.Windows.Media
                 return SecurityHelper.GetHRForException(e);
             }
 
-            #pragma warning restore 6500
-
             return NativeMethods.E_NOTIMPL;
         }
 
         public unsafe int Seek(long offset, uint origin, long * plibNewPostion)
         {
-            #pragma warning disable 6500
-
             try
             {
                 Verify();
@@ -406,15 +367,11 @@ namespace System.Windows.Media
                 return SecurityHelper.GetHRForException(e);
             }
 
-            #pragma warning restore 6500
-
             return NativeMethods.S_OK;
         }
 
         public int SetSize(long value)
         {
-            #pragma warning disable 6500
-
             try
             {
                 Verify();
@@ -428,8 +385,6 @@ namespace System.Windows.Media
                 return SecurityHelper.GetHRForException(e);
             }
 
-            #pragma warning restore 6500
-
             return NativeMethods.S_OK;
         }
 
@@ -437,8 +392,6 @@ namespace System.Windows.Media
         {
             System.Runtime.InteropServices.ComTypes.STATSTG statstgOut = new System.Runtime.InteropServices.ComTypes.STATSTG();
             statstg = statstgOut;
-
-            #pragma warning disable 6500
 
             try
             {
@@ -457,15 +410,11 @@ namespace System.Windows.Media
                 return SecurityHelper.GetHRForException(e);
             }
 
-            #pragma warning restore 6500
-
             return NativeMethods.S_OK;
         }
 
         public int UnlockRegion(long libOffset, long cb, uint dwLockType)
         {
-            #pragma warning disable 6500
-
             try
             {
                 Verify();
@@ -477,16 +426,12 @@ namespace System.Windows.Media
                 return SecurityHelper.GetHRForException(e);
             }
 
-            #pragma warning restore 6500
-
             return NativeMethods.E_NOTIMPL;
         }
 
         public int Write(byte[] buffer, uint cb, out uint cbWritten)
         {
             cbWritten = 0;
-
-            #pragma warning disable 6500
 
             try
             {
@@ -505,16 +450,12 @@ namespace System.Windows.Media
                 return SecurityHelper.GetHRForException(e);
             }
 
-            #pragma warning restore 6500
-
             return NativeMethods.S_OK;
         }
 
         public int CanWrite(out bool canWrite)
         {
             canWrite = false;
-
-            #pragma warning disable 6500
 
             try
             {
@@ -529,16 +470,12 @@ namespace System.Windows.Media
                 return SecurityHelper.GetHRForException(e);
             }
 
-            #pragma warning restore 6500
-
             return NativeMethods.S_OK;
         }
 
         public int CanSeek(out bool canSeek)
         {
             canSeek = false;
-
-            #pragma warning disable 6500
 
             try
             {
@@ -552,8 +489,6 @@ namespace System.Windows.Media
                 _lastException = e;
                 return SecurityHelper.GetHRForException(e);
             }
-
-            #pragma warning restore 6500
 
             return NativeMethods.S_OK;
         }
@@ -698,16 +633,17 @@ namespace System.Windows.Media
             IntPtr pStream = IntPtr.Zero;
 
             StreamAsIStream sais = new StreamAsIStream(stream);
-            StreamDescriptor sd = new StreamDescriptor();
+            StreamDescriptor sd = new StreamDescriptor
+            {
+                pfnDispose = StaticPtrs.pfnDispose,
 
-            sd.pfnDispose = StaticPtrs.pfnDispose;
-
-            sd.pfnClone = StaticPtrs.pfnClone;
-            sd.pfnCommit = StaticPtrs.pfnCommit;
-            sd.pfnCopyTo = StaticPtrs.pfnCopyTo;
-            sd.pfnLockRegion = StaticPtrs.pfnLockRegion;
-            sd.pfnRead = StaticPtrs.pfnRead;
-            sd.pfnRevert = StaticPtrs.pfnRevert;
+                pfnClone = StaticPtrs.pfnClone,
+                pfnCommit = StaticPtrs.pfnCommit,
+                pfnCopyTo = StaticPtrs.pfnCopyTo,
+                pfnLockRegion = StaticPtrs.pfnLockRegion,
+                pfnRead = StaticPtrs.pfnRead,
+                pfnRevert = StaticPtrs.pfnRevert
+            };
             unsafe
             {
                 sd.pfnSeek = StaticPtrs.pfnSeek;

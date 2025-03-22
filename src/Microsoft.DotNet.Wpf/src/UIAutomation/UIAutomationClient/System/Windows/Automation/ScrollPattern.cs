@@ -4,8 +4,6 @@
 
 // Description: Client-side wrapper for Scroll Pattern
 
-using System;
-using System.Windows.Automation.Provider;
 using MS.Internal.Automation;
 
 namespace System.Windows.Automation
@@ -206,11 +204,11 @@ namespace System.Windows.Automation
         //  Private Fields
         //
         //------------------------------------------------------
- 
+
         #region Private Fields
 
-        SafePatternHandle _hPattern;
-        bool _cached;
+        private SafePatternHandle _hPattern;
+        private bool _cached;
 
         #endregion Private Fields
 

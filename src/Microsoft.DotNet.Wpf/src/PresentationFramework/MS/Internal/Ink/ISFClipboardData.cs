@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -11,12 +11,9 @@
 //
 
 
-using System;
 using System.IO;
 using System.Windows;
-using System.Windows.Controls;
 using System.Windows.Ink;
-using System.Security;
 
 namespace MS.Internal.Ink
 {
@@ -64,20 +61,15 @@ namespace MS.Internal.Ink
         // Copies the internal strokes to the IDataObject
         protected override void DoCopy(IDataObject dataObject)
         {
-            // samgeo - Presharp issue
             // Presharp gives a warning when local IDisposable variables are not closed
             // in this case, we can't call Dispose since it will also close the underlying stream
             // which needs to be open for consumers to read
-#pragma warning disable 1634, 1691
-#pragma warning disable 6518
 
             // Save the data in the data object.
             MemoryStream stream = new MemoryStream();
             Strokes.Save(stream);
             stream.Position = 0;
             dataObject.SetData(StrokeCollection.InkSerializedFormat, stream);
-#pragma warning restore 6518
-#pragma warning restore 1634, 1691
         }
 
         // Retrieves the stroks from the IDataObject
@@ -137,7 +129,7 @@ namespace MS.Internal.Ink
 
         #region Private Fields
 
-        StrokeCollection    _strokes;
+        private StrokeCollection    _strokes;
 
         #endregion Private Fields
     }

@@ -25,7 +25,7 @@
     -->
     <WpfRuntimeIdentifier Condition="('$(Platform)'!='AnyCPU' and '$(Platform)'!='Win32') Or $(Platform.EndsWith('x64'))">win-$(Platform)</WpfRuntimeIdentifier>
     <WpfRuntimeIdentifier Condition="'$(Platform)'=='AnyCPU' or '$(Platform)'=='Win32' or '$(Platform)'=='x86'">win-x86</WpfRuntimeIdentifier>
-    <WpfRuntimeIdentifier Condition="'$(Platform)'=='ARM64'">win-arm64</WpfRuntimeIdentifier>
+    <WpfRuntimeIdentifier Condition="'$(Platform)'=='arm64'">win-arm64</WpfRuntimeIdentifier>
   </PropertyGroup>
 
   <Import Project="$(WpfArcadeSdkToolsDir)RuntimeFrameworkReference.props"/>

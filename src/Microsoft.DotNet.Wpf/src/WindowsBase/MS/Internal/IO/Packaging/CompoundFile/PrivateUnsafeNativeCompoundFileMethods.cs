@@ -2,34 +2,15 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-//
-//
 // Description:
 //  The COM and P/Invoke interop code necessary for the managed compound
 //  file layer to call the existing APIs in OLE32.DLL.
 //
 //  Note that not everything is properly ported, for example the SNB type
 //  used in several IStorage methods is just ignored.
-//
-//  WARNING: This class should ONLY be access by SafeNativeCompoundFileMethods class
-//      although this class is marked as "internal". This is only done because
-//      TAS cannot be set on the individual member level if the entire class is
-//      marked as SecurityCritical. This class should be treated as if it is a nested
-//      private class of SafeNativeCompoundfileMethods.
-//
-//
-//
 
-//
-
-using System;
 using System.IO;
 using System.Runtime.InteropServices;
-using System.Windows;
-
-using MS.Internal.Interop;    // For PROPSPEC and PROPVARIANT.
-using System.Security;
-using MS.Internal.WindowsBase;
 
 using CultureInfo = System.Globalization.CultureInfo;
 
@@ -37,10 +18,6 @@ namespace MS.Internal.IO.Packaging.CompoundFile
 {
     internal static class UnsafeNativeCompoundFileMethods
     {
-        /////////////////////////////////////////////////////
-        // Security Suppressed APIs
-        /////////////////////////////////////////////////////
-
         [DllImport("ole32.dll")]
         internal static extern int StgCreateDocfileOnILockBytes(
             UnsafeNativeILockBytes plkbyt,
@@ -202,12 +179,13 @@ namespace MS.Internal.IO.Packaging.CompoundFile
                     throw new ArgumentException(SR.Format(SR.InvalidArgumentValue, "grfStatFlag", grfStatFlag.ToString(CultureInfo.InvariantCulture)));
                 }
 
-                System.Runtime.InteropServices.ComTypes.STATSTG returnValue = new System.Runtime.InteropServices.ComTypes.STATSTG();
-                
-                returnValue.grfLocksSupported = 0 ; // No lock supported
+                System.Runtime.InteropServices.ComTypes.STATSTG returnValue = new System.Runtime.InteropServices.ComTypes.STATSTG
+                {
+                    grfLocksSupported = 0, // No lock supported
 
-                returnValue.cbSize = _baseStream.Length;
-                returnValue.type = SafeNativeCompoundFileConstants.STGTY_LOCKBYTES;
+                    cbSize = _baseStream.Length,
+                    type = SafeNativeCompoundFileConstants.STGTY_LOCKBYTES
+                };
 
                 pstatstg = returnValue;
             }

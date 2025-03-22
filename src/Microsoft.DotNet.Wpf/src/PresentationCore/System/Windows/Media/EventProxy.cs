@@ -1,20 +1,10 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-//
-#pragma warning disable 1634, 1691 // Allow suppression of certain presharp messages
-
-using System.Windows.Media;
-using System;
 using MS.Internal;
 using MS.Win32;
-using System.Reflection;
-using System.Collections;
-using System.Diagnostics;
-using System.Security;
 using System.Runtime.InteropServices;
-using MS.Internal.PresentationCore;
 
 namespace System.Windows.Media
 {
@@ -84,7 +74,6 @@ namespace System.Windows.Media
 
         public int RaiseEvent(byte[] buffer, uint cb)
         {
-#pragma warning disable 6500
             try
             {
                 ObjectDisposedException.ThrowIf(target == null, typeof(EventProxyWrapper));
@@ -104,7 +93,6 @@ namespace System.Windows.Media
             {
                 return Marshal.GetHRForException(e);
             }
-#pragma warning restore 6500
 
             return NativeMethods.S_OK;
         }
@@ -143,12 +131,13 @@ namespace System.Windows.Media
             SafeMILHandle eventProxy = null;
 
             EventProxyWrapper epw = new EventProxyWrapper(invokable);
-            EventProxyDescriptor epd = new EventProxyDescriptor();
+            EventProxyDescriptor epd = new EventProxyDescriptor
+            {
+                pfnDispose = EventProxyStaticPtrs.pfnDispose,
+                pfnRaiseEvent = EventProxyStaticPtrs.pfnRaiseEvent,
 
-            epd.pfnDispose = EventProxyStaticPtrs.pfnDispose;
-            epd.pfnRaiseEvent = EventProxyStaticPtrs.pfnRaiseEvent;
-
-            epd.m_handle = System.Runtime.InteropServices.GCHandle.Alloc(epw, System.Runtime.InteropServices.GCHandleType.Normal);
+                m_handle = System.Runtime.InteropServices.GCHandle.Alloc(epw, System.Runtime.InteropServices.GCHandleType.Normal)
+            };
 
             HRESULT.Check(MILCreateEventProxy(ref epd, out eventProxy));
 

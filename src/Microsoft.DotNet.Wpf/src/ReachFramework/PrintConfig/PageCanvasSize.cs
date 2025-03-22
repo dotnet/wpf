@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -13,16 +13,7 @@ Abstract:
 
 --*/
 
-using System;
-using System.IO;
 using System.Xml;
-using System.Collections;
-using System.Diagnostics;
-
-using System.Printing;
-using MS.Internal.Printing.Configuration;
-
-#pragma warning disable 1634, 1691 // Allows suppression of certain PreSharp messages
 
 namespace MS.Internal.Printing.Configuration
 {
@@ -205,16 +196,15 @@ namespace MS.Internal.Printing.Configuration
                         this._imageableSizeWidth = reader.GetCurrentPropertyIntValueWithException();
                     }
                     // We want to catch internal FormatException to skip recoverable XML content syntax error
-                    #pragma warning suppress 56502
-                    #if _DEBUG
+#if _DEBUG
                     catch (FormatException e)
-                    #else
+#else
                     catch (FormatException)
-                    #endif
+#endif
                     {
-                        #if _DEBUG
+#if _DEBUG
                         Trace.WriteLine("-Error- " + e.Message);
-                        #endif
+#endif
                     }
                 }
                 else if (reader.CurrentElementNameAttrValue == PrintSchemaTags.Keywords.PageImageableSizeKeys.ImageableSizeHeight)
@@ -224,16 +214,15 @@ namespace MS.Internal.Printing.Configuration
                         this._imageableSizeHeight = reader.GetCurrentPropertyIntValueWithException();
                     }
                     // We want to catch internal FormatException to skip recoverable XML content syntax error
-                    #pragma warning suppress 56502
-                    #if _DEBUG
+#if _DEBUG
                     catch (FormatException e)
-                    #else
+#else
                     catch (FormatException)
-                    #endif
+#endif
                     {
-                        #if _DEBUG
+#if _DEBUG
                         Trace.WriteLine("-Error- " + e.Message);
-                        #endif
+#endif
                     }
                 }
                 else if (reader.CurrentElementNameAttrValue == PrintSchemaTags.Keywords.PageImageableSizeKeys.ImageableArea)
@@ -256,16 +245,15 @@ namespace MS.Internal.Printing.Configuration
                                 this._imageableArea._originWidth = reader.GetCurrentPropertyIntValueWithException();
                             }
                             // We want to catch internal FormatException to skip recoverable XML content syntax error
-                            #pragma warning suppress 56502
-                            #if _DEBUG
+#if _DEBUG
                             catch (FormatException e)
-                            #else
+#else
                             catch (FormatException)
-                            #endif
+#endif
                             {
-                                #if _DEBUG
+#if _DEBUG
                                 Trace.WriteLine("-Error- " + e.Message);
-                                #endif
+#endif
                             }
                         }
                         else if (reader.CurrentElementNameAttrValue == PrintSchemaTags.Keywords.PageImageableSizeKeys.OriginHeight)
@@ -275,16 +263,15 @@ namespace MS.Internal.Printing.Configuration
                                 this._imageableArea._originHeight = reader.GetCurrentPropertyIntValueWithException();
                             }
                             // We want to catch internal FormatException to skip recoverable XML content syntax error
-                            #pragma warning suppress 56502
-                            #if _DEBUG
+#if _DEBUG
                             catch (FormatException e)
-                            #else
+#else
                             catch (FormatException)
-                            #endif
+#endif
                             {
-                                #if _DEBUG
+#if _DEBUG
                                 Trace.WriteLine("-Error- " + e.Message);
-                                #endif
+#endif
                             }
                         }
                         else if (reader.CurrentElementNameAttrValue == PrintSchemaTags.Keywords.PageImageableSizeKeys.ExtentWidth)
@@ -294,16 +281,15 @@ namespace MS.Internal.Printing.Configuration
                                 this._imageableArea._extentWidth = reader.GetCurrentPropertyIntValueWithException();
                             }
                             // We want to catch internal FormatException to skip recoverable XML content syntax error
-                            #pragma warning suppress 56502
-                            #if _DEBUG
+#if _DEBUG
                             catch (FormatException e)
-                            #else
+#else
                             catch (FormatException)
-                            #endif
+#endif
                             {
-                                #if _DEBUG
+#if _DEBUG
                                 Trace.WriteLine ("-Error- " + e.Message);
-                                #endif
+#endif
                             }
                         }
                         else if (reader.CurrentElementNameAttrValue == PrintSchemaTags.Keywords.PageImageableSizeKeys.ExtentHeight)
@@ -313,16 +299,15 @@ namespace MS.Internal.Printing.Configuration
                                 this._imageableArea._extentHeight = reader.GetCurrentPropertyIntValueWithException();
                             }
                             // We want to catch internal FormatException to skip recoverable XML content syntax error
-                            #pragma warning suppress 56502
-                            #if _DEBUG
+#if _DEBUG
                             catch (FormatException e)
-                            #else
+#else
                             catch (FormatException)
-                            #endif
+#endif
                             {
-                                #if _DEBUG
+#if _DEBUG
                                 Trace.WriteLine ("-Error- " + e.Message);
-                                #endif
+#endif
                             }
                         }
                         else

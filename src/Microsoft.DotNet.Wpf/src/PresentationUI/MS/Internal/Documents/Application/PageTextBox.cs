@@ -7,14 +7,12 @@
 //              DocumentApplicationUI.
 
 using System;
-using System.ComponentModel;
 using System.Globalization;
 using System.Windows;
 using System.Windows.Automation;
 using System.Windows.Automation.Peers;
 using System.Windows.Automation.Provider;
 using System.Windows.Controls;
-using System.Windows.Data;
 using System.Windows.Input;         // For event args
 using System.Windows.TrustUI;       // For string resources
 

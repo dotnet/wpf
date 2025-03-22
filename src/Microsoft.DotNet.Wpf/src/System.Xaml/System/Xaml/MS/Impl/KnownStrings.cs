@@ -35,7 +35,7 @@ namespace System.Xaml.MS.Impl
         public const string DefaultPrefix = "p";
 
         public const string ReferenceName = "__ReferenceID";
-        public static ReadOnlySpan<char> WhitespaceChars => [' ', '\t', '\n', '\r', '\f'];
+        public static readonly char[] WhitespaceChars = [' ', '\t', '\n', '\r', '\f'];
         public const char SpaceChar = ' ';
         public const char TabChar = '\t';
         public const char NewlineChar = '\n';

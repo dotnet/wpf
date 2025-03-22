@@ -4,21 +4,7 @@
 
 //
 
-using MS.Internal;
-using System;
-using System.IO;
-using System.ComponentModel;
-using System.ComponentModel.Design.Serialization;
-using System.Diagnostics;
-using System.Reflection;
 using System.Runtime.InteropServices;
-using System.Windows;
-using System.Windows.Media;
-using System.Windows.Markup;
-using System.Windows.Media.Animation;
-using System.Windows.Media.Composition;
-using MS.Internal.PresentationCore;
-using System.Security;
 
 
 namespace System.Windows.Media.Effects
@@ -96,8 +82,8 @@ namespace System.Windows.Media.Effects
             }
             
             return _imageEffectEmulation;
-        }        
+        }
 
-        BlurEffect _imageEffectEmulation;
+        private BlurEffect _imageEffectEmulation;
     }
 }

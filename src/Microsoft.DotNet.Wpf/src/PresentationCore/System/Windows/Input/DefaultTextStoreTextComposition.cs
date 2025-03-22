@@ -13,12 +13,7 @@
 //
 //
 
-using System;
 using System.Runtime.InteropServices;
-using System.Text;
-using System.Windows.Threading;
-using System.Windows;
-using System.Security; 
 
 using MS.Win32;
 

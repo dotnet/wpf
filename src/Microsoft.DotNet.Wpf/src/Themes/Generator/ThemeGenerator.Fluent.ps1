@@ -28,16 +28,16 @@ foreach($themeColor in $themeColors)
         if($file.BaseName -eq "Fluent") {
             continue
         }
-        [xml]$currentXaml = Get-Content $file.FullName
+        [xml]$currentXaml = Get-Content $file.FullName -Encoding UTF8
         
         $combinedXaml.ResourceDictionary.InnerXml += $currentXaml.ResourceDictionary.InnerXml
     }
     
-    [xml]$themeColorXaml = Get-Content $themeColorFilePath
+    [xml]$themeColorXaml = Get-Content $themeColorFilePath -Encoding UTF8
     $combinedXaml.ResourceDictionary.InnerXml += $themeColorXaml.ResourceDictionary.InnerXml
     
     foreach ($file in Get-ChildItem $styleFilesDir -Filter "*.xaml") {
-        [xml]$currentXaml = Get-Content $file.FullName
+        [xml]$currentXaml = Get-Content $file.FullName -Encoding UTF8
         $combinedXaml.ResourceDictionary.InnerXml += $currentXaml.ResourceDictionary.InnerXml
     }
 

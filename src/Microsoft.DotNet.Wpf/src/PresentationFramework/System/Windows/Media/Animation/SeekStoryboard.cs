@@ -11,15 +11,14 @@
 *
 \***************************************************************************/
 using System.ComponentModel;            // DefaultValueAttribute
-using System.Diagnostics;               // Debug.Assert
 
 namespace System.Windows.Media.Animation
 {
-/// <summary>
-/// SeekStoryboard will call seek on its Storyboard reference when
-///  it is triggered.
-/// </summary>
-public sealed class SeekStoryboard : ControllableStoryboardAction
+    /// <summary>
+    /// SeekStoryboard will call seek on its Storyboard reference when
+    ///  it is triggered.
+    /// </summary>
+    public sealed class SeekStoryboard : ControllableStoryboardAction
 {
     /// <summary>
     ///     A time offset to use for this action.  If it is never explicitly
@@ -103,7 +102,7 @@ public sealed class SeekStoryboard : ControllableStoryboardAction
         }
     }
 
-    TimeSpan       _offset = TimeSpan.Zero;
-    TimeSeekOrigin _origin = TimeSeekOrigin.BeginTime;
+        private TimeSpan       _offset = TimeSpan.Zero;
+        private TimeSeekOrigin _origin = TimeSeekOrigin.BeginTime;
 }
 }

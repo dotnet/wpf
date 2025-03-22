@@ -1,35 +1,19 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-//
-//
 // Description:
 //      Defines a node in the composition scene graph.
-//
 
-using System;
-using System.Security;
 using System.Windows.Threading;
-using MS.Win32;
 using System.Windows.Diagnostics;
-using System.Windows.Media;
 using System.Windows.Media.Media3D;
-using System.Windows.Media.Animation;
 using System.Windows.Media.Composition;
 using System.Windows.Media.Effects;
-using System.Diagnostics;
-using System.Collections;
 using System.Windows.Interop;
-using System.Collections.Generic;
 using MS.Internal;
 using MS.Internal.Media;
 using MS.Internal.Media3D;
-using System.Resources;
-using MS.Utility;
-using System.Runtime.InteropServices;
-
-using SR=MS.Internal.PresentationCore.SR;
 
 //------------------------------------------------------------------------------
 // This section lists various things that we could improve on the Visual class.
@@ -519,7 +503,7 @@ namespace System.Windows.Media
         /// </summary>
         internal Rect CalculateSubgraphBoundsOuterSpace()
         {
-            return CalculateSubgraphBoundsOuterSpace(false /* renderBounds */);
+            return CalculateSubgraphBoundsOuterSpace(renderBounds: false);
         }
 
         /// <summary>
@@ -529,7 +513,7 @@ namespace System.Windows.Media
         /// </summary>
         internal Rect CalculateSubgraphRenderBoundsOuterSpace()
         {
-            return CalculateSubgraphBoundsOuterSpace(true /* renderBounds */);
+            return CalculateSubgraphBoundsOuterSpace(renderBounds: true);
         }
 
         /// <summary>
@@ -2530,7 +2514,7 @@ namespace System.Windows.Media
         /// </summary>
         protected virtual Visual GetVisualChild(int index)
         {
-           throw new ArgumentOutOfRangeException("index", index, SR.Visual_ArgumentOutOfRange);
+           throw new ArgumentOutOfRangeException(nameof(index), index, SR.Visual_ArgumentOutOfRange);
         }
 
         /// <summary>
@@ -2642,7 +2626,7 @@ namespace System.Windows.Media
             }
 
             // Fire notifications
-            this.OnVisualChildrenChanged(child, null /* no removed child */);
+            this.OnVisualChildrenChanged(child, visualRemoved: null);
             child.FireOnVisualParentChanged(null);
             VisualDiagnostics.OnVisualChildChanged(this, child, true);
         }
@@ -2707,7 +2691,7 @@ namespace System.Windows.Media
 
             // Fire notifications
             child.FireOnVisualParentChanged(this);
-            OnVisualChildrenChanged(null /* no child added */, child);
+            OnVisualChildrenChanged(visualAdded: null, child);
         }
 
         /// <summary>
@@ -2865,7 +2849,7 @@ namespace System.Windows.Media
 
                 SetFlagsOnAllChannels(true, VisualProxyFlags.IsTransformDirty);
 
-                TransformChanged(/* sender */ null, /* args */ null);
+                TransformChanged(sender: null, args: null);
             }
         }
 
@@ -2977,7 +2961,7 @@ namespace System.Windows.Media
 
                 SetFlagsOnAllChannels(true, VisualProxyFlags.IsEffectDirty);
 
-                EffectChanged(/* sender */ null, /* args */ null);
+                EffectChanged(sender: null, args: null);
             }
         }
 
@@ -3039,7 +3023,7 @@ namespace System.Windows.Media
                 // To enable emulation of the legacy effects on top of the new effects pipeline, store the
                 // bitmap effect information in our staging uncommon field: UserProvidedBitmapEffectData.
 
-                BitmapEffect oldBitmapEffect = (bed == null) ? null : bed.BitmapEffect;
+                BitmapEffect oldBitmapEffect = bed?.BitmapEffect;
                 if (oldBitmapEffect == value) // If new and old value are the same, this set call can be treated as a no-op.
                 {
                     return;
@@ -3075,7 +3059,7 @@ namespace System.Windows.Media
                 }
 
                 // Notify about the bitmap effect changes to configure the new emulation.
-                BitmapEffectEmulationChanged(/* sender */ null, /* args */ null);
+                BitmapEffectEmulationChanged(sender: null, args: null);
             }
         }
 
@@ -3136,7 +3120,7 @@ namespace System.Windows.Media
                 // To enable emulation of the legacy effects on top of the new effects pipeline, store the
                 // bitmap effect input information in our staging uncommon field: UserProvidedBitmapEffectData.
 
-                BitmapEffectInput oldBitmapEffectInput = (bed == null) ? null : bed.BitmapEffectInput;
+                BitmapEffectInput oldBitmapEffectInput = bed?.BitmapEffectInput;
                 BitmapEffectInput newBitmapEffectInput = value;
 
                 if (oldBitmapEffectInput == newBitmapEffectInput) // If new and old value are the same, this set call can be treated as a no-op.
@@ -3164,7 +3148,7 @@ namespace System.Windows.Media
                 }
 
                 // Notify about the bitmap effect changes to configure the new emulation.
-                BitmapEffectEmulationChanged(/* sender */ null, /* args */ null);
+                BitmapEffectEmulationChanged(sender: null, args: null);
             }
         }
 
@@ -3174,11 +3158,11 @@ namespace System.Windows.Media
         // responsible for figuring out if a legacy effect can be emulated on the new pipeline or
         // not.
         // </summary>
-        internal void BitmapEffectEmulationChanged(object sender, EventArgs e)
+        internal void BitmapEffectEmulationChanged(object sender, EventArgs args)
         {
             BitmapEffectState bed = UserProvidedBitmapEffectData.GetValue(this);
-            BitmapEffect currentBitmapEffect = (bed == null) ? null : bed.BitmapEffect;
-            BitmapEffectInput currentBitmapEffectInput = (bed == null) ? null : bed.BitmapEffectInput;
+            BitmapEffect currentBitmapEffect = bed?.BitmapEffect;
+            BitmapEffectInput currentBitmapEffectInput = bed?.BitmapEffectInput;
 
             // Note that when this method is called, a legacy BitmapEffect has been set or reset on
             // the Visual by the user. The next step is to try to emulate the effect in case the current
@@ -3240,7 +3224,7 @@ namespace System.Windows.Media
                     SetFlags(value, VisualFlags.BitmapEffectEmulationDisabled);
 
                     // Notify about the bitmap effect changes to configure the new emulation.
-                    BitmapEffectEmulationChanged(/* sender */ null, /* args */ null);
+                    BitmapEffectEmulationChanged(sender: null, args: null);
                 }
             }
         }
@@ -3270,7 +3254,7 @@ namespace System.Windows.Media
             {
                 BitmapEffectState bitmapEffectState = BitmapEffectStateField.GetValue(this);
 
-                BitmapEffect bitmapEffect = (bitmapEffectState == null) ? null : bitmapEffectState.BitmapEffect;
+                BitmapEffect bitmapEffect = bitmapEffectState?.BitmapEffect;
                 if (bitmapEffect == value)
                 {
                     return;
@@ -3321,7 +3305,7 @@ namespace System.Windows.Media
                 VerifyAPIReadWrite();
                 BitmapEffectState bitmapEffectState = BitmapEffectStateField.GetValue(this);
 
-                BitmapEffectInput bitmapEffectInput = (bitmapEffectState == null) ? null : bitmapEffectState.BitmapEffectInput;
+                BitmapEffectInput bitmapEffectInput = bitmapEffectState?.BitmapEffectInput;
                 if (bitmapEffectInput == value)
                 {
                     return;
@@ -3396,7 +3380,7 @@ namespace System.Windows.Media
 
                 SetFlagsOnAllChannels(true, VisualProxyFlags.IsCacheModeDirty);
 
-                CacheModeChanged(/* sender */ null, /* args */ null);
+                CacheModeChanged(sender: null, args: null);
             }
         }
 
@@ -3423,7 +3407,7 @@ namespace System.Windows.Media
 
                     SetFlagsOnAllChannels(true, VisualProxyFlags.IsScrollableAreaClipDirty);
 
-                    ScrollableAreaClipChanged(/* sender */ null, /* args */ null);
+                    ScrollableAreaClipChanged(sender: null, args: null);
                 }
             }
         }
@@ -3441,7 +3425,7 @@ namespace System.Windows.Media
             }
             protected set
             {
-                ChangeVisualClip(value, false /* dontSetWhenClose */);
+                ChangeVisualClip(value, dontSetWhenClose: false);
             }
         }
 
@@ -3495,7 +3479,7 @@ namespace System.Windows.Media
 
             SetFlagsOnAllChannels(true, VisualProxyFlags.IsClipDirty);
 
-            ClipChanged(/* sender */ null, /* args */ null);
+            ClipChanged(sender: null, args: null);
         }
 
         /// <summary>
@@ -3776,7 +3760,7 @@ namespace System.Windows.Media
 
                 SetFlagsOnAllChannels(true, VisualProxyFlags.IsOpacityMaskDirty);
 
-                OpacityMaskChanged(/* sender */ null, /* args */ null);
+                OpacityMaskChanged(sender: null, args: null);
             }
         }
 
@@ -3818,7 +3802,7 @@ namespace System.Windows.Media
 
                 GuidelinesXField.SetValue(this, newGuidelines);
 
-                GuidelinesChanged(/* sender */ null, /* args */ null);
+                GuidelinesChanged(sender: null, args: null);
             }
         }
 
@@ -3860,7 +3844,7 @@ namespace System.Windows.Media
 
                 GuidelinesYField.SetValue(this, newGuidelines);
 
-                GuidelinesChanged(/* sender */ null, /* args */ null);
+                GuidelinesChanged(sender: null, args: null);
             }
         }
 
@@ -4614,10 +4598,7 @@ namespace System.Windows.Media
                 }
 
                 // group can be null if it does not have an inverse
-                if (group != null)
-                {
-                    group.Freeze();
-                }
+                group?.Freeze();
 
                 // Initialize out params
                 generalTransform = group;
@@ -4808,7 +4789,7 @@ namespace System.Windows.Media
             }
         }
 
-        internal void ClipChanged(object sender, EventArgs e)
+        internal void ClipChanged(object sender, EventArgs args)
         {
             PropagateChangedFlags();
         }
@@ -4821,7 +4802,7 @@ namespace System.Windows.Media
             }
         }
 
-        internal void ScrollableAreaClipChanged(object sender, EventArgs e)
+        internal void ScrollableAreaClipChanged(object sender, EventArgs args)
         {
             PropagateChangedFlags();
         }
@@ -4834,7 +4815,7 @@ namespace System.Windows.Media
             }
         }
 
-        internal void TransformChanged(object sender, EventArgs e)
+        internal void TransformChanged(object sender, EventArgs args)
         {
             PropagateChangedFlags();
         }
@@ -4848,7 +4829,7 @@ namespace System.Windows.Media
             }
         }
 
-        internal void EffectChanged(object sender, EventArgs e)
+        internal void EffectChanged(object sender, EventArgs args)
         {
             PropagateChangedFlags();
         }
@@ -4861,7 +4842,7 @@ namespace System.Windows.Media
             }
         }
 
-        internal void CacheModeChanged(object sender, EventArgs e)
+        internal void CacheModeChanged(object sender, EventArgs args)
         {
             PropagateChangedFlags();
         }
@@ -4874,7 +4855,7 @@ namespace System.Windows.Media
             }
         }
 
-        internal void GuidelinesChanged(object sender, EventArgs e)
+        internal void GuidelinesChanged(object sender, EventArgs args)
         {
             SetFlagsOnAllChannels(
                 true,
@@ -4891,7 +4872,7 @@ namespace System.Windows.Media
             }
         }
 
-        internal void OpacityMaskChanged(object sender, EventArgs e)
+        internal void OpacityMaskChanged(object sender, EventArgs args)
         {
             PropagateChangedFlags();
         }
@@ -4904,7 +4885,7 @@ namespace System.Windows.Media
             }
         }
 
-        internal virtual void ContentsChanged(object sender, EventArgs e)
+        internal virtual void ContentsChanged(object sender, EventArgs args)
         {
             PropagateChangedFlags();
         }
@@ -4987,10 +4968,7 @@ namespace System.Windows.Media
             for (int i = 0; i < count; i++)
             {
                 Visual cv = InternalGetVisualChild(i);
-                if (cv != null)
-                {
-                    cv.RecursiveSetDpiScaleVisualFlags(args);
-                }
+                cv?.RecursiveSetDpiScaleVisualFlags(args);
             }
         }
 

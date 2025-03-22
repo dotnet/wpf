@@ -4,8 +4,6 @@
 
 #nullable disable
 
-using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.Windows.Markup;
 using System.Xaml;
@@ -13,7 +11,7 @@ using MS.Internal.Xaml.Context;
 
 namespace MS.Internal.Xaml
 {
-internal class ServiceProviderContext : ITypeDescriptorContext,  // derives from IServiceProvider
+    internal class ServiceProviderContext : ITypeDescriptorContext,  // derives from IServiceProvider
                                   IServiceProvider,
                                   IXamlTypeResolver,
                                   IUriContext,
@@ -26,7 +24,7 @@ internal class ServiceProviderContext : ITypeDescriptorContext,  // derives from
                                   IDestinationTypeProvider,
                                   IXamlLineInfo
     {
-        ObjectWriterContext _xamlContext;
+        private ObjectWriterContext _xamlContext;
 
         public ServiceProviderContext(ObjectWriterContext context)
         {
@@ -136,7 +134,7 @@ internal class ServiceProviderContext : ITypeDescriptorContext,  // derives from
 
             foreach (var property in properties)
             {
-                if (property == null)
+                if (property is null)
                 {
                     // we don't allow any property to be null
                     throw new ArgumentException(SR.Format(SR.ValueInArrayIsNull, "properties"));
@@ -152,15 +150,15 @@ internal class ServiceProviderContext : ITypeDescriptorContext,  // derives from
 
             foreach (var type in types)
             {
-                if (type == null)
+                if (type is null)
                 {
                     // we don't allow any type to be null
                     throw new ArgumentException(SR.Format(SR.ValueInArrayIsNull, "types"));
                 }
             }
+
             return _xamlContext.ServiceProvider_GetFirstAmbientValue(types);
         }
-
 
         IEnumerable<AmbientPropertyValue> IAmbientProvider.GetAllAmbientValues(
                                                     IEnumerable<XamlType> ceilingTypes,
@@ -170,7 +168,7 @@ internal class ServiceProviderContext : ITypeDescriptorContext,  // derives from
 
             foreach (var property in properties)
             {
-                if (property == null)
+                if (property is null)
                 {
                     // we don't allow any property to be null
                     throw new ArgumentException(SR.Format(SR.ValueInArrayIsNull, "properties"));
@@ -186,7 +184,7 @@ internal class ServiceProviderContext : ITypeDescriptorContext,  // derives from
 
             foreach (var type in types)
             {
-                if (type == null)
+                if (type is null)
                 {
                     // we don't allow any type to be null
                     throw new ArgumentException(SR.Format(SR.ValueInArrayIsNull, "types"));
@@ -206,7 +204,7 @@ internal class ServiceProviderContext : ITypeDescriptorContext,  // derives from
 
             foreach (var property in properties)
             {
-                if (property == null)
+                if (property is null)
                 {
                     // we don't allow any property to be null
                     throw new ArgumentException(SR.Format(SR.ValueInArrayIsNull, "properties"));
@@ -288,8 +286,12 @@ internal class ServiceProviderContext : ITypeDescriptorContext,  // derives from
             {
                 return null;
             }
-            var token = new NameFixupToken();
-            token.CanAssignDirectly = canAssignDirectly;
+
+            var token = new NameFixupToken
+            {
+                CanAssignDirectly = canAssignDirectly
+            };
+
             token.NeededNames.AddRange(names);
             if (token.CanAssignDirectly && token.NeededNames.Count != 1)
             {
@@ -297,7 +299,7 @@ internal class ServiceProviderContext : ITypeDescriptorContext,  // derives from
             }
 
             // TypeConverter case (aka "Initialization")
-            if (_xamlContext.CurrentType == null)
+            if (_xamlContext.CurrentType is null)
             {
                 // If this is OBJECT Initialization
                 if (_xamlContext.ParentProperty == XamlLanguage.Initialization)
@@ -362,7 +364,6 @@ internal class ServiceProviderContext : ITypeDescriptorContext,  // derives from
             return token;
         }
 
-
         IEnumerable<KeyValuePair<string, object>> IXamlNameResolver.GetAllNamesAndValuesInScope()
         {
             return _xamlContext.GetAllNamesAndValuesInScope();
@@ -376,7 +377,6 @@ internal class ServiceProviderContext : ITypeDescriptorContext,  // derives from
             }
             remove
             {
-
                 _xamlContext.RemoveNameScopeInitializationCompleteSubscriber(value);
             }
         }

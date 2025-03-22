@@ -10,11 +10,7 @@
 *
 *
 \***************************************************************************/
-using System;
-using System.Diagnostics;
 using MS.Internal;
-using MS.Utility;
-using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Collections;
 using System.Windows.Markup;
@@ -273,7 +269,7 @@ namespace System.Windows
         // Is templated parent an FE or an FCE?
         private bool                   _isTemplatedParentAnFE;
 
-        ProvideValueServiceProvider    _provideValueServiceProvider;
+        private ProvideValueServiceProvider    _provideValueServiceProvider;
 
         // This is a HybridDictionary of Name-Object maps
         private HybridDictionary _nameMap;

@@ -9,12 +9,7 @@
 //
 
 
-using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Collections;
-using System.Diagnostics;
-using System.Security;
 using System.Windows;
 using System.Windows.Media;
 using System.Windows.Documents;
@@ -335,7 +330,7 @@ namespace MS.Internal.PtsHost
 
             if (subtrackDetails.cParas == 0) 
             {
-                return new ReadOnlyCollection<ParagraphResult>(new List<ParagraphResult>(0));
+                return ReadOnlyCollection<ParagraphResult>.Empty;
             }
 
             // Get list of paragraphs

@@ -1,24 +1,12 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
 
-using MS.Internal;
-using MS.Internal.PresentationCore;                        // SecurityHelper
-using MS.Utility;
-using MS.Win32;
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Runtime.InteropServices;
-using System.Security;
-using System.Windows;
-using System.Windows.Input;
 using System.Windows.Input.StylusPlugIns;
 using System.Windows.Interop;
 using System.Windows.Media;
 using System.Windows.Threading;
-using SR = MS.Internal.PresentationCore.SR;
 
 namespace System.Windows.Input.StylusPointer
 {
@@ -35,7 +23,7 @@ namespace System.Windows.Input.StylusPointer
 
         internal PointerStylusPlugInManager(PresentationSource source)
         {
-            _inputSource = new SecurityCriticalData<PresentationSource>(source);
+            _inputSource = source;
         }
 
         #endregion
@@ -68,7 +56,7 @@ namespace System.Windows.Input.StylusPointer
         /// <returns>A matrix from the tablet to the screen</returns>
         private Matrix GetTabletToViewTransform(TabletDevice tablet)
         {
-            Matrix matrix = (_inputSource.Value as HwndSource)?.CompositionTarget?.TransformToDevice ?? Matrix.Identity;
+            Matrix matrix = (_inputSource as HwndSource)?.CompositionTarget?.TransformToDevice ?? Matrix.Identity;
 
             matrix.Invert();
             matrix *= tablet.TabletDeviceImpl.TabletToScreen;
@@ -208,7 +196,7 @@ namespace System.Windows.Input.StylusPointer
         /// </summary>
         /// <param name="pt">The point to test</param>
         /// <returns>The plugin collection that passes the test or null if none do.</returns>
-        StylusPlugInCollection HittestPlugInCollection(Point pt)
+        private StylusPlugInCollection HittestPlugInCollection(Point pt)
         {
             foreach (StylusPlugInCollection plugInCollection in _plugInCollectionList)
             {
@@ -255,7 +243,7 @@ namespace System.Windows.Input.StylusPointer
             RawStylusInput originalRSI = rawStylusInputReport.RawStylusInput;
             // See if we have a plugin for the target of this input.
             StylusPlugInCollection targetPIC = null;
-            StylusPlugInCollection targetRtiPIC = (originalRSI != null) ? originalRSI.Target : null;
+            StylusPlugInCollection targetRtiPIC = originalRSI?.Target;
             bool updateEventPoints = false;
 
             // Make sure we use UIElement for target if non NULL and hit ContentElement.
@@ -656,9 +644,9 @@ namespace System.Windows.Input.StylusPointer
             }
         }
 
-        internal SecurityCriticalData<PresentationSource> _inputSource;
+        internal PresentationSource _inputSource;
 
-        List<StylusPlugInCollection> _plugInCollectionList = new List<StylusPlugInCollection>();
+        private List<StylusPlugInCollection> _plugInCollectionList = new List<StylusPlugInCollection>();
 
         [ThreadStatic]
         private static StylusPlugInCollection _activeMousePlugInCollection;

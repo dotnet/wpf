@@ -2,23 +2,7 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-//
-//
-// Description: This class represents a (ContentUser , ContentRight) pair.
-//
-//
-//
-//
-
-using System;
-using System.Collections;
-using System.Diagnostics;
-using System.Globalization;
-using System.Windows;
-using MS.Internal.Security.RightsManagement;
-using SecurityHelper=MS.Internal.WindowsBase.SecurityHelper; 
-
-namespace System.Security.RightsManagement 
+namespace System.Security.RightsManagement
 {
     /// <summary>
     /// ContentGrant class represent a (ContentUser , ContentRight) pair this is 
@@ -58,7 +42,7 @@ namespace System.Security.RightsManagement
                 (right != ContentRight.DocumentEdit)  &&
                 (right != ContentRight.Export))
             {
-                throw new ArgumentOutOfRangeException("right");                
+                throw new ArgumentOutOfRangeException(nameof(right));                
             }
 
             ArgumentOutOfRangeException.ThrowIfGreaterThan(validFrom, validUntil);

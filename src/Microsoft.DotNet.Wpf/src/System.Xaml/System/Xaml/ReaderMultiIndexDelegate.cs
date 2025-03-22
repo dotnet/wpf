@@ -19,12 +19,12 @@ namespace System.Xaml
     //
     internal class ReaderMultiIndexDelegate : ReaderBaseDelegate, IXamlIndexingReader
     {
-        static XamlNode s_StartOfStream = new XamlNode(XamlNode.InternalNodeType.StartOfStream);
-        static XamlNode s_EndOfStream = new XamlNode(XamlNode.InternalNodeType.EndOfStream);
+        private static XamlNode s_StartOfStream = new XamlNode(XamlNode.InternalNodeType.StartOfStream);
+        private static XamlNode s_EndOfStream = new XamlNode(XamlNode.InternalNodeType.EndOfStream);
 
-        XamlNodeIndexDelegate _indexDelegate;
-        int _count;
-        int _idx;
+        private XamlNodeIndexDelegate _indexDelegate;
+        private int _count;
+        private int _idx;
 
         public ReaderMultiIndexDelegate(XamlSchemaContext schemaContext, XamlNodeIndexDelegate indexDelegate, int count, bool hasLineInfo)
             : base(schemaContext)
@@ -50,8 +50,9 @@ namespace System.Xaml
                     {
                         return true;   // This is the common/fast path
                     }
+
                     // else do the NONE node stuff.
-                    if (_currentNode.LineInfo != null)
+                    if (_currentNode.LineInfo is not null)
                     {
                         _currentLineInfo = _currentNode.LineInfo;
                     }
@@ -67,7 +68,8 @@ namespace System.Xaml
                     _currentLineInfo = null;
                     break;
                 }
-            } while (_currentNode.NodeType == XamlNodeType.None);
+            }
+            while (_currentNode.NodeType == XamlNodeType.None);
             return !IsEof;
         }
 

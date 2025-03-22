@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -7,23 +7,9 @@
 * Purpose:  Public api for writing baml records to a stream
 *
 \***************************************************************************/
-using System;
-using System.Xml;
 using System.IO;
-using System.Windows;
-using System.Text;
 using System.Collections;
-using System.ComponentModel;
-using MS.Internal.Utility;
-using MS.Internal;
-
-using System.Diagnostics;
 using System.Reflection;
-using System.Windows.Controls;
-using System.Windows.Documents;
-using System.Windows.Threading;
-
-using MS.Utility;
 
 namespace System.Windows.Markup
 {
@@ -229,10 +215,12 @@ namespace System.Windows.Markup
                                                assemblyName,
                                                typeFullName,
                                                elementType,
-                                               serializerType);  
-            node.IsInjected = isInjected;
-            node.CreateUsingTypeConverter = useTypeConverter;
-            
+                                               serializerType)
+            {
+                IsInjected = isInjected,
+                CreateUsingTypeConverter = useTypeConverter
+            };
+
             _bamlRecordWriter.WriteElementStart(node);
         }
 
@@ -1364,49 +1352,49 @@ namespace System.Windows.Markup
                 get { return _elementType; }
             }
 
-            bool           _endAttributesReached;
-            BamlRecordType _recordType;
-            Type           _elementType;
+            private bool           _endAttributesReached;
+            private BamlRecordType _recordType;
+            private Type           _elementType;
         }
 
         // Writer that actually writes BamlRecords to a stream.
-        BamlRecordWriter      _bamlRecordWriter;
+        private BamlRecordWriter      _bamlRecordWriter;
     
         // True if the DocumentStart record has been written to the stream.
-        bool                  _startDocumentWritten;
+        private bool                  _startDocumentWritten;
 
         // The depth of the element tree, including complex properties
-        int                   _depth;
+        private int                   _depth;
 
         // True if Close() has been called.
-        bool                  _closed;
+        private bool                  _closed;
 
         // If a custom property is of Type DependencyProperty, this is used to provide
         // info about the Type of value for such a property in order to write it out in
         // an optimized form by its custom serializer.
-        DependencyProperty    _dpProperty;
+        private DependencyProperty    _dpProperty;
 
         // Stack of the type of nodes written to the baml stream.  This is 
         // used for end-tag matching and basic structure checking.  This
         // contains WriteStackNode objects.
-        ParserStack           _nodeTypeStack;
+        private ParserStack           _nodeTypeStack;
 
         // Cache of assemblies that are needed for type resolutions when
         // doingIBamlSerialize
-        Hashtable             _assemblies;
+        private Hashtable             _assemblies;
     
         // XamlTypeMapper used by this writer
-        XamlTypeMapper        _xamlTypeMapper;
+        private XamlTypeMapper        _xamlTypeMapper;
 
         // ParserContext for this writer
-        ParserContext         _parserContext;
+        private ParserContext         _parserContext;
 
         // The helper class that handles parsing of MarkupExtension values.
-        MarkupExtensionParser _extensionParser;
+        private MarkupExtensionParser _extensionParser;
 
         // Buffered XamlNodes that occur when a property with a MarkupExtension value
         // is written and expanded into a complex property subtree.
-        ArrayList             _markupExtensionNodes;
+        private ArrayList             _markupExtensionNodes;
 
 #endregion Data
     }

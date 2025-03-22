@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -7,26 +7,24 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
 using System.IO.Packaging;
-using System.Security;
 using System.Security.RightsManagement;
-using System.Windows.TrustUI;
 
 using MS.Internal.Documents.Application;
 
 using Microsoft.Win32;
 
-using SR=System.Windows.TrustUI.SR;
+using SR = System.Windows.TrustUI.SR;
 
 namespace MS.Internal.Documents
 {
-/// <summary>
-/// RightsManagementProvider is used to connect DRP to RM APIs 
-/// </summary>
-/// <remarks>
-/// This class is a facade for the RM APIs. It is the model between the Manager
-/// and the EncryptedPackageEnvelope and System.Security.RightsManagement classes.
-/// </remarks>
-internal class RightsManagementProvider : IRightsManagementProvider, IDisposable
+    /// <summary>
+    /// RightsManagementProvider is used to connect DRP to RM APIs 
+    /// </summary>
+    /// <remarks>
+    /// This class is a facade for the RM APIs. It is the model between the Manager
+    /// and the EncryptedPackageEnvelope and System.Security.RightsManagement classes.
+    /// </remarks>
+    internal class RightsManagementProvider : IRightsManagementProvider, IDisposable
 {
     #region Constructors
     //--------------------------------------------------------------------------
@@ -1066,14 +1064,15 @@ internal class RightsManagementProvider : IRightsManagementProvider, IDisposable
         RightsManagementUser user,
         IList<ContentGrant> grantList)
     {
-        RightsManagementLicense rmLicense = new RightsManagementLicense();
+            RightsManagementLicense rmLicense = new RightsManagementLicense
+            {
+                LicensedUser = user,
+                LicensePermissions = RightsManagementPermissions.AllowNothing,
+                ValidFrom = DateTime.MinValue,
+                ValidUntil = DateTime.MaxValue
+            };
 
-        rmLicense.LicensedUser = user;
-        rmLicense.LicensePermissions = RightsManagementPermissions.AllowNothing;
-        rmLicense.ValidFrom = DateTime.MinValue;
-        rmLicense.ValidUntil = DateTime.MaxValue;        
-
-        AddReferralInfo(rmLicense);
+            AddReferralInfo(rmLicense);
 
         if (grantList != null)
         {
@@ -1429,97 +1428,97 @@ internal class RightsManagementProvider : IRightsManagementProvider, IDisposable
         }
     }
 
-    #endregion Private Properties
+        #endregion Private Properties
 
-    #region Private Fields
-    //--------------------------------------------------------------------------
-    // Private Fields
-    //--------------------------------------------------------------------------
+        #region Private Fields
+        //--------------------------------------------------------------------------
+        // Private Fields
+        //--------------------------------------------------------------------------
 
-    /// <summary>
-    /// The underlying EncryptedPackageEnvelope class from the RM APIs.
-    /// </summary>
-    EncryptedPackageEnvelope _encryptedPackageEnvelope;
-    
-    /// <summary>
-    /// The currently active secure environment.
-    /// </summary>
-    SecureEnvironment _secureEnvironment;
+        /// <summary>
+        /// The underlying EncryptedPackageEnvelope class from the RM APIs.
+        /// </summary>
+        private EncryptedPackageEnvelope _encryptedPackageEnvelope;
 
-    /// <summary>
-    /// The use license the user has for the currently open package.
-    /// </summary>
-    UseLicense _useLicense;
+        /// <summary>
+        /// The currently active secure environment.
+        /// </summary>
+        private SecureEnvironment _secureEnvironment;
 
-    /// <summary>
-    /// The last saved use license.
-    /// </summary>
-    UseLicense _lastSavedUseLicense;
+        /// <summary>
+        /// The use license the user has for the currently open package.
+        /// </summary>
+        private UseLicense _useLicense;
 
-    /// <summary>
-    /// A copy of the unsigned publish license.
-    /// </summary>
-    UnsignedPublishLicense _unsignedPublishLicense;
+        /// <summary>
+        /// The last saved use license.
+        /// </summary>
+        private UseLicense _lastSavedUseLicense;
 
-    /// <summary>
-    /// A generated unsigned publish license that has not yet been signed. Once
-    /// it is signed, it will replace the _unsignedPublishLicense above.
-    /// </summary>
-    UnsignedPublishLicense _temporaryUnsignedPublishLicense;
+        /// <summary>
+        /// A copy of the unsigned publish license.
+        /// </summary>
+        private UnsignedPublishLicense _unsignedPublishLicense;
 
-    /// <summary>
-    /// The publish license saved in the current _encryptedPackage.
-    /// </summary>
-    PublishLicense _publishLicenseFromEnvelope;
-    
-    /// <summary>
-    /// The current publish license, which may be different from
-    /// _publishLicenseFromEnvelope above if the user has committed a publishing
-    /// operation.
-    /// </summary>
-    PublishLicense _currentPublishLicense;
+        /// <summary>
+        /// A generated unsigned publish license that has not yet been signed. Once
+        /// it is signed, it will replace the _unsignedPublishLicense above.
+        /// </summary>
+        private UnsignedPublishLicense _temporaryUnsignedPublishLicense;
 
-    /// <summary>
-    /// The last saved publish license.
-    /// </summary>
-    PublishLicense _lastSavedPublishLicense;
+        /// <summary>
+        /// The publish license saved in the current _encryptedPackage.
+        /// </summary>
+        private PublishLicense _publishLicenseFromEnvelope;
 
-    /// <summary>
-    /// The specially formatted version of the use license describing what
-    /// rights the current user has on the document.
-    /// </summary>
-    RightsManagementLicense _rmUseLicense;
+        /// <summary>
+        /// The current publish license, which may be different from
+        /// _publishLicenseFromEnvelope above if the user has committed a publishing
+        /// operation.
+        /// </summary>
+        private PublishLicense _currentPublishLicense;
 
-    /// <summary>
-    /// The last saved RM use license.
-    /// </summary>
-    RightsManagementLicense _lastSavedRMUseLicense;
+        /// <summary>
+        /// The last saved publish license.
+        /// </summary>
+        private PublishLicense _lastSavedPublishLicense;
 
-    /// <summary>
-    /// The user for whom this document has been opened.
-    /// </summary>
-    RightsManagementUser _user;
+        /// <summary>
+        /// The specially formatted version of the use license describing what
+        /// rights the current user has on the document.
+        /// </summary>
+        private RightsManagementLicense _rmUseLicense;
 
-    /// <summary>
-    /// A dictionary of rights granted to users on this document.
-    /// </summary>
-    IDictionary<RightsManagementUser, RightsManagementLicense> _rightsDictionary;
+        /// <summary>
+        /// The last saved RM use license.
+        /// </summary>
+        private RightsManagementLicense _lastSavedRMUseLicense;
 
-    /// <summary>
-    /// The last saved version of the dictionary of rights granted to users.
-    /// </summary>
-    IDictionary<RightsManagementUser, RightsManagementLicense> _lastSavedRightsDictionary;
+        /// <summary>
+        /// The user for whom this document has been opened.
+        /// </summary>
+        private RightsManagementUser _user;
 
-    /// <summary>
-    /// A dictionary of rights corresponding to the rights granted in a
-    /// temporary unsigned publish license.
-    /// </summary>
-    IDictionary<RightsManagementUser, RightsManagementLicense> _temporaryRightsDictionary;
+        /// <summary>
+        /// A dictionary of rights granted to users on this document.
+        /// </summary>
+        private IDictionary<RightsManagementUser, RightsManagementLicense> _rightsDictionary;
 
-    /// <summary>
-    /// A list of all the CryptoProviders generated
-    /// </summary>
-    IList<CryptoProvider> _cryptoProviders;
+        /// <summary>
+        /// The last saved version of the dictionary of rights granted to users.
+        /// </summary>
+        private IDictionary<RightsManagementUser, RightsManagementLicense> _lastSavedRightsDictionary;
+
+        /// <summary>
+        /// A dictionary of rights corresponding to the rights granted in a
+        /// temporary unsigned publish license.
+        /// </summary>
+        private IDictionary<RightsManagementUser, RightsManagementLicense> _temporaryRightsDictionary;
+
+        /// <summary>
+        /// A list of all the CryptoProviders generated
+        /// </summary>
+        private IList<CryptoProvider> _cryptoProviders;
 
     //Name of the RM application manifest.
     private const string _applicationManifestFileName = "XPSViewerManifest.xml";

@@ -4,11 +4,7 @@
 
 //
 
-using System;
-using System.Diagnostics;
-using System.Collections;
 using MS.Internal;
-using System.Security;
 
 namespace System.Windows.Media
 {

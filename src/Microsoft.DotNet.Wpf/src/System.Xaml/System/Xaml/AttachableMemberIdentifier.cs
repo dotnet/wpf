@@ -8,8 +8,8 @@ namespace System.Xaml
 {
     public class AttachableMemberIdentifier : IEquatable<AttachableMemberIdentifier>
     {
-        readonly Type declaringType;
-        readonly string memberName;
+        private readonly Type declaringType;
+        private readonly string memberName;
 
         public AttachableMemberIdentifier(Type declaringType, string memberName)
         {
@@ -44,6 +44,7 @@ namespace System.Xaml
             {
                 return right is null;
             }
+
             return left.Equals(right);
         }
 
@@ -54,7 +55,7 @@ namespace System.Xaml
 
         public bool Equals(AttachableMemberIdentifier other)
         {
-            if (other == null)
+            if (other is null)
             {
                 return false;
             }
@@ -64,14 +65,14 @@ namespace System.Xaml
 
         public override int GetHashCode()
         {
-            int a = declaringType == null ? 0 : declaringType.GetHashCode();
-            int b = memberName == null ? 0 : memberName.GetHashCode();
+            int a = declaringType is null ? 0 : declaringType.GetHashCode();
+            int b = memberName is null ? 0 : memberName.GetHashCode();
             return ((a << 5) + a) ^ b;
         }
 
         public override string ToString()
         {
-            if (declaringType == null)
+            if (declaringType is null)
             {
                 return memberName;
             }

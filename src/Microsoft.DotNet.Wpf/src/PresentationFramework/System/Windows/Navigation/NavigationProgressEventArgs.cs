@@ -81,9 +81,10 @@ namespace System.Windows.Navigation
                 return _navigator;
             }
         }
-        Uri _uri;
-        long _bytesRead;
-        long _maxBytes;
-        object _navigator;
+
+        private Uri _uri;
+        private long _bytesRead;
+        private long _maxBytes;
+        private object _navigator;
     }
 }

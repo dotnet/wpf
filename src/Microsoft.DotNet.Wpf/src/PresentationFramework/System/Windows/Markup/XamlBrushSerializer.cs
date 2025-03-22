@@ -8,16 +8,7 @@
 //
 
 using System;
-using System.Collections;
-using System.ComponentModel;
-using System.ComponentModel.Design;
-using System.ComponentModel.Design.Serialization;
-using System.Diagnostics;
-using System.Globalization;
 using System.IO;
-using System.Xml;
-using MS.Utility;
-using MS.Internal;
 
 #if PBTCOMPILER
 using System.Reflection;
@@ -104,7 +95,7 @@ namespace System.Windows.Markup
         {
             if (writer == null)
             {
-                throw new ArgumentNullException("writer");
+                throw new ArgumentNullException(nameof(writer));
             }
 
             KnownColor knownColor = KnownColors.ColorStringToKnownColor(stringValue);

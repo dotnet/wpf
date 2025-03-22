@@ -8,6 +8,38 @@
 *
 \***************************************************************************/
 
+using System.Security;
+using System.ComponentModel;
+using System.Runtime.InteropServices;
+using Microsoft.Win32;
+
+#if !PBTCOMPILER
+using MS.Win32;
+using System.IO.Packaging;
+#endif
+
+#if PRESENTATION_CORE
+using MS.Internal.AppModel;
+#endif
+
+#if PRESENTATIONFRAMEWORK_ONLY
+using System.Diagnostics;
+using System.Windows;
+using MS.Internal.Utility;      // BindUriHelper
+using MS.Internal.AppModel;
+#endif
+
+#if REACHFRAMEWORK
+using MS.Internal.Utility;
+#endif
+#if WINDOWS_BASE
+// This existed originally to allow FontCache service to 
+// see the WindowsBase variant of this class. We no longer have
+// a FontCache service, but over time other parts of WPF might
+// have started to depend on this, so we leave it as-is for 
+// compat. 
+#endif
+
 // The SecurityHelper class differs between assemblies and could not actually be
 //  shared, so it is duplicated across namespaces to prevent name collision.
 // This duplication seems hardly necessary now. We should continue
@@ -29,44 +61,7 @@ namespace MS.Internal.Drt
 #error Class is being used from an unknown assembly.
 #endif
 {
-    using System;
-    using System.Globalization;     // CultureInfo
-    using System.Security;
-    using System.ComponentModel;
-    using System.Runtime.InteropServices;
-    using Microsoft.Win32;
-    using System.Diagnostics.CodeAnalysis;
-
-
-#if !PBTCOMPILER
-    using MS.Win32;
-    using System.IO.Packaging;
-#endif
-
-#if PRESENTATION_CORE
-using MS.Internal.AppModel;
-#endif
-
-#if PRESENTATIONFRAMEWORK_ONLY
-    using System.Diagnostics;
-    using System.Windows;
-    using MS.Internal.Utility;      // BindUriHelper
-    using MS.Internal.AppModel;
-#endif
-
-#if REACHFRAMEWORK
-    using MS.Internal.Utility;
-#endif
-#if WINDOWS_BASE
-    // This existed originally to allow FontCache service to 
-    // see the WindowsBase variant of this class. We no longer have
-    // a FontCache service, but over time other parts of WPF might
-    // have started to depend on this, so we leave it as-is for 
-    // compat. 
-#endif
-
-
-internal static class SecurityHelper
+    internal static class SecurityHelper
     {
 
 #if PRESENTATION_CORE
@@ -117,15 +112,6 @@ internal static class SecurityHelper
               return targetZone;
         }
 #endif
-
-
-#if WINDOWS_BASE
-        internal static void RunClassConstructor(Type t)
-        {
-            System.Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(t.TypeHandle);
-        }
-
-#endif //  WINDOWS_BASE
 
 #if DRT
         /// <remarks> The LinkDemand on Marshal.SizeOf() was removed in v4. </remarks>
@@ -219,16 +205,6 @@ internal static class SecurityHelper
             System.Windows.MessageBox.ShowCore(parentHwnd, text, title, buttons, image, MessageBoxResult.None, MessageBoxOptions.None);
         }
 #endif
-
-#if PRESENTATION_CORE || PRESENTATIONFRAMEWORK || WINDOWS_BASE
-
-        internal static bool AreStringTypesEqual(string m1, string m2)
-        {
-            return (string.Equals(m1, m2, StringComparison.OrdinalIgnoreCase));
-        }
-
-#endif //PRESENTATION_CORE || PRESENTATIONFRAMEWORK || WINDOWS_BASE
-
 
 #if WINDOWS_BASE
         ///

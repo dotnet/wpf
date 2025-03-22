@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -9,30 +9,20 @@
 *
 *
 \***************************************************************************/
-using System;
 using System.IO;
 using System.Net;
 using System.Collections;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
-using System.Diagnostics;
 using System.ComponentModel;
-using System.Security;
 using System.Windows.Threading;
 using System.Windows.Media;
 using System.Windows.Diagnostics;
-using System.IO.Packaging;
-using MS.Internal.IO.Packaging;         // for PackageCacheEntry
-using System.Globalization;
-using System.Windows.Navigation;
 
 using MS.Internal;
 using MS.Internal.Utility;
 using MS.Internal.AppModel;
-using MS.Utility;
 using System.Xaml;
-using System.Xaml.Permissions;
 using System.Windows.Baml2006;
 using System.Windows.Markup;
 
@@ -1098,10 +1088,12 @@ namespace System.Windows
             Debug.Assert(deferrableContent.ServiceProvider != null);
             Debug.Assert(deferrableContent.RootObject != null);
 
-            Baml2006ReaderSettings settings = new Baml2006ReaderSettings(deferrableContent.SchemaContext.Settings);
-            settings.IsBamlFragment = true;
-            settings.OwnsStream = true;
-            settings.BaseUri = null;    // Base URI can only be set on the root object, not on deferred content.
+            Baml2006ReaderSettings settings = new Baml2006ReaderSettings(deferrableContent.SchemaContext.Settings)
+            {
+                IsBamlFragment = true,
+                OwnsStream = true,
+                BaseUri = null    // Base URI can only be set on the root object, not on deferred content.
+            };
 
             Baml2006Reader reader = new Baml2006Reader(deferrableContent.Stream,
                 deferrableContent.SchemaContext, settings);
@@ -1836,13 +1828,10 @@ namespace System.Windows
 
                 void Inflate(DeferredResourceReference deferredResourceReference)
                 {
-                    if (deferredResourceReference is not null)
-                    {
-                        // This will inflate the deferred reference, causing it
-                        // to be removed from the list.  The list may also be
-                        // purged of dead references.
-                        deferredResourceReference.GetValue(BaseValueSourceInternal.Unknown);
-                    }
+                    // This will inflate the deferred reference, causing it
+                    // to be removed from the list.  The list may also be
+                    // purged of dead references.
+                    deferredResourceReference?.GetValue(BaseValueSourceInternal.Unknown);
                 }
             }
         }
@@ -2553,10 +2542,7 @@ namespace System.Windows
                 _deferredResourceReferencesList = loadedRD._deferredResourceReferencesList;
 
                 // redirect each entry toward its new owner
-                if (_deferredResourceReferencesList != null)
-                {
-                    _deferredResourceReferencesList.ChangeDictionary(this);
-                }
+                _deferredResourceReferencesList?.ChangeDictionary(this);
             }
         }
 
@@ -2660,8 +2646,7 @@ namespace System.Windows
         // a dummy DO, used as the InheritanceContext when the dictionary's owner is
         // not itself a DO
         private static readonly DependencyObject DummyInheritanceContext = new DependencyObject();
-
-        XamlObjectIds _contextXamlObjectIds  = new XamlObjectIds();
+        private XamlObjectIds _contextXamlObjectIds  = new XamlObjectIds();
 
         private IXamlObjectWriterFactory _objectWriterFactory;
         private XamlObjectWriterSettings _objectWriterSettings;

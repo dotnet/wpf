@@ -9,17 +9,10 @@
 //
 //
 
-using System.Security;
 using System.Collections;
 using System.Globalization;
-using System.Windows.Threading;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Runtime.InteropServices;
-using System.Diagnostics;
 
 using MS.Win32;
-using MS.Utility;
 
 namespace System.Windows.Input
 {
@@ -28,7 +21,7 @@ namespace System.Windows.Input
     //  InputLanguageSource class
     //
     //------------------------------------------------------
- 
+
     /// <summary>
     /// This is an internal. The source for input languages.
     /// </summary>
@@ -252,10 +245,10 @@ namespace System.Windows.Input
         private int _dispatcherThreadId;
 
         // the connected input language manager.
-        InputLanguageManager _inputlanguagemanager;
+        private InputLanguageManager _inputlanguagemanager;
 
         // the reference to ITfInputProcessorProfile.
-        InputProcessorProfiles _ipp;
+        private InputProcessorProfiles _ipp;
 
         #endregion Private Fields
     }

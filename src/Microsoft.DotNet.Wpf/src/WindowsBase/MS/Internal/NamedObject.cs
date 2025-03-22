@@ -2,12 +2,6 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-//
-//
-// Description: Placeholder object, with a name that appears in the debugger
-//
-
-using System;
 using System.Globalization;
 
 namespace MS.Internal
@@ -39,6 +33,6 @@ namespace MS.Internal
             return _name;
         }
 
-        string _name;
+        private string _name;
     }
 }

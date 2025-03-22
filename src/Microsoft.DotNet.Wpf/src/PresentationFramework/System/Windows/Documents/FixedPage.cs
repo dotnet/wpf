@@ -1,6 +1,20 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
+
+using System.Collections;
+using System.ComponentModel;
+using System.Windows.Controls;
+using System.Windows.Documents.DocumentStructures;
+using System.Windows.Input;
+using System.Windows.Markup;
+using System.Windows.Media;
+using System.Windows.Navigation;
+using System.Windows.Shapes;
+using MS.Internal.Documents;
+using MS.Internal.Utility;
+
+using BuildInfo = MS.Internal.PresentationFramework.BuildInfo;
 
 //
 // Description:
@@ -10,28 +24,6 @@
 
 namespace System.Windows.Documents
 {
-    using System;
-    using System.Collections;
-    using System.Collections.Generic;
-    using System.ComponentModel;
-    using System.Diagnostics;
-    using System.Globalization;
-    using System.IO.Packaging;
-    using System.Text;
-    using System.Windows;
-    using System.Windows.Controls;
-    using System.Windows.Documents.DocumentStructures;
-    using System.Windows.Input;
-    using System.Windows.Markup;
-    using System.Windows.Media;
-    using System.Windows.Navigation;
-    using System.Windows.Shapes;
-    using MS.Internal;
-    using MS.Internal.Documents;
-    using MS.Internal.Utility;
-
-    using BuildInfo = MS.Internal.PresentationFramework.BuildInfo;
-
     //=====================================================================
     /// <summary>
     /// FixedPage is the container element for a metafile that represents
@@ -56,8 +48,10 @@ namespace System.Windows.Documents
         #region Constructors
         static FixedPage()
         {
-            FrameworkPropertyMetadata metadata = new FrameworkPropertyMetadata(FlowDirection.LeftToRight, FrameworkPropertyMetadataOptions.AffectsParentArrange);
-            metadata.CoerceValueCallback = new CoerceValueCallback(CoerceFlowDirection);
+            FrameworkPropertyMetadata metadata = new FrameworkPropertyMetadata(FlowDirection.LeftToRight, FrameworkPropertyMetadataOptions.AffectsParentArrange)
+            {
+                CoerceValueCallback = new CoerceValueCallback(CoerceFlowDirection)
+            };
             FlowDirectionProperty.OverrideMetadata(typeof(FixedPage), metadata);
             // This puts the origin always at the top left of the page and prevents mirroring unless this is overridden.
         }
@@ -191,7 +185,7 @@ namespace System.Windows.Documents
 
             if (uie == null)
             {
-                throw new ArgumentException(SR.Format(SR.UnexpectedParameterType, value.GetType(), typeof(UIElement)), "value");
+                throw new ArgumentException(SR.Format(SR.UnexpectedParameterType, value.GetType(), typeof(UIElement)), nameof(value));
             }
 
             Children.Add(uie);
@@ -711,7 +705,7 @@ namespace System.Windows.Documents
         {
             if (_uiElementCollection == null)
             {
-                throw new ArgumentOutOfRangeException("index", index, SR.Visual_ArgumentOutOfRange);
+                throw new ArgumentOutOfRangeException(nameof(index), index, SR.Visual_ArgumentOutOfRange);
             }
             return _uiElementCollection[index];
         }

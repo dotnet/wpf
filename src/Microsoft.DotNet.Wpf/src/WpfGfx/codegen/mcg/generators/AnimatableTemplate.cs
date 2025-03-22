@@ -66,22 +66,7 @@ namespace MS.Internal.MilCodeGen.ResourceModel
                         [[inline]]
                             [[Helpers.ManagedStyle.WriteFileHeader(filename, @"wpf\src\Graphics\codegen\mcg\generators\AnimatableTemplate.cs")]]
 
-                            // Allow suppression of certain presharp messages
-                            #pragma warning disable 1634, 1691
-                            
-                            using MS.Internal;
-                            using MS.Utility;
-                            using System;
-                            using System.Collections;
-                            using System.Collections.Generic;
-                            using System.Diagnostics;
-                            using System.Security;
-                            using System.Security.Permissions;
-                            using System.Windows.Threading;
                             using System.Windows.Media.Animation;
-                            using System.Windows.Media.Composition;
-
-                            using SR = MS.Internal.PresentationCore.SR;
 
                             namespace [[instance.Namespace]]
                             {

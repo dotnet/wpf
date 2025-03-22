@@ -9,9 +9,6 @@ All rights reserved.
 
 namespace MS.Internal.Printing.Configuration
 {
-    using System;
-    using System.Runtime.InteropServices;
-
     internal struct PRINTER_INFO_2
     {
         public string pPrinterName;

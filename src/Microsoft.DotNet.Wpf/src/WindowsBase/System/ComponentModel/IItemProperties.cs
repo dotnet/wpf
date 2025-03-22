@@ -2,25 +2,20 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-//
-//
-//
 // Description: Editing functionality for collection views.
 //
 // See spec at http://sharepoint/sites/wpftsv/Documents/DataGrid/DataGrid_CollectionView.mht
-//
 
-using System;
-using System.Collections.ObjectModel;   // ReadOnlyCollection<T>
+using System.Collections.ObjectModel;
 
 namespace System.ComponentModel
 {
-/// <summary>
-/// IItemProperties is an interface that a collection view
-/// can implement to expose information about the properties available on
-/// items in the underlying collection.
-/// </summary>
-public interface IItemProperties
+    /// <summary>
+    /// IItemProperties is an interface that a collection view
+    /// can implement to expose information about the properties available on
+    /// items in the underlying collection.
+    /// </summary>
+    public interface IItemProperties
 {
     /// <summary>
     /// Returns information about the properties available on items in the
@@ -57,8 +52,8 @@ public class ItemPropertyInfo
     /// </summary>
     public object  Descriptor { get { return _descriptor; } }
 
-    string _name;
-    Type _type;
-    object _descriptor;
+    private string _name;
+    private Type _type;
+    private object _descriptor;
 }
 }

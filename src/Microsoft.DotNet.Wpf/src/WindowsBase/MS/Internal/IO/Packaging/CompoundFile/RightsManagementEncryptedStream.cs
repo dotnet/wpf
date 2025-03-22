@@ -2,28 +2,8 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-//
-//
-// Description:
-//  This class implements stream subclass that is responsible for actual encryption decryption 
-//
-//
-//
-//
-
-
-using System;
-using System.Collections;
-using System.Diagnostics;
 using System.IO;
-using System.Collections.Generic;           // for List<>
-using System.IO.Packaging;
-using System.Security.Cryptography;
 using System.Security.RightsManagement;
-using MS.Internal.IO.Packaging;
-    
-using System.Windows;
-using MS.Internal.WindowsBase;
 
 namespace MS.Internal.IO.Packaging.CompoundFile
 {
@@ -160,14 +140,14 @@ namespace MS.Internal.IO.Packaging.CompoundFile
                         }
                     default:
                         {
-                            throw new ArgumentOutOfRangeException("origin", SR.SeekOriginInvalid);
+                            throw new ArgumentOutOfRangeException(nameof(origin), SR.SeekOriginInvalid);
                         }
                 }
             }
             
             if (temp < 0)
             {
-                throw new ArgumentOutOfRangeException("offset", SR.SeekNegative);
+                throw new ArgumentOutOfRangeException(nameof(offset), SR.SeekNegative);
             }
 
             _streamPosition = temp;
@@ -183,7 +163,7 @@ namespace MS.Internal.IO.Packaging.CompoundFile
             
             if (newLength < 0)
             {
-                throw new ArgumentOutOfRangeException("newLength", SR.CannotMakeStreamLengthNegative);
+                throw new ArgumentOutOfRangeException(nameof(newLength), SR.CannotMakeStreamLengthNegative);
             }
 
             _streamCachedLength = newLength;
@@ -299,12 +279,12 @@ namespace MS.Internal.IO.Packaging.CompoundFile
 
             if (!cryptoProvider.CanDecrypt )
             {
-                throw new ArgumentException(SR.CryptoProviderCanNotDecrypt, "cryptoProvider");            
+                throw new ArgumentException(SR.CryptoProviderCanNotDecrypt, nameof(cryptoProvider));            
             }
 
             if (!cryptoProvider.CanMergeBlocks)
             {
-                throw new ArgumentException(SR.CryptoProviderCanNotMergeBlocks, "cryptoProvider");            
+                throw new ArgumentException(SR.CryptoProviderCanNotMergeBlocks, nameof(cryptoProvider));            
             }
             
             _baseStream = baseStream;

@@ -2,25 +2,7 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-//
-//
-//
-//  Contents:  Critical handle wrapping unmanaged text penalty module for
-//             penalty calculation of optimal paragraph vis PTS direct access.
-//
-//  Spec:      Text Formatting API.doc
-//
-//
-
-
-using System;
-using System.Security;
-using System.Windows.Media;
 using System.Windows.Media.TextFormatting;
-using System.Runtime.InteropServices;
-
-using SR = MS.Internal.PresentationCore.SR;
-
 
 namespace MS.Internal.TextFormatting
 {

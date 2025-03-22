@@ -8,12 +8,12 @@ namespace System.Xaml
 {
     internal class XamlSubreader : XamlReader, IXamlLineInfo
     {
-        XamlReader _reader;
-        IXamlLineInfo _lineInfoReader;
-        bool _done;
-        bool _firstRead;
-        bool _rootIsStartMember;
-        int _depth;
+        private XamlReader _reader;
+        private IXamlLineInfo _lineInfoReader;
+        private bool _done;
+        private bool _firstRead;
+        private bool _rootIsStartMember;
+        private int _depth;
 
         public XamlSubreader(XamlReader reader)
         {
@@ -32,6 +32,7 @@ namespace System.Xaml
             {
                 return LimitedRead();
             }
+
             _firstRead = false;
             return true;
         }
@@ -79,23 +80,24 @@ namespace System.Xaml
         {
             get
             {
-                if (_lineInfoReader == null)
+                if (_lineInfoReader is null)
                 {
                     return false;
                 }
+
                 return _lineInfoReader.HasLineInfo;
             }
-
         }
 
         public int LineNumber
         {
             get
             {
-                if (_lineInfoReader == null)
+                if (_lineInfoReader is null)
                 {
                     return 0;
                 }
+
                 return _lineInfoReader.LineNumber;
             }
         }
@@ -104,10 +106,11 @@ namespace System.Xaml
         {
             get
             {
-                if (_lineInfoReader == null)
+                if (_lineInfoReader is null)
                 {
                     return 0;
                 }
+
                 return _lineInfoReader.LinePosition;
             }
         }
@@ -153,6 +156,7 @@ namespace System.Xaml
             {
                 _done = true;
             }
+
             _reader.Read();
             return !IsEof;
         }

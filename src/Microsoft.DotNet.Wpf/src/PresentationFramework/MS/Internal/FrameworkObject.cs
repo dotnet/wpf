@@ -38,13 +38,10 @@
         fo.SomeMethod(arg);
 */
 
-using System;
 using System.Windows;
 using System.Windows.Markup;
 using System.Windows.Media;             // Visual, etc.
 using System.Windows.Media.Media3D;     // Visual3D, etc.
-
-using System.IO;
 
 namespace MS.Internal
 {
@@ -1155,7 +1152,7 @@ namespace MS.Internal
 
         #region Helper methods
 
-        void UnexpectedCall()
+        private void UnexpectedCall()
         {
             Invariant.Assert(false, "Call to FrameworkObject expects either FE or FCE");
         }

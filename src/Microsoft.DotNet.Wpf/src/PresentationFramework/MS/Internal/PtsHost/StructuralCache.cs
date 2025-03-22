@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -8,13 +8,7 @@
 //
 
 
-using MS.Internal.Text;
 using MS.Internal.PtsHost.UnsafeNativeMethods;
-using MS.Utility;
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Globalization;
 using System.Windows;
 using System.Windows.Media;
 using System.Windows.Documents;
@@ -170,7 +164,7 @@ namespace MS.Internal.PtsHost
         /// <returns>List of DRTs for specified range.</returns>
         internal DtrList DtrsFromRange(int dcpNew, int cchOld)
         {
-            return (_dtrs != null) ? _dtrs.DtrsFromRange(dcpNew, cchOld) : null;
+            return _dtrs?.DtrsFromRange(dcpNew, cchOld);
         }
 
         /// <summary>

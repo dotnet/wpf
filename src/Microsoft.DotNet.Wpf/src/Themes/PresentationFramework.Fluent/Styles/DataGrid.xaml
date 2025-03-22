@@ -59,8 +59,6 @@
 
     <!--  END REMOVE COLORS  -->
 
-    <Style x:Key="DefaultDataGridCheckBoxColumnCellStyle" TargetType="{x:Type DataGridColumn}" />
-
     <Style x:Key="{ComponentResourceKey ResourceId=DataGridSelectAllButtonStyle, TypeInTargetAssembly={x:Type DataGrid}}" TargetType="{x:Type Button}">
         <Setter Property="OverridesDefaultStyle" Value="True" />
         <Setter Property="Template">
@@ -281,7 +279,7 @@
                             BorderBrush="{TemplateBinding BorderBrush}"
                             BorderThickness="0,0,1,0">
                             <StackPanel Orientation="Horizontal">
-                                <ContentPresenter VerticalAlignment="Center" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                                <ContentPresenter VerticalAlignment="Center" RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
                                 <Control
                                     SnapsToDevicePixels="False"
                                     Template="{Binding ValidationErrorTemplate, RelativeSource={RelativeSource AncestorType={x:Type DataGridRow}}}"
@@ -375,6 +373,7 @@
                             BorderBrush="{TemplateBinding BorderBrush}"
                             BorderThickness="0,0,1,1">
                             <ContentPresenter
+                                RecognizesAccessKey="True"
                                 HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
                                 VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
                                 SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
@@ -501,9 +500,6 @@
                 <Setter Property="Background" Value="LightGray" />
             </Trigger>
         </Style.Triggers>
-    </Style>
-    <Style TargetType="{x:Type DataGridTextColumn}">
-        <Setter Property="EditingElementStyle" Value="{StaticResource TextBoxStyle}" />
     </Style>
 
     <!--  Style and template for the DataGrid.  -->
@@ -664,7 +660,6 @@
         <Setter Property="VerticalAlignment" Value="Center" />
         <Setter Property="HorizontalContentAlignment" Value="Left" />
         <Setter Property="VerticalContentAlignment" Value="Center" />
-        <Setter Property="Cursor" Value="Hand" />
         <Setter Property="FontWeight" Value="Normal" />
         <Setter Property="KeyboardNavigation.IsTabStop" Value="True" />
         <Setter Property="Focusable" Value="True" />
@@ -785,11 +780,6 @@
         BasedOn="{StaticResource DataGridCheckBoxElementDefaultStyle}"
         TargetType="{x:Type CheckBox}">
         <Setter Property="SnapsToDevicePixels" Value="True" />
-    </Style>
-
-    <Style TargetType="{x:Type DataGridCheckBoxColumn}">
-        <Setter Property="ElementStyle" Value="{StaticResource DataGridCheckBoxElementDefaultStyle}" />
-        <Setter Property="EditingElementStyle" Value="{StaticResource DataGridCheckBoxEditingElementDefaultStyle}" />
     </Style>
 
     <Style BasedOn="{StaticResource DefaultDataGridColumnHeadersPresenterStyle}" TargetType="{x:Type DataGridColumnHeadersPresenter}" />

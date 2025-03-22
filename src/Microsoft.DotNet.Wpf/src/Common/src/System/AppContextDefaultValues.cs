@@ -2,17 +2,6 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-// There are cases where we have multiple assemblies that are going to import this file and 
-// if they are going to also have InternalsVisibleTo between them, there will be a compiler warning
-// that the type is found both in the source and in a referenced assembly. The compiler will prefer 
-// the version of the type defined in the source
-//
-// In order to disable the warning for this type we are disabling this warning for this entire file.
-#pragma warning disable 436
-
-using System;
-using System.Collections.Generic;
-
 namespace System
 {
     internal static partial class AppContextDefaultValues
@@ -182,15 +171,11 @@ namespace System
             return true;
         }
 #endif
-        // This is a partial method. Platforms (such as Desktop) can provide an implementation of it that will read override value
-        // from whatever mechanism is available on that platform. If no implementation is provided, the compiler is going to remove the calls
-        // to it from the code
-        static partial void TryGetSwitchOverridePartial(string switchName, ref bool overrideFound, ref bool overrideValue);
 
+        /// <summary>
         /// This is a partial method. This method is responsible for populating the default values based on a TFM.
         /// It is partial because each library should define this method in their code to contain their defaults.
+        /// </summary> 
         static partial void PopulateDefaultValuesPartial(string platformIdentifier, string profile, int targetFrameworkVersion);
     }
 }
-
-#pragma warning restore 436

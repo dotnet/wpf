@@ -11,7 +11,6 @@
 //
 
 
-using System;
 using System.Runtime.InteropServices;
 using MS.Internal.IO.Packaging;
 
@@ -501,17 +500,17 @@ namespace MS.Internal.Interop
         /// <summary>
         /// Chunk ID
         /// </summary>
-        uint idChunk;
+        private uint idChunk;
 
         /// <summary>
         /// Beginning of the region, specified as an offset from the beginning of the chunk
         /// </summary>
-        uint cwcStart;
+        private uint cwcStart;
 
         /// <summary>
         /// Extent of the region, specified as a number of Unicode characters
         /// </summary>
-        uint cwcExtent;
+        private uint cwcExtent;
     };
     #endregion
 

@@ -1,11 +1,10 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
-        
+
 
 using System.Diagnostics;
 using System.Globalization;
-using System.Windows;
 
 #if RIBBON_IN_FRAMEWORK
 namespace System.Windows.Controls.Ribbon
@@ -46,8 +45,7 @@ namespace Microsoft.Windows.Controls.Ribbon
                         {
                             if (accessKeyIndex == -1)
                             {
-                                int accessorIndex = stringContent.IndexOf(keyTip[0]);
-                                if (accessorIndex != -1)
+                                if (stringContent.Contains(keyTip[0]))
                                 {
                                     syncElement.KeepKeyTipAndContentInSync = true;
                                     syncElement.IsKeyTipSyncSource = true;
@@ -155,7 +153,7 @@ namespace Microsoft.Windows.Controls.Ribbon
                             if (accessorIndex >= 0)
                             {
                                 syncElement.KeepKeyTipAndContentInSync = true;
-                                return stringContent.Substring(0, accessorIndex) + '_' + stringContent.Substring(accessorIndex);
+                                return string.Concat(stringContent.Substring(0, accessorIndex), '_', stringContent.Substring(accessorIndex));
                             }
                         }
                     }

@@ -8,13 +8,6 @@
 *
 \***************************************************************************/
 
-using System.ComponentModel;
-
-using System.ComponentModel.Design.Serialization;
-using System.Reflection;
-using System;
-using System.Xml;
-
 #if PBTCOMPILER
 namespace MS.Internal.Markup
 #else

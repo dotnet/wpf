@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -21,22 +21,13 @@ using System.IO;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-
-using System.Globalization;
 using System.Diagnostics;
-using System.Reflection;
-using System.Resources;
 using System.Xml;
 
 using Microsoft.Build.Framework;
 using Microsoft.Build.Utilities;
 
 using MS.Utility;
-using MS.Internal.Tasks;
-
-// Since we disable PreSharp warnings in this file, PreSharp warning is unknown to C# compiler.
-// We first need to disable warnings about unknown message numbers and unknown pragmas.
-#pragma warning disable 1634, 1691
 
 namespace Microsoft.Build.Tasks.Windows
 {
@@ -91,7 +82,7 @@ namespace Microsoft.Build.Tasks.Windows
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1031:DoNotCatchGeneralExceptionTypes")]
         public override bool Execute()
         {
-            if (string.Compare(IncludePackageReferencesDuringMarkupCompilation, "false", StringComparison.OrdinalIgnoreCase) != 0)
+            if (!string.Equals(IncludePackageReferencesDuringMarkupCompilation, "false", StringComparison.OrdinalIgnoreCase))
             {
                 return ExecuteGenerateTemporaryTargetAssemblyWithPackageReferenceSupport();
             }
@@ -636,9 +627,7 @@ namespace Microsoft.Build.Tasks.Windows
 
             for (int i = 0; i < root.ChildNodes.Count; i++)
             {
-                XmlElement nodeGroup = root.ChildNodes[i] as XmlElement;
-
-                if (nodeGroup != null && String.Compare(nodeGroup.Name, groupName, StringComparison.OrdinalIgnoreCase) == 0)
+                if (root.ChildNodes[i] is XmlElement nodeGroup && string.Equals(nodeGroup.Name, groupName, StringComparison.OrdinalIgnoreCase))
                 {
                     //
                     // This is ItemGroup element.
@@ -649,9 +638,7 @@ namespace Microsoft.Build.Tasks.Windows
 
                         for (int j = 0; j < nodeGroup.ChildNodes.Count; j++)
                         {
-                            XmlElement nodeItem = nodeGroup.ChildNodes[j] as XmlElement;
-
-                            if (nodeItem != null && String.Compare(nodeItem.Name, sItemName, StringComparison.OrdinalIgnoreCase) == 0)
+                            if (nodeGroup.ChildNodes[j] is XmlElement nodeItem && string.Equals(nodeItem.Name, sItemName, StringComparison.OrdinalIgnoreCase))
                             {
                                 // This is the item that need to remove.
                                 // Add it into the temporary array list.
@@ -668,13 +655,11 @@ namespace Microsoft.Build.Tasks.Windows
                         {
                             foreach (object node in itemToRemove)
                             {
-                                XmlElement item = node as XmlElement;
-
                                 //
                                 // Remove this item from its parent node.
                                 // the parent node should be nodeGroup.
                                 //
-                                if (item != null)
+                                if (node is XmlElement item)
                                 {
                                     nodeGroup.RemoveChild(item);
                                 }
@@ -881,7 +866,7 @@ namespace Microsoft.Build.Tasks.Windows
         // Creates an XmlNode that contains an Import Project element
         //
         //  <Import Project="Sdk.props" Sdk="Microsoft.NET.Sdk" />
-        static XmlNode CreateImportProjectSdkNode(XmlDocument xmlProjectDoc, string projectAttributeValue, SdkReference sdkReference)
+        private static XmlNode CreateImportProjectSdkNode(XmlDocument xmlProjectDoc, string projectAttributeValue, SdkReference sdkReference)
         {
             XmlNode nodeImport = xmlProjectDoc.CreateElement("Import", xmlProjectDoc.DocumentElement.NamespaceURI);
             XmlAttribute projectAttribute = xmlProjectDoc.CreateAttribute("Project");

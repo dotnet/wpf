@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -11,12 +11,8 @@
 \***************************************************************************/
 using MS.Internal;
 using MS.Utility;
-using System;
-using System.Diagnostics;
-using System.Security;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
-using System.Windows.Documents;
 using System.Windows.Media;
 
 namespace System.Windows
@@ -557,10 +553,7 @@ namespace System.Windows
                 if (info.IsImplicitDataTemplateChange)
                 {
                     ContentPresenter contentPresenter = fe as ContentPresenter;
-                    if (contentPresenter != null)
-                    {
-                        contentPresenter.ReevaluateTemplate();
-                    }
+                    contentPresenter?.ReevaluateTemplate();
                 }
 
                 if (fe.HasResourceReference)

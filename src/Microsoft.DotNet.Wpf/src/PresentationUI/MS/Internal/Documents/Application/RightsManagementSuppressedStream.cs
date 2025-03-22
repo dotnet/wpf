@@ -6,15 +6,13 @@
 
 using System;
 using System.IO;
-using System.Security;
-using System.Windows.TrustUI;
 
-using SR=System.Windows.TrustUI.SR;
+using SR = System.Windows.TrustUI.SR;
 
 namespace MS.Internal.Documents.Application
 {
 
-internal sealed class RightsManagementSuppressedStream : StreamProxy
+    internal sealed class RightsManagementSuppressedStream : StreamProxy
 {
     #region Constructors
     //--------------------------------------------------------------------------

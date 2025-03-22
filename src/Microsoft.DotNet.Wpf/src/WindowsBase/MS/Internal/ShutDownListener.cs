@@ -2,8 +2,7 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-//
-//
+
 // Description: Listen for shut down events on behalf of a target, in a way that
 //          does not leak the target.  ShutDown events include:
 //                  AppDomain.DomainUnload
@@ -28,8 +27,6 @@
 //          Shutdown is a "one-time" process.  When the ShutDownListener receives
 //          any one of the desired events, it stops listening to all events.
 
-using System;
-using System.Security;              // 
 using System.Threading;             // Interlocked
 using System.Windows.Threading;     // Dispatcher
 
@@ -119,9 +116,8 @@ namespace MS.Internal
         private void HandleShutDown(object sender, EventArgs e)
         {
             // The dispatcher and AppDomain events might arrive on separate threads
-            // at the same time.  The interlock assures that we only do the work
-            // once.
-            if (Interlocked.Exchange(ref _inShutDown, 1) == 0)
+            // at the same time. The interlock assures that we only do the work once.
+            if (Interlocked.Exchange(ref _inShutDown, true) == false)
             {
                 // ShutDown is a one-time event.  Stop listening (thus releasing
                 // references to the ShutDownListener).
@@ -137,7 +133,7 @@ namespace MS.Internal
         }
 
         [Flags]
-        enum PrivateFlags : ushort
+        private enum PrivateFlags : ushort
         {
             DomainUnload        = ShutDownEvents.DomainUnload,
             ProcessExit         = ShutDownEvents.ProcessExit,
@@ -147,8 +143,8 @@ namespace MS.Internal
             Listening           = 0x8000,
         }
 
-        PrivateFlags _flags;
-        WeakReference _dispatcherWR;
-        int _inShutDown;
+        private PrivateFlags _flags;
+        private WeakReference _dispatcherWR;
+        private bool _inShutDown;
     }
 }

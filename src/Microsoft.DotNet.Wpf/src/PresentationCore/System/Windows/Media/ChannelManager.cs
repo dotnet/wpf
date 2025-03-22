@@ -9,34 +9,15 @@
 //      that abstracts out channel creation, storage and destruction.
 //
 
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Diagnostics;
-using System.Runtime.InteropServices;
-using System.Threading;
-using System.Windows.Threading;
-using System.Windows;
-using System.Windows.Interop;
-using System.Windows.Media;
-using System.Windows.Media.Animation;
 using System.Windows.Media.Composition;
-using System.Security;
 
 using MS.Internal;
-using MS.Utility;
-using MS.Win32;
 
-using Microsoft.Win32.SafeHandles;
-
-using SR=MS.Internal.PresentationCore.SR;
-
-using UnsafeNativeMethods=MS.Win32.PresentationCore.UnsafeNativeMethods.MilCoreApi;
+using UnsafeNativeMethods = MS.Win32.PresentationCore.UnsafeNativeMethods.MilCoreApi;
 
 namespace System.Windows.Media
 {
-    partial class MediaContext
+    internal partial class MediaContext
     {
         /// <summary>
         /// A helper structure that abstracts channel management.

@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -10,24 +10,12 @@
 //      Copied from WebBrowse.cs in winforms
 //
 
-using System;
-using System.ComponentModel;
-using System.Diagnostics;
 using System.Runtime.InteropServices;
-using System.Security;
-using System.Windows;
-using System.Text;
 using System.Windows.Navigation;
-using MS.Internal.PresentationFramework;
 using System.Windows.Controls;
 using MS.Win32;
 using MS.Internal.AppModel;
 using MS.Internal.Interop;
-
-//In order to avoid generating warnings about unknown message numbers and
-//unknown pragmas when compiling your C# source code with the actual C# compiler,
-//you need to disable warnings 1634 and 1691. (Presharp Documentation)
-#pragma warning disable 1634, 1691
 
 namespace MS.Internal.Controls
 {
@@ -85,8 +73,7 @@ namespace MS.Internal.Controls
                     // on a hyperlink, Goback/Forward), or programmatically call GoBack and Forward,
                     // When we get the navigating event, NavigatingToAboutBlank is true, but the source is not "about:blank".
                     // Clear the NavigatingToAboutBlank bit in that case.
-                    if ((_parent.NavigatingToAboutBlank) &&
-                         String.Compare(urlString, WebBrowser.AboutBlankUriString, StringComparison.OrdinalIgnoreCase) != 0)
+                    if ((_parent.NavigatingToAboutBlank) && !string.Equals(urlString, WebBrowser.AboutBlankUriString, StringComparison.OrdinalIgnoreCase))
                     {
                         _parent.NavigatingToAboutBlank = false;
                     }
@@ -121,9 +108,6 @@ namespace MS.Internal.Controls
                     cancelRequested = e.Cancel;
                 }
             }
-            // We disable this to suppress FXCop warning since in this case we really want to catch all exceptions
-            // please refer to comment below
-#pragma warning disable 6502
             catch
             {
                 // This is an interesting pattern of putting a try catch block around this that catches everything,
@@ -133,7 +117,6 @@ namespace MS.Internal.Controls
                 // There fore I catch all exceptions and cancel navigation 
                 cancelRequested = true;
             }
-#pragma warning restore 6502
             finally
             {
                 // Clean the WebBrowser control state if navigation cancelled.
@@ -181,8 +164,7 @@ namespace MS.Internal.Controls
                 // If we are loading from stream.
                 if (_parent.DocumentStream != null)
                 {
-                    Invariant.Assert(_parent.NavigatingToAboutBlank &&
-                        (String.Compare((string)url, WebBrowser.AboutBlankUriString, StringComparison.OrdinalIgnoreCase) == 0));
+                    Invariant.Assert(_parent.NavigatingToAboutBlank && string.Equals((string)url, WebBrowser.AboutBlankUriString, StringComparison.OrdinalIgnoreCase));
 
                     try
                     {
@@ -210,10 +192,10 @@ namespace MS.Internal.Controls
                     // internally. Make sure we pass null in the event args.
                     if (_parent.NavigatingToAboutBlank)
                     {
-                        Invariant.Assert(String.Compare(urlString, WebBrowser.AboutBlankUriString, StringComparison.OrdinalIgnoreCase) == 0);
+                        Invariant.Assert(string.Equals(urlString, WebBrowser.AboutBlankUriString, StringComparison.OrdinalIgnoreCase));
                         urlString = null;
                     }
-                    Uri source = (String.IsNullOrEmpty(urlString) ? null : new Uri(urlString));
+                    Uri source = string.IsNullOrEmpty(urlString) ? null : new Uri(urlString);
                     NavigationEventArgs e = new NavigationEventArgs(source, null, null, null, null, true);
 
                     _parent.OnNavigated(e);
@@ -238,10 +220,10 @@ namespace MS.Internal.Controls
                 // internally. Make sure we pass null in the event args.
                 if (_parent.NavigatingToAboutBlank)
                 {
-                    Invariant.Assert(String.Compare(urlString, WebBrowser.AboutBlankUriString, StringComparison.OrdinalIgnoreCase) == 0);
+                    Invariant.Assert(string.Equals(urlString, WebBrowser.AboutBlankUriString, StringComparison.OrdinalIgnoreCase));
                     urlString = null;
                 }
-                Uri source = (String.IsNullOrEmpty(urlString) ? null : new Uri(urlString));
+                Uri source = string.IsNullOrEmpty(urlString) ? null : new Uri(urlString);
                 NavigationEventArgs e = new NavigationEventArgs(source, null, null, null, null, true);
 
                 _parent.OnLoadCompleted(e);
@@ -255,8 +237,7 @@ namespace MS.Internal.Controls
         private bool ShouldIgnoreCompletionEvent(ref object url)
         {
             string urlString = url as string;
-            return (_parent.NavigatingToAboutBlank &&
-                    String.Compare(urlString, WebBrowser.AboutBlankUriString, StringComparison.OrdinalIgnoreCase) != 0);
+            return _parent.NavigatingToAboutBlank && !string.Equals(urlString, WebBrowser.AboutBlankUriString, StringComparison.OrdinalIgnoreCase);
         }
 
         public void CommandStateChange(long command, bool enable)

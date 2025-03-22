@@ -7,8 +7,6 @@
 // Description: DrawingGroupDrawingContext populates a DrawingGroup 
 //              from Draw commands that are called on it.
 //
-using System.Diagnostics;
-
 namespace System.Windows.Media
 {
     internal class DrawingGroupDrawingContext : DrawingDrawingContext

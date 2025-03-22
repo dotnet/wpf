@@ -5,7 +5,6 @@
 // Description:
 // EventListener internal class holds the event data for both client and server sides
 
-using System;
 using System.Windows.Automation;
 
 namespace MS.Internal.Automation

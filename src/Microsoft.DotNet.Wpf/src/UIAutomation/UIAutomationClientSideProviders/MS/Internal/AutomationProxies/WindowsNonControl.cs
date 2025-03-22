@@ -7,15 +7,12 @@
 //  controls from the Content view of the Automation Tree.
 
 using System;
-using System.Collections;
-using System.Windows;
 using System.Windows.Automation;
 using System.Windows.Automation.Provider;
-using MS.Win32;
 
 namespace MS.Internal.AutomationProxies
 {
-    class WindowsNonControl: ProxyHwnd
+    internal class WindowsNonControl: ProxyHwnd
     {
         // ------------------------------------------------------
         //
@@ -25,7 +22,7 @@ namespace MS.Internal.AutomationProxies
 
         #region Constructors
 
-        WindowsNonControl(IntPtr hwnd, ProxyFragment parent, int item)
+        private WindowsNonControl(IntPtr hwnd, ProxyFragment parent, int item)
             : base(hwnd, parent, item)
         {
             _fIsContent = false;

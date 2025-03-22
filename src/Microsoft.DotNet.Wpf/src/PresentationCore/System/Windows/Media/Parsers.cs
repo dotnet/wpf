@@ -2,24 +2,10 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-//
 //  Synopsis: Implements class Parsers for internal use of type converters
-//
 
-using System;
-using System.Collections;
-using System.Collections.Specialized;
-using System.Diagnostics;
-using MS.Internal;
 using System.ComponentModel;
-using System.Globalization;
 using System.Windows.Media;
-using System.Windows.Media.Media3D;
-using System.Windows.Media.Animation;
-using System.Windows.Media.Imaging;
-using System.Windows;
-
-using SR=MS.Internal.PresentationCore.SR;
 
 namespace MS.Internal
 {
@@ -321,7 +307,7 @@ namespace MS.Internal
 
             AbbreviatedGeometryParser parser = new AbbreviatedGeometryParser();
 
-            parser.ParseToGeometryContext(context, pathString, 0 /* curIndex */);
+            parser.ParseToGeometryContext(context, pathString, startIndex: 0);
             
             PathGeometry pathGeometry = context.GetPathGeometry();
 

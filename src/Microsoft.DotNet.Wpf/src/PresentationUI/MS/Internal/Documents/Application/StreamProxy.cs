@@ -10,18 +10,17 @@
 
 using System;
 using System.IO;
-using System.Security;
 using System.Windows.TrustUI;
 
 namespace MS.Internal.Documents.Application
 {
-/// <summary>
-/// Implements the Proxy pattern from Design Patterns for Stream.  The intended
-/// usage is to control access to the Stream; specifically to allow one to 
-/// replace the underlying stream.  The StreamProxy can also ensure, if
-/// desired, that the underlying stream is readonly.
-/// </summary>
-internal class StreamProxy : Stream
+    /// <summary>
+    /// Implements the Proxy pattern from Design Patterns for Stream.  The intended
+    /// usage is to control access to the Stream; specifically to allow one to 
+    /// replace the underlying stream.  The StreamProxy can also ensure, if
+    /// desired, that the underlying stream is readonly.
+    /// </summary>
+    internal class StreamProxy : Stream
 {
     #region Constructors
     //--------------------------------------------------------------------------
@@ -264,15 +263,15 @@ internal class StreamProxy : Stream
             }
         }
     }
-    #endregion Internal Properties
+        #endregion Internal Properties
 
-    #region Private Fields
-    //--------------------------------------------------------------------------
-    // Private Fields
-    //--------------------------------------------------------------------------
+        #region Private Fields
+        //--------------------------------------------------------------------------
+        // Private Fields
+        //--------------------------------------------------------------------------
 
-    Stream _proxy;
-    bool _isTargetReadOnly;
+        private Stream _proxy;
+        private bool _isTargetReadOnly;
 
     #endregion Private Fields
 }

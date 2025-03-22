@@ -1,14 +1,8 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-// PRESHARP: In order to avoid generating warnings about unkown message numbers and unknown pragmas.
-#pragma warning disable 1634, 1691
-
-using System;
 using MS.Internal.Automation;
-using System.Windows.Automation;
-using System.Runtime.InteropServices;
 
 namespace System.Windows.Automation
 {
@@ -84,8 +78,8 @@ namespace System.Windows.Automation
  
         #region Private Fields
 
-        Condition [ ] _conditions;
-        SafeConditionMemoryHandle _conditionArrayHandle;
+        private Condition [ ] _conditions;
+        private SafeConditionMemoryHandle _conditionArrayHandle;
 
         #endregion Private Fields
     }

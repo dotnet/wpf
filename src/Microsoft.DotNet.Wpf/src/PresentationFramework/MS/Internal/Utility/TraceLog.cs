@@ -14,7 +14,6 @@
 //  the debugger).  Log entries are timestamped.
 //
 
-using System;
 using System.Collections;
 using System.Globalization;
 
@@ -62,7 +61,7 @@ namespace MS.Internal.Utility
                 return string.Create(CultureInfo.InvariantCulture, $"{o.GetType().Name}.{o.GetHashCode()}");
         }
 
-        ArrayList _log;
-        int _size;
+        private ArrayList _log;
+        private int _size;
     }
 }

@@ -14,15 +14,7 @@
     AccessorTable;  table lookup is cheaper than doing reflection again.
 \***************************************************************************/
 
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.ComponentModel;                // IBindingList
-using System.Diagnostics;
-using System.Reflection;                    // TypeDescriptor
-using System.Windows;                       // SR
 using System.Windows.Threading;             // Dispatcher
-using MS.Internal;                          // Invariant.Assert
 
 namespace MS.Internal.Data
 {
@@ -176,7 +168,7 @@ namespace MS.Internal.Data
         private readonly Dictionary<AccessorTableKey, AccessorInfo> _table = new Dictionary<AccessorTableKey, AccessorInfo>();
         private int _generation;
         private bool _cleanupRequested;
-        bool _traceSize;
+        private bool _traceSize;
 #if DEBUG
         private int[]       _ages = new int[10];
         private int         _hits, _misses;

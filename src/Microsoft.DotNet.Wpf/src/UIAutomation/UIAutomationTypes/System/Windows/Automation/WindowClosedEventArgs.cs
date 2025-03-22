@@ -4,11 +4,7 @@
 
 // Description: WindowClosedEventArgs event args class
 
-using System;
-using System.Windows.Automation;
-using MS.Internal.Automation;
-
-namespace System.Windows.Automation 
+namespace System.Windows.Automation
 {
     /// <summary>
     /// WindowClosedEventArgs event args class

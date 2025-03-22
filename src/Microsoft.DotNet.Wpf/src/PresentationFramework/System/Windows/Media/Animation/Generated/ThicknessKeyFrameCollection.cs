@@ -3,21 +3,14 @@
 // See the LICENSE file in the project root for more information.
 
 //
+//
 // This file was generated, please do not edit it directly.
 //
 // Please see MilCodeGen.html for more information.
 //
 
-using MS.Internal;
-
-using System;
 using System.Collections;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Diagnostics;
 using System.Globalization;
-using System.Windows.Media.Animation;
-using System.Windows.Media.Media3D;
 
 namespace System.Windows.Media.Animation
 {
@@ -58,9 +51,10 @@ namespace System.Windows.Media.Animation
             {
                 if (s_emptyCollection == null)
                 {
-                    ThicknessKeyFrameCollection emptyCollection = new ThicknessKeyFrameCollection();
-
-                    emptyCollection._keyFrames = new List< ThicknessKeyFrame>(0);
+                    ThicknessKeyFrameCollection emptyCollection = new ThicknessKeyFrameCollection
+                    {
+                        _keyFrames = new List<ThicknessKeyFrame>(0)
+                    };
                     emptyCollection.Freeze();
 
                     s_emptyCollection = emptyCollection;

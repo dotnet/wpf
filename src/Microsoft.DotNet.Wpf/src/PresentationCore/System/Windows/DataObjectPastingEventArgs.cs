@@ -2,15 +2,6 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-//
-//
-// Description: DataObject.Pasting event arguments
-//
-
-using System;
-
-using SR=MS.Internal.PresentationCore.SR;
-
 namespace System.Windows
 {
     /// <summary>
@@ -132,7 +123,7 @@ namespace System.Windows
 
                 ArgumentNullException.ThrowIfNull(value);
 
-                availableFormats = value.GetFormats(/*autoConvert:*/false);
+                availableFormats = value.GetFormats(autoConvert: false);
                 if (availableFormats == null || availableFormats.Length == 0)
                 {
                     throw new ArgumentException(SR.DataObject_DataObjectMustHaveAtLeastOneFormat);

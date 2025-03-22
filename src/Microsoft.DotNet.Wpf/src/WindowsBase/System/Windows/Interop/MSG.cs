@@ -2,11 +2,8 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-
-using System;
 using System.Runtime.InteropServices;
 using System.Diagnostics.CodeAnalysis;
-using System.Security;
 
 namespace System.Windows.Interop
 {
@@ -59,7 +56,6 @@ namespace System.Windows.Interop
         ///     The handle of the window to which the message was sent. 
         /// </summary>
         [SuppressMessage("Microsoft.Design", "CA1051:DoNotDeclareVisibleInstanceFields")]
-        [SuppressMessage("Microsoft.Security", "CA2111:PointersShouldNotBeVisible")]
         [SuppressMessage("Microsoft.Reliability", "CA2006:UseSafeHandleToEncapsulateNativeResources")]
         public IntPtr hwnd
         {
@@ -92,7 +88,6 @@ namespace System.Windows.Interop
         ///     The wParam of the window message. 
         /// </summary>
         [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly")]
-        [SuppressMessage("Microsoft.Security", "CA2111:PointersShouldNotBeVisible")]
         [SuppressMessage("Microsoft.Reliability", "CA2006:UseSafeHandleToEncapsulateNativeResources")]
         public IntPtr wParam
         {
@@ -110,7 +105,6 @@ namespace System.Windows.Interop
         ///     The lParam of the window message. 
         /// </summary>
         [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly")]
-        [SuppressMessage("Microsoft.Security", "CA2111:PointersShouldNotBeVisible")]
         [SuppressMessage("Microsoft.Reliability", "CA2006:UseSafeHandleToEncapsulateNativeResources")]
         public IntPtr lParam
         {

@@ -6,8 +6,6 @@
 // Description: UIElement layout island.
 //
 
-using System;
-using System.Collections.Generic;       // List<T>
 using System.Collections.ObjectModel;   // ReadOnlyCollection<T>
 using System.Windows;                   // UIElement
 using System.Windows.Media;             // Visual
@@ -197,7 +195,7 @@ namespace MS.Internal.Documents
         /// </summary>
         ReadOnlyCollection<Rect> IContentHost.GetRectangles(ContentElement child)
         {
-            return new ReadOnlyCollection<Rect>(new List<Rect>());
+            return ReadOnlyCollection<Rect>.Empty;
         }
 
         /// <summary>

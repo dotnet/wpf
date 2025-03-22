@@ -4,8 +4,6 @@
 
 // Description: Provider interface for UI that raises events
 
-using System;
-using System.Windows.Automation;
 using System.Runtime.InteropServices;
 
 

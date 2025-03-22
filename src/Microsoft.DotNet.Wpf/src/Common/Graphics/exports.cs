@@ -6,32 +6,15 @@
 // Description:
 //     Managed exports from MIL core.
 
-using System;
-using System.Collections;
-using System.ComponentModel;
-using System.Threading;
-using System.Windows;
-using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Media.Effects;
-using System.Windows.Media.Media3D;
 using System.Runtime.InteropServices;
-using System.Windows.Media.Animation;
 using MS.Internal;
-using MS.Internal.PresentationCore;
 using MS.Internal.Interop;
 using MS.Utility;
 using MS.Win32;
-using System.Diagnostics;
-using System.Collections.Generic;
-using System.Security;
-using Microsoft.Win32.SafeHandles;
 
-using UnsafeNativeMethods=MS.Win32.PresentationCore.UnsafeNativeMethods;
-using SafeNativeMethods=MS.Win32.PresentationCore.SafeNativeMethods;
-using HRESULT=MS.Internal.HRESULT;
-using SR=MS.Internal.PresentationCore.SR;
-using DllImport=MS.Internal.PresentationCore.DllImport;
+using UnsafeNativeMethods = MS.Win32.PresentationCore.UnsafeNativeMethods;
+using HRESULT = MS.Internal.HRESULT;
 
 /*
  *
@@ -340,13 +323,13 @@ namespace System.Windows.Media.Composition
             /// <summary>
             /// Primary channel.
             /// </summary>
-            IntPtr _hChannel;
+            private IntPtr _hChannel;
 
             private Channel _referenceChannel;
             private bool _isSynchronous;
             private bool _isOutOfBandChannel;
 
-            IntPtr _pConnection;
+            private IntPtr _pConnection;
 
             /// <summary>
             /// Creates a channel and associates it with channel group (partition).

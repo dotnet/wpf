@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -6,12 +6,9 @@
 // Description: Defines DisplayMemberTemplateSelector class.
 //
 
-using System;
-using System.Diagnostics;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
-using MS.Internal;
 
 namespace MS.Internal.Data
 {
@@ -44,9 +41,11 @@ namespace MS.Internal.Data
                 {
                     _xmlNodeContentTemplate = new DataTemplate();
                     FrameworkElementFactory text = ContentPresenter.CreateTextBlockFactory();
-                    Binding binding = new Binding();
-                    binding.XPath = _displayMemberPath;
-                    binding.StringFormat = _stringFormat;
+                    Binding binding = new Binding
+                    {
+                        XPath = _displayMemberPath,
+                        StringFormat = _stringFormat
+                    };
                     text.SetBinding(TextBlock.TextProperty, binding);
                     _xmlNodeContentTemplate.VisualTree = text;
                     _xmlNodeContentTemplate.Seal();
@@ -59,9 +58,11 @@ namespace MS.Internal.Data
                 {
                     _clrNodeContentTemplate = new DataTemplate();
                     FrameworkElementFactory text = ContentPresenter.CreateTextBlockFactory();
-                    Binding binding = new Binding();
-                    binding.Path = new PropertyPath(_displayMemberPath);
-                    binding.StringFormat = _stringFormat;
+                    Binding binding = new Binding
+                    {
+                        Path = new PropertyPath(_displayMemberPath),
+                        StringFormat = _stringFormat
+                    };
                     text.SetBinding(TextBlock.TextProperty, binding);
                     _clrNodeContentTemplate.VisualTree = text;
                     _clrNodeContentTemplate.Seal();

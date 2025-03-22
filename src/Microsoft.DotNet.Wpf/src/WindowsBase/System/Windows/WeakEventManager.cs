@@ -59,18 +59,11 @@
 
 \***************************************************************************/
 
-using System;
-using System.Diagnostics;           // Debug
-using System.Collections;           // Hashtable
-using System.Collections.Generic;   // List<T>
 using System.Reflection;            // MethodInfo
 using System.Threading;             // Interlocked
-using System.Security;              // 
-using System.Windows;               // SR
 using System.Windows.Threading;     // DispatcherObject
 using MS.Utility;                   // FrugalList
 using MS.Internal;                  // Invariant
-using MS.Internal.WindowsBase;
 
 namespace System.Windows
 {
@@ -265,7 +258,7 @@ namespace System.Windows
 
         private void AddListener(object source, IWeakEventListener listener, Delegate handler)
         {
-            object sourceKey = (source != null) ? source : StaticSource;
+            object sourceKey = source ?? StaticSource;
 
             using (Table.WriteLock)
             {
@@ -304,7 +297,7 @@ namespace System.Windows
 
         private void RemoveListener(object source, object target, Delegate handler)
         {
-            object sourceKey = (source != null) ? source : StaticSource;
+            object sourceKey = source ?? StaticSource;
 
             using (Table.WriteLock)
             {
@@ -345,7 +338,7 @@ namespace System.Windows
         protected void DeliverEvent(object sender, EventArgs args)
         {
             ListenerList list;
-            object sourceKey = (sender != null) ? sender : StaticSource;
+            object sourceKey = sender ?? StaticSource;
 
             // get the list of listeners
             using (Table.ReadLock)
@@ -530,8 +523,8 @@ namespace System.Windows
             public Delegate Handler { get { return (_handler != null) ? (Delegate)_handler.Target : null; } }
             public bool HasHandler { get { return _handler != null; } }
 
-            WeakReference _target;
-            WeakReference _handler;
+            private WeakReference _target;
+            private WeakReference _handler;
         }
 
         /// <summary>
@@ -633,7 +626,7 @@ namespace System.Windows
                 AddHandlerToCWT(target, handler);
             }
 
-            void AddHandlerToCWT(object target, Delegate handler)
+            private void AddHandlerToCWT(object target, Delegate handler)
             {
                 // add the handler to the CWT - this keeps the handler alive throughout
                 // the lifetime of the target, without prolonging the lifetime of
@@ -648,8 +641,7 @@ namespace System.Windows
                 {
                     // 1% case - the target listens multiple times
                     // we store the delegates in a list
-                    List<Delegate> list = value as List<Delegate>;
-                    if (list == null)
+                    if (value is not List<Delegate> list)
                     {
                         // lazily allocate the list, and add the old handler
                         Delegate oldHandler = value as Delegate;
@@ -688,8 +680,7 @@ namespace System.Windows
                 // remove the handler from the CWT
                 if (_cwt.TryGetValue(target, out value))
                 {
-                    List<Delegate> list = value as List<Delegate>;
-                    if (list == null)
+                    if (value is not List<Delegate> list)
                     {
                         // 99% case - the target is removing its single handler
                         _cwt.Remove(target);
@@ -787,8 +778,7 @@ namespace System.Windows
                     else
                     {
                         // legacy (4.0)
-                        IWeakEventListener iwel = target as IWeakEventListener;
-                        if (iwel != null)
+                        if (target is IWeakEventListener iwel)
                         {
                             bool handled = iwel.ReceiveWeakEvent(managerType, sender, args);
 
@@ -841,9 +831,7 @@ namespace System.Windows
 
             protected void CopyTo(ListenerList newList)
             {
-                IWeakEventListener iwel;
-
-                for (int k=0, n=Count; k<n; ++k)
+                for (int k = 0, n = Count; k < n; ++k)
                 {
                     Listener listener = GetListener(k);
                     if (listener.Target != null)
@@ -856,7 +844,7 @@ namespace System.Windows
                                 newList.AddHandler(handler);
                             }
                         }
-                        else if ((iwel = listener.Target as IWeakEventListener) != null)
+                        else if (listener.Target is IWeakEventListener iwel)
                         {
                             newList.Add(iwel);
                         }

@@ -6,12 +6,7 @@
 
 #region Using directives
 
-using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Runtime.InteropServices;
-using System.Security;
-using SecurityHelper=MS.Internal.SecurityHelper; 
 
 #endregion
 
@@ -145,7 +140,7 @@ namespace System.Windows.Media.Effects
             return _imageEffectEmulation;
         }        
 
-        DropShadowEffect _imageEffectEmulation;
+        private DropShadowEffect _imageEffectEmulation;
 
         private const double _MAX_EMULATED_BLUR_RADIUS = 25.0;
     }

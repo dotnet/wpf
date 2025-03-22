@@ -4,13 +4,8 @@
 
 // Description: Static class that manages prefetching and normalization
 
-using System;
 using System.Diagnostics;
-using System.Windows;
 using System.Windows.Automation;
-using System.Windows.Automation.Provider;
-using System.ComponentModel;
-using MS.Win32;
 
 
 // For methods that support prefetching, ClientAPI sends the UiaCoreApi
@@ -56,7 +51,7 @@ using MS.Win32;
 
 namespace MS.Internal.Automation
 {
-    static class CacheHelper
+    internal static class CacheHelper
     {
         //------------------------------------------------------
         //

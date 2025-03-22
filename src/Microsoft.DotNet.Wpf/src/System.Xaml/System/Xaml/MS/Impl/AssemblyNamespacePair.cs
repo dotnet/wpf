@@ -4,7 +4,6 @@
 
 #nullable disable
 
-using System.Diagnostics;
 using System.Reflection;
 
 namespace System.Xaml.MS.Impl
@@ -12,10 +11,10 @@ namespace System.Xaml.MS.Impl
     [DebuggerDisplay("{ClrNamespace} {Assembly.FullName}")]
     internal class AssemblyNamespacePair
     {
-        WeakReference _assembly;
-        String _clrNamespace;
+        private WeakReference _assembly;
+        private string _clrNamespace;
 
-        public AssemblyNamespacePair(Assembly asm, String clrNamespace)
+        public AssemblyNamespacePair(Assembly asm, string clrNamespace)
         {
             _assembly = new WeakReference(asm);
             _clrNamespace = clrNamespace;

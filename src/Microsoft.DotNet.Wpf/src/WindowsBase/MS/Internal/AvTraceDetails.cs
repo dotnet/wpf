@@ -2,13 +2,6 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-/***************************************************************************\
-*
-*
-*
-\***************************************************************************/
-
-
 namespace MS.Internal
 {
     // This class represents the details of a single trace (the ID and message strings).
@@ -49,8 +42,8 @@ namespace MS.Internal
             }
         }
 
-        int _id;
-        string[] _labels;
+        private int _id;
+        private string[] _labels;
     }
 }
 

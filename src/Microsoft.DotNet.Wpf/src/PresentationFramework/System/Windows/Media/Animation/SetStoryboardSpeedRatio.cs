@@ -11,15 +11,14 @@
 *
 \***************************************************************************/
 using System.ComponentModel;            // DefaultValueAttribute
-using System.Diagnostics;               // Debug.Assert
 
 namespace System.Windows.Media.Animation
 {
-/// <summary>
-/// SetStoryboardSpeedRatio will set the speed for its Storyboard reference when
-///  it is triggered.
-/// </summary>
-public sealed class SetStoryboardSpeedRatio : ControllableStoryboardAction
+    /// <summary>
+    /// SetStoryboardSpeedRatio will set the speed for its Storyboard reference when
+    ///  it is triggered.
+    /// </summary>
+    public sealed class SetStoryboardSpeedRatio : ControllableStoryboardAction
 {
     /// <summary>
     ///     A speed ratio to use for this action.  If it is never explicitly
@@ -61,6 +60,6 @@ public sealed class SetStoryboardSpeedRatio : ControllableStoryboardAction
         }
     }
 
-    double          _speedRatio = 1.0;
+        private double          _speedRatio = 1.0;
 }
 }

@@ -1,27 +1,17 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
 
-using System;
-
 using System.ComponentModel;
-
-using System.Collections;
 using System.Collections.Specialized;
-using System.Diagnostics;
-using System.Globalization;
 using System.Windows.Threading;
-
-using System.Windows;
 using System.Windows.Automation.Peers;
-using System.Security;
 using System.Windows.Media;
 using System.Windows.Input;
 using System.Windows.Documents;
 using System.Windows.Interop;
 using System.Windows.Controls.Primitives;
-using System.Windows.Markup;
 using System.Windows.Shapes;
 
 using MS.Internal.KnownBoxes;
@@ -223,10 +213,7 @@ namespace System.Windows.Controls
 
             // Fire accessibility event
             ComboBoxAutomationPeer peer = UIElementAutomationPeer.FromElement(comboBox) as ComboBoxAutomationPeer;
-            if(peer != null)
-            {
-                peer.RaiseExpandCollapseAutomationEvent(oldValue, newValue);
-            }
+            peer?.RaiseExpandCollapseAutomationEvent(oldValue, newValue);
 
             if (newValue)
             {
@@ -246,10 +233,7 @@ namespace System.Windows.Controls
                             ComboBox cb = (ComboBox)arg;
                             cb.UpdateSelectionBoxItem();
 
-                            if (cb._clonedElement != null)
-                            {
-                                cb._clonedElement.CoerceValue(FrameworkElement.FlowDirectionProperty);
-                            }
+                            cb._clonedElement?.CoerceValue(FrameworkElement.FlowDirectionProperty);
 
                             return null;
                         },
@@ -582,8 +566,7 @@ namespace System.Windows.Controls
                 ||  AutomationPeer.ListenerExists(AutomationEvents.SelectionItemPatternOnElementRemovedFromSelection)   )
             {
                 ComboBoxAutomationPeer peer = UIElementAutomationPeer.CreatePeerForElement(this) as ComboBoxAutomationPeer;
-                if (peer != null)
-                    peer.RaiseSelectionEvents(e);
+                peer?.RaiseSelectionEvents(e);
             }
         }
 
@@ -627,8 +610,7 @@ namespace System.Windows.Controls
             ComboBoxAutomationPeer peer = UIElementAutomationPeer.FromElement(cb) as ComboBoxAutomationPeer;
             // Raise the propetyChangeEvent for Value if Automation Peer exist, the new Value must
             // be the one in SelctionBoxItem(selected value is the one user will care about)
-            if (peer != null)
-                peer.RaiseValuePropertyChangedEvent((string)e.OldValue, (string)e.NewValue);
+            peer?.RaiseValuePropertyChangedEvent((string)e.OldValue, (string)e.NewValue);
 
             cb.TextUpdated((string)e.NewValue, false);
         }
@@ -790,7 +772,7 @@ namespace System.Windows.Controls
             }
         }
 
-        object UpdateTextBoxCallback(object arg)
+        private object UpdateTextBoxCallback(object arg)
         {
             _updateTextBoxOperation = null;
 
@@ -811,7 +793,7 @@ namespace System.Windows.Controls
             return null;
         }
 
-        void UpdateTextBox(string matchedText, MatchedTextInfo matchedTextInfo)
+        private void UpdateTextBox(string matchedText, MatchedTextInfo matchedTextInfo)
         {
             // Replace the TextBox's text with the matched text and
             // select the text beyond what the user typed
@@ -906,16 +888,18 @@ namespace System.Windows.Controls
                     if (_clonedElement != null)
                     {
                         // Create visual copy of selected element
-                        VisualBrush visualBrush = new VisualBrush(_clonedElement);
-                        visualBrush.Stretch = Stretch.None;
+                        VisualBrush visualBrush = new VisualBrush(_clonedElement)
+                        {
+                            Stretch = Stretch.None,
 
-                        //Set position and dimension of content
-                        visualBrush.ViewboxUnits = BrushMappingMode.Absolute;
-                        visualBrush.Viewbox = new Rect(_clonedElement.RenderSize);
+                            //Set position and dimension of content
+                            ViewboxUnits = BrushMappingMode.Absolute,
+                            Viewbox = new Rect(_clonedElement.RenderSize),
 
-                        //Set position and dimension of tile
-                        visualBrush.ViewportUnits = BrushMappingMode.Absolute;
-                        visualBrush.Viewport = new Rect(_clonedElement.RenderSize);
+                            //Set position and dimension of tile
+                            ViewportUnits = BrushMappingMode.Absolute,
+                            Viewport = new Rect(_clonedElement.RenderSize)
+                        };
 
                         // We need to check if the item acquires a mirror transform through the visual tree
                         // below the ComboBox. If it does then the same mirror transform needs to be applied
@@ -937,10 +921,12 @@ namespace System.Windows.Controls
                         }
 
                         // Apply visual brush to a rectangle
-                        Rectangle rect = new Rectangle();
-                        rect.Fill = visualBrush;
-                        rect.Width = _clonedElement.RenderSize.Width;
-                        rect.Height = _clonedElement.RenderSize.Height;
+                        Rectangle rect = new Rectangle
+                        {
+                            Fill = visualBrush,
+                            Width = _clonedElement.RenderSize.Width,
+                            Height = _clonedElement.RenderSize.Height
+                        };
 
                         _clonedElement.LayoutUpdated += CloneLayoutUpdated;
 
@@ -1213,8 +1199,10 @@ namespace System.Windows.Controls
                 Debug.Assert(_autoScrollTimer == null, "IsMouseCaptured went from true to true");
                 if (_autoScrollTimer == null)
                 {
-                    _autoScrollTimer = new DispatcherTimer(DispatcherPriority.SystemIdle);
-                    _autoScrollTimer.Interval = AutoScrollTimeout;
+                    _autoScrollTimer = new DispatcherTimer(DispatcherPriority.SystemIdle)
+                    {
+                        Interval = AutoScrollTimeout
+                    };
                     _autoScrollTimer.Tick += new EventHandler(OnAutoScrollTimeout);
                     _autoScrollTimer.Start();
                 }
@@ -1958,18 +1946,12 @@ namespace System.Windows.Controls
             set
             {
                 ComboBoxItem cbi = (_highlightedInfo != null) ? _highlightedInfo.Container as ComboBoxItem : null;
-                if (cbi != null)
-                {
-                    cbi.SetIsHighlighted(false);
-                }
+                cbi?.SetIsHighlighted(false);
 
                 _highlightedInfo = value;
 
                 cbi = (_highlightedInfo != null) ? _highlightedInfo.Container as ComboBoxItem : null;
-                if (cbi != null)
-                {
-                    cbi.SetIsHighlighted(true);
-                }
+                cbi?.SetIsHighlighted(true);
 
                 CoerceValue(IsSelectionBoxHighlightedProperty);
             }

@@ -4,8 +4,6 @@
 
 #nullable disable
 
-using System;
-using System.Collections.Generic;
 using System.Runtime.Serialization;
 using System.Xaml;
 using System.Xaml.Schema;
@@ -15,9 +13,9 @@ namespace MS.Internal.Xaml.Parser
 {
     internal class XamlPullParser
     {
-        XamlParserContext _context;
-        XamlScanner _xamlScanner;
-        XamlXmlReaderSettings _settings;
+        private XamlParserContext _context;
+        private XamlScanner _xamlScanner;
+        private XamlXmlReaderSettings _settings;
 
         public XamlPullParser(XamlParserContext context, XamlScanner scanner, XamlXmlReaderSettings settings)
         {
@@ -28,7 +26,7 @@ namespace MS.Internal.Xaml.Parser
 
         // =====================================================
 
-        //  Document ::= PREFIXDEFINITION* Element
+        // Document ::= PREFIXDEFINITION* Element
         //  Element ::= EmptyElement | (StartElement ElementBody)
         //  EmptyElement ::= EMPTYELEMENT DIRECTIVE* ATTRIBUTE*
         //  StartElement ::= ELEMENT DIRECTIVE*
@@ -72,6 +70,7 @@ namespace MS.Internal.Xaml.Parser
                 {
                     yield return Logic_LineInfo();
                 }
+
                 nodeType = _xamlScanner.NodeType;
             }
 
@@ -97,6 +96,7 @@ namespace MS.Internal.Xaml.Parser
                 {
                     yield return node;
                 }
+
                 break;
 
             case ScannerNodeType.ELEMENT:
@@ -104,10 +104,12 @@ namespace MS.Internal.Xaml.Parser
                 {
                     yield return node;
                 }
+
                 foreach (XamlNode node in P_ElementBody())
                 {
                     yield return node;
                 }
+
                 break;
             default:
                 throw new XamlUnexpectedParseException(_xamlScanner, nodeType, ElementRuleException);
@@ -124,6 +126,7 @@ namespace MS.Internal.Xaml.Parser
                 throw new XamlUnexpectedParseException(_xamlScanner, _xamlScanner.NodeType,
                     EmptyElementRuleException);
             }
+
             yield return Logic_StartObject(_xamlScanner.Type, _xamlScanner.Namespace);
             _xamlScanner.Read();
             if (ProvideLineInfo)
@@ -138,18 +141,21 @@ namespace MS.Internal.Xaml.Parser
                 {
                     yield return node;
                 }
+
                 _xamlScanner.Read();
                 if (ProvideLineInfo)
                 {
                     yield return Logic_LineInfo();
                 }
             }
+
             while (_xamlScanner.NodeType == ScannerNodeType.ATTRIBUTE)
             {
                 foreach (XamlNode node in LogicStream_Attribute())
                 {
                     yield return node;
                 }
+
                 _xamlScanner.Read();
                 if (ProvideLineInfo)
                 {
@@ -171,6 +177,7 @@ namespace MS.Internal.Xaml.Parser
                 throw new XamlUnexpectedParseException(_xamlScanner, _xamlScanner.NodeType,
                     StartElementRuleException);
             }
+
             yield return Logic_StartObject(_xamlScanner.Type, _xamlScanner.Namespace);
             _xamlScanner.Read();
             if (ProvideLineInfo)
@@ -185,6 +192,7 @@ namespace MS.Internal.Xaml.Parser
                 {
                     yield return node;
                 }
+
                 _xamlScanner.Read();
                 if (ProvideLineInfo)
                 {
@@ -204,6 +212,7 @@ namespace MS.Internal.Xaml.Parser
                 {
                     yield return node;
                 }
+
                 _xamlScanner.Read();
                 if (ProvideLineInfo)
                 {
@@ -227,6 +236,7 @@ namespace MS.Internal.Xaml.Parser
                     {
                         yield return node;
                     }
+
                     break;
 
                 case ScannerNodeType.PREFIXDEFINITION:
@@ -240,8 +250,10 @@ namespace MS.Internal.Xaml.Parser
                         {
                             yield return node;
                         }
+
                         nodeType = _xamlScanner.NodeType;
-                    } while (nodeType == ScannerNodeType.PREFIXDEFINITION
+                    }
+                    while (nodeType == ScannerNodeType.PREFIXDEFINITION
                             || nodeType == ScannerNodeType.ELEMENT
                             || nodeType == ScannerNodeType.EMPTYELEMENT
                             || nodeType == ScannerNodeType.TEXT);
@@ -264,11 +276,12 @@ namespace MS.Internal.Xaml.Parser
                             }
                         }
                     }
+
                     break;
                 case ScannerNodeType.ENDTAG:
                     // <Foo></Foo> if foo has no default constructor we need to output SM _Initialization V "" EM
                     XamlType currentType = _context.CurrentType;
-                    bool hasTypeConverter = currentType.TypeConverter != null;
+                    bool hasTypeConverter = currentType.TypeConverter is not null;
                     bool isConstructable = currentType.IsConstructible && !currentType.ConstructionRequiresArguments;
                     if (!hasContent && hasTypeConverter && !isConstructable)
                     {
@@ -276,19 +289,22 @@ namespace MS.Internal.Xaml.Parser
                         yield return new XamlNode(XamlNodeType.Value, string.Empty);
                         yield return Logic_EndMember();
                     }
+
                     doneWithElementContent = true;
                     break;
                 default:
                     doneWithElementContent = true;
                     break;
                 }
-            } while (!doneWithElementContent);
+            }
+            while (!doneWithElementContent);
 
             if (_xamlScanner.NodeType != ScannerNodeType.ENDTAG)
             {
                 throw new XamlUnexpectedParseException(_xamlScanner, _xamlScanner.NodeType,
                     ElementBodyRuleException);
             }
+
             yield return Logic_EndObject();
             _xamlScanner.Read();
             if (ProvideLineInfo)
@@ -311,12 +327,14 @@ namespace MS.Internal.Xaml.Parser
                     {
                         yield return node;
                     }
+
                     break;
                 case ScannerNodeType.PROPERTYELEMENT:
                     foreach (XamlNode node in P_NonemptyPropertyElement())
                     {
                         yield return node;
                     }
+
                     break;
                 default:
                     throw new XamlUnexpectedParseException(_xamlScanner, nodeType,
@@ -334,6 +352,7 @@ namespace MS.Internal.Xaml.Parser
                 throw new XamlUnexpectedParseException(_xamlScanner, _xamlScanner.NodeType,
                     EmptyPropertyElementRuleException);
             }
+
             yield return Logic_StartMember(_xamlScanner.PropertyElement);
             yield return Logic_EndMember();
             _xamlScanner.Read();
@@ -353,6 +372,7 @@ namespace MS.Internal.Xaml.Parser
                 throw new XamlUnexpectedParseException(_xamlScanner, _xamlScanner.NodeType,
                     NonemptyPropertyElementRuleException);
             }
+
             yield return Logic_StartMember(_xamlScanner.PropertyElement);
             _xamlScanner.Read();
             if (ProvideLineInfo)
@@ -376,8 +396,10 @@ namespace MS.Internal.Xaml.Parser
                         {
                             yield return node;
                         }
+
                         nodeType = _xamlScanner.NodeType;
-                    } while (nodeType == ScannerNodeType.PREFIXDEFINITION
+                    }
+                    while (nodeType == ScannerNodeType.PREFIXDEFINITION
                             || nodeType == ScannerNodeType.ELEMENT
                             || nodeType == ScannerNodeType.EMPTYELEMENT
                             || nodeType == ScannerNodeType.TEXT);
@@ -398,19 +420,21 @@ namespace MS.Internal.Xaml.Parser
                             }
                         }
                     }
+
                     break;
                 default:
                     doingPropertyContent = false;
                     break;
                 }
-            } while (doingPropertyContent);
-
+            }
+            while (doingPropertyContent);
 
             if (_xamlScanner.NodeType != ScannerNodeType.ENDTAG)
             {
                 throw new XamlUnexpectedParseException(_xamlScanner, _xamlScanner.NodeType,
                     NonemptyPropertyElementRuleException);
             }
+
             yield return Logic_EndMember();
             _xamlScanner.Read();
             if (ProvideLineInfo)
@@ -445,6 +469,7 @@ namespace MS.Internal.Xaml.Parser
                         {
                             yield return Logic_LineInfo();
                         }
+
                         break;
                     }
                 }
@@ -455,20 +480,23 @@ namespace MS.Internal.Xaml.Parser
                 // on Content Property in before the PrefixDef's and then the ObjectType.
                 while (nodeType == ScannerNodeType.PREFIXDEFINITION)
                 {
-                    if (savedPrefixDefinitions == null)
+                    if (savedPrefixDefinitions is null)
                     {
                         savedPrefixDefinitions = new List<XamlNode>();
                     }
+
                     if (ProvideLineInfo)
                     {
                         savedPrefixDefinitions.Add(Logic_LineInfo());
                     }
+
                     savedPrefixDefinitions.Add(Logic_PrefixDefinition());
                     _xamlScanner.Read();
                     if (ProvideLineInfo)
                     {
                         yield return Logic_LineInfo();
                     }
+
                     nodeType = _xamlScanner.NodeType;
                 }
 
@@ -482,19 +510,21 @@ namespace MS.Internal.Xaml.Parser
                     // then a TypeConverter
                     if (nodeType == ScannerNodeType.TEXT)
                     {
-                        if (currentType.ContentProperty != null && CanAcceptString(currentType.ContentProperty))
+                        if (currentType.ContentProperty is not null && CanAcceptString(currentType.ContentProperty))
                         {
                             isContentProperty = true;
                         }
+
                         // If there have been "real" properties then we are forced to use the
                         // Constructor.  Otherwise we can consider a TypeConverter on the TEXT.
                         else if (!_context.CurrentForcedToUseConstructor
                                 && !_xamlScanner.TextContent.IsEmpty
-                                && currentType.TypeConverter != null)
+                                && currentType.TypeConverter is not null)
                         {
                             isTextInitialization = true;
                         }
                     }
+
                     // Otherwise, we look first for a collection, and then fall back to content property
                     if (!isTextInitialization && !isContentProperty)
                     {
@@ -508,12 +538,13 @@ namespace MS.Internal.Xaml.Parser
                             isContentProperty = true;
                         }
                     }
+
                     // Don't yield more than one unknown content property for multiple,
                     // contiguous content objects and values.
                     if (isContentProperty && !_context.CurrentInUnknownContent)
                     {
                         XamlMember contentProperty = currentType.ContentProperty;
-                        if (contentProperty != null)
+                        if (contentProperty is not null)
                         {
                             bool isVisible = _context.IsVisible(
                                 contentProperty, _context.CurrentTypeIsRoot ? _context.CurrentType : null);
@@ -528,6 +559,7 @@ namespace MS.Internal.Xaml.Parser
                                 contentProperty = new XamlMember(contentProperty.Name, currentType, false);
                             }
                         }
+
                         // A null argument produces an unknown content member.
                         yield return Logic_StartContentProperty(contentProperty);
 
@@ -541,12 +573,13 @@ namespace MS.Internal.Xaml.Parser
 
                 // Now we are ready for the given element.
                 // so now emit the saved prefix definitions.
-                if (savedPrefixDefinitions != null)
+                if (savedPrefixDefinitions is not null)
                 {
                     for (int i = 0; i < savedPrefixDefinitions.Count; i++)
                     {
                         yield return savedPrefixDefinitions[i];
                     }
+
                     if (ProvideLineInfo)
                     {
                         yield return Logic_LineInfo();
@@ -605,6 +638,7 @@ namespace MS.Internal.Xaml.Parser
                 {
                     yield return Logic_EndMember();
                 }
+
                 break;
             } // end switch
         }
@@ -644,6 +678,7 @@ namespace MS.Internal.Xaml.Parser
                     {
                         yield return Logic_LineInfo();
                     }
+
                     if (string.IsNullOrEmpty(trimmed))
                     {
                         break;
@@ -656,27 +691,30 @@ namespace MS.Internal.Xaml.Parser
                 // in before the PrefixDef's and then the ObjectType.
                 while (nodeType == ScannerNodeType.PREFIXDEFINITION)
                 {
-                    if (_savedPrefixDefinitions == null)
+                    if (_savedPrefixDefinitions is null)
                     {
                         _savedPrefixDefinitions = new List<XamlNode>();
                     }
+
                     _savedPrefixDefinitions.Add(Logic_PrefixDefinition());
                     if (ProvideLineInfo)
                     {
                         _savedPrefixDefinitions.Add(Logic_LineInfo());
                     }
+
                     _xamlScanner.Read();
                     if (ProvideLineInfo)
                     {
                         yield return Logic_LineInfo();
                     }
+
                     nodeType = _xamlScanner.NodeType;
                 }
 
                 // If this is TEXT and the current Property has a TypeConverter
                 // Then emit the TEXT now.
                 if (nodeType == ScannerNodeType.TEXT
-                    && _context.CurrentMember.TypeConverter != null)
+                    && _context.CurrentMember.TypeConverter is not null)
                 {
                     yield return new XamlNode(XamlNodeType.Value, trimmed);
                 }
@@ -721,7 +759,7 @@ namespace MS.Internal.Xaml.Parser
                     {
                         // Now we are ready for the given element.
                         // now emit the saved prefix definitions.
-                        if (_savedPrefixDefinitions != null)
+                        if (_savedPrefixDefinitions is not null)
                         {
                             for (int i = 0; i < _savedPrefixDefinitions.Count; i++)
                             {
@@ -735,6 +773,7 @@ namespace MS.Internal.Xaml.Parser
                         }
                     }
                 }
+
                 break;
             }
         }
@@ -820,6 +859,7 @@ namespace MS.Internal.Xaml.Parser
                 XamlNode textNode = new XamlNode(XamlNodeType.Value, text.AttributeText);
                 yield return textNode;
             }
+
             yield return new XamlNode(XamlNodeType.EndMember);
         }
 
@@ -836,8 +876,9 @@ namespace MS.Internal.Xaml.Parser
             {
                 _context.CurrentForcedToUseConstructor = true;
             }
+
             XamlType memberXamlType = member.Type;
-            _context.CurrentInContainerDirective = member.IsDirective && (memberXamlType != null && (memberXamlType.IsCollection || memberXamlType.IsDictionary));
+            _context.CurrentInContainerDirective = member.IsDirective && (memberXamlType is not null && (memberXamlType.IsCollection || memberXamlType.IsDictionary));
 
             var startMember = new XamlNode(XamlNodeType.StartMember, member);
             return startMember;
@@ -853,10 +894,11 @@ namespace MS.Internal.Xaml.Parser
 
         private XamlNode Logic_StartContentProperty(XamlMember property)
         {
-            if (property == null)
+            if (property is null)
             {
                 property = XamlLanguage.UnknownContent;
             }
+
             _context.CurrentMember = property;
             var startProperty = new XamlNode(XamlNodeType.StartMember, property);
             // SetLineInfo(startProperty);  // No line number info for objects from members.
@@ -892,7 +934,7 @@ namespace MS.Internal.Xaml.Parser
                 // OR the previous element was "TrimSurroundingWhitespace"
                 // then trim leading Whitespace.
                 XamlType previousObject = _context.CurrentPreviousChildType;
-                if (previousObject == null || previousObject.TrimSurroundingWhitespace)
+                if (previousObject is null || previousObject.TrimSurroundingWhitespace)
                 {
                     trimmed = XamlText.TrimLeadingWhitespace(trimmed);
                 }
@@ -908,6 +950,7 @@ namespace MS.Internal.Xaml.Parser
                     }
                 }
             }
+
             return trimmed;
         }
 
@@ -927,7 +970,7 @@ namespace MS.Internal.Xaml.Parser
             _context.CurrentInContainerDirective = true;
 
             var startProperty = new XamlNode(XamlNodeType.StartMember, XamlLanguage.Items);
-            //SetLineInfo(startProperty);  // No line number info for implicit properties.
+            // SetLineInfo(startProperty);  // No line number info for implicit properties.
             return startProperty;
         }
 
@@ -938,10 +981,11 @@ namespace MS.Internal.Xaml.Parser
         {
             get
             {
-                if (_arrayExtensionType == null)
+                if (_arrayExtensionType is null)
                 {
                     _arrayExtensionType = _context.GetXamlType(arrayType);
                 }
+
                 return _arrayExtensionType;
             }
         }
@@ -951,10 +995,11 @@ namespace MS.Internal.Xaml.Parser
         {
             get
             {
-                if (_arrayTypeMember == null)
+                if (_arrayTypeMember is null)
                 {
                     _arrayTypeMember = _context.GetXamlProperty(ArrayExtensionType, @"Type", null);
                 }
+
                 return _arrayTypeMember;
             }
         }
@@ -964,10 +1009,11 @@ namespace MS.Internal.Xaml.Parser
         {
             get
             {
-                if (_itemsTypeMember == null)
+                if (_itemsTypeMember is null)
                 {
                     _itemsTypeMember = _context.GetXamlProperty(ArrayExtensionType, @"Items", null);
                 }
+
                 return _itemsTypeMember;
             }
         }
@@ -995,6 +1041,7 @@ namespace MS.Internal.Xaml.Parser
                 {
                     yield return new XamlNode(XamlNodeType.NamespaceDeclaration, nsDecl);
                 }
+
                 yield return Logic_StartObject(ArrayExtensionType, null);
                 _context.CurrentInImplicitArray = true;
                 yield return Logic_StartMember(ArrayTypeMember);
@@ -1021,18 +1068,20 @@ namespace MS.Internal.Xaml.Parser
                 {
                     emitPreamble = true;
                 }
+
                 // If the collection is R/W and there is a type converter and we have Text
                 // use the type converter rather than the GO; SM _items;
-                else if (propertyType.TypeConverter != null && !currentProperty.IsReadOnly
+                else if (propertyType.TypeConverter is not null && !currentProperty.IsReadOnly
                     && _xamlScanner.NodeType == ScannerNodeType.TEXT)
                 {
                     emitPreamble = false;
                 }
+
                 // Or if the Value (this is the first value in the collection)
                 // isn't assignable to the Collection then "Get" the collection.
-                else if (valueElementType == null || !valueElementType.CanAssignTo(propertyType))
+                else if (valueElementType is null || !valueElementType.CanAssignTo(propertyType))
                 {
-                    if (valueElementType != null)
+                    if (valueElementType is not null)
                     {
                         // Unless: the Value is a Markup extension, in which case it is
                         // assumed that the ProvideValue() type will be AssignableFrom
@@ -1043,6 +1092,7 @@ namespace MS.Internal.Xaml.Parser
                         {
                             emitPreamble = true;
                         }
+
                         // Except: the Array Extension can never return a dictionary
                         // so for Array Extension do "Get" the collection.
                         // Note Array Extension would be suitable for List Collections
@@ -1054,6 +1104,7 @@ namespace MS.Internal.Xaml.Parser
                         }
                     }
                 }
+
                 if (emitPreamble)
                 {
                     yield return Logic_StartGetObjectFromMember(propertyType);
@@ -1080,7 +1131,7 @@ namespace MS.Internal.Xaml.Parser
             else
             {
                 // Force unknown members to behave as whitespace significant collections in order to preserve as much information as possible.
-                if (_context.CurrentMember != null && _context.CurrentMember.IsUnknown)
+                if (_context.CurrentMember is not null && _context.CurrentMember.IsUnknown)
                 {
                     return false;
                 }
@@ -1101,32 +1152,36 @@ namespace MS.Internal.Xaml.Parser
                     XamlMember prop = _context.CurrentMember;
                     if (_xamlScanner.PeekNodeType == ScannerNodeType.ELEMENT)
                     {
-                        if (prop == null)
+                        if (prop is null)
                         {
                             prop = _context.CurrentType.ContentProperty;
                         }
-                        if (prop != null && prop.Type != null && prop.Type.IsWhitespaceSignificantCollection)
+
+                        if (prop is not null && prop.Type is not null && prop.Type.IsWhitespaceSignificantCollection)
                         {
                             return false;
                         }
-                        if (prop == null && _context.CurrentType.IsWhitespaceSignificantCollection)
+
+                        if (prop is null && _context.CurrentType.IsWhitespaceSignificantCollection)
                         {
                             return false;
                         }
                     }
+
                     // Whitespace can also start content if space is preserved and it's at the end of an element and...
                     else if (text.IsSpacePreserved && _xamlScanner.PeekNodeType == ScannerNodeType.ENDTAG)
                     {
                         // ...it's by itself in a PE with no other children
-                        if (prop != null)
+                        if (prop is not null)
                         {
-                            if (_context.CurrentPreviousChildType == null)
+                            if (_context.CurrentPreviousChildType is null)
                             {
                                 return false;
                             }
                         }
+
                         // ...it's in an element with a string content property
-                        else if (_context.CurrentType.ContentProperty != null)
+                        else if (_context.CurrentType.ContentProperty is not null)
                         {
                             prop = _context.CurrentType.ContentProperty;
                             // For backcompat we need to support CPs of type object here.
@@ -1138,36 +1193,42 @@ namespace MS.Internal.Xaml.Parser
                             {
                                 return false;
                             }
+
                             if (prop.Type.IsWhitespaceSignificantCollection)
                             {
                                 return false;
                             }
                         }
+
                         // ...it's in a type-convertible element
-                        else if (_context.CurrentType.TypeConverter != null && !_context.CurrentForcedToUseConstructor)
+                        else if (_context.CurrentType.TypeConverter is not null && !_context.CurrentForcedToUseConstructor)
                         {
                             return false;
                         }
                     }
                 }
             }
+
             return true;
         }
 
         private static bool CanAcceptString(XamlMember property)
         {
-            if (property == null)
+            if (property is null)
             {
                 return false;
             }
+
             if (property.TypeConverter == BuiltInValueConverter.String)
             {
                 return true;
             }
+
             if (property.TypeConverter == BuiltInValueConverter.Object)
             {
                 return true;
             }
+
             XamlType propertyType = property.Type;
             if (propertyType.IsCollection)
             {
@@ -1179,12 +1240,13 @@ namespace MS.Internal.Xaml.Parser
                     }
                 }
             }
+
             return false;
         }
     }
 
     [Serializable]  // FxCop advised this be Serializable.
-    class XamlUnexpectedParseException : XamlParseException
+    internal class XamlUnexpectedParseException : XamlParseException
     {
         public XamlUnexpectedParseException() { }
 

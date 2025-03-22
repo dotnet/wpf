@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -7,15 +7,9 @@
 //                  and moved to .Text subnamespace.
 //
 
-// PRESHARP: In order to avoid generating warnings about unkown message numbers and unknown pragmas.
-#pragma warning disable 1634, 1691
-
-using System;
-using System.Collections;
 using System.Diagnostics;
 using System.Globalization;
 using System.Runtime.InteropServices;
-using System.Windows.Automation.Provider;
 using MS.Internal.Automation;
 
 namespace System.Windows.Automation.Text
@@ -189,7 +183,7 @@ namespace System.Windows.Automation.Text
 
             if (value.GetType() != ai.Type)
             {
-                throw new ArgumentException(SR.Format(SR.TextAttributeValueWrongType, attribute, ai.Type.Name, value.GetType().Name), "value");
+                throw new ArgumentException(SR.Format(SR.TextAttributeValueWrongType, attribute, ai.Type.Name, value.GetType().Name), nameof(value));
             }
 
             // note: if we implement attributes whose values are logical elements, patterns,
@@ -220,7 +214,7 @@ namespace System.Windows.Automation.Text
             // A null string is not should throw an ArgumentNullException while an empty string should throw an ArgumentException.
             // Therefore we can not use IsNullOrEmpty() here, suppress the warning.
             ArgumentNullException.ThrowIfNull(text);
-#pragma warning suppress 6507
+
             Misc.ValidateArgument(text.Length != 0, nameof(SR.TextMustNotBeNullOrEmpty));
 
             SafeTextRangeHandle hResultTextRange = UiaCoreApi.TextRange_FindText(_hTextRange, text, backward, ignoreCase);
@@ -429,17 +423,17 @@ namespace System.Windows.Automation.Text
         }
 
         #endregion Public Properties
-        
+
         //------------------------------------------------------
         //
         //  Private Methods
         //
         //------------------------------------------------------
- 
+
         #region Private Methods
 
         // check an endpoint argument to see if it is valid.
-        void ValidateEndpointArgument(TextPatternRangeEndpoint endpoint, string name)
+        private void ValidateEndpointArgument(TextPatternRangeEndpoint endpoint, string name)
         {
             if (endpoint != TextPatternRangeEndpoint.Start && endpoint != TextPatternRangeEndpoint.End)
             {
@@ -448,7 +442,7 @@ namespace System.Windows.Automation.Text
         }
 
         // check a range argument to see if it is valid.
-        void ValidateRangeArgument(TextPatternRange range, string name)
+        private void ValidateRangeArgument(TextPatternRange range, string name)
         {
             // check if the argument is null
             if (range == null)
@@ -464,7 +458,7 @@ namespace System.Windows.Automation.Text
 }
 
         // check an unit argument to see if it is valid.
-        void ValidateUnitArgument(TextUnit unit, string name)
+        private void ValidateUnitArgument(TextUnit unit, string name)
         {
             if (unit<TextUnit.Character || unit>TextUnit.Document)
             {
@@ -479,11 +473,11 @@ namespace System.Windows.Automation.Text
         //  Private Fields
         //
         //------------------------------------------------------
- 
+
         #region Private Fields
 
-        SafeTextRangeHandle _hTextRange;
-        TextPattern _pattern;
+        private SafeTextRangeHandle _hTextRange;
+        private TextPattern _pattern;
 
         #endregion Private Fields
     }

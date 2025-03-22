@@ -2,19 +2,11 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-//
-//
-//
-// Description: Base class for group descriptions.
-//
-// See spec at http://avalon/connecteddata/Specs/Grouping.mht
-//
-
-using System.Collections;               // IComparer
-using System.Collections.ObjectModel;   // ObservableCollection
-using System.Collections.Specialized;   // NotifyCollectionChangedEvent*
-using System.Globalization;             // CultureInfo
-using MS.Internal;                      // Invariant.Assert
+using System.Collections;
+using System.Collections.ObjectModel;
+using System.Collections.Specialized;
+using System.Globalization;
+using MS.Internal;
 
 namespace System.ComponentModel
 {
@@ -143,7 +135,7 @@ namespace System.ComponentModel
             {
                 _customSort = value;
                 SetSortDescriptions(null);
-                OnPropertyChanged(new PropertyChangedEventArgs("CustomSort"));
+                OnPropertyChanged(new PropertyChangedEventArgs(nameof(CustomSort)));
             }
         }
 
@@ -198,9 +190,9 @@ namespace System.ComponentModel
         //
         //------------------------------------------------------
 
-        void OnGroupNamesChanged(object sender, NotifyCollectionChangedEventArgs e)
+        private void OnGroupNamesChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
-            OnPropertyChanged(new PropertyChangedEventArgs("GroupNames"));
+            OnPropertyChanged(new PropertyChangedEventArgs(nameof(GroupNames)));
         }
 
         // set new SortDescription collection; rehook collection change notification handler
@@ -223,7 +215,7 @@ namespace System.ComponentModel
 
             if (raiseChangeEvent)
             {
-                OnPropertyChanged(new PropertyChangedEventArgs("SortDescriptions"));
+                OnPropertyChanged(new PropertyChangedEventArgs(nameof(SortDescriptions)));
             }
         }
 
@@ -236,11 +228,11 @@ namespace System.ComponentModel
                 if (_customSort != null)
                 {
                     _customSort = null;
-                    OnPropertyChanged(new PropertyChangedEventArgs("CustomSort"));
+                    OnPropertyChanged(new PropertyChangedEventArgs(nameof(CustomSort)));
                 }
             }
 
-            OnPropertyChanged(new PropertyChangedEventArgs("SortDescriptions"));
+            OnPropertyChanged(new PropertyChangedEventArgs(nameof(SortDescriptions)));
         }
 
 
@@ -254,9 +246,9 @@ namespace System.ComponentModel
         //
         //------------------------------------------------------
 
-        ObservableCollection<object> _explicitGroupNames;
-        SortDescriptionCollection _sort;
-        IComparer _customSort;
+        private ObservableCollection<object> _explicitGroupNames;
+        private SortDescriptionCollection _sort;
+        private IComparer _customSort;
 
         #endregion Private fields
     }

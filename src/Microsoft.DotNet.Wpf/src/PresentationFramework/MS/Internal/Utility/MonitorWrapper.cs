@@ -8,11 +8,7 @@
 //
 
 
-using System;
 using System.Threading;
-using System.Windows;
-
-using MS.Internal;
 
 namespace MS.Internal.Utility
 {
@@ -43,8 +39,8 @@ namespace MS.Internal.Utility
             }
         }
 
-        int _enterCount;
-        object _syncRoot = new object();
+        private int _enterCount;
+        private object _syncRoot = new object();
 
         private class MonitorHelper : IDisposable
         {

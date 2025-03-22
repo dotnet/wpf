@@ -11,34 +11,19 @@
 
 using MS.Internal;
 using MS.Internal.Collections;
-using MS.Internal.PresentationCore;
 using MS.Utility;
-using System;
 using System.Collections;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.ComponentModel.Design.Serialization;
-using System.Diagnostics;
 using System.Globalization;
-using System.Reflection;
-using System.Runtime.InteropServices;
 using System.Text;
 using System.Windows.Markup;
 using System.Windows.Media.Media3D.Converters;
-using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Media.Composition;
-using System.Security;
-using SR=MS.Internal.PresentationCore.SR;
-using System.Windows.Media.Imaging;
-// These types are aliased to match the unamanaged names used in interop
-using BOOL = System.UInt32;
-using WORD = System.UInt16;
-using Float = System.Single;
 
 namespace System.Windows.Media.Media3D
 {
-    abstract partial class Camera : Animatable, IFormattable, DUCE.IResource
+    public abstract partial class Camera : Animatable, IFormattable, DUCE.IResource
     {
         //------------------------------------------------------
         //
@@ -79,6 +64,10 @@ namespace System.Windows.Media.Media3D
 
         private static void TransformPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
+
+
+
+
             // The first change to the default value of a mutable collection property (e.g. GeometryGroup.Children) 
             // will promote the property value from a default value to a local value. This is technically a sub-property 
             // change because the collection was changed and not a new collection set (GeometryGroup.Children.
@@ -347,7 +336,6 @@ namespace System.Windows.Media.Media3D
             // to make sure that they are not mutable, otherwise we will throw
             // if these get touched by more than one thread in the lifetime
             // of your app.
-
             Debug.Assert(s_Transform == null || s_Transform.IsFrozen,
                 "Detected context bound default value Camera.s_Transform (See OS Bug #947272).");
 
@@ -364,6 +352,8 @@ namespace System.Windows.Media.Media3D
                                    /* isIndependentlyAnimated  = */ false,
                                    /* coerceValueCallback */ null);
         }
+
+
 
         #endregion Constructors
     }

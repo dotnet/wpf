@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -11,17 +11,13 @@
 //
 //---------------------------------------------------------------------------
 
-
 using System;
 using System.Xml;
 using System.IO;
 using System.Text;
 using System.Text.RegularExpressions;
-using System.Reflection;
 using System.Collections;
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.Globalization;
 using System.Runtime.InteropServices;
 
 using MS.Internal.Markup;
@@ -31,9 +27,6 @@ using Microsoft.Build.Utilities;
 
 using MS.Utility;                   // For SR
 using MS.Internal.Tasks;
-
-// Since we disable PreSharp warnings in this file, we first need to disable warnings about unknown message numbers and unknown pragmas.
-#pragma warning disable 1634, 1691
 
 namespace Microsoft.Build.Tasks.Windows
 {
@@ -100,7 +93,6 @@ namespace Microsoft.Build.Tasks.Windows
             }
             catch (Exception e)
             {
-                // PreSharp Complaint 6500 - do not handle null-ref or SEH exceptions.
                 if (e is NullReferenceException || e is SEHException)
                 {
                     throw;
@@ -123,13 +115,11 @@ namespace Microsoft.Build.Tasks.Windows
                     allFilesOk = false;
                 }
             }
-#pragma warning disable 6500
             catch // Non-CLS compliant errors
             {
                 Log.LogErrorWithCodeFromResources(nameof(SR.NonClsError));
                 allFilesOk = false;
             }
-#pragma warning restore 6500
 
             return allFilesOk;
         }
@@ -401,7 +391,6 @@ namespace Microsoft.Build.Tasks.Windows
             }
             catch (Exception e)
             {
-                // PreSharp Complaint 6500 - do not handle null-ref or SEH exceptions.
                 if (e is NullReferenceException || e is SEHException)
                 {
                     throw;
@@ -412,13 +401,11 @@ namespace Microsoft.Build.Tasks.Windows
                     return false;
                 }
             }
-#pragma warning disable 6500
             catch   // Non-cls compliant errors
             {
                 Log.LogErrorWithCodeFromResources(nameof(SR.IntermediateDirectoryError), _backupPath);
                 return false;
             }
-#pragma warning restore 6500
         }
 
 
@@ -518,7 +505,11 @@ namespace Microsoft.Build.Tasks.Windows
                                 collector.RootElementLinePosition = reader.LinePosition;
                             }
 
-                            if (reader.Name.IndexOf('.') >= 0)
+#if !NETFX
+                            if (reader.Name.Contains('.'))
+#else
+                            if (reader.Name.Contains("."))
+#endif
                             {
                                 // the name has a dot, which suggests it is a property tag.
                                 // we will ignore adding uid
@@ -866,8 +857,6 @@ namespace Microsoft.Build.Tasks.Windows
             {
                 string suffix = uid.Substring(separatorIndex + 1);
 
-                // Disable Presharp warning 6502 : catch block shouldn't have empty body
-                #pragma warning disable 6502
                 try {
                     index  = Int64.Parse(suffix, TypeConverterHelper.InvariantEnglishUS);
                     prefix = uid.Substring(0, separatorIndex);
@@ -880,7 +869,6 @@ namespace Microsoft.Build.Tasks.Windows
                 {
                     // not acceptable uid
                 }
-                #pragma warning restore 6502
             }
         }
 
@@ -902,8 +890,6 @@ namespace Microsoft.Build.Tasks.Windows
             Int64 ext = 1;
             string prefix = UidNamespaceAbbreviation.ToString(TypeConverterHelper.InvariantEnglishUS);
 
-            // Disable Presharp warning 6502 : catch block shouldn't have empty body
-            #pragma warning disable 6502
             try
             {
                 // find a prefix that is not used in the Xaml
@@ -918,7 +904,6 @@ namespace Microsoft.Build.Tasks.Windows
             catch (OverflowException)
             {
             }
-            #pragma warning restore 6502
 
             // if overflows, (extreamly imposible), we will return a guid as the prefix
             return Guid.NewGuid().ToString();
@@ -1003,7 +988,6 @@ namespace Microsoft.Build.Tasks.Windows
             }
             catch (Exception e)
             {
-                // PreSharp Complaint 6500 - do not handle null-ref or SEH exceptions.
                 if (e is NullReferenceException || e is SEHException)
                 {
                     throw;
@@ -1011,12 +995,10 @@ namespace Microsoft.Build.Tasks.Windows
 
                 return false;
             }
-#pragma warning disable 6500
             catch
             {
                 return false;
             }
-#pragma warning restore 6500
         }
 
         // writing to the target stream removing uids
@@ -1045,7 +1027,6 @@ namespace Microsoft.Build.Tasks.Windows
             }
             catch (Exception e)
             {
-                // PreSharp Complaint 6500 - do not handle null-ref or SEH exceptions.
                 if (e is NullReferenceException || e is SEHException)
                 {
                     throw;
@@ -1053,12 +1034,10 @@ namespace Microsoft.Build.Tasks.Windows
 
                 return false;
             }
-#pragma warning disable 6500
             catch
             {
                 return false;
             }
-#pragma warning restore 6500
         }
 
         private void WriteTillSourcePosition(int lineNumber, int linePosition)
@@ -1281,7 +1260,7 @@ namespace Microsoft.Build.Tasks.Windows
 
             public void SetLine(string line)
             {
-                Content = (line == null) ? string.Empty : line;
+                Content = line ?? string.Empty;
                 Index   = 0;
             }
 

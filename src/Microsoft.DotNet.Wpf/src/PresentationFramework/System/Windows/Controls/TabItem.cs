@@ -1,26 +1,20 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
 
-using System;
-using System.Diagnostics;
 using MS.Internal;
 using MS.Internal.KnownBoxes;
-using MS.Utility;
-using System.Windows.Threading;
 using System.ComponentModel;
 using System.Windows.Automation;
 using System.Windows.Automation.Peers;
-using System.Windows.Media;
 using System.Windows.Input;
-using System.Windows;
 using System.Windows.Data;
 
 using System.Windows.Controls.Primitives;
 
 // Disable CS3001: Warning as Error: not CLS-compliant
-#pragma warning disable 3001
+#pragma warning disable CS3001
 
 namespace System.Windows.Controls
 {
@@ -98,10 +92,7 @@ namespace System.Windows.Controls
             bool isSelected = (bool)e.NewValue;
 
             TabControl parentTabControl = tabItem.TabControlParent;
-            if (parentTabControl != null)
-            {
-                parentTabControl.RaiseIsSelectedChangedAutomationEvent(tabItem, isSelected);
-            }
+            parentTabControl?.RaiseIsSelectedChangedAutomationEvent(tabItem, isSelected);
 
             if (isSelected)
             {
@@ -117,8 +108,10 @@ namespace System.Windows.Controls
             // Because TabItem use negative margins some TabItems overlap which would changes the directional navigation if we don't reduce the bounding box
             if (isSelected)
             {
-                Binding binding = new Binding("Margin");
-                binding.Source = tabItem;
+                Binding binding = new Binding("Margin")
+                {
+                    Source = tabItem
+                };
                 BindingOperations.SetBinding(tabItem, KeyboardNavigation.DirectionalNavigationMarginProperty, binding);
             }
             else
@@ -550,7 +543,7 @@ namespace System.Windows.Controls
             DefaultValue = 0,
         }
 
-        BoolField _tabItemBoolFieldStore = BoolField.DefaultValue;
+        private BoolField _tabItemBoolFieldStore = BoolField.DefaultValue;
 
         #endregion Private Fields
 

@@ -2,7 +2,6 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-using System;
 using System.ComponentModel;
 using System.Windows.Markup;
 using System.Globalization;
@@ -116,6 +115,12 @@ namespace System.Windows
 
         #region Construction
 
+
+        /// <summary>
+        /// Globally unique index in <see cref="GlobalEventManager"/>.
+        /// </summary>
+        internal int GlobalIndex { get; }
+
         // Constructor for a RoutedEvent (is internal 
         // to the EventManager and is onvoked when a new
         // RoutedEvent is registered)
@@ -130,16 +135,9 @@ namespace System.Windows
             _handlerType = handlerType;
             _ownerType = ownerType;
 
-            _globalIndex = GlobalEventManager.GetNextAvailableGlobalIndex(this);
+            GlobalIndex = GlobalEventManager.GetNextAvailableGlobalIndex();
         }
 
-        /// <summary>
-        ///    Index in GlobalEventManager 
-        /// </summary>
-        internal int GlobalIndex
-        {
-            get { return _globalIndex; }
-        }
         #endregion Construction
 
         #region Data
@@ -148,8 +146,6 @@ namespace System.Windows
         private RoutingStrategy _routingStrategy;
         private Type _handlerType;
         private Type _ownerType;
-
-        private int _globalIndex;
 
         #endregion Data
     }

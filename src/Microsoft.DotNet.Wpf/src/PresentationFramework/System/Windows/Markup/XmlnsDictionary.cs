@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -8,12 +8,9 @@
 // 
 
 using System;
-using System.Xml;
-using System.IO;
 using System.Collections;
 using System.Collections.Specialized;
 using System.Diagnostics;
-using System.Reflection;
 using MS.Utility;
 
 #if PBTCOMPILER
@@ -36,13 +33,13 @@ namespace System.Windows.Markup
     public class XmlnsDictionary : IDictionary, System.Xaml.IXamlNamespaceResolver
 #endif
     {
-#region Public Methods
+        #region Public Methods
         /// <summary>
         /// NamespaceDeclaration class which is similar to NamespaceDeclaration class in
         /// XmlNamespaceManager code in BCL. ScopeCount gets incremented and decremented
         /// at PushScope/PopScope, and acts like a marker between Scoped Declarations.
         /// </summary>
-        struct NamespaceDeclaration
+        private struct NamespaceDeclaration
         {
             /// <summary>
             /// namespace prefix
@@ -64,7 +61,7 @@ namespace System.Windows.Markup
         /// Namespace Scope 
         /// to retrieve all the declarations at current level or from the root node 
         /// </summary>
-        enum NamespaceScope 
+        private enum NamespaceScope 
         {
             /// <summary>
             /// All Namespaces from root to this Node
@@ -97,7 +94,7 @@ namespace System.Windows.Markup
         {
             if(null == xmlnsDictionary)
             {
-                throw new ArgumentNullException( "xmlnsDictionary" );
+                throw new ArgumentNullException( nameof(xmlnsDictionary));
             }
             
             // Copy the Declarations if they exists 
@@ -258,9 +255,8 @@ namespace System.Windows.Markup
         /// <param name="index">The zero-based index in array at which copying begins</param>
         public void CopyTo(Array array, int index)
         {
-            IDictionary dict = GetNamespacesInScope(NamespaceScope.All) as IDictionary;
-            if (dict != null)
-                dict.CopyTo(array,index);
+            if (GetNamespacesInScope(NamespaceScope.All) is IDictionary dict)
+                dict.CopyTo(array, index);
         }
 
 #endregion ICollectionMethods
@@ -339,7 +335,7 @@ namespace System.Windows.Markup
         {
             if (prefix == null)
             {
-                throw new ArgumentNullException( "prefix" ); 
+                throw new ArgumentNullException( nameof(prefix)); 
             }
             
             if (_lastDecl >0)
@@ -370,7 +366,7 @@ namespace System.Windows.Markup
         {
             if (xmlNamespace == null)
             {
-                throw new ArgumentNullException( "xmlNamespace" ); 
+                throw new ArgumentNullException( nameof(xmlNamespace)); 
             }
 
             if (_lastDecl > 0)
@@ -390,7 +386,7 @@ namespace System.Windows.Markup
         public string DefaultNamespace()
         {
              string defaultNs = LookupNamespace(string.Empty);
-             return (defaultNs == null) ? string.Empty : defaultNs;
+             return defaultNs ?? string.Empty;
          }
 #endif
 
@@ -611,10 +607,10 @@ namespace System.Windows.Markup
             CheckSealed();
             
             if (xmlNamespace == null)
-                throw new ArgumentNullException("xmlNamespace");
+                throw new ArgumentNullException(nameof(xmlNamespace));
 
             if (prefix == null)
-                throw new ArgumentNullException("prefix");
+                throw new ArgumentNullException(nameof(prefix));
 
             int lastScopeCount = _nsDeclarations[_lastDecl].ScopeCount;
 
@@ -661,12 +657,12 @@ namespace System.Windows.Markup
             {
                 if (xmlNamespace == null)
                 {
-                    throw new ArgumentNullException("xmlNamespace");
+                    throw new ArgumentNullException(nameof(xmlNamespace));
                 }
 
                 if (prefix == null)
                 {
-                    throw new ArgumentNullException("prefix");
+                    throw new ArgumentNullException(nameof(prefix));
                 }
 
                int lastScopeCount = _nsDeclarations[_lastDecl-1].ScopeCount;

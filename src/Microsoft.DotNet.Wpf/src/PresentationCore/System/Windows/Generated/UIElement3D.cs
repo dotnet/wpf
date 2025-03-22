@@ -11,21 +11,14 @@
 
 using MS.Internal;
 using MS.Internal.KnownBoxes;
-using MS.Internal.PresentationCore;
 using MS.Utility;
-using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Diagnostics;
-using System.Security;
 using System.Windows.Input;
 using System.Windows.Media.Animation;
 
-#pragma warning disable 1634, 1691  // suppressing PreSharp warnings
-
 namespace System.Windows
 {
-    partial class UIElement3D 
+    public partial class UIElement3D 
     {
         static private readonly Type _typeofThis = typeof(UIElement3D);
 
@@ -403,7 +396,8 @@ namespace System.Windows
                     EventHandlersStoreField.ClearValue(this);
                     WriteFlag(CoreFlags.ExistsEventHandlersStore, false);
                 }
-}
+
+            }
         }
 
         /// <summary>

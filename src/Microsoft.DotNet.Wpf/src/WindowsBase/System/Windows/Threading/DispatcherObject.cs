@@ -2,8 +2,6 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-using System;
-using System.Windows;
 using System.Threading;
 
 namespace System.Windows.Threading
@@ -115,10 +113,7 @@ namespace System.Windows.Threading
 
             // Note: a DispatcherObject that is not associated with a
             // dispatcher is considered to be free-threaded.
-            if(dispatcher != null)
-            {
-                dispatcher.VerifyAccess();
-            }
+            dispatcher?.VerifyAccess();
         }
 
         /// <summary>

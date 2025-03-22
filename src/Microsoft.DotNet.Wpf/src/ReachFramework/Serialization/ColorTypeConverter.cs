@@ -10,15 +10,10 @@
         colors to a Xps package.
 
 --*/
-using System;
-using System.Collections;
-using System.Collections.Specialized;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
 using System.Text;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
 using System.Windows.Xps.Packaging;
 
 namespace System.Windows.Xps.Serialization
@@ -160,7 +155,7 @@ namespace System.Windows.Xps.Serialization
             {
                 colorString = color.ToString(culture);
 
-                if (colorString.StartsWith("sc#", StringComparison.Ordinal) && colorString.Contains("E"))
+                if (colorString.StartsWith("sc#", StringComparison.Ordinal) && colorString.Contains('E'))
                 {
                     //
                     // Fix bug 1588888: Serialization produces non-compliant scRGB color string.

@@ -6,7 +6,6 @@
 // Description: Accessors for dynamic objects
 //
 
-using System;
 using SW = System.Windows;              // SR
 
 namespace MS.Internal.Data
@@ -31,8 +30,8 @@ namespace MS.Internal.Data
             return SW.SR.Format(SW.SR.PropertyPathNoProperty, target, "Items");
         }
 
-        Type _ownerType;
-        string _propertyName;
+        private Type _ownerType;
+        private string _propertyName;
     }
 
     #endregion DynamicObjectAccessor

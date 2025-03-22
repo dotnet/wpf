@@ -12,9 +12,7 @@
 //
 
 
-using System;
 using System.Windows.Threading;
-using System.Collections.Generic;
 
 using MS.Internal;
 using MS.Internal.TextFormatting;

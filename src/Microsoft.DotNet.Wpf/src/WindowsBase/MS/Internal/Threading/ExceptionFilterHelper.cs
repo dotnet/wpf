@@ -2,15 +2,9 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-//
-//
 // Description:  Internal class replicating the functionality of the
 //      former VB class of the same name.   It's no longer used internally, but
 //      exists solely for compat - in case anyone used private reflection.
-//
-
-using System;
-using System.Threading;
 
 namespace MS.Internal.Threading
 {
@@ -55,8 +49,8 @@ namespace MS.Internal.Threading
             return result;
         }
 
-        InternalRealCallDelegate _internalRealCall;
-        FilterExceptionDelegate _filterException;
-        CatchExceptionDelegate _catchException;
+        private InternalRealCallDelegate _internalRealCall;
+        private FilterExceptionDelegate _filterException;
+        private CatchExceptionDelegate _catchException;
     }
 }

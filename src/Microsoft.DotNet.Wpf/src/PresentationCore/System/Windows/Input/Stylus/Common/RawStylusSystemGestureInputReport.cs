@@ -2,11 +2,7 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-using System;
 using System.ComponentModel;
-using System.Security;
-using System.Windows.Input.StylusWisp;
-using SR = MS.Internal.PresentationCore.SR;
 
 namespace System.Windows.Input
 {
@@ -196,9 +192,9 @@ namespace System.Windows.Input
 
         /////////////////////////////////////////////////////////////////////
 
-        SystemGesture _id;
-        int _gestureX;// gesture location in tablet device coordinates
-        int _gestureY;
-        int _buttonState;
-}
+        private SystemGesture _id;
+        private int _gestureX; // gesture location in tablet device coordinates
+        private int _gestureY;
+        private int _buttonState;
+    }
 }

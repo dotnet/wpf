@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -11,22 +11,19 @@
 //
 //
 
-using System;
 using System.Collections;   // In order to use IEnumerator
-using System.Diagnostics;
-using MS.Utility;           // In order to use SR
 
 namespace System.Windows
 {
-/*
-    public delegate bool ParentTraversalCallback(FrameworkElement parentFE, FrameworkContentElement parentFCE, object data);
-    public delegate bool ChildTraversalCallback(FrameworkElement childFE, FrameworkContentElement childFCE, object child, object data);
-*/
-    
-/// <summary>
-/// Static helper functions for dealing with the logical tree
-/// </summary>
-public static class LogicalTreeHelper
+    /*
+        public delegate bool ParentTraversalCallback(FrameworkElement parentFE, FrameworkContentElement parentFCE, object data);
+        public delegate bool ChildTraversalCallback(FrameworkElement childFE, FrameworkContentElement childFCE, object child, object data);
+    */
+
+    /// <summary>
+    /// Static helper functions for dealing with the logical tree
+    /// </summary>
+    public static class LogicalTreeHelper
 {
     //------------------------------------------------------
     //
@@ -185,16 +182,10 @@ public static class LogicalTreeHelper
         ArgumentNullException.ThrowIfNull(current);
 
         FrameworkElement fe = current as FrameworkElement;
-        if (fe != null)
-        {
-            fe.BringIntoView();
-        }
+        fe?.BringIntoView();
 
         FrameworkContentElement fce = current as FrameworkContentElement;
-        if (fce != null)
-        {
-            fce.BringIntoView();
-        }
+        fce?.BringIntoView();
     }
 
 /*
@@ -371,10 +362,7 @@ public static class LogicalTreeHelper
             else
             {
                 FrameworkContentElement parentFCE = parent as FrameworkContentElement;
-                if (parentFCE != null)
-                {
-                    parentFCE.AddLogicalChild(child);
-                }
+                parentFCE?.AddLogicalChild(child);
             }
         }
     }
@@ -387,9 +375,9 @@ public static class LogicalTreeHelper
             {
                 parentFE.AddLogicalChild(child);
             }
-            else if (parentFCE != null)
+            else
             {
-                parentFCE.AddLogicalChild(child);
+                parentFCE?.AddLogicalChild(child);
             }
         }
     }
@@ -406,10 +394,7 @@ public static class LogicalTreeHelper
             else
             {
                 FrameworkContentElement parentFCE = parent as FrameworkContentElement;
-                if (parentFCE != null)
-                {
-                    parentFCE.RemoveLogicalChild(child);
-                }
+                parentFCE?.RemoveLogicalChild(child);
             }
         }
     }
@@ -482,7 +467,7 @@ public static class LogicalTreeHelper
             return _enumerator;
         }
 
-        IEnumerator _enumerator;
+            private IEnumerator _enumerator;
 
 
         internal static EnumeratorWrapper Empty
@@ -498,7 +483,7 @@ public static class LogicalTreeHelper
             }
         }
 
-        static EnumeratorWrapper _emptyInstance;
+            private static EnumeratorWrapper _emptyInstance;
     }
 }
 }

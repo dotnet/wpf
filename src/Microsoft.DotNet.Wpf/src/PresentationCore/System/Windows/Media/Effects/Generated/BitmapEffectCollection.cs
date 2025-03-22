@@ -10,40 +10,17 @@
 //
 
 using MS.Internal;
-using MS.Internal.Collections;
-using MS.Internal.KnownBoxes;
-using MS.Internal.PresentationCore;
 using MS.Utility;
-using System;
 using System.Collections;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Diagnostics;
-using System.Globalization;
-using System.Reflection;
-using System.Runtime.InteropServices;
-using System.ComponentModel.Design.Serialization;
-using System.Text;
-using System.Windows;
-using System.Windows.Media;
-using System.Windows.Media.Media3D;
 using System.Windows.Media.Animation;
 using System.Windows.Media.Composition;
 using System.Windows.Media.Imaging;
-using System.Windows.Markup;
-using System.Security;
-using SR=MS.Internal.PresentationCore.SR;
-// These types are aliased to match the unamanaged names used in interop
-using BOOL = System.UInt32;
-using WORD = System.UInt16;
-using Float = System.Single;
 
 namespace System.Windows.Media.Effects
 {
     /// <summary>
     /// A collection of BitmapEffect objects.
     /// </summary>
-
 
     public sealed partial class BitmapEffectCollection : Animatable, IList, IList<BitmapEffect>
     {
@@ -257,11 +234,14 @@ namespace System.Windows.Media.Effects
 
                 if (!Object.ReferenceEquals(_collection[ index ], value))
                 {
+
                     BitmapEffect oldValue = _collection[ index ];
                     OnFreezablePropertyChanged(oldValue, value);
 
                     _collection[ index ] = value;
-}
+
+
+                }
 
 
                 ++_version;
@@ -606,8 +586,10 @@ namespace System.Windows.Media.Effects
                 BitmapEffect newValue = (BitmapEffect) sourceBitmapEffectCollection._collection[i].Clone();
                 OnFreezablePropertyChanged(/* oldValue = */ null, newValue);
                 _collection.Add(newValue);
-}
-}
+
+            }
+
+        }
         /// <summary>
         /// Implementation of Freezable.CloneCurrentValueCore()
         /// </summary>
@@ -626,8 +608,10 @@ namespace System.Windows.Media.Effects
                 BitmapEffect newValue = (BitmapEffect) sourceBitmapEffectCollection._collection[i].CloneCurrentValue();
                 OnFreezablePropertyChanged(/* oldValue = */ null, newValue);
                 _collection.Add(newValue);
-}
-}
+
+            }
+
+        }
         /// <summary>
         /// Implementation of Freezable.GetAsFrozenCore()
         /// </summary>
@@ -646,8 +630,10 @@ namespace System.Windows.Media.Effects
                 BitmapEffect newValue = (BitmapEffect) sourceBitmapEffectCollection._collection[i].GetAsFrozen();
                 OnFreezablePropertyChanged(/* oldValue = */ null, newValue);
                 _collection.Add(newValue);
-}
-}
+
+            }
+
+        }
         /// <summary>
         /// Implementation of Freezable.GetCurrentValueAsFrozenCore()
         /// </summary>
@@ -666,8 +652,10 @@ namespace System.Windows.Media.Effects
                 BitmapEffect newValue = (BitmapEffect) sourceBitmapEffectCollection._collection[i].GetCurrentValueAsFrozen();
                 OnFreezablePropertyChanged(/* oldValue = */ null, newValue);
                 _collection.Add(newValue);
-}
-}
+
+            }
+
+        }
         /// <summary>
         /// Implementation of <see cref="System.Windows.Freezable.FreezeCore">Freezable.FreezeCore</see>.
         /// </summary>
@@ -771,6 +759,7 @@ namespace System.Windows.Media.Effects
 
             void IDisposable.Dispose()
             {
+
             }
 
             /// <summary>
@@ -939,6 +928,7 @@ namespace System.Windows.Media.Effects
                         BitmapEffect newValue = item;
                         OnFreezablePropertyChanged(/* oldValue = */ null, newValue);
                         _collection.Add(newValue);
+
                     }
 
                     needsItemValidation = false;
@@ -954,6 +944,7 @@ namespace System.Windows.Media.Effects
                         throw new System.ArgumentException(SR.Collection_NoNull);
                     }
                     OnFreezablePropertyChanged(/* oldValue = */ null, item);
+
                 }
             }
 

@@ -1,28 +1,17 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-
-/***************************************************************************\
-*
-*
-* This class wraps a System.Diagnostics.TraceSource.  The purpose of
-* wrapping is so that we can have a common point of enabling/disabling
-* without perf effect.  This is also where we standardize the output
-* we produce, to enable more effective trace filters, trace listeners,
-* and post-processing tools.
-*
-*
-\***************************************************************************/
+// This class wraps a System.Diagnostics.TraceSource.  The purpose of
+// wrapping is so that we can have a common point of enabling/disabling
+// without perf effect.  This is also where we standardize the output
+// we produce, to enable more effective trace filters, trace listeners,
+// and post-processing tools.
 
 #define TRACE
 
-using System;
-using System.Diagnostics;
 using System.Globalization;
-using System.Security;
 using System.Text;
-using System.Reflection;
 using System.Collections;
 using System.Windows;
 
@@ -161,7 +150,7 @@ namespace MS.Internal
         //
         // Internal initialization
         //
-        void Initialize( )
+        private void Initialize( )
         {
             // Decide if we should actually create a TraceSource instance (doing so isn't free,
             // so we don't want to do it if we can avoid it).
@@ -371,16 +360,6 @@ namespace MS.Internal
             if (value == null)
                 return "<null>";
 
-            // PreSharp uses message numbers that the C# compiler doesn't know about.
-            // Disable the C# complaints, per the PreSharp documentation.
-            #pragma warning disable 1634, 1691
-
-            // PreSharp complains about catching NullReference (and other) exceptions.
-            // In this case, these are precisely the ones we want to catch the most,
-            // so that we can still print some kind of diagnostic information even
-            // about objects that implement ToString poorly.
-            #pragma warning disable 56500
-
             string result;
             try
             {
@@ -390,9 +369,6 @@ namespace MS.Internal
             {
                 result = "<unprintable>";
             }
-
-            #pragma warning restore 56500
-            #pragma warning restore 1634, 1691
 
             return AntiFormat(result);
         }
@@ -419,7 +395,7 @@ namespace MS.Internal
                 else
                 {
                     // duplicate the formatting character
-                    sb.Append(s.Substring(index, formatIndex - index + 1));
+                    sb.Append(s.AsSpan(index, formatIndex - index + 1));
                     sb.Append(s[formatIndex]);
 
                     index = formatIndex + 1;
@@ -429,7 +405,7 @@ namespace MS.Internal
 
             if (index <= lengthMinus1)
             {
-                sb.Append(s.Substring(index));
+                sb.Append(s.AsSpan(index));
             }
 
             return sb.ToString();
@@ -492,37 +468,37 @@ namespace MS.Internal
         //
 
         // Flag showing if tracing is enabled.  See also the IsEnabledOverride property
-        bool _isEnabled = false;
+        private bool _isEnabled = false;
 
         // If this is set, then having the debugger attached is an excuse to be enabled,
         // even if the registry flag isn't set.
-        bool _enabledByDebugger = false;
+        private bool _enabledByDebugger = false;
 
         // If this flag is set, Trace doesn't automatically add the .GetHashCode and .GetType
         // to the format string.
-        bool _suppressGeneratedParameters = false;
+        private bool _suppressGeneratedParameters = false;
 
         // If this flag is set, tracing will be enabled, as if it was set in the registry.
-        static bool _hasBeenRefreshed = false;
+        private static bool _hasBeenRefreshed = false;
 
         // Delegates to create and remove the TraceSource instance
-        GetTraceSourceDelegate _getTraceSourceDelegate;
-        ClearTraceSourceDelegate _clearTraceSourceDelegate;
+        private GetTraceSourceDelegate _getTraceSourceDelegate;
+        private ClearTraceSourceDelegate _clearTraceSourceDelegate;
 
         // Cache of TraceSource instance; real value resides in PresentationTraceSources.
-        TraceSource _traceSource;
+        private TraceSource _traceSource;
 
         // Cache used by IsWpfTracingEnabledInRegistry
-        static Nullable<bool> _enabledInRegistry = null;
+        private static Nullable<bool> _enabledInRegistry = null;
 
-        static char[] FormatChars = new char[]{ '{', '}' };
+        private static char[] FormatChars = new char[]{ '{', '}' };
     }
 
     internal delegate void AvTraceEventHandler( AvTraceBuilder traceBuilder, object[] parameters, int start );
 
     internal class AvTraceBuilder
     {
-        StringBuilder  _sb;
+        private StringBuilder  _sb;
 
         public AvTraceBuilder()
         {
@@ -544,8 +520,7 @@ namespace MS.Internal
             object[] argstrs = new object[args.Length];
             for (int i = 0; i < args.Length; ++i)
             {
-                string s = args[i] as string;
-                argstrs[i] = (s != null) ? s : AvTrace.ToStringHelper(args[i]);
+                argstrs[i] = (args[i] is string s) ? s : AvTrace.ToStringHelper(args[i]);
             }
             _sb.AppendFormat( CultureInfo.InvariantCulture, message, argstrs );
         }

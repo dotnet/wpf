@@ -7,9 +7,6 @@
 //
 //  Contents:  OpentTypeLayout substitution classes
 
-using System.Diagnostics;
-using System.Security;
-using System;
 using System.IO;
 
 namespace MS.Internal.Shaping
@@ -551,7 +548,7 @@ namespace MS.Internal.Shaping
         private int offset;
     }
 
-    struct AlternateSubstitutionSubtable
+    internal struct AlternateSubstitutionSubtable
     {
         private const int offsetFormat              = 0;
         private const int offsetCoverage            = 2;

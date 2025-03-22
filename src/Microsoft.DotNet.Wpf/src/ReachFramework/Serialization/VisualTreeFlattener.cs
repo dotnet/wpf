@@ -3,17 +3,10 @@
 // See the LICENSE file in the project root for more information.
 
 
-using System;
-using System.Diagnostics;
 using System.Collections;
-using System.Collections.Generic;
-using System.Text;
 using System.IO;
 using System.Xml;
 using System.ComponentModel;
-using System.Security;
-
-using System.Windows;
 using System.Windows.Documents;
 using System.Windows.Media;
 using System.Windows.Media.Effects;
@@ -47,8 +40,8 @@ namespace MS.Internal.ReachFramework
 
     internal class LooseImageSourceTypeConverter : ImageSourceTypeConverter
     {
-        int m_bitmapId;
-        String m_mainFile;
+        private int m_bitmapId;
+        private String m_mainFile;
 
         public LooseImageSourceTypeConverter(String mainFile)
         {
@@ -148,7 +141,7 @@ namespace MS.Internal.ReachFramework
                 index = m_mainFile.Length;
             }
 
-            string uri = m_mainFile.Substring(0, index) + "_" + bitmapName;
+            string uri = string.Concat(m_mainFile.Substring(0, index), "_", bitmapName);
 
             Stream bitmapStreamDest = new System.IO.FileStream(uri, FileMode.Create, FileAccess.ReadWrite, FileShare.None);
 
@@ -166,8 +159,8 @@ namespace MS.Internal.ReachFramework
 
     internal class LooseFileSerializationManager : PackageSerializationManager
     {
-        String m_mainFile;
-        LooseImageSourceTypeConverter m_imageConverter;
+        private String m_mainFile;
+        private LooseImageSourceTypeConverter m_imageConverter;
 
         public LooseFileSerializationManager(String mainFile)
         {
@@ -304,8 +297,8 @@ namespace System.Windows.Xps.Serialization
     {
         #region Private Fields
 
-        DrawingContextFlattener _dcf;
-        Dictionary<String, int>      _nameList;
+        private DrawingContextFlattener _dcf;
+        private Dictionary<String, int>      _nameList;
 
         //
         // Fix bug 1514270: Any VisualBrush.Visual rasterization occurs in brush-space, which
@@ -382,7 +375,7 @@ namespace System.Windows.Xps.Serialization
         /// 1: single primitive
         /// 2: complex
         /// </summary>
-        static int Complexity(System.Windows.Media.Drawing drawing)
+        private static int Complexity(System.Windows.Media.Drawing drawing)
         {
             if (drawing == null)
             {

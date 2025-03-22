@@ -2,17 +2,8 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-//
-//
-// Description:
-//  This is partial class declaration of the InternalSafeNativeMethods
-//   specifically the private sub class PrivateUnsafeNativeMethods with the PInvoke declarations
-//
-//
-//
-//
-
 #define PRESENTATION_HOST_DLL
+
 // We use this #ifdef to control the usage of the intermediate unmanaged 
 // DLL that is used to satisfy requirement of the DRM DK SP1 Lock box. 
 // SP1 Lock box requires that certain functions (DRMGetBoundLicenseObject, 
@@ -24,10 +15,8 @@
 // debugging of the client applications)
 
 
-using System;
 using System.Runtime.InteropServices;
 using System.Text;
-using System.Security;
 
 using MS.Win32;
 

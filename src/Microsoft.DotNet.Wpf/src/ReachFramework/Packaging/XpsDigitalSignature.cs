@@ -11,20 +11,11 @@
                                    
                                                                              
 --*/
-using MS.Internal;
-using System;
-using System.Windows.Documents;
 using System.IO.Packaging;
-using System.Security;                                  // for SecurityCritical tag
-using System.Security.Cryptography;
 using System.Security.Cryptography.X509Certificates;
 using System.Security.Cryptography.Xml;
-using System.Collections;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Xml;
-
-using PackUriHelper = System.IO.Packaging.PackUriHelper;
 namespace System.Windows.Xps.Packaging
 {
     /// <summary>
@@ -314,7 +305,7 @@ namespace System.Windows.Xps.Packaging
         }
         #endregion Internal property
         #region Private methods
-        bool CollectionContainsCollection(
+        private bool CollectionContainsCollection(
             ICollection<Uri> containingCollection, 
             ICollection<Uri> containedCollection
             )
@@ -354,7 +345,7 @@ namespace System.Windows.Xps.Packaging
            string contentType =  _package.CurrentXpsManager.MetroPackage.GetPart(uri).ContentType;
            return( OptionalSignedParts.ContainsKey( contentType ) );
         }
-         
+
         /// <summary>
         /// This determines if the contained collection is a subset of the containting collection
         /// For each Source Uri in the Containging collection there must be the coorisponding
@@ -363,7 +354,7 @@ namespace System.Windows.Xps.Packaging
         /// <param name="containingCollection">The super set collection</param>
         /// <param name="containedCollection">The sub set collection</param>
         /// <returns>returns true if is the contained collection is a subset of the containing collection</returns>
-        bool SelectorListContainsSelectorList(
+        private bool SelectorListContainsSelectorList(
             ReadOnlyCollection<PackageRelationshipSelector> containingCollection,
             List<PackageRelationshipSelector> containedCollection
             )
@@ -422,7 +413,8 @@ namespace System.Windows.Xps.Packaging
             }
             return contained;
         }
-        Dictionary<string, string> OptionalSignedParts
+
+        private Dictionary<string, string> OptionalSignedParts
         {
             get
             {

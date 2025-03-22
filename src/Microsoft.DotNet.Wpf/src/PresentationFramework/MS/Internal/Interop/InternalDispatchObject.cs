@@ -40,16 +40,13 @@
 //
 
 
-using System;
-using System.Security;
 using System.Reflection;
-using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using System.Globalization;
 
 namespace MS.Internal.Interop
 {
-internal abstract class InternalDispatchObject<IDispInterface> : IReflect
+    internal abstract class InternalDispatchObject<IDispInterface> : IReflect
 {
     /// <summary>
     /// DISPID->MethodInfo map used by InvokeMember()
@@ -119,7 +116,7 @@ internal abstract class InternalDispatchObject<IDispInterface> : IReflect
         // We never expect to get a real method name here--see the explanation in GetMethods().
         if (name.StartsWith("[DISPID=", StringComparison.OrdinalIgnoreCase))
         {
-            int dispid = int.Parse(name.Substring(8, name.Length-9), CultureInfo.InvariantCulture);
+            int dispid = int.Parse(name.AsSpan(8, name.Length-9), CultureInfo.InvariantCulture);
             MethodInfo method;
             if (_dispId2MethodMap.TryGetValue(dispid, out method))
             {

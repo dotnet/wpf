@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -6,32 +6,22 @@
 // Description:  
 //      WebBrowser is a wrapper for the webbrowser activex control     
 
-using System;
-using System.ComponentModel;
 using System.Runtime.InteropServices;
-using System.Windows;
 using MS.Win32;
-using System.Security; 
 using System.Windows.Controls.Primitives; //PopupRoot
-using MS.Internal.Utility ;
+using MS.Internal.Utility;
 using MS.Internal.AppModel; //RootBrowserWindow
 using System.Windows.Interop;
 using System.Windows.Input;
-using System.Windows.Threading;
-using System.Diagnostics;
 using System.Windows.Navigation;
 using System.IO; //Stream
 using System.Threading; // thread
 using MS.Internal;
 using MS.Internal.Controls;
-using MS.Internal.Interop;
 using MS.Internal.Telemetry.PresentationFramework;
-using System.IO.Packaging;
 using System.Diagnostics.CodeAnalysis;
 
 using HRESULT = MS.Internal.Interop.HRESULT;
-using SafeSecurityHelper=MS.Internal.PresentationFramework.SafeSecurityHelper;
-using SecurityHelperPF=MS.Internal.PresentationFramework.SecurityHelper;
 using PackUriHelper = MS.Internal.IO.Packaging.PackUriHelper;
 
 /* Overview of Keyboard Input Routing for the WebOC
@@ -178,7 +168,7 @@ namespace System.Windows.Controls
         {
             if (string.IsNullOrEmpty(text))
             {
-                throw new ArgumentNullException("text");
+                throw new ArgumentNullException(nameof(text));
             }
 
             MemoryStream ms = new MemoryStream(text.Length);
@@ -265,7 +255,7 @@ namespace System.Windows.Controls
 
             if (string.IsNullOrEmpty(scriptName))
             {
-                throw new ArgumentNullException("scriptName");
+                throw new ArgumentNullException(nameof(scriptName));
             }
 
             UnsafeNativeMethods.IDispatchEx scriptObjectEx = null;
@@ -283,8 +273,10 @@ namespace System.Windows.Controls
             object retVal = null;            
             if (scriptObjectEx != null)
             {
-                NativeMethods.DISPPARAMS dp = new NativeMethods.DISPPARAMS();
-                dp.rgvarg = IntPtr.Zero;
+                NativeMethods.DISPPARAMS dp = new NativeMethods.DISPPARAMS
+                {
+                    rgvarg = IntPtr.Zero
+                };
                 try
                 {
                     // If we use reflection to call script code, we need to Assert for the UnmanagedCode permission. 
@@ -436,7 +428,7 @@ namespace System.Windows.Controls
                 {
                     Type t = value.GetType();
 
-                    if (!System.Runtime.InteropServices.MarshalLocal.IsTypeVisibleFromCom(t))
+                    if (!Marshal.IsTypeVisibleFromCom(t))
                     {
                         throw new ArgumentException(SR.NeedToBeComVisible);
                     }
@@ -879,7 +871,7 @@ namespace System.Windows.Controls
 
             if (!source.IsAbsoluteUri)
             {
-                throw new ArgumentException(SR.AbsoluteUriOnly, "source");
+                throw new ArgumentException(SR.AbsoluteUriOnly, nameof(source));
             }
 
             // Resolve Pack://siteoforigin.
@@ -990,8 +982,7 @@ namespace System.Windows.Controls
         // Do not reference this directly. Use the AxIWebBrowser2 property instead since that
         // will cause the object to be instantiated if it is not already created.
         private UnsafeNativeMethods.IWebBrowser2  _axIWebBrowser2;
-
-        WebOCHostingAdaptor                       _hostingAdaptor;
+        private WebOCHostingAdaptor                       _hostingAdaptor;
 
         // To hook up events from the native WebBrowser
         private ConnectionPointCookie             _cookie;

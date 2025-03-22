@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -6,15 +6,11 @@
 //
 
 using System;
-using System.Collections;
 using System.Globalization;
 using System.Runtime.InteropServices;
-using System.ComponentModel;
-using System.Text;
 using System.Windows.Automation;
 using System.Windows.Automation.Provider;
 using System.Windows;
-using System.Diagnostics;
 using MS.Win32;
 using NativeMethodsSetLastError = MS.Internal.UIAutomationClientSideProviders.NativeMethodsSetLastError;
 
@@ -24,7 +20,7 @@ namespace MS.Internal.AutomationProxies
     // NOTE: Since this proxy has its own HWND, it will be always discovered by UIAutomation
     // and placed where it should be
     // we MUST NEVER create a hard connection between us and header (via _parent) ourselves
-    class WindowsSysHeader: ProxyHwnd
+    internal class WindowsSysHeader: ProxyHwnd
     {
         //------------------------------------------------------
         //
@@ -80,14 +76,11 @@ namespace MS.Internal.AutomationProxies
                     IntPtr hwndParent = NativeMethodsSetLastError.GetAncestor (hwnd, NativeMethods.GA_PARENT);
                     if (hwndParent != IntPtr.Zero)
                     {
-                        if (Misc.GetClassName(hwndParent).IndexOf("SysListView32", StringComparison.Ordinal) >= 0)
+                        if (Misc.GetClassName(hwndParent).Contains("SysListView32", StringComparison.Ordinal))
                         {
                             // Notify the Listview that the header Change
                             WindowsListView wlv = (WindowsListView) WindowsListView.Create (hwndParent, 0);
-                            if (wlv != null)
-                            {
-                                wlv.DispatchEvents (eventId, idProp, idObject, idChild);
-                            }
+                            wlv?.DispatchEvents (eventId, idProp, idObject, idChild);
                         }
                     }
                 }
@@ -155,9 +148,10 @@ namespace MS.Internal.AutomationProxies
         // Returns a Proxy element corresponding to the specified screen coordinates.
         internal override ProxySimple ElementProviderFromPoint (int x, int y)
         {
-            NativeMethods.HDHITTESTINFO HitTestInfo = new NativeMethods.HDHITTESTINFO();
-
-            HitTestInfo.pt = new NativeMethods.Win32Point (x, y);
+            NativeMethods.HDHITTESTINFO HitTestInfo = new NativeMethods.HDHITTESTINFO
+            {
+                pt = new NativeMethods.Win32Point(x, y)
+            };
 
             int index = -1;
 
@@ -251,7 +245,7 @@ namespace MS.Internal.AutomationProxies
             IntPtr hwndParent = NativeMethodsSetLastError.GetAncestor (_hwnd, NativeMethods.GA_PARENT);
             if (hwndParent != IntPtr.Zero)
             {
-                if (Misc.GetClassName(hwndParent).IndexOf("SysListView32", StringComparison.Ordinal) >= 0)
+                if (Misc.GetClassName(hwndParent).Contains("SysListView32", StringComparison.Ordinal))
                 {
                     // Determine the number of pixels or columns to scroll horizontally.
                     int pixels = 0;
@@ -473,10 +467,7 @@ namespace MS.Internal.AutomationProxies
                 }
 
                 WindowsSysHeader parent = _parent as WindowsSysHeader;
-                if (parent != null)
-                {
-                    parent.ScrollIntoView(this);
-                }
+                parent?.ScrollIntoView(this);
 
                 NativeMethods.Win32Point pt;
 
@@ -721,10 +712,7 @@ namespace MS.Internal.AutomationProxies
                 }
 
                 WindowsSysHeader parent = _parent as WindowsSysHeader;
-                if (parent != null)
-                {
-                    parent.ScrollIntoView(this);
-                }
+                parent?.ScrollIntoView(this);
 
 
                 Rect rect = XSendMessage.GetItemRect(_hwnd, NativeMethods.HDM_GETITEMDROPDOWNRECT, _item);

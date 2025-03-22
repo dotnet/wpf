@@ -2,19 +2,7 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-//
-//
-//
-//  Contents:  API for iterating a tree of objects for serialization
-//
-//
-
-using System;
 using System.ComponentModel;
-using System.Collections.Generic;
-using System.Reflection;
-using System.Text;
-using System.Windows.Markup;
 
 namespace System.Windows.Markup.Primitives
 {
@@ -54,7 +42,7 @@ namespace System.Windows.Markup.Primitives
         /// If the MarkupItem is in a dictionary, one of the properties of the item will have an IsKey set to true. 
         /// This is the value for the dictionary key.
         /// </summary>
-        public virtual IEnumerable<MarkupProperty> Properties { get { return GetProperties(true /*mapToConstructorArgs*/); } }
+        public virtual IEnumerable<MarkupProperty> Properties { get { return GetProperties(mapToConstructorArgs: true); } }
         internal abstract IEnumerable<MarkupProperty> GetProperties(bool mapToConstructorArgs);
 
         /// <summary>

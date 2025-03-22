@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -47,7 +47,7 @@ namespace System.Windows.Markup
         /// <returns> The object to set on this property.</returns>
         public override object ProvideValue(IServiceProvider serviceProvider)
         {
-            if (_member == null)
+            if (_member is null)
             {
                 throw new InvalidOperationException(SR.MarkupExtensionStaticMember);
             }
@@ -55,7 +55,7 @@ namespace System.Windows.Markup
             Type type = MemberType;
             string fieldString;
             string typeNameForError = null;
-            if (type != null)
+            if (type is not null)
             {
                 fieldString = _member;
                 typeNameForError = type.FullName;
@@ -80,8 +80,7 @@ namespace System.Windows.Markup
 
                 ArgumentNullException.ThrowIfNull(serviceProvider);
 
-                IXamlTypeResolver xamlTypeResolver = serviceProvider.GetService(typeof(IXamlTypeResolver)) as IXamlTypeResolver;
-                if (xamlTypeResolver == null)
+                if (serviceProvider.GetService(typeof(IXamlTypeResolver)) is not IXamlTypeResolver xamlTypeResolver)
                 {
                     throw new ArgumentException(SR.Format(SR.MarkupExtensionNoContext, GetType().Name, nameof(IXamlTypeResolver)));
                 }
@@ -122,27 +121,29 @@ namespace System.Windows.Markup
             do
             {
                 FieldInfo field = currentType.GetField(name, BindingFlags.Public | BindingFlags.Static);
-                if (field != null)
+                if (field is not null)
                 {
                     value = field.GetValue(null);
                     return true;
                 }
 
                 currentType = currentType.BaseType;
-            } while(currentType != null);
+            }
+            while (currentType is not null);
 
             currentType = type;
             do
             {
                 PropertyInfo prop = currentType.GetProperty(name, BindingFlags.Public | BindingFlags.Static);
-                if (prop != null)
+                if (prop is not null)
                 {
-                    value = prop.GetValue(null,null);
+                    value = prop.GetValue(null, null);
                     return true;
                 }
 
                 currentType = currentType.BaseType;
-            } while(currentType != null);
+            }
+            while (currentType is not null);
 
             value = null;
             return false;

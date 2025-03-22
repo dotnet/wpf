@@ -3,20 +3,13 @@
 // See the LICENSE file in the project root for more information.
 
 using System;
-using System.Xml;
-using System.IO;
 using System.Text;
 using System.Collections;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Reflection;
-using System.Threading;
 using System.Globalization;
-using System.Security;
 using MS.Utility;
-using System.Collections.Specialized;
-using System.Runtime.InteropServices;
 using MS.Internal.Xaml.Parser;
 
 #if PBTCOMPILER
@@ -1465,8 +1458,11 @@ namespace System.Windows.Markup
                 // if the prefix was "" then
                 // 1) normal properties resolve to the parent Tag namespace.
                 // 2) Attached properties resolve to the "" default namespace.
-                int dotIndex = name.IndexOf('.');
-                if (-1 == dotIndex)
+#if !NETFX
+                if (!name.Contains('.'))
+#else
+                if (!name.Contains("."))
+#endif
                     attribNamespaceURI = parentURI;
                 else
                     attribNamespaceURI = _parserHelper.LookupNamespace("");
@@ -1625,7 +1621,7 @@ namespace System.Windows.Markup
                     if (builder == null)
                     {
                         builder = new StringBuilder(value.Length);
-                        builder.Append(value.Substring(0,i));
+                        builder.Append(value, 0, i);
                     }
                     noEscape = false;
                 }
@@ -1648,7 +1644,7 @@ namespace System.Windows.Markup
         /// properties here, since MarkupExtensions don't support events or
         /// DependencyProperties.
         /// </summary>
-        AttributeContext GetAttributeContext(
+        private AttributeContext GetAttributeContext(
                 Type   elementBaseType,
                 string elementBaseTypeNamespaceUri,
                 string attributeNamespaceUri,
@@ -1690,7 +1686,7 @@ namespace System.Windows.Markup
         /// <summary>
         /// Throw a XamlParseException
         /// </summary>
-        void ThrowException(
+        private void ThrowException(
             string id,
             string parameter1,
             int    lineNumber,
@@ -1703,7 +1699,7 @@ namespace System.Windows.Markup
         /// <summary>
         /// Throw a XamlParseException
         /// </summary>
-        void ThrowException(
+        private void ThrowException(
             string id,
             string parameter1,
             string parameter2,
@@ -1717,7 +1713,7 @@ namespace System.Windows.Markup
         /// <summary>
         /// Throw a XamlParseException
         /// </summary>
-        void ThrowException(
+        private void ThrowException(
             string id,
             string parameter1,
             string parameter2,
@@ -1732,7 +1728,7 @@ namespace System.Windows.Markup
         /// <summary>
         /// Throw a XamlParseException
         /// </summary>
-        void ThrowExceptionWithLine(
+        private void ThrowExceptionWithLine(
             string message,
             int    lineNumber,
             int    linePosition)

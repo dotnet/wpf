@@ -11,9 +11,6 @@
 *
 \***************************************************************************/
 
-using System.Collections;       // IDictionary
-using System.Diagnostics;       // Debug.Assert
-
 namespace System.Windows
 {
     internal struct EffectiveValueEntry
@@ -22,8 +19,10 @@ namespace System.Windows
 
         internal static EffectiveValueEntry CreateDefaultValueEntry(DependencyProperty dp, object value)
         {
-            EffectiveValueEntry entry = new EffectiveValueEntry(dp, BaseValueSourceInternal.Default);
-            entry.Value = value;
+            EffectiveValueEntry entry = new EffectiveValueEntry(dp, BaseValueSourceInternal.Default)
+            {
+                Value = value
+            };
             return entry;
 }
 
@@ -337,17 +336,21 @@ namespace System.Windows
                 // new value for the expression has not been evaluated yet.
                 // In the intermediate we need to return the default value
                 // for the property. This problem was manifested in DRTDocumentViewer.
-                EffectiveValueEntry unsetEntry = new EffectiveValueEntry();
-                unsetEntry.BaseValueSourceInternal = BaseValueSourceInternal;
-                unsetEntry.PropertyIndex = PropertyIndex;
+                EffectiveValueEntry unsetEntry = new EffectiveValueEntry
+                {
+                    BaseValueSourceInternal = BaseValueSourceInternal,
+                    PropertyIndex = PropertyIndex
+                };
                 return unsetEntry;
             }
 
             // else entry has modifiers
-            EffectiveValueEntry entry = new EffectiveValueEntry();
-            entry.BaseValueSourceInternal = BaseValueSourceInternal;
-            entry.PropertyIndex = PropertyIndex;
-            entry.IsDeferredReference = IsDeferredReference;
+            EffectiveValueEntry entry = new EffectiveValueEntry
+            {
+                BaseValueSourceInternal = BaseValueSourceInternal,
+                PropertyIndex = PropertyIndex,
+                IsDeferredReference = IsDeferredReference
+            };
 
             // If the property has a modifier return the modified value
             Debug.Assert(ModifiedValue != null);
@@ -632,8 +635,7 @@ namespace System.Windows
         {
             get
             {
-                BaseValueWeakReference wr = _baseValue as BaseValueWeakReference;
-                return (wr != null) ? wr.Target : _baseValue;
+                return (_baseValue is BaseValueWeakReference wr) ? wr.Target : _baseValue;
             }
             set { _baseValue = value; }
         }
@@ -672,7 +674,7 @@ namespace System.Windows
         private object _animatedValue;
         private object _coercedValue;
 
-        class BaseValueWeakReference : WeakReference
+        private class BaseValueWeakReference : WeakReference
         {
             public BaseValueWeakReference(object target) : base(target) {}
         }

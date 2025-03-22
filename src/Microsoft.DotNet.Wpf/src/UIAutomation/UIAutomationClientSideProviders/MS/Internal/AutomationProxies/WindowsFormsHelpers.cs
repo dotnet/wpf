@@ -9,17 +9,13 @@
 //
 
 using System;
-using System.Text;
-using System.Collections;
-using System.Windows.Automation;
 using System.Windows.Automation.Provider;
-using System.Runtime.InteropServices;
 using MS.Win32;
 
 namespace MS.Internal.AutomationProxies
 {
     // Helper static class used by the Win32 proxies to get Winforms information
-    static class WindowsFormsHelper
+    internal static class WindowsFormsHelper
     {
         #region Proxy Create
 

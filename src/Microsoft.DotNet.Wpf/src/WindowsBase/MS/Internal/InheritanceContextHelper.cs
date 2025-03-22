@@ -2,17 +2,9 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-/***************************************************************************\
-*
-*
-* This file holds a helper class for DO subclasses that implement an
-* inheritance context.
-*
-*
-\***************************************************************************/
+// This file holds a helper class for DO subclasses that implement an
+// inheritance context.
 
-
-using System;
 using System.Windows;
 
 namespace MS.Internal
@@ -31,10 +23,7 @@ namespace MS.Internal
             DependencyObject context,
             DependencyObject newValue )
         {
-            if (context != null)
-            {
-                context.ProvideSelfAsInheritanceContext(newValue, null);
-            }
+            context?.ProvideSelfAsInheritanceContext(newValue, null);
         }
 
         //--------------------------------------------------------------------

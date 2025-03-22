@@ -1,17 +1,14 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
 using MS.Internal;
 using MS.Win32;
-using System.Diagnostics;
 using System.Globalization;
-using System.Security;
 using System.Windows.Input.StylusPlugIns;
 using System.Windows.Interop;
 using System.Windows.Media;
 using System.Windows.Threading;
-using SR = MS.Internal.PresentationCore.SR;
 
 namespace System.Windows.Input.StylusWisp
 {
@@ -135,48 +132,18 @@ namespace System.Windows.Input.StylusWisp
         /// <summary>
         ///     Returns the PresentationSource that is reporting input for this device.
         /// </summary>
-        internal override PresentationSource ActiveSource
-        {
-            get
-            {
-                if (_inputSource != null)
-                {
-                    return _inputSource.Value;
-                }
-                return null;
-            }
-        }
+        internal override PresentationSource ActiveSource => _inputSource;
 
         /// <summary>
         ///     Returns the PresentationSource that is reporting input for this device.
         /// </summary>
-        internal override PresentationSource CriticalActiveSource
-        {
-            get
-            {
-                if (_inputSource != null)
-                {
-                    return _inputSource.Value;
-                }
-                return null;
-            }
-        }
+        internal override PresentationSource CriticalActiveSource => _inputSource;
 
         /// <summary>
         ///     Returns the currently active PenContext (if seen) for this device.
         ///     Gets set on InRange and cleared on the out of range event (that matches PenContext).
         /// </summary>
-        internal PenContext ActivePenContext
-        {
-            get
-            {
-                if (_activePenContext != null)
-                {
-                    return _activePenContext.Value;
-                }
-                return null;
-            }
-        }
+        internal PenContext ActivePenContext => _activePenContext;
 
         /////////////////////////////////////////////////////////////////////
         /// <summary>
@@ -279,10 +246,7 @@ namespace System.Windows.Input.StylusWisp
                 throw new InvalidOperationException(SR.Format(SR.Invalid_IInputElement, doStylusCapture.GetType()));
             }
 
-            if (doStylusCapture != null)
-            {
-                doStylusCapture.VerifyAccess();
-            }
+            doStylusCapture?.VerifyAccess();
 
             bool success = false;
 
@@ -352,13 +316,12 @@ namespace System.Windows.Input.StylusWisp
         {
             // Simulate a stylus move (if we are current stylus, inrange, visuals still valid to update
             // and has moved).
-            if (InRange && _inputSource != null && _inputSource.Value != null &&
-                _inputSource.Value.CompositionTarget != null && !_inputSource.Value.CompositionTarget.IsDisposed)
+            if (InRange && _inputSource?.CompositionTarget is { } target && !target.IsDisposed)
             {
-                Point ptDevice = PointUtil.ScreenToClient(_lastScreenLocation, _inputSource.Value);
+                Point ptDevice = PointUtil.ScreenToClient(_lastScreenLocation, _inputSource);
 
                 // GlobalHitTest always returns an IInputElement, so we are sure to have one.
-                IInputElement stylusOver = Input.StylusDevice.GlobalHitTest(_inputSource.Value, ptDevice);
+                IInputElement stylusOver = Input.StylusDevice.GlobalHitTest(_inputSource, ptDevice);
                 bool fOffsetChanged = false;
 
                 if (_stylusOver == stylusOver)
@@ -370,7 +333,7 @@ namespace System.Windows.Input.StylusWisp
                 if (fOffsetChanged || _stylusOver != stylusOver)
                 {
                     int timeStamp = Environment.TickCount;
-                    PenContext penContext = _stylusLogic.GetStylusPenContextForHwnd(_inputSource.Value, TabletDevice.Id);
+                    PenContext penContext = _stylusLogic.GetStylusPenContextForHwnd(_inputSource, TabletDevice.Id);
 
                     if (_eventStylusPoints != null &&
                         _eventStylusPoints.Count > 0 &&
@@ -389,18 +352,20 @@ namespace System.Windows.Input.StylusWisp
 
                         RawStylusInputReport report = new RawStylusInputReport(InputMode.Foreground,
                                                                              timeStamp,
-                                                                             _inputSource.Value,
+                                                                             _inputSource,
                                                                              penContext,
                                                                              InAir ? RawStylusActions.InAirMove : RawStylusActions.Move,
                                                                              TabletDevice.Id,
                                                                              Id,
-                                                                             data);
+                                                                             data)
+                        {
+                            Synchronized = true
+                        };
 
-
-                        report.Synchronized = true;
-
-                        InputReportEventArgs inputReportEventArgs = new InputReportEventArgs(StylusDevice, report);
-                        inputReportEventArgs.RoutedEvent = InputManager.PreviewInputReportEvent;
+                        InputReportEventArgs inputReportEventArgs = new InputReportEventArgs(StylusDevice, report)
+                        {
+                            RoutedEvent = InputManager.PreviewInputReportEvent
+                        };
 
                         _stylusLogic.InputManagerProcessInputEventArgs(inputReportEventArgs);
                     }
@@ -659,16 +624,20 @@ namespace System.Windows.Input.StylusWisp
                 // Send the LostStylusCapture and GotStylusCapture events.
                 if (oldStylusCapture != null)
                 {
-                    StylusEventArgs lostCapture = new StylusEventArgs(StylusDevice, timestamp);
-                    lostCapture.RoutedEvent = Stylus.LostStylusCaptureEvent;
-                    lostCapture.Source = oldStylusCapture;
+                    StylusEventArgs lostCapture = new StylusEventArgs(StylusDevice, timestamp)
+                    {
+                        RoutedEvent = Stylus.LostStylusCaptureEvent,
+                        Source = oldStylusCapture
+                    };
                     _stylusLogic.InputManagerProcessInputEventArgs(lostCapture);
                 }
                 if (_stylusCapture != null)
                 {
-                    StylusEventArgs gotCapture = new StylusEventArgs(StylusDevice, timestamp);
-                    gotCapture.RoutedEvent = Stylus.GotStylusCaptureEvent;
-                    gotCapture.Source = _stylusCapture;
+                    StylusEventArgs gotCapture = new StylusEventArgs(StylusDevice, timestamp)
+                    {
+                        RoutedEvent = Stylus.GotStylusCaptureEvent,
+                        Source = _stylusCapture
+                    };
                     _stylusLogic.InputManagerProcessInputEventArgs(gotCapture);
                 }
 
@@ -681,10 +650,10 @@ namespace System.Windows.Input.StylusWisp
                         IInputElement inputElementHit = _stylusCapture;
 
                         // See if we need to update over for subtree mode.
-                        if (CapturedMode == CaptureMode.SubTree && _inputSource != null && _inputSource.Value != null)
+                        if (CapturedMode == CaptureMode.SubTree && _inputSource != null)
                         {
-                            Point pt = _stylusLogic.DeviceUnitsFromMeasureUnits(_inputSource.Value, GetPosition(null));
-                            inputElementHit = FindTarget(_inputSource.Value, pt);
+                            Point pt = _stylusLogic.DeviceUnitsFromMeasureUnits(_inputSource, GetPosition(null));
+                            inputElementHit = FindTarget(_inputSource, pt);
                         }
 
                         ChangeStylusOver(inputElementHit);
@@ -692,11 +661,11 @@ namespace System.Windows.Input.StylusWisp
                     else
                     {
                         // Only try to update over if we have a valid input source.
-                        if (_inputSource != null && _inputSource.Value != null)
+                        if (_inputSource is not null)
                         {
                             Point pt = GetPosition(null); // relative to window (root element)
-                            pt = _stylusLogic.DeviceUnitsFromMeasureUnits(_inputSource.Value, pt); // change back to device coords.
-                            IInputElement currentOver = Input.StylusDevice.GlobalHitTest(_inputSource.Value, pt);
+                            pt = _stylusLogic.DeviceUnitsFromMeasureUnits(_inputSource, pt); // change back to device coords.
+                            IInputElement currentOver = Input.StylusDevice.GlobalHitTest(_inputSource, pt);
                             ChangeStylusOver(currentOver);
                         }
                     }
@@ -1209,7 +1178,7 @@ namespace System.Windows.Input.StylusWisp
             {
                 if (_inputSource != null)
                 {
-                    relativePresentationSource = _inputSource.Value;
+                    relativePresentationSource = _inputSource;
                 }
             }
 
@@ -1454,9 +1423,9 @@ namespace System.Windows.Input.StylusWisp
 
             _rawPosition = _eventStylusPoints[_eventStylusPoints.Count - 1];
 
-            _inputSource = new SecurityCriticalDataClass<PresentationSource>(inputSource);
+            _inputSource = inputSource;
 
-            if (inputSource != null)
+            if (inputSource is not null)
             {
                 // Update our screen position from this move.
                 Point pt = _stylusLogic.DeviceUnitsFromMeasureUnits(inputSource, (Point)_rawPosition);
@@ -1597,7 +1566,7 @@ namespace System.Windows.Input.StylusWisp
             // Make sure we clean the last _inputSource for down at this time.
             //_inputSourceForDown = null;
             if (inRange)
-                _activePenContext = new SecurityCriticalDataClass<PenContext>(penContext);
+                _activePenContext = penContext;
             else
                 _activePenContext = null;
         }
@@ -1673,7 +1642,7 @@ namespace System.Windows.Input.StylusWisp
                             }
 
                             _rawPosition = _eventStylusPoints[_eventStylusPoints.Count - 1];
-                            _inputSource = new SecurityCriticalDataClass<PresentationSource>(inputSource);
+                            _inputSource = inputSource;
                             Point pt = _stylusLogic.DeviceUnitsFromMeasureUnits(inputSource, (Point)_rawPosition);
                             _lastScreenLocation = PointUtil.ClientToScreen(pt, inputSource);
                         }
@@ -1723,8 +1692,10 @@ namespace System.Windows.Input.StylusWisp
                                                      actions,
                                                      (int)pt.X, (int)pt.Y, 0, IntPtr.Zero);
 
-                        InputReportEventArgs inputReportArgs = new InputReportEventArgs(StylusDevice, mouseInputReport);
-                        inputReportArgs.RoutedEvent = InputManager.PreviewInputReportEvent;
+                        InputReportEventArgs inputReportArgs = new InputReportEventArgs(StylusDevice, mouseInputReport)
+                        {
+                            RoutedEvent = InputManager.PreviewInputReportEvent
+                        };
                         _stylusLogic.InputManagerProcessInputEventArgs(inputReportArgs);
                     }
                 }
@@ -1756,8 +1727,8 @@ namespace System.Windows.Input.StylusWisp
                 else if (_stylusOver != null)
                 {
                     // Use our current input source (or one we're may be over) if no capture.
-                    mouseInputSource = (_inputSource != null && _inputSource.Value != null) ?
-                                            DetermineValidSource(_inputSource.Value, _eventStylusPoints, null) : null;
+                    mouseInputSource = (_inputSource is not null) ?
+                                            DetermineValidSource(_inputSource, _eventStylusPoints, null) : null;
                 }
             }
 
@@ -1977,49 +1948,49 @@ namespace System.Windows.Input.StylusWisp
 
         /////////////////////////////////////////////////////////////////////
 
-        WispTabletDevice _tabletDevice;
-        string _sName;
-        int _id;
-        bool _fInverted;
-        bool _fInRange;
-        StylusButtonCollection _stylusButtonCollection;
-        IInputElement _stylusOver;
+        private WispTabletDevice _tabletDevice;
+        private string _sName;
+        private int _id;
+        private bool _fInverted;
+        private bool _fInRange;
+        private StylusButtonCollection _stylusButtonCollection;
+        private IInputElement _stylusOver;
 #if MULTICAPTURE
         private DeferredElementTreeState _stylusOverTreeState;
 #endif
 
-        IInputElement _stylusCapture;
-        CaptureMode _captureMode;
+        private IInputElement _stylusCapture;
+        private CaptureMode _captureMode;
 #if MULTICAPTURE
         private DeferredElementTreeState _stylusCaptureWithinTreeState;
 #endif
-        StylusPoint _rawPosition = new StylusPoint(0, 0);
-        Point _rawElementRelativePosition = new Point(0, 0);
-        StylusPointCollection _eventStylusPoints;
+        private StylusPoint _rawPosition = new StylusPoint(0, 0);
+        private Point _rawElementRelativePosition = new Point(0, 0);
+        private StylusPointCollection _eventStylusPoints;
 
-        private SecurityCriticalDataClass<PresentationSource> _inputSource;
+        private PresentationSource _inputSource;
 
-        private SecurityCriticalDataClass<PenContext> _activePenContext;
+        private PenContext _activePenContext;
 
-        bool _needToSendMouseDown;
+        private bool _needToSendMouseDown;
         private Point _lastMouseScreenLocation = new Point(0, 0);
         private Point _lastScreenLocation = new Point(0, 0);
 
-        bool _fInAir = true;
-        bool _fLeftButtonDownTrigger = true; // default to left button down
-        bool _fGestureWasFired = true; // StylusDown resets this.
-        bool _fBlockMouseMoveChanges; // StylusDown sets to true, SystemGesture & StylusUp sets to false.
-        bool _fDetectedDrag; // StylusDown resets this.  Used for generating DoubleTap gestures.
+        private bool _fInAir = true;
+        private bool _fLeftButtonDownTrigger = true; // default to left button down
+        private bool _fGestureWasFired = true; // StylusDown resets this.
+        private bool _fBlockMouseMoveChanges; // StylusDown sets to true, SystemGesture & StylusUp sets to false.
+        private bool _fDetectedDrag; // StylusDown resets this.  Used for generating DoubleTap gestures.
 
         // Used to track the promoted mouse state.
-        MouseButtonState _promotedMouseState;
+        private MouseButtonState _promotedMouseState;
 
         // real time pen input info that is tracked per stylus device
-        StylusPlugInCollection _nonVerifiedTarget;
-        StylusPlugInCollection _verifiedTarget;
+        private StylusPlugInCollection _nonVerifiedTarget;
+        private StylusPlugInCollection _verifiedTarget;
 
-        object _rtiCaptureChanged = new object();
-        StylusPlugInCollection _stylusCapturePlugInCollection;
+        private object _rtiCaptureChanged = new object();
+        private StylusPlugInCollection _stylusCapturePlugInCollection;
 
 
         // Information used to distinguish double-clicks (actually, multi clicks) from

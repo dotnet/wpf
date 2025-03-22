@@ -1,12 +1,9 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
 // Description:
 // Common code to support the ITextPointerProvider interface
-
-// PRESHARP: In order to avoid generating warnings about unkown message numbers and unknown pragmas.
-#pragma warning disable 1634, 1691
 
 using System;
 using System.Collections;
@@ -16,7 +13,6 @@ using System.Windows;
 using System.Windows.Automation;
 using System.Windows.Automation.Provider;
 using System.Windows.Automation.Text;
-using System.ComponentModel;
 using MS.Win32;
 
 namespace MS.Internal.AutomationProxies
@@ -241,10 +237,7 @@ namespace MS.Internal.AutomationProxies
                     ITextRange range = _range.GetDuplicate();
                     range.End = range.Start + maxLength;
                     text = range.Text;
-                    // PerSharp/PreFast will flag this as a warning 6507/56507: Prefer 'string.IsNullOrEmpty(text)' over checks for null and/or emptiness.
-                    // An empty strings is desirable, not a null string.  Cannot use IsNullOrEmpty().
-                    // Suppress the warning.
-#pragma warning suppress 6507
+
                     Debug.Assert(text == null || text.Length == maxLength);
                 }
             }
@@ -729,7 +722,7 @@ namespace MS.Internal.AutomationProxies
                     else
                     {
                         // on subsequent iterations compare if the font name is the same.
-                        if (string.Compare(name, unitRange.Font.Name, StringComparison.Ordinal) != 0)
+                        if (!string.Equals(name, unitRange.Font.Name, StringComparison.Ordinal))
                         {
                             return TextPattern.MixedAttributeValue;
                         }

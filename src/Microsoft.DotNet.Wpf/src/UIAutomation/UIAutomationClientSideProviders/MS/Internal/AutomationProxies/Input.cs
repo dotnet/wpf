@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -51,13 +51,11 @@ namespace MS.Internal.AutomationProxies
         //  Constructors
         //
         //------------------------------------------------------
- 
+
         #region Constructors
 
         // Static class - Private to prevent creation
-        Input()
-        {
-        }
+        private Input() { }
 
         #endregion Constructors
 
@@ -109,8 +107,10 @@ namespace MS.Internal.AutomationProxies
                 intflags |= NativeMethods.MOUSEEVENTF_VIRTUALDESK;
             }
 
-            NativeMethods.INPUT mi = new NativeMethods.INPUT();
-            mi.type = NativeMethods.INPUT_MOUSE;
+            NativeMethods.INPUT mi = new NativeMethods.INPUT
+            {
+                type = NativeMethods.INPUT_MOUSE
+            };
             mi.union.mouseInput.dx = (int) x;
             mi.union.mouseInput.dy = (int)y;
             mi.union.mouseInput.mouseData = data;
@@ -124,8 +124,10 @@ namespace MS.Internal.AutomationProxies
         // Inject keyboard input into the system
         internal static void SendKeyboardInput( Key key, bool press )
         {
-            NativeMethods.INPUT ki = new NativeMethods.INPUT();
-            ki.type = NativeMethods.INPUT_KEYBOARD;
+            NativeMethods.INPUT ki = new NativeMethods.INPUT
+            {
+                type = NativeMethods.INPUT_KEYBOARD
+            };
             ki.union.keyboardInput.wVk = (short) KeyInterop.VirtualKeyFromKey( key );
             ki.union.keyboardInput.wScan = (short)SafeNativeMethods.MapVirtualKey(ki.union.keyboardInput.wVk, 0);
             int dwFlags = 0;
@@ -150,9 +152,10 @@ namespace MS.Internal.AutomationProxies
         // SendKeyboardInput does.
         internal static void SendKeyboardInputVK(short vk, bool press)
         {
-            NativeMethods.INPUT ki = new NativeMethods.INPUT();
-
-            ki.type = NativeMethods.INPUT_KEYBOARD;
+            NativeMethods.INPUT ki = new NativeMethods.INPUT
+            {
+                type = NativeMethods.INPUT_KEYBOARD
+            };
             ki.union.keyboardInput.wVk = vk;
             ki.union.keyboardInput.wScan = 0;
             ki.union.keyboardInput.dwFlags = press ? 0 : NativeMethods.KEYEVENTF_KEYUP;

@@ -1,27 +1,18 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
 // Description: Main class used by Automation clients, represents a UI element
 
-using System.Windows.Automation;
 using System.Windows.Automation.Provider;
-using System;
-using System.Runtime.Serialization;
 using System.Collections;
-using System.Collections.Specialized;
 using System.Diagnostics;
 using System.ComponentModel;
-using MS.Win32;
 using MS.Internal.Automation;
-using System.Runtime.InteropServices;
 
 #if EVENT_TRACING_PROPERTY
 using Microsoft.Win32.Diagnostics;
 #endif
-
-// PRESHARP: In order to avoid generating warnings about unkown message numbers and unknown pragmas.
-#pragma warning disable 1634, 1691
 
 namespace System.Windows.Automation
 {
@@ -512,9 +503,6 @@ namespace System.Windows.Automation
             }
 
             object value;
-            // PRESHARP will flag this as warning 56506/6506:Parameter 'property' to this public method must be validated: A null-dereference can occur here.
-            // False positive, property is checked, see above
-#pragma warning suppress 6506
              UiaCoreApi.UiaGetPropertyValue(_hnode, property.Id, out value);
             if (value != AutomationElement.NotSupported)
             {
@@ -1043,9 +1031,6 @@ namespace System.Windows.Automation
                 // Use (object) case to ensure we just do a ref check here, not call .Equals
                 if ((object)_cachedParent == (object)this)
                 {
-                    // PRESHARP will flag this as a warning 56503/6503: Property get methods should not throw exceptions
-                    // We've spec'd as throwing an Exception, and that's what we do PreSharp shouldn't complain
-#pragma warning suppress 6503
                     throw new InvalidOperationException(SR.CachedPropertyNotRequested);
                 }
 
@@ -1075,9 +1060,6 @@ namespace System.Windows.Automation
                 // Use (object) case to ensure we just do a ref check here, not call .Equals
                 if ((object)_cachedFirstChild == (object)this)
                 {
-                    // PRESHARP will flag this as a warning 56503/6503: Property get methods should not throw exceptions
-                    // We've spec'd as throwing an Exception, and that's what we do PreSharp shouldn't complain
-#pragma warning suppress 6503
                     throw new InvalidOperationException(SR.CachedPropertyNotRequested);
                 }
 
@@ -1212,11 +1194,11 @@ namespace System.Windows.Automation
         //  Private Methods
         //
         //------------------------------------------------------
- 
+
         #region Private Methods
 
         // Lookup a cached AutomationPattern or AutomationProperty
-        object LookupCachedValue(AutomationIdentifier id, bool throwIfNotRequested, bool wrap)
+        private object LookupCachedValue(AutomationIdentifier id, bool throwIfNotRequested, bool wrap)
         {
             if (_cachedValues == null)
             {
@@ -1310,8 +1292,10 @@ namespace System.Windows.Automation
             }
 
             // Set up a find struct...
-            UiaCoreApi.UiaFindParams findParams = new UiaCoreApi.UiaFindParams();
-            findParams.FindFirst = findFirst;
+            UiaCoreApi.UiaFindParams findParams = new UiaCoreApi.UiaFindParams
+            {
+                FindFirst = findFirst
+            };
 
             if ((scope & TreeScope.Descendants) != 0)
                 findParams.MaxDepth = -1;

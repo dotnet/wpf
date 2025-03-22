@@ -1,31 +1,29 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
-        
+
+#region Using declarations
+
+using System.Collections;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.Globalization;
+using System.Windows.Documents;
+using System.Windows.Input;
+using System.Windows.Markup;
+using System.Windows.Media;
+using System.Windows.Threading;
+#if RIBBON_IN_FRAMEWORK
+using MS.Internal;
+using Microsoft.Windows.Controls;
+using System.Windows.Controls.Ribbon;
+
 #if RIBBON_IN_FRAMEWORK
 namespace System.Windows.Controls
 #else
 namespace Microsoft.Windows.Controls
 #endif
 {
-    #region Using declarations
-
-    using System;
-    using System.Collections;
-    using System.Collections.Generic;
-    using System.Diagnostics;
-    using System.Globalization;
-    using System.Windows;
-    using System.Windows.Controls;
-    using System.Windows.Documents;
-    using System.Windows.Input;
-    using System.Windows.Markup;
-    using System.Windows.Media;
-    using System.Windows.Threading;
-#if RIBBON_IN_FRAMEWORK
-    using MS.Internal;
-    using Microsoft.Windows.Controls;
-    using System.Windows.Controls.Ribbon;
 #else
     using Microsoft.Windows.Controls.Ribbon;
 #endif
@@ -154,10 +152,7 @@ namespace Microsoft.Windows.Controls
                 WeakHashSet<DependencyObject> oldElementSet = null;
                 if (current._scopeToElementMap.TryGetValue(oldScope, out oldElementSet))
                 {
-                    if (oldElementSet != null)
-                    {
-                        oldElementSet.Remove(d);
-                    }
+                    oldElementSet?.Remove(d);
                 }
             }
             if (newScope != null)
@@ -682,7 +677,7 @@ namespace Microsoft.Windows.Controls
             return false;
         }
 
-        void PreProcessInput(object sender, PreProcessInputEventArgs e)
+        private void PreProcessInput(object sender, PreProcessInputEventArgs e)
         {
             if (State != KeyTipState.None)
             {
@@ -716,7 +711,7 @@ namespace Microsoft.Windows.Controls
             }
         }
 
-        void PostProcessInput(object sender, ProcessInputEventArgs e)
+        private void PostProcessInput(object sender, ProcessInputEventArgs e)
         {
             if (e.StagingItem.Input.RoutedEvent == Keyboard.KeyDownEvent)
             {
@@ -944,8 +939,10 @@ namespace Microsoft.Windows.Controls
 
             HideCurrentShowingKeyTips();
             _prefixText = string.Empty;
-            KeyTipAccessedEventArgs eventArgs = new KeyTipAccessedEventArgs();
-            eventArgs.RoutedEvent = PreviewKeyTipAccessedEvent;
+            KeyTipAccessedEventArgs eventArgs = new KeyTipAccessedEventArgs
+            {
+                RoutedEvent = PreviewKeyTipAccessedEvent
+            };
             object oldFocusedElement = Keyboard.FocusedElement;
             IInputElement inputElement = exactMatchElement as IInputElement;
             if (inputElement != null)
@@ -1098,8 +1095,10 @@ namespace Microsoft.Windows.Controls
         {
             if (_showKeyTipsTimer == null)
             {
-                _showKeyTipsTimer = new DispatcherTimer(DispatcherPriority.Normal);
-                _showKeyTipsTimer.Interval = TimeSpan.FromMilliseconds(ShowKeyTipsWaitTime);
+                _showKeyTipsTimer = new DispatcherTimer(DispatcherPriority.Normal)
+                {
+                    Interval = TimeSpan.FromMilliseconds(ShowKeyTipsWaitTime)
+                };
                 _showKeyTipsTimer.Tick += delegate(object sender, EventArgs e) { ShowKeyTips(); };
             }
             _showKeyTipsTimer.Start();
@@ -1107,10 +1106,7 @@ namespace Microsoft.Windows.Controls
 
         private void ShowKeyTips()
         {
-            if (_showKeyTipsTimer != null)
-            {
-                _showKeyTipsTimer.Stop();
-            }
+            _showKeyTipsTimer?.Stop();
             if (State == KeyTipState.Pending)
             {
                 Debug.Assert(_currentGlobalScope != null);
@@ -1236,10 +1232,7 @@ namespace Microsoft.Windows.Controls
                 _currentWindow.LocationChanged -= new EventHandler(OnWindowLocationChanged);
             }
             _currentWindow = null;
-            if (_showKeyTipsTimer != null)
-            {
-                _showKeyTipsTimer.Stop();
-            }
+            _showKeyTipsTimer?.Stop();
             _focusRibbonOnKeyTipKeyUp = false;
             _modeEnterKey = Key.None;
             _probableModeEnterKey = Key.None;
@@ -1369,10 +1362,7 @@ namespace Microsoft.Windows.Controls
                 // Raise the ActivatingKeyTip event.
                 ActivatingKeyTipEventArgs activatingEventArgs = new ActivatingKeyTipEventArgs();
                 IInputElement inputElement = element as IInputElement;
-                if (inputElement != null)
-                {
-                    inputElement.RaiseEvent(activatingEventArgs);
-                }
+                inputElement?.RaiseEvent(activatingEventArgs);
 
                 // KeyTips could have been dismissed due to one
                 // of the event handler, hence check again.
@@ -1382,7 +1372,7 @@ namespace Microsoft.Windows.Controls
                     if (activatingEventArgs.KeyTipVisibility == Visibility.Visible)
                     {
                         // Create the keytip and add it as the adorner.
-                        UIElement adornedElement = RibbonHelper.GetContainingUIElement(activatingEventArgs.PlacementTarget == null ? element : activatingEventArgs.PlacementTarget);
+                        UIElement adornedElement = RibbonHelper.GetContainingUIElement(activatingEventArgs.PlacementTarget ?? element);
                         if (adornedElement != null && adornedElement.IsVisible)
                         {
                             bool isScrollAdornerLayer = false;
@@ -1439,10 +1429,7 @@ namespace Microsoft.Windows.Controls
                     UnlinkKeyTipControlFromAdorner(adorner);
                     bool isScrollAdornerLayer = false;
                     AdornerLayer adornerLayer = GetAdornerLayer(adornedElement, out isScrollAdornerLayer);
-                    if (adornerLayer != null)
-                    {
-                        adornerLayer.Remove(adorner);
-                    }
+                    adornerLayer?.Remove(adorner);
                 }
                 element.ClearValue(KeyTipAdornerProperty);
                 element.ClearValue(KeyTipAdornerHolderProperty);
@@ -1469,10 +1456,7 @@ namespace Microsoft.Windows.Controls
                             foreach (object child in LogicalTreeHelper.GetChildren(currentAdornerLayer))
                             {
                                 KeyTipAdorner keyTipAdorner = child as KeyTipAdorner;
-                                if (keyTipAdorner != null)
-                                {
-                                    keyTipAdorner.NudgeIntoAdornerLayerBoundary(currentAdornerLayer);
-                                }
+                                keyTipAdorner?.NudgeIntoAdornerLayerBoundary(currentAdornerLayer);
                             }
                         }
                         _placementProcessingAdornerLayers.Clear();
@@ -1738,9 +1722,9 @@ namespace Microsoft.Windows.Controls
         #region Private Data
 
         // Data members which exist across multiple keytip life times.
-        WeakHashSet<DependencyObject> _toBeScopedElements = new WeakHashSet<DependencyObject>(); // List of one-off elements to be scoped.
-        WeakDictionary<DependencyObject, bool> _unprocessedScopes = new WeakDictionary<DependencyObject, bool>(); // List of scopes which are to processed
-        WeakDictionary<DependencyObject, WeakHashSet<DependencyObject>> _scopeToElementMap = new WeakDictionary<DependencyObject, WeakHashSet<DependencyObject>>();
+        private WeakHashSet<DependencyObject> _toBeScopedElements = new WeakHashSet<DependencyObject>(); // List of one-off elements to be scoped.
+        private WeakDictionary<DependencyObject, bool> _unprocessedScopes = new WeakDictionary<DependencyObject, bool>(); // List of scopes which are to processed
+        private WeakDictionary<DependencyObject, WeakHashSet<DependencyObject>> _scopeToElementMap = new WeakDictionary<DependencyObject, WeakHashSet<DependencyObject>>();
         private List<WeakReference> _keyTipEnterFocusHandlers = null;
         private List<WeakReference> _keyTipExitRestoreFocusHandlers = null;
         private bool _adornerLayerPlacementProcessingQueued = false;

@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -6,18 +6,14 @@
 
 using System;
 using System.Windows;
-using System.Collections;
-using System.ComponentModel;
 using System.Windows.Automation;
 using System.Windows.Automation.Provider;
-using System.Text;
-using System.Runtime.InteropServices;
 using MS.Win32;
 using NativeMethodsSetLastError = MS.Internal.UIAutomationClientSideProviders.NativeMethodsSetLastError;
 
 namespace MS.Internal.AutomationProxies
 {
-    class WindowsUpDown : ProxyHwnd, IRangeValueProvider
+    internal class WindowsUpDown : ProxyHwnd, IRangeValueProvider
     {
         // ------------------------------------------------------
         //
@@ -89,10 +85,7 @@ namespace MS.Internal.AutomationProxies
                 WindowsUpDown wtv = new WindowsUpDown(hwnd, null, -1);
                 button = wtv.CreateSpinButtonItem(SpinItem.UpArrow);
             }
-            if (button != null)
-            {
-                button.DispatchEvents(NativeMethods.EventObjectInvoke, InvokePattern.InvokedEvent, idObject, idChild);
-            }
+            button?.DispatchEvents(NativeMethods.EventObjectInvoke, InvokePattern.InvokedEvent, idObject, idChild);
         }
 
         // Creates a list item RawElementBase Item
@@ -373,7 +366,7 @@ namespace MS.Internal.AutomationProxies
             // If this is a Spinner UpDown Control, the buddy window should be a control with
             // the class of EDIT.
             IntPtr hwndBuddy = HwndBuddy(_hwnd);
-            return hwndBuddy != IntPtr.Zero && Misc.ProxyGetClassName(hwndBuddy).IndexOf("EDIT", StringComparison.OrdinalIgnoreCase) != -1;
+            return hwndBuddy != IntPtr.Zero && Misc.ProxyGetClassName(hwndBuddy).Contains("EDIT", StringComparison.OrdinalIgnoreCase);
         }
 
         private double Max
@@ -414,7 +407,7 @@ namespace MS.Internal.AutomationProxies
 
         #region SpinButtonItem
 
-        class SpinButtonItem: ProxySimple, IInvokeProvider
+        private class SpinButtonItem: ProxySimple, IInvokeProvider
         {
             //------------------------------------------------------
             //

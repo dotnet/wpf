@@ -1,13 +1,10 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
 
-using System;
 using System.ComponentModel;
-using System.Diagnostics;
 using System.Reflection;
-using System.Windows;
 using System.Windows.Data;
 using System.Windows.Input;
 using MS.Internal;
@@ -873,10 +870,7 @@ namespace System.Windows.Controls
                 // to the targets that need notification.
                 DataGridColumn column = (DataGridColumn)d;
                 DataGrid dataGridOwner = column.DataGridOwner;
-                if (dataGridOwner != null)
-                {
-                    dataGridOwner.NotifyPropertyChanged(d, e, target);
-                }
+                dataGridOwner?.NotifyPropertyChanged(d, e, target);
             }
         }
 
@@ -886,10 +880,7 @@ namespace System.Windows.Controls
         /// <param name="propertyName"></param>
         protected void NotifyPropertyChanged(string propertyName)
         {
-            if (DataGridOwner != null)
-            {
-                DataGridOwner.NotifyPropertyChanged(this, propertyName, new DependencyPropertyChangedEventArgs(), DataGridNotificationTarget.RefreshCellContent);
-            }
+            DataGridOwner?.NotifyPropertyChanged(this, propertyName, new DependencyPropertyChangedEventArgs(), DataGridNotificationTarget.RefreshCellContent);
         }
 
         /// <summary>
@@ -976,10 +967,7 @@ namespace System.Windows.Controls
         {
             DataGridColumn column = (DataGridColumn)d;
 
-            if (column.DataGridOwner != null)
-            {
-                column.DataGridOwner.ValidateDisplayIndex(column, (int)baseValue);
-            }
+            column.DataGridOwner?.ValidateDisplayIndex(column, (int)baseValue);
 
             return baseValue;
         }
@@ -1163,8 +1151,10 @@ namespace System.Windows.Controls
             // determine the type of column to be created and create one
             if (propertyType.IsEnum)
             {
-                comboBoxColumn = new DataGridComboBoxColumn();
-                comboBoxColumn.ItemsSource = Enum.GetValues(propertyType);
+                comboBoxColumn = new DataGridComboBoxColumn
+                {
+                    ItemsSource = Enum.GetValues(propertyType)
+                };
                 dataGridColumn = comboBoxColumn;
             }
             else if (typeof(string).IsAssignableFrom(propertyType))

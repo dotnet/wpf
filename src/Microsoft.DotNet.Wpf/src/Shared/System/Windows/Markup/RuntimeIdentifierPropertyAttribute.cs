@@ -24,7 +24,7 @@ namespace System.Windows.Markup
 namespace System.Windows.Markup
 #endif
 {
-#if !PBTCOMPILER && !TARGETTING35SP1 && !WINDOWS_BASE
+#if !PBTCOMPILER && !WINDOWS_BASE
     /// <summary>
     /// This attribute is placed on a class to identify the property that will
     /// function as an Name for the given class
@@ -65,14 +65,12 @@ namespace System.Windows.Markup
 #if !PBTCOMPILER
         internal static bool NameValidationCallback(object candidateName)
         {
-            string name = candidateName as string;
-
-            if( name != null )
+            if (candidateName is string name)
             {
                 // Non-null string, ask the XAML validation code for blessing.
                 return IsValidIdentifierName(name);
             }
-            else if( candidateName == null )
+            else if (candidateName == null)
             {
                 // Null string is allowed
                 return true;

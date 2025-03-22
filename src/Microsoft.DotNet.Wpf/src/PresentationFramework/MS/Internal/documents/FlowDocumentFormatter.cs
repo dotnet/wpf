@@ -6,11 +6,8 @@
 // Description: Bottomless content formatter associated with FlowDocument.
 //
 
-using System;                       // Object
 using System.Windows;               // Size
 using System.Windows.Documents;     // FlowDocument
-using System.Windows.Media;         // Visual
-using System.Windows.Threading;     // DispatcherOperationCallback
 using MS.Internal.PtsHost;          // FlowDocumentPage
 using MS.Internal.PtsHost.UnsafeNativeMethods;  // PTS
 

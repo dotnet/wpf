@@ -2,16 +2,15 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-using System;
-
 namespace System.Windows.Markup.Localizer
 {
     /// <summary>
     /// The EventArgs for the BamlLocalizer.ErrorNotify event. 
     /// </summary>
     public class BamlLocalizerErrorNotifyEventArgs : EventArgs
-    {        BamlLocalizableResourceKey _key;    // The key of the localizable resources related to the error 
-        BamlLocalizerError       _error;    // The error code. 
+    {
+        private BamlLocalizableResourceKey _key;    // The key of the localizable resources related to the error 
+        private BamlLocalizerError _error;    // The error code. 
         
         internal BamlLocalizerErrorNotifyEventArgs(BamlLocalizableResourceKey key, BamlLocalizerError error)
         {

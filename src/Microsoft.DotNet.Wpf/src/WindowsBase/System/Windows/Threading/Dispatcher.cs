@@ -1299,86 +1299,87 @@ namespace System.Windows.Threading
 
         private object InvokeImpl(DispatcherOperation operation, CancellationToken cancellationToken, TimeSpan timeout)
         {
-            object result = null;
-
             Debug.Assert(timeout.TotalMilliseconds >= 0 || timeout == TimeSpan.FromMilliseconds(-1));
             Debug.Assert(operation.Priority != DispatcherPriority.Send || !CheckAccess()); // should be handled by caller
 
-            if (!cancellationToken.IsCancellationRequested)
+            if (cancellationToken.IsCancellationRequested)
             {
-                // This operation must be queued since it was invoked either to
-                // another thread, or at a priority other than Send.
-                InvokeAsyncImpl(operation, cancellationToken);
+                return null;
+            }
 
-                CancellationToken ctTimeout = CancellationToken.None;
-                CancellationTokenRegistration ctTimeoutRegistration = new CancellationTokenRegistration();
-                CancellationTokenSource ctsTimeout = null;
+            // This operation must be queued since it was invoked either to
+            // another thread, or at a priority other than Send.
+            InvokeAsyncImpl(operation, cancellationToken);
 
-                if (timeout.TotalMilliseconds >= 0)
+            CancellationToken ctTimeout = CancellationToken.None;
+            CancellationTokenRegistration ctTimeoutRegistration = new CancellationTokenRegistration();
+            CancellationTokenSource ctsTimeout = null;
+
+            if (timeout.TotalMilliseconds >= 0)
+            {
+                // Create a CancellationTokenSource that will abort the
+                // operation after the timeout.  Note that this does not
+                // cancel the operation, just abort it if it is still pending.
+                ctsTimeout = new CancellationTokenSource(timeout);
+                ctTimeout = ctsTimeout.Token;
+                ctTimeoutRegistration = ctTimeout.Register(s => ((DispatcherOperation)s).Abort(), operation);
+            }
+
+            object result = null;
+
+            // We have already registered with the cancellation tokens
+            // (both provided by the user, and one for the timeout) to
+            // abort the operation when they are canceled.  If the
+            // operation has already started when the timeout expires,
+            // we still wait for it to complete.  This is different
+            // than simply waiting on the operation with a timeout
+            // because we are the ones queueing the dispatcher
+            // operation, not the caller.  We can't leave the operation
+            // in a state that it might execute if we return that it did not
+            // invoke.
+            try
+            {
+                operation.Wait();
+
+                Debug.Assert(operation.Status == DispatcherOperationStatus.Completed ||
+                             operation.Status == DispatcherOperationStatus.Aborted);
+
+                // Old async semantics return from Wait without
+                // throwing an exception if the operation was aborted.
+                // There is no need to test the timout condition, since
+                // the old async semantics would just return the result,
+                // which would be null.
+
+                // This should not block because either the operation
+                // is using the old async sematics, or the operation
+                // completed successfully.
+                result = operation.Result;
+            }
+            catch (OperationCanceledException)
+            {
+                Debug.Assert(operation.Status == DispatcherOperationStatus.Aborted);
+
+                // New async semantics will throw an exception if the
+                // operation was aborted.  Here we convert that
+                // exception into a timeout exception if the timeout
+                // has expired (admittedly a weak relationship
+                // assuming causality).
+                if (ctTimeout.IsCancellationRequested)
                 {
-                    // Create a CancellationTokenSource that will abort the
-                    // operation after the timeout.  Note that this does not
-                    // cancel the operation, just abort it if it is still pending.
-                    ctsTimeout = new CancellationTokenSource(timeout);
-                    ctTimeout = ctsTimeout.Token;
-                    ctTimeoutRegistration = ctTimeout.Register(s => ((DispatcherOperation)s).Abort(), operation);
+                    // The operation was canceled because of the
+                    // timeout, throw a TimeoutException instead.
+                    throw new TimeoutException();
                 }
-
-
-                // We have already registered with the cancellation tokens
-                // (both provided by the user, and one for the timeout) to
-                // abort the operation when they are canceled.  If the
-                // operation has already started when the timeout expires,
-                // we still wait for it to complete.  This is different
-                // than simply waiting on the operation with a timeout
-                // because we are the ones queueing the dispatcher
-                // operation, not the caller.  We can't leave the operation
-                // in a state that it might execute if we return that it did not
-                // invoke.
-                try
+                else
                 {
-                    operation.Wait();
-
-                    Debug.Assert(operation.Status == DispatcherOperationStatus.Completed ||
-                                 operation.Status == DispatcherOperationStatus.Aborted);
-
-                    // Old async semantics return from Wait without
-                    // throwing an exception if the operation was aborted.
-                    // There is no need to test the timout condition, since
-                    // the old async semantics would just return the result,
-                    // which would be null.
-
-                    // This should not block because either the operation
-                    // is using the old async sematics, or the operation
-                    // completed successfully.
-                    result = operation.Result;
+                    // The operation was canceled from some other reason.
+                    throw;
                 }
-                catch (OperationCanceledException)
-                {
-                    Debug.Assert(operation.Status == DispatcherOperationStatus.Aborted);
-
-                    // New async semantics will throw an exception if the
-                    // operation was aborted.  Here we convert that
-                    // exception into a timeout exception if the timeout
-                    // has expired (admittedly a weak relationship
-                    // assuming causality).
-                    if (ctTimeout.IsCancellationRequested)
-                    {
-                        // The operation was canceled because of the
-                        // timeout, throw a TimeoutException instead.
-                        throw new TimeoutException();
-                    }
-                    else
-                    {
-                        // The operation was canceled from some other reason.
-                        throw;
-                    }
-                }
-                finally
-                {
-                    ctTimeoutRegistration.Dispose();
-                    ctsTimeout?.Dispose();
-                }
+            }
+            finally
+            {
+                ctTimeoutRegistration.Dispose();
+                ctsTimeout?.Dispose();
             }
 
             return result;
@@ -2132,31 +2133,34 @@ namespace System.Windows.Threading
         //  Get ITfMessagePump interface from Cicero.
         private UnsafeNativeMethods.ITfMessagePump GetMessagePump()
         {
-            UnsafeNativeMethods.ITfMessagePump messagePump = null;
-
-            if (_isTSFMessagePumpEnabled)
+            if (!_isTSFMessagePumpEnabled)
             {
-                // If the current thread is not STA, Cicero just does not work.
-                // Probably this Dispatcher is running for worker thread.
-                if (Thread.CurrentThread.GetApartmentState() == ApartmentState.STA)
-                {
-                    // If there is no text services, we don't have to use ITfMessagePump.
-                    if (TextServicesLoader.ServicesInstalled)
-                    {
-                        UnsafeNativeMethods.ITfThreadMgr threadManager;
-                        threadManager = TextServicesLoader.Load();
-
-                        // ThreadManager does not exist. No MessagePump yet.
-                        if (threadManager is not null)
-                        {
-                            // QI ITfMessagePump.
-                            messagePump = threadManager as UnsafeNativeMethods.ITfMessagePump;
-                        }
-                    }
-                }
+                return null;
             }
 
-            return messagePump;
+            // If the current thread is not STA, Cicero just does not work.
+            // Probably this Dispatcher is running for worker thread.
+            if (Thread.CurrentThread.GetApartmentState() != ApartmentState.STA)
+            {
+                return null;
+            }
+
+            // If there is no text services, we don't have to use ITfMessagePump.
+            if (!TextServicesLoader.ServicesInstalled)
+            {
+                return null;
+            }
+
+            UnsafeNativeMethods.ITfThreadMgr threadManager = TextServicesLoader.Load();
+
+            // ThreadManager does not exist. No MessagePump yet.
+            if (threadManager is null)
+            {
+                return null;
+            }
+
+            // QI ITfMessagePump.
+            return threadManager as UnsafeNativeMethods.ITfMessagePump;
         }
 
         /// <summary>
@@ -2303,10 +2307,9 @@ namespace System.Windows.Threading
             return CriticalRequestProcessing(false);
         }
 
+        /// <returns>Boolean value indicating whether operation succeeded</returns>
         internal bool CriticalRequestProcessing(bool force)
         {
-            bool succeeded = true;
-
             // This method is called from within the instance lock.  So we
             // can reliably check the _window field without worrying about
             // it being changed out from underneath us during shutdown.
@@ -2315,42 +2318,42 @@ namespace System.Windows.Threading
 
             DispatcherPriority priority = _queue.MaxPriority;
 
-            if (priority != DispatcherPriority.Invalid &&
-                priority != DispatcherPriority.Inactive)
+            if (priority == DispatcherPriority.Invalid ||
+                priority == DispatcherPriority.Inactive)
             {
-                // If forcing the processing request, we will discard any
-                // existing request (timer or message) and request again.
-                if (force)
-                {
-                    if (_postedProcessingType == PROCESS_BACKGROUND)
-                    {
-                        SafeNativeMethods.KillTimer(new HandleRef(this, _window.Handle), TIMERID_BACKGROUND);
-                    }
-                    else if (_postedProcessingType == PROCESS_FOREGROUND)
-                    {
-                        // Preserve the thread's current "extra message info"
-                        // (PeekMessage overwrites it).
-                        IntPtr extraInformation = UnsafeNativeMethods.GetMessageExtraInfo();
-
-                        MSG msg = new();
-                        UnsafeNativeMethods.PeekMessage(ref msg, new HandleRef(this, _window.Handle), _msgProcessQueue, _msgProcessQueue, NativeMethods.PM_REMOVE);
-
-                        UnsafeNativeMethods.SetMessageExtraInfo(extraInformation);
-                    }
-                    _postedProcessingType = PROCESS_NONE;
-                }
-
-                if (_foregroundPriorityRange.Contains(priority))
-                {
-                    succeeded = RequestForegroundProcessing();
-                }
-                else
-                {
-                    succeeded = RequestBackgroundProcessing();
-                }
+                return true;
             }
 
-            return succeeded;
+            // If forcing the processing request, we will discard any
+            // existing request (timer or message) and request again.
+            if (force)
+            {
+                if (_postedProcessingType == PROCESS_BACKGROUND)
+                {
+                    SafeNativeMethods.KillTimer(new HandleRef(this, _window.Handle), TIMERID_BACKGROUND);
+                }
+                else if (_postedProcessingType == PROCESS_FOREGROUND)
+                {
+                    // Preserve the thread's current "extra message info"
+                    // (PeekMessage overwrites it).
+                    IntPtr extraInformation = UnsafeNativeMethods.GetMessageExtraInfo();
+
+                    MSG msg = new();
+                    UnsafeNativeMethods.PeekMessage(ref msg, new HandleRef(this, _window.Handle), _msgProcessQueue, _msgProcessQueue, NativeMethods.PM_REMOVE);
+
+                    UnsafeNativeMethods.SetMessageExtraInfo(extraInformation);
+                }
+                _postedProcessingType = PROCESS_NONE;
+            }
+
+            if (_foregroundPriorityRange.Contains(priority))
+            {
+                return RequestForegroundProcessing();
+            }
+            else
+            {
+                return RequestBackgroundProcessing();
+            }
         }
 
         private bool IsWindowNull() => _window is null;
@@ -2389,25 +2392,22 @@ namespace System.Windows.Threading
                 return true;
             }
 
+            if (!IsInputPending())
+            {
+                return RequestForegroundProcessing();
+            }
+
             // If there is Win32 input pending, we can't do any background
             // processing until it is done.  We use a short timer to
             // get processing time after the input.
 
-            bool succeeded;
+            _postedProcessingType = PROCESS_BACKGROUND;
 
-            if (IsInputPending())
-            {
-                _postedProcessingType = PROCESS_BACKGROUND;
+            bool succeeded = SafeNativeMethods.TrySetTimer(new HandleRef(this, _window.Handle), TIMERID_BACKGROUND, DELTA_BACKGROUND);
 
-                succeeded = SafeNativeMethods.TrySetTimer(new HandleRef(this, _window.Handle), TIMERID_BACKGROUND, DELTA_BACKGROUND);
-                if (!succeeded)
-                {
-                    OnRequestProcessingFailure("TrySetTimer");
-                }
-            }
-            else
+            if (!succeeded)
             {
-                succeeded = RequestForegroundProcessing();
+                OnRequestProcessingFailure("TrySetTimer");
             }
 
             return succeeded;
@@ -2735,24 +2735,26 @@ namespace System.Windows.Threading
         // The exception filter called for catching an unhandled exception.
         private bool CatchException(Exception e)
         {
+            if (UnhandledException is null)
+            {
+                return false;
+            }
+
             bool handled = false;
 
-            if (UnhandledException is not null)
-            {
-                _unhandledExceptionEventArgs.Initialize(e, false);
+            _unhandledExceptionEventArgs.Initialize(e, false);
 
-                bool bSuccess = false;
-                try
-                {
-                    UnhandledException(this, _unhandledExceptionEventArgs);
-                    handled = _unhandledExceptionEventArgs.Handled;
-                    bSuccess = true;
-                }
-                finally
-                {
-                    if (!bSuccess)
-                        handled = false;
-                }
+            bool bSuccess = false;
+            try
+            {
+                UnhandledException(this, _unhandledExceptionEventArgs);
+                handled = _unhandledExceptionEventArgs.Handled;
+                bSuccess = true;
+            }
+            finally
+            {
+                if (!bSuccess)
+                    handled = false;
             }
 
             return handled;

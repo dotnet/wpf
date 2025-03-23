@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -654,15 +654,13 @@ namespace MS.Internal
         private const char       _equalSeparator     = '=';
 
         //This array is sorted by the ascii value of these characters.
-        private static readonly char[] s_allowedCharacters = [
+        private static ReadOnlySpan<char> AllowedCharacters => [
         '!' /*33*/, '#' /*35*/ , '$'  /*36*/,
         '%' /*37*/, '&' /*38*/ , '\'' /*39*/,
         '*' /*42*/, '+' /*43*/ , '-'  /*45*/,
         '.' /*46*/, '^' /*94*/ , '_'  /*95*/,
         '`' /*96*/, '|' /*124*/, '~'  /*126*/,
         ];
-
-        private static ReadOnlySpan<char> AllowedCharacters => s_allowedCharacters;
         
         //Linear White Space characters
         private static readonly char[] _linearWhiteSpaceChars = [

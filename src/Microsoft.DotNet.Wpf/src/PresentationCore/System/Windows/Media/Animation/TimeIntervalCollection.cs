@@ -1054,7 +1054,7 @@ namespace System.Windows.Media.Animation
                     if (isAutoReversed)
                     {
                         long doublePeriod = periodInTicks << 1;  // Fast multiply by 2
-                        outputInTicks = outputInTicks % doublePeriod;
+                        outputInTicks %= doublePeriod;
 
                         if (outputInTicks > periodInTicks)
                         {
@@ -1063,7 +1063,7 @@ namespace System.Windows.Media.Animation
                     }
                     else
                     {
-                        outputInTicks = outputInTicks % periodInTicks;
+                        outputInTicks %= periodInTicks;
                         if (outputInTicks == 0)
                         {
                             outputInTicks = periodInTicks;  // If we are at the end, stick to the max value

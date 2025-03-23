@@ -156,7 +156,7 @@ namespace System.Windows.Media.Animation
             if (   IsCumulative
                 && currentRepeat > 0)
             {
-                pathPoint = pathPoint + (_accumulatingVector * currentRepeat);
+                pathPoint += (_accumulatingVector * currentRepeat);
             }
 
             if (IsAdditive) 

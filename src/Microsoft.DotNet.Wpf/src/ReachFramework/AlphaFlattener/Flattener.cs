@@ -220,7 +220,7 @@ namespace Microsoft.Internal.AlphaFlattener
                 }
 
                 // Push transform/clip/opacity to leaf node
-                tree.Transform = tree.Transform * transform;
+                tree.Transform *= transform;
 
                 if (tree.Clip == null)
                 {

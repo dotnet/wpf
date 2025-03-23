@@ -75,7 +75,7 @@ namespace MS.Internal.Data
                             change = Change.Remove;
                             index1 = index;
                             target = list[index];
-                            index = index + 2;
+                            index += 2;
                         }
                         else
                         {
@@ -112,7 +112,7 @@ namespace MS.Internal.Data
                                 change = Change.Reset;
                             }
 
-                            index = index + 2;
+                            index += 2;
                         }
                         else
                         {

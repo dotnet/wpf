@@ -129,7 +129,7 @@ namespace System.Windows.Controls
                 }
                 else
                 {
-                    width = width - GetVisualCanvasMarginX();
+                    width -= GetVisualCanvasMarginX();
                 }
 
                 double height = Height;
@@ -139,7 +139,7 @@ namespace System.Windows.Controls
                 }
                 else
                 {
-                    height = height - GetVisualCanvasMarginY();
+                    height -= GetVisualCanvasMarginY();
                 }
 
                 Vector offset = VisualTreeHelper.GetOffset(_referenceHeader);

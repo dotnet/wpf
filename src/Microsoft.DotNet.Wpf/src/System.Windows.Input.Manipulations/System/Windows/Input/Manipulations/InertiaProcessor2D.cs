@@ -1259,7 +1259,7 @@ namespace System.Windows.Input.Manipulations
                 double result = InitialVelocity - Deceleration * elapsedTimeSinceInitialTimestamp;
 
                 // convert to milliseconds
-                result = result * timestampTicksPerMillisecond;
+                result *= timestampTicksPerMillisecond;
                 Debug.Assert(Validations.IsFinite((float)result));
                 return (float)result;
             }

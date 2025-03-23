@@ -2025,7 +2025,7 @@ namespace System.Windows.Automation.Peers
             ContextLayoutManager lm = ContextLayoutManager.From(this.Dispatcher);
             if(lm != null)
             {
-                lm.AutomationSyncUpdateCounter = lm.AutomationSyncUpdateCounter + 1;
+                lm.AutomationSyncUpdateCounter += 1;
 
                 try
                 {
@@ -2108,7 +2108,7 @@ namespace System.Windows.Automation.Peers
                 }
                 finally
                 {
-                    lm.AutomationSyncUpdateCounter = lm.AutomationSyncUpdateCounter - 1;
+                    lm.AutomationSyncUpdateCounter -= 1;
                 }
             }
         }

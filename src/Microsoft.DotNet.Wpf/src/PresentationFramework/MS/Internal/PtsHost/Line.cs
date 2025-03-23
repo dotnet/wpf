@@ -1012,7 +1012,7 @@ namespace MS.Internal.PtsHost
             }
 
             flowDirection = textBounds[0].FlowDirection;           
-            rect.X = rect.X + delta;
+            rect.X += delta;
             return rect;
         }
 

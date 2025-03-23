@@ -427,7 +427,7 @@ namespace System.Windows.Interop
                                 break;
                             default:
                                 Debug.Fail("bad state");
-                                this.ActiveXState = this.ActiveXState + 1;  // To exit the loop
+                                this.ActiveXState += 1;  // To exit the loop
                                 break;
                         }
 
@@ -483,7 +483,7 @@ namespace System.Windows.Interop
                                 break;
                             default:
                                 Debug.Fail("bad state");
-                                this.ActiveXState = this.ActiveXState - 1;  // To exit the loop
+                                this.ActiveXState -= 1;  // To exit the loop
                                 break;
                         }
 

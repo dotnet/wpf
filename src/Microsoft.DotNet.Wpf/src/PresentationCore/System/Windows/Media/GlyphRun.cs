@@ -1279,21 +1279,7 @@ namespace System.Windows.Media
 
                 for (int i = 0; i < GlyphCount; ++i)
                 {
-                    EmGlyphMetrics emGlyphMetrics = new EmGlyphMetrics(glyphMetrics[i], designToEm, _pixelsPerDip, _textFormattingMode);
-
-                    if (TextFormattingMode.Display == _textFormattingMode)
-                    {
-                        // Workaround for short or narrow glyphs - see comment in
-                        // AdjustAdvanceForDisplayLayout
-                        emGlyphMetrics.AdvanceHeight = AdjustAdvanceForDisplayLayout(
-                            emGlyphMetrics.AdvanceHeight,
-                            emGlyphMetrics.TopSideBearing,
-                            emGlyphMetrics.BottomSideBearing);
-                        emGlyphMetrics.AdvanceWidth = AdjustAdvanceForDisplayLayout(
-                            emGlyphMetrics.AdvanceWidth,
-                            emGlyphMetrics.LeftSideBearing,
-                            emGlyphMetrics.RightSideBearing);
-                    }
+                    EmGlyphMetrics emGlyphMetrics = new(glyphMetrics[i], designToEm, _pixelsPerDip, _textFormattingMode);
 
                     Point glyphOffset = GetGlyphOffset(i);
                     double originX;
@@ -1408,31 +1394,7 @@ namespace System.Windows.Media
             return bounds;
         }
 
-        private double AdjustAdvanceForDisplayLayout(double advance,
-                                                     double oneSideBearing,
-                                                     double otherSideBearing)
-        {
-            // AdvanceHeight is used to compute the bounding box. In some case, eg. the dash
-            // character '-', the bounding box is computed to be empty in Display
-            // TextFormattingMode (because the metrics are rounded to be pixel aligned) and so the
-            // dash is not rendered!
-            //
-            // Thus we coerce ah to be at least 1 pixel greater than tsb + bsb to gurantee that all
-            // glyphs will be rendered (with non-zero bounding box).
-            //
-            // Note: A side effect to this is that spaces will now be processed when rendering.
-            // That is, if the bounding box was empty the rendering engine will not process the
-            // text for rendering. But now even spaces will be processed but will be rendered as
-            // empty space.
-
-            // This problem also applies to the width of some characters, such as '.', ':', and 'l'
-            // The fix is the same: coerce AdvanceWidth to be at least
-            // LeftSideBearing + RightSideBearing + 1 pixels.
-
-            return Math.Max(advance, oneSideBearing + otherSideBearing + 1);
-        }
-
-        private Rect ComputeInkBoundingBoxLtoR(MS.Internal.Text.TextInterface.GlyphMetrics[] glyphMetrics)
+        private Rect ComputeInkBoundingBoxLtoR(GlyphMetrics[] glyphMetrics)
         {
             // We don't use Rect and Rect.Union to accumulate the bounding box
             // because this function is a hot spot and Rect methods perform extra checks that we don't need.
@@ -1449,21 +1411,7 @@ namespace System.Windows.Media
 
             for (int i = 0; i < glyphCount; ++i)
             {
-                EmGlyphMetrics emGlyphMetrics = new EmGlyphMetrics(glyphMetrics[i], designToEm, _pixelsPerDip, _textFormattingMode);
-
-                if (TextFormattingMode.Display == _textFormattingMode)
-                {
-                    // Workaround for short or narrow glyphs - see comment in
-                    // AdjustAdvanceForDisplayLayout
-                    emGlyphMetrics.AdvanceHeight = AdjustAdvanceForDisplayLayout(
-                        emGlyphMetrics.AdvanceHeight,
-                        emGlyphMetrics.TopSideBearing,
-                        emGlyphMetrics.BottomSideBearing);
-                    emGlyphMetrics.AdvanceWidth = AdjustAdvanceForDisplayLayout(
-                        emGlyphMetrics.AdvanceWidth,
-                        emGlyphMetrics.LeftSideBearing,
-                        emGlyphMetrics.RightSideBearing);
-                }
+                EmGlyphMetrics emGlyphMetrics = new(glyphMetrics[i], designToEm, _pixelsPerDip, _textFormattingMode);
 
                 if (GlyphOffsets != null)
                 {
@@ -1680,44 +1628,6 @@ namespace System.Windows.Media
                     backgroundRect
                     );
             }
-        }
-
-        /// <summary>
-        /// Helper that scales a raw dwrite GlyphMetrics into em space.
-        /// </summary>
-        private struct EmGlyphMetrics
-        {
-            internal EmGlyphMetrics(MS.Internal.Text.TextInterface.GlyphMetrics glyphMetrics, double designToEm, double pixelsPerDip, TextFormattingMode textFormattingMode)
-            {
-                if (TextFormattingMode.Display == textFormattingMode)
-                {
-                    this.AdvanceWidth = TextFormatterImp.RoundDipForDisplayMode(designToEm * glyphMetrics.AdvanceWidth, pixelsPerDip);
-                    this.AdvanceHeight = TextFormatterImp.RoundDipForDisplayMode(designToEm * glyphMetrics.AdvanceHeight, pixelsPerDip);
-                    this.LeftSideBearing = TextFormatterImp.RoundDipForDisplayMode(designToEm * glyphMetrics.LeftSideBearing, pixelsPerDip);
-                    this.RightSideBearing = TextFormatterImp.RoundDipForDisplayMode(designToEm * glyphMetrics.RightSideBearing, pixelsPerDip);
-                    this.TopSideBearing = TextFormatterImp.RoundDipForDisplayMode(designToEm * glyphMetrics.TopSideBearing, pixelsPerDip);
-                    this.BottomSideBearing = TextFormatterImp.RoundDipForDisplayMode(designToEm * glyphMetrics.BottomSideBearing, pixelsPerDip);
-                    this.Baseline = TextFormatterImp.RoundDipForDisplayMode(designToEm * GlyphTypeface.BaselineHelper(glyphMetrics), pixelsPerDip);
-                }
-                else
-                {
-                    this.AdvanceWidth = designToEm * glyphMetrics.AdvanceWidth;
-                    this.AdvanceHeight = designToEm * glyphMetrics.AdvanceHeight;
-                    this.LeftSideBearing = designToEm * glyphMetrics.LeftSideBearing;
-                    this.RightSideBearing = designToEm * glyphMetrics.RightSideBearing;
-                    this.TopSideBearing = designToEm * glyphMetrics.TopSideBearing;
-                    this.BottomSideBearing = designToEm * glyphMetrics.BottomSideBearing;
-                    this.Baseline = designToEm * GlyphTypeface.BaselineHelper(glyphMetrics);
-                }
-            }
-
-            internal double LeftSideBearing;
-            internal double AdvanceWidth;
-            internal double RightSideBearing;
-            internal double TopSideBearing;
-            internal double AdvanceHeight;
-            internal double BottomSideBearing;
-            internal double Baseline;
         }
 
         #endregion Drawing and measurements

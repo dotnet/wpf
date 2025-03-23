@@ -104,10 +104,10 @@
   </PropertyGroup>
   <!-- Code Coverage -->
   <PropertyGroup>
-    <CoverletMSBuildPackageVersion>6.0.4</CoverletMSBuildPackageVersion>
+    <CoverletMSBuildPackageVersion>6.0.0</CoverletMSBuildPackageVersion>
     <CodecovVersion>1.12.3</CodecovVersion>
-    <CoverletVersion>6.0.4</CoverletVersion>
-    <ReportGeneratorVersion>4.0.9</ReportGeneratorVersion>
+    <CoverletVersion>6.0.0</CoverletVersion>
+    <ReportGeneratorVersion>5.2.0</ReportGeneratorVersion>
   </PropertyGroup>
   <!-- External Analyzers -->
   <PropertyGroup>

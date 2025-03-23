@@ -890,11 +890,11 @@ namespace System.Windows.Ink
             //
             if (!DoubleUtil.AreClose(beginFIndex, StrokeFIndices.BeforeFirst))
             {
-                beginFIndex = beginFIndex - beginIndex;
+                beginFIndex -= beginIndex;
             }
             if (!DoubleUtil.AreClose(endFIndex, StrokeFIndices.AfterLast))
             {
-                endFIndex = endFIndex - beginIndex;
+                endFIndex -= beginIndex;
             }
 
             if (stylusPoints.Count > 1)

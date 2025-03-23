@@ -419,7 +419,7 @@ namespace Microsoft.Windows.Controls.Ribbon
                     extraLength += Math.Abs(lastCharacter.X - firstCharacter.X);
 
                     // Redistribute the extraLength among first two lines
-                    _textBlock1.Width = _textBlock1.Width + extraLength / 2;
+                    _textBlock1.Width += extraLength / 2;
                     _textBlock1.Measure(infinity);
                     _textBlock1.Arrange(new Rect(_textBlock1.DesiredSize));
                 }

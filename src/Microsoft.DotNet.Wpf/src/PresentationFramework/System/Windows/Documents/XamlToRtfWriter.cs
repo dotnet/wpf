@@ -437,7 +437,7 @@ namespace System.Windows.Documents
                         // Increment current listitem number
                         if (openLists.Count > 0)
                         {
-                            openCounts[openLists.Count - 1] = openCounts[openLists.Count - 1] + 1;
+                            openCounts[openLists.Count - 1] += 1;
                         }
                         break;
                     case DocumentNodeType.dnParagraph:

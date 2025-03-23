@@ -166,7 +166,7 @@ namespace MS.Internal.TextFormatting
             // indent is part of our text line but not of LS line
             // paragraph width == 0 means format width is unlimited
             int formatWidth = (paragraphWidth <= 0 ? Constants.IdealInfiniteWidth : paragraphWidth);
-            formatWidth = formatWidth - _pap.ParagraphIndent;
+            formatWidth -= _pap.ParagraphIndent;
             
             // sanitize the format width value before passing to LS
             formatWidth = Math.Max(formatWidth, 0);

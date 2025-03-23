@@ -245,7 +245,7 @@ namespace MS.Internal.PtsHost
             {
                 // Do quick search by looking only at size increments
                 int thousands = highestIndex / 1000;
-                highestIndex = highestIndex % 1000;            
+                highestIndex %= 1000;            
                 for (int i = 0; i < RomanNumericSizeIncrements.Length; i++)
                 {
                     Invariant.Assert(highestIndex >= RomanNumericSizeIncrements[i]);

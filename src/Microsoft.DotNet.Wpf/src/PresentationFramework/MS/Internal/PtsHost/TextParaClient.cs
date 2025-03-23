@@ -2077,9 +2077,9 @@ namespace MS.Internal.PtsHost
                 lineRect.Width = Math.Max(lineVisual.WidthIncludingTrailingWhitespace, 0);
             }
 
-            lineRect.Y = lineRect.Y - lineTopSpace;
-            lineRect.Height = lineRect.Height + lineTopSpace;
-            lineRect.Width = lineRect.Width + lineRightSpace;
+            lineRect.Y -= lineTopSpace;
+            lineRect.Height += lineTopSpace;
+            lineRect.Width += lineRightSpace;
 
             // Ignore horizontal offset because TextBox page width != extent width.
             // It's ok to include content that doesn't strictly intersect -- this
@@ -2118,8 +2118,8 @@ namespace MS.Internal.PtsHost
                         for (int i = 0, count = rectangles.Count; i < count; ++i)
                         {
                             Rect r = rectangles[i];
-                            r.Y = r.Y - lineTopSpace;
-                            r.Height = r.Height + lineTopSpace;
+                            r.Y -= lineTopSpace;
+                            r.Height += lineTopSpace;
                             rectangles[i] = r;
                         }
                     }
@@ -2188,9 +2188,9 @@ namespace MS.Internal.PtsHost
                 elementRect.Width = Math.Max(lineVisual.WidthIncludingTrailingWhitespace, 0);
             }
 
-            elementRect.Y = elementRect.Y - lineTopSpace;
-            elementRect.Height = elementRect.Height + lineTopSpace;
-            elementRect.Width = elementRect.Width + lineRightSpace;
+            elementRect.Y -= lineTopSpace;
+            elementRect.Height += lineTopSpace;
+            elementRect.Width += lineRightSpace;
 
             // Ignore horizontal offset because TextBox page width != extent width.
             // It's ok to include content that doesn't strictly intersect -- this
@@ -2228,8 +2228,8 @@ namespace MS.Internal.PtsHost
                         for (int i = 0, count = rectangles.Count; i < count; ++i)
                         {
                             Rect r = rectangles[i];
-                            r.Y = r.Y - lineTopSpace;
-                            r.Height = r.Height + lineTopSpace;
+                            r.Y -= lineTopSpace;
+                            r.Height += lineTopSpace;
                             rectangles[i] = r;
                         }
                     }

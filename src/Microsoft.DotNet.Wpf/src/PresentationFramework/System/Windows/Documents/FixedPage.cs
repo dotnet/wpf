@@ -106,7 +106,7 @@ namespace System.Windows.Documents
                     _drawDebugVisual++;
                 }
 
-                _drawDebugVisual = _drawDebugVisual % (int)DrawDebugVisual.LastOne;
+                _drawDebugVisual %= (int)DrawDebugVisual.LastOne;
 
                 if (_drawDebugVisual < 0)
                 {

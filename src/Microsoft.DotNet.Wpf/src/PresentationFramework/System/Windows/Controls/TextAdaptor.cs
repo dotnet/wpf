@@ -283,8 +283,8 @@ namespace MS.Internal.Automation
                 return null;
 
             // map null into the appropriate endpoint
-            rangeStart = rangeStart ?? _textContainer.Start;
-            rangeEnd = rangeEnd ?? _textContainer.End;
+            rangeStart ??= _textContainer.Start;
+            rangeEnd ??= _textContainer.End;
 
             // if either pointer belongs to the wrong tree, return null (meaning "entire range")
             if (rangeStart.TextContainer != _textContainer || rangeEnd.TextContainer != _textContainer)

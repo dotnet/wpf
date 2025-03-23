@@ -188,7 +188,7 @@ namespace MS.Internal.Ink.InkSerializedFormat
                 if ((ull & 0x0001) > 0)
                     fneg = true;
 
-                ull = ull >> 1;
+                ull >>= 1;
 
                 long l = (long)ull;
 

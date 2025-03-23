@@ -290,7 +290,7 @@ namespace System.Windows.Documents
                     currentFixedNode[1] == FixedFlowMap.FixedOrderEndVisual)
                 {
                     prevTextPoint.X = 2;
-                    prevTextPoint.Y = prevTextPoint.Y + 10;
+                    prevTextPoint.Y += 10;
                     String outputString = currentFixedNode[1] == FixedFlowMap.FixedOrderStartVisual ?
                                 "FixedOrderStartVisual" : "FixedOrderEndVisual";
                     ft = new FormattedText(outputString,
@@ -328,7 +328,7 @@ namespace System.Windows.Documents
                     else
                     {
                         prevTextPoint.X = 2;
-                        prevTextPoint.Y = prevTextPoint.Y + 10;
+                        prevTextPoint.Y += 10;
                     }
                     ft = new FormattedText(currentFixedNode.ToString(),
                                             EnglishCulture,
@@ -362,7 +362,7 @@ namespace System.Windows.Documents
                     else
                     {
                         prevTextPoint.X = 2;
-                        prevTextPoint.Y = prevTextPoint.Y + 10;
+                        prevTextPoint.Y += 10;
                     }
                     ft = new FormattedText(currentFixedNode.ToString(),
                                             EnglishCulture,
@@ -406,7 +406,7 @@ namespace System.Windows.Documents
                     else
                     {
                         prevTextPoint.X = 2;
-                        prevTextPoint.Y = prevTextPoint.Y + 10;
+                        prevTextPoint.Y += 10;
 
                     }
 
@@ -425,7 +425,7 @@ namespace System.Windows.Documents
                 // For anything else, there is this code to draw ...
                 //
                 prevTextPoint.X = 2;
-                prevTextPoint.Y = prevTextPoint.Y + 10;
+                prevTextPoint.Y += 10;
                 ft = new FormattedText(currentFixedNode.ToString(),
                                         EnglishCulture,
                                         FlowDirection.LeftToRight,

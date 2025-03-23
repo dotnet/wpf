@@ -1038,7 +1038,7 @@ namespace System.Xaml
             ConcurrentDictionary<string, IList<string>> assemblyMappings = nsInfo.ClrToXmlNs;
             IList<string> result;
 
-            clrNs = clrNs ?? string.Empty;
+            clrNs ??= string.Empty;
 
             if (!assemblyMappings.TryGetValue(clrNs, out result))
             {

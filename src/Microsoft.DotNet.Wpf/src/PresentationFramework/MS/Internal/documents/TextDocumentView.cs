@@ -2471,7 +2471,7 @@ namespace MS.Internal.Documents
                         }
                         else
                         {
-                            lineIndex = lineIndex + count;
+                            lineIndex += count;
                             count = 0;
                         }
 
@@ -2950,7 +2950,7 @@ namespace MS.Internal.Documents
                 }
                 else
                 {
-                    lineIndex = lineIndex + count;
+                    lineIndex += count;
                     count = 0;
                 }
 

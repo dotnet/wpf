@@ -2129,7 +2129,7 @@ namespace System.Windows.Media.Animation
                             IsBackwardsProgressingGlobal = !IsBackwardsProgressingGlobal;
                             parentSpeed = -parentSpeed;  // Negate parent speed here for tick logic, since we negated localProgress
                         }
-                        newIteration = newIteration / 2;  // Definition of iteration with AutoReverse is a front and back segment, divide by 2
+                        newIteration /= 2;  // Definition of iteration with AutoReverse is a front and back segment, divide by 2
                     }
 
                     _currentIteration = 1 + newIteration;  // Officially, iterations are numbered from 1

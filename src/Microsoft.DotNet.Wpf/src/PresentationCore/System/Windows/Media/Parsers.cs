@@ -56,22 +56,22 @@ namespace MS.Internal
             else if (trimmedColor.Length > 4)
             {
                 a = ParseHexChar(trimmedColor[1]);
-                a = a + a*16;
+                a += a*16;
                 r = ParseHexChar(trimmedColor[2]);
-                r = r + r*16;
+                r += r*16;
                 g = ParseHexChar(trimmedColor[3]);
-                g = g + g*16;
+                g += g*16;
                 b = ParseHexChar(trimmedColor[4]);
-                b = b + b*16;
+                b += b*16;
             }
             else
             {
                 r = ParseHexChar(trimmedColor[1]);
-                r = r + r*16;
+                r += r*16;
                 g = ParseHexChar(trimmedColor[2]);
-                g = g + g*16;
+                g += g*16;
                 b = ParseHexChar(trimmedColor[3]);
-                b = b + b*16;
+                b += b*16;
             }
 
             return ( Color.FromArgb ((byte)a, (byte)r, (byte)g, (byte)b) );

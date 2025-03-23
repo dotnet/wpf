@@ -519,7 +519,7 @@ namespace System.Windows.Documents
                 case 0:
                     break;
             }
-            nCount = nCount % 100;
+            nCount %= 100;
 
             // 10's
             switch (nCount / 10)
@@ -545,7 +545,7 @@ namespace System.Windows.Documents
                 case 0:
                     break;
             }
-            nCount = nCount % 10;
+            nCount %= 10;
 
             // 1's
             switch (nCount)
@@ -7145,7 +7145,7 @@ namespace System.Windows.Documents
                     if (!dnPa.IsPending)
                     {
                         Debug.Assert(dnPa.LastChildIndex >= nAt + nExcise - 1);
-                        dnPa.ChildCount = dnPa.ChildCount - nExcise;
+                        dnPa.ChildCount -= nExcise;
                     }
                 }
 
@@ -7230,7 +7230,7 @@ namespace System.Windows.Documents
 
                 if (ddn.Type == DocumentNodeType.dnParagraph)
                 {
-                    ddn.NearMargin = ddn.NearMargin - nMargin;
+                    ddn.NearMargin -= nMargin;
                 }
             }
         }
@@ -7320,7 +7320,7 @@ namespace System.Windows.Documents
                 dnNewTable.Parent = dn.ClosedParent;
                 for (DocumentNode dnPa = dnNewTable.ClosedParent; dnPa != null; dnPa = dnPa.ClosedParent)
                 {
-                    dnPa.ChildCount = dnPa.ChildCount + 2;
+                    dnPa.ChildCount += 2;
                 }
 
                 // Adjust the loop end to account for the newly inserted elements
@@ -7469,7 +7469,7 @@ namespace System.Windows.Documents
                             DocumentNode dnSpanningCell = dnaSpanCells.EntryAt(kCSA);
                             if (dnSpanningCell != null)
                             {
-                                dnSpanningCell.RowSpan = dnSpanningCell.RowSpan + 1;
+                                dnSpanningCell.RowSpan += 1;
                             }
                             kCSA += dnCell.ColSpan;
                             dnCell.ColSpan = 0;

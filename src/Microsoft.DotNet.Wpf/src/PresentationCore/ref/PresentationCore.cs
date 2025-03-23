@@ -4858,6 +4858,7 @@ namespace System.Windows.Interop
         public static System.Windows.Media.Imaging.BitmapSource CreateBitmapSourceFromHBitmap(System.IntPtr bitmap, System.IntPtr palette, System.Windows.Int32Rect sourceRect, System.Windows.Media.Imaging.BitmapSizeOptions sizeOptions) { throw null; }
         public static System.Windows.Media.Imaging.BitmapSource CreateBitmapSourceFromHIcon(System.IntPtr icon, System.Windows.Int32Rect sourceRect, System.Windows.Media.Imaging.BitmapSizeOptions sizeOptions) { throw null; }
         public static System.Windows.Media.Imaging.BitmapSource CreateBitmapSourceFromMemorySection(System.IntPtr section, int pixelWidth, int pixelHeight, System.Windows.Media.PixelFormat format, int stride, int offset) { throw null; }
+        public static System.Windows.Media.Imaging.BitmapSource CreateBitmapSourceFromWICBitmapSource(System.IntPtr wicBitmapSource) { throw null; }
     }
     public sealed partial class InteropBitmap : System.Windows.Media.Imaging.BitmapSource
     {

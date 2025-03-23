@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -285,16 +285,13 @@ namespace System.Windows.Threading
         {
             // The operation has been invoked, so forget about it.
             _operation = null;
-            
+
             // The dispatcher thread is calling us because item's priority
             // was changed from inactive to something else.
-            if(Tick != null)
-            {
-                Tick(this, EventArgs.Empty);
-            }
+            Tick?.Invoke(this, EventArgs.Empty);
 
             // If we are still enabled, start the timer again.
-            if(_isEnabled)
+            if (_isEnabled)
             {
                 Restart();
             }

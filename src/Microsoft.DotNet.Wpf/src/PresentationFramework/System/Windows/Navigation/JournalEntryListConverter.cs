@@ -176,10 +176,7 @@ namespace System.Windows.Navigation
         internal void StacksChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
             _items = null;
-            if (CollectionChanged != null)
-            {
-                CollectionChanged(this, new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Reset));
-            }
+            CollectionChanged?.Invoke(this, new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Reset));
         }
 
         public event NotifyCollectionChangedEventHandler CollectionChanged;

@@ -216,10 +216,7 @@ namespace System.Windows.Forms.Integration
         {
             InvalidOperationException exception = new InvalidOperationException(SR.Host_CannotRotateWindowsFormsHost);
             LayoutExceptionEventArgs args = new LayoutExceptionEventArgs(exception);
-            if (_layoutError != null)
-            {
-                _layoutError(this, args);
-            }
+            _layoutError?.Invoke(this, args);
             if (args.ThrowException)
             {
                 throw exception;
@@ -350,10 +347,7 @@ namespace System.Windows.Forms.Integration
                 this.Child.GotFocus += new EventHandler(this.OnChildGotFocus);
             }
 
-            if (ChildChanged != null)
-            {
-                ChildChanged(this, new ChildChangedEventArgs(oldChild));
-            }
+            ChildChanged?.Invoke(this, new ChildChangedEventArgs(oldChild));
 
 
         }

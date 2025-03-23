@@ -707,10 +707,7 @@ namespace System.Windows.Input
 
             _isActive = true;
 
-            if (Activated != null)
-            {
-                Activated(this, EventArgs.Empty);
-            }
+            Activated?.Invoke(this, EventArgs.Empty);
         }
 
         protected void Deactivate()
@@ -728,10 +725,7 @@ namespace System.Windows.Input
             _isActive = false;
             _manipulatingElement = null;
 
-            if (Deactivated != null)
-            {
-                Deactivated(this, EventArgs.Empty);
-            }
+            Deactivated?.Invoke(this, EventArgs.Empty);
         }
 
         /// <summary>
@@ -1271,10 +1265,7 @@ namespace System.Windows.Input
 
         private void OnUpdated()
         {
-            if (Updated != null)
-            {
-                Updated(this, EventArgs.Empty);
-            }
+            Updated?.Invoke(this, EventArgs.Empty);
         }
 
         void IManipulator.ManipulationEnded(bool cancel)

@@ -1225,10 +1225,7 @@ namespace System.Windows.Controls
                                 isTopContainer = DoubleUtil.IsZero(startPosition);
                             }
 
-                            if (action != null)
-                            {
-                                action(fe);
-                            }
+                            action?.Invoke(fe);
 
                             if (isVSP45Compat)
                             {

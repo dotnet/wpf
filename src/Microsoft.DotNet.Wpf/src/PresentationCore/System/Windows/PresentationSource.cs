@@ -558,10 +558,7 @@ namespace System.Windows
         internal static object FireContentRendered(object arg)
         {
             PresentationSource ps = (PresentationSource)arg;
-            if (ps.ContentRendered != null)
-            {
-                ps.ContentRendered(arg, EventArgs.Empty);
-            }
+            ps.ContentRendered?.Invoke(arg, EventArgs.Empty);
             return null;
         }
 

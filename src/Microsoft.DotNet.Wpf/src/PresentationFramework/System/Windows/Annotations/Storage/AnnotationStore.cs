@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -244,10 +244,7 @@ namespace System.Windows.Annotations.Storage
                 Flush();
             }
 
-            if (authorChanged != null)
-            {
-                authorChanged(this, args);
-            }
+            authorChanged?.Invoke(this, args);
         }
 
         /// <summary>
@@ -274,10 +271,7 @@ namespace System.Windows.Annotations.Storage
                 Flush();
             }
 
-            if (anchorChanged != null)
-            {
-                anchorChanged(this, args);
-            }
+            anchorChanged?.Invoke(this, args);
         }
 
         /// <summary>
@@ -304,10 +298,7 @@ namespace System.Windows.Annotations.Storage
                 Flush();
             }
 
-            if (cargoChanged != null)
-            {
-                cargoChanged(this, args);
-            }
+            cargoChanged?.Invoke(this, args);
         }
 
         /// <summary>
@@ -329,10 +320,7 @@ namespace System.Windows.Annotations.Storage
                 Flush();
             }
 
-            if (storeContentChanged != null)
-            {
-                storeContentChanged(this, e);
-            }
+            storeContentChanged?.Invoke(this, e);
         }
 
         #endregion Protected Methods

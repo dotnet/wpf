@@ -1774,10 +1774,7 @@ namespace System.Windows.Threading
                 // Call the ShutdownStarted event before we actually mark ourselves
                 // as shutting down.  This is so the handlers can actaully do work
                 // when they get this event without throwing exceptions.
-                if(ShutdownStarted != null)
-                {
-                    ShutdownStarted(this, EventArgs.Empty);
-                }
+                ShutdownStarted?.Invoke(this, EventArgs.Empty);
 
                 _hasShutdownStarted = true;
 
@@ -1832,10 +1829,7 @@ namespace System.Windows.Threading
             // Call the ShutdownFinished event before we actually mark ourselves
             // as shut down.  This is so the handlers can actaully do work
             // when they get this event without throwing exceptions.
-            if(ShutdownFinished != null)
-            {
-                ShutdownFinished(this, EventArgs.Empty);
-            }
+            ShutdownFinished?.Invoke(this, EventArgs.Empty);
 
             // Destroy the message-only window we use to process Win32 messages
             //

@@ -806,10 +806,7 @@ namespace System.Windows.Data
         /// </summary>
         protected virtual void OnPropertyChanged(PropertyChangedEventArgs e)
         {
-            if (PropertyChanged != null)
-            {
-                PropertyChanged(this, e);
-            }
+            PropertyChanged?.Invoke(this, e);
         }
 
         /// <summary>
@@ -912,8 +909,7 @@ namespace System.Windows.Data
 
             unchecked { ++ _timestamp; }    // invalidate enumerators because of a change
 
-            if (CollectionChanged != null)
-                CollectionChanged(this, args);
+            CollectionChanged?.Invoke(this, args);
 
             // Collection changes change the count unless an item is being
             // replaced or moved within the collection.
@@ -1029,10 +1025,7 @@ namespace System.Windows.Data
                 return;
             }
 
-            if (CurrentChanging != null)
-            {
-                CurrentChanging(this, args);
-            }
+            CurrentChanging?.Invoke(this, args);
         }
 
         /// <summary>

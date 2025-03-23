@@ -372,10 +372,7 @@ namespace System.Windows.Media
             {
                 _tier = tier;
 
-                if (TierChanged != null)
-                {
-                    TierChanged(null, null);
-                }
+                TierChanged?.Invoke(null, null);
             }
         }
 
@@ -2163,10 +2160,7 @@ namespace System.Windows.Media
                     // Raise Render Complete event since a Render happened and
                     // the commit for that render happened.
                     //
-                    if (_renderCompleteHandlers != null)
-                    {
-                        _renderCompleteHandlers(this, null);
-                    }
+                    _renderCompleteHandlers?.Invoke(this, null);
 
                     _commitPendingAfterRender = false;
                 }

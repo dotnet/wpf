@@ -799,8 +799,7 @@ namespace System.Windows.Input
             // Call the RequerySuggested handlers
             _requerySuggestedOperation = null;
 
-            if (PrivateRequerySuggested != null)
-                PrivateRequerySuggested(null, EventArgs.Empty);
+            PrivateRequerySuggested?.Invoke(null, EventArgs.Empty);
 
             return null;
         }

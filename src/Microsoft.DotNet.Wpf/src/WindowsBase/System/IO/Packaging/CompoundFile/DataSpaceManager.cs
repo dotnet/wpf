@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -998,8 +998,7 @@ namespace System.IO.Packaging
     /// <param name="initArguments">Arguments for the initializers</param>
     internal void CallTransformInitializers( TransformInitializationEventArgs initArguments )
     {
-        if( null != OnTransformInitialization )
-            OnTransformInitialization( this, initArguments );
+        OnTransformInitialization?.Invoke(this, initArguments);
     }
 
     /// <summary>

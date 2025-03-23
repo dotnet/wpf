@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -45,8 +45,7 @@ namespace System.Windows.Interop
             _modalCount += 1;
             if(1 == _modalCount)
             {
-                if(null != _enterThreadModal)
-                    _enterThreadModal(null, EventArgs.Empty);
+                _enterThreadModal?.Invoke(null, EventArgs.Empty);
             }
         }
 
@@ -58,8 +57,7 @@ namespace System.Windows.Interop
             _modalCount -= 1;
             if(0 == _modalCount)
             {
-                if(null != _leaveThreadModal)
-                    _leaveThreadModal(null, EventArgs.Empty);
+                _leaveThreadModal?.Invoke(null, EventArgs.Empty);
             }
             if(_modalCount < 0)
                 _modalCount = 0;    // Throwing is also good
@@ -70,8 +68,7 @@ namespace System.Windows.Interop
         ///</summary>
         public void RaiseIdle()
         {
-            if(null != _threadIdle)
-                _threadIdle(null, EventArgs.Empty);
+            _threadIdle?.Invoke(null, EventArgs.Empty);
         }
 
         /// <summary>
@@ -81,14 +78,12 @@ namespace System.Windows.Interop
         {
             bool handled = false;
 
-            if (null != _threadFilterMessage)
-                _threadFilterMessage(ref msg, ref handled);
+            _threadFilterMessage?.Invoke(ref msg, ref handled);
 
             if (handled)
                 return handled;
 
-            if (null != _threadPreprocessMessage)
-                _threadPreprocessMessage(ref msg, ref handled);
+            _threadPreprocessMessage?.Invoke(ref msg, ref handled);
 
             return handled;
         }

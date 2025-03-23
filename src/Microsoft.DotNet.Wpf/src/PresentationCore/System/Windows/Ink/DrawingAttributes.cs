@@ -597,10 +597,7 @@ namespace System.Windows.Ink
             }
             finally
             {
-                if ( this.AttributeChanged != null )
-                {
-                    this.AttributeChanged(this, e);
-                }
+                this.AttributeChanged?.Invoke(this, e);
             }
         }
 
@@ -620,10 +617,7 @@ namespace System.Windows.Ink
                 throw new ArgumentNullException(nameof(e), SR.EventArgIsNull);
             }
 
-            if (this.PropertyDataChanged != null)
-            {
-                this.PropertyDataChanged(this, e);
-            }
+            this.PropertyDataChanged?.Invoke(this, e);
         }
 
 
@@ -637,10 +631,7 @@ namespace System.Windows.Ink
         /// <param name="e">The EventArgs specifying the name of the changed property.</param>
         protected virtual void OnPropertyChanged(PropertyChangedEventArgs e)
         {
-            if ( _propertyChanged != null )
-            {
-                _propertyChanged(this, e);
-            }
+            _propertyChanged?.Invoke(this, e);
         }
 
         #endregion Protected Methods

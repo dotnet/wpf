@@ -211,10 +211,7 @@ namespace System.Windows.Controls
                 focusedElement?.Focus();
             }
 
-            if (ContentRendered != null)
-            {
-                ContentRendered(this, args);
-            }
+            ContentRendered?.Invoke(this, args);
         }
         #endregion IDownloader implementation
 

@@ -398,10 +398,7 @@ namespace System.Windows.Input
         protected virtual void OnChanged(EventArgs e)
         {
             ArgumentNullException.ThrowIfNull(e);
-            if (this.Changed != null)
-            {
-                this.Changed(this, e);
-            }
+            this.Changed?.Invoke(this, e);
         }
 
         /// <summary>

@@ -778,20 +778,12 @@ namespace System.Windows.Controls
 
         protected virtual void OnCalendarClosed(RoutedEventArgs e)
         {
-            RoutedEventHandler handler = this.CalendarClosed;
-            if (null != handler)
-            {
-                handler(this, e);
-            }
+            this.CalendarClosed?.Invoke(this, e);
         }
 
         protected virtual void OnCalendarOpened(RoutedEventArgs e)
         {
-            RoutedEventHandler handler = this.CalendarOpened;
-            if (null != handler)
-            {
-                handler(this, e);
-            }
+            this.CalendarOpened?.Invoke(this, e);
         }
 
         protected virtual void OnSelectedDateChanged(SelectionChangedEventArgs e)
@@ -805,11 +797,7 @@ namespace System.Windows.Controls
         /// <param name="e">A DatePickerDateValidationErrorEventArgs that contains the event data.</param>
         protected virtual void OnDateValidationError(DatePickerDateValidationErrorEventArgs e)
         {
-            EventHandler<DatePickerDateValidationErrorEventArgs> handler = this.DateValidationError;
-            if (handler != null)
-            {
-                handler(this, e);
-            }
+            this.DateValidationError?.Invoke(this, e);
         }
 
         protected internal override bool HasEffectiveKeyboardFocus

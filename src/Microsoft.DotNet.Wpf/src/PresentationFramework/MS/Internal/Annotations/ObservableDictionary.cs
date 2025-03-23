@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -346,10 +346,7 @@ namespace MS.Internal.Annotations
         /// </summary>
         private void FireDictionaryChanged()
         {
-            if (PropertyChanged != null)
-            {
-                PropertyChanged(this, new PropertyChangedEventArgs(null));
-            }
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(null));
         }
 
         #endregion Private Methods

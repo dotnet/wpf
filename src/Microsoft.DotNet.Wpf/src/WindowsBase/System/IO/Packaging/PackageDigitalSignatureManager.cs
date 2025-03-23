@@ -664,9 +664,8 @@ namespace System.IO.Packaging
                     if (temp != VerifyResult.Success)
                     {
                         result = temp;  // note failure
-                        
-                        if (InvalidSignatureEvent != null)
-                            InvalidSignatureEvent(this, new SignatureVerificationEventArgs(_signatures[i], temp));
+
+                        InvalidSignatureEvent?.Invoke(this, new SignatureVerificationEventArgs(_signatures[i], temp));
 
                         if (exitOnFailure)
                             break;

@@ -243,10 +243,7 @@ namespace System.Windows.Documents
         {
             if (!_initializing)
             {
-                if (TableStructureChanged != null)
-                {
-                    TableStructureChanged(this, EventArgs.Empty);
-                }
+                TableStructureChanged?.Invoke(this, EventArgs.Empty);
 
                 ValidateStructure();
 

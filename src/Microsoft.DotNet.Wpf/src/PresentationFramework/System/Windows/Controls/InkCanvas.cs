@@ -1391,10 +1391,7 @@ namespace System.Windows.Controls
             // No need to invoke VerifyAccess since this method is thread free.
 
             ArgumentNullException.ThrowIfNull(e);
-            if (null != SelectionMoving)
-            {
-                SelectionMoving(this, e);
-            }
+            SelectionMoving?.Invoke(this, e);
         }
 
         /// <summary>
@@ -1422,10 +1419,7 @@ namespace System.Windows.Controls
             // No need to invoke VerifyAccess since this method is thread free.
 
             ArgumentNullException.ThrowIfNull(e);
-            if (null != SelectionMoved)
-            {
-                SelectionMoved(this, e);
-            }
+            SelectionMoved?.Invoke(this, e);
         }
 
         /// <summary>
@@ -1458,10 +1452,7 @@ namespace System.Windows.Controls
             // No need to invoke VerifyAccess since this method is thread free.
 
             ArgumentNullException.ThrowIfNull(e);
-            if (null != StrokeErasing)
-            {
-                StrokeErasing(this, e);
-            }
+            StrokeErasing?.Invoke(this, e);
         }
 
         /// <summary>
@@ -1534,10 +1525,7 @@ namespace System.Windows.Controls
             // No need to invoke VerifyAccess since this method is thread free.
 
             ArgumentNullException.ThrowIfNull(e);
-            if (null != SelectionResizing)
-            {
-                SelectionResizing(this, e);
-            }
+            SelectionResizing?.Invoke(this, e);
         }
 
         /// <summary>
@@ -1564,10 +1552,7 @@ namespace System.Windows.Controls
             // No need to invoke VerifyAccess since this method is thread free.
 
             ArgumentNullException.ThrowIfNull(e);
-            if (null != SelectionResized)
-            {
-                SelectionResized(this, e);
-            }
+            SelectionResized?.Invoke(this, e);
         }
 
         /// <summary>
@@ -1598,10 +1583,7 @@ namespace System.Windows.Controls
             // No need to invoke VerifyAccess since this method is thread free.
 
             ArgumentNullException.ThrowIfNull(e);
-            if (null != SelectionChanging)
-            {
-                SelectionChanging(this, e);
-            }
+            SelectionChanging?.Invoke(this, e);
         }
 
         /// <summary>
@@ -1628,10 +1610,7 @@ namespace System.Windows.Controls
             // No need to invoke VerifyAccess since this method is thread free.
 
             ArgumentNullException.ThrowIfNull(e);
-            if (null != SelectionChanged)
-            {
-                SelectionChanged(this, e);
-            }
+            SelectionChanged?.Invoke(this, e);
         }
 
         /// <summary>

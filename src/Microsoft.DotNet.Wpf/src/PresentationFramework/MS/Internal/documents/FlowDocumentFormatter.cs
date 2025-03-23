@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -307,10 +307,7 @@ namespace MS.Internal.Documents
                 _isContentFormatValid = false;
             }
 
-            if (ContentInvalidated != null)
-            {
-                ContentInvalidated(this, EventArgs.Empty);
-            }
+            ContentInvalidated?.Invoke(this, EventArgs.Empty);
         }
 
         /// <summary>
@@ -329,10 +326,7 @@ namespace MS.Internal.Documents
         /// </summary>
         void IFlowDocumentFormatter.Suspend()
         {
-            if (Suspended != null)
-            {
-                Suspended(this, EventArgs.Empty);
-            }
+            Suspended?.Invoke(this, EventArgs.Empty);
         }
 
         /// <summary>

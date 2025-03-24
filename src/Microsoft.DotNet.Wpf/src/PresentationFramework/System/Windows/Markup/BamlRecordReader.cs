@@ -798,11 +798,6 @@ namespace System.Windows.Markup
                 {
                     RootList.Add(element);
                 }
-
-                // Set a flag to prevent the TreeBuilder from clobbering the
-                // XamlTypeMapper's xmlns hashtable on the root element as this
-                // would have already been set by the inner Baml loading Context.
-                IsRootAlreadyLoaded = true;
             }
             else
             {
@@ -5165,12 +5160,6 @@ namespace System.Windows.Markup
             get { return _bamlStream.Length; }
         }
 
-        internal bool IsRootAlreadyLoaded
-        {
-            get { return _isRootAlreadyLoaded; }
-            set { _isRootAlreadyLoaded = value; }
-        }
-
 #endregion Properties
 
 #region Data
@@ -5178,7 +5167,6 @@ namespace System.Windows.Markup
         // state vars
         private IComponentConnector          _componentConnector;
         private object                       _rootElement;
-        private bool                         _isRootAlreadyLoaded;
         private ArrayList                    _rootList;
         private ParserContext                _parserContext;   // XamlTypeMapper, namespace state, lang/space values
         private TypeConvertContext           _typeConvertContext;

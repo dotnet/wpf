@@ -133,92 +133,76 @@ namespace System.Windows.Markup
         {
             BamlRecord bamlRecord = null;
 
-            if (null == PreParsedRecordsStart)
+            Stream stream = BinaryReader.BaseStream;
+
+            // If we have a ReaderStream we know we are coming from XAML (check if can read full record)
+            // When reading BAML we don't get a ReaderStream so:
+            //      network - should check for number of bits downloaded but currently
+            //          no way to get this information. For now read sync.
+            //          NOTE:  This has to be addressed if we want async download
+            //                 of BAML.
+            //      local file - in memory or something, so else read the record sync.
+
+            if (null != XamlReaderStream)
             {
-                Stream stream = BinaryReader.BaseStream;
+                long currentPosition = stream.Position;
+                long bytesAvailable = stream.Length - currentPosition;
 
-                // If we have a ReaderStream we know we are coming from XAML (check if can read full record)
-                // When reading BAML we don't get a ReaderStream so:
-                //      network - should check for number of bits downloaded but currently
-                //          no way to get this information. For now read sync.
-                //          NOTE:  This has to be addressed if we want async download
-                //                 of BAML.
-                //      local file - in memory or something, so else read the record sync.
-
-                if (null != XamlReaderStream)
+                // Make sure there is room for the record type in the stream.
+                if (BamlRecord.RecordTypeFieldLength > bytesAvailable)
                 {
-                    long currentPosition = stream.Position;
-                    long bytesAvailable = stream.Length - currentPosition;
+                    return null;
+                }
 
-                    // Make sure there is room for the record type in the stream.
-                    if (BamlRecord.RecordTypeFieldLength > bytesAvailable)
-                    {
-                        return null;
-                    }
+                BamlRecordType recordType = (BamlRecordType)BinaryReader.ReadByte();
 
-                    BamlRecordType recordType = (BamlRecordType)BinaryReader.ReadByte();
+                // We've read the record type, so decrement available bytes.
+                bytesAvailable -= BamlRecord.RecordTypeFieldLength;
 
-                    // We've read the record type, so decrement available bytes.
-                    bytesAvailable -= BamlRecord.RecordTypeFieldLength;
+                // call GetNextRecord passing in the record type.  If this returns null,
+                // then the complete record was not yet available and could not be
+                // read.
+                bamlRecord = ReadNextRecordWithDebugExtension(bytesAvailable, recordType);
 
-                    // call GetNextRecord passing in the record type.  If this returns null,
-                    // then the complete record was not yet available and could not be
-                    // read.
-                    bamlRecord = ReadNextRecordWithDebugExtension(bytesAvailable, recordType);
-
-                    if (bamlRecord == null)
-                    {
+                if (bamlRecord == null)
+                {
 #if DEBUG
-                        // this case can happen if doing BAML Async and entire record hasn't
-                        // been downloaded.
-                        Debug.Assert(false == XamlReaderStream.IsWriteComplete,
-                                "not enough bytes for RecordSize but write is complete");
+                    // this case can happen if doing BAML Async and entire record hasn't
+                    // been downloaded.
+                    Debug.Assert(false == XamlReaderStream.IsWriteComplete,
+                            "not enough bytes for RecordSize but write is complete");
 #endif
-                        stream.Seek(currentPosition,SeekOrigin.Begin);
-                        return null;
-                    }
+                    stream.Seek(currentPosition,SeekOrigin.Begin);
+                    return null;
+                }
 
-                    // tell stream we are done with these file bits.
-                    XamlReaderStream.ReaderDoneWithFileUpToPosition(stream.Position -1);
-                }
-                else
-                {
-                    // default to reading a single record synchronous.  Don't attempt
-                    // to read if its already at the end of the stream.
-                    bool keepOnReading = true;
-                    while (keepOnReading)
-                    {
-                        if (BinaryReader.BaseStream.Length >
-                            BinaryReader.BaseStream.Position)
-                        {
-                            // If we are supposed to skip info records, then just advance the stream
-                            // for info records and continue until we get a non-info record, or we
-                            // run out of stream data to read.
-                            BamlRecordType recordType = (BamlRecordType)BinaryReader.ReadByte();
-                            bamlRecord = ReadNextRecordWithDebugExtension(Int64.MaxValue, recordType);
-                            keepOnReading = false;
-                        }
-                        else
-                        {
-                            keepOnReading = false;
-                        }
-                    }
-                }
+                // tell stream we are done with these file bits.
+                XamlReaderStream.ReaderDoneWithFileUpToPosition(stream.Position -1);
             }
-            else if (PreParsedCurrentRecord != null) // If the preparsed list has not reached its end
+            else
             {
-                bamlRecord = PreParsedCurrentRecord;   // return the record pointed to index
-                PreParsedCurrentRecord = PreParsedCurrentRecord.Next;
-
-                // if the next record is a debug record then process it and advance over it.
-                // The Debug record extension record is process BEFORE the current record because
-                // it is debug information regarding the current record.
-                if (BamlRecordHelper.HasDebugExtensionRecord(ParserContext.IsDebugBamlStream, bamlRecord))
+                // default to reading a single record synchronous.  Don't attempt
+                // to read if its already at the end of the stream.
+                bool keepOnReading = true;
+                while (keepOnReading)
                 {
-                    ProcessDebugBamlRecord(PreParsedCurrentRecord);
-                    PreParsedCurrentRecord = PreParsedCurrentRecord.Next;
+                    if (BinaryReader.BaseStream.Length >
+                        BinaryReader.BaseStream.Position)
+                    {
+                        // If we are supposed to skip info records, then just advance the stream
+                        // for info records and continue until we get a non-info record, or we
+                        // run out of stream data to read.
+                        BamlRecordType recordType = (BamlRecordType)BinaryReader.ReadByte();
+                        bamlRecord = ReadNextRecordWithDebugExtension(Int64.MaxValue, recordType);
+                        keepOnReading = false;
+                    }
+                    else
+                    {
+                        keepOnReading = false;
+                    }
                 }
             }
+            
             return bamlRecord;
         }
 
@@ -282,18 +266,7 @@ namespace System.Windows.Markup
         /// </summary>
         internal BamlRecordType GetNextRecordType()
         {
-            BamlRecordType bamlRecordType;
-
-            if (null == PreParsedRecordsStart)
-            {
-                bamlRecordType = (BamlRecordType)BinaryReader.PeekChar();
-            }
-            else
-            {
-                bamlRecordType = PreParsedCurrentRecord.RecordType;
-            }
-
-            return bamlRecordType;
+            return (BamlRecordType)BinaryReader.PeekChar();
         }
 
         /// <summary>
@@ -5074,23 +5047,10 @@ namespace System.Windows.Markup
                 f?.Freeze();
             }
         }
-        internal void PreParsedBamlReset()
-        {
-            PreParsedCurrentRecord = PreParsedRecordsStart;
-        }
 
         #endregion Methods
 
         #region Properties
-
-        // List of preparsed BamlRecords that are used instead of a
-        // record stream.  This is used when reading the contents of
-        // a resource dictionary.
-        internal BamlRecord PreParsedRecordsStart
-        {
-            get { return _preParsedBamlRecordsStart; }
-            set { _preParsedBamlRecordsStart = value; }
-        }
 
         // Index into the list of preparsed records for the next
         // record to be read.
@@ -5340,7 +5300,6 @@ namespace System.Windows.Markup
         private ReaderStream                 _xamlReaderStream;
         private BamlBinaryReader             _binaryReader;
         private BamlRecordManager            _bamlRecordManager;
-        private BamlRecord                   _preParsedBamlRecordsStart = null;
         private BamlRecord                   _preParsedIndexRecord = null;
         private bool                         _endOfDocument = false;
         private bool                         _buildTopDown = true;

@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -964,7 +964,7 @@ namespace MS.Win32
         {
             if (!IntPostMessage(hwnd, msg, wparam, lparam))
             {
-                throw new Win32Exception();
+                throw new Win32Exception(Marshal.GetLastWin32Error());
             }
         }
 

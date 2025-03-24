@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -121,7 +121,12 @@ namespace MS.Win32
                 try
                 {
                     result = UnsafeNativeMethods.SetWindowLong(new HandleRef(null,hwnd), NativeMethods.GWL_WNDPROC, defWindowProc);
-}
+
+                    if (result != IntPtr.Zero)
+                    {
+                        UnsafeNativeMethods.PostMessage(new HandleRef(null, hwnd), WindowMessage.WM_CLOSE, IntPtr.Zero, IntPtr.Zero);
+                    }
+                }
                 catch(System.ComponentModel.Win32Exception e)
                 {
                     // We failed to change the window proc.  Now what?
@@ -133,10 +138,6 @@ namespace MS.Win32
                         // the wrong thread.
                         throw;
                     }
-                }
-                if (result != IntPtr.Zero )
-                {
-                    UnsafeNativeMethods.PostMessage(new HandleRef(null,hwnd), WindowMessage.WM_CLOSE, IntPtr.Zero, IntPtr.Zero);
                 }
             }
         }

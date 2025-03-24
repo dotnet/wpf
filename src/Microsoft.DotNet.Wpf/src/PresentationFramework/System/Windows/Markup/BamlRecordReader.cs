@@ -5052,14 +5052,6 @@ namespace System.Windows.Markup
 
         #region Properties
 
-        // Index into the list of preparsed records for the next
-        // record to be read.
-        internal BamlRecord PreParsedCurrentRecord
-        {
-            get { return _preParsedIndexRecord; }
-            set { _preParsedIndexRecord= value; }
-        }
-
         // Stream that contains baml records in binary form.  This is used when
         // reading from a file.
         internal Stream BamlStream
@@ -5300,7 +5292,6 @@ namespace System.Windows.Markup
         private ReaderStream                 _xamlReaderStream;
         private BamlBinaryReader             _binaryReader;
         private BamlRecordManager            _bamlRecordManager;
-        private BamlRecord                   _preParsedIndexRecord = null;
         private bool                         _endOfDocument = false;
         private bool                         _buildTopDown = true;
 

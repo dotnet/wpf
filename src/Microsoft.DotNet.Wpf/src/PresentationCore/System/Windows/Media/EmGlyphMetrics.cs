@@ -1,6 +1,7 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
+using System.Runtime.CompilerServices;
 using MS.Internal.Text.TextInterface;
 using MS.Internal.TextFormatting;
 
@@ -19,7 +20,10 @@ internal readonly struct EmGlyphMetrics
     internal readonly double BottomSideBearing { get; }
     internal readonly double Baseline { get; }
 
-    internal EmGlyphMetrics(GlyphMetrics glyphMetrics, double designToEm, double pixelsPerDip, TextFormattingMode textFormattingMode)
+    // This will result in newobj IL due to the ref pass, we want to make sure this code gets inlined due to int->double conversions via vcvtsi2sd,
+    // since JIT will only use volatile SIMD registers here and that will cause unnecessary stalls (as it doesn't play "safe" zero register either)
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    internal EmGlyphMetrics(scoped ref readonly GlyphMetrics glyphMetrics, double designToEm, double pixelsPerDip, TextFormattingMode textFormattingMode)
     {
         if (textFormattingMode is TextFormattingMode.Display)
         {
@@ -29,7 +33,7 @@ internal readonly struct EmGlyphMetrics
             RightSideBearing = TextFormatterImp.RoundDipForDisplayMode(designToEm * glyphMetrics.RightSideBearing, pixelsPerDip);
             TopSideBearing = TextFormatterImp.RoundDipForDisplayMode(designToEm * glyphMetrics.TopSideBearing, pixelsPerDip);
             BottomSideBearing = TextFormatterImp.RoundDipForDisplayMode(designToEm * glyphMetrics.BottomSideBearing, pixelsPerDip);
-            Baseline = TextFormatterImp.RoundDipForDisplayMode(designToEm * GlyphTypeface.BaselineHelper(glyphMetrics), pixelsPerDip);
+            Baseline = TextFormatterImp.RoundDipForDisplayMode(designToEm * GlyphTypeface.BaselineHelper(in glyphMetrics), pixelsPerDip);
 
             // Workaround for short or narrow glyphs - see comment in AdjustAdvanceForDisplayLayout
             AdvanceWidth = AdjustAdvanceForDisplayLayout(AdvanceWidth, LeftSideBearing, RightSideBearing);
@@ -43,7 +47,7 @@ internal readonly struct EmGlyphMetrics
             RightSideBearing = designToEm * glyphMetrics.RightSideBearing;
             TopSideBearing = designToEm * glyphMetrics.TopSideBearing;
             BottomSideBearing = designToEm * glyphMetrics.BottomSideBearing;
-            Baseline = designToEm * GlyphTypeface.BaselineHelper(glyphMetrics);
+            Baseline = designToEm * GlyphTypeface.BaselineHelper(in glyphMetrics);
         }
     }
 

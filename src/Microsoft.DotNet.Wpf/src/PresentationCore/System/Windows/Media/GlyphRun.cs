@@ -1279,7 +1279,7 @@ namespace System.Windows.Media
 
                 for (int i = 0; i < GlyphCount; ++i)
                 {
-                    EmGlyphMetrics emGlyphMetrics = new(glyphMetrics[i], designToEm, _pixelsPerDip, _textFormattingMode);
+                    EmGlyphMetrics emGlyphMetrics = new(in glyphMetrics[i], designToEm, _pixelsPerDip, _textFormattingMode);
 
                     Point glyphOffset = GetGlyphOffset(i);
                     double originX;
@@ -1411,7 +1411,7 @@ namespace System.Windows.Media
 
             for (int i = 0; i < glyphCount; ++i)
             {
-                EmGlyphMetrics emGlyphMetrics = new(glyphMetrics[i], designToEm, _pixelsPerDip, _textFormattingMode);
+                EmGlyphMetrics emGlyphMetrics = new(in glyphMetrics[i], designToEm, _pixelsPerDip, _textFormattingMode);
 
                 if (GlyphOffsets != null)
                 {

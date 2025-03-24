@@ -3876,69 +3876,6 @@ namespace System.Windows.Markup
             return DependencyProperty.UnsetValue;
         }
 
-        /// <summary>
-        /// Helper function for loading a Resources from RootElement/AppResources/SystemResources.
-        /// The passed in object must be a trimmed string or a type.
-        /// </summary>
-        /// <returns>
-        ///  The resource value, if found.  Otherwise DependencyProperty.UnsetValue.
-        /// </returns>
-        private object FindResourceInRootOrAppOrTheme(
-            object  resourceNameObject,
-            bool    allowDeferredResourceReference,
-            bool    mustReturnDeferredResourceReference)
-        {
-            // This method should not exist since resource references should be references
-            // and not looked up at this point.
-            // That not being the case, we need to look at SystemResources and App Resources
-            // even when we don't have a reference to an element or tree.
-            // System resources lucked out, though...
-            object result;
-            if (!SystemResources.IsSystemResourcesParsing)
-            {
-                object source;
-                result = FrameworkElement.FindResourceFromAppOrSystem(resourceNameObject, out source, false /*throwOnError*/, allowDeferredResourceReference, mustReturnDeferredResourceReference);
-            }
-            else
-            {
-                result = SystemResources.FindResourceInternal(resourceNameObject, allowDeferredResourceReference, mustReturnDeferredResourceReference);
-            }
-
-            if (result != null)
-            {
-                return result;
-            }
-
-            return DependencyProperty.UnsetValue;
-        }
-
-        // Given a key, find object in the parser stack that may hold a
-        // ResourceDictionary and search for an object keyed by that key.
-        internal object FindResourceInParentChain(
-            object  resourceNameObject,
-            bool    allowDeferredResourceReference,
-            bool    mustReturnDeferredResourceReference)
-        {
-            // Try the parser stack first.
-            object resource = FindResourceInParserStack(resourceNameObject, allowDeferredResourceReference, mustReturnDeferredResourceReference);
-
-            if (resource == DependencyProperty.UnsetValue)
-            {
-                // If we get to here, we've either walked off the top of the reader stack, or haven't
-                // found a value on an element that is in the tree.  In that case, give the RootElement
-                // and the parent held in the parser context one last try.  This would occur if the
-                // parser is used for literal content that did not contain a DependencyObject tree.
-                resource = FindResourceInRootOrAppOrTheme(resourceNameObject, allowDeferredResourceReference, mustReturnDeferredResourceReference);
-            }
-
-            if (resource == DependencyProperty.UnsetValue && mustReturnDeferredResourceReference)
-            {
-                resource = new DeferredResourceReferenceHolder(resourceNameObject, DependencyProperty.UnsetValue);
-            }
-
-            return resource;
-        }
-
         private object GetObjectDataFromContext(ReaderContextStackData context)
         {
             if (null == context.ObjectData &&

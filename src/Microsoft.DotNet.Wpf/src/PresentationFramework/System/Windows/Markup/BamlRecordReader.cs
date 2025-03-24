@@ -3896,29 +3896,8 @@ namespace System.Windows.Markup
                     }
                 }
 
-
-                // If we reach the end of this reader's context stack, see if we should
-                // look at another one.
-
-                bool newContextStackFound = false;
-                while (reader._previousBamlRecordReader != null)
-                {
-                    // Yes, move to the next reader
-                    reader = reader._previousBamlRecordReader;
-
-                    if (reader.ReaderContextStack != contextStack)
-                    {
-                        contextStack = reader.ReaderContextStack;
-                        newContextStackFound = true;
-                        break;
-                    }
-                }
-
-                if( !newContextStackFound )
-                {
-                    // Terminate the loop
-                    contextStack = null;
-                }
+                // Terminate the loop
+                contextStack = null;
             }
 
             return DependencyProperty.UnsetValue;
@@ -5100,20 +5079,6 @@ namespace System.Windows.Markup
             PreParsedCurrentRecord = PreParsedRecordsStart;
         }
 
-
-        //+--------------------------------------------------------------------------------------------------------------
-        //
-        //  SetPreviousBamlRecordReader
-        //
-        //  Link this nested BamlRecordReader to one that is higher in the stack.
-        //
-        //+--------------------------------------------------------------------------------------------------------------
-
-        protected internal void SetPreviousBamlRecordReader( BamlRecordReader previousBamlRecordReader )
-        {
-            _previousBamlRecordReader = previousBamlRecordReader;
-        }
-
         #endregion Methods
 
         #region Properties
@@ -5354,14 +5319,6 @@ namespace System.Windows.Markup
             set { _isRootAlreadyLoaded = value; }
         }
 
-        // The PreviousBamlRecordReader is set when this BRR is nested inside
-        // another.
-
-        internal BamlRecordReader PreviousBamlRecordReader
-        {
-            get { return _previousBamlRecordReader; }
-        }
-
 #endregion Properties
 
 #region Data
@@ -5387,9 +5344,6 @@ namespace System.Windows.Markup
         private BamlRecord                   _preParsedIndexRecord = null;
         private bool                         _endOfDocument = false;
         private bool                         _buildTopDown = true;
-
-        // The outer BRR, when this one is nested.
-        private BamlRecordReader             _previousBamlRecordReader;
 
         private static List<ReaderContextStackData> _stackDataFactoryCache = new List<ReaderContextStackData>();
 

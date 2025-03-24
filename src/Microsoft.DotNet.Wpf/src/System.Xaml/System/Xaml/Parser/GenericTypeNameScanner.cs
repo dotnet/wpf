@@ -100,7 +100,7 @@ namespace MS.Internal.Xaml.Parser
 
         // Parse a single subscript (e.g. [] or [,]) at the given position, returning its rank
         // Returns 0 if the parse failed
-        internal static int ParseSubscriptSegment(string subscript, ref int pos)
+        internal static int ParseSubscriptSegment(ReadOnlySpan<char> subscript, ref int pos)
         {
             bool openBracketFound = false;
             int rank = 1;
@@ -150,17 +150,17 @@ namespace MS.Internal.Xaml.Parser
         }
 
         // strips the subscript off the end of typeName, and returns it
-        internal static string StripSubscript(string typeName, out string subscript)
+        internal static ReadOnlySpan<char> StripSubscript(ReadOnlySpan<char> typeName, out ReadOnlySpan<char> subscript)
         {
             int openBracketNdx = typeName.IndexOf(OpenBracket);
             if (openBracketNdx < 0)
             {
-                subscript = null;
+                subscript = ReadOnlySpan<char>.Empty;
                 return typeName;
             }
 
-            subscript = typeName.Substring(openBracketNdx);
-            return typeName.Substring(0, openBracketNdx);
+            subscript = typeName.Slice(openBracketNdx);
+            return typeName.Slice(0, openBracketNdx);
         }
 
         private void State_Start()

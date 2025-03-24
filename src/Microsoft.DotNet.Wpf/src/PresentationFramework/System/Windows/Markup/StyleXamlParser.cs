@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -45,27 +45,6 @@ namespace System.Windows.Markup
     /// </summary>
     internal class StyleXamlParser : XamlParser
     {
-
-#region Constructors
-
-#if !PBTCOMPILER
-        /// <summary>
-        /// Constructor.
-        /// </summary>
-        /// <remarks>
-        /// Note that we are re-using the token reader, so we'll swap out the XamlParser that
-        /// the token reader uses with ourself.  Then restore it when we're done parsing.
-        /// </remarks>
-        internal StyleXamlParser(
-            XamlTreeBuilder  treeBuilder,
-            XamlReaderHelper       tokenReader,
-            ParserContext    parserContext) : this(tokenReader, parserContext)
-        {
-            _treeBuilder      = treeBuilder;
-        }
-
-#endif
-
         /// <summary>
         /// Constructor.
         /// </summary>
@@ -82,13 +61,9 @@ namespace System.Windows.Markup
 
             _previousXamlParser = TokenReader.ControllingXamlParser;
             TokenReader.ControllingXamlParser = this;
-            _startingDepth = TokenReader.XmlReader.Depth;
         }
 
-#endregion Constructors
-
 #region Overrides
-
 
         /// <summary>
         /// Override of the main switch statement that processes the xaml nodes.
@@ -1452,15 +1427,7 @@ namespace System.Windows.Markup
         internal override void ParseError(XamlParseException e)
         {
             CloseWriterStream();
-#if !PBTCOMPILER
-            // If there is an associated treebuilder, tell it about the error.  There may not
-            // be a treebuilder, if this parser was built from a serializer for the purpose of
-            // converting directly to baml, rather than converting to an object tree.
-            if (TreeBuilder != null)
-            {
-                TreeBuilder.XamlTreeBuildError(e);
-            }
-#endif
+
             throw e;
         }
 
@@ -1513,17 +1480,6 @@ namespace System.Windows.Markup
 
         #endregion Methods
 
-        #region Properties
-
-#if !PBTCOMPILER
-        /// <summary>
-        /// TreeBuilder associated with this class
-        /// </summary>
-        XamlTreeBuilder TreeBuilder
-        {
-            get { return _treeBuilder; }
-        }
-#else
         /// <summary>
         /// Return true if we are not in pass one of a compile and we are parsing a
         /// defer load section of markup.
@@ -1540,23 +1496,12 @@ namespace System.Windows.Markup
         {
             get { return BamlRecordWriter == null; }
         }
-#endif
-
-#endregion Properties
 
         #region Data
 
-#if !PBTCOMPILER
-        // TreeBuilder that created this parser
-        XamlTreeBuilder _treeBuilder;
-#endif
         // The XamlParser that the TokenReader was using when this instance of
         // the StyleXamlParser was created.  This must be restored on exit
         private XamlParser      _previousXamlParser;
-
-        // Depth in the Xaml file when parsing of this style block started.
-        // This is used to determine when to stop parsing
-        private int             _startingDepth;
 
         private StyleModeStack _styleModeStack = new StyleModeStack();
 

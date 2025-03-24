@@ -787,47 +787,37 @@ namespace System.Windows.Markup
             ReaderFlags   flags = ReaderFlags.Unknown;
             ReaderContextStackData currentContext = CurrentContext;
 
-            if (_bamlAsForest && currentContext == null)
+            if (null != currentContext &&
+                (ReaderFlags.PropertyComplexClr == currentContext.ContextType ||
+                    ReaderFlags.PropertyComplexDP == currentContext.ContextType) &&
+                null == currentContext.ExpectedType)
             {
-                Debug.Assert(_rootElement != null);
-                element = _rootElement;
-
-                flags = GetFlagsFromType(element.GetType());
+                string propName = GetPropNameFrom(currentContext.ObjectData);
+                ThrowException(nameof(SR.ParserNoComplexMulti), propName);
             }
-            else
+
+            // If this is the very top element as indicated by there not being a
+            // parent context, then we have to add this element to the rootlist
+            // by calling SetPropertyValueToParent.  For all other cases we don't want to
+            // call this here since we may be building a subtree bottom up and want
+            // to defer addition of elements.  
+            if (null == ParentContext)
             {
-                if (null != currentContext &&
-                    (ReaderFlags.PropertyComplexClr == currentContext.ContextType ||
-                     ReaderFlags.PropertyComplexDP == currentContext.ContextType) &&
-                    null == currentContext.ExpectedType)
-                {
-                    string propName = GetPropNameFrom(currentContext.ObjectData);
-                    ThrowException(nameof(SR.ParserNoComplexMulti), propName);
-                }
-
-                // If this is the very top element as indicated by there not being a
-                // parent context, then we have to add this element to the rootlist
-                // by calling SetPropertyValueToParent.  For all other cases we don't want to
-                // call this here since we may be building a subtree bottom up and want
-                // to defer addition of elements.  
-                if (null == ParentContext)
-                {
-                    SetPropertyValueToParent(true);
-                }
-
-                // Get an instance of the element, if it is to be created now.  Also set
-                // the flags to indicate what the element is and how to treat it.
-                GetElementAndFlags(bamlElementRecord, out element, out flags,
-                                   out delayCreatedType, out delayCreatedTypeId);
+                SetPropertyValueToParent(true);
             }
+
+            // Get an instance of the element, if it is to be created now.  Also set
+            // the flags to indicate what the element is and how to treat it.
+            GetElementAndFlags(bamlElementRecord, out element, out flags,
+                                out delayCreatedType, out delayCreatedTypeId);
+
 
             Stream bamlStream = BamlStream;
 
-            if (!_bamlAsForest &&
-                currentContext == null &&
+            if (currentContext == null &&
                 element != null &&
                 bamlStream != null &&
-                !(bamlStream is ReaderStream) &&
+                bamlStream is not ReaderStream &&
                 StreamPosition == StreamLength)
             {
                 // We are here because the root element was loaded from this baml stream
@@ -5379,7 +5369,6 @@ namespace System.Windows.Markup
         // state vars
         private IComponentConnector          _componentConnector;
         private object                       _rootElement;
-        private bool                         _bamlAsForest;
         private bool                         _isRootAlreadyLoaded;
         private ArrayList                    _rootList;
         private ParserContext                _parserContext;   // XamlTypeMapper, namespace state, lang/space values

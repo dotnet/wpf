@@ -5230,13 +5230,6 @@ namespace System.Windows.Markup
             get { return _xamlReaderStream; }
         }
 
-        // The stack of context information accumulated during reading.
-        internal ParserStack ContextStack
-        {
-            get { return _contextStack; }
-            set { _contextStack = value; }
-        }
-
         internal int LineNumber
         {
             get { return ParserContext.LineNumber; }

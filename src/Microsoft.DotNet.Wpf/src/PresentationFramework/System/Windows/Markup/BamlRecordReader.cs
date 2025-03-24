@@ -114,17 +114,6 @@ namespace System.Windows.Markup
             set { _rootList = value; }
         }
 
-
-        /// <summary>
-        /// True if tree is to be built strictly (well, more or less strictly)
-        /// top down.
-        /// </summary>
-        internal bool BuildTopDown
-        {
-            get { return _buildTopDown; }
-            set { _buildTopDown = value; }
-        }
-
         /// <summary>
         /// Read a BamlRecord from the underlying binary stream and return it.
         /// If we're at the end of the stream, return null.
@@ -846,11 +835,7 @@ namespace System.Windows.Markup
                 // of the logical tree.  Other objects, such as Freezables, are added bottom-up
                 // to aid in having all properties set prior to adding them to the tree.
                 // See PS workitem #19080
-                if (BuildTopDown &&
-                    element != null &&
-                    ((element is UIElement) ||
-                    (element is ContentElement) ||
-                    (element is UIElement3D)))
+                if (element is not null and (UIElement or ContentElement or UIElement3D))
                 {
                     SetPropertyValueToParent(true);
                 }
@@ -5206,7 +5191,6 @@ namespace System.Windows.Markup
         private BamlBinaryReader             _binaryReader;
         private BamlRecordManager            _bamlRecordManager;
         private bool                         _endOfDocument = false;
-        private bool                         _buildTopDown = true;
 
         private static List<ReaderContextStackData> _stackDataFactoryCache = new List<ReaderContextStackData>();
 

@@ -10,7 +10,7 @@ namespace System.Windows.Media;
 /// <summary>
 /// Helper that scales a raw DWrite GlyphMetrics into em space. Used when computing ink bounding box.
 /// </summary>
-internal readonly struct EmGlyphMetrics
+internal readonly ref struct EmGlyphMetrics
 {
     internal readonly double LeftSideBearing { get; }
     internal readonly double AdvanceWidth { get; }

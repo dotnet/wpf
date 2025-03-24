@@ -5119,14 +5119,6 @@ namespace System.Windows.Markup
             }
         }
 
-        // Determines sync and async parsing modes.  Not used directly by the record
-        // reader, but is needed when spinning off other deserializers
-        internal XamlParseMode XamlParseMode
-        {
-            get { return _parseMode; }
-            set { _parseMode = value; }
-        }
-
         // Table for mapping types, attributes and assemblies.
         // This should always be a part of the ParserContext
         internal BamlMapTable MapTable
@@ -5270,7 +5262,6 @@ namespace System.Windows.Markup
         private TypeConvertContext           _typeConvertContext;
         private int                          _persistId;
         private ParserStack                  _contextStack = new ParserStack();
-        private XamlParseMode                _parseMode = XamlParseMode.Synchronous;
         // end of state vars
 
         private Stream                       _bamlStream;

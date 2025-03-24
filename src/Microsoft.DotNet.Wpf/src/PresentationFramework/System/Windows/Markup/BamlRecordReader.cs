@@ -5127,13 +5127,6 @@ namespace System.Windows.Markup
             set { _parseMode = value; }
         }
 
-        // The maximum number of records to read while in async mode
-        internal int MaxAsyncRecords
-        {
-            get { return _maxAsyncRecords; }
-            set { _maxAsyncRecords = value; }
-        }
-
         // Table for mapping types, attributes and assemblies.
         // This should always be a part of the ParserContext
         internal BamlMapTable MapTable
@@ -5278,7 +5271,6 @@ namespace System.Windows.Markup
         private int                          _persistId;
         private ParserStack                  _contextStack = new ParserStack();
         private XamlParseMode                _parseMode = XamlParseMode.Synchronous;
-        private int                          _maxAsyncRecords;
         // end of state vars
 
         private Stream                       _bamlStream;

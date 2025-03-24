@@ -25,7 +25,7 @@ namespace System.Windows
         public override bool CanConvertTo(ITypeDescriptorContext context, Type destinationType)
         {
             // Return false for any other target type. Don't call base.CanConvertTo() because it would be confusing 
-            // in some cases. For example, for destination typeof(string), base TypeConveter just converts the
+            // in some cases. For example, for destination typeof(string), base TypeConverter just converts the
             // ITypeDescriptorContext to the full name string of the given type.
             return destinationType == typeof(InstanceDescriptor);
         }

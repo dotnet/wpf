@@ -11,7 +11,11 @@
 using System;
 using System.IO;
 using System.Collections;
+using System.Collections.Specialized;
+using System.Collections.Generic;
 using System.ComponentModel;
+using System.Runtime.InteropServices;
+using System.Diagnostics.CodeAnalysis;
 using System.Diagnostics;
 using System.Reflection;
 
@@ -363,9 +367,9 @@ namespace System.Windows.Markup
                 {
                     // Loop through attributes. We only care about having CLR properties in
                     // the hash table.  DependencyProperties are already cached by the framework.
-                    for (int i=0; i<AttributeIdMap.Count; i++)
+                    for (int i = 0; i < AttributeIdMap.Count; i++)
                     {
-                        BamlAttributeInfoRecord info = AttributeIdMap[i] as BamlAttributeInfoRecord;
+                        BamlAttributeInfoRecord info = AttributeIdMap[i];
                         if (info.PropInfo != null)
                         {
                             object key = GetAttributeInfoKey(info.OwnerType.FullName, info.Name);
@@ -374,9 +378,9 @@ namespace System.Windows.Markup
                     }
 
                     // Loop through types and cache them.
-                    for (int j=0; j<TypeIdMap.Count; j++)
+                    for (int j = 0; j < TypeIdMap.Count; j++)
                     {
-                        BamlTypeInfoRecord info = TypeIdMap[j] as BamlTypeInfoRecord;
+                        BamlTypeInfoRecord info = TypeIdMap[j];
                         if (info.Type != null)
                         {
                             BamlAssemblyInfoRecord assyInfo = GetAssemblyInfoFromId(info.AssemblyId);
@@ -396,26 +400,19 @@ namespace System.Windows.Markup
         // and types that are a part of BamlTypeInfoRecords in the baml file.
         internal Type GetTypeFromId(short id)
         {
-            Type type = null;
-
             if (id < 0)
             {
                 return KnownTypes.Types[-id];
             }
-            else
+
+            BamlTypeInfoRecord typeInfo = TypeIdMap[id];
+            Type type = GetTypeFromTypeInfo(typeInfo);
+
+            if (type is null)
             {
-                BamlTypeInfoRecord typeInfo  = (BamlTypeInfoRecord)TypeIdMap[id];
-
-                if (null != typeInfo)
-                {
-                    type = GetTypeFromTypeInfo(typeInfo);
-
-                    if (null == type)
-                    {
-                        ThrowException(nameof(SR.ParserFailFindType), typeInfo.TypeFullName);
-                    }
-                }
+                ThrowException(nameof(SR.ParserFailFindType), typeInfo.TypeFullName);
             }
+
             return type;
         }
 
@@ -498,7 +495,7 @@ namespace System.Windows.Markup
             }
             else
             {
-                return (BamlTypeInfoRecord) TypeIdMap[id];
+                return TypeIdMap[id];
             }
         }
 
@@ -509,9 +506,9 @@ namespace System.Windows.Markup
         private short GetAssemblyIdForType(Type t)
         {
             string assemblyName = t.Assembly.FullName;
-            for (int i=0; i<AssemblyIdMap.Count; i++)
+            for (int i = 0; i < AssemblyIdMap.Count; i++)
             {
-                string mapName = ((BamlAssemblyInfoRecord)AssemblyIdMap[i]).AssemblyFullName;
+                string mapName = AssemblyIdMap[i].AssemblyFullName;
                 if (mapName == assemblyName)
                 {
                     return (short)i;
@@ -613,7 +610,7 @@ namespace System.Windows.Markup
             else
             {
                 Debug.Assert(id < StringIdMap.Count);
-                BamlStringInfoRecord infoRecord = (BamlStringInfoRecord)StringIdMap[id];
+                BamlStringInfoRecord infoRecord = StringIdMap[id];
                 return infoRecord.Value;
             }
         }
@@ -645,7 +642,7 @@ namespace System.Windows.Markup
                 return record;
             }
 
-            return (BamlAttributeInfoRecord)AttributeIdMap[id];
+            return AttributeIdMap[id];
         }
 
         internal BamlAttributeInfoRecord GetAttributeInfoFromIdWithOwnerType(short attributeId)
@@ -676,13 +673,9 @@ namespace System.Windows.Markup
             }
             else
             {
-                BamlAttributeInfoRecord record = (BamlAttributeInfoRecord)AttributeIdMap[id];
-                if (record != null)
-                {
-                    return record.Name;
-                }
+                BamlAttributeInfoRecord record = AttributeIdMap[id];
+                return record.Name;
             }
-            return null;
         }
 
         internal bool DoesAttributeMatch(short id, short ownerTypeId, string name)
@@ -696,7 +689,7 @@ namespace System.Windows.Markup
             }
             else
             {
-                BamlAttributeInfoRecord record = (BamlAttributeInfoRecord)AttributeIdMap[id];
+                BamlAttributeInfoRecord record = AttributeIdMap[id];
                 return (record.OwnerTypeId == ownerTypeId) && (string.Equals(record.Name, name, StringComparison.Ordinal));
             }
         }
@@ -717,7 +710,7 @@ namespace System.Windows.Markup
             }
             else
             {
-                BamlAttributeInfoRecord record = (BamlAttributeInfoRecord)AttributeIdMap[id];
+                BamlAttributeInfoRecord record = AttributeIdMap[id];
                 return attributeUsage == record.AttributeUsage;
             }
         }
@@ -733,7 +726,7 @@ namespace System.Windows.Markup
             }
             else
             {
-                BamlAttributeInfoRecord record = (BamlAttributeInfoRecord)AttributeIdMap[id];
+                BamlAttributeInfoRecord record = AttributeIdMap[id];
                 name = record.Name;
                 ownerTypeId = record.OwnerTypeId;
                 attributeUsage = record.AttributeUsage;
@@ -792,16 +785,12 @@ namespace System.Windows.Markup
             {
                 if (bamlAttributeInfoRecord.OwnerTypeId < 0)
                 {
-                    bamlAttributeInfoRecord.OwnerType =
-                                         GetKnownTypeFromId(bamlAttributeInfoRecord.OwnerTypeId);
+                    bamlAttributeInfoRecord.OwnerType = GetKnownTypeFromId(bamlAttributeInfoRecord.OwnerTypeId);
                 }
                 else
                 {
-                    BamlTypeInfoRecord typeInfo = (BamlTypeInfoRecord)TypeIdMap[bamlAttributeInfoRecord.OwnerTypeId];
-                    if (null != typeInfo)
-                    {
-                        bamlAttributeInfoRecord.OwnerType =  GetTypeFromTypeInfo(typeInfo);
-                    }
+                    BamlTypeInfoRecord typeInfo = TypeIdMap[bamlAttributeInfoRecord.OwnerTypeId];
+                    bamlAttributeInfoRecord.OwnerType = GetTypeFromTypeInfo(typeInfo);
                 }
             }
 
@@ -906,7 +895,7 @@ namespace System.Windows.Markup
             }
             else
             {
-                BamlAttributeInfoRecord attribInfo = (BamlAttributeInfoRecord)AttributeIdMap[id];
+                BamlAttributeInfoRecord attribInfo = AttributeIdMap[id];
                 return GetDependencyProperty(attribInfo);
             }
         }
@@ -986,7 +975,7 @@ namespace System.Windows.Markup
             }
             else
             {
-                return (BamlAssemblyInfoRecord)AssemblyIdMap[id];
+                return AssemblyIdMap[id];
             }
         }
 
@@ -1020,10 +1009,9 @@ namespace System.Windows.Markup
                 AssemblyFullName = assemblyFullName
             };
 
-            BamlAssemblyInfoRecord bamlAssemblyInfoRecord =
-                (BamlAssemblyInfoRecord)GetHashTableData(key);
+            BamlAssemblyInfoRecord bamlAssemblyInfoRecord = (BamlAssemblyInfoRecord)GetHashTableData(key);
 
-            if (null == bamlAssemblyInfoRecord)
+            if (bamlAssemblyInfoRecord is null)
             {
                 bamlAssemblyInfoRecord = new BamlAssemblyInfoRecord
                 {
@@ -1075,7 +1063,8 @@ namespace System.Windows.Markup
 #endif
 
                 // review, could be a race condition here.
-                bamlAssemblyInfoRecord.AssemblyId = (short)AssemblyIdMap.Add(bamlAssemblyInfoRecord);
+                AssemblyIdMap.Add(bamlAssemblyInfoRecord);
+                bamlAssemblyInfoRecord.AssemblyId = (short)(AssemblyIdMap.Count - 1);
 
                 ObjectHashTable.Add(key, bamlAssemblyInfoRecord);
 
@@ -1092,7 +1081,8 @@ namespace System.Windows.Markup
                     bamlAssemblyInfoRecord.Assembly.FullName == bamlAssemblyInfoRecord.AssemblyFullName);
 
                 // review, could be a race condition here.
-                bamlAssemblyInfoRecord.AssemblyId = (short)AssemblyIdMap.Add(bamlAssemblyInfoRecord);
+                AssemblyIdMap.Add(bamlAssemblyInfoRecord);
+                bamlAssemblyInfoRecord.AssemblyId = (short)(AssemblyIdMap.Count - 1);
 
                 // Write to BAML
                 bamlAssemblyInfoRecord.Write(binaryWriter);
@@ -1110,9 +1100,7 @@ namespace System.Windows.Markup
         // sure we are not overwriting existing data.
         internal void LoadAssemblyInfoRecord(BamlAssemblyInfoRecord record)
         {
-            Debug.Assert(AssemblyIdMap.Count == record.AssemblyId ||
-                         record.AssemblyFullName ==
-                ((BamlAssemblyInfoRecord)AssemblyIdMap[record.AssemblyId]).AssemblyFullName);
+            Debug.Assert(AssemblyIdMap.Count == record.AssemblyId || record.AssemblyFullName == AssemblyIdMap[record.AssemblyId].AssemblyFullName);
 
             if (AssemblyIdMap.Count == record.AssemblyId)
             {
@@ -1248,7 +1236,8 @@ namespace System.Windows.Markup
             bamlTypeInfoRecord.IsInternalType = (elementType != null && ReflectionHelper.IsInternalType(elementType));
 
             // review, could be a race condition here.
-            bamlTypeInfoRecord.TypeId = (short)TypeIdMap.Add(bamlTypeInfoRecord);
+            TypeIdMap.Add(bamlTypeInfoRecord);
+            bamlTypeInfoRecord.TypeId = (short)(TypeIdMap.Count - 1);
 
             // add to the hash
             ObjectHashTable.Add(key, bamlTypeInfoRecord);
@@ -1265,9 +1254,7 @@ namespace System.Windows.Markup
         // as an existing record, ensure we're not trying to overwrite something.
         internal void LoadTypeInfoRecord(BamlTypeInfoRecord record)
         {
-            Debug.Assert(TypeIdMap.Count == record.TypeId ||
-                         record.TypeFullName ==
-                         ((BamlTypeInfoRecord)TypeIdMap[record.TypeId]).TypeFullName);
+            Debug.Assert(TypeIdMap.Count == record.TypeId || record.TypeFullName == TypeIdMap[record.TypeId].TypeFullName);
 
             if (TypeIdMap.Count == record.TypeId)
             {
@@ -1347,7 +1334,7 @@ namespace System.Windows.Markup
             object key = GetAttributeInfoKey(typeFullName, fieldName);
 
             bamlAttributeInfoRecord = (BamlAttributeInfoRecord)GetHashTableData(key);
-            if (null == bamlAttributeInfoRecord)
+            if (bamlAttributeInfoRecord is null)
             {
                 // The property is new and needs a record created.
                 bamlAttributeInfoRecord = new BamlAttributeInfoRecord
@@ -1356,7 +1343,8 @@ namespace System.Windows.Markup
                     OwnerTypeId = typeId
                 };
 
-                bamlAttributeInfoRecord.AttributeId = (short)AttributeIdMap.Add(bamlAttributeInfoRecord);
+                AttributeIdMap.Add(bamlAttributeInfoRecord);
+                bamlAttributeInfoRecord.AttributeId = (short)(AttributeIdMap.Count - 1);
                 bamlAttributeInfoRecord.AttributeUsage = attributeUsage;
 
                 // add to the hash
@@ -1470,8 +1458,9 @@ namespace System.Windows.Markup
             Debug.Assert(GetHashTableData(stringValue) == null,
                 "Already have this String in the BamlMapTable string table");
 
-            BamlStringInfoRecord stringInfo = new BamlStringInfoRecord();
-            stringInfo.StringId = (short)StringIdMap.Add(stringInfo);
+            BamlStringInfoRecord stringInfo = new();
+            StringIdMap.Add(stringInfo);
+            stringInfo.StringId = (short)(StringIdMap.Count - 1);
             stringInfo.Value = stringValue;
 
             // add to the hash
@@ -1630,10 +1619,11 @@ namespace System.Windows.Markup
 
 #if !PBTCOMPILER
         // Helper method to throw an Exception.
-        private void ThrowException(string id, string parameter)
+        [DoesNotReturn]
+        private static void ThrowException(string id, string parameter)
         {
-            ApplicationException bamlException = new ApplicationException(
-                                                     SR.Format(SR.GetResourceString(id), parameter));
+            ApplicationException bamlException = new(SR.Format(SR.GetResourceString(id), parameter));
+
             throw bamlException;
         }
 
@@ -1643,9 +1633,7 @@ namespace System.Windows.Markup
         // an existing record something different.
         internal void LoadAttributeInfoRecord(BamlAttributeInfoRecord record)
         {
-            Debug.Assert(AttributeIdMap.Count == record.AttributeId ||
-                         record.Name ==
-                         ((BamlAttributeInfoRecord)AttributeIdMap[record.AttributeId]).Name);
+            Debug.Assert(AttributeIdMap.Count == record.AttributeId || record.Name == AttributeIdMap[record.AttributeId].Name);
 
             if (AttributeIdMap.Count == record.AttributeId)
             {
@@ -1659,9 +1647,7 @@ namespace System.Windows.Markup
         // an existing record something different.
         internal void LoadStringInfoRecord(BamlStringInfoRecord record)
         {
-            Debug.Assert(StringIdMap.Count == record.StringId ||
-                         record.Value ==
-                         ((BamlStringInfoRecord)StringIdMap[record.StringId]).Value);
+            Debug.Assert(StringIdMap.Count == record.StringId || record.Value == StringIdMap[record.StringId].Value);
 
             if (StringIdMap.Count == record.StringId)
             {
@@ -1691,18 +1677,14 @@ namespace System.Windows.Markup
 #endif
 
 #if !PBTCOMPILER
-        internal BamlMapTable Clone()
+        internal BamlMapTable Clone() => new BamlMapTable(_xamlTypeMapper)
         {
-            BamlMapTable table = new BamlMapTable(_xamlTypeMapper)
-            {
-                _objectHashTable = (Hashtable)_objectHashTable.Clone(),
-                _assemblyIdToInfo = (ArrayList)_assemblyIdToInfo.Clone(),
-                _typeIdToInfo = (ArrayList)_typeIdToInfo.Clone(),
-                _attributeIdToInfo = (ArrayList)_attributeIdToInfo.Clone(),
-                _stringIdToInfo = (ArrayList)_stringIdToInfo.Clone()
-            };
-            return table;
-        }
+            ObjectHashTable = (Hashtable)_objectHashTable.Clone(),
+            AssemblyIdMap = new List<BamlAssemblyInfoRecord>(_assemblyIdToInfo),
+            TypeIdMap = new List<BamlTypeInfoRecord>(_typeIdToInfo),
+            AttributeIdMap = new List<BamlAttributeInfoRecord>(_attributeIdToInfo),
+            StringIdMap = new List<BamlStringInfoRecord>(_stringIdToInfo)
+        };
 
         private TypeConverter GetConverterFromCache(short typeId)
         {
@@ -1743,35 +1725,49 @@ namespace System.Windows.Markup
 
         private Hashtable ObjectHashTable
         {
-            get { return _objectHashTable; }
+            get => _objectHashTable;
+#if !PBTCOMPILER
+            init => _objectHashTable = value;
+#endif
         }
 
-        private ArrayList AssemblyIdMap
+        private List<BamlAssemblyInfoRecord> AssemblyIdMap
         {
-            get { return _assemblyIdToInfo; }
+            get => _assemblyIdToInfo;
+#if !PBTCOMPILER
+            init => _assemblyIdToInfo = value;
+#endif
         }
 
-        private ArrayList TypeIdMap
+        private List<BamlTypeInfoRecord> TypeIdMap
         {
-            get { return _typeIdToInfo; }
+            get => _typeIdToInfo;
+#if !PBTCOMPILER
+            init => _typeIdToInfo = value;
+#endif
         }
 
-        private ArrayList AttributeIdMap
+        private List<BamlAttributeInfoRecord> AttributeIdMap
         {
-            get { return _attributeIdToInfo; }
+            get => _attributeIdToInfo;
+#if !PBTCOMPILER
+            init => _attributeIdToInfo = value;
+#endif
         }
 
-        private ArrayList StringIdMap
+        private List<BamlStringInfoRecord> StringIdMap
         {
-            get { return _stringIdToInfo; }
+            get => _stringIdToInfo;
+#if !PBTCOMPILER
+            init => _stringIdToInfo = value;
+#endif
         }
 
         internal XamlTypeMapper XamlTypeMapper
         {
-            get { return _xamlTypeMapper; }
-
+            get => _xamlTypeMapper;
 #if !PBTCOMPILER
-            set { _xamlTypeMapper = value;  }
+            set => _xamlTypeMapper = value;
 #endif
         }
 
@@ -1815,14 +1811,28 @@ namespace System.Windows.Markup
         // see if any advantage in breaking up or searching
         // by PropId, etc. instead of Hash. Hash is only used on compile
         // so leave null so Load doesn't take the hit.
-        private Hashtable _objectHashTable = new Hashtable();
+        private readonly Hashtable _objectHashTable = new();
 
-        private ArrayList _assemblyIdToInfo = new ArrayList(1);    // arrayList of Assemblies
-        private ArrayList _typeIdToInfo = new ArrayList(0);    // arrayList of class Types
-        private ArrayList _attributeIdToInfo = new ArrayList(10);   // arrayList of Attribute Ids
-        private ArrayList _stringIdToInfo = new ArrayList(1);     // arrayList of String Info
+        /// <summary>
+        /// List of <see cref="BamlAssemblyInfoRecord"/> (user assemblies).
+        /// </summary>
+        private readonly List<BamlAssemblyInfoRecord> _assemblyIdToInfo = new();
+        /// <summary>
+        /// List of <see cref="BamlTypeInfoRecord"/> (class types).
+        /// </summary>
+        private readonly List<BamlTypeInfoRecord> _typeIdToInfo = new();
+        /// <summary>
+        /// List of <see cref="BamlAttributeInfoRecord"/> (attribute IDs).
+        /// </summary>
+        private readonly List<BamlAttributeInfoRecord> _attributeIdToInfo = new(10);
+        /// <summary>
+        /// List of <see cref="BamlStringInfoRecord"/> (strings).
+        /// </summary>
+        private readonly List<BamlStringInfoRecord> _stringIdToInfo = new();
 
-        // XamlTypeMapper associated with this map table.  There is always a one-to-one correspondence.
+        /// <summary>
+        /// XamlTypeMapper associated with this map table. There is always a one-to-one correspondence.
+        /// </summary>
         private XamlTypeMapper _xamlTypeMapper;
 
         // The assembly record for the known types of controls

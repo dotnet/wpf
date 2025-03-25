@@ -162,7 +162,7 @@ public sealed class KeySplineConverterTests
             {
                 new KeySpline { ControlPoint1 = new Point(0.25, 0.1), ControlPoint2 = new Point(0.25, 1.0) },
                 CultureInfo.InvariantCulture, "0.25,0.1,0.25,1"
-  };
+            };
             yield return new object[]
             {
                 new KeySpline { ControlPoint1 = new Point(0.5, 0.75), ControlPoint2 = new Point(0.25, 0.9) },

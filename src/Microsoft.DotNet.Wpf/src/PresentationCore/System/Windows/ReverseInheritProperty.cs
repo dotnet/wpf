@@ -108,7 +108,7 @@ namespace System.Windows
             CastElement(element, out uie, out ce, out uie3D);
 
             bool isFlagSet = IsFlagSet(uie, ce, uie3D, FlagCache);
-            bool isFlagOriginCacheSet = (setOriginCacheFlag ? IsFlagSet(uie, ce, uie3D, (newValue ? FlagNewOriginCache : FlagOldOriginCache)) : false);
+            bool isFlagOriginCacheSet = setOriginCacheFlag && IsFlagSet(uie, ce, uie3D, newValue ? FlagNewOriginCache : FlagOldOriginCache);
 
             // If the cache flag value is undergoing change, record it and
             // propagate the change to the ancestors.
@@ -166,8 +166,8 @@ namespace System.Windows
             CastElement(element, out uie, out ce, out uie3D);
 
             bool flagChanged = IsFlagSet(uie, ce, uie3D, FlagChanged);
-            bool isFlagOldOriginCacheSet = ((FlagOldOriginCache == CoreFlags.None) ? false : IsFlagSet(uie, ce, uie3D, FlagOldOriginCache));
-            bool isFlagNewOriginCacheSet = ((FlagNewOriginCache == CoreFlags.None) ? false : IsFlagSet(uie, ce, uie3D, FlagNewOriginCache));
+            bool isFlagOldOriginCacheSet = FlagOldOriginCache is not CoreFlags.None && IsFlagSet(uie, ce, uie3D, FlagOldOriginCache);
+            bool isFlagNewOriginCacheSet = FlagNewOriginCache is not CoreFlags.None && IsFlagSet(uie, ce, uie3D, FlagNewOriginCache);
 
             if (flagChanged || isFlagOldOriginCacheSet || isFlagNewOriginCacheSet)
             {

@@ -655,7 +655,7 @@ namespace System.Windows.Interop
         internal static bool IsExtendedKey(IntPtr lParam)
         {
             int keyData = NativeMethods.IntPtrToInt32(lParam);
-            return ((keyData & 0x01000000) != 0) ? true : false;
+            return ((keyData & 0x01000000) != 0);
         }
 
         ///<summary>

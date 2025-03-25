@@ -644,7 +644,7 @@ namespace System.Windows.Media.Imaging
                     {
                         SafeMILHandle metadataHandle = new SafeMILHandle(metadata);
 
-                        _metadata = new BitmapMetadata(metadataHandle, true, _decoder != null ? _decoder.IsMetadataFixedSize : false, _syncObject);
+                        _metadata = new BitmapMetadata(metadataHandle, true, _decoder is not null && _decoder.IsMetadataFixedSize, _syncObject);
                         _metadata.Freeze();
                     }
 

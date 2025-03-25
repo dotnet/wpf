@@ -329,11 +329,10 @@ namespace MS.Internal.Ink.GestureRecognition
                 if ( hModule != IntPtr.Zero )
                 {
                     s_GetAlternateListExists = MS.Win32.UnsafeNativeMethods.GetProcAddressNoThrow(
-                        new HandleRef(null, hModule), "GetAlternateList") != IntPtr.Zero ?
-                        true : false;
+                        new HandleRef(null, hModule), "GetAlternateList") != IntPtr.Zero;
                 }
 
-                return hModule != IntPtr.Zero ? true : false; 
+                return hModule != IntPtr.Zero;
             }
             return false; //path was null 
         }

@@ -17,21 +17,21 @@ namespace MS.Internal
         internal static bool IsBitmap(object data)
         {
             SystemDrawingExtensionMethods extensions = AssemblyHelper.ExtensionsForSystemDrawing();
-            return (extensions != null) ? extensions.IsBitmap(data) : false;
+            return extensions is not null && extensions.IsBitmap(data);
         }
 
         // return true if the data is an Image
         internal static bool IsImage(object data)
         {
             SystemDrawingExtensionMethods extensions = AssemblyHelper.ExtensionsForSystemDrawing();
-            return (extensions != null) ? extensions.IsImage(data) : false;
+            return extensions is not null && extensions.IsImage(data);
         }
 
         // return true if the data is a graphics metafile
         internal static bool IsMetafile(object data)
         {
             SystemDrawingExtensionMethods extensions = AssemblyHelper.ExtensionsForSystemDrawing();
-            return (extensions != null) ? extensions.IsMetafile(data) : false;
+            return extensions is not null && extensions.IsMetafile(data);
         }
 
         // return the handle from a metafile

@@ -1639,7 +1639,7 @@ namespace MS.Internal.AutomationProxies
             for (int source = 0; source < ach.Length; source++)
             {
                 // get rid of leading spaces
-                if (ach[source] == ' ' && leadingSpace == false)
+                if (ach[source] == ' ' && !leadingSpace)
                 {
                     continue;
                 }
@@ -1649,7 +1649,7 @@ namespace MS.Internal.AutomationProxies
                 }
 
                 // get rid of &
-                if (ach[source] == '&' && amper == false)
+                if (ach[source] == '&' && !amper)
                 {
                     amper = true;
                 }

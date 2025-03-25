@@ -839,7 +839,7 @@ namespace MS.Internal.AutomationProxies
             }
 
 
-            if (rval == false)
+            if (!rval)
             {
                 // If it's not a recognized role, but does have a default action, support
                 // Invoke as a fallback...

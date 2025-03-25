@@ -546,7 +546,7 @@ namespace MS.Win32
 
         internal static void SetWindowText(HandleRef hWnd, string text)
         {
-            if (IntSetWindowText(hWnd, text) == false)
+            if (!IntSetWindowText(hWnd, text))
             {
                 throw new Win32Exception();
             }
@@ -610,7 +610,7 @@ namespace MS.Win32
         // note:  this method exists in UnsafeNativeMethodsCLR.cs, but that method does not have the if/throw implemntation
         internal static void GetWindowPlacement(HandleRef hWnd, ref NativeMethods.WINDOWPLACEMENT placement)
         {
-            if (IntGetWindowPlacement(hWnd, ref placement) == false)
+            if (!IntGetWindowPlacement(hWnd, ref placement))
             {
                 throw new Win32Exception();
             }
@@ -622,7 +622,7 @@ namespace MS.Win32
         // note: this method appears in UnsafeNativeMethodsCLR.cs but does not have the if/throw block
         internal static void SetWindowPlacement(HandleRef hWnd, [In] ref NativeMethods.WINDOWPLACEMENT placement)
         {
-            if (IntSetWindowPlacement(hWnd, ref placement) == false)
+            if (!IntSetWindowPlacement(hWnd, ref placement))
             {
                 throw new Win32Exception();
             }

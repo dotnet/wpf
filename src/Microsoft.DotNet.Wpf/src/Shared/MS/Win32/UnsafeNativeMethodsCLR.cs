@@ -329,7 +329,7 @@ namespace MS.Win32
             // Sometimes Win32 will fail this call, such as if you are
             // not running in the interactive desktop.  For example,
             // a secure screen saver may be running.
-            if (returnValue == false)
+            if (!returnValue)
             {
                 Debug.WriteLine("GetCursorPos failed!");
 

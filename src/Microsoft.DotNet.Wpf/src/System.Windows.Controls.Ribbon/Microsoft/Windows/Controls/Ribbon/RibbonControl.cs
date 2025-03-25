@@ -227,17 +227,17 @@ namespace Microsoft.Windows.Controls.Ribbon
 
         internal bool ChildHasLargeImage
         {
-            get { return _partContentPresenter != null ? _partContentPresenter.ChildHasLargeImage : false; }
+            get { return _partContentPresenter is not null && _partContentPresenter.ChildHasLargeImage; }
         }
 
         internal bool ChildHasSmallImage
         {
-            get { return _partContentPresenter != null ? _partContentPresenter.ChildHasSmallImage : false; }
+            get { return _partContentPresenter is not null && _partContentPresenter.ChildHasSmallImage; }
         }
 
         internal bool ChildHasLabel
         {
-            get { return _partContentPresenter != null ? _partContentPresenter.ChildHasLabel : false; }
+            get { return _partContentPresenter is not null && _partContentPresenter.ChildHasLabel; }
         }
 
         #endregion

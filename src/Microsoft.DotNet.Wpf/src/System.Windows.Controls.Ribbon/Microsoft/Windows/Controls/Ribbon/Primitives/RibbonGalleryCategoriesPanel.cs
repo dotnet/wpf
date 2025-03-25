@@ -262,7 +262,7 @@ namespace Microsoft.Windows.Controls.Ribbon.Primitives
 #endif
 
             IContainsStarLayoutManager iContainsStarLayoutManager = (IContainsStarLayoutManager)this;
-            bool isStarLayoutPass = (iContainsStarLayoutManager.StarLayoutManager == null ? true : iContainsStarLayoutManager.StarLayoutManager.IsStarLayoutPass);
+            bool isStarLayoutPass = iContainsStarLayoutManager.StarLayoutManager is null || iContainsStarLayoutManager.StarLayoutManager.IsStarLayoutPass;
 
 #if IN_RIBBON_GALLERY
             if (isInInRibbonMode)

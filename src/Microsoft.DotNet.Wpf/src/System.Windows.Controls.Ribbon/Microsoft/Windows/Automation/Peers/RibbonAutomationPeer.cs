@@ -224,7 +224,7 @@ namespace Microsoft.Windows.Automation.Peers
 
         protected override bool IsOffscreenCore()
         {
-            return OwningRibbon.IsCollapsed ? true : base.IsOffscreenCore();
+            return OwningRibbon.IsCollapsed || base.IsOffscreenCore();
         }
 
         #region ISelectionProvider Members

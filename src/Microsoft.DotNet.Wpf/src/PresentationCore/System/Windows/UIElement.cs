@@ -702,7 +702,7 @@ namespace System.Windows
             }
             finally
             {
-                if (etwTracingEnabled == true)
+                if (etwTracingEnabled)
                 {
                     EventTrace.EventProvider.TraceEvent(EventTrace.Event.WClientMeasureElementEnd, EventTrace.Keyword.KeywordLayout, EventTrace.Level.Verbose, perfElementID, _desiredSize.Width, _desiredSize.Height);
                 }
@@ -919,7 +919,7 @@ namespace System.Windows
                             try
                             {
                                 bool etwGeneralEnabled = EventTrace.IsEnabled(EventTrace.Keyword.KeywordGraphics | EventTrace.Keyword.KeywordPerf, EventTrace.Level.Verbose);
-                                if (etwGeneralEnabled == true)
+                                if (etwGeneralEnabled)
                                 {
                                     EventTrace.EventProvider.TraceEvent(EventTrace.Event.WClientOnRenderBegin, EventTrace.Keyword.KeywordGraphics | EventTrace.Keyword.KeywordPerf, EventTrace.Level.Verbose, perfElementID);
                                 }
@@ -930,7 +930,7 @@ namespace System.Windows
                                 }
                                 finally
                                 {
-                                    if (etwGeneralEnabled == true)
+                                    if (etwGeneralEnabled)
                                     {
                                         EventTrace.EventProvider.TraceEvent(EventTrace.Event.WClientOnRenderEnd, EventTrace.Keyword.KeywordGraphics | EventTrace.Keyword.KeywordPerf, EventTrace.Level.Verbose, perfElementID);
                                     }
@@ -954,7 +954,7 @@ namespace System.Windows
             }
             finally
             {
-                if (etwTracingEnabled == true)
+                if (etwTracingEnabled)
                 {
                     EventTrace.EventProvider.TraceEvent(EventTrace.Event.WClientArrangeElementEnd, EventTrace.Keyword.KeywordLayout, EventTrace.Level.Verbose, perfElementID, finalRect.Top, finalRect.Left, finalRect.Width, finalRect.Height);
                 }

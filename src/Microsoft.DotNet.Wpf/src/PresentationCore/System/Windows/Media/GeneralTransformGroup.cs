@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -43,7 +43,7 @@ namespace System.Windows.Media
             // transform the point through each of the transforms
             for (int i = 0; i < Children.Count; i++)
             {
-                if (Children.Internal_GetItem(i).TryTransform(inPoint, out result) == false)
+                if (!Children.Internal_GetItem(i).TryTransform(inPoint, out result))
                 {
                     fPointTransformed = false;
                 }

@@ -236,7 +236,7 @@ namespace System.Windows.Input.StylusPlugIns
                                 // depending on whether we are going active or inactive so you don't
                                 // get input events after going inactive or before going active.
                                 __enabled = value;
-                                if (value == false)
+                                if (!value)
                                 {
                                     // Make sure we fire OnIsActivateForInputChanged if we need to.
                                     InvalidateIsActiveForInput();
@@ -253,7 +253,7 @@ namespace System.Windows.Input.StylusPlugIns
                     else
                     {
                         __enabled = value;
-                        if (value == false)
+                        if (!value)
                         {
                             // Make sure we fire OnIsActivateForInputChanged if we need to.
                             InvalidateIsActiveForInput();

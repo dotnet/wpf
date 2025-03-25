@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
 //----------------------------------------------------------------------------------------
@@ -87,7 +87,7 @@ namespace MS.Internal.Tasks
 
         internal bool SaveStateInformation(MarkupCompilePass1 mcPass1)
         {
-            Debug.Assert(String.IsNullOrEmpty(_stateFilePath) != true, "StateFilePath must not be empty.");
+            Debug.Assert(!String.IsNullOrEmpty(_stateFilePath), "StateFilePath must not be empty.");
             Debug.Assert(mcPass1 != null, "A valid instance of MarkupCompilePass1 must be passed to method SaveCacheInformation.");
             Debug.Assert(_cacheInfoList.Length == (int)CompilerStateType.MaxCount, "The Cache string array should be already allocated.");
 
@@ -148,7 +148,7 @@ namespace MS.Internal.Tasks
         //
         internal bool LoadStateInformation( )
         {
-            Debug.Assert(String.IsNullOrEmpty(_stateFilePath) != true, "_stateFilePath must be not be empty.");
+            Debug.Assert(!String.IsNullOrEmpty(_stateFilePath), "_stateFilePath must be not be empty.");
             Debug.Assert(_cacheInfoList.Length == (int)CompilerStateType.MaxCount, "The Cache string array should be already allocated.");
 
             bool loadSuccess = false;
@@ -176,7 +176,7 @@ namespace MS.Internal.Tasks
 
                 int i = 0;
 
-                while (srCache.EndOfStream != true)
+                while (!srCache.EndOfStream)
                 {
                     if (i >= (int)CompilerStateType.MaxCount)
                     {

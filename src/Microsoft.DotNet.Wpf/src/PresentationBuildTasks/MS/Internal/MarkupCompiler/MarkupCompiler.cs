@@ -3355,7 +3355,7 @@ namespace MS.Internal
                 relPath = TaskHelper.GetRootRelativePath(Directory.GetCurrentDirectory() + Path.DirectorySeparatorChar, fullFilePath);
             }
 
-            if (string.IsNullOrEmpty(relPath) == false)
+            if (!string.IsNullOrEmpty(relPath))
             {
                 resourceId = relPath;
             }

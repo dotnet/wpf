@@ -817,7 +817,7 @@ namespace Microsoft.Build.Tasks.Windows
                     break;
             }
 
-            if (isSupported == false)
+            if (!isSupported)
             {
                 Log.LogErrorWithCodeFromResources(nameof(SR.TargetIsNotSupported), outputType);
 

@@ -941,7 +941,7 @@ namespace System.Windows.Threading
                 }
             }
 
-            if (succeeded == true)
+            if (succeeded)
             {
                 // We have enqueued the operation.  Register a callback
                 // with the cancellation token to abort the operation

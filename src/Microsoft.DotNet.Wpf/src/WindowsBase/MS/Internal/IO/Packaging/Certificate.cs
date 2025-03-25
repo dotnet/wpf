@@ -141,7 +141,7 @@ namespace MS.Internal.IO.Packaging
                 _part = container.GetPart(partName);
 
                 // ensure the part is of the expected type
-                if (_part.ValidatedContentType().AreTypeAndSubTypeEqual(_certificatePartContentType) == false)
+                if (!_part.ValidatedContentType().AreTypeAndSubTypeEqual(_certificatePartContentType))
                     throw new FileFormatException(SR.CertificatePartContentTypeMismatch);
             }
             else

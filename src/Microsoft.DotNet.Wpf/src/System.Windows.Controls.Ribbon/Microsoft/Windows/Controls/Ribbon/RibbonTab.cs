@@ -560,7 +560,7 @@ namespace Microsoft.Windows.Controls.Ribbon
                         resizeSuccessful = group.DecreaseGroupSize();
                     }
 
-                    if (resizeSuccessful == true)
+                    if (resizeSuccessful)
                     {
                         _automaticResizeOrder.Add(_groupAutoResizeIndex.Value + 1);
                     }
@@ -572,7 +572,7 @@ namespace Microsoft.Windows.Controls.Ribbon
                         _groupAutoResizeIndex = Items.Count - 1;
                         break;
                     }
-                } while (resizeSuccessful == false);
+                } while (!resizeSuccessful);
 
                 // If we failed to resize during this pass, and we attempted to resize for every
                 // group, then there are no reamining groups to resize.

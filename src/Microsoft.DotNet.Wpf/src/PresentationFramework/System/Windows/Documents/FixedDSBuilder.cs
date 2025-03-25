@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -88,7 +88,7 @@ namespace System.Windows.Documents
 
             for (int i = 0; i< _visitedArray.Count; i++ )
             {
-                if (_visitedArray[i] == false)
+                if (!_visitedArray[i])
                 {
                     AddFixedNodeInFlow(i, null);
                 }
@@ -215,7 +215,7 @@ namespace System.Windows.Documents
             if (listItem != null && listItem.Marker != null)
             {
                 NameHashFixedNode fen;
-                if (_nameHashTable.TryGetValue(listItem.Marker, out fen) == true)
+                if (_nameHashTable.TryGetValue(listItem.Marker, out fen))
                 {
                     _visitedArray[fen.index] = true;
                 }
@@ -225,7 +225,7 @@ namespace System.Windows.Documents
         private void ConstructSomElement(NamedElement ne)
         {
             NameHashFixedNode fen;
-            if (_nameHashTable.TryGetValue(ne.NameReference, out fen) == true)
+            if (_nameHashTable.TryGetValue(ne.NameReference, out fen))
             {
                 if (fen.uiElement is Glyphs || fen.uiElement is Path ||
                     fen.uiElement is Image)

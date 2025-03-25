@@ -1038,7 +1038,7 @@ namespace System.Windows.Baml2006
 
         private void Process_Text_Helper(string stringValue)
         {
-            if (_context.InsideKeyRecord != true && _context.InsideStaticResource != true)
+            if (!_context.InsideKeyRecord && !_context.InsideStaticResource)
             {
                 InjectPropertyAndFrameIfNeeded(_context.SchemaContext.GetXamlType(typeof(String)), 0);
             }
@@ -1204,7 +1204,7 @@ namespace System.Windows.Baml2006
             }
 
             // Need to output the keys if we're in deferred content
-            if (_context.PreviousFrame.IsDeferredContent && _context.InsideStaticResource == false)
+            if (_context.PreviousFrame.IsDeferredContent && !_context.InsideStaticResource)
             {         
                 // If we're providing binary, that means we've delay loaded the ResourceDictionary
                 // and the object we're currently creating doens't actually need the key.

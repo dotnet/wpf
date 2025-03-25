@@ -232,7 +232,7 @@ namespace System.Windows.Documents
             Debug.Assert(_spannedCells != null);
 
             if ((_formatCellCount > 0) ||
-               isLastRowOfAnySpan == true)
+               isLastRowOfAnySpan)
             {
                 SetFlags(true, Flags.HasRealCells);
             }

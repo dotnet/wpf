@@ -138,7 +138,7 @@ namespace System.Windows.Documents
 
         void IFixedNavigate.NavigateAsync(string elementID)
         {
-            if (IsPageCountValid == true)
+            if (IsPageCountValid)
             {
                 FixedHyperLink.NavigateToElement(this, elementID);
             }
@@ -672,7 +672,7 @@ namespace System.Windows.Documents
                 }
             }
 
-            if (documentSequencePageCountFinal == true)
+            if (documentSequencePageCountFinal)
             {
                 _paginator.NotifyPaginationCompleted(EventArgs.Empty);
             }

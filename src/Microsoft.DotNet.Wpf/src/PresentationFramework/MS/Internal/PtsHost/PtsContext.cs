@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -72,7 +72,7 @@ namespace MS.Internal.PtsHost
             int index;
 
             // Do actual dispose only once.
-            if (Interlocked.CompareExchange(ref _disposed, true, false) == false)
+            if (!Interlocked.CompareExchange(ref _disposed, true, false))
             {
                 // Destroy all page break records. The collection is allocated during creation
                 // of the context, and can be only destroyed during dispose process.

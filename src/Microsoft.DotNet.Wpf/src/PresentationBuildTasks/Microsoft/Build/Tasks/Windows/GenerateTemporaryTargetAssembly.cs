@@ -619,7 +619,7 @@ namespace Microsoft.Build.Tasks.Windows
 
             XmlNode root = xmlProjectDoc.DocumentElement;
 
-            if (root.HasChildNodes == false)
+            if (!root.HasChildNodes)
             {
                 // If there is no child element in this project file, just return immediatelly.
                 return;

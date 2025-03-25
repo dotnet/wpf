@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -868,7 +868,7 @@ namespace System.Windows.Markup
         /// </returns>
         private bool IsSubsumingNamespace(string namespaceName)
         {
-            return (_subsumingNamespaces is null ? false : _subsumingNamespaces.ContainsKey(namespaceName));
+            return _subsumingNamespaces is not null && _subsumingNamespaces.ContainsKey(namespaceName);
         }
 
         /// <summary>
@@ -895,7 +895,7 @@ namespace System.Windows.Markup
         /// </returns>
         private bool IsNamespaceKnown(string namespaceName)
         {
-            return (_knownNamespaces is null ? false : _knownNamespaces.ContainsKey(namespaceName));
+            return _knownNamespaces is not null && _knownNamespaces.ContainsKey(namespaceName);
         }
 
         /// <summary>

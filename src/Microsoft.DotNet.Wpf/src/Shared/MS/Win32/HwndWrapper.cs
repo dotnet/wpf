@@ -269,7 +269,7 @@ namespace MS.Win32
             {
                 // This is a special message we respond to by forcing a GC Collect.  This
                 // is used by test apps and such.
-                IntPtr lHeap = (IntPtr)GC.GetTotalMemory((wParam == new IntPtr(1) )? true : false);
+                IntPtr lHeap = (IntPtr)GC.GetTotalMemory((wParam == new IntPtr(1) ));
                 result =  lHeap;
                 handled = true;
             }

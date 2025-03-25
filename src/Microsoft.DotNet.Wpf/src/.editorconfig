@@ -212,9 +212,6 @@ dotnet_diagnostic.IDE0073.severity = suggestion
 # IDE0074: Use compound assignment
 dotnet_diagnostic.IDE0074.severity = suggestion
 
-# IDE0075: Simplify conditional expression
-dotnet_diagnostic.IDE0075.severity = suggestion
-
 # IDE0076: Invalid global 'SuppressMessageAttribute'
 dotnet_diagnostic.IDE0076.severity = suggestion
 

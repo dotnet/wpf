@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -98,7 +98,7 @@ namespace System.ComponentModel
         /// <summary> Override of Object.Equals </summary>
         public override bool Equals(object obj)
         {
-            return (obj is SortDescription) ? (this == (SortDescription)obj) : false;
+            return (obj is SortDescription) && (this == (SortDescription)obj);
         }
 
         /// <summary> Equality operator for SortDescription. </summary>

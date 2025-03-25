@@ -174,7 +174,7 @@ namespace System.Windows.Markup
 //
         public virtual bool HasLineInfo()
         {
-            return ( _readerAsIXmlLineInfo is null ) ? false : _readerAsIXmlLineInfo.HasLineInfo();
+            return _readerAsIXmlLineInfo is not null && _readerAsIXmlLineInfo.HasLineInfo();
         }
 
         public virtual int LineNumber

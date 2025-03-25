@@ -64,8 +64,7 @@ namespace MS.Internal
         // return true if parent is an empty XmlDataCollection.
         internal override bool IsEmptyXmlDataCollection(object parent)
         {
-            XmlDataCollection xdc = parent as XmlDataCollection;
-            return (xdc != null) ? xdc.Count > 0 : false;
+            return parent is XmlDataCollection xdc && xdc.Count > 0;
         }
 
         // when item is an XmlNode, get its tag name (using the target DO as context

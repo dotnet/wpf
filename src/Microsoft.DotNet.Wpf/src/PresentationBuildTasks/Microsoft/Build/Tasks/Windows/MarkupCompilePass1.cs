@@ -1100,7 +1100,7 @@ namespace Microsoft.Build.Tasks.Windows
             _compilerAnalyzer.AnalyzeInputFiles();
 
 
-            _isCleanBuild = (CompilerAnalyzer.AnalyzeResult == RecompileCategory.All) ? true : false;
+            _isCleanBuild = CompilerAnalyzer.AnalyzeResult is RecompileCategory.All;
 
         }
 

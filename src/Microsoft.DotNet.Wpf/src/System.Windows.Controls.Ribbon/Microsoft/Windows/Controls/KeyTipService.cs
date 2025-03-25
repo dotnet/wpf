@@ -391,14 +391,14 @@ namespace Microsoft.Windows.Controls
                 return TreeHelper.FindVisualAncestor(element,
                     delegate(DependencyObject d)
                     {
-                        return ((KeyTipService.GetIsKeyTipScope(d) == true) || (TreeHelper.GetParent(d) == null));
+                        return ((KeyTipService.GetIsKeyTipScope(d)) || (TreeHelper.GetParent(d) == null));
                     });
             }
             else
             {
                 return TreeHelper.FindAncestor(element, delegate(DependencyObject d)
                 {
-                    return ((KeyTipService.GetIsKeyTipScope(d) == true) || (TreeHelper.GetParent(d) == null));
+                    return ((KeyTipService.GetIsKeyTipScope(d)) || (TreeHelper.GetParent(d) == null));
                 });
             }
         }

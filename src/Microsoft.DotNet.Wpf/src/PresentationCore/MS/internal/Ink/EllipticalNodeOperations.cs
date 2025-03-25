@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
 
@@ -43,7 +43,7 @@ namespace MS.Internal.Ink
             else
             {
                 // Reverse the rotation
-                if (false == DoubleUtil.IsZero(nodeShape.Rotation))
+                if (!DoubleUtil.IsZero(nodeShape.Rotation))
                 {
                     _nodeShapeToCircle.Rotate(-nodeShape.Rotation);
                     Debug.Assert(_nodeShapeToCircle.HasInverse, "Just rotated an invertible transform and produced a non-invertible one");
@@ -90,7 +90,7 @@ namespace MS.Internal.Ink
 
             // Get the vector between the node positions
             Vector spine = endNode.Position - beginNode.Position;
-            if (_nodeShapeToCircle.IsIdentity == false)
+            if (!_nodeShapeToCircle.IsIdentity)
             {
                 spine = _nodeShapeToCircle.Transform(spine);
             }
@@ -147,7 +147,7 @@ namespace MS.Internal.Ink
 
             // Get the common tangent points
 
-            if (_circleToNodeShape.IsIdentity == false)
+            if (!_circleToNodeShape.IsIdentity)
             {
                 vectorToLeftTangent = _circleToNodeShape.Transform(vectorToLeftTangent);
                 vectorToRightTangent = _circleToNodeShape.Transform(vectorToRightTangent);
@@ -167,7 +167,7 @@ namespace MS.Internal.Ink
         /// <returns></returns>
         internal override IEnumerable<ContourSegment> GetContourSegments(StrokeNodeData node, Quad quad)
         {
-            System.Diagnostics.Debug.Assert(node.IsEmpty == false);
+            System.Diagnostics.Debug.Assert(!node.IsEmpty);
 
             if (quad.IsEmpty)
             {
@@ -229,7 +229,7 @@ namespace MS.Internal.Ink
             Vector hitEnd = hitEndPoint - bigNode.Position;
 
             // If the node shape is an ellipse, transform the scene to turn the shape to a circle
-            if (_nodeShapeToCircle.IsIdentity == false)
+            if (!_nodeShapeToCircle.IsIdentity)
             {
                 hitBegin = _nodeShapeToCircle.Transform(hitBegin);
                 hitEnd = _nodeShapeToCircle.Transform(hitEnd);
@@ -244,11 +244,11 @@ namespace MS.Internal.Ink
             {
                 isHit = true;
             }
-            else if (quad.IsEmpty == false)
+            else if (!quad.IsEmpty)
             {
                 // Hit-test the other node
                 Vector spineVector = smallNode.Position - bigNode.Position;
-                if (_nodeShapeToCircle.IsIdentity == false)
+                if (!_nodeShapeToCircle.IsIdentity)
                 {
                     spineVector = _nodeShapeToCircle.Transform(spineVector);
                 }
@@ -297,7 +297,7 @@ namespace MS.Internal.Ink
                 // Find position of smallNode relative to the bigNode.
                 spineVector = smallNode.Position - bigNode.Position;
                 // If the node shape is an ellipse, transform the scene to turn the shape to a circle
-                if (_nodeShapeToCircle.IsIdentity == false)
+                if (!_nodeShapeToCircle.IsIdentity)
                 {
                     spineVector = _nodeShapeToCircle.Transform(spineVector);
                 }
@@ -330,7 +330,7 @@ namespace MS.Internal.Ink
                     // Find position of the hitting segment relative to bigNode transformed to circle.
                     Vector hitBegin = hitSegment.Begin - bigNode.Position;
                     Vector hitEnd = hitBegin + hitSegment.Vector;
-                    if (_nodeShapeToCircle.IsIdentity == false)
+                    if (!_nodeShapeToCircle.IsIdentity)
                     {
                         hitBegin = _nodeShapeToCircle.Transform(hitBegin);
                         hitEnd = _nodeShapeToCircle.Transform(hitEnd);
@@ -345,7 +345,7 @@ namespace MS.Internal.Ink
                     }
 
                     // Hit-test the other node
-                    if (quad.IsEmpty == false)
+                    if (!quad.IsEmpty)
                     {
                         nearest = GetNearest(hitBegin - spineVector, hitEnd - spineVector);
                         if ((nearest.LengthSquared <= smallRadiusSquared) ||
@@ -387,7 +387,7 @@ namespace MS.Internal.Ink
             Vector hitEnd = hitEndPoint - endNode.Position;
 
             // If the node shape is an ellipse, transform the scene to turn the shape to a circle
-            if (_nodeShapeToCircle.IsIdentity == false)
+            if (!_nodeShapeToCircle.IsIdentity)
             {
                 spineVector = _nodeShapeToCircle.Transform(spineVector);
                 hitBegin = _nodeShapeToCircle.Transform(hitBegin);
@@ -404,7 +404,7 @@ namespace MS.Internal.Ink
                 result.EndFIndex = StrokeFIndices.AfterLast;
                 result.BeginFIndex = beginNode.IsEmpty ? StrokeFIndices.BeforeFirst : 1;
             }
-            if (beginNode.IsEmpty == false)
+            if (!beginNode.IsEmpty)
             {
                 // Hit-test the first node
                 beginRadius = _radius * beginNode.PressureFactor;
@@ -421,7 +421,7 @@ namespace MS.Internal.Ink
 
             // If both nodes are hit or nothing is hit at all, return.
             if (result.IsFull || quad.IsEmpty
-                || (result.IsEmpty && (HitTestQuadSegment(quad, hitBeginPoint, hitEndPoint) == false)))
+                || (result.IsEmpty && (!HitTestQuadSegment(quad, hitBeginPoint, hitEndPoint))))
             {
                 return result;
             }
@@ -462,7 +462,7 @@ namespace MS.Internal.Ink
             // Compute the positions of the beginNode relative to the endNode.
             Vector spineVector = beginNode.IsEmpty ? new Vector(0, 0) : (beginNode.Position - endNode.Position);
             // If the node shape is an ellipse, transform the scene to turn the shape to a circle
-            if (_nodeShapeToCircle.IsIdentity == false)
+            if (!_nodeShapeToCircle.IsIdentity)
             {
                 spineVector = _nodeShapeToCircle.Transform(spineVector);
             }
@@ -472,7 +472,7 @@ namespace MS.Internal.Ink
 
             endRadius = _radius * endNode.PressureFactor;
             endRadiusSquared = endRadius * endRadius;
-            if (beginNode.IsEmpty == false)
+            if (!beginNode.IsEmpty)
             {
                 beginRadius = _radius * beginNode.PressureFactor;
                 beginRadiusSquared = beginRadius * beginRadius;
@@ -495,7 +495,7 @@ namespace MS.Internal.Ink
 
                     // If the node shape is an ellipse, transform the scene to turn
                     // the shape into circle.
-                    if (_nodeShapeToCircle.IsIdentity == false)
+                    if (!_nodeShapeToCircle.IsIdentity)
                     {
                         hitBegin = _nodeShapeToCircle.Transform(hitBegin);
                         hitEnd = _nodeShapeToCircle.Transform(hitEnd);
@@ -523,7 +523,7 @@ namespace MS.Internal.Ink
                         }
                     }
 
-                    if ((beginNode.IsEmpty == false) && (!isHit || !DoubleUtil.AreClose(result.BeginFIndex, StrokeFIndices.BeforeFirst)))
+                    if ((!beginNode.IsEmpty) && (!isHit || !DoubleUtil.AreClose(result.BeginFIndex, StrokeFIndices.BeforeFirst)))
                     {
                         // Hit-test the first node
                         nearest = GetNearest(hitBegin - spineVector, hitEnd - spineVector);
@@ -543,7 +543,7 @@ namespace MS.Internal.Ink
 
                     // If both nodes are hit or nothing is hit at all, return.
                     if (beginNode.IsEmpty || (!isHit && (quad.IsEmpty ||
-                        (HitTestQuadSegment(quad, hitSegment.Begin, hitSegment.End) == false))))
+                        (!HitTestQuadSegment(quad, hitSegment.Begin, hitSegment.End)))))
                     {
                         if (isInside && (WhereIsVectorAboutVector(
                             endNode.Position - hitSegment.Begin, hitSegment.Vector) != HitResult.Right))
@@ -568,7 +568,7 @@ namespace MS.Internal.Ink
             //
             if (!result.IsFull)
             {
-                if (isInside == true)
+                if (isInside)
                 {
                     System.Diagnostics.Debug.Assert(result.IsEmpty);
                     result = StrokeFIndices.Full;
@@ -608,7 +608,7 @@ namespace MS.Internal.Ink
             // when the stylus stays at the the location but pressure changes.
             if (DoubleUtil.IsZero(spineVector.X) && DoubleUtil.IsZero(spineVector.Y))
             {
-                System.Diagnostics.Debug.Assert(DoubleUtil.AreClose(beginRadius, endRadius) == false);
+                System.Diagnostics.Debug.Assert(!DoubleUtil.AreClose(beginRadius, endRadius));
 
                 Vector nearest = GetNearest(hitBegin, hitEnd);
                 double radius;
@@ -649,7 +649,7 @@ namespace MS.Internal.Ink
                 Vector P1Xp = hitBegin + (hitVector * x);
                 if (P1Xp.LengthSquared < (beginRadius * beginRadius))
                 {
-                    System.Diagnostics.Debug.Assert(DoubleUtil.IsBetweenZeroAndOne(x) == false);
+                    System.Diagnostics.Debug.Assert(!DoubleUtil.IsBetweenZeroAndOne(x));
                     findex = ClipTest(spineVector, beginRadius, endRadius, (0 > x) ? hitBegin : hitEnd);
                     System.Diagnostics.Debug.Assert(!double.IsNaN(findex));
                 }
@@ -676,7 +676,7 @@ namespace MS.Internal.Ink
 
                     // If the nearest point misses the segment, then find the findex
                     // of the node nearest to the segment.
-                    if (false == DoubleUtil.IsBetweenZeroAndOne(r))
+                    if (!DoubleUtil.IsBetweenZeroAndOne(r))
                     {
                         findex = ClipTest(spineVector, beginRadius, endRadius, (0 > r) ? hitBegin : hitEnd);
                         System.Diagnostics.Debug.Assert(!double.IsNaN(findex));

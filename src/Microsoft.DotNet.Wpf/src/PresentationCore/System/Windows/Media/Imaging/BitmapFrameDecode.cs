@@ -679,7 +679,7 @@ namespace System.Windows.Media.Imaging
                 if (_decoder.InternalDecoder == null)
                 {
                     Debug.Assert(_decoder is LateBoundBitmapDecoder);
-                    Debug.Assert(IsDownloading == false);
+                    Debug.Assert(!IsDownloading);
 
                     _decoder = ((LateBoundBitmapDecoder)_decoder).Decoder;
                     _syncObject = _decoder.SyncObject;

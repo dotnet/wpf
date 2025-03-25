@@ -1085,7 +1085,7 @@ namespace System.Windows.Media.Animation
                 builder.Append(", AccelerationRatio = ");
                 builder.Append(AccelerationRatio);
             }
-            if (AutoReverse != false)
+            if (AutoReverse)
             {
                 builder.Append(", AutoReverse = ");
                 builder.Append(AutoReverse);

@@ -287,7 +287,7 @@ namespace System.Windows.Media.Imaging
             Stream newStream = (Stream)arg;
 
             // Assert that we are able to seek the new stream
-            Debug.Assert(newStream.CanSeek == true);
+            Debug.Assert(newStream.CanSeek);
 
             _stream = newStream;
 

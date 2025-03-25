@@ -1101,7 +1101,7 @@ namespace System.Windows.Media.Imaging
                 System.IO.FileStream filestream = stream as System.IO.FileStream;
                 try
                 {
-                    if (filestream.IsAsync is false)
+                    if (!filestream.IsAsync)
                     {
                         safeFilehandle = filestream.SafeFileHandle;
                     }

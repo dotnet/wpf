@@ -221,7 +221,7 @@ namespace System.Windows.Ink
         public void Transform(Matrix transformMatrix, bool applyToStylusTip)
         {
             // Ensure that the transformMatrix is invertible.
-            if ( false == transformMatrix.HasInverse )
+            if (!transformMatrix.HasInverse)
                 throw new ArgumentException(SR.MatrixNotInvertible, nameof(transformMatrix));
 
             // if transformMatrix is identity or the StrokeCollection is empty

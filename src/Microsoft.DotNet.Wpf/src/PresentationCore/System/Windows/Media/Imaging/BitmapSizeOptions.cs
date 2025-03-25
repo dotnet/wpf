@@ -197,21 +197,21 @@ namespace System.Windows.Media.Imaging
         {
             if (_pixelWidth == 0 && _pixelHeight != 0)
             {
-                Debug.Assert(_preservesAspectRatio == true);
+                Debug.Assert(_preservesAspectRatio);
 
                 newWidth = (uint)((_pixelHeight * width)/height);
                 newHeight = (uint)_pixelHeight;
             }
             else if (_pixelWidth != 0 && _pixelHeight == 0)
             {
-                Debug.Assert(_preservesAspectRatio == true);
+                Debug.Assert(_preservesAspectRatio);
 
                 newWidth = (uint)_pixelWidth;
                 newHeight = (uint)((_pixelWidth * height)/width);
             }
             else if (_pixelWidth != 0 && _pixelHeight != 0)
             {
-                Debug.Assert(_preservesAspectRatio == false);
+                Debug.Assert(!_preservesAspectRatio);
 
                 newWidth = (uint)_pixelWidth;
                 newHeight = (uint)_pixelHeight;

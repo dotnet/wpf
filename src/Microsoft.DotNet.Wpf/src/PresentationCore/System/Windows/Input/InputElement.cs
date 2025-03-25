@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
 using System.Windows.Media;
@@ -243,7 +243,7 @@ namespace System.Windows.Input
                 {
                     ptTranslated = mUp.Transform(ptTranslated);
                 }
-                else if (gUp.TryTransform(ptTranslated, out ptTranslated) == false)
+                else if (!gUp.TryTransform(ptTranslated, out ptTranslated))
                 {
                     // Error.  Out parameter has been set false.
                     return new Point();
@@ -315,7 +315,7 @@ namespace System.Windows.Input
                         }
                         else if (gDown != null)
                         {
-                            if (gDown.TryTransform(ptTranslated, out ptTranslated) == false)
+                            if (!gDown.TryTransform(ptTranslated, out ptTranslated))
                             {
                                 // Error.  Out parameter has been set false.
                                 return new Point();

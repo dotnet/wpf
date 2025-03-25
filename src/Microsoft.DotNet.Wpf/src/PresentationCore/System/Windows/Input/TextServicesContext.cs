@@ -94,7 +94,7 @@ namespace System.Windows.Input
             }
 
             // Free up any remaining textstores.
-            if (_istimactivated == true)
+            if (_istimactivated)
             {
                 // Shut down the thread manager when the last TextStore goes away.
                 // On XP, if we're called on a worker thread (during AppDomain shutdown)
@@ -199,7 +199,7 @@ namespace System.Windows.Input
                 int editCookie = UnsafeNativeMethods.TF_INVALID_COOKIE;
 
                 // Activate TSF on this thread if this is the first TextStore.
-                if (_istimactivated == false)
+                if (!_istimactivated)
                 {
                     //temp variable created to retrieve the value
                     // which is then stored in the critical data.

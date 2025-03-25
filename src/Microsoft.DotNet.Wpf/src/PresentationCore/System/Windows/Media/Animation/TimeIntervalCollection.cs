@@ -136,7 +136,7 @@ namespace System.Windows.Media.Animation
             _nodeTime[0] = point;
             _nodeIsPoint[0] = true;
             _nodeIsInterval[0] = false;
-            Debug.Assert(_nodeIsInterval[0] == false);
+            Debug.Assert(!_nodeIsInterval[0]);
 
             _count = 1;
         }

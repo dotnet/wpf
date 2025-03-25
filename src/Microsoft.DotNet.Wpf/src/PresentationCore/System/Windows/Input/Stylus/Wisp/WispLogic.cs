@@ -2448,7 +2448,7 @@ namespace System.Windows.Input.StylusWisp
             // Second, if we still haven't thought of a reason to kill capture, validate
             // it on a Visual basis for things like still being in the right tree.
             //
-            if (killCapture == false)
+            if (!killCapture)
             {
                 DependencyObject containingVisual = InputElement.GetContainingVisual(dependencyObject);
                 killCapture = !ValidateVisualForCapture(containingVisual, CurrentStylusDevice);

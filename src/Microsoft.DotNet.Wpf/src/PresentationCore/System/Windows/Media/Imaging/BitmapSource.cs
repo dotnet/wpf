@@ -533,7 +533,7 @@ namespace System.Windows.Media.Imaging
 
         private void EnsureShouldUseVirtuals()
         {
-            if (_useVirtuals == false)
+            if (!_useVirtuals)
             {
                 throw new NotImplementedException();
             }

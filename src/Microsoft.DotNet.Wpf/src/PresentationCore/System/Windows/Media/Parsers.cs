@@ -196,10 +196,10 @@ namespace MS.Internal
             bool isContextColor;
             string trimmedColor = KnownColors.MatchColor(color, out isPossibleKnowColor, out isNumericColor, out isContextColor, out isScRgbColor);
 
-            if ((isPossibleKnowColor == false) &&
-                (isNumericColor == false) &&
-                (isScRgbColor == false) &&
-                (isContextColor== false))
+            if ((!isPossibleKnowColor) &&
+                (!isNumericColor) &&
+                (!isScRgbColor) &&
+                (!isContextColor))
             {
                 throw new FormatException(SR.Parsers_IllegalToken);
             }

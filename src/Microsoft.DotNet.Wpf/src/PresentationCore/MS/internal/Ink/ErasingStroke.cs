@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
 //#define POINTS_FILTER_TRACE
@@ -157,7 +157,7 @@ namespace MS.Internal.Ink
                     int index = eraseAt.Count;
                     foreach (StrokeNode erasingStrokeNode in _erasingStrokeNodes)
                     {
-                        if (false == inkSegmentBounds.IntersectsWith(erasingStrokeNode.GetBoundsConnected()))
+                        if (!inkSegmentBounds.IntersectsWith(erasingStrokeNode.GetBoundsConnected()))
                         {
                             continue;
                         }
@@ -206,7 +206,7 @@ namespace MS.Internal.Ink
                         }
 
                         // If not merged nor inserted, add it to the end of the list
-                        if (false == inserted)
+                        if (!inserted)
                         {
                             eraseAt.Add(fragment);
                         }

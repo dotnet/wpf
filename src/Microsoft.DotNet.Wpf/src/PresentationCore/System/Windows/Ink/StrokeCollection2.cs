@@ -112,7 +112,7 @@ namespace System.Windows.Ink
 
                         for (int i = 0; i < stylusPoints.Count; i++)
                         {
-                            if (true == lasso.Contains((Point)stylusPoints[i]))
+                            if (lasso.Contains((Point)stylusPoints[i]))
                             {
                                 target -= strokeInfo.GetPointWeight(i);
                                 if (DoubleUtil.LessThanOrClose(target, 0f))
@@ -162,7 +162,7 @@ namespace System.Windows.Ink
                 // Presharp gives a warning when get methods might deref a null.  It's complaining
                 // here that 'stroke'' could be null, but StrokeCollection never allows nulls to be added
                 // so this is not possible
-                if (true == stroke.HitTest(bounds, percentageWithinBounds))
+                if (stroke.HitTest(bounds, percentageWithinBounds))
                 {
                     hits.Add(stroke);
                 }
@@ -255,7 +255,7 @@ namespace System.Windows.Ink
         /// <param name="bounds">rectangle to clip with</param>
         public void Clip(Rect bounds)
         {
-            if (bounds.IsEmpty == false)
+            if (!bounds.IsEmpty)
             {
                 Clip(new Point[4] { bounds.TopLeft, bounds.TopRight, bounds.BottomRight, bounds.BottomLeft });
             }
@@ -298,7 +298,7 @@ namespace System.Windows.Ink
         /// <param name="bounds">rectangle to erase within</param>
         public void Erase(Rect bounds)
         {
-            if (bounds.IsEmpty == false)
+            if (!bounds.IsEmpty)
             {
                 Erase(new Point[4] { bounds.TopLeft, bounds.TopRight, bounds.BottomRight, bounds.BottomLeft });
             }
@@ -361,7 +361,7 @@ namespace System.Windows.Ink
                     // It's very important to override the Alpha value so that Colors of the same RGB vale
                     // but different Alpha would be in the same list.
                     Color color = StrokeRenderer.GetHighlighterColor(stroke.DrawingAttributes.Color);
-                    if (highLighters.TryGetValue(color, out strokes) == false)
+                    if (!highLighters.TryGetValue(color, out strokes))
                     {
                         strokes = new List<Stroke>();
                         highLighters.Add(color, strokes);

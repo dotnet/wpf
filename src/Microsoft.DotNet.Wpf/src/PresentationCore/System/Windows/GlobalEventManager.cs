@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
 using System.Collections;
@@ -82,7 +82,7 @@ namespace System.Windows
                 
                 for (int i=0; i<keys.Count; i++)
                 {
-                    if (keys.List[i].IsSubclassOf(dType) == true)
+                    if (keys.List[i].IsSubclassOf(dType))
                     {
                         classListenersLists = (ClassHandlersStore)_dTypedClassListeners[keys.List[i]];                            
                         classListenersLists.UpdateSubClassHandlers(routedEvent, updatedClassListeners);
@@ -126,7 +126,7 @@ namespace System.Windows
                 // Requires GlobalLock to access _ownerTypedRoutedEventList
                 IDictionaryEnumerator htEnumerator = _ownerTypedRoutedEventList.GetEnumerator();
                 
-                while(htEnumerator.MoveNext() == true)
+                while(htEnumerator.MoveNext())
                 {
                     FrugalObjectList<RoutedEvent> ownerRoutedEventList = (FrugalObjectList<RoutedEvent>)htEnumerator.Value;
                 

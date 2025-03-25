@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -117,7 +117,7 @@ namespace MS.Internal
         {
             // The dispatcher and AppDomain events might arrive on separate threads
             // at the same time. The interlock assures that we only do the work once.
-            if (Interlocked.Exchange(ref _inShutDown, true) == false)
+            if (!Interlocked.Exchange(ref _inShutDown, true))
             {
                 // ShutDown is a one-time event.  Stop listening (thus releasing
                 // references to the ShutDownListener).

@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -45,7 +45,7 @@ namespace MS.Internal
             // If the sourceUri is not relative to baseUri, Emtpy string is returned
             // as resource id.
             //
-            if (baseUri.IsAbsoluteUri == false || sourceUri.IsAbsoluteUri == false)
+            if (!baseUri.IsAbsoluteUri || !sourceUri.IsAbsoluteUri)
             {
                  // 
                  // if any passed Uri is not absolute uri, return empty string here.

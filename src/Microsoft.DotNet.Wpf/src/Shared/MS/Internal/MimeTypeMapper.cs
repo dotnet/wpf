@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -24,7 +24,7 @@ namespace MS.Internal
             if (uriSource != null)
             {
                 Uri uri = uriSource;
-                if (uri.IsAbsoluteUri == false)
+                if (!uri.IsAbsoluteUri)
                 {
                       uri = new Uri("http://foo/bar/");
                       uri = new Uri(uri, uriSource);
@@ -136,7 +136,7 @@ namespace MS.Internal
             string extensionWithDot = Path.GetExtension(docString);
             string extension = String.Empty;
 
-            if (String.IsNullOrEmpty(extensionWithDot) == false)
+            if (!String.IsNullOrEmpty(extensionWithDot))
             {
                 extension = extensionWithDot.Substring(1).ToLower(CultureInfo.InvariantCulture);
             }

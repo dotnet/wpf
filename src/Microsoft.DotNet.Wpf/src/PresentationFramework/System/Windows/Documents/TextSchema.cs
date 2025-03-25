@@ -918,7 +918,7 @@ namespace System.Windows.Documents
                 // When the brush is not serializable to string, we consider values equal only is they are equal as objects
                 string string1 = DPTypeDescriptorContext.GetStringValue(TextElement.BackgroundProperty, brush1);
                 string string2 = DPTypeDescriptorContext.GetStringValue(TextElement.BackgroundProperty, brush2);
-                return string1 != null && string2 != null ? string1 == string2 : false;
+                return string1 is not null && string2 is not null && string1 == string2;
             }
         }
 

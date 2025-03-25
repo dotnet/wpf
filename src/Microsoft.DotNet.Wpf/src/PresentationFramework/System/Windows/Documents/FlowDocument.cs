@@ -855,9 +855,8 @@ namespace System.Windows.Documents
                     return false;
                 }
 
-                RichTextBox parentRichTextBox = this.Parent as RichTextBox;
 
-                return (parentRichTextBox == null) ? true : parentRichTextBox.IsDocumentEnabled;
+                return Parent is not RichTextBox parentRichTextBox || parentRichTextBox.IsDocumentEnabled;
             }
         }
 

@@ -423,7 +423,7 @@ namespace System.Windows.Documents
         {
             get
             {
-                return _referencedEdge == ElementEdge.BeforeStart ? _positionRefCount > 0 : false;
+                return _referencedEdge is ElementEdge.BeforeStart && _positionRefCount > 0;
             }
 
             set
@@ -467,7 +467,7 @@ namespace System.Windows.Documents
         {
             get
             {
-                return _referencedEdge == ElementEdge.AfterEnd ? _positionRefCount > 0 : false;
+                return _referencedEdge is ElementEdge.AfterEnd && _positionRefCount > 0;
             }
 
             set

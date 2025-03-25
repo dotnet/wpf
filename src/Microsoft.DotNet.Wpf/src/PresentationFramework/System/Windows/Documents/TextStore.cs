@@ -1081,7 +1081,7 @@ namespace System.Windows.Documents
                         end = (lineRange.End.CompareTo(endPointer) >= 0) ? endPointer : lineRange.End;
 
                         lineRect = GetLineBounds(start, end);
-                        moved = (navigator.MoveToLineBoundary(1) != 0) ? true : false;
+                        moved = (navigator.MoveToLineBoundary(1) != 0);
                     }
                     else
                     {

@@ -558,7 +558,7 @@ namespace System.Windows.Controls
         {
             get
             {
-                return (EnsureCollectionView()) ? _collectionView.NeedsRefresh : false;
+                return EnsureCollectionView() && _collectionView.NeedsRefresh;
             }
         }
 
@@ -610,7 +610,7 @@ namespace System.Windows.Controls
         {
             get
             {
-                return (EnsureCollectionView()) ? _collectionView.CanSort : true;
+                return !EnsureCollectionView() || _collectionView.CanSort;
             }
         }
 
@@ -648,7 +648,7 @@ namespace System.Windows.Controls
         {
             get
             {
-                return (EnsureCollectionView()) ? _collectionView.CanFilter : true;
+                return !EnsureCollectionView() || _collectionView.CanFilter;
             }
         }
 
@@ -660,7 +660,7 @@ namespace System.Windows.Controls
         {
             get
             {
-                return (EnsureCollectionView()) ? _collectionView.CanGroup : false;
+                return EnsureCollectionView() && _collectionView.CanGroup;
             }
         }
 
@@ -1238,8 +1238,7 @@ namespace System.Windows.Controls
         {
             get
             {
-                ICollectionViewLiveShaping cvls = _collectionView as ICollectionViewLiveShaping;
-                return (cvls != null) ? cvls.CanChangeLiveSorting : false;
+                return _collectionView is ICollectionViewLiveShaping collectionView && collectionView.CanChangeLiveSorting;
             }
         }
 
@@ -1250,8 +1249,7 @@ namespace System.Windows.Controls
         {
             get
             {
-                ICollectionViewLiveShaping cvls = _collectionView as ICollectionViewLiveShaping;
-                return (cvls != null) ? cvls.CanChangeLiveFiltering : false;
+                return _collectionView is ICollectionViewLiveShaping collectionView && collectionView.CanChangeLiveFiltering;
             }
         }
 
@@ -1262,8 +1260,7 @@ namespace System.Windows.Controls
         {
             get
             {
-                ICollectionViewLiveShaping cvls = _collectionView as ICollectionViewLiveShaping;
-                return (cvls != null) ? cvls.CanChangeLiveGrouping : false;
+                return _collectionView is ICollectionViewLiveShaping collectionView && collectionView.CanChangeLiveGrouping;
             }
         }
 
@@ -2276,7 +2273,7 @@ namespace System.Windows.Controls
 
         private bool IsSortingSet
         {
-            get { return IsShapingActive ? _shapingStorage._isSortingSet : false; }
+            get { return IsShapingActive && _shapingStorage._isSortingSet; }
             set
             {
                 Debug.Assert(IsShapingActive, "Shaping storage not available");
@@ -2310,7 +2307,7 @@ namespace System.Windows.Controls
 
         private bool IsGroupingSet
         {
-            get { return IsShapingActive ? _shapingStorage._isGroupingSet : false; }
+            get { return IsShapingActive && _shapingStorage._isGroupingSet; }
             set
             {
                 if (IsShapingActive)
@@ -2345,7 +2342,7 @@ namespace System.Windows.Controls
 
         private bool IsLiveSortingSet
         {
-            get { return IsShapingActive ? _shapingStorage._isLiveSortingSet : false; }
+            get { return IsShapingActive && _shapingStorage._isLiveSortingSet; }
             set
             {
                 Debug.Assert(IsShapingActive, "Shaping storage not available");
@@ -2378,7 +2375,7 @@ namespace System.Windows.Controls
 
         private bool IsLiveFilteringSet
         {
-            get { return IsShapingActive ? _shapingStorage._isLiveFilteringSet : false; }
+            get { return IsShapingActive && _shapingStorage._isLiveFilteringSet; }
             set
             {
                 Debug.Assert(IsShapingActive, "Shaping storage not available");
@@ -2411,7 +2408,7 @@ namespace System.Windows.Controls
 
         private bool IsLiveGroupingSet
         {
-            get { return IsShapingActive ? _shapingStorage._isLiveGroupingSet : false; }
+            get { return IsShapingActive && _shapingStorage._isLiveGroupingSet; }
             set
             {
                 Debug.Assert(IsShapingActive, "Shaping storage not available");

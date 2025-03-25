@@ -73,7 +73,7 @@ namespace MS.Internal.PtsHost
         {
             double value;
     
-            isWidthAuto = figureLength.IsAuto ? true : false;
+            isWidthAuto = figureLength.IsAuto;
     
             // Check figure's horizontal anchor. If anchored to page, use page width to format
     

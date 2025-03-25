@@ -64,7 +64,7 @@ namespace System.Windows.Data
     /// </summary>
     public override bool HasValidationError
     {
-        get { return (_activeIndex < 0) ? false : MutableBindingExpressions[_activeIndex].HasValidationError; }
+        get { return _activeIndex >= 0 && MutableBindingExpressions[_activeIndex].HasValidationError; }
     }
 
     //------------------------------------------------------

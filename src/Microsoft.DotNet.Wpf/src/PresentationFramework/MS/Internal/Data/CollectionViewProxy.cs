@@ -759,8 +759,7 @@ namespace MS.Internal.Data
         {
             get
             {
-                ICollectionViewLiveShaping cvls = ProxiedView as ICollectionViewLiveShaping;
-                return (cvls != null) ? cvls.CanChangeLiveSorting : false;
+                return ProxiedView is ICollectionViewLiveShaping collectionView && collectionView.CanChangeLiveSorting;
             }
         }
 
@@ -771,8 +770,7 @@ namespace MS.Internal.Data
         {
             get
             {
-                ICollectionViewLiveShaping cvls = ProxiedView as ICollectionViewLiveShaping;
-                return (cvls != null) ? cvls.CanChangeLiveFiltering : false;
+                return ProxiedView is ICollectionViewLiveShaping collectionView && collectionView.CanChangeLiveFiltering;
             }
         }
 
@@ -783,8 +781,7 @@ namespace MS.Internal.Data
         {
             get
             {
-                ICollectionViewLiveShaping cvls = ProxiedView as ICollectionViewLiveShaping;
-                return (cvls != null) ? cvls.CanChangeLiveGrouping : false;
+                return ProxiedView is ICollectionViewLiveShaping collectionView && collectionView.CanChangeLiveGrouping;
             }
         }
 

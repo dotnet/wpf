@@ -1782,7 +1782,7 @@ namespace System.Windows.Controls
             // The mouse moved, see if we're over the items host yet
             if (comboBox.IsDropDownOpen)
             {
-                bool isMouseOverItemsHost = comboBox.ItemsHost != null ? comboBox.ItemsHost.IsMouseOver : false;
+                bool isMouseOverItemsHost = comboBox.ItemsHost is not null && comboBox.ItemsHost.IsMouseOver;
 
                 // When mouse enters items host, start tracking mouse movements
                 if (isMouseOverItemsHost && !comboBox.HasMouseEnteredItemsHost)

@@ -1739,7 +1739,7 @@ namespace System.Windows.Documents
             }
 
             // We eat this event if IME handled.
-            return (lret != IntPtr.Zero) ? true : false;
+            return lret != IntPtr.Zero;
         }
 
         // Opens a composition undo unit. Opens the compsed composition undo unit if it exist on the top

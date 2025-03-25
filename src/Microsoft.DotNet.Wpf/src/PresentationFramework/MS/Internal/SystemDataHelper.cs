@@ -17,28 +17,28 @@ namespace MS.Internal
         internal static bool IsDataView(IBindingList list)
         {
             SystemDataExtensionMethods extensions = AssemblyHelper.ExtensionsForSystemData();
-            return (extensions != null) ? extensions.IsDataView(list) : false;
+            return extensions is not null && extensions.IsDataView(list);
         }
 
         // return true if the item is a DataRowView
         internal static bool IsDataRowView(object item)
         {
             SystemDataExtensionMethods extensions = AssemblyHelper.ExtensionsForSystemData();
-            return (extensions != null) ? extensions.IsDataRowView(item) : false;
+            return extensions is not null && extensions.IsDataRowView(item);
         }
 
         // return true if the value is null in the SqlTypes sense
         internal static bool IsSqlNull(object value)
         {
             SystemDataExtensionMethods extensions = AssemblyHelper.ExtensionsForSystemData();
-            return (extensions != null) ? extensions.IsSqlNull(value) : false;
+            return extensions is not null && extensions.IsSqlNull(value);
         }
 
         // return true if the type is nullable in the SqlTypes sense
         internal static bool IsSqlNullableType(Type type)
         {
             SystemDataExtensionMethods extensions = AssemblyHelper.ExtensionsForSystemData();
-            return (extensions != null) ? extensions.IsSqlNullableType(type) : false;
+            return extensions is not null && extensions.IsSqlNullableType(type);
         }
 
         // ADO DataSet exposes some properties that cause problems involving
@@ -46,7 +46,7 @@ namespace MS.Internal
         internal static bool IsDataSetCollectionProperty(PropertyDescriptor pd)
         {
             SystemDataExtensionMethods extensions = AssemblyHelper.ExtensionsForSystemData();
-            return (extensions != null) ? extensions.IsDataSetCollectionProperty(pd) : false;
+            return extensions is not null && extensions.IsDataSetCollectionProperty(pd);
         }
 
         // Intercept GetValue calls for certain ADO properties
@@ -61,7 +61,7 @@ namespace MS.Internal
         internal static bool DetermineWhetherDBNullIsValid(object item, string columnName, object arg)
         {
             SystemDataExtensionMethods extensions = AssemblyHelper.ExtensionsForSystemData();
-            return (extensions != null) ? extensions.DetermineWhetherDBNullIsValid(item, columnName, arg) : false;
+            return extensions is not null && extensions.DetermineWhetherDBNullIsValid(item, columnName, arg);
         }
 
         // return a null value appropriate for the given SqlNullable type

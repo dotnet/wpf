@@ -1143,8 +1143,8 @@ namespace System.Windows.Xps.Serialization
         {
             Size newSize = ValidateDocumentSize(elementSize, printTicket);
 
-            if (uiElement.IsArrangeValid == false ||
-                uiElement.IsMeasureValid == false ||
+            if (!uiElement.IsArrangeValid ||
+!uiElement.IsMeasureValid ||
                 elementSize != newSize
                 )
             {

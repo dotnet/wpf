@@ -501,7 +501,7 @@ namespace System.Windows.Xps.Serialization
                 int dummy;
                 // Some classes like DocumentViewer, in its visual tree, will implicitly generate
                 // some named elements. We will avoid create the duplicate names. 
-                if (_nameList.TryGetValue(fe.Name, out dummy) == false)
+                if (!_nameList.TryGetValue(fe.Name, out dummy))
                 {
                     nameAttr = fe.Name;
                     _nameList.Add(fe.Name, 0);

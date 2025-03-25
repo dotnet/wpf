@@ -225,7 +225,7 @@ namespace System.Windows.Xps.Serialization
             XpsSerializationCompletedEventArgs e
             )
         {
-            if (e.Cancelled == true)
+            if (e.Cancelled)
             {
                 _documentEvent = XpsDocumentEventType.XpsDocumentCancel;
 

@@ -933,7 +933,7 @@ namespace System.Xaml
                 ShouldSerializeResult shouldSerialize = context.Runtime.ShouldSerialize(property, source);
                 if (shouldSerialize != ShouldSerializeResult.Default)
                 {
-                    return shouldSerialize == ShouldSerializeResult.True ? true : false;
+                    return shouldSerialize is ShouldSerializeResult.True;
                 }
 
                 if (!isReadOnly)

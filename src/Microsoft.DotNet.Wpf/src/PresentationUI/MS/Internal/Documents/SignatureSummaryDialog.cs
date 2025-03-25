@@ -45,7 +45,7 @@ namespace MS.Internal.Documents
             InitializeDialogType();
 
             //Show only the buttons appropriate for the current mode.
-            if (_showRequestDialog == true)
+            if (_showRequestDialog)
             {
                 Text = SR.DigSigRequestTitle;
 
@@ -192,7 +192,7 @@ namespace MS.Internal.Documents
             InitializeColumnHeaders();
 
             //Show only the buttons appropriate for the current mode.
-            if (_showRequestDialog == true)
+            if (_showRequestDialog)
             {
                 Text = SR.DigSigRequestTitle;
 

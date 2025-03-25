@@ -9192,7 +9192,7 @@ namespace System.Windows.Controls
             System.Windows.Controls.ItemContainerGenerator generator = Generator as System.Windows.Controls.ItemContainerGenerator;
             ItemsControl itemsControl = ItemsControl.GetItemsOwner(this);
 
-            if (generator != null && itemsControl != null && itemsControl.IsGrouping == false)
+            if (generator != null && itemsControl != null && !itemsControl.IsGrouping)
             {
                 foreach (UIElement child in InternalChildren)
                 {
@@ -11390,7 +11390,7 @@ namespace System.Windows.Controls
                 // We must be the ItemsHost to turn on Virtualization.
                 bool isVirtualizing = IsItemsHost && value;
 
-                if (isVirtualizing == false)
+                if (!isVirtualizing)
                 {
                     _realizedChildren = null;
                 }

@@ -704,7 +704,7 @@ namespace MS.Internal.PtsHost
         /// </remarks>
         private void Dispose(bool disposing)
         {
-            if (Interlocked.CompareExchange(ref _disposed, true, false) == false)
+            if (!Interlocked.CompareExchange(ref _disposed, true, false))
             {
                 // Destroy PTS page.
                 // According to following article the entire reachable graph from 

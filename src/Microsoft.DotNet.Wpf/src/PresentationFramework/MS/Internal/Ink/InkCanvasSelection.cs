@@ -126,7 +126,7 @@ namespace MS.Internal.Ink
         /// <param name="activeSelectionHitResult"></param>
         internal void StartFeedbackAdorner(Rect feedbackRect, InkCanvasSelectionHitResult activeSelectionHitResult)
         {
-            Debug.Assert( _inkCanvas.EditingCoordinator.UserIsEditing == true );
+            Debug.Assert( _inkCanvas.EditingCoordinator.UserIsEditing);
             Debug.Assert(activeSelectionHitResult != InkCanvasSelectionHitResult.None, "activeSelectionHitResult cannot be InkCanvasSelectionHitResult.None.");
 
             _activeSelectionHitResult = activeSelectionHitResult;

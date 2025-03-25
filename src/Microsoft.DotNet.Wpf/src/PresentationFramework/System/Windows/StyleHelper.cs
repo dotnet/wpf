@@ -2069,7 +2069,7 @@ namespace System.Windows
                 if( walkNode != container && nextParent != null ) // Only interested in nodes that are "Not me" and not auto-generated (== no TemplatedParent)
                 {
                     // Do the cheaper comparison first - the Style reference should be cached
-                    if ((frameworkTemplate != null && walkNodeIsFE == true && feWalkNode.TemplateInternal == frameworkTemplate) )
+                    if ((frameworkTemplate != null && walkNodeIsFE && feWalkNode.TemplateInternal == frameworkTemplate) )
                     {
                         // Then the expensive one - pulling in reflection to check if they're also the same types.
                         if( walkNode.GetType() == container.GetType() )

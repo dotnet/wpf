@@ -3933,7 +3933,7 @@ namespace System.Windows.Controls
         internal void OnLoadingRowDetailsWrapper(DataGridRow row)
         {
             if (row != null &&
-                row.DetailsLoaded == false &&
+!row.DetailsLoaded &&
                 row.DetailsVisibility == Visibility.Visible &&
                 row.DetailsPresenter != null)
             {
@@ -3946,7 +3946,7 @@ namespace System.Windows.Controls
         internal void OnUnloadingRowDetailsWrapper(DataGridRow row)
         {
             if (row != null &&
-                row.DetailsLoaded == true &&
+                row.DetailsLoaded &&
                 row.DetailsPresenter != null)
             {
                 DataGridRowDetailsEventArgs e = new DataGridRowDetailsEventArgs(row, row.DetailsPresenter.DetailsElement);
@@ -7046,7 +7046,7 @@ namespace System.Windows.Controls
             DataGrid dataGrid = (DataGrid)d;
             if (DataGridHelper.IsPropertyTransferEnabled(dataGrid, CanUserSortColumnsProperty) &&
                 DataGridHelper.IsDefaultValue(dataGrid, CanUserSortColumnsProperty) &&
-                dataGrid.Items.CanSort == false)
+!dataGrid.Items.CanSort)
             {
                 return false;
             }
@@ -7611,7 +7611,7 @@ namespace System.Windows.Controls
                 _selectedCells.RestoreOnlyFullRows(ranges);
             }
 
-            if (AutoGenerateColumns == true)
+            if (AutoGenerateColumns)
             {
                 RegenerateAutoColumns();
             }

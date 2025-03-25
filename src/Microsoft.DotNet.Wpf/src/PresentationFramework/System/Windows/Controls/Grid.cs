@@ -3983,7 +3983,7 @@ namespace System.Windows.Controls
                 {
                     Grid grid = VisualTreeHelper.GetParent(this) as Grid;
                     if (    grid == null
-                        ||  grid.ShowGridLines == false )
+                        || !grid.ShowGridLines)
                     {
                         return;
                     }

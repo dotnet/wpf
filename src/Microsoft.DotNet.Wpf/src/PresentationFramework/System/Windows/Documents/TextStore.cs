@@ -1089,7 +1089,7 @@ namespace System.Windows.Documents
                         end = navigator;
                     }
 
-                    if (lineRect.IsEmpty == false)
+                    if (!lineRect.IsEmpty)
                     {
                         rectBound.Union(lineRect);
                     }
@@ -3052,7 +3052,7 @@ namespace System.Windows.Documents
 
             int i;
             bool eaten = false;
-            for (i = 0; (i < _mouseSinks.Count) && (eaten == false); i++)
+            for (i = 0; (i < _mouseSinks.Count) && (!eaten); i++)
             {
                 MouseSink mSink = (MouseSink)_mouseSinks[i];
 
@@ -3170,7 +3170,7 @@ namespace System.Windows.Documents
 
             // Scan the line range and compute the top and the height of the bounding rectangle.
             ITextPointer navigator = start.CreatePointer(LogicalDirection.Forward);
-            while (navigator.MoveToNextContextPosition(LogicalDirection.Forward) == true && navigator.CompareTo(end) < 0)
+            while (navigator.MoveToNextContextPosition(LogicalDirection.Forward) && navigator.CompareTo(end) < 0)
             {
                 TextPointerContext context = navigator.GetPointerContext(LogicalDirection.Backward);
                 switch (context)

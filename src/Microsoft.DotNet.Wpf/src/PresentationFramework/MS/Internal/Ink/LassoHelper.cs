@@ -178,7 +178,7 @@ namespace MS.Internal.Ink
 
             foreach (Point point in points)
             {
-                if (true == Contains(point))
+                if (Contains(point))
                 {
                     countPointsInLasso++;
                     if (countPointsInLasso == marginCount)
@@ -192,7 +192,7 @@ namespace MS.Internal.Ink
         /// <summary>Checks whether supplied point is inside.</summary>
         private bool Contains(Point point)
         {
-            if (false == _boundingBox.Contains(point))
+            if (!_boundingBox.Contains(point))
             {
                 return false;
             }
@@ -202,7 +202,7 @@ namespace MS.Internal.Ink
 
             while (--last >= 0)
             {
-                if (false == DoubleUtil.AreClose(_lasso[last].Y, point.Y))
+                if (!DoubleUtil.AreClose(_lasso[last].Y, point.Y))
                 {
                     isHigher = point.Y < _lasso[last].Y;
                     break;
@@ -286,7 +286,7 @@ namespace MS.Internal.Ink
         /// </summary>
         private void EnsureReady()
         {
-            if (false == _isActivated)
+            if (!_isActivated)
             {
                 _isActivated = true;
 

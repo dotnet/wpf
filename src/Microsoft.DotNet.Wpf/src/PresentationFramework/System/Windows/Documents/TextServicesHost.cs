@@ -263,7 +263,7 @@ namespace System.Windows.Documents
         private void OnDispatcherShutdownFinished(object sender, EventArgs args)
         {
             Debug.Assert(CheckAccess(), "OnDispatcherShutdownFinished called on bad thread!");
-            Debug.Assert(_isDispatcherShutdownFinished == false, "Was this dispather finished???");
+            Debug.Assert(!_isDispatcherShutdownFinished, "Was this dispather finished???");
 
             // Remove the callback.
             Dispatcher.ShutdownFinished -= new EventHandler(OnDispatcherShutdownFinished);
@@ -296,7 +296,7 @@ namespace System.Windows.Documents
             // Get ITfThreadMgr
             if (_threadManager == null)
             {
-                Debug.Assert(_isDispatcherShutdownFinished == false, "Was this dispather finished?");
+                Debug.Assert(!_isDispatcherShutdownFinished, "Was this dispather finished?");
                 Debug.Assert(_registeredtextstorecount == 0, "TextStore was registered without ThreadMgr?");
 
                 // TextServicesLoader.Load() might return null if no text services are installed or enabled.

@@ -316,7 +316,7 @@ namespace System.Windows
             Debug.Assert(d != null, "Must have non-null current node");
 
             // This must be an inherited dependency property
-            Debug.Assert(fMetadata.IsInherited == true, "This must be an inherited dependency property");
+            Debug.Assert(fMetadata.IsInherited, "This must be an inherited dependency property");
 
             // IsSelfInheritanceParent can only change from false to true
             Debug.Assert(!wasSelfInheritanceParent || isSelfInheritanceParent, "IsSelfInheritanceParent changed from true to false");

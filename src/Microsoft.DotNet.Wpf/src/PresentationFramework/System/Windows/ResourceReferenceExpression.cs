@@ -52,7 +52,7 @@ namespace System.Windows
             ArgumentNullException.ThrowIfNull(dp);
 
             // If the cached value is valid then return it
-            if (ReadInternalState(InternalState.HasCachedResourceValue) == true)
+            if (ReadInternalState(InternalState.HasCachedResourceValue))
                 return _cachedResourceValue;
 
             object source;
@@ -87,7 +87,7 @@ namespace System.Windows
             //   </Button.Background>
             // </Button
             // Button is the mentor for the ResourceReference on SolidColorBrush
-            if (ReadInternalState(InternalState.IsMentorCacheValid) == false)
+            if (!ReadInternalState(InternalState.IsMentorCacheValid))
             {
                 // Find the mentor by walking up the InheritanceContext
                 // links and update the cache
@@ -305,7 +305,7 @@ namespace System.Windows
         /// </summary>
         private void InvalidateMentorCache()
         {
-            if (ReadInternalState(InternalState.IsMentorCacheValid) == true)
+            if (ReadInternalState(InternalState.IsMentorCacheValid))
             {
                 if (_mentorCache != null)
                 {

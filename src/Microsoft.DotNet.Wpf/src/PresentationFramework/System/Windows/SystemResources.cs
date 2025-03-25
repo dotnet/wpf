@@ -2117,7 +2117,7 @@ namespace System.Windows
 
                 foreach (KeyValuePair<object, WeakReference<DeferredResourceReference>> entry in _entries)
                 {
-                    if (entry.Value.TryGetTarget(out var item) is false)
+                    if (!entry.Value.TryGetTarget(out var item))
                     {
                         deadKeys.Add(entry.Key);
                     }

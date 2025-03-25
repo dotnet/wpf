@@ -1646,7 +1646,7 @@ namespace System.Windows.Documents
             This.SetSpellCheckEnabled(This.IsSpellCheckEnabled);
 
             // Finalize any active IME composition when transitioning to true.
-            if ((bool)e.NewValue == true && This._textstore != null)
+            if ((bool)e.NewValue && This._textstore != null)
             {
                 This._textstore.CompleteCompositionAsync();
             }

@@ -283,7 +283,7 @@ namespace System.Windows.Documents
         internal static bool IsNonMergeableInline(Type elementType)
         {
             TextElementEditingBehaviorAttribute att = (TextElementEditingBehaviorAttribute)Attribute.GetCustomAttribute(elementType, typeof(TextElementEditingBehaviorAttribute));
-            if (att != null && att.IsMergeable == false)
+            if (att != null && !att.IsMergeable)
             {
                 return true;
             }

@@ -223,7 +223,7 @@ namespace System.Windows.Markup
 #if DEBUG
                         // this case can happen if doing BAML Async and entire record hasn't
                         // been downloaded.
-                        Debug.Assert(false == XamlReaderStream.IsWriteComplete,
+                        Debug.Assert(!XamlReaderStream.IsWriteComplete,
                                 "not enough bytes for RecordSize but write is complete");
 #endif
                         stream.Seek(currentPosition,SeekOrigin.Begin);
@@ -366,7 +366,7 @@ namespace System.Windows.Markup
             bool moreData = true;
 
             // loop through the records until the end building the Tree.
-            while ( (true == moreData)
+            while ( (moreData)
                 && null != (bamlRecord = GetNextRecord()))
             {
                 moreData = ReadRecord(bamlRecord);
@@ -4351,7 +4351,7 @@ namespace System.Windows.Markup
             {
                 baseuri = BindUriHelper.BaseUri;
             }
-            else if (baseuri.IsAbsoluteUri == false)
+            else if (!baseuri.IsAbsoluteUri)
             {
                 baseuri = new Uri(BindUriHelper.BaseUri, baseuri);
             }

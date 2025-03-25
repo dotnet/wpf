@@ -1089,7 +1089,7 @@ namespace System.Windows.Controls
                             // now that we've raised the Gesture event and the developer
                             // has had a chance to change args.Cancel, see what their intent is.
                             //
-                            if (args.Cancel == false)
+                            if (!args.Cancel)
                             {
                                 //bail out and don't add
                                 //the stroke to InkCanvas.Strokes

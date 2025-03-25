@@ -886,7 +886,7 @@ namespace System.Windows.Documents
             else
             {
                 // Define whether word adjustment is allowed. Pressing Shift+Control prevents from auto-word expansion.
-                bool disableWordExpansion = _textEditor.AutoWordSelection == false || ((Keyboard.Modifiers & ModifierKeys.Shift) != 0 && (Keyboard.Modifiers & ModifierKeys.Control) != 0);
+                bool disableWordExpansion = !_textEditor.AutoWordSelection || ((Keyboard.Modifiers & ModifierKeys.Shift) != 0 && (Keyboard.Modifiers & ModifierKeys.Control) != 0);
 
                 if (disableWordExpansion)
                 {

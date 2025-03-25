@@ -1026,7 +1026,7 @@ namespace System.Windows.Controls
                 transformations.Children.Add(new TranslateTransform(anchor.X, anchor.Y));
 
                 TranslateTransform offsetTransform = new TranslateTransform(0, 0);
-                if (IsExpanded == true)
+                if (IsExpanded)
                 {
                     offsetTransform = PositionTransform.Clone();
 

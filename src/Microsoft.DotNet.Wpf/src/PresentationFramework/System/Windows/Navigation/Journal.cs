@@ -253,7 +253,7 @@ namespace System.Windows.Navigation
                 {
                     return null;
                 }
-            } while (IsNavigable(_journalEntryList[index]) == false);
+            } while (!IsNavigable(_journalEntryList[index]));
             JournalEntry removedEntry = RemoveEntryInternal(index);
             Debug.Assert(ValidateIndexes());
             UpdateView();

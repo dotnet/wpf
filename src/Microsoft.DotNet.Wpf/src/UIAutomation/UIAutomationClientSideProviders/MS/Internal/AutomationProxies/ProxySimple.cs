@@ -236,7 +236,7 @@ namespace MS.Internal.AutomationProxies
                 // Punt if not the case, drill down otherwise
                 // If already focused, leave as-is. Calling SetForegroundWindow
                 // on an already focused HWND will remove focus!
-                return Misc.GetFocusedWindow() == _hwnd ? IsFocused() : false;
+                return Misc.GetFocusedWindow() == _hwnd && IsFocused();
             }
             else if (idProp == AutomationElement.AutomationIdProperty)
             {

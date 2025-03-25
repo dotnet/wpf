@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -683,9 +683,9 @@ namespace MS.Internal.MilCodeGen.Generators
 
             if (_resourceModel.ShouldGenerate(CodeSections.ManagedTypeConverter, resource))
             {
-                string converterName = resource.Name+"Converter";
-                string valueSerializerName = resource.Name+"ValueSerializer";
-
+                string converterName = resource.Name + "Converter";
+                string valueSerializerName = resource.Name + "ValueSerializer";
+                string lowerName = GeneratorMethods.FirstLower(resource.Name);
 
                 // ---------------------------
                 // Write out the TypeConverter
@@ -882,17 +882,15 @@ namespace MS.Internal.MilCodeGen.Generators
                     csFile.WriteBlock(
                         [[inline]]
                             [[Helpers.ManagedStyle.WriteFileHeader(valueSerializerName+".cs")]]
-                        [[/inline]]
-                        );
+                        [[/inline]]);
 
-                    foreach (string s in resource.Namespaces)
-                    {
-                        csFile.Write(
-                            [[inline]]
-                                using [[s]];
-                            [[/inline]]
-                                );
-                    }
+					csFile.Write(
+                        [[inline]]
+                            using [[resource.ManagedNamespace]];
+                            using System.Windows.Markup;
+
+                            using ConverterHelper = System.Windows.Markup.TypeConverterHelper;
+                        [[/inline]]);
 
                     // If always serializable to string, ensure that it's still the right type.
                     if (resource.IsAlwaysSerializableAsString)
@@ -900,12 +898,18 @@ namespace MS.Internal.MilCodeGen.Generators
                         valueSerializerCanConvertTo =
                             [[inline]]
                                 // Validate the input type
-                                if (!(value is [[resource.Name]]))
+                                return value is [[resource.Name]];
+                            [[/inline]]
+                                ;
+								
+                        valueSerializerConvertTo =
+                            [[inline]]
+                                if (value is not [[resource.Name]] [[lowerName]])
                                 {
-                                    return false;
+                                    // Let base throw an exception.
+                                    return base.ConvertToString(value, context);
                                 }
 
-                                return true;
                             [[/inline]]
                                 ;
                     }
@@ -916,21 +920,14 @@ namespace MS.Internal.MilCodeGen.Generators
                         valueSerializerCanConvertTo =
                             [[inline]]
                                 // When invoked by the serialization engine we can convert to string only for some instances
-                                if (!(value is [[resource.Name]]))
-                                {
-                                    return false;
-                                }
-
-                                [[resource.Name]] instance  = ([[resource.Name]]) value;
-
-                                return instance.CanSerializeToString();
+                                return value is [[resource.Name]] [[lowerName]] && [[lowerName]].CanSerializeToString();
                             [[/inline]]
                                 ;
 
                         valueSerializerConvertTo =
                             [[inline]]
                                 // When invoked by the serialization engine we can convert to string only for some instances
-                                if (!instance.CanSerializeToString())
+                                if (value is not [[resource.Name]] [[lowerName]] || ![[lowerName]].CanSerializeToString())
                                 {
                                     // Let base throw an exception.
                                     return base.ConvertToString(value, context);
@@ -938,8 +935,6 @@ namespace MS.Internal.MilCodeGen.Generators
 
                             [[/inline]]
                                 ;
-
-
                     }
 
                     csFile.WriteBlock(
@@ -974,14 +969,7 @@ namespace MS.Internal.MilCodeGen.Generators
                                     /// </summary>
                                     public override object ConvertFromString(string value, IValueSerializerContext context)
                                     {
-                                        if (value != null)
-                                        {
-                                            return [[resource.Name]].Parse(value[[contextParam]] );
-                                        }
-                                        else
-                                        {
-                                            return base.ConvertFromString( value, context );
-                                        }
+                                        return value is not null ? [[resource.Name]].Parse(value[[contextParam]]) : base.ConvertFromString(value, context);
                                     }
 
                                     /// <summary>
@@ -989,13 +977,8 @@ namespace MS.Internal.MilCodeGen.Generators
                                     /// </summary>
                                     public override string ConvertToString(object value, IValueSerializerContext context)
                                     {
-                                        if (value is [[resource.Name]] instance)
-                                        {
-                                            [[valueSerializerConvertTo]]
-                                            return instance.ConvertToString(null, System.Windows.Markup.TypeConverterHelper.InvariantEnglishUS);
-                                        }
-
-                                        return base.ConvertToString(value, context);
+                                        [[valueSerializerConvertTo]]
+                                        return [[lowerName]].ConvertToString(null, ConverterHelper.InvariantEnglishUS);
                                     }
                                 }
                             }

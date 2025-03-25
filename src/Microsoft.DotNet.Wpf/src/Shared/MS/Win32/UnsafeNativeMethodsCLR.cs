@@ -964,8 +964,7 @@ namespace MS.Win32
         {
             if (!IntPostMessage(hwnd, msg, wparam, lparam))
             {
-                int errorCode = Marshal.GetLastWin32Error();
-                throw new Win32Exception(errorCode);
+                throw new Win32Exception();
             }
         }
 

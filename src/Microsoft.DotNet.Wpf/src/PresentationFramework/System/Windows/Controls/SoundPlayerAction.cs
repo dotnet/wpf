@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -11,24 +11,11 @@
 *
 \***************************************************************************/
 using MS.Internal;
-using MS.Internal.PresentationFramework;
-using MS.Utility;
-using System;
-using System.Collections;
 using System.ComponentModel;            // DefaultValueAttribute
 using System.IO;
-using System.IO.Packaging;
 using System.Media;
-using System.Net;
-using System.Windows;
-using System.Windows.Documents;
-using System.Windows.Markup;
-using System.Windows.Media;
 using System.Windows.Navigation;
 using System.Windows.Threading;
-using System.Diagnostics;
-using System.Runtime.InteropServices;
-using System.Security;
 using System.Threading.Tasks;
 
 namespace System.Windows.Controls
@@ -51,10 +38,7 @@ namespace System.Windows.Controls
        /// </summary>
        public void Dispose()
        {
-           if (m_player != null)
-           {
-               m_player.Dispose();
-           }
+           m_player?.Dispose();
        }
 
 
@@ -210,10 +194,7 @@ namespace System.Windows.Controls
            if (m_uriChangedWhileLoadingStream)  // The source URI was changed, redo Stream loading
            {
                m_uriChangedWhileLoadingStream = false;
-               if (newStream != null)  // Don't hold on to the new stream - it's not needed anymore
-               {
-                   newStream.Dispose();
-               }
+               newStream?.Dispose();
                BeginLoadStream();
            }
            else if (newStream != null)  // We loaded the Stream, begin buffering it

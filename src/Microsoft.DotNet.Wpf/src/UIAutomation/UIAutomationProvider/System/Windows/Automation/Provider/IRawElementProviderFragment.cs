@@ -4,8 +4,6 @@
 
 // Description: Provider side interface for n-level UI
 
-using System;
-using System.Windows.Automation;
 using System.Runtime.InteropServices;
 
 

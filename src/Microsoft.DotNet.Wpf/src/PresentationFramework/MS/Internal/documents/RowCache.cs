@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+ï»¿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -6,12 +6,7 @@
 // Description: RowCache caches information about Row layouts used by DocumentGrid.
 //
 
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Diagnostics;
 using System.Windows;
-using System.Windows.Documents;
 
 namespace MS.Internal.Documents
 {
@@ -243,10 +238,8 @@ namespace MS.Internal.Documents
         /// <returns>The requested row.</returns>
         public RowInfo GetRow(int index)
         {
-            if (index < 0 || index > _rowCache.Count)
-            {
-                throw new ArgumentOutOfRangeException("index");
-            }
+            ArgumentOutOfRangeException.ThrowIfNegative(index);
+            ArgumentOutOfRangeException.ThrowIfGreaterThan(index, _rowCache.Count);
 
             return _rowCache[index];
         }
@@ -259,10 +252,8 @@ namespace MS.Internal.Documents
         /// <returns>The requested row.</returns>
         public RowInfo GetRowForPageNumber(int pageNumber)
         {
-            if (pageNumber < 0 || pageNumber > LastPageInCache)
-            {
-                throw new ArgumentOutOfRangeException("pageNumber");
-            }
+            ArgumentOutOfRangeException.ThrowIfNegative(pageNumber);
+            ArgumentOutOfRangeException.ThrowIfGreaterThan(pageNumber, LastPageInCache);
 
             return _rowCache[GetRowIndexForPageNumber(pageNumber)];
         }
@@ -275,10 +266,8 @@ namespace MS.Internal.Documents
         /// <returns>The requested row index</returns>
         public int GetRowIndexForPageNumber(int pageNumber)
         {
-            if (pageNumber < 0 || pageNumber > LastPageInCache)
-            {
-                throw new ArgumentOutOfRangeException("pageNumber");
-            }
+            ArgumentOutOfRangeException.ThrowIfNegative(pageNumber);
+            ArgumentOutOfRangeException.ThrowIfGreaterThan(pageNumber, LastPageInCache);
 
             //Search our cache for the row that contains the page.
             //NOTE: Future perf item:
@@ -307,10 +296,8 @@ namespace MS.Internal.Documents
         /// <returns>The index of the row that lives at the offset.</returns>
         public int GetRowIndexForVerticalOffset(double offset)
         {
-            if (offset < 0 || offset > ExtentHeight)
-            {
-                throw new ArgumentOutOfRangeException("offset");
-            }
+            ArgumentOutOfRangeException.ThrowIfNegative(offset);
+            ArgumentOutOfRangeException.ThrowIfGreaterThan(offset, ExtentHeight);
 
             //If we have no rows we'll return 0 (the top of the non-existent document)
             if (_rowCache.Count == 0)
@@ -399,10 +386,7 @@ namespace MS.Internal.Documents
             startRowIndex = 0;
             rowCount = 0;
 
-            if (endOffset < startOffset)
-            {
-                throw new ArgumentOutOfRangeException("endOffset");
-            }
+            ArgumentOutOfRangeException.ThrowIfLessThan(endOffset, startOffset);
 
             //If the offsets we're given are out of range we'll just return now
             //because we have no rows to find at this offset.
@@ -514,16 +498,12 @@ namespace MS.Internal.Documents
             }
 
             //Throw exception for illegal values
-            if (pivotPage < 0 || pivotPage > PageCache.PageCount)
-            {
-                throw new ArgumentOutOfRangeException("pivotPage");
-            }
+            ArgumentOutOfRangeException.ThrowIfNegative(pivotPage);
+            //Throw exception for illegal values
+            ArgumentOutOfRangeException.ThrowIfGreaterThan(pivotPage, PageCache.PageCount);
 
             //Can't lay out fewer than 1 column of pages.
-            if (columns < 1)
-            {
-                throw new ArgumentOutOfRangeException("columns");
-            }
+            ArgumentOutOfRangeException.ThrowIfLessThan(columns, 1);
 
             //Store off the requested layout parameters.
             _layoutColumns = columns;
@@ -657,16 +637,11 @@ namespace MS.Internal.Documents
         private int RecalcRowsForDynamicPageSizes(int pivotPage, int columns)
         {
             //Throw exception for illegal values
-            if (pivotPage < 0 || pivotPage >= PageCache.PageCount)
-            {
-                throw new ArgumentOutOfRangeException("pivotPage");
-            }
+            ArgumentOutOfRangeException.ThrowIfNegative(pivotPage);
+            ArgumentOutOfRangeException.ThrowIfGreaterThanOrEqual(pivotPage, PageCache.PageCount);
 
             //Can't lay out fewer than 1 column of pages.
-            if (columns < 1)
-            {
-                throw new ArgumentOutOfRangeException("columns");
-            }
+            ArgumentOutOfRangeException.ThrowIfLessThan(columns, 1);
 
             //Adjust the pivot page as necessary so that the to-be-computed layout has the specified number
             //of columns on the row.
@@ -694,7 +669,7 @@ namespace MS.Internal.Documents
             //at the top and work our way down, we might not end up with the
             //same pages on this row.
 
-            //Store off the rows we calculate here, we’ll need them later.            
+            //Store off the rows we calculate here, weâ€™ll need them later.            
             List<RowInfo> tempRows = new List<RowInfo>(pivotPage / columns);
             int currentPage = pivotPage;
             while (currentPage > 0)
@@ -705,7 +680,7 @@ namespace MS.Internal.Documents
                 tempRows.Add(newRow);
             }
 
-            //We’ve made it to the top.
+            //Weâ€™ve made it to the top.
             //Now we can calculate the offsets of each row and add them to the Row cache.                       
             for (int i = tempRows.Count - 1; i >= 0; i--)
             {
@@ -729,7 +704,7 @@ namespace MS.Internal.Documents
                 AddRow(newRow);
             }
 
-            //And we’re done.  Whew.
+            //And weâ€™re done.  Whew.
             return pivotRowIndex;
         }
 
@@ -744,10 +719,7 @@ namespace MS.Internal.Documents
         /// <returns></returns>
         private RowInfo CreateDynamicRow(int startPage, double rowWidth, bool createForward)
         {
-            if (startPage >= PageCache.PageCount)
-            {
-                throw new ArgumentOutOfRangeException("startPage");
-            }
+            ArgumentOutOfRangeException.ThrowIfGreaterThanOrEqual(startPage, PageCache.PageCount);
 
             //Given a starting page for this row, and the specified
             //width for each row, figure out how many pages will fit on this row
@@ -756,7 +728,7 @@ namespace MS.Internal.Documents
             //Populate the struct with initial data.
             RowInfo newRow = new RowInfo();
 
-            //Each row is guaranteed to have at least one page, even if it’s wider
+            //Each row is guaranteed to have at least one page, even if itâ€™s wider
             //than the allotted size, so we add it here.        
             Size pageSize = GetScaledPageSize(startPage);
             newRow.AddPage(pageSize);
@@ -771,7 +743,7 @@ namespace MS.Internal.Documents
                     //Grab the next page.
                     pageSize = GetScaledPageSize(startPage + newRow.PageCount);
 
-                    //We’re out of pages, or out of space.
+                    //Weâ€™re out of pages, or out of space.
                     if (startPage + newRow.PageCount >= PageCache.PageCount ||
                         newRow.RowSize.Width + pageSize.Width > rowWidth)
                     {
@@ -783,7 +755,7 @@ namespace MS.Internal.Documents
                     //Grab the previous page.
                     pageSize = GetScaledPageSize(startPage - newRow.PageCount);
 
-                    //We’re out of pages, or out of space.
+                    //Weâ€™re out of pages, or out of space.
                     if (startPage - newRow.PageCount < 0 ||
                         newRow.RowSize.Width + pageSize.Width > rowWidth)
                     {
@@ -820,16 +792,11 @@ namespace MS.Internal.Documents
         private int RecalcRowsForFixedPageSizes(int startPage, int columns)
         {
             //Throw exception for illegal values
-            if (startPage < 0 || startPage > PageCache.PageCount)
-            {
-                throw new ArgumentOutOfRangeException("startPage");
-            }
+            ArgumentOutOfRangeException.ThrowIfNegative(startPage);
+            ArgumentOutOfRangeException.ThrowIfGreaterThan(startPage, PageCache.PageCount);
 
             //Can't lay out fewer than 1 column of pages.
-            if (columns < 1)
-            {
-                throw new ArgumentOutOfRangeException("columns");
-            }
+            ArgumentOutOfRangeException.ThrowIfLessThan(columns, 1);
 
             //Since all pages in the document have been determined to be
             //the same size, we can use a simple algorithm to create our row layout.
@@ -857,29 +824,25 @@ namespace MS.Internal.Documents
         /// <returns></returns>
         private RowInfo CreateFixedRow(int startPage, int columns)
         {
-            if (startPage >= PageCache.PageCount)
-            {
-                throw new ArgumentOutOfRangeException("startPage");
-            }
+            ArgumentOutOfRangeException.ThrowIfGreaterThanOrEqual(startPage, PageCache.PageCount);
 
-            if (columns < 1)
-            {
-                throw new ArgumentOutOfRangeException("columns");
-            }
+            ArgumentOutOfRangeException.ThrowIfLessThan(columns, 1);
 
             //Given a starting page for this row and the number of columns in the row
             //calculate the width & height and return the resulting RowInfo struct
 
             //Populate the struct with initial data
-            RowInfo newRow = new RowInfo();
-            newRow.FirstPage = startPage;
+            RowInfo newRow = new RowInfo
+            {
+                FirstPage = startPage
+            };
 
             //Keep adding pages until we either:
             // - run out of pages to add
             // - add the appropriate number of pages            
             for (int i = startPage; i < startPage + columns; i++)
             {
-                //We’re out of pages.
+                //Weâ€™re out of pages.
                 if (i > PageCache.PageCount - 1)
                     break;
 
@@ -965,8 +928,10 @@ namespace MS.Internal.Documents
             while (currentPage < lastPage)
             {
                 //Build a new row.
-                RowInfo newRow = new RowInfo();
-                newRow.FirstPage = currentPage;
+                RowInfo newRow = new RowInfo
+                {
+                    FirstPage = currentPage
+                };
 
                 //Add pages until we either run out of pages or need to start a new row.               
                 do
@@ -1049,9 +1014,11 @@ namespace MS.Internal.Documents
                 RowInfo currentRow = _rowCache[rowIndex];
                 //Create a new row and copy pertinent data
                 //from the old one.
-                RowInfo updatedRow = new RowInfo();
-                updatedRow.VerticalOffset = currentRow.VerticalOffset;
-                updatedRow.FirstPage = currentRow.FirstPage;
+                RowInfo updatedRow = new RowInfo
+                {
+                    VerticalOffset = currentRow.VerticalOffset,
+                    FirstPage = currentRow.FirstPage
+                };
 
                 //Now rebuild this row, thus recalculating the row's size
                 //based on the new page sizes.
@@ -1160,9 +1127,11 @@ namespace MS.Internal.Documents
 
             if (oldRow.FirstPage < startPage)
             {
-                RowInfo updatedRow = new RowInfo();
-                updatedRow.VerticalOffset = oldRow.VerticalOffset;
-                updatedRow.FirstPage = oldRow.FirstPage;
+                RowInfo updatedRow = new RowInfo
+                {
+                    VerticalOffset = oldRow.VerticalOffset,
+                    FirstPage = oldRow.FirstPage
+                };
 
                 for (int i = oldRow.FirstPage; i < startPage; i++)
                 {
@@ -1305,7 +1274,7 @@ namespace MS.Internal.Documents
                             break;
 
                         default:
-                            throw new ArgumentOutOfRangeException("args");
+                            throw new ArgumentOutOfRangeException(nameof(args));
                     }
                 }
 

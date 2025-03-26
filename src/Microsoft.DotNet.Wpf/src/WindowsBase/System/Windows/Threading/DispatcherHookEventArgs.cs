@@ -2,7 +2,6 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-
 namespace System.Windows.Threading
 {
     /// <summary>
@@ -28,7 +27,7 @@ namespace System.Windows.Threading
         {
             get
             {
-                return _operation != null ? _operation.Dispatcher : null;
+                return _operation?.Dispatcher;
             }
         }
         

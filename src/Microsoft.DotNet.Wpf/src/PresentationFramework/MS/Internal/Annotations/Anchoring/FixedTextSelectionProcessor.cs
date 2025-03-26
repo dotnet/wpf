@@ -1,45 +1,34 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
 //
 //
 // Description:
-//     FixedTextSelectionProcessor uses TextAnchors to represent portions 
-//     of text that are anchors. It produces FixedTextRange locator parts that are designed 
+//     FixedTextSelectionProcessor uses TextAnchors to represent portions
+//     of text that are anchors. It produces FixedTextRange locator parts that are designed
 //     specifically for use inside the DocumentViewer control. This locator part contains the
-//     page number and the start and end points of the text selection. 
+//     page number and the start and end points of the text selection.
 //     FixedTextSelectionProcessor converts the text selection to FixedTextRange
-//    
+//
 //     Spec: Anchoring to text in paginated docs.doc
 //
 
-using System;
-using System.IO;
 using System.Windows;
-using System.Collections;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Diagnostics;
 using System.Globalization;
 using System.Windows.Annotations;
-using System.Windows.Annotations.Storage;
-using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using System.Windows.Documents;
-using System.Windows.Media;
 using System.Xml;
-using MS.Utility;
-using MS.Internal.Documents;
-using MS.Internal.PtsHost;
 
 namespace MS.Internal.Annotations.Anchoring
 {
     /// <summary>
-    ///     FixedTextSelectionProcessor uses TextAnchors to represent portions 
-    ///     of text that are anchors.  It produces locator parts that 
+    ///     FixedTextSelectionProcessor uses TextAnchors to represent portions
+    ///     of text that are anchors.  It produces locator parts that
     ///     represent these TextRanges by beginning and end position
-    /// </summary>  
+    /// </summary>
     internal class FixedTextSelectionProcessor : SelectionProcessor
     {
         //------------------------------------------------------
@@ -69,14 +58,14 @@ namespace MS.Internal.Annotations.Anchoring
 
         /// <summary>
         /// Merges the two anchors into one, if possible. It does not require
-        /// the anchors to be connected. All this method does is to create a 
+        /// the anchors to be connected. All this method does is to create a
         /// TextAnchor that spans the two anchors.
         /// </summary>
         /// <param name="anchor1">anchor to merge. Must be a TextAnchor. </param>
         /// <param name="anchor2">other anchor to merge. Must be a TextAnchor. </param>
-        /// <param name="newAnchor">new anchor that contains the data from both 
+        /// <param name="newAnchor">new anchor that contains the data from both
         /// anchor1 and anchor2</param>
-        /// <returns>true if the anchors were merged, false otherwise 
+        /// <returns>true if the anchors were merged, false otherwise
         /// </returns>
         public override bool MergeSelections(Object anchor1, Object anchor2, out Object newAnchor)
         {
@@ -88,7 +77,7 @@ namespace MS.Internal.Annotations.Anchoring
         ///  Generates FixedPageProxy objects for each page, spaned by the selection
         /// </summary>
         /// <param name="selection">the selection to examine. Must implement ITextRange</param>
-        /// <returns>a list of FixedPageProxy objects, corresponding to each page spanned by the selection; never returns 
+        /// <returns>a list of FixedPageProxy objects, corresponding to each page spanned by the selection; never returns
         /// null</returns>
         /// <exception cref="ArgumentNullException">selection is null</exception>
         /// <exception cref="ArgumentException">selection is of wrong type</exception>
@@ -108,14 +97,14 @@ namespace MS.Internal.Annotations.Anchoring
                 TextSelectionHelper.GetPointerPage(startPointer, out startPage);
                 start = TextSelectionHelper.GetPointForPointer(startPointer);
                 if (startPage == int.MinValue)
-                    throw new ArgumentException(SR.Format(SR.SelectionDoesNotResolveToAPage, "start"), "selection");
+                    throw new ArgumentException(SR.Format(SR.SelectionDoesNotResolveToAPage, "start"), nameof(selection));
 
                 int endPage = int.MinValue;
                 ITextPointer endPointer = segment.End.CreatePointer(LogicalDirection.Backward);
                 TextSelectionHelper.GetPointerPage(endPointer, out endPage);
                 end = TextSelectionHelper.GetPointForPointer(endPointer);
                 if (endPage == int.MinValue)
-                    throw new ArgumentException(SR.Format(SR.SelectionDoesNotResolveToAPage, "end"), "selection");
+                    throw new ArgumentException(SR.Format(SR.SelectionDoesNotResolveToAPage, "end"), nameof(selection));
 
                 int firstPage = pageEl.Count;
                 int numOfPages = endPage - startPage;
@@ -153,8 +142,8 @@ namespace MS.Internal.Annotations.Anchoring
         }
 
         /// <summary>
-        /// Gets the parent element of this selection. The parent element is the 
-        /// FixedPage that contains selection.Start TextPointer. 
+        /// Gets the parent element of this selection. The parent element is the
+        /// FixedPage that contains selection.Start TextPointer.
         /// </summary>
         /// <param name="selection">the selection to examine. Must implement ITextRange</param>
         /// <returns>the parent element of the selection; can be null</returns>
@@ -172,7 +161,7 @@ namespace MS.Internal.Annotations.Anchoring
         /// to the start position of the selection
         /// </summary>
         /// <param name="selection">the selection to examine. Must implement ITextRange</param>
-        /// <returns>the anchor point of the selection; can be (double.NaN, double.NaN) if the 
+        /// <returns>the anchor point of the selection; can be (double.NaN, double.NaN) if the
         /// selection start point is not contained in a document viewer</returns>
         /// <exception cref="ArgumentNullException">selection is null</exception>
         /// <exception cref="ArgumentException">selection is of wrong type</exception>
@@ -202,7 +191,7 @@ namespace MS.Internal.Annotations.Anchoring
             FixedPageProxy fp = startNode as FixedPageProxy;
 
             if (fp == null)
-                throw new ArgumentException(SR.StartNodeMustBeFixedPageProxy, "startNode");
+                throw new ArgumentException(SR.StartNodeMustBeFixedPageProxy, nameof(startNode));
 
             ContentLocatorPart part = new ContentLocatorPart(FixedTextElementName);
             if (fp.Segments.Count == 0)
@@ -244,19 +233,19 @@ namespace MS.Internal.Annotations.Anchoring
         }
 
         /// <summary>
-        ///     Creates a TextRange object spanning the portion of 'startNode' 
+        ///     Creates a TextRange object spanning the portion of 'startNode'
         ///     specified by 'locatorPart'.
         /// </summary>
-        /// <param name="locatorPart">FixedTextRange locator part specifying start and end point of 
+        /// <param name="locatorPart">FixedTextRange locator part specifying start and end point of
         /// the TextRange</param>
         /// <param name="startNode">the FixedPage containing this locator part</param>
-        /// <param name="attachmentLevel">set to AttachmentLevel.Full if the FixedPage for the locator 
+        /// <param name="attachmentLevel">set to AttachmentLevel.Full if the FixedPage for the locator
         /// part was found, AttachmentLevel.Unresolved otherwise</param>
         /// <returns>a TextRange spanning the text between start end end point in the FixedTextRange
         /// locator part
         /// , null if selection described by locator part could not be
         /// recreated</returns>
-        /// <exception cref="ArgumentNullException">locatorPart or startNode are 
+        /// <exception cref="ArgumentNullException">locatorPart or startNode are
         /// null</exception>
         /// <exception cref="ArgumentException">locatorPart is of the incorrect type</exception>
         /// <exception cref="ArgumentException">startNode is not a FixedPage</exception>
@@ -290,7 +279,7 @@ namespace MS.Internal.Annotations.Anchoring
 
             if (docPage == null)
             {
-                throw new ArgumentException(SR.StartNodeMustBeDocumentPageViewOrFixedPage, "startNode");
+                throw new ArgumentException(SR.StartNodeMustBeDocumentPageViewOrFixedPage, nameof(startNode));
             }
 
             ArgumentNullException.ThrowIfNull(locatorPart);
@@ -337,7 +326,7 @@ namespace MS.Internal.Annotations.Anchoring
 
                     if (segStart == null)
                     {
-                        //selStart can be null if there are no insertion points on this page 
+                        //selStart can be null if there are no insertion points on this page
                         continue;
                     }
 
@@ -394,12 +383,12 @@ namespace MS.Internal.Annotations.Anchoring
         //
         //  Public Events
         //
-        //------------------------------------------------------        
+        //------------------------------------------------------
         //------------------------------------------------------
         //
         //  Private Methods
         //
-        //------------------------------------------------------        
+        //------------------------------------------------------
 
         #region Private Methods
 
@@ -413,8 +402,8 @@ namespace MS.Internal.Annotations.Anchoring
             {
                 FixedDocument document = content.Parent as FixedDocument;
 
-                // If the document is part of a FixedDocumentSequence then we want to get the 
-                // FixedDocumentSequenceDocumentPage for the FixedPage (cause its TextView is 
+                // If the document is part of a FixedDocumentSequence then we want to get the
+                // FixedDocumentSequenceDocumentPage for the FixedPage (cause its TextView is
                 // the one we want to use).
                 FixedDocumentSequence sequence = document.Parent as FixedDocumentSequence;
                 if (sequence != null)
@@ -430,7 +419,7 @@ namespace MS.Internal.Annotations.Anchoring
         }
 
         /// <summary>
-        /// Checks if the selection object satisfies the requirements 
+        /// Checks if the selection object satisfies the requirements
         /// for this processor
         /// </summary>
         /// <param name="selection">selection</param>
@@ -458,19 +447,19 @@ namespace MS.Internal.Annotations.Anchoring
                 }
                 else
                 {
-                    throw new ArgumentException(SR.WrongSelectionType, "selection: type=" + selection.GetType().ToString());
+                    throw new ArgumentException(SR.WrongSelectionType, $"selection: type={selection.GetType()}");
                 }
             }
 
             if (!(start.TextContainer is FixedTextContainer ||
                 start.TextContainer is DocumentSequenceTextContainer))
-                throw new ArgumentException(SR.WrongSelectionType, "selection: type=" + selection.GetType().ToString());
+                throw new ArgumentException(SR.WrongSelectionType, $"selection: type={selection.GetType()}");
 
             return textSegments;
         }
 
         /// <summary>
-        /// Checks if the selection object satisfies the requirements 
+        /// Checks if the selection object satisfies the requirements
         /// for this processor
         /// </summary>
         /// <param name="selection">selection</param>
@@ -484,7 +473,7 @@ namespace MS.Internal.Annotations.Anchoring
             if (anchor == null || !(anchor.Start.TextContainer is FixedTextContainer ||
                     anchor.Start.TextContainer is DocumentSequenceTextContainer))
             {
-                throw new ArgumentException(SR.WrongSelectionType, "selection: type=" + selection.GetType().ToString());
+                throw new ArgumentException(SR.WrongSelectionType, $"selection: type={selection.GetType()}");
             }
 
             return anchor;
@@ -502,32 +491,35 @@ namespace MS.Internal.Annotations.Anchoring
             ArgumentNullException.ThrowIfNull(locatorPart);
 
             if (FixedTextElementName != locatorPart.PartType)
-                throw new ArgumentException(SR.Format(SR.IncorrectLocatorPartType, locatorPart.PartType.Namespace + ":" + locatorPart.PartType.Name), "locatorPart");
+                throw new ArgumentException(SR.Format(SR.IncorrectLocatorPartType, $"{locatorPart.PartType.Namespace}:{locatorPart.PartType.Name}"), nameof(locatorPart));
 
             string segmentValue = locatorPart.NameValuePairs[TextSelectionProcessor.SegmentAttribute + segmentNumber.ToString(NumberFormatInfo.InvariantInfo)];
             if (segmentValue == null)
                 throw new ArgumentException(SR.Format(SR.InvalidLocatorPart, TextSelectionProcessor.SegmentAttribute + segmentNumber.ToString(NumberFormatInfo.InvariantInfo)));
 
-            string[] values = segmentValue.Split(TextSelectionProcessor.Separator);
-            if (values.Length != 4)
+            ReadOnlySpan<char> segmentValueSpan = segmentValue.AsSpan();
+            Span<Range> splitRegions = stackalloc Range[5];
+
+            if (segmentValueSpan.Split(splitRegions, TextSelectionProcessor.Separator) != 4)
                 throw new ArgumentException(SR.Format(SR.InvalidLocatorPart, TextSelectionProcessor.SegmentAttribute + segmentNumber.ToString(NumberFormatInfo.InvariantInfo)));
-            start = GetPoint(values[0], values[1]);
-            end = GetPoint(values[2], values[3]);
+
+            start = GetPoint(segmentValueSpan[splitRegions[0]], segmentValueSpan[splitRegions[1]]);
+            end = GetPoint(segmentValueSpan[splitRegions[2]], segmentValueSpan[splitRegions[3]]);
         }
 
         /// <summary>
-        /// Calculate Point out of string X and Y values
+        /// Calculates <see cref="Point"/> out of X and Y values supplied as a <see cref="string"/>.
         /// </summary>
-        /// <param name="xstr">x string value</param>
-        /// <param name="ystr">y string value</param>
-        /// <returns></returns>
-        private Point GetPoint(string xstr, string ystr)
+        /// <param name="xValue">x string value</param>
+        /// <param name="yValue">y string value</param>
+        /// <returns>Initialized <see cref="Point"/> structure.</returns>
+        private static Point GetPoint(ReadOnlySpan<char> xValue, ReadOnlySpan<char> yValue)
         {
             Point point;
-            if (xstr != null && !String.IsNullOrEmpty(xstr.Trim()) && ystr != null && !String.IsNullOrEmpty(ystr.Trim()))
+            if (!xValue.Trim().IsEmpty && !yValue.Trim().IsEmpty)
             {
-                double x = Double.Parse(xstr, NumberFormatInfo.InvariantInfo);
-                double y = Double.Parse(ystr, NumberFormatInfo.InvariantInfo);
+                double x = double.Parse(xValue, NumberFormatInfo.InvariantInfo);
+                double y = double.Parse(yValue, NumberFormatInfo.InvariantInfo);
                 point = new Point(x, y);
             }
             else
@@ -586,7 +578,7 @@ namespace MS.Internal.Annotations.Anchoring
         }
 
         /// <summary>
-        /// Gets first and last TP on a documentPage. 
+        /// Gets first and last TP on a documentPage.
         /// </summary>
         /// <param name="documentPage">the document page</param>
         /// <param name="start">start TP</param>
@@ -663,9 +655,8 @@ namespace MS.Internal.Annotations.Anchoring
                 }
             }
 
-
-            int _page;
-            IList<PointSegment> _segments = new List<PointSegment>(1);
+            private int _page;
+            private IList<PointSegment> _segments = new List<PointSegment>(1);
         }
 
         /// <summary>

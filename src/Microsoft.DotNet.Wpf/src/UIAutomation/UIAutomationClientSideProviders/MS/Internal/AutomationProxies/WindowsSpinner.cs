@@ -5,9 +5,6 @@
 // Description: Win32 Spinner Proxy
 
 using System;
-using System.Collections;
-using System.Text;
-using System.ComponentModel;
 using System.Windows.Automation;
 using System.Windows.Automation.Provider;
 using System.Windows;
@@ -16,7 +13,7 @@ using MS.Win32;
 namespace MS.Internal.AutomationProxies
 {
     // Proxy for a Windows NumericUpDown control with Windows Edit control, called a Spinner
-    class WindowsSpinner : ProxyHwnd, IRangeValueProvider
+    internal class WindowsSpinner : ProxyHwnd, IRangeValueProvider
     {
         // ------------------------------------------------------
         //
@@ -54,11 +51,7 @@ namespace MS.Internal.AutomationProxies
         internal static IRawElementProviderSimple Create(IntPtr hwnd, int idChild)
         {
             // Something is wrong if idChild is not zero 
-            if (idChild != 0)
-            {
-                System.Diagnostics.Debug.Assert (idChild == 0, "Invalid Child Id, idChild != 0");
-                throw new ArgumentOutOfRangeException("idChild", idChild, SR.ShouldBeZero);
-            }
+            ArgumentOutOfRangeException.ThrowIfNotEqual(idChild, 0);
 
             IntPtr hwndBuddy;
             try
@@ -71,7 +64,7 @@ namespace MS.Internal.AutomationProxies
                     return null;
                 }
 
-                if (Misc.ProxyGetClassName(hwndBuddy).IndexOf("EDIT", StringComparison.OrdinalIgnoreCase) == -1)
+                if (!Misc.ProxyGetClassName(hwndBuddy).Contains("EDIT", StringComparison.OrdinalIgnoreCase))
                 {
                     return null;
                 }
@@ -285,7 +278,7 @@ namespace MS.Internal.AutomationProxies
                 while (hwndChild != IntPtr.Zero)
                 {
                     string className = Misc.ProxyGetClassName(hwndChild);
-                    if (className.IndexOf("msctls_updown32", StringComparison.OrdinalIgnoreCase) != -1)
+                    if (className.Contains("msctls_updown32", StringComparison.OrdinalIgnoreCase))
                     {
                         IntPtr hwndBuddy = Misc.ProxySendMessage(hwndChild, NativeMethods.UDM_GETBUDDY, IntPtr.Zero, IntPtr.Zero);
                         if (hwnd == hwndBuddy)

@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -10,10 +10,6 @@
 //      during a resources change tree-walk.
 //
 //
-
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
 
 namespace System.Windows
 {
@@ -95,8 +91,10 @@ namespace System.Windows
         {
             get
             {
-                ResourcesChangeInfo info = new ResourcesChangeInfo();
-                info.IsThemeChange = true;
+                ResourcesChangeInfo info = new ResourcesChangeInfo
+                {
+                    IsThemeChange = true
+                };
                 return info;
             }
         }
@@ -109,8 +107,10 @@ namespace System.Windows
         {
             get
             {
-                ResourcesChangeInfo info = new ResourcesChangeInfo();
-                info.IsTreeChange = true;
+                ResourcesChangeInfo info = new ResourcesChangeInfo
+                {
+                    IsTreeChange = true
+                };
                 return info;
             }
         }
@@ -123,8 +123,10 @@ namespace System.Windows
         {
             get
             {
-                ResourcesChangeInfo info = new ResourcesChangeInfo();
-                info.IsSysColorsOrSettingsChange = true;
+                ResourcesChangeInfo info = new ResourcesChangeInfo
+                {
+                    IsSysColorsOrSettingsChange = true
+                };
                 return info;
             }
         }
@@ -138,8 +140,10 @@ namespace System.Windows
         {
             get
             {
-                ResourcesChangeInfo info = new ResourcesChangeInfo();
-                info.IsCatastrophicDictionaryChange = true;
+                ResourcesChangeInfo info = new ResourcesChangeInfo
+                {
+                    IsCatastrophicDictionaryChange = true
+                };
                 return info;
             }
         }
@@ -197,6 +201,12 @@ namespace System.Windows
         internal bool IsResourceAddOperation
         {
             get { return _key != null || (_newDictionaries != null && _newDictionaries.Count > 0); }
+        }
+
+        // This flag is used to indicate if the current operation is a single resource update operation
+        internal bool IsIndividualResourceChange
+        {
+            get { return _key != null; }
         }
 
         // This member is used to identify the container when a style change happens

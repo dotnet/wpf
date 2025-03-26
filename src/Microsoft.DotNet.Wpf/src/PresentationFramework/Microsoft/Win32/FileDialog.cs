@@ -1,30 +1,27 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
 //
-// 
+//
 // Description:
 //              FileDialog is an abstract class derived from CommonItemDialog
 //              that implements shared functionality common to both File
-//              Open and File Save common dialogs.  
+//              Open and File Save common dialogs.
 //              Creation of the specific IFileOpenDialog and IFileSaveDialog are
 //              deferred to the derived classes.
 //
 
+using System.Runtime.InteropServices;
+using System.ComponentModel;
+using MS.Internal.AppModel;
+using MS.Internal.Interop;
+using System.Windows;
+using MS.Internal;
+using System.IO;
 
 namespace Microsoft.Win32
 {
-    using MS.Internal;
-    using MS.Internal.AppModel;
-    using MS.Internal.Interop;
-
-    using System;
-    using System.Collections.Generic;
-    using System.ComponentModel;
-    using System.IO;
-    using System.Text;
-    using System.Windows;
 
     /// <summary>
     ///    Provides a common base class for wrappers around both the
@@ -44,7 +41,7 @@ namespace Microsoft.Win32
         #region Constructors
 
         /// <summary>
-        /// In an inherited class, initializes a new instance of 
+        /// In an inherited class, initializes a new instance of
         /// the System.Windows.FileDialog class.
         /// </summary>
         private protected FileDialog()
@@ -67,7 +64,7 @@ namespace Microsoft.Win32
 
         /// <summary>
         ///  Resets all properties to their default values.
-        ///  Classes derived from FileDialog are expected to 
+        ///  Classes derived from FileDialog are expected to
         ///  call Base.Reset() at the beginning of their
         ///  implementation of Reset() if they choose to
         ///  override this function.
@@ -86,7 +83,7 @@ namespace Microsoft.Win32
         //   this object for users' debugging purposes.
         public override string ToString()
         {
-            return base.ToString() + ", FileName: " + FileName;
+            return $"{base.ToString()}, FileName: {FileName}";
         }
 
         #endregion Public Methods
@@ -99,9 +96,9 @@ namespace Microsoft.Win32
         #region Public Properties
 
         /// <summary>
-        ///  Gets a string containing the filename component of the 
+        ///  Gets a string containing the filename component of the
         ///  file selected in the dialog box.
-        /// 
+        ///
         ///  Example:  if FileName = "c:\windows\explorer.exe" ,
         ///              SafeFileName = "explorer.exe"
         /// </summary>
@@ -161,7 +158,7 @@ namespace Microsoft.Win32
 
         //   If multiple files are selected, we only return the first filename.
         /// <summary>
-        ///  Gets or sets a string containing the full path of the file selected in 
+        ///  Gets or sets a string containing the full path of the file selected in
         ///  the file dialog box.
         /// </summary>
         public string FileName
@@ -185,7 +182,7 @@ namespace Microsoft.Win32
                 {
                     // UNDONE : This broke the save file dialog.
                     //string temp = Path.GetFullPath(value); // ensure filename is valid...
-                    MutableItemNames = new string[] { value };
+                    MutableItemNames = [value];
                 }
             }
         }
@@ -213,13 +210,13 @@ namespace Microsoft.Win32
         public bool AddExtension { get; set; }
 
         //   FOS_FILEMUSTEXIST is only used for Open dialog
-        //   boxes, according to MSDN.  It implies 
+        //   boxes, according to MSDN.  It implies
         //   FOS_PATHMUSTEXIST and "cannot be used" with a
         //   Save As dialog box...  in practice, it seems
-        //   to be ignored when used with Save As boxes 
+        //   to be ignored when used with Save As boxes
         /// <summary>
         ///  Gets or sets a value indicating whether
-        ///  the dialog box displays a warning if the 
+        ///  the dialog box displays a warning if the
         ///  user specifies a file name that does not exist.
         /// </summary>
         public bool CheckFileExists
@@ -238,7 +235,7 @@ namespace Microsoft.Win32
 
         /// <summary>
         ///  Specifies that the user can type only valid paths and file names. If this flag is
-        ///  used and the user types an invalid path and file name in the File Name entry field, 
+        ///  used and the user types an invalid path and file name in the File Name entry field,
         ///  a warning is displayed in a message box.
         /// </summary>
         public bool CheckPathExists
@@ -256,7 +253,7 @@ namespace Microsoft.Win32
 
         /// <summary>
         /// The AddExtension property attempts to determine the appropriate extension
-        /// by using the selected filter.  The DefaultExt property serves as a fallback - 
+        /// by using the selected filter.  The DefaultExt property serves as a fallback -
         ///  if the extension cannot be determined from the filter, DefaultExt will
         /// be used instead.
         /// </summary>
@@ -266,16 +263,14 @@ namespace Microsoft.Win32
             {
                 // For string properties, it's important to not return null, as an empty
                 // string tends to make more sense to beginning developers.
-                return _defaultExtension == null ? String.Empty : _defaultExtension;
+                return _defaultExtension ?? string.Empty;
             }
 
             set
             {
                 if (value != null)
                 {
-                    // Use Ordinal here as per FxCop CA1307
-                    if (value.StartsWith(".", StringComparison.Ordinal)) // Allow calling code to provide 
-                                                                         // extensions like ".ext" - 
+                    if (value.StartsWith('.')) // Allow calling code to provide extensions like ".ext" -
                     {
                         value = value.Substring(1);    // but strip out the period to leave only "ext"
                     }
@@ -302,37 +297,33 @@ namespace Microsoft.Win32
         ///  Thrown in the setter if the new filter string does not have an even number of tokens
         ///  separated by the vertical bar character '|' (that is, the new filter string is invalid.)
         /// </exception>
-        /// <remarks>
-        ///     Callers must have FileIOPermission(PermissionState.Unrestricted) to call this API.
-        /// </remarks>
         public string Filter
         {
             get
             {
                 // For string properties, it's important to not return null, as an empty
                 // string tends to make more sense to beginning developers.
-                return _filter == null ? String.Empty : _filter;
+                return _filter ?? string.Empty;
             }
 
             set
             {
-                if (String.CompareOrdinal(value, _filter) != 0)   // different filter than what we have stored already
+                if (!string.Equals(value, _filter, StringComparison.Ordinal))   // different filter than what we have stored already
                 {
                     string updatedFilter = value;
 
-                    if (!String.IsNullOrEmpty(updatedFilter))
+                    if (!string.IsNullOrEmpty(updatedFilter))
                     {
                         // Require the number of segments of the filter string to be even -
                         // in other words, there must only be matched pairs of description and
                         // file extensions.
                         //
                         // This implicitly requires there to be at least one vertical bar in
-                        // the filter string - or else formats.Length will be 1, resulting in an
+                        // the filter string - or else formatsCount will be 1, resulting in an
                         // ArgumentException.
+                        int formatsCount = updatedFilter.AsSpan().Count('|');
 
-                        string[] formats = updatedFilter.Split('|');
-
-                        if (formats.Length % 2 != 0)
+                        if (formatsCount % 2 == 0)
                         {
                             throw new ArgumentException(SR.FileDialogInvalidFilter);
                         }
@@ -353,12 +344,12 @@ namespace Microsoft.Win32
         //   developers, but is a side effect of a Win32 feature that allows you to add a template
         //   filter string that is filled in when the user selects a file for future uses of the dialog.
         //   We don't support that feature, so only values >1 are valid.
-        //  
+        //
         //   For details, see MSDN docs for OPENFILENAME Structure, nFilterIndex
         /// <summary>
         ///  Gets or sets the index of the filter currently selected in the file dialog box.
         ///
-        ///  NOTE:  The index of the first filter entry is 1, not 0.  
+        ///  NOTE:  The index of the first filter entry is 1, not 0.
         /// </summary>
         public int FilterIndex
         {
@@ -404,19 +395,11 @@ namespace Microsoft.Win32
 
         /// <summary>
         ///  Occurs when the user clicks on the Open or Save button on a file dialog
-        ///  box.  
+        ///  box.
         /// </summary>
         public event CancelEventHandler FileOk;
 
         #endregion Public Events
-
-        //---------------------------------------------------
-        //
-        // Public Events
-        //
-        //---------------------------------------------------
-        // #region Public Events
-        // #endregion Public Events
 
         //---------------------------------------------------
         //
@@ -430,10 +413,7 @@ namespace Microsoft.Win32
         /// </summary>
         protected override void OnItemOk(CancelEventArgs e)
         {
-            if (FileOk != null)
-            {
-                FileOk(this, e);
-            }
+            FileOk?.Invoke(this, e);
         }
 
         #endregion Protected Methods
@@ -448,8 +428,8 @@ namespace Microsoft.Win32
         /// <summary>
         /// PromptUserIfAppropriate is a virtual function that shows any prompt
         /// message boxes (like "Do you want to overwrite this file") necessary after
-        ///  the Open button is pressed in a file dialog.  
-        ///  
+        ///  the Open button is pressed in a file dialog.
+        ///
         /// Return value is false if we showed a dialog box and true if we did not.
         /// (in other words, true if it's OK to continue with the open process and
         /// false if we need to return the user to the dialog to make another selection.)
@@ -457,7 +437,7 @@ namespace Microsoft.Win32
         /// <remarks>
         ///  SaveFileDialog overrides this method to add additional message boxes for
         ///  its unique properties.
-        /// 
+        ///
         ///  For FileDialog:
         ///   If FOS_FILEMUSTEXIST is set, we check to be sure the path passed in on the
         ///   fileName parameter exists as an actual file on the hard disk.  If so, we
@@ -474,12 +454,12 @@ namespace Microsoft.Win32
             {
                 try
                 {
-                    // File.Exists requires a full path, so we call GetFullPath on	
+                    // File.Exists requires a full path, so we call GetFullPath on
                     // the filename before checking if it exists.
                     string tempPath = Path.GetFullPath(fileName);
                     fileExists = File.Exists(tempPath);
                 }
-                // FileIOPermission constructor will throw on invalid paths.	
+                // FileIOPermission constructor will throw on invalid paths.
                 catch (PathTooLongException)
                 {
                     fileExists = false;
@@ -531,22 +511,6 @@ namespace Microsoft.Win32
 
         //---------------------------------------------------
         //
-        // Internal Properties
-        //
-        //---------------------------------------------------
-        //#region Internal Properties
-        //#endregion Internal Properties
-
-        //---------------------------------------------------
-        //
-        // Internal Events
-        //
-        //---------------------------------------------------
-        //#region Internal Events
-        //#endregion Internal Events
-
-        //---------------------------------------------------
-        //
         // Private Methods
         //
         //---------------------------------------------------
@@ -568,7 +532,7 @@ namespace Microsoft.Win32
             //
             _defaultExtension = null;
             _filter = null;
-            _filterIndex = 1;        // The index of the first filter entry is 1, not 0.  
+            _filterIndex = 1;        // The index of the first filter entry is 1, not 0.
                                      // 0 is reserved for the custom filter functionality
                                      // provided by Windows, which we do not expose to the user.
         }
@@ -588,7 +552,7 @@ namespace Microsoft.Win32
                 // a list of valid extensions from the filter(s).
                 // The first extension from FilterExtensions is the
                 // default extension.
-                string[] extensions = GetFilterExtensions();
+                ReadOnlySpan<string> extensions = GetFilterExtensions();
 
                 // For each filename:
                 //      -  Process AddExtension
@@ -597,41 +561,39 @@ namespace Microsoft.Win32
                 {
                     string fileName = MutableItemNames[i];
 
-                    // If AddExtension is enabled and we do not already have an extension:            
+                    // If AddExtension is enabled and we do not already have an extension:
                     if (AddExtension && !Path.HasExtension(fileName))
                     {
                         // Loop through all extensions, starting with the default extension
-                        for (int j = 0; j < extensions.Length; j++)
+                        foreach (string extension in extensions)
                         {
                             // Assert for a valid extension
-                            Invariant.Assert(!extensions[j].StartsWith(".", StringComparison.Ordinal),
-                                        "FileDialog.GetFilterExtensions should not return things starting with '.'");
+                            Invariant.Assert(!extension.StartsWith('.'), "FileDialog.GetFilterExtensions should not return things starting with '.'");
 
                             string currentExtension = Path.GetExtension(fileName);
 
                             // Assert to make sure Path.GetExtension behaves as we think it should, returning
                             // "" if the string is empty and something beginnign with . otherwise.
-                            // Use StringComparison.Ordinal as per FxCop CA1307 and CA130.
-                            Invariant.Assert(currentExtension.Length == 0 || currentExtension.StartsWith(".", StringComparison.Ordinal),
-                                         "Path.GetExtension should return something that starts with '.'");
+                            Invariant.Assert(currentExtension.Length == 0 || currentExtension.StartsWith('.'),
+                                             "Path.GetExtension should return something that starts with '.'");
 
                             // Because we check Path.HasExtension above, files should
                             // theoretically not have extensions at this stage - but
                             // we'll go ahead and remove an existing extension if it
                             // somehow slipped through.
                             //
-                            // Strip out any extension that may be remaining and place the rest 
+                            // Strip out any extension that may be remaining and place the rest
                             // of the filename in s.
 
                             string newFilename;
-                            if (((ReadOnlySpan<char>)extensions[j]).IndexOfAny('*', '?') != -1)
+                            if (extension.AsSpan().ContainsAny('*', '?'))
                             {
                                 // we don't want to append the extension if it contains wild cards
                                 newFilename = fileName.Substring(0, fileName.Length - currentExtension.Length);
                             }
                             else
                             {
-                                newFilename = string.Concat(fileName.AsSpan(0, fileName.Length - currentExtension.Length), ".", extensions[j]);
+                                newFilename = $"{fileName.AsSpan(0, fileName.Length - currentExtension.Length)}.{extension}";
                             }
 
                             // If FOS_FILEMUSTEXIST is not set, or if it is set but the filename we generated
@@ -674,25 +636,22 @@ namespace Microsoft.Win32
         {
             // Expecting pipe delimited filter string pairs.
             // First is the label, second is semi-colon delimited list of extensions.
-            var extensions = new List<COMDLG_FILTERSPEC>();
+            COMDLG_FILTERSPEC[] extensions = null;
 
             if (!string.IsNullOrEmpty(filter))
             {
                 string[] tokens = filter.Split('|');
-                if (0 == tokens.Length % 2)
+                if (tokens.Length % 2 == 0)
                 {
-                    for (int i = 1; i < tokens.Length; i += 2)
+                    extensions = new COMDLG_FILTERSPEC[tokens.Length / 2];
+                    for (int i = 0; i < extensions.Length; i++)
                     {
-                        extensions.Add(
-                            new COMDLG_FILTERSPEC
-                            {
-                                pszName = tokens[i - 1],
-                                pszSpec = tokens[i],
-                            });
+                        extensions[i] = new(tokens[i * 2], tokens[i * 2 + 1]);
                     }
                 }
             }
-            return extensions.ToArray();
+
+            return extensions ?? Array.Empty<COMDLG_FILTERSPEC>();
         }
 
         #endregion Private Methods
@@ -706,16 +665,16 @@ namespace Microsoft.Win32
 
         /// <summary>
         /// Extracts the file extensions specified by the current file filter into
-        /// an array of strings.  None of the extensions contain .'s, and the 
+        /// an array of strings.  None of the extensions contain .'s, and the
         /// default extension is first.
         /// </summary>
         /// <exception cref="System.InvalidOperationException">
         /// Thrown if the filter string stored in the dialog is invalid.
         /// </exception>
-        private string[] GetFilterExtensions()
+        private ReadOnlySpan<string> GetFilterExtensions()
         {
-            string filter = this._filter;
-            List<string> extensions = new List<string>();
+            string filter = _filter;
+            List<string> extensions = new();
 
             // Always make the default extension the first in the list,
             // because other functions process files in order accepting the first
@@ -760,27 +719,27 @@ namespace Microsoft.Win32
                 {
                     // Find our filter in the tokens list, then split it on the
                     // ';' character (which is the filter extension delimiter)
-                    string[] exts = tokens[indexOfExtension].Split(';');
+                    ReadOnlySpan<char> exts = tokens[indexOfExtension].AsSpan();
 
-                    foreach (string ext in exts)
+                    foreach (Range ext in exts.Split(';'))
                     {
                         // Filter extensions should be in the form *.txt or .txt,
                         // so we strip out everything before and including the '.'
                         // before adding the extension to our list.
                         // If the extension has no '.', we just ignore it as invalid.
-                        int i = ext.LastIndexOf('.');
+                        int i = exts[ext].LastIndexOf('.');
 
                         if (i >= 0)
                         {
-                            // start the substring one beyond the location of the '.'
+                            // start the slice one beyond the location of the '.'
                             // (i) and continue to the end of the string
-                            extensions.Add(ext.Substring(i + 1, ext.Length - (i + 1)));
+                            extensions.Add(exts[ext].Slice(i + 1).ToString());
                         }
                     }
                 }
             }
 
-            return extensions.ToArray();
+            return CollectionsMarshal.AsSpan(extensions);
         }
 
         #endregion Private Properties

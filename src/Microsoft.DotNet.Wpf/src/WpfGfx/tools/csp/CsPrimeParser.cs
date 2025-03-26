@@ -98,7 +98,7 @@ namespace MS.Internal.Csp
         //------------------------------------------------------
 
         #region Internal Properties
-        string Result
+        private string Result
         {
             get
             {
@@ -186,7 +186,7 @@ namespace MS.Internal.Csp
 
         private void ProcessLine(string line)
         {
-            line = line + "\n";
+            line += "\n";
             _current.Column = 0;
 
             if (_sourceDebuggingSupport) 
@@ -511,7 +511,7 @@ namespace MS.Internal.Csp
 
         // The output C# code
         private StringBuilder _stringBuilder;
-        bool _inMiddleOfOutputLine;
+        private bool _inMiddleOfOutputLine;
         #endregion Private Fields
     }
 }

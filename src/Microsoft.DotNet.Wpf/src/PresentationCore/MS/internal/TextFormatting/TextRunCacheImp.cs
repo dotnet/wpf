@@ -2,22 +2,8 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-//
-//
-//
-//  Contents:  Cache of text and text properties of run
-//
-//
-
-
-using System;
-using System.Collections.Generic;
 using System.Globalization;
-using System.Windows;
-using System.Diagnostics;
 using System.Windows.Media.TextFormatting;
-
-using SR=MS.Internal.PresentationCore.SR;
 
 namespace MS.Internal.TextFormatting
 {
@@ -118,10 +104,7 @@ namespace MS.Internal.TextFormatting
 
                 textRun = settings.TextSource.GetTextRun(cpFetch);
 
-                if (textRun.Length < 1)
-                {
-                    throw new ArgumentOutOfRangeException("textRun.Length", SR.ParameterMustBeGreaterThanZero);
-                }
+                ArgumentOutOfRangeException.ThrowIfNegativeOrZero(textRun.Length, "textRun.Length");
 
                 Plsrun plsrun = TextRunInfo.GetRunType(textRun);
 

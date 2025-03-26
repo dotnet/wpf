@@ -1,6 +1,13 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
+
+using MS.Internal;
+using System.Windows.Input;
+using System.Windows.Controls; // ScrollChangedEventArgs
+using System.Windows.Controls.Primitives;  // CharacterCasing, TextBoxBase
+using System.Windows.Media;
+using System.Windows.Media.Media3D;
 
 // 
 // Description: A Component of TextEditor supporting mouse gestures.
@@ -8,27 +15,6 @@
 
 namespace System.Windows.Documents
 {
-    using MS.Internal;
-    using System.Globalization;
-    using System.Threading;
-    using System.ComponentModel;
-    using System.Text;
-    using System.Collections; // ArrayList
-    using System.Runtime.InteropServices;
-
-    using System.Windows.Threading;
-    using System.Windows.Input;
-    using System.Windows.Controls; // ScrollChangedEventArgs
-    using System.Windows.Controls.Primitives;  // CharacterCasing, TextBoxBase
-    using System.Windows.Media;
-    using System.Windows.Media.Media3D;
-    using System.Windows.Markup;
-
-    using MS.Utility;
-    using MS.Win32;
-    using MS.Internal.Documents;
-    using MS.Internal.Commands; // CommandHelpers
-
     /// <summary>
     /// Text editing service for controls.
     /// </summary>
@@ -147,10 +133,7 @@ namespace System.Windows.Documents
                 {
                     // Transform point to TextView.RenderScope coordinates.
                     transform = textEditor.UiScope.TransformToDescendant(textEditor.TextView.RenderScope);
-                    if (transform != null)
-                    {
-                        transform.TryTransform(point, out point);
-                    }
+                    transform?.TryTransform(point, out point);
                     position = textEditor.TextView.GetTextPositionFromPoint(point, true);
                     interactiveArea = (position != null);
                 }

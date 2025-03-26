@@ -4,9 +4,6 @@
 
 // Description: Automation Identifiers for Selection Pattern
 
-using System;
-using System.Collections;
-using System.ComponentModel;
 using MS.Internal.Automation;
 
 namespace System.Windows.Automation

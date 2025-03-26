@@ -1,17 +1,11 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
-        
+
 using System;
-using System.Windows.Shapes;
-using System.Windows.Controls;
-using System.Diagnostics;
-using System.Threading;
 
 using System.Windows;
 using System.Windows.Media;
-using System.Windows.Media.Animation;
-using MS.Internal;
 
 namespace Microsoft.Windows.Themes
 {
@@ -62,8 +56,8 @@ namespace Microsoft.Windows.Themes
         /// <returns>The value of the property.</returns>
         public static ScrollGlyph GetScrollGlyph(DependencyObject element)
         {
-            if (element == null) { throw new ArgumentNullException("element"); }
-            
+            ArgumentNullException.ThrowIfNull(element);
+
             return (ScrollGlyph) element.GetValue(ScrollGlyphProperty);
         }
 
@@ -74,8 +68,8 @@ namespace Microsoft.Windows.Themes
         /// <param name="value">The value to attach.</param>
         public static void SetScrollGlyph(DependencyObject element, ScrollGlyph value)
         {
-            if (element == null) { throw new ArgumentNullException("element"); }
-            
+            ArgumentNullException.ThrowIfNull(element);
+
             element.SetValue(ScrollGlyphProperty, value);
         }
 
@@ -369,10 +363,12 @@ namespace Microsoft.Windows.Themes
                     {
                         if (_commonThumbBorder == null)
                         {
-                            Pen temp = new Pen();
-                            temp.Thickness = 1;
+                            Pen temp = new Pen
+                            {
+                                Thickness = 1,
 
-                            temp.Brush = new SolidColorBrush(Color.FromRgb(0xA3, 0xA3, 0xA3));
+                                Brush = new SolidColorBrush(Color.FromRgb(0xA3, 0xA3, 0xA3))
+                            };
 
                             temp.Freeze();
                             _commonThumbBorder = temp;
@@ -393,10 +389,12 @@ namespace Microsoft.Windows.Themes
                     {
                         if (_commonThumbHoverBorder == null)
                         {
-                            Pen temp = new Pen();
-                            temp.Thickness = 1;
+                            Pen temp = new Pen
+                            {
+                                Thickness = 1,
 
-                            temp.Brush = new SolidColorBrush(Color.FromRgb(0x21, 0xA1, 0xC4));
+                                Brush = new SolidColorBrush(Color.FromRgb(0x21, 0xA1, 0xC4))
+                            };
 
                             temp.Freeze();
                             _commonThumbHoverBorder = temp;
@@ -417,10 +415,12 @@ namespace Microsoft.Windows.Themes
                     {
                         if (_commonThumbPressedBorder == null)
                         {
-                            Pen temp = new Pen();
-                            temp.Thickness = 1;
+                            Pen temp = new Pen
+                            {
+                                Thickness = 1,
 
-                            temp.Brush = new SolidColorBrush(Color.FromRgb(0x00, 0x73, 0x94));
+                                Brush = new SolidColorBrush(Color.FromRgb(0x00, 0x73, 0x94))
+                            };
 
                             temp.Freeze();
                             _commonThumbPressedBorder = temp;

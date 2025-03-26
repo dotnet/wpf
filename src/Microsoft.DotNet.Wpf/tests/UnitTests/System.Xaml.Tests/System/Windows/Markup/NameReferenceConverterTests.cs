@@ -1,6 +1,5 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -18,10 +17,10 @@ public class NameReferenceConverterTests
     [InlineData(typeof(object), false)]
     [InlineData(typeof(string), true)]
     [InlineData(typeof(InstanceDescriptor), true)]
-    public void CanConvertFrom_Invoke_ReturnsExpected(Type type, bool expected)
+    public void CanConvertFrom_Invoke_ReturnsExpected(Type? type, bool expected)
     {
         var converter = new NameReferenceConverter();
-        Assert.Equal(expected, converter.CanConvertFrom(type));
+        Assert.Equal(expected, converter.CanConvertFrom(type!));
     }
 
     [Fact]
@@ -46,7 +45,7 @@ public class NameReferenceConverterTests
     [Theory]
     [InlineData("fixup")]
     [InlineData(null)]
-    public void ConvertFrom_ResolveUnsuccessful_ReturnsExpected(string fixup)
+    public void ConvertFrom_ResolveUnsuccessful_ReturnsExpected(string? fixup)
     {
         var converter = new NameReferenceConverter();
         var context = new CustomTypeDescriptorContext
@@ -57,7 +56,7 @@ public class NameReferenceConverterTests
                 return new CustomXamlNameResolver
                 {
                     ResolveAction = name => null!,
-                    GetFixupTokenAction = (names, canAssignDirectly) => fixup
+                    GetFixupTokenAction = (names, canAssignDirectly) => fixup!
                 };
             }
         };
@@ -105,7 +104,7 @@ public class NameReferenceConverterTests
     [InlineData(null)]
     [InlineData(1)]
     [InlineData("")]
-    public void ConvertFrom_InvalidValue_ThrowsInvalidOperationException(object value)
+    public void ConvertFrom_InvalidValue_ThrowsInvalidOperationException(object? value)
     {
         var converter = new NameReferenceConverter();
         var context = new CustomTypeDescriptorContext
@@ -122,10 +121,10 @@ public class NameReferenceConverterTests
     public static IEnumerable<object?[]> CanConvertTo_TestData()
     {
         yield return new object?[] { null, null, false };
-        yield return new object?[] { new CustomTypeDescriptorContext { GetServiceAction = serviceType => null! }, typeof(string), false };
-        yield return new object?[] { new CustomTypeDescriptorContext { GetServiceAction = serviceType => new object() }, typeof(string), false };
-        yield return new object?[] { new CustomTypeDescriptorContext { GetServiceAction = serviceType => new CustomXamlNameProvider() }, typeof(int), false };
-        yield return new object?[] { new CustomTypeDescriptorContext { GetServiceAction = serviceType => new CustomXamlNameProvider() }, typeof(string), true };
+        yield return new object[] { new CustomTypeDescriptorContext { GetServiceAction = serviceType => null! }, typeof(string), false };
+        yield return new object[] { new CustomTypeDescriptorContext { GetServiceAction = serviceType => new object() }, typeof(string), false };
+        yield return new object[] { new CustomTypeDescriptorContext { GetServiceAction = serviceType => new CustomXamlNameProvider() }, typeof(int), false };
+        yield return new object[] { new CustomTypeDescriptorContext { GetServiceAction = serviceType => new CustomXamlNameProvider() }, typeof(string), true };
     }
 
     [Theory]
@@ -139,7 +138,7 @@ public class NameReferenceConverterTests
     [Theory]
     [InlineData(null)]
     [InlineData("name")]
-    public void ConvertTo_ValidService_ReturnsExpected(string name)
+    public void ConvertTo_ValidService_ReturnsExpected(string? name)
     {
         var converter = new NameReferenceConverter();
         var context = new CustomTypeDescriptorContext
@@ -149,7 +148,7 @@ public class NameReferenceConverterTests
                 Assert.Equal(typeof(IXamlNameProvider), serviceType);
                 return new CustomXamlNameProvider
                 {
-                    GetNameAction = value => name
+                    GetNameAction = value => name!
                 };
             }
         };
@@ -205,12 +204,7 @@ public class NameReferenceConverterTests
 
         public object GetService(Type serviceType)
         {
-            if (GetServiceAction is null)
-            {
-                throw new NotImplementedException();
-            }
-
-            return GetServiceAction(serviceType);
+            return GetServiceAction is null ? throw new NotImplementedException() : GetServiceAction(serviceType);
         }
 
         public void OnComponentChanged() => throw new NotImplementedException();
@@ -226,12 +220,7 @@ public class NameReferenceConverterTests
 
         public object Resolve(string name)
         {
-            if (ResolveAction is null)
-            {
-                throw new NotImplementedException();
-            }
-
-            return ResolveAction(name);
+            return ResolveAction is null ? throw new NotImplementedException() : ResolveAction(name);
         }
 
         public object Resolve(string name, out bool isFullyInitialized) => throw new NotImplementedException();
@@ -239,7 +228,7 @@ public class NameReferenceConverterTests
         public object GetFixupToken(IEnumerable<string> names) => throw new NotImplementedException();
 
         public Func<IEnumerable<string>, bool, object>? GetFixupTokenAction { get; set; }
-        
+
         public object GetFixupToken(IEnumerable<string> names, bool canAssignDirectly)
         {
             if (GetFixupTokenAction is null)
@@ -263,15 +252,10 @@ public class NameReferenceConverterTests
     private class CustomXamlNameProvider : IXamlNameProvider
     {
         public Func<object, string>? GetNameAction { get; set; }
-        
+
         public string GetName(object value)
         {
-            if (GetNameAction is null)
-            {
-                throw new NotImplementedException();
-            }
-
-            return GetNameAction(value);
+            return GetNameAction is null ? throw new NotImplementedException() : GetNameAction(value);
         }
     }
 }

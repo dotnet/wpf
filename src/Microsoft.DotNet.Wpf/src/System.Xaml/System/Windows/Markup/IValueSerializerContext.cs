@@ -2,10 +2,12 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
+#nullable disable
+
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 
-namespace System.Windows.Markup 
+namespace System.Windows.Markup
 {
     /// <summary>
     /// Context provided to ValueSerializer that can be used to special case serialization
@@ -25,7 +27,7 @@ namespace System.Windows.Markup
         /// Get a value serializer for the given property descriptor. A property can
         /// override the value serializer that  is to be used to serialize the property
         /// by specifing either a ValueSerializerAttribute or a TypeConverterAttribute.
-        /// This method takes these attributes into account when determining the value 
+        /// This method takes these attributes into account when determining the value
         /// serializer.
         /// </summary>
         /// <param name="descriptor">The property descriptor for whose property value is being converted</param>

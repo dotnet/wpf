@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -6,20 +6,11 @@
 // Description: Contains various journaling related internal enums and classes
 //
 
-using System;
-using System.Security;
 using System.Runtime.Serialization;
-using System.Diagnostics;
 using System.Windows;
 using System.Windows.Markup;
 
 using System.Windows.Navigation;
-using MS.Internal.Utility;
-
-//In order to avoid generating warnings about unknown message numbers and 
-//unknown pragmas when compiling your C# source code with the actual C# compiler, 
-//you need to disable warnings 1634 and 1691. (Presharp Documentation)
-#pragma warning disable 1634, 1691
 
 namespace MS.Internal.AppModel
 {
@@ -272,7 +263,7 @@ namespace MS.Internal.AppModel
             : base(info, context)
         {
             _pageFunctionId = (Guid)info.GetValue("_pageFunctionId", typeof(Guid));
-            _parentPageFunctionId = (Guid)info.GetValue("_parentPageFunctionId", typeof(Guid)); ;
+            _parentPageFunctionId = (Guid)info.GetValue("_parentPageFunctionId", typeof(Guid));
         }
 
         //
@@ -472,7 +463,7 @@ namespace MS.Internal.AppModel
 
         #region Private fields
 
-        PageFunctionBase _keepAlivePageFunction = null;
+        private PageFunctionBase _keepAlivePageFunction = null;
 
         #endregion
     }
@@ -568,7 +559,7 @@ namespace MS.Internal.AppModel
             // Special case: doing fragment navigation or CustomContentState navigation
             // within a PF. Then don't create a new PF object!
             IDownloader idl = navigator as IDownloader;
-            NavigationService ns = idl != null ? idl.Downloader : null;
+            NavigationService ns = idl?.Downloader;
             Debug.Assert(ns != null, "Fragment navigation won't work when the INavigator doesn't have a NavigationService.");
 
             PageFunctionBase pageFunction =
@@ -625,7 +616,7 @@ namespace MS.Internal.AppModel
             : base(jeGroupState, pageFunction)
         {
             string typeName = pageFunction.GetType().AssemblyQualifiedName;
-            this._typeName = new SecurityCriticalDataForSet<string>(typeName);
+            this._typeName = typeName;
         }
 
 
@@ -636,7 +627,7 @@ namespace MS.Internal.AppModel
         protected JournalEntryPageFunctionType(SerializationInfo info, StreamingContext context)
             : base(info, context)
         {
-            _typeName = new SecurityCriticalDataForSet<string>(info.GetString("_typeName"));
+            _typeName = info.GetString("_typeName");
         }
 
         //
@@ -645,7 +636,7 @@ namespace MS.Internal.AppModel
         public override void GetObjectData(SerializationInfo info, StreamingContext context)
         {
             base.GetObjectData(info, context);
-            info.AddValue("_typeName", _typeName.Value);
+            info.AddValue("_typeName", _typeName);
         }
         #endregion
 
@@ -656,7 +647,7 @@ namespace MS.Internal.AppModel
 
         internal override void SaveState(object contentObject)
         {
-            Debug.Assert(contentObject.GetType().AssemblyQualifiedName == this._typeName.Value,
+            Debug.Assert(contentObject.GetType().AssemblyQualifiedName == this._typeName,
                 "The type of a PageFunction a journal entry is associated with cannot change.");
             base.SaveState(contentObject); // Save controls state (JournalDataStreams).
         }
@@ -671,7 +662,7 @@ namespace MS.Internal.AppModel
         {
             PageFunctionBase pageFunction;
 
-            Invariant.Assert(this._typeName.Value != null, "JournalEntry does not contain the Type for the PageFunction to be created");
+            Invariant.Assert(this._typeName != null, "JournalEntry does not contain the Type for the PageFunction to be created");
 
             //First try Type.GetType from the saved typename, then try Activator.CreateInstanceFrom
             //Type.GetType - Since the typename is fullyqualified
@@ -679,14 +670,14 @@ namespace MS.Internal.AppModel
             //If the assembly was not a strongly named one nor is present in the APPBASE, this will
             //fail.
 
-            Type pfType = Type.GetType(this._typeName.Value);
+            Type pfType = Type.GetType(this._typeName);
             try
             {
                 pageFunction = (PageFunctionBase)Activator.CreateInstance(pfType);
             }
             catch (Exception ex)
             {
-                throw new Exception(SR.Format(SR.FailedResumePageFunction, this._typeName.Value), ex);
+                throw new Exception(SR.Format(SR.FailedResumePageFunction, this._typeName), ex);
             }
 
             InitializeComponent(pageFunction);
@@ -704,10 +695,7 @@ namespace MS.Internal.AppModel
         {
             // Need to explicitly add a call to InitializeComponent() for Page
             IComponentConnector iComponentConnector = pageFunction as IComponentConnector;
-            if (iComponentConnector != null)
-            {
-                iComponentConnector.InitializeComponent();
-            }
+            iComponentConnector?.InitializeComponent();
         }
 
         #endregion
@@ -726,7 +714,7 @@ namespace MS.Internal.AppModel
         #region Private fields
 
         /// AssemblyQualifiedName of the PageFunction Type
-        private SecurityCriticalDataForSet<string> _typeName;
+        private string _typeName;
 
         #endregion
     }

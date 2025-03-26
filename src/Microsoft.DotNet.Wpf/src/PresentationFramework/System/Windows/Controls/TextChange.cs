@@ -6,10 +6,6 @@
 // Description: 
 //
 
-using System;
-using System.Windows;
-using System.Collections;
-
 namespace System.Windows.Controls
 {
     /// <summary>

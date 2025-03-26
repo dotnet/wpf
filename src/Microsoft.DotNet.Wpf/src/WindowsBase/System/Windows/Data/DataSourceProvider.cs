@@ -2,17 +2,11 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-//
-//
 // Description: common base class and contract for data source provider objects
 //
 // Specs:       http://avalon/connecteddata/Specs/Avalon%20DataProviders.mht
-//
 
-using System;
-using System.Diagnostics;
 using System.ComponentModel;
-using System.Threading;
 using System.Windows.Threading;     // Dispatcher*
 
 using MS.Internal;  // Invariant
@@ -100,7 +94,7 @@ namespace System.Windows.Data
             set
             {
                 _isInitialLoadEnabled = value;
-                OnPropertyChanged(new PropertyChangedEventArgs("IsInitialLoadEnabled"));
+                OnPropertyChanged(new PropertyChangedEventArgs(nameof(IsInitialLoadEnabled)));
             }
         }
 
@@ -344,8 +338,6 @@ namespace System.Windows.Data
 
         private void EndDefer()
         {
-            Debug.Assert(_deferLevel > 0);
-
             --_deferLevel;
 
             if (_deferLevel == 0)
@@ -385,13 +377,13 @@ namespace System.Windows.Data
                 completionWork(callbackArgs);
 
             // notify any listeners
-            OnPropertyChanged(new PropertyChangedEventArgs("Data"));
+            OnPropertyChanged(new PropertyChangedEventArgs(nameof(Data)));
             if (DataChanged != null)
             {
                 DataChanged(this, EventArgs.Empty);
             }
             if (errorChanged)
-                OnPropertyChanged(new PropertyChangedEventArgs("Error"));
+                OnPropertyChanged(new PropertyChangedEventArgs(nameof(Error)));
         }
 
         #endregion Private Methods
@@ -439,7 +431,7 @@ namespace System.Windows.Data
         private Exception _error;
         private Dispatcher _dispatcher;
 
-        static readonly DispatcherOperationCallback UpdateWithNewResultCallback = new DispatcherOperationCallback(UpdateWithNewResult);
+        private static readonly DispatcherOperationCallback UpdateWithNewResultCallback = new DispatcherOperationCallback(UpdateWithNewResult);
 }
 }
 

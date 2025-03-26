@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -9,11 +9,10 @@ using System;
 using System.Collections.Generic;
 using System.DirectoryServices;
 using System.Globalization;
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Runtime.InteropServices.ComTypes;
 using System.Windows.TrustUI;
-
-using MS.Internal.PresentationUI;
 
 namespace MS.Internal.Documents
 {
@@ -128,17 +127,19 @@ namespace MS.Internal.Documents
 
             //Set up the QueryInitParams -- this is essentially empty as we require no special flags,
             //default usernames, passwords or server information for our purposes.
-            UnsafeNativeMethods.QueryInitParams queryInitParams = 
-                new UnsafeNativeMethods.QueryInitParams();
-            queryInitParams.cbStruct = 
-                (uint)Marshal.SizeOf(typeof(UnsafeNativeMethods.QueryInitParams));
-            queryInitParams.dwFlags = 0;
-            queryInitParams.pDefaultScope = null;
-            queryInitParams.pDefaultSaveLocation = null;
-            queryInitParams.pUserName = null;
-            queryInitParams.pPassword = null;
-            queryInitParams.pServer = null;
-            
+            UnsafeNativeMethods.QueryInitParams queryInitParams =
+                new UnsafeNativeMethods.QueryInitParams
+                {
+                    cbStruct =
+                (uint)Marshal.SizeOf(typeof(UnsafeNativeMethods.QueryInitParams)),
+                    dwFlags = 0,
+                    pDefaultScope = null,
+                    pDefaultSaveLocation = null,
+                    pUserName = null,
+                    pPassword = null,
+                    pServer = null
+                };
+
             //Allocate memory for our QueryInitParams structure that will be used in the
             //OpenQueryWindowParams structure.
             IntPtr queryInitParamsPtr = Marshal.AllocCoTaskMem(Marshal.SizeOf(queryInitParams));
@@ -161,21 +162,23 @@ namespace MS.Internal.Documents
                 // - No "Find:" dropdown (for things other than users)
                 // - No menus
                 // - Single item selection
-                UnsafeNativeMethods.OpenQueryWindowParams openQueryWindowParams = 
-                    new UnsafeNativeMethods.OpenQueryWindowParams();
-                openQueryWindowParams.cbStruct = 
-                    (uint)Marshal.SizeOf(typeof(UnsafeNativeMethods.OpenQueryWindowParams));
-                openQueryWindowParams.dwFlags = UnsafeNativeMethods.OQWF_DEFAULTFORM | 
-                                                UnsafeNativeMethods.OQWF_OKCANCEL | 
+                UnsafeNativeMethods.OpenQueryWindowParams openQueryWindowParams =
+                    new UnsafeNativeMethods.OpenQueryWindowParams
+                    {
+                        cbStruct =
+                    (uint)Marshal.SizeOf(typeof(UnsafeNativeMethods.OpenQueryWindowParams)),
+                        dwFlags = UnsafeNativeMethods.OQWF_DEFAULTFORM |
+                                                UnsafeNativeMethods.OQWF_OKCANCEL |
                                                 UnsafeNativeMethods.OQWF_SHOWOPTIONAL |
                                                 UnsafeNativeMethods.OQWF_REMOVEFORMS |
-                                                UnsafeNativeMethods.OQWF_HIDEMENUS;
-                openQueryWindowParams.clsidHandler = UnsafeNativeMethods.CLSID_DsQuery;
-                openQueryWindowParams.pHandlerParameters = queryInitParamsPtr; 
-                openQueryWindowParams.clsidDefaultForm = 
-                    UnsafeNativeMethods.CLSID_DsFindPeople; //Bring up the people picker
-                openQueryWindowParams.pPersistQuery = IntPtr.Zero;      //We aren't persisting this query anywhere
-                openQueryWindowParams.pFormParameters = IntPtr.Zero;    //We aren't pre-populating the form
+                                                UnsafeNativeMethods.OQWF_HIDEMENUS,
+                        clsidHandler = UnsafeNativeMethods.CLSID_DsQuery,
+                        pHandlerParameters = queryInitParamsPtr,
+                        clsidDefaultForm =
+                    UnsafeNativeMethods.CLSID_DsFindPeople, //Bring up the people picker
+                        pPersistQuery = IntPtr.Zero,      //We aren't persisting this query anywhere
+                        pFormParameters = IntPtr.Zero    //We aren't pre-populating the form
+                    };
 
                 //Invoke the OpenQueryWindow method on the ICommonQuery object,
                 //which will invoke the dialog and return any entered data in the
@@ -312,10 +315,7 @@ namespace MS.Internal.Documents
             /// <param name="ptrToDsObjectNames">A pointer to a valid DsObjectNames struct</param>
             internal DsObjectNamesWrapper(System.IO.MemoryStream dataStream)
             {
-                if (dataStream == null)
-                {
-                    throw new ArgumentNullException("dataStream");
-                }
+                ArgumentNullException.ThrowIfNull(dataStream);
 
                 //We need to get a pointer to this data for our DsObjectNamesWrapper
                 //to wrap.
@@ -404,7 +404,7 @@ namespace MS.Internal.Documents
                 //Ensure we're within proper bounds.
                 if (index < 0 || index >= Count)
                 {
-                    throw new ArgumentOutOfRangeException("index");
+                    throw new ArgumentOutOfRangeException(nameof(index));
                 }
 
                 //First we have to get a DsObject out of the array (aObjects) of DsObjects.
@@ -440,7 +440,7 @@ namespace MS.Internal.Documents
                 //Ensure we're within proper bounds.
                 if (index < 0 || index >= Count)
                 {
-                    throw new ArgumentOutOfRangeException("index");
+                    throw new ArgumentOutOfRangeException(nameof(index));
                 }
 
                 //Now we calculate the offset of the specified array index.
@@ -465,7 +465,7 @@ namespace MS.Internal.Documents
             /// </summary>
             private void ThrowIfDisposed()
             {
-                if (_isDisposed) throw new ObjectDisposedException("DsObjectNamesWrapper");
+                ObjectDisposedException.ThrowIf(_isDisposed, typeof(DsObjectNamesWrapper));
             }
 
             /// <summary>
@@ -516,7 +516,7 @@ namespace MS.Internal.Documents
             /// DsObjects array.
             /// </summary>
             private static readonly int _dsObjectArrayFieldOffset = 
-                Marshal.SizeOf(typeof(Guid)) + Marshal.SizeOf(typeof(UInt32));
+                Unsafe.SizeOf<Guid>() + sizeof(UInt32);
 
             /// <summary>
             /// The size of a DsObject.

@@ -1,14 +1,9 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
 // Description: Provides functionality that Win32/Avalon servers need (non-Avalon specific)
 
-// PRESHARP: In order to avoid generating warnings about unkown message numbers and unknown pragmas.
-#pragma warning disable 1634, 1691
-
-using System;
-using System.Windows.Automation;
 using MS.Internal.Automation;
 
 namespace System.Windows.Automation.Provider
@@ -76,8 +71,8 @@ namespace System.Windows.Automation.Provider
         public static IntPtr ReturnRawElementProvider (IntPtr hwnd, IntPtr wParam, IntPtr lParam, IRawElementProviderSimple el )
         {
             ValidateArgument( hwnd != IntPtr.Zero, nameof(SR.HwndMustBeNonNULL));
-            ValidateArgumentNonNull(el, "el" );
-            
+            ArgumentNullException.ThrowIfNull(el);
+
             return UiaCoreProviderApi.UiaReturnRawElementProvider(hwnd, wParam, lParam, el);
         }
 
@@ -99,31 +94,25 @@ namespace System.Windows.Automation.Provider
         /// <param name="e">Contains information about the property that changed.</param>
         public static void RaiseAutomationPropertyChangedEvent(IRawElementProviderSimple element, AutomationPropertyChangedEventArgs e)
         {
-            ValidateArgumentNonNull(element, "element");
-            ValidateArgumentNonNull(e, "e");
+            ArgumentNullException.ThrowIfNull(element);
+            ArgumentNullException.ThrowIfNull(e);
 
-            // PRESHARP will flag this as warning 56506/6506:Parameter 'e' to this public method must be validated: A null-dereference can occur here.
-            // False positive, e is checked, see above
-#pragma warning suppress 6506
             UiaCoreProviderApi.UiaRaiseAutomationPropertyChangedEvent(element, e.Property.Id, e.OldValue, e.NewValue);
         }
 
         /// <summary>
         /// Called to notify listeners of a pattern or custom event.  This could could be called by a server implementation or by a proxy's event
-        /// translator.  
+        /// translator.
         /// </summary>
         /// <param name="eventId">An AutomationEvent representing this event.</param>
         /// <param name="provider">The actual server-side element associated with this event.</param>
         /// <param name="e">Contains information about the event (may be null).</param>
         public static void RaiseAutomationEvent(AutomationEvent eventId, IRawElementProviderSimple provider, AutomationEventArgs e)
         {
-            ValidateArgumentNonNull(eventId, "eventId");
-            ValidateArgumentNonNull(provider, "provider");
-            ValidateArgumentNonNull(e, "e");
+            ArgumentNullException.ThrowIfNull(eventId);
+            ArgumentNullException.ThrowIfNull(provider);
+            ArgumentNullException.ThrowIfNull(e);
 
-            // PRESHARP will flag this as warning 56506/6506:Parameter 'e' to this public method must be validated: A null-dereference can occur here.
-            // False positive, e is checked, see above
-#pragma warning suppress 6506
             if (e.EventId == AutomationElementIdentifiers.AsyncContentLoadedEvent)
             {
                 AsyncContentLoadedEventArgs asyncArgs = e as AsyncContentLoadedEventArgs;
@@ -134,9 +123,6 @@ namespace System.Windows.Automation.Provider
                 return;
             }
 
-            // PRESHARP will flag this as warning 56506/6506:Parameter 'e' to this public method must be validated: A null-dereference can occur here.
-            // False positive, e is checked, see above
-#pragma warning suppress 6506
             if (e.EventId == AutomationElementIdentifiers.NotificationEvent)
             {
                 NotificationEventArgs notificationArgs = e as NotificationEventArgs;
@@ -151,9 +137,6 @@ namespace System.Windows.Automation.Provider
                 return;
             }
 
-            // PRESHARP will flag this as warning 56506/6506:Parameter 'e' to this public method must be validated: A null-dereference can occur here.
-            // False positive, e is checked, see above
-#pragma warning suppress 6506
             if (e.EventId == AutomationElementIdentifiers.ActiveTextPositionChangedEvent)
             {
                 ActiveTextPositionChangedEventArgs activeTextPositionChangedArgs = e as ActiveTextPositionChangedEventArgs;
@@ -164,16 +147,10 @@ namespace System.Windows.Automation.Provider
                 return;
             }
 
-            // PRESHARP will flag this as warning 56506/6506:Parameter 'e' to this public method must be validated: A null-dereference can occur here.
-            // False positive, e is checked, see above
-#pragma warning suppress 6506
             if (e.EventId == WindowPatternIdentifiers.WindowClosedEvent && !(e is WindowClosedEventArgs))
                 ThrowInvalidArgument("e");
 
             // fire to all clients
-            // PRESHARP will flag this as warning 56506/6506:Parameter 'eventId' to this public method must be validated: A null-dereference can occur here.
-            // False positive, eventId is checked, see above
-#pragma warning suppress 6506
             UiaCoreProviderApi.UiaRaiseAutomationEvent(provider, eventId.Id);
         }
 
@@ -184,12 +161,9 @@ namespace System.Windows.Automation.Provider
         /// <param name="e">Contains information about the event.</param>
         public static void RaiseStructureChangedEvent(IRawElementProviderSimple provider, StructureChangedEventArgs e)
         {
-            ValidateArgumentNonNull(provider, "provider");
-            ValidateArgumentNonNull(e, "e");
+            ArgumentNullException.ThrowIfNull(provider);
+            ArgumentNullException.ThrowIfNull(e);
 
-            // PRESHARP will flag this as warning 56506/6506:Parameter 'e' to this public method must be validated: A null-dereference can occur here.
-            // False positive, e is checked, see above
-#pragma warning suppress 6506
             UiaCoreProviderApi.UiaRaiseStructureChangedEvent(provider, e.StructureChangeType, e.GetRuntimeId());
         }
         #endregion Public Methods
@@ -202,15 +176,6 @@ namespace System.Windows.Automation.Provider
         //------------------------------------------------------
 
         #region Private Methods
-
-        // Check that specified argument is non-null, if so, throw exception
-        private static void ValidateArgumentNonNull(object obj, string argName)
-        {
-            if (obj == null)
-            {
-                throw new ArgumentNullException(argName);
-            }
-        }
 
         // Throw an argument Exception with a generic error
         private static void ThrowInvalidArgument(string argName)

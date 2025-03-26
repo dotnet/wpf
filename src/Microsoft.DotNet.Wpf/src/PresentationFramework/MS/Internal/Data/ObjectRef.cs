@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -9,18 +9,12 @@
 // See spec at Data Binding.mht
 //
 
-using System;
-using System.Collections;
-using System.Diagnostics;
 using System.Globalization;
-using System.Reflection;
 using System.Windows;
 using System.Windows.Media;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Markup;
-using MS.Internal;
-using MS.Internal.Utility;
 
 namespace MS.Internal.Data
 {
@@ -283,8 +277,7 @@ namespace MS.Internal.Data
 
         public override string ToString()
         {
-            return String.Format(CultureInfo.InvariantCulture,
-                    "ElementName={0}", _name);
+            return $"ElementName={_name}";
         }
 
         internal override string Identify()
@@ -298,7 +291,7 @@ namespace MS.Internal.Data
         //
         //------------------------------------------------------
 
-        string _name;
+        private string _name;
     }
 
     #endregion ElementObjectRef
@@ -336,15 +329,11 @@ namespace MS.Internal.Data
             switch (_relativeSource.Mode)
             {
                 case RelativeSourceMode.FindAncestor:
-                    s = String.Format(CultureInfo.InvariantCulture,
-                        "RelativeSource {0}, AncestorType='{1}', AncestorLevel='{2}'",
-                        _relativeSource.Mode,
-                        _relativeSource.AncestorType,
-                        _relativeSource.AncestorLevel);
+                    s = string.Create(CultureInfo.InvariantCulture,
+                        $"RelativeSource {_relativeSource.Mode}, AncestorType='{_relativeSource.AncestorType}', AncestorLevel='{_relativeSource.AncestorLevel}'");
                     break;
                 default:
-                    s = String.Format(CultureInfo.InvariantCulture,
-                        "RelativeSource {0}", _relativeSource.Mode);
+                    s = string.Create(CultureInfo.InvariantCulture, $"RelativeSource {_relativeSource.Mode}");
                     break;
             }
 
@@ -453,8 +442,8 @@ namespace MS.Internal.Data
 
         internal override string Identify()
         {
-            return String.Format(System.Windows.Markup.TypeConverterHelper.InvariantEnglishUS,
-                "RelativeSource ({0})", _relativeSource.Mode);
+            return string.Create(System.Windows.Markup.TypeConverterHelper.InvariantEnglishUS,
+                $"RelativeSource ({_relativeSource.Mode})");
         }
 
         //------------------------------------------------------
@@ -495,7 +484,7 @@ namespace MS.Internal.Data
                     else
                     {
                         child = d as FrameworkElement;
-                        parent = ((child != null) ? child.Parent : null) as System.Windows.Controls.Primitives.GridViewRowPresenterBase;
+                        parent = (child?.Parent) as System.Windows.Controls.Primitives.GridViewRowPresenterBase;
                     }
 
                     if (child != null && parent != null &&
@@ -620,7 +609,7 @@ namespace MS.Internal.Data
         //
         //------------------------------------------------------
 
-        RelativeSource _relativeSource;
+        private RelativeSource _relativeSource;
     }
 
     #endregion RelativeObjectRef
@@ -678,8 +667,8 @@ namespace MS.Internal.Data
         //
         //------------------------------------------------------
 
-        object _object;
-        WeakReference _element; // to DependencyObject (bug 986435)
+        private object _object;
+        private WeakReference _element; // to DependencyObject (bug 986435)
     }
 
     #endregion ExplicitObjectRef

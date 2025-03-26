@@ -2,26 +2,23 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
+#region Using declarations
+
+using System.ComponentModel;
+using System.Diagnostics;
+using System.Windows.Automation.Peers;
+using System.Windows.Documents;
+using System.Windows.Media;
+using System.Windows.Shapes;
+#if RIBBON_IN_FRAMEWORK
+using Microsoft.Windows.Controls;
+
 #if RIBBON_IN_FRAMEWORK
 namespace System.Windows.Controls.Ribbon
 #else
 namespace Microsoft.Windows.Controls.Ribbon
 #endif
 {
-    #region Using declarations
-
-    using System;
-    using System.ComponentModel;
-    using System.Diagnostics;
-    using System.Windows;
-    using System.Windows.Automation.Peers;
-    using System.Windows.Controls;
-    using System.Windows.Data;
-    using System.Windows.Documents;
-    using System.Windows.Media;
-    using System.Windows.Shapes;
-#if RIBBON_IN_FRAMEWORK
-    using Microsoft.Windows.Controls;
 #else
     using Microsoft.Windows.Automation.Peers;
 #endif
@@ -218,19 +215,13 @@ namespace Microsoft.Windows.Controls.Ribbon
 
         public static Geometry GetPathData(DependencyObject element)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException("element");
-            }
+            ArgumentNullException.ThrowIfNull(element);
             return (Geometry)element.GetValue(PathDataProperty);
         }
 
         public static void SetPathData(DependencyObject element, Geometry value)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException("element");
-            }
+            ArgumentNullException.ThrowIfNull(element);
             element.SetValue(PathDataProperty, value);
         }
 
@@ -249,19 +240,13 @@ namespace Microsoft.Windows.Controls.Ribbon
         /// </summary>
         public static bool GetHasTwoLines(DependencyObject element)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException("element");
-            }
+            ArgumentNullException.ThrowIfNull(element);
             return (bool)element.GetValue(HasTwoLinesProperty);
         }
 
         public static void SetHasTwoLines(DependencyObject element, bool value)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException("element");
-            }
+            ArgumentNullException.ThrowIfNull(element);
             element.SetValue(HasTwoLinesProperty, value);
         }
 

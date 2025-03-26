@@ -12,12 +12,6 @@
 //
 
 using MS.Internal.Media3D;
-using MS.Internal.PresentationCore;
-using System;
-using System.Diagnostics;
-using System.Windows.Media;
-using System.Windows.Media.Animation;
-using System.Windows.Media.Composition;
 
 
 namespace System.Windows.Media.Media3D
@@ -157,7 +151,6 @@ namespace System.Windows.Media.Media3D
         /// </summary>
         internal override Transform3D AffineTransform
         {
-            [FriendAccessAllowed] // Built into Core, also used by Framework.
             get
             {
                 return this;

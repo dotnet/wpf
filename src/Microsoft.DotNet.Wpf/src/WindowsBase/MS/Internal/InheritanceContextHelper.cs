@@ -2,19 +2,10 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-/***************************************************************************\
-*
-*
-* This file holds a helper class for DO subclasses that implement an
-* inheritance context.
-*
-*
-\***************************************************************************/
+// This file holds a helper class for DO subclasses that implement an
+// inheritance context.
 
-
-using System;
 using System.Windows;
-using MS.Internal.WindowsBase;
 
 namespace MS.Internal
 {
@@ -28,15 +19,11 @@ namespace MS.Internal
         //
         //--------------------------------------------------------------------
 
-        [FriendAccessAllowed] // Built into Core, also used by Framework.
         internal static void ProvideContextForObject(
             DependencyObject context,
             DependencyObject newValue )
         {
-            if (context != null)
-            {
-                context.ProvideSelfAsInheritanceContext(newValue, null);
-            }
+            context?.ProvideSelfAsInheritanceContext(newValue, null);
         }
 
         //--------------------------------------------------------------------
@@ -47,7 +34,6 @@ namespace MS.Internal
         //
         //--------------------------------------------------------------------
 
-        [FriendAccessAllowed] // Built into Base, also used by Framework.
         internal static void RemoveContextFromObject(
             DependencyObject context,
             DependencyObject oldValue )
@@ -68,7 +54,6 @@ namespace MS.Internal
         //
         //--------------------------------------------------------------------
 
-        [FriendAccessAllowed] // Built into Base, also used by Framework.
         internal static void AddInheritanceContext(DependencyObject newInheritanceContext,
                                                               DependencyObject value,
                                                               ref bool hasMultipleInheritanceContexts,
@@ -105,7 +90,6 @@ namespace MS.Internal
         //
         //--------------------------------------------------------------------
 
-        [FriendAccessAllowed] // Built into Base, also used by Framework.
         internal static void RemoveInheritanceContext(DependencyObject oldInheritanceContext,
                                                               DependencyObject value,
                                                               ref bool hasMultipleInheritanceContexts,

@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -9,20 +9,6 @@
 //              This DrawingContextWalker is used to perform hit tests on renderdata.
 //
 //
-
-using MS.Internal;
-using System;
-using System.ComponentModel;
-using System.Collections;
-using System.Collections.Generic;
-using System.ComponentModel.Design.Serialization;
-using System.Diagnostics;
-using System.Runtime.InteropServices;
-using System.Windows;
-using System.Windows.Media;
-using System.Windows.Media.Animation;
-using System.Windows.Media.Composition;
-using System.Windows.Media.Imaging;
 
 namespace System.Windows.Media
 {
@@ -62,7 +48,7 @@ namespace System.Windows.Media
             Point point1)
         {
             // PERF: Consider ways to reduce the allocation of Geometries during managed hit test and bounds passes.
-            DrawGeometry(null /* brush */, pen, new LineGeometry(point0, point1));
+            DrawGeometry(brush: null, pen, new LineGeometry(point0, point1));
         }
 
         /// <summary>
@@ -173,16 +159,17 @@ namespace System.Windows.Media
             Rect rectangle)
         {
             // PERF: Consider ways to reduce the allocation of Geometries during managed hit test and bounds passes.
-            ImageBrush imageBrush = new ImageBrush();
+            ImageBrush imageBrush = new ImageBrush
+            {
+                // The ImageSource provided will be shared between the original location and the new ImageBrush
+                // we're creating - this will by default break property inheritance, dynamic resource references
+                // and databinding.  To prevent this, we mark the new ImageBrush.CanBeInheritanceContext == false.
+                CanBeInheritanceContext = false,
 
-            // The ImageSource provided will be shared between the original location and the new ImageBrush
-            // we're creating - this will by default break property inheritance, dynamic resource references
-            // and databinding.  To prevent this, we mark the new ImageBrush.CanBeInheritanceContext == false.
-            imageBrush.CanBeInheritanceContext = false;
+                ImageSource = imageSource
+            };
 
-            imageBrush.ImageSource = imageSource;
-
-            DrawGeometry(imageBrush, null /* pen */, new RectangleGeometry(rectangle));
+            DrawGeometry(imageBrush, pen: null, new RectangleGeometry(rectangle));
         }
 
         /// <summary>
@@ -201,10 +188,10 @@ namespace System.Windows.Media
             Rect rectangle)
         {
             // Hit test a rect with a VideoBrush once it exists.
-            // DrawGeometry(new VideoBrush(video), null /* pen */, new RectangleGeometry(rectangle));
+            // DrawGeometry(new VideoBrush(video), pen: null, new RectangleGeometry(rectangle));
 
             // PERF: Consider ways to reduce the allocation of Geometries during managed hit test and bounds passes.
-            DrawGeometry(Brushes.Black, null /* pen */, new RectangleGeometry(rectangle));
+            DrawGeometry(Brushes.Black, pen: null, new RectangleGeometry(rectangle));
         }
 
         #endregion Static Drawing Context Methods

@@ -7,8 +7,6 @@
 //              the functionality common across TextViews.
 // 
 
-using System;                               // InvalidOperationException, ...
-using System.Collections.Generic;           // List<T>
 using System.Collections.ObjectModel;       // ReadOnlyCollection
 using System.Windows;                       // Point, Rect, ...
 using System.Windows.Controls.Primitives;   // DocumentPageView
@@ -111,7 +109,7 @@ namespace MS.Internal.Documents
             {
                 throw new InvalidOperationException(SR.TextViewInvalidLayout);
             }
-            return new ReadOnlyCollection<GlyphRun>(new List<GlyphRun>());
+            return ReadOnlyCollection<GlyphRun>.Empty;
         }
 
         /// <summary>

@@ -2,21 +2,6 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-using MS.Utility;
-using System;
-using System.Runtime.InteropServices;
-using System.Security;
-using System.Globalization;
-using System.Windows;
-using System.Windows.Input;
-using System.Windows.Ink;
-using MS.Internal.Ink.InkSerializedFormat;
-using System.Collections.Generic;
-using System.Diagnostics;
-
-
-using SR = MS.Internal.PresentationCore.SR;
-
 namespace MS.Internal.Ink.InkSerializedFormat
 {
     /// <summary>
@@ -377,10 +362,7 @@ namespace MS.Internal.Ink.InkSerializedFormat
             {
                 throw new ArgumentNullException(StrokeCollectionSerializer.ISFDebugMessage("input or compressed data was null in Compress"));
             }
-            if (bitCount < 0)
-            {
-                throw new ArgumentOutOfRangeException("bitCount");
-            }
+            ArgumentOutOfRangeException.ThrowIfNegative(bitCount);
 
             if (bitCount == 0)
             {
@@ -428,14 +410,8 @@ namespace MS.Internal.Ink.InkSerializedFormat
             {
                 throw new ArgumentNullException(StrokeCollectionSerializer.ISFDebugMessage("reader or compressedData was null in compress"));
             }
-            if (bitCount < 0)
-            {
-                throw new ArgumentOutOfRangeException("bitCount");
-            }
-            if (unitsToEncode < 0)
-            {
-                throw new ArgumentOutOfRangeException("unitsToEncode");
-            }
+            ArgumentOutOfRangeException.ThrowIfNegative(bitCount);
+            ArgumentOutOfRangeException.ThrowIfNegative(unitsToEncode);
 
             if (bitCount == 0)
             {
@@ -518,20 +494,11 @@ namespace MS.Internal.Ink.InkSerializedFormat
         internal uint Uncompress(int bitCount, byte[] input, int inputIndex, DeltaDelta dtxf, int[] outputBuffer, int outputBufferIndex)
         {
             ArgumentNullException.ThrowIfNull(input);
-            if (inputIndex >= input.Length)
-            {
-                throw new ArgumentOutOfRangeException("inputIndex");
-            }
+            ArgumentOutOfRangeException.ThrowIfGreaterThanOrEqual(inputIndex, input.Length);
             ArgumentNullException.ThrowIfNull(outputBuffer);
-            if (outputBufferIndex >= outputBuffer.Length)
-            {
-                throw new ArgumentOutOfRangeException("outputBufferIndex");
-            }
+            ArgumentOutOfRangeException.ThrowIfGreaterThanOrEqual(outputBufferIndex, outputBuffer.Length);
 
-            if (bitCount < 0)
-            {
-                throw new ArgumentOutOfRangeException("bitCount");
-            }
+            ArgumentOutOfRangeException.ThrowIfNegative(bitCount);
 
             // Adjust bit count if 0 passed in
             if (bitCount == 0)
@@ -603,14 +570,8 @@ namespace MS.Internal.Ink.InkSerializedFormat
         internal byte[] Uncompress(int bitCount, BitStreamReader reader, GorillaEncodingType encodingType, int unitsToDecode)
         {
             ArgumentNullException.ThrowIfNull(reader);
-            if (bitCount < 0)
-            {
-                throw new ArgumentOutOfRangeException("bitCount");
-            }
-            if (unitsToDecode < 0)
-            {
-                throw new ArgumentOutOfRangeException("unitsToDecode");
-            }
+            ArgumentOutOfRangeException.ThrowIfNegative(bitCount);
+            ArgumentOutOfRangeException.ThrowIfNegative(unitsToDecode);
 
             int bitsToWrite = 0;
 

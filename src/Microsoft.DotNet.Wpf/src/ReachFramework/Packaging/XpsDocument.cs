@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -14,25 +14,16 @@
 
 
 --*/
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
 using System.IO.Packaging;
 using System.Security.Cryptography.X509Certificates;
 using System.Windows.Documents;
-using System.Windows.Media;
-using System.Printing;
-using System.Windows.Xps;
 using System.Windows.Xps.Serialization;
 using System.Windows.Markup;
-using System.Threading;
 using System.Xml;
-using System.Security;
 using MS.Internal;
 using MS.Internal.Security;
-using MS.Internal.IO.Packaging;
 
 using MS.Internal.IO.Packaging.Extensions;
 using Package = System.IO.Packaging.Package;
@@ -252,12 +243,7 @@ namespace System.Windows.Xps.Packaging
                 // This list maintains a reference to _signatures so its enumerator will adapt
                 // as _signatures is updated.  Therefore, we need not regenerate it when _signatures
                 // is modified.
-                if (_reachSignatureList == null)
-                {
-                    _reachSignatureList = new ReadOnlyCollection<XpsDigitalSignature>(_reachSignatures);
-                }
-
-                return _reachSignatureList;
+                return _reachSignatureList ??= new ReadOnlyCollection<XpsDigitalSignature>(_reachSignatures);
            }
         }
 
@@ -619,9 +605,10 @@ namespace System.Windows.Xps.Packaging
             {
                  throw new XpsPackagingException(SR.ReachPackaging_InvalidStartingPart);
             }
-            ParserContext parserContext = new ParserContext();
-
-            parserContext.BaseUri = PackUriHelper.Create(Uri, CurrentXpsManager.StartingPart.Uri);
+            ParserContext parserContext = new ParserContext
+            {
+                BaseUri = PackUriHelper.Create(Uri, CurrentXpsManager.StartingPart.Uri)
+            };
 
             object fixedObject = XamlReader.Load(CurrentXpsManager.StartingPart.GetStream(), parserContext, useRestrictiveXamlReader: true);
             if (!(fixedObject is FixedDocumentSequence) )
@@ -877,7 +864,6 @@ namespace System.Windows.Xps.Packaging
                                          );
            return AddSignature(packSignature);
         }
-        [MS.Internal.ReachFramework.FriendAccessAllowed]
         internal
         static
         XpsDocument
@@ -892,23 +878,20 @@ namespace System.Windows.Xps.Packaging
             Package package = Package.Open(dataStream,
                                            FileMode.CreateNew,
                                            (dataStream.CanRead) ? FileAccess.ReadWrite : FileAccess.Write);
-            XpsDocument document = new XpsDocument(package);
-
-            document.OpcPackage = package;
+            XpsDocument document = new XpsDocument(package)
+            {
+                OpcPackage = package
+            };
 
             return document;
         }
 
-        [MS.Internal.ReachFramework.FriendAccessAllowed]
         internal
         void
         DisposeXpsDocument(
             )
         {
-            if(_opcPackage != null)
-            {
-                _opcPackage.Close();
-            }
+            _opcPackage?.Close();
         }
 
         internal
@@ -948,9 +931,9 @@ namespace System.Windows.Xps.Packaging
 
         private XpsThumbnail   _thumbnail;
 
-        private Package        _opcPackage; 
+        private Package        _opcPackage;
 
-        bool _disposed = false;
+        private bool _disposed = false;
 
         #endregion Private data
 
@@ -967,10 +950,7 @@ namespace System.Windows.Xps.Packaging
 
         private void CheckDisposed()
         {
-            if (_disposed)
-            {
-                throw new ObjectDisposedException("XpsDocument");
-            }
+            ObjectDisposedException.ThrowIf(_disposed, typeof(XpsDocument));
         }
 
         #region INode implementation
@@ -1005,7 +985,6 @@ namespace System.Windows.Xps.Packaging
         /// Creates and returns the appropriate <c>PackageSerializationManager</c>.
         /// </summary>
         /// <returns><c>PackageSerializationManager</c></returns>
-        [MS.Internal.ReachFramework.FriendAccessAllowed]
         internal
         PackageSerializationManager
         CreateSerializationManager(
@@ -1027,7 +1006,6 @@ namespace System.Windows.Xps.Packaging
         /// Creates and returns the appropriate <c>MetroAsyncSerializationManager</c>.
         /// </summary>
         /// <returns><c>AsyncPackageSerializationManager</c></returns>
-        [MS.Internal.ReachFramework.FriendAccessAllowed]
         internal
         PackageSerializationManager
         CreateAsyncSerializationManager(
@@ -1046,7 +1024,6 @@ namespace System.Windows.Xps.Packaging
         /// <summary>
         /// Dispose a serializaiton manager
         /// </summary>
-        [MS.Internal.ReachFramework.FriendAccessAllowed]
         internal
         void
         DisposeSerializationManager(

@@ -11,34 +11,19 @@
 
 using MS.Internal;
 using MS.Internal.Collections;
-using MS.Internal.PresentationCore;
 using MS.Utility;
-using System;
 using System.Collections;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.ComponentModel.Design.Serialization;
-using System.Diagnostics;
 using System.Globalization;
-using System.Reflection;
-using System.Runtime.InteropServices;
 using System.Text;
 using System.Windows.Markup;
 using System.Windows.Media.Media3D.Converters;
-using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Media.Composition;
-using System.Security;
-using SR=MS.Internal.PresentationCore.SR;
-using System.Windows.Media.Imaging;
-// These types are aliased to match the unamanaged names used in interop
-using BOOL = System.UInt32;
-using WORD = System.UInt16;
-using Float = System.Single;
 
 namespace System.Windows.Media.Media3D
 {
-    abstract partial class AffineTransform3D : Transform3D
+    public abstract partial class AffineTransform3D : Transform3D
     {
         //------------------------------------------------------
         //
@@ -65,6 +50,9 @@ namespace System.Windows.Media.Media3D
         {
             return (AffineTransform3D)base.CloneCurrentValue();
         }
+
+
+
 
         #endregion Public Methods
 

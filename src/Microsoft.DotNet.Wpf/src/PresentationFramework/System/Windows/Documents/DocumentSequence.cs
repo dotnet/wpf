@@ -1,28 +1,17 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-//
-// Description:
-//      Implements the FixedDocumentSequence element
-//
-
 using MS.Internal.Documents;
-using MS.Utility;                   // ExceptionStringTable
 using System.Collections;
 using System.Collections.Specialized;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Diagnostics;
 using System.Globalization;
 using System.Windows.Automation.Peers;    // AutomationPeer
 using System.Windows.Threading;     // Dispatcher
-using System.Windows;               // DependencyID etc.
 using System.Windows.Media;         // Visual
 using System.Windows.Markup; // IAddChild, ContentProperty
 using System.Windows.Navigation;
-
-#pragma warning disable 1634, 1691  // suppressing PreSharp warnings
 
 namespace System.Windows.Documents
 {
@@ -110,7 +99,7 @@ namespace System.Windows.Documents
 
             if (docRef == null)
             {
-                throw new ArgumentException(SR.Format(SR.UnexpectedParameterType, value.GetType(), typeof(DocumentReference)), "value");
+                throw new ArgumentException(SR.Format(SR.UnexpectedParameterType, value.GetType(), typeof(DocumentReference)), nameof(value));
             }
 
             if (docRef.IsInitialized)
@@ -119,7 +108,7 @@ namespace System.Windows.Documents
             }
             else
             {
-                DocumentsTrace.FixedDocumentSequence.Content.Trace(string.Format("Doc {0} Deferred", _references.Count));
+                DocumentsTrace.FixedDocumentSequence.Content.Trace($"Doc {_references.Count} Deferred");
                 if (_partialRef == null)
                 {
                     _partialRef = docRef;
@@ -242,7 +231,7 @@ namespace System.Windows.Documents
         /// </summary>
         internal DocumentPage GetPage(int pageNumber)
         {
-            DocumentsTrace.FixedFormat.IDF.Trace(string.Format("IDP.GetPage({0})", pageNumber));
+            DocumentsTrace.FixedFormat.IDF.Trace($"IDP.GetPage({pageNumber})");
 
             // Make sure that the call is in the right context.
 //             Dispatcher.VerifyAccess();
@@ -250,7 +239,7 @@ namespace System.Windows.Documents
             // Page number cannot be negative.
             if (pageNumber < 0)
             {
-                throw new ArgumentOutOfRangeException("pageNumber", SR.IDPNegativePageNumber);
+                throw new ArgumentOutOfRangeException(nameof(pageNumber), SR.IDPNegativePageNumber);
             }
 
             DocumentPage innerDP = null;
@@ -275,7 +264,7 @@ namespace System.Windows.Documents
         {
             if (fixedDocPageNumber < 0)
             {
-                throw new ArgumentOutOfRangeException("fixedDocPageNumber", SR.IDPNegativePageNumber);
+                throw new ArgumentOutOfRangeException(nameof(fixedDocPageNumber), SR.IDPNegativePageNumber);
             }
 
             ArgumentNullException.ThrowIfNull(document);
@@ -292,7 +281,7 @@ namespace System.Windows.Documents
         /// </summary>
         internal void GetPageAsync(int pageNumber, object userState)
         {
-            DocumentsTrace.FixedFormat.IDF.Trace(string.Format("IDP.GetPageAsync({0}, {1})", pageNumber, userState));
+            DocumentsTrace.FixedFormat.IDF.Trace($"IDP.GetPageAsync({pageNumber}, {userState})");
 
             // Make sure that the call is in the right context.
 //             Dispatcher.VerifyAccess();
@@ -300,7 +289,7 @@ namespace System.Windows.Documents
             // Page number cannot be negative.
             if (pageNumber < 0)
             {
-                throw new ArgumentOutOfRangeException("pageNumber", SR.IDPNegativePageNumber);
+                throw new ArgumentOutOfRangeException(nameof(pageNumber), SR.IDPNegativePageNumber);
             }
 
             ArgumentNullException.ThrowIfNull(userState);
@@ -324,11 +313,9 @@ namespace System.Windows.Documents
             // Because of that we are expecting one of 2 types here.
             DynamicDocumentPaginator childPaginator = null;
             ContentPosition childContentPosition = null;
-            if (contentPosition is DocumentSequenceTextPointer)
+            if (contentPosition is DocumentSequenceTextPointer dsTextPointer)
             {
-                DocumentSequenceTextPointer dsTextPointer = (DocumentSequenceTextPointer)contentPosition;
 
-                #pragma warning suppress 6506 // dsTextPointer is obviously not null
                 childPaginator = GetPaginator(dsTextPointer.ChildBlock.DocRef);
                 childContentPosition = dsTextPointer.ChildPointer as ContentPosition;
             }
@@ -349,7 +336,7 @@ namespace System.Windows.Documents
         /// </summary>
         internal void CancelAsync(object userState)
         {
-            DocumentsTrace.FixedFormat.IDF.Trace(string.Format("IDP.GetPageAsyncCancel([{0}])", userState));
+            DocumentsTrace.FixedFormat.IDF.Trace($"IDP.GetPageAsyncCancel([{userState}])");
 
             ArgumentNullException.ThrowIfNull(userState);
 
@@ -359,10 +346,7 @@ namespace System.Windows.Documents
                 if (asyncRequest != null)
                 {
                     asyncRequest.Cancelled = true;
-                    if (asyncRequest.Page.ChildPaginator != null)
-                    {
-                        asyncRequest.Page.ChildPaginator.CancelAsync(asyncRequest);
-                    }
+                    asyncRequest.Page.ChildPaginator?.CancelAsync(asyncRequest);
                 }
             }
         }
@@ -717,7 +701,7 @@ namespace System.Windows.Documents
 
             if (docRef == _partialRef)
             {
-                DocumentsTrace.FixedDocumentSequence.Content.Trace(string.Format("Loaded DocumentReference {0}", _references.Count));
+                DocumentsTrace.FixedDocumentSequence.Content.Trace($"Loaded DocumentReference {_references.Count}");
                 _partialRef.Initialized -= new EventHandler(_OnDocumentReferenceInitialized);
                 _partialRef = null;
                 _references.Add(docRef);
@@ -738,7 +722,7 @@ namespace System.Windows.Documents
                     // get the affected item
                     object item = args.NewItems[0];
 
-                    DocumentsTrace.FixedDocumentSequence.Content.Trace(string.Format("_OnCollectionChange: Add {0}", item.GetHashCode()));
+                    DocumentsTrace.FixedDocumentSequence.Content.Trace($"_OnCollectionChange: Add {item.GetHashCode()}");
                     AddLogicalChild(item);
 
                     int pageCount = this.PageCount;
@@ -753,7 +737,7 @@ namespace System.Windows.Documents
 
                     if (addedPages > 0)
                     {
-                        DocumentsTrace.FixedDocumentSequence.Content.Trace(string.Format("_OnCollectionChange: Add with IDP {0}", paginator.GetHashCode()));
+                        DocumentsTrace.FixedDocumentSequence.Content.Trace($"_OnCollectionChange: Add with IDP {paginator.GetHashCode()}");
                         _paginator.NotifyPaginationProgress(new PaginationProgressEventArgs(firstPage, addedPages));
                         _paginator.NotifyPagesChanged(new PagesChangedEventArgs(firstPage, addedPages));
                     }
@@ -810,7 +794,7 @@ namespace System.Windows.Documents
         //----------------------------------------------------------------------
         private void _OnChildPaginationCompleted(object sender, EventArgs args)
         {
-            DocumentsTrace.FixedDocumentSequence.IDF.Trace(string.Format("_OnChildPaginationCompleted"));
+            DocumentsTrace.FixedDocumentSequence.IDF.Trace("_OnChildPaginationCompleted");
             if (IsPageCountValid)
             {
                 _paginator.NotifyPaginationCompleted(EventArgs.Empty);
@@ -825,7 +809,7 @@ namespace System.Windows.Documents
 
         private void _OnChildPaginationProgress(object sender, PaginationProgressEventArgs args)
         {
-            DocumentsTrace.FixedDocumentSequence.IDF.Trace(string.Format("_OnChildPaginationProgress"));
+            DocumentsTrace.FixedDocumentSequence.IDF.Trace("_OnChildPaginationProgress");
             int pageNumber;
             if (_SynthesizeGlobalPageNumber((DynamicDocumentPaginator)sender, args.Start, out pageNumber))
             {
@@ -835,7 +819,7 @@ namespace System.Windows.Documents
 
         private void _OnChildPagesChanged(object sender, PagesChangedEventArgs args)
         {
-            DocumentsTrace.FixedDocumentSequence.IDF.Trace(string.Format("_OnChildPagesChanged"));
+            DocumentsTrace.FixedDocumentSequence.IDF.Trace("_OnChildPagesChanged");
             int pageNumber;
             if (_SynthesizeGlobalPageNumber((DynamicDocumentPaginator)sender, args.Start, out pageNumber))
             {
@@ -855,7 +839,7 @@ namespace System.Windows.Documents
         // It is translated into an async request into child paginator
         private object _GetPageAsyncDelegate(object arg)
         {
-            DocumentsTrace.FixedDocumentSequence.IDF.Trace(string.Format("_GetPageAsyncDelegate"));
+            DocumentsTrace.FixedDocumentSequence.IDF.Trace("_GetPageAsyncDelegate");
 
             GetPageAsyncRequest asyncRequest = (GetPageAsyncRequest)arg;
             int pageNumber = asyncRequest.Page.PageNumber;
@@ -885,7 +869,7 @@ namespace System.Windows.Documents
         // Callback from inner IDP.GetPageAsync
         private void _OnGetPageCompleted(object sender, GetPageCompletedEventArgs args)
         {
-            DocumentsTrace.FixedDocumentSequence.IDF.Trace(string.Format("_OnGetPageCompleted"));
+            DocumentsTrace.FixedDocumentSequence.IDF.Trace("_OnGetPageCompleted");
 
             // this job is complete
             GetPageAsyncRequest completedRequest = (GetPageAsyncRequest)args.UserState;
@@ -934,7 +918,7 @@ namespace System.Windows.Documents
         // Notify the caller of IDFAsync.MeasurePageAsync
         private void _NotifyGetPageAsyncCompleted(DocumentPage page, int pageNumber, Exception error, bool cancelled, object userState)
         {
-            DocumentsTrace.FixedDocumentSequence.IDF.Trace(string.Format("_NotifyGetPageAsyncCompleted"));
+            DocumentsTrace.FixedDocumentSequence.IDF.Trace("_NotifyGetPageAsyncCompleted");
             _paginator.NotifyGetPageCompleted(new GetPageCompletedEventArgs(page, pageNumber, error, cancelled, userState));
         }
 
@@ -966,7 +950,7 @@ namespace System.Windows.Documents
 
         // Text OM
         private DocumentSequenceTextContainer _textContainer;
-        
+
         // Rubber band selection
         private RubberbandSelector _rubberbandSelector;
 
@@ -1110,7 +1094,7 @@ namespace System.Windows.Documents
         /// </summary>
         public override string ToString()
         {
-            return String.Format(CultureInfo.InvariantCulture, "SDP:D{0}", _DocumentIndex);
+            return string.Create(CultureInfo.InvariantCulture, $"SDP:D{_DocumentIndex}");
         }
 #endif
         #endregion Public Methods
@@ -1230,7 +1214,7 @@ namespace System.Windows.Documents
         //---------------------------------------------------------------------
 
         #region Private Fields
-        
+
         private readonly FixedDocumentSequence    _fixedDocumentSequence;
         private readonly DynamicDocumentPaginator _documentPaginator;
         private readonly DocumentPage             _documentPage;

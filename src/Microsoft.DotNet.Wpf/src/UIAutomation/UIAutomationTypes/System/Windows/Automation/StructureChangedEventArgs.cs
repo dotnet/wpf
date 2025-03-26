@@ -10,12 +10,9 @@
 //  
 //
 
-using System;
-using System.Windows.Automation;
 using System.Runtime.InteropServices;
-using MS.Internal.Automation;
 
-namespace System.Windows.Automation 
+namespace System.Windows.Automation
 {
     /// <summary>
     /// Delegate to handle logical structure change events
@@ -76,10 +73,7 @@ namespace System.Windows.Automation
         public StructureChangedEventArgs(StructureChangeType structureChangeType, int [] runtimeId) 
             : base(AutomationElementIdentifiers.StructureChangedEvent) 
         {
-            if (runtimeId == null)
-            {
-                throw new ArgumentNullException("runtimeId");
-            }
+            ArgumentNullException.ThrowIfNull(runtimeId);
             _structureChangeType = structureChangeType;
             _runtimeID = (int [])runtimeId.Clone();
         }

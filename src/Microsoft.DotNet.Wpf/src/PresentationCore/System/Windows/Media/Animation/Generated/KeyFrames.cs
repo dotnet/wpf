@@ -9,19 +9,12 @@
 // Please see MilCodeGen.html for more information.
 //
 
-using MS.Internal;
-
-using System;
-using System.Collections;
-using System.ComponentModel;
-using System.Diagnostics;
-using System.Windows.Media;
 using System.Windows.Media.Media3D;
-
-using MS.Internal.PresentationCore;
 
 namespace System.Windows.Media.Animation
 {
+
+
     /// <summary>
     /// This class is used as part of a BooleanKeyFrameCollection in
     /// conjunction with a KeyFrameBooleanAnimation to animate a
@@ -141,11 +134,8 @@ namespace System.Windows.Media.Animation
             Boolean baseValue, 
             double keyFrameProgress)
         {
-            if (   keyFrameProgress < 0.0
-                || keyFrameProgress > 1.0)
-            {
-                throw new ArgumentOutOfRangeException("keyFrameProgress");
-            }
+            ArgumentOutOfRangeException.ThrowIfNegative(keyFrameProgress);
+            ArgumentOutOfRangeException.ThrowIfGreaterThan(keyFrameProgress, 1.0);
 
             return InterpolateValueCore(baseValue, keyFrameProgress);
         }
@@ -285,11 +275,8 @@ namespace System.Windows.Media.Animation
             Byte baseValue, 
             double keyFrameProgress)
         {
-            if (   keyFrameProgress < 0.0
-                || keyFrameProgress > 1.0)
-            {
-                throw new ArgumentOutOfRangeException("keyFrameProgress");
-            }
+            ArgumentOutOfRangeException.ThrowIfNegative(keyFrameProgress);
+            ArgumentOutOfRangeException.ThrowIfGreaterThan(keyFrameProgress, 1.0);
 
             return InterpolateValueCore(baseValue, keyFrameProgress);
         }
@@ -429,11 +416,8 @@ namespace System.Windows.Media.Animation
             Char baseValue, 
             double keyFrameProgress)
         {
-            if (   keyFrameProgress < 0.0
-                || keyFrameProgress > 1.0)
-            {
-                throw new ArgumentOutOfRangeException("keyFrameProgress");
-            }
+            ArgumentOutOfRangeException.ThrowIfNegative(keyFrameProgress);
+            ArgumentOutOfRangeException.ThrowIfGreaterThan(keyFrameProgress, 1.0);
 
             return InterpolateValueCore(baseValue, keyFrameProgress);
         }
@@ -573,11 +557,8 @@ namespace System.Windows.Media.Animation
             Color baseValue, 
             double keyFrameProgress)
         {
-            if (   keyFrameProgress < 0.0
-                || keyFrameProgress > 1.0)
-            {
-                throw new ArgumentOutOfRangeException("keyFrameProgress");
-            }
+            ArgumentOutOfRangeException.ThrowIfNegative(keyFrameProgress);
+            ArgumentOutOfRangeException.ThrowIfGreaterThan(keyFrameProgress, 1.0);
 
             return InterpolateValueCore(baseValue, keyFrameProgress);
         }
@@ -717,11 +698,8 @@ namespace System.Windows.Media.Animation
             Decimal baseValue, 
             double keyFrameProgress)
         {
-            if (   keyFrameProgress < 0.0
-                || keyFrameProgress > 1.0)
-            {
-                throw new ArgumentOutOfRangeException("keyFrameProgress");
-            }
+            ArgumentOutOfRangeException.ThrowIfNegative(keyFrameProgress);
+            ArgumentOutOfRangeException.ThrowIfGreaterThan(keyFrameProgress, 1.0);
 
             return InterpolateValueCore(baseValue, keyFrameProgress);
         }
@@ -861,11 +839,8 @@ namespace System.Windows.Media.Animation
             Double baseValue, 
             double keyFrameProgress)
         {
-            if (   keyFrameProgress < 0.0
-                || keyFrameProgress > 1.0)
-            {
-                throw new ArgumentOutOfRangeException("keyFrameProgress");
-            }
+            ArgumentOutOfRangeException.ThrowIfNegative(keyFrameProgress);
+            ArgumentOutOfRangeException.ThrowIfGreaterThan(keyFrameProgress, 1.0);
 
             return InterpolateValueCore(baseValue, keyFrameProgress);
         }
@@ -1005,11 +980,8 @@ namespace System.Windows.Media.Animation
             Int16 baseValue, 
             double keyFrameProgress)
         {
-            if (   keyFrameProgress < 0.0
-                || keyFrameProgress > 1.0)
-            {
-                throw new ArgumentOutOfRangeException("keyFrameProgress");
-            }
+            ArgumentOutOfRangeException.ThrowIfNegative(keyFrameProgress);
+            ArgumentOutOfRangeException.ThrowIfGreaterThan(keyFrameProgress, 1.0);
 
             return InterpolateValueCore(baseValue, keyFrameProgress);
         }
@@ -1149,11 +1121,8 @@ namespace System.Windows.Media.Animation
             Int32 baseValue, 
             double keyFrameProgress)
         {
-            if (   keyFrameProgress < 0.0
-                || keyFrameProgress > 1.0)
-            {
-                throw new ArgumentOutOfRangeException("keyFrameProgress");
-            }
+            ArgumentOutOfRangeException.ThrowIfNegative(keyFrameProgress);
+            ArgumentOutOfRangeException.ThrowIfGreaterThan(keyFrameProgress, 1.0);
 
             return InterpolateValueCore(baseValue, keyFrameProgress);
         }
@@ -1293,11 +1262,8 @@ namespace System.Windows.Media.Animation
             Int64 baseValue, 
             double keyFrameProgress)
         {
-            if (   keyFrameProgress < 0.0
-                || keyFrameProgress > 1.0)
-            {
-                throw new ArgumentOutOfRangeException("keyFrameProgress");
-            }
+            ArgumentOutOfRangeException.ThrowIfNegative(keyFrameProgress);
+            ArgumentOutOfRangeException.ThrowIfGreaterThan(keyFrameProgress, 1.0);
 
             return InterpolateValueCore(baseValue, keyFrameProgress);
         }
@@ -1437,11 +1403,8 @@ namespace System.Windows.Media.Animation
             Matrix baseValue, 
             double keyFrameProgress)
         {
-            if (   keyFrameProgress < 0.0
-                || keyFrameProgress > 1.0)
-            {
-                throw new ArgumentOutOfRangeException("keyFrameProgress");
-            }
+            ArgumentOutOfRangeException.ThrowIfNegative(keyFrameProgress);
+            ArgumentOutOfRangeException.ThrowIfGreaterThan(keyFrameProgress, 1.0);
 
             return InterpolateValueCore(baseValue, keyFrameProgress);
         }
@@ -1581,11 +1544,8 @@ namespace System.Windows.Media.Animation
             Object baseValue, 
             double keyFrameProgress)
         {
-            if (   keyFrameProgress < 0.0
-                || keyFrameProgress > 1.0)
-            {
-                throw new ArgumentOutOfRangeException("keyFrameProgress");
-            }
+            ArgumentOutOfRangeException.ThrowIfNegative(keyFrameProgress);
+            ArgumentOutOfRangeException.ThrowIfGreaterThan(keyFrameProgress, 1.0);
 
             return InterpolateValueCore(baseValue, keyFrameProgress);
         }
@@ -1725,11 +1685,8 @@ namespace System.Windows.Media.Animation
             Point baseValue, 
             double keyFrameProgress)
         {
-            if (   keyFrameProgress < 0.0
-                || keyFrameProgress > 1.0)
-            {
-                throw new ArgumentOutOfRangeException("keyFrameProgress");
-            }
+            ArgumentOutOfRangeException.ThrowIfNegative(keyFrameProgress);
+            ArgumentOutOfRangeException.ThrowIfGreaterThan(keyFrameProgress, 1.0);
 
             return InterpolateValueCore(baseValue, keyFrameProgress);
         }
@@ -1869,11 +1826,8 @@ namespace System.Windows.Media.Animation
             Point3D baseValue, 
             double keyFrameProgress)
         {
-            if (   keyFrameProgress < 0.0
-                || keyFrameProgress > 1.0)
-            {
-                throw new ArgumentOutOfRangeException("keyFrameProgress");
-            }
+            ArgumentOutOfRangeException.ThrowIfNegative(keyFrameProgress);
+            ArgumentOutOfRangeException.ThrowIfGreaterThan(keyFrameProgress, 1.0);
 
             return InterpolateValueCore(baseValue, keyFrameProgress);
         }
@@ -2013,11 +1967,8 @@ namespace System.Windows.Media.Animation
             Quaternion baseValue, 
             double keyFrameProgress)
         {
-            if (   keyFrameProgress < 0.0
-                || keyFrameProgress > 1.0)
-            {
-                throw new ArgumentOutOfRangeException("keyFrameProgress");
-            }
+            ArgumentOutOfRangeException.ThrowIfNegative(keyFrameProgress);
+            ArgumentOutOfRangeException.ThrowIfGreaterThan(keyFrameProgress, 1.0);
 
             return InterpolateValueCore(baseValue, keyFrameProgress);
         }
@@ -2157,11 +2108,8 @@ namespace System.Windows.Media.Animation
             Rotation3D baseValue, 
             double keyFrameProgress)
         {
-            if (   keyFrameProgress < 0.0
-                || keyFrameProgress > 1.0)
-            {
-                throw new ArgumentOutOfRangeException("keyFrameProgress");
-            }
+            ArgumentOutOfRangeException.ThrowIfNegative(keyFrameProgress);
+            ArgumentOutOfRangeException.ThrowIfGreaterThan(keyFrameProgress, 1.0);
 
             return InterpolateValueCore(baseValue, keyFrameProgress);
         }
@@ -2301,11 +2249,8 @@ namespace System.Windows.Media.Animation
             Rect baseValue, 
             double keyFrameProgress)
         {
-            if (   keyFrameProgress < 0.0
-                || keyFrameProgress > 1.0)
-            {
-                throw new ArgumentOutOfRangeException("keyFrameProgress");
-            }
+            ArgumentOutOfRangeException.ThrowIfNegative(keyFrameProgress);
+            ArgumentOutOfRangeException.ThrowIfGreaterThan(keyFrameProgress, 1.0);
 
             return InterpolateValueCore(baseValue, keyFrameProgress);
         }
@@ -2445,11 +2390,8 @@ namespace System.Windows.Media.Animation
             Single baseValue, 
             double keyFrameProgress)
         {
-            if (   keyFrameProgress < 0.0
-                || keyFrameProgress > 1.0)
-            {
-                throw new ArgumentOutOfRangeException("keyFrameProgress");
-            }
+            ArgumentOutOfRangeException.ThrowIfNegative(keyFrameProgress);
+            ArgumentOutOfRangeException.ThrowIfGreaterThan(keyFrameProgress, 1.0);
 
             return InterpolateValueCore(baseValue, keyFrameProgress);
         }
@@ -2589,11 +2531,8 @@ namespace System.Windows.Media.Animation
             Size baseValue, 
             double keyFrameProgress)
         {
-            if (   keyFrameProgress < 0.0
-                || keyFrameProgress > 1.0)
-            {
-                throw new ArgumentOutOfRangeException("keyFrameProgress");
-            }
+            ArgumentOutOfRangeException.ThrowIfNegative(keyFrameProgress);
+            ArgumentOutOfRangeException.ThrowIfGreaterThan(keyFrameProgress, 1.0);
 
             return InterpolateValueCore(baseValue, keyFrameProgress);
         }
@@ -2733,11 +2672,8 @@ namespace System.Windows.Media.Animation
             String baseValue, 
             double keyFrameProgress)
         {
-            if (   keyFrameProgress < 0.0
-                || keyFrameProgress > 1.0)
-            {
-                throw new ArgumentOutOfRangeException("keyFrameProgress");
-            }
+            ArgumentOutOfRangeException.ThrowIfNegative(keyFrameProgress);
+            ArgumentOutOfRangeException.ThrowIfGreaterThan(keyFrameProgress, 1.0);
 
             return InterpolateValueCore(baseValue, keyFrameProgress);
         }
@@ -2877,11 +2813,8 @@ namespace System.Windows.Media.Animation
             Vector baseValue, 
             double keyFrameProgress)
         {
-            if (   keyFrameProgress < 0.0
-                || keyFrameProgress > 1.0)
-            {
-                throw new ArgumentOutOfRangeException("keyFrameProgress");
-            }
+            ArgumentOutOfRangeException.ThrowIfNegative(keyFrameProgress);
+            ArgumentOutOfRangeException.ThrowIfGreaterThan(keyFrameProgress, 1.0);
 
             return InterpolateValueCore(baseValue, keyFrameProgress);
         }
@@ -3021,11 +2954,8 @@ namespace System.Windows.Media.Animation
             Vector3D baseValue, 
             double keyFrameProgress)
         {
-            if (   keyFrameProgress < 0.0
-                || keyFrameProgress > 1.0)
-            {
-                throw new ArgumentOutOfRangeException("keyFrameProgress");
-            }
+            ArgumentOutOfRangeException.ThrowIfNegative(keyFrameProgress);
+            ArgumentOutOfRangeException.ThrowIfGreaterThan(keyFrameProgress, 1.0);
 
             return InterpolateValueCore(baseValue, keyFrameProgress);
         }
@@ -3044,4 +2974,5 @@ namespace System.Windows.Media.Animation
 
         #endregion
     }                 
+
 }

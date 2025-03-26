@@ -1,6 +1,14 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
+
+using MS.Internal.Documents;
+using System.Windows.Automation;
+using System.Windows.Controls;
+using System.Windows.Markup;    // for XmlLanguage
+using System.Windows.Navigation;
+using System.Globalization;
+using System.Text;
 
 //
 // Description:
@@ -9,22 +17,6 @@
 
 namespace System.Windows.Documents
 {
-    using MS.Internal.Documents;
-    using System.Windows;
-    using System.Windows.Automation;
-    using System.Windows.Controls;
-    using System.Windows.Shapes;
-    using System.Windows.Markup;    // for XmlLanguage
-    using System.Windows.Media;
-    using System.Windows.Navigation;
-    using System;
-    using System.Collections;
-    using System.Collections.Generic;
-    using System.Diagnostics;
-    using System.Globalization;
-    using System.Text;
-    using System.Security;
-
     /// <summary>
     /// FixedElement represents a flow element/object in the Fixed Document.
     /// Its children collection is used for DependencyProperty evaluation.
@@ -44,7 +36,7 @@ namespace System.Windows.Documents
             Italic,
             Underline,
             Object,
-            Container, 
+            Container,
             Section,
             Figure,
             Table,
@@ -65,47 +57,47 @@ namespace System.Windows.Documents
                                 typeof(FixedElement));
 
         // only apply to ElementType.Run
-        public static readonly DependencyProperty FontFamilyProperty = 
+        public static readonly DependencyProperty FontFamilyProperty =
                     TextElement.FontFamilyProperty.AddOwner(
                                 typeof(FixedElement));
 
-        public static readonly DependencyProperty FontStyleProperty = 
+        public static readonly DependencyProperty FontStyleProperty =
                     TextElement.FontStyleProperty.AddOwner(
                                 typeof(FixedElement));
 
-        public static readonly DependencyProperty FontWeightProperty = 
+        public static readonly DependencyProperty FontWeightProperty =
                     TextElement.FontWeightProperty.AddOwner(
                                 typeof(FixedElement));
-        
-        public static readonly DependencyProperty FontStretchProperty = 
+
+        public static readonly DependencyProperty FontStretchProperty =
                     TextElement.FontStretchProperty.AddOwner(
                                 typeof(FixedElement));
-        
-        public static readonly DependencyProperty FontSizeProperty = 
+
+        public static readonly DependencyProperty FontSizeProperty =
                     TextElement.FontSizeProperty.AddOwner(
                                 typeof(FixedElement));
-        
-        public static readonly DependencyProperty ForegroundProperty = 
+
+        public static readonly DependencyProperty ForegroundProperty =
                     TextElement.ForegroundProperty.AddOwner(
                                 typeof(FixedElement));
 
-        public static readonly DependencyProperty FlowDirectionProperty = 
+        public static readonly DependencyProperty FlowDirectionProperty =
                     FrameworkElement.FlowDirectionProperty.AddOwner(
                                 typeof(FixedElement));
 
 
 
         //Applies only to Table
-        public static readonly DependencyProperty CellSpacingProperty = 
+        public static readonly DependencyProperty CellSpacingProperty =
                     Table.CellSpacingProperty.AddOwner(
                                 typeof(FixedElement));
-       
+
 
         //Applies only to TableCell
-        public static readonly DependencyProperty BorderThicknessProperty = 
+        public static readonly DependencyProperty BorderThicknessProperty =
                     Block.BorderThicknessProperty.AddOwner(typeof(FixedElement));
 
-        public static readonly DependencyProperty BorderBrushProperty = 
+        public static readonly DependencyProperty BorderBrushProperty =
                     Block.BorderBrushProperty.AddOwner(typeof(FixedElement));
 
         public static readonly DependencyProperty ColumnSpanProperty =
@@ -163,7 +155,7 @@ namespace System.Windows.Documents
         /// <returns>string - A string representation of this object</returns>
         public override string ToString()
         {
-            return String.Format(CultureInfo.InvariantCulture, "{{S@{0}---E@{1}}} {2}", _start, _end, System.Enum.GetName(typeof(ElementType), _type));
+            return string.Create(CultureInfo.InvariantCulture, $"{{S@{_start}---E@{_end}}} {System.Enum.GetName(_type)}");
         }
 #endif
 
@@ -223,8 +215,10 @@ namespace System.Windows.Documents
             object o = im;
             if (_type == ElementType.InlineUIContainer)
             {
-                InlineUIContainer c = new InlineUIContainer();
-                c.Child = im;
+                InlineUIContainer c = new InlineUIContainer
+                {
+                    Child = im
+                };
                 o = c;
             }
             return o;
@@ -251,8 +245,10 @@ namespace System.Windows.Documents
                     root = new Paragraph();
                     break;
                 case ElementType.Hyperlink:
-                    Hyperlink link = new Hyperlink();
-                    link.NavigateUri = GetValue(NavigateUriProperty) as Uri;
+                    Hyperlink link = new Hyperlink
+                    {
+                        NavigateUri = GetValue(NavigateUriProperty) as Uri
+                    };
                     link.RequestNavigate += new RequestNavigateEventHandler(ClickHyperlink);
                     AutomationProperties.SetHelpText(link, (String)this.GetValue(HelpTextProperty));
                     AutomationProperties.SetName(link, (String)this.GetValue(NameProperty));
@@ -299,8 +295,10 @@ namespace System.Windows.Documents
             Uri source = _object as Uri;
             if (source != null)
             {
-                image = new Image();
-                image.Source = new System.Windows.Media.Imaging.BitmapImage(source);
+                image = new Image
+                {
+                    Source = new System.Windows.Media.Imaging.BitmapImage(source)
+                };
                 image.Width = image.Source.Width;
                 image.Height = image.Source.Height;
 

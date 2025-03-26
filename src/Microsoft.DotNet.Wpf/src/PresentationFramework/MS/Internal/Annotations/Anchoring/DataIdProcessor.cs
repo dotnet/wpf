@@ -1,31 +1,11 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-#pragma warning disable 1634, 1691
-//
-//
-// Description:
-//     DataIdProcessor walks the tree and loads annotations based on unique ids
-//     identified by the DataIdProperty.  It loads annotations when it
-//     reaches a leaf in the tree or when it runs into a node with the
-//     FetchAnnotationsAsBatch property set to true.
-//     Spec: Anchoring Namespace Spec.doc
-//
-
-using System;
-using System.Diagnostics;
-using System.Collections;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.Windows;
 using System.Windows.Annotations;
-using System.Windows.Annotations.Storage;
-using System.Windows.Markup;
-using System.Windows.Threading;
 using System.Xml;
-
-using MS.Utility;
 
 namespace MS.Internal.Annotations.Anchoring
 {
@@ -65,9 +45,9 @@ namespace MS.Internal.Annotations.Anchoring
         #region Public Methods
 
         /// <summary>
-        ///     If and only if the current node has a DataId set and has FetchAnnotationsAsBatch 
+        ///     If and only if the current node has a DataId set and has FetchAnnotationsAsBatch
         ///     set to true, then all annotations for the subtree rooted at this node are loaded
-        ///     at once. 
+        ///     at once.
         /// </summary>
         /// <param name="node">node to process</param>
         /// <param name="calledProcessAnnotations">indicates the callback was called by
@@ -112,7 +92,7 @@ namespace MS.Internal.Annotations.Anchoring
         /// was returned as true by any node underneath this node</param>
         /// <param name="calledProcessAnnotations">indicates whether ProcessAnnotations was called
         /// by this method</param>
-        /// <returns>        
+        /// <returns>
         ///     a list of AttachedAnnotations loaded during the processing of
         ///     the node; can be null if no annotations were loaded
         /// </returns>
@@ -155,7 +135,7 @@ namespace MS.Internal.Annotations.Anchoring
         ///     containing the id value is returned.  Otherwise null is returned.
         /// </summary>
         /// <param name="node">the node to generate a locator for</param>
-        /// <param name="continueGenerating">specifies whether or not generating should 
+        /// <param name="continueGenerating">specifies whether or not generating should
         /// continue for the rest of the path; always set to true</param>
         /// <returns>if node has a value for DataIdProperty, a locator with a
         /// single locator part containing the id value; null otherwise
@@ -179,19 +159,19 @@ namespace MS.Internal.Annotations.Anchoring
         }
 
         /// <summary>
-        ///     Searches the logical tree for a node matching the values of 
-        ///     locatorPart.  The search begins with startNode.  
+        ///     Searches the logical tree for a node matching the values of
+        ///     locatorPart.  The search begins with startNode.
         /// </summary>
-        /// <param name="locatorPart">locator part to be matched, must be of the type 
+        /// <param name="locatorPart">locator part to be matched, must be of the type
         /// handled by this processor</param>
         /// <param name="startNode">logical tree node to start search at</param>
-        /// <param name="continueResolving">return flag indicating whether the search 
+        /// <param name="continueResolving">return flag indicating whether the search
         /// should continue (presumably because the search was not exhaustive)</param>
-        /// <returns>returns a node that matches the locator part; null if no such 
+        /// <returns>returns a node that matches the locator part; null if no such
         /// node is found</returns>
-        /// <exception cref="ArgumentNullException">locatorPart or startNode are 
+        /// <exception cref="ArgumentNullException">locatorPart or startNode are
         /// null</exception>
-        /// <exception cref="ArgumentException">locatorPart is of the incorrect 
+        /// <exception cref="ArgumentException">locatorPart is of the incorrect
         /// type</exception>
         public override DependencyObject ResolveLocatorPart(ContentLocatorPart locatorPart, DependencyObject startNode, out bool continueResolving)
         {
@@ -199,7 +179,7 @@ namespace MS.Internal.Annotations.Anchoring
             ArgumentNullException.ThrowIfNull(startNode);
 
             if (DataIdElementName != locatorPart.PartType)
-                throw new ArgumentException(SR.Format(SR.IncorrectLocatorPartType, locatorPart.PartType.Namespace + ":" + locatorPart.PartType.Name), "locatorPart");
+                throw new ArgumentException(SR.Format(SR.IncorrectLocatorPartType, $"{locatorPart.PartType.Namespace}:{locatorPart.PartType.Name}"), nameof(locatorPart));
 
             // Initial value
             continueResolving = true;
@@ -208,7 +188,7 @@ namespace MS.Internal.Annotations.Anchoring
             string id = locatorPart.NameValuePairs[ValueAttributeName];
             if (id == null)
             {
-                throw new ArgumentException(SR.Format(SR.IncorrectLocatorPartType, locatorPart.PartType.Namespace + ":" + locatorPart.PartType.Name), "locatorPart");
+                throw new ArgumentException(SR.Format(SR.IncorrectLocatorPartType, $"{locatorPart.PartType.Namespace}:{locatorPart.PartType.Name}"), nameof(locatorPart));
             }
 
             // and from the node to examine.
@@ -246,13 +226,13 @@ namespace MS.Internal.Annotations.Anchoring
         //
         //  Public Operators
         //
-        //------------------------------------------------------        
+        //------------------------------------------------------
 
         //------------------------------------------------------
         //
         //  Public Events
         //
-        //------------------------------------------------------       
+        //------------------------------------------------------
 
         //------------------------------------------------------
         //
@@ -270,11 +250,10 @@ namespace MS.Internal.Annotations.Anchoring
         public const String Id = "Id";
 
         /// <summary>
-        ///     Used to specify a unique id for the data represented by a 
+        ///     Used to specify a unique id for the data represented by a
         ///     logical tree node.  Attach this property to the element with a
         ///     unique value.
         /// </summary>
-#pragma warning suppress 7009
         public static readonly DependencyProperty DataIdProperty =
                 DependencyProperty.RegisterAttached(
                         "DataId",
@@ -319,7 +298,6 @@ namespace MS.Internal.Annotations.Anchoring
         ///     processor should load all annotations for the subtree rooted
         ///     a the element as a batch.
         /// </summary>
-#pragma warning suppress 7009
         public static readonly DependencyProperty FetchAnnotationsAsBatchProperty = DependencyProperty.RegisterAttached(
                 "FetchAnnotationsAsBatch",
                 typeof(bool),
@@ -421,7 +399,7 @@ namespace MS.Internal.Annotations.Anchoring
         /// <summary>
         ///     Get the value of the DataId dependency property for a
         ///     DependencyObject.
-        /// </summary>       
+        /// </summary>
         /// <param name="d">the object whose DataId value is to be retrieved</param>
         /// <returns>the object's DataId, if it is set, null otherwise</returns>
         internal String GetNodeId(DependencyObject d)
@@ -450,7 +428,7 @@ namespace MS.Internal.Annotations.Anchoring
         #region Private Fields
 
         /// <summary>
-        ///     The type name of locator parts handled by this  handler.  
+        ///     The type name of locator parts handled by this  handler.
         ///     This is internal and available to the processor that
         ///     is closely aligned with this handler.
         /// </summary>

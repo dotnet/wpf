@@ -1,30 +1,14 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-//
-// Description:
-//      DocumentSequenceTextContainer is a TextContainer that aggregates
-//      0 or more TextContainer and expose them as single TextContainer.
-//
-
-#pragma warning disable 1634, 1691 // To enable presharp warning disables (#pragma suppress) below.
+using MS.Internal;
+using MS.Internal.Documents;
+using System.Collections.Specialized;
+using System.Collections.ObjectModel;
 
 namespace System.Windows.Documents
 {
-    using MS.Internal;
-    using MS.Internal.Documents;
-    using System;
-    using System.Collections;
-    using System.Collections.Specialized;
-    using System.Collections.Generic;
-    using System.Collections.ObjectModel;
-    using System.ComponentModel;
-    using System.Diagnostics;
-    using System.Windows;                // DependencyID etc.
-    using System.Text;
-    using System.Windows.Threading;              // Dispatcher
-
     //=====================================================================
     /// <summary>
     /// DocumentSequenceTextContainer is a TextContainer that aggregates
@@ -192,7 +176,7 @@ namespace System.Windows.Documents
                 blocks++;
                 cdb = cdb.NextBlock;
             }
-            return  "DSTC Id=" + DebugId + " Blocks= " + blocks;
+            return $"DSTC Id={DebugId} Blocks= {blocks}";
         }
 #endif // DEBUG
         #endregion Public Methods
@@ -319,7 +303,6 @@ namespace System.Windows.Documents
         {
             get
             {
-                #pragma warning suppress 56503
                 throw new NotImplementedException();
             }
         }
@@ -637,7 +620,7 @@ namespace System.Windows.Documents
                             //Update start pointer for the first block
                             _start = new DocumentSequenceTextPointer(newBlock,  newBlock.ChildContainer.Start);
                         }
-                        
+
 
                         // Record Change Notifications
                         ITextContainer container = newBlock.ChildContainer;
@@ -694,7 +677,7 @@ namespace System.Windows.Documents
                     // Store the highlight.
                     if (selected != DependencyProperty.UnsetValue)
                     {
-                        DocumentsTrace.FixedDocumentSequence.Highlights.Trace(string.Format("HightlightRange {0}-{1}", highlightRangeStart.ToString(), highlightTransitionPosition.ToString()));
+                        DocumentsTrace.FixedDocumentSequence.Highlights.Trace($"HightlightRange {highlightRangeStart}-{highlightTransitionPosition}");
                         if (highlightRangeStart.GetPointerContext(LogicalDirection.Forward) != TextPointerContext.Text)
                         {
                             DocumentsTrace.FixedDocumentSequence.Highlights.Trace("<HighlightNotOnText>");
@@ -703,7 +686,7 @@ namespace System.Windows.Documents
                         {
                             char[] sb = new char[256];
                             TextPointerBase.GetTextWithLimit(highlightRangeStart.CreateDynamicTextPointer(LogicalDirection.Forward), LogicalDirection.Forward, sb, 0, 256, highlightTransitionPosition.CreateDynamicTextPointer(LogicalDirection.Forward));
-                            DocumentsTrace.FixedDocumentSequence.TextOM.Trace(string.Format("HightlightContent [{0}]", new String(sb)));
+                            DocumentsTrace.FixedDocumentSequence.TextOM.Trace($"HightlightContent [{new String(sb)}]");
                         }
                     }
                 }
@@ -883,7 +866,7 @@ namespace System.Windows.Documents
 
                 if (EnsureParentPosition(textPosition, direction, out parentPosition))
                 {
-                    return base.GetHighlightValue(parentPosition, direction, highlightLayerOwnerType); 
+                    return base.GetHighlightValue(parentPosition, direction, highlightLayerOwnerType);
                 }
 
                 return DependencyProperty.UnsetValue;
@@ -900,8 +883,8 @@ namespace System.Windows.Documents
             /// </param>
             internal override bool IsContentHighlighted(StaticTextPointer textPosition, LogicalDirection direction)
             {
-                StaticTextPointer parentPosition; 
-                
+                StaticTextPointer parentPosition;
+
                 if (EnsureParentPosition(textPosition, direction, out parentPosition))
                 {
                     return base.IsContentHighlighted(parentPosition, direction);
@@ -970,7 +953,7 @@ namespace System.Windows.Documents
 
                 if (EnsureParentPosition(textPosition, direction, out parentPosition))
                 {
-                    returnPointer = base.GetNextPropertyChangePosition(parentPosition, direction);                     
+                    returnPointer = base.GetNextPropertyChangePosition(parentPosition, direction);
 
                     // If we were passed a child position, we need to convert the result back to a child position
                     if (textPosition.TextContainer.Highlights != this)
@@ -979,7 +962,7 @@ namespace System.Windows.Documents
                     }
                 }
 
-                return returnPointer; 
+                return returnPointer;
             }
 
             /// <summary>
@@ -1000,7 +983,7 @@ namespace System.Windows.Documents
                     if (textPosition.GetPointerContext(direction) == TextPointerContext.None)
                         return false;
 
-                    // Turn the textPosition (which should be in the scope of a FixedDocument) 
+                    // Turn the textPosition (which should be in the scope of a FixedDocument)
                     // into a position in the scope of the DocumentSequence.
                     ITextPointer dynamicTextPointer = textPosition.CreateDynamicTextPointer(LogicalDirection.Forward);
                     ITextPointer parentTextPointer = ((DocumentSequenceTextContainer)this.TextContainer).MapChildPositionToParent(dynamicTextPointer);
@@ -1028,7 +1011,7 @@ namespace System.Windows.Documents
                 {
                     DocumentSequenceTextPointer parentChangePosition = textPosition.CreateDynamicTextPointer(LogicalDirection.Forward) as DocumentSequenceTextPointer;
                     Debug.Assert(parentChangePosition != null);
-                    
+
                     // If the DocSequence position translates into a position in a different FixedDocument than
                     // the original request, we return an end of the original FixedDocument (which end depends on direction)
                     ITextPointer childTp = parentChangePosition.ChildPointer;

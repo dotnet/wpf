@@ -3,18 +3,15 @@
 // See the LICENSE file in the project root for more information.
 
 
+using System.Reflection;
+using MS.Internal.PresentationFramework; // SecurityHelper
+
 //
 // Description: DocumentsTrace is a tracing utility for Fixed and Flow documents
 //              
 
 namespace MS.Internal.Documents
 {
-    using System;
-    using System.Diagnostics;
-    using System.Reflection;
-    using System.Security;
-    using MS.Internal.PresentationFramework; // SecurityHelper
-
     internal sealed class DocumentsTrace
     {
         internal static class FixedFormat
@@ -120,8 +117,8 @@ namespace MS.Internal.Documents
         public DocumentsTrace(string switchName)
         {
 #if DEBUG
-            string name = SafeSecurityHelper.GetAssemblyPartialName( Assembly.GetCallingAssembly() );
-            _switch = new BooleanSwitch(switchName, "[" + name + "]");
+            ReadOnlySpan<char> shortAssemblyName = ReflectionUtils.GetAssemblyPartialName(Assembly.GetCallingAssembly());
+            _switch = new BooleanSwitch(switchName, $"[{shortAssemblyName}]");
 #endif
         }
 
@@ -138,7 +135,7 @@ namespace MS.Internal.Documents
 #if DEBUG
             if (_switch.Enabled)
             {
-                System.Diagnostics.Trace.WriteLine(_switch.Description + " " + _switch.DisplayName + " : " + message);
+                System.Diagnostics.Trace.WriteLine($"{_switch.Description} {_switch.DisplayName} : {message}");
             }
 #endif
         }
@@ -158,7 +155,7 @@ namespace MS.Internal.Documents
                 for (int i=0; i < st.FrameCount && i < Depth; i++)
                 {
                     System.Diagnostics.StackFrame sf = st.GetFrame(i);
-                    Trace(sf.GetMethod()+"+"+sf.GetILOffset().ToString());
+                    Trace($"{sf.GetMethod()}+{sf.GetILOffset()}");
                 }
 
                 Unindent();

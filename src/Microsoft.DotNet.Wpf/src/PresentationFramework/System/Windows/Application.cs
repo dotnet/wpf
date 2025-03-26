@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -15,47 +15,33 @@
 //              to define global properties and maintain state across multiple pages of markup.
 //
 
-
-//In order to avoid generating warnings about unknown message numbers and unknown pragmas
-//when compiling your C# source code with the actual C# compiler, you need to disable
-//warnings 1634 and 1691. (From PreSharp Documentation)
-#pragma warning disable 1634, 1691
-
 using System.Collections;
-using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.ComponentModel;
-using System.Diagnostics;
-using System.Globalization;
 using System.IO;
 using System.Reflection;
 using System.Runtime.InteropServices;
-using System.Security;
 using System.Resources;
 using System.Threading;
 
 using System.IO.Packaging;
 using System.Windows.Threading;
 using System.Windows.Navigation;
-using System.Windows;
 using System.Windows.Interop;
 using System.Windows.Resources;
 using System.Windows.Markup;
 using System.Net;
-using System.Text;
 
 using MS.Internal;
 using MS.Internal.AppModel;
 using MS.Internal.IO.Packaging;
 using MS.Internal.Interop;
-using MS.Internal.Navigation;
-using MS.Internal.Telemetry;
 using MS.Internal.Utility;
-using MS.Internal.Resources;
 using MS.Utility;
 using MS.Win32;
 using Microsoft.Win32;
 using MS.Internal.Telemetry.PresentationFramework;
+using System.Diagnostics.CodeAnalysis;
 
 using PackUriHelper = System.IO.Packaging.PackUriHelper;
 
@@ -220,28 +206,6 @@ namespace System.Windows
             return RunInternal(window);
         }
 
-
-        /// <summary>
-        ///
-        /// </summary>
-        /// <param name="serviceType"></param>
-        /// <returns></returns>
-        internal object GetService(Type serviceType)
-        {
-            // this is called only from OleCmdHelper and it gets
-            // service for IBrowserCallbackServices which is internal.
-            // This call is made on the App thread.
-            //
-            VerifyAccess();
-            object service = null;
-
-            if (ServiceProvider != null)
-            {
-                service = ServiceProvider.GetService(serviceType);
-            }
-            return service;
-        }
-
         /// <summary>
         ///     Shutdown is called to programmatically shutdown an application.
         ///
@@ -400,9 +364,10 @@ namespace System.Windows
             //
             // Generate the ParserContext from packUri
             //
-            ParserContext pc = new ParserContext();
-
-            pc.BaseUri = currentUri;
+            ParserContext pc = new ParserContext
+            {
+                BaseUri = currentUri
+            };
 
             bool bCloseStream = true;  // Whether or not to close the stream after LoadBaml is done.
 
@@ -507,9 +472,11 @@ namespace System.Windows
             ContentType contentType = new ContentType(part.ContentType);
             Stream stream = part.GetSeekableStream();
 
-            ParserContext pc = new ParserContext();
-            pc.BaseUri = packUri;
-            pc.SkipJournaledProperties = bSkipJournaledProperties;
+            ParserContext pc = new ParserContext
+            {
+                BaseUri = packUri,
+                SkipJournaledProperties = bSkipJournaledProperties
+            };
 
             //
             // The stream must be a BAML or XAML stream.
@@ -923,10 +890,17 @@ namespace System.Windows
                     _resources = value;
                 }
 
-                if (oldValue != null)
+                // This app is no longer an owner for the old RD
+                oldValue?.RemoveOwner(this);
+
+                if (_reloadFluentDictionary && !_resourcesInitialized)
                 {
-                    // This app is no longer an owner for the old RD
-                    oldValue.RemoveOwner(this);
+                    if(value != null && ThemeMode != ThemeMode.None)
+                    {
+                        value.MergedDictionaries.Insert(0, ThemeManager.GetThemeDictionary(ThemeMode));
+                    }
+                    _reloadFluentDictionary = false;
+                    invalidateResources = true;
                 }
 
                 if (value != null)
@@ -954,6 +928,74 @@ namespace System.Windows
         {
             get { return Resources; }
             set { Resources = value; }
+        }
+
+        /// <summary>
+        /// Gets or sets the Fluent theme mode of the application.
+        /// </summary>
+        /// <remarks>
+        /// Setting this property controls if Fluent theme is loaded in Light, Dark or System mode. 
+        /// It also controls the application of backdrop and darkmode on window.
+        /// The four values for the ThemeMode enum are :
+        ///     <see cref="ThemeMode.None"/> - No Fluent theme is loaded.
+        ///     <see cref="ThemeMode.System"/> - Fluent theme is loaded based on the system theme.
+        ///     <see cref="ThemeMode.Light"/> - Fluent theme is loaded in Light mode.
+        ///     <see cref="ThemeMode.Dark"/> - Fluent theme is loaded in Dark mode.
+        ///
+        /// These values are predefined in <see cref="ThemeMode"/> struct
+        ///
+        /// The default value is <see cref="ThemeMode.None"/>.
+        ///     <see cref="ThemeMode"/> and <see cref="Resources"/> are designed to be in sync with each other.
+        ///     Syncing is done in order to avoid UI inconsistencies, for example, if the application is in dark mode 
+        ///     but the windows are in light mode or vice versa. 
+        ///     
+        ///     Setting this property loads the Fluent theme dictionaries in the application resources.
+        ///     So, if you set this property, it is preferrable to not include Fluent theme dictionaries
+        ///     in the application resources manually. If you do, the Fluent theme dictionaries added in the application
+        ///     resources will take precedence over the ones added by setting this property.
+        ///     
+        ///     This property is experimental and may be removed in future versions.
+        /// </remarks>
+        [Experimental("WPF0001")]
+        [TypeConverter(typeof(ThemeModeConverter))]
+        public ThemeMode ThemeMode
+        {
+            get
+            {
+                return _themeMode;
+            }
+            set
+            {
+                VerifyAccess();
+                if (!ThemeManager.IsValidThemeMode(value))
+                {
+                    throw new ArgumentException(string.Format("ThemeMode value {0} is invalid. Use None, System, Light or Dark", value));
+                }
+                
+                ThemeMode oldValue = _themeMode;
+                _themeMode = value;
+
+                if(!_resourcesInitialized)
+                {
+
+                    ThemeManager.OnApplicationThemeChanged(oldValue, value);
+
+                    // If the resources are not initializd, fluent dictionary
+                    // included in this operation will be reset.
+                    // Hence, we need to reload the fluent dictionary.
+                    _reloadFluentDictionary = true;
+
+                    // OnApplicationThemeChanged will trigger InvalidateResourceReferences
+                    // which will mark _resourcesInitialized = true, however since 
+                    // the value earlier was false, it means that Resources may not have been
+                    // parsed from BAML yet. Hence, we need to reset the value to false.
+                    _resourcesInitialized = false;
+
+                    return;
+                }
+
+                ThemeManager.OnApplicationThemeChanged(oldValue, value);
+            }
         }
 
         bool IQueryAmbient.IsAmbientPropertyAvailable(string propertyName)
@@ -1529,8 +1571,10 @@ namespace System.Windows
                     // this support when we can do breaking change. We need to understand what scenarios require
                     // the Application StartupUri to load content other than xaml/baml in the app resource or content file.
                     // If there are no interesting ones, we should remove this support.
-                    NavService = new NavigationService(null);
-                    NavService.AllowWindowNavigation = true;
+                    NavService = new NavigationService(null)
+                    {
+                        AllowWindowNavigation = true
+                    };
                     NavService.PreBPReady += new BPReadyEventHandler(OnPreBPReady);
                     NavService.Navigate(StartupUri);
                 }
@@ -1588,28 +1632,23 @@ namespace System.Windows
                 // this will always be null in the browser hosted case since we we don't
                 // support Activate, Deactivate, and SessionEnding events in the
                 // browser scenario and thus we never create this hwndsource.
-                if (_parkingHwnd != null)
-                {
-                    _parkingHwnd.Dispose();
-                }
+                _parkingHwnd?.Dispose();
 
-                if (_events != null)
-                {
-                    _events.Dispose();
-                }
+                _events?.Dispose();
 
                 PreloadedPackages.Clear();
-                AppSecurityManager.ClearSecurityManager();
 
                 _appIsShutdown = true; // mark app as shutdown
             }
         }
 
-        //
-        // This function is called from the public Run methods to start the application.
-        // ApplicationProxyInternal.Run method calls this method directly to bypass the check
-        // for browser hosted application in the public Run() method
-        //
+        /// <summary>
+        /// This function is called from the public Run methods to start the application.
+        /// </summary>
+        /// <param name="window"></param>
+        /// <returns></returns>
+        /// <exception cref="InvalidOperationException"></exception>
+        /// <exception cref="ArgumentException"></exception>
         internal int RunInternal(Window window)
         {
             VerifyAccess();
@@ -1687,6 +1726,19 @@ namespace System.Windows
 
         internal void InvalidateResourceReferences(ResourcesChangeInfo info)
         {
+            _resourcesInitialized = true;
+            
+            // Sync needs to be performed only under the following conditions:
+            //  - the resource change event raised is due to a collection change
+            //      i.e. it is not a IsIndividualResourceAddOperation
+            //  - the event is not raised due to the change in Application.ThemeMode
+            //      i.e. SkipAppThemeModeSyncing is set to true
+            if (!info.IsIndividualResourceChange
+                    && !ThemeManager.SkipAppThemeModeSyncing)
+            {
+                ThemeManager.SyncApplicationThemeMode();
+            }
+            
             // Invalidate ResourceReference properties on all the windows.
             // we Clone() the collection b/c if we don't then some other thread can be
             // modifying the collection while we iterate over it
@@ -1694,10 +1746,11 @@ namespace System.Windows
             InvalidateResourceReferenceOnWindowCollection(NonAppWindowsInternal.Clone(), info);
         }
 
-        // Creates and returns a NavigationWindow for standalone cases
-        // For browser hosted cases, returns the existing RootBrowserWindow which
-        //   is created before the application.Run is called.
-        internal NavigationWindow GetAppWindow()
+        /// <summary>
+        /// Creates and returns a NavigationWindow for standalone cases
+        /// </summary>
+        /// <returns></returns>
+        internal static NavigationWindow GetAppWindow()
         {
             NavigationWindow appWin = new NavigationWindow();
 
@@ -1812,47 +1865,6 @@ namespace System.Windows
             }
         }
 
-        //This property indicates what type of an application was created. We use this
-        //to determine whether to update the address bar or not for toplevel navigations
-        //Since we don't currently have support to represent a proper relative uri
-        //for .xps or .deploy or browser hosted exes, we limit address bar
-        //updates to xaml navigations.
-        //In the future, IBrowserCallbackServices and this should be moved to use RootBrowserWindow
-        //instead of being in the application. For example,if a standalone window is created
-        //in the same application, we still try to use IBrowserCallbackServices in the
-        //standalone window. Need to ensure only RootBrowserWindow knows about browser hosting,
-        //rest of the appmodel code should be agnostic to hosting process.
-        //This will be cleaned up with the RootBrowserWindow cleanup.
-        internal MimeType MimeType
-        {
-            get { return _appMimeType.Value; }
-            set { _appMimeType = new SecurityCriticalDataForSet<MimeType>(value); }
-        }
-
-        // this is called from ApplicationProxyInternal, ProgressBarAppHelper, and ContainerActivationHelper.
-        // All of these are on the app thread
-        internal IServiceProvider ServiceProvider
-        {
-            private get
-            {
-                VerifyAccess();
-                if (_serviceProvider != null)
-                {
-                    return _serviceProvider;
-                }
-                else
-                {
-                    return null;
-                }
-            }
-            set
-            {
-                VerifyAccess();
-                _serviceProvider = value ;
-            }
-        }
-
-
         // is called by NavigationService to detect TopLevel container
         // We check there to call this only if NavigationService is on
         // the same thread as the Application
@@ -1874,10 +1886,7 @@ namespace System.Windows
         {
             get
             {
-                //If we are shutting down normally, Application.IsShuttingDown will be true. Be sure to check this first.
-                // If we are browser hosted, BrowserCallbackServices.IsShuttingDown checks to see if the browser is shutting us down,
-                // even if we may not be shutting down the Application yet. Check this to avoid reentrance issues between the time that
-                // browser is shutting us down and that Application.Shutdown (CriticalShutdown) is invoked.
+                // If we are shutting down normally, Application.IsShuttingDown will be true. Be sure to check this first.
                 if (_isShuttingDown)
                 {
                     return _isShuttingDown;
@@ -1984,7 +1993,7 @@ namespace System.Windows
             MimeObjectFactory.RegisterCore(MimeTypeMapper.HtmMime, htmlxappFactoryDelegate);
             MimeObjectFactory.RegisterCore(MimeTypeMapper.HtmlMime, htmlxappFactoryDelegate);
             MimeObjectFactory.RegisterCore(MimeTypeMapper.XbapMime, htmlxappFactoryDelegate);
- 
+
         }
 
         // This function returns the resource stream including resource and content file.
@@ -2002,7 +2011,7 @@ namespace System.Windows
 
             Uri packageUri = PackUriHelper.GetPackageUri(resolvedUri);
             Uri partUri = PackUriHelper.GetPartUri(resolvedUri);
-            
+
             //
             // ResourceContainer must have been added into the package cache, the code should just
             // take use of that ResourceContainer instance, instead of creating a new instance here.
@@ -2029,7 +2038,7 @@ namespace System.Windows
             {
                 Uri packUri = PackUriHelper.Create(packageUri);
                 Invariant.Assert(packUri == BaseUriHelper.PackAppBaseUri || packUri == BaseUriHelper.SiteOfOriginBaseUri,
-                                "Unknown packageUri passed: "+packageUri);
+                    $"Unknown packageUri passed: {packageUri}");
 
                 Invariant.Assert(IsApplicationObjectShuttingDown);
                 throw new InvalidOperationException(SR.ApplicationShuttingDown);
@@ -2206,8 +2215,6 @@ namespace System.Windows
                 {
                     Dispatcher.CriticalInvokeShutdown();
                 }
-
-                ServiceProvider = null;
             }
         }
 
@@ -2231,11 +2238,9 @@ namespace System.Windows
 
         private void ConfigAppWindowAndRootElement(object root, Uri uri)
         {
-            Window w = root as Window;
-            if (w == null)
+            if (root is not Window wnd)
             {
-                //Creates and returns a NavigationWindow for standalone cases
-                //For browser hosted cases, returns the RootBrowserWindow precreated by docobjhost
+                //Creates and returns a NavigationWindow
                 NavigationWindow appWin = GetAppWindow();
 
                 //Since we cancel PreBPReady event here, the other navigation events won't fire twice.
@@ -2257,9 +2262,9 @@ namespace System.Windows
                 // if Visibility has not been set, we set it to true
                 // Also check whether the window is already closed when we get here - applications could close the window
                 // in its constructor.
-                if (!w.IsVisibilitySet && !w.IsDisposed)
+                if (!wnd.IsVisibilitySet && !wnd.IsDisposed)
                 {
-                    w.Visibility = Visibility.Visible;
+                    wnd.Visibility = Visibility.Visible;
                 }
             }
         }
@@ -2284,7 +2289,7 @@ namespace System.Windows
         private string GetSystemSound(string soundName)
         {
             string soundFile = null;
-            string regPath = string.Format(CultureInfo.InvariantCulture, SYSTEM_SOUNDS_REGISTRY_LOCATION, soundName);
+            string regPath = $@"AppEvents\Schemes\Apps\Explorer\{soundName}\.current\";
             try
             {
                 using (RegistryKey soundKey = Registry.CurrentUser.OpenSubKey(regPath))
@@ -2344,7 +2349,7 @@ namespace System.Windows
                     Invariant.Assert(fileInBamlConvert != null, "fileInBamlConvert should not be null");
                     Invariant.Assert(fileCurrent != null, "fileCurrent should not be null");
 
-                    if (String.Compare(fileInBamlConvert, fileCurrent, StringComparison.OrdinalIgnoreCase) == 0)
+                    if (string.Equals(fileInBamlConvert, fileCurrent, StringComparison.OrdinalIgnoreCase))
                     {
                         //
                         // This is the root element of the xaml page which is being loaded to creat a tree
@@ -2371,7 +2376,7 @@ namespace System.Windows
                         if (Math.Abs(diff) == 1)
                         {
                             // Check whether the file name is the same.
-                            if (String.Compare(bamlConvertUriSegments[l - 1], curUriSegments[m - 1], StringComparison.OrdinalIgnoreCase) == 0)
+                            if (string.Equals(bamlConvertUriSegments[l - 1], curUriSegments[m - 1], StringComparison.OrdinalIgnoreCase))
                             {
                                 string component = (diff == 1) ? bamlConvertUriSegments[1] : curUriSegments[1];
 
@@ -2428,8 +2433,9 @@ namespace System.Windows
         private bool                        _ownDispatcherStarted;
         private NavigationService           _navService;
 
-        private SecurityCriticalDataForSet<MimeType> _appMimeType;
-        private IServiceProvider            _serviceProvider;
+        private ThemeMode                   _themeMode = ThemeMode.None;
+        private bool                        _resourcesInitialized = false;
+        private bool                        _reloadFluentDictionary = false;
 
         private bool                        _appIsShutdown;
         private int                         _exitCode;
@@ -2451,7 +2457,6 @@ namespace System.Windows
                                                                             SafeNativeMethods.PlaySoundFlags.SND_NODEFAULT |
                                                                             SafeNativeMethods.PlaySoundFlags.SND_ASYNC |
                                                                             SafeNativeMethods.PlaySoundFlags.SND_NOSTOP;
-        private const string SYSTEM_SOUNDS_REGISTRY_LOCATION            = @"AppEvents\Schemes\Apps\Explorer\{0}\.current\";
         private const string SYSTEM_SOUNDS_REGISTRY_BASE                = @"HKEY_CURRENT_USER\AppEvents\Schemes\Apps\Explorer\";
         private const string SOUND_NAVIGATING                           = "Navigating";
         private const string SOUND_COMPLETE_NAVIGATION                  = "ActivatingDocument";

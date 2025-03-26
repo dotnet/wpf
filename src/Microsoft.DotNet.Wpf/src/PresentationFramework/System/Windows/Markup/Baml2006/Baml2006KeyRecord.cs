@@ -2,12 +2,7 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Xaml;
-using System.Windows.Markup;
-using System.Diagnostics;
 
 namespace System.Windows.Baml2006
 {
@@ -94,8 +89,8 @@ namespace System.Windows.Baml2006
 
         private List<Object> _resources;
         private object _data;
-        bool _shared;
-        bool _sharedSet;
+        private bool _shared;
+        private bool _sharedSet;
     }
 
     internal class StaticResource

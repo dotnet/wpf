@@ -2,26 +2,13 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-//
-//
-//
-// Description: InputLanguageManager class and InputLanguage APIs.
-//
-//
-
 using System.Collections;
 using System.Windows.Threading;
-using System.Windows;
 using System.Globalization;
 using MS.Win32;
-using System;
-using System.Security;
-using System.Runtime.InteropServices;
 using System.ComponentModel;
 
-using SR=MS.Internal.PresentationCore.SR;
-
-namespace System.Windows.Input 
+namespace System.Windows.Input
 {
     /// <summary>
     ///     The InputLanguageManager class is responsible for mmanaging 
@@ -287,7 +274,7 @@ namespace System.Windows.Input
                     return null;
                 }
 
-                return (IEnumerable)_source.InputLanguageList;
+                return _source.InputLanguageList;
             }
         }
 

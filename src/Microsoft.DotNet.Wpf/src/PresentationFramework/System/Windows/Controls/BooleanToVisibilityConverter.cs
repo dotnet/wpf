@@ -1,17 +1,10 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
 
-using System;
-using System.ComponentModel;
-using System.Windows;
-using System.Windows.Media;
 using System.Windows.Data;
 using System.Globalization;
-using System.Collections.Generic;
-
-using MS.Internal.Controls;
 
 
 namespace System.Windows.Controls
@@ -40,7 +33,7 @@ namespace System.Windows.Controls
             else if (value is Nullable<bool>)
             {
                 Nullable<bool> tmp = (Nullable<bool>)value;
-                bValue = tmp.HasValue ? tmp.Value : false;
+                bValue = tmp ?? false;
             }
             return (bValue) ? Visibility.Visible : Visibility.Collapsed;
         }

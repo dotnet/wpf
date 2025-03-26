@@ -2,37 +2,12 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
+using System.ComponentModel;
+using System.Runtime.InteropServices;
+using MS.Utility;
+
 namespace MS.Win32
 {
-    using MS.Utility;
-    using System.Runtime.InteropServices;
-    using System.Runtime.InteropServices.ComTypes;
-    using System;
-    using System.Security;
-    using System.Collections;
-    using System.IO;
-    using System.Text;
-    using System.ComponentModel;
-
-
-    // The SecurityHelper class differs between assemblies and could not actually be
-    //  shared, so it is duplicated across namespaces to prevent name collision.
-#if WINDOWS_BASE
-    using MS.Internal.WindowsBase;
-#elif PRESENTATION_CORE
-    using MS.Internal.PresentationCore;
-#elif PRESENTATIONFRAMEWORK
-    using MS.Internal.PresentationFramework;
-#elif DRT
-    using MS.Internal.Drt;
-#elif UIAUTOMATIONTYPES
-    using MS.Internal.UIAutomationTypes;
-#else
-#error Attempt to use a class (duplicated across multiple namespaces) from an unknown assembly.
-#endif
-
-    using IComDataObject = System.Runtime.InteropServices.ComTypes.IDataObject;
-
     internal static partial class SafeNativeMethods
     {
         public static int GetMessagePos()
@@ -267,12 +242,6 @@ namespace MS.Win32
             }
         }
 
-        public static int GetCurrentProcessId()
-        {
-            return SafeNativeMethodsPrivate.GetCurrentProcessId();
-        }
-
-
         public static int GetCurrentThreadId()
         {
             return SafeNativeMethodsPrivate.GetCurrentThreadId();
@@ -290,7 +259,7 @@ namespace MS.Win32
 
             int sessionId;
             if (SafeNativeMethodsPrivate.ProcessIdToSessionId(
-                GetCurrentProcessId(), out sessionId))
+                Environment.ProcessId, out sessionId))
             {
                 result = sessionId;
             }
@@ -338,7 +307,7 @@ namespace MS.Win32
             IntPtr buffer = IntPtr.Zero;
             int bytesReturned;
 
-            int sessionId = SessionId.HasValue ? SessionId.Value : NativeMethods.WTS_CURRENT_SESSION;
+            int sessionId = SessionId ?? NativeMethods.WTS_CURRENT_SESSION;
             bool currentSessionConnectState = defaultResult;
 
             try
@@ -350,9 +319,9 @@ namespace MS.Win32
                     out buffer, out bytesReturned) && (bytesReturned >= sizeof(int)))
                 {
                     var data = Marshal.ReadInt32(buffer);
-                    if (Enum.IsDefined(typeof(NativeMethods.WTS_CONNECTSTATE_CLASS), data))
+                    var connectState = (NativeMethods.WTS_CONNECTSTATE_CLASS)data;
+                    if (Enum.IsDefined(connectState))
                     {
-                        var connectState = (NativeMethods.WTS_CONNECTSTATE_CLASS)data;
                         currentSessionConnectState = (connectState == NativeMethods.WTS_CONNECTSTATE_CLASS.WTSActive);
                     }
                 }
@@ -618,9 +587,6 @@ namespace MS.Win32
 
         private partial class SafeNativeMethodsPrivate
         {
-            [DllImport(ExternDll.Kernel32, ExactSpelling = true, CharSet = System.Runtime.InteropServices.CharSet.Auto)]
-            public static extern int GetCurrentProcessId();
-
             [DllImport(ExternDll.Kernel32, ExactSpelling = true, CharSet = CharSet.Auto)]
             [return:MarshalAs(UnmanagedType.Bool)]
             public static extern bool ProcessIdToSessionId([In]int dwProcessId, [Out]out int pSessionId);

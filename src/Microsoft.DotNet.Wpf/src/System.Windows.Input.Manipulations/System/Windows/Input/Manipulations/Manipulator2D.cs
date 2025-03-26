@@ -87,8 +87,8 @@ namespace System.Windows.Input.Manipulations
         [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "y", Justification = "This is actually the best name for the parameter")]
         public Manipulator2D(int id, float x, float y)
         {
-            Validations.CheckFinite(x, "x");
-            Validations.CheckFinite(y, "y");
+            Validations.CheckFinite(x, nameof(x));
+            Validations.CheckFinite(y, nameof(y));
 
             this.id = id;
             this.x = x;

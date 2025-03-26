@@ -1,27 +1,14 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-//
-//
-
 using MS.Internal;
-using MS.Internal.Media;
 using MS.Internal.Media3D;
-using System;
 using System.ComponentModel;
-using System.ComponentModel.Design.Serialization;
-using System.Diagnostics;
-using System.Windows;
 using System.Windows.Diagnostics;
-using System.Windows.Media;
 using System.Windows.Media.Composition;
 using System.Windows.Markup;
 using System.Windows.Media.Effects;
-
-using MS.Internal.PresentationCore;
-
-using SR=MS.Internal.PresentationCore.SR;
 
 namespace System.Windows.Media.Media3D
 {
@@ -204,8 +191,8 @@ namespace System.Windows.Media.Media3D
         public static readonly DependencyProperty CameraProperty =
             DependencyProperty.Register(
                     "Camera",
-                    /* propertyType = */ typeof(Camera),
-                    /* ownerType = */ typeof(Viewport3DVisual),
+                    propertyType: typeof(Camera),
+                    ownerType: typeof(Viewport3DVisual),
                     new PropertyMetadata(
                         FreezableOperations.GetAsFrozen(new PerspectiveCamera()),
                         CameraPropertyChanged),
@@ -227,7 +214,7 @@ namespace System.Windows.Media.Media3D
                 owner.SetFlagsOnAllChannels(true, VisualProxyFlags.Viewport3DVisual_IsCameraDirty | VisualProxyFlags.IsContentDirty);
             }
 
-            owner.ContentsChanged(/* sender = */ owner, EventArgs.Empty);
+            owner.ContentsChanged(sender: owner, EventArgs.Empty);
         }
 
         /// <summary>
@@ -252,8 +239,8 @@ namespace System.Windows.Media.Media3D
         public static readonly DependencyProperty ViewportProperty =
             DependencyProperty.Register(
                     "Viewport",
-                    /* propertyType = */ typeof(Rect),
-                    /* ownerType = */ typeof(Viewport3DVisual),
+                    propertyType: typeof(Rect),
+                    ownerType: typeof(Viewport3DVisual),
                     new PropertyMetadata(Rect.Empty, ViewportPropertyChanged),
                     (ValidateValueCallback) delegate { return MediaContext.CurrentMediaContext.WriteAccessEnabled; });
 
@@ -265,7 +252,7 @@ namespace System.Windows.Media.Media3D
                 "How are we receiving sub property changes from a struct?");
 
             owner.SetFlagsOnAllChannels(true, VisualProxyFlags.Viewport3DVisual_IsViewportDirty | VisualProxyFlags.IsContentDirty);
-            owner.ContentsChanged(/* sender = */ owner, EventArgs.Empty);
+            owner.ContentsChanged(sender: owner, EventArgs.Empty);
         }
 
         /// <summary>
@@ -345,10 +332,7 @@ namespace System.Windows.Media.Media3D
             child.SetParent(this);
 
             // set the inheritance context so databinding, etc... work
-            if (_inheritanceContextForChildren != null)
-            {
-                _inheritanceContextForChildren.ProvideSelfAsInheritanceContext(child, null);
-            }
+            _inheritanceContextForChildren?.ProvideSelfAsInheritanceContext(child, null);
 
             SetFlagsOnAllChannels(true, VisualProxyFlags.IsContentDirty);
 
@@ -368,7 +352,7 @@ namespace System.Windows.Media.Media3D
             // UIElement.PropagateResumeLayout(child);
 
             // Fire notifications
-            OnVisualChildrenChanged(child, /* visualRemoved = */ null);
+            OnVisualChildrenChanged(child, visualRemoved: null);
 
             child.FireOnVisualParentChanged(null);
             VisualDiagnostics.OnVisualChildChanged(this, child, true);
@@ -395,13 +379,10 @@ namespace System.Windows.Media.Media3D
 
             VisualDiagnostics.OnVisualChildChanged(this, child, false);
 
-            child.SetParent(/* newParent = */ (Visual) null);  // CS0121: Call is ambigious without casting null to Visual.
+            child.SetParent(newParent: (Visual) null);  // CS0121: Call is ambigious without casting null to Visual.
 
             // remove the inheritance context
-            if (_inheritanceContextForChildren != null)
-            {
-                _inheritanceContextForChildren.RemoveSelfAsInheritanceContext(child, null);
-            }
+            _inheritanceContextForChildren?.RemoveSelfAsInheritanceContext(child, null);
 
             //
             // Remove the child on all channels this visual is marshalled to.
@@ -436,7 +417,7 @@ namespace System.Windows.Media.Media3D
 
             child.FireOnVisualParentChanged(this);
 
-            OnVisualChildrenChanged(/* visualAdded = */ null , child);
+            OnVisualChildrenChanged(visualAdded: null , child);
         }
 
         /// <summary>
@@ -512,7 +493,7 @@ namespace System.Windows.Media.Media3D
         /// </summary>
         protected override GeometryHitTestResult HitTestCore(GeometryHitTestParameters hitTestParameters)
         {
-            throw new NotSupportedException(SR.Format(SR.HitTest_Invalid, typeof(GeometryHitTestParameters).Name, this.GetType().Name));
+            throw new NotSupportedException(SR.Format(SR.HitTest_Invalid, nameof(GeometryHitTestParameters), this.GetType().Name));
         }
 
         internal Point WorldToViewport(Point4D point)
@@ -799,7 +780,7 @@ namespace System.Windows.Media.Media3D
                                 DUCE.Visual3DNode.InsertChildAt(
                                     _proxy3D.GetHandle(channel),
                                     ((DUCE.IResource)child).GetHandle(channel),
-                                    /* iPosition = */ i,
+                                    iPosition: i,
                                     channel);
 
                                 child.SetFlags(channel, true, VisualProxyFlags.IsConnectedToParent);
@@ -851,7 +832,7 @@ namespace System.Windows.Media.Media3D
             // same extensibility point we use for "content".
             SetFlagsOnAllChannels(true, VisualProxyFlags.IsContentDirty);
 
-            ContentsChanged(/* sender = */ this, EventArgs.Empty);
+            ContentsChanged(sender: this, EventArgs.Empty);
         }
 
         /// <summary>
@@ -867,7 +848,6 @@ namespace System.Windows.Media.Media3D
         // Because 2D Visuals and FEs do not participate in inheritance context
         // we allow this backdoor for a Viewport3D to set itself as the inheritance
         // context of the Visual3DCollection it exposes as Children.
-        [FriendAccessAllowed]
         internal void SetInheritanceContextForChildren(DependencyObject inheritanceContextForChildren)
         {
             _inheritanceContextForChildren = inheritanceContextForChildren;

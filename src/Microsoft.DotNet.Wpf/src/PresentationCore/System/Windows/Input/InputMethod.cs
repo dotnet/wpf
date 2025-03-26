@@ -1,32 +1,18 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-//
-// 
 // Description: Manage Input Methods (EA-IME, TextServicesFramework).
-//
-//
 
 using System.Runtime.InteropServices;
-using System.Collections;
-using System.Diagnostics;
 using System.Globalization;
 using System.Threading;
 using System.Windows.Threading;
 using System.Windows.Interop;
-using System.Windows.Media;
-using System.Security;
-using MS.Utility;
 using MS.Win32;
 using MS.Internal;
-using MS.Internal.PresentationCore;                        // SecurityHelper
 
-using System;
-
-using SR=MS.Internal.PresentationCore.SR;
-
-namespace System.Windows.Input 
+namespace System.Windows.Input
 {
     //------------------------------------------------------
     //
@@ -1347,7 +1333,7 @@ namespace System.Windows.Input
                     //
                     if (DefaultImc != IntPtr.Zero)
                     {
-                        UnsafeNativeMethods.ImmAssociateContext(new HandleRef(this, hwnd), new HandleRef(this, _defaultImc.Value));
+                        UnsafeNativeMethods.ImmAssociateContext(new HandleRef(this, hwnd), new HandleRef(this, _defaultImc));
                     }
                 }
                 else 
@@ -1483,8 +1469,7 @@ namespace System.Windows.Input
                     compartment = TextServicesCompartmentContext.Current.GetThreadCompartment(iminfo.Guid);
                 else if (iminfo.Scope == CompartmentScope.Global)
                     compartment = TextServicesCompartmentContext.Current.GetGlobalCompartment(iminfo.Guid);
-                if (compartment != null)
-                   compartment.UnadviseNotifySink();
+                compartment?.UnadviseNotifySink();
             }
         }
 
@@ -1588,9 +1573,11 @@ namespace System.Windows.Input
                 bCanShown  = true;
                 if (fShow)
                 {
-                    NativeMethods.REGISTERWORD regWord = new NativeMethods.REGISTERWORD();
-                    regWord.lpReading = null;
-                    regWord.lpWord = strRegister;
+                    NativeMethods.REGISTERWORD regWord = new NativeMethods.REGISTERWORD
+                    {
+                        lpReading = null,
+                        lpWord = strRegister
+                    };
                     UnsafeNativeMethods.ImmConfigureIME(new HandleRef(this, hkl), new HandleRef(this, HwndFromInputElement(element)), NativeMethods.IME_CONFIG_REGISTERWORD, ref regWord);
                 }
             }
@@ -1748,7 +1735,7 @@ namespace System.Windows.Input
         {
             get
             {
-                if (_defaultImc==null)
+                if (_defaultImc == 0)
                 {
                     // 
                     //  Get the default HIMC from default IME window.
@@ -1757,11 +1744,12 @@ namespace System.Windows.Input
                     IntPtr himc = UnsafeNativeMethods.ImmGetContext(new HandleRef(this, hwnd));
 
                     // Store the default imc to _defaultImc.
-                    _defaultImc = new SecurityCriticalDataClass<IntPtr>(himc);
+                    _defaultImc = himc;
 
                     UnsafeNativeMethods.ImmReleaseContext(new HandleRef(this, hwnd), new HandleRef(this, himc));
                 }
-                return _defaultImc.Value;
+
+                return _defaultImc;
             }
         }
 
@@ -1795,7 +1783,7 @@ namespace System.Windows.Input
 
         // the default imc. The default imc is per thread and we cache it in ThreadStatic.
         [ThreadStatic]
-        private static SecurityCriticalDataClass<IntPtr> _defaultImc;
+        private static IntPtr _defaultImc;
 
         #endregion Private Fields
     }

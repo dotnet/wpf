@@ -2,13 +2,10 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
+using System.Windows;
 
-namespace MS.Internal.ComponentModel 
+namespace MS.Internal.ComponentModel
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Windows;
-
     // This structure is used as a key in a dictionary of property key -> property descriptor
     // The key is unique based on the type the property is attached to, and the property
     // itself.

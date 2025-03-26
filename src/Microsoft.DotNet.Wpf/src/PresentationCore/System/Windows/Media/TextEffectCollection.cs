@@ -10,15 +10,8 @@
 //
 
 
-using System;
-using System.Diagnostics;
-using System.Runtime.InteropServices;
-using System.Windows;
 using System.Collections;
-using System.Collections.Generic;
-using System.Windows.Media;
 using System.Windows.Media.Animation;
-using System.Windows.Markup;
 
 namespace System.Windows.Media
 {

@@ -2,26 +2,9 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-using System;
 using System.IO;
-using System.Net;
-using System.Collections;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Collections.Specialized;
-using System.Diagnostics;
 using System.ComponentModel;
-using System.Windows.Threading;
-using System.Windows.Media;
-using System.IO.Packaging;
-using MS.Internal.IO.Packaging;         // for PackageCacheEntry
 using System.Globalization;
-using System.Windows.Navigation;
-
-using MS.Internal;
-using MS.Internal.Utility;
-using MS.Internal.AppModel;
-using MS.Utility;
 using System.Xaml;
 using System.Windows.Baml2006;
 using System.Windows.Markup;
@@ -95,7 +78,7 @@ namespace System.Windows
             T result = provider.GetService(typeof(T)) as T;
             if (result == null)
             {
-                throw new InvalidOperationException(SR.Format(SR.DeferringLoaderNoContext, typeof(DeferrableContentConverter).Name, typeof(T).Name));
+                throw new InvalidOperationException(SR.Format(SR.DeferringLoaderNoContext, nameof(DeferrableContentConverter), typeof(T).Name));
             }
             return result;
         }

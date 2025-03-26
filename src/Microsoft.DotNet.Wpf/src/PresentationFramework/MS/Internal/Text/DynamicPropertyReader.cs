@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -9,17 +9,11 @@
 //
 
 
-using System;
-using System.Diagnostics;
 using System.Globalization;
 using System.Windows;
-using System.Windows.Controls;
 using System.Windows.Documents;
 using System.Windows.Media;
-using System.Windows.Media.TextFormatting;
 using System.Windows.Markup;
-using MS.Internal.PtsHost;
-using MS.Internal.Annotations.Component;
 
 namespace MS.Internal.Text
 {
@@ -322,11 +316,12 @@ namespace MS.Internal.Text
         // ------------------------------------------------------------------
         internal static NumberSubstitution GetNumberSubstitution(DependencyObject element)
         {
-            NumberSubstitution numberSubstitution = new NumberSubstitution();
-
-            numberSubstitution.CultureSource = (NumberCultureSource)element.GetValue(NumberSubstitution.CultureSourceProperty);
-            numberSubstitution.CultureOverride = (CultureInfo)element.GetValue(NumberSubstitution.CultureOverrideProperty);
-            numberSubstitution.Substitution = (NumberSubstitutionMethod)element.GetValue(NumberSubstitution.SubstitutionProperty);
+            NumberSubstitution numberSubstitution = new NumberSubstitution
+            {
+                CultureSource = (NumberCultureSource)element.GetValue(NumberSubstitution.CultureSourceProperty),
+                CultureOverride = (CultureInfo)element.GetValue(NumberSubstitution.CultureOverrideProperty),
+                Substitution = (NumberSubstitutionMethod)element.GetValue(NumberSubstitution.SubstitutionProperty)
+            };
 
             return numberSubstitution;
         }

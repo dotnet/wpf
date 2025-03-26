@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -101,9 +101,8 @@ namespace System.Windows.Controls
         /// and Viewport as oCompare.</returns>
         override public bool Equals(object oCompare)
         {
-            if (oCompare is HierarchicalVirtualizationConstraints)
+            if (oCompare is HierarchicalVirtualizationConstraints constraints)
             {
-                HierarchicalVirtualizationConstraints constraints = (HierarchicalVirtualizationConstraints)oCompare;
                 return (this == constraints);
             }
             else
@@ -144,10 +143,10 @@ namespace System.Windows.Controls
 
         #region Data
 
-        VirtualizationCacheLength _cacheLength;
-        VirtualizationCacheLengthUnit _cacheLengthUnit;
-        Rect _viewport;
-        long _scrollGeneration;
+        private VirtualizationCacheLength _cacheLength;
+        private VirtualizationCacheLengthUnit _cacheLengthUnit;
+        private Rect _viewport;
+        private long _scrollGeneration;
 
         #endregion
     }

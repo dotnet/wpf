@@ -357,11 +357,6 @@
         <target state="translated">Nie można ustawić fokusu na elemencie docelowym.</target>
         <note />
       </trans-unit>
-      <trans-unit id="ShouldBeZero">
-        <source>Must be zero.</source>
-        <target state="translated">Musi mieć wartość zero.</target>
-        <note />
-      </trans-unit>
       <trans-unit id="ValueReadonly">
         <source>Value is read-only.</source>
         <target state="translated">Wartość jest tylko do odczytu.</target>

@@ -11,37 +11,21 @@
 
 using MS.Internal;
 using MS.Internal.Collections;
-using MS.Internal.PresentationCore;
 using MS.Utility;
-using System;
 using System.Collections;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.ComponentModel.Design.Serialization;
-using System.Diagnostics;
 using System.Globalization;
-using System.Reflection;
-using System.Runtime.InteropServices;
 using System.Text;
 using System.Windows.Markup;
 using System.Windows.Media.Media3D.Converters;
-using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Media.Composition;
-using System.Security;
-using SR=MS.Internal.PresentationCore.SR;
-using System.Windows.Media.Imaging;
-// These types are aliased to match the unamanaged names used in interop
-using BOOL = System.UInt32;
-using WORD = System.UInt16;
-using Float = System.Single;
 
 namespace System.Windows.Media.Media3D
 {
     /// <summary>
     /// A collection of GeneralTransform3D objects.
     /// </summary>
-
 
     public sealed partial class GeneralTransform3DCollection : Animatable, IList, IList<GeneralTransform3D>
     {
@@ -166,7 +150,7 @@ namespace System.Windows.Media.Media3D
             // not in the collection.  Therefore we need to first verify the old value exists
             // before calling OnFreezablePropertyChanged.  Since we already need to locate
             // the item in the collection we keep the index and use RemoveAt(...) to do
-            // the work.#1016178)
+            // the work.  (Windows OS #1016178)
 
             // We use the public IndexOf to guard our UIContext since OnFreezablePropertyChanged
             // is only called conditionally.  IList.IndexOf returns -1 if the value is not found.
@@ -255,11 +239,14 @@ namespace System.Windows.Media.Media3D
 
                 if (!Object.ReferenceEquals(_collection[ index ], value))
                 {
+
                     GeneralTransform3D oldValue = _collection[ index ];
                     OnFreezablePropertyChanged(oldValue, value);
 
                     _collection[ index ] = value;
-}
+
+
+                }
 
 
                 ++_version;
@@ -296,10 +283,8 @@ namespace System.Windows.Media.Media3D
             // This will not throw in the case that we are copying
             // from an empty collection.  This is consistent with the
             // BCL Collection implementations. (Windows 1587365)
-            if (index < 0  || (index + _collection.Count) > array.Length)
-            {
-                throw new ArgumentOutOfRangeException("index");
-            }
+            ArgumentOutOfRangeException.ThrowIfNegative(index);
+            ArgumentOutOfRangeException.ThrowIfGreaterThan(index, array.Length - _collection.Count);
 
             _collection.CopyTo(array, index);
         }
@@ -408,10 +393,8 @@ namespace System.Windows.Media.Media3D
             // This will not throw in the case that we are copying
             // from an empty collection.  This is consistent with the
             // BCL Collection implementations. (Windows 1587365)
-            if (index < 0  || (index + _collection.Count) > array.Length)
-            {
-                throw new ArgumentOutOfRangeException("index");
-            }
+            ArgumentOutOfRangeException.ThrowIfNegative(index);
+            ArgumentOutOfRangeException.ThrowIfGreaterThan(index, array.Length - _collection.Count);
 
             if (array.Rank != 1)
             {
@@ -608,8 +591,10 @@ namespace System.Windows.Media.Media3D
                 GeneralTransform3D newValue = (GeneralTransform3D) sourceGeneralTransform3DCollection._collection[i].Clone();
                 OnFreezablePropertyChanged(/* oldValue = */ null, newValue);
                 _collection.Add(newValue);
-}
-}
+
+            }
+
+        }
         /// <summary>
         /// Implementation of Freezable.CloneCurrentValueCore()
         /// </summary>
@@ -628,8 +613,10 @@ namespace System.Windows.Media.Media3D
                 GeneralTransform3D newValue = (GeneralTransform3D) sourceGeneralTransform3DCollection._collection[i].CloneCurrentValue();
                 OnFreezablePropertyChanged(/* oldValue = */ null, newValue);
                 _collection.Add(newValue);
-}
-}
+
+            }
+
+        }
         /// <summary>
         /// Implementation of Freezable.GetAsFrozenCore()
         /// </summary>
@@ -648,8 +635,10 @@ namespace System.Windows.Media.Media3D
                 GeneralTransform3D newValue = (GeneralTransform3D) sourceGeneralTransform3DCollection._collection[i].GetAsFrozen();
                 OnFreezablePropertyChanged(/* oldValue = */ null, newValue);
                 _collection.Add(newValue);
-}
-}
+
+            }
+
+        }
         /// <summary>
         /// Implementation of Freezable.GetCurrentValueAsFrozenCore()
         /// </summary>
@@ -668,8 +657,10 @@ namespace System.Windows.Media.Media3D
                 GeneralTransform3D newValue = (GeneralTransform3D) sourceGeneralTransform3DCollection._collection[i].GetCurrentValueAsFrozen();
                 OnFreezablePropertyChanged(/* oldValue = */ null, newValue);
                 _collection.Add(newValue);
-}
-}
+
+            }
+
+        }
         /// <summary>
         /// Implementation of <see cref="System.Windows.Freezable.FreezeCore">Freezable.FreezeCore</see>.
         /// </summary>
@@ -773,6 +764,7 @@ namespace System.Windows.Media.Media3D
 
             void IDisposable.Dispose()
             {
+
             }
 
             /// <summary>
@@ -941,6 +933,7 @@ namespace System.Windows.Media.Media3D
                         GeneralTransform3D newValue = item;
                         OnFreezablePropertyChanged(/* oldValue = */ null, newValue);
                         _collection.Add(newValue);
+
                     }
 
                     needsItemValidation = false;
@@ -956,6 +949,7 @@ namespace System.Windows.Media.Media3D
                         throw new System.ArgumentException(SR.Collection_NoNull);
                     }
                     OnFreezablePropertyChanged(/* oldValue = */ null, item);
+
                 }
             }
 

@@ -87,11 +87,6 @@
 #define TRACE
 #endif // DEBUG
 
-using System;
-using System.Collections;
-using System.Diagnostics;
-using MS.Internal;
-
 namespace System.Windows.Media.Animation
 {
     /// <summary>

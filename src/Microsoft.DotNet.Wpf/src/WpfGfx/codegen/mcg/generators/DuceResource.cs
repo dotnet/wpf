@@ -50,7 +50,7 @@ namespace MS.Internal.MilCodeGen.Generators
         #region Public Methods
         public override void Go()
         {
-            FileCodeSink marshalFile = new FileCodeSink(_resourceModel.OutputDirectory, "src\\Graphics\\core\\resources\\marshal_generated.cpp");
+            FileCodeSink marshalFile = new FileCodeSink(_resourceModel.OutputDirectory, "src\\WpfGfx\\core\\resources\\marshal_generated.cpp");
             Helpers.Style.WriteFileHeader(marshalFile);
             Helpers.Style.WriteIncludePrecomp(marshalFile);
 
@@ -229,7 +229,7 @@ namespace MS.Internal.MilCodeGen.Generators
                 [[/inline]]
                 );
 
-            FileCodeSink dataFile = new FileCodeSink(_resourceModel.OutputDirectory, "src\\Graphics\\core\\resources\\data_generated.h");
+            FileCodeSink dataFile = new FileCodeSink(_resourceModel.OutputDirectory, "src\\WpfGfx\\core\\resources\\data_generated.h");
             Helpers.Style.WriteFileHeader(dataFile);
 
             // Write lines to ignore deprecation of D3DMATRIX
@@ -257,7 +257,7 @@ namespace MS.Internal.MilCodeGen.Generators
             // we use a hash table as a set.
             //
 
-            FileCodeSink forwardsFile = new FileCodeSink(_resourceModel.OutputDirectory, "src\\Graphics\\core\\resources\\resources_generated.h");
+            FileCodeSink forwardsFile = new FileCodeSink(_resourceModel.OutputDirectory, "src\\WpfGfx\\core\\resources\\resources_generated.h");
             Helpers.Style.WriteFileHeader(forwardsFile);
             Hashtable forwards = new Hashtable();
 
@@ -567,7 +567,7 @@ namespace MS.Internal.MilCodeGen.Generators
 
             codeSink.WriteBlock(
                 [[inline]]
-                    HRESULT [[dataType.DuceClass]]::RegisterNotifiers(CMilSlaveHandleTable *pHandleTable)
+                    HRESULT [[dataType.DuceClass]]::RegisterNotifiers(__in_ecount(1) CMilSlaveHandleTable *pHandleTable)
                     {
                         HRESULT hr = S_OK;
 

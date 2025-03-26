@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -11,10 +11,6 @@
 //                  Common operations on files
 //
 //---------------------------------------------------------------------------
-
-using System;
-using System.IO;
-using System.Security;
 
 namespace System.IO
 {
@@ -145,11 +141,6 @@ namespace System.IO
             return stream;
         }
 
-        // PreSharp uses message numbers that the C# compiler doesn't know about.
-        // Disable the C# complaints, per the PreSharp documentation.
-        #pragma warning disable 1634, 1691
-        #pragma warning disable 56502 // disable PreSharp warning about empty catch blocks
-
         ///<summary>
         /// Delete a temporary file robustly.
         ///</summary>
@@ -175,6 +166,5 @@ namespace System.IO
                 }
             }
         }
-        #pragma warning restore 56502
     }
 }

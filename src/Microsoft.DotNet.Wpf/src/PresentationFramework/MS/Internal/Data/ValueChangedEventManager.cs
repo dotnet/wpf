@@ -26,15 +26,10 @@
     deliver the "event" to the listeners that are interested in that property.
 \****************************************************************************/
 
-using System;
 using System.Collections;               // ICollection
-using System.Collections.Generic;       // List<T>
 using System.Collections.Specialized;   // HybridDictionary
 using System.ComponentModel;            // PropertyDescriptor
-using System.Diagnostics;               // Debug
-using System.Reflection;                // MethodInfo
 using System.Windows;                   // WeakEventManager
-using MS.Internal.PresentationFramework; // SR
 
 namespace MS.Internal.Data
 {
@@ -89,7 +84,7 @@ namespace MS.Internal.Data
         public static void AddHandler(object source, EventHandler<ValueChangedEventArgs> handler, PropertyDescriptor pd)
         {
             ArgumentNullException.ThrowIfNull(handler);
-            if (handler.GetInvocationList().Length != 1)
+            if (!handler.HasSingleTarget)
                 throw new NotSupportedException(SR.NoMulticastHandlers);
 
             CurrentManager.PrivateAddHandler(source, handler, pd);
@@ -101,7 +96,7 @@ namespace MS.Internal.Data
         public static void RemoveHandler(object source, EventHandler<ValueChangedEventArgs> handler, PropertyDescriptor pd)
         {
             ArgumentNullException.ThrowIfNull(handler);
-            if (handler.GetInvocationList().Length != 1)
+            if (!handler.HasSingleTarget)
                 throw new NotSupportedException(SR.NoMulticastHandlers);
 
             CurrentManager.PrivateRemoveHandler(source, handler, pd);
@@ -387,7 +382,7 @@ namespace MS.Internal.Data
 
         #endregion Private Methods
 
-        List<PropertyDescriptor> _toRemove = new List<PropertyDescriptor>();
+        private List<PropertyDescriptor> _toRemove = new List<PropertyDescriptor>();
 
         #region ValueChangedRecord
 
@@ -535,11 +530,11 @@ namespace MS.Internal.Data
                 return (target is MS.Internal.Data.ValueTable);
             }
 
-            PropertyDescriptor _pd;
-            ValueChangedEventManager _manager;
-            object _source;
-            ListenerList<ValueChangedEventArgs> _listeners = new ListenerList<ValueChangedEventArgs>();
-            ValueChangedEventArgs _eventArgs;
+            private PropertyDescriptor _pd;
+            private ValueChangedEventManager _manager;
+            private object _source;
+            private ListenerList<ValueChangedEventArgs> _listeners = new ListenerList<ValueChangedEventArgs>();
+            private ValueChangedEventArgs _eventArgs;
         }
 
         #endregion ValueChangedRecord

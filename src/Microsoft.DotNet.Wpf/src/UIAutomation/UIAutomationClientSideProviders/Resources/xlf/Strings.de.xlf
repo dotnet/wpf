@@ -357,11 +357,6 @@
         <target state="translated">Das Zielelement kann keinen Fokus erhalten.</target>
         <note />
       </trans-unit>
-      <trans-unit id="ShouldBeZero">
-        <source>Must be zero.</source>
-        <target state="translated">Muss Null sein.</target>
-        <note />
-      </trans-unit>
       <trans-unit id="ValueReadonly">
         <source>Value is read-only.</source>
         <target state="translated">Der Wert ist schreibgeschützt.</target>

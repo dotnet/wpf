@@ -1782,16 +1782,6 @@
         <target state="translated">Bölüm adı içerik türüyle uyumlu değil.</target>
         <note />
       </trans-unit>
-      <trans-unit id="InvalidPermissionStateValue">
-        <source>PermissionState value '{0}' is not valid for this Permission.</source>
-        <target state="translated">'{0}' PermissionState değeri bu İzin için geçerli değil.</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="InvalidPermissionType">
-        <source>Permission type is not valid. Expected '{0}'.</source>
-        <target state="translated">İzin türü geçerli değil. Beklenen '{0}'.</target>
-        <note />
-      </trans-unit>
       <trans-unit id="InvalidPressureValue">
         <source>Pressure must be a value between 0 and 1.</source>
         <target state="translated">Basınç 0 ile 1 arasında bir değer olmalıdır.</target>
@@ -2522,51 +2512,6 @@
         <target state="translated">Sayfa numarası negatif olamaz.</target>
         <note />
       </trans-unit>
-      <trans-unit id="ParameterCannotBeGreaterThan">
-        <source>The parameter value cannot be greater than '{0}'.</source>
-        <target state="translated">Parametre değeri '{0}' değerinden büyük olamaz.</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="ParameterCannotBeLessThan">
-        <source>The parameter value cannot be less than '{0}'.</source>
-        <target state="translated">Parametre değeri '{0}' değerinden küçük olamaz.</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="ParameterCannotBeNegative">
-        <source>Parameter must be greater than or equal to zero.</source>
-        <target state="translated">Parametre sıfıra eşit veya daha büyük olmalıdır.</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="ParameterMustBeBetween">
-        <source>The parameter value must be between '{0}' and '{1}'.</source>
-        <target state="translated">Parametre değeri '{0}' ile '{1}' arasında olmalıdır.</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="ParameterMustBeGreaterThanZero">
-        <source>The parameter value must be greater than zero.</source>
-        <target state="translated">Parametre değeri sıfırdan büyük olmalıdır.</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="ParameterValueCannotBeInfinity">
-        <source>The parameter value must be finite.</source>
-        <target state="translated">Parametre değeri sonlu olmalıdır.</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="ParameterValueCannotBeNaN">
-        <source>The parameter value must be a number.</source>
-        <target state="translated">Parametre değeri bir sayı olmalıdır.</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="ParameterValueCannotBeNegative">
-        <source>'{0}' parameter value cannot be negative.</source>
-        <target state="translated">'{0}' parametre değeri negatif olamaz.</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="ParameterValueMustBeGreaterThanZero">
-        <source>'{0}' parameter value must be greater than zero.</source>
-        <target state="translated">'{0}' parametre değeri sıfırdan büyük olmalıdır.</target>
-        <note />
-      </trans-unit>
       <trans-unit id="Parser_BadForm">
         <source>Incorrect form '{0}' found parsing '{1}' string.</source>
         <target state="translated">'{1}' dizesi ayrıştırılırken yanlış '{0}' biçimi bulundu.</target>
@@ -2900,11 +2845,6 @@
       <trans-unit id="SearchText">
         <source>Search</source>
         <target state="translated">Arama</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="SecurityExceptionForSettingSandboxExternalToTrue">
-        <source>Cannot set SandboxExternalContent to true in partial trust.</source>
-        <target state="translated">Kısmi güvende SandboxExternalContent true olarak ayarlanamaz.</target>
         <note />
       </trans-unit>
       <trans-unit id="SeekNegative">

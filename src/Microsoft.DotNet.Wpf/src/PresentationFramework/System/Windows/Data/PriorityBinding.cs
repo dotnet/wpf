@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -9,24 +9,20 @@
 // See spec at Data Binding.mht
 //
 
-using System;
-using System.Collections;
 using System.Collections.ObjectModel;   // Collection<T>
 using System.ComponentModel;
-using System.Globalization;
 using System.Windows.Markup;
 using MS.Internal.Data;
-using MS.Utility;
 
 namespace System.Windows.Data
 {
-/// <summary>
-///  Describes a collection of bindings attached to a single property.
-///     These behave as "priority" bindings, meaning that the property
-///     receives its value from the first binding in the collection that
-///     can produce a legal value.
-/// </summary>
-[ContentProperty("Bindings")]
+    /// <summary>
+    ///  Describes a collection of bindings attached to a single property.
+    ///     These behave as "priority" bindings, meaning that the property
+    ///     receives its value from the first binding in the collection that
+    ///     can produce a legal value.
+    /// </summary>
+    [ContentProperty("Bindings")]
 public class PriorityBinding : BindingBase, IAddChild
 {
     //------------------------------------------------------
@@ -55,7 +51,7 @@ public class PriorityBinding : BindingBase, IAddChild
         if (binding != null)
             Bindings.Add(binding);
         else
-            throw new ArgumentException(SR.Format(SR.ChildHasWrongType, this.GetType().Name, "BindingBase", value.GetType().FullName), "value");
+            throw new ArgumentException(SR.Format(SR.ChildHasWrongType, this.GetType().Name, "BindingBase", value.GetType().FullName), nameof(value));
     }
 
     ///<summary>
@@ -131,12 +127,12 @@ public class PriorityBinding : BindingBase, IAddChild
         CheckSealed();
     }
 
-    //------------------------------------------------------
-    //
-    //  Private Fields
-    //
-    //------------------------------------------------------
+        //------------------------------------------------------
+        //
+        //  Private Fields
+        //
+        //------------------------------------------------------
 
-    BindingCollection       _bindingCollection;
+        private BindingCollection       _bindingCollection;
 }
 }

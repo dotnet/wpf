@@ -3,9 +3,7 @@
 // See the LICENSE file in the project root for more information.
 
 
-using System;
 using System.ComponentModel;
-using System.Collections;
 
 namespace System.Windows
 {
@@ -57,15 +55,10 @@ namespace System.Windows
         /// <returns>TypeConverter.StandardValuesCollection</returns>
         public override TypeConverter.StandardValuesCollection GetStandardValues(ITypeDescriptorContext context)
         {
-            if (_standardValues == null)
+            return _standardValues ??= new TypeConverter.StandardValuesCollection(new Nullable<bool>[]
             {
-                ArrayList list1 = new ArrayList(3);
-                list1.Add((bool?)true);
-                list1.Add((bool?)false);
-                list1.Add((bool?)null);
-                _standardValues = new TypeConverter.StandardValuesCollection(list1.ToArray());
-            }
-            return _standardValues;
+                true, false, null
+            });
         }
 
         /// <summary>

@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -11,17 +11,12 @@ using MS.Internal.KnownBoxes;
 using MS.Internal.Media;
 using MS.Internal.PresentationCore;
 using MS.Utility;
-using System;
 using System.Collections;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Diagnostics;
-using System.Security;
 using System.Windows.Automation;
 using System.Windows.Automation.Peers;
 using System.Windows.Input;
 using System.Windows.Input.StylusPlugIns;
-using System.Windows.Interop;
 using System.Windows.Markup;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
@@ -55,10 +50,6 @@ namespace System.Windows
         /// </summary>
         Collapsed
     }
-
-    // PreSharp uses message numbers that the C# compiler doesn't know about.
-    // Disable the C# complaints, per the PreSharp documentation.
-#pragma warning disable 1634, 1691
 
     /// <summary>
     /// UIElement is the base class for frameworks building on the Windows Presentation Core.
@@ -704,8 +695,8 @@ namespace System.Windows
                         GetUIParentOrICH(out p, out ich); //only one will be returned
                         if (p != null && !p.MeasureInProgress) //this is what differs this code from signalDesiredSizeChange()
                             p.OnChildDesiredSizeChanged(this);
-                        else if (ich != null)
-                            ich.OnChildDesiredSizeChanged(this);
+                        else
+                            ich?.OnChildDesiredSizeChanged(this);
                     }
                 }
             }
@@ -1144,17 +1135,13 @@ namespace System.Windows
                 HandleRef desktopWnd = new HandleRef(null, IntPtr.Zero);
 
                 // Win32Exception will get the Win32 error code so we don't have to
-#pragma warning disable 6523
                 IntPtr dc = UnsafeNativeMethods.GetDC(desktopWnd);
 
                 // Detecting error case from unmanaged call, required by PREsharp to throw a Win32Exception
-#pragma warning disable 6503
                 if (dc == IntPtr.Zero)
                 {
                     throw new Win32Exception();
                 }
-#pragma warning restore 6503
-#pragma warning restore 6523
 
                 try
                 {
@@ -1689,9 +1676,9 @@ namespace System.Windows
                 {
                     contentElement.AddToEventRoute(route, args);
                 }
-                else if (uiElement3D != null)
+                else
                 {
-                    uiElement3D.AddToEventRoute(route, args);
+                    uiElement3D?.AddToEventRoute(route, args);
                 }
             }
             else
@@ -1885,7 +1872,6 @@ namespace System.Windows
         /// <summary>
         ///     Adds a handler for the given attached event
         /// </summary>
-        [FriendAccessAllowed] // Built into Core, also used by Framework.
         internal static void AddHandler(DependencyObject d, RoutedEvent routedEvent, Delegate handler)
         {
             ArgumentNullException.ThrowIfNull(d);
@@ -1922,7 +1908,6 @@ namespace System.Windows
         /// <summary>
         ///     Removes a handler for the given attached event
         /// </summary>
-        [FriendAccessAllowed] // Built into Core, also used by Framework.
         internal static void RemoveHandler(DependencyObject d, RoutedEvent routedEvent, Delegate handler)
         {
             ArgumentNullException.ThrowIfNull(d);
@@ -2169,7 +2154,7 @@ namespace System.Windows
             {
                 get
                 {
-                    return _result != null ? _result.VisualHit : null;
+                    return _result?.VisualHit;
                 }
             }
 
@@ -2379,7 +2364,6 @@ namespace System.Windows
         /// <summary>
         ///     Asynchronously re-evaluate the reverse-inherited properties.
         /// </summary>
-        [FriendAccessAllowed]
         internal void SynchronizeReverseInheritPropertyFlags(DependencyObject oldParent, bool isCoreParent)
         {
             if(IsKeyboardFocusWithin)
@@ -3066,8 +3050,8 @@ namespace System.Windows
 
             if(p != null)
                 p.OnChildDesiredSizeChanged(this);
-            else if(ich != null)
-                ich.OnChildDesiredSizeChanged(this);
+            else
+                ich?.OnChildDesiredSizeChanged(this);
         }
 
         private void ensureClip(Size layoutSlotSize)
@@ -3089,7 +3073,7 @@ namespace System.Windows
                 }
             }
 
-            ChangeVisualClip(clipGeometry, true /* dontSetWhenClose */);
+            ChangeVisualClip(clipGeometry, dontSetWhenClose: true);
         }
 
         /// <summary>
@@ -3133,7 +3117,6 @@ namespace System.Windows
         /// Opens the DrawingVisual for rendering. The returned DrawingContext can be used to
         /// render into the DrawingVisual.
         /// </summary>
-        [FriendAccessAllowed]
         internal DrawingContext RenderOpen()
         {
             return new VisualDrawingContext(this);
@@ -3163,7 +3146,7 @@ namespace System.Windows
                 // Remove the notification handlers.
                 //
 
-                oldContent.PropagateChangedHandler(ContentsChangedHandler, false /* remove */);
+                oldContent.PropagateChangedHandler(ContentsChangedHandler, adding: false);
 
 
                 //
@@ -3180,11 +3163,8 @@ namespace System.Windows
             // Prepare the new content.
             //
 
-            if (newContent != null)
-            {
-                // Propagate notification handlers.
-                newContent.PropagateChangedHandler(ContentsChangedHandler, true /* adding */);
-            }
+            // Propagate notification handlers.
+            newContent?.PropagateChangedHandler(ContentsChangedHandler, adding: true);
 
             _drawingContent = newContent;
 
@@ -3262,10 +3242,7 @@ namespace System.Windows
         {
             VerifyAPIReadOnly();
 
-            if (_drawingContent != null)
-            {
-                _drawingContent.WalkContent(walker);
-            }
+            _drawingContent?.WalkContent(walker);
         }
 
         /// <summary>
@@ -3689,8 +3666,7 @@ namespace System.Windows
 
             //Notify Automation in case it is interested.
             AutomationPeer peer = uie.GetAutomationPeer();
-            if(peer != null)
-                peer.InvalidatePeer();
+            peer?.InvalidatePeer();
 
         }
 
@@ -4105,7 +4081,6 @@ namespace System.Windows
         /// <param name="value"></param>
         /// To keep PersistId from being serialized the set has been removed from the property and a separate
         /// set method has been created.
-        [FriendAccessAllowed] // Built into Core, also used by Framework.
         internal void SetPersistId(int value)
         {
             _persistId = value;
@@ -4128,7 +4103,6 @@ namespace System.Windows
         internal Rect PreviousArrangeRect
         {
             //  called from PresentationFramework!System.Windows.Controls.Primitives.LayoutInformation.GetLayoutSlot()
-            [FriendAccessAllowed]
             get
             {
                 return _finalRect;
@@ -4615,7 +4589,7 @@ namespace System.Windows
         {
             get
             {
-                return TouchDevice.GetCapturedTouches(this, /* includeWithin = */ false);
+                return TouchDevice.GetCapturedTouches(this, includeWithin: false);
             }
         }
 
@@ -4626,7 +4600,7 @@ namespace System.Windows
         {
             get
             {
-                return TouchDevice.GetCapturedTouches(this, /* includeWithin = */ true);
+                return TouchDevice.GetCapturedTouches(this, includeWithin: true);
             }
         }
 
@@ -4638,7 +4612,7 @@ namespace System.Windows
         {
             get
             {
-                return TouchDevice.GetTouchesOver(this, /* includeWithin = */ true);
+                return TouchDevice.GetTouchesOver(this, includeWithin: true);
             }
         }
 
@@ -4650,7 +4624,7 @@ namespace System.Windows
         {
             get
             {
-                return TouchDevice.GetTouchesOver(this, /* includeWithin = */ false);
+                return TouchDevice.GetTouchesOver(this, includeWithin: false);
             }
         }
 

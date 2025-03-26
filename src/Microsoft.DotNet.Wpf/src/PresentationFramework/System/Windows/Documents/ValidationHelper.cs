@@ -1,6 +1,9 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
+
+using MS.Internal; // Invariant.Assert
+using System.ComponentModel;
 
 // 
 // Description: Helpers for TOM parameter validation.
@@ -8,11 +11,6 @@
 
 namespace System.Windows.Documents
 {
-    using MS.Internal; // Invariant.Assert
-    using System.ComponentModel;
-    using System.Windows;
-    using System.Windows.Media;
-
     internal static class ValidationHelper
     {
         //------------------------------------------------------
@@ -29,7 +27,7 @@ namespace System.Windows.Documents
         // Throws an appropriate exception if a test fails.
         internal static void VerifyPosition(ITextContainer tree, ITextPointer position)
         {
-            VerifyPosition(tree, position, "position");
+            VerifyPosition(tree, position, nameof(position));
         }
         
         // Verifies a TextPointer is non-null and is associated with a given TextContainer.

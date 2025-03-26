@@ -2,17 +2,11 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
+using System.Threading;
+using System.IO;
 
-
-namespace MS.Internal 
+namespace MS.Internal
 {
-    using System;
-    using System.Diagnostics;
-    using System.Security;
-    using System.Threading;
-    using System.IO;
-    using MS.Internal.WindowsBase;
-
     /// <summary>
     /// A static class for retail validated assertions.
     /// Instead of breaking into the debugger an exception is thrown.

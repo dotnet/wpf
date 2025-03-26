@@ -2,6 +2,8 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
+#nullable disable
+
 namespace System.Xaml
 {
     internal class LineInfo
@@ -27,7 +29,7 @@ namespace System.Xaml
 
         public int LinePosition
         {
-            get { return _linePosition; }            
+            get { return _linePosition; }
         }
         #endregion
     }

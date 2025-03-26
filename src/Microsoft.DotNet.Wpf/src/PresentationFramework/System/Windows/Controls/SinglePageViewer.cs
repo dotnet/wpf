@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -9,7 +9,6 @@
 //              can be viewed using this control.
 //
 
-using System.Collections.Generic;           // Stack<T>
 using System.Collections.ObjectModel;       // ReadOnlyCollection<T>
 using System.Windows.Automation.Peers;      // AutomationPeer
 using System.Windows.Documents;             // IDocumentPaginatorSouce, ...
@@ -22,9 +21,7 @@ using MS.Internal;                          // Invariant, DoubleUtil
 using MS.Internal.Commands;                 // CommandHelpers
 using MS.Internal.Documents;                // FindToolBar
 using MS.Internal.KnownBoxes;               // BooleanBoxes
-using MS.Internal.PresentationFramework;    // SecurityHelper
 using MS.Internal.AppModel;                 // IJournalState
-using System.Security;                      // SecurityCritical, SecurityTreatAsSafe
 
 namespace System.Windows.Controls
 {
@@ -668,11 +665,13 @@ namespace System.Windows.Controls
                 {
                     // Store the current state of the document in the PrintingState
                     paginator = ((IDocumentPaginatorSource)document).DocumentPaginator as FlowDocumentPaginator;
-                    _printingState = new FlowDocumentPrintingState();
-                    _printingState.XpsDocumentWriter = docWriter;
-                    _printingState.PageSize = paginator.PageSize;
-                    _printingState.PagePadding = document.PagePadding;
-                    _printingState.IsSelectionEnabled = IsSelectionEnabled;
+                    _printingState = new FlowDocumentPrintingState
+                    {
+                        XpsDocumentWriter = docWriter,
+                        PageSize = paginator.PageSize,
+                        PagePadding = document.PagePadding,
+                        IsSelectionEnabled = IsSelectionEnabled
+                    };
 
                     // Since _printingState value is used to determine CanExecute state, we must invalidate that state.
                     CommandManager.InvalidateRequerySuggested();
@@ -1460,10 +1459,7 @@ namespace System.Windows.Controls
             if (viewer.Selection != null)
             {
                 CaretElement caretElement = viewer.Selection.CaretElement;
-                if (caretElement != null)
-                {
-                    caretElement.InvalidateVisual();
-                }
+                caretElement?.InvalidateVisual();
             }
         }
 

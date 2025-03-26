@@ -1,8 +1,12 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
 
+
+using System.Diagnostics.CodeAnalysis;
+using System.Windows.Data;
+using Standard;
 
 #if RIBBON_IN_FRAMEWORK
 namespace System.Windows.Shell
@@ -10,13 +14,6 @@ namespace System.Windows.Shell
 namespace Microsoft.Windows.Shell
 #endif
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Diagnostics.CodeAnalysis;
-    using System.Windows;
-    using System.Windows.Data;
-    using Standard;
-
     public enum ResizeGripDirection
     {
         None,
@@ -119,7 +116,7 @@ namespace Microsoft.Windows.Shell
             var dobj = inputElement as DependencyObject;
             if (dobj == null)
             {
-                throw new ArgumentException("The element must be a DependencyObject", "inputElement");
+                throw new ArgumentException("The element must be a DependencyObject", nameof(inputElement));
             }
             return (bool)dobj.GetValue(IsHitTestVisibleInChromeProperty);
         }
@@ -132,7 +129,7 @@ namespace Microsoft.Windows.Shell
             var dobj = inputElement as DependencyObject;
             if (dobj == null)
             {
-                throw new ArgumentException("The element must be a DependencyObject", "inputElement");
+                throw new ArgumentException("The element must be a DependencyObject", nameof(inputElement));
             }
             dobj.SetValue(IsHitTestVisibleInChromeProperty, hitTestVisible);
         }
@@ -151,7 +148,7 @@ namespace Microsoft.Windows.Shell
             var dobj = inputElement as DependencyObject;
             if (dobj == null)
             {
-                throw new ArgumentException("The element must be a DependencyObject", "inputElement");
+                throw new ArgumentException("The element must be a DependencyObject", nameof(inputElement));
             }
             return (ResizeGripDirection)dobj.GetValue(ResizeGripDirectionProperty);
         }
@@ -164,7 +161,7 @@ namespace Microsoft.Windows.Shell
             var dobj = inputElement as DependencyObject;
             if (dobj == null)
             {
-                throw new ArgumentException("The element must be a DependencyObject", "inputElement");
+                throw new ArgumentException("The element must be a DependencyObject", nameof(inputElement));
             }
             dobj.SetValue(ResizeGripDirectionProperty, direction);
         }
@@ -337,7 +334,7 @@ namespace Microsoft.Windows.Shell
                     new Binding
                     {
 #if RIBBON_IN_FRAMEWORK
-                        Path = new PropertyPath("(SystemParameters." + bp.SystemParameterPropertyName + ")"),
+                        Path = new PropertyPath($"(SystemParameters.{bp.SystemParameterPropertyName})"),
 #else
                         Source = SystemParameters2.Current,
                         Path = new PropertyPath(bp.SystemParameterPropertyName),

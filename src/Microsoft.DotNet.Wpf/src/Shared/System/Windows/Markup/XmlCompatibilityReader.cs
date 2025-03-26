@@ -2,13 +2,13 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
+#nullable disable
+
 using System;
 using System.Xml;
-using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Diagnostics;
-using System.Threading;
 
 #if SYSTEM_XAML
 using System.Xaml;
@@ -28,10 +28,6 @@ using System.Windows;
 namespace System.Windows.Markup
 #endif
 {
-#if !PBTCOMPILER && !SYSTEM_XAML
-    [FriendAccessAllowed]
-#endif
-
     // <returns>
     // true if xmlNamespace is recognized
     // </returns>
@@ -42,11 +38,10 @@ namespace System.Windows.Markup
     // if the passed in namespace is subsumed, then newXmlNamespace returns the subsuming namespace.
     // </param>
     internal delegate bool IsXmlNamespaceSupportedCallback(string xmlNamespace, out string newXmlNamespace);
-    delegate void HandleElementCallback(int elementDepth, ref bool more);
-    delegate void HandleAttributeCallback(int elementDepth);
-#if !PBTCOMPILER && !SYSTEM_XAML
-    [FriendAccessAllowed]
-#endif
+
+    internal delegate void HandleElementCallback(int elementDepth, ref bool more);
+    internal delegate void HandleAttributeCallback(int elementDepth);
+
     internal sealed class XmlCompatibilityReader : XmlWrappingReader
     {
         #region Construction
@@ -168,9 +163,9 @@ namespace System.Windows.Markup
                 ScanForEndCompatibility(previousElementDepth);
             }
 
-            bool more = Reader.Read(); //passed as ref arg to ReadStartElement and ReadEndElement
+            bool more = Reader.Read(); // passed as ref arg to ReadStartElement and ReadEndElement
             bool result = false;
-          
+
             while (more)
             {
                 switch (Reader.NodeType)
@@ -182,8 +177,10 @@ namespace System.Windows.Markup
                             {
                                 continue;
                             }
+
                             break;
                         }
+
                     case XmlNodeType.EndElement:
                         {
                             // if the element read should be ignored, read the next element
@@ -191,6 +188,7 @@ namespace System.Windows.Markup
                             {
                                 continue;
                             }
+
                             break;
                         }
                 }
@@ -236,8 +234,10 @@ namespace System.Windows.Markup
                 {
                     Error(SR.XCRUnknownCompatElement, elementName);
                 }
+
                 elementCB(elementDepth, ref more);
             }
+
             // handle non-markup-compatibility elements
             else
             {
@@ -256,6 +256,7 @@ namespace System.Windows.Markup
                             // note that for certain logic this scope's parent should be checked
                             Scope.InProcessContent = true;
                         }
+
                         _depthOffset++;
                         more = Reader.Read();
                     }
@@ -279,7 +280,7 @@ namespace System.Windows.Markup
                 }
             }
 
-            // if the element is empty (e.g. "<a ... />" and we pushed a scope then we need to set a flag 
+            // if the element is empty (e.g. "<a ... />" and we pushed a scope then we need to set a flag
             // to get rid of the scope when we hit the next element.
             // We also need to store the current elementDepth.
             if (isEmpty)
@@ -325,8 +326,9 @@ namespace System.Windows.Markup
                         Error(SR.XCRChoiceNotFound);
                     }
                 }
+
                 _depthOffset--;
-                PopScope();  //we know we can pop, so no need to scan
+                PopScope();  // we know we can pop, so no need to scan
                 more = Reader.Read();
             }
             else
@@ -550,6 +552,7 @@ namespace System.Windows.Markup
                     RestoreReaderPosition();
                 }
             }
+
             return result;
         }
 
@@ -622,7 +625,7 @@ namespace System.Windows.Markup
         {
             string namespaceName = Reader.LookupNamespace(prefix);
 
-            if (namespaceName != null)
+            if (namespaceName is not null)
             {
                 namespaceName = GetMappedNamespace(namespaceName);
             }
@@ -648,6 +651,7 @@ namespace System.Windows.Markup
                 {
                     return LookupNamespace(string.Empty);
                 }
+
                 // Look for xmlns: ...
                 else if (string.Equals(XmlnsDeclaration, Reader.Prefix, StringComparison.Ordinal))
                 {
@@ -710,10 +714,8 @@ namespace System.Windows.Markup
         {
             set
             {
-                XmlTextReader xmlTextReader = Reader as XmlTextReader;
-
                 // review, what if not the XmlTextReader.
-                if (null != xmlTextReader)
+                if (Reader is XmlTextReader xmlTextReader)
                 {
                     xmlTextReader.Normalization = value;
                 }
@@ -728,8 +730,7 @@ namespace System.Windows.Markup
         {
             get
             {
-                XmlTextReader textReader = Reader as XmlTextReader;
-                if (textReader == null)
+                if (Reader is not XmlTextReader textReader)
                 {
                     return new System.Text.UTF8Encoding(true, true);
                 }
@@ -783,7 +784,7 @@ namespace System.Windows.Markup
                 // if the namespace has not yet been mapped, map it
                 mappedNamespace = MapNewNamespace(namespaceName);
             }
-            else if (mappedNamespace == null)
+            else if (mappedNamespace is null)
             {
                 // if the mapped namespace is null, then the namespace was not supported, just return
                 // the given namespace
@@ -806,7 +807,7 @@ namespace System.Windows.Markup
         /// </returns>
         private string MapNewNamespace(string namespaceName)
         {
-            if (_namespaceCallback != null)
+            if (_namespaceCallback is not null)
             {
                 string mappedNamespace;
 
@@ -818,7 +819,7 @@ namespace System.Windows.Markup
                 {
                     AddKnownNamespace(namespaceName);
 
-                    if (String.IsNullOrEmpty(mappedNamespace) || namespaceName == mappedNamespace)
+                    if (string.IsNullOrEmpty(mappedNamespace) || namespaceName == mappedNamespace)
                     {
                         _namespaceMap[namespaceName] = namespaceName;
                     }
@@ -867,7 +868,7 @@ namespace System.Windows.Markup
         /// </returns>
         private bool IsSubsumingNamespace(string namespaceName)
         {
-            return (_subsumingNamespaces == null ? false : _subsumingNamespaces.ContainsKey(namespaceName));
+            return (_subsumingNamespaces is null ? false : _subsumingNamespaces.ContainsKey(namespaceName));
         }
 
         /// <summary>
@@ -878,7 +879,7 @@ namespace System.Windows.Markup
         /// </param>
         private void AddSubsumingNamespace(string namespaceName)
         {
-            if (_subsumingNamespaces == null)
+            if (_subsumingNamespaces is null)
                 _subsumingNamespaces = new Dictionary<string, object>();
             _subsumingNamespaces[namespaceName] = null;
         }
@@ -894,7 +895,7 @@ namespace System.Windows.Markup
         /// </returns>
         private bool IsNamespaceKnown(string namespaceName)
         {
-            return (_knownNamespaces == null ? false : _knownNamespaces.ContainsKey(namespaceName));
+            return (_knownNamespaces is null ? false : _knownNamespaces.ContainsKey(namespaceName));
         }
 
         /// <summary>
@@ -905,7 +906,7 @@ namespace System.Windows.Markup
         /// </param>
         private void AddKnownNamespace(string namespaceName)
         {
-            if (_knownNamespaces == null)
+            if (_knownNamespaces is null)
                 _knownNamespaces = new Dictionary<string, object>();
             _knownNamespaces[namespaceName] = null;
         }
@@ -934,6 +935,7 @@ namespace System.Windows.Markup
             {
                 result = Scope.CanIgnore(namespaceName);
             }
+
             return result;
         }
 
@@ -954,7 +956,7 @@ namespace System.Windows.Markup
             foreach (string pair in content.Trim().Split(' '))
             {
                 // check each non-null, non-empty space-delineated namespace/element pair
-                if (!String.IsNullOrEmpty(pair))
+                if (!string.IsNullOrEmpty(pair))
                 {
                     int colonIndex = pair.IndexOf(':');
                     int length = pair.Length;
@@ -970,7 +972,7 @@ namespace System.Windows.Markup
                     string elementName = pair.Substring(colonIndex + 1, length - 1 - colonIndex);
                     string namespaceName = LookupNamespace(prefix);
 
-                    if (namespaceName == null)
+                    if (namespaceName is null)
                     {
                         // if a prefix does not map to a namespace, throw an exception
                         Error(SR.XCRUndefinedPrefix, prefix);
@@ -1002,11 +1004,11 @@ namespace System.Windows.Markup
             foreach (string prefix in prefixes.Trim().Split(' '))
             {
                 // check each non-null, non-empty space-delineated prefix
-                if (!String.IsNullOrEmpty(prefix))
+                if (!string.IsNullOrEmpty(prefix))
                 {
                     string namespaceUri = LookupNamespace(prefix);
 
-                    if (namespaceUri == null)
+                    if (namespaceUri is null)
                     {
                         // if a prefix does not map to a namespace, throw an exception
                         Error(SR.XCRUndefinedPrefix, prefix);
@@ -1032,6 +1034,7 @@ namespace System.Windows.Markup
             {
                 result = Reader.MoveToNextAttribute();
             }
+
             return result;
         }
 
@@ -1080,6 +1083,7 @@ namespace System.Windows.Markup
                             {
                                 Error(SR.XCRUnknownCompatAttrib, attributeName);
                             }
+
                             attributeCB(elementDepth);
                         }
 
@@ -1088,7 +1092,8 @@ namespace System.Windows.Markup
 
                     onAttribute = Reader.MoveToNextAttribute();
                     _attributePosition++; // we count the attribute index in case we see Ignorable
-                } while (onAttribute);
+                }
+                while (onAttribute);
 
                 if (Scope.Depth == elementDepth)
                 {
@@ -1100,7 +1105,6 @@ namespace System.Windows.Markup
                 Reader.MoveToElement();
             }
         }
-
 
         /// <summary>
         /// pops a scope if the end of a compatibility region.
@@ -1163,6 +1167,7 @@ namespace System.Windows.Markup
                 // Choice and Fallback
                 Error(SR.Format(SR.XCRInvalidACChild, Reader.Name));
             }
+
             if (Reader.IsEmptyElement)
             {
                 // AlternateContent blocks must have a Choice, so they can't be empty
@@ -1198,6 +1203,7 @@ namespace System.Windows.Markup
                 // Choice must be the child of AlternateContent
                 Error(SR.XCRChoiceOnlyInAC);
             }
+
             if (Scope.FallbackSeen)
             {
                 // Choice cannot occur after Fallback
@@ -1206,12 +1212,13 @@ namespace System.Windows.Markup
 
             string requiresValue = Reader.GetAttribute(Requires);
 
-            if (requiresValue == null)
+            if (requiresValue is null)
             {
                 // Choice must have a requires attribute
                 Error(SR.XCRRequiresAttribNotFound);
             }
-            if (String.IsNullOrEmpty(requiresValue))
+
+            if (string.IsNullOrEmpty(requiresValue))
             {
                 // Requires attribute may not be empty
                 Error(SR.XCRInvalidRequiresAttribute);
@@ -1231,6 +1238,7 @@ namespace System.Windows.Markup
                 {
                     MoveToNextAttribute();
                 }
+
                 string attributeName = Reader.LocalName;
                 MoveToElement();
 
@@ -1311,11 +1319,13 @@ namespace System.Windows.Markup
                 // Fallback must be the child of AlternateContent
                 Error(SR.XCRFallbackOnlyInAC);
             }
+
             if (!Scope.ChoiceSeen)
             {
                 // AlternateContent block must contain a Choice element
                 Error(SR.XCRChoiceNotFound);
             }
+
             if (Scope.FallbackSeen)
             {
                 // AlternateContent block may only contain one Fallback child
@@ -1356,6 +1366,7 @@ namespace System.Windows.Markup
                     PushScope(elementDepth);
                     _depthOffset++;
                 }
+
                 more = Reader.Read();
             }
         }
@@ -1468,8 +1479,8 @@ namespace System.Windows.Markup
         private void Error(string message, params object[] args)
         {
             IXmlLineInfo info = Reader as IXmlLineInfo;
-            throw new XmlException(string.Format(CultureInfo.InvariantCulture, message, args), null, info == null ? 1 : info.LineNumber,
-                info == null ? 1 : info.LinePosition);
+            throw new XmlException(string.Format(CultureInfo.InvariantCulture, message, args), null, info is null ? 1 : info.LineNumber,
+                info is null ? 1 : info.LinePosition);
         }
         #endregion Private Methods
 
@@ -1486,10 +1497,11 @@ namespace System.Windows.Markup
         {
             get
             {
-                if (_alternateContent == null)
+                if (_alternateContent is null)
                 {
                     _alternateContent = Reader.NameTable.Add("AlternateContent");
                 }
+
                 return _alternateContent;
             }
         }
@@ -1498,10 +1510,11 @@ namespace System.Windows.Markup
         {
             get
             {
-                if (_choice == null)
+                if (_choice is null)
                 {
                     _choice = Reader.NameTable.Add("Choice");
                 }
+
                 return _choice;
             }
         }
@@ -1510,10 +1523,11 @@ namespace System.Windows.Markup
         {
             get
             {
-                if (_fallback == null)
+                if (_fallback is null)
                 {
                     _fallback = Reader.NameTable.Add("Fallback");
                 }
+
                 return _fallback;
             }
         }
@@ -1522,10 +1536,11 @@ namespace System.Windows.Markup
         {
             get
             {
-                if (_requires == null)
+                if (_requires is null)
                 {
                     _requires = Reader.NameTable.Add("Requires");
                 }
+
                 return _requires;
             }
         }
@@ -1534,10 +1549,11 @@ namespace System.Windows.Markup
         {
             get
             {
-                if (_ignorable == null)
+                if (_ignorable is null)
                 {
                     _ignorable = Reader.NameTable.Add("Ignorable");
                 }
+
                 return _ignorable;
             }
         }
@@ -1546,10 +1562,11 @@ namespace System.Windows.Markup
         {
             get
             {
-                if (_mustUnderstand == null)
+                if (_mustUnderstand is null)
                 {
                     _mustUnderstand = Reader.NameTable.Add("MustUnderstand");
                 }
+
                 return _mustUnderstand;
             }
         }
@@ -1558,10 +1575,11 @@ namespace System.Windows.Markup
         {
             get
             {
-                if (_processContent == null)
+                if (_processContent is null)
                 {
                     _processContent = Reader.NameTable.Add("ProcessContent");
                 }
+
                 return _processContent;
             }
         }
@@ -1570,10 +1588,11 @@ namespace System.Windows.Markup
         {
             get
             {
-                if (_preserveElements == null)
+                if (_preserveElements is null)
                 {
                     _preserveElements = Reader.NameTable.Add("PreserveElements");
                 }
+
                 return _preserveElements;
             }
         }
@@ -1582,10 +1601,11 @@ namespace System.Windows.Markup
         {
             get
             {
-                if (_preserveAttributes == null)
+                if (_preserveAttributes is null)
                 {
                     _preserveAttributes = Reader.NameTable.Add("PreserveAttributes");
                 }
+
                 return _preserveAttributes;
             }
         }
@@ -1594,16 +1614,17 @@ namespace System.Windows.Markup
         {
             get
             {
-                if (_compatibilityUri == null)
+                if (_compatibilityUri is null)
                 {
                     _compatibilityUri = Reader.NameTable.Add(MarkupCompatibilityURI);
                 }
+
                 return _compatibilityUri;
             }
         }
         #endregion Private Properties
         #region Nested Classes
-        struct NamespaceElementPair
+        private struct NamespaceElementPair
         {
             public string namespaceName;
             public string itemName;
@@ -1622,18 +1643,18 @@ namespace System.Windows.Markup
         /// </summary>
         private class CompatibilityScope
         {
-            CompatibilityScope _previous;
-            int _depth;
-            bool _fallbackSeen;
-            bool _inAlternateContent;
-            bool _inProcessContent;
-            bool _choiceTaken;
-            bool _choiceSeen;
-            XmlCompatibilityReader _reader;
-            Dictionary<string, object> _ignorables;
-            Dictionary<string, ProcessContentSet> _processContents;
-            Dictionary<string, PreserveItemSet> _preserveElements;
-            Dictionary<string, PreserveItemSet> _preserveAttributes;
+            private CompatibilityScope _previous;
+            private int _depth;
+            private bool _fallbackSeen;
+            private bool _inAlternateContent;
+            private bool _inProcessContent;
+            private bool _choiceTaken;
+            private bool _choiceSeen;
+            private XmlCompatibilityReader _reader;
+            private Dictionary<string, object> _ignorables;
+            private Dictionary<string, ProcessContentSet> _processContents;
+            private Dictionary<string, PreserveItemSet> _preserveElements;
+            private Dictionary<string, PreserveItemSet> _preserveAttributes;
 
             public CompatibilityScope(CompatibilityScope previous, int depth, XmlCompatibilityReader reader)
             {
@@ -1663,7 +1684,7 @@ namespace System.Windows.Markup
                 get
                 {
                     bool result;
-                    if (_inProcessContent && _previous != null)
+                    if (_inProcessContent && _previous is not null)
                     {
                         result = _previous.FallbackSeen;
                     }
@@ -1671,11 +1692,12 @@ namespace System.Windows.Markup
                     {
                         result = _fallbackSeen;
                     }
+
                     return result;
                 }
                 set
                 {
-                    if (_inProcessContent && _previous != null)
+                    if (_inProcessContent && _previous is not null)
                     {
                         _previous.FallbackSeen = value;
                     }
@@ -1691,7 +1713,7 @@ namespace System.Windows.Markup
                 get
                 {
                     bool result;
-                    if (_inProcessContent && _previous != null)
+                    if (_inProcessContent && _previous is not null)
                     {
                         result = _previous.InAlternateContent;
                     }
@@ -1699,6 +1721,7 @@ namespace System.Windows.Markup
                     {
                         result = _inAlternateContent;
                     }
+
                     return result;
                 }
                 set
@@ -1720,7 +1743,7 @@ namespace System.Windows.Markup
                 get
                 {
                     bool result;
-                    if (_inProcessContent && _previous != null)
+                    if (_inProcessContent && _previous is not null)
                     {
                         result = _previous.ChoiceTaken;
                     }
@@ -1728,11 +1751,12 @@ namespace System.Windows.Markup
                     {
                         result = _choiceTaken;
                     }
+
                     return result;
                 }
                 set
                 {
-                    if (_inProcessContent && _previous != null)
+                    if (_inProcessContent && _previous is not null)
                     {
                         _previous.ChoiceTaken = value;
                     }
@@ -1748,7 +1772,7 @@ namespace System.Windows.Markup
                 get
                 {
                     bool result;
-                    if (_inProcessContent && _previous != null)
+                    if (_inProcessContent && _previous is not null)
                     {
                         result = _previous.ChoiceSeen;
                     }
@@ -1756,11 +1780,12 @@ namespace System.Windows.Markup
                     {
                         result = _choiceSeen;
                     }
+
                     return result;
                 }
                 set
                 {
-                    if (_inProcessContent && _previous != null)
+                    if (_inProcessContent && _previous is not null)
                     {
                         _previous.ChoiceSeen = value;
                     }
@@ -1775,7 +1800,7 @@ namespace System.Windows.Markup
             {
                 bool result = IsIgnorableAtCurrentScope(namespaceName);
 
-                if (!result && _previous != null)
+                if (!result && _previous is not null)
                 {
                     result = _previous.CanIgnore(namespaceName);
                 }
@@ -1785,18 +1810,18 @@ namespace System.Windows.Markup
 
             public bool IsIgnorableAtCurrentScope(string namespaceName)
             {
-                return _ignorables != null && _ignorables.ContainsKey(namespaceName);
+                return _ignorables is not null && _ignorables.ContainsKey(namespaceName);
             }
 
             public bool ShouldProcessContent(string namespaceName, string elementName)
             {
                 bool result = false;
                 ProcessContentSet set;
-                if (_processContents != null && _processContents.TryGetValue(namespaceName, out set))
+                if (_processContents is not null && _processContents.TryGetValue(namespaceName, out set))
                 {
                     result = set.ShouldProcessContent(elementName);
                 }
-                else if (_previous != null)
+                else if (_previous is not null)
                 {
                     result = _previous.ShouldProcessContent(namespaceName, elementName);
                 }
@@ -1806,55 +1831,62 @@ namespace System.Windows.Markup
 
             public void Ignorable(string namespaceName)
             {
-                if (_ignorables == null)
+                if (_ignorables is null)
                 {
                     _ignorables = new Dictionary<string, object>();
                 }
+
                 _ignorables[namespaceName] = null; // we don't care about value, just key
             }
 
             public void ProcessContent(string namespaceName, string elementName)
             {
-                if (_processContents == null)
+                if (_processContents is null)
                 {
                     _processContents = new Dictionary<string, ProcessContentSet>();
                 }
+
                 ProcessContentSet processContentSet;
                 if (!_processContents.TryGetValue(namespaceName, out processContentSet))
                 {
                     processContentSet = new ProcessContentSet(namespaceName, _reader);
                     _processContents.Add(namespaceName, processContentSet);
                 }
+
                 processContentSet.Add(elementName);
             }
 
             public void PreserveElement(string namespaceName, string elementName)
             {
-                if (_preserveElements == null)
+                if (_preserveElements is null)
                 {
                     _preserveElements = new Dictionary<string, PreserveItemSet>();
                 }
+
                 PreserveItemSet preserveElementSet;
                 if (!_preserveElements.TryGetValue(namespaceName, out preserveElementSet))
                 {
                     preserveElementSet = new PreserveItemSet(namespaceName, _reader);
                     _preserveElements.Add(namespaceName, preserveElementSet);
                 }
+
                 preserveElementSet.Add(elementName);
             }
 
             public void PreserveAttribute(string namespaceName, string attributeName)
             {
-                if (_preserveAttributes == null)
+                if (_preserveAttributes is null)
                 {
                     _preserveAttributes = new Dictionary<string, PreserveItemSet>();
                 }
+
                 PreserveItemSet preserveAttributeSet;
                 if (!_preserveAttributes.TryGetValue(namespaceName, out preserveAttributeSet))
                 {
                     preserveAttributeSet = new PreserveItemSet(namespaceName, _reader);
                     _preserveAttributes.Add(namespaceName, preserveAttributeSet);
                 }
+
                 preserveAttributeSet.Add(attributeName);
             }
 
@@ -1877,7 +1909,7 @@ namespace System.Windows.Markup
             public void Verify()
             {
                 // Check process content
-                if (_processContents != null)
+                if (_processContents is not null)
                 {
                     foreach (string key in _processContents.Keys)
                     {
@@ -1887,8 +1919,9 @@ namespace System.Windows.Markup
                         }
                     }
                 }
+
                 // Check preserve elements
-                if (_preserveElements != null)
+                if (_preserveElements is not null)
                 {
                     foreach (string key in _preserveElements.Keys)
                     {
@@ -1898,8 +1931,9 @@ namespace System.Windows.Markup
                         }
                     }
                 }
+
                 // Check preserve attributes
-                if (_preserveAttributes != null)
+                if (_preserveAttributes is not null)
                 {
                     foreach (string key in _preserveAttributes.Keys)
                     {
@@ -1912,12 +1946,12 @@ namespace System.Windows.Markup
             }
         }
 
-        class ProcessContentSet
+        private class ProcessContentSet
         {
-            bool _all;
-            string _namespaceName;
-            XmlCompatibilityReader _reader;
-            HashSet<string> _names;
+            private bool _all;
+            private string _namespaceName;
+            private XmlCompatibilityReader _reader;
+            private HashSet<string> _names;
 
             public ProcessContentSet(string namespaceName, XmlCompatibilityReader reader)
             {
@@ -1927,7 +1961,7 @@ namespace System.Windows.Markup
 
             public bool ShouldProcessContent(string elementName)
             {
-                return _all || (_names != null && _names.Contains(elementName));
+                return _all || (_names is not null && _names.Contains(elementName));
             }
 
             public void Add(string elementName)
@@ -1946,7 +1980,7 @@ namespace System.Windows.Markup
 
                 if (elementName == "*")
                 {
-                    if (_names != null)
+                    if (_names is not null)
                     {
                         _reader.Error(SR.XCRInvalidProcessContent, _namespaceName);
                     }
@@ -1957,7 +1991,7 @@ namespace System.Windows.Markup
                 }
                 else
                 {
-                    if (_names == null)
+                    if (_names is null)
                     {
                         _names = new HashSet<string>();
                     }
@@ -1967,12 +2001,12 @@ namespace System.Windows.Markup
             }
 }
 
-        class PreserveItemSet
+        private class PreserveItemSet
         {
-            bool _all;
-            string _namespaceName;
-            XmlCompatibilityReader _reader;
-            Dictionary<string, string> _names;
+            private bool _all;
+            private string _namespaceName;
+            private XmlCompatibilityReader _reader;
+            private Dictionary<string, string> _names;
 
             public PreserveItemSet(string namespaceName, XmlCompatibilityReader reader)
             {
@@ -1982,7 +2016,7 @@ namespace System.Windows.Markup
 
             public bool ShouldPreserveItem(string itemName)
             {
-                return _all || (_names != null && _names.ContainsKey(itemName));
+                return _all || (_names is not null && _names.ContainsKey(itemName));
             }
 
             public void Add(string itemName)
@@ -2001,7 +2035,7 @@ namespace System.Windows.Markup
 
                 if (itemName == "*")
                 {
-                    if (_names != null)
+                    if (_names is not null)
                     {
                         _reader.Error(SR.XCRInvalidPreserve, _namespaceName);
                     }
@@ -2012,7 +2046,7 @@ namespace System.Windows.Markup
                 }
                 else
                 {
-                    if (_names == null)
+                    if (_names is null)
                     {
                         _names = new Dictionary<string, string>();
                     }
@@ -2053,7 +2087,8 @@ namespace System.Windows.Markup
         private const string XmlnsDeclaration = "xmlns";
         private const string MarkupCompatibilityURI = "http://schemas.openxmlformats.org/markup-compatibility/2006";
 
-        static private string[] _predefinedNamespaces = new string[4] {
+        private static string[] _predefinedNamespaces = new string[4]
+        {
             "http://www.w3.org/2000/xmlns/",
             "http://www.w3.org/XML/1998/namespace",
             "http://www.w3.org/2001/XMLSchema-instance",

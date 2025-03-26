@@ -1,19 +1,12 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
 
-using System;
-using System.Collections.ObjectModel;
-using System.ComponentModel;
-using System.Diagnostics;
-using System.Globalization;
-using System.Windows;
 using System.Windows.Controls.Primitives;
 using System.Windows.Data;
 using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Threading;
 using System.Windows.Automation;
 
 namespace System.Windows.Controls
@@ -185,10 +178,7 @@ namespace System.Windows.Controls
         private static void OnColumnChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
             DataGridCell cell = sender as DataGridCell;
-            if (cell != null)
-            {
-                cell.OnColumnChanged((DataGridColumn)e.OldValue, (DataGridColumn)e.NewValue);
-            }
+            cell?.OnColumnChanged((DataGridColumn)e.OldValue, (DataGridColumn)e.NewValue);
         }
 
         /// <summary>
@@ -586,11 +576,8 @@ namespace System.Windows.Controls
             IsEditing = true;
 
             DataGridColumn column = Column;
-            if (column != null)
-            {
-                // Ask the column to store the original value
-                column.BeginEdit(Content as FrameworkElement, e);
-            }
+            // Ask the column to store the original value
+            column?.BeginEdit(Content as FrameworkElement, e);
 
             RaisePreparingCellForEdit(e);
         }
@@ -600,11 +587,8 @@ namespace System.Windows.Controls
             Debug.Assert(IsEditing, "Should not call CancelEdit when IsEditing is false.");
 
             DataGridColumn column = Column;
-            if (column != null)
-            {
-                // Ask the column to restore the original value
-                column.CancelEdit(Content as FrameworkElement);
-            }
+            // Ask the column to restore the original value
+            column?.CancelEdit(Content as FrameworkElement);
 
             IsEditing = false;
         }
@@ -678,13 +662,10 @@ namespace System.Windows.Controls
             if (!cell._syncingIsSelected)
             {
                 DataGrid dataGrid = cell.DataGridOwner;
-                if (dataGrid != null)
-                {
-                    // Notify the DataGrid that a cell's IsSelected property changed
-                    // in case it was done programmatically instead of by the
-                    // DataGrid itself.
-                    dataGrid.CellIsSelectedChanged(cell, isSelected);
-                }
+                // Notify the DataGrid that a cell's IsSelected property changed
+                // in case it was done programmatically instead of by the
+                // DataGrid itself.
+                dataGrid?.CellIsSelectedChanged(cell, isSelected);
             }
 
             cell.RaiseSelectionChangedEvent(isSelected);
@@ -871,8 +852,10 @@ namespace System.Windows.Controls
             if (DataGridHelper.IsGridLineVisible(dataGrid, /*isHorizontal = */ false))
             {
                 double thickness = DataGridOwner.VerticalGridLineThickness;
-                Rect rect = new Rect(new Size(thickness, RenderSize.Height));
-                rect.X = RenderSize.Width - thickness;
+                Rect rect = new Rect(new Size(thickness, RenderSize.Height))
+                {
+                    X = RenderSize.Width - thickness
+                };
 
                 drawingContext.DrawRectangle(DataGridOwner.VerticalGridLinesBrush, null, rect);
             }
@@ -880,8 +863,10 @@ namespace System.Windows.Controls
             if (DataGridHelper.IsGridLineVisible(dataGrid, /*isHorizontal = */ true))
             {
                 double thickness = dataGrid.HorizontalGridLineThickness;
-                Rect rect = new Rect(new Size(RenderSize.Width, thickness));
-                rect.Y = RenderSize.Height - thickness;
+                Rect rect = new Rect(new Size(RenderSize.Width, thickness))
+                {
+                    Y = RenderSize.Height - thickness
+                };
 
                 drawingContext.DrawRectangle(dataGrid.HorizontalGridLinesBrush, null, rect);
             }
@@ -936,11 +921,8 @@ namespace System.Windows.Controls
                 }
 
                 DataGrid dataGridOwner = DataGridOwner;
-                if (dataGridOwner != null)
-                {
-                    // Let the DataGrid process selection
-                    dataGridOwner.HandleSelectionForCellInput(this, /* startDragging = */ Mouse.Captured == null, /* allowsExtendSelect = */ true, /* allowsMinimalSelect = */ true);
-                }
+                // Let the DataGrid process selection
+                dataGridOwner?.HandleSelectionForCellInput(this, /* startDragging = */ Mouse.Captured == null, /* allowsExtendSelect = */ true, /* allowsMinimalSelect = */ true);
 
                 e.Handled = true;
             }
@@ -1038,10 +1020,7 @@ namespace System.Windows.Controls
         private void SendInputToColumn(InputEventArgs e)
         {
             var column = Column;
-            if (column != null)
-            {
-                column.OnInput(e);
-            }
+            column?.OnInput(e);
         }
 
         #endregion

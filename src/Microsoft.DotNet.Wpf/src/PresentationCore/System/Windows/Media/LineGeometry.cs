@@ -1,29 +1,12 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
 //                                             
 
-using System;                   
-using MS.Internal;
-using System.ComponentModel;
-using System.ComponentModel.Design.Serialization;
-using System.Reflection;
-using System.Collections;
-using System.Text;
-using System.Globalization;
-using System.Windows.Media;
-using System.Windows;
-using System.Text.RegularExpressions;
-using System.Windows.Media.Animation;
 using System.Windows.Media.Composition;
-using System.Diagnostics;
-using System.Runtime.InteropServices; 
-using System.Security;
 
-using SR=MS.Internal.PresentationCore.SR;
-
-namespace System.Windows.Media 
+namespace System.Windows.Media
 {
     /// <summary>
     /// This is the Geometry class for Lines. 
@@ -118,7 +101,7 @@ namespace System.Windows.Media
                     pPoints[0] = pt1;
                     pPoints[1] = pt2;
 
-                    fixed (byte *pTypes = LineGeometry.s_lineTypes)
+                    fixed (byte* pTypes = LineTypes) //Merely retrieves the pointer to static PE data, no actual pinning occurs
                     {
                         return Geometry.GetBoundsHelper(
                             pen, 
@@ -140,11 +123,11 @@ namespace System.Windows.Media
         {
             unsafe
             {
-                Point *pPoints = stackalloc Point[2];
+                Point* pPoints = stackalloc Point[2];
                 pPoints[0] = StartPoint;
                 pPoints[1] = EndPoint;
                 
-                fixed (byte* pTypes = GetTypeList())
+                fixed (byte* pTypes = LineTypes) //Merely retrieves the pointer to static PE data, no actual pinning occurs
                 {
                     return ContainsInternal(
                         pen,
@@ -185,13 +168,11 @@ namespace System.Windows.Media
             return 0.0;
         }
 
-        private byte[] GetTypeList() { return s_lineTypes; }
+        private static ReadOnlySpan<byte> LineTypes => [(byte)MILCoreSegFlags.SegTypeLine];
 
-        private static byte[] s_lineTypes = new byte[] { (byte)MILCoreSegFlags.SegTypeLine };
+        private static uint GetPointCount() { return c_pointCount; }
 
-        private uint GetPointCount() { return c_pointCount; }
-
-        private uint GetSegmentCount() { return c_segmentCount; }
+        private static uint GetSegmentCount() { return c_segmentCount; }
 
         /// <summary>
         /// GetAsPathGeometry - return a PathGeometry version of this Geometry
@@ -255,14 +236,16 @@ namespace System.Windows.Media
                 return Geometry.GetEmptyPathGeometryData();
             }
 
-            PathGeometryData data = new PathGeometryData();
-            data.FillRule = FillRule.EvenOdd;
-            data.Matrix = CompositionResourceManager.TransformToMilMatrix3x2D(Transform);
+            PathGeometryData data = new PathGeometryData
+            {
+                FillRule = FillRule.EvenOdd,
+                Matrix = CompositionResourceManager.TransformToMilMatrix3x2D(Transform)
+            };
 
             ByteStreamGeometryContext ctx = new ByteStreamGeometryContext();
 
-            ctx.BeginFigure(StartPoint, true /* is filled */, false /* is closed */);
-            ctx.LineTo(EndPoint, true /* is stroked */, false /* is smooth join */);
+            ctx.BeginFigure(StartPoint, isFilled: true, isClosed: false);
+            ctx.LineTo(EndPoint, isStroked: true, isSmoothJoin: false);
             
             ctx.Close();
             data.SerializedData = ctx.GetData();

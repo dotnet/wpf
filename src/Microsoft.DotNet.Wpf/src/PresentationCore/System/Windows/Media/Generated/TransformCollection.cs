@@ -12,40 +12,22 @@
 using MS.Internal;
 using MS.Internal.KnownBoxes;
 using MS.Internal.Collections;
-using MS.Internal.PresentationCore;
 using MS.Utility;
-using System;
 using System.Collections;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Diagnostics;
 using System.Globalization;
-using System.Reflection;
-using System.Runtime.InteropServices;
-using System.ComponentModel.Design.Serialization;
 using System.Text;
-using System.Windows;
-using System.Windows.Media;
 using System.Windows.Media.Effects;
-using System.Windows.Media.Media3D;
 using System.Windows.Media.Animation;
 using System.Windows.Media.Composition;
-using System.Windows.Media.Imaging;
 using System.Windows.Markup;
 using System.Windows.Media.Converters;
-using System.Security;
-using SR=MS.Internal.PresentationCore.SR;
-// These types are aliased to match the unamanaged names used in interop
-using BOOL = System.UInt32;
-using WORD = System.UInt16;
-using Float = System.Single;
 
 namespace System.Windows.Media
 {
     /// <summary>
     /// A collection of Transform objects.
     /// </summary>
-
 
     public sealed partial class TransformCollection : Animatable, IList, IList<Transform>
     {
@@ -271,6 +253,7 @@ namespace System.Windows.Media
 
                 if (!Object.ReferenceEquals(_collection[ index ], value))
                 {
+
                     Transform oldValue = _collection[ index ];
                     OnFreezablePropertyChanged(oldValue, value);
 
@@ -314,10 +297,8 @@ namespace System.Windows.Media
             // This will not throw in the case that we are copying
             // from an empty collection.  This is consistent with the
             // BCL Collection implementations. (Windows 1587365)
-            if (index < 0  || (index + _collection.Count) > array.Length)
-            {
-                throw new ArgumentOutOfRangeException("index");
-            }
+            ArgumentOutOfRangeException.ThrowIfNegative(index);
+            ArgumentOutOfRangeException.ThrowIfGreaterThan(index, array.Length - _collection.Count);
 
             _collection.CopyTo(array, index);
         }
@@ -426,10 +407,8 @@ namespace System.Windows.Media
             // This will not throw in the case that we are copying
             // from an empty collection.  This is consistent with the
             // BCL Collection implementations. (Windows 1587365)
-            if (index < 0  || (index + _collection.Count) > array.Length)
-            {
-                throw new ArgumentOutOfRangeException("index");
-            }
+            ArgumentOutOfRangeException.ThrowIfNegative(index);
+            ArgumentOutOfRangeException.ThrowIfGreaterThan(index, array.Length - _collection.Count);
 
             if (array.Rank != 1)
             {
@@ -651,7 +630,8 @@ namespace System.Windows.Media
                 _collection.Add(newValue);
                 OnInsert(newValue);
             }
-}
+
+        }
         /// <summary>
         /// Implementation of Freezable.CloneCurrentValueCore()
         /// </summary>
@@ -672,7 +652,8 @@ namespace System.Windows.Media
                 _collection.Add(newValue);
                 OnInsert(newValue);
             }
-}
+
+        }
         /// <summary>
         /// Implementation of Freezable.GetAsFrozenCore()
         /// </summary>
@@ -693,7 +674,8 @@ namespace System.Windows.Media
                 _collection.Add(newValue);
                 OnInsert(newValue);
             }
-}
+
+        }
         /// <summary>
         /// Implementation of Freezable.GetCurrentValueAsFrozenCore()
         /// </summary>
@@ -714,7 +696,8 @@ namespace System.Windows.Media
                 _collection.Add(newValue);
                 OnInsert(newValue);
             }
-}
+
+        }
         /// <summary>
         /// Implementation of <see cref="System.Windows.Freezable.FreezeCore">Freezable.FreezeCore</see>.
         /// </summary>
@@ -818,6 +801,7 @@ namespace System.Windows.Media
 
             void IDisposable.Dispose()
             {
+
             }
 
             /// <summary>

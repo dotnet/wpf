@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -6,14 +6,9 @@
 //              implementations.  NativeMsaaProviderRoot creates
 //              instances of this class.
 
-// PRESHARP: In order to avoid generating warnings about unkown message numbers and unknown pragmas.
-#pragma warning disable 1634, 1691
-
 using System;
 using System.Collections;
 using System.Diagnostics;
-using System.Globalization;
-using System.Runtime.InteropServices;
 using System.Windows;
 using System.Windows.Automation;
 using System.Windows.Automation.Provider;
@@ -130,11 +125,11 @@ namespace MS.Internal.AutomationProxies
         // needed based on a window handle, object and child ids.
         // It returns an IRawElementProviderSimple implementation for a native IAccessible object
         // or null if the hwnd doesn't natively implement IAccessible.
-        internal static IRawElementProviderSimple Create (IntPtr hwnd, int idChild, int idObject)
+        internal static IRawElementProviderSimple Create(IntPtr hwnd, int idChild, int idObject)
         {
 #if DEBUG
 //            // uncomment this if you want to prevent unwanted interactions with the debugger in Whidbey.
-//            if (string.Compare(hwnd.ProcessName, "devenv.exe", StringComparison.OrdinalIgnoreCase) == 0)
+//            if (string.Equals(hwnd.ProcessName, "devenv.exe", StringComparison.OrdinalIgnoreCase))
 //            {
 //                return null;
 //            }
@@ -367,7 +362,7 @@ namespace MS.Internal.AutomationProxies
                 // two different AutomationElements representing the same underlying
                 // UI in MCE may incorrectly compare as FALSE.
                 string className = Misc.GetClassName(_hwnd);
-                if(String.Compare(className, "eHome Render Window", StringComparison.OrdinalIgnoreCase) == 0)
+                if (string.Equals(className, "eHome Render Window", StringComparison.OrdinalIgnoreCase))
                     _isMCE = TristateBool.TestedTrue;
                 else
                     _isMCE = TristateBool.TestedFalse;
@@ -1066,7 +1061,7 @@ namespace MS.Internal.AutomationProxies
 
             foreach (string str in BadImplClassnames)
             {
-                if (String.Compare(className, str, StringComparison.OrdinalIgnoreCase) == 0)
+                if (string.Equals(className, str, StringComparison.OrdinalIgnoreCase))
                     return true;
             }
 
@@ -1086,9 +1081,7 @@ namespace MS.Internal.AutomationProxies
                     _knownRoot = (MsaaNativeProvider)Create(_hwnd, NativeMethods.CHILD_SELF, NativeMethods.OBJID_CLIENT);
                     if (_knownRoot == null)
                     {
-                        // PerSharp/PreFast will flag this as a warning, 6503/56503: Property get methods should not throw exceptions.
                         // When failing to create the element, the correct this to do is to throw an ElementNotAvailableException.
-#pragma warning suppress 6503
                         throw new ElementNotAvailableException();
                     }
                 }
@@ -1192,7 +1185,7 @@ namespace MS.Internal.AutomationProxies
         }
 
         // Used by Toggle and Invoke...
-        void CallDoDefaultAction()
+        private void CallDoDefaultAction()
         {
             // Make sure that the control is enabled
             if (!SafeNativeMethods.IsWindowEnabled(_hwnd))
@@ -1227,13 +1220,13 @@ namespace MS.Internal.AutomationProxies
         //  Private Fields
         //
         //------------------------------------------------------
- 
+
         #region Private Fields
 
         //private delegate AutomationPattern PatternChecker(Accessible acc);
 
         // a struct holding an entry for the table below
-        struct RoleCtrlType
+        private struct RoleCtrlType
         {
             public RoleCtrlType(AccessibleRole role, ControlType ctrlType)
             {
@@ -1288,7 +1281,7 @@ namespace MS.Internal.AutomationProxies
         };
 
         // a struct holding an entry for the table below
-        struct CtrlTypePatterns
+        private struct CtrlTypePatterns
         {
             public CtrlTypePatterns(ControlType ctrlType, params AutomationPattern[] patterns)
             {

@@ -2,21 +2,15 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-//
 // Description:
 //  Common container-related operations that can be shared among internal
 //  components.
-//
 
 using System;
 using System.Collections;   // for IList
-using System.Globalization;
 using System.IO;
-using System.Runtime.InteropServices;
-using System.Runtime.Serialization;
 using System.Text;          // for StringBuilder
 using System.Diagnostics;   // for Debug.Assert
-using System.Security;
 
 
 #if PBTCOMPILER
@@ -34,20 +28,18 @@ namespace MS.Internal.IO.Packaging.CompoundFile
     /// </summary>
     static internal class ContainerUtilities
     {
-        static private readonly Int32 _int16Size = SizeOfInt16();
-        static private readonly Int32 _int32Size = SizeOfInt32();
+        static private readonly Int32 _int16Size = sizeof(Int16);
+        static private readonly Int32 _int32Size = sizeof(Int32);
         static private readonly byte[] _paddingBuf = new byte[4];        // for writing DWORD padding
 
 
 #if !PBTCOMPILER
-        static private readonly Int32 _int64Size = SizeOfInt64();
+        static private readonly Int32 _int64Size = sizeof(Int64);
 
         /// Used by ConvertBackSlashPathToStringArrayPath and 
         ///     ConvertStringArrayPathToBackSlashPath to separate path elements.
         static readonly internal char PathSeparator = Path.DirectorySeparatorChar;
         static readonly internal string PathSeparatorAsString = new string(ContainerUtilities.PathSeparator, 1);
-
-        static private readonly CaseInsensitiveOrdinalStringComparer _stringCaseInsensitiveComparer = new CaseInsensitiveOrdinalStringComparer();
 #endif
 
 
@@ -82,14 +74,6 @@ namespace MS.Internal.IO.Packaging.CompoundFile
             get
             {
                 return _int64Size;
-            }
-        }
-
-        static internal CaseInsensitiveOrdinalStringComparer StringCaseInsensitiveComparer
-        {
-            get
-            {
-                return _stringCaseInsensitiveComparer;
             }
         }
 #endif
@@ -152,10 +136,7 @@ namespace MS.Internal.IO.Packaging.CompoundFile
                     {
                         strByteLen += padLength;
 
-                        if (writer != null)
-                        {
-                            writer.Write(_paddingBuf, 0, padLength);
-                        }
+                        writer?.Write(_paddingBuf, 0, padLength);
                     }
                 }
 
@@ -283,29 +264,6 @@ namespace MS.Internal.IO.Packaging.CompoundFile
         }
 
 #if !PBTCOMPILER
-
-#endif        
-        private static int SizeOfInt16()
-        {
-            return Marshal.SizeOf(typeof(Int16));
-        }
-        
-#if !PBTCOMPILER
-
-#endif        
-        private static int SizeOfInt32()
-        {
-            return Marshal.SizeOf(typeof(Int32));
-        }
-        
-#if !PBTCOMPILER
-        private static int SizeOfInt64()
-        {
-            return Marshal.SizeOf(typeof(Int64));
-        }
-#endif
-        
-#if !PBTCOMPILER
         /// <summary>
         ///     Interprets a single string by treating it as a set of names
         /// delimited by a special character.  The character is the backslash,
@@ -353,7 +311,7 @@ namespace MS.Internal.IO.Packaging.CompoundFile
             {
                 if (0 == arrayElement.Length)
                     throw new ArgumentException(
-                        SR.PathHasEmptyElement, "backSlashPath");
+                        SR.PathHasEmptyElement, nameof(backSlashPath));
             }
 
             // No empty strings, this array should be fine.
@@ -492,11 +450,11 @@ namespace MS.Internal.IO.Packaging.CompoundFile
         {
             CheckStringAgainstNullAndEmpty(testString, testStringIdentifier);
 
-            if (testString.IndexOf(PathSeparator) != -1)
+            if (testString.Contains(PathSeparator))
                 throw new ArgumentException(
                     SR.Format(SR.NameCanNotHaveDelimiter,
                         testStringIdentifier,
-                        PathSeparator), "testString");
+                        PathSeparator), nameof(testString));
         }
 
 #endif

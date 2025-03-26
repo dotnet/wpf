@@ -2,7 +2,7 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-using System.Diagnostics;
+#nullable disable
 
 namespace System.Xaml
 {
@@ -10,7 +10,7 @@ namespace System.Xaml
     public class NamespaceDeclaration
     {
         private string prefix;
-        
+
         private string ns;
 
         public NamespaceDeclaration(string ns, string prefix)
@@ -26,7 +26,7 @@ namespace System.Xaml
                 return prefix;
             }
         }
-        
+
         public string Namespace
         {
             get

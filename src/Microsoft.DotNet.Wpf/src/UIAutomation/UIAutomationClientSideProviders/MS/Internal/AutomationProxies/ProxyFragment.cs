@@ -36,15 +36,12 @@
 using System;
 using System.Windows.Automation;
 using System.Windows.Automation.Provider;
-using System.ComponentModel;
-using System.Collections;
-using System.Runtime.InteropServices;
 
 namespace MS.Internal.AutomationProxies
 {
     // Base Class for all the Windows Control that supports navigation.
     // Implements the default behaviors
-    class ProxyFragment : ProxySimple, IRawElementProviderFragmentRoot
+    internal class ProxyFragment : ProxySimple, IRawElementProviderFragmentRoot
     {
         // ------------------------------------------------------
         //

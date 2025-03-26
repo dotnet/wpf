@@ -2413,16 +2413,6 @@ Do you want to replace it?</source>
         <target state="translated">Тип "{0}" не является действительным типом PageFunction.</target>
         <note />
       </trans-unit>
-      <trans-unit id="InvalidPermissionStateValue">
-        <source>PermissionState value '{0}' is not valid for this Permission.</source>
-        <target state="translated">Значение PermissionState "{0}" недопустимо для данного разрешения.</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="InvalidPermissionType">
-        <source>Permission type is not valid. Expected '{0}'.</source>
-        <target state="translated">Недопустимый тип разрешений. Требуется "{0}".</target>
-        <note />
-      </trans-unit>
       <trans-unit id="InvalidPoint">
         <source>Invalid Point value.</source>
         <target state="translated">Недопустимое значение Point.</target>
@@ -3606,11 +3596,6 @@ Do you want to replace it?</source>
       <trans-unit id="Panel_NoNullVisualParent">
         <source>'{0}' must be provided when instantiating '{1}'.</source>
         <target state="translated">При создании экземпляра "{1}" необходимо задать "{0}".</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="ParameterCannotBeNegative">
-        <source>Parameter must be greater than or equal to zero.</source>
-        <target state="translated">Значение параметра должно быть больше или равно 0.</target>
         <note />
       </trans-unit>
       <trans-unit id="ParameterMustBeLogicalNode">
@@ -4820,7 +4805,7 @@ Do you want to replace it?</source>
       </trans-unit>
       <trans-unit id="ScrollBar_ContextMenu_Top">
         <source>Top</source>
-        <target state="translated">Top</target>
+        <target state="translated">Наверх</target>
         <note />
       </trans-unit>
       <trans-unit id="ScrollViewer_CannotBeNaN">
@@ -4831,11 +4816,6 @@ Do you want to replace it?</source>
       <trans-unit id="ScrollViewer_OutOfRange">
         <source>'{0}' parameter has value '{1}', which is not in the valid range of '{2}' to '{3}'.</source>
         <target state="translated">Параметр "{0}" имеет значение "{1}", лежащее вне допустимого диапазона от "{2}" до "{3}".</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="SecurityExceptionForSettingSandboxExternalToTrue">
-        <source>Cannot set SandboxExternalContent to true in partial trust.</source>
-        <target state="translated">Не удается задать значение "true" для SandboxExternalContent при частично доверительных отношениях.</target>
         <note />
       </trans-unit>
       <trans-unit id="SeekFailed">

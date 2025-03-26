@@ -10,10 +10,9 @@
 //              or DrawingGroups.
 //
 
-using System.Windows.Media;
 using System.Windows.Media.Composition;
 
-namespace System.Windows.Media 
+namespace System.Windows.Media
 {
     /// <summary>
     /// IDrawingContent defines a common interface for representations

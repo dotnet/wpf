@@ -10,37 +10,15 @@
 //
 
 using MS.Internal;
-using MS.Internal.Collections;
-using MS.Internal.KnownBoxes;
-using MS.Internal.PresentationCore;
 using MS.Utility;
-using System;
 using System.Collections;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Diagnostics;
-using System.Globalization;
-using System.Reflection;
-using System.Runtime.InteropServices;
-using System.ComponentModel.Design.Serialization;
-using System.Text;
-using System.Windows;
-using System.Windows.Media;
-using System.Windows.Media.Media3D;
 using System.Windows.Media.Animation;
 using System.Windows.Media.Composition;
 using System.Windows.Media.Imaging;
-using System.Windows.Markup;
-using System.Security;
-using SR=MS.Internal.PresentationCore.SR;
-// These types are aliased to match the unamanaged names used in interop
-using BOOL = System.UInt32;
-using WORD = System.UInt16;
-using Float = System.Single;
 
 namespace System.Windows.Media.Effects
 {
-    sealed partial class PixelShader : Animatable, DUCE.IResource
+    public sealed partial class PixelShader : Animatable, DUCE.IResource
     {
         //------------------------------------------------------
         //
@@ -171,6 +149,8 @@ namespace System.Windows.Media.Effects
             {
                 if (_duceResource.CreateOrAddRefOnChannel(this, channel, System.Windows.Media.Composition.DUCE.ResourceType.TYPE_PIXELSHADER))
                 {
+
+
                     AddRefOnChannelAnimations(channel);
 
 
@@ -188,8 +168,11 @@ namespace System.Windows.Media.Effects
 
                 if (_duceResource.ReleaseOnChannel(channel))
                 {
+
+
                     ReleaseOnChannelAnimations(channel);
-}
+
+                }
             }
         }
         DUCE.ResourceHandle DUCE.IResource.GetHandle(DUCE.Channel channel)
@@ -294,8 +277,7 @@ namespace System.Windows.Media.Effects
             // We check our static default fields which are of type Freezable
             // to make sure that they are not mutable, otherwise we will throw
             // if these get touched by more than one thread in the lifetime
-            // of your app. 
-
+            // of your app.
 
 
             // Initializations
@@ -319,6 +301,8 @@ namespace System.Windows.Media.Effects
                                    /* isIndependentlyAnimated  = */ false,
                                    /* coerceValueCallback */ null);
         }
+
+
 
         #endregion Constructors
     }

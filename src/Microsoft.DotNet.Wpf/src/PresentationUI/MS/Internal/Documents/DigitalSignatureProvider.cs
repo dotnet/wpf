@@ -1,27 +1,20 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.IO;
 using System.IO.Packaging;
-using System.Net;
-using System.Security;              // For elevations
 using System.Security.Cryptography.X509Certificates;
 using System.Windows.TrustUI;
 using System.Windows.Xps.Packaging;
-
-using MS.Internal.PresentationUI;   // For FriendAccessAllowed
 
 namespace MS.Internal.Documents
 {
     /// <summary>
     /// DigitalSignatureProvider is used to connect DRP to Xps dig sig 
     /// </summary>
-    [FriendAccessAllowed]
     internal class DigitalSignatureProvider : IDigitalSignatureProvider
     {
         #region Constructors
@@ -38,24 +31,20 @@ namespace MS.Internal.Documents
         /// will manipulate</param>
         public DigitalSignatureProvider(Package package)
         {
-            if (package != null)
+            ArgumentNullException.ThrowIfNull(package);
+
+            XpsDocument = new XpsDocument(package);
+            FixedDocumentSequence = XpsDocument.FixedDocumentSequenceReader;
+            if (FixedDocumentSequence == null)
             {
-                XpsDocument = new XpsDocument(package);
-                FixedDocumentSequence = XpsDocument.FixedDocumentSequenceReader;
-                if (FixedDocumentSequence == null)
-                {
-                    throw new ArgumentException(SR.DigitalSignatureNoFixedDocumentSequence);
-                }
-                // We only want to save the first fixed document since all
-                // XPS Viewer signature definitions will be added to the first
-                // fixed document.
-                FixedDocument =
-                    FixedDocumentSequence.FixedDocuments[0];
+                throw new ArgumentException(SR.DigitalSignatureNoFixedDocumentSequence);
             }
-            else
-            {
-                throw new ArgumentNullException("package");
-            }
+            // We only want to save the first fixed document since all
+            // XPS Viewer signature definitions will be added to the first
+            // fixed document.
+            FixedDocument =
+                FixedDocumentSequence.FixedDocuments[0];
+
         }
         #endregion Constructors
 
@@ -84,13 +73,13 @@ namespace MS.Internal.Documents
         {
             get
             {
-                if (!_isSignableCacheValid.Value)
+                if (!_isSignableCacheValid)
                 {
-                    _isSignableCache.Value = XpsDocument.IsSignable;
-                    _isSignableCacheValid.Value = true;
+                    _isSignableCache = XpsDocument.IsSignable;
+                    _isSignableCacheValid = true;
                 }
 
-                return _isSignableCache.Value;                        
+                return _isSignableCache;                        
             }
         }
 
@@ -189,16 +178,17 @@ namespace MS.Internal.Documents
             Guid guidID = Guid.NewGuid();
 
             // Create a new SignatureDefinition
-            XpsSignatureDefinition xpsSignatureDefinition = new XpsSignatureDefinition();
+            XpsSignatureDefinition xpsSignatureDefinition = new XpsSignatureDefinition
+            {
+                // Use the digSig to setup the SignatureDefinition.
+                RequestedSigner = digitalSignature.SubjectName,
+                Intent = digitalSignature.Reason,
+                SigningLocale = digitalSignature.Location,
+                SignBy = digitalSignature.SignedOn,
 
-            // Use the digSig to setup the SignatureDefinition.
-            xpsSignatureDefinition.RequestedSigner = digitalSignature.SubjectName;
-            xpsSignatureDefinition.Intent = digitalSignature.Reason;
-            xpsSignatureDefinition.SigningLocale = digitalSignature.Location;
-            xpsSignatureDefinition.SignBy = digitalSignature.SignedOn;            
-
-            // Use our new guid to setup the ID
-            xpsSignatureDefinition.SpotId = guidID;
+                // Use our new guid to setup the ID
+                SpotId = guidID
+            };
 
             // Add the signature definition to the document
             FixedDocument.AddSignatureDefinition(xpsSignatureDefinition);
@@ -368,13 +358,13 @@ namespace MS.Internal.Documents
                     DigitalSignatureList = GetSignaturesFromPackage();
                 }
 
-                if (_readOnlySignatureList.Value == null)
+                if (_readOnlySignatureList == null)
                 {
-                    _readOnlySignatureList.Value =
+                    _readOnlySignatureList =
                         new ReadOnlyCollection<DigitalSignature>(DigitalSignatureList);
                 }
 
-                return _readOnlySignatureList.Value;
+                return _readOnlySignatureList;
             }
         }
 
@@ -499,9 +489,10 @@ namespace MS.Internal.Documents
         /// passed in as a parameter</returns>
         private static DigitalSignature ConvertXpsDigitalSignature(XpsDigitalSignature xpsDigitalSignature)
         {
-            DigitalSignature digitalSignature = new DigitalSignature();
-
-            digitalSignature.XpsDigitalSignature = xpsDigitalSignature;
+            DigitalSignature digitalSignature = new DigitalSignature
+            {
+                XpsDigitalSignature = xpsDigitalSignature
+            };
 
             X509Certificate2 x509Certificate2 =
                 xpsDigitalSignature.SignerCertificate as X509Certificate2;
@@ -549,15 +540,17 @@ namespace MS.Internal.Documents
         private static DigitalSignature ConvertXpsSignatureDefinition(XpsSignatureDefinition signatureDefinition)
         {
             //Create new DigSig.  This is a request and will have the status NotSigned.
-            DigitalSignature digitalSignature = new DigitalSignature();
-            digitalSignature.SignatureState = SignatureStatus.NotSigned;
+            DigitalSignature digitalSignature = new DigitalSignature
+            {
+                SignatureState = SignatureStatus.NotSigned,
 
-            //set fields using the definition.
-            digitalSignature.SubjectName = signatureDefinition.RequestedSigner;
-            digitalSignature.Reason = signatureDefinition.Intent;
-            digitalSignature.SignedOn = signatureDefinition.SignBy;
-            digitalSignature.Location = signatureDefinition.SigningLocale;
-            digitalSignature.GuidID = signatureDefinition.SpotId;
+                //set fields using the definition.
+                SubjectName = signatureDefinition.RequestedSigner,
+                Reason = signatureDefinition.Intent,
+                SignedOn = signatureDefinition.SignBy,
+                Location = signatureDefinition.SigningLocale,
+                GuidID = signatureDefinition.SpotId
+            };
 
             return digitalSignature;
         }
@@ -688,11 +681,11 @@ namespace MS.Internal.Documents
             // We assert that _isSignableCacheValid is true here --
             // we don't want to block on calling XpsDocument.IsSignable so we
             // require calling code do that work prior to invoking SignDocument.
-            Invariant.Assert(_isSignableCacheValid.Value);
+            Invariant.Assert(_isSignableCacheValid);
 
             // Assert that the document is actually signable.  We should never
             // get here if it's not.
-            Invariant.Assert(_isSignableCache.Value);
+            Invariant.Assert(_isSignableCache);
         }
 
         #endregion Private Methods
@@ -711,12 +704,12 @@ namespace MS.Internal.Documents
         {
             get
             {
-                return _xpsDocument.Value;
+                return _xpsDocument;
             }
 
             set
             {
-                _xpsDocument.Value = value;
+                _xpsDocument = value;
             }
         }
 
@@ -728,12 +721,12 @@ namespace MS.Internal.Documents
         {
             get
             {
-                return _fixedDocument.Value;
+                return _fixedDocument;
             }
 
             set
             {
-                _fixedDocument.Value = value;
+                _fixedDocument = value;
             }
         }
 
@@ -744,12 +737,12 @@ namespace MS.Internal.Documents
         {
             get
             {
-                return _fixedDocumentSequence.Value;
+                return _fixedDocumentSequence;
             }
 
             set
             {
-                _fixedDocumentSequence.Value = value;
+                _fixedDocumentSequence = value;
             }
         }
 
@@ -780,29 +773,29 @@ namespace MS.Internal.Documents
         /// <summary>
         /// The XPS document from which to read signatures.
         /// </summary>
-        SecurityCriticalDataForSet<XpsDocument> _xpsDocument;
+        private XpsDocument _xpsDocument;
 
         /// <summary>
         /// The fixed document sequence to which to write signature definitions.
         /// </summary>
-        SecurityCriticalDataForSet<IXpsFixedDocumentSequenceReader> _fixedDocumentSequence;
+        private IXpsFixedDocumentSequenceReader _fixedDocumentSequence;
 
         /// <summary>
         /// The fixed document to which to write signature definitions.
         /// </summary>
-        SecurityCriticalDataForSet<IXpsFixedDocumentReader> _fixedDocument;
+        private IXpsFixedDocumentReader _fixedDocument;
 
         /// <summary>
         /// A list of all the signatures in the package.
         /// </summary>
-        IList<DigitalSignature> _digitalSignatureList;
+        private IList<DigitalSignature> _digitalSignatureList;
 
         /// <summary>
         /// A cached read-only version of the signature list. This is a wrapper
         /// around _digitalSignatureList that is intended to be passed out by
         /// the Signatures property.
         /// </summary>
-        SecurityCriticalDataForSet<ReadOnlyCollection<DigitalSignature>> _readOnlySignatureList;
+        private ReadOnlyCollection<DigitalSignature> _readOnlySignatureList;
 
         //Contains all known flags that don't convert to Corrupted.
         //(All flags except Cyclic and NotSignatureValid).  We will be looking for unknown flags using this
@@ -858,8 +851,8 @@ namespace MS.Internal.Documents
         /// <summary>
         /// Cached value for the IsSignable property
         /// </summary>
-        private SecurityCriticalDataForSet<bool> _isSignableCache;
-        private SecurityCriticalDataForSet<bool> _isSignableCacheValid;
+        private bool _isSignableCache;
+        private bool _isSignableCacheValid;
 
         #endregion Private Fields
     }

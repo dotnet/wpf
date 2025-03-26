@@ -1,36 +1,15 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-//
-//
-// Description: This class represents the Use Lciense which enables end users to
-//              consume protected content.
-//
-//
-//
-//
-
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Diagnostics;
-using System.Globalization;
-using System.Windows;
-using SecurityHelper=MS.Internal.WindowsBase.SecurityHelper;
 
 using MS.Internal.Security.RightsManagement;
-using MS.Internal.Utility;
-
-// Disable message about unknown message numbers so as to allow the suppression
-// of PreSharp warnings (whose numbers are unknown to the compiler).
-#pragma warning disable 1634, 1691
 
 namespace System.Security.RightsManagement
 {
     /// <summary>
-    /// This class represents the Use Lciense which enables end users to consume protected content.
+    /// This class represents the Use License which enables end users to consume protected content.
     /// </summary>
     public class UseLicense
     {
@@ -111,12 +90,9 @@ namespace System.Security.RightsManagement
         /// </summary>
         public CryptoProvider Bind (SecureEnvironment secureEnvironment)
         {
-
             ArgumentNullException.ThrowIfNull(secureEnvironment);
 
             // The SecureEnvironment constructor makes sure ClientSession cannot be null.
-            // Accordingly suppressing preSharp warning about having to validate ClientSession.
-#pragma warning suppress 6506
             return secureEnvironment.ClientSession.TryBindUseLicenseToAllIdentites(_serializedUseLicense);
         }
 

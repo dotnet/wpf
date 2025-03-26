@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -13,10 +13,7 @@
 //      NavigationService.
 //
 
-using System;
 using System.Collections;
-using System.Security;
-using System.Diagnostics;
 
 using System.Windows;
 using System.Windows.Navigation;
@@ -229,7 +226,7 @@ namespace MS.Internal.AppModel
         public JournalEntry RemoveBackEntry()
         {
             _host.VerifyContextAndObjectState();
-            return _journal == null ? null : _journal.RemoveBackEntry();
+            return _journal?.RemoveBackEntry();
         }
 
         public System.Collections.IEnumerable BackStack
@@ -333,10 +330,7 @@ namespace MS.Internal.AppModel
 
         internal void AbortJournalNavigation()
         {
-            if (_journal != null)
-            {
-                _journal.AbortJournalNavigation();
-            }
+            _journal?.AbortJournalNavigation();
         }
 
         internal INavigatorBase FindTarget(string name)
@@ -378,7 +372,7 @@ namespace MS.Internal.AppModel
                             s += "u";
                             break;
                         default:
-                            Invariant.Assert(false, "Invalid JournalEntryType: " + journal[i].EntryType);
+                            Invariant.Assert(false, $"Invalid JournalEntryType: {journal[i].EntryType}");
                             break;
                     }
                 }

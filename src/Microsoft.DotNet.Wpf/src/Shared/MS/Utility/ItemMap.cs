@@ -2,10 +2,6 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-using System;
-using System.Collections;
-using System.Diagnostics;
-
 namespace MS.Utility
 {
     //
@@ -16,7 +12,7 @@ namespace MS.Utility
     // This struct is designed to function with its fields starting at
     // their default values and without the need of surfacing a constructor
     // other than the deafult
-    #pragma warning disable 649
+#pragma warning disable 649
 
     internal struct ItemStructMap<T>
     {

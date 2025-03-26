@@ -1,19 +1,15 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
 
-using System;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.ComponentModel;
-using System.Diagnostics;
-using System.Windows;
 using System.Windows.Automation;
 using System.Windows.Automation.Peers;
 using System.Windows.Controls.Primitives;
 using System.Windows.Data;
-using System.Windows.Media;
 using System.Windows.Threading;
 using MS.Internal;
 
@@ -44,7 +40,7 @@ namespace System.Windows.Controls
         private const byte DATAGRIDROW_stateNullCode = 255;
 
         // Static arrays to handle state transitions:
-        private static byte[] _idealStateMapping = new byte[] {
+        private static ReadOnlySpan<byte> IdealStateMapping => [
             DATAGRIDROW_stateNormalCode,
             DATAGRIDROW_stateNormalCode,
             DATAGRIDROW_stateMouseOverCode,
@@ -61,9 +57,9 @@ namespace System.Windows.Controls
             DATAGRIDROW_stateNormalEditingFocusedCode,
             DATAGRIDROW_stateMouseOverEditingCode,
             DATAGRIDROW_stateMouseOverEditingFocusedCode
-        };
+        ];
 
-        private static byte[] _fallbackStateMapping = new byte[] {
+        private static ReadOnlySpan<byte> FallbackStateMapping => [
             DATAGRIDROW_stateNormalCode, //DATAGRIDROW_stateMouseOverCode's fallback
             DATAGRIDROW_stateMouseOverEditingFocusedCode, //DATAGRIDROW_stateMouseOverEditingCode's fallback
             DATAGRIDROW_stateNormalEditingFocusedCode, //DATAGRIDROW_stateMouseOverEditingFocusedCode's fallback
@@ -74,7 +70,7 @@ namespace System.Windows.Controls
             DATAGRIDROW_stateSelectedFocusedCode, //DATAGRIDROW_stateNormalEditingFocusedCode's fallback
             DATAGRIDROW_stateSelectedFocusedCode, //DATAGRIDROW_stateSelectedCode's fallback
             DATAGRIDROW_stateNormalCode //DATAGRIDROW_stateSelectedFocusedCode's fallback
-        };
+        ];
 
         private static string[] _stateNames = new string[] {
             VisualStates.DATAGRIDROW_stateMouseOver,
@@ -226,7 +222,7 @@ namespace System.Windows.Controls
                 idealStateMappingIndex += 1;
             }
 
-            byte stateCode = _idealStateMapping[idealStateMappingIndex];
+            byte stateCode = IdealStateMapping[idealStateMappingIndex];
             Debug.Assert(stateCode != DATAGRIDROW_stateNullCode);
 
             string storyboardName;
@@ -254,7 +250,7 @@ namespace System.Windows.Controls
                 else
                 {
                     // The state wasn't implemented so fall back to the next one
-                    stateCode = _fallbackStateMapping[stateCode];
+                    stateCode = FallbackStateMapping[stateCode];
                 }
             }
 
@@ -582,10 +578,7 @@ namespace System.Windows.Controls
             if (cellsPresenter != null)
             {
                 cellsPresenter.ClearValue(DataGridCellsPresenter.HeightProperty);
-                if (_owner != null)
-                {
-                    _owner.ItemAttachedStorage.ClearValue(Item, DataGridCellsPresenter.HeightProperty);
-                }
+                _owner?.ItemAttachedStorage.ClearValue(Item, DataGridCellsPresenter.HeightProperty);
             }
         }
 
@@ -601,10 +594,7 @@ namespace System.Windows.Controls
         protected internal virtual void OnColumnsChanged(ObservableCollection<DataGridColumn> columns, NotifyCollectionChangedEventArgs e)
         {
             DataGridCellsPresenter cellsPresenter = CellsPresenter;
-            if (cellsPresenter != null)
-            {
-                cellsPresenter.OnColumnsChanged(columns, e);
-            }
+            cellsPresenter?.OnColumnsChanged(columns, e);
         }
 
         #endregion
@@ -717,9 +707,8 @@ namespace System.Windows.Controls
                 row.DataGridOwner,
                 DataGrid.RowDetailsVisibilityModeProperty);
 
-            if (visibility is DataGridRowDetailsVisibilityMode)
+            if (visibility is DataGridRowDetailsVisibilityMode visibilityMode)
             {
-                var visibilityMode = (DataGridRowDetailsVisibilityMode)visibility;
                 var hasDetailsTemplate = row.DetailsTemplate != null || row.DetailsTemplateSelector != null;
                 var isRealItem = row.Item != CollectionView.NewItemPlaceholder;
                 switch (visibilityMode)
@@ -799,10 +788,7 @@ namespace System.Windows.Controls
             if (row.DetailsLoaded &&
                 d.GetValue(e.Property) == e.NewValue)
             {
-                if (row.DataGridOwner != null)
-                {
-                    row.DataGridOwner.OnUnloadingRowDetailsWrapper(row);
-                }
+                row.DataGridOwner?.OnUnloadingRowDetailsWrapper(row);
                 if (e.NewValue != null)
                 {
                     // Invoke LoadingRowDetails, but only after the details template is expanded (so DetailsElement will be available).
@@ -827,7 +813,7 @@ namespace System.Windows.Controls
         {
             var row = (DataGridRow)arg;
             var dataGrid = row.DataGridOwner;
-            var detailsElement = row.DetailsPresenter != null ? row.DetailsPresenter.DetailsElement : null;
+            var detailsElement = row.DetailsPresenter?.DetailsElement;
             if (dataGrid != null)
             {
                 var detailsEventArgs = new DataGridRowDetailsEventArgs(row, detailsElement);
@@ -937,10 +923,7 @@ namespace System.Windows.Controls
 
             if (DataGridHelper.ShouldNotifyDetailsPresenter(target))
             {
-                if (DetailsPresenter != null)
-                {
-                    DetailsPresenter.NotifyPropertyChanged(d, e);
-                }
+                DetailsPresenter?.NotifyPropertyChanged(d, e);
             }
 
             if (DataGridHelper.ShouldNotifyCellsPresenter(target) ||
@@ -948,10 +931,7 @@ namespace System.Windows.Controls
                 DataGridHelper.ShouldRefreshCellContent(target))
             {
                 DataGridCellsPresenter cellsPresenter = CellsPresenter;
-                if (cellsPresenter != null)
-                {
-                    cellsPresenter.NotifyPropertyChanged(d, propertyName, e, target);
-                }
+                cellsPresenter?.NotifyPropertyChanged(d, propertyName, e, target);
             }
 
             if (DataGridHelper.ShouldNotifyRowHeaders(target) && RowHeader != null)
@@ -1014,15 +994,9 @@ namespace System.Windows.Controls
                 RestoreAttachedItemValue(cellsPresenter, DataGridCellsPresenter.HeightProperty);
             }
 
-            if (DetailsPresenter != null)
-            {
-                DetailsPresenter.SyncProperties();
-            }
+            DetailsPresenter?.SyncProperties();
 
-            if (RowHeader != null)
-            {
-                RowHeader.SyncProperties();
-            }
+            RowHeader?.SyncProperties();
         }
 
         #endregion
@@ -1094,13 +1068,10 @@ namespace System.Windows.Controls
                 if (gridPeer != null)
                 {
                     DataGridItemAutomationPeer rowItemPeer = gridPeer.FindOrCreateItemAutomationPeer(row.DataContext) as DataGridItemAutomationPeer;
-                    if (rowItemPeer != null)
-                    {
-                        rowItemPeer.RaisePropertyChangedEvent(
+                    rowItemPeer?.RaisePropertyChangedEvent(
                             System.Windows.Automation.SelectionItemPatternIdentifiers.IsSelectedProperty,
                             (bool)e.OldValue,
                             isSelected);
-                    }
                 }
             }
 
@@ -1250,10 +1221,7 @@ namespace System.Windows.Controls
         internal void ScrollCellIntoView(int index)
         {
             DataGridCellsPresenter cellsPresenter = CellsPresenter;
-            if (cellsPresenter != null)
-            {
-                cellsPresenter.ScrollCellIntoView(index);
-            }
+            cellsPresenter?.ScrollCellIntoView(index);
         }
 
         #endregion
@@ -1266,10 +1234,7 @@ namespace System.Windows.Controls
         protected override Size ArrangeOverride(Size arrangeBounds)
         {
             DataGrid dataGrid = DataGridOwner;
-            if (dataGrid != null)
-            {
-                dataGrid.QueueInvalidateCellsPanelHorizontalOffset();
-            }
+            dataGrid?.QueueInvalidateCellsPanelHorizontalOffset();
 
             return base.ArrangeOverride(arrangeBounds);
         }

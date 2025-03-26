@@ -1,28 +1,10 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-
-//
-//
-// Description: Creates a Drawing representation of the Draw calls made
-//              to this DrawingContext.
-//
-
 using MS.Internal;
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Windows;
-using System.Windows.Media;
 using System.Windows.Media.Animation;
-using System.Windows.Media.Composition;
 using System.Windows.Media.Effects;
-using System.Windows.Media.Imaging;
-using System.Windows.Media.Media3D;
-using System.Windows.Threading;
-
-using SR=MS.Internal.PresentationCore.SR;
 
 namespace System.Windows.Media
 {
@@ -102,14 +84,15 @@ namespace System.Windows.Media
             //
 
             // Instantiate the geometry
-            LineGeometry geometry = new LineGeometry(point0, point1);
+            LineGeometry geometry = new LineGeometry(point0, point1)
+            {
+                //
+                // We may need to opt-out of inheritance through the new Freezable.
+                // This is controlled by this.CanBeInheritanceContext.
+                //
 
-            //
-            // We may need to opt-out of inheritance through the new Freezable.
-            // This is controlled by this.CanBeInheritanceContext.
-            //
-
-            geometry.CanBeInheritanceContext = CanBeInheritanceContext;
+                CanBeInheritanceContext = CanBeInheritanceContext
+            };
 
             // Setup the geometries freezable-related state
             SetupNewFreezable(
@@ -203,14 +186,15 @@ namespace System.Windows.Media
             //
 
             // Instantiate the geometry
-            RectangleGeometry geometry = new RectangleGeometry(rectangle);
+            RectangleGeometry geometry = new RectangleGeometry(rectangle)
+            {
+                //
+                // We may need to opt-out of inheritance through the new Freezable.
+                // This is controlled by this.CanBeInheritanceContext.
+                //
 
-            //
-            // We may need to opt-out of inheritance through the new Freezable.
-            // This is controlled by this.CanBeInheritanceContext.
-            //
-
-            geometry.CanBeInheritanceContext = CanBeInheritanceContext;
+                CanBeInheritanceContext = CanBeInheritanceContext
+            };
 
             // Setup the geometries freezable-related state
             SetupNewFreezable(
@@ -323,14 +307,15 @@ namespace System.Windows.Media
             //
 
             // Instantiate the geometry
-            RectangleGeometry geometry = new RectangleGeometry(rectangle, radiusX, radiusY);
+            RectangleGeometry geometry = new RectangleGeometry(rectangle, radiusX, radiusY)
+            {
+                //
+                // We may need to opt-out of inheritance through the new Freezable.
+                // This is controlled by this.CanBeInheritanceContext.
+                //
 
-            //
-            // We may need to opt-out of inheritance through the new Freezable.
-            // This is controlled by this.CanBeInheritanceContext.
-            //
-
-            geometry.CanBeInheritanceContext = CanBeInheritanceContext;
+                CanBeInheritanceContext = CanBeInheritanceContext
+            };
 
             // Setup the geometries freezable-related state
             SetupNewFreezable(
@@ -459,14 +444,15 @@ namespace System.Windows.Media
             //
 
             // Instantiate the geometry
-            EllipseGeometry geometry = new EllipseGeometry(center, radiusX, radiusY);
+            EllipseGeometry geometry = new EllipseGeometry(center, radiusX, radiusY)
+            {
+                //
+                // We may need to opt-out of inheritance through the new Freezable.
+                // This is controlled by this.CanBeInheritanceContext.
+                //
 
-            //
-            // We may need to opt-out of inheritance through the new Freezable.
-            // This is controlled by this.CanBeInheritanceContext.
-            //
-
-            geometry.CanBeInheritanceContext = CanBeInheritanceContext;
+                CanBeInheritanceContext = CanBeInheritanceContext
+            };
 
             // Setup the geometries freezable-related state
             SetupNewFreezable(
@@ -594,17 +580,18 @@ namespace System.Windows.Media
             // Create a drawing & add animations if they exist
             //
 
-            ImageDrawing imageDrawing = new ImageDrawing();
+            ImageDrawing imageDrawing = new ImageDrawing
+            {
+                //
+                // We may need to opt-out of inheritance through the new Freezable.
+                // This is controlled by this.CanBeInheritanceContext.
+                //
 
-            //
-            // We may need to opt-out of inheritance through the new Freezable.
-            // This is controlled by this.CanBeInheritanceContext.
-            //
+                CanBeInheritanceContext = CanBeInheritanceContext,
 
-            imageDrawing.CanBeInheritanceContext = CanBeInheritanceContext;
-
-            imageDrawing.ImageSource = imageSource;
-            imageDrawing.Rect = rectangle;
+                ImageSource = imageSource,
+                Rect = rectangle
+            };
 
             SetupNewFreezable(
                 imageDrawing,
@@ -710,17 +697,18 @@ namespace System.Windows.Media
             // Create a drawing & add animations if they exist
             //
 
-            VideoDrawing videoDrawing = new VideoDrawing();
+            VideoDrawing videoDrawing = new VideoDrawing
+            {
+                //
+                // We may need to opt-out of inheritance through the new Freezable.
+                // This is controlled by this.CanBeInheritanceContext.
+                //
 
-            //
-            // We may need to opt-out of inheritance through the new Freezable.
-            // This is controlled by this.CanBeInheritanceContext.
-            //
+                CanBeInheritanceContext = CanBeInheritanceContext,
 
-            videoDrawing.CanBeInheritanceContext = CanBeInheritanceContext;
-
-            videoDrawing.Player = player;
-            videoDrawing.Rect = rectangle;
+                Player = player,
+                Rect = rectangle
+            };
 
             SetupNewFreezable(
                 videoDrawing,
@@ -1044,8 +1032,7 @@ namespace System.Windows.Media
             // NOTE:Disabling this API for now
             
             _currentDrawingGroup.BitmapEffect = effect;
-            _currentDrawingGroup.BitmapEffectInput = (effectInput != null) ?
-                                                        effectInput : new BitmapEffectInput();
+            _currentDrawingGroup.BitmapEffectInput = effectInput ?? new BitmapEffectInput();
 }
 
         /// <summary>
@@ -1097,17 +1084,18 @@ namespace System.Windows.Media
 
             // Add a GlyphRunDrawing to the Drawing graph
 
-            GlyphRunDrawing glyphRunDrawing = new GlyphRunDrawing();
+            GlyphRunDrawing glyphRunDrawing = new GlyphRunDrawing
+            {
+                //
+                // We may need to opt-out of inheritance through the new Freezable.
+                // This is controlled by this.CanBeInheritanceContext.
+                //
 
-            //
-            // We may need to opt-out of inheritance through the new Freezable.
-            // This is controlled by this.CanBeInheritanceContext.
-            //
+                CanBeInheritanceContext = CanBeInheritanceContext,
 
-            glyphRunDrawing.CanBeInheritanceContext = CanBeInheritanceContext;
-
-            glyphRunDrawing.ForegroundBrush = foregroundBrush;
-            glyphRunDrawing.GlyphRun = glyphRun;
+                ForegroundBrush = foregroundBrush,
+                GlyphRun = glyphRun
+            };
 
             SetupNewFreezable(
                 glyphRunDrawing,
@@ -1133,7 +1121,7 @@ namespace System.Windows.Media
         public override void Close()
         {
             // Throw an exception if this object has already been closed/disposed.
-            VerifyNotDisposed();
+            ObjectDisposedException.ThrowIf(_disposed, typeof(DrawingDrawingContext));
 
             // Close this object
             ((IDisposable)this).Dispose();
@@ -1192,14 +1180,15 @@ namespace System.Windows.Media
                     // strictly needed for Append, but always using a collection
                     // simplifies the TransactionalAppend implementation (i.e.,
                     // a seperate implemention isn't needed for a single element)
-                    rootChildren = new DrawingCollection();
+                    rootChildren = new DrawingCollection
+                    {
+                        //
+                        // We may need to opt-out of inheritance through the new Freezable.
+                        // This is controlled by this.CanBeInheritanceContext.
+                        //
 
-                    //
-                    // We may need to opt-out of inheritance through the new Freezable.
-                    // This is controlled by this.CanBeInheritanceContext.
-                    //
-
-                    rootChildren.CanBeInheritanceContext = CanBeInheritanceContext;
+                        CanBeInheritanceContext = CanBeInheritanceContext
+                    };
 
                     if (_rootDrawing != null)
                     {
@@ -1242,7 +1231,7 @@ namespace System.Windows.Media
         {
             base.VerifyApiNonstructuralChange();
 
-            VerifyNotDisposed();
+            ObjectDisposedException.ThrowIf(_disposed, typeof(DrawingDrawingContext));
         }
 
         #endregion Protected Methods
@@ -1274,17 +1263,6 @@ namespace System.Windows.Media
         #region Private Methods
 
         /// <summary>
-        /// Throws an exception if this object is already disposed.
-        /// </summary>
-        private void VerifyNotDisposed()
-        {
-            if (_disposed)
-            {
-                throw new ObjectDisposedException("DrawingDrawingContext");
-            }
-        }
-
-        /// <summary>
         /// Freezes the given freezable if the fFreeze flag is true.  Used by
         /// the various drawing methods to freeze resources if there is no
         /// chance the user might attempt to mutate it.
@@ -1311,18 +1289,19 @@ namespace System.Windows.Media
             Debug.Assert(geometry != null);
 
             // Instantiate the GeometryDrawing
-            GeometryDrawing geometryDrawing = new GeometryDrawing();
+            GeometryDrawing geometryDrawing = new GeometryDrawing
+            {
+                //
+                // We may need to opt-out of inheritance through the new Freezable.
+                // This is controlled by this.CanBeInheritanceContext.
+                //
 
-            //
-            // We may need to opt-out of inheritance through the new Freezable.
-            // This is controlled by this.CanBeInheritanceContext.
-            //
+                CanBeInheritanceContext = CanBeInheritanceContext,
 
-            geometryDrawing.CanBeInheritanceContext = CanBeInheritanceContext;
-
-            geometryDrawing.Brush = brush;
-            geometryDrawing.Pen = pen;
-            geometryDrawing.Geometry = geometry;
+                Brush = brush,
+                Pen = pen,
+                Geometry = geometry
+            };
 
             // Setup it's Freezeable-related state
             SetupNewFreezable(
@@ -1345,14 +1324,15 @@ namespace System.Windows.Media
         private void PushNewDrawingGroup()
         {
             // Instantiate a new drawing group
-            DrawingGroup drawingGroup = new DrawingGroup();
+            DrawingGroup drawingGroup = new DrawingGroup
+            {
+                //
+                // We may need to opt-out of inheritance through the new Freezable.
+                // This is controlled by this.CanBeInheritanceContext.
+                //
 
-            //
-            // We may need to opt-out of inheritance through the new Freezable.
-            // This is controlled by this.CanBeInheritanceContext.
-            //
-
-            drawingGroup.CanBeInheritanceContext = CanBeInheritanceContext;
+                CanBeInheritanceContext = CanBeInheritanceContext
+            };
 
             // Setup it's freezable state
             SetupNewFreezable(
@@ -1413,14 +1393,15 @@ namespace System.Windows.Media
                 // DrawingGroup as the root and add both drawings to it.
 
                 // Instantiate the DrawingGroup
-                _currentDrawingGroup = new DrawingGroup();
+                _currentDrawingGroup = new DrawingGroup
+                {
+                    //
+                    // We may need to opt-out of inheritance through the new Freezable.
+                    // This is controlled by this.CanBeInheritanceContext.
+                    //
 
-                //
-                // We may need to opt-out of inheritance through the new Freezable.
-                // This is controlled by this.CanBeInheritanceContext.
-                //
-
-                _currentDrawingGroup.CanBeInheritanceContext = CanBeInheritanceContext;
+                    CanBeInheritanceContext = CanBeInheritanceContext
+                };
 
                 SetupNewFreezable(
                     _currentDrawingGroup,

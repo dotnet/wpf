@@ -13,7 +13,6 @@
 // See specs at Validation.mht
 //
 
-using System;
 using System.Globalization;
 using System.Windows.Data;
 
@@ -91,8 +90,8 @@ namespace System.Windows.Controls
             set { _validatesOnTargetUpdated = value; }
         }
 
-        ValidationStep  _validationStep;
-        bool            _validatesOnTargetUpdated;
+        private ValidationStep  _validationStep;
+        private bool            _validatesOnTargetUpdated;
     }
 }
 

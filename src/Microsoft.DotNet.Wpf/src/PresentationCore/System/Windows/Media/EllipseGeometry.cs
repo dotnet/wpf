@@ -1,28 +1,11 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-//                                             
-
-using System;
 using MS.Internal;
-using System.ComponentModel;
-using System.ComponentModel.Design.Serialization;
-using System.Reflection;
-using System.Collections;
-using System.Text;
-using System.Globalization;
-using System.Windows.Media;
 using System.Windows.Media.Composition;
-using System.Windows;
-using System.Text.RegularExpressions;
-using System.Windows.Media.Animation;
-using System.Diagnostics;
-using System.Runtime.InteropServices;
-using System.Security;
-using SR=MS.Internal.PresentationCore.SR;
 
-namespace System.Windows.Media 
+namespace System.Windows.Media
 {
     /// <summary>
     /// This is the Geometry class for Circles and Ellipses 
@@ -119,7 +102,7 @@ namespace System.Windows.Media
                     Transform.GetTransformValue(transform, out geometryMatrix);
 
                     boundsRect = EllipseGeometry.GetBoundsHelper(
-                        null /* no pen */,
+                        pen: null,
                         Matrix.Identity,
                         Center,
                         RadiusX,
@@ -179,10 +162,10 @@ namespace System.Windows.Media
             {
                 unsafe
                 {
-                    Point * pPoints = stackalloc Point[(int)c_pointCount];
+                    Point* pPoints = stackalloc Point[(int)c_pointCount];
                     EllipseGeometry.GetPointList(pPoints, c_pointCount, center, radiusX, radiusY);
 
-                    fixed (byte *pTypes = EllipseGeometry.s_roundedPathTypes)
+                    fixed (byte* pTypes = RoundedPathTypes) //Merely retrieves the pointer to static PE data, no actual pinning occurs
                     {
                         rect = Geometry.GetBoundsHelper(
                             pen, 
@@ -206,10 +189,10 @@ namespace System.Windows.Media
         {
             unsafe
             {
-                Point *pPoints = stackalloc Point[(int)GetPointCount()];
+                Point* pPoints = stackalloc Point[(int)GetPointCount()];
                 EllipseGeometry.GetPointList(pPoints, GetPointCount(), Center, RadiusX, RadiusY);
 
-                fixed (byte* pTypes = GetTypeList())
+                fixed (byte* pTypes = RoundedPathTypes) //Merely retrieves the pointer to static PE data, no actual pinning occurs
                 {
                     return ContainsInternal(
                         pen,
@@ -317,20 +300,22 @@ namespace System.Windows.Media
                 return Geometry.GetEmptyPathGeometryData();
             }
 
-            PathGeometryData data = new PathGeometryData();
-            data.FillRule = FillRule.EvenOdd;
-            data.Matrix = CompositionResourceManager.TransformToMilMatrix3x2D(Transform);
+            PathGeometryData data = new PathGeometryData
+            {
+                FillRule = FillRule.EvenOdd,
+                Matrix = CompositionResourceManager.TransformToMilMatrix3x2D(Transform)
+            };
 
             Point[] points = GetPointList();
 
             ByteStreamGeometryContext ctx = new ByteStreamGeometryContext();
 
-            ctx.BeginFigure(points[0], true /* is filled */, true /* is closed */);
+            ctx.BeginFigure(points[0], isFilled: true, isClosed: true);
 
             // i == 0, 3, 6, 9
             for (int i = 0; i < 12; i += 3)
             {
-                ctx.BezierTo(points[i + 1], points[i + 2], points[i + 3], true /* is stroked */, true /* is smooth join */);
+                ctx.BezierTo(points[i + 1], points[i + 2], points[i + 3], isStroked: true, isSmoothJoin: true);
             }
 
             ctx.Close();
@@ -383,9 +368,8 @@ namespace System.Windows.Media
             points[8].Y = points[9].Y = points[10].Y = center.Y - radiusY;
         }
 
-        private byte[] GetTypeList() { return s_roundedPathTypes; }
-        private uint GetPointCount() { return c_pointCount; }
-        private uint GetSegmentCount() { return c_segmentCount; }
+        private static uint GetPointCount() { return c_pointCount; }
+        private static uint GetSegmentCount() { return c_segmentCount; }
         
         #region Static Data
         
@@ -396,18 +380,16 @@ namespace System.Windows.Media
         private const UInt32 c_pointCount = 13;
 
         private const byte c_smoothBezier = (byte)MILCoreSegFlags.SegTypeBezier  |
-                                              (byte)MILCoreSegFlags.SegIsCurved    |
-                                              (byte)MILCoreSegFlags.SegSmoothJoin;
+                                            (byte)MILCoreSegFlags.SegIsCurved    |
+                                            (byte)MILCoreSegFlags.SegSmoothJoin;
 
-        private static readonly byte[] s_roundedPathTypes = {
-            (byte)MILCoreSegFlags.SegTypeBezier | 
-            (byte)MILCoreSegFlags.SegIsCurved   |
-            (byte)MILCoreSegFlags.SegSmoothJoin | 
-            (byte)MILCoreSegFlags.SegClosed,
-            c_smoothBezier, 
-            c_smoothBezier, 
-            c_smoothBezier
-        };
+        private static ReadOnlySpan<byte> RoundedPathTypes => [(byte)MILCoreSegFlags.SegTypeBezier | 
+                                                               (byte)MILCoreSegFlags.SegIsCurved   |
+                                                               (byte)MILCoreSegFlags.SegSmoothJoin | 
+                                                               (byte)MILCoreSegFlags.SegClosed,
+                                                               c_smoothBezier, 
+                                                               c_smoothBezier, 
+                                                               c_smoothBezier];
 
         #endregion
     }

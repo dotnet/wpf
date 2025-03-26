@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -9,9 +9,7 @@
 //
 //
 
-using System;
 using System.ComponentModel;
-using System.Diagnostics;
 using System.Windows.Markup;
 using MS.Internal;
 
@@ -207,9 +205,10 @@ namespace System.Windows
             _targetObject = d;
             _targetProperty = dp;
 
-            FrameworkObject fo = new FrameworkObject(_targetObject);
-
-            fo.HasResourceReference = true;
+            FrameworkObject fo = new FrameworkObject(_targetObject)
+            {
+                HasResourceReference = true
+            };
 
             if (!fo.IsValid)
             {
@@ -278,7 +277,17 @@ namespace System.Windows
                     }
                 }
 
-                deferredResourceReference.RemoveFromDictionary();
+                if (FrameworkAppContextSwitches.DisableDynamicResourceOptimization)
+                {
+                    deferredResourceReference.RemoveFromDictionary();
+                }
+                else
+                {
+                    // This will inflate the deferred reference, causing it
+                    // to be removed from the list.  The list may also be
+                    // purged of dead references.
+                    deferredResourceReference.GetValue(BaseValueSourceInternal.Unknown);
+                }
             }
 
             StopListeningForFreezableChanges(resource);
@@ -341,8 +350,8 @@ namespace System.Windows
         internal void InvalidateExpressionValue(object sender, EventArgs e)
         {
             // VS has a scenario where a TreeWalk invalidates all reference expressions on a DependencyObject.
-            // If there is a dependency between RRE's, 
-            // invalidating one RRE could cause _targetObject to be null on the other RRE. Hence this check. 
+            // If there is a dependency between RRE's,
+            // invalidating one RRE could cause _targetObject to be null on the other RRE. Hence this check.
             if (_targetObject == null)
             {
                 return;
@@ -404,7 +413,7 @@ namespace System.Windows
                     {
                         _weakContainerRRE = new ResourceReferenceExpressionWeakContainer(this);
                     }
-                    
+
                     // Hook up the event to the weak container to prevent memory leaks (Bug436021)
                     _weakContainerRRE.AddChangedHandler(resourceAsFreezable);
                     WriteInternalState(InternalState.IsListeningForFreezableChanges, true);
@@ -435,7 +444,7 @@ namespace System.Windows
                     }
                 }
 
-                // It is possible that a freezable was unfrozen during the call to ListForFreezableChanges 
+                // It is possible that a freezable was unfrozen during the call to ListForFreezableChanges
                 // but was frozen before the call to StopListeningForFreezableChanges
                 WriteInternalState(InternalState.IsListeningForFreezableChanges, false);
             }
@@ -512,8 +521,8 @@ namespace System.Windows
         #region ResourceReferenceExpressionWeakContainer
 
         /// <summary>
-        /// ResourceReferenceExpressionWeakContainer handles the Freezable.Changed event 
-        /// without holding a strong reference to ResourceReferenceExpression. 
+        /// ResourceReferenceExpressionWeakContainer handles the Freezable.Changed event
+        /// without holding a strong reference to ResourceReferenceExpression.
         /// </summary>
         private class ResourceReferenceExpressionWeakContainer : WeakReference
         {
@@ -542,7 +551,7 @@ namespace System.Windows
                 }
 
                 _resource = resource;
-            
+
                 Debug.Assert(!_resource.IsFrozen);
                 _resource.Changed += new EventHandler(this.InvalidateTargetSubProperty);
             }
@@ -558,7 +567,7 @@ namespace System.Windows
 
             private Freezable _resource;
         }
-        #endregion 
+        #endregion
     }
 
     /// <summary>

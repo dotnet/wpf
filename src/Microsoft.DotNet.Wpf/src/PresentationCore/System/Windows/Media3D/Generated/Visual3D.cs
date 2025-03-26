@@ -12,21 +12,7 @@
 // Please see MilCodeGen.html for more information.
 //
 
-// Allow suppression of certain presharp messages
-#pragma warning disable 1634, 1691
-
-using MS.Internal;
-using MS.Utility;
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Security;
-using System.Windows.Threading;
 using System.Windows.Media.Animation;
-using System.Windows.Media.Composition;
-
-using SR = MS.Internal.PresentationCore.SR;
 
 namespace System.Windows.Media.Media3D
 {
@@ -82,17 +68,13 @@ namespace System.Windows.Media.Media3D
 
             if (!AnimationStorage.IsPropertyAnimatable(this, dp))
             {
-        #pragma warning disable 56506 // Suppress presharp warning: Parameter 'dp' to this public method must be validated:  A null-dereference can occur here.
-                throw new ArgumentException(SR.Format(SR.Animation_DependencyPropertyIsNotAnimatable, dp.Name, this.GetType()), "dp");
-        #pragma warning restore 56506
+                throw new ArgumentException(SR.Format(SR.Animation_DependencyPropertyIsNotAnimatable, dp.Name, this.GetType()), nameof(dp));
             }
 
             if (clock != null
                 && !AnimationStorage.IsAnimationValid(dp, clock.Timeline))
             {
-        #pragma warning disable 56506 // Suppress presharp warning: Parameter 'dp' to this public method must be validated:  A null-dereference can occur here.
-                throw new ArgumentException(SR.Format(SR.Animation_AnimationTimelineTypeMismatch, clock.Timeline.GetType(), dp.Name, dp.PropertyType), "clock");
-        #pragma warning restore 56506
+                throw new ArgumentException(SR.Format(SR.Animation_AnimationTimelineTypeMismatch, clock.Timeline.GetType(), dp.Name, dp.PropertyType), nameof(clock));
             }
 
             if (!HandoffBehaviorEnum.IsDefined(handoffBehavior))
@@ -151,15 +133,13 @@ namespace System.Windows.Media.Media3D
 
             if (!AnimationStorage.IsPropertyAnimatable(this, dp))
             {
-        #pragma warning disable 56506 // Suppress presharp warning: Parameter 'dp' to this public method must be validated:  A null-dereference can occur here.
-                throw new ArgumentException(SR.Format(SR.Animation_DependencyPropertyIsNotAnimatable, dp.Name, this.GetType()), "dp");
-        #pragma warning restore 56506
+                throw new ArgumentException(SR.Format(SR.Animation_DependencyPropertyIsNotAnimatable, dp.Name, this.GetType()), nameof(dp));
             }
 
             if (   animation != null
                 && !AnimationStorage.IsAnimationValid(dp, animation))
             {
-                throw new ArgumentException(SR.Format(SR.Animation_AnimationTimelineTypeMismatch, animation.GetType(), dp.Name, dp.PropertyType), "animation");
+                throw new ArgumentException(SR.Format(SR.Animation_AnimationTimelineTypeMismatch, animation.GetType(), dp.Name, dp.PropertyType), nameof(animation));
             }
 
             if (!HandoffBehaviorEnum.IsDefined(handoffBehavior))
@@ -231,10 +211,7 @@ namespace System.Windows.Media.Media3D
             {
                 AnimationStorage storage = AnimationStorage.GetStorage(this, dp);
 
-                if (storage != null)
-                {
-                    storage.EvaluateAnimatedValue(metadata, ref entry);                      
-                }
+                storage?.EvaluateAnimatedValue(metadata, ref entry);
             }
         }
 

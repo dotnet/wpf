@@ -1,6 +1,8 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
+
+using MS.Internal;
 
 //
 // Description:
@@ -8,15 +10,8 @@
 //      This is primarily used by internal code.
 //
 
-#pragma warning disable 1634, 1691 // To enable presharp warning disables (#pragma suppress) below.
-
 namespace System.Windows.Documents
 {
-    using System;
-    using System.Diagnostics;
-    using System.Windows;
-    using MS.Internal;
-
     /// <summary>
     /// NullTextPointer is an implementation of ITextPointer for NullTextContainer
     /// </summary>
@@ -497,8 +492,7 @@ namespace System.Windows.Documents
         {
             get
             {
-                    #pragma warning suppress 56503
-                    throw new NotImplementedException();
+                throw new NotImplementedException();
             }
         }
 

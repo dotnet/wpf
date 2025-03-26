@@ -1,7 +1,14 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
-        
+
+
+#region Using declarations
+
+using System.Windows.Media;
+#if RIBBON_IN_FRAMEWORK
+using System.Windows.Controls.Ribbon.Primitives;
+using Microsoft.Windows.Controls;
 
 #if RIBBON_IN_FRAMEWORK
 namespace System.Windows.Controls.Ribbon
@@ -9,20 +16,6 @@ namespace System.Windows.Controls.Ribbon
 namespace Microsoft.Windows.Controls.Ribbon
 #endif
 {
-    #region Using declarations
-
-    using System;
-    using System.ComponentModel;
-    using System.Diagnostics;
-    using System.Reflection;
-    using System.Windows;
-    using System.Windows.Controls;
-    using System.Windows.Controls.Primitives;
-    using System.Windows.Input;
-    using System.Windows.Media;
-#if RIBBON_IN_FRAMEWORK
-    using System.Windows.Controls.Ribbon.Primitives;
-    using Microsoft.Windows.Controls;
 #else
     using Microsoft.Windows.Controls.Ribbon.Primitives;
 #endif
@@ -50,10 +43,7 @@ namespace Microsoft.Windows.Controls.Ribbon
         /// </summary>
         public static ImageSource GetLargeImageSource(DependencyObject element)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException("element");
-            }
+            ArgumentNullException.ThrowIfNull(element);
             return (ImageSource)element.GetValue(LargeImageSourceProperty);
         }
 
@@ -62,10 +52,7 @@ namespace Microsoft.Windows.Controls.Ribbon
         /// </summary>
         public static void SetLargeImageSource(DependencyObject element, ImageSource value)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException("element");
-            }
+            ArgumentNullException.ThrowIfNull(element);
             element.SetValue(LargeImageSourceProperty, value);
         }
 
@@ -87,10 +74,7 @@ namespace Microsoft.Windows.Controls.Ribbon
         /// </summary>
         public static ImageSource GetSmallImageSource(DependencyObject element)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException("element");
-            }
+            ArgumentNullException.ThrowIfNull(element);
             return (ImageSource)element.GetValue(SmallImageSourceProperty);
         }
 
@@ -99,10 +83,7 @@ namespace Microsoft.Windows.Controls.Ribbon
         /// </summary>
         public static void SetSmallImageSource(DependencyObject element, ImageSource value)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException("element");
-            }
+            ArgumentNullException.ThrowIfNull(element);
             element.SetValue(SmallImageSourceProperty, value);
         }
 
@@ -128,10 +109,7 @@ namespace Microsoft.Windows.Controls.Ribbon
         /// </summary>
         public static string GetLabel(DependencyObject element)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException("element");
-            }
+            ArgumentNullException.ThrowIfNull(element);
             return (string)element.GetValue(LabelProperty);
         }
 
@@ -140,10 +118,7 @@ namespace Microsoft.Windows.Controls.Ribbon
         /// </summary>
         public static void SetLabel(DependencyObject element, string value)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException("element");
-            }
+            ArgumentNullException.ThrowIfNull(element);
             element.SetValue(LabelProperty, value);
         }
 
@@ -168,10 +143,7 @@ namespace Microsoft.Windows.Controls.Ribbon
         /// </summary>
         public static string GetToolTipTitle(DependencyObject element)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException("element");
-            }
+            ArgumentNullException.ThrowIfNull(element);
             return (string)element.GetValue(ToolTipTitleProperty);
         }
 
@@ -180,10 +152,7 @@ namespace Microsoft.Windows.Controls.Ribbon
         /// </summary>
         public static void SetToolTipTitle(DependencyObject element, string value)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException("element");
-            }
+            ArgumentNullException.ThrowIfNull(element);
             element.SetValue(ToolTipTitleProperty, value);
         }
 
@@ -199,10 +168,7 @@ namespace Microsoft.Windows.Controls.Ribbon
         /// </summary>
         public static string GetToolTipDescription(DependencyObject element)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException("element");
-            }
+            ArgumentNullException.ThrowIfNull(element);
             return (string)element.GetValue(ToolTipDescriptionProperty);
         }
 
@@ -211,10 +177,7 @@ namespace Microsoft.Windows.Controls.Ribbon
         /// </summary>
         public static void SetToolTipDescription(DependencyObject element, string value)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException("element");
-            }
+            ArgumentNullException.ThrowIfNull(element);
             element.SetValue(ToolTipDescriptionProperty, value);
         }
 
@@ -230,10 +193,7 @@ namespace Microsoft.Windows.Controls.Ribbon
         /// </summary>
         public static ImageSource GetToolTipImageSource(DependencyObject element)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException("element");
-            }
+            ArgumentNullException.ThrowIfNull(element);
             return (ImageSource)element.GetValue(ToolTipImageSourceProperty);
         }
 
@@ -242,10 +202,7 @@ namespace Microsoft.Windows.Controls.Ribbon
         /// </summary>
         public static void SetToolTipImageSource(DependencyObject element, ImageSource value)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException("element");
-            }
+            ArgumentNullException.ThrowIfNull(element);
             element.SetValue(ToolTipImageSourceProperty, value);
         }
 
@@ -261,10 +218,7 @@ namespace Microsoft.Windows.Controls.Ribbon
         /// </summary>
         public static string GetToolTipFooterTitle(DependencyObject element)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException("element");
-            }
+            ArgumentNullException.ThrowIfNull(element);
             return (string)element.GetValue(ToolTipFooterTitleProperty);
         }
 
@@ -273,10 +227,7 @@ namespace Microsoft.Windows.Controls.Ribbon
         /// </summary>
         public static void SetToolTipFooterTitle(DependencyObject element, string value)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException("element");
-            }
+            ArgumentNullException.ThrowIfNull(element);
             element.SetValue(ToolTipFooterTitleProperty, value);
         }
 
@@ -292,10 +243,7 @@ namespace Microsoft.Windows.Controls.Ribbon
         /// </summary>
         public static string GetToolTipFooterDescription(DependencyObject element)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException("element");
-            }
+            ArgumentNullException.ThrowIfNull(element);
             return (string)element.GetValue(ToolTipFooterDescriptionProperty);
         }
 
@@ -304,10 +252,7 @@ namespace Microsoft.Windows.Controls.Ribbon
         /// </summary>
         public static void SetToolTipFooterDescription(DependencyObject element, string value)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException("element");
-            }
+            ArgumentNullException.ThrowIfNull(element);
             element.SetValue(ToolTipFooterDescriptionProperty, value);
         }
 
@@ -323,10 +268,7 @@ namespace Microsoft.Windows.Controls.Ribbon
         /// </summary>
         public static ImageSource GetToolTipFooterImageSource(DependencyObject element)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException("element");
-            }
+            ArgumentNullException.ThrowIfNull(element);
             return (ImageSource)element.GetValue(ToolTipFooterImageSourceProperty);
         }
 
@@ -335,10 +277,7 @@ namespace Microsoft.Windows.Controls.Ribbon
         /// </summary>
         public static void SetToolTipFooterImageSource(DependencyObject element, ImageSource value)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException("element");
-            }
+            ArgumentNullException.ThrowIfNull(element);
             element.SetValue(ToolTipFooterImageSourceProperty, value);
         }
 
@@ -368,10 +307,7 @@ namespace Microsoft.Windows.Controls.Ribbon
         /// </summary>
         public static Ribbon GetRibbon(DependencyObject element)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException("element");
-            }
+            ArgumentNullException.ThrowIfNull(element);
             return (Ribbon)element.GetValue(RibbonProperty);
         }
 
@@ -380,10 +316,7 @@ namespace Microsoft.Windows.Controls.Ribbon
         /// </summary>
         internal static void SetRibbon(DependencyObject element, Ribbon value)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException("element");
-            }
+            ArgumentNullException.ThrowIfNull(element);
             element.SetValue(RibbonPropertyKey, value);
         }
 
@@ -402,10 +335,7 @@ namespace Microsoft.Windows.Controls.Ribbon
         /// </summary>
         public static Brush GetMouseOverBorderBrush(DependencyObject element)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException("element");
-            }
+            ArgumentNullException.ThrowIfNull(element);
             return (Brush)element.GetValue(MouseOverBorderBrushProperty); 
         }
 
@@ -414,10 +344,7 @@ namespace Microsoft.Windows.Controls.Ribbon
         /// </summary>
         public static void SetMouseOverBorderBrush(DependencyObject element, Brush value)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException("element");
-            }
+            ArgumentNullException.ThrowIfNull(element);
             element.SetValue(MouseOverBorderBrushProperty, value); 
         }
             
@@ -436,10 +363,7 @@ namespace Microsoft.Windows.Controls.Ribbon
         /// </summary>
         public static Brush GetMouseOverBackground(DependencyObject element)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException("element");
-            }
+            ArgumentNullException.ThrowIfNull(element);
             return (Brush)element.GetValue(MouseOverBackgroundProperty); 
         }
 
@@ -448,10 +372,7 @@ namespace Microsoft.Windows.Controls.Ribbon
         /// </summary>
         public static void SetMouseOverBackground(DependencyObject element, Brush value)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException("element");
-            }
+            ArgumentNullException.ThrowIfNull(element);
             element.SetValue(MouseOverBackgroundProperty, value);
         }
 
@@ -470,10 +391,7 @@ namespace Microsoft.Windows.Controls.Ribbon
         /// </summary>
         public static Brush GetPressedBorderBrush(DependencyObject element)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException("element");
-            }
+            ArgumentNullException.ThrowIfNull(element);
             return (Brush)element.GetValue(PressedBorderBrushProperty); 
         }
 
@@ -482,10 +400,7 @@ namespace Microsoft.Windows.Controls.Ribbon
         /// </summary>
         public static void SetPressedBorderBrush(DependencyObject element, Brush value)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException("element");
-            }
+            ArgumentNullException.ThrowIfNull(element);
             element.SetValue(PressedBorderBrushProperty, value);
         }
 
@@ -504,10 +419,7 @@ namespace Microsoft.Windows.Controls.Ribbon
         /// </summary>
         public static Brush GetPressedBackground(DependencyObject element)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException("element");
-            }
+            ArgumentNullException.ThrowIfNull(element);
             return (Brush)element.GetValue(PressedBackgroundProperty);
         }
 
@@ -516,10 +428,7 @@ namespace Microsoft.Windows.Controls.Ribbon
         /// </summary>
         public static void SetPressedBackground(DependencyObject element, Brush value)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException("element");
-            }
+            ArgumentNullException.ThrowIfNull(element);
             element.SetValue(PressedBackgroundProperty, value);
         }
 
@@ -538,10 +447,7 @@ namespace Microsoft.Windows.Controls.Ribbon
         /// </summary>
         public static Brush GetCheckedBackground(DependencyObject element)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException("element");
-            }
+            ArgumentNullException.ThrowIfNull(element);
             return (Brush)element.GetValue(CheckedBackgroundProperty);
         }
 
@@ -550,10 +456,7 @@ namespace Microsoft.Windows.Controls.Ribbon
         /// </summary>
         public static void SetCheckedBackground(DependencyObject element, Brush value)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException("element");
-            }
+            ArgumentNullException.ThrowIfNull(element);
             element.SetValue(CheckedBackgroundProperty, value);
         }
 
@@ -572,10 +475,7 @@ namespace Microsoft.Windows.Controls.Ribbon
         /// </summary>
         public static Brush GetCheckedBorderBrush(DependencyObject element)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException("element");
-            }
+            ArgumentNullException.ThrowIfNull(element);
             return (Brush)element.GetValue(CheckedBorderBrushProperty);
         }
 
@@ -584,10 +484,7 @@ namespace Microsoft.Windows.Controls.Ribbon
         /// </summary>
         public static void SetCheckedBorderBrush(DependencyObject element, Brush value)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException("element");
-            }
+            ArgumentNullException.ThrowIfNull(element);
             element.SetValue(CheckedBorderBrushProperty, value);
         }
 
@@ -606,10 +503,7 @@ namespace Microsoft.Windows.Controls.Ribbon
         /// </summary>
         public static Brush GetFocusedBackground(DependencyObject element)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException("element");
-            }
+            ArgumentNullException.ThrowIfNull(element);
             return (Brush)element.GetValue(FocusedBackgroundProperty);
         }
 
@@ -618,10 +512,7 @@ namespace Microsoft.Windows.Controls.Ribbon
         /// </summary>
         public static void SetFocusedBackground(DependencyObject element, Brush value)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException("element");
-            }
+            ArgumentNullException.ThrowIfNull(element);
             element.SetValue(FocusedBackgroundProperty, value);
         }
 
@@ -640,10 +531,7 @@ namespace Microsoft.Windows.Controls.Ribbon
         /// </summary>
         public static Brush GetFocusedBorderBrush(DependencyObject element)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException("element");
-            }
+            ArgumentNullException.ThrowIfNull(element);
             return (Brush)element.GetValue(FocusedBorderBrushProperty);
         }
 
@@ -652,10 +540,7 @@ namespace Microsoft.Windows.Controls.Ribbon
         /// </summary>
         public static void SetFocusedBorderBrush(DependencyObject element, Brush value)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException("element");
-            }
+            ArgumentNullException.ThrowIfNull(element);
             element.SetValue(FocusedBorderBrushProperty, value);
         }
 
@@ -676,10 +561,7 @@ namespace Microsoft.Windows.Controls.Ribbon
         /// <returns></returns>
         public static CornerRadius GetCornerRadius(DependencyObject element)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException("element");
-            }
+            ArgumentNullException.ThrowIfNull(element);
             return (CornerRadius)element.GetValue(CornerRadiusProperty);
         }
 
@@ -690,10 +572,7 @@ namespace Microsoft.Windows.Controls.Ribbon
         /// <param name="value"></param>
         public static void SetCornerRadius(DependencyObject element, CornerRadius value)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException("element");
-            }
+            ArgumentNullException.ThrowIfNull(element);
             element.SetValue(CornerRadiusProperty, value);
         }
 
@@ -719,10 +598,7 @@ namespace Microsoft.Windows.Controls.Ribbon
         /// </summary>
         public static RibbonControlSizeDefinition GetControlSizeDefinition(DependencyObject element)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException("element");
-            }
+            ArgumentNullException.ThrowIfNull(element);
             return (RibbonControlSizeDefinition)element.GetValue(ControlSizeDefinitionProperty);
         }
 
@@ -731,10 +607,7 @@ namespace Microsoft.Windows.Controls.Ribbon
         /// </summary>
         public static void SetControlSizeDefinition(DependencyObject element, RibbonControlSizeDefinition value)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException("element");
-            }
+            ArgumentNullException.ThrowIfNull(element);
             element.SetValue(ControlSizeDefinitionProperty, value);
         }
 
@@ -771,19 +644,13 @@ namespace Microsoft.Windows.Controls.Ribbon
 
         public static RibbonControlSizeDefinition GetDefaultControlSizeDefinition(DependencyObject element)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException("element");
-            }
+            ArgumentNullException.ThrowIfNull(element);
             return (RibbonControlSizeDefinition)element.GetValue(DefaultControlSizeDefinitionProperty);
         }
 
         public static void SetDefaultControlSizeDefinition(DependencyObject element, RibbonControlSizeDefinition value)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException("element");
-            }
+            ArgumentNullException.ThrowIfNull(element);
             element.SetValue(DefaultControlSizeDefinitionProperty, value);
         }
 
@@ -800,10 +667,7 @@ namespace Microsoft.Windows.Controls.Ribbon
                 if (ribbonGroupItemsPanel != null)
                 {
                     RibbonGroup ribbonGroup = TreeHelper.FindVisualAncestor<RibbonGroup>(ribbonGroupItemsPanel);
-                    if (ribbonGroup != null)
-                    {
-                        ribbonGroup.UpdateGroupSizeDefinitionsAsync();
-                    }
+                    ribbonGroup?.UpdateGroupSizeDefinitionsAsync();
                 }
             }
 
@@ -839,10 +703,7 @@ namespace Microsoft.Windows.Controls.Ribbon
             if (RibbonControlService.GetIsInControlGroup(d))
             {
                 RibbonControlGroup controlGroup = TreeHelper.FindVisualAncestor<RibbonControlGroup>(d);
-                if (controlGroup != null)
-                {
-                    controlGroup.CoerceValue(DefaultControlSizeDefinitionProperty);
-                }
+                controlGroup?.CoerceValue(DefaultControlSizeDefinitionProperty);
             }
         }
 
@@ -872,10 +733,7 @@ namespace Microsoft.Windows.Controls.Ribbon
         /// </summary>
         public static bool GetIsInControlGroup(DependencyObject element)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException("element");
-            }
+            ArgumentNullException.ThrowIfNull(element);
             return (bool)element.GetValue(IsInControlGroupProperty);
         }
 
@@ -885,10 +743,7 @@ namespace Microsoft.Windows.Controls.Ribbon
         /// </summary>
         internal static void SetIsInControlGroup(DependencyObject element, bool value)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException("element");
-            }
+            ArgumentNullException.ThrowIfNull(element);
             element.SetValue(IsInControlGroupPropertyKey, value);
         }
 
@@ -910,19 +765,13 @@ namespace Microsoft.Windows.Controls.Ribbon
 
         public static bool GetCanAddToQuickAccessToolBarDirectly(DependencyObject element)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException("element");
-            }
+            ArgumentNullException.ThrowIfNull(element);
             return (bool)element.GetValue(CanAddToQuickAccessToolBarDirectlyProperty);
         }
 
         public static void SetCanAddToQuickAccessToolBarDirectly(DependencyObject element, bool value)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException("element");
-            }
+            ArgumentNullException.ThrowIfNull(element);
             element.SetValue(CanAddToQuickAccessToolBarDirectlyProperty, value);
         }
 
@@ -945,10 +794,7 @@ namespace Microsoft.Windows.Controls.Ribbon
         /// </summary>
         public static bool GetIsInQuickAccessToolBar(DependencyObject element)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException("element");
-            }
+            ArgumentNullException.ThrowIfNull(element);
             return (bool)element.GetValue(IsInQuickAccessToolBarProperty);
         }
 
@@ -957,10 +803,7 @@ namespace Microsoft.Windows.Controls.Ribbon
         /// </summary>
         internal static void SetIsInQuickAccessToolBar(DependencyObject element, bool value)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException("element");
-            }
+            ArgumentNullException.ThrowIfNull(element);
             element.SetValue(IsInQuickAccessToolBarPropertyKey, value);
         }
 
@@ -979,10 +822,7 @@ namespace Microsoft.Windows.Controls.Ribbon
         /// </summary>
         public static RibbonControlSizeDefinition GetQuickAccessToolBarControlSizeDefinition(DependencyObject element)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException("element");
-            }
+            ArgumentNullException.ThrowIfNull(element);
             return (RibbonControlSizeDefinition)element.GetValue(QuickAccessToolBarControlSizeDefinitionProperty);
         }
 
@@ -991,10 +831,7 @@ namespace Microsoft.Windows.Controls.Ribbon
         /// </summary>
         public static void SetQuickAccessToolBarControlSizeDefinition(DependencyObject element, RibbonControlSizeDefinition value)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException("element");
-            }
+            ArgumentNullException.ThrowIfNull(element);
             element.SetValue(QuickAccessToolBarControlSizeDefinitionProperty, value);
         }
 
@@ -1014,10 +851,7 @@ namespace Microsoft.Windows.Controls.Ribbon
         /// </summary>
         public static object GetQuickAccessToolBarId(DependencyObject element)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException("element");
-            }
+            ArgumentNullException.ThrowIfNull(element);
             return element.GetValue(QuickAccessToolBarIdProperty);
         }
 
@@ -1026,10 +860,7 @@ namespace Microsoft.Windows.Controls.Ribbon
         /// </summary>
         public static void SetQuickAccessToolBarId(DependencyObject element, object value)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException("element");
-            }
+            ArgumentNullException.ThrowIfNull(element);
             element.SetValue(QuickAccessToolBarIdProperty, value);
         }
 
@@ -1042,10 +873,7 @@ namespace Microsoft.Windows.Controls.Ribbon
         /// </summary>
         public static bool GetShowKeyboardCues(DependencyObject element)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException("element");
-            }
+            ArgumentNullException.ThrowIfNull(element);
             return (bool)element.GetValue(ShowKeyboardCuesProperty);
         }
 
@@ -1054,10 +882,7 @@ namespace Microsoft.Windows.Controls.Ribbon
         /// </summary>
         internal static void SetShowKeyboardCues(DependencyObject element, bool value)
         {
-            if (element == null)
-            {
-                throw new ArgumentNullException("element");
-            }
+            ArgumentNullException.ThrowIfNull(element);
             element.SetValue(ShowKeyboardCuesPropertyKey, value);
         }
 

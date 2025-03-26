@@ -3,16 +3,11 @@
 // See the LICENSE file in the project root for more information.
 
 using System;
-using System.Reflection;
 using System.Windows;
-using System.Windows.Controls;
 using System.Windows.Threading;
 using System.Windows.TrustUI;
 using System.Windows.Input;
 using System.Globalization;
-using System.Resources;
-using MS.Internal.PresentationUI;
-using MS.Internal.AppModel;
 using System.Windows.Interop;
 
 namespace Microsoft.Internal.DeploymentUI
@@ -20,7 +15,6 @@ namespace Microsoft.Internal.DeploymentUI
     /// <summary>
     /// Interaction logic for TenFeetInstallationProgress.xaml
     /// </summary>
-    [FriendAccessAllowed] // Built into UI, used by Framework.
     internal partial class TenFeetInstallationProgress : IProgressPage
     {
         public TenFeetInstallationProgress()
@@ -135,7 +129,7 @@ namespace Microsoft.Internal.DeploymentUI
             ProgressBar_1.Value = percentDone;
         }
 
-        static void OnCommandRefresh(object sender, RoutedEventArgs e)
+        private static void OnCommandRefresh(object sender, RoutedEventArgs e)
         {
             TenFeetInstallationProgress page = sender as TenFeetInstallationProgress;
             if (page != null && page.RefreshCallback != null)
@@ -144,13 +138,13 @@ namespace Microsoft.Internal.DeploymentUI
             }
         }
 
-        static void OnCanRefresh(object sender, CanExecuteRoutedEventArgs e)
+        private static void OnCanRefresh(object sender, CanExecuteRoutedEventArgs e)
         {
             e.CanExecute = true;
             e.Handled = true;
         }
 
-        static void OnCommandStop(object sender, RoutedEventArgs e)
+        private static void OnCommandStop(object sender, RoutedEventArgs e)
         {
             TenFeetInstallationProgress page = sender as TenFeetInstallationProgress;
             if (page != null && page.StopCallback != null)
@@ -159,7 +153,7 @@ namespace Microsoft.Internal.DeploymentUI
             }
         }
 
-        static void OnCanStop(object sender, CanExecuteRoutedEventArgs e)
+        private static void OnCanStop(object sender, CanExecuteRoutedEventArgs e)
         {
             e.CanExecute = true;
             e.Handled = true;
@@ -170,10 +164,10 @@ namespace Microsoft.Internal.DeploymentUI
             StopCallback(null);
         }
 
-        string _publisher;
-        string _application;
-        DispatcherOperationCallback _stop;
-        DispatcherOperationCallback _refresh;
+        private string _publisher;
+        private string _application;
+        private DispatcherOperationCallback _stop;
+        private DispatcherOperationCallback _refresh;
         private Uri _deploymentPath;
 
     }

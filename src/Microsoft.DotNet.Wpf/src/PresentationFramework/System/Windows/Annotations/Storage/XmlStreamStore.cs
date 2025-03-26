@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -12,25 +12,14 @@
 //
 
 
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Globalization;
-using System.Diagnostics;
 using System.IO;
-using System.Windows;
-using System.Windows.Annotations;
 using System.Xml;
-using System.Xml.Schema;
 using System.Xml.XPath;
-using System.Xml.Serialization;
 using MS.Internal;
 using MS.Internal.Annotations;
 using MS.Internal.Annotations.Storage;
 using MS.Utility;
 using System.Windows.Markup;
-using MS.Internal.Controls.StickyNote;
-using System.Windows.Controls;
 
 namespace System.Windows.Annotations.Storage
 {
@@ -143,11 +132,11 @@ namespace System.Windows.Annotations.Storage
 
                     // we are making sure that the newAnnotation doesn't already exist in the store
                     if (editor != null)
-                        throw new ArgumentException(SR.AnnotationAlreadyExists, "newAnnotation");
+                        throw new ArgumentException(SR.AnnotationAlreadyExists, nameof(newAnnotation));
 
                     // we are making sure that the newAnnotation doesn't already exist in the store map
                     if (_storeAnnotationsMap.FindAnnotation(newAnnotation.Id) != null)
-                        throw new ArgumentException(SR.AnnotationAlreadyExists, "newAnnotation");
+                        throw new ArgumentException(SR.AnnotationAlreadyExists, nameof(newAnnotation));
 
                     // simply add the annotation to the map to save on performance
                     // notice that we need to tell the map that this instance of the annotation is dirty
@@ -248,7 +237,7 @@ namespace System.Windows.Annotations.Storage
             IList<Annotation> annotations = null;
             try
             {
-                string query = @"//" + AnnotationXmlConstants.Prefixes.CoreSchemaPrefix + ":" + AnnotationXmlConstants.Elements.ContentLocator;
+                string query = $@"//{AnnotationXmlConstants.Prefixes.CoreSchemaPrefix}:{AnnotationXmlConstants.Elements.ContentLocator}";
 
                 if (anchorLocator.Parts.Count > 0)
                 {
@@ -276,7 +265,7 @@ namespace System.Windows.Annotations.Storage
                     }
                 }
 
-                query += @"/ancestor::" + AnnotationXmlConstants.Prefixes.CoreSchemaPrefix + ":Anchors/ancestor::" + AnnotationXmlConstants.Prefixes.CoreSchemaPrefix + ":Annotation";
+                query += $@"/ancestor::{AnnotationXmlConstants.Prefixes.CoreSchemaPrefix}:Anchors/ancestor::{AnnotationXmlConstants.Prefixes.CoreSchemaPrefix}:Annotation";
 
                 annotations = InternalGetAnnotations(query, anchorLocator);
             }
@@ -301,7 +290,7 @@ namespace System.Windows.Annotations.Storage
             EventTrace.EasyTraceEvent(EventTrace.Keyword.KeywordAnnotation, EventTrace.Event.GetAnnotationsBegin);
             try
             {
-                string query = "//" + AnnotationXmlConstants.Prefixes.CoreSchemaPrefix + ":Annotation";
+                string query = $"//{AnnotationXmlConstants.Prefixes.CoreSchemaPrefix}:Annotation";
 
                 annotations = InternalGetAnnotations(query, null);
             }
@@ -735,13 +724,14 @@ namespace System.Windows.Annotations.Storage
 
             lock (SyncRoot)
             {
-                _document = new XmlDocument();
-                _document.PreserveWhitespace = false;
+                _document = new XmlDocument
+                {
+                    PreserveWhitespace = false
+                };
                 if (_stream.Length == 0)
                 {
-                    _document.LoadXml("<?xml version=\"1.0\" encoding=\"utf-8\"?> <" +
-                        AnnotationXmlConstants.Prefixes.CoreSchemaPrefix + ":Annotations xmlns:" + AnnotationXmlConstants.Prefixes.CoreSchemaPrefix + "=\"" +
-                        AnnotationXmlConstants.Namespaces.CoreSchemaNamespace + "\" xmlns:" + AnnotationXmlConstants.Prefixes.BaseSchemaPrefix + "=\"" + AnnotationXmlConstants.Namespaces.BaseSchemaNamespace + "\" />");
+                    _document.LoadXml(
+                        $"<?xml version=\"1.0\" encoding=\"utf-8\"?> <{AnnotationXmlConstants.Prefixes.CoreSchemaPrefix}:Annotations xmlns:{AnnotationXmlConstants.Prefixes.CoreSchemaPrefix}=\"{AnnotationXmlConstants.Namespaces.CoreSchemaNamespace}\" xmlns:{AnnotationXmlConstants.Prefixes.BaseSchemaPrefix}=\"{AnnotationXmlConstants.Namespaces.BaseSchemaNamespace}\" />");
                 }
                 else
                 {
@@ -758,7 +748,7 @@ namespace System.Windows.Annotations.Storage
                 // use an iterator to get a single node.
 
                 XPathNavigator navigator = _document.CreateNavigator();
-                XPathNodeIterator iterator = navigator.Select("//" + AnnotationXmlConstants.Prefixes.CoreSchemaPrefix + ":Annotations", _namespaceManager);
+                XPathNodeIterator iterator = navigator.Select($"//{AnnotationXmlConstants.Prefixes.CoreSchemaPrefix}:Annotations", _namespaceManager);
                 Invariant.Assert(iterator.Count == 1, "More than one annotation returned for the query");
 
                 iterator.MoveNext();
@@ -790,11 +780,11 @@ namespace System.Windows.Annotations.Storage
             {
                 if (knownNamespace == null)
                 {
-                    throw new ArgumentException(SR.NullUri, "knownNamespaces");
+                    throw new ArgumentException(SR.NullUri, nameof(knownNamespaces));
                 }
                 if (allNamespaces.Contains(knownNamespace))
                 {
-                    throw new ArgumentException(SR.DuplicatedUri, "knownNamespaces");
+                    throw new ArgumentException(SR.DuplicatedUri, nameof(knownNamespaces));
                 }
                 allNamespaces.Add(knownNamespace);
             }
@@ -808,12 +798,12 @@ namespace System.Windows.Annotations.Storage
                     {
                         if (name == null)
                         {
-                            throw new ArgumentException(SR.NullUri, "knownNamespaces");
+                            throw new ArgumentException(SR.NullUri, nameof(knownNamespaces));
                         }
 
                         if (allNamespaces.Contains(name))
                         {
-                            throw new ArgumentException(SR.DuplicatedCompatibleUri, "knownNamespaces");
+                            throw new ArgumentException(SR.DuplicatedCompatibleUri, nameof(knownNamespaces));
                         }
                         allNamespaces.Add(name);
                     }//foreach
@@ -887,7 +877,7 @@ namespace System.Windows.Annotations.Storage
             {
                 if (!Uri.IsWellFormedUriString(xmlNamespace, UriKind.RelativeOrAbsolute))
                 {
-                    throw new ArgumentException(SR.Format(SR.InvalidNamespace, xmlNamespace), "xmlNamespace");
+                    throw new ArgumentException(SR.Format(SR.InvalidNamespace, xmlNamespace), nameof(xmlNamespace));
                 }
                 Uri namespaceUri = new Uri(xmlNamespace, UriKind.RelativeOrAbsolute);
                 if (!_ignoredNamespaces.Contains(namespaceUri))
@@ -920,7 +910,7 @@ namespace System.Windows.Annotations.Storage
 
                 // We use XmlConvert.ToString to turn the Guid into a string because
                 // that's what is used by the Annotation's serialization methods.
-                XPathNodeIterator iterator = tempNavigator.Select(@"//" + AnnotationXmlConstants.Prefixes.CoreSchemaPrefix + @":Annotation[@Id=""" + XmlConvert.ToString(id) + @"""]", _namespaceManager);
+                XPathNodeIterator iterator = tempNavigator.Select($@"//{AnnotationXmlConstants.Prefixes.CoreSchemaPrefix}:Annotation[@Id=""{XmlConvert.ToString(id)}""]", _namespaceManager);
                 if (iterator.MoveNext())
                 {
                     navigator = (XPathNavigator)iterator.Current;
@@ -1039,13 +1029,13 @@ namespace System.Windows.Annotations.Storage
         // The xpath navigator used to navigate the annotations Xml stream
         private XPathNavigator _rootNavigator;
         // map that holds AnnotationId->Annotation
-        StoreAnnotationsMap _storeAnnotationsMap;
+        private StoreAnnotationsMap _storeAnnotationsMap;
         //list of ignored namespaces during XmlLoad
-        List<Uri> _ignoredNamespaces = new List<Uri>();
+        private List<Uri> _ignoredNamespaces = new List<Uri>();
 
-        //XmlCompatibilityReader - we need to hold that one open, so the underlying stream stays open too
+        // XmlCompatibilityReader - we need to hold that one open, so the underlying stream stays open too
         // if the store is disposed the reader will be disposed and the stream will be closed too.
-        XmlCompatibilityReader _xmlCompatibilityReader;
+        private XmlCompatibilityReader _xmlCompatibilityReader;
 
         ///
         ///Static fields

@@ -6,8 +6,6 @@
 // Description: TextView implementation for DocumentPageView.
 // 
 
-using System;                               // InvalidOperationException, ...
-using System.Collections.Generic;           // List<T>
 using System.Collections.ObjectModel;       // ReadOnlyCollection
 using System.Windows;                       // Point, Rect, ...
 using System.Windows.Controls.Primitives;   // DocumentPageView
@@ -315,7 +313,7 @@ namespace MS.Internal.Documents
             }
             if (IsPageMissing)
             {
-                return new ReadOnlyCollection<GlyphRun>(new List<GlyphRun>());
+                return ReadOnlyCollection<GlyphRun>.Empty;
             }
             return _pageTextView.GetGlyphRuns(start, end);
         }
@@ -530,7 +528,7 @@ namespace MS.Internal.Documents
             {
                 if (!IsValid || IsPageMissing)
                 {
-                    return new ReadOnlyCollection<TextSegment>(new List<TextSegment>());
+                    return ReadOnlyCollection<TextSegment>.Empty;
                 }
                 return _pageTextView.TextSegments;
             }

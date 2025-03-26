@@ -6,10 +6,8 @@
 // Description: RCW for ISpellChecker and related COM types.
 //
 
-using System;
 using System.Runtime.InteropServices;
 using System.Runtime.CompilerServices;
-using System.Security;
 
 /// <summary>
 /// RCW for spellcheck.idl found in Windows SDK

@@ -13,15 +13,9 @@ Abstract:
 
 --*/
 
-using System;
-using System.Xml;
 using System.IO;
-using System.Collections;
 using System.Collections.ObjectModel;
-using System.Collections.Generic;
 using System.Globalization;
-
-using System.Printing;
 using MS.Internal.Printing.Configuration;
 
 namespace System.Printing

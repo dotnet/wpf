@@ -2,17 +2,15 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
+using MS.Internal;
+using System.Collections;
+
 //
 // Description: Run-length table of document status for use the by the Speller.
 //
 
 namespace System.Windows.Documents
 {
-    using MS.Internal;
-    using System.Collections;
-    using System.Diagnostics;
-    using System.Windows.Controls;
-
     // Run-length table of document status for use the by the Speller.
     //
     // The speller tracks all document content as either
@@ -736,8 +734,7 @@ namespace System.Windows.Documents
                     runType = "error";
                 }
 
-                Debug.WriteLine(i + ": " + run.Position.TextContainer.Start.GetOffsetToPosition(run.Position) +
-                                " " + runType);
+                Debug.WriteLine($"{i}: {run.Position.TextContainer.Start.GetOffsetToPosition(run.Position)} {runType}");
             }
         }
 #endif // DEBUG

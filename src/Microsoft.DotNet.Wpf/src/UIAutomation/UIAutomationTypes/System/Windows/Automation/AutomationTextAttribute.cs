@@ -5,7 +5,6 @@
 // Description: Identifier for Automation Text Attributes
 
 
-using System;
 using MS.Internal.Automation;
 
 namespace System.Windows.Automation

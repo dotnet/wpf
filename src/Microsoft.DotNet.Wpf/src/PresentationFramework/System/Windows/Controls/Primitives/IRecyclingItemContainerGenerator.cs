@@ -8,8 +8,6 @@
 // Spec: Item Container Recycling Spec.docx
 //
 
-using System;
-
 namespace System.Windows.Controls.Primitives
 {
     /// <summary>

@@ -3,7 +3,6 @@
 // See the LICENSE file in the project root for more information.
 
 
-
 // This is basically copied from ReadOnlyCollection<T>, with just enough modification
 // to support storage of items as WeakReferences.  Use of internal BCL features
 // is commented out.
@@ -18,22 +17,14 @@
 
 namespace System.Collections.ObjectModel
 {
-    using System;
-    using System.Collections;
-    using System.Collections.Generic;
-    using System.Diagnostics;
-    using System.Windows;
-    using MS.Internal.WindowsBase;      // [FriendAccessAllowed]
-
     [Serializable]
     [System.Runtime.InteropServices.ComVisible(false)]
     //[DebuggerTypeProxy(typeof(Mscorlib_CollectionDebugView<>))]
     [DebuggerDisplay("Count = {Count}")]
-    [FriendAccessAllowed]
     internal class WeakReadOnlyCollection<T>: IList<T>, IList
     {
         //IList<T> list;
-        IList<WeakReference> list;
+        private IList<WeakReference> list;
         [NonSerialized]
         private Object _syncRoot;
 
@@ -130,11 +121,12 @@ namespace System.Collections.ObjectModel
         object ICollection.SyncRoot {
             get {
                 if( _syncRoot == null) {
-                    ICollection c = list as ICollection;
-                    if( c != null) {
+                    if (list is ICollection c)
+                    {
                         _syncRoot = c.SyncRoot;
                     }
-                    else {
+                    else
+                    {
                         System.Threading.Interlocked.CompareExchange<Object>(ref _syncRoot, new Object(), null);
                     }
                 }
@@ -166,11 +158,12 @@ namespace System.Collections.ObjectModel
             }
 
             IList<T> dlist = CreateDereferencedList();
-            T[] items = array as T[];
-            if (items != null) {
+            if (array is T[] items)
+            {
                 dlist.CopyTo(items, index);
             }
-            else {
+            else
+            {
                 //
                 // Catch the obvious case assignment will fail.
                 // We can found all possible problems by doing the check though.
@@ -179,7 +172,8 @@ namespace System.Collections.ObjectModel
                 //
                 Type targetType = array.GetType().GetElementType();
                 Type sourceType = typeof(T);
-                if(!(targetType.IsAssignableFrom(sourceType) || sourceType.IsAssignableFrom(targetType))) {
+                if (!(targetType.IsAssignableFrom(sourceType) || sourceType.IsAssignableFrom(targetType)))
+                {
                     //ThrowHelper.ThrowArgumentException(ExceptionResource.Argument_InvalidArrayType);
                     throw new ArgumentException(SR.Argument_InvalidArrayType);
                 }
@@ -188,19 +182,22 @@ namespace System.Collections.ObjectModel
                 // We can't cast array of value type to object[], so we don't support
                 // widening of primitive types here.
                 //
-                object[] objects = array as object[];
-                if( objects == null) {
+                if (array is not object[] objects)
+                {
                     //ThrowHelper.ThrowArgumentException(ExceptionResource.Argument_InvalidArrayType);
                     throw new ArgumentException(SR.Argument_InvalidArrayType);
                 }
 
                 int count = dlist.Count;
-                try {
-                    for (int i = 0; i < count; i++) {
+                try
+                {
+                    for (int i = 0; i < count; i++)
+                    {
                         objects[index++] = dlist[i];
                     }
                 }
-                catch(ArrayTypeMismatchException) {
+                catch (ArrayTypeMismatchException)
+                {
                     //ThrowHelper.ThrowArgumentException(ExceptionResource.Argument_InvalidArrayType);
                     throw new ArgumentException(SR.Argument_InvalidArrayType);
                 }
@@ -270,7 +267,7 @@ namespace System.Collections.ObjectModel
             throw new NotSupportedException(SR.NotSupported_ReadOnlyCollection);
         }
 
-        IList<T> CreateDereferencedList()
+        private IList<T> CreateDereferencedList()
         {
             int n = list.Count;
             List<T> newList = new List<T>(n);
@@ -296,8 +293,7 @@ namespace System.Collections.ObjectModel
 
             public T Current {
                 get {
-                    WeakReference wr = ie.Current as WeakReference;
-                    if (wr != null)
+                    if (ie.Current is WeakReference wr)
                         return (T)wr.Target;
                     else
                         return default(T);

@@ -6,11 +6,6 @@
 // Description: Highlight rendering for IME compositions.
 //
 
-using System;
-using System.Diagnostics;
-using System.Collections;
-using System.Windows.Media;
-
 namespace System.Windows.Documents
 {
 #if UNUSED_IME_HIGHLIGHT_LAYER

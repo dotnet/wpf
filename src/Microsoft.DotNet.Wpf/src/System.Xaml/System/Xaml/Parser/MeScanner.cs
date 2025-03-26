@@ -1,10 +1,9 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
+#nullable disable
+
 using System.Text;
 using System.Xaml;
 using System.Xaml.MS.Impl;
@@ -15,7 +14,7 @@ namespace MS.Internal.Xaml.Parser
 {
     // Markup Extension Tokenizer AKA Scanner.
 
-    enum MeTokenType
+    internal enum MeTokenType
     {
         None,
         Open         = '{',
@@ -26,7 +25,7 @@ namespace MS.Internal.Xaml.Parser
         PropertyName,  // String - Preceeds a '='.  {},= delimited, can (but shouldn't) contain spaces.
         String,        // String - all other strings, {},= delimited can contain spaces.
         QuotedMarkupExtension // String - must be recursivly parsed as a MarkupExtension.
-    };
+    }
 
     // 1) Value and (propertynames for compatibility with WPF 3.0) can also have
     // escaped character with '\' to include '{' '}' ',' '=', and '\'.
@@ -35,7 +34,7 @@ namespace MS.Internal.Xaml.Parser
     // 3) All strings are trimmed of whitespace front and back unless they were quoted.
     // 4) Quote characters can only appear at the start and end of strings.
     // 5) TypeNames cannot be quoted.
-    
+
     internal class MeScanner
     {
         public const char Space = ' ';
@@ -48,20 +47,20 @@ namespace MS.Internal.Xaml.Parser
         public const char Backslash = '\\';
         public const char NullChar = '\0';
 
-        enum StringState { Value, Type, Property };
+        private enum StringState { Value, Type, Property };
 
-        XamlParserContext _context;
-        string _inputText;
-        int _idx;
-        MeTokenType _token;
-        XamlType _tokenXamlType;
-        XamlMember _tokenProperty;
-        string _tokenNamespace;
-        string _tokenText;
-        StringState _state;
-        bool _hasTrailingWhitespace;
-        int _lineNumber;
-        int _startPosition;
+        private XamlParserContext _context;
+        private string _inputText;
+        private int _idx;
+        private MeTokenType _token;
+        private XamlType _tokenXamlType;
+        private XamlMember _tokenProperty;
+        private string _tokenNamespace;
+        private string _tokenText;
+        private StringState _state;
+        private bool _hasTrailingWhitespace;
+        private int _lineNumber;
+        private int _startPosition;
         private string _currentParameterName;
         private SpecialBracketCharacters _currentSpecialBracketCharacters;
 
@@ -159,6 +158,7 @@ namespace MS.Internal.Xaml.Parser
                     _token = MeTokenType.Open;
                     _state = StringState.Type;  // types follow '{'
                 }
+
                 break;
 
             case Quote1:
@@ -170,8 +170,10 @@ namespace MS.Internal.Xaml.Parser
                     {
                         isQuotedMarkupExtension = true;
                     }
+
                     PushBack();                   // put back the read-ahead.
                 }
+
                 readString = true;  // read substring"
                 break;
 
@@ -195,6 +197,7 @@ namespace MS.Internal.Xaml.Parser
                         ++_context.CurrentBracketModeParseParameters.CurrentConstructorParam <
                         _context.CurrentBracketModeParseParameters.MaxConstructorParams;
                 }
+
                 break;
 
             default:
@@ -202,10 +205,10 @@ namespace MS.Internal.Xaml.Parser
                 break;
             }
 
-            if(readString)
+            if (readString)
             {
-                if (_context.CurrentType.IsMarkupExtension 
-                    && _context.CurrentBracketModeParseParameters != null 
+                if (_context.CurrentType.IsMarkupExtension
+                    && _context.CurrentBracketModeParseParameters is not null
                     && _context.CurrentBracketModeParseParameters.IsConstructorParsingMode)
                 {
                     int currentCtrParam = _context.CurrentBracketModeParseParameters.CurrentConstructorParam;
@@ -231,6 +234,7 @@ namespace MS.Internal.Xaml.Parser
                     ResolvePropertyName(str);
                     break;
                 }
+
                 _state = StringState.Value;
                 _tokenText = RemoveEscapes(str);
             }
@@ -241,8 +245,8 @@ namespace MS.Internal.Xaml.Parser
             if (value.StartsWith("{}", StringComparison.OrdinalIgnoreCase))
             {
                 value = value.Substring(2);
-            } 
-            
+            }
+
             if (!value.Contains(Backslash))
             {
                 return value;
@@ -275,7 +279,8 @@ namespace MS.Internal.Xaml.Parser
                     // pick up again after that
                     start = idx + 2;
                 }
-            } while (start < value.Length);
+            }
+            while (start < value.Length);
             string result = builder.ToString();
             return result;
         }
@@ -284,19 +289,19 @@ namespace MS.Internal.Xaml.Parser
         {
             string error;
             XamlTypeName typeName = XamlTypeName.ParseInternal(longName, _context.FindNamespaceByPrefix, out error);
-            if (typeName == null)
+            if (typeName is null)
             {
                 throw new XamlParseException(this, error);
             }
-            
+
             // In curly form, we search for TypeName + 'Extension' before TypeName
             string bareTypeName = typeName.Name;
             typeName.Name = typeName.Name + KnownStrings.Extension;
             XamlType xamlType = _context.GetXamlType(typeName, false);
             // This would be cleaner if we moved the Extension fallback logic out of XSC
-            if (xamlType == null || 
+            if (xamlType is null ||
                 // Guard against Extension getting added twice
-                (xamlType.UnderlyingType != null && 
+                (xamlType.UnderlyingType is not null &&
                  KS.Eq(xamlType.UnderlyingType.Name, typeName.Name + KnownStrings.Extension)))
             {
                 typeName.Name = bareTypeName;
@@ -310,7 +315,7 @@ namespace MS.Internal.Xaml.Parser
         private void ResolvePropertyName(string longName)
         {
             XamlPropertyName propName = XamlPropertyName.Parse(longName);
-            if (propName == null)
+            if (propName is null)
             {
                 throw new ArgumentException(SR.MalformedPropertyName);
             }
@@ -322,15 +327,17 @@ namespace MS.Internal.Xaml.Parser
 
             if (propName.IsDotted)
             {
-                prop = _context.GetDottedProperty(tagType, tagNamespace, propName, false /*tagIsRoot*/);
+                prop = _context.GetDottedProperty(tagType, tagNamespace, propName, tagIsRoot: false);
             }
+
             // Regular property p
             else
             {
                 string ns = _context.GetAttributeNamespace(propName, Namespace);
                 declaringType = _context.CurrentType;
-                prop = _context.GetNoDotAttributeProperty(declaringType, propName, Namespace, ns, false /*tagIsRoot*/);
+                prop = _context.GetNoDotAttributeProperty(declaringType, propName, Namespace, ns, tagIsRoot: false);
             }
+
             _tokenProperty = prop;
         }
 
@@ -345,12 +352,12 @@ namespace MS.Internal.Xaml.Parser
             StringBuilder sb = new StringBuilder();
             char ch;
 
-            while(!IsAtEndOfInput)
+            while (!IsAtEndOfInput)
             {
                 ch = CurrentChar;
 
                 // handle escaping and quoting first.
-                if(escaped)
+                if (escaped)
                 {
                     sb.Append(Backslash);
                     sb.Append(ch);
@@ -373,9 +380,10 @@ namespace MS.Internal.Xaml.Parser
                         break;  // we are done.
                     }
                 }
+
                 // If we are inside of MarkupExtensionBracketCharacters for a particular property or position parameter,
-                // scoop up everything inside one by one, and keep track of nested Bracket Characters in the stack. 
-                else if (_context.CurrentBracketModeParseParameters != null && _context.CurrentBracketModeParseParameters.IsBracketEscapeMode)
+                // scoop up everything inside one by one, and keep track of nested Bracket Characters in the stack.
+                else if (_context.CurrentBracketModeParseParameters is not null && _context.CurrentBracketModeParseParameters.IsBracketEscapeMode)
                 {
                     Stack<char> bracketCharacterStack = _context.CurrentBracketModeParseParameters.BracketCharacterStack;
                     if (_currentSpecialBracketCharacters.StartsEscapeSequence(ch))
@@ -419,6 +427,7 @@ namespace MS.Internal.Xaml.Parser
                             done = true;  // we are done.
                             break;
                         }
+
                         sb.Append(ch);
                         break;
 
@@ -436,6 +445,7 @@ namespace MS.Internal.Xaml.Parser
                             braceCount--;
                             sb.Append(ch);
                         }
+
                         break;
                     case Comma:
                         done = true;  // we are done.
@@ -456,12 +466,13 @@ namespace MS.Internal.Xaml.Parser
                         {
                             throw new XamlParseException(this, SR.QuoteCharactersOutOfPlace);
                         }
+
                         quoteChar = ch;
                         wasQuoted = true;
                         break;
 
                     default:  // All other character (including whitespace)
-                        if (_currentSpecialBracketCharacters != null && _currentSpecialBracketCharacters.StartsEscapeSequence(ch))
+                        if (_currentSpecialBracketCharacters is not null && _currentSpecialBracketCharacters.StartsEscapeSequence(ch))
                         {
                             Stack<char> bracketCharacterStack =
                                 _context.CurrentBracketModeParseParameters.BracketCharacterStack;
@@ -492,6 +503,7 @@ namespace MS.Internal.Xaml.Parser
                         break;  // we are done.
                     }
                 }
+
                 atStart = false;
                 Advance();
             }
@@ -530,6 +542,7 @@ namespace MS.Internal.Xaml.Parser
                 {
                     return _inputText[_idx + 1];
                 }
+
                 return NullChar;
             }
         }
@@ -542,6 +555,7 @@ namespace MS.Internal.Xaml.Parser
                 _idx = _inputText.Length;
                 return false;
             }
+
             return true;
         }
 
@@ -551,12 +565,13 @@ namespace MS.Internal.Xaml.Parser
 
             if (ch == KnownStrings.WhitespaceChars[0] ||
                 ch == KnownStrings.WhitespaceChars[1] ||
-                ch == KnownStrings.WhitespaceChars[2] || 
+                ch == KnownStrings.WhitespaceChars[2] ||
                 ch == KnownStrings.WhitespaceChars[3] ||
                 ch == KnownStrings.WhitespaceChars[4])
             {
                 return true;
             }
+
             return false;
         }
 
@@ -588,7 +603,7 @@ namespace MS.Internal.Xaml.Parser
         private SpecialBracketCharacters GetBracketCharacterForProperty(string propertyName)
         {
             SpecialBracketCharacters bracketCharacters = null;
-            if (_context.CurrentEscapeCharacterMapForMarkupExtension != null && 
+            if (_context.CurrentEscapeCharacterMapForMarkupExtension is not null &&
                 _context.CurrentEscapeCharacterMapForMarkupExtension.ContainsKey(propertyName))
             {
                 bracketCharacters = _context.CurrentEscapeCharacterMapForMarkupExtension[propertyName];
@@ -605,7 +620,7 @@ namespace MS.Internal.Xaml.Parser
             CurrentConstructorParam = 0;
             IsBracketEscapeMode = false;
             BracketCharacterStack = new Stack<char>();
-            if (context.CurrentLongestConstructorOfMarkupExtension != null)
+            if (context.CurrentLongestConstructorOfMarkupExtension is not null)
             {
                 IsConstructorParsingMode = context.CurrentLongestConstructorOfMarkupExtension.Length > 0;
                 MaxConstructorParams = context.CurrentLongestConstructorOfMarkupExtension.Length;

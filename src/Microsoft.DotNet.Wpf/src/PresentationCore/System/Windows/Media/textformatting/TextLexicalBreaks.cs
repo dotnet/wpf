@@ -10,12 +10,6 @@
 //
 //
 
-
-using System;
-using System.Globalization;
-using MS.Internal.PresentationCore;
-
-
 namespace System.Windows.Media.TextFormatting
 {
     /// <summary>
@@ -28,7 +22,6 @@ namespace System.Windows.Media.TextFormatting
 #if HYPHENATION_API
     public abstract class TextLexicalBreaks
 #else
-    [FriendAccessAllowed]   // used by Framework
     internal abstract class TextLexicalBreaks
 #endif
     {

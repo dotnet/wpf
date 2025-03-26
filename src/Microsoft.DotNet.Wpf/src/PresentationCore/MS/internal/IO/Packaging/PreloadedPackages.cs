@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -9,16 +9,8 @@
 //                  PackWebRequest.
 //
 
-using System;
-using System.Security;
-using System.Collections;
 using System.Collections.Specialized;
-using System.Diagnostics;
-using System.Globalization;
-using System.IO;
 using System.IO.Packaging;
-
-using MS.Internal;
 using MS.Internal.PresentationCore;     // for ExceptionStringTable
 
 namespace MS.Internal.IO.Packaging
@@ -30,7 +22,6 @@ namespace MS.Internal.IO.Packaging
     ///  class and we won't be using even half of the dictionary functionalities.
     ///  If this class becomes a public class which is strongly discouraged, this class
     ///  needs to implement IDictionary.</remarks>
-    [FriendAccessAllowed]
     internal static class PreloadedPackages 
     {
         //------------------------------------------------------
@@ -142,10 +133,7 @@ namespace MS.Internal.IO.Packaging
 
             lock (_globalLock)
             {
-                if (_packagePairs != null)
-                {
-                    _packagePairs.Remove(uri);
-                }
+                _packagePairs?.Remove(uri);
             }
         }
 
@@ -164,7 +152,7 @@ namespace MS.Internal.IO.Packaging
 
             if (!uri.IsAbsoluteUri)
             {
-                throw new ArgumentException(SR.UriMustBeAbsolute, "uri");
+                throw new ArgumentException(SR.UriMustBeAbsolute, nameof(uri));
             }
         }
 

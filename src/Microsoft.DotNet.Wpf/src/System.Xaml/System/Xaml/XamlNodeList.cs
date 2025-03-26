@@ -2,23 +2,22 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-using System.Collections.Generic;
-using System.Diagnostics;
+#nullable disable
 
 namespace System.Xaml
 {
     // provides a place to Write a list of Xaml nodes
     // and Read them back.  W/o exposing the 'XamlNode' type.
-    
+
     // Single Writer, multiple reader.
     // Must complete writing and Close, before reading.
 
     public class XamlNodeList
     {
-        List<XamlNode> _nodeList;
-        bool _readMode;
-        XamlWriter _writer;
-        bool _hasLineInfo;
+        private List<XamlNode> _nodeList;
+        private bool _readMode;
+        private XamlWriter _writer;
+        private bool _hasLineInfo;
 
         public XamlNodeList(XamlSchemaContext schemaContext)
         {
@@ -57,10 +56,12 @@ namespace System.Xaml
             {
                 throw new XamlException(SR.CloseXamlWriterBeforeReading);
             }
-            if (_writer.SchemaContext == null)
+
+            if (_writer.SchemaContext is null)
             {
                 throw new XamlException(SR.SchemaContextNotInitialized);
             }
+
             return new ReaderMultiIndexDelegate(_writer.SchemaContext, Index, _nodeList.Count, _hasLineInfo);
         }
 
@@ -74,6 +75,7 @@ namespace System.Xaml
                     _nodeList.Add(node);
                     return;
                 }
+
                 Debug.Assert(XamlNode.IsEof_Helper(nodeType, data));
                 _readMode = true;
             }
@@ -104,9 +106,10 @@ namespace System.Xaml
             {
                 throw new XamlException(SR.CloseXamlWriterBeforeReading);
             }
+
             return _nodeList[idx];
         }
-              
+
         public void Clear()
         {
             _nodeList.Clear();

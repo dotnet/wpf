@@ -6,9 +6,7 @@
 // Description: AutomationPeer associated with DocumentPageView.
 //
 
-using System.Collections.Generic;           // List<T>
 using System.Globalization;                 // CultureInfo
-using System.Windows.Controls;              // DocumentViewer
 using System.Windows.Controls.Primitives;   // DocumentPageView
 
 namespace System.Windows.Automation.Peers
@@ -30,7 +28,7 @@ namespace System.Windows.Automation.Peers
         /// <see cref="AutomationPeer.GetChildrenCore"/>
         /// </summary>
         /// <remarks>
-        /// AutomationPeer associated with DocumentPageView blocks any exposure 
+        /// AutomationPeer associated with DocumentPageView blocks any exposure
         /// of the currently hosted page. So it returns empty collection of children.
         /// </remarks>
         protected override List<AutomationPeer> GetChildrenCore()
@@ -42,7 +40,7 @@ namespace System.Windows.Automation.Peers
         /// <see cref="AutomationPeer.GetAutomationIdCore()"/>
         /// </summary>
         /// <returns>A string representing the current DocumentPageView.</returns>
-        protected override string GetAutomationIdCore() 
+        protected override string GetAutomationIdCore()
         {
             // Initialize the result to Empty, so that if Name is not set on the
             // DocumentPageView, and there is no valid PageNumber set, then the
@@ -63,7 +61,7 @@ namespace System.Windows.Automation.Peers
                 // will be kept in a 1-indexed format.  InvariantCulture is used to ensure
                 // that these AutomationIds will not change with the language, so that they
                 // can be trusted to always work in automation.
-                result = String.Format(CultureInfo.InvariantCulture, "DocumentPage{0}", owner.PageNumber + 1);
+                result = string.Create(CultureInfo.InvariantCulture, $"DocumentPage{owner.PageNumber + 1}");
             }
 
             return result;

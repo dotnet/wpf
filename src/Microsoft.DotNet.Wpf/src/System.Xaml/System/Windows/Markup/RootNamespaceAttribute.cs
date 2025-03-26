@@ -19,7 +19,7 @@ namespace System.Windows.Markup
         /// RootNamespace property in a project file.
         /// </summary>
         /// <param name="nameSpace">The root namespace value</param>
-        public RootNamespaceAttribute(string nameSpace)
+        public RootNamespaceAttribute(string? nameSpace)
         {
             Namespace = nameSpace;
         }
@@ -28,6 +28,6 @@ namespace System.Windows.Markup
         /// The root namespace value corresponding to the value of the RootNamespace
         /// property in a project file.
         /// </summary>
-        public string Namespace { get; }
+        public string? Namespace { get; }
     }
 }

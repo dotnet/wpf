@@ -10,14 +10,8 @@
 //
 //
 
-using System;
 using System.ComponentModel;    // for TypeConverter
 using System.Globalization;     // for CultureInfo
-using System.Reflection;
-using MS.Internal;
-using System.Windows;
-using System.Windows.Input;
-using MS.Utility;
 
 namespace System.Windows.Input
 {
@@ -63,7 +57,7 @@ namespace System.Windows.Input
                 string modifiersToken;
 
                 if (fullName.Length == 0)
-                    return new MouseGesture(MouseAction.None, ModifierKeys.None); ;
+                    return new MouseGesture(MouseAction.None, ModifierKeys.None);
 
                 // break apart LocalName and Prefix
                 int Offset = fullName.LastIndexOf(MODIFIERS_DELIMITER);

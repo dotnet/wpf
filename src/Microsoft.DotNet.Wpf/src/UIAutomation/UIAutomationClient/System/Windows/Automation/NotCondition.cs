@@ -3,9 +3,7 @@
 // See the LICENSE file in the project root for more information.
 
 
-using System;
 using MS.Internal.Automation;
-using System.Windows.Automation;
 
 namespace System.Windows.Automation
 {
@@ -32,7 +30,7 @@ namespace System.Windows.Automation
         /// <param name="condition">Condition to negate</param>
         public NotCondition( Condition condition )
         {
-            Misc.ValidateArgumentNonNull( condition, "condition" );
+            ArgumentNullException.ThrowIfNull(condition);
 
             _condition = condition;
 
@@ -72,10 +70,10 @@ namespace System.Windows.Automation
         //  Private Fields
         //
         //------------------------------------------------------
- 
+
         #region Private Fields
 
-        Condition _condition;
+        private Condition _condition;
 
         #endregion Private Fields
     }

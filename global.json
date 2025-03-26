@@ -1,10 +1,12 @@
 {
   "tools": {
-    "dotnet": "8.0.100-preview.7.23376.3",
+    "dotnet": "10.0.100-preview.3.25167.3",
     "runtimes": {
-      "dotnet": [
-        "2.1.7",
-        "$(VSRedistCommonNetCoreSharedFrameworkx6480PackageVersion)"
+      "dotnet/x64": [
+        "$(VSRedistCommonNetCoreSharedFrameworkx64100PackageVersion)"
+      ],
+      "dotnet/x86": [
+        "$(VSRedistCommonNetCoreSharedFrameworkx64100PackageVersion)"
       ]
     },
     "vs": {
@@ -12,14 +14,16 @@
     }
   },
   "msbuild-sdks": {
-    "Microsoft.DotNet.Arcade.Sdk": "8.0.0-beta.23451.1",
-    "Microsoft.DotNet.Helix.Sdk": "8.0.0-beta.23451.1"
+    "Microsoft.DotNet.Arcade.Sdk": "10.0.0-beta.25174.1",
+    "Microsoft.DotNet.Helix.Sdk": "10.0.0-beta.25174.1",
+    "Microsoft.Build.NoTargets": "3.7.56"
   },
   "sdk": {
-    "version": "8.0.100-preview.7.23376.3"
+    "version": "10.0.100-preview.3.25167.3"
   },
   "native-tools": {
     "strawberry-perl": "5.38.0.1",
-    "net-framework-48-ref-assemblies": "0.0.0.1"
+    "net-framework-48-ref-assemblies": "0.0.0.1",
+    "windows-sdk-d3d-redist": "1.0.0"
   }
 }

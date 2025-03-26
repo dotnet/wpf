@@ -5,9 +5,7 @@
 // Description: 
 //    SigningDialog is the Forms dialog that allows users to select signing parameters.
 using System;
-using System.ComponentModel;
 using System.Drawing;
-using System.Windows.Forms;
 using System.Windows.TrustUI;
 using System.Security.Cryptography.X509Certificates;
 using System.Globalization;                 // For localization of string conversion
@@ -33,15 +31,9 @@ namespace MS.Internal.Documents
         /// </summary>
         internal SigningDialog(X509Certificate2 x509Certificate2, DigitalSignature digitalSignatureRequest, DocumentSignatureManager docSigManager)
         {
-            if (x509Certificate2 == null)
-            {
-                throw new ArgumentNullException("x509Certificate2");
-            } 
-            if (docSigManager == null)
-            {
-                throw new ArgumentNullException("docSigManager");
-            }
-            
+            ArgumentNullException.ThrowIfNull(x509Certificate2);
+            ArgumentNullException.ThrowIfNull(docSigManager);
+
             _docSigManager = docSigManager;
             _x509Certificate2 = x509Certificate2;   // setting critical data.
 

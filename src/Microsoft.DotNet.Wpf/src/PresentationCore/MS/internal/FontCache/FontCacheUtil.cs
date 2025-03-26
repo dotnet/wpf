@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -7,37 +7,18 @@
 // Description: Miscellaneous utility functions for font handling code.
 //
 
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Diagnostics;
 using System.Globalization;
 using System.IO;
 using System.IO.Packaging;
-using System.Reflection;
-using System.Resources;
 using System.Runtime.InteropServices;
-using System.Security;
-using System.Text;
-using System.Threading;
-using System.Windows;
 using System.Windows.Markup;    // for XmlLanguage
-using System.Windows.Media;
 using System.Windows.Navigation;
-using System.Windows.Threading;
 
 using MS.Win32;
-using MS.Internal;
-using MS.Internal.FontFace;
 using MS.Internal.PresentationCore;
-using MS.Internal.Resources;
-using MS.Utility;
 
 using Microsoft.Win32.SafeHandles;
-
-// Since we disable PreSharp warnings in this file, we first need to disable warnings about unknown message numbers and unknown pragmas.
-#pragma warning disable 1634, 1691
 
 namespace MS.Internal.FontCache
 {
@@ -46,7 +27,6 @@ namespace MS.Internal.FontCache
     /// The purpose of the class is to protect the memory block from overruns.
     /// ArgumentOutOfRangeException is thrown when an overrun is detected.
     /// </summary>
-    [FriendAccessAllowed]
     internal struct CheckedPointer
     {
         internal unsafe CheckedPointer(void * pointer, int size)
@@ -60,8 +40,9 @@ namespace MS.Internal.FontCache
             Debug.Assert(stream.Position == 0);
             unsafe { _pointer = stream.PositionPointer; }
             long length = stream.Length;
-            if (length < 0 || length > int.MaxValue)
-                throw new ArgumentOutOfRangeException();
+            ArgumentOutOfRangeException.ThrowIfNegative(length);
+            ArgumentOutOfRangeException.ThrowIfGreaterThan(length, int.MaxValue);
+
             _size = (int)length;
         }
 
@@ -213,7 +194,6 @@ namespace MS.Internal.FontCache
     /// <summary>
     /// HashFn is a port of predefined hash functions from LKRHash
     /// </summary>
-    [FriendAccessAllowed]
     internal static class HashFn
     {
         // Small prime number used as a multiplier in the supplied hash functions
@@ -282,7 +262,6 @@ namespace MS.Internal.FontCache
     /// <summary>
     /// Utility functions for interaction with font cache service
     /// </summary>
-    [FriendAccessAllowed]
     internal static class Util
     {
         internal const int nullOffset = -1;
@@ -514,7 +493,7 @@ namespace MS.Internal.FontCache
                         out faceIndex
                     ))
                 {
-                    throw new ArgumentException(SR.FaceIndexMustBePositiveOrZero, "fontUri");
+                    throw new ArgumentException(SR.FaceIndexMustBePositiveOrZero, nameof(fontUri));
                 }
 
                 // face index was specified in a fragment, we need to strip off fragment from the source Uri
@@ -802,7 +781,6 @@ namespace MS.Internal.FontCache
     /// <summary>
     /// A class that wraps operations with Win32 memory sections and file mappings
     /// </summary>
-    [FriendAccessAllowed]
     internal class FileMapping : UnmanagedMemoryStream
     {
         ~FileMapping()
@@ -817,10 +795,8 @@ namespace MS.Internal.FontCache
             {
                 if (disposing)
                 {
-                    if (_viewHandle != null)
-                        _viewHandle.Dispose();
-                    if (_mappingHandle != null)
-                        _mappingHandle.Dispose();
+                    _viewHandle?.Dispose();
+                    _mappingHandle?.Dispose();
                 }
 
                 // We only handle flat disk files read only, should never be writeable.
@@ -836,12 +812,6 @@ namespace MS.Internal.FontCache
             {
                 unsafe
                 {
-                    // Disable PREsharp warning about not calling Marshal.GetLastWin32Error,
-                    // because we already check the handle for invalid value and
-                    // we are not particularly interested in specific Win32 error.
-
-#pragma warning disable 6523
-
                     long size;
 
                     using (SafeFileHandle fileHandle = UnsafeNativeMethods.CreateFile(
@@ -882,8 +852,6 @@ namespace MS.Internal.FontCache
                     _viewHandle = UnsafeNativeMethods.MapViewOfFileEx(_mappingHandle, UnsafeNativeMethods.FILE_MAP_READ, 0, 0, IntPtr.Zero, IntPtr.Zero);
                     if (_viewHandle.IsInvalid)
                         throw new IOException(SR.Format(SR.IOExceptionWithFileName, fileName));
-
-#pragma warning restore 6523
 
                     Initialize((byte*)_viewHandle.Memory, size, size, FileAccess.Read);
                 }
@@ -971,7 +939,7 @@ namespace MS.Internal.FontCache
 
             int IComparer<LocalizedName>.Compare(LocalizedName x, LocalizedName y)
             {
-                return String.Compare(x._language.IetfLanguageTag, y._language.IetfLanguageTag, StringComparison.OrdinalIgnoreCase);
+                return string.Compare(x._language.IetfLanguageTag, y._language.IetfLanguageTag, StringComparison.OrdinalIgnoreCase);
             }
 
             #endregion

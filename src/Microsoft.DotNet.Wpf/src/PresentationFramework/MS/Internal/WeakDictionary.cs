@@ -3,12 +3,10 @@
 // See the LICENSE file in the project root for more information.
 
 
+using System.Collections;
+
 namespace MS.Internal
 {
-    using System;
-    using System.Collections;
-    using System.Collections.Generic;
-
     /// <summary>
     ///     Helper WeakDictionary class implemented using WeakHashTable
     /// </summary>
@@ -292,10 +290,7 @@ namespace MS.Internal
 
         public void CopyTo(KeyValuePair<TKey, TValue>[] array, int arrayIndex)
         {
-            if (arrayIndex < 0)
-            {
-                throw new ArgumentOutOfRangeException("arrayIndex");
-            }
+            ArgumentOutOfRangeException.ThrowIfNegative(arrayIndex);
             ArgumentNullException.ThrowIfNull(array);
 
             int count = 0;
@@ -304,10 +299,7 @@ namespace MS.Internal
                 count++;
             }
 
-            if (count + arrayIndex > array.Length)
-            {
-                throw new ArgumentOutOfRangeException("arrayIndex");
-            }
+            ArgumentOutOfRangeException.ThrowIfGreaterThan(arrayIndex, array.Length - count);
 
             foreach (KeyValuePair<TKey, TValue> item in this)
             {
@@ -363,9 +355,9 @@ namespace MS.Internal
 
         #region Private Data
 
-        IWeakHashtable _hashTable = WeakHashtable.FromKeyType(typeof(TKey));
-        KeyCollection<TKey, TValue> _keys = null;
-        ValueCollection<TKey, TValue> _values = null;
+        private IWeakHashtable _hashTable = WeakHashtable.FromKeyType(typeof(TKey));
+        private KeyCollection<TKey, TValue> _keys = null;
+        private ValueCollection<TKey, TValue> _values = null;
 
         #endregion
     }

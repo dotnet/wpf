@@ -8,18 +8,7 @@
 //   Class that serializes and deserializes Styles.
 //
 
-using System;
-using System.ComponentModel;
-
-using System.ComponentModel.Design.Serialization;
-using System.Diagnostics;
-using System.Collections;
 using System.Globalization;
-using System.IO;
-using System.Reflection;
-using System.Text;
-using System.Xml;
-using MS.Utility;
 
 #if !PBTCOMPILER
 using System.Windows.Data;
@@ -66,9 +55,11 @@ namespace System.Windows.Markup
             XamlNode               xamlNode,
             BamlRecordWriter       bamlWriter)
         {
-            StyleXamlParser styleParser = new StyleXamlParser(tokenReader, context);
-            styleParser.BamlRecordWriter = bamlWriter;
-            styleParser.ParserHooks = _parserHooks;
+            StyleXamlParser styleParser = new StyleXamlParser(tokenReader, context)
+            {
+                BamlRecordWriter = bamlWriter,
+                ParserHooks = _parserHooks
+            };
 
 
             // Process the xamlNode that is passed in so that the <Style> element is written to baml
@@ -145,8 +136,8 @@ namespace System.Windows.Markup
                 return targetType;
         }
 
-                // Helper to insert line and position numbers into message, if they are present
-        void ThrowException(
+        // Helper to insert line and position numbers into message, if they are present
+        private void ThrowException(
              string id,
              int  lineNumber,
              int  linePosition)
@@ -186,9 +177,9 @@ namespace System.Windows.Markup
         internal const string VisualTriggersPropertyName                    = "Triggers";
         internal const string ResourcesPropertyName                         = "Resources";
         internal const string SettersPropertyName                           = "Setters";
-        internal const string VisualTriggersFullPropertyName    = StyleTagName + "." + VisualTriggersPropertyName;
-        internal const string SettersFullPropertyName           = StyleTagName + "." + SettersPropertyName;
-        internal const string ResourcesFullPropertyName         = StyleTagName + "." + ResourcesPropertyName;
+        internal const string VisualTriggersFullPropertyName    = $"{StyleTagName}.{VisualTriggersPropertyName}";
+        internal const string SettersFullPropertyName           = $"{StyleTagName}.{SettersPropertyName}";
+        internal const string ResourcesFullPropertyName         = $"{StyleTagName}.{ResourcesPropertyName}";
         internal const string PropertyTriggerPropertyName                   = "Property";
         internal const string PropertyTriggerValuePropertyName              = "Value";
         internal const string PropertyTriggerSourceName                     = "SourceName";

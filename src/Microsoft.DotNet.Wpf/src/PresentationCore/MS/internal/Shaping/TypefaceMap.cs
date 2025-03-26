@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -8,24 +8,16 @@
 //
 //
 
-using System;
-using System.Security;
-using System.Collections;
-using System.Collections.Generic;
 using System.Globalization;
-using System.Diagnostics;
 using System.Windows;
 using System.Windows.Media;
 using System.Windows.Media.TextFormatting;
 using MS.Utility;
-using MS.Internal;
 using MS.Internal.Generic;
 using MS.Internal.FontCache;
 using MS.Internal.FontFace;
 using MS.Internal.TextFormatting;
 using System.Runtime.InteropServices;
-
-using FontFace = MS.Internal.FontFace;
 
 
 namespace MS.Internal.Shaping
@@ -120,7 +112,7 @@ namespace MS.Internal.Shaping
                         (char*)ptext.ToPointer(),
                         (uint)stringLength,
                         culture,
-                        MS.Internal.FontCache.DWriteFactory.Instance,
+                        (MS.Internal.Text.TextInterface.Native.IDWriteFactory*)MS.Internal.FontCache.DWriteFactory.Instance.DWriteFactory,
                         isRightToLeftParagraph,
                         digitCulture,
                         ignoreUserOverride,
@@ -614,7 +606,7 @@ namespace MS.Internal.Shaping
                 else if (!string.IsNullOrEmpty(targetFamilyName))
                 {
                     // The base Uri used for resolving target family names is the Uri of the composite font.
-                    Uri baseUri = (canonicalFamilyReference != null) ? canonicalFamilyReference.LocationUri : null;
+                    Uri baseUri = canonicalFamilyReference?.LocationUri;
 
                     // map to the target of the family map
                     cchAdvance = MapByFontFamilyName(

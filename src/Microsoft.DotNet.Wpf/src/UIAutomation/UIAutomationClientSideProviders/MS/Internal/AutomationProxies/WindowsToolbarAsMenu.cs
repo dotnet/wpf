@@ -12,11 +12,10 @@
 
 using System;
 using System.Windows.Automation;
-using MS.Win32;
 
 namespace MS.Internal.AutomationProxies
 {
-    class WindowsToolbarAsMenu : WindowsToolbar
+    internal class WindowsToolbarAsMenu : WindowsToolbar
     {
         // ------------------------------------------------------
         //
@@ -60,7 +59,7 @@ namespace MS.Internal.AutomationProxies
 
         #region Private Fields
 
-        Accessible _acc;
+        private Accessible _acc;
 
         #endregion
     }

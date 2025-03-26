@@ -4,17 +4,6 @@
 
 
 
-using System;
-using System.Collections.Generic;
-using System.Windows;
-using System.Windows.Threading;
-using System.Windows.Media.Animation;
-using System.Windows.Media;
-using System.Windows.Media.Composition;
-using System.Diagnostics;
-using MS.Internal;
-using System.Security;
-
 //------------------------------------------------------------------------------
 // This section lists various things that we could improve on the DrawingContext
 // class.
@@ -117,10 +106,7 @@ namespace System.Windows.Media
         {
             base.VerifyApiNonstructuralChange();
 
-            if (_disposed)
-            {
-                throw new ObjectDisposedException("RenderDataDrawingContext");
-            }
+            ObjectDisposedException.ThrowIf(_disposed, typeof(RenderDataDrawingContext));
         }
 
         /// <summary>

@@ -246,5 +246,3 @@ struct MILCMD_POP
 
 };
 
-
-

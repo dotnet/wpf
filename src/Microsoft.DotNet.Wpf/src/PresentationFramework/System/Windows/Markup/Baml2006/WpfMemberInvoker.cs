@@ -2,9 +2,6 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Xaml.Schema;
 using System.Reflection;
 
@@ -12,9 +9,9 @@ namespace System.Windows.Baml2006
 {
     internal class WpfMemberInvoker : XamlMemberInvoker
     {
-        WpfXamlMember _member;
-        bool _hasShouldSerializeMethodBeenLookedup = false;
-        MethodInfo _shouldSerializeMethod = null;
+        private WpfXamlMember _member;
+        private bool _hasShouldSerializeMethodBeenLookedup = false;
+        private MethodInfo _shouldSerializeMethod = null;
 
         public WpfMemberInvoker(WpfXamlMember member) : base(member)
         {
@@ -71,9 +68,9 @@ namespace System.Windows.Baml2006
             if (!_hasShouldSerializeMethodBeenLookedup)
             {
                 Type declaringType = _member.UnderlyingMember.DeclaringType;
-                string methodName = "ShouldSerialize" + _member.Name;
+                string methodName = $"ShouldSerialize{_member.Name}";
                 BindingFlags flags = BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Static;
-                Type[] args = new Type[] { typeof(DependencyObject) }; ;
+                Type[] args = new Type[] { typeof(DependencyObject) };
                 if (_member.IsAttachable)
                 {
                     _shouldSerializeMethod = declaringType.GetMethod(methodName, flags, null, args, null);

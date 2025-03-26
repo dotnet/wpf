@@ -1,23 +1,8 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-//
-//
-//
-//  Contents:  Generic implementation of text marker properties
-//
-//  Spec:      Text Formatting API.doc
-//
-//
-
-
-using System;
-using System.Collections;
-using System.Windows;
 using MS.Internal.TextFormatting;
-
-using SR=MS.Internal.PresentationCore.SR;
 
 namespace System.Windows.Media.TextFormatting
 {
@@ -28,7 +13,6 @@ namespace System.Windows.Media.TextFormatting
     {
         private double          _offset;
         private TextSource      _textSource;
-
 
         /// <summary>
         /// Construct a text marker object
@@ -57,15 +41,12 @@ namespace System.Windows.Media.TextFormatting
                 else if (TextMarkerSource.IsKnownIndexMarkerStyle(style))
                 {
                     // validate autoNumberingIndex
-                    if (autoNumberingIndex < 1)
-                    {
-                        throw new ArgumentOutOfRangeException("autoNumberingIndex", SR.Format(SR.ParameterCannotBeLessThan, 1));
-                    }
+                    ArgumentOutOfRangeException.ThrowIfNegativeOrZero(autoNumberingIndex);
                 }
                 else
                 {
                     // invalid style
-                    throw new ArgumentException(SR.Format(SR.Enum_Invalid, typeof(TextMarkerStyle)), "style");
+                    throw new ArgumentException(SR.Format(SR.Enum_Invalid, typeof(TextMarkerStyle)), nameof(style));
                 }
 
                 _textSource = new TextMarkerSource(

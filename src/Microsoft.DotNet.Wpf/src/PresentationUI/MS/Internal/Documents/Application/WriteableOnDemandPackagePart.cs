@@ -10,40 +10,36 @@
 //  replaced with one provided by a delegate.
 
 using System;
-using System.Collections.Generic;
 using System.IO;
 using System.IO.Packaging;
-using System.Text;
 using System.Windows.TrustUI;
-
-using MS.Internal.IO;
 
 namespace MS.Internal.Documents.Application
 {
-/// <summary>
-/// This class acts as a type of proxy; it is responsible for forwarding all
-/// PackagePart requests to the active PackagePart.  Unlike a proxy it is 
-/// controls which part is active.  Initially the active part is the stream
-/// provided on construction, at the time of the first write operation the 
-/// active part is replaced with one provided by a delegate.The class will 
-/// get a writing PackagePart only when needed.
-/// </summary>
-/// <remarks>
-/// When GetStreamCore is called instead of returning the stream directly we
-/// return a WriteableOnDemandStream a proxy.  We provide this stream proxy
-/// a read only stream from the active part and a factory method for 
-/// creating a writeable stream.  
-/// 
-/// When the WriteableStreamFactory method is called, if our active part is
-/// writable we simply forward a GetStream request to our active part.
-/// 
-/// Our active part becomes writeable on the first call to our 
-/// WriteableStreamFactory method, we use the delegate provide at our 
-/// construction to get a writeable part and set it as the active part.
-/// 
-/// Currently this is the only way our active part becomes writeable.
-/// </remarks>
-internal sealed class WriteableOnDemandPackagePart : PackagePart
+    /// <summary>
+    /// This class acts as a type of proxy; it is responsible for forwarding all
+    /// PackagePart requests to the active PackagePart.  Unlike a proxy it is 
+    /// controls which part is active.  Initially the active part is the stream
+    /// provided on construction, at the time of the first write operation the 
+    /// active part is replaced with one provided by a delegate.The class will 
+    /// get a writing PackagePart only when needed.
+    /// </summary>
+    /// <remarks>
+    /// When GetStreamCore is called instead of returning the stream directly we
+    /// return a WriteableOnDemandStream a proxy.  We provide this stream proxy
+    /// a read only stream from the active part and a factory method for 
+    /// creating a writeable stream.  
+    /// 
+    /// When the WriteableStreamFactory method is called, if our active part is
+    /// writable we simply forward a GetStream request to our active part.
+    /// 
+    /// Our active part becomes writeable on the first call to our 
+    /// WriteableStreamFactory method, we use the delegate provide at our 
+    /// construction to get a writeable part and set it as the active part.
+    /// 
+    /// Currently this is the only way our active part becomes writeable.
+    /// </remarks>
+    internal sealed class WriteableOnDemandPackagePart : PackagePart
 {
     #region Constructors
     //--------------------------------------------------------------------------
@@ -65,20 +61,9 @@ internal sealed class WriteableOnDemandPackagePart : PackagePart
         WriteablePackagePartFactoryDelegate writeablePartFactory)
         : base(container, readingPart.Uri)
     {
-        if (container == null)
-        {
-            throw new ArgumentNullException("container");
-        }
-
-        if (readingPart == null)
-        {
-            throw new ArgumentNullException("readingPart");
-        }
-
-        if (writeablePartFactory == null)
-        {
-            throw new ArgumentNullException("writeablePartFactory");
-        }
+        ArgumentNullException.ThrowIfNull(container);
+        ArgumentNullException.ThrowIfNull(readingPart);
+        ArgumentNullException.ThrowIfNull(writeablePartFactory);
 
         _activePart = readingPart;
         _getWriteablePartInstance = writeablePartFactory;

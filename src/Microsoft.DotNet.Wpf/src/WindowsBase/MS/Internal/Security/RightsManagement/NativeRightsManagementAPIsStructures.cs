@@ -2,25 +2,15 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-//
-//
-// Description:
+/// Description:
 //  These are the Structure declarations for interop services required to call into unmanaged 
 //  Promethium Rights Management SDK APIs 
-//
-//
-//
-//
 
 #define PRESENTATION_HOST_DLL
 // for "PresentationHostDLL.dll"
 
-
-using System;
 using System.Runtime.InteropServices;
-using System.Text;
-using System.Security;
-    
+
 namespace MS.Internal.Security.RightsManagement
 {
     [StructLayout(LayoutKind.Sequential)]
@@ -89,14 +79,14 @@ namespace MS.Internal.Security.RightsManagement
             }
         }
        
-       ushort Year =0; 
-       ushort Month =0; 
-       ushort DayOfWeek =0; 
-       ushort Day =0; 
-       ushort Hour =0; 
-       ushort Minute =0; 
-       ushort Second =0; 
-       ushort Milliseconds =0; 
+       private ushort Year =0; 
+       private ushort Month =0; 
+       private ushort DayOfWeek =0; 
+       private ushort Day =0; 
+       private ushort Hour =0; 
+       private ushort Minute =0; 
+       private ushort Second =0; 
+       private ushort Milliseconds =0; 
     }
 
     [StructLayout(LayoutKind.Sequential)]

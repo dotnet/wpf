@@ -12,11 +12,7 @@
 //
 
 
-using System;
-using System.Diagnostics;
 using MS.Internal;
-using System.Security;
-using SR=MS.Internal.PresentationCore.SR;
 
 namespace System.Windows.Media.TextFormatting
 {
@@ -84,18 +80,12 @@ namespace System.Windows.Media.TextFormatting
             int                 offsetToFirstChar
             )
         {
-            if (offsetToFirstChar < 0)
-            {
-                throw new ArgumentOutOfRangeException("offsetToFirstChar", SR.ParameterCannotBeNegative);
-            }
+            ArgumentOutOfRangeException.ThrowIfNegative(offsetToFirstChar);
 
             // maximum offset is one less than CharacterBuffer.Count, except that zero is always a valid offset
             // even in the case of an empty or null character buffer
             int maxOffset = (charBuffer == null) ? 0 : Math.Max(0, charBuffer.Count - 1);
-            if (offsetToFirstChar > maxOffset)
-            {
-                throw new ArgumentOutOfRangeException("offsetToFirstChar", SR.Format(SR.ParameterCannotBeGreaterThan, maxOffset));
-            }
+            ArgumentOutOfRangeException.ThrowIfGreaterThan(offsetToFirstChar, maxOffset);
 
             _charBuffer = charBuffer;
             _offsetToFirstChar = offsetToFirstChar;

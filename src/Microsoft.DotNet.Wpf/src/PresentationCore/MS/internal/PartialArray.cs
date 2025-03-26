@@ -1,22 +1,8 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-//
-// 
-//
-// Description: The PartialArray struct is used when the developer needs to pass a CLR array range to 
-//              a function that takes generic IList interface. For cases when the whole array needs to be passed,
-//              CLR array already implements IList.
-// 
-//
-//
-
-using System;
 using System.Collections;
-using System.Collections.Generic;
-using System.Diagnostics;
-using SR = MS.Internal.PresentationCore.SR;
 
 namespace MS.Internal
 {
@@ -142,13 +128,10 @@ namespace MS.Internal
             {
                 throw new ArgumentException(
                     SR.Collection_CopyTo_ArrayCannotBeMultidimensional, 
-                    "array");                
+                    nameof(array));                
             }
 
-            if (arrayIndex < 0)
-            {
-                throw new ArgumentOutOfRangeException("arrayIndex");
-            }
+            ArgumentOutOfRangeException.ThrowIfNegative(arrayIndex);
 
             if (arrayIndex >= array.Length)
             {
@@ -157,7 +140,7 @@ namespace MS.Internal
                         SR.Collection_CopyTo_IndexGreaterThanOrEqualToArrayLength, 
                         "arrayIndex", 
                         "array"),
-                        "arrayIndex");
+                        nameof(arrayIndex));
             }
 
             if ((array.Length - Count - arrayIndex) < 0)

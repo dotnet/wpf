@@ -1,14 +1,14 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
-        
+
+
+using System;
+using System.Windows;
+using System.Windows.Media;
 
 namespace Microsoft.Windows.Controls
 {
-    using System;
-    using System.Windows;
-    using System.Windows.Media;
-
     internal static class TreeHelper
     {
         /// <summary>
@@ -212,10 +212,7 @@ namespace Microsoft.Windows.Controls
                     return;
                 }
                 UIElement element = pathStart as UIElement;
-                if (element != null)
-                {
-                    element.InvalidateMeasure();
-                }
+                element?.InvalidateMeasure();
                 if (isEndType)
                 {
                     return;
@@ -236,10 +233,7 @@ namespace Microsoft.Windows.Controls
             while (pathStart != null)
             {
                 UIElement element = pathStart as UIElement;
-                if (element != null)
-                {
-                    element.InvalidateMeasure();
-                }
+                element?.InvalidateMeasure();
 
                 if (predicate(pathStart))
                 {

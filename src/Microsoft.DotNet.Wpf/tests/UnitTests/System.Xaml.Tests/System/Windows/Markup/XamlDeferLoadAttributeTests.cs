@@ -1,6 +1,5 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 using Xunit;
 
@@ -24,13 +23,13 @@ namespace System.Windows.Markup.Tests
         [Fact]
         public void Ctor_NullLoaderType_ThrowsArgumentNullException()
         {
-            Assert.Throws<ArgumentNullException>("loaderType", () => new XamlDeferLoadAttribute(null, typeof(int)));
+            Assert.Throws<ArgumentNullException>("loaderType", () => new XamlDeferLoadAttribute(null!, typeof(int)));
         }
 
         [Fact]
         public void Ctor_NullContentType_ThrowsArgumentNullException()
         {
-            Assert.Throws<ArgumentNullException>("contentType", () => new XamlDeferLoadAttribute(typeof(int), null));
+            Assert.Throws<ArgumentNullException>("contentType", () => new XamlDeferLoadAttribute(typeof(int), null!));
         }
 
         [Theory]
@@ -48,13 +47,13 @@ namespace System.Windows.Markup.Tests
         [Fact]
         public void Ctor_NullLoaderTypeName_ThrowsArgumentNullException()
         {
-            Assert.Throws<ArgumentNullException>("loaderType", () => new XamlDeferLoadAttribute(null, "contentType"));
+            Assert.Throws<ArgumentNullException>("loaderType", () => new XamlDeferLoadAttribute(null!, "contentType"));
         }
 
         [Fact]
         public void Ctor_NullContentTypeName_ThrowsArgumentNullException()
         {
-            Assert.Throws<ArgumentNullException>("contentType", () => new XamlDeferLoadAttribute("loaderType", null));
+            Assert.Throws<ArgumentNullException>("contentType", () => new XamlDeferLoadAttribute("loaderType", null!));
         }
     }
 }

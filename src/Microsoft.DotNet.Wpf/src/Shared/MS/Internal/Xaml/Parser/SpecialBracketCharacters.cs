@@ -2,10 +2,11 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-//  Description: Data model for the Bracket characters specified on a Markup Extension property.
+#nullable disable
+
+// Description: Data model for the Bracket characters specified on a Markup Extension property.
 
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Text;
@@ -13,27 +14,27 @@ using System.Text;
 namespace MS.Internal.Xaml.Parser
 {
     /// <summary>
-    /// Class that provides helper functions for the parser/Xaml Reader 
+    /// Class that provides helper functions for the parser/Xaml Reader
     /// to process Bracket Characters specified on a Markup Extension Property
     /// </summary>
     internal class SpecialBracketCharacters : ISupportInitialize
     {
         private string _startChars;
         private string _endChars;
-        private readonly static ISet<char> _restrictedCharSet = new SortedSet<char>((new char[] { '=', ',', '\'', '"', '{', '}', '\\' }));
+        private static readonly ISet<char> _restrictedCharSet = new SortedSet<char>((new char[] { '=', ',', '\'', '"', '{', '}', '\\' }));
         private bool _initializing;
         private StringBuilder _startCharactersStringBuilder;
         private StringBuilder _endCharactersStringBuilder;
-        
+
         internal SpecialBracketCharacters()
         {
             BeginInit();
         }
 
-        internal SpecialBracketCharacters(IReadOnlyDictionary<char,char> attributeList)
+        internal SpecialBracketCharacters(IReadOnlyDictionary<char, char> attributeList)
         {
             BeginInit();
-            if (attributeList != null && attributeList.Count > 0)
+            if (attributeList is not null && attributeList.Count > 0)
             {
                 Tokenize(attributeList);
             }
@@ -52,14 +53,14 @@ namespace MS.Internal.Xaml.Parser
             }
         }
 
-        private void Tokenize(IReadOnlyDictionary<char,char> attributeList)
+        private void Tokenize(IReadOnlyDictionary<char, char> attributeList)
         {
             if (_initializing)
             {
                 foreach (char openingBracket in attributeList.Keys)
                 {
                     char closingBracket = attributeList[openingBracket];
-                    string errorMessage = string.Empty; 
+                    string errorMessage = string.Empty;
                     if (IsValidBracketCharacter(openingBracket, closingBracket))
                     {
                         _startCharactersStringBuilder.Append(openingBracket);

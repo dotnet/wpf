@@ -1210,12 +1210,6 @@
   <data name="InvalidPartName" xml:space="preserve">
     <value>The part name does not correspond to its content type.</value>
   </data>
-  <data name="InvalidPermissionStateValue" xml:space="preserve">
-    <value>PermissionState value '{0}' is not valid for this Permission.</value>
-  </data>
-  <data name="InvalidPermissionType" xml:space="preserve">
-    <value>Permission type is not valid. Expected '{0}'.</value>
-  </data>
   <data name="InvalidPressureValue" xml:space="preserve">
     <value>Pressure must be a value between 0 and 1.</value>
   </data>
@@ -1822,33 +1816,6 @@
   <data name="PaginatorNegativePageNumber" xml:space="preserve">
     <value>Page number cannot be negative.</value>
   </data>
-  <data name="ParameterCannotBeGreaterThan" xml:space="preserve">
-    <value>The parameter value cannot be greater than '{0}'.</value>
-  </data>
-  <data name="ParameterCannotBeLessThan" xml:space="preserve">
-    <value>The parameter value cannot be less than '{0}'.</value>
-  </data>
-  <data name="ParameterCannotBeNegative" xml:space="preserve">
-    <value>Parameter must be greater than or equal to zero.</value>
-  </data>
-  <data name="ParameterMustBeBetween" xml:space="preserve">
-    <value>The parameter value must be between '{0}' and '{1}'.</value>
-  </data>
-  <data name="ParameterMustBeGreaterThanZero" xml:space="preserve">
-    <value>The parameter value must be greater than zero.</value>
-  </data>
-  <data name="ParameterValueCannotBeInfinity" xml:space="preserve">
-    <value>The parameter value must be finite.</value>
-  </data>
-  <data name="ParameterValueCannotBeNaN" xml:space="preserve">
-    <value>The parameter value must be a number.</value>
-  </data>
-  <data name="ParameterValueCannotBeNegative" xml:space="preserve">
-    <value>'{0}' parameter value cannot be negative.</value>
-  </data>
-  <data name="ParameterValueMustBeGreaterThanZero" xml:space="preserve">
-    <value>'{0}' parameter value must be greater than zero.</value>
-  </data>
   <data name="Parsers_IllegalToken" xml:space="preserve">
     <value>Token is not valid.</value>
   </data>
@@ -2067,9 +2034,6 @@
   </data>
   <data name="SearchText" xml:space="preserve">
     <value>Search</value>
-  </data>
-  <data name="SecurityExceptionForSettingSandboxExternalToTrue" xml:space="preserve">
-    <value>Cannot set SandboxExternalContent to true in partial trust.</value>
   </data>
   <data name="SeekNegative" xml:space="preserve">
     <value>Cannot set seek pointer to a negative position.</value>

@@ -6,16 +6,6 @@
 
 #if !SILVERLIGHTXAML
 
-using System.Collections;
-using System.Diagnostics.Tracing;
-using System.Diagnostics;
-using System.Runtime.InteropServices;
-using System.Security;
-using System.Threading;
-using System;
-using MS.Internal.WindowsBase;
-
-
 #if SYSTEM_XAML
 namespace MS.Internal.Xaml
 #else
@@ -135,7 +125,7 @@ namespace MS.Utility
             EventProvider.Register(providerGuid);
         }
 
-        static bool IsClassicETWRegistryEnabled()
+        private static bool IsClassicETWRegistryEnabled()
         {
             string regKey = @"HKEY_CURRENT_USER\Software\Microsoft\Avalon.Graphics\";                
             return int.Equals(1, Microsoft.Win32.Registry.GetValue(regKey, "ClassicETW", 0));

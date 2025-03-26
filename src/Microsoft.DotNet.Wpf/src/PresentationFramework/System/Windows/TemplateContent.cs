@@ -1,13 +1,11 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
 using System.Xaml;
 using System.Xaml.Schema;
 using System.Xaml.Permissions;
-using System.Collections.Generic;
 using System.Windows.Controls;
-using System.Diagnostics;
 using System.Windows.Data;
 using System.Windows.Diagnostics;
 using System.Windows.Markup;
@@ -16,7 +14,6 @@ using MS.Utility;
 using System.ComponentModel;
 using System.Collections;
 using System.Collections.Specialized;
-using System.Security;
 using MS.Internal.Xaml.Context;
 using System.Windows.Baml2006;
 
@@ -104,8 +101,7 @@ namespace System.Windows
                 string type = (this.Type == null) ? String.Empty : this.Type.Name;
                 string prop = (this.Property == null) ? "-" : this.Property.Name;
                 string inst = (Instance == null) ? "-" : "*";
-                string res = String.Format(CultureInfo.InvariantCulture,
-                    "{0}.{1} inst={2}", type, prop, inst);
+                string res = $"{type}.{prop} inst={inst}";
                 return res;
             }
         }
@@ -250,11 +246,13 @@ namespace System.Windows
             // Items panel templates have special rules
             if (OwnerTemplate is ItemsPanelTemplate)
             {
-                PropertyValue pv = new PropertyValue();
-                pv.ValueType = PropertyValueType.Set;
-                pv.ChildName = TemplateLoadData.RootName;
-                pv.ValueInternal = true;
-                pv.Property = Panel.IsItemsHostProperty;
+                PropertyValue pv = new PropertyValue
+                {
+                    ValueType = PropertyValueType.Set,
+                    ChildName = TemplateLoadData.RootName,
+                    ValueInternal = true,
+                    Property = Panel.IsItemsHostProperty
+                };
 
                 sharedProperties.Add(pv);
             }
@@ -374,10 +372,7 @@ namespace System.Windows
 
             while (reader.Read())
             {
-                if (lineInfoConsumer != null)
-                {
-                    lineInfoConsumer.SetLineInfo(lineInfo.LineNumber, lineInfo.LinePosition);
-                }
+                lineInfoConsumer?.SetLineInfo(lineInfo.LineNumber, lineInfo.LinePosition);
 
                 object newValue;
                 bool reProcessOnApply = ParseNode(reader, stack, sharedProperties, ref nameNumber, out newValue);
@@ -438,7 +433,7 @@ namespace System.Windows
                                 typeof(FrameworkContentElement).IsAssignableFrom(stack.CurrentFrame.Type.UnderlyingType))
                             {
                                 // All FEs and FCEs must have a name.  We assign a default if there was no name provided
-                                string name = nameNumber++.ToString(CultureInfo.InvariantCulture) + "_T";
+                                string name = $"{nameNumber++.ToString(CultureInfo.InvariantCulture)}_T";
                                 UpdateSharedPropertyNames(name, sharedProperties, stack.CurrentFrame.Type);
                                 stack.CurrentFrame.Name = name;
                             }
@@ -466,7 +461,7 @@ namespace System.Windows
                                 typeof(FrameworkContentElement).IsAssignableFrom(stack.CurrentFrame.Type.UnderlyingType))
                             {
                                 // All FEs and FCEs must have a name.  We assign a default if there was no name provided
-                                string name = nameNumber++.ToString(CultureInfo.InvariantCulture) + "_T";
+                                string name = $"{nameNumber++.ToString(CultureInfo.InvariantCulture)}_T";
                                 UpdateSharedPropertyNames(name, sharedProperties, stack.CurrentFrame.Type);
                                 stack.CurrentFrame.Name = name;
                             }
@@ -491,7 +486,7 @@ namespace System.Windows
                                 typeof(FrameworkContentElement).IsAssignableFrom(stack.CurrentFrame.Type.UnderlyingType))
                             {
                                 // All FEs and FCEs must have a name.  We assign a default if there was no name provided
-                                string name = nameNumber++.ToString(CultureInfo.InvariantCulture) + "_T";
+                                string name = $"{nameNumber++.ToString(CultureInfo.InvariantCulture)}_T";
                                 UpdateSharedPropertyNames(name, sharedProperties, stack.CurrentFrame.Type);
                                 stack.CurrentFrame.Name = name;
                             }
@@ -735,7 +730,7 @@ namespace System.Windows
                                 typeof(FrameworkContentElement).IsAssignableFrom(stack.CurrentFrame.Type.UnderlyingType))
                             {
                                 // All FEs and FCEs must have a name.  We assign a default if there was no name provided
-                                string name = nameNumber++.ToString(CultureInfo.InvariantCulture) + "_T";
+                                string name = $"{nameNumber++.ToString(CultureInfo.InvariantCulture)}_T";
                                 UpdateSharedPropertyNames(name, sharedProperties, stack.CurrentFrame.Type);
                                 stack.CurrentFrame.Name = name;
                             }
@@ -988,10 +983,7 @@ namespace System.Windows
                                     // events inside of a FramewokrTemplate
                                     if (!insideTemplate && frames.CurrentFrame.Property == XamlLanguage.ConnectionId)
                                     {
-                                        if (OwnerTemplate.StyleConnector != null)
-                                        {
-                                            OwnerTemplate.StyleConnector.Connect((int)xamlReader.Value, frames.CurrentFrame.Instance);
-                                        }
+                                        OwnerTemplate.StyleConnector?.Connect((int)xamlReader.Value, frames.CurrentFrame.Instance);
                                     }
                                     break;
                             }
@@ -1143,11 +1135,13 @@ namespace System.Windows
             if (isValueShareable)
             {
                 // If we're here, that means the property can be shared
-                PropertyValue propertyValue = new PropertyValue();
-                propertyValue.Property = property;
-                propertyValue.ChildName = parentName;
-                propertyValue.ValueInternal = value;
-                propertyValue.ValueType = PropertyValueType.Set;
+                PropertyValue propertyValue = new PropertyValue
+                {
+                    Property = property,
+                    ChildName = parentName,
+                    ValueInternal = value,
+                    ValueType = PropertyValueType.Set
+                };
 
                 sharedValue = propertyValue;
 
@@ -1235,9 +1229,10 @@ namespace System.Windows
                 Debug.Assert(templateChildName != null);
 
                 DependencyProperty dpContent = DependencyProperty.FromName(contentSource, targetType);
-                DependencyProperty dpContentTemplate = DependencyProperty.FromName(contentSource + "Template", targetType);
-                DependencyProperty dpContentTemplateSelector = DependencyProperty.FromName(contentSource + "TemplateSelector", targetType);
-                DependencyProperty dpContentStringFormat = DependencyProperty.FromName(contentSource + "StringFormat", targetType);
+                DependencyProperty dpContentTemplate = DependencyProperty.FromName($"{contentSource}Template", targetType);
+                DependencyProperty dpContentTemplateSelector = DependencyProperty.FromName(
+                    $"{contentSource}TemplateSelector", targetType);
+                DependencyProperty dpContentStringFormat = DependencyProperty.FromName($"{contentSource}StringFormat", targetType);
 
                 if (dpContent == null && isContentSourceSet)
                 {
@@ -1246,11 +1241,13 @@ namespace System.Windows
 
                 if (dpContent != null)
                 {
-                    PropertyValue pv = new PropertyValue();
-                    pv.ValueType = PropertyValueType.TemplateBinding;
-                    pv.ChildName = templateChildName;
-                    pv.ValueInternal = new TemplateBindingExtension(dpContent);
-                    pv.Property = ContentPresenter.ContentProperty;
+                    PropertyValue pv = new PropertyValue
+                    {
+                        ValueType = PropertyValueType.TemplateBinding,
+                        ChildName = templateChildName,
+                        ValueInternal = new TemplateBindingExtension(dpContent),
+                        Property = ContentPresenter.ContentProperty
+                    };
 
                     StyleHelper.UpdateTables(ref pv, ref childRecordFromChildIndex,
                         ref triggerSourceRecordFromChildIndex,
@@ -1267,11 +1264,13 @@ namespace System.Windows
                 {
                     if (dpContentTemplate != null)
                     {
-                        PropertyValue pv = new PropertyValue();
-                        pv.ValueType = PropertyValueType.TemplateBinding;
-                        pv.ChildName = templateChildName;
-                        pv.ValueInternal = new TemplateBindingExtension(dpContentTemplate);
-                        pv.Property = ContentPresenter.ContentTemplateProperty;
+                        PropertyValue pv = new PropertyValue
+                        {
+                            ValueType = PropertyValueType.TemplateBinding,
+                            ChildName = templateChildName,
+                            ValueInternal = new TemplateBindingExtension(dpContentTemplate),
+                            Property = ContentPresenter.ContentTemplateProperty
+                        };
 
                         StyleHelper.UpdateTables(ref pv, ref childRecordFromChildIndex,
                                ref triggerSourceRecordFromChildIndex,
@@ -1283,11 +1282,13 @@ namespace System.Windows
 
                     if (dpContentTemplateSelector != null)
                     {
-                        PropertyValue pv = new PropertyValue();
-                        pv.ValueType = PropertyValueType.TemplateBinding;
-                        pv.ChildName = templateChildName;
-                        pv.ValueInternal = new TemplateBindingExtension(dpContentTemplateSelector);
-                        pv.Property = ContentPresenter.ContentTemplateSelectorProperty;
+                        PropertyValue pv = new PropertyValue
+                        {
+                            ValueType = PropertyValueType.TemplateBinding,
+                            ChildName = templateChildName,
+                            ValueInternal = new TemplateBindingExtension(dpContentTemplateSelector),
+                            Property = ContentPresenter.ContentTemplateSelectorProperty
+                        };
 
                         StyleHelper.UpdateTables(ref pv, ref childRecordFromChildIndex,
                                ref triggerSourceRecordFromChildIndex,
@@ -1299,11 +1300,13 @@ namespace System.Windows
 
                     if (dpContentStringFormat != null)
                     {
-                        PropertyValue pv = new PropertyValue();
-                        pv.ValueType = PropertyValueType.TemplateBinding;
-                        pv.ChildName = templateChildName;
-                        pv.ValueInternal = new TemplateBindingExtension(dpContentStringFormat);
-                        pv.Property = ContentPresenter.ContentStringFormatProperty;
+                        PropertyValue pv = new PropertyValue
+                        {
+                            ValueType = PropertyValueType.TemplateBinding,
+                            ChildName = templateChildName,
+                            ValueInternal = new TemplateBindingExtension(dpContentStringFormat),
+                            Property = ContentPresenter.ContentStringFormatProperty
+                        };
 
 
                         StyleHelper.UpdateTables(ref pv, ref childRecordFromChildIndex,
@@ -1339,11 +1342,13 @@ namespace System.Windows
 
                 if (dpContent != null)
                 {
-                    PropertyValue propertyValue = new PropertyValue();
-                    propertyValue.ValueType = PropertyValueType.TemplateBinding;
-                    propertyValue.ChildName = childName;
-                    propertyValue.ValueInternal = new TemplateBindingExtension(dpContent);
-                    propertyValue.Property = GridViewRowPresenter.ContentProperty;
+                    PropertyValue propertyValue = new PropertyValue
+                    {
+                        ValueType = PropertyValueType.TemplateBinding,
+                        ChildName = childName,
+                        ValueInternal = new TemplateBindingExtension(dpContent),
+                        Property = GridViewRowPresenter.ContentProperty
+                    };
 
                     StyleHelper.UpdateTables(ref propertyValue,
                                              ref childRecordFromChildIndex,
@@ -1358,11 +1363,13 @@ namespace System.Windows
             // <GridViewRowPresenter Columns="{TemplateBinding Property=GridView.ColumnCollection}" .../>
             if (!isColumnsPropertyDefined)
             {
-                PropertyValue propertyValue = new PropertyValue();
-                propertyValue.ValueType = PropertyValueType.TemplateBinding;
-                propertyValue.ChildName = childName;
-                propertyValue.ValueInternal = new TemplateBindingExtension(GridView.ColumnCollectionProperty);
-                propertyValue.Property = GridViewRowPresenter.ColumnsProperty;
+                PropertyValue propertyValue = new PropertyValue
+                {
+                    ValueType = PropertyValueType.TemplateBinding,
+                    ChildName = childName,
+                    ValueInternal = new TemplateBindingExtension(GridView.ColumnCollectionProperty),
+                    Property = GridViewRowPresenter.ColumnsProperty
+                };
 
                 StyleHelper.UpdateTables(ref propertyValue,
                                          ref childRecordFromChildIndex,

@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -8,18 +8,11 @@
 // Description: GlyphTypeface implementation
 //
 
-using System;
 using System.Collections;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Diagnostics;
 using System.Globalization;
 using System.IO;
 using System.Runtime.InteropServices;
-using System.Security;
-
-using System.Windows;
-using System.Windows.Media;
 using System.Windows.Media.Composition;
 using System.Windows.Media.TextFormatting;
 using System.Windows.Markup;
@@ -29,7 +22,7 @@ using MS.Internal.TextFormatting;
 using MS.Internal.FontCache;
 using MS.Internal.FontFace;
 using MS.Internal.PresentationCore;
-using UnsafeNativeMethods=MS.Win32.PresentationCore.UnsafeNativeMethods;
+using UnsafeNativeMethods = MS.Win32.PresentationCore.UnsafeNativeMethods;
 
 
 namespace System.Windows.Media
@@ -94,7 +87,7 @@ namespace System.Windows.Media
                 }
 
                 // store the original Uri that contains the face index
-                _originalUri = new SecurityCriticalDataClass<Uri>(Util.CombineUriWithFaceIndex(uriPath, checked((int)fontFaceDWrite.Index)));
+                _originalUri = Util.CombineUriWithFaceIndex(uriPath, checked((int)fontFaceDWrite.Index));
             }
             finally
             {
@@ -104,8 +97,7 @@ namespace System.Windows.Media
             Uri typefaceSource = new Uri(uriPath);
            
             _fontFace = new FontFaceLayoutInfo(font);
-            // We skip permission demands for FontSource because the above line already demands them for the right callers.
-            _fontSource = new FontSource(typefaceSource, true);
+            _fontSource = new FontSource(typefaceSource);
 
             Invariant.Assert(  styleSimulations == StyleSimulations.None 
                             || styleSimulations == StyleSimulations.ItalicSimulation 
@@ -122,10 +114,10 @@ namespace System.Windows.Media
             ArgumentNullException.ThrowIfNull(typefaceSource);
 
             if (!typefaceSource.IsAbsoluteUri)
-                throw new ArgumentException(SR.UriNotAbsolute, "typefaceSource");
+                throw new ArgumentException(SR.UriNotAbsolute, nameof(typefaceSource));
 
             // remember the original Uri that contains face index
-            _originalUri = new SecurityCriticalDataClass<Uri>(typefaceSource);
+            _originalUri = typefaceSource;
 
             // split the Uri into the font source Uri and face index
             Uri fontSourceUri;
@@ -158,8 +150,7 @@ namespace System.Windows.Media
 
             _fontFace = new FontFaceLayoutInfo(_font);
 
-            // We skip permission demands for FontSource because the above line already demands them for the right callers.
-            _fontSource = new FontSource(fontSourceUri, true);
+            _fontSource = new FontSource(fontSourceUri);
 
 
             _initializationState = InitializationState.IsInitialized; // fully initialized
@@ -182,7 +173,7 @@ namespace System.Windows.Media
         public override int GetHashCode()
         {
             CheckInitialized();
-            return _originalUri.Value.GetHashCode() ^ (int)StyleSimulations;
+            return _originalUri.GetHashCode() ^ (int)StyleSimulations;
         }
 
         /// <summary>
@@ -198,7 +189,7 @@ namespace System.Windows.Media
                 return false;
 
             return StyleSimulations == t.StyleSimulations
-                && _originalUri.Value == t._originalUri.Value;
+                && _originalUri == t._originalUri;
         }
 
         /// <summary>
@@ -235,16 +226,16 @@ namespace System.Windows.Media
             ArgumentNullException.ThrowIfNull(glyphs);
 
             if (glyphs.Count <= 0)
-                throw new ArgumentException(SR.CollectionNumberOfElementsMustBeGreaterThanZero, "glyphs");
+                throw new ArgumentException(SR.CollectionNumberOfElementsMustBeGreaterThanZero, nameof(glyphs));
 
             if (glyphs.Count > ushort.MaxValue)
-                throw new ArgumentException(SR.Format(SR.CollectionNumberOfElementsMustBeLessOrEqualTo, ushort.MaxValue), "glyphs");
+                throw new ArgumentException(SR.Format(SR.CollectionNumberOfElementsMustBeLessOrEqualTo, ushort.MaxValue), nameof(glyphs));
 
             UnmanagedMemoryStream pinnedFontSource = FontSource.GetUnmanagedStream();
 
             try
             {
-                TrueTypeFontDriver trueTypeDriver = new TrueTypeFontDriver(pinnedFontSource, _originalUri.Value);
+                TrueTypeFontDriver trueTypeDriver = new TrueTypeFontDriver(pinnedFontSource, _originalUri);
                 trueTypeDriver.SetFace(FaceIndex);
 
                 return trueTypeDriver.ComputeFontSubset(glyphs);
@@ -291,7 +282,7 @@ namespace System.Windows.Media
             get
             {
                 CheckInitialized(); // This can only be called on fully initialized GlyphTypeface
-                return _originalUri.Value;
+                return _originalUri;
             }
             set
             {
@@ -300,9 +291,9 @@ namespace System.Windows.Media
                 ArgumentNullException.ThrowIfNull(value);
 
                 if (!value.IsAbsoluteUri)
-                    throw new ArgumentException(SR.UriNotAbsolute, "value");
+                    throw new ArgumentException(SR.UriNotAbsolute, nameof(value));
 
-                _originalUri = new SecurityCriticalDataClass<Uri>(value);
+                _originalUri = value;
             }
         }
 
@@ -1068,7 +1059,7 @@ namespace System.Windows.Media
             try
             {
                 if (glyphIndex >= fontFaceDWrite.GlyphCount)
-                    throw new ArgumentOutOfRangeException("glyphIndex", SR.Format(SR.GlyphIndexOutOfRange, glyphIndex));
+                    throw new ArgumentOutOfRangeException(nameof(glyphIndex), SR.Format(SR.GlyphIndexOutOfRange, glyphIndex));
 
                 glyphMetrics = new MS.Internal.Text.TextInterface.GlyphMetrics();
 
@@ -1677,10 +1668,7 @@ namespace System.Windows.Media
                 throw new InvalidOperationException(SR.NotInInitialization);
             }
 
-            Initialize(
-                (_originalUri == null) ? null : _originalUri.Value,
-                 _styleSimulations
-                 );
+            Initialize(_originalUri, _styleSimulations);
         }
 
         private void CheckInitialized()
@@ -1829,10 +1817,9 @@ namespace System.Windows.Media
                 // The extra "arrayIndex >= array.Length" check in because even if _collection.Count
                 // is 0 the index is not allowed to be equal or greater than the length
                 // (from the MSDN ICollection docs)
-                if (arrayIndex < 0 || arrayIndex >= array.Length || (arrayIndex + Count) > array.Length)
-                {
-                    throw new ArgumentOutOfRangeException("arrayIndex");
-                }
+                ArgumentOutOfRangeException.ThrowIfNegative(arrayIndex);
+                ArgumentOutOfRangeException.ThrowIfGreaterThanOrEqual(arrayIndex, array.Length);
+                ArgumentOutOfRangeException.ThrowIfGreaterThan(arrayIndex, array.Length - Count);
 
                 for (ushort i = 0; i < Count; ++i)
                     array[arrayIndex + i] = new KeyValuePair<ushort, double>(i, this[i]);
@@ -1915,10 +1902,9 @@ namespace System.Windows.Media
                     // The extra "arrayIndex >= array.Length" check in because even if _collection.Count
                     // is 0 the index is not allowed to be equal or greater than the length
                     // (from the MSDN ICollection docs)
-                    if (arrayIndex < 0 || arrayIndex >= array.Length || (arrayIndex + Count) > array.Length)
-                    {
-                        throw new ArgumentOutOfRangeException("arrayIndex");
-                    }
+                    ArgumentOutOfRangeException.ThrowIfNegative(arrayIndex);
+                    ArgumentOutOfRangeException.ThrowIfGreaterThanOrEqual(arrayIndex, array.Length);
+                    ArgumentOutOfRangeException.ThrowIfGreaterThan(arrayIndex, array.Length - Count);
 
                     for (ushort i = 0; i < Count; ++i)
                         array[arrayIndex + i] = _glyphIndexer[i];
@@ -1989,7 +1975,7 @@ namespace System.Windows.Media
         /// <summary>
         /// The Uri that was passed in to constructor.
         /// </summary>
-        private SecurityCriticalDataClass<Uri> _originalUri;
+        private Uri _originalUri;
 
         private const double CFFConversionFactor = 1.0 / 65536.0;
 

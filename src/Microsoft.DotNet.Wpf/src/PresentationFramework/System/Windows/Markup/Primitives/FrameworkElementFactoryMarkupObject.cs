@@ -7,16 +7,10 @@
 //             FrameworkElementFactory
 //
 
-using System;
 using System.ComponentModel;
 using System.Collections;
-using System.Collections.Generic;
-using System.Diagnostics;
 
-using System.Windows;
-using System.Windows.Markup;
-
-using MS.Utility;                       
+using MS.Utility;
 
 namespace System.Windows.Markup.Primitives
 {
@@ -287,8 +281,8 @@ namespace System.Windows.Markup.Primitives
             get { return _factory; }
         }
 
-        FrameworkElementFactoryMarkupObject _item;
-        FrameworkElementFactory _factory;
+        private FrameworkElementFactoryMarkupObject _item;
+        private FrameworkElementFactory _factory;
     }
 
     /// <summary>
@@ -356,7 +350,7 @@ namespace System.Windows.Markup.Primitives
             get { return _factory.Text; }
         }
 
-        FrameworkElementFactoryMarkupObject _item;
-        FrameworkElementFactory _factory;
+        private FrameworkElementFactoryMarkupObject _item;
+        private FrameworkElementFactory _factory;
     }
 }

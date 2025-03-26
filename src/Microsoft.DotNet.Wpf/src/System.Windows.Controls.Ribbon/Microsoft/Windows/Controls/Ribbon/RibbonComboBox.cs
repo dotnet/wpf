@@ -1,7 +1,22 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
-        
+
+
+#region Using declarations
+
+using System.Collections.Specialized;
+using System.Diagnostics;
+using System.Windows.Automation.Peers;
+using System.Windows.Controls.Primitives;
+using System.Windows.Documents;
+using System.Windows.Input;
+using System.Windows.Media;
+using System.Windows.Shapes;
+using System.Windows.Threading;
+#if RIBBON_IN_FRAMEWORK
+using Microsoft.Windows.Controls;
+using MS.Internal;
 
 #if RIBBON_IN_FRAMEWORK
 namespace System.Windows.Controls.Ribbon
@@ -9,23 +24,6 @@ namespace System.Windows.Controls.Ribbon
 namespace Microsoft.Windows.Controls.Ribbon
 #endif
 {
-    #region Using declarations
-
-    using System;
-    using System.Collections.Specialized;
-    using System.Diagnostics;
-    using System.Windows;
-    using System.Windows.Automation.Peers;
-    using System.Windows.Controls;
-    using System.Windows.Controls.Primitives;
-    using System.Windows.Documents;
-    using System.Windows.Input;
-    using System.Windows.Media;
-    using System.Windows.Shapes;
-    using System.Windows.Threading;
-#if RIBBON_IN_FRAMEWORK
-    using Microsoft.Windows.Controls;
-    using MS.Internal;
 #else
     using Microsoft.Windows.Automation.Peers;
 #endif
@@ -125,8 +123,7 @@ namespace Microsoft.Windows.Controls.Ribbon
             RibbonComboBoxAutomationPeer peer = UIElementAutomationPeer.FromElement(cb) as RibbonComboBoxAutomationPeer;
             // Raise the propetyChangeEvent for Value if Automation Peer exist, the new Value must
             // be the one in SelctionBoxItem(selected value is the one user will care about)
-            if (peer != null)
-                peer.RaiseValuePropertyChangedEvent((string)e.OldValue, (string)e.NewValue);
+            peer?.RaiseValuePropertyChangedEvent((string)e.OldValue, (string)e.NewValue);
 
 
             cb.TextUpdated((string)e.NewValue, false);
@@ -549,16 +546,18 @@ namespace Microsoft.Windows.Controls.Ribbon
                     if (_clonedElement != null)
                     {
                         // Create visual copy of selected element
-                        VisualBrush visualBrush = new VisualBrush(_clonedElement);
-                        visualBrush.Stretch = Stretch.None;
+                        VisualBrush visualBrush = new VisualBrush(_clonedElement)
+                        {
+                            Stretch = Stretch.None,
 
-                        //Set position and dimension of content
-                        visualBrush.ViewboxUnits = BrushMappingMode.Absolute;
-                        visualBrush.Viewbox = new Rect(_clonedElement.RenderSize);
+                            //Set position and dimension of content
+                            ViewboxUnits = BrushMappingMode.Absolute,
+                            Viewbox = new Rect(_clonedElement.RenderSize),
 
-                        //Set position and dimension of tile
-                        visualBrush.ViewportUnits = BrushMappingMode.Absolute;
-                        visualBrush.Viewport = new Rect(_clonedElement.RenderSize);
+                            //Set position and dimension of tile
+                            ViewportUnits = BrushMappingMode.Absolute,
+                            Viewport = new Rect(_clonedElement.RenderSize)
+                        };
 
                         // If the FlowDirection on cloned element doesn't match the combobox's apply a mirror
                         // If the FlowDirection on cloned element doesn't match its parent's apply a mirror
@@ -572,10 +571,12 @@ namespace Microsoft.Windows.Controls.Ribbon
                         }
 
                         // Apply visual brush to a rectangle
-                        Rectangle rect = new Rectangle();
-                        rect.Fill = visualBrush;
-                        rect.Width = _clonedElement.RenderSize.Width;
-                        rect.Height = _clonedElement.RenderSize.Height;
+                        Rectangle rect = new Rectangle
+                        {
+                            Fill = visualBrush,
+                            Width = _clonedElement.RenderSize.Width,
+                            Height = _clonedElement.RenderSize.Height
+                        };
 
                         _clonedElement.LayoutUpdated += CloneLayoutUpdated;
 
@@ -810,7 +811,7 @@ namespace Microsoft.Windows.Controls.Ribbon
             }
         }
 
-        object UpdateTextBoxCallback(object arg)
+        private object UpdateTextBoxCallback(object arg)
         {
             _updateTextBoxOperation = null;
 
@@ -831,7 +832,7 @@ namespace Microsoft.Windows.Controls.Ribbon
             return null;
         }
 
-        void UpdateTextBox(string matchedText, string newText)
+        private void UpdateTextBox(string matchedText, string newText)
         {
             // Replace the TextBox's text with the matched text and
             // select the text beyond what the user typed
@@ -887,15 +888,12 @@ namespace Microsoft.Windows.Controls.Ribbon
 
                 Dispatcher.BeginInvoke((Action)delegate()
                 {
-                    if (_firstGallery != null)
-                    {
-                        // Scroll the highlighted item into view. Note that we need to do the
-                        // scroll in a Dispatcher operation because the scroll operation wont
-                        // succeed until the Popup contents are Loaded and connected to a
-                        // PresentationSource. We need to allow time for that to happen.
+                    // Scroll the highlighted item into view. Note that we need to do the
+                    // scroll in a Dispatcher operation because the scroll operation wont
+                    // succeed until the Popup contents are Loaded and connected to a
+                    // PresentationSource. We need to allow time for that to happen.
 
-                        _firstGallery.ScrollIntoView(_firstGallery.HighlightedItem);
-                    }
+                    _firstGallery?.ScrollIntoView(_firstGallery.HighlightedItem);
                 },
                 DispatcherPriority.Render);
             }
@@ -1409,17 +1407,17 @@ namespace Microsoft.Windows.Controls.Ribbon
             }
         }
 
-        void OnGallerySelectionChanged(object sender, RoutedPropertyChangedEventArgs<object> e)
+        private void OnGallerySelectionChanged(object sender, RoutedPropertyChangedEventArgs<object> e)
         {
             UpdateSelectionProperties();
         }
 
-        void OnGalleryItemSelectionChanged(object sender, RoutedEventArgs e)
+        private void OnGalleryItemSelectionChanged(object sender, RoutedEventArgs e)
         {
             UpdateSelectionProperties();
         }
 
-        void OnGalleryHighlightChanged(object sender, EventArgs e)
+        private void OnGalleryHighlightChanged(object sender, EventArgs e)
         {
             // Note that the _firstGallery does not physically take keyboard focus.
 
@@ -1438,7 +1436,7 @@ namespace Microsoft.Windows.Controls.Ribbon
             }
         }
 
-        void OnGalleryGotKeyboardFocus(object sender, KeyboardFocusChangedEventArgs e)
+        private void OnGalleryGotKeyboardFocus(object sender, KeyboardFocusChangedEventArgs e)
         {
             // When on of the GalleryItems within the _firstGallery acquires Keyboard
             // focus reinstate focus to the parent based on the IsEditable mode

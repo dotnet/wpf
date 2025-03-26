@@ -1,29 +1,17 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
 // Class that implements BamlTreeMap.
 
-using System;
 using System.IO;
 using System.Xml;
-using System.Globalization;
 using System.Collections;
-using System.Collections.Generic;
 using System.Windows.Markup;
 using System.Windows.Markup.Localizer;
-using System.Diagnostics;
-using System.Text;
 using System.Windows;
 
 using MS.Utility;
-
-
-// Disabling 1634 and 1691: 
-// In order to avoid generating warnings about unknown message numbers and 
-// unknown pragmas when compiling C# source code with the C# compiler, 
-// you need to disable warnings 1634 and 1691. (Presharp Documentation)
-#pragma warning disable 1634, 1691
 
 namespace MS.Internal.Globalization
 {
@@ -32,7 +20,7 @@ namespace MS.Internal.Globalization
     /// this class in charges of creating mappings to the
     /// loclaizable resources and tree nodes.
     /// </summary>
-    internal class BamlTreeMap
+    internal sealed class BamlTreeMap
     {
         //----------------------------------
         // internal Constructor
@@ -82,26 +70,22 @@ namespace MS.Internal.Globalization
 
         /// <summary>
         /// Maps a key to a baml tree node in the given tree
-        /// </summary>        
+        /// </summary>
         internal BamlTreeNode MapKeyToBamlTreeNode(BamlLocalizableResourceKey key, BamlTree tree)
         {
-            if (_keyToBamlNodeIndexMap.Contains(key))
-            {
-                return tree[(int)_keyToBamlNodeIndexMap[key]];
-            }
+            if (_keyToBamlNodeIndexMap.TryGetValue(key, out int bamlNodeIndex))
+                return tree[bamlNodeIndex];
 
             return null;
         }
 
         /// <summary>
         /// Maps a uid to a baml tree node in the given tree
-        /// </summary>        
+        /// </summary>
         internal BamlStartElementNode MapUidToBamlTreeElementNode(string uid, BamlTree tree)
         {
-            if (_uidToBamlNodeIndexMap.Contains(uid))
-            {
-                return tree[(int)_uidToBamlNodeIndexMap[uid]] as BamlStartElementNode;
-            }
+            if (_uidToBamlNodeIndexMap.TryGetValue(uid, out int bamlNodeIndex))
+                return tree[bamlNodeIndex] as BamlStartElementNode;
 
             return null;
         }
@@ -118,16 +102,17 @@ namespace MS.Internal.Globalization
             // create the table based on the treesize passed in
             // the hashtable is for look-up during update
             _resolver.InitLocalizabilityCache();
-            _keyToBamlNodeIndexMap = new Hashtable(_tree.Size);
-            _uidToBamlNodeIndexMap = new Hashtable(_tree.Size / 2);
+            _keyToBamlNodeIndexMap = new Dictionary<BamlLocalizableResourceKey, int>(_tree.Size);
+            _uidToBamlNodeIndexMap = new Dictionary<string, int>(_tree.Size / 2);
             _localizableResources = new BamlLocalizationDictionary();
 
             for (int i = 0; i < _tree.Size; i++)
             {
                 BamlTreeNode currentNode = _tree[i];
 
-                // a node may be marked as unidentifiable if it or its parent has a duplicate uid. 
-                if (currentNode.Unidentifiable) continue; // skip unidentifiable nodes
+                // a node may be marked as unidentifiable if it or its parent has a duplicate uid.
+                if (currentNode.Unidentifiable)
+                    continue; // skip unidentifiable nodes
 
                 if (currentNode.NodeType == BamlNodeType.StartElement)
                 {
@@ -144,7 +129,7 @@ namespace MS.Internal.Globalization
                     if (currentNode.NodeType == BamlNodeType.StartElement)
                     {
                         // store uid mapping to the corresponding element node
-                        if (_uidToBamlNodeIndexMap.ContainsKey(key.Uid))
+                        if (!_uidToBamlNodeIndexMap.TryAdd(key.Uid, i))
                         {
                             _resolver.RaiseErrorNotifyEvent(
                                 new BamlLocalizerErrorNotifyEventArgs(
@@ -153,7 +138,7 @@ namespace MS.Internal.Globalization
                                     )
                             );
 
-                            // Mark this element and its properties unidentifiable. 
+                            // Mark this element and its properties unidentifiable.
                             currentNode.Unidentifiable = true;
                             if (currentNode.Children != null)
                             {
@@ -164,11 +149,7 @@ namespace MS.Internal.Globalization
                                 }
                             }
 
-                            continue; // skip the duplicate node                                
-                        }
-                        else
-                        {
-                            _uidToBamlNodeIndexMap.Add(key.Uid, i);
+                            continue; // skip the duplicate node
                         }
                     }
 
@@ -179,7 +160,7 @@ namespace MS.Internal.Globalization
                      && currentNode.Parent != null
                      && currentNode.Parent.NodeType == BamlNodeType.StartDocument)
                     {
-                        // remember the key to the root element so that 
+                        // remember the key to the root element so that
                         // users can further add modifications to the root that would have a global impact.
                         // such as FlowDirection or CultureInfo
                         _localizableResources.SetRootElementKey(key);
@@ -204,7 +185,7 @@ namespace MS.Internal.Globalization
         //-------------------------------------------------
 
         /// <summary>
-        /// Return the localizable resource key for this baml tree node. 
+        /// Return the localizable resource key for this baml tree node.
         /// If this node shouldn't be localized, the key returned will be null.
         /// </summary>
         internal static BamlLocalizableResourceKey GetKey(BamlTreeNode node)
@@ -241,15 +222,11 @@ namespace MS.Internal.Globalization
                             }
                             else
                             {
-                                // This node is auto-numbered. This has to do with the fact that 
-                                // the compiler may compile duplicated properties into Baml under the same element. 
-                                uid = string.Format(
+                                // This node is auto-numbered. This has to do with the fact that
+                                // the compiler may compile duplicated properties into Baml under the same element.
+                                uid = string.Create(
                                     TypeConverterHelper.InvariantEnglishUS,
-                                    "{0}.{1}_{2}",
-                                    parent.Uid,
-                                    propertyNode.PropertyName,
-                                    propertyNode.Index
-                                    );
+                                    $"{parent.Uid}.{propertyNode.PropertyName}_{propertyNode.Index}");
                             }
 
                             key = new BamlLocalizableResourceKey(
@@ -285,32 +262,33 @@ namespace MS.Internal.Globalization
         //---------------------------------
         // private members
         //---------------------------------
-        private Hashtable _keyToBamlNodeIndexMap;       // _key to baml node. Key is integer. Not using Generic on value type for perf reason
-        private Hashtable _uidToBamlNodeIndexMap;
-        private LocalizableResourceBuilder _localizableResourceBuilder;
-
+        private Dictionary<BamlLocalizableResourceKey, int> _keyToBamlNodeIndexMap;
+        private Dictionary<string, int> _uidToBamlNodeIndexMap;
         private BamlLocalizationDictionary _localizableResources;
-        private BamlTree _tree;
-        private InternalBamlLocalizabilityResolver _resolver;
+
+        private readonly LocalizableResourceBuilder _localizableResourceBuilder;
+        private readonly InternalBamlLocalizabilityResolver _resolver;
+        private readonly BamlTree _tree;
+
     }
 
 
     internal class InternalBamlLocalizabilityResolver : BamlLocalizabilityResolver
     {
-        BamlLocalizabilityResolver _externalResolver;
+        private BamlLocalizabilityResolver _externalResolver;
 
         // a list of assemblies encounter in the baml
-        FrugalObjectList<string> _assemblyNames;
+        private FrugalObjectList<string> _assemblyNames;
 
         // class name mapped to assembly index in the Frugal list
-        Hashtable _classNameToAssemblyIndex;
+        private Hashtable _classNameToAssemblyIndex;
 
         // cached localizablity values
         private Dictionary<string, ElementLocalizability> _classAttributeTable;
         private Dictionary<string, LocalizabilityAttribute> _propertyAttributeTable;
 
         //
-        // cached localization comments 
+        // cached localization comments
         // Normally, we only need to use comments of a single element at one time.
         // In case of formatting inline tags we might be grabing comments of a few more elements.
         // A small cached would be enough
@@ -398,7 +376,7 @@ namespace MS.Internal.Globalization
             _commentsDocument = null;
         }
 
-        // Grab the comments on a BamlTreeNode for the value. 
+        // Grab the comments on a BamlTreeNode for the value.
         internal LocalizabilityGroup GetLocalizabilityComment(
             BamlStartElementNode node,
             string localName
@@ -423,7 +401,7 @@ namespace MS.Internal.Globalization
             string localName
             )
         {
-            // get all the comments declares on this node            
+            // get all the comments declares on this node
             ElementComments comment = LookupCommentForElement(node);
             for (int i = 0; i < comment.LocalizationComments.Length; i++)
             {
@@ -443,14 +421,14 @@ namespace MS.Internal.Globalization
 
         //--------------------------------------
         // BamlLocalizabilityResolver interface
-        //--------------------------------------   
+        //--------------------------------------
         public override ElementLocalizability GetElementLocalizability(string assembly, string className)
         {
             if (_externalResolver == null
               || assembly == null || assembly.Length == 0
               || className == null || className.Length == 0)
             {
-                // return the default value 
+                // return the default value
                 return new ElementLocalizability(
                     null,
                     DefaultAttribute
@@ -488,7 +466,7 @@ namespace MS.Internal.Globalization
                 return DefaultAttribute;
             }
 
-            string fullName = className + ":" + property;
+            string fullName = $"{className}:{property}";
             if (_propertyAttributeTable.ContainsKey(fullName))
             {
                 // return cached value
@@ -568,9 +546,11 @@ namespace MS.Internal.Globalization
             get
             {
                 // if the value has no localizability attribute set, we default to all inherit.
-                LocalizabilityAttribute attribute = new LocalizabilityAttribute(LocalizationCategory.Inherit);
-                attribute.Modifiability = Modifiability.Inherit;
-                attribute.Readability = Readability.Inherit;
+                LocalizabilityAttribute attribute = new LocalizabilityAttribute(LocalizationCategory.Inherit)
+                {
+                    Modifiability = Modifiability.Inherit,
+                    Readability = Readability.Inherit
+                };
                 return attribute;
             }
         }
@@ -592,8 +572,10 @@ namespace MS.Internal.Globalization
                 }
             }
 
-            ElementComments comment = new ElementComments();
-            comment.ElementId = node.Uid;
+            ElementComments comment = new ElementComments
+            {
+                ElementId = node.Uid
+            };
 
             if (_commentsDocument != null)
             {
@@ -616,7 +598,7 @@ namespace MS.Internal.Globalization
                 //
                 // The baml itself might contain comments too
                 // Grab the missing comments from Baml if there is any.
-                //    
+                //
 
                 for (int i = 0;
                      i < node.Children.Count && (comment.LocalizationComments.Length == 0 || comment.LocalizationAttributes.Length == 0);
@@ -636,14 +618,14 @@ namespace MS.Internal.Globalization
                         else if (LocComments.IsLocLocalizabilityProperty(propertyNode.OwnerTypeFullName, propertyNode.PropertyName)
                             && comment.LocalizationAttributes.Length == 0)
                         {
-                            // grab comments from Baml                            
+                            // grab comments from Baml
                             SetLocalizationAttributes(node, comment, propertyNode.Value);
                         }
                     }
                 }
             }
 
-            // cached it 
+            // cached it
             _comments[_commentsIndex] = comment;
             _commentsIndex = (_commentsIndex + 1) % _comments.Length;
 
@@ -652,8 +634,8 @@ namespace MS.Internal.Globalization
 
         private static XmlElement FindElementByID(XmlDocument doc, string uid)
         {
-            // Have considered using XPATH. However, XPATH doesn't have a way to escape single quote within 
-            // single quotes, here we iterate through the document by ourselves            
+            // Have considered using XPATH. However, XPATH doesn't have a way to escape single quote within
+            // single quotes, here we iterate through the document by ourselves
             if (doc != null && doc.DocumentElement != null)
             {
                 foreach (XmlNode node in doc.DocumentElement.ChildNodes)
@@ -722,13 +704,13 @@ namespace MS.Internal.Globalization
         }
 
         /// <summary>
-        /// Data structure for all the comments declared on a particular element 
+        /// Data structure for all the comments declared on a particular element
         /// </summary>
         private class ElementComments
         {
             internal string ElementId;        // element's uid
             internal PropertyComment[] LocalizationAttributes; // Localization.Attributes
-            internal PropertyComment[] LocalizationComments;   // Localization.Comments 
+            internal PropertyComment[] LocalizationComments;   // Localization.Comments
 
             internal ElementComments()
             {

@@ -8,19 +8,7 @@
 //
 //
 
-using System;
-using System.Diagnostics;
-using System.Security;
-using System.Text;
-using System.Windows;
-using System.Windows.Media;
-using System.Windows.Media.TextFormatting;
-
-using MS.Utility;
-using MS.Internal;
-using MS.Internal.Shaping;
 using MS.Internal.FontCache;
-using MS.Internal.TextFormatting;
 
 namespace MS.Internal.FontFace
 {
@@ -202,8 +190,8 @@ namespace MS.Internal.FontFace
         {
             get
             {
-                if (tokenIndex < 0 || tokenIndex >= Count)
-                    throw new ArgumentOutOfRangeException("tokenIndex");
+                ArgumentOutOfRangeException.ThrowIfNegative(tokenIndex);
+                ArgumentOutOfRangeException.ThrowIfGreaterThanOrEqual(tokenIndex, Count);
 
                 // Have we already been canonicalized?
                 if (_canonicalReferences != null)

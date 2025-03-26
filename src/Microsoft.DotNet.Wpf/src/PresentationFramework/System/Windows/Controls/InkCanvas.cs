@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -9,23 +9,13 @@
 //      editing ink
 //
 
-using MS.Utility;
-using MS.Internal;
 using MS.Internal.Commands;
 using MS.Internal.Controls;
 using MS.Internal.Ink;
 using MS.Internal.KnownBoxes;
-using System;
 using System.Collections;
 using System.Collections.ObjectModel;
-using System.Collections.Specialized;
 using System.ComponentModel;
-using System.ComponentModel.Design;
-using System.Diagnostics;
-using System.IO;
-using System.Windows;
-using System.Collections.Generic;
-using System.Security;
 using System.Runtime.InteropServices;
 using System.Windows.Media;
 using System.Windows.Data;
@@ -33,13 +23,11 @@ using System.Windows.Documents;
 using System.Windows.Ink;
 using System.Windows.Input;
 using System.Windows.Input.StylusPlugIns;
-using System.Windows.Controls;
 using System.Windows.Markup; // IAddChild, ContentPropertyAttribute
 using System.Windows.Threading;
 using System.Windows.Automation.Peers;
 
 using BuildInfo = MS.Internal.PresentationFramework.BuildInfo;
-using SecurityHelper = MS.Internal.SecurityHelper;
 
 namespace System.Windows.Controls
 {
@@ -58,7 +46,7 @@ namespace System.Windows.Controls
         {
             Type ownerType = typeof(InkCanvas);
 
-            // 
+            //
             // We should add the following listener as the class handler which will be guarantied to receive the
             // notification before the handler on the instances. So we won't be trapped in the bad state due to the
             // event routing.
@@ -116,22 +104,30 @@ namespace System.Windows.Controls
             defaultStyle.Setters.Add(new Setter(Stylus.IsTouchFeedbackEnabledProperty, false));
 
             // Set MinWidth to 350d if Width is set to Auto
-            Trigger trigger = new Trigger();
-            trigger.Property = WidthProperty;
-            trigger.Value = double.NaN;
-            Setter setter = new Setter();
-            setter.Property = MinWidthProperty;
-            setter.Value = 350d;
+            Trigger trigger = new Trigger
+            {
+                Property = WidthProperty,
+                Value = double.NaN
+            };
+            Setter setter = new Setter
+            {
+                Property = MinWidthProperty,
+                Value = 350d
+            };
             trigger.Setters.Add(setter);
             defaultStyle.Triggers.Add(trigger);
 
             // Set MinHeight to 250d if Height is set to Auto
-            trigger = new Trigger();
-            trigger.Property = HeightProperty;
-            trigger.Value = double.NaN;
-            setter = new Setter();
-            setter.Property = MinHeightProperty;
-            setter.Value = 250d;
+            trigger = new Trigger
+            {
+                Property = HeightProperty,
+                Value = double.NaN
+            };
+            setter = new Setter
+            {
+                Property = MinHeightProperty,
+                Value = 250d
+            };
             trigger.Setters.Add(setter);
             defaultStyle.Triggers.Add(trigger);
 
@@ -160,8 +156,10 @@ namespace System.Windows.Controls
             //
             // instance the DynamicRenderer and add it to the StylusPlugIns
             //
-            _dynamicRenderer = new DynamicRenderer();
-            _dynamicRenderer.Enabled = false;
+            _dynamicRenderer = new DynamicRenderer
+            {
+                Enabled = false
+            };
             this.StylusPlugIns.Add(_dynamicRenderer);
 
             //
@@ -379,7 +377,7 @@ namespace System.Windows.Controls
             if (    (_localAdornerDecorator == null)
                 ||  (index != 0))
             {
-                throw new ArgumentOutOfRangeException("index", index, SR.Visual_ArgumentOutOfRange);
+                throw new ArgumentOutOfRangeException(nameof(index), index, SR.Visual_ArgumentOutOfRange);
             }
 
             return _localAdornerDecorator;
@@ -431,7 +429,7 @@ namespace System.Windows.Controls
         /// <param name="element">The element from which to read the Top attached property.</param>
         /// <returns>The property's value.</returns>
         /// <seealso cref="InkCanvas.TopProperty" />
-        [TypeConverter("System.Windows.LengthConverter, PresentationFramework, Version=" +BuildInfo.WCP_VERSION + ", Culture=neutral, PublicKeyToken=" +BuildInfo.WCP_PUBLIC_KEY_TOKEN + ", Custom=null")]
+        [TypeConverter($"System.Windows.LengthConverter, PresentationFramework, Version={BuildInfo.WCP_VERSION}, Culture=neutral, PublicKeyToken={BuildInfo.WCP_PUBLIC_KEY_TOKEN}, Custom=null")]
         [AttachedPropertyBrowsableForChildren()]
         public static double GetTop(UIElement element)
         {
@@ -465,7 +463,7 @@ namespace System.Windows.Controls
         /// <param name="element">The element from which to read the Bottom attached property.</param>
         /// <returns>The property's Length value.</returns>
         /// <seealso cref="InkCanvas.BottomProperty" />
-        [TypeConverter("System.Windows.LengthConverter, PresentationFramework, Version=" +BuildInfo.WCP_VERSION + ", Culture=neutral, PublicKeyToken=" +BuildInfo.WCP_PUBLIC_KEY_TOKEN + ", Custom=null")]
+        [TypeConverter($"System.Windows.LengthConverter, PresentationFramework, Version={BuildInfo.WCP_VERSION}, Culture=neutral, PublicKeyToken={BuildInfo.WCP_PUBLIC_KEY_TOKEN}, Custom=null")]
         [AttachedPropertyBrowsableForChildren()]
         public static double GetBottom(UIElement element)
         {
@@ -499,7 +497,7 @@ namespace System.Windows.Controls
         /// <param name="element">The element from which to read the Left attached property.</param>
         /// <returns>The property's value.</returns>
         /// <seealso cref="InkCanvas.LeftProperty" />
-        [TypeConverter("System.Windows.LengthConverter, PresentationFramework, Version=" +BuildInfo.WCP_VERSION + ", Culture=neutral, PublicKeyToken=" +BuildInfo.WCP_PUBLIC_KEY_TOKEN + ", Custom=null")]
+        [TypeConverter($"System.Windows.LengthConverter, PresentationFramework, Version={BuildInfo.WCP_VERSION}, Culture=neutral, PublicKeyToken={BuildInfo.WCP_PUBLIC_KEY_TOKEN}, Custom=null")]
         [AttachedPropertyBrowsableForChildren()]
         public static double GetLeft(UIElement element)
         {
@@ -533,7 +531,7 @@ namespace System.Windows.Controls
         /// <param name="element">The element from which to read the Right attached property.</param>
         /// <returns>The property's Length value.</returns>
         /// <seealso cref="InkCanvas.RightProperty" />
-        [TypeConverter("System.Windows.LengthConverter, PresentationFramework, Version=" +BuildInfo.WCP_VERSION + ", Culture=neutral, PublicKeyToken=" +BuildInfo.WCP_PUBLIC_KEY_TOKEN + ", Custom=null")]
+        [TypeConverter($"System.Windows.LengthConverter, PresentationFramework, Version={BuildInfo.WCP_VERSION}, Culture=neutral, PublicKeyToken={BuildInfo.WCP_PUBLIC_KEY_TOKEN}, Custom=null")]
         [AttachedPropertyBrowsableForChildren()]
         public static double GetRight(UIElement element)
         {
@@ -644,11 +642,13 @@ namespace System.Windows.Controls
 
                     // Bind the InkCanvas.ActiveEditingModeProperty
                     // to SelectionAdorner.VisibilityProperty.
-                    Binding activeEditingModeBinding = new Binding();
-                    activeEditingModeBinding.Path = new PropertyPath(InkCanvas.ActiveEditingModeProperty);
-                    activeEditingModeBinding.Mode = BindingMode.OneWay;
-                    activeEditingModeBinding.Source = this;
-                    activeEditingModeBinding.Converter = new ActiveEditingMode2VisibilityConverter();
+                    Binding activeEditingModeBinding = new Binding
+                    {
+                        Path = new PropertyPath(InkCanvas.ActiveEditingModeProperty),
+                        Mode = BindingMode.OneWay,
+                        Source = this,
+                        Converter = new ActiveEditingMode2VisibilityConverter()
+                    };
                     _selectionAdorner.SetBinding(UIElement.VisibilityProperty, activeEditingModeBinding);
                 }
 
@@ -1435,7 +1435,7 @@ namespace System.Windows.Controls
         internal void RaiseSelectionMoved(EventArgs e)
         {
             Debug.Assert(e != null, "EventArg can not be null");
-            
+
             this.OnSelectionMoved(e);
             // Update the cursor of SelectionEditor behavior.
             EditingCoordinator.SelectionEditor.OnInkCanvasSelectionChanged();
@@ -1748,7 +1748,7 @@ namespace System.Windows.Controls
         {
             VerifyAccess();
 
-            // 
+            //
             // Try to switch to Select mode first. If we fail to change the mode, then just simply no-op.
             if ( EnsureActiveEditingMode(InkCanvasEditingMode.Select) )
             {
@@ -1840,7 +1840,7 @@ namespace System.Windows.Controls
                 Double.IsInfinity(point.X)||
                 Double.IsInfinity(point.Y) )
             {
-                    throw new ArgumentException(SR.InvalidPoint, "point");
+                    throw new ArgumentException(SR.InvalidPoint, nameof(point));
             }
 
 
@@ -2030,10 +2030,12 @@ namespace System.Windows.Controls
                     _inkPresenter = new InkPresenter();
 
                     // Bind the InkPresenter.Strokes to InkCanvas.Strokes
-                    Binding strokes = new Binding();
-                    strokes.Path = new PropertyPath(InkCanvas.StrokesProperty);
-                    strokes.Mode = BindingMode.OneWay;
-                    strokes.Source = this;
+                    Binding strokes = new Binding
+                    {
+                        Path = new PropertyPath(InkCanvas.StrokesProperty),
+                        Mode = BindingMode.OneWay,
+                        Source = this
+                    };
                     _inkPresenter.SetBinding(InkPresenter.StrokesProperty, strokes);
                 }
                 return _inkPresenter;
@@ -2197,10 +2199,12 @@ namespace System.Windows.Controls
                     _innerCanvas = new InkCanvasInnerCanvas(this);
 
                     // Bind the inner Canvas' Background to InkCanvas' Background
-                    Binding background = new Binding();
-                    background.Path = new PropertyPath(InkCanvas.BackgroundProperty);
-                    background.Mode = BindingMode.OneWay;
-                    background.Source = this;
+                    Binding background = new Binding
+                    {
+                        Path = new PropertyPath(InkCanvas.BackgroundProperty),
+                        Mode = BindingMode.OneWay,
+                        Source = this
+                    };
                     _innerCanvas.SetBinding(Panel.BackgroundProperty, background);
                 }
 
@@ -2371,8 +2375,8 @@ namespace System.Windows.Controls
                             // We only have to reset IsSelected for the elements no longer exists in the new collection.
                             if ( !validStrokes.Contains(strokes[i]) )
                             {
-                                // 
-                                // Make sure we reset the IsSelected property which could have been 
+                                //
+                                // Make sure we reset the IsSelected property which could have been
                                 // set to true in the dynamic selection.
                                 strokes[i].IsSelected = false;
                             }
@@ -2395,7 +2399,7 @@ namespace System.Windows.Controls
                     int countOldSelectedStrokes = strokes.Count;
                     for ( int i = 0; i < countOldSelectedStrokes; i++ )
                     {
-                        // Make sure we reset the IsSelected property which could have been 
+                        // Make sure we reset the IsSelected property which could have been
                         // set to true in the dynamic selection but not being selected previously.
                         if ( !currentSelectedStrokes.Contains(strokes[i]) )
                         {
@@ -2512,7 +2516,7 @@ namespace System.Windows.Controls
             List<UIElement> elements = new List<UIElement>();
             foreach (UIElement element in selectedElements)
             {
-                // 
+                //
                 // Don't add the duplicated element.
                 if ( !elements.Contains(element) )
                 {
@@ -2775,7 +2779,7 @@ namespace System.Windows.Controls
             Debug.Assert(inkCanvas != null);
 
             if ( inkCanvas.IsEnabled
-                // 
+                //
                 // If user is editing, we should disable all commands.
                 && !inkCanvas.EditingCoordinator.UserIsEditing )
             {
@@ -2804,18 +2808,18 @@ namespace System.Windows.Controls
                 else if ( command == ApplicationCommands.SelectAll )
                 {
                     //anything to select?
-                    args.CanExecute = ( inkCanvas.ActiveEditingMode == InkCanvasEditingMode.Select 
+                    args.CanExecute = ( inkCanvas.ActiveEditingMode == InkCanvasEditingMode.Select
                                             && (inkCanvas.Strokes.Count > 0 || inkCanvas.Children.Count > 0));
                 }
             }
             else
             {
-                // 
+                //
                 // Return false for CanExecute if InkCanvas is disabled.
                 args.CanExecute = false;
             }
 
-            // 
+            //
             // Mark Handled as true so that the clipboard commands stops routing to InkCanvas' ancestors.
             if ( command == ApplicationCommands.Cut || command == ApplicationCommands.Copy
                 || command == ApplicationCommands.Paste )
@@ -2881,7 +2885,7 @@ namespace System.Windows.Controls
             if ( !e.Handled || inkCanvas.ForceCursor )
             {
                 Cursor cursor = inkCanvas.EditingCoordinator.GetActiveBehaviorCursor();
-                
+
                 // If cursor is null, we don't handle the event and leave it as whatever the default is.
                 if ( cursor != null )
                 {

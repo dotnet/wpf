@@ -2,22 +2,13 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-//
-//
 // Description: Manager for the PropertyChanged event in the "weak event listener"
 //              pattern.  See WeakEventTable.cs for an overview.
-//
 
-using System;
-using System.Collections;       // ICollection
-using System.Collections.Generic; // List<T>
-using System.Collections.Specialized;   // HybridDictionary
-using System.ComponentModel;    // INotifyPropertyChanged
-using System.Diagnostics;       // Debug
-using System.Reflection;        // MethodInfo
-using System.Windows;           // WeakEventManager
-using MS.Internal;              // BaseAppContextSwitches
-using MS.Internal.WindowsBase;  // SR
+using System.Collections;
+using System.Collections.Specialized;
+using System.Windows;
+using MS.Internal;
 
 namespace System.ComponentModel
 {
@@ -390,7 +381,7 @@ namespace System.ComponentModel
                 if (dict == null)
                 {
                     // no entry in the hashtable - add a new one
-                    dict = new HybridDictionary(true /* case insensitive */);
+                    dict = new HybridDictionary(caseInsensitive: true);
 
                     this[source] = dict;
 
@@ -621,9 +612,9 @@ namespace System.ComponentModel
 
         #endregion Private Methods
 
-        ListenerList _proposedAllListenersList;
-        List<String> _toRemove = new List<String>();
-        static readonly string AllListenersKey = "<All Listeners>"; // not a legal property name
+        private ListenerList _proposedAllListenersList;
+        private List<String> _toRemove = new List<String>();
+        private static readonly string AllListenersKey = "<All Listeners>"; // not a legal property name
     }
 }
 

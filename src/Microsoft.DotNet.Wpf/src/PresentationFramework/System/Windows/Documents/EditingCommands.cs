@@ -2,15 +2,14 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
+using System.Windows.Input; // Command
+
 //
 // Description: Command definitions for Rich Text Editing.
 //
 
 namespace System.Windows.Documents
 {
-    using System.Windows.Input; // Command
-    using System.ComponentModel; // TypeConverter
-
     /// <summary>
     /// Command definitions for Rich Text Editing.
     /// </summary>
@@ -39,6 +38,8 @@ namespace System.Windows.Documents
         /// Formatting of deleted content is not springloaded (unlike Backspace).
         /// </summary>
         public static RoutedUICommand  Delete                  { get { return EnsureCommand(ref _Delete                 , "Delete"                   ); } }
+
+        internal static RoutedUICommand Clear                  { get { return EnsureCommand(ref _Clear                  , "Clear"                    ); } }
 
         /// <summary>
         /// Backspace command.
@@ -477,6 +478,7 @@ namespace System.Windows.Documents
         // --------------
         private static RoutedUICommand _ToggleInsert;
         private static RoutedUICommand _Delete;
+        private static RoutedUICommand _Clear;
         private static RoutedUICommand _Backspace;
         private static RoutedUICommand _DeleteNextWord;
         private static RoutedUICommand _DeletePreviousWord;

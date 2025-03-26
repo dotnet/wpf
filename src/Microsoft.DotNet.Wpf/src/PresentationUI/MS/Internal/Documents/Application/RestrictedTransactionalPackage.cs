@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -8,18 +8,15 @@
 using System;
 using System.IO;
 using System.IO.Packaging;
-using System.Security;
 using System.Windows.TrustUI;
-
-using MS.Internal;
 
 namespace MS.Internal.Documents.Application
 {
-/// <summary>
-/// This class wraps TransactionalPackage, ensuring that only approved
-/// part content types can be written.
-/// </summary>
-internal sealed class RestrictedTransactionalPackage : TransactionalPackage
+    /// <summary>
+    /// This class wraps TransactionalPackage, ensuring that only approved
+    /// part content types can be written.
+    /// </summary>
+    internal sealed class RestrictedTransactionalPackage : TransactionalPackage
 {
     #region Constructors
     //--------------------------------------------------------------------------
@@ -46,14 +43,11 @@ internal sealed class RestrictedTransactionalPackage : TransactionalPackage
     /// <exception cref="System.ArgumentException" />
     internal override void MergeChanges(Stream target)
     {
-        if (target == null)
-        {
-            throw new ArgumentNullException("target");
-        }
+        ArgumentNullException.ThrowIfNull(target);
 
-        if (TempPackage.Value != null)
+        if (TempPackage != null)
         {
-            foreach (PackagePart part in TempPackage.Value.GetParts())
+            foreach (PackagePart part in TempPackage.GetParts())
             {
                 // Ensure that all parts being modified are permitted.
                 if ((part != null) && (!IsValidContentType(part.ContentType)))
@@ -92,7 +86,7 @@ internal sealed class RestrictedTransactionalPackage : TransactionalPackage
         // Ensure that modifying this contentType is permitted.
         if (!IsValidContentType(contentType))
         {
-            throw new ArgumentException(SR.PackagePartTypeNotWritable, "contentType");
+            throw new ArgumentException(SR.PackagePartTypeNotWritable, nameof(contentType));
         }
         return base.CreatePartCore(partUri, contentType, compressionOption);
     }

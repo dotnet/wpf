@@ -20,7 +20,7 @@ namespace MS { namespace Internal { namespace Text { namespace TextInterface
         __in_ecount(length) const WCHAR* text,
         UINT32                           length,
         CultureInfo^                     culture,
-        Factory^                         factory,
+        IDWriteFactory*                  pDWriteFactory,
         bool                             isRightToLeftParagraph,
         CultureInfo^                     numberCulture,
         bool                             ignoreUserOverride,
@@ -41,7 +41,7 @@ namespace MS { namespace Internal { namespace Text { namespace TextInterface
 
             // We obtain an AddRef factory so as not to worry about having to call GC::KeepAlive(factory)
             // which puts unnecessary maintenance cost on this code.
-            IDWriteFactory* pDWriteFactory = factory->DWriteFactoryAddRef;
+            pDWriteFactory->AddRef();
             HRESULT hr = S_OK;
             try
             {
@@ -607,7 +607,7 @@ namespace MS { namespace Internal { namespace Text { namespace TextInterface
             {
                 String^ localeName = cultureInfo->IetfLanguageTag;
                 pin_ptr<const WCHAR> pLocaleName = Native::Util::GetPtrToStringChars(localeName);
-                DWRITE_MATRIX transform = Factory::GetIdentityTransform();
+                DWRITE_MATRIX transform = InternalFactory::GetIdentityTransform();
 
                 if (features != nullptr)
                 {

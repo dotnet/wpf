@@ -1,25 +1,16 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
 
-using System;
 using System.Collections.Specialized;
 using System.ComponentModel;
-using System.Diagnostics;
 using System.Windows.Threading;
-
-using System.Windows;
-using System.Windows.Automation;
 using System.Windows.Automation.Peers;
 using System.Windows.Controls.Primitives;
 
 using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Markup;
-using System.Windows.Shapes;
-
-using MS.Utility;
 using MS.Internal.KnownBoxes;
 using MS.Internal.Telemetry.PresentationFramework;
 
@@ -392,10 +383,7 @@ namespace System.Windows.Controls
             // invalidate layout so that the child can be placed in the correct
             // location (in the main bar or the overflow menu).
             ToolBar toolBar = ItemsControl.ItemsControlFromItemContainer(element) as ToolBar;
-            if (toolBar != null)
-            {
-                toolBar.InvalidateLayout();
-            }
+            toolBar?.InvalidateLayout();
         }
 
         private void InvalidateLayout()
@@ -408,12 +396,9 @@ namespace System.Windows.Controls
             InvalidateMeasure();
 
             ToolBarPanel toolBarPanel = this.ToolBarPanel;
-            if (toolBarPanel != null)
-            {
-                // Whether elements are in the overflow or not is decided
-                // in ToolBarPanel.MeasureOverride.
-                toolBarPanel.InvalidateMeasure();
-            }
+            // Whether elements are in the overflow or not is decided
+            // in ToolBarPanel.MeasureOverride.
+            toolBarPanel?.InvalidateMeasure();
         }
 
         private static bool IsValidOverflowMode(object o)

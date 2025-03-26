@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -7,18 +7,14 @@
 //
 
 using System;
-using System.ComponentModel;
-using System.Globalization;
 using System.Runtime.InteropServices;
-using System.Windows;
 using System.Windows.Automation;
-using System.Windows.Automation.Provider;
 using MS.Win32;
 
 namespace MS.Internal.AutomationProxies
 {
     // Static class used to support the Scroll pattern for controls that have scroll bars. 
-    static class WindowScroll
+    internal static class WindowScroll
     {
         #region Internal Methods
 
@@ -165,7 +161,7 @@ namespace MS.Internal.AutomationProxies
             string className = Misc.ProxyGetClassName(hwnd);
             if (className.StartsWith("RichEdit", StringComparison.OrdinalIgnoreCase) ||
                 className.StartsWith("WindowForms10.RichEdit", StringComparison.OrdinalIgnoreCase) ||
-                string.Compare(className, "Edit", StringComparison.OrdinalIgnoreCase) == 0)
+                string.Equals(className, "Edit", StringComparison.OrdinalIgnoreCase))
             {
                 hasScrollableStyle = Misc.IsBitSet(style, NativeMethods.ES_MULTILINE);
             }
@@ -193,9 +189,10 @@ namespace MS.Internal.AutomationProxies
         static private double GetScrollInfo(IntPtr hwnd, int sbFlag)
         {
             // check if there is a scrollbar 
-            NativeMethods.ScrollInfo si = new NativeMethods.ScrollInfo ();
-
-            si.fMask = NativeMethods.SIF_ALL;
+            NativeMethods.ScrollInfo si = new NativeMethods.ScrollInfo
+            {
+                fMask = NativeMethods.SIF_ALL
+            };
             si.cbSize = Marshal.SizeOf (si.GetType ());
 
             if (Misc.GetScrollInfo(hwnd, sbFlag, ref si))
@@ -288,8 +285,10 @@ namespace MS.Internal.AutomationProxies
             }
 
             // Get Max & min                    
-            NativeMethods.ScrollInfo si = new NativeMethods.ScrollInfo ();
-            si.fMask = NativeMethods.SIF_ALL;
+            NativeMethods.ScrollInfo si = new NativeMethods.ScrollInfo
+            {
+                fMask = NativeMethods.SIF_ALL
+            };
             si.cbSize = Marshal.SizeOf(si.GetType ());
 
             // if no scroll bar return false
@@ -362,8 +361,10 @@ namespace MS.Internal.AutomationProxies
             }
 
             // Get Max & min
-            NativeMethods.ScrollInfo si = new NativeMethods.ScrollInfo ();
-            si.fMask = NativeMethods.SIF_ALL;
+            NativeMethods.ScrollInfo si = new NativeMethods.ScrollInfo
+            {
+                fMask = NativeMethods.SIF_ALL
+            };
             si.cbSize = Marshal.SizeOf (si.GetType ());
 
             // if no scroll bar return false

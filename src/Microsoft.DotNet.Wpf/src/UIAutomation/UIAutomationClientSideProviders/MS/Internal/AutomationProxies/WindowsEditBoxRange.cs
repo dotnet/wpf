@@ -1,23 +1,17 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
 // Description:
 // ITextRangeProvider interface for WindowsEditBox
 
-// PRESHARP: In order to avoid generating warnings about unkown message numbers and unknown pragmas.
-#pragma warning disable 1634, 1691
-
 using System;
 using System.Collections;
 using System.Diagnostics;
-using System.Runtime.InteropServices;
-using System.Windows.Input;
 using System.Windows;
 using System.Windows.Automation;
 using System.Windows.Automation.Provider;
 using System.Windows.Automation.Text;
-using System.ComponentModel;
 using MS.Win32;
 
 namespace MS.Internal.AutomationProxies
@@ -199,19 +193,7 @@ namespace MS.Internal.AutomationProxies
 
         ITextRangeProvider ITextRangeProvider.FindText(string text, bool backwards, bool ignoreCase)
         {
-            // PerSharp/PreFast will flag this as warning 6507/56507: Prefer 'string.IsNullOrEmpty(text)' over checks for null and/or emptiness.
-            // A null string is not should throw an ArgumentNullException while an empty string should throw an ArgumentException.
-            // Therefore we can not use IsNullOrEmpty() here, suppress the warning.
-#pragma warning suppress 6507
-            if (text == null)
-            {
-                throw new ArgumentNullException("text");
-            }
-#pragma warning suppress 6507
-            if (text.Length == 0)
-            {
-                throw new ArgumentException(SR.InvalidParameter);
-            }
+            ArgumentException.ThrowIfNullOrEmpty(text);
 
             // get the text of the range
             string rangeText = _provider.GetText();

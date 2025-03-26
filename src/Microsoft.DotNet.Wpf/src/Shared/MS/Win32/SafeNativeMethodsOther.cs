@@ -2,36 +2,13 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-namespace MS.Win32 {
-    using System.Runtime.InteropServices;
-    using System.Runtime.InteropServices.ComTypes;
-    using System;
-    using System.Security;
-    using System.Collections;
-    using System.IO;
-    using System.Text;
-    using System.ComponentModel;
-    using System.Diagnostics;   
+using System.ComponentModel;
+using System.Runtime.InteropServices;
 
-
-    using IComDataObject = System.Runtime.InteropServices.ComTypes.IDataObject;
-
-#if WINDOWS_BASE
-    using MS.Internal.WindowsBase;
-#elif PRESENTATION_CORE
-    using MS.Internal.PresentationCore;
-#elif PRESENTATIONFRAMEWORK
-    using MS.Internal.PresentationFramework;
-#elif DRT
-    using MS.Internal.Drt;
-#else
-#error Attempt to use FriendAccessAllowedAttribute from an unknown assembly.
-    using MS.Internal.YourAssemblyName;
-#endif
-
-    [FriendAccessAllowed]
+namespace MS.Win32
+{
     internal partial class SafeNativeMethods
-    {        
+    {
         //////////////////////////////
         // from Framework
 
@@ -124,23 +101,22 @@ namespace MS.Win32 {
         public const UInt16 C3_IDEOGRAPH  = 0x0100;
         public const UInt16 C3_KASHIDA    = 0x0200;
 
-        public static bool GetStringTypeEx(uint locale, uint infoType, char[] sourceString, int count,
-            UInt16[] charTypes)
+        public static unsafe bool GetStringTypeEx(uint locale, uint infoType, ReadOnlySpan<char> sourceString, Span<UInt16> charTypes)
         {
-            bool win32Return = SafeNativeMethodsPrivate.GetStringTypeEx(locale, infoType, sourceString, count, charTypes);
-            int win32Error = Marshal.GetLastWin32Error();
-
-            if (!win32Return)
+            // Since we do not use [LibraryImport], Span<T> marshallers are not available by default
+            fixed (char* ptrSourceString = sourceString)
+            fixed (ushort* ptrCharTypes = charTypes)
             {
-                throw new Win32Exception(win32Error);
-            }
+                if (!SafeNativeMethodsPrivate.GetStringTypeEx(locale, infoType, ptrSourceString, sourceString.Length, ptrCharTypes))
+                    throw new Win32Exception(); // Initializes with Marshal.GetLastPInvokeError()
+            }        
 
-            return win32Return;
+            return true;
         }
         
-            public static int GetSysColor(int nIndex)
+        public static int GetSysColor(int nIndex)
         {
-                return SafeNativeMethodsPrivate.GetSysColor(nIndex);
+            return SafeNativeMethodsPrivate.GetSysColor(nIndex);
         }
 
         public static bool IsClipboardFormatAvailable(int format)
@@ -224,11 +200,10 @@ namespace MS.Win32 {
             [DllImport(ExternDll.User32, SetLastError=true, CharSet=CharSet.Auto)]
             public static extern int GetCaretBlinkTime();
 
-            [DllImport("kernel32.dll", SetLastError = true, CharSet = CharSet.Auto)]
-            public static extern bool GetStringTypeEx(uint locale, uint infoType, char[] sourceString, int count,
-                [Out, MarshalAs(UnmanagedType.LPArray, SizeParamIndex = 3)] UInt16[] charTypes);
+            [DllImport(ExternDll.Kernel32, SetLastError = true, CharSet = CharSet.Auto)]
+            public static unsafe extern bool GetStringTypeEx(uint locale, uint infoType, char* sourceString, int count, ushort* charTypes);
             
-            [DllImport(ExternDll.User32, CharSet = System.Runtime.InteropServices.CharSet.Auto)]
+            [DllImport(ExternDll.User32, CharSet = CharSet.Auto)]
             public static extern int GetSysColor(int nIndex);
 
             [DllImport(ExternDll.User32, ExactSpelling = true, CharSet = CharSet.Auto)]

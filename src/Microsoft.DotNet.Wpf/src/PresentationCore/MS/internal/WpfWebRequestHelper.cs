@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -11,46 +11,36 @@
 //      type from filename.
 //
 
-using System;
 using System.Net;
 using System.Net.Cache;
-using System.Security;
 using System.IO;
 
 using System.Windows.Navigation;
 using System.IO.Packaging;
 using MS.Internal.AppModel;
-using MS.Internal.Utility;
 using MS.Internal.PresentationCore;
-
-//From Presharp documentation:
-//In order to avoid generating warnings about unknown message numbers and
-//unknown pragmas when compiling your C# source code with the actual C# compiler,
-//you need to disable warnings 1634 and 1691. 
-#pragma warning disable 1634, 1691
 
 namespace MS.Internal
 {
-/// <summary>
-/// Helper class for handling all web requests/responses in the framework. Using it ensures consisent handling 
-/// and support for special features: cookies, NTLM authentication, caching, inferring MIME type from filename.
-/// 
-/// Only two methods are mandatory: 
-///   - CreateRequest. (PackWebRequestFactory.CreateWebRequest is an allowed alternative. It delegates to 
-///     this CreateRequest for non-pack URIs.)
-///   - HandleWebResponse. 
-/// The remaining methods just automate the entire request process, up to the point of getting the response
-/// stream. Using the SecurityTreatAsSafe ones helps avoid making other code SecurityCritical.
-/// 
-/// Related types:
-///   - BaseUriHelper
-///   - BindUriHelper (built into Framework, subset into Core)
-///   - PackWebRequestFactory
-///   - MimeObjectFactory
-/// </summary>
-static class WpfWebRequestHelper
-{
-    [FriendAccessAllowed]
+    /// <summary>
+    /// Helper class for handling all web requests/responses in the framework. Using it ensures consisent handling 
+    /// and support for special features: cookies, NTLM authentication, caching, inferring MIME type from filename.
+    /// 
+    /// Only two methods are mandatory: 
+    ///   - CreateRequest. (PackWebRequestFactory.CreateWebRequest is an allowed alternative. It delegates to 
+    ///     this CreateRequest for non-pack URIs.)
+    ///   - HandleWebResponse. 
+    /// The remaining methods just automate the entire request process, up to the point of getting the response
+    /// stream. Using the SecurityTreatAsSafe ones helps avoid making other code SecurityCritical.
+    /// 
+    /// Related types:
+    ///   - BaseUriHelper
+    ///   - BindUriHelper (built into Framework, subset into Core)
+    ///   - PackWebRequestFactory
+    ///   - MimeObjectFactory
+    /// </summary>
+    internal static class WpfWebRequestHelper
+    {
     internal static WebRequest CreateRequest(Uri uri)
     {
         // Ideally we would want to use RegisterPrefix and WebRequest.Create.
@@ -99,11 +89,6 @@ static class WpfWebRequestHelper
 
             CookieHandler.HandleWebRequest(httpRequest);
 
-            if (String.IsNullOrEmpty(httpRequest.Referer))
-            {
-                httpRequest.Referer = BindUriHelper.GetReferer(uri);
-            }
-
             CustomCredentialPolicy.EnsureCustomCredentialPolicy();
 
             // Enable NTLM authentication.
@@ -120,7 +105,6 @@ static class WpfWebRequestHelper
     /// change behavior in SP1/v3.5, ConfigCachePolicy() is called separately by the code that previously
     /// relied on ConfigHttpWebRequest().
     /// </remarks>
-    [FriendAccessAllowed]
     static internal void ConfigCachePolicy(WebRequest request, bool isRefresh)
     {
         HttpWebRequest httpRequest = request as HttpWebRequest;
@@ -168,33 +152,28 @@ static class WpfWebRequestHelper
     }
     private static string _defaultUserAgent;
 
-    [FriendAccessAllowed]
     internal static void HandleWebResponse(WebResponse response)
     {
         CookieHandler.HandleWebResponse(response);
     }
 
-    [FriendAccessAllowed]
     internal static Stream CreateRequestAndGetResponseStream(Uri uri)
     {
         WebRequest request = CreateRequest(uri);
         return GetResponseStream(request);
     }
-    [FriendAccessAllowed]
     internal static Stream CreateRequestAndGetResponseStream(Uri uri, out ContentType contentType)
     {
         WebRequest request = CreateRequest(uri);
         return GetResponseStream(request, out contentType);
     }
 
-    [FriendAccessAllowed]
     internal static WebResponse CreateRequestAndGetResponse(Uri uri)
     {
         WebRequest request = CreateRequest(uri);
         return GetResponse(request);
     }
 
-    [FriendAccessAllowed]
     internal static WebResponse GetResponse(WebRequest request)
     {
         WebResponse response = request.GetResponse();
@@ -215,7 +194,6 @@ static class WpfWebRequestHelper
         HandleWebResponse(response);
         return response;
     }
-    [FriendAccessAllowed]
     internal static WebResponse EndGetResponse(WebRequest request, IAsyncResult ar)
     {
         WebResponse response = request.EndGetResponse(ar);
@@ -232,7 +210,6 @@ static class WpfWebRequestHelper
         return response;
     }
 
-    [FriendAccessAllowed]
     internal static Stream GetResponseStream(WebRequest request)
     {
         WebResponse response = GetResponse(request);
@@ -242,7 +219,6 @@ static class WpfWebRequestHelper
     /// Gets the response from the given request and determines the content type using the special rules 
     /// implemented in GetContentType().
     /// </summary>
-    [FriendAccessAllowed]
     internal static Stream GetResponseStream(WebRequest request, out ContentType contentType)
     {
         WebResponse response = GetResponse(request);
@@ -258,7 +234,6 @@ static class WpfWebRequestHelper
     /// - Unconfigured web servers don't return the right type for WPF content. This method does lookup based on
     ///   file extension.
     /// </summary>
-    [FriendAccessAllowed]
     internal static ContentType GetContentType(WebResponse response)
     {
         ContentType contentType = ContentType.Empty;
@@ -288,7 +263,6 @@ static class WpfWebRequestHelper
                     }
                 }
             }
-#pragma warning disable 6502
             catch (NotImplementedException)
             {
                 // this is a valid result and indicates that the subclass chose not to implement this property
@@ -297,7 +271,6 @@ static class WpfWebRequestHelper
             {
                 // this is a valid result and indicates that the subclass chose not to implement this property
             }
-#pragma warning restore 6502
         }
 
         // DevDiv2 29007 - IE9 - pack://siteoforigin:,,,/ Uris fail for standalone applications

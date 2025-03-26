@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -10,7 +10,6 @@
 //
 //
 
-using MS.Internal;
 using System.ComponentModel;
 using System.Globalization;
 using MS.Internal.PtsHost.UnsafeNativeMethods;     // PTS restrictions
@@ -120,17 +119,19 @@ namespace System.Windows
             {
                 throw new ArgumentException(SR.Format(SR.InvalidCtorParameterUnknownFigureUnitType, "type"));
             }
-            if(value > 1.0 && (type == FigureUnitType.Content || type == FigureUnitType.Page))
+            if (type is FigureUnitType.Content or FigureUnitType.Page)
             {
-                throw new ArgumentOutOfRangeException("value");
+                ArgumentOutOfRangeException.ThrowIfGreaterThan(value, 1.0);
             }
-            if (value > maxColumns && type == FigureUnitType.Column)
+
+            if (type == FigureUnitType.Column)
             {
-                throw new ArgumentOutOfRangeException("value");
+                ArgumentOutOfRangeException.ThrowIfGreaterThan(value, maxColumns);
             }
-            if (value > maxPixel && type == FigureUnitType.Pixel)
+
+            if (type == FigureUnitType.Pixel)
             {
-                throw new ArgumentOutOfRangeException("value");
+                ArgumentOutOfRangeException.ThrowIfGreaterThan(value, maxPixel);
             }
 
             _unitValue = (type == FigureUnitType.Auto) ? 0.0 : value;
@@ -181,9 +182,8 @@ namespace System.Windows
         /// and unit type as oCompare.</returns>
         override public bool Equals(object oCompare)
         {
-            if(oCompare is FigureLength)
+            if (oCompare is FigureLength l)
             {
-                FigureLength l = (FigureLength)oCompare;
                 return (this == l);
             }
             else

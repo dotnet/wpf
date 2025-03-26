@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -21,30 +21,16 @@
 //      The classid of the ActiveX control is specified in the constructor.
 //
 
-using System;
 using System.Collections;
 using System.Collections.Specialized;
-using System.ComponentModel;
-using System.Diagnostics;
-using System.Globalization;
 using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Threading;
-
-using System.Windows;
-using System.Windows.Interop;
 using System.Windows.Controls;
 using System.Windows.Input;
-using System.Windows.Markup;
 using MS.Internal;
 using MS.Internal.Controls;
-using MS.Internal.Utility;
 using MS.Win32;
-using System.Security;
-
-// Since we disable PreSharp warnings in this file, PreSharp warning is unknown to C# compiler.
-// We first need to disable warnings about unknown message numbers and unknown pragmas.
-#pragma warning disable 1634, 1691
 
 namespace System.Windows.Interop
 {
@@ -55,7 +41,7 @@ namespace System.Windows.Interop
     ///     host an ActiveX control. Currently the support is limited to
     ///     windowed controls. This class provides a technology bridge
     ///     between unmanaged ActiveXControls and Avalon framework.
-    ///     
+    ///
     ///     The only reason we expose this class public in ArrowHead without public OM
     ///     is for the WebBrowser control. The WebBrowser class derives from ActiveXHost, and
     ///     we are exposing the WebBrowser class in ArrowHead. This class does not have public
@@ -103,7 +89,7 @@ namespace System.Windows.Interop
             }
             #pragma warning restore 0618
 
-            _clsid.Value = clsid;
+            _clsid = clsid;
 
             // hookup so we are notified when loading is finished.
             Initialized += new EventHandler(OnInitialized);
@@ -157,13 +143,13 @@ namespace System.Windows.Interop
 
             //The above call should have set this interface
             Invariant.Assert(_axOleInPlaceActiveObject != null, "InPlace activation of ActiveX control failed");
-            
+
             if (ControlHandle.Handle == IntPtr.Zero)
             {
                 IntPtr inplaceWindow = IntPtr.Zero;
                 _axOleInPlaceActiveObject.GetWindow(out inplaceWindow);
                 AttachWindow(inplaceWindow);
-            }                        
+            }
 
             return _axWindow;
         }
@@ -520,7 +506,7 @@ namespace System.Windows.Interop
                                          this.ParentHandle.Handle,
                                          _bounds);
 
-            Debug.Assert(hr == NativeMethods.S_OK, String.Format(CultureInfo.CurrentCulture, "DoVerb call failed for verb 0x{0:X}", verb));
+            Debug.Assert(hr == NativeMethods.S_OK, $"DoVerb call failed for verb 0x{verb:X}");
             return hr == NativeMethods.S_OK;
         }
 
@@ -570,7 +556,7 @@ namespace System.Windows.Interop
                 // First, create the ActiveX control
                 Debug.Assert(_axInstance == null, "_axInstance must be null");
 
-                _axInstance = CreateActiveXObject(_clsid.Value);
+                _axInstance = CreateActiveXObject(_clsid);
                 Debug.Assert(_axInstance != null, "w/o an exception being thrown we must have an object...");
 
                 //
@@ -976,9 +962,11 @@ namespace System.Windows.Interop
 
         private NativeMethods.SIZE SetExtent(int width, int height)
         {
-            NativeMethods.SIZE sz = new NativeMethods.SIZE();
-            sz.cx = width;
-            sz.cy = height;
+            NativeMethods.SIZE sz = new NativeMethods.SIZE
+            {
+                cx = width,
+                cy = height
+            };
 
             bool resetExtents = false;
             try
@@ -1051,7 +1039,7 @@ namespace System.Windows.Interop
 
         #region ActiveX Related
 
-        private SecurityCriticalDataForSet<Guid>    _clsid;
+        private Guid                        _clsid;
 
         private HandleRef                   _axWindow;
         private BitVector32                 _axHostState    = new BitVector32();

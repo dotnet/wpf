@@ -7,9 +7,6 @@
 // Description: Holds the information regarding the matched text from text search
 //
 
-using System;
-using System.Windows;
-
 namespace System.Windows.Controls
 {
     internal class MatchedTextInfo

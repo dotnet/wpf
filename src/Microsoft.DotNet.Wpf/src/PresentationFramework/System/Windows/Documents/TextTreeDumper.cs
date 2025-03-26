@@ -6,9 +6,6 @@
 // Description: Debug-only helper class, dumps TextContainer state to debugger.
 //
 
-using System;
-using System.Diagnostics;
-
 namespace System.Windows.Documents
 {
 #if DEBUG
@@ -50,7 +47,7 @@ namespace System.Windows.Documents
         {
             if (tree.RootNode == null)
             {
-                Debug.WriteLine("<" + tree + "/>");
+                Debug.WriteLine($"<{tree}/>");
             }
             else
             {
@@ -63,7 +60,7 @@ namespace System.Windows.Documents
         {
             if (tree.RootNode == null)
             {
-                Debug.WriteLine("<" + tree + "/>");
+                Debug.WriteLine($"<{tree}/>");
             }
             else
             {
@@ -80,13 +77,13 @@ namespace System.Windows.Documents
         // Dumps a node and all contained nodes "flat" -- in notation similar to xaml.
         internal static void DumpFlat(TextTreeNode node)
         {
-            Debug.Write("<" + GetFlatPrefix(node) + node.DebugId);
+            Debug.Write($"<{GetFlatPrefix(node)}{node.DebugId}");
 
             if (node.ContainedNode != null)
             {
                 Debug.Write(">");
                 DumpNodeFlatRecursive(node.GetFirstContainedNode());
-                Debug.WriteLine("</" + GetFlatPrefix(node) + node.DebugId + ">");
+                Debug.WriteLine($"</{GetFlatPrefix(node)}{node.DebugId}>");
             }
             else
             {
@@ -97,7 +94,7 @@ namespace System.Windows.Documents
         // Dumps a TextPointer or TextNavigator, including symbol offset.
         internal static void Dump(TextPointer position)
         {
-            Debug.WriteLine("Offset: " + position.GetSymbolOffset() + " " + position.ToString());
+            Debug.WriteLine($"Offset: {position.GetSymbolOffset()} {position}");
         }
 
         #endregion Internal Methods
@@ -133,19 +130,19 @@ namespace System.Windows.Documents
             containedNode = node.ContainedNode;
             if (containedNode != null)
             {
-                Debug.Write(indent + "C ");
+                Debug.Write($"{indent}C ");
                 DumpNodeRecursive(containedNode, depth + 1);
             }
 
             if (node.LeftChildNode != null)
             {
-                Debug.Write(indent + "L ");
+                Debug.Write($"{indent}L ");
                 DumpNodeRecursive(node.LeftChildNode, depth + 1);
             }
 
             if (node.RightChildNode != null)
             {
-                Debug.Write(indent + "R ");
+                Debug.Write($"{indent}R ");
                 DumpNodeRecursive(node.RightChildNode, depth + 1);
             }
 
@@ -153,15 +150,15 @@ namespace System.Windows.Documents
             {
                 if (node is TextTreeRootNode)
                 {
-                    Debug.WriteLine(indent + "</RootNode>");
+                    Debug.WriteLine($"{indent}</RootNode>");
                 }
                 else if (node is TextTreeTextElementNode)
                 {
-                    Debug.WriteLine(indent + "</TextElementNode>");
+                    Debug.WriteLine($"{indent}</TextElementNode>");
                 }
                 else
                 {
-                    Debug.WriteLine(indent + "</UnknownNode>");
+                    Debug.WriteLine($"{indent}</UnknownNode>");
                 }
             }
         }
@@ -171,13 +168,13 @@ namespace System.Windows.Documents
         {
             for (; node != null; node = node.GetNextNode())
             {
-                Debug.Write("<" + GetFlatPrefix(node) + node.DebugId);
+                Debug.Write($"<{GetFlatPrefix(node)}{node.DebugId}");
 
                 if (node.ContainedNode != null)
                 {
                     Debug.Write(">");
                     DumpNodeFlatRecursive(node.GetFirstContainedNode());
-                    Debug.Write("</" + GetFlatPrefix(node) + node.DebugId + ">");
+                    Debug.Write($"</{GetFlatPrefix(node)}{node.DebugId}>");
                 }
                 else
                 {

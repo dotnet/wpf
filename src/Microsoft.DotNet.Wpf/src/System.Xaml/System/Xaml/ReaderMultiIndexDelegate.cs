@@ -2,6 +2,8 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
+#nullable disable
+
 namespace System.Xaml
 {
     public interface IXamlIndexingReader
@@ -17,12 +19,12 @@ namespace System.Xaml
     //
     internal class ReaderMultiIndexDelegate : ReaderBaseDelegate, IXamlIndexingReader
     {
-        static XamlNode s_StartOfStream = new XamlNode(XamlNode.InternalNodeType.StartOfStream);
-        static XamlNode s_EndOfStream = new XamlNode(XamlNode.InternalNodeType.EndOfStream);
+        private static XamlNode s_StartOfStream = new XamlNode(XamlNode.InternalNodeType.StartOfStream);
+        private static XamlNode s_EndOfStream = new XamlNode(XamlNode.InternalNodeType.EndOfStream);
 
-        XamlNodeIndexDelegate _indexDelegate;
-        int _count;
-        int _idx;
+        private XamlNodeIndexDelegate _indexDelegate;
+        private int _count;
+        private int _idx;
 
         public ReaderMultiIndexDelegate(XamlSchemaContext schemaContext, XamlNodeIndexDelegate indexDelegate, int count, bool hasLineInfo)
             : base(schemaContext)
@@ -38,10 +40,7 @@ namespace System.Xaml
 
         public override bool Read()
         {
-            if (IsDisposed)
-            {
-                throw new ObjectDisposedException("XamlReader"); // Can't say ReaderMultiIndexDelegate because its internal.
-            }
+            ObjectDisposedException.ThrowIf(IsDisposed, typeof(XamlReader)); // Can't say ReaderMultiIndexDelegate because its internal.
             do
             {
                 if (_idx < _count - 1)
@@ -51,8 +50,9 @@ namespace System.Xaml
                     {
                         return true;   // This is the common/fast path
                     }
+
                     // else do the NONE node stuff.
-                    if (_currentNode.LineInfo != null)
+                    if (_currentNode.LineInfo is not null)
                     {
                         _currentLineInfo = _currentNode.LineInfo;
                     }
@@ -68,7 +68,8 @@ namespace System.Xaml
                     _currentLineInfo = null;
                     break;
                 }
-            } while (_currentNode.NodeType == XamlNodeType.None);
+            }
+            while (_currentNode.NodeType == XamlNodeType.None);
             return !IsEof;
         }
 

@@ -1,38 +1,19 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-//
-//
-// Description:
-//   Class for manipulating storages in the container file.
-
-
-
-using System;
 using System.Collections;
-using System.ComponentModel; // For EditorBrowsable attribute
-using System.Diagnostics; // For Assert
-using System.Security;
-using System.IO;
-using System.Globalization;             //  CultureInfo.InvariantCulture
-
-
-using System.Windows;                 //  SR.[exception message]
 using MS.Internal.IO.Packaging.CompoundFile;
 using CU = MS.Internal.IO.Packaging.CompoundFile.ContainerUtilities;
-using MS.Internal; // for Invariant & CriticalExceptions
-using System.Runtime.InteropServices;        // COMException
-using MS.Internal.WindowsBase;
-
-#pragma warning disable 1634, 1691  // suppressing PreSharp warnings
+using MS.Internal;
+using System.Runtime.InteropServices;
 
 namespace System.IO.Packaging
 {
-/// <summary>
-/// This class holds the core information for a StorageInfo object.
-/// </summary>
-internal class StorageInfoCore
+    /// <summary>
+    /// This class holds the core information for a StorageInfo object.
+    /// </summary>
+    internal class StorageInfoCore
 {
     internal StorageInfoCore( 
         string nameStorage
@@ -46,7 +27,7 @@ internal class StorageInfoCore
         safeIStorage = storage;
         validEnumerators = new Hashtable();
         // Storage and Stream names: we preserve casing, but do case-insensitive comparison (Native CompoundFile API behavior)
-        elementInfoCores = new Hashtable(CU.StringCaseInsensitiveComparer);
+        elementInfoCores = new Hashtable(StringComparer.OrdinalIgnoreCase);
     }
 
     /// <summary>
@@ -99,13 +80,13 @@ public class StorageInfo
     /// The only time this is allowed to be null is when this storage is the
     /// root storage.
     /// </summary>
-    StorageInfo parentStorage;
+    private StorageInfo parentStorage;
 
     /// <summary>
     /// Each storage holds a reference to the container root.  This value will
     /// be equal to null for the container root.
     /// </summary>
-    StorageRoot rootStorage;
+    private StorageRoot rootStorage;
 
     /// <summary>
     /// There is one StorageInfoCore object per underlying IStorage. If 
@@ -176,7 +157,7 @@ public class StorageInfo
     /// Respond to a request from a child StorageInfo object to give
     /// it a StorageInfoCore object for the given name.
     /// </summary>
-    StorageInfoCore CoreForChildStorage( string storageNname )
+    private StorageInfoCore CoreForChildStorage( string storageNname )
     {
         CheckDisposedStatus();
         
@@ -284,8 +265,7 @@ public class StorageInfo
         ArgumentNullException.ThrowIfNull(name);
 
         // Stream names: we preserve casing, but do case-insensitive comparison (Native CompoundFile API behavior)
-        if (((IEqualityComparer) CU.StringCaseInsensitiveComparer).Equals(name,
-                EncryptedPackageEnvelope.PackageStreamName))
+        if (string.Equals(name, EncryptedPackageEnvelope.PackageStreamName, StringComparison.OrdinalIgnoreCase))
             throw new ArgumentException(SR.Format(SR.StreamNameNotValid,name));
 
         //create a new streaminfo object
@@ -540,7 +520,6 @@ public class StorageInfo
 
         Invariant.Assert(streamArray  != null);
 
-        #pragma warning suppress 6506 // Invariant.Assert(streamArray  != null)
         return (StreamInfo[])streamArray.ToArray(typeof(StreamInfo));
     }
 
@@ -570,7 +549,6 @@ public class StorageInfo
 
         Invariant.Assert(storageArray != null);
 
-        #pragma warning suppress 6506 // Invariant.Assert(streamArray  != null)
         return (StorageInfo[])storageArray.ToArray(typeof(StorageInfo));
     }
 
@@ -668,7 +646,6 @@ public class StorageInfo
                         | SafeNativeCompoundFileConstants.STGM_SHARE_EXCLUSIVE,
                     0,
                     0,
-                #pragma warning suppress 6506 // Invariant.Assert(null != newStorage)
                 out newStorage.safeIStorage );
             if( SafeNativeCompoundFileConstants.S_OK != nativeCallErrorCode )
             {
@@ -821,59 +798,56 @@ public class StorageInfo
 
         // Invalidate enumerators
         InvalidateEnumerators();
-        
-        // Remove the now-meaningless name, which also signifies disposed status.
-        if( deadElementWalking is StorageInfoCore )
-        {
-            StorageInfoCore deadStorageInfoCore = (StorageInfoCore)deadElementWalking;
 
-            // Erase this storage's existence
-            deadStorageInfoCore.storageName = null;
-            if( null != deadStorageInfoCore.safeIStorage )
+            // Remove the now-meaningless name, which also signifies disposed status.
+            if (deadElementWalking is StorageInfoCore deadStorageInfoCore)
             {
-                ((IDisposable) deadStorageInfoCore.safeIStorage).Dispose();
-                deadStorageInfoCore.safeIStorage = null;
-            }
-        }
-        else if( deadElementWalking is StreamInfoCore )
-        {
-            StreamInfoCore deadStreamInfoCore = (StreamInfoCore)deadElementWalking;
 
-            // Erase this stream's existence
-            deadStreamInfoCore.streamName = null;
-
-            try
-            {
-                if (null != deadStreamInfoCore.exposedStream)
+                // Erase this storage's existence
+                deadStorageInfoCore.storageName = null;
+                if (null != deadStorageInfoCore.safeIStorage)
                 {
-                    ((Stream)(deadStreamInfoCore.exposedStream)).Close();
+                    ((IDisposable)deadStorageInfoCore.safeIStorage).Dispose();
+                    deadStorageInfoCore.safeIStorage = null;
                 }
             }
-            catch(Exception e)
+            else if (deadElementWalking is StreamInfoCore deadStreamInfoCore)
             {
-                if(CriticalExceptions.IsCriticalException(e))
+
+                // Erase this stream's existence
+                deadStreamInfoCore.streamName = null;
+
+                try
                 {
-                    // PreSharp Warning 56500
-                    throw;
+                    if (null != deadStreamInfoCore.exposedStream)
+                    {
+                        ((Stream)(deadStreamInfoCore.exposedStream)).Close();
+                    }
                 }
-                else
+                catch (Exception e)
                 {
-                    // We don't care if there are any issues - 
-                    //  the user wanted this stream gone anyway.
+                    if (CriticalExceptions.IsCriticalException(e))
+                    {
+                        throw;
+                    }
+                    else
+                    {
+                        // We don't care if there are any issues - 
+                        //  the user wanted this stream gone anyway.
+                    }
+                }
+
+                deadStreamInfoCore.exposedStream = null;
+
+                if (null != deadStreamInfoCore.safeIStream)
+                {
+                    ((IDisposable)deadStreamInfoCore.safeIStream).Dispose();
+                    deadStreamInfoCore.safeIStream = null;
                 }
             }
 
-            deadStreamInfoCore.exposedStream = null;
-            
-            if( null != deadStreamInfoCore.safeIStream ) 
-            {
-                ((IDisposable) deadStreamInfoCore.safeIStream).Dispose();
-                deadStreamInfoCore.safeIStream = null;
-            }
-        }
-        
-        // Remove reference for destroyed element
-        core.elementInfoCores.Remove(elementNameInternal);
+            // Remove reference for destroyed element
+            core.elementInfoCores.Remove(elementNameInternal);
     }
     /// <summary>
     /// Looks for a storage element with the given name, retrieves its
@@ -901,8 +875,7 @@ public class StorageInfo
         while( 0 < actual && !nameFound )
         {
             // Stream names: we preserve casing, but do case-insensitive comparison (Native CompoundFile API behavior)
-            if(((IEqualityComparer) CU.StringCaseInsensitiveComparer).Equals(streamName,
-                                            statStg.pwcsName))
+            if (string.Equals(streamName, statStg.pwcsName, StringComparison.OrdinalIgnoreCase))
             {
                 nameFound = true;
             }
@@ -1041,7 +1014,7 @@ public class StorageInfo
     /// If this returns true, the storage cache pointer should be live.
     /// </summary>
     /// <returns>Whether "this" storage exists</returns>
-    bool InternalExists()
+    private bool InternalExists()
     {
         return InternalExists( core.storageName );
     }
@@ -1060,7 +1033,7 @@ public class StorageInfo
     /// If this returns true, the storage cache pointer should be live.
     /// </summary>
     /// <returns>Whether "this" storage exists</returns>
-    bool InternalExists(string name)
+    private bool InternalExists(string name)
     {
         // We can't have an IStorage unless we exist.
         if( null != core.safeIStorage )
@@ -1093,7 +1066,7 @@ public class StorageInfo
         return parentStorage.CanOpenStorage( name );
     }
     
-    bool CanOpenStorage( string nameInternal )
+    private bool CanOpenStorage( string nameInternal )
     {
         bool openSuccess = false;
         StorageInfoCore childCore = core.elementInfoCores[ nameInternal ] as StorageInfoCore ;
@@ -1135,7 +1108,7 @@ public class StorageInfo
     /// If it doesn't, abort with an exception.  This implements the little
     /// shortcut.
     /// </summary>
-    void VerifyExists()
+    private void VerifyExists()
     {
         if( !InternalExists() )
         {
@@ -1148,7 +1121,7 @@ public class StorageInfo
     /// <summary>
     /// Grabs the STATSTG representing us
     /// </summary>
-    System.Runtime.InteropServices.ComTypes.STATSTG GetStat()
+    private System.Runtime.InteropServices.ComTypes.STATSTG GetStat()
     {
         System.Runtime.InteropServices.ComTypes.STATSTG returnValue;
 
@@ -1167,7 +1140,7 @@ public class StorageInfo
     /// DateTime from a 64-bit value representing FILETIME instead of the
     /// FILETIME struct itself.
     /// </summary>
-    DateTime ConvertFILETIMEToDateTime( System.Runtime.InteropServices.ComTypes.FILETIME time )
+    private DateTime ConvertFILETIMEToDateTime( System.Runtime.InteropServices.ComTypes.FILETIME time )
     {
         // We should let the user know when the time is not valid, rather than 
         //  return a bogus date of Dec 31. 1600.
@@ -1229,33 +1202,31 @@ public class StorageInfo
                 {
                     RecursiveStorageInfoCoreRelease( (StorageInfoCore)o );
                 }
-                else if( o is StreamInfoCore )
-                {
-                    StreamInfoCore streamRelease = (StreamInfoCore)o;
-
-                    try
+                else if (o is StreamInfoCore streamRelease)
                     {
-                        if (null != streamRelease.exposedStream)
+                        try
                         {
-                            ((Stream)(streamRelease.exposedStream)).Close();
+                            if (null != streamRelease.exposedStream)
+                            {
+                                ((Stream)(streamRelease.exposedStream)).Close();
+                            }
+                            streamRelease.exposedStream = null;
                         }
-                        streamRelease.exposedStream = null;
-                    }
-                    finally
-                    {
-                        // We need this release and null-out to happen even if we
-                        //  ran into problems with the clean-up code above.
-                        if( null != streamRelease.safeIStream)
+                        finally
                         {
-                            ((IDisposable) streamRelease.safeIStream).Dispose();
-                            streamRelease.safeIStream = null;
-                        }
+                            // We need this release and null-out to happen even if we
+                            //  ran into problems with the clean-up code above.
+                            if (null != streamRelease.safeIStream)
+                            {
+                                ((IDisposable)streamRelease.safeIStream).Dispose();
+                                streamRelease.safeIStream = null;
+                            }
 
-                        // Null name in core signifies the core object is disposed
-                        ((StreamInfoCore)o).streamName = null;
+                            // Null name in core signifies the core object is disposed
+                            ((StreamInfoCore)o).streamName = null;
+                        }
                     }
                 }
-            }
 
             // All child objects freed, clear out the enumerators
             InvalidateEnumerators( startCore );

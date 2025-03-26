@@ -2,18 +2,17 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
+#nullable disable
+
 using System.Runtime.Serialization;
 using System.Xaml.Schema;
 
 namespace MS.Internal.Xaml.Parser
 {
-    class GenericTypeNameParser
+    internal class GenericTypeNameParser
     {
         [Serializable]
-        class TypeNameParserException : Exception
+        private class TypeNameParserException : Exception
         {
             public TypeNameParserException(string message)
                 : base(message)
@@ -29,7 +28,7 @@ namespace MS.Internal.Xaml.Parser
         private GenericTypeNameScanner _scanner;
         private string _inputText;
         private Func<string, string> _prefixResolver;
-        Stack<TypeNameFrame> _stack;
+        private Stack<TypeNameFrame> _stack;
 
         public GenericTypeNameParser(Func<string, string> prefixResolver)
         {
@@ -38,9 +37,7 @@ namespace MS.Internal.Xaml.Parser
 
         public static XamlTypeName ParseIfTrivalName(string text, Func<string, string> prefixResolver, out string error)
         {
-            int parenIdx = text.IndexOf('(');
-            int bracketIdx = text.IndexOf('[');
-            if (parenIdx != -1 || bracketIdx != -1)
+            if (text.Contains('(') || text.Contains('['))
             {
                 error = string.Empty;
                 return null;
@@ -57,11 +54,12 @@ namespace MS.Internal.Xaml.Parser
             }
 
             string ns = prefixResolver(prefix);
-            if (String.IsNullOrEmpty(ns))
+            if (string.IsNullOrEmpty(ns))
             {
                 error = SR.Format(SR.PrefixNotFound, prefix);
                 return null;
             }
+
             XamlTypeName xamlTypeName = new XamlTypeName(ns, simpleName);
             return xamlTypeName;
         }
@@ -89,10 +87,11 @@ namespace MS.Internal.Xaml.Parser
             }
 
             XamlTypeName typeName = null;
-            if (String.IsNullOrEmpty(error))
+            if (string.IsNullOrEmpty(error))
             {
                 typeName = CollectNameFromStack();
             }
+
             return typeName;
         }
 
@@ -118,10 +117,11 @@ namespace MS.Internal.Xaml.Parser
             }
 
             IList<XamlTypeName> typeNameList = null;
-            if (String.IsNullOrEmpty(error))
+            if (string.IsNullOrEmpty(error))
             {
                 typeNameList = CollectNameListFromStack();
             }
+
             return typeNameList;
         }
 
@@ -141,6 +141,7 @@ namespace MS.Internal.Xaml.Parser
             {
                 ThrowOnBadInput();
             }
+
             P_SimpleTypeName();
 
             // Optional
@@ -154,10 +155,9 @@ namespace MS.Internal.Xaml.Parser
             {
                 P_RepeatingSubscript();
             }
-            
+
             Callout_EndOfType();
         }
-
 
         // SimpleTypeName   ::= (Prefix ‘:’)? TypeName
         //
@@ -181,10 +181,11 @@ namespace MS.Internal.Xaml.Parser
                 {
                     ThrowOnBadInput();
                 }
+
                 name = _scanner.MultiCharTokenText;
                 _scanner.Read();
-
             }
+
             Callout_FoundName(prefix, name);
         }
 
@@ -204,6 +205,7 @@ namespace MS.Internal.Xaml.Parser
             {
                 ThrowOnBadInput();
             }
+
             _scanner.Read();
         }
 
@@ -259,29 +261,32 @@ namespace MS.Internal.Xaml.Parser
             _stack.Push(frame);
         }
 
-        void Callout_FoundName(string prefix, string name)
+        private void Callout_FoundName(string prefix, string name)
         {
-            TypeNameFrame frame = new TypeNameFrame();
-            frame.Name = name;
+            TypeNameFrame frame = new TypeNameFrame
+            {
+                Name = name
+            };
             string ns = _prefixResolver(prefix);
             frame.Namespace = ns ?? throw new TypeNameParserException(SR.Format(SR.PrefixNotFound, prefix));
             _stack.Push(frame);
         }
 
-        void Callout_EndOfType()
+        private void Callout_EndOfType()
         {
             TypeNameFrame frame = _stack.Pop();
             XamlTypeName typeName = new XamlTypeName(frame.Namespace, frame.Name, frame.TypeArgs);
 
             frame = _stack.Peek();
-            if (frame.TypeArgs == null)
+            if (frame.TypeArgs is null)
             {
                 frame.AllocateTypeArgs();
             }
+
             frame.TypeArgs.Add(typeName);
         }
 
-        void Callout_Subscript(string subscript)
+        private void Callout_Subscript(string subscript)
         {
             TypeNameFrame frame = _stack.Peek();
             frame.Name += subscript;
@@ -318,9 +323,9 @@ namespace MS.Internal.Xaml.Parser
         }
     }
 
-    class TypeNameFrame
+    internal class TypeNameFrame
     {
-        List<XamlTypeName> _typeArgs;
+        private List<XamlTypeName> _typeArgs;
 
         public string Namespace { get; set; }
         public string Name { get; set; }

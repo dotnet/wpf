@@ -1,17 +1,17 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
 //---------------------------------------------------------------------------
-// 
+//
 // Description: This is a MSBuild task which generates a temporary target assembly
 //              if current project contains a xaml file with local-type-reference.
 //
-//              It generates a temporary project file and then call build-engine 
+//              It generates a temporary project file and then call build-engine
 //              to compile it.
-//              
-//              The new project file will replace all the Reference Items with the 
-//              resolved ReferencePath, add all the generated code file into Compile 
+//
+//              The new project file will replace all the Reference Items with the
+//              resolved ReferencePath, add all the generated code file into Compile
 //              Item list.
 //
 //---------------------------------------------------------------------------
@@ -21,22 +21,13 @@ using System.IO;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-
-using System.Globalization;
 using System.Diagnostics;
-using System.Reflection;
-using System.Resources;
 using System.Xml;
 
 using Microsoft.Build.Framework;
 using Microsoft.Build.Utilities;
 
 using MS.Utility;
-using MS.Internal.Tasks;
-
-// Since we disable PreSharp warnings in this file, PreSharp warning is unknown to C# compiler.
-// We first need to disable warnings about unknown message numbers and unknown pragmas.
-#pragma warning disable 1634, 1691
 
 namespace Microsoft.Build.Tasks.Windows
 {
@@ -45,15 +36,15 @@ namespace Microsoft.Build.Tasks.Windows
     /// <summary>
     ///   This task is used to generate a temporary target assembly. It generates
     ///   a temporary project file and then compile it.
-    /// 
+    ///
     ///   The generated project file is based on current project file, with below
     ///   modification:
-    /// 
+    ///
     ///       A:  Add the generated code files (.g.cs) to Compile Item list.
     ///       B:  Replace Reference Item list with ReferenctPath item list.
-    ///           So that it doesn't need to rerun time-consuming task 
+    ///           So that it doesn't need to rerun time-consuming task
     ///           ResolveAssemblyReference (RAR) again.
-    /// 
+    ///
     /// </summary>
     public sealed class GenerateTemporaryTargetAssembly : Task
     {
@@ -66,13 +57,13 @@ namespace Microsoft.Build.Tasks.Windows
         #region Constructors
 
         /// <summary>
-        /// Constructor 
+        /// Constructor
         /// </summary>
         public GenerateTemporaryTargetAssembly()
             : base(SR.SharedResourceManager)
         {
-        }   
-        
+        }
+
         #endregion Constructors
 
         //------------------------------------------------------
@@ -91,7 +82,7 @@ namespace Microsoft.Build.Tasks.Windows
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1031:DoNotCatchGeneralExceptionTypes")]
         public override bool Execute()
         {
-            if (string.Compare(IncludePackageReferencesDuringMarkupCompilation, "false", StringComparison.OrdinalIgnoreCase) != 0)
+            if (!string.Equals(IncludePackageReferencesDuringMarkupCompilation, "false", StringComparison.OrdinalIgnoreCase))
             {
                 return ExecuteGenerateTemporaryTargetAssemblyWithPackageReferenceSupport();
             }
@@ -102,9 +93,9 @@ namespace Microsoft.Build.Tasks.Windows
         }
 
         /// <summary>
-        /// ExecuteLegacyGenerateTemporaryTargetAssembly 
+        /// ExecuteLegacyGenerateTemporaryTargetAssembly
         ///
-        /// Creates a project file based on the parent project and compiles a temporary assembly. 
+        /// Creates a project file based on the parent project and compiles a temporary assembly.
         ///
         /// Passes IntermediateOutputPath, AssemblyName, and TemporaryTargetAssemblyName as global properties.
         ///
@@ -122,8 +113,12 @@ namespace Microsoft.Build.Tasks.Windows
                 XmlDocument xmlProjectDoc = null;
 
                 xmlProjectDoc = new XmlDocument( );
-                xmlProjectDoc.Load(CurrentProject);
-
+                //Bugfix for GB chars, exception thrown when using Load(CurrentProject), when project name has GB characters in it.
+                //Using a filestream instead of using string path to avoid the need to properly compose Uri (which is another way of fixing - but more complicated).
+                using(FileStream fs = File.OpenRead(CurrentProject))
+                {
+                    xmlProjectDoc.Load(fs);
+                }
                 //
                 // remove all the WinFX specific item lists
                 // ApplicationDefinition, Page, MarkupResource and Resource
@@ -149,12 +144,12 @@ namespace Microsoft.Build.Tasks.Windows
                 // This can fix the problem of project cache in VS.NET environment.
                 //
                 // GetRandomFileName( ) could return any possible file name and extension
-                // Since this temporary file will be used to represent an MSBUILD project file, 
+                // Since this temporary file will be used to represent an MSBUILD project file,
                 // we will use the same extension as that of the current project file
                 //
                 string randomFileName = Path.GetFileNameWithoutExtension(Path.GetRandomFileName());
 
-                // Don't call Path.ChangeExtension to append currentProjectExtension. It will do 
+                // Don't call Path.ChangeExtension to append currentProjectExtension. It will do
                 // odd things with project names that already contains a period (like System.Windows.
                 // Contols.Ribbon.csproj). Instead, just append the extension - after all, we already know
                 // for a fact that this name (i.e., tempProj) lacks a file extension.
@@ -172,14 +167,14 @@ namespace Microsoft.Build.Tasks.Windows
                 Hashtable globalProperties = new Hashtable(3);
 
                 // Add AssemblyName, IntermediateOutputPath and _TargetAssemblyProjectName to the global property list
-                // Note that _TargetAssemblyProjectName is not defined as a property with Output attribute - that doesn't do us much 
+                // Note that _TargetAssemblyProjectName is not defined as a property with Output attribute - that doesn't do us much
                 // good here. We need _TargetAssemblyProjectName to be a well-known property in the new (temporary) project
                 // file, and having it be available in the current MSBUILD process is not useful.
                 globalProperties[intermediateOutputPathPropertyName] = IntermediateOutputPath;
 
                 globalProperties[assemblyNamePropertyName] = AssemblyName;
                 globalProperties[targetAssemblyProjectNamePropertyName] = currentProjectName;
-
+                globalProperties["EmbedUntrackedSources"] = "false";
                 Dictionary<string, ITaskItem[]> targetOutputs = new Dictionary<string, ITaskItem[]>();
                 retValue = BuildEngine.BuildProjectFile(tempProj, new string[] { CompileTargetName }, globalProperties, targetOutputs);
 
@@ -201,7 +196,7 @@ namespace Microsoft.Build.Tasks.Windows
                         File.Delete(tempProj);
 
                         DirectoryInfo intermediateOutputPath = new DirectoryInfo(IntermediateOutputPath);
-                        foreach (FileInfo temporaryProjectFile in intermediateOutputPath.EnumerateFiles(string.Concat(tempProjPrefix, "*")))
+                        foreach (FileInfo temporaryProjectFile in intermediateOutputPath.EnumerateFiles($"{tempProjPrefix}*"))
                         {
                             temporaryProjectFile.Delete();
                         }
@@ -223,13 +218,13 @@ namespace Microsoft.Build.Tasks.Windows
         }
 
         /// <summary>
-        /// ExecuteGenerateTemporaryTargetAssemblyWithPackageReferenceSupport 
+        /// ExecuteGenerateTemporaryTargetAssemblyWithPackageReferenceSupport
         ///
-        /// Creates a project file based on the parent project and compiles a temporary assembly. 
+        /// Creates a project file based on the parent project and compiles a temporary assembly.
         ///
         /// Receives the temporary project name as a parameter and writes properties in to the project file itself.
         ///
-        /// No global properties are set.  
+        /// No global properties are set.
         ///
         /// </summary>
         /// <returns></returns>
@@ -241,14 +236,18 @@ namespace Microsoft.Build.Tasks.Windows
 
             //
             // Create the temporary target assembly project
-            // 
+            //
             try
             {
                 XmlDocument xmlProjectDoc = null;
 
                 xmlProjectDoc = new XmlDocument( );
-                xmlProjectDoc.Load(CurrentProject);
-
+                //Bugfix for GB chars, exception thrown when using Load(CurrentProject), when project name has GB characters in it.
+                //Using a filestream instead of using string path to avoid the need to properly compose Uri (which is another way of fixing - but more complicated).
+                using(FileStream fs = File.OpenRead(CurrentProject))
+                {
+                    xmlProjectDoc.Load(fs);
+                }
                 // remove all the WinFX specific item lists
                 // ApplicationDefinition, Page, MarkupResource and Resource
                 RemoveItemsByName(xmlProjectDoc, APPDEFNAME);
@@ -267,10 +266,10 @@ namespace Microsoft.Build.Tasks.Windows
                 AddNewItems(xmlProjectDoc, AnalyzerTypeName, Analyzers);
 
                 // Replace implicit SDK imports with explicit SDK imports
-                ReplaceImplicitImports(xmlProjectDoc); 
+                ReplaceImplicitImports(xmlProjectDoc);
 
                 // Add properties required for temporary assembly compilation
-                var properties = new List<(string PropertyName, string PropertyValue)> 
+                var properties = new List<(string PropertyName, string PropertyValue)>
                 {
                     ( nameof(AssemblyName), AssemblyName ),
                     ( nameof(IntermediateOutputPath), IntermediateOutputPath ),
@@ -312,7 +311,7 @@ namespace Microsoft.Build.Tasks.Windows
                         File.Delete(TemporaryTargetAssemblyProjectName);
 
                         DirectoryInfo intermediateOutputPath = new DirectoryInfo(IntermediateOutputPath);
-                        foreach (FileInfo temporaryProjectFile in intermediateOutputPath.EnumerateFiles(string.Concat(Path.GetFileNameWithoutExtension(TemporaryTargetAssemblyProjectName), "*")))
+                        foreach (FileInfo temporaryProjectFile in intermediateOutputPath.EnumerateFiles($"{Path.GetFileNameWithoutExtension(TemporaryTargetAssemblyProjectName)}*"))
                         {
                             temporaryProjectFile.Delete();
                         }
@@ -335,7 +334,7 @@ namespace Microsoft.Build.Tasks.Windows
         }
 
         #endregion Public Methods
-        
+
         //------------------------------------------------------
         //
         //  Public Properties
@@ -345,7 +344,7 @@ namespace Microsoft.Build.Tasks.Windows
         #region Public Properties
 
         /// <summary>
-        /// CurrentProject 
+        /// CurrentProject
         ///    The full path of current project file.
         /// </summary>
         [Required]
@@ -365,7 +364,7 @@ namespace Microsoft.Build.Tasks.Windows
             get { return _msbuildBinPath; }
             set { _msbuildBinPath = value; }
         }
-        
+
         /// <summary>
         /// GeneratedCodeFiles
         ///    A list of generated code files, it could be empty.
@@ -381,8 +380,8 @@ namespace Microsoft.Build.Tasks.Windows
         /// CompileTypeName
         ///   The appropriate item name which can be accepted by managed compiler task.
         ///   It is "Compile" for now.
-        ///   
-        ///   Adding this property is to make the type name configurable, if it is changed, 
+        ///
+        ///   Adding this property is to make the type name configurable, if it is changed,
         ///   No code is required to change in this task, but set a new type name in project file.
         /// </summary>
         [Required]
@@ -408,8 +407,8 @@ namespace Microsoft.Build.Tasks.Windows
         /// ReferencePathTypeName
         ///   The appropriate item name which is used to keep the Reference list in managed compiler task.
         ///   It is "ReferencePath" for now.
-        ///   
-        ///   Adding this property is to make the type name configurable, if it is changed, 
+        ///
+        ///   Adding this property is to make the type name configurable, if it is changed,
         ///   No code is required to change in this task, but set a new type name in project file.
         /// </summary>
         [Required]
@@ -422,11 +421,11 @@ namespace Microsoft.Build.Tasks.Windows
 
         /// <summary>
         /// IntermediateOutputPath
-        /// 
+        ///
         /// The value which is set to IntermediateOutputPath property in current project file.
-        /// 
-        /// Passing this value explicitly is to make sure to generate temporary target assembly 
-        /// in expected directory.  
+        ///
+        /// Passing this value explicitly is to make sure to generate temporary target assembly
+        /// in expected directory.
         /// </summary>
         [Required]
         public string IntermediateOutputPath
@@ -437,11 +436,11 @@ namespace Microsoft.Build.Tasks.Windows
 
         /// <summary>
         /// AssemblyName
-        /// 
+        ///
         /// The value which is set to AssemblyName property in current project file.
-        /// Passing this value explicitly is to make sure to generate the expected 
+        /// Passing this value explicitly is to make sure to generate the expected
         /// temporary target assembly.
-        /// 
+        ///
         /// </summary>
         [Required]
         public string AssemblyName
@@ -452,10 +451,10 @@ namespace Microsoft.Build.Tasks.Windows
 
         /// <summary>
         /// CompileTargetName
-        /// 
+        ///
         /// The msbuild target name which is used to generate assembly from source code files.
         /// Usually it is "CoreCompile"
-        /// 
+        ///
         /// </summary>
         [Required]
         public string CompileTargetName
@@ -466,54 +465,54 @@ namespace Microsoft.Build.Tasks.Windows
 
         /// <summary>
         /// Optional <see cref="Boolean"/> task parameter
-        /// 
+        ///
         /// When <code>true</code>, debugging information is enabled for the <see cref="GenerateTemporaryTargetAssembly"/>
-        /// Task. At this time, the only debugging information that is generated consists of the temporary project that is 
+        /// Task. At this time, the only debugging information that is generated consists of the temporary project that is
         /// created to generate the temporary target assembly. This temporary project is normally deleted at the end of this
-        /// MSBUILD task; when <see cref="GenerateTemporaryTargetAssemblyDebuggingInformation"/> is enable, this temporary project 
-        /// will be retained for inspection by the developer. 
+        /// MSBUILD task; when <see cref="GenerateTemporaryTargetAssemblyDebuggingInformation"/> is enable, this temporary project
+        /// will be retained for inspection by the developer.
         ///
         /// This is a diagnostic parameter, and it defaults to <code>false</code>.
         /// </summary>
-        public bool GenerateTemporaryTargetAssemblyDebuggingInformation 
-        { 
+        public bool GenerateTemporaryTargetAssemblyDebuggingInformation
+        {
             get { return _generateTemporaryTargetAssemblyDebuggingInformation; }
-            set { _generateTemporaryTargetAssemblyDebuggingInformation = value; } 
+            set { _generateTemporaryTargetAssemblyDebuggingInformation = value; }
         }
 
         /// <summary>
-        /// Analyzers 
-        /// 
+        /// Analyzers
+        ///
         /// Required for Source Generator support. May be null.
-        /// 
+        ///
         /// </summary>
-        public ITaskItem[] Analyzers 
+        public ITaskItem[] Analyzers
         { get; set; }
 
         /// <summary>
         /// AnalyzerTypeName
         ///   The appropriate item name which can be accepted by managed compiler task.
         ///   It is "Analyzer" for now.
-        ///   
-        ///   Adding this property is to make the type name configurable, if it is changed, 
+        ///
+        ///   Adding this property is to make the type name configurable, if it is changed,
         ///   No code is required to change in this task, but set a new type name in project file.
         /// </summary>
         [Required]
         public string AnalyzerTypeName { get; set; }
 
         /// <summary>
-        /// RootNamespace 
-        /// 
+        /// RootNamespace
+        ///
         /// Required for Source Generator support. May be null.
-        /// 
+        ///
         /// </summary>
         public string RootNamespace { get; set; }
 
         /// <summary>
         /// BaseIntermediateOutputPath
-        /// 
+        ///
         /// Required for Source Generator support. May be null.
-        /// 
+        ///
         /// </summary>
         public string BaseIntermediateOutputPath
         {
@@ -521,18 +520,18 @@ namespace Microsoft.Build.Tasks.Windows
         }
 
         /// <summary>
-        /// IncludePackageReferencesDuringMarkupCompilation 
-        /// 
+        /// IncludePackageReferencesDuringMarkupCompilation
+        ///
         /// Required for Source Generator support. May be null.
         ///
-        /// Set this property to 'false' to use the .NET Core 3.0 behavior for this task. 
+        /// Set this property to 'false' to use the .NET Core 3.0 behavior for this task.
         ///
         /// </summary>
-        public string IncludePackageReferencesDuringMarkupCompilation 
+        public string IncludePackageReferencesDuringMarkupCompilation
         { get; set; }
 
         /// <summary>
-        /// TemporaryTargetAssemblyProjectName 
+        /// TemporaryTargetAssemblyProjectName
         ///
         /// Required for PackageReference support.
         ///
@@ -541,7 +540,7 @@ namespace Microsoft.Build.Tasks.Windows
         /// The file name with extension of the randomly generated project name for the temporary assembly
         ///
         /// </summary>
-        public string TemporaryTargetAssemblyProjectName 
+        public string TemporaryTargetAssemblyProjectName
         { get; set; }
 
         /// <summary>
@@ -555,22 +554,22 @@ namespace Microsoft.Build.Tasks.Windows
         /// This is required for some VS publishing scenarios.
         ///
         /// </summary>
-        public string MSBuildProjectExtensionsPath 
+        public string MSBuildProjectExtensionsPath
         { get; set; }
 
         /// <summary>
         ///
         /// TemporaryAssemblyForLocalTypeReference
         ///
-        /// The path of the generated temporary local type assembly.  
+        /// The path of the generated temporary local type assembly.
         ///
         /// </summary>
         [Output]
-        public string TemporaryAssemblyForLocalTypeReference 
+        public string TemporaryAssemblyForLocalTypeReference
         { get; set; }
 
         #endregion Public Properties
-  
+
         //------------------------------------------------------
         //
         //  Private Methods
@@ -584,7 +583,7 @@ namespace Microsoft.Build.Tasks.Windows
         //
         private void RemoveEntityByName(XmlDocument xmlProjectDoc, string sItemName, string groupName)
         {
-            
+
             if (xmlProjectDoc == null || String.IsNullOrEmpty(sItemName))
             {
                 // When the parameters are not valid, simply return it, instead of throwing exceptions.
@@ -609,7 +608,7 @@ namespace Microsoft.Build.Tasks.Windows
             //     <Import ... />
             //     ...
             //     <Target Name="xxx" ..../>
-            //     
+            //
             //      ...
             //
             //  </Project>
@@ -628,9 +627,7 @@ namespace Microsoft.Build.Tasks.Windows
 
             for (int i = 0; i < root.ChildNodes.Count; i++)
             {
-                XmlElement nodeGroup = root.ChildNodes[i] as XmlElement;
-
-                if (nodeGroup != null && String.Compare(nodeGroup.Name, groupName, StringComparison.OrdinalIgnoreCase) == 0)
+                if (root.ChildNodes[i] is XmlElement nodeGroup && string.Equals(nodeGroup.Name, groupName, StringComparison.OrdinalIgnoreCase))
                 {
                     //
                     // This is ItemGroup element.
@@ -641,9 +638,7 @@ namespace Microsoft.Build.Tasks.Windows
 
                         for (int j = 0; j < nodeGroup.ChildNodes.Count; j++)
                         {
-                            XmlElement nodeItem = nodeGroup.ChildNodes[j] as XmlElement;
-
-                            if (nodeItem != null && String.Compare(nodeItem.Name, sItemName, StringComparison.OrdinalIgnoreCase) == 0)
+                            if (nodeGroup.ChildNodes[j] is XmlElement nodeItem && string.Equals(nodeItem.Name, sItemName, StringComparison.OrdinalIgnoreCase))
                             {
                                 // This is the item that need to remove.
                                 // Add it into the temporary array list.
@@ -660,13 +655,11 @@ namespace Microsoft.Build.Tasks.Windows
                         {
                             foreach (object node in itemToRemove)
                             {
-                                XmlElement item = node as XmlElement;
-
                                 //
                                 // Remove this item from its parent node.
                                 // the parent node should be nodeGroup.
                                 //
-                                if (item != null)
+                                if (node is XmlElement item)
                                 {
                                     nodeGroup.RemoveChild(item);
                                 }
@@ -682,7 +675,7 @@ namespace Microsoft.Build.Tasks.Windows
 
             }   // end of "for i" statement.
         }
-        
+
         //
         // Remove specific items from project file. Every item should be under an ItemGroup.
         //
@@ -740,7 +733,7 @@ namespace Microsoft.Build.Tasks.Windows
                 if (!String.IsNullOrEmpty(embedInteropTypesMetadata))
                 {
                     embedItem = xmlProjectDoc.CreateElement(EMBEDINTEROPTYPES, root.NamespaceURI);
-                    embedItem.InnerText = embedInteropTypesMetadata; 
+                    embedItem.InnerText = embedInteropTypesMetadata;
                     nodeItem.AppendChild(embedItem);
                 }
 
@@ -781,14 +774,14 @@ namespace Microsoft.Build.Tasks.Windows
                     XmlElement nodeItem = xmlProjectDoc.CreateElement(property.PropertyName, root.NamespaceURI);
                     nodeItem.InnerText = property.PropertyValue;
 
-                    // Add current item node into the PropertyGroup 
+                    // Add current item node into the PropertyGroup
                     nodeItemGroup.AppendChild(nodeItem);
                 }
             }
         }
 
         //
-        // Replace implicit SDK imports with explicit imports 
+        // Replace implicit SDK imports with explicit imports
         //
         private static void ReplaceImplicitImports(XmlDocument xmlProjectDoc)
         {
@@ -812,7 +805,7 @@ namespace Microsoft.Build.Tasks.Windows
                     XmlNode previousNodeImportProps = null;
                     XmlNode previousNodeImportTargets = null;
 
-                    foreach (string sdk in sdks.Split(_semicolonChar).Select(i => i.Trim()))
+                    foreach (string sdk in sdks.Split(s_semicolonChar).Select(i => i.Trim()))
                     {
                         //  <Project Sdk="Microsoft.NET.Sdk">
                         //  <Project Sdk="My.Custom.Sdk/1.0.0">
@@ -873,7 +866,7 @@ namespace Microsoft.Build.Tasks.Windows
         // Creates an XmlNode that contains an Import Project element
         //
         //  <Import Project="Sdk.props" Sdk="Microsoft.NET.Sdk" />
-        static XmlNode CreateImportProjectSdkNode(XmlDocument xmlProjectDoc, string projectAttributeValue, SdkReference sdkReference)
+        private static XmlNode CreateImportProjectSdkNode(XmlDocument xmlProjectDoc, string projectAttributeValue, SdkReference sdkReference)
         {
             XmlNode nodeImport = xmlProjectDoc.CreateElement("Import", xmlProjectDoc.DocumentElement.NamespaceURI);
             XmlAttribute projectAttribute = xmlProjectDoc.CreateAttribute("Project");
@@ -944,12 +937,12 @@ namespace Microsoft.Build.Tasks.Windows
 
         private const string WPFTMP = "wpftmp";
 
-        private static readonly char[] _semicolonChar = new char[] { ';' };
+        private static readonly char[] s_semicolonChar = [';'];
 
         #endregion Private Fields
 
     }
-    
+
     #endregion GenerateProjectForLocalTypeReference Task class
 }
 

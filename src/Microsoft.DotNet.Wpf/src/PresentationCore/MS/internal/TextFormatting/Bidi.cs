@@ -4,16 +4,8 @@
 
 
 
-using System.Windows;
-using System;
-using MS.Internal.TextFormatting;
-using System.Collections;
-using System.Collections.Generic;
-using System.Diagnostics;
 using System.Globalization;
-using System.Security;
 using System.Windows.Media.TextFormatting;
-using MS.Internal;
 
 namespace MS.Internal.TextFormatting
 {
@@ -601,8 +593,8 @@ namespace MS.Internal.TextFormatting
                 set { m_overflow = value; }
             }
 
-            ulong                       m_levelStack;
-            ulong                       m_overrideLevels;
+            private ulong                       m_levelStack;
+            private ulong                       m_overrideLevels;
 
             /// <Remark>
             /// holding the last number class from the analysis
@@ -613,7 +605,7 @@ namespace MS.Internal.TextFormatting
             /// </Remark>
             protected DirectionClass    StrongCharClass;
 
-            ushort                      m_overflow;
+            private ushort                      m_overflow;
         }
         #endregion
 

@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -11,24 +11,9 @@
 //#define TRACE_MAJOR         // DO NOT LEAVE ENABLED IN CHECKED IN CODE
 //#define TRACE_ADDITIONAL    // DO NOT LEAVE ENABLED IN CHECKED IN CODE
 
-using MS.Internal;
-using MS.Internal.Controls;
-using System;
-using System.Security;
-using System.Collections;
-using System.Collections.Generic;
-using System.Collections.Specialized;
-using System.ComponentModel;
-using System.ComponentModel.Design;
-using System.Diagnostics;
 using System.Windows;
-using System.Windows.Media;
-using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Controls;
-using System.Windows.Markup;
-using System.Threading;
-using System.Windows.Ink;
 
 namespace MS.Internal.Ink
 {
@@ -180,7 +165,7 @@ namespace MS.Internal.Ink
                 // If the current captured device is Stylus, we should activate the LassoSelectionBehavior with
                 // the Stylus. Otherwise, use mouse.
                 EditingCoordinator.ActivateDynamicBehavior(EditingCoordinator.LassoSelectionBehavior,
-                    args.StylusDevice != null ? args.StylusDevice : args.Device);
+                    args.StylusDevice ?? args.Device);
             }
         }
 

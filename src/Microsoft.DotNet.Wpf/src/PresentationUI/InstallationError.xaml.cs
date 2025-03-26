@@ -1,23 +1,17 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
+
 using System;
-using System.Reflection;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Navigation;
 using System.Windows.Threading;
 using System.Windows.Input;
 using System.Diagnostics;
 using System.IO;
-using MS.Internal.PresentationUI;
 using System.Windows.Interop;
-using System.Security;
-
 
 namespace Microsoft.Internal.DeploymentUI
 {
-    [FriendAccessAllowed] // Built into UI, used by Framework.
     internal partial class InstallationErrorPage : IErrorPage
     {
 
@@ -186,8 +180,7 @@ namespace Microsoft.Internal.DeploymentUI
             }
         }
 
-
-        static void OnCommandRefresh(object sender, RoutedEventArgs e)
+        private static void OnCommandRefresh(object sender, RoutedEventArgs e)
         {
             InstallationErrorPage page = sender as InstallationErrorPage;
             if (page != null && page.RefreshCallback != null)
@@ -196,7 +189,7 @@ namespace Microsoft.Internal.DeploymentUI
             }
         }
 
-        static void OnCanRefresh(object sender, CanExecuteRoutedEventArgs e)
+        private static void OnCanRefresh(object sender, CanExecuteRoutedEventArgs e)
         {
             InstallationErrorPage page = sender as InstallationErrorPage;
             if (page != null)

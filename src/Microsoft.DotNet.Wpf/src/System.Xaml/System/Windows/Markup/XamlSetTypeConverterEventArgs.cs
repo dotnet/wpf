@@ -2,6 +2,8 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
+#nullable disable
+
 using System.ComponentModel;
 using System.Globalization;
 using System.Xaml;
@@ -35,13 +37,13 @@ namespace System.Windows.Markup
 
         public override void CallBase()
         {
-            if (CurrentType != null)
+            if (CurrentType is not null)
             {
                 XamlType baseType = CurrentType.BaseType;
-                if (baseType != null)
+                if (baseType is not null)
                 {
                     CurrentType = baseType;
-                    if (baseType.SetTypeConverterHandler != null)
+                    if (baseType.SetTypeConverterHandler is not null)
                     {
                         baseType.SetTypeConverterHandler(TargetObject, this);
                     }

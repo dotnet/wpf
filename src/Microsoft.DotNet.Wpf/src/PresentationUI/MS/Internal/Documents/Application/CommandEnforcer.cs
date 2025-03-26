@@ -4,13 +4,10 @@
 
 // Description: Manager for Enforcing RM Permissions on DocumentApplication-specific RoutedUICommands.
 
-using MS.Internal.Documents;
 using System;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
-using System.Security;
 using System.Windows.Input;
-using System.Windows.TrustUI;
 
 namespace MS.Internal.Documents.Application
 {
@@ -27,10 +24,7 @@ namespace MS.Internal.Documents.Application
         /// <param name="policy">The RMPolicy to be bound to the above Command.</param>
         public PolicyBinding(RoutedUICommand command, RightsManagementPolicy policy)
         {
-            if (command == null)
-            {
-                throw new ArgumentNullException("command");
-            }
+            ArgumentNullException.ThrowIfNull(command);
 
             _command = command;
             _policy = policy;
@@ -91,10 +85,7 @@ namespace MS.Internal.Documents.Application
         /// <param name="bind">The binding to add</param>
         internal void AddBinding(PolicyBinding bind)
         {
-            if (bind == null)
-            {
-                throw new ArgumentNullException("bind");
-            }
+            ArgumentNullException.ThrowIfNull(bind);
 
             _bindings.Add(bind);
         }

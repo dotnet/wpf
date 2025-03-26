@@ -2,28 +2,11 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-//
-//
-// Description:  Secure Environment class is a starting point for Managed RM APIs 
-//   It provides basic services of enumerating User Certificates, Initializing Environment 
-//
-//
-//
-//
-
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Diagnostics;
-using System.Globalization;
-using System.Windows;
 using MS.Internal.Security.RightsManagement;
-using SecurityHelper=MS.Internal.WindowsBase.SecurityHelper; 
 using MS.Internal;
-using MS.Internal.WindowsBase;
 
-namespace System.Security.RightsManagement 
+namespace System.Security.RightsManagement
 {
     /// <summary>
     /// This class represent a client session, which used in activation, binding  and other function calls.
@@ -81,7 +64,7 @@ namespace System.Security.RightsManagement
             if ((user.AuthenticationType != AuthenticationType.Windows) && 
                  (user.AuthenticationType != AuthenticationType.Passport))
             {
-                throw new ArgumentOutOfRangeException("user", SR.OnlyPassportOrWindowsAuthenticatedUsersAreAllowed);
+                throw new ArgumentOutOfRangeException(nameof(user), SR.OnlyPassportOrWindowsAuthenticatedUsersAreAllowed);
             }
             
             using (ClientSession userClientSession = new ClientSession(user))
@@ -103,7 +86,7 @@ namespace System.Security.RightsManagement
             if ((user.AuthenticationType != AuthenticationType.Windows) && 
                  (user.AuthenticationType != AuthenticationType.Passport))
             {
-                throw new ArgumentOutOfRangeException("user", SR.OnlyPassportOrWindowsAuthenticatedUsersAreAllowed);
+                throw new ArgumentOutOfRangeException(nameof(user), SR.OnlyPassportOrWindowsAuthenticatedUsersAreAllowed);
             }
 
             // Generic client session to enumerate user certificates 
@@ -257,7 +240,7 @@ namespace System.Security.RightsManagement
             if ((user.AuthenticationType != AuthenticationType.Windows) && 
                  (user.AuthenticationType != AuthenticationType.Passport))
             {
-                throw new ArgumentOutOfRangeException("user");
+                throw new ArgumentOutOfRangeException(nameof(user));
             }
 
             if (!IsUserActivated(user))
@@ -290,13 +273,13 @@ namespace System.Security.RightsManagement
             if ((authentication != AuthenticationType.Windows) && 
                  (authentication != AuthenticationType.Passport))
             {
-                throw new ArgumentOutOfRangeException("authentication");
+                throw new ArgumentOutOfRangeException(nameof(authentication));
             }
 
             if ((userActivationMode != UserActivationMode.Permanent) &&
                  (userActivationMode != UserActivationMode.Temporary))
             {
-                throw new ArgumentOutOfRangeException("userActivationMode");            
+                throw new ArgumentOutOfRangeException(nameof(userActivationMode));            
             }
 
             //build user with the given authnetication type and a default name 
@@ -368,8 +351,7 @@ namespace System.Security.RightsManagement
         /// </summary>
         private void CheckDisposed()
         {
-            if (_clientSession == null)
-                throw new ObjectDisposedException("SecureEnvironment");
+            ObjectDisposedException.ThrowIf(_clientSession == null, typeof(SecureEnvironment));
         }
 
         private ContentUser _user;

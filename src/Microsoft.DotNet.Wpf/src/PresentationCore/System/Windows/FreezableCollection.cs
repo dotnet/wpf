@@ -2,45 +2,18 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-//
-//
 // Description: This file contains the implementation of FreezableCollection<T>.
 //     FreezableCollection<T> is an IList<T> implementation which implements
 //     the requisite infrastructure for collections of DependencyObjects,
 //     Freezables, and Animatables and which is itself an Animatable and a Freezable.
-//
 
 using MS.Internal;
-using MS.Internal.KnownBoxes;
-using MS.Internal.Collections;
-using MS.Internal.PresentationCore;
-using MS.Utility;
-using System;
 using System.Collections;
-using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.ComponentModel;
-using System.Diagnostics;
-using System.Globalization;
-using System.Reflection;
-using System.Runtime.InteropServices;
-using System.ComponentModel.Design.Serialization;
-using System.Text;
-using System.Windows;
-using System.Windows.Media;
-using System.Windows.Media.Effects;
-using System.Windows.Media.Media3D;
 using System.Windows.Media.Animation;
-using System.Windows.Media.Composition;
-using System.Windows.Media.Imaging;
-using System.Windows.Markup;
-using System.Windows.Media.Converters;
-using System.Security;
-using SR=MS.Internal.PresentationCore.SR;
+
 // These types are aliased to match the unamanaged names used in interop
-using BOOL = System.UInt32;
-using WORD = System.UInt16;
-using Float = System.Single;
 
 namespace System.Windows
 {
@@ -109,7 +82,7 @@ namespace System.Windows
                     throw new System.ArgumentException(SR.Collection_NoNull);
                 }
 
-                OnFreezablePropertyChanged(/* oldValue = */ null, item);
+                OnFreezablePropertyChanged(oldValue: null, item);
 
                 _collection.Add(item);
             }
@@ -178,7 +151,7 @@ namespace System.Windows
 
             for (int i = _collection.Count - 1; i >= 0; i--)
             {
-                OnFreezablePropertyChanged(/* oldValue = */ _collection[i], /* newValue = */ null);
+                OnFreezablePropertyChanged(oldValue: _collection[i], newValue: null);
             }
 
             _collection.Clear();
@@ -225,7 +198,7 @@ namespace System.Windows
 
             WritePreamble();
 
-            OnFreezablePropertyChanged(/* oldValue = */ null, /* newValue = */ value);
+            OnFreezablePropertyChanged(oldValue: null, newValue: value);
 
             _collection.Insert(index, value);
 
@@ -391,10 +364,8 @@ namespace System.Windows
             // This will not throw in the case that we are copying
             // from an empty collection.  This is consistent with the
             // BCL Collection implementations. (Windows 1587365)
-            if (index < 0  || (index + _collection.Count) > array.Length)
-            {
-                throw new ArgumentOutOfRangeException("index");
-            }
+            ArgumentOutOfRangeException.ThrowIfNegative(index);
+            ArgumentOutOfRangeException.ThrowIfGreaterThan(index, array.Length - _collection.Count);
 
             _collection.CopyTo(array, index);
         }
@@ -503,10 +474,8 @@ namespace System.Windows
             // This will not throw in the case that we are copying
             // from an empty collection.  This is consistent with the
             // BCL Collection implementations. (Windows 1587365)
-            if (index < 0  || (index + _collection.Count) > array.Length)
-            {
-                throw new ArgumentOutOfRangeException("index");
-            }
+            ArgumentOutOfRangeException.ThrowIfNegative(index);
+            ArgumentOutOfRangeException.ThrowIfGreaterThan(index, array.Length - _collection.Count);
 
             if (array.Rank != 1)
             {
@@ -728,7 +697,7 @@ namespace System.Windows
             }
             WritePreamble();
             T newValue = value;
-            OnFreezablePropertyChanged(/* oldValue = */ null, newValue);
+            OnFreezablePropertyChanged(oldValue: null, newValue);
             _collection.Add(value);
 
 
@@ -811,7 +780,7 @@ namespace System.Windows
             return new FreezableCollection<T>();
         }
 
-        enum CloneCommonType
+        private enum CloneCommonType
         {
             Clone,
             CloneCurrentValue,
@@ -859,7 +828,7 @@ namespace System.Windows
                     }
                 }
 
-                OnFreezablePropertyChanged(/* oldValue = */ null, newValue);
+                OnFreezablePropertyChanged(oldValue: null, newValue);
                 _collection.Add(newValue);
             }
         }
@@ -1138,7 +1107,7 @@ namespace System.Windows
 
             public bool Busy { get { return _busyCount > 0; } }
 
-            int _busyCount;
+            private int _busyCount;
         }
 
         #endregion

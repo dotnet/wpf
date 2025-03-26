@@ -1,23 +1,12 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-//
-// 
-//
 // Description: InputGestureCollection serves the purpose of Storing/Retrieving InputGestures 
 //
 //              See spec at : http://avalon/coreui/Specs/Commanding(new).mht
-// 
-//
 
-using System;
 using System.Collections;
-using System.Diagnostics;
-using System.Collections.Generic;
-using System.Windows;
-
-using SR=MS.Internal.PresentationCore.SR;
 
 namespace System.Windows.Input
 {
@@ -178,7 +167,7 @@ namespace System.Windows.Input
          {
              get
              {
-                 return (_innerGestureList != null ? _innerGestureList[index] : null);
+                 return (_innerGestureList?[index]);
              }
              set
              {
@@ -238,8 +227,7 @@ namespace System.Windows.Input
              if (IsReadOnly)
                  throw new NotSupportedException(SR.ReadOnlyInputGesturesCollection);
 
-             if (_innerGestureList != null)
-                _innerGestureList.RemoveAt(index);
+             _innerGestureList?.RemoveAt(index);
          }
 
          /// <summary>
@@ -320,8 +308,7 @@ namespace System.Windows.Input
             if (inputGesture == null)
                 throw new NotSupportedException(SR.CollectionOnlyAcceptsInputGestures);
 
-            if (_innerGestureList != null)
-                _innerGestureList.Insert(index, inputGesture);
+            _innerGestureList?.Insert(index, inputGesture);
         }
 
         /// <summary>
@@ -403,8 +390,7 @@ namespace System.Windows.Input
         /// <param name="index">start index of items to copy</param>
         public void CopyTo(InputGesture[] inputGestures, int index) 
         {
-            if (_innerGestureList != null)
-                _innerGestureList.CopyTo(inputGestures, index);
+            _innerGestureList?.CopyTo(inputGestures, index);
         }
 
         /// <summary>

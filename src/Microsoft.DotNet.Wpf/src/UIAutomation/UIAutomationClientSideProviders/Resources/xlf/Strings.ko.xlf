@@ -357,11 +357,6 @@
         <target state="translated">대상 요소가 포커스를 받을 수 없습니다.</target>
         <note />
       </trans-unit>
-      <trans-unit id="ShouldBeZero">
-        <source>Must be zero.</source>
-        <target state="translated">0이어야 합니다.</target>
-        <note />
-      </trans-unit>
       <trans-unit id="ValueReadonly">
         <source>Value is read-only.</source>
         <target state="translated">값이 읽기 전용입니다.</target>

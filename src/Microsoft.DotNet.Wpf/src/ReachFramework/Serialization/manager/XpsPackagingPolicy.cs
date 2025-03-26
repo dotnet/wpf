@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -9,22 +9,10 @@
         the serialization packaging policy. It is the buffering layer
         between the serializer and the package
 --*/
-using System;
 using System.Collections;
-using System.Collections.Generic;
-using System.Collections.Specialized;
-using System.ComponentModel;
-using System.Diagnostics;
-using System.Reflection;
 using System.Xml;
 using System.IO;
-using System.IO.Packaging;
-using System.Security;
-using System.ComponentModel.Design.Serialization;
 using System.Windows.Xps.Packaging;
-using System.Windows.Documents;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
 using System.Printing;
 
 namespace System.Windows.Xps.Serialization
@@ -1455,25 +1443,13 @@ namespace System.Windows.Xps.Serialization
             _currentXpsColorContextRef = 0;
             _currentXpsResourceDictionaryRef = 0;
 
-            if(_fontResourceStream!=null)
-            {
-                _fontResourceStream.Initialize();
-            }
+            _fontResourceStream?.Initialize();
 
-            if(_imageResourceStream!=null)
-            {
-                _imageResourceStream.Initialize();
-            }
+            _imageResourceStream?.Initialize();
 
-            if(_colorContextResourceStream!=null)
-            {
-                _colorContextResourceStream.Initialize();
-            }
+            _colorContextResourceStream?.Initialize();
 
-            if(_resourceDictionaryResourceStream!=null)
-            {
-                _resourceDictionaryResourceStream.Initialize();
-            }
+            _resourceDictionaryResourceStream?.Initialize();
 
 
         }

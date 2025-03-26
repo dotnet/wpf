@@ -9,14 +9,7 @@
 *
 *
 \***************************************************************************/
-using System;
-using System.ComponentModel;
-using System.ComponentModel.Design.Serialization;
 using System.Windows.Input;
-using System.Reflection;
-using MS.Internal.WindowsBase;
-using MS.Utility;
-using System.Runtime.CompilerServices;
 using System.Windows.Markup;
 using System.Windows;
 
@@ -51,7 +44,7 @@ namespace MS.Internal.Markup
             object value;
             if (MemberType != null)
             {
-                value = SystemResourceKey.GetSystemResourceKey(MemberType.Name + "." + Member);
+                value = SystemResourceKey.GetSystemResourceKey($"{MemberType.Name}.{Member}");
                 if (value != null)
                 {
                     return value;

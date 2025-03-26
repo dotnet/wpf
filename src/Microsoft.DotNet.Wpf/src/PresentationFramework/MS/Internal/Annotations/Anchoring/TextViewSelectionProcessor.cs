@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -9,23 +9,11 @@
 //     all anchors that intersect with the text in an element's TextView.      
 //
 
-using System;
 using System.Windows;
-using System.Collections;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Diagnostics;
 using System.Globalization;
 using System.Windows.Annotations;
-using System.Windows.Annotations.Storage;
-using System.Windows.Controls;
 using System.Windows.Documents;
 using System.Xml;
-using MS.Utility;
-using System.Windows.Media;
-using System.Windows.Controls.Primitives;
-using MS.Internal.Documents;
-using MS.Internal.PtsHost;
 
 namespace MS.Internal.Annotations.Anchoring
 {
@@ -274,7 +262,7 @@ namespace MS.Internal.Annotations.Anchoring
 
             IServiceProvider provider = selection as IServiceProvider;
             if (provider == null)
-                throw new ArgumentException(SR.SelectionMustBeServiceProvider, "selection");
+                throw new ArgumentException(SR.SelectionMustBeServiceProvider, nameof(selection));
 
             ITextView textView = provider.GetService(typeof(ITextView)) as ITextView;
 

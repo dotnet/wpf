@@ -1,18 +1,16 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    
     <EnableDefaultItems>false</EnableDefaultItems>
-    <Platforms>AnyCPU;x64;arm64</Platforms>
+    <Platforms>x86;x64;arm64</Platforms>
   </PropertyGroup>
 
   <ItemGroup>
-    <EmbeddedResource Include="Resources\Strings.resx"/>
+    <EmbeddedResource Include="Resources\Strings.resx" />
     <Compile Include="$(WpfCommonDir)src\System\SR.cs">
         <Link>Common\System\SR.cs</Link>
     </Compile>
     <Compile Include="System\Windows\Input\Manipulations\DoubleUtil.cs" />
     <Compile Include="System\Windows\Input\Manipulations\Exceptions.cs" />
-    <Compile Include="System\Windows\Input\Manipulations\GlobalSuppressions.cs" />
     <Compile Include="System\Windows\Input\Manipulations\InertiaExpansionBehavior2D.cs" />
     <Compile Include="System\Windows\Input\Manipulations\InertiaParameters2D.cs" />
     <Compile Include="System\Windows\Input\Manipulations\InertiaProcessor2D.cs" />
@@ -37,19 +35,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <NetCoreReference Include="System.Collections" />
-    <NetCoreReference Include="System.Diagnostics.Debug" />
-    <NetCoreReference Include="System.Diagnostics.Tools" />
-    <NetCoreReference Include="System.Runtime" />
-    <NetCoreReference Include="System.Runtime.Extensions" />
-    <NetCoreReference Include="System.Resources.ResourceManager" />
-    <NetCoreReference Include="System.Runtime.InteropServices" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="$(WpfSourceDir)System.Windows.Input.Manipulations\ref\System.Windows.Input.Manipulations-ref.csproj">
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
     </ProjectReference>
   </ItemGroup>
-
 </Project>

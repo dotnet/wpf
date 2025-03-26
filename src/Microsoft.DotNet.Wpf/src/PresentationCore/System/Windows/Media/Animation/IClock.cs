@@ -4,10 +4,6 @@
 
 //                                             
 
-using System;
-using MS.Internal;
-using System.Runtime.InteropServices;
-
 namespace System.Windows.Media.Animation
 {
     /// <summary>

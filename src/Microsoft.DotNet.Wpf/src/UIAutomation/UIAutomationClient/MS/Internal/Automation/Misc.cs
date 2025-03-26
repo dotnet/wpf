@@ -1,11 +1,8 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
 // Description: Miscellaneous helper routines
-
-// PRESHARP: In order to avoid generating warnings about unkown message numbers and unknown pragmas.
-#pragma warning disable 1634, 1691
 
 using Microsoft.Win32.SafeHandles;
 using MS.Win32;
@@ -13,15 +10,9 @@ using System;
 using System.Collections;
 using System.ComponentModel;
 using System.Diagnostics;
-using System.Net;
-using System.Net.Sockets;
-using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
-using System.Security;
 using System.Text;
-using System.Windows;
 using System.Windows.Automation;
-using System.Windows.Automation.Provider;
 using NativeMethodsSetLastError = MS.Internal.UIAutomationClient.NativeMethodsSetLastError;
 
 namespace MS.Internal.Automation
@@ -45,7 +36,8 @@ namespace MS.Internal.Automation
         // compare two arrays
         internal static bool Compare(int[] a1, int[] a2)
         {
-            CheckNonNull(a1, a2);
+            ArgumentNullException.ThrowIfNull(a1);
+            ArgumentNullException.ThrowIfNull(a2);
 
             int l = a1.Length;
 
@@ -66,7 +58,8 @@ namespace MS.Internal.Automation
         // compare two AutomationElements
         internal static bool Compare(AutomationElement el1, AutomationElement el2)
         {
-            CheckNonNull(el1, el2);
+            ArgumentNullException.ThrowIfNull(el1);
+            ArgumentNullException.ThrowIfNull(el2);
             return Compare(el1.GetRuntimeId(), el2.GetRuntimeId());
         }
         #endregion Element Comparisons
@@ -168,15 +161,6 @@ namespace MS.Internal.Automation
 
         #region Param validation & Error related
 
-        // Check that specified argument is non-null, if so, throw exception
-        internal static void ValidateArgumentNonNull(object obj, string argName)
-        {
-            if (obj == null)
-            {
-                throw new ArgumentNullException(argName);
-            }
-        }
-
         // Throw an argument Exception with a generic error
         internal static void ThrowInvalidArgument(string argName)
         {
@@ -189,15 +173,6 @@ namespace MS.Internal.Automation
             if (!cond)
             {
                 throw new ArgumentException(SR.GetResourceString(reason, null));
-            }
-        }
-
-        // Check that specified condition is true; if not, throw exception
-        internal static void ValidateArgumentInRange(bool cond, string argName)
-        {
-            if (!cond)
-            {
-                throw new ArgumentOutOfRangeException(argName);
             }
         }
 
@@ -747,16 +722,6 @@ namespace MS.Internal.Automation
         //------------------------------------------------------
 
         #region Private Methods
-
-        // Helper used by the various comparison functions above
-        private static void CheckNonNull(object el1, object el2)
-        {
-            if (el1 == null)
-                throw new ArgumentNullException("el1");
-
-            if (el2 == null)
-                throw new ArgumentNullException("el2");
-        }
 
         //This function throws corresponding exception depending on the last error.
         private static void EvaluateSendMessageTimeoutError(int error)

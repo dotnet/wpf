@@ -69,10 +69,7 @@ namespace MS.Internal.Documents.Application
             RightsManagementOperation operation,
             Exception exception)
         {
-            if (exception == null)
-            {
-                throw new ArgumentNullException("exception");
-            }
+            ArgumentNullException.ThrowIfNull(exception);
 
             Trace.SafeWrite(
                 Trace.Rights,

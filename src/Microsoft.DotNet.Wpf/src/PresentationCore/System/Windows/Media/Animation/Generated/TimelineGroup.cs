@@ -10,38 +10,12 @@
 //
 
 using MS.Internal;
-using MS.Internal.KnownBoxes;
-using MS.Internal.Collections;
-using MS.Internal.PresentationCore;
 using MS.Utility;
-using System;
 using System.Collections;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Diagnostics;
-using System.Globalization;
-using System.Reflection;
-using System.Runtime.InteropServices;
-using System.ComponentModel.Design.Serialization;
-using System.Text;
-using System.Windows;
-using System.Windows.Media;
-using System.Windows.Media.Media3D;
-using System.Windows.Media.Animation;
-using System.Windows.Media.Composition;
-using System.Windows.Media.Imaging;
-using System.Windows.Markup;
-using System.Windows.Media.Converters;
-using System.Security;
-using SR=MS.Internal.PresentationCore.SR;
-// These types are aliased to match the unamanaged names used in interop
-using BOOL = System.UInt32;
-using WORD = System.UInt16;
-using Float = System.Single;
 
 namespace System.Windows.Media.Animation
 {
-    abstract partial class TimelineGroup : Timeline
+    public abstract partial class TimelineGroup : Timeline
     {
         //------------------------------------------------------
         //
@@ -194,10 +168,9 @@ namespace System.Windows.Media.Animation
             // We check our static default fields which are of type Freezable
             // to make sure that they are not mutable, otherwise we will throw
             // if these get touched by more than one thread in the lifetime
-            // of your app
-
+            // of your app.
             Debug.Assert(s_Children == null || s_Children.IsFrozen,
-                "Detected context bound default value TimelineGroup.s_Children");
+                "Detected context bound default value TimelineGroup.s_Children (See OS Bug #947272).");
 
 
             // Initializations
@@ -212,6 +185,8 @@ namespace System.Windows.Media.Animation
                                    /* isIndependentlyAnimated  = */ false,
                                    /* coerceValueCallback */ null);
         }
+
+
 
         #endregion Constructors
     }

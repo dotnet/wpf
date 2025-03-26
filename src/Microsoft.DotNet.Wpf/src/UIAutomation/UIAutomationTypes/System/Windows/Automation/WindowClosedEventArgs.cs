@@ -4,11 +4,7 @@
 
 // Description: WindowClosedEventArgs event args class
 
-using System;
-using System.Windows.Automation;
-using MS.Internal.Automation;
-
-namespace System.Windows.Automation 
+namespace System.Windows.Automation
 {
     /// <summary>
     /// WindowClosedEventArgs event args class
@@ -33,10 +29,7 @@ namespace System.Windows.Automation
         public WindowClosedEventArgs (int [] runtimeId) 
             : base(WindowPatternIdentifiers.WindowClosedEvent)
         {
-            if (runtimeId == null)
-            {
-                throw new ArgumentNullException("runtimeId");
-            }
+            ArgumentNullException.ThrowIfNull(runtimeId);
             _runtimeId = (int[])runtimeId.Clone();
         }
 

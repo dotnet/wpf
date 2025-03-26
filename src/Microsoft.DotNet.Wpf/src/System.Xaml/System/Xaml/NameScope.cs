@@ -2,24 +2,25 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-// Used to store mapping information for names occuring 
+#nullable disable
+
+// Used to store mapping information for names occuring
 // within the logical tree section.
 
 using System.Collections;
-using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Windows.Markup;
 
 namespace System.Xaml
 {
     /// <summary>
-    /// Used to store mapping information for names occuring 
+    /// Used to store mapping information for names occuring
     /// within the logical tree section.
     /// </summary>
     internal class NameScope : INameScopeDictionary
-    {        
+    {
         /// <summary>
-        /// Register Name-Object Map 
+        /// Register Name-Object Map
         /// </summary>
         /// <param name="name">name to be registered</param>
         /// <param name="scopedElement">object mapped to name</param>
@@ -38,7 +39,7 @@ namespace System.Xaml
                 throw new ArgumentException(SR.Format(SR.NameScopeInvalidIdentifierName, name));
             }
 
-            if (_nameMap == null)
+            if (_nameMap is null)
             {
                 _nameMap = new HybridDictionary();
                 _nameMap[name] = scopedElement;
@@ -47,19 +48,19 @@ namespace System.Xaml
             {
                 object nameContext = _nameMap[name];
                 // first time adding the Name, set it
-                if (nameContext == null)
+                if (nameContext is null)
                 {
                     _nameMap[name] = scopedElement;
                 }
                 else if (scopedElement != nameContext)
                 {
                     throw new ArgumentException(SR.Format(SR.NameScopeDuplicateNamesNotAllowed, name));
-                }   
+                }
             }
         }
 
         /// <summary>
-        /// Unregister Name-Object Map 
+        /// Unregister Name-Object Map
         /// </summary>
         /// <param name="name">name to be registered</param>
         public void UnregisterName(string name)
@@ -71,7 +72,7 @@ namespace System.Xaml
                 throw new ArgumentException(SR.NameScopeNameNotEmptyString);
             }
 
-            if (_nameMap?[name] == null)
+            if (_nameMap?[name] is null)
             {
                 throw new ArgumentException(SR.Format(SR.NameScopeNameNotFound, name));
             }
@@ -86,18 +87,18 @@ namespace System.Xaml
         /// <returns>corresponding Context if found, else null</returns>
         public object FindName(string name)
         {
-            if (_nameMap == null || string.IsNullOrEmpty(name))
+            if (_nameMap is null || string.IsNullOrEmpty(name))
             {
                 return null;
             }
 
             return _nameMap[name];
         }
-        
+
         // This is a HybridDictionary of Name-Object maps
         private HybridDictionary _nameMap;
 
-        IEnumerator<KeyValuePair<string, object>> GetEnumerator() => new Enumerator(_nameMap);
+        private IEnumerator<KeyValuePair<string, object>> GetEnumerator() => new Enumerator(_nameMap);
 
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 
@@ -111,7 +112,7 @@ namespace System.Xaml
 
         public void CopyTo(KeyValuePair<string, object>[] array, int arrayIndex)
         {
-            if (_nameMap == null)
+            if (_nameMap is null)
             {
                 array = null;
                 return;
@@ -134,16 +135,18 @@ namespace System.Xaml
             {
                 return false;
             }
+
             return Remove(item.Key);
         }
 
         public void Add(KeyValuePair<string, object> item)
         {
-            if (item.Key == null)
+            if (item.Key is null)
             {
                 throw new ArgumentException(SR.Format(SR.ReferenceIsNull, "item.Key"), nameof(item));
             }
-            if (item.Value == null)
+
+            if (item.Value is null)
             {
                 throw new ArgumentException(SR.Format(SR.ReferenceIsNull, "item.Value"), nameof(item));
             }
@@ -153,10 +156,11 @@ namespace System.Xaml
 
         public bool Contains(KeyValuePair<string, object> item)
         {
-            if (item.Key == null)
+            if (item.Key is null)
             {
                 throw new ArgumentException(SR.Format(SR.ReferenceIsNull, "item.Key"), nameof(item));
             }
+
             return ContainsKey(item.Key);
         }
 
@@ -188,7 +192,7 @@ namespace System.Xaml
             ArgumentNullException.ThrowIfNull(key);
 
             object value = FindName(key);
-            return value != null;
+            return value is not null;
         }
 
         public bool Remove(string key)
@@ -218,7 +222,7 @@ namespace System.Xaml
         {
             get
             {
-                if (_nameMap == null)
+                if (_nameMap is null)
                 {
                     return null;
                 }
@@ -228,6 +232,7 @@ namespace System.Xaml
                 {
                     list.Add(key);
                 }
+
                 return list;
             }
         }
@@ -236,7 +241,7 @@ namespace System.Xaml
         {
             get
             {
-                if (_nameMap == null)
+                if (_nameMap is null)
                 {
                     return null;
                 }
@@ -246,6 +251,7 @@ namespace System.Xaml
                 {
                     list.Add(value);
                 }
+
                 return list;
             }
         }
@@ -253,7 +259,7 @@ namespace System.Xaml
         private class Enumerator : IEnumerator<KeyValuePair<string, object>>
         {
             private IDictionaryEnumerator _enumerator;
-            
+
             public Enumerator(HybridDictionary nameMap)
             {
                 _enumerator = nameMap?.GetEnumerator();
@@ -265,7 +271,7 @@ namespace System.Xaml
             {
                 get
                 {
-                    if (_enumerator == null)
+                    if (_enumerator is null)
                     {
                         return default(KeyValuePair<string, object>);
                     }

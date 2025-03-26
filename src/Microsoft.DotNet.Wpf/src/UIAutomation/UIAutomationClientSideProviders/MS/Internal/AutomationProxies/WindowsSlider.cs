@@ -6,10 +6,7 @@
 //
 
 using System;
-using System.Text;
-using System.Collections;
 using System.Runtime.InteropServices;
-using System.ComponentModel;
 using System.Windows.Automation;
 using System.Windows.Automation.Provider;
 using System.Windows;
@@ -17,7 +14,7 @@ using MS.Win32;
 
 namespace MS.Internal.AutomationProxies
 {
-    class WindowsSlider: ProxyHwnd, IRangeValueProvider
+    internal class WindowsSlider: ProxyHwnd, IRangeValueProvider
     {
         // ------------------------------------------------------
         //
@@ -27,7 +24,7 @@ namespace MS.Internal.AutomationProxies
 
         #region Constructors 
 
-        WindowsSlider (IntPtr hwnd, ProxyFragment parent, int item)
+        private WindowsSlider (IntPtr hwnd, ProxyFragment parent, int item)
             : base (hwnd, parent, item )
         {
             _fHorizontal = IsHorizontalSlider ();
@@ -54,11 +51,7 @@ namespace MS.Internal.AutomationProxies
         private static IRawElementProviderSimple Create(IntPtr hwnd, int idChild)
         {
             // Something is wrong if idChild is not zero 
-            if (idChild != 0)
-            {
-                System.Diagnostics.Debug.Assert (idChild == 0, "Invalid Child Id, idChild != 0");
-                throw new ArgumentOutOfRangeException("idChild", idChild, SR.ShouldBeZero);
-            }
+            ArgumentOutOfRangeException.ThrowIfNotEqual(idChild, 0);
 
             return new WindowsSlider(hwnd, null, idChild);
         }
@@ -353,7 +346,7 @@ namespace MS.Internal.AutomationProxies
 
         #region SliderItem 
 
-        class SliderItem: ProxySimple, IInvokeProvider
+        private class SliderItem: ProxySimple, IInvokeProvider
         {
             // ------------------------------------------------------
             //

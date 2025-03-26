@@ -5,11 +5,7 @@
 //
 //
 
-using System;
-using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
-using System.Security;
-using MS.Internal.PresentationCore;
 
 namespace MS.Internal.WindowsRuntime
 {
@@ -31,6 +27,9 @@ namespace MS.Internal.WindowsRuntime
             [DllImport(DllImport.ApiSetWinRT, CallingConvention = CallingConvention.StdCall)]
             internal static extern unsafe int RoGetActivationFactory(IntPtr runtimeClassId, ref Guid iid, [MarshalAs(UnmanagedType.Interface)] out object factory);
         
+            [DllImport(DllImport.ApiSetWinRT, CallingConvention = CallingConvention.StdCall)]
+            internal static extern unsafe int RoActivateInstance(IntPtr runtimeClassId, [MarshalAs(UnmanagedType.Interface)] out object instance);
+
             internal const int E_NOINTERFACE = unchecked((int)0x80004002);
 
             internal const int REGDB_E_CLASSNOTREG = unchecked((int)0x80040154);

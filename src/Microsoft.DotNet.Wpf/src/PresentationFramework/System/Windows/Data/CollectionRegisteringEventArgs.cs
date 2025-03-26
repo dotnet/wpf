@@ -8,7 +8,6 @@
 // See spec at Cross-thread Collections.docx
 //
 
-using System;
 using System.Collections;
 
 namespace System.Windows.Data
@@ -25,7 +24,7 @@ namespace System.Windows.Data
 
         public object Parent { get { return _parent; } }
 
-        IEnumerable _collection;
-        object _parent;
+        private IEnumerable _collection;
+        private object _parent;
     }
 }

@@ -3,12 +3,9 @@
 // See the LICENSE file in the project root for more information.
 
 
-using System;
 using System.Collections;
-using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.ComponentModel;
-using System.Diagnostics;
 using System.Windows.Data;
 
 namespace System.Windows.Controls
@@ -282,15 +279,11 @@ namespace System.Windows.Controls
         {
             get
             {
-                if ((index >= 0) && (index < RepeatCount))
-                {
-                    Debug.Assert(_item != null, "_item should be non-null.");
-                    return _item;
-                }
-                else
-                {
-                    throw new ArgumentOutOfRangeException("index");
-                }
+                ArgumentOutOfRangeException.ThrowIfNegative(index);
+                ArgumentOutOfRangeException.ThrowIfGreaterThanOrEqual(index, RepeatCount);
+
+                Debug.Assert(_item != null, "_item should be non-null.");
+                return _item;
             }
 
             set

@@ -2,6 +2,10 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
+using System.Windows.Media;
+using System.Windows.Shapes;
+using System.Windows.Controls;
+
 /*++
     Description:
        Abstract class that provides a common base class for all non-container semantic elements.
@@ -11,13 +15,6 @@
 
 namespace System.Windows.Documents
 {
-    using System.Collections.Generic;
-    using System.Diagnostics;
-    using System.Windows.Media;
-    using System.Windows.Media.Imaging;
-    using System.Windows.Shapes;
-    using System.Windows.Controls;
-
     internal abstract class FixedSOMElement : FixedSOMSemanticBox
     {
         //--------------------------------------------------------------------

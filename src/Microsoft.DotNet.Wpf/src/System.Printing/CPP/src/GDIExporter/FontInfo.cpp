@@ -16,14 +16,14 @@
 // FontStreamContext
 FontStreamContext::FontStreamContext(GlyphTypeface^ source)
 {
-    Debug::Assert(source != nullptr);
+    Debug::Assert(source != nullptr, "source should not be null");
 
     _sourceTypeface = source;
 }
 
 FontStreamContext::FontStreamContext(Uri^ source, int streamLength)
 {
-    Debug::Assert(source != nullptr);
+    Debug::Assert(source != nullptr, "Source should not be null.");
 
     _sourceUri = source;
     _streamLength = streamLength;
@@ -129,7 +129,7 @@ bool FontStreamContext::Equals(FontStreamContext% otherContext)
 
         if (otherStream != nullptr)
         {
-            Debug::Assert(thisStream->Length == otherStream->Length);
+            Debug::Assert(thisStream->Length == otherStream->Length, "Length of both streams should be same.");
 
             //
             // Compare both streams CompareLength bytes at a time.
@@ -187,7 +187,7 @@ bool FontStreamContext::Equals(FontStreamContext% otherContext)
                 }
             }
 
-            Debug::Assert(eof == 2);
+            Debug::Assert(eof == 2, "Number of streams reaching eof should be 2.");
         }
     }
 
@@ -197,14 +197,14 @@ bool FontStreamContext::Equals(FontStreamContext% otherContext)
 // FontInstallInfo
 FontInstallInfo::FontInstallInfo(Uri^ uri)
 {
-    Debug::Assert(uri != nullptr);
+    Debug::Assert(uri != nullptr, "Uri should not be null.");
 
     _uri = uri;
 }
 
 bool FontInstallInfo::Equals(FontStreamContext% context, FontInstallInfo^ otherFont)
 {
-    Debug::Assert(otherFont != nullptr);
+    Debug::Assert(otherFont != nullptr, "OtherFont should not be null.");
 
     if (_uri->Equals(otherFont->_uri))
     {
@@ -798,7 +798,7 @@ Object^ FontInstallInfo::Install(FontStreamContext% context, String^ % newFamily
 
 void FontInstallInfo::Uninstall(Object^ installHandle)
 {
-    Debug::Assert(installHandle != nullptr);
+    Debug::Assert(installHandle != nullptr, "Install handle should not be null.");
 
     String^ filename = dynamic_cast<String^>(installHandle);
 
@@ -851,7 +851,7 @@ bool FontInfo::UsePrivate(GlyphTypeface^ typeface)
     // installed as private or system font, in which case we simply use one of those.
     // Otherwise install the GlyphTypeface font into GDI.
     //
-    Debug::Assert(typeface != nullptr);
+    Debug::Assert(typeface != nullptr, "GlyphTypeface should not be null");
 
     FontStreamContext installContext(typeface);
 
@@ -904,7 +904,7 @@ void FontInfo::UninstallPrivate()
 {
     if (_privateInstall != nullptr)
     {
-        Debug::Assert(_privateInstallHandle != nullptr);
+        Debug::Assert(_privateInstallHandle != nullptr, "Private font should not be installed at this point");
 
         _privateInstall->Uninstall(_privateInstallHandle);
 

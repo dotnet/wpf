@@ -7,18 +7,7 @@
 //   Class that serializes and deserializes Templates.
 //
 
-using System;
-using System.ComponentModel;
-
-using System.ComponentModel.Design.Serialization;
-using System.Diagnostics;
-using System.Collections;
 using System.Globalization;
-using System.IO;
-using System.Reflection;
-using System.Text;
-using System.Xml;
-using MS.Utility;
 
 #if !PBTCOMPILER
 using System.Windows.Data;
@@ -68,9 +57,11 @@ namespace System.Windows.Markup
             BamlRecordWriter       bamlWriter)
         {
 
-            TemplateXamlParser templateParser = new TemplateXamlParser(tokenReader, context);
-            templateParser.ParserHooks = _parserHooks;
-            templateParser.BamlRecordWriter = bamlWriter;
+            TemplateXamlParser templateParser = new TemplateXamlParser(tokenReader, context)
+            {
+                ParserHooks = _parserHooks,
+                BamlRecordWriter = bamlWriter
+            };
 
             // Process the xamlNode that is passed in so that the <Template> element is written to baml
             templateParser.WriteElementStart((XamlElementStartNode)xamlNode);
@@ -163,7 +154,7 @@ namespace System.Windows.Markup
         }
 
         // Helper to insert line and position numbers into message, if they are present
-        void ThrowException(
+        private void ThrowException(
              string id,
              int  lineNumber,
              int  linePosition,
@@ -215,19 +206,19 @@ namespace System.Windows.Markup
         internal const string ItemStringFormatPropertyName                  = "ItemStringFormat";
         internal const string ItemBindingGroupPropertyName                  = "ItemBindingGroup";
         internal const string AlternationCountPropertyName                  = "AlternationCount";
-        internal const string ControlTemplateTriggersFullPropertyName       = ControlTemplateTagName + "." + TriggersPropertyName;
-        internal const string ControlTemplateResourcesFullPropertyName      = ControlTemplateTagName + "." + ResourcesPropertyName;
-        internal const string DataTemplateTriggersFullPropertyName          = DataTemplateTagName + "." + TriggersPropertyName;
-        internal const string DataTemplateResourcesFullPropertyName         = DataTemplateTagName + "." + ResourcesPropertyName;
-        internal const string HierarchicalDataTemplateTriggersFullPropertyName = HierarchicalDataTemplateTagName + "." + TriggersPropertyName;
-        internal const string HierarchicalDataTemplateItemsSourceFullPropertyName = HierarchicalDataTemplateTagName + "." + ItemsSourcePropertyName;
-        internal const string HierarchicalDataTemplateItemTemplateFullPropertyName = HierarchicalDataTemplateTagName + "." + ItemTemplatePropertyName;
-        internal const string HierarchicalDataTemplateItemTemplateSelectorFullPropertyName = HierarchicalDataTemplateTagName + "." + ItemTemplateSelectorPropertyName;
-        internal const string HierarchicalDataTemplateItemContainerStyleFullPropertyName = HierarchicalDataTemplateTagName + "." + ItemContainerStylePropertyName;
-        internal const string HierarchicalDataTemplateItemContainerStyleSelectorFullPropertyName = HierarchicalDataTemplateTagName + "." + ItemContainerStyleSelectorPropertyName;
-        internal const string HierarchicalDataTemplateItemStringFormatFullPropertyName = HierarchicalDataTemplateTagName + "." + ItemStringFormatPropertyName;
-        internal const string HierarchicalDataTemplateItemBindingGroupFullPropertyName = HierarchicalDataTemplateTagName + "." + ItemBindingGroupPropertyName;
-        internal const string HierarchicalDataTemplateAlternationCountFullPropertyName = HierarchicalDataTemplateTagName + "." + AlternationCountPropertyName;
+        internal const string ControlTemplateTriggersFullPropertyName       = $"{ControlTemplateTagName}.{TriggersPropertyName}";
+        internal const string ControlTemplateResourcesFullPropertyName      = $"{ControlTemplateTagName}.{ResourcesPropertyName}";
+        internal const string DataTemplateTriggersFullPropertyName          = $"{DataTemplateTagName}.{TriggersPropertyName}";
+        internal const string DataTemplateResourcesFullPropertyName         = $"{DataTemplateTagName}.{ResourcesPropertyName}";
+        internal const string HierarchicalDataTemplateTriggersFullPropertyName = $"{HierarchicalDataTemplateTagName}.{TriggersPropertyName}";
+        internal const string HierarchicalDataTemplateItemsSourceFullPropertyName = $"{HierarchicalDataTemplateTagName}.{ItemsSourcePropertyName}";
+        internal const string HierarchicalDataTemplateItemTemplateFullPropertyName = $"{HierarchicalDataTemplateTagName}.{ItemTemplatePropertyName}";
+        internal const string HierarchicalDataTemplateItemTemplateSelectorFullPropertyName = $"{HierarchicalDataTemplateTagName}.{ItemTemplateSelectorPropertyName}";
+        internal const string HierarchicalDataTemplateItemContainerStyleFullPropertyName = $"{HierarchicalDataTemplateTagName}.{ItemContainerStylePropertyName}";
+        internal const string HierarchicalDataTemplateItemContainerStyleSelectorFullPropertyName = $"{HierarchicalDataTemplateTagName}.{ItemContainerStyleSelectorPropertyName}";
+        internal const string HierarchicalDataTemplateItemStringFormatFullPropertyName = $"{HierarchicalDataTemplateTagName}.{ItemStringFormatPropertyName}";
+        internal const string HierarchicalDataTemplateItemBindingGroupFullPropertyName = $"{HierarchicalDataTemplateTagName}.{ItemBindingGroupPropertyName}";
+        internal const string HierarchicalDataTemplateAlternationCountFullPropertyName = $"{HierarchicalDataTemplateTagName}.{AlternationCountPropertyName}";
         internal const string PropertyTriggerPropertyName                   = "Property";
         internal const string PropertyTriggerValuePropertyName              = "Value";
         internal const string PropertyTriggerSourceName                     = "SourceName";

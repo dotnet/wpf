@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -6,12 +6,7 @@
 // Description: TextPointer object representing a location in formatted text.
 //
 
-using System;
 using MS.Internal;
-using System.Threading;
-using System.Windows;
-using System.Windows.Media;
-using System.Collections;
 using System.Windows.Controls; // doc comments
 
 namespace System.Windows.Documents
@@ -1390,7 +1385,7 @@ namespace System.Windows.Documents
             _tree.EmptyDeadPositionList();
             SyncToTreeGeneration();
 
-            ValidationHelper.ValidateChild(this, textElement, "textElement");
+            ValidationHelper.ValidateChild(this, textElement, nameof(textElement));
 
             if (textElement.Parent != null)
             {
@@ -1486,7 +1481,7 @@ namespace System.Windows.Documents
         public override string ToString()
         {
 #if DEBUG
-            return "TextPointer Id=" + _debugId + " NodeId=" + _node.DebugId + " Edge=" + this.Edge;
+            return $"TextPointer Id={_debugId} NodeId={_node.DebugId} Edge={this.Edge}";
 #else
             return base.ToString();
 #endif // DEBUG
@@ -2146,7 +2141,7 @@ namespace System.Windows.Documents
             _tree.EmptyDeadPositionList();
             SyncToTreeGeneration();
 
-            ValidationHelper.ValidateChild(this, uiElement, "uiElement");
+            ValidationHelper.ValidateChild(this, uiElement, nameof(uiElement));
 
             if (!((TextElement)this.Parent).IsEmpty) // the parent may be InlineUIContainer or BlockUIContainer
             {
@@ -2173,7 +2168,7 @@ namespace System.Windows.Documents
             SyncToTreeGeneration();
 
             elementNode = GetAdjacentTextElementNodeSibling(direction);
-            return (elementNode == null) ? null : elementNode.TextElement;
+            return elementNode?.TextElement;
         }
 
         /// <summary>
@@ -2423,7 +2418,7 @@ namespace System.Windows.Documents
 
             element = GetElement(direction);
 
-            return element != null ? element.GetType() : null;
+            return element?.GetType();
         }
 
         bool ITextPointer.HasEqualScope(ITextPointer position)
@@ -3621,7 +3616,7 @@ namespace System.Windows.Documents
 
                 DependencyObject element = this.Parent;
 
-                return element != null ? element.GetType() : null;
+                return element?.GetType();
             }
         }
 
@@ -3813,7 +3808,7 @@ namespace System.Windows.Documents
 
 #if DEBUG
         // Debug-only unique identifier for this instance.
-        int DebugId
+        private int DebugId
         {
             get
             {
@@ -4127,7 +4122,7 @@ namespace System.Windows.Documents
 
             elementNode = GetAdjacentTextElementNode(direction);
 
-            return (elementNode == null) ? null : elementNode.TextElement;
+            return elementNode?.TextElement;
         }
 
         // Invariant.Strict only.  Asserts this position has good state.

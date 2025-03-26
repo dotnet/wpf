@@ -7,10 +7,7 @@
 //      Defines a Canvas-like class which is used by InkCanvas for the layout.
 //
 
-using System;
 using System.Collections;
-using System.ComponentModel;
-using System.Diagnostics;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;

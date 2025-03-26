@@ -2,7 +2,6 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-using System;
 using System.IO;
 using System.ComponentModel;
 
@@ -49,15 +48,9 @@ namespace System.Windows.Baml2006
                 throw new ArgumentException("can\u2019t seek on baseStream");
             }
 
-            if (offset < 0)
-            {
-                throw new ArgumentOutOfRangeException(nameof(offset));
-            }
+            ArgumentOutOfRangeException.ThrowIfNegative(offset);
 
-            if (length < 0)
-            {
-                throw new ArgumentOutOfRangeException(nameof(length));
-            }
+            ArgumentOutOfRangeException.ThrowIfNegative(length);
 
             SharedStream subStream = baseStream as SharedStream;
             if (subStream != null)
@@ -172,15 +165,9 @@ namespace System.Windows.Baml2006
         {
             ArgumentNullException.ThrowIfNull(buffer);
 
-            if (offset < 0 || offset >= buffer.Length)
-            {
-                throw new ArgumentOutOfRangeException(nameof(offset));
-            }
-
-            if ((offset + count) > buffer.Length)
-            {
-                throw new ArgumentOutOfRangeException(nameof(count));
-            }
+            ArgumentOutOfRangeException.ThrowIfNegative(offset);
+            ArgumentOutOfRangeException.ThrowIfGreaterThanOrEqual(offset, buffer.Length);
+            ArgumentOutOfRangeException.ThrowIfGreaterThan(offset, buffer.Length - count);
 
             CheckDisposed();
 
@@ -311,7 +298,7 @@ namespace System.Windows.Baml2006
             return false;
         }
 
-        class RefCount
+        private class RefCount
         {
             public int Value;
         }

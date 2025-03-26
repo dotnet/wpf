@@ -10,12 +10,8 @@
 // 
 //
 
-using System;
-using System.Collections.Generic;
-using System.Windows.Input;
 using System.ComponentModel;
 using System.Globalization;
-using System.ComponentModel.Design.Serialization;
 
 
 namespace System.Windows.Input
@@ -156,7 +152,7 @@ namespace System.Windows.Input
             {
                 if (destinationType == typeof(string))
                 {
-                    return Enum.GetName(typeof(InputScopeNameValue), ((InputScopeName)inputScope.Names[0]).NameValue);
+                    return Enum.GetName(((InputScopeName)inputScope.Names[0]).NameValue);
                 }
             }
             return base.ConvertTo(context, culture, value, destinationType);

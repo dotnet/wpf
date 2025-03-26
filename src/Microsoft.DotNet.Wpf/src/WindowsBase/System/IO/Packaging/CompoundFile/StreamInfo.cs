@@ -2,33 +2,9 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-//
-//
-// Description:
-//  Class for manipulating streams in the container file
-//
-//
-//
-//
-//
-//
-//
-//
-
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Diagnostics; // For Debug.Assert
-using System.IO;
 using System.Runtime.InteropServices;
-using System.Security;
-
-using System.Windows;                 //  SR.[exception message]
 using MS.Internal.IO.Packaging.CompoundFile;
 using CU = MS.Internal.IO.Packaging.CompoundFile.ContainerUtilities;
-
-using System.IO.Packaging;
-using MS.Internal.WindowsBase;
 
 namespace System.IO.Packaging
 {
@@ -84,9 +60,9 @@ namespace System.IO.Packaging
     {
         /***********************************************************************/
         // Default values to use for shortcuts
-        const FileMode   defaultFileOpenMode   = FileMode.OpenOrCreate;
-        const FileMode   defaultFileCreateMode = FileMode.Create;
-        const string     defaultDataSpace      = null; // Programmatic change-able?
+        private const FileMode   defaultFileOpenMode   = FileMode.OpenOrCreate;
+        private const FileMode   defaultFileCreateMode = FileMode.Create;
+        private const string     defaultDataSpace      = null; // Programmatic change-able?
 
         /***********************************************************************/
         // Instance values
@@ -94,18 +70,18 @@ namespace System.IO.Packaging
         /// <summary>
         /// A reference back to the parent storage object
         /// </summary>
-        StorageInfo parentStorage;
+        private StorageInfo parentStorage;
 
         /// <summary>
         /// Reference to a class that contains our core information.  This is
         /// maintained by our parent storage.
         /// </summary>
-        StreamInfoCore core;
+        private StreamInfoCore core;
 
         /// <summary>
         /// CompoundFileStreamReference for this StreamInfo object
         /// </summary>
-        CompoundFileStreamReference _streamReference;
+        private CompoundFileStreamReference _streamReference;
 
         /// <summary>
         /// We need to rememeber the FileAccess that was used for openning 
@@ -559,7 +535,7 @@ namespace System.IO.Packaging
             return returnStream;
         }
 
-        Stream BuildStreamOnUnderlyingIStream( 
+        private Stream BuildStreamOnUnderlyingIStream( 
             IStream underlyingIStream,
             FileAccess access, 
             StreamInfo parent )
@@ -584,7 +560,7 @@ namespace System.IO.Packaging
         ///  the root container is read-only, or if we're pointlessly trying
         ///  to create a read-only stream.
         /// </summary>
-        void CreateTimeReadOnlyCheck( FileAccess access )
+        private void CreateTimeReadOnlyCheck( FileAccess access )
         {
             // Can't create a stream if the root container is read-only
             if( FileAccess.Read == parentStorage.Root.OpenAccess )
@@ -596,12 +572,12 @@ namespace System.IO.Packaging
                 throw new ArgumentException(
                     SR.CanNotCreateAsReadOnly);
         }
-        
+
         /// <summary>
         /// Shortcut macro - calls the IStorage::CreateStream method on the parent
         /// storage object.
         /// </summary>
-        IStream CreateStreamOnParentIStorage(
+        private IStream CreateStreamOnParentIStorage(
             string name, 
             int mode )
         {
@@ -644,7 +620,7 @@ namespace System.IO.Packaging
         /// Shortcut macro - calls the IStorage::OpenStream method on the parent
         /// storage object.
         /// </summary>
-        IStream OpenStreamOnParentIStorage(
+        private IStream OpenStreamOnParentIStorage(
             string name, 
             int mode )
         {
@@ -730,7 +706,7 @@ namespace System.IO.Packaging
         /// If it doesn't, abort with an exception.  This implements the little
         /// shortcut.
         /// </summary>
-        void VerifyExists()
+        private void VerifyExists()
         {
             if( !InternalExists() )
             {
@@ -828,8 +804,7 @@ namespace System.IO.Packaging
 
                 foreach (IDataTransform dataTransform in transforms)
                 {
-                    string id = dataTransform.TransformIdentifier as string;
-                    if (id != null)
+                    if (dataTransform.TransformIdentifier is string id)
                     {
                         if (string.Equals(id, RightsManagementEncryptionTransform.ClassTransformIdentifier, StringComparison.OrdinalIgnoreCase)
                             &&

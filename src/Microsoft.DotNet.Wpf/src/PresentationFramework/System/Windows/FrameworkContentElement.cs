@@ -1,44 +1,23 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-using System;
 using System.Collections;
-using System.Collections.Generic;
-using System.Collections.Specialized;
 using System.ComponentModel;
-
-using System.Diagnostics;
-using System.Globalization;
-using System.Windows.Threading;
-using System.Threading;
 
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Diagnostics;
-using System.Windows.Documents;
 
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
-using System.Windows.Media.TextFormatting;
 using System.Windows.Markup;
 
-#if DEBUG
-using System.Reflection;
-#endif
-
-using MS.Internal.Text;
 using MS.Internal;
 using MS.Internal.KnownBoxes;
 using MS.Internal.PresentationFramework;
 using MS.Utility;
-
-// Disabling 1634 and 1691:
-// In order to avoid generating warnings about unknown message numbers and
-// unknown pragmas when compiling C# source code with the C# compiler,
-// you need to disable warnings 1634 and 1691. (Presharp Documentation)
-#pragma warning disable 1634, 1691
 
 namespace System.Windows
 {
@@ -294,11 +273,8 @@ namespace System.Windows
                 ResourceDictionary oldValue = ResourcesField.GetValue(this);
                 ResourcesField.SetValue(this, value);
 
-                if (oldValue != null)
-                {
-                    // This element is no longer an owner for the old RD
-                    oldValue.RemoveOwner(this);
-                }
+                // This element is no longer an owner for the old RD
+                oldValue?.RemoveOwner(this);
 
                 if (value != null)
                 {
@@ -598,7 +574,7 @@ namespace System.Windows
                                 #region EventTracing
                                 if (EventTrace.IsEnabled(EventTrace.Keyword.KeywordGeneral, EventTrace.Level.Verbose))
                                 {
-                                    string TypeAndName = "[" + GetType().Name + "]" + dp.Name;
+                                    string TypeAndName = $"[{GetType().Name}]{dp.Name}";
                                     EventTrace.EventProvider.TraceEvent(EventTrace.Event.WClientPropParentCheck,
                                                                          EventTrace.Keyword.KeywordGeneral, EventTrace.Level.Verbose,
                                                                          GetHashCode(), TypeAndName);
@@ -682,8 +658,10 @@ namespace System.Windows
         internal Expression GetExpressionCore(DependencyProperty dp, PropertyMetadata metadata)
         {
             this.IsRequestingExpression = true;
-            EffectiveValueEntry entry = new EffectiveValueEntry(dp);
-            entry.Value = DependencyProperty.UnsetValue;
+            EffectiveValueEntry entry = new EffectiveValueEntry(dp)
+            {
+                Value = DependencyProperty.UnsetValue
+            };
             this.EvaluateBaseValueCore(dp, metadata, ref entry);
             this.IsRequestingExpression = false;
 
@@ -1071,8 +1049,10 @@ namespace System.Windows
         /// </summary>
         public void BringIntoView()
         {
-            RequestBringIntoViewEventArgs args = new RequestBringIntoViewEventArgs(this, Rect.Empty);
-            args.RoutedEvent=FrameworkElement.RequestBringIntoViewEvent;
+            RequestBringIntoViewEventArgs args = new RequestBringIntoViewEventArgs(this, Rect.Empty)
+            {
+                RoutedEvent = FrameworkElement.RequestBringIntoViewEvent
+            };
             RaiseEvent(args);
         }
 
@@ -2015,15 +1995,12 @@ namespace System.Windows
                 while(enumerator.MoveNext())
                 {
                     DependencyObject child =enumerator.Current as DependencyObject;
-                    if(child != null)
-                    {
-                        // CODE REVIEW (dwaynen)
-                        //
-                        // We assume we will only ever have a UIElement or a ContentElement
-                        // as a child of a FrameworkContentElement.  (Not a raw Visual.)
+                    // CODE REVIEW (dwaynen)
+                    //
+                    // We assume we will only ever have a UIElement or a ContentElement
+                    // as a child of a FrameworkContentElement.  (Not a raw Visual.)
 
-                        child.CoerceValue(property);
-                    }
+                    child?.CoerceValue(property);
                 }
             }
         }
@@ -2051,10 +2028,7 @@ namespace System.Windows
         private void EventHandlersStoreRemove(EventPrivateKey key, Delegate handler)
         {
             EventHandlersStore store = EventHandlersStore;
-            if (store != null)
-            {
-                store.Remove(key, handler);
-            }
+            store?.Remove(key, handler);
         }
 
         // Gettor and Settor for flag that indicates
@@ -2123,7 +2097,7 @@ namespace System.Windows
                 // Thus we support any indices in the range [-1, 65535).
                 if (value < -1 || value >= 0xFFFF)
                 {
-                    throw new ArgumentOutOfRangeException("value", SR.TemplateChildIndexOutOfRange);
+                    throw new ArgumentOutOfRangeException(nameof(value), SR.TemplateChildIndexOutOfRange);
                 }
 
                 uint childIndex = (value == -1) ? 0xFFFF : (uint)value;

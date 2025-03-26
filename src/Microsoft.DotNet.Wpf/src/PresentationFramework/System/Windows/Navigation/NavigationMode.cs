@@ -10,8 +10,6 @@
 //          Refresh method (or corresponding UI button).
 //
 
-using System;
-
 namespace System.Windows.Navigation
 {
     #region NavigationMode Enum

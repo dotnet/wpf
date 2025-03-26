@@ -2,25 +2,11 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-using System;
 using System.Collections;
-using System.Collections.Generic;
-using System.Collections.Specialized;
-using System.ComponentModel;
-using System.Diagnostics;
-using System.Reflection;
 using System.Xml;
-using System.IO;
-using System.Security;
-using System.ComponentModel.Design.Serialization;
 using System.Windows.Xps.Packaging;
-using System.Windows.Documents;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Markup;
 using System.Windows.Threading;
 using MS.Internal;
-using System.Printing;
 
 namespace System.Windows.Xps.Serialization
 {
@@ -503,12 +489,12 @@ namespace System.Windows.Xps.Serialization
 
         #region private data
 
-        Dispatcher _dispatcher;
-        bool _serializationOperationCanceled;
-        XmlWriter _currentPageXmlWriter;
-        bool _isBatchWorkItemInProgress;
-        Stack _operationStack;
-        Queue _batchOperationQueue;
+        private Dispatcher _dispatcher;
+        private bool _serializationOperationCanceled;
+        private XmlWriter _currentPageXmlWriter;
+        private bool _isBatchWorkItemInProgress;
+        private Stack _operationStack;
+        private Queue _batchOperationQueue;
 
         #endregion private data
     }

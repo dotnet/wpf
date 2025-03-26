@@ -357,11 +357,6 @@
         <target state="translated">ターゲット要素は、フォーカスを受け取ることができません。</target>
         <note />
       </trans-unit>
-      <trans-unit id="ShouldBeZero">
-        <source>Must be zero.</source>
-        <target state="translated">ゼロを指定してください。</target>
-        <note />
-      </trans-unit>
       <trans-unit id="ValueReadonly">
         <source>Value is read-only.</source>
         <target state="translated">値は読み取り専用です。</target>

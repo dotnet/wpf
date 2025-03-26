@@ -33,4 +33,6 @@ TypesMustExist : Type 'System.Windows.Interop.DocObjHost' does not exist in the 
 CannotRemoveAttribute : Attribute 'System.ComponentModel.TypeConverterAttribute' exists on 'System.Windows.Markup.StaticExtension' in the contract but not the implementation.
 CannotRemoveAttribute : Attribute 'System.ComponentModel.TypeConverterAttribute' exists on 'System.Windows.Markup.TypeExtension' in the contract but not the implementation.
 CannotRemoveBaseTypeOrInterface : Type 'System.Windows.Markup.XamlParseException' does not implement interface 'System.Runtime.InteropServices._Exception' in the implementation but it does in the contract.
-Total Issues: 34
+MembersMustExist : Member 'public System.String System.Windows.Markup.XmlAttributeProperties.GetXmlNamespaceMaps(System.Windows.DependencyObject)' does not exist in the implementation but it does exist in the contract.
+MembersMustExist : Member 'public void System.Windows.Markup.XmlAttributeProperties.SetXmlNamespaceMaps(System.Windows.DependencyObject, System.String)' does not exist in the implementation but it does exist in the contract.
+Total Issues: 36

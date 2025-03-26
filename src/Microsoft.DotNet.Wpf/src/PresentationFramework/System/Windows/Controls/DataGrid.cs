@@ -1,16 +1,13 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
 
 using System.Collections;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.ComponentModel;
-using System.Diagnostics;
 using System.Runtime.InteropServices;
-using System.Security;
 using System.Text;
 using System.Windows.Automation;
 using System.Windows.Automation.Peers;
@@ -341,7 +338,7 @@ namespace System.Windows.Controls
 
         private static readonly UncommonField<int> BringColumnIntoViewRetryCountField
             = new UncommonField<int>(0);
-        const int MaxBringColumnIntoViewRetries = 4;
+        private const int MaxBringColumnIntoViewRetries = 4;
 
         /// <summary>
         ///     Called from DataGridCellsPanel.BringIndexIntoView to request a
@@ -363,7 +360,7 @@ namespace System.Windows.Controls
                 int retries = BringColumnIntoViewRetryCountField.GetValue(this);
                 if (retries < MaxBringColumnIntoViewRetries)
                 {
-                    BringColumnIntoViewRetryCountField.SetValue(this, retries+1);
+                    BringColumnIntoViewRetryCountField.SetValue(this, retries + 1);
                     return true;
                 }
             }
@@ -384,7 +381,7 @@ namespace System.Windows.Controls
         {
             if (displayIndex < 0 || displayIndex >= Columns.Count)
             {
-                throw new ArgumentOutOfRangeException("displayIndex", displayIndex, SR.DataGrid_DisplayIndexOutOfRange);
+                throw new ArgumentOutOfRangeException(nameof(displayIndex), displayIndex, SR.DataGrid_DisplayIndexOutOfRange);
             }
 
             return InternalColumns.ColumnFromDisplayIndex(displayIndex);
@@ -620,10 +617,7 @@ namespace System.Windows.Controls
                         if (row != null)
                         {
                             var cellsPresenter = row.CellsPresenter;
-                            if (cellsPresenter != null)
-                            {
-                                cellsPresenter.InvalidateDataGridCellsPanelMeasureAndArrange();
-                            }
+                            cellsPresenter?.InvalidateDataGridCellsPanelMeasureAndArrange();
                         }
                     }
                 }
@@ -1163,10 +1157,7 @@ namespace System.Windows.Controls
             var row = (DataGridRow)arg;
             var dataGrid = row.DataGridOwner;
 
-            if (dataGrid != null)
-            {
-                dataGrid.OnLoadingRowDetailsWrapper(row);
-            }
+            dataGrid?.OnLoadingRowDetailsWrapper(row);
 
             return null;
         }
@@ -1350,10 +1341,7 @@ namespace System.Windows.Controls
             _itemAttachedStorage.ClearValue(item, DataGridRow.DetailsVisibilityProperty);
 
             var row = (DataGridRow)ItemContainerGenerator.ContainerFromItem(item);
-            if (row != null)
-            {
-                row.ClearValue(DataGridRow.DetailsVisibilityProperty);
-            }
+            row?.ClearValue(DataGridRow.DetailsVisibilityProperty);
         }
 
         internal DataGridItemAttachedStorage ItemAttachedStorage
@@ -1714,8 +1702,10 @@ namespace System.Windows.Controls
 
                 // Same priority as ListBox. Currently choosing SystemIdle over ApplicationIdle since the layout
                 // manger will do some work (sometimes) at ApplicationIdle.
-                _autoScrollTimer = new DispatcherTimer(DispatcherPriority.SystemIdle);
-                _autoScrollTimer.Interval = AutoScrollTimeout;
+                _autoScrollTimer = new DispatcherTimer(DispatcherPriority.SystemIdle)
+                {
+                    Interval = AutoScrollTimeout
+                };
                 _autoScrollTimer.Tick += new EventHandler(OnAutoScrollTimeout);
                 _autoScrollTimer.Start();
             }
@@ -1934,8 +1924,10 @@ namespace System.Windows.Controls
                 }
                 if (_internalScrollHost != null)
                 {
-                    Binding horizontalOffsetBinding = new Binding("ContentHorizontalOffset");
-                    horizontalOffsetBinding.Source = _internalScrollHost;
+                    Binding horizontalOffsetBinding = new Binding("ContentHorizontalOffset")
+                    {
+                        Source = _internalScrollHost
+                    };
                     SetBinding(HorizontalScrollOffsetProperty, horizontalOffsetBinding);
                 }
             }
@@ -2259,10 +2251,7 @@ namespace System.Windows.Controls
                         EditRowItem(cell.RowDataItem);
 
                         var bindingGroup = cell.RowOwner.BindingGroup;
-                        if (bindingGroup != null)
-                        {
-                            bindingGroup.BeginEdit();
-                        }
+                        bindingGroup?.BeginEdit();
 
                         _editingRowInfo = ItemInfoFromContainer(cell.RowOwner);
                     }
@@ -2452,10 +2441,7 @@ namespace System.Windows.Controls
             if (AutomationPeer.ListenerExists(AutomationEvents.InvokePatternOnInvoked))
             {
                 DataGridAutomationPeer peer = DataGridAutomationPeer.FromElement(this) as DataGridAutomationPeer;
-                if (peer != null)
-                {
-                    peer.RaiseAutomationRowInvokeEvents(e.Row);
-                }
+                peer?.RaiseAutomationRowInvokeEvents(e.Row);
             }
         }
 
@@ -2479,10 +2465,7 @@ namespace System.Windows.Controls
             if (AutomationPeer.ListenerExists(AutomationEvents.InvokePatternOnInvoked))
             {
                 DataGridAutomationPeer peer = DataGridAutomationPeer.FromElement(this) as DataGridAutomationPeer;
-                if (peer != null)
-                {
-                    peer.RaiseAutomationCellInvokeEvents(e.Column, e.Row);
-                }
+                peer?.RaiseAutomationCellInvokeEvents(e.Column, e.Row);
             }
         }
 
@@ -2549,10 +2532,7 @@ namespace System.Windows.Controls
                     if (cancelAllowed)
                     {
                         var bindingGroup = cell.RowOwner.BindingGroup;
-                        if (bindingGroup != null)
-                        {
-                            bindingGroup.CancelEdit();
-                        }
+                        bindingGroup?.CancelEdit();
 
                         CancelRowItem();
                     }
@@ -2733,7 +2713,7 @@ namespace System.Windows.Controls
                     {
                         info = ItemInfoFromIndex(index);
                     }
-                break;
+                    break;
 
                 case NewItemPlaceholderPosition.AtBeginning:
                     index = 1;
@@ -2741,7 +2721,7 @@ namespace System.Windows.Controls
                     {
                         info = ItemInfoFromIndex(index);
                     }
-                break;
+                    break;
             }
 
             // but if it's not where we expect, find it the hard way
@@ -2951,17 +2931,14 @@ namespace System.Windows.Controls
 
                     if (oldCellContainer != cell)
                     {
-                        if (oldCellContainer != null)
-                        {
-                            oldCellContainer.NotifyCurrentCellContainerChanged();
-                        }
+                        oldCellContainer?.NotifyCurrentCellContainerChanged();
 
                         cell.NotifyCurrentCellContainerChanged();
                     }
                 }
-                else if  (oldCellContainer != null)
+                else
                 {
-                    oldCellContainer.NotifyCurrentCellContainerChanged();
+                    oldCellContainer?.NotifyCurrentCellContainerChanged();
                 }
             }
 
@@ -3080,7 +3057,7 @@ namespace System.Windows.Controls
             get { return LeaseItemInfo(CurrentCell.ItemInfo); }
         }
 
-        internal bool IsCurrent(DataGridRow row, DataGridColumn column=null)
+        internal bool IsCurrent(DataGridRow row, DataGridColumn column = null)
         {
             DataGridCellInfo currentCell = CurrentCell;
             if (currentCell.ItemInfo == null)
@@ -3093,9 +3070,9 @@ namespace System.Windows.Controls
             }
             DependencyObject currentContainer = currentCell.ItemInfo.Container;
             int currentIndex = currentCell.ItemInfo.Index;
-            return  (column == null || column == currentCell.Column) &&             // columns match
-                    (   (currentContainer != null && currentContainer == row) ||    // rows match (the easy way)
-                        (   ItemsControl.EqualsEx(CurrentItem, row.Item) &&         // rows match (the hard way)
+            return (column == null || column == currentCell.Column) &&             // columns match
+                    ((currentContainer != null && currentContainer == row) ||    // rows match (the easy way)
+                        (ItemsControl.EqualsEx(CurrentItem, row.Item) &&         // rows match (the hard way)
                             (currentIndex < 0 || currentIndex == ItemContainerGenerator.IndexFromContainer(row))
                         )
                     );
@@ -3124,10 +3101,7 @@ namespace System.Windows.Controls
             if (AutomationPeer.ListenerExists(AutomationEvents.InvokePatternOnInvoked))
             {
                 DataGridAutomationPeer peer = DataGridAutomationPeer.FromElement(this) as DataGridAutomationPeer;
-                if (peer != null)
-                {
-                    peer.RaiseAutomationCellInvokeEvents(e.Column, e.Row);
-                }
+                peer?.RaiseAutomationCellInvokeEvents(e.Column, e.Row);
             }
         }
 
@@ -3809,10 +3783,7 @@ namespace System.Windows.Controls
 
             // Make sure the newItemPlaceholderRow reflects the correct visiblity
             DataGridRow newItemPlaceholderRow = (DataGridRow)ItemContainerGenerator.ContainerFromItem(CollectionView.NewItemPlaceholder);
-            if (newItemPlaceholderRow != null)
-            {
-                newItemPlaceholderRow.CoerceValue(VisibilityProperty);
-            }
+            newItemPlaceholderRow?.CoerceValue(VisibilityProperty);
         }
 
         private void SetCurrentItemToPlaceholder()
@@ -4079,7 +4050,7 @@ namespace System.Windows.Controls
             if (!_newItemMarginComputationPending)
             {
                 _newItemMarginComputationPending = true;
-                Dispatcher.BeginInvoke((Action)delegate()
+                Dispatcher.BeginInvoke((Action)delegate ()
                 {
                     double marginLeft = 0;
                     if (IsGrouping && InternalScrollHost != null)
@@ -4311,10 +4282,7 @@ namespace System.Windows.Controls
                 AutomationPeer.ListenerExists(AutomationEvents.SelectionItemPatternOnElementRemovedFromSelection))
             {
                 DataGridAutomationPeer peer = DataGridAutomationPeer.FromElement(this) as DataGridAutomationPeer;
-                if (peer != null)
-                {
-                    peer.RaiseAutomationCellSelectedEvent(e);
-                }
+                peer?.RaiseAutomationCellSelectedEvent(e);
             }
         }
 
@@ -4564,10 +4532,7 @@ namespace System.Windows.Controls
                 AutomationPeer.ListenerExists(AutomationEvents.SelectionItemPatternOnElementRemovedFromSelection))
             {
                 DataGridAutomationPeer peer = DataGridAutomationPeer.FromElement(this) as DataGridAutomationPeer;
-                if (peer != null)
-                {
-                    peer.RaiseAutomationSelectionEvents(e);
-                }
+                peer?.RaiseAutomationSelectionEvents(e);
             }
 
             base.OnSelectionChanged(e);
@@ -4650,10 +4615,7 @@ namespace System.Windows.Controls
                         foreach (DataGridCellInfo cellInfo in cells)
                         {
                             DataGridCell cell = TryFindCell(cellInfo);
-                            if (cell != null)
-                            {
-                                cell.SyncIsSelected(isSelected);
-                            }
+                            cell?.SyncIsSelected(isSelected);
                         }
                     }
                 }
@@ -4962,10 +4924,7 @@ namespace System.Windows.Controls
                                 }
 
                                 IDisposable d = enumerator as IDisposable;
-                                if (d != null)
-                                {
-                                    d.Dispose();
-                                }
+                                d?.Dispose();
 
                                 _selectedCells.AddRegion(startIndex, 0, endIndex - startIndex + 1, _columns.Count);
                             }
@@ -5375,13 +5334,13 @@ namespace System.Windows.Controls
         private void OnItemsCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
             _currentCellContainer = null;
-            List<Tuple<int,int>> ranges = null;
+            List<Tuple<int, int>> ranges = null;
 
             using (UpdateSelectedCells())
             {
                 if (e.Action == NotifyCollectionChangedAction.Reset)
                 {
-                    ranges = new List<Tuple<int,int>>();
+                    ranges = new List<Tuple<int, int>>();
                     LocateSelectedItems(ranges);
                 }
 
@@ -5710,7 +5669,7 @@ namespace System.Windows.Controls
                                         else if (keyboardNavigationMode == KeyboardNavigationMode.Contained)
                                         {
                                             DependencyObject nextFocusTarget = keyboardNavigation.PredictFocusedElement(currentCellContainer, KeyToTraversalDirection(rtlKey),
-                                                treeViewNavigation:false, considerDescendants:false);
+                                                treeViewNavigation: false, considerDescendants: false);
                                             if (nextFocusTarget != null && keyboardNavigation.IsAncestorOfEx(this, nextFocusTarget))
                                             {
                                                 Keyboard.Focus(nextFocusTarget as IInputElement);
@@ -5756,7 +5715,7 @@ namespace System.Windows.Controls
                                         else if (keyboardNavigationMode == KeyboardNavigationMode.Contained)
                                         {
                                             DependencyObject nextFocusTarget = keyboardNavigation.PredictFocusedElement(currentCellContainer, KeyToTraversalDirection(rtlKey),
-                                                treeViewNavigation:false, considerDescendants:false);
+                                                treeViewNavigation: false, considerDescendants: false);
                                             if (nextFocusTarget != null && keyboardNavigation.IsAncestorOfEx(this, nextFocusTarget))
                                             {
                                                 Keyboard.Focus(nextFocusTarget as IInputElement);
@@ -5790,7 +5749,7 @@ namespace System.Windows.Controls
                                         else if (keyboardNavigationMode == KeyboardNavigationMode.Contained)
                                         {
                                             DependencyObject nextFocusTarget = keyboardNavigation.PredictFocusedElement(currentCellContainer, KeyToTraversalDirection(rtlKey),
-                                                treeViewNavigation:false, considerDescendants:false);
+                                                treeViewNavigation: false, considerDescendants: false);
                                             if (nextFocusTarget != null && keyboardNavigation.IsAncestorOfEx(this, nextFocusTarget))
                                             {
                                                 Keyboard.Focus(nextFocusTarget as IInputElement);
@@ -5825,7 +5784,7 @@ namespace System.Windows.Controls
                                         else if (keyboardNavigationMode == KeyboardNavigationMode.Contained)
                                         {
                                             DependencyObject nextFocusTarget = keyboardNavigation.PredictFocusedElement(currentCellContainer, KeyToTraversalDirection(rtlKey),
-                                                treeViewNavigation:false, considerDescendants:false);
+                                                treeViewNavigation: false, considerDescendants: false);
                                             if (nextFocusTarget != null && keyboardNavigation.IsAncestorOfEx(this, nextFocusTarget))
                                             {
                                                 Keyboard.Focus(nextFocusTarget as IInputElement);
@@ -6016,10 +5975,7 @@ namespace System.Windows.Controls
                             // When the new item jumped to the bottom, CurrentCell doesn't actually change,
                             // but there is a new container.
                             currentCellContainer = CurrentCellContainer;
-                            if (currentCellContainer != null)
-                            {
-                                currentCellContainer.Focus();
-                            }
+                            currentCellContainer?.Focus();
                         }
                     }
                 }
@@ -6234,9 +6190,9 @@ namespace System.Windows.Controls
                             }
                         }
                     }
-                    else if (targetElement != null)
+                    else
                     {
-                        targetElement.Focus();
+                        targetElement?.Focus();
                     }
                 }
             }
@@ -6724,11 +6680,11 @@ namespace System.Windows.Controls
         [Flags]
         private enum RelativeMousePositions
         {
-            Over    = 0x00,
-            Above   = 0x01,
-            Below   = 0x02,
-            Left    = 0x04,
-            Right   = 0x08,
+            Over = 0x00,
+            Above = 0x01,
+            Below = 0x02,
+            Left = 0x04,
+            Right = 0x08,
         }
 
         #endregion
@@ -6893,10 +6849,7 @@ namespace System.Windows.Controls
                                 if (dataGridItemAutomationPeer != null)
                                 {
                                     DataGridCellItemAutomationPeer cellPeer = dataGridItemAutomationPeer.GetOrCreateCellItemPeer(column);
-                                    if (cellPeer != null)
-                                    {
-                                        cellPeer.RaisePropertyChangedEvent(ValuePatternIdentifiers.ValueProperty, _value, newValue);
-                                    }
+                                    cellPeer?.RaisePropertyChangedEvent(ValuePatternIdentifiers.ValueProperty, _value, newValue);
                                 }
                             }
                         }
@@ -6935,8 +6888,10 @@ namespace System.Windows.Controls
                     else
                     {
                         // lacking a cell, bind a dummy element directly to the data item
-                        target = new FrameworkElement();
-                        target.DataContext = _item;
+                        target = new FrameworkElement
+                        {
+                            DataContext = _item
+                        };
                     }
 
                     BindingOperations.SetBinding(target, CellContentProperty, _column.ClipboardContentBinding);
@@ -6971,8 +6926,10 @@ namespace System.Windows.Controls
                     else
                     {
                         // lacking a cell, bind a dummy element directly to the data item
-                        target = new FrameworkElement();
-                        target.DataContext = _item;
+                        target = new FrameworkElement
+                        {
+                            DataContext = _item
+                        };
                     }
 
                     BindingOperations.SetBinding(target, CellClipboardProperty, _column.ClipboardContentBinding);
@@ -7088,7 +7045,7 @@ namespace System.Windows.Controls
         private static object OnCoerceCanUserSortColumns(DependencyObject d, object baseValue)
         {
             DataGrid dataGrid = (DataGrid)d;
-            if( DataGridHelper.IsPropertyTransferEnabled(dataGrid, CanUserSortColumnsProperty) &&
+            if (DataGridHelper.IsPropertyTransferEnabled(dataGrid, CanUserSortColumnsProperty) &&
                 DataGridHelper.IsDefaultValue(dataGrid, CanUserSortColumnsProperty) &&
                 dataGrid.Items.CanSort == false)
             {
@@ -7220,7 +7177,7 @@ namespace System.Windows.Controls
                             // get the index of existing descriptor to replace it
                             for (int i = 0; i < Items.SortDescriptions.Count; i++)
                             {
-                                if (string.Compare(Items.SortDescriptions[i].PropertyName, sortPropertyName, StringComparison.Ordinal) == 0 &&
+                                if (string.Equals(Items.SortDescriptions[i].PropertyName, sortPropertyName, StringComparison.Ordinal) &&
                                     (GroupingSortDescriptionIndices == null ||
                                     !GroupingSortDescriptionIndices.Contains(i)))
                                 {
@@ -7595,10 +7552,7 @@ namespace System.Windows.Controls
             Items.SortDescriptions.Clear();
             _sortingStarted = false;
             List<int> groupingSortDescriptionIndices = GroupingSortDescriptionIndices;
-            if (groupingSortDescriptionIndices != null)
-            {
-                groupingSortDescriptionIndices.Clear();
-            }
+            groupingSortDescriptionIndices?.Clear();
             foreach (DataGridColumn column in Columns)
             {
                 column.SortDirection = null;
@@ -7653,7 +7607,7 @@ namespace System.Windows.Controls
             {
                 // Selector will try to maintain the previous row selection.
                 // Keep SelectedCells in sync.
-                List<Tuple<int,int>> ranges = new List<Tuple<int, int>>();
+                List<Tuple<int, int>> ranges = new List<Tuple<int, int>>();
                 LocateSelectedItems(ranges);
                 _selectedCells.RestoreOnlyFullRows(ranges);
             }
@@ -7763,7 +7717,7 @@ namespace System.Windows.Controls
             if (CellInfoNeedsAdjusting(CurrentCell))
                 list.Add(CurrentCell.ItemInfo);
 
-            AdjustItemInfosAfterGeneratorChange(list, claimUniqueContainer:false);
+            AdjustItemInfosAfterGeneratorChange(list, claimUniqueContainer: false);
             base.AdjustItemInfosAfterGeneratorChangeOverride();
             AdjustPendingInfos();
         }
@@ -7782,7 +7736,7 @@ namespace System.Windows.Controls
             {
                 using (UpdateSelectedCells())
                 {
-                    for (int i=_pendingInfos.Count - 1; i>=0; --i)
+                    for (int i = _pendingInfos.Count - 1; i >= 0; --i)
                     {
                         ItemInfo info = _pendingInfos[i];
                         if (info.Index >= 0)

@@ -2,24 +2,8 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-//
-//
-//
-
-using System;
-using System.ComponentModel;
-using System.Windows;
-using System.Windows.Media;
 using System.Windows.Media.Media3D;
 using System.Runtime.InteropServices;
-using System.Windows.Media.Animation;
-using MS.Internal.PresentationCore;
-using MS.Win32;
-using System.Diagnostics;
-using System.Windows.Media.Composition;
-using System.Security;
-
-using DllImport=MS.Internal.PresentationCore.DllImport;
 
 namespace System.Windows.Media.Composition
 {

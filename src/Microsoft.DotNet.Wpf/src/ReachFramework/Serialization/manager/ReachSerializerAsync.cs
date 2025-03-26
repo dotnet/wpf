@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -11,19 +11,7 @@
         graph of types rooted by some object instance
                 
 --*/
-using System;
-using System.Collections;
-using System.Collections.Specialized;
-using System.ComponentModel;
-using System.Diagnostics;
-using System.Reflection;
 using System.Xml;
-using System.IO;
-using System.Security;
-using System.ComponentModel.Design.Serialization;
-using System.Windows.Xps.Packaging;
-using System.Windows.Documents;
-using System.Windows.Media;
 
 namespace System.Windows.Xps.Serialization
 {
@@ -462,10 +450,7 @@ namespace System.Windows.Xps.Serialization
                 ReachSerializer serializer = SerializationManager.GetSerializer(serializablePropertyContext.Value);
 
                 // If there is no serializer for this type, we won't serialize this property
-                if(serializer!=null)
-                {
-                    serializer.SerializeObject(serializablePropertyContext);
-                }
+                serializer?.SerializeObject(serializablePropertyContext);
             }
         }
 

@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -6,8 +6,6 @@
 //
 // Description: Base class for DataObject events arguments
 //
-
-using System;
 
 namespace System.Windows
 {
@@ -52,7 +50,7 @@ namespace System.Windows
         {
             if (routedEvent != DataObject.CopyingEvent && routedEvent != DataObject.PastingEvent && routedEvent != DataObject.SettingDataEvent)
             {
-                throw new ArgumentOutOfRangeException("routedEvent");
+                throw new ArgumentOutOfRangeException(nameof(routedEvent));
             }
 
             RoutedEvent = routedEvent;

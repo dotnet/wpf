@@ -52,15 +52,8 @@ internal sealed class WriteableOnDemandStream : Stream
         FileAccess access,
         GetWriteableInstance writeableStreamFactory)
     {
-        if (readingStream == null)
-        {
-            throw new ArgumentNullException("readingStream");
-        }
-
-        if (writeableStreamFactory == null)
-        {
-            throw new ArgumentNullException("writeableStreamFactory");
-        }
+        ArgumentNullException.ThrowIfNull(readingStream);
+        ArgumentNullException.ThrowIfNull(writeableStreamFactory);
 
         _active = readingStream;
         _mode = mode;

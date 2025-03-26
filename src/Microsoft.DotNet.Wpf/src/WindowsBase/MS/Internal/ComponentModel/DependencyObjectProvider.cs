@@ -2,20 +2,12 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
+using System.Collections;
+using System.ComponentModel;
+using System.Windows;
 
-namespace MS.Internal.ComponentModel 
+namespace MS.Internal.ComponentModel
 {
-    using MS.Internal.ComponentModel;
-    using System;
-    using System.Collections;
-    using System.Collections.Generic;
-    using System.ComponentModel;
-    using System.Diagnostics;
-    using System.Reflection;
-    using System.Windows;
-    using System.Windows.Markup;
-    using System.Text;
-
     /// <summary>
     ///     A type description provider provides metadata for types.  It allows a type
     ///     to define its own semantic layer for properties, events and attributes.
@@ -104,13 +96,11 @@ namespace MS.Internal.ComponentModel
         /// </summary>
         public override IDictionary GetCache(object instance) 
         {
-            DependencyObject d = instance as DependencyObject;
-
             // This should never happen because we are bound only
             // to dependency object types.  However, in case it
             // does, simply invoke the base and get out.
 
-            if (d == null) 
+            if (instance is not DependencyObject d)
             {
                 return base.GetCache(instance);
             }

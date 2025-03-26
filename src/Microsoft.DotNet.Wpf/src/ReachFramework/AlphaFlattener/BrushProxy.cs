@@ -1,12 +1,9 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
 
-using System;
 using System.Collections;              // for ArrayList
-using System.Collections.Generic;
-using System.Diagnostics;
 
 #if DEBUG_RASTERIZATION
 using System.IO;
@@ -15,7 +12,6 @@ using System.IO;
 using System.Windows;                  // for Rect                        WindowsBase.dll
 using System.Windows.Media;            // for Geometry, Brush, ImageData. PresentationCore.dll
 using System.Windows.Media.Imaging;
-using System.Security;
 
 using System.Windows.Xps.Serialization;
 using MS.Utility;
@@ -250,10 +246,11 @@ namespace Microsoft.Internal.AlphaFlattener
 
         public PenProxy Clone()
         {
-            PenProxy pen = new PenProxy();
-
-            pen._pen   = this._pen;
-            pen._brush = this._brush;
+            PenProxy pen = new PenProxy
+            {
+                _pen = this._pen,
+                _brush = this._brush
+            };
 
             return pen;
         }
@@ -813,10 +810,7 @@ namespace Microsoft.Internal.AlphaFlattener
                     }
                 }
 
-                if (_opacityMask != null)
-                {
-                    _opacityMask.ApplyTransform(trans);
-                }
+                _opacityMask?.ApplyTransform(trans);
             }
         }
 
@@ -1440,9 +1434,10 @@ namespace Microsoft.Internal.AlphaFlattener
         /// <returns></returns>
         private Brush BuildOpacityBrush()
         {
-            DrawingGroup drawing = new DrawingGroup();
-
-            drawing.Opacity = _opacity;
+            DrawingGroup drawing = new DrawingGroup
+            {
+                Opacity = _opacity
+            };
 
             Rect bounds = GetBrushFillBounds();
 
@@ -2423,9 +2418,10 @@ namespace Microsoft.Internal.AlphaFlattener
                     GradientStop gsA = gcA[i];
                     GradientStop gsB = gcB[i];
 
-                    GradientStop gs = new GradientStop();
-
-                    gs.Offset = gsA.Offset;
+                    GradientStop gs = new GradientStop
+                    {
+                        Offset = gsA.Offset
+                    };
 
                     if (opacityOnlyB)
                     {
@@ -2973,9 +2969,10 @@ namespace Microsoft.Internal.AlphaFlattener
 
                 if (allSame)
                 {
-                    Brush b = new SolidColorBrush(c);
-
-                    b.Opacity = opacity;
+                    Brush b = new SolidColorBrush(c)
+                    {
+                        Opacity = opacity
+                    };
 
                     return b;
                 }
@@ -3112,8 +3109,10 @@ namespace Microsoft.Internal.AlphaFlattener
                     treeWalkProgress.EnterTreeWalk(vb);
                     try 
                     {
-                        VisualTreeFlattener flattener = new VisualTreeFlattener(metroContext, pageSize, treeWalkProgress);
-                        flattener.InheritedTransformHint = visualToWorldTransformHint;
+                        VisualTreeFlattener flattener = new VisualTreeFlattener(metroContext, pageSize, treeWalkProgress)
+                        {
+                            InheritedTransformHint = visualToWorldTransformHint
+                        };
                         flattener.VisualWalk(vb.Visual);
                     }
                     finally 
@@ -3327,9 +3326,8 @@ namespace Microsoft.Internal.AlphaFlattener
             }
 
             // SolidColorBrush * GradientBrush
-            if (brushB.Brush is GradientBrush)
+            if (brushB.Brush is GradientBrush gradientBrush)
             {
-                GradientBrush gradientBrush = (GradientBrush)brushB.Brush;
                 return brushB.BlendGradient(colorA, reverse, gradientBrush.ColorInterpolationMode);
             }
 
@@ -4312,8 +4310,10 @@ namespace Microsoft.Internal.AlphaFlattener
                 }
                 else
                 {
-                    geometry = new EllipseGeometry(center, _rx * t, _ry * t);
-                    geometry.Transform = new MatrixTransform(_trans);
+                    geometry = new EllipseGeometry(center, _rx * t, _ry * t)
+                    {
+                        Transform = new MatrixTransform(_trans)
+                    };
                 }
 
                 return geometry;

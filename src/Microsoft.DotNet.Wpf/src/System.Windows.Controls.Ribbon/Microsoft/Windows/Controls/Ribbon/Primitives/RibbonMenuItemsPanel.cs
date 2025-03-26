@@ -2,21 +2,17 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
+using System.Windows.Controls.Primitives;
+using System.Collections.Generic;
+using MS.Internal;
+using Microsoft.Windows.Controls;
+
 #if RIBBON_IN_FRAMEWORK
 namespace System.Windows.Controls.Ribbon.Primitives
 #else
 namespace Microsoft.Windows.Controls.Ribbon.Primitives
 #endif
 {
-    using System.Diagnostics;
-    using System.Windows;
-    using System.Windows.Controls;
-    using System.Windows.Controls.Primitives;
-    using System.Collections.Generic;
-    using System;
-    using MS.Internal;
-    using Microsoft.Windows.Controls;
-
     public class RibbonMenuItemsPanel : VirtualizingStackPanel, ISupportStarLayout
     {
         #region Constructor
@@ -32,10 +28,7 @@ namespace Microsoft.Windows.Controls.Ribbon.Primitives
 
         public void RegisterStarLayoutProvider(IProvideStarLayoutInfoBase starLayoutInfoProvider)
         {
-            if (starLayoutInfoProvider == null)
-            {
-                throw new ArgumentNullException("starLayoutInfoProvider");
-            }
+            ArgumentNullException.ThrowIfNull(starLayoutInfoProvider);
             if (!_registeredStarLayoutProviders.Contains(starLayoutInfoProvider))
             {
                 _registeredStarLayoutProviders.Add(starLayoutInfoProvider);
@@ -45,10 +38,7 @@ namespace Microsoft.Windows.Controls.Ribbon.Primitives
 
         public void UnregisterStarLayoutProvider(IProvideStarLayoutInfoBase starLayoutInfoProvider)
         {
-            if (starLayoutInfoProvider == null)
-            {
-                throw new ArgumentNullException("starLayoutInfoProvider");
-            }
+            ArgumentNullException.ThrowIfNull(starLayoutInfoProvider);
             if (_registeredStarLayoutProviders.Contains(starLayoutInfoProvider))
             {
                 _registeredStarLayoutProviders.Remove(starLayoutInfoProvider);

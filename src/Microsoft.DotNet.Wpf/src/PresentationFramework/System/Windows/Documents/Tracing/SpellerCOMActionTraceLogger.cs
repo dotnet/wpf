@@ -11,8 +11,6 @@
 //
 
 using MS.Internal;
-using MS.Internal.Telemetry;
-using System.Collections.Generic;
 using System.Diagnostics.Tracing;
 
 namespace System.Windows.Documents.Tracing
@@ -157,7 +155,7 @@ namespace System.Windows.Documents.Tracing
                         NumCallsMeasured = new Dictionary<Actions, long>()
                     };
 
-                    foreach (Actions a in Enum.GetValues(typeof(Actions)))
+                    foreach (Actions a in Enum.GetValues<Actions>())
                     {
                         instanceInfo.CumulativeCallTime100Ns.Add(a, 0);
                         instanceInfo.NumCallsMeasured.Add(a, 0);

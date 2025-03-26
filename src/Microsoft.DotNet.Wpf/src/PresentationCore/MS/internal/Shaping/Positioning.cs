@@ -2,13 +2,6 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-
-
-using System.Diagnostics;
-using System.Security;
-using System;
-using System.IO;
-
 namespace MS.Internal.Shaping
 {
 
@@ -209,27 +202,30 @@ namespace MS.Internal.Shaping
         }
     
         public DeviceTable(int Offset) { offset = Offset; }
-        bool IsNull() { return (offset==0); }
+
+        private bool IsNull() { return (offset==0); }
         private int offset;
     }
 
     internal struct ValueRecordTable
     {
-        const ushort XPlacmentFlag = 0x0001;
-        const ushort YPlacmentFlag = 0x0002;
-        const ushort XAdvanceFlag   = 0x0004;
-        const ushort YAdvanceFlag  = 0x0008;
-        const ushort XPlacementDeviceFlag = 0x0010;
-        const ushort YPlacementDeviceFlag = 0x0020;
-        const ushort XAdvanceDeviceFlag  = 0x0040;
-        const ushort YAdvanceDeviceFlag  = 0x0080;
+        private const ushort XPlacmentFlag = 0x0001;
+        private const ushort YPlacmentFlag = 0x0002;
+        private const ushort XAdvanceFlag   = 0x0004;
+        private const ushort YAdvanceFlag  = 0x0008;
+        private const ushort XPlacementDeviceFlag = 0x0010;
+        private const ushort YPlacementDeviceFlag = 0x0020;
+        private const ushort XAdvanceDeviceFlag  = 0x0040;
+        private const ushort YAdvanceDeviceFlag  = 0x0080;
         
-        private static ushort[] BitCount = 
-                    new ushort[16] { 0, 2, 2, 4,  2, 4, 4, 6,  2, 4, 4, 6,  4, 6, 6, 8 };
+        private static ReadOnlySpan<ushort> BitCount => [0, 2, 2, 4,
+                                                         2, 4, 4, 6,
+                                                         2, 4, 4, 6,
+                                                         4, 6, 6, 8];
 
         public static ushort Size(ushort Format)
         {
-            return (ushort)(BitCount[Format&0x000F]+BitCount[(Format>>4)&0x000F]);
+            return (ushort)(BitCount[Format & 0x000F] + BitCount[(Format >> 4) & 0x000F]);
         }
          
         public void AdjustPos(  FontTable Table,
@@ -1184,7 +1180,7 @@ namespace MS.Internal.Shaping
         private int offset;
     }
 
-    struct CursivePositioningSubtable
+    internal struct CursivePositioningSubtable
     {
         private const ushort offsetFormat = 0;
         private const ushort offsetCoverage = 2;

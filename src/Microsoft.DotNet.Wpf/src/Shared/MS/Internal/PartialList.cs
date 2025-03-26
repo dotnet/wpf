@@ -16,10 +16,7 @@
 //
 //---------------------------------------------------------------------------
 
-using System;
 using System.Collections;
-using System.Collections.Generic;
-using System.Diagnostics;
 
 namespace MS.Internal
 {
@@ -33,17 +30,6 @@ namespace MS.Internal
         private int _initialIndex;
         private int _count;
 
-        /// <summary>
-        /// Convenience constructor for taking in an entire list. Useful for creating a read-only
-        /// version of the list.
-        /// </summary>
-        public PartialList(IList<T> list)
-        {
-            _list = list;
-            _initialIndex = 0;
-            _count = list.Count;
-        }
-
         public PartialList(IList<T> list, int initialIndex, int count)
         {
             // make sure early that the caller didn't miscalculate index and count
@@ -54,22 +40,6 @@ namespace MS.Internal
             _count = count;
         }
 
-#if !PRESENTATION_CORE
-        /// <summary>
-        /// Creates new PartialList object only for true partial ranges.
-        /// Otherwise, returns the original list.
-        /// </summary>
-        public static IList<T> Create(IList<T> list, int initialIndex, int count)
-        {
-            if (list == null)
-                return null;
-
-            if (initialIndex == 0 && count == list.Count)
-                return list;
-
-            return new PartialList<T>(list, initialIndex, count);
-        }
-#endif
         #region IList<T> Members
 
         public void RemoveAt(int index)
@@ -151,8 +121,7 @@ namespace MS.Internal
 
         public void CopyTo(T[] array, int arrayIndex)
         {
-            if (arrayIndex < 0)
-                throw new ArgumentOutOfRangeException("arrayIndex");
+            ArgumentOutOfRangeException.ThrowIfNegative(arrayIndex);
 
             for (int i = 0; i < _count; ++i)
                 array[arrayIndex + i] = this[i];

@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -12,28 +12,16 @@
 using MS.Internal;                      // Helper
 using MS.Utility;                       // ItemStructList<ChildValueLookup>
 using System.Collections;               // Hashtable
-using System.Collections.Generic;       // List<T>
 using System.Collections.Specialized;   // HybridDictionary
 using System.ComponentModel;            // TypeConverter, TypeDescriptor
-using System.Diagnostics;               // Debug.Assert
 using System.Runtime.CompilerServices;  // ConditionalWeakTable
 using System.Windows.Controls;          // Control, ContentPresenter
 using System.Windows.Data;              // BindingExpression
-using System.Windows.Documents;         // TableRowGroup,TableRow
 using System.Windows.Media;             // VisualCollection
 using System.Windows.Media.Animation;   // Storyboard
 using System.Windows.Markup;            // MarkupExtension
-using System.Windows.Threading;         // DispatcherObject
 using System.Threading;                 // Interlocked
 using MS.Internal.Data;                 // BindingValueChangedEventArgs
-using System.Globalization;
-using System.Reflection;
-
-// Disabling 1634 and 1691:
-// In order to avoid generating warnings about unknown message numbers and
-// unknown pragmas when compiling C# source code with the C# compiler,
-// you need to disable warnings 1634 and 1691. (Presharp Documentation)
-#pragma warning disable 1634, 1691
 
 namespace System.Windows
 {
@@ -115,7 +103,6 @@ namespace System.Windows
                 newThemeStyle.CheckTargetType(d);
                 newThemeStyle.Seal();
 
-#pragma warning disable 6503
                 // Check if the theme style has the OverridesDefaultStyle  property set on the target tag or any of its
                 // visual triggers. It is an error to specify the OverridesDefaultStyle  in your own ThemeStyle.
                 if (StyleHelper.IsSetOnContainer(FrameworkElement.OverridesDefaultStyleProperty, ref newThemeStyle.ContainerDependents, true))
@@ -128,7 +115,6 @@ namespace System.Windows
                 {
                     throw new InvalidOperationException(SR.CannotHaveEventHandlersInThemeStyle);
                 }
-#pragma warning restore 6503
             }
 
             themeStyleCache = newThemeStyle;
@@ -185,7 +171,7 @@ namespace System.Windows
 
                 themeStyleKey = fe.DefaultStyleKey;
                 overridesDefaultStyle = fe.OverridesDefaultStyle;
-              
+
                 oldThemeStyle = fe.ThemeStyle;
             }
             else
@@ -196,7 +182,7 @@ namespace System.Windows
 
                 themeStyleKey = fce.DefaultStyleKey;
                 overridesDefaultStyle = fce.OverridesDefaultStyle;
-               
+
                 oldThemeStyle = fce.ThemeStyle;
             }
 
@@ -295,6 +281,7 @@ namespace System.Windows
         {
             DependencyObject d = fe;
 
+#pragma warning disable IDE0031
             if (newTemplate != null)
             {
                 newTemplate.Seal();
@@ -313,6 +300,7 @@ namespace System.Windows
                     StyleHelper.CheckForCyclicReferencesInStyleAndTemplateTriggers(templateProperty, newTemplate, style, themeStyle);
                 }
 #endif
+#pragma warning restore IDE0031
             }
 
             // Update the template cache
@@ -369,10 +357,7 @@ namespace System.Windows
             // Seal template nodes (if exists)
 
 
-            if (frameworkTemplate != null)
-            {
-                frameworkTemplate.ProcessTemplateBeforeSeal();
-            }
+            frameworkTemplate?.ProcessTemplateBeforeSeal();
 
 
             if (templateRoot != null)
@@ -387,10 +372,7 @@ namespace System.Windows
             }
 
             // Seal triggers
-            if (triggers != null)
-            {
-                triggers.Seal();
-            }
+            triggers?.Seal();
 
             // Seal Resource Dictionary
             if (resources != null)
@@ -527,11 +509,13 @@ namespace System.Windows
 
             int mapIndex = childRecord.ValueLookupListFromProperty.EnsureEntry(propertyValue.Property.GlobalIndex);
 
-            ChildValueLookup valueLookup = new ChildValueLookup();
-            valueLookup.LookupType = (ValueLookupType)propertyValue.ValueType; // Maps directly to ValueLookupType for applicable values
-            valueLookup.Conditions = propertyValue.Conditions;
-            valueLookup.Property = propertyValue.Property;
-            valueLookup.Value = propertyValue.ValueInternal;
+            ChildValueLookup valueLookup = new ChildValueLookup
+            {
+                LookupType = (ValueLookupType)propertyValue.ValueType, // Maps directly to ValueLookupType for applicable values
+                Conditions = propertyValue.Conditions,
+                Property = propertyValue.Property,
+                Value = propertyValue.ValueInternal
+            };
 
             childRecord.ValueLookupListFromProperty.Entries[mapIndex].Value.Add(ref valueLookup);
 
@@ -755,9 +739,11 @@ namespace System.Windows
                 }
             }
 
-            dependent = new ContainerDependent();
-            dependent.Property = dp;
-            dependent.FromVisualTrigger = fromVisualTrigger;
+            dependent = new ContainerDependent
+            {
+                Property = dp,
+                FromVisualTrigger = fromVisualTrigger
+            };
             containerDependents.Add(dependent);
         }
 
@@ -778,9 +764,11 @@ namespace System.Windows
             {
                 Debug.Assert(childIndex >= 0);
 
-                ChildEventDependent dependent = new ChildEventDependent();
-                dependent.ChildIndex = childIndex;
-                dependent.EventHandlersStore = eventHandlersStore;
+                ChildEventDependent dependent = new ChildEventDependent
+                {
+                    ChildIndex = childIndex,
+                    EventHandlersStore = eventHandlersStore
+                };
 
                 eventDependents.Add(ref dependent);
             }
@@ -799,9 +787,11 @@ namespace System.Windows
             DependencyProperty                              dp,
             ref FrugalStructList<ChildPropertyDependent>    propertyDependents)
         {
-            ChildPropertyDependent dependent = new ChildPropertyDependent();
-            dependent.ChildIndex = childIndex;
-            dependent.Property = dp;
+            ChildPropertyDependent dependent = new ChildPropertyDependent
+            {
+                ChildIndex = childIndex,
+                Property = dp
+            };
 
             propertyDependents.Add(dependent);
         }
@@ -837,10 +827,12 @@ namespace System.Windows
             {
                 // Since there isn't a duplicate entry,
                 // create and add a new one
-                ChildPropertyDependent resourceDependent = new ChildPropertyDependent();
-                resourceDependent.ChildIndex = childIndex;
-                resourceDependent.Property = dp;
-                resourceDependent.Name = name;
+                ChildPropertyDependent resourceDependent = new ChildPropertyDependent
+                {
+                    ChildIndex = childIndex,
+                    Property = dp,
+                    Name = name
+                };
 
                 resourceDependents.Add(resourceDependent);
             }
@@ -1447,7 +1439,7 @@ namespace System.Windows
 
             if (oldStyle != null)
             {
-                HybridDictionary instanceValues = (styleData != null) ? styleData[(int)InstanceStyleData.InstanceValues] : null;
+                HybridDictionary instanceValues = styleData?[(int)InstanceStyleData.InstanceValues];
                 ReleaseInstanceDataForDataTriggers(dataField, instanceValues, oldStyle, oldFrameworkTemplate );
                 if (oldStyle.HasInstanceValues)
                 {
@@ -1458,7 +1450,7 @@ namespace System.Windows
             }
             else if (oldFrameworkTemplate != null)
             {
-                HybridDictionary instanceValues = (styleData != null) ? styleData[(int)InstanceStyleData.InstanceValues] : null;
+                HybridDictionary instanceValues = styleData?[(int)InstanceStyleData.InstanceValues];
                 ReleaseInstanceDataForDataTriggers(dataField, instanceValues, oldStyle, oldFrameworkTemplate );
                 if (oldFrameworkTemplate.HasInstanceValues)
                 {
@@ -1469,7 +1461,7 @@ namespace System.Windows
             }
             else
             {
-                HybridDictionary instanceValues = (styleData != null) ? styleData[(int)InstanceStyleData.InstanceValues] : null;
+                HybridDictionary instanceValues = styleData?[(int)InstanceStyleData.InstanceValues];
                 ReleaseInstanceDataForDataTriggers(dataField, instanceValues, oldStyle, oldFrameworkTemplate );
             }
         }
@@ -1835,7 +1827,7 @@ namespace System.Windows
                         label = container.GetHashCode().ToString(System.Globalization.CultureInfo.InvariantCulture);
 
                     EventTrace.EventProvider.TraceEvent(EventTrace.Event.WClientParseInstVisTreeEnd, EventTrace.Keyword.KeywordXamlBaml, EventTrace.Level.Verbose,
-                                                         String.Format(System.Globalization.CultureInfo.InvariantCulture, "Style.InstantiateSubTree for {0} {1}", container.GetType().Name, label));
+                        $"Style.InstantiateSubTree for {container.GetType().Name} {label}");
                 }
             }
 
@@ -1875,7 +1867,7 @@ namespace System.Windows
                         label = container.GetHashCode().ToString(System.Globalization.CultureInfo.InvariantCulture);
 
                     EventTrace.EventProvider.TraceEvent(EventTrace.Event.WClientParseInstVisTreeEnd, EventTrace.Keyword.KeywordXamlBaml, EventTrace.Level.Verbose,
-                                                         String.Format(System.Globalization.CultureInfo.InvariantCulture, "Style.InstantiateSubTree for {0} {1}", container.GetType().Name, label));
+                        $"Style.InstantiateSubTree for {container.GetType().Name} {label}");
                 }
             }
 
@@ -2168,10 +2160,7 @@ namespace System.Windows
             }
 
             // Clear the NameMap property on the root of the generated subtree
-            if (rootNode != null)
-            {
-                rootNode.ClearValue(NameScope.NameScopeProperty);
-            }
+            rootNode?.ClearValue(NameScope.NameScopeProperty);
 
             // Detach the generated tree from the conatiner
             DetachGeneratedSubTree(feContainer, fceContainer);
@@ -2225,7 +2214,7 @@ namespace System.Windows
 
             FrameworkObject container = new FrameworkObject(feContainer, fceContainer);
 
-            HybridDictionary instanceValues = (instanceData != null) ? instanceData[(int)InstanceStyleData.InstanceValues] : null;
+            HybridDictionary instanceValues = instanceData?[(int)InstanceStyleData.InstanceValues];
             int[] childIndices = new int[templateChain.Count];
 
             // Assumes that styleChain[0] is the root of the templated subtree
@@ -2921,11 +2910,11 @@ namespace System.Windows
             FrameworkContentElement fceContainer;
             Helper.DowncastToFEorFCE(container, out feContainer, out fceContainer, true);
 
-            HybridDictionary[] styleData = (dataField != null) ? dataField.GetValue(container) : null;
-            HybridDictionary instanceValues = (styleData != null) ? styleData[(int)InstanceStyleData.InstanceValues] : null;
+            HybridDictionary[] styleData = dataField?.GetValue(container);
+            HybridDictionary instanceValues = styleData?[(int)InstanceStyleData.InstanceValues];
             InstanceValueKey key = new InstanceValueKey(childIndex, dp.GlobalIndex, i);
 
-            object value = (instanceValues != null)? instanceValues[key] : null;
+            object value = instanceValues?[key];
             bool isRequestingExpression = (feChild != null) ? feChild.IsRequestingExpression : fceChild.IsRequestingExpression;
 
             if (value == null)
@@ -2982,10 +2971,7 @@ namespace System.Windows
                 {
                     expr = value as Expression;
                     // if the instance value is an expression, attach it
-                    if (expr != null)
-                    {
-                        expr.OnAttach(child, dp);
-                    }
+                    expr?.OnAttach(child, dp);
                 }
             }
 
@@ -3080,7 +3066,8 @@ namespace System.Windows
                                         // Check for property trigger presence & applicability
                                         for (int j = 0; j < conditions.Length; j++)
                                         {
-                                            Debug.Assert(!StyleHelper.IsSetOnContainer(conditions[j].Property, ref containerDependents, true), "Style trigger condition property " + conditions[j].Property + " is set via a template trigger on the container. This is a cyclic reference and is illegal.");
+                                            Debug.Assert(!StyleHelper.IsSetOnContainer(conditions[j].Property, ref containerDependents, true),
+                                                $"Style trigger condition property {conditions[j].Property} is set via a template trigger on the container. This is a cyclic reference and is illegal.");
                                         }
                                     }
                                     break;
@@ -3382,8 +3369,8 @@ namespace System.Windows
                 FrugalStructList<ContainerDependent> newContainerDependents;
 
                 Debug.Assert(feContainer != null);
-                oldFactory = (oldFrameworkTemplate != null) ? oldFrameworkTemplate.VisualTree : null;
-                newFactory = (newFrameworkTemplate != null) ? newFrameworkTemplate.VisualTree : null;
+                oldFactory = oldFrameworkTemplate?.VisualTree;
+                newFactory = newFrameworkTemplate?.VisualTree;
 
                 canBuildVisualTree = (oldFrameworkTemplate != null) ? oldFrameworkTemplate.CanBuildVisualTree : false;
                 hasTemplateGeneratedSubTree = feContainer.HasTemplateGeneratedSubTree;
@@ -3692,8 +3679,10 @@ namespace System.Windows
                 DependencyProperty              dp,
                 FrameworkElementFactory         templateRoot)
         {
-            EffectiveValueEntry newEntry = new EffectiveValueEntry(dp);
-            newEntry.Value = DependencyProperty.UnsetValue;
+            EffectiveValueEntry newEntry = new EffectiveValueEntry(dp)
+            {
+                Value = DependencyProperty.UnsetValue
+            };
             if (GetValueFromTemplatedParent(
                     container,
                     childIndex,
@@ -3838,8 +3827,10 @@ namespace System.Windows
                 FrameworkObject fo,
                 DependencyProperty dp)
         {
-            EffectiveValueEntry newEntry = new EffectiveValueEntry(dp);
-            newEntry.Value = DependencyProperty.UnsetValue;
+            EffectiveValueEntry newEntry = new EffectiveValueEntry(dp)
+            {
+                Value = DependencyProperty.UnsetValue
+            };
             if (GetValueFromStyleOrTemplate(fo, dp, ref newEntry))
             {
                 DependencyObject target = fo.DO;
@@ -4349,9 +4340,8 @@ namespace System.Windows
                 }
                 else
                 {
-                    Debug.Assert(candidateTrigger is List<TriggerBase>, "Internal data structure error: The FrugalMap [Style/Template].PropertyTriggersWithActions " +
-                        "is expected to hold a single TriggerBase or a List<T> of them.  An object of type " +
-                        candidateTrigger.GetType().ToString() + " is not expected.  Where did this object come from?");
+                    Debug.Assert(candidateTrigger is List<TriggerBase>,
+                        $"Internal data structure error: The FrugalMap [Style/Template].PropertyTriggersWithActions is expected to hold a single TriggerBase or a List<T> of them.  An object of type {candidateTrigger.GetType()} is not expected.  Where did this object come from?");
 
                     List<TriggerBase> triggerList = (List<TriggerBase>)candidateTrigger;
 
@@ -5062,7 +5052,7 @@ namespace System.Windows
                 else
                 {
                     Debug.Assert( existing is List<TriggerBase>,
-                        "FrugalMap for holding List<TriggerBase> is holding an instance of unexpected type " + existing.GetType() );
+                        $"FrugalMap for holding List<TriggerBase> is holding an instance of unexpected type {existing.GetType()}");
 
                     List<TriggerBase> existingList = (List<TriggerBase>)existing;
 
@@ -5108,7 +5098,7 @@ namespace System.Windows
                 else
                 {
                     Debug.Assert( existing is List<TriggerBase>,
-                        "HybridDictionary for holding List<TriggerBase> is holding an instance of unexpected type " + existing.GetType() );
+                        $"HybridDictionary for holding List<TriggerBase> is holding an instance of unexpected type {existing.GetType()}");
 
                     List<TriggerBase> existingList = (List<TriggerBase>)existing;
 
@@ -5280,9 +5270,8 @@ namespace System.Windows
                     }
                     else
                     {
-                        Debug.Assert(candidateTrigger is List<TriggerBase>, "Internal data structure error: The HybridDictionary [Style/Template].DataTriggersWithActions " +
-                            "is expected to hold a single TriggerBase or a List<T> of them.  An object of type " +
-                            candidateTrigger.GetType().ToString() + " is not expected.  Where did this object come from?");
+                        Debug.Assert(candidateTrigger is List<TriggerBase>,
+                            $"Internal data structure error: The HybridDictionary [Style/Template].DataTriggersWithActions is expected to hold a single TriggerBase or a List<T> of them.  An object of type {candidateTrigger.GetType()} is not expected.  Where did this object come from?");
 
                         List<TriggerBase> triggerList = (List<TriggerBase>)candidateTrigger;
 
@@ -5443,10 +5432,7 @@ namespace System.Windows
                 return null;
             }
 
-            if (childIndex < 0)
-            {
-                throw new ArgumentOutOfRangeException("childIndex");
-            }
+            ArgumentOutOfRangeException.ThrowIfNegative(childIndex);
 
             DependencyObject child = styledChildren[childIndex - 1];
 
@@ -5478,7 +5464,7 @@ namespace System.Windows
                                 new AlternativeExpressionStorageCallback(GetExpressionCore),
                                 out _getExpression);
             }
-            
+
         }
 
         private static Expression GetExpressionCore(
@@ -5522,8 +5508,8 @@ namespace System.Windows
             {
                 if (fe != null)
                     fe.WriteInternalFlag(InternalFlags.IsInitialized, true);
-                else if (fce != null)
-                    fce.WriteInternalFlag(InternalFlags.IsInitialized, true);
+                else
+                    fce?.WriteInternalFlag(InternalFlags.IsInitialized, true);
             }
 
             // get the desired expression
@@ -5534,8 +5520,8 @@ namespace System.Windows
             {
                 if (fe != null)
                     fe.WriteInternalFlag(InternalFlags.IsInitialized, false);
-                else if (fce != null)
-                    fce.WriteInternalFlag(InternalFlags.IsInitialized, false);
+                else
+                    fce?.WriteInternalFlag(InternalFlags.IsInitialized, false);
             }
 
             return result;
@@ -5773,35 +5759,33 @@ namespace System.Windows
         //  Trading off an object boxing cost in exchange for avoiding reflection cost.
         public override bool Equals( object value )
         {
-            if( value is ChildValueLookup )
+            if (value is ChildValueLookup other)
             {
-                ChildValueLookup other = (ChildValueLookup)value;
-
-                if( LookupType      == other.LookupType &&
-                    Property        == other.Property &&
-                    Value           == other.Value )
+                if (LookupType == other.LookupType &&
+                    Property == other.Property &&
+                    Value == other.Value)
                 {
-                    if( Conditions == null &&
-                        other.Conditions == null )
+                    if (Conditions == null &&
+                        other.Conditions == null)
                     {
                         // Both condition arrays are null
                         return true;
                     }
 
-                    if( Conditions == null ||
-                        other.Conditions == null )
+                    if (Conditions == null ||
+                        other.Conditions == null)
                     {
                         // One condition array is null, but not other
                         return false;
                     }
 
                     // Both condition array non-null, see if they're the same length..
-                    if( Conditions.Length == other.Conditions.Length )
+                    if (Conditions.Length == other.Conditions.Length)
                     {
                         // Same length.  Walk the list and compare.
-                        for( int i = 0; i < Conditions.Length; i++ )
+                        for (int i = 0; i < Conditions.Length; i++)
                         {
-                            if( !Conditions[i].TypeSpecificEquals(other.Conditions[i]) )
+                            if (!Conditions[i].TypeSpecificEquals(other.Conditions[i]))
                             {
                                 return false;
                             }
@@ -5896,7 +5880,7 @@ namespace System.Windows
             // compare the state and reference values directly.)
             object referenceValue = Value;
             string referenceString = referenceValue as String;
-            Type stateType = (state != null) ? state.GetType() : null;
+            Type stateType = state?.GetType();
 
             if (referenceString != null && stateType != null &&
                 stateType != typeof(String))
@@ -5918,14 +5902,6 @@ namespace System.Windows
                     TypeConverter typeConverter = DefaultValueConverter.GetConverter(stateType);
                     if (typeConverter != null && typeConverter.CanConvertFrom(typeof(String)))
                     {
-                        // PreSharp uses message numbers that the C# compiler doesn't know about.
-                        // Disable the C# complaints, per the PreSharp documentation.
-                        #pragma warning disable 1634, 1691
-
-                        // PreSharp complains about catching NullReference (and other) exceptions.
-                        // It doesn't recognize that IsCritical[Application]Exception() handles these correctly.
-                        #pragma warning disable 56500
-
                         try
                         {
                             cachedValue = typeConverter.ConvertFromString(null, System.Windows.Markup.TypeConverterHelper.InvariantEnglishUS, referenceString);
@@ -5940,9 +5916,6 @@ namespace System.Windows
                         {
                             // if the conversion failed, just use the unconverted value
                         }
-
-                        #pragma warning restore 56500
-                        #pragma warning restore 1634, 1691
                     }
 
                     // cache the converted value
@@ -6151,9 +6124,9 @@ namespace System.Windows
         }
 
         // the origin of the instance value in the container's style:
-        int _childIndex;    // the childIndex of the target element
-        int _dpIndex;       // the global index of the target DP
-        int _index;         // the index in the ItemStructList<ChildValueLookup>
+        private int _childIndex;    // the childIndex of the target element
+        private int _dpIndex;       // the global index of the target DP
+        private int _index;         // the index in the ItemStructList<ChildValueLookup>
     }
 
     #endregion DataStructures

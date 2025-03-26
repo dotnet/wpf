@@ -1,23 +1,12 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
 
-using System;
 using System.Collections;
-using System.Collections.Generic;
-using System.Collections.Specialized;
-using System.ComponentModel;
-using System.Diagnostics;
-using System.Reflection;
 using System.Xml;
-using System.IO;
-using System.Security;
-using System.ComponentModel.Design.Serialization;
 using System.Windows.Xps.Packaging;
-using System.Windows.Documents;
 using System.Windows.Media;
-using System.Windows.Markup;
 using System.Printing;
 using System.Windows.Threading;
 using MS.Internal;
@@ -148,15 +137,6 @@ namespace System.Windows.Xps.Serialization
             Object arg
             )
         {
-            //
-            // PreSharp uses message numbers that the C# compiler doesn't know about.
-            // Disable the C# complaints, per the PreSharp documentation.
-            #pragma warning disable 1634, 1691
-            //
-            // PreSharp complains about catching NullReference (and other) exceptions.
-            // This is an async model and we need to catch all exception ourselves and then
-            // send them to the completion delegate
-            #pragma warning disable 56500
             try
             {
                 if(!_serializationOperationCanceled)
@@ -209,8 +189,6 @@ namespace System.Windows.Xps.Serialization
 
                 return null;
             }
-            #pragma warning restore 56500
-            #pragma warning restore 1634, 1691
 
             return null;
         }
@@ -227,15 +205,6 @@ namespace System.Windows.Xps.Serialization
             Object arg
             )
         {
-            //
-            // PreSharp uses message numbers that the C# compiler doesn't know about.
-            // Disable the C# complaints, per the PreSharp documentation.
-            #pragma warning disable 1634, 1691
-            //
-            // PreSharp complains about catching NullReference (and other) exceptions.
-            // This is an async model and we need to catch all exception ourselves and then
-            // send them to the completion delegate
-            #pragma warning disable 56500
             try
             {
                 // This logic must be mirrored in IsAsyncWorkPending see remarks.
@@ -341,8 +310,6 @@ namespace System.Windows.Xps.Serialization
 
                 return null;
             }
-            #pragma warning restore 56500
-            #pragma warning restore 1634, 1691
 
             return null;
         }
@@ -728,7 +695,7 @@ namespace System.Windows.Xps.Serialization
                 _device.EndDocument(abort);
 
                 //
-                // Inform the listener that the doucment has been printed
+                // Inform the listener that the document has been printed
                 //
                 XpsSerializationProgressChangedEventArgs e =
                 new XpsSerializationProgressChangedEventArgs(XpsWritingProgressChangeLevel.FixedDocumentWritingProgress,

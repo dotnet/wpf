@@ -1,30 +1,15 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-//
-//
-
-using System;
-using System.IO;
-using System.Collections;
-using System.ComponentModel;
-using System.ComponentModel.Design.Serialization;
-using System.Reflection;
-using MS.Internal;
-using System.Diagnostics;
-using System.Windows.Media;
-using System.Globalization;
-using System.Security;
-using System.Net;
-using System.Runtime.InteropServices;
-using System.Windows.Media.Animation;
 using System.Windows.Media.Composition;
+using System.Runtime.CompilerServices;
+using System.Runtime.InteropServices;
+using System.IO;
+using MS.Internal;
 using MS.Win32;
-using System.IO.Packaging;
+
 using UnsafeNativeMethods = MS.Win32.PresentationCore.UnsafeNativeMethods;
-using SR = MS.Internal.PresentationCore.SR;
-using MS.Internal.PresentationCore;                        // SecurityHelper
 
 namespace System.Windows.Media.Imaging
 {
@@ -647,7 +632,6 @@ namespace System.Windows.Media.Imaging
         /// <param name="pixels"></param>
         /// <param name="stride"></param>
         /// <param name="offset"></param>
-        [FriendAccessAllowed] // Built into Core, also used by Framework.
         unsafe internal void CriticalCopyPixels(Int32Rect sourceRect, Array pixels, int stride, int offset)
         {
             ReadPreamble();
@@ -657,7 +641,7 @@ namespace System.Windows.Media.Imaging
             ArgumentNullException.ThrowIfNull(pixels);
 
             if (pixels.Rank != 1)
-                throw new ArgumentException(SR.Collection_BadRank, "pixels");
+                throw new ArgumentException(SR.Collection_BadRank, nameof(pixels));
 
             if (offset < 0)
             {
@@ -680,43 +664,13 @@ namespace System.Windows.Media.Imaging
 
             int destBufferSize = checked(elementSize * (pixels.Length - offset));
 
+            // Check whether offset is out of bounds manually
+            if (offset >= pixels.Length)
+                throw new IndexOutOfRangeException();
 
-            if (pixels is byte[])
-            {
-                fixed (void* pixelArray = &((byte[])pixels)[offset])
-                    CriticalCopyPixels(sourceRect, (IntPtr)pixelArray, destBufferSize, stride);
-            }
-            else if (pixels is short[])
-            {
-                fixed (void* pixelArray = &((short[])pixels)[offset])
-                    CriticalCopyPixels(sourceRect, (IntPtr)pixelArray, destBufferSize, stride);
-            }
-            else if (pixels is ushort[])
-            {
-                fixed (void* pixelArray = &((ushort[])pixels)[offset])
-                    CriticalCopyPixels(sourceRect, (IntPtr)pixelArray, destBufferSize, stride);
-            }
-            else if (pixels is int[])
-            {
-                fixed (void* pixelArray = &((int[])pixels)[offset])
-                    CriticalCopyPixels(sourceRect, (IntPtr)pixelArray, destBufferSize, stride);
-            }
-            else if (pixels is uint[])
-            {
-                fixed (void* pixelArray = &((uint[])pixels)[offset])
-                    CriticalCopyPixels(sourceRect, (IntPtr)pixelArray, destBufferSize, stride);
-            }
-            else if (pixels is float[])
-            {
-                fixed (void* pixelArray = &((float[])pixels)[offset])
-                    CriticalCopyPixels(sourceRect, (IntPtr)pixelArray, destBufferSize, stride);
-            }
-            else if (pixels is double[])
-            {
-                fixed (void* pixelArray = &((double[])pixels)[offset])
-                    CriticalCopyPixels(sourceRect, (IntPtr)pixelArray, destBufferSize, stride);
-            }
-}
+            fixed (byte* pixelArray = &Unsafe.AddByteOffset(ref MemoryMarshal.GetArrayDataReference(pixels), (nint)offset * elementSize))
+                CriticalCopyPixels(sourceRect, (nint)pixelArray, destBufferSize, stride);
+        }
 
         /// <summary>
         /// CriticalCopyPixels
@@ -728,10 +682,9 @@ namespace System.Windows.Media.Imaging
         internal void CriticalCopyPixels(Int32Rect sourceRect, IntPtr buffer, int bufferSize, int stride)
         {
             if (buffer == IntPtr.Zero)
-                throw new ArgumentNullException("buffer");
+                throw new ArgumentNullException(nameof(buffer));
 
-            if (stride <= 0)
-                throw new ArgumentOutOfRangeException("stride", SR.ParameterMustBeGreaterThanZero);
+            ArgumentOutOfRangeException.ThrowIfNegativeOrZero(stride);
 
             if (sourceRect.Width <= 0)
                 sourceRect.Width = PixelWidth;
@@ -739,19 +692,14 @@ namespace System.Windows.Media.Imaging
             if (sourceRect.Height <= 0)
                 sourceRect.Height = PixelHeight;
 
-            if (sourceRect.Width > PixelWidth)
-                throw new ArgumentOutOfRangeException("sourceRect.Width", SR.Format(SR.ParameterCannotBeGreaterThan, PixelWidth));
-
-            if (sourceRect.Height > PixelHeight)
-                throw new ArgumentOutOfRangeException("sourceRect.Height", SR.Format(SR.ParameterCannotBeGreaterThan, PixelHeight));
+            ArgumentOutOfRangeException.ThrowIfGreaterThan(sourceRect.Width, PixelWidth, "sourceRect.Width");
+            ArgumentOutOfRangeException.ThrowIfGreaterThan(sourceRect.Height, PixelHeight, "sourceRect.Height");
 
             int minStride = checked(((sourceRect.Width * Format.BitsPerPixel) + 7) / 8);
-            if (stride < minStride)
-                throw new ArgumentOutOfRangeException("stride", SR.Format(SR.ParameterCannotBeLessThan, minStride));
+            ArgumentOutOfRangeException.ThrowIfLessThan(stride, minStride);
 
             int minRequiredDestSize = checked((stride * (sourceRect.Height - 1)) + minStride);
-            if (bufferSize < minRequiredDestSize)
-                throw new ArgumentOutOfRangeException("buffer", SR.Format(SR.ParameterCannotBeLessThan, minRequiredDestSize));
+            ArgumentOutOfRangeException.ThrowIfLessThan(bufferSize, minRequiredDestSize);
 
             lock (_syncObject)
             {
@@ -917,8 +865,7 @@ namespace System.Windows.Media.Imaging
                             }
                             finally
                             {
-                                if (pIWicConverter != null)
-                                    pIWicConverter.Close();
+                                pIWicConverter?.Close();
                             }
                         }
                     }
@@ -1275,7 +1222,7 @@ namespace System.Windows.Media.Imaging
                 // not set properly. Use IsValidForFinalizeCreation to validate, but don't throw
                 // if the validation fails.
                 if (_bitmapInit.IsInitAtLeastOnce &&
-                    IsValidForFinalizeCreation(/* throwIfInvalid = */ false))
+                    IsValidForFinalizeCreation(throwIfInvalid: false))
                 {
                     // FinalizeCreation() can throw because it usually makes pinvokes to things
                     // that return HRESULTs. Since firing the download events up the chain is

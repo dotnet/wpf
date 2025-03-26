@@ -2,9 +2,8 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
+#nullable disable
+
 using System.Reflection;
 using System.Xaml;
 using System.Xaml.Schema;
@@ -18,52 +17,48 @@ namespace MS.Internal.Xaml.Context
         private XamlContextStack<ObjectWriterFrame> _stack;
 
         private object _rootInstance;
+        private ServiceProviderContext _serviceProviderContext;
+        private XamlRuntime _runtime;
+        private int _savedDepth;     // The depth of the "saved" part this context is based on.
+        private bool _nameResolutionComplete;
+        private XamlObjectWriterSettings _settings;
+        private List<NameScopeInitializationCompleteSubscriber> _nameScopeInitializationCompleteSubscribers;
 
-        ServiceProviderContext _serviceProviderContext;
-        XamlRuntime _runtime;
-        int _savedDepth;     // The depth of the "saved" part this context is based on.
-        bool _nameResolutionComplete;
-        XamlObjectWriterSettings _settings;
-        List<NameScopeInitializationCompleteSubscriber> _nameScopeInitializationCompleteSubscribers;
-
-        public ObjectWriterContext(XamlSavedContext savedContext, 
+        public ObjectWriterContext(XamlSavedContext savedContext,
             XamlObjectWriterSettings settings, XAML3.INameScope rootNameScope, XamlRuntime runtime)
             : base(savedContext.SchemaContext)
         {
             _stack = new XamlContextStack<ObjectWriterFrame>(savedContext.Stack, false);
-            if (settings != null)
+            if (settings is not null)
             {
                 _settings = settings.StripDelegates();
             }
+
             _runtime = runtime;
             BaseUri = savedContext.BaseUri;
             // If the bottom of the stack is a (no XamlType) Value (reparse) then back-up onto it.
             // Otherwise add a blank frame to isolate template use from the saved context.
-            switch(savedContext.SaveContextType)
+            switch (savedContext.SaveContextType)
             {
             case SavedContextType.Template:
                 // Templates always need a root namescope, to isolate them from the rest of the doc
                 XAML3.INameScopeDictionary rootNameScopeDictionary = null;
-                if (rootNameScope == null)
+                if (rootNameScope is null)
                 {
-#if TARGETTING35SP1
-                    rootNameScopeDictionary = new NameScopeDictionary(new NameScope());
-#else
                     rootNameScopeDictionary = new NameScope();
-#endif
                 }
                 else
                 {
                     rootNameScopeDictionary = rootNameScope as XAML3.INameScopeDictionary;
 
-                    if (rootNameScopeDictionary == null)
+                    if (rootNameScopeDictionary is null)
                     {
                         rootNameScopeDictionary = new NameScopeDictionary(rootNameScope);
                     }
                 }
 
                 // Push an extra frame to ensure that the template NameScope is
-                // not part of the saved context.  Otherwise, the namescope 
+                // not part of the saved context.  Otherwise, the namescope
                 // will hold things alive as long as the template is alive
                 _stack.PushScope();
                 _savedDepth = _stack.Depth;
@@ -73,7 +68,7 @@ namespace MS.Internal.Xaml.Context
 
             case SavedContextType.ReparseValue:
             case SavedContextType.ReparseMarkupExtension:
-                Debug.Assert(rootNameScope == null, "Cannot pass a new namescope in to a reparse context");
+                Debug.Assert(rootNameScope is null, "Cannot pass a new namescope in to a reparse context");
                 _savedDepth = _stack.Depth - 1;
                 break;
             }
@@ -86,29 +81,27 @@ namespace MS.Internal.Xaml.Context
             _stack = new XamlContextStack<ObjectWriterFrame>(() => new ObjectWriterFrame());
 
             XAML3.INameScopeDictionary rootNameScopeDictionary = null;
-            if (rootNameScope == null)
+            if (rootNameScope is null)
             {
-#if TARGETTING35SP1
-                rootNameScopeDictionary = new NameScopeDictionary(new NameScope());
-#else
                 rootNameScopeDictionary = new NameScope();
-#endif
             }
             else
             {
                 rootNameScopeDictionary = rootNameScope as XAML3.INameScopeDictionary;
 
-                if (rootNameScopeDictionary == null)
+                if (rootNameScopeDictionary is null)
                 {
                     rootNameScopeDictionary = new NameScopeDictionary(rootNameScope);
                 }
             }
+
             _stack.CurrentFrame.NameScopeDictionary = rootNameScopeDictionary;
             _stack.PushScope();  // put a blank sentinal frame on the stack.
-            if (settings != null)
+            if (settings is not null)
             {
                 _settings = settings.StripDelegates();
             }
+
             _runtime = runtime;
             _savedDepth = 0;
         }
@@ -118,11 +111,12 @@ namespace MS.Internal.Xaml.Context
             get
             {
                 Assembly result = base.LocalAssembly;
-                if (result == null && _settings != null && _settings.AccessLevel != null)
+                if (result is null && _settings is not null && _settings.AccessLevel is not null)
                 {
                     result = Assembly.Load(_settings.AccessLevel.AssemblyAccessToAssemblyName);
                     base.LocalAssembly = result;
                 }
+
                 return result;
             }
             protected set { base.LocalAssembly = value; }
@@ -161,12 +155,13 @@ namespace MS.Internal.Xaml.Context
             // As soon as we have the necessary setting on ObjectWriter, we need to start passing
             // the local assembly into the context; currently, this will only return publics.
             XamlType xamlType = ServiceProvider_ResolveXamlType(qName);
-            if (xamlType == null || xamlType.UnderlyingType == null)
+            if (xamlType is null || xamlType.UnderlyingType is null)
             {
                 XamlTypeName name = XamlTypeName.Parse(qName, _serviceProviderContext);
                 xamlType = GetXamlType(name, true, true);
                 throw new XamlParseException(SR.Format(SR.TypeNotFound, xamlType.GetQualifiedName()));
             }
+
             return xamlType.UnderlyingType;
         }
 
@@ -177,7 +172,7 @@ namespace MS.Internal.Xaml.Context
 
         internal AmbientPropertyValue ServiceProvider_GetFirstAmbientValue(IEnumerable<XamlType> ceilingTypes, XamlMember[] properties)
         {
-            List<AmbientPropertyValue> valueList = FindAmbientValues(ceilingTypes, /*searchLiveStackOnly*/false, /*types*/null, properties, true);
+            List<AmbientPropertyValue> valueList = FindAmbientValues(ceilingTypes, searchLiveStackOnly: false, types: null, properties, true);
             return (valueList.Count == 0) ? null : valueList[0];
         }
 
@@ -189,7 +184,7 @@ namespace MS.Internal.Xaml.Context
 
         internal IEnumerable<AmbientPropertyValue> ServiceProvider_GetAllAmbientValues(IEnumerable<XamlType> ceilingTypes, XamlMember[] properties)
         {
-            List<AmbientPropertyValue> valueList = FindAmbientValues(ceilingTypes, /*searchLiveStackOnly*/false, /*types*/null, properties, /*stopAfterFirst*/ false);
+            List<AmbientPropertyValue> valueList = FindAmbientValues(ceilingTypes, searchLiveStackOnly: false, types: null, properties, stopAfterFirst: false);
             return valueList;
         }
 
@@ -207,10 +202,11 @@ namespace MS.Internal.Xaml.Context
 
         internal XamlObjectWriterSettings ServiceProvider_GetSettings()
         {
-            if (_settings == null)
+            if (_settings is null)
             {
                 _settings = new XamlObjectWriterSettings();
             }
+
             return _settings;
         }
 
@@ -218,7 +214,7 @@ namespace MS.Internal.Xaml.Context
 
         // -----  abstracts overriden from XamlContext.
 
-        public override void AddNamespacePrefix(String prefix, string xamlNS)
+        public override void AddNamespacePrefix(string prefix, string xamlNS)
         {
             _stack.CurrentFrame.AddNamespace(prefix, xamlNS);
         }
@@ -234,8 +230,10 @@ namespace MS.Internal.Xaml.Context
                 {
                     return xamlNs;
                 }
+
                 frame = (ObjectWriterFrame)frame.Previous;
             }
+
             return null;
         }
 
@@ -246,7 +244,7 @@ namespace MS.Internal.Xaml.Context
 
             while (frame.Depth > 0)
             {
-                if (frame._namespaces != null)
+                if (frame._namespaces is not null)
                 {
                     foreach (NamespaceDeclaration namespaceDeclaration in frame.GetNamespacePrefixes())
                     {
@@ -256,6 +254,7 @@ namespace MS.Internal.Xaml.Context
                         }
                     }
                 }
+
                 frame = (ObjectWriterFrame)frame.Previous;
             }
         }
@@ -269,14 +268,15 @@ namespace MS.Internal.Xaml.Context
 
         // ----- methods to support the Service Providers
 
-        internal ServiceProviderContext ServiceProviderContext    
+        internal ServiceProviderContext ServiceProviderContext
         {
             get
             {
-                if (null == _serviceProviderContext)
+                if (_serviceProviderContext is null)
                 {
                     _serviceProviderContext = new ServiceProviderContext(this);
                 }
+
                 return _serviceProviderContext;
             }
         }
@@ -285,12 +285,12 @@ namespace MS.Internal.Xaml.Context
         {
             ObjectWriterFrame frame = _stack.CurrentFrame;
 
-            if (frame == null)
+            if (frame is null)
             {
                 return null;
             }
 
-            if (frame.Instance != null && frame.XamlType == null)
+            if (frame.Instance is not null && frame.XamlType is null)
             {
                 //
                 // Text/TypeConverter, we need to go up a frame
@@ -301,6 +301,7 @@ namespace MS.Internal.Xaml.Context
             {
                 return frame.XamlType;
             }
+
             return frame.Member.Type;
         }
 
@@ -318,7 +319,7 @@ namespace MS.Internal.Xaml.Context
                 }
             }
 
-            List<XamlType> ceilingTypes = ceilingTypesEnumerable != null ? new List<XamlType>(ceilingTypesEnumerable) : null;
+            List<XamlType> ceilingTypes = ceilingTypesEnumerable is not null ? new List<XamlType>(ceilingTypesEnumerable) : null;
 
             List<AmbientPropertyValue> retList = new List<AmbientPropertyValue>();
 
@@ -335,13 +336,13 @@ namespace MS.Internal.Xaml.Context
 
                 object inst = frame.Instance;
 
-                if (types != null)
+                if (types is not null)
                 {
                     foreach (XamlType type in types)
                     {
-                        if (frame.XamlType != null && frame.XamlType.CanAssignTo(type))
+                        if (frame.XamlType is not null && frame.XamlType.CanAssignTo(type))
                         {
-                            if (inst != null)
+                            if (inst is not null)
                             {
                                 AmbientPropertyValue apValue = new AmbientPropertyValue(null, inst);
                                 retList.Add(apValue);
@@ -350,16 +351,16 @@ namespace MS.Internal.Xaml.Context
                     }
                 }
 
-                if (properties != null)
+                if (properties is not null)
                 {
                     foreach (XamlMember prop in properties)
                     {
                         bool returnAmbientValue = false;
                         object value = null;
 
-                        if (frame.XamlType != null && frame.XamlType.CanAssignTo(prop.DeclaringType))
+                        if (frame.XamlType is not null && frame.XamlType.CanAssignTo(prop.DeclaringType))
                         {
-                            if (inst != null)
+                            if (inst is not null)
                             {
                                 // If we are searching from inside the target Ambient property,
                                 // (like StaticResource inside a ResourceDictionary)
@@ -367,8 +368,8 @@ namespace MS.Internal.Xaml.Context
                                 // the object but will only exist on the parse stack.
                                 // If it is top-down it will be attached to the instance already
                                 // and the normal path will serve.
-                                if (prop == frame.Member && lowerFrame.Instance != null
-                                    && lowerFrame.XamlType != null && !lowerFrame.XamlType.IsUsableDuringInitialization)
+                                if (prop == frame.Member && lowerFrame.Instance is not null
+                                    && lowerFrame.XamlType is not null && !lowerFrame.XamlType.IsUsableDuringInitialization)
                                 {
                                     // One last thing to check:  If the object we are inside is a ME
                                     // then we are inside a call to ProvideValue and we don't want to
@@ -381,13 +382,11 @@ namespace MS.Internal.Xaml.Context
                                 }
                                 else
                                 {   // The Ambient Property is either Fully build or not set.
-
                                     // FIRST: Ask the object (via IQueryAmbient interface) if it has a value for this property.
                                     // This is usefull to prevent needless creation of empty lazy properties.
-                                    var ambientCtrl = inst as XAML3.IQueryAmbient;
 
                                     // If there is no ambientControl or if ambientControl says YES, then get the property value.
-                                    if (ambientCtrl == null || ambientCtrl.IsAmbientPropertyAvailable(prop.Name))
+                                    if (inst is not XAML3.IQueryAmbient ambientCtrl || ambientCtrl.IsAmbientPropertyAvailable(prop.Name))
                                     {
                                         returnAmbientValue = true;
                                         value = _runtime.GetValue(inst, prop);
@@ -409,7 +408,7 @@ namespace MS.Internal.Xaml.Context
                     break;
                 }
 
-                if (ceilingTypes != null)
+                if (ceilingTypes is not null)
                 {
                     if (ceilingTypes.Contains(frame.XamlType))
                     {
@@ -419,7 +418,7 @@ namespace MS.Internal.Xaml.Context
 
                 lowerFrame = frame;
                 frame = (ObjectWriterFrame)frame.Previous;
-                Debug.Assert(frame != null);
+                Debug.Assert(frame is not null);
             }
 
             return retList;
@@ -446,9 +445,9 @@ namespace MS.Internal.Xaml.Context
                 {
                     object inst = frame.Instance;
 
-                    if (frame.XamlType != null && frame.XamlType.CanAssignTo(type))
+                    if (frame.XamlType is not null && frame.XamlType.CanAssignTo(type))
                     {
-                        if (inst != null)
+                        if (inst is not null)
                         {
                             retList.Add(inst);
                             if (stopAfterFirst)
@@ -460,7 +459,7 @@ namespace MS.Internal.Xaml.Context
                 }
 
                 frame = (ObjectWriterFrame)frame.Previous;
-                Debug.Assert(frame != null);
+                Debug.Assert(frame is not null);
             }
 
             return retList;
@@ -489,7 +488,7 @@ namespace MS.Internal.Xaml.Context
         {
             _stack.PopScope();
         }
-        
+
         /// <summary>
         /// Total depth of the stack SavedDepth+LiveDepth
         /// </summary>
@@ -527,7 +526,7 @@ namespace MS.Internal.Xaml.Context
 
         public XamlType GrandParentType
         {
-            get { return (_stack.PreviousPreviousFrame != null) ? _stack.PreviousPreviousFrame.XamlType : null; }
+            get { return _stack.PreviousPreviousFrame?.XamlType; }
         }
 
         public XamlMember CurrentProperty
@@ -559,7 +558,7 @@ namespace MS.Internal.Xaml.Context
 
         public object GrandParentInstance
         {
-            get { return (_stack.PreviousPreviousFrame != null) ? _stack.PreviousPreviousFrame.Instance : null; }
+            get { return _stack.PreviousPreviousFrame?.Instance; }
         }
 
         public object CurrentCollection
@@ -592,7 +591,7 @@ namespace MS.Internal.Xaml.Context
 
         public bool GrandParentIsObjectFromMember
         {
-            get { return (_stack.PreviousPreviousFrame != null) ? _stack.PreviousPreviousFrame.IsObjectFromMember : false; }
+            get { return (_stack.PreviousPreviousFrame is not null) ? _stack.PreviousPreviousFrame.IsObjectFromMember : false; }
         }
 
         public bool CurrentIsPropertyValueSet
@@ -658,9 +657,9 @@ namespace MS.Internal.Xaml.Context
         // Used only for BeginInitHandler, in place of BaseUri.
         public Uri SourceBamlUri
         {
-            get { return _settings != null ? _settings.SourceBamlUri : null; }
+            get { return _settings?.SourceBamlUri; }
         }
-        
+
         // This specifically stores the start line number for a start object for consistency
         public int LineNumber_StartObject { get; set; }
 
@@ -767,12 +766,13 @@ namespace MS.Internal.Xaml.Context
         {
             get
             {
-                //evaluate if _rootInstance should just always look at _rootFrame.Instance instead of caching an instance
-                if (_rootInstance == null)
+                // evaluate if _rootInstance should just always look at _rootFrame.Instance instead of caching an instance
+                if (_rootInstance is null)
                 {
                     ObjectWriterFrame rootFrame = GetTopFrame();
                     _rootInstance = rootFrame.Instance;
                 }
+
                 return _rootInstance;
             }
         }
@@ -790,18 +790,20 @@ namespace MS.Internal.Xaml.Context
             {
                 frame = frame.Previous;
             }
+
             return (ObjectWriterFrame)frame;
         }
 
         private XAML3.INameScopeDictionary LookupNameScopeDictionary(ObjectWriterFrame frame)
         {
-            if (frame.NameScopeDictionary == null)
+            if (frame.NameScopeDictionary is null)
             {
-                if (frame.XamlType != null && frame.XamlType.IsNameScope)
+                if (frame.XamlType is not null && frame.XamlType.IsNameScope)
                 {
                     frame.NameScopeDictionary = frame.Instance as XAML3.INameScopeDictionary ?? new NameScopeDictionary(frame.Instance as XAML3.INameScope);
                 }
-                if (frame.NameScopeDictionary == null)
+
+                if (frame.NameScopeDictionary is null)
                 {
                     if (frame.Depth == 1)
                     {
@@ -810,13 +812,9 @@ namespace MS.Internal.Xaml.Context
                     else if (frame.Depth > 1)
                     {
                         if (frame.Depth == SavedDepth + 1 &&
-                            _settings != null && !_settings.RegisterNamesOnExternalNamescope)
+                            _settings is not null && !_settings.RegisterNamesOnExternalNamescope)
                         {
-#if TARGETTING35SP1
-                            frame.NameScopeDictionary = new NameScopeDictionary(new NameScope());
-#else
                             frame.NameScopeDictionary = new NameScope();
-#endif
                         }
                         else
                         {
@@ -826,8 +824,9 @@ namespace MS.Internal.Xaml.Context
                     }
                 }
             }
+
             // We are sure to find a name scope at the root (at least).
-            Debug.Assert(frame.NameScopeDictionary != null || frame.Depth == 0);
+            Debug.Assert(frame.NameScopeDictionary is not null || frame.Depth == 0);
             return frame.NameScopeDictionary;
         }
 
@@ -841,16 +840,18 @@ namespace MS.Internal.Xaml.Context
                 while (frame.Depth > 0)
                 {
                     nameScopeDictionary = LookupNameScopeDictionary(frame);
-                    Debug.Assert(nameScopeDictionary != null);
+                    Debug.Assert(nameScopeDictionary is not null);
                     if (frame.NameScopeDictionary != previousNameScopeDictionary)
                     {
                         previousNameScopeDictionary = nameScopeDictionary;
                         yield return nameScopeDictionary;
                     }
+
                     frame = (ObjectWriterFrame)frame.Previous;
                 }
+
                 // return the provided root namescope if it's different from the document root namescope
-                if (frame.NameScopeDictionary != null && frame.NameScopeDictionary != previousNameScopeDictionary)
+                if (frame.NameScopeDictionary is not null && frame.NameScopeDictionary != previousNameScopeDictionary)
                 {
                     yield return frame.NameScopeDictionary;
                 }
@@ -866,8 +867,10 @@ namespace MS.Internal.Xaml.Context
                 {
                     return true;
                 }
+
                 frame = (ObjectWriterFrame)frame.Previous;
             }
+
             return false;
         }
 
@@ -876,7 +879,7 @@ namespace MS.Internal.Xaml.Context
             Debug.Assert(rootFrame.Depth == 1);
 
             object inst = rootFrame.Instance;
-            if (inst == null && rootFrame.XamlType.IsNameScope)
+            if (inst is null && rootFrame.XamlType.IsNameScope)
             {
                 throw new InvalidOperationException(SR.NameScopeOnRootInstance);
             }
@@ -885,42 +888,37 @@ namespace MS.Internal.Xaml.Context
 
             nameScopeDictionary = inst as XAML3.INameScopeDictionary;
 
-            if (nameScopeDictionary == null)
+            if (nameScopeDictionary is null)
             {
-                XAML3.INameScope nameScope = inst as XAML3.INameScope;
-                if (nameScope != null)
+                if (inst is XAML3.INameScope nameScope)
                 {
                     nameScopeDictionary = new NameScopeDictionary(nameScope);
                 }
             }
-            
+
             // If the root instance isn't a name scope
             // then perhaps it designated a property as the name scope.
-            if (nameScopeDictionary == null)
+            if (nameScopeDictionary is null)
             {
                 XamlType xamlType = rootFrame.XamlType;
-                if (xamlType.UnderlyingType != null)
+                if (xamlType.UnderlyingType is not null)
                 {
                     // Get the Name Scope Property (from attribute on the class)
                     XamlMember nameScopeProperty = TypeReflector.LookupNameScopeProperty(xamlType);
-                    if (nameScopeProperty != null)
+                    if (nameScopeProperty is not null)
                     {
                         // Read the value of the property.  If it is an object we are good.
                         // if it is null create a stock name scope dictionary object and assign it back.
                         XAML3.INameScope nameScope = (XAML3.INameScope)_runtime.GetValue(inst, nameScopeProperty, false);
-                        if (nameScope == null)
+                        if (nameScope is null)
                         {
-#if TARGETTING35SP1
-                            nameScopeDictionary = new NameScopeDictionary(new NameScope());
-#else
                             nameScopeDictionary = new NameScope();
-#endif
                             _runtime.SetValue(inst, nameScopeProperty, nameScopeDictionary);
                         }
                         else
                         {
                             nameScopeDictionary = nameScope as XAML3.INameScopeDictionary;
-                            if (nameScopeDictionary == null)
+                            if (nameScopeDictionary is null)
                             {
                                 nameScopeDictionary = new NameScopeDictionary(nameScope);
                             }
@@ -929,7 +927,7 @@ namespace MS.Internal.Xaml.Context
                 }
             }
 
-            if (nameScopeDictionary == null && _settings != null 
+            if (nameScopeDictionary is null && _settings is not null
                 && _settings.RegisterNamesOnExternalNamescope)
             {
                 ObjectWriterFrame frameZero = (ObjectWriterFrame)rootFrame.Previous;
@@ -938,13 +936,9 @@ namespace MS.Internal.Xaml.Context
 
             // Otherwise we still need a namescope at the root of the parse
             // for our own usage.  For IXamlNameResolver() to use.
-            if (nameScopeDictionary == null)
+            if (nameScopeDictionary is null)
             {
-#if TARGETTING35SP1
-                nameScopeDictionary = new NameScopeDictionary(new NameScope());
-#else
                 nameScopeDictionary = new NameScope();
-#endif
             }
 
             rootFrame.NameScopeDictionary = nameScopeDictionary;
@@ -955,13 +949,13 @@ namespace MS.Internal.Xaml.Context
         {
             // Ensure that we have a root namescope before cloning the stack
             ObjectWriterFrame topFrame = GetTopFrame();
-            if (topFrame.NameScopeDictionary == null)
+            if (topFrame.NameScopeDictionary is null)
             {
                 topFrame.NameScopeDictionary = LookupNameScopeDictionary(topFrame);
             }
 
             // Clone the stack
-            var newStack = new XamlContextStack<ObjectWriterFrame>(_stack, true);            
+            var newStack = new XamlContextStack<ObjectWriterFrame>(_stack, true);
             XamlSavedContext savedContext = new XamlSavedContext(savedContextType, this, newStack);
             return savedContext;
         }
@@ -973,19 +967,22 @@ namespace MS.Internal.Xaml.Context
             foreach (XAML3.INameScope nameScope in StackWalkOfNameScopes)
             {
                 object obj = nameScope.FindName(name);
-                if (obj != null)
+                if (obj is not null)
                 {
-                    if (IsInitializedCallback != null)
+                    if (IsInitializedCallback is not null)
                     {
                         isFullyInitialized = IsInitializedCallback.IsFullyInitialized(obj);
                     }
-                    if (NameResolutionComplete || isFullyInitialized || IsInitializedCallback == null)
+
+                    if (NameResolutionComplete || isFullyInitialized || IsInitializedCallback is null)
                     {
                         value = obj;
                     }
+
                     break;
                 }
             }
+
             return value;
         }
 
@@ -1005,15 +1002,17 @@ namespace MS.Internal.Xaml.Context
                     {
                         continue;
                     }
+
                     allNamesAndValues.Add(nameValuePair);
                 }
             }
+
             return allNamesAndValues;
         }
 
         internal void AddNameScopeInitializationCompleteSubscriber(EventHandler handler)
         {
-            if (_nameScopeInitializationCompleteSubscribers == null)
+            if (_nameScopeInitializationCompleteSubscribers is null)
             {
                 _nameScopeInitializationCompleteSubscribers = new List<NameScopeInitializationCompleteSubscriber>();
             }
@@ -1027,7 +1026,7 @@ namespace MS.Internal.Xaml.Context
         internal void RemoveNameScopeInitializationCompleteSubscriber(EventHandler handler)
         {
             var subscriber = _nameScopeInitializationCompleteSubscribers.Find(o => o.Handler == handler);
-            if (subscriber != null)
+            if (subscriber is not null)
             {
                 _nameScopeInitializationCompleteSubscribers.Remove(subscriber);
             }
@@ -1035,7 +1034,7 @@ namespace MS.Internal.Xaml.Context
 
         internal void RaiseNameScopeInitializationCompleteEvent()
         {
-            if (_nameScopeInitializationCompleteSubscribers != null)
+            if (_nameScopeInitializationCompleteSubscribers is not null)
             {
                 EventArgs e = new EventArgs();
                 foreach (var subscriber in _nameScopeInitializationCompleteSubscribers)
@@ -1048,7 +1047,7 @@ namespace MS.Internal.Xaml.Context
 
         internal class NameScopeInitializationCompleteSubscriber
         {
-            List<XAML3.INameScopeDictionary> _nameScopeDictionaryList = new List<XAML3.INameScopeDictionary>();
+            private List<XAML3.INameScopeDictionary> _nameScopeDictionaryList = new List<XAML3.INameScopeDictionary>();
 
             public EventHandler Handler
             {
@@ -1063,7 +1062,7 @@ namespace MS.Internal.Xaml.Context
 
         private class StackWalkNameResolver : IXamlNameResolver
         {
-            List<XAML3.INameScopeDictionary> _nameScopeDictionaryList;
+            private List<XAML3.INameScopeDictionary> _nameScopeDictionaryList;
 
             public StackWalkNameResolver(List<XAML3.INameScopeDictionary> nameScopeDictionaryList)
             {
@@ -1090,7 +1089,7 @@ namespace MS.Internal.Xaml.Context
 
             public event EventHandler OnNameScopeInitializationComplete
             {
-                // at this point all name scopes have been completed, and we will 
+                // at this point all name scopes have been completed, and we will
                 // not raise any event for subscriptions that come after this.
                 add
                 {
@@ -1107,12 +1106,13 @@ namespace MS.Internal.Xaml.Context
                 foreach (XAML3.INameScopeDictionary nameScope in _nameScopeDictionaryList)
                 {
                     object obj = nameScope.FindName(name);
-                    if (obj != null)
+                    if (obj is not null)
                     {
                         value = obj;
                         break;
                     }
                 }
+
                 return value;
             }
 
@@ -1121,7 +1121,7 @@ namespace MS.Internal.Xaml.Context
                 // This resolver is only used after the parse is complete, including completing
                 // name references. So all objects are fully initialized.
                 object result = Resolve(name);
-                isFullyInitialized = (result != null);
+                isFullyInitialized = (result is not null);
                 return result;
             }
 
@@ -1137,9 +1137,11 @@ namespace MS.Internal.Xaml.Context
                         {
                             continue;
                         }
+
                         allNamesAndValues.Add(nameValuePair);
                     }
                 }
+
                 return allNamesAndValues;
             }
         }

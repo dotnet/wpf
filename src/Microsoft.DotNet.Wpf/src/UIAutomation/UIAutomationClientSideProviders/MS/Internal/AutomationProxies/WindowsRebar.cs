@@ -1,14 +1,11 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
 // Description: HWND-based Rebar Proxy
 
 using System;
-using System.Collections;
-using System.Text;
 using System.Runtime.InteropServices;
-using System.ComponentModel;
 using System.Windows.Automation;
 using System.Windows.Automation.Provider;
 using System.Windows;
@@ -16,7 +13,7 @@ using MS.Win32;
 
 namespace MS.Internal.AutomationProxies
 {
-    class WindowsRebar: ProxyHwnd, IRawElementProviderHwndOverride
+    internal class WindowsRebar: ProxyHwnd, IRawElementProviderHwndOverride
     {
         // ------------------------------------------------------
         //
@@ -26,7 +23,7 @@ namespace MS.Internal.AutomationProxies
 
         #region Constructors
 
-        WindowsRebar (IntPtr hwnd, ProxyFragment parent, int item)
+        private WindowsRebar (IntPtr hwnd, ProxyFragment parent, int item)
             : base( hwnd, parent, item )
         {
             _sType = SR.LocalizedControlTypeRebar;
@@ -50,11 +47,7 @@ namespace MS.Internal.AutomationProxies
         private static IRawElementProviderSimple Create(IntPtr hwnd, int idChild)
         {
             // Something is wrong if idChild is not zero 
-            if (idChild != 0)
-            {
-                System.Diagnostics.Debug.Assert (idChild == 0, "Invalid Child Id, idChild != 0");
-                throw new ArgumentOutOfRangeException("idChild", idChild, SR.ShouldBeZero);
-            }
+            ArgumentOutOfRangeException.ThrowIfNotEqual(idChild, 0);
 
             return new WindowsRebar(hwnd, null, idChild);
         }
@@ -204,10 +197,12 @@ namespace MS.Internal.AutomationProxies
 
         private unsafe int getRebarBandIDFromPoint (NativeMethods.Win32Point pt)
         {
-            NativeMethods.RB_HITTESTINFO rbHitTestInfo = new NativeMethods.RB_HITTESTINFO ();
-            rbHitTestInfo.pt = pt;
-            rbHitTestInfo.uFlags = 0;
-            rbHitTestInfo.iBand = 0;
+            NativeMethods.RB_HITTESTINFO rbHitTestInfo = new NativeMethods.RB_HITTESTINFO
+            {
+                pt = pt,
+                uFlags = 0,
+                iBand = 0
+            };
 
             return XSendMessage.XSendGetIndex(_hwnd, NativeMethods.RB_HITTEST, IntPtr.Zero, new IntPtr(&rbHitTestInfo), Marshal.SizeOf(rbHitTestInfo.GetType()));
         }
@@ -249,7 +244,7 @@ namespace MS.Internal.AutomationProxies
 
         #region RebarBandItem
 
-        class RebarBandItem: ProxyFragment, IInvokeProvider
+        private class RebarBandItem: ProxyFragment, IInvokeProvider
         {
             // ------------------------------------------------------
             //
@@ -431,8 +426,10 @@ namespace MS.Internal.AutomationProxies
                 {
                     if (_hwndBand == IntPtr.Zero)
                     {
-                        NativeMethods.REBARBANDINFO rebarBandInfo = new NativeMethods.REBARBANDINFO();
-                        rebarBandInfo.fMask = RBBIM_CHILD;
+                        NativeMethods.REBARBANDINFO rebarBandInfo = new NativeMethods.REBARBANDINFO
+                        {
+                            fMask = RBBIM_CHILD
+                        };
 
                         unsafe
                         {
@@ -456,7 +453,7 @@ namespace MS.Internal.AutomationProxies
 
             #region Private Fields
 
-            IntPtr _hwndBand = IntPtr.Zero;
+            private IntPtr _hwndBand = IntPtr.Zero;
 
             #endregion
 
@@ -472,7 +469,7 @@ namespace MS.Internal.AutomationProxies
 
         #region RebarBandChildOverrideProxy
 
-        class RebarBandChildOverrideProxy: ProxyHwnd
+        private class RebarBandChildOverrideProxy: ProxyHwnd
         {
             // ------------------------------------------------------
             //

@@ -1,8 +1,7 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-//
 //  ABOUT THIS FILE:
 //   -- This file contains native methods which are deemed NOT SAFE in the sense that any usage of them
 //      must be carefully reviewed.   FXCop will flag callers of these for review.
@@ -11,25 +10,12 @@
 //   -- Put methods in here when a stack walk is innappropriate due to performance concerns
 
 using System.Runtime.InteropServices;
-using System.Runtime.InteropServices.ComTypes;
-using System.Runtime.ConstrainedExecution;
-using System;
 using MS.Internal;
-using MS.Internal.PresentationCore;
-using System.Security;
-using System.Collections;
-using System.IO;
 using System.Text;
 using System.Windows.Media.Composition;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows;
-using MS.Win32;
-using IComDataObject = System.Runtime.InteropServices.ComTypes.IDataObject;
-
-using DllImport = MS.Internal.PresentationCore.DllImport;
-
-#pragma warning disable 1634, 1691  // suppressing PreSharp warnings
 
 namespace MS.Win32.PresentationCore
 {
@@ -530,7 +516,7 @@ namespace MS.Win32.PresentationCore
             {
                 if (ptr != IntPtr.Zero)
                 {
-                    #pragma warning suppress 6031 // Return value ignored on purpose.
+                    // Return value ignored on purpose.
                     UnsafeNativeMethods.MILUnknown.Release(ptr);
                     ptr = IntPtr.Zero;
                 }

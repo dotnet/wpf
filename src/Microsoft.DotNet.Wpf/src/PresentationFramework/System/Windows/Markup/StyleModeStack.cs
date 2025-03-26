@@ -2,12 +2,8 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-using System;
-using System.Xml;
-using System.IO;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Reflection;
 
 #if PBTCOMPILER
 namespace MS.Internal.Markup
@@ -48,7 +44,7 @@ namespace System.Windows.Markup
         {
             get
             {
-                Debug.Assert(Depth >= 0, "StyleModeStack's depth was " + Depth + ", should be >= 0");
+                Debug.Assert(Depth >= 0, $"StyleModeStack's depth was {Depth}, should be >= 0");
                 return _stack.Peek();
             }
         }
@@ -65,7 +61,7 @@ namespace System.Windows.Markup
         
         internal StyleMode Pop()
         {
-            Debug.Assert(Depth >= 0, "StyleMode::Pop() with depth of " + Depth + ", should be >= 0");
+            Debug.Assert(Depth >= 0, $"StyleMode::Pop() with depth of {Depth}, should be >= 0");
             return _stack.Pop();
         }
         

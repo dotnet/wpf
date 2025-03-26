@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -8,10 +8,6 @@
 //
 
 
-using System;
-using System.Windows;
-using System.Windows.Documents;
-using MS.Internal.Text;
 using System.Windows.Media.TextFormatting;
 
 namespace MS.Internal.PtsHost
@@ -37,10 +33,7 @@ namespace MS.Internal.PtsHost
         /// </summary>
         public override void Dispose()
         {
-            if(_textLineBreak != null)
-            {
-                _textLineBreak.Dispose();
-            }
+            _textLineBreak?.Dispose();
 
             base.Dispose();
         }

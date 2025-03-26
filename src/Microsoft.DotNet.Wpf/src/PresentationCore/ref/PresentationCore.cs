@@ -651,7 +651,7 @@ namespace System.Windows
     }
     public delegate void DragEventHandler(object sender, System.Windows.DragEventArgs e);
     [System.ComponentModel.TypeConverterAttribute(typeof(System.Windows.DurationConverter))]
-    public partial struct Duration
+    public readonly partial struct Duration
     {
         public Duration(System.TimeSpan timeSpan) { throw null; }
         public static System.Windows.Duration Automatic { get { throw null; } }
@@ -7012,14 +7012,14 @@ namespace System.Windows.Media
     public partial struct PixelFormat : System.IEquatable<System.Windows.Media.PixelFormat>
     {
         public int BitsPerPixel { get { throw null; } }
-        public System.Collections.Generic.IList<System.Windows.Media.PixelFormatChannelMask> Masks { get { throw null; } }
-        public override bool Equals(object obj) { throw null; }
-        public bool Equals(System.Windows.Media.PixelFormat pixelFormat) { throw null; }
+        public readonly System.Collections.Generic.IList<System.Windows.Media.PixelFormatChannelMask> Masks { get { throw null; } }
+        public override readonly bool Equals(object obj) { throw null; }
+        public readonly bool Equals(System.Windows.Media.PixelFormat pixelFormat) { throw null; }
         public static bool Equals(System.Windows.Media.PixelFormat left, System.Windows.Media.PixelFormat right) { throw null; }
-        public override int GetHashCode() { throw null; }
+        public override readonly int GetHashCode() { throw null; }
         public static bool operator ==(System.Windows.Media.PixelFormat left, System.Windows.Media.PixelFormat right) { throw null; }
         public static bool operator !=(System.Windows.Media.PixelFormat left, System.Windows.Media.PixelFormat right) { throw null; }
-        public override string ToString() { throw null; }
+        public override readonly string ToString() { throw null; }
     }
     public partial struct PixelFormatChannelMask
     {
@@ -10119,7 +10119,7 @@ namespace System.Windows.Media.Animation
         void System.Collections.IList.Remove(object keyFrame) { }
     }
     [System.ComponentModel.TypeConverterAttribute(typeof(System.Windows.Media.Animation.RepeatBehaviorConverter))]
-    public partial struct RepeatBehavior : System.IFormattable
+    public readonly partial struct RepeatBehavior : System.IFormattable
     {
         public RepeatBehavior(double count) { throw null; }
         public RepeatBehavior(System.TimeSpan duration) { throw null; }

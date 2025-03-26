@@ -2,27 +2,11 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-//
-//
-
-using System;
-using System.Security;
-using System.Collections;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.ComponentModel.Design.Serialization;
-using System.Reflection;
 using MS.Internal;
 using MS.Win32.PresentationCore;
-using MS.Internal.PresentationCore; //SecurityHelper
-using System.Diagnostics;
+using System.Collections.ObjectModel;
 using System.Windows.Threading;
-using System.Windows.Media;
-using System.Windows.Media.Animation;
-using System.Globalization;
 using System.Runtime.InteropServices;
-
-using SR=MS.Internal.PresentationCore.SR;
 
 namespace System.Windows.Media.Imaging
 {
@@ -61,7 +45,7 @@ namespace System.Windows.Media.Imaging
                 colorArray[i] = colors[i];
             }
 
-            _colors = new PartialList<Color>(colorArray);
+            _colors = new ReadOnlyCollection<Color>(colorArray);
 
             _palette = CreateInternalPalette();
 
@@ -347,7 +331,7 @@ namespace System.Windows.Media.Imaging
                 }
             }
 
-            _colors = new PartialList<Color>(colors);
+            _colors = new ReadOnlyCollection<Color>(colors);
         }
 
         #endregion // Private Methods
@@ -382,7 +366,7 @@ namespace System.Windows.Media.Imaging
         // the behavior that we want.
         private SafeMILHandle _palette = null; // IWICPalette*
 
-        private IList<Color> _colors = new PartialList<Color>(new List<Color>());
+        private IList<Color> _colors = ReadOnlyCollection<Color>.Empty;
     }
 }
 

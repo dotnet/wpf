@@ -2,6 +2,8 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
+#nullable disable
+
 namespace System.Xaml
 {
     // This is the simplest implementation of a Node based XamlReader.
@@ -9,10 +11,10 @@ namespace System.Xaml
     // of nodes with a "Next" delegate.
     // So is suitable for Queues and other simple single reader situations.
     //
-    class ReaderDelegate : ReaderBaseDelegate
+    internal class ReaderDelegate : ReaderBaseDelegate
     {
         // InfosetNode _currentNode is inherited.
-        XamlNodeNextDelegate _nextDelegate;
+        private XamlNodeNextDelegate _nextDelegate;
 
         public ReaderDelegate(XamlSchemaContext schemaContext, XamlNodeNextDelegate next, bool hasLineInfo)
             : base(schemaContext)
@@ -25,10 +27,7 @@ namespace System.Xaml
 
         public override bool Read()
         {
-            if (IsDisposed)
-            {
-                throw new ObjectDisposedException("XamlReader"); // Can't say ReaderDelegate because its internal.
-            }
+            ObjectDisposedException.ThrowIf(IsDisposed, typeof(XamlReader)); // Can't say ReaderDelegate because its internal.
             do
             {
                 _currentNode = _nextDelegate();
@@ -37,6 +36,7 @@ namespace System.Xaml
                 {
                     return true;   // This is the common/fast path
                 }
+
                 // else do the NONE node stuff
                 if (_currentNode.IsLineInfo)
                 {
@@ -46,7 +46,8 @@ namespace System.Xaml
                 {
                     break;
                 }
-            } while (_currentNode.NodeType == XamlNodeType.None);
+            }
+            while (_currentNode.NodeType == XamlNodeType.None);
 
             return !IsEof;
         }

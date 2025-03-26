@@ -351,7 +351,6 @@ namespace MS.Internal.MilCodeGen.Generators
                 {
                     cs.Write(
                         [[inline]]
-
                                 if (_collection.Count == 0)
                                 {
                                     return String.Empty;
@@ -715,29 +714,21 @@ namespace MS.Internal.MilCodeGen.Generators
                                 );
                     }
 
-                    csFile.Write(
-                        [[inline]]
-                            #pragma warning disable 1634, 1691  // suppressing PreSharp warnings
-                        [[/inline]]
-                        );
-
                     // If the resource may not always be serializable as a string, we need to check if this instance can.
                     if (!resource.IsAlwaysSerializableAsString)
                     {
                         serializationContextCanConvertTo =
                             [[inline]]
-
                                 // When invoked by the serialization engine we can convert to string only for some instances
                                 if (context != null && context.Instance != null)
                                 {
                                     if (!(context.Instance is [[resource.Name]]))
                                     {
-                                        throw new ArgumentException(SR.Format(SR.General_Expected_Type, "[[resource.Name]]"), "context");
+                                        throw new ArgumentException(SR.Format(SR.General_Expected_Type, "[[resource.Name]]"), nameof(context));
                                     }
 
                                     [[resource.Name]] value = ([[resource.Name]])context.Instance;
 
-                                    #pragma warning suppress 6506 // value is obviously not null
                                     return value.CanSerializeToString();
                                 }
 
@@ -747,11 +738,9 @@ namespace MS.Internal.MilCodeGen.Generators
 
                         serializationContextConvertTo =
                             [[inline]]
-
                                 // When invoked by the serialization engine we can convert to string only for some instances
                                 if (context != null && context.Instance != null)
                                 {
-                                    #pragma warning suppress 6506 // instance is obviously not null
                                     if (!instance.CanSerializeToString())
                                     {
                                         throw new NotSupportedException(SR.Converter_ConvertToNotSupported);
@@ -830,9 +819,8 @@ namespace MS.Internal.MilCodeGen.Generators
                                             throw GetConvertFromException(value);
                                         }
 
-                                        String source = value as string;
 
-                                        if (source != null)
+                                        if (value is string source)
                                         {
                                             return [[resource.Name]].Parse(source[[contextParam]]);
                                         }
@@ -863,8 +851,6 @@ namespace MS.Internal.MilCodeGen.Generators
                                             if (destinationType == typeof(string))
                                             {
                                                 [[serializationContextConvertTo]]// Delegate to the formatting/culture-aware ConvertToString method.
-
-                                                #pragma warning suppress 6506 // instance is obviously not null
                                                 return instance.ConvertToString(null, culture);
                                             }
                                         }
@@ -873,7 +859,6 @@ namespace MS.Internal.MilCodeGen.Generators
                                         return base.ConvertTo(context, culture, value, destinationType);
                                     }
                                 }
-
                             }
                         [[/inline]]
                             );
@@ -909,18 +894,11 @@ namespace MS.Internal.MilCodeGen.Generators
                                 );
                     }
 
-                    csFile.Write(
-                        [[inline]]
-                            #pragma warning disable 1634, 1691  // suppressing PreSharp warnings
-                        [[/inline]]
-                        );
-
                     // If always serializable to string, ensure that it's still the right type.
                     if (resource.IsAlwaysSerializableAsString)
                     {
                         valueSerializerCanConvertTo =
                             [[inline]]
-
                                 // Validate the input type
                                 if (!(value is [[resource.Name]]))
                                 {
@@ -928,7 +906,6 @@ namespace MS.Internal.MilCodeGen.Generators
                                 }
 
                                 return true;
-
                             [[/inline]]
                                 ;
                     }
@@ -938,7 +915,6 @@ namespace MS.Internal.MilCodeGen.Generators
                     {
                         valueSerializerCanConvertTo =
                             [[inline]]
-
                                 // When invoked by the serialization engine we can convert to string only for some instances
                                 if (!(value is [[resource.Name]]))
                                 {
@@ -947,17 +923,13 @@ namespace MS.Internal.MilCodeGen.Generators
 
                                 [[resource.Name]] instance  = ([[resource.Name]]) value;
 
-                                #pragma warning suppress 6506 // instance is obviously not null
                                 return instance.CanSerializeToString();
-
-
                             [[/inline]]
                                 ;
 
                         valueSerializerConvertTo =
                             [[inline]]
                                 // When invoked by the serialization engine we can convert to string only for some instances
-                                #pragma warning suppress 6506 // instance is obviously not null
                                 if (!instance.CanSerializeToString())
                                 {
                                     // Let base throw an exception.
@@ -1010,7 +982,6 @@ namespace MS.Internal.MilCodeGen.Generators
                                         {
                                             return base.ConvertFromString( value, context );
                                         }
-
                                     }
 
                                     /// <summary>
@@ -1018,22 +989,15 @@ namespace MS.Internal.MilCodeGen.Generators
                                     /// </summary>
                                     public override string ConvertToString(object value, IValueSerializerContext context)
                                     {
-                                        if (value is [[resource.Name]])
+                                        if (value is [[resource.Name]] instance)
                                         {
-                                            [[resource.Name]] instance = ([[resource.Name]]) value;
                                             [[valueSerializerConvertTo]]
-
-                                            #pragma warning suppress 6506 // instance is obviously not null
                                             return instance.ConvertToString(null, System.Windows.Markup.TypeConverterHelper.InvariantEnglishUS);
                                         }
 
                                         return base.ConvertToString(value, context);
                                     }
                                 }
-
-
-
-
                             }
                         [[/inline]]
                             );

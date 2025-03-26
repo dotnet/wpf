@@ -1,15 +1,10 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
 
-using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Diagnostics;
-using System.Windows;
 using System.Windows.Automation.Peers;
-using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Automation;
@@ -197,10 +192,7 @@ namespace System.Windows.Controls.Primitives
                 {
                     header.SetLeftGripperVisibility();
                     DataGridColumnHeader nextColumnHeader = dataGrid.ColumnHeaderFromDisplayIndex(header.DisplayIndex + 1);
-                    if (nextColumnHeader != null)
-                    {
-                        nextColumnHeader.SetLeftGripperVisibility(column.CanUserResize);
-                    }
+                    nextColumnHeader?.SetLeftGripperVisibility(column.CanUserResize);
                 }
             }
         }
@@ -300,10 +292,7 @@ namespace System.Windows.Controls.Primitives
                 if (header.Column != null)
                 {
                     DataGrid dataGrid = header.Column.DataGridOwner;
-                    if (dataGrid != null)
-                    {
-                        dataGrid.InternalColumns.OnColumnResizeStarted();
-                    }
+                    dataGrid?.InternalColumns.OnColumnResizeStarted();
                 }
 
                 e.Handled = true;
@@ -351,10 +340,7 @@ namespace System.Windows.Controls.Primitives
                 if (header.Column != null)
                 {
                     DataGrid dataGrid = header.Column.DataGridOwner;
-                    if (dataGrid != null)
-                    {
-                        dataGrid.InternalColumns.OnColumnResizeCompleted(e.Canceled);
-                    }
+                    dataGrid?.InternalColumns.OnColumnResizeCompleted(e.Canceled);
                 }
 
                 e.Handled = true;
@@ -553,10 +539,7 @@ namespace System.Windows.Controls.Primitives
                 if (dataGrid.ColumnFromDisplayIndex(index).IsVisible)
                 {
                     DataGridColumnHeader nextHeader = dataGrid.ColumnHeaderFromDisplayIndex(index);
-                    if (nextHeader != null)
-                    {
-                        nextHeader.SetLeftGripperVisibility(canUserResize);
-                    }
+                    nextHeader?.SetLeftGripperVisibility(canUserResize);
                     break;
                 }
             }
@@ -763,10 +746,7 @@ namespace System.Windows.Controls.Primitives
                 if (AutomationPeer.ListenerExists(AutomationEvents.InvokePatternOnInvoked))
                 {
                     AutomationPeer peer = UIElementAutomationPeer.CreatePeerForElement(this);
-                    if (peer != null)
-                    {
-                        peer.RaiseAutomationEvent(AutomationEvents.InvokePatternOnInvoked);
-                    }
+                    peer?.RaiseAutomationEvent(AutomationEvents.InvokePatternOnInvoked);
                 }
 
                 base.OnClick();

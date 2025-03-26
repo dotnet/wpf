@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -14,19 +14,13 @@ Abstract:
 
 --*/
 
-using System;
 using System.IO;
-using System.Collections.Specialized;
 using System.Runtime.InteropServices;
-using System.Globalization;
-
-using System.Printing;
 using System.Printing.Interop;
 using MS.Internal.Printing.Configuration;
 using System.Windows.Xps.Serialization; // for Toolbox
 
 using MS.Utility;
-using System.Security;
 
 namespace System.Printing
 {
@@ -189,7 +183,6 @@ namespace System.Printing
     /// <summary>
     /// PrintTicketManager class that supports PrintTicket and PrintCapabilities functions.
     /// </summary>
-    [MS.Internal.ReachFramework.FriendAccessAllowed]
     internal class PrintTicketManager : IDisposable
     {
         #region Constructors
@@ -216,11 +209,8 @@ namespace System.Printing
             ArgumentNullException.ThrowIfNull(deviceName);
 
             // Check if we can support the schema version client has requested
-            if ((clientPrintSchemaVersion > MaxPrintSchemaVersion) ||
-                (clientPrintSchemaVersion <= 0))
-            {
-                throw new ArgumentOutOfRangeException("clientPrintSchemaVersion");
-            }
+            ArgumentOutOfRangeException.ThrowIfNegativeOrZero(clientPrintSchemaVersion);
+            ArgumentOutOfRangeException.ThrowIfGreaterThan(clientPrintSchemaVersion, MaxPrintSchemaVersion);
 
             // Instantiate a new PTProvider instance. PTProvider constructor throws exception if it fails for any reason.
             _ptProvider = PTProviderBase.Create(deviceName,
@@ -297,10 +287,7 @@ namespace System.Printing
         {
             Toolbox.EmitEvent(EventTrace.Event.WClientDRXGetPrintCapStart);
 
-            if (_disposed)
-            {
-                throw new ObjectDisposedException("PrintTicketManager");
-            }
+            ObjectDisposedException.ThrowIf(_disposed, typeof(PrintTicketManager));
 
             MemoryStream ptStream = null;
 
@@ -377,10 +364,7 @@ namespace System.Printing
                                                             PrintTicket      deltaPrintTicket,
                                                             PrintTicketScope scope)
         {
-            if (_disposed)
-            {
-                throw new ObjectDisposedException("PrintTicketManager");
-            }
+            ObjectDisposedException.ThrowIf(_disposed, typeof(PrintTicketManager));
 
             // Base PrintTicket is required. Delta PrintTicket is optional.
             ArgumentNullException.ThrowIfNull(basePrintTicket);
@@ -390,7 +374,7 @@ namespace System.Printing
                 (scope != PrintTicketScope.DocumentScope) &&
                 (scope != PrintTicketScope.JobScope))
             {
-                throw new ArgumentOutOfRangeException("scope");
+                throw new ArgumentOutOfRangeException(nameof(scope));
             }
 
             MemoryStream baseStream = null, deltaStream = null, resultStream = null;
@@ -418,10 +402,7 @@ namespace System.Printing
         /// <returns>The converted PrintTicket object.</returns>
         public PrintTicket ConvertDevModeToPrintTicket(byte[] devMode)
         {
-            if (_disposed)
-            {
-                throw new ObjectDisposedException("PrintTicketManager");
-            }
+            ObjectDisposedException.ThrowIf(_disposed, typeof(PrintTicketManager));
 
             return PrintTicketConverter.InternalConvertDevModeToPrintTicket(_ptProvider,
                                                                             devMode,
@@ -437,10 +418,7 @@ namespace System.Printing
         public byte[] ConvertPrintTicketToDevMode(PrintTicket printTicket,
                                                   BaseDevModeType baseType)
         {
-            if (_disposed)
-            {
-                throw new ObjectDisposedException("PrintTicketManager");
-            }
+            ObjectDisposedException.ThrowIf(_disposed, typeof(PrintTicketManager));
 
             return PrintTicketConverter.InternalConvertPrintTicketToDevMode(_ptProvider,
                                                                             printTicket,

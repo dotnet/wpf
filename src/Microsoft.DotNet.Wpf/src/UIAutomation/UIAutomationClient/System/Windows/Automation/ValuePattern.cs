@@ -4,8 +4,6 @@
 
 // Description: Client-side wrapper for Value Pattern
 
-using System;
-using System.Windows.Automation.Provider;
 using MS.Internal.Automation;
 
 namespace System.Windows.Automation
@@ -72,8 +70,8 @@ namespace System.Windows.Automation
         /// <param name="value">Value to set the UI to, the provider is responsible for converting from a string into the appropriate data type</param>
         public void SetValue( string value )
         {
-            Misc.ValidateArgumentNonNull(value, "value");
-            
+            ArgumentNullException.ThrowIfNull(value);
+
             // Test the Enabled state prior to the more general Read-Only state.            
             object enabled = _el.GetCurrentPropertyValue(AutomationElementIdentifiers.IsEnabledProperty);
             if (enabled is bool && !(bool)enabled)

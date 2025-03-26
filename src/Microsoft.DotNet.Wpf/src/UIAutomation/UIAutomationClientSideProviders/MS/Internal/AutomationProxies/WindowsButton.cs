@@ -5,19 +5,14 @@
 // Description: Windows Button Proxy
 
 using System;
-using System.Collections;
-using System.Text;
 using System.Windows.Automation;
 using System.Windows.Automation.Provider;
-using System.Windows;
-using System.Runtime.InteropServices;
-using System.ComponentModel;
 using MS.Win32;
 
 namespace MS.Internal.AutomationProxies
 {
     // Windows Button proxy
-    class WindowsButton : ProxyHwnd, IInvokeProvider, IToggleProvider, ISelectionProvider, ISelectionItemProvider
+    internal class WindowsButton : ProxyHwnd, IInvokeProvider, IToggleProvider, ISelectionProvider, ISelectionItemProvider
     {
         // ------------------------------------------------------
         //
@@ -95,11 +90,7 @@ namespace MS.Internal.AutomationProxies
         private static IRawElementProviderSimple Create(IntPtr hwnd, int idChild)
         {
             // Something is wrong if idChild is not zero 
-            if (idChild != 0)
-            {
-                System.Diagnostics.Debug.Assert (idChild == 0, "Invalid Child Id, idChild != 0");
-                throw new ArgumentOutOfRangeException("idChild", idChild, SR.ShouldBeZero);
-            }
+            ArgumentOutOfRangeException.ThrowIfNotEqual(idChild, 0);
 
             ButtonType type;
             int style;
@@ -291,19 +282,16 @@ namespace MS.Internal.AutomationProxies
         #region ProxyHwnd Overrides
 
         // Builds a list of Win32 WinEvents to process a UIAutomation Event.
-        protected override WinEventTracker.EvtIdProperty[] EventToWinEvent(AutomationEvent idEvent, out int cEvent)
+        protected override ReadOnlySpan<WinEventTracker.EvtIdProperty> EventToWinEvent(AutomationEvent idEvent)
         {
             // For Vista, we only need register for EventObjectInvoke to handle InvokePattern.InvokedEvent.
             // For XP, we rely on state changes, handled in ProxyHwnd.EventToWinEvent().
             if (idEvent == InvokePattern.InvokedEvent && Environment.OSVersion.Version.Major >= 6)
             {
-                cEvent = 1;
-                return new WinEventTracker.EvtIdProperty[] { 
-                    new WinEventTracker.EvtIdProperty (NativeMethods.EventObjectInvoke, idEvent)
-                };
+                return new WinEventTracker.EvtIdProperty[1] { new(NativeMethods.EventObjectInvoke, idEvent) };
             }
 
-            return base.EventToWinEvent(idEvent, out cEvent);
+            return base.EventToWinEvent(idEvent);
         }
 
         #endregion

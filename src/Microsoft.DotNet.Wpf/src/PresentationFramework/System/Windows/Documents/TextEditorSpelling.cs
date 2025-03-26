@@ -1,6 +1,12 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
+
+using MS.Internal;
+using System.Windows.Input;
+using MS.Internal.Commands;
+using System.Windows.Controls;
+using System.Windows.Markup; // XmlLanguage
 
 // 
 // Description: A Component of TextEditor supporting spelling.
@@ -8,13 +14,6 @@
 
 namespace System.Windows.Documents
 {
-    using MS.Internal;
-    using System.Windows;
-    using System.Windows.Input;
-    using MS.Internal.Commands;
-    using System.Windows.Controls;
-    using System.Windows.Markup; // XmlLanguage
-
     // A Component of TextEditor supporting spelling.
     internal static class TextEditorSpelling
     {
@@ -36,7 +35,7 @@ namespace System.Windows.Documents
         // Worker for TextBox/RichTextBox.GetSpellingErrorAtPosition.
         internal static SpellingError GetSpellingErrorAtPosition(TextEditor This, ITextPointer position, LogicalDirection direction)
         {
-            return (This.Speller == null) ? null : This.Speller.GetError(position, direction, true /* forceEvaluation */);
+            return This.Speller?.GetError(position, direction, true /* forceEvaluation */);
         }
 
         // Returns the error (if any) at the current selection.
@@ -101,7 +100,7 @@ namespace System.Windows.Documents
         // Worker for TextBox/RichTextBox.GetNextSpellingErrorPosition.
         internal static ITextPointer GetNextSpellingErrorPosition(TextEditor This, ITextPointer position, LogicalDirection direction)
         {
-            return (This.Speller == null) ? null : This.Speller.GetNextSpellingErrorPosition(position, direction);
+            return This.Speller?.GetNextSpellingErrorPosition(position, direction);
         }
 
         #endregion Class Internal Methods

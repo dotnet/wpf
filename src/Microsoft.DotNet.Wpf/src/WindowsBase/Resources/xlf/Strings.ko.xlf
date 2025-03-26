@@ -827,26 +827,6 @@
         <target state="translated">Open Packaging Conventions 사양에 정의된 규칙을 기준으로 파트 URI가 잘못되었습니다.</target>
         <note />
       </trans-unit>
-      <trans-unit id="InvalidPermissionLevel">
-        <source>Permission level is not valid.</source>
-        <target state="translated">권한 수준이 잘못되었습니다.</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="InvalidPermissionState">
-        <source>Permission state is not valid.</source>
-        <target state="translated">권한 상태가 잘못되었습니다.</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="InvalidPermissionStateValue">
-        <source>PermissionState value '{0}' is not valid for this Permission.</source>
-        <target state="translated">PermissionState 값 '{0}'은(는) 이 권한에 대해 올바르지 않습니다.</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="InvalidPermissionType">
-        <source>Permission type is not valid. Expected '{0}'.</source>
-        <target state="translated">사용 권한 형식이 잘못되었습니다. '{0}'이(가) 필요합니다.</target>
-        <note />
-      </trans-unit>
       <trans-unit id="InvalidPriority">
         <source>Specified priority is not valid.</source>
         <target state="translated">지정한 속성이 잘못되었습니다.</target>
@@ -1290,16 +1270,6 @@
       <trans-unit id="PackageSpecificReferenceTagMustBeUnique">
         <source>Specified reference object conflicts with predefined Package specific reference.</source>
         <target state="translated">지정한 참조 개체가 미리 정의된 Package 특정 참조와 충돌합니다.</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="ParameterCannotBeNegative">
-        <source>Parameter must be greater than or equal to zero.</source>
-        <target state="translated">매개 변수는 0보다 크거나 같아야 합니다.</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="ParameterMustBeBetween">
-        <source>The parameter value must be between '{0}' and '{1}'.</source>
-        <target state="translated">매개 변수 값은 '{0}'과(와) '{1}' 사이에 있어야 합니다.</target>
         <note />
       </trans-unit>
       <trans-unit id="ParentContainerClosed">
@@ -2250,16 +2220,6 @@
       <trans-unit id="StringEmpty">
         <source>Parameter cannot be a zero-length string.</source>
         <target state="translated">매개 변수 문자열의 길이는 0일 수 없습니다.</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="TargetNotMediaPermissionLevel">
-        <source>Target is not a MediaPermission.</source>
-        <target state="translated">대상이 MediaPermission이 아닙니다.</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="TargetNotWebBrowserPermissionLevel">
-        <source>Target is not a WebBrowserPermission.</source>
-        <target state="translated">대상이 WebBrowserPermission이 아닙니다.</target>
         <note />
       </trans-unit>
       <trans-unit id="ThreadMayNotWaitOnOperationsAlreadyExecutingOnTheSameThread">

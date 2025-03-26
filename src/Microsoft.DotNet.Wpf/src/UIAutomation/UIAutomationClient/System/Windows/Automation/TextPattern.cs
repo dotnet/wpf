@@ -6,9 +6,7 @@
 //
 
 
-using System;
 using System.Diagnostics;
-using System.Windows.Automation.Provider;
 using System.Windows.Automation.Text;
 using MS.Internal.Automation;
 
@@ -200,10 +198,7 @@ namespace System.Windows.Automation
         /// <returns>A range that spans the child element.</returns>
         public TextPatternRange RangeFromChild(AutomationElement childElement)
         {
-            if (childElement == null)
-            {
-                throw new ArgumentNullException("childElement");
-            }
+            ArgumentNullException.ThrowIfNull(childElement);
             SafeTextRangeHandle hTextRange = UiaCoreApi.TextPattern_RangeFromChild(_hPattern, childElement.RawNode);
             return TextPatternRange.Wrap(hTextRange, this);
         }

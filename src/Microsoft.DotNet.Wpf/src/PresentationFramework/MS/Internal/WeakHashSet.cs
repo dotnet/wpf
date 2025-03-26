@@ -2,16 +2,14 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
+using System.Collections;
+
 // This file was generated, please do not edit it directly.
 // 
 // This file was generated using the common file located at:
 
 namespace MS.Internal
 {
-    using System;
-    using System.Collections;
-    using System.Collections.Generic;
-
     /// <summary>
     ///     Helper WeakHashSet class implemented using WeakHashTable
     /// </summary>
@@ -39,10 +37,7 @@ namespace MS.Internal
 
         public void CopyTo(T[] array, int arrayIndex)
         {
-            if (arrayIndex < 0)
-            {
-                throw new ArgumentOutOfRangeException("arrayIndex");
-            }
+            ArgumentOutOfRangeException.ThrowIfNegative(arrayIndex);
             ArgumentNullException.ThrowIfNull(array);
 
             int count = 0;
@@ -51,10 +46,7 @@ namespace MS.Internal
                 count++;
             }
 
-            if (count + arrayIndex > array.Length)
-            {
-                throw new ArgumentOutOfRangeException("arrayIndex");
-            }
+            ArgumentOutOfRangeException.ThrowIfGreaterThan(arrayIndex, array.Length - count);
 
             foreach (T item in this)
             {
@@ -118,7 +110,7 @@ namespace MS.Internal
 
         #region Private Data
 
-        WeakHashtable _hashTable = new WeakHashtable();
+        private WeakHashtable _hashTable = new WeakHashtable();
 
         #endregion
     }

@@ -8,7 +8,6 @@
 //      property in SourceValueInfo is really a named indexed property (from VB).
 //
 
-using System;
 using System.Reflection;
 
 namespace MS.Internal.Data
@@ -24,7 +23,7 @@ namespace MS.Internal.Data
             get { return _instance; }
         }
 
-        static readonly IndexerPropertyInfo _instance = new IndexerPropertyInfo();
+        private static readonly IndexerPropertyInfo _instance = new IndexerPropertyInfo();
 
         #region PropertyInfo overrides
 

@@ -1,21 +1,11 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-using MS.Utility;
-using System;
 using System.Collections;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Threading;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Markup;
-using MS.Internal;
-using System.Reflection;
 using System.ComponentModel;
 
-using BuildInfo=MS.Internal.PresentationFramework.BuildInfo;
+using BuildInfo = MS.Internal.PresentationFramework.BuildInfo;
 
 //---------------------------------------------------------------------------
 //
@@ -32,24 +22,17 @@ using BuildInfo=MS.Internal.PresentationFramework.BuildInfo;
 //                  \wcp\Framework\Ms\Utility\GridContentElementCollection.tb
 //                  \wcp\Framework\Ms\Utility\RowDefinitionCollection.ti
 //
-//  
-//
-//
-
-//
 //---------------------------------------------------------------------------
-
-#pragma warning disable 1634, 1691  // suppressing PreSharp warnings
 
 namespace System.Windows.Controls
 {
     /// <summary>
-    /// A RowDefinitionCollection is an ordered, strongly typed, non-sparse 
-    /// collection of RowDefinitions. 
+    /// A RowDefinitionCollection is an ordered, strongly typed, non-sparse
+    /// collection of RowDefinitions.
     /// </summary>
     /// <remarks>
-    /// RowDefinitionCollection provides public access for RowDefinitions 
-    /// reading and manipulation. 
+    /// RowDefinitionCollection provides public access for RowDefinitions
+    /// reading and manipulation.
     /// </remarks>
     public sealed class RowDefinitionCollection : IList<RowDefinition> , IList
     {
@@ -78,7 +61,7 @@ namespace System.Windows.Controls
         //
         //------------------------------------------------------
 
-        #region Public Methods 
+        #region Public Methods
 
         /// <summary>
         ///     <see cref="ICollection.CopyTo"/>
@@ -216,10 +199,10 @@ namespace System.Windows.Controls
         /// </summary>
         public int IndexOf(RowDefinition value)  //  int IList<T>.IndexOf(T item);
         {
-            if (    value == null 
+            if (    value == null
                 ||  value.Parent != _owner )
             {
-                return (-1); 
+                return (-1);
             }
             else
             {
@@ -294,7 +277,7 @@ namespace System.Windows.Controls
         public void RemoveAt(int index) //  void IList.RemoveAt(int index); void IList<T>.RemoveAt(int index)
         {
             PrivateVerifyWriteAccess();
-            if (index < 0 || index >= _size) 
+            if (index < 0 || index >= _size)
             {
                 throw new ArgumentOutOfRangeException(SR.TableCollectionOutOfRange);
             }
@@ -310,10 +293,10 @@ namespace System.Windows.Controls
         /// <param name="count">
         ///     The number of RowDefinitions to remove.
         /// </param>
-        public void RemoveRange(int index, int count) 
+        public void RemoveRange(int index, int count)
         {
             PrivateVerifyWriteAccess();
-            if (index < 0 || index >= _size) 
+            if (index < 0 || index >= _size)
             {
                 throw new ArgumentOutOfRangeException(SR.TableCollectionOutOfRange);
             }
@@ -328,7 +311,7 @@ namespace System.Windows.Controls
 
             PrivateOnModified();
 
-            if (count > 0) 
+            if (count > 0)
             {
                 for (int i = index + count - 1; i >= index; --i)
                 {
@@ -367,7 +350,7 @@ namespace System.Windows.Controls
             return (new Enumerator(this));
         }
 
-        #endregion Public Methods 
+        #endregion Public Methods
 
         //------------------------------------------------------
         //
@@ -375,7 +358,7 @@ namespace System.Windows.Controls
         //
         //------------------------------------------------------
 
-        #region Public Properties 
+        #region Public Properties
 
         /// <summary>
         ///     <see cref="ICollection<T>.Count"/>
@@ -391,9 +374,9 @@ namespace System.Windows.Controls
         /// </summary>
         bool IList.IsFixedSize
         {
-            get 
+            get
             {
-                return (    _owner.MeasureOverrideInProgress 
+                return (    _owner.MeasureOverrideInProgress
                         ||  _owner.ArrangeOverrideInProgress    );
             }
         }
@@ -404,9 +387,9 @@ namespace System.Windows.Controls
         /// </summary>
         public bool IsReadOnly  //  bool IList.IsReadOnly {get;}; bool ICollection<T>.IsReadOnly {get;}
         {
-            get 
+            get
             {
-                return (    _owner.MeasureOverrideInProgress 
+                return (    _owner.MeasureOverrideInProgress
                         ||  _owner.ArrangeOverrideInProgress    );
             }
         }
@@ -414,7 +397,7 @@ namespace System.Windows.Controls
         /// <summary>
         ///     <see cref="ICollection.IsSynchronized"/>
         /// </summary>
-        public bool IsSynchronized  //  bool IColleciton.IsSynchronized {get;}; 
+        public bool IsSynchronized  //  bool IColleciton.IsSynchronized {get;};
         {
             get { return (false); }
         }
@@ -422,7 +405,7 @@ namespace System.Windows.Controls
         /// <summary>
         ///     <see cref="ICollection.SyncRoot"/>
         /// </summary>
-        public object SyncRoot  //  object ICollection.SyncRoot {get;}; 
+        public object SyncRoot  //  object ICollection.SyncRoot {get;};
         {
             get { return (this); }
         }
@@ -436,7 +419,7 @@ namespace System.Windows.Controls
         /// </remarks>
         object IList.this[int index]
         {
-            get 
+            get
             {
                 if (index < 0 || index >= _size)
                 {
@@ -444,7 +427,7 @@ namespace System.Windows.Controls
                 }
                 return (_items[index]);
             }
-            set 
+            set
             {
                 PrivateVerifyWriteAccess();
                 PrivateValidateValueForAddition(value);
@@ -462,7 +445,7 @@ namespace System.Windows.Controls
         /// </summary>
         public RowDefinition this[int index] //  T IList<T>.this[int index] {get; set;}
         {
-            get 
+            get
             {
                 if (index < 0 || index >= _size)
                 {
@@ -470,7 +453,7 @@ namespace System.Windows.Controls
                 }
                 return ((RowDefinition)_items[index]);
             }
-            set 
+            set
             {
                 PrivateVerifyWriteAccess();
                 PrivateValidateValueForAddition(value);
@@ -483,7 +466,7 @@ namespace System.Windows.Controls
             }
         }
 
-        #endregion Public Properties 
+        #endregion Public Properties
 
         //------------------------------------------------------
         //
@@ -491,7 +474,7 @@ namespace System.Windows.Controls
         //
         //------------------------------------------------------
 
-        #region Internal Methods 
+        #region Internal Methods
 
         /// <summary>
         ///     Frees un-used memory.
@@ -509,7 +492,7 @@ namespace System.Windows.Controls
         //
         //------------------------------------------------------
 
-        #region Internal Properties 
+        #region Internal Properties
 
         /// <summary>
         ///     Internal version of Count.
@@ -527,7 +510,7 @@ namespace System.Windows.Controls
             get {   return (_items);    }
         }
 
-        #endregion Internal Properties 
+        #endregion Internal Properties
 
         //------------------------------------------------------
         //
@@ -535,7 +518,7 @@ namespace System.Windows.Controls
         //
         //------------------------------------------------------
 
-        #region Private Methods 
+        #region Private Methods
 
         /// <summary>
         ///     Throws if the collection is in readonly state.
@@ -587,12 +570,12 @@ namespace System.Windows.Controls
         }
 
         /// <summary>
-        ///     Sets the specified DefinitionBase at the specified index; 
+        ///     Sets the specified DefinitionBase at the specified index;
         ///     Connects the value to the model tree;
         ///     Notifies the DefinitionBase about the event.
         /// </summary>
         /// <remarks>
-        ///     Note that the function requires that _item[index] == null and 
+        ///     Note that the function requires that _item[index] == null and
         ///     it also requires that the passed in value is not included into another RowDefinitionCollection.
         /// </remarks>
         private void PrivateConnectChild(int index, DefinitionBase value)
@@ -627,10 +610,10 @@ namespace System.Windows.Controls
         }
 
         /// <summary>
-        ///     PrivateInsert inserts specified DefinitionBase into the 
-        ///     RowDefinitionCollection at the specified index. Index is allowed 
-        ///     to be equal to the current size of the collection. When index 
-        ///     is equal to size, PrivateInsert effectively performs Add 
+        ///     PrivateInsert inserts specified DefinitionBase into the
+        ///     RowDefinitionCollection at the specified index. Index is allowed
+        ///     to be equal to the current size of the collection. When index
+        ///     is equal to size, PrivateInsert effectively performs Add
         ///     operation.
         /// </summary>
         private void PrivateInsert(int index, DefinitionBase value)
@@ -666,7 +649,7 @@ namespace System.Windows.Controls
         /// </summary>
         private void PrivateRemove(DefinitionBase value)
         {
-            Debug.Assert(   _items[value.Index] == value 
+            Debug.Assert(   _items[value.Index] == value
                         &&  value.Parent == _owner );
 
             PrivateOnModified();
@@ -679,7 +662,7 @@ namespace System.Windows.Controls
 
             for (int i = index; i < _size; ++i)
             {
-                Debug.Assert(   _items[i + 1] != null  
+                Debug.Assert(   _items[i + 1] != null
                             &&  _items[i + 1].Parent == _owner    );
 
                 _items[i] = _items[i + 1];
@@ -711,10 +694,10 @@ namespace System.Windows.Controls
             {
                 _items = null;
             }
-            else if (_items == null || value != _items.Length) 
+            else if (_items == null || value != _items.Length)
             {
                 RowDefinition[] newItems = new RowDefinition[value];
-                if (_size > 0) 
+                if (_size > 0)
                 {
                     Array.Copy(_items, 0, newItems, 0, _size);
                 }
@@ -722,7 +705,7 @@ namespace System.Windows.Controls
             }
         }
 
-        #endregion Private Methods 
+        #endregion Private Methods
 
         //------------------------------------------------------
         //
@@ -730,13 +713,13 @@ namespace System.Windows.Controls
         //
         //------------------------------------------------------
 
-        #region Private Fields 
+        #region Private Fields
         private readonly Grid _owner;      //  owner of the collection
         private DefinitionBase[] _items;            //  storage of items
         private int _size;                          //  size of the collection
         private int _version;                       //  version tracks updates in the collection
         private const int c_defaultCapacity = 4;    //  default capacity of the collection
-        #endregion Private Fields 
+        #endregion Private Fields
 
         //------------------------------------------------------
         //
@@ -744,7 +727,7 @@ namespace System.Windows.Controls
         //
         //------------------------------------------------------
 
-        #region Private Structures Classes 
+        #region Private Structures Classes
 
         /// <summary>
         ///     Dual purpose IEnumerator / IEnumerator<T> implementation.
@@ -770,7 +753,7 @@ namespace System.Windows.Controls
             ///     <see cref="IEnumerator<T>.MoveNext"/>
             ///     <seealso cref="IEnumerator.MoveNext"/>
             /// </summary>
-            public bool MoveNext() 
+            public bool MoveNext()
             {
                 if (_collection == null)
                 {
@@ -786,7 +769,7 @@ namespace System.Windows.Controls
                     _currentElement = _collection[_index];
                     return (true);
                 }
-                else 
+                else
                 {
                     _currentElement = _collection;
                     _index = _collection._size;
@@ -798,22 +781,22 @@ namespace System.Windows.Controls
             /// <summary>
             ///     <see cref="IEnumerator.Current"/>
             /// </summary>
-            object IEnumerator.Current 
+            object IEnumerator.Current
             {
-                get 
+                get
                 {
                     //  note: (_currentElement == _collection) works for empty enumerator too.
                     //  if the case then EnumeratorNotStarted will be thrown.
-                    if (_currentElement == _collection) 
+                    if (_currentElement == _collection)
                     {
                         if (_index == -1)
                         {
-                            #pragma warning suppress 6503 // IEnumerator.Current is documented to throw this exception
+                            // IEnumerator.Current is documented to throw this exception
                             throw new InvalidOperationException(SR.EnumeratorNotStarted);
                         }
                         else
                         {
-                            #pragma warning suppress 6503 // IEnumerator.Current is documented to throw this exception
+                            // IEnumerator.Current is documented to throw this exception
                             throw new InvalidOperationException(SR.EnumeratorReachedEnd);
                         }
                     }
@@ -826,20 +809,20 @@ namespace System.Windows.Controls
             /// </summary>
             public RowDefinition Current
             {
-                get 
+                get
                 {
                     //  note: (_currentElement == _collection) works for empty enumerator too.
                     //  if the case then EnumeratorNotStarted will be thrown.
-                    if (_currentElement == _collection) 
+                    if (_currentElement == _collection)
                     {
                         if (_index == -1)
                         {
-                            #pragma warning suppress 6503 // IEnumerator.Current is documented to throw this exception
+                            // IEnumerator.Current is documented to throw this exception
                             throw new InvalidOperationException(SR.EnumeratorNotStarted);
                         }
                         else
                         {
-                            #pragma warning suppress 6503 // IEnumerator.Current is documented to throw this exception
+                            // IEnumerator.Current is documented to throw this exception
                             throw new InvalidOperationException(SR.EnumeratorReachedEnd);
                         }
                     }
@@ -850,13 +833,13 @@ namespace System.Windows.Controls
             /// <summary>
             ///     <see cref="IEnumerator.Reset"/>
             /// </summary>
-            public void Reset() 
+            public void Reset()
             {
                 if (_collection == null)
                 {
                     //  empty enumerator case.
-                    //  it is Ok to just return here without checking if 
-                    //  the enumerator is disposed as long as empty enumerator 
+                    //  it is Ok to just return here without checking if
+                    //  the enumerator is disposed as long as empty enumerator
                     //  is internal only.
                     return;
                 }
@@ -875,7 +858,7 @@ namespace System.Windows.Controls
             }
 
             /// <summary>
-            ///     Validates that 
+            ///     Validates that
             ///     enumerator is not disposed;
             ///     enumerator is still in sync with collection;
             /// </summary>
@@ -892,7 +875,7 @@ namespace System.Windows.Controls
             }
 
             private RowDefinitionCollection _collection;              //  the collection to be enumerated
-            private int _index;                         //  current element index 
+            private int _index;                         //  current element index
             private int _version;                       //  the snapshot of collection's version at the time of creation
             private object _currentElement;             //  multipurpose:
                                                         //  points to the collection object when enumerator is either before start or after end
@@ -900,11 +883,11 @@ namespace System.Windows.Controls
                                                         //  is null if disposed
         }
 
-        #endregion Private Structures Classes 
+        #endregion Private Structures Classes
     }
 
     /// <summary>
-    ///     RowDefinition is a FrameworkContentElement used by Grid 
+    ///     RowDefinition is a FrameworkContentElement used by Grid
     ///     to hold column / row specific properties.
     /// </summary>
     public class RowDefinition : DefinitionBase
@@ -933,11 +916,11 @@ namespace System.Windows.Controls
         //
         //------------------------------------------------------
 
-        #region Public Properties 
+        #region Public Properties
 
         /// <summary>
         ///     Sets specified Height value for the RowDefinition.
-        ///     Returns current Height value for the RowDefinition. 
+        ///     Returns current Height value for the RowDefinition.
         /// </summary>
         public GridLength Height
         {
@@ -986,7 +969,7 @@ namespace System.Windows.Controls
         }
 
         /// <summary>
-        ///     Returns calculated device independent pixel value of the RowDefinition's offset 
+        ///     Returns calculated device independent pixel value of the RowDefinition's offset
         ///     in the coordinate system of the owning grid.
         /// </summary>
         public double Offset
@@ -994,17 +977,17 @@ namespace System.Windows.Controls
             get
             {
                 double value = 0.0;
-                
+
                 if (base.Index != 0)
                 {
                     value = base.FinalOffset;
                 }
-                
+
                 return (value);
             }
         }
 
-        #endregion Public Properties 
+        #endregion Public Properties
 
         //------------------------------------------------------
         //
@@ -1020,42 +1003,42 @@ namespace System.Windows.Controls
         [MS.Internal.PresentationFramework.CommonDependencyProperty]
         public static readonly DependencyProperty HeightProperty =
                 DependencyProperty.Register(
-                        "Height", 
-                        typeof(GridLength), 
+                        "Height",
+                        typeof(GridLength),
                         typeof(RowDefinition),
                         new FrameworkPropertyMetadata(
-                                new GridLength(1.0, GridUnitType.Star), 
-                                new PropertyChangedCallback(OnUserSizePropertyChanged)), 
+                                new GridLength(1.0, GridUnitType.Star),
+                                new PropertyChangedCallback(OnUserSizePropertyChanged)),
                         new ValidateValueCallback(IsUserSizePropertyValueValid));
 
         /// <summary>
         /// MinHeight property.
         /// </summary>
         [MS.Internal.PresentationFramework.CommonDependencyProperty]
-        [TypeConverter("System.Windows.LengthConverter, PresentationFramework, Version=" + BuildInfo.WCP_VERSION + ", Culture=neutral, PublicKeyToken=" + BuildInfo.WCP_PUBLIC_KEY_TOKEN + ", Custom=null")]
+        [TypeConverter($"System.Windows.LengthConverter, PresentationFramework, Version={BuildInfo.WCP_VERSION}, Culture=neutral, PublicKeyToken={BuildInfo.WCP_PUBLIC_KEY_TOKEN}, Custom=null")]
         public static readonly DependencyProperty MinHeightProperty =
                 DependencyProperty.Register(
-                        "MinHeight", 
-                        typeof(double), 
+                        "MinHeight",
+                        typeof(double),
                         typeof(RowDefinition),
                         new FrameworkPropertyMetadata(
-                                0d, 
-                                new PropertyChangedCallback(OnUserMinSizePropertyChanged)), 
+                                0d,
+                                new PropertyChangedCallback(OnUserMinSizePropertyChanged)),
                         new ValidateValueCallback(IsUserMinSizePropertyValueValid));
 
         /// <summary>
         /// MaxHeight property.
         /// </summary>
         [MS.Internal.PresentationFramework.CommonDependencyProperty]
-        [TypeConverter("System.Windows.LengthConverter, PresentationFramework, Version=" + BuildInfo.WCP_VERSION + ", Culture=neutral, PublicKeyToken=" + BuildInfo.WCP_PUBLIC_KEY_TOKEN + ", Custom=null")]
+        [TypeConverter($"System.Windows.LengthConverter, PresentationFramework, Version={BuildInfo.WCP_VERSION}, Culture=neutral, PublicKeyToken={BuildInfo.WCP_PUBLIC_KEY_TOKEN}, Custom=null")]
         public static readonly DependencyProperty MaxHeightProperty =
                 DependencyProperty.Register(
-                        "MaxHeight", 
-                        typeof(double), 
+                        "MaxHeight",
+                        typeof(double),
                         typeof(RowDefinition),
                         new FrameworkPropertyMetadata(
-                                Double.PositiveInfinity, 
-                                new PropertyChangedCallback(OnUserMaxSizePropertyChanged)), 
+                                Double.PositiveInfinity,
+                                new PropertyChangedCallback(OnUserMaxSizePropertyChanged)),
                         new ValidateValueCallback(IsUserMaxSizePropertyValueValid));
 
         #endregion Dynamic Properties

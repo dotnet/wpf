@@ -9,16 +9,8 @@
 // Please see MilCodeGen.html for more information.
 //
 
-using MS.Internal;
-
-using System;
 using System.Collections;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Diagnostics;
 using System.Globalization;
-using System.Windows.Media.Animation;
-using System.Windows.Media.Media3D;
 
 namespace System.Windows.Media.Animation
 {
@@ -59,9 +51,10 @@ namespace System.Windows.Media.Animation
             {
                 if (s_emptyCollection == null)
                 {
-                    MatrixKeyFrameCollection emptyCollection = new MatrixKeyFrameCollection();
-
-                    emptyCollection._keyFrames = new List< MatrixKeyFrame>(0);
+                    MatrixKeyFrameCollection emptyCollection = new MatrixKeyFrameCollection
+                    {
+                        _keyFrames = new List<MatrixKeyFrame>(0)
+                    };
                     emptyCollection.Freeze();
 
                     s_emptyCollection = emptyCollection;

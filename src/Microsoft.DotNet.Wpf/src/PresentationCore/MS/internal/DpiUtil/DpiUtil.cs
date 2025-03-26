@@ -3,16 +3,13 @@
 // See the LICENSE file in the project root for more information.
 
 
+using MS.Utility;
+using System.Windows;
+
+using PROCESS_DPI_AWARENESS = MS.Win32.NativeMethods.PROCESS_DPI_AWARENESS;
+
 namespace MS.Internal
 {
-    using MS.Utility;
-    using System;
-    using System.Security;
-    using System.Windows;
-    using System.Windows.Interop;
-
-    using PROCESS_DPI_AWARENESS = MS.Win32.NativeMethods.PROCESS_DPI_AWARENESS;
-
     /// <summary>
     /// DPI related utilities
     /// </summary>

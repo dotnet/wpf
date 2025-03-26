@@ -217,7 +217,7 @@
   <!--  Button  -->
   <SolidColorBrush x:Key="AccentButtonBackground" Color="{StaticResource SystemColorHighlightColor}" />
   <SolidColorBrush x:Key="AccentButtonBackgroundPointerOver" Color="{StaticResource SystemColorButtonTextColor}" />
-  <SolidColorBrush x:Key="AccentButtonBackgroundPressed" Color="{StaticResource SystemColorHighlightColor}" />
+  <SolidColorBrush x:Key="AccentButtonBackgroundPressed" Color="{StaticResource SystemColorButtonFaceColor}" />
   <SolidColorBrush x:Key="AccentButtonBackgroundDisabled" Color="{StaticResource SystemColorButtonFaceColor}" />
   <SolidColorBrush x:Key="AccentButtonForeground" Color="{StaticResource SystemColorHighlightTextColor}" />
   <SolidColorBrush x:Key="AccentButtonForegroundPointerOver" Color="{StaticResource SystemColorButtonFaceColor}" />

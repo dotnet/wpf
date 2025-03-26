@@ -50,11 +50,6 @@ public sealed unsafe partial class DataObject :
     /// </summary>
     public DataObject(object data) => _innerData = Composition.Create<DataObject, IDataObject>(data);
 
-    /// <inheritdoc cref="DataObject(object)"/>
-    /// <param name="doNotUnwrap">Do not allow unwrapping of nested data.</param>
-    private DataObject(object data, bool doNotUnwrap) : this(data)
-        => _doNotUnwrap = doNotUnwrap;
-
     /// <summary>
     ///  Initializes a new instance of the class, containing the specified data and its
     ///  associated format.
@@ -98,6 +93,11 @@ public sealed unsafe partial class DataObject :
     /// </remarks>
     internal static DataObject CreateFromClipboard(object data) =>
         new DataObject(data, doNotUnwrap: data is not IDataObject);
+
+    /// <inheritdoc cref="DataObject(object)"/>
+    /// <param name="doNotUnwrap">Do not allow unwrapping of nested data.</param>
+    private DataObject(object data, bool doNotUnwrap) : this(data)
+        => _doNotUnwrap = doNotUnwrap;
 
     bool IDataObjectInternal<DataObject, IDataObject>.TryUnwrapUserDataObject([NotNullWhen(true)] out IDataObject? dataObject) =>
         TryUnwrapUserDataObject(out dataObject);

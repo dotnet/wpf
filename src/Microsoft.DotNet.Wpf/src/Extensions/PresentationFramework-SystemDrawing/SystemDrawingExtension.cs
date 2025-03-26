@@ -80,6 +80,9 @@ namespace MS.Internal
             // Read the comment as that is where the ISF is stored.
             // For reference the tag is PropertyTagExifUserComment [0x9286] or 37510 (int)
             PropertyItem? piComment = bitmap.GetPropertyItem(37510);
+
+            // Want to make this throw in the same way it used to for now. It would be good
+            // to redo this to return null and handle the null case in the various callers.
             return new MemoryStream(piComment!.Value!);
         }
 

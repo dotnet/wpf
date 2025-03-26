@@ -17,7 +17,7 @@ using HRESULT = Windows.Win32.Foundation.HRESULT;
 
 namespace System.Windows.Ole;
 
-internal unsafe class WpfOleServices : IOleServices
+internal sealed unsafe class WpfOleServices : IOleServices
 {
     // Prevent instantiation
     private WpfOleServices() { }
@@ -160,7 +160,7 @@ internal unsafe class WpfOleServices : IOleServices
     {
         DataFormatNames.Bitmap or DataFormatNames.BinaryFormatBitmap =>
             type == typeof(BitmapSource) || type.FullName is "System.Drawing.Bitmap" or "System.Drawing.Image",
-        DataFormatNames.Emf /* TODO: or DataFormatNames.BinaryFormatMetafile */=>
+        DataFormatNames.Emf or DataFormatNames.BinaryFormatMetafile =>
             type.FullName is "System.Drawing.Imaging.Metafile" or "System.Drawing.Image",
 
         // All else should fall through as valid.

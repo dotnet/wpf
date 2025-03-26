@@ -2,9 +2,10 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
+using System.Xaml.Schema;
 using System.Reflection;
 using System.Xaml;
-using System.Xaml.Schema;
+using MS.Internal;
 
 namespace System.Windows.Baml2006
 {
@@ -520,8 +521,8 @@ namespace System.Windows.Baml2006
             {
                 return true;
             }
-            return MS.Internal.PresentationFramework.SafeSecurityHelper.IsSameKeyToken(
-                publicKeyToken, localAssemblyName.GetPublicKeyToken());
+
+            return ReflectionUtils.IsSamePublicKeyToken(publicKeyToken, localAssemblyName.GetPublicKeyToken());
         }
 
         private Type ResolveBamlTypeToType(BamlType bamlType)

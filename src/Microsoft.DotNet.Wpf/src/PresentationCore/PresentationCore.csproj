@@ -348,6 +348,7 @@
     <Compile Include="System\Windows\BinaryFormat\ListConverterHelper.cs" />
     <Compile Include="System\Windows\BinaryFormat\FormatterConverterStub.cs" />
     <Compile Include="System\Windows\BinaryFormat\SerializationExtensions.cs" />
+    <Compile Include="System\Windows\Navigation\AssemblyPackageInfo.cs" />
     <Compile Include="System\Windows\Nrbf\SerializationRecordExtensions.cs" />
     <Compile Include="System\Windows\BinaryFormat\MessageEnd.cs" />
     <Compile Include="System\Windows\BinaryFormat\Record.cs" />

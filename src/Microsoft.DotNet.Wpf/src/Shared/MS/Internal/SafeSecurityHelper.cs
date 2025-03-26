@@ -10,6 +10,8 @@ using System.Globalization;
 using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Threading;
+using MS.Internal;
+
 #if SYSTEM_XAML
 using TypeConverterHelper = System.Xaml.TypeConverterHelper;
 #else
@@ -116,7 +118,7 @@ namespace System.Xaml
                 if (string.Equals(curAsmName.Name, assemblyName.Name, StringComparison.InvariantCultureIgnoreCase) &&
                      (reqVersion is null || reqVersion.Equals(curVersion)) &&
                      (reqCulture is null || reqCulture.Equals(curCulture)) &&
-                     (reqKeyToken is null || IsSameKeyToken(reqKeyToken, curKeyToken)))
+                     (reqKeyToken is null || ReflectionUtils.IsSamePublicKeyToken(reqKeyToken, curKeyToken)))
                 {
                     return assemblies[i];
                 }
@@ -213,46 +215,6 @@ namespace System.Xaml
         }
 
 #endif  // WINDOWS_BASE || PRESENTATION_CORE || SYSTEM_XAML
-
-        //
-        // Determine if two Public Key Tokens are the same.
-        //
-#if !REACHFRAMEWORK
-#if PRESENTATIONFRAMEWORK || SYSTEM_XAML || PRESENTATION_CORE
-        internal
-#else
-        private
-#endif
-        static bool IsSameKeyToken(byte[] reqKeyToken, byte[] curKeyToken)
-        {
-           bool isSame = false;
-
-           if (reqKeyToken is null && curKeyToken is null)
-           {
-               // Both Key Tokens are not set, treat them as same.
-               isSame = true;
-           }
-           else if (reqKeyToken is not null && curKeyToken is not null)
-           {
-               // Both KeyTokens are set.
-               if (reqKeyToken.Length == curKeyToken.Length)
-               {
-                   isSame = true;
-
-                   for (int i = 0; i < reqKeyToken.Length; i++)
-                   {
-                      if (reqKeyToken[i] != curKeyToken[i])
-                      {
-                         isSame = false;
-                         break;
-                      }
-                   }
-               }
-           }
-
-           return isSame;
-        }
-#endif //!REACHFRAMEWORK
 
         internal const string IMAGE = "image";
     }

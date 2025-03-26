@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -12,6 +12,7 @@ using System.Security;
 using System.ComponentModel;
 using System.Runtime.InteropServices;
 using Microsoft.Win32;
+using System.Windows;
 
 #if !PBTCOMPILER
 using MS.Win32;
@@ -22,22 +23,8 @@ using System.IO.Packaging;
 using MS.Internal.AppModel;
 #endif
 
-#if PRESENTATIONFRAMEWORK_ONLY
-using System.Diagnostics;
-using System.Windows;
-using MS.Internal.Utility;      // BindUriHelper
-using MS.Internal.AppModel;
-#endif
-
 #if REACHFRAMEWORK
 using MS.Internal.Utility;
-#endif
-#if WINDOWS_BASE
-// This existed originally to allow FontCache service to 
-// see the WindowsBase variant of this class. We no longer have
-// a FontCache service, but over time other parts of WPF might
-// have started to depend on this, so we leave it as-is for 
-// compat. 
 #endif
 
 // The SecurityHelper class differs between assemblies and could not actually be

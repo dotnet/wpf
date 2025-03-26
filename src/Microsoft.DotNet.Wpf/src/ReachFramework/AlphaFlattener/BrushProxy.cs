@@ -3814,7 +3814,7 @@ namespace Microsoft.Internal.AlphaFlattener
                         i = -i;
                     }
 
-                    i %= (steps * 2);
+                    i %= steps * 2;
 
                     if (i >= steps)
                     {

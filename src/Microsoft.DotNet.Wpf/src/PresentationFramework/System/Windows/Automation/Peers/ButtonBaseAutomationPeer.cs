@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -16,7 +16,7 @@ namespace System.Windows.Automation.Peers
         {}
 
         ///
-        override protected string GetAcceleratorKeyCore()
+        protected override string GetAcceleratorKeyCore()
         {
             string acceleratorKey = base.GetAcceleratorKeyCore();
             if (acceleratorKey == string.Empty)
@@ -53,7 +53,7 @@ namespace System.Windows.Automation.Peers
 
         // Return the base without the AccessKey character
         ///
-        override protected string GetNameCore()
+        protected override string GetNameCore()
         {
             string result = base.GetNameCore();
             ButtonBase bb = (ButtonBase)Owner;

@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -70,6 +70,6 @@ namespace System.Windows
             ArgumentOutOfRangeException.ThrowIfGreaterThan(_height, height, paramName);
         }
 
-        private readonly static Int32Rect s_empty = new Int32Rect(0,0,0,0);
+        private static readonly Int32Rect s_empty = new Int32Rect(0,0,0,0);
 }
 }

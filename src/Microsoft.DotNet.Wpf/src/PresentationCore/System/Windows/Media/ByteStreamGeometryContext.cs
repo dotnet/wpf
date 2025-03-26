@@ -258,7 +258,7 @@ namespace System.Windows.Media
             return _chunkList[0];
         }
 
-        override internal void SetClosedState(bool isClosed)
+        internal override void SetClosedState(bool isClosed)
         {
             if (_currentPathFigureDataOffset == -1)
             {
@@ -656,7 +656,7 @@ namespace System.Windows.Media
             }
         }
 
-        unsafe private void GenericPolyTo(Point* points,
+        private unsafe void GenericPolyTo(Point* points,
                                    int count,
                                    bool isStroked,
                                    bool isSmoothJoin,

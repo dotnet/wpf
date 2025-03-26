@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -201,7 +201,7 @@ namespace MS.Win32
             public static extern int GetCaretBlinkTime();
 
             [DllImport(ExternDll.Kernel32, SetLastError = true, CharSet = CharSet.Auto)]
-            public static unsafe extern bool GetStringTypeEx(uint locale, uint infoType, char* sourceString, int count, ushort* charTypes);
+            public static extern unsafe bool GetStringTypeEx(uint locale, uint infoType, char* sourceString, int count, ushort* charTypes);
             
             [DllImport(ExternDll.User32, CharSet = CharSet.Auto)]
             public static extern int GetSysColor(int nIndex);

@@ -37,7 +37,7 @@ namespace System.Windows.Media.Imaging
 
         /// <summary>
         /// </summary>
-        unsafe internal CachedBitmap(
+        internal unsafe CachedBitmap(
                     int pixelWidth,
                     int pixelHeight,
                     double dpiX,
@@ -98,7 +98,7 @@ namespace System.Windows.Media.Imaging
 
         /// <summary>
         /// </summary>
-        unsafe internal CachedBitmap(
+        internal unsafe CachedBitmap(
             int pixelWidth,
             int pixelHeight,
             double dpiX,

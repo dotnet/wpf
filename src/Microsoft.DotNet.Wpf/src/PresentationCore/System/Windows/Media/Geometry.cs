@@ -149,7 +149,7 @@ namespace System.Windows.Media
         }
 
 
-        internal unsafe static Rect GetBoundsHelper(
+        internal static unsafe Rect GetBoundsHelper(
             Pen pen, 
             Matrix *pWorldMatrix, 
             Point* pPoints, 

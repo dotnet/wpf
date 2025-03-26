@@ -448,7 +448,7 @@ namespace System.Windows.Markup
         /// <summary>
         /// Return the object if it should be treated as IAddChild, otherwise return null
         /// </summary>
-        static internal IAddChild AsIAddChild(object obj)
+        internal static IAddChild AsIAddChild(object obj)
         {
             IAddChild iac = obj as IAddChildInternal;
             return iac;
@@ -458,12 +458,12 @@ namespace System.Windows.Markup
         /// <summary>
         /// True if type should be treated as IAddChild
         /// </summary>
-        static internal bool TreatAsIAddChild(Type parentObjectType)
+        internal static bool TreatAsIAddChild(Type parentObjectType)
         {
             return (KnownTypes.Types[(int)KnownElements.IAddChildInternal].IsAssignableFrom( parentObjectType ));
         }
 
-        static internal BamlRecordType GetPropertyStartRecordType(Type propertyType, bool propertyCanWrite)
+        internal static BamlRecordType GetPropertyStartRecordType(Type propertyType, bool propertyCanWrite)
         {
             BamlRecordType recordType;
             if (propertyType.IsArray)
@@ -1127,7 +1127,7 @@ namespace System.Windows.Markup
         }
 
         // This provides subclasses with a referece section to create their own section.
-        internal new static BitVector32.Section LastFlagsSection
+        internal static new BitVector32.Section LastFlagsSection
         {
             get { return BamlRecord.LastFlagsSection; }
         }
@@ -1336,7 +1336,7 @@ namespace System.Windows.Markup
 
 #if !PBTCOMPILER
         // This provides subclasses with a referece section to create their own section.
-        internal new static BitVector32.Section LastFlagsSection
+        internal static new BitVector32.Section LastFlagsSection
         {
             get { return _assemblyIdHighSection; }
         }
@@ -1606,7 +1606,7 @@ namespace System.Windows.Markup
 
 #if !PBTCOMPILER
         // This provides subclasses with a referece section to create their own section.
-        internal new static BitVector32.Section LastFlagsSection
+        internal static new BitVector32.Section LastFlagsSection
         {
             get { return _sharedSetSection; }
         }
@@ -1764,7 +1764,7 @@ namespace System.Windows.Markup
 
 #if !PBTCOMPILER
         // This provides subclasses with a referece section to create their own section.
-        internal new static BitVector32.Section LastFlagsSection
+        internal static new BitVector32.Section LastFlagsSection
         {
             get { return _sharedSetSection; }
         }
@@ -2430,7 +2430,7 @@ namespace System.Windows.Markup
 
 #if !PBTCOMPILER
         // This provides subclasses with a referece section to create their own section.
-        internal new static BitVector32.Section LastFlagsSection
+        internal static new BitVector32.Section LastFlagsSection
         {
             get { return _isValueStaticExtensionSection; }
         }
@@ -2883,7 +2883,7 @@ namespace System.Windows.Markup
             = BitVector32.CreateSection(1, _isValueTypeIdSection);
 
         // This provides subclasses with a referece section to create their own section.
-        internal new static BitVector32.Section LastFlagsSection
+        internal static new BitVector32.Section LastFlagsSection
         {
             get { return _isRawEnumValueSetSection; }
         }
@@ -3313,7 +3313,7 @@ namespace System.Windows.Markup
 
 
         // This provides subclasses with a referece section to create their own section.
-        internal new static BitVector32.Section LastFlagsSection
+        internal static new BitVector32.Section LastFlagsSection
         {
             get { return _isInjected; }
         }
@@ -3670,7 +3670,7 @@ namespace System.Windows.Markup
             = BitVector32.CreateSection(1, _isValueTypeExtensionSection);
 
         // This provides subclasses with a referece section to create their own section.
-        internal new static BitVector32.Section LastFlagsSection
+        internal static new BitVector32.Section LastFlagsSection
         {
             get { return _isValueStaticExtensionSection; }
         }
@@ -4220,7 +4220,7 @@ namespace System.Windows.Markup
 
 #if !PBTCOMPILER
         // This provides subclasses with a referece section to create their own section.
-        internal new static BitVector32.Section LastFlagsSection
+        internal static new BitVector32.Section LastFlagsSection
         {
             get { return _assemblyIdHighSection; }
         }
@@ -4433,7 +4433,7 @@ namespace System.Windows.Markup
 
 #if !PBTCOMPILER
         // This provides subclasses with a referece section to create their own section.
-        internal new static BitVector32.Section LastFlagsSection
+        internal static new BitVector32.Section LastFlagsSection
         {
             get { return _typeIdHighSection; }
         }
@@ -4914,7 +4914,7 @@ namespace System.Windows.Markup
 
 #if !PBTCOMPILER
         // This provides subclasses with a referece section to create their own section.
-        internal new static BitVector32.Section LastFlagsSection
+        internal static new BitVector32.Section LastFlagsSection
         {
             get { return _attributeUsageSection; }
         }
@@ -5053,7 +5053,7 @@ namespace System.Windows.Markup
 
 #if !PBTCOMPILER
         // This provides subclasses with a referece section to create their own section.
-        internal new static BitVector32.Section LastFlagsSection
+        internal static new BitVector32.Section LastFlagsSection
         {
             get { return _stringIdHighSection; }
         }

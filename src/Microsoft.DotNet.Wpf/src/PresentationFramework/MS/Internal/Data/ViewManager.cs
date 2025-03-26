@@ -672,7 +672,7 @@ namespace MS.Internal.Data
             si.AccessCollection(collection, accessMethod, writeAccess);
         }
 
-        static internal ViewManager Current
+        internal static ViewManager Current
         {
             get { return DataBindEngine.CurrentDataBindEngine.ViewManager; }
         }

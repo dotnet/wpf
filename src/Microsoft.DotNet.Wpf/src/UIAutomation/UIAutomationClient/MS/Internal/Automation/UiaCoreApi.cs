@@ -1562,7 +1562,7 @@ namespace MS.Internal.Automation
             UiaRegisterProviderCallback(onGetProviderDelegate);
         }
 
-        static private
+        private static
         IRawElementProviderSimple [] OnGetProvider(IntPtr hwnd, ProviderType providerType)
         {
             IRawElementProviderSimple provider;

@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -117,7 +117,7 @@ namespace System.Security.RightsManagement
         /// <summary>
         /// This function returns a read only collection of the activated users.
         /// </summary>
-        static public  ReadOnlyCollection<ContentUser>  GetActivatedUsers()
+        public static  ReadOnlyCollection<ContentUser>  GetActivatedUsers()
         {
             
             //build user with the default authentication type and a default name 

@@ -270,7 +270,7 @@ namespace System.Windows.Ink
         /// called by base class Collection&lt;T&gt; when the list is being cleared;
         /// raises a CollectionChanged event to any listeners
         /// </summary>
-        protected override sealed void ClearItems()
+        protected sealed override void ClearItems()
         {
             if ( this.Count > 0 )
             {
@@ -289,7 +289,7 @@ namespace System.Windows.Ink
         /// <summary>
         /// called by base class RemoveAt or Remove methods
         /// </summary>
-        protected override sealed void RemoveItem(int index)
+        protected sealed override void RemoveItem(int index)
         {
             Stroke removedStroke = this[index];
             base.RemoveItem(index);
@@ -302,7 +302,7 @@ namespace System.Windows.Ink
         /// <summary>
         /// called by base class Insert, Add methods
         /// </summary>
-        protected override sealed void InsertItem(int index, Stroke stroke)
+        protected sealed override void InsertItem(int index, Stroke stroke)
         {
             ArgumentNullException.ThrowIfNull(stroke);
             if ( this.IndexOf(stroke) != -1 )
@@ -320,7 +320,7 @@ namespace System.Windows.Ink
         /// <summary>
         /// called by base class set_Item method
         /// </summary>
-        protected override sealed void SetItem(int index, Stroke stroke)
+        protected sealed override void SetItem(int index, Stroke stroke)
         {
             ArgumentNullException.ThrowIfNull(stroke);
             if ( IndexOf(stroke) != -1 )

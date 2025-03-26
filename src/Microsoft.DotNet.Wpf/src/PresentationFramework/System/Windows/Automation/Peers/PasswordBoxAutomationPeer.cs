@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -29,7 +29,7 @@ namespace System.Windows.Automation.Peers
         /// Class name for the type for which this is a peer.
         /// </summary>
         /// <returns></returns>
-        override protected string GetClassNameCore()
+        protected override string GetClassNameCore()
         {
             return "PasswordBox";
         }
@@ -38,7 +38,7 @@ namespace System.Windows.Automation.Peers
         /// Type for which this is a peer.
         /// </summary>
         /// <returns></returns>
-        override protected AutomationControlType GetAutomationControlTypeCore()
+        protected override AutomationControlType GetAutomationControlTypeCore()
         {
             return AutomationControlType.Edit;
         }
@@ -48,7 +48,7 @@ namespace System.Windows.Automation.Peers
         /// </summary>
         /// <param name="patternInterface"></param>
         /// <returns></returns>
-        override public object GetPattern(PatternInterface patternInterface)
+        public override object GetPattern(PatternInterface patternInterface)
         {
             object returnValue = null;
 
@@ -86,7 +86,7 @@ namespace System.Windows.Automation.Peers
         /// Indicates whether or not this is a password control
         /// </summary>
         /// <returns>true</returns>
-        override protected bool IsPasswordCore()
+        protected override bool IsPasswordCore()
         {
             return true;
         }

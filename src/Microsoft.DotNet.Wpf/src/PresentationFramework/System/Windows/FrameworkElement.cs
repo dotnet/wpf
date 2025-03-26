@@ -93,7 +93,7 @@ namespace System.Windows
     [UsableDuringInitialization(true)]
     public partial class FrameworkElement : UIElement, IFrameworkInputElement, ISupportInitialize, IHaveResources, IQueryAmbient
     {
-        static private readonly Type _typeofThis = typeof(FrameworkElement);
+        private static readonly Type _typeofThis = typeof(FrameworkElement);
 
         /// <summary>
         ///     Default FrameworkElement constructor
@@ -579,7 +579,7 @@ namespace System.Windows
         /// <summary>
         /// Gets or sets the template child of the FrameworkElement.
         /// </summary>
-        virtual internal UIElement TemplateChild
+        internal virtual UIElement TemplateChild
         {
             get
             {
@@ -3164,7 +3164,7 @@ namespace System.Windows
         /// This will make the culture pertain to the scope of the element where it is applied.  The
         /// XmlLanguage names follow the RFC 3066 standard. For example, U.S. English is "en-US".
         /// </summary>
-        static public readonly DependencyProperty LanguageProperty =
+        public static readonly DependencyProperty LanguageProperty =
                     DependencyProperty.RegisterAttached(
                                 "Language",
                                 typeof(XmlLanguage),
@@ -3862,7 +3862,7 @@ namespace System.Windows
         }
 
         // If the cursor is changed, we may need to set the actual cursor.
-        static private void OnCursorChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        private static void OnCursorChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             FrameworkElement fe = ((FrameworkElement)d);
 
@@ -3897,7 +3897,7 @@ namespace System.Windows
         }
 
         // If the ForceCursor property changed, we may need to set the actual cursor.
-        static private void OnForceCursorChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        private static void OnForceCursorChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             FrameworkElement fe = ((FrameworkElement)d);
 

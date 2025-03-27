@@ -1,6 +1,7 @@
 <Project>
   <PropertyGroup>
     <RepositoryName>wpf</RepositoryName>
+    <PackageProjectUrl>https://github.com/dotnet/wpf</PackageProjectUrl>
     <WindowsDesktopARM64Support>true</WindowsDesktopARM64Support>
     <TargetFramework>net10.0</TargetFramework>
     <TargetFrameworkVersion>10.0</TargetFrameworkVersion>

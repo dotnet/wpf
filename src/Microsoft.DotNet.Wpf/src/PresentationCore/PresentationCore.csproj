@@ -265,7 +265,6 @@
     <Compile Include="MS\Internal\Shaping\IShapeableTextCollector.cs" />
     <Compile Include="MS\Internal\Shaping\OpenTypeCommon.cs" />
     <Compile Include="MS\Internal\Shaping\OpenTypeLayout.cs" />
-    <Compile Include="MS\Internal\Shaping\OpenTypeLayoutCache.cs" />
     <Compile Include="MS\Internal\Shaping\Positioning.cs" />
     <Compile Include="MS\Internal\Shaping\ShapeTypeface.cs" />
     <Compile Include="MS\Internal\Shaping\Substitution.cs" />

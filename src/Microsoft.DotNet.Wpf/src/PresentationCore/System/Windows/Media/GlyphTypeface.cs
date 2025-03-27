@@ -21,7 +21,7 @@ using MS.Internal;
 using MS.Internal.TextFormatting;
 using MS.Internal.FontCache;
 using MS.Internal.FontFace;
-using MS.Internal.PresentationCore;
+using MS.Internal.Text.TextInterface;
 using UnsafeNativeMethods = MS.Win32.PresentationCore.UnsafeNativeMethods;
 
 
@@ -1142,13 +1142,14 @@ namespace System.Windows.Media
                                    TextFormattingMode textFormattingMode,
                                    bool isSideways)
         {
-            MS.Internal.Text.TextInterface.GlyphMetrics glyphMetrics = GlyphMetrics(glyph, DesignEmHeight, pixelsPerDip, textFormattingMode, isSideways);
-            return BaselineHelper(glyphMetrics) / DesignEmHeight;
+            GlyphMetrics glyphMetrics = GlyphMetrics(glyph, DesignEmHeight, pixelsPerDip, textFormattingMode, isSideways);
+
+            return BaselineHelper(in glyphMetrics) / DesignEmHeight;
         }
 
-        internal static double BaselineHelper(MS.Internal.Text.TextInterface.GlyphMetrics metrics)
+        internal static double BaselineHelper(ref readonly GlyphMetrics metrics)
         {
-            return  -1 * ((double)metrics.BottomSideBearing + metrics.VerticalOriginY - metrics.AdvanceHeight);
+            return -1 * ((double)metrics.BottomSideBearing + metrics.VerticalOriginY - metrics.AdvanceHeight);
         }
 
         /// <summary>
@@ -1180,7 +1181,7 @@ namespace System.Windows.Media
 
             unsafe
             {
-                MS.Internal.Text.TextInterface.GlyphMetrics glyphMetrics = GlyphMetrics(glyph, renderingEmSize, pixelsPerDip, textFormattingMode, isSideways);
+                GlyphMetrics glyphMetrics = GlyphMetrics(glyph, renderingEmSize, pixelsPerDip, textFormattingMode, isSideways);
 
                 double designToEm = renderingEmSize / DesignEmHeight;
 
@@ -1192,7 +1193,7 @@ namespace System.Windows.Media
                     rsb = TextFormatterImp.RoundDipForDisplayMode(designToEm * glyphMetrics.RightSideBearing, pixelsPerDip) * scalingFactor;
                     tsb = TextFormatterImp.RoundDipForDisplayMode(designToEm * glyphMetrics.TopSideBearing, pixelsPerDip) * scalingFactor;
                     bsb = TextFormatterImp.RoundDipForDisplayMode(designToEm * glyphMetrics.BottomSideBearing, pixelsPerDip) * scalingFactor;
-                    baseline = TextFormatterImp.RoundDipForDisplayMode(designToEm * BaselineHelper(glyphMetrics), pixelsPerDip) * scalingFactor;
+                    baseline = TextFormatterImp.RoundDipForDisplayMode(designToEm * BaselineHelper(in glyphMetrics), pixelsPerDip) * scalingFactor;
                 }
                 else
                 {
@@ -1202,7 +1203,7 @@ namespace System.Windows.Media
                     rsb = designToEm * glyphMetrics.RightSideBearing * scalingFactor;
                     tsb = designToEm * glyphMetrics.TopSideBearing * scalingFactor;
                     bsb = designToEm * glyphMetrics.BottomSideBearing * scalingFactor;
-                    baseline = designToEm * BaselineHelper(glyphMetrics) * scalingFactor;
+                    baseline = designToEm * BaselineHelper(in glyphMetrics) * scalingFactor;
                 }
             }
         }

@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -995,20 +995,6 @@ namespace MS.Internal.Shaping
                 return OpenTypeLayoutResult.BadFontTable;
             }
 
-            return OpenTypeLayoutResult.Success;
-        }
-
-
-        ///<summary>
-        ///
-        ///</summary>
-        internal static OpenTypeLayoutResult CreateLayoutCache (
-            IOpenTypeFont       font,           // In: Font access interface
-            int                 maxCacheSize    // In: Maximum cache size allowed
-        )
-        {
-            OpenTypeLayoutCache.CreateCache(font, maxCacheSize);
-            
             return OpenTypeLayoutResult.Success;
         }
         

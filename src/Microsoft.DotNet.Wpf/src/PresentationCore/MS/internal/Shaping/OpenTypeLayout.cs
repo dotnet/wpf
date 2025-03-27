@@ -505,9 +505,6 @@ namespace MS.Internal.Shaping
     /// will be called, so, in the future, design interfaces to use
     /// fontcache and define what information can be stored there.
     /// </summary>
-
-
-
     internal class OpenTypeLayoutWorkspace
     {
         /// <summary>
@@ -517,34 +514,7 @@ namespace MS.Internal.Shaping
         {
             _bytesPerLookup     = 0;
             _lookupUsageFlags   = null;
-            _cachePointers      = null;
         }
-
-        /// <summary>
-        /// Reset all structures to the new font/OTTable/script/langsys.
-        ///
-        /// Client need to call it only once per shaping engine call.
-        /// This is client's responsibility to ensure that workspace is
-        /// used for single font/OTTable/script/langsys between Init() calls
-        /// </summary>
-        ///<param name="font">In: Font access interface</param>
-        ///<param name="tableTag">In: Font table tag</param>
-        ///<param name="scriptTag">In: Script tag</param>
-        ///<param name="langSysTag">In: Language System tag</param>
-        ///<returns>Success if workspace is initialized succesfully, specific error if failed</returns>
-        internal OpenTypeLayoutResult Init(
-            IOpenTypeFont           font,
-            OpenTypeTags            tableTag,
-            uint                    scriptTag,
-            uint                    langSysTag
-            )
-        {
-            // Currently all buffers are per call,
-            // no need to do anything.
-            return OpenTypeLayoutResult.Success;
-        }
-
-#region Lookup flags 
 
         //lookup usage flags access
         private const byte AggregatedFlagMask        = 0x01;
@@ -564,11 +534,6 @@ namespace MS.Internal.Shaping
             }
 
             Array.Clear(_lookupUsageFlags, 0, requiredLookupUsageArraySize);
-        }
-
-        public bool IsAggregatedFlagSet(int lookupIndex)
-        {
-            return ((_lookupUsageFlags[lookupIndex * _bytesPerLookup] & AggregatedFlagMask) != 0);
         }
 
         public bool IsFeatureFlagSet(int lookupIndex, int featureIndex)
@@ -622,78 +587,6 @@ namespace MS.Internal.Shaping
         // Buffer grows with number of features applied
         private int _bytesPerLookup;
         private byte[] _lookupUsageFlags;
-#endregion Lookup flags
 
-#region Layout cache pointers
-
-        /// <summary>
-        /// Allocate enough memory for array of cache pointers, parallel to glyph run.
-        ///
-        /// These method should not be used directly, it is only called by OpenTypeLayputCache.
-        ///
-        /// </summary>
-        ///<param name="glyphRunLength">In: Size of a glyph run</param>
-        public unsafe void AllocateCachePointers(int glyphRunLength)
-        {
-            if (_cachePointers != null && _cachePointers.Length >= glyphRunLength) return;
-
-            _cachePointers = new ushort[glyphRunLength];
-        }
-
-        /// <summary>
-        /// If glyph run is cahnged, update pointers according to the change. Reallocate array if necessary.
-        ///
-        /// These method should not be used directly, it is only called by OpenTypeLayputCache.
-        ///
-        /// </summary>
-        ///<param name="oldLength">In: Number of glyphs in the run before change</param>
-        ///<param name="newLength">In: Number of glyphs in the run after change</param>
-        ///<param name="firstGlyphChanged">In: Index of the first changed glyph</param>
-        ///<param name="afterLastGlyphChanged">In: Index of the glyph after last changed</param>
-        public unsafe void UpdateCachePointers(
-                                        int     oldLength,
-                                        int     newLength,
-                                        int     firstGlyphChanged,
-                                        int     afterLastGlyphChanged
-                                       )
-        {
-            if (oldLength != newLength)
-            {
-                int oldAfterLastGlyphChanged = afterLastGlyphChanged - (newLength - oldLength);
-
-                if (_cachePointers.Length < newLength) 
-                {
-                    ushort[] tmp = new ushort[newLength];
-                    
-                    Array.Copy(_cachePointers, tmp, firstGlyphChanged);
-                    Array.Copy(_cachePointers, oldAfterLastGlyphChanged, tmp, afterLastGlyphChanged, oldLength - oldAfterLastGlyphChanged);
-                    
-                    _cachePointers = tmp;
-                }
-                else
-                {
-                        Array.Copy(_cachePointers, oldAfterLastGlyphChanged, _cachePointers, afterLastGlyphChanged, oldLength - oldAfterLastGlyphChanged);
-                }
-            }
-        }
-        
-        public unsafe ushort[] CachePointers
-        {
-            get { return _cachePointers; }
-        }
-        
-        public byte[] TableCacheData
-        {
-            get { return _tableCache; }
-            set { _tableCache = value; }
-        }
-
-        // Array of cache pointers, per glyph
-        private unsafe ushort[]  _cachePointers;
-        
-        // Pointer to the table cache
-        private byte[]      _tableCache;
-
-#endregion Layout cache pointers
     }
 }

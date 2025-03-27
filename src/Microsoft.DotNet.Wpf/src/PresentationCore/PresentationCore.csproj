@@ -168,7 +168,6 @@
     <Compile Include="MS\Internal\FontCache\CanonicalFontFamilyReference.cs" />
     <Compile Include="MS\Internal\FontCache\DWriteFactory.cs" />
     <Compile Include="MS\Internal\FontCache\FamilyCollection.cs" />
-    <Compile Include="MS\Internal\FontCache\fontcacheconstants.cs" />
     <Compile Include="MS\Internal\FontCache\FontCacheUtil.cs" />
     <Compile Include="MS\Internal\FontCache\FontFaceLayoutInfo.cs" />
     <Compile Include="MS\Internal\FontCache\FontResourceCache.cs" />

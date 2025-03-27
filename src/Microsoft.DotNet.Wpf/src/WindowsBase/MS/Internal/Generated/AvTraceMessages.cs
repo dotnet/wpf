@@ -14,8 +14,8 @@ namespace MS.Internal
                 delegate() { PresentationTraceSources._DependencyPropertySource = null; }
                 );
 
-		static AvTraceDetails _ApplyTemplateContent;
-		static public AvTraceDetails ApplyTemplateContent
+		private static AvTraceDetails _ApplyTemplateContent;
+		public static AvTraceDetails ApplyTemplateContent
         {
             get
             {
@@ -28,7 +28,7 @@ namespace MS.Internal
             }
         }
 
-		static AvTraceDetails _Register;
+        private static AvTraceDetails _Register;
 		static public AvTraceDetails Register
         {
             get
@@ -42,7 +42,7 @@ namespace MS.Internal
             }
         }
 
-		static AvTraceDetails _UpdateEffectiveValueStart;
+        private static AvTraceDetails _UpdateEffectiveValueStart;
 		static public AvTraceDetails UpdateEffectiveValueStart
         {
             get
@@ -56,7 +56,7 @@ namespace MS.Internal
             }
         }
 
-		static AvTraceDetails _UpdateEffectiveValueStop;
+        private static AvTraceDetails _UpdateEffectiveValueStop;
 		static public AvTraceDetails UpdateEffectiveValueStop
         {
             get
@@ -141,8 +141,7 @@ namespace MS.Internal
                 delegate() { return PresentationTraceSources.FreezableSource; },
                 delegate() { PresentationTraceSources._FreezableSource = null; }
                 );
-
-		static AvTraceDetails _UnableToFreezeExpression;
+        private static AvTraceDetails _UnableToFreezeExpression;
 		static public AvTraceDetails UnableToFreezeExpression
         {
             get
@@ -156,7 +155,7 @@ namespace MS.Internal
             }
         }
 
-		static AvTraceDetails _UnableToFreezeDispatcherObjectWithThreadAffinity;
+        private static AvTraceDetails _UnableToFreezeDispatcherObjectWithThreadAffinity;
 		static public AvTraceDetails UnableToFreezeDispatcherObjectWithThreadAffinity
         {
             get
@@ -170,7 +169,7 @@ namespace MS.Internal
             }
         }
 
-		static AvTraceDetails _UnableToFreezeFreezableSubProperty;
+        private static AvTraceDetails _UnableToFreezeFreezableSubProperty;
 		static public AvTraceDetails UnableToFreezeFreezableSubProperty
         {
             get
@@ -184,7 +183,7 @@ namespace MS.Internal
             }
         }
 
-		static AvTraceDetails _UnableToFreezeAnimatedProperties;
+        private static AvTraceDetails _UnableToFreezeAnimatedProperties;
 		static public AvTraceDetails UnableToFreezeAnimatedProperties
         {
             get
@@ -270,7 +269,7 @@ namespace MS.Internal
                 delegate() { PresentationTraceSources._NameScopeSource = null; }
                 );
 
-		static AvTraceDetails _RegisterName;
+        private static AvTraceDetails _RegisterName;
 		static public AvTraceDetails RegisterName
         {
             get
@@ -284,7 +283,7 @@ namespace MS.Internal
             }
         }
 
-		static AvTraceDetails _UnregisterName;
+        private static AvTraceDetails _UnregisterName;
 		static public AvTraceDetails UnregisterName
         {
             get

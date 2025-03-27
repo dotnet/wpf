@@ -25,9 +25,7 @@ using System.Windows.Media.Converters;
 
 namespace System.Windows.Media
 {
-
-
-    abstract partial class GeneralTransform : Animatable, IFormattable
+    public abstract partial class GeneralTransform : Animatable, IFormattable
     {
         //------------------------------------------------------
         //

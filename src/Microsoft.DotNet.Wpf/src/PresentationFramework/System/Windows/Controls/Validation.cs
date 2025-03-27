@@ -572,7 +572,7 @@ namespace System.Windows.Controls
             }
         }
 
-        static void OnValidationError(DependencyObject source, ValidationError validationError, ValidationErrorEventAction action)
+        private static void OnValidationError(DependencyObject source, ValidationError validationError, ValidationErrorEventAction action)
         {
             ValidationErrorEventArgs args = new ValidationErrorEventArgs(validationError, action);
 

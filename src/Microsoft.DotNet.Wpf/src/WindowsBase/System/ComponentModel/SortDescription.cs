@@ -152,7 +152,7 @@ namespace System.ComponentModel
 
         private string              _propertyName;
         private ListSortDirection   _direction;
-        bool                        _sealed;
+        private bool                _sealed;
 
         #endregion Private Fields
     }

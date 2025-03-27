@@ -418,11 +418,11 @@ namespace System.Windows.Input
             }
         }
 
-        PenThread _penThread; // Hold ref on worker thread we use to talk to wisptis.
+        private PenThread _penThread; // Hold ref on worker thread we use to talk to wisptis.
 
         protected Size _cancelSize = Size.Empty;
 
-        StylusDeviceCollection _stylusDeviceCollection;
+        private StylusDeviceCollection _stylusDeviceCollection;
 
         private bool _isDisposalPending;
 

@@ -1017,7 +1017,7 @@ namespace System.Windows.Markup
         /// A def attribute was encountered.  Perform synchonous mode checking
         /// prior to calling the virtual that may be overridden.
         /// </summary>
-        void WriteDefAttributeCore(XamlDefAttributeNode xamlDefAttributeNode)
+        private void WriteDefAttributeCore(XamlDefAttributeNode xamlDefAttributeNode)
         {
 
             string attributeValue = xamlDefAttributeNode.Value;
@@ -1197,7 +1197,7 @@ namespace System.Windows.Markup
 
         // Set the depth count for how deep we are within
         // a ParserAction.Skip reference.
-        int SkipActionDepthCount
+        private int SkipActionDepthCount
         {
             get { return _skipActionDepthCount; }
             set {  _skipActionDepthCount = value; }
@@ -1205,7 +1205,7 @@ namespace System.Windows.Markup
 
         // Set and get the token to watch for when skipping a
         // section of a xaml file
-        XamlNodeType SkipActionToken
+        private XamlNodeType SkipActionToken
         {
             get { return _skipActionToken; }
             set {  _skipActionToken = value; }
@@ -1213,7 +1213,7 @@ namespace System.Windows.Markup
 
         // set the operation mode of the parser as determined
         // by attached ParserHooks
-        ParserAction ParserAction
+        private ParserAction ParserAction
         {
             get { return _parserAction; }
             set {  _parserAction = value; }
@@ -1289,18 +1289,18 @@ namespace System.Windows.Markup
 
         // private Data
 
-        XamlReaderHelper             _xamlTokenReader;
-
-        ParserContext                _parserContext; 
-
-        XamlParseMode                _xamlParseMode;
-        BamlRecordWriter             _bamlWriter;
-
+        private XamlReaderHelper             _xamlTokenReader;
+         
+        private ParserContext                _parserContext; 
+         
+        private XamlParseMode                _xamlParseMode;
+        private BamlRecordWriter             _bamlWriter;
+         
         // ParserHooks related
-        ParserHooks                  _parserHooks;
-        ParserAction                 _parserAction = ParserAction.Normal;
-        int                          _skipActionDepthCount = -1; // skip mode depth count.
-        XamlNodeType                 _skipActionToken = XamlNodeType.Unknown;
+        private ParserHooks                  _parserHooks;
+        private ParserAction                 _parserAction = ParserAction.Normal;
+        private int                          _skipActionDepthCount = -1; // skip mode depth count.
+        private XamlNodeType                 _skipActionToken = XamlNodeType.Unknown;
 
         static private string []     _predefinedNamespaces = new string [3] {
             XamlReaderHelper.DefinitionNamespaceURI,

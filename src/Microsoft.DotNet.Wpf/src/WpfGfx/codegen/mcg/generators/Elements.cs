@@ -63,7 +63,7 @@ namespace MS.Internal.MilCodeGen.Generators
 
                             namespace [[e.Namespace]]
                             {
-                                partial class [[e.Name]] [[(e.ImplementsIAnimatable ? ": IAnimatable" : "")]]
+                                public partial class [[e.Name]] [[(e.ImplementsIAnimatable ? ": IAnimatable" : "")]]
                                 {
                                     static private readonly Type _typeofThis = typeof([[e.Name]]);
 

@@ -105,12 +105,12 @@ namespace MS.Internal.Data
             get { return this[FullCollectionKey]; }
         }
 
-        WeakReference _component;     // the XElement of interest
-        PropertyDescriptor _propertyDescriptor;    // the PD to obtain its elements or descendants
-        HybridDictionary _table;         // table of results:  string -> <XDA, DC, Collection>
-        const string FullCollectionKey = "%%FullCollection%%";      // not a legal XML tag name
+        private WeakReference _component;     // the XElement of interest
+        private PropertyDescriptor _propertyDescriptor;    // the PD to obtain its elements or descendants
+        private HybridDictionary _table;         // table of results:  string -> <XDA, DC, Collection>
+        private const string FullCollectionKey = "%%FullCollection%%";      // not a legal XML tag name
 
-        class Record
+        private class Record
         {
             public Record(IEnumerable xda)
             {
@@ -126,9 +126,9 @@ namespace MS.Internal.Data
             public DifferencingCollection DC { get { return _dc; } }
             public ReadOnlyObservableCollection<object> Collection { get { return _rooc; } }
 
-            IEnumerable _xda;   // the XDeferredAxis
-            DifferencingCollection _dc;    // the corresponding ObservableCollection
-            ReadOnlyObservableCollection<object> _rooc; // wrapper around the DC
+            private IEnumerable _xda;   // the XDeferredAxis
+            private DifferencingCollection _dc;    // the corresponding ObservableCollection
+            private ReadOnlyObservableCollection<object> _rooc; // wrapper around the DC
         }
     }
 }

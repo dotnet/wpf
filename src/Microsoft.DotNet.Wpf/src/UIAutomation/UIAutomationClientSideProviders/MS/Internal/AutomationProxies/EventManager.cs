@@ -14,7 +14,7 @@ using MS.Win32;
 namespace MS.Internal.AutomationProxies
 {
     // Class to manage UIAutomation events and how they relate to winevents
-    static class EventManager
+    internal static class EventManager
     {
         // ------------------------------------------------------
         //

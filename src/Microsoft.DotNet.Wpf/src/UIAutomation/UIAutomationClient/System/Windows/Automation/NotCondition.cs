@@ -70,10 +70,10 @@ namespace System.Windows.Automation
         //  Private Fields
         //
         //------------------------------------------------------
- 
+
         #region Private Fields
 
-        Condition _condition;
+        private Condition _condition;
 
         #endregion Private Fields
     }

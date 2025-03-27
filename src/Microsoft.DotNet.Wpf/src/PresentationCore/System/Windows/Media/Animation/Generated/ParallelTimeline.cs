@@ -15,9 +15,7 @@ using System.Collections;
 
 namespace System.Windows.Media.Animation
 {
-
-
-    partial class ParallelTimeline : TimelineGroup
+    public partial class ParallelTimeline : TimelineGroup
     {
         //------------------------------------------------------
         //

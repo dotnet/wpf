@@ -116,9 +116,8 @@ namespace MS.Internal
         private void HandleShutDown(object sender, EventArgs e)
         {
             // The dispatcher and AppDomain events might arrive on separate threads
-            // at the same time.  The interlock assures that we only do the work
-            // once.
-            if (Interlocked.Exchange(ref _inShutDown, 1) == 0)
+            // at the same time. The interlock assures that we only do the work once.
+            if (Interlocked.Exchange(ref _inShutDown, true) == false)
             {
                 // ShutDown is a one-time event.  Stop listening (thus releasing
                 // references to the ShutDownListener).
@@ -134,7 +133,7 @@ namespace MS.Internal
         }
 
         [Flags]
-        enum PrivateFlags : ushort
+        private enum PrivateFlags : ushort
         {
             DomainUnload        = ShutDownEvents.DomainUnload,
             ProcessExit         = ShutDownEvents.ProcessExit,
@@ -144,8 +143,8 @@ namespace MS.Internal
             Listening           = 0x8000,
         }
 
-        PrivateFlags _flags;
-        WeakReference _dispatcherWR;
-        int _inShutDown;
+        private PrivateFlags _flags;
+        private WeakReference _dispatcherWR;
+        private bool _inShutDown;
     }
 }

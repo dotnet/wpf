@@ -42,8 +42,8 @@ namespace MS.Internal
             }
         }
 
-        int _id;
-        string[] _labels;
+        private int _id;
+        private string[] _labels;
     }
 }
 

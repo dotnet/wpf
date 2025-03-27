@@ -374,7 +374,7 @@ namespace System.Windows.Media.Media3D
             // Visual(3D).AddVisualChild for the things they propagate on adding a new child
             
             // Fire notifications
-            this.OnVisualChildrenChanged(child, null /* no removed child */);
+            this.OnVisualChildrenChanged(child, visualRemoved: null);
             child.FireOnVisualParentChanged(null);
         }
 
@@ -406,7 +406,7 @@ namespace System.Windows.Media.Media3D
             
             // Fire notifications
             child.FireOnVisualParentChanged(this);
-            OnVisualChildrenChanged(null /* no child added */, child);
+            OnVisualChildrenChanged(visualAdded: null, child);
         }
 
         /// <summary>

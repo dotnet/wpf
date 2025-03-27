@@ -14,7 +14,7 @@ using System.Windows.Media.Animation;
 
 namespace System.Windows.Media
 {
-    sealed partial class GradientStop : Animatable, IFormattable
+    public sealed partial class GradientStop : Animatable, IFormattable
     {
         #region Constructors
 

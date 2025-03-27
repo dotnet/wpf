@@ -28,7 +28,7 @@ namespace System.Windows.Media
 
     [TypeConverter(typeof(BrushConverter))]
     [ValueSerializer(typeof(BrushValueSerializer))] // Used by MarkupWriter
-    abstract partial class Brush : Animatable, IFormattable, DUCE.IResource
+    public abstract partial class Brush : Animatable, IFormattable, DUCE.IResource
     {
         //------------------------------------------------------
         //

@@ -790,7 +790,7 @@ namespace MS.Internal.IO.Packaging
                 Dispose(false);
             }
 
-            void CheckDisposed()
+            private void CheckDisposed()
             {
                 ObjectDisposedException.ThrowIf(_disposed, typeof(ReliableIsolatedStorageFileFolder));
             }

@@ -1091,7 +1091,7 @@ namespace System.Xaml
 
         #endregion
 
-        enum MemberType : byte
+        private enum MemberType : byte
         {
             Instance,
             Attachable,

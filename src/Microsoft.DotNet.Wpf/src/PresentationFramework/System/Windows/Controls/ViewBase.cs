@@ -93,7 +93,7 @@ namespace System.Windows.Controls
         }
 
         // Fields to implement DO's inheritance context
-        DependencyObject _inheritanceContext;
+        private DependencyObject _inheritanceContext;
 
         #endregion InheritanceContext
 

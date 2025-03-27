@@ -11,7 +11,7 @@ using MS.Win32;
 
 namespace MS.Internal.AutomationProxies
 {
-    class WindowsStatic: ProxyHwnd
+    internal class WindowsStatic: ProxyHwnd
     {
         // ------------------------------------------------------
         //
@@ -21,7 +21,7 @@ namespace MS.Internal.AutomationProxies
 
         #region Constructors
 
-        WindowsStatic (IntPtr hwnd, ProxyFragment parent, StaticType type, int style)
+        private WindowsStatic (IntPtr hwnd, ProxyFragment parent, StaticType type, int style)
             : base( hwnd, parent, 0)
         {
             _type = type;
@@ -224,12 +224,12 @@ namespace MS.Internal.AutomationProxies
 
         #region Private Fields
 
-        StaticType _type;
+        private StaticType _type;
 
-        int _style;
+        private int _style;
 
         // Static control types based on style constants
-        enum StaticType
+        private enum StaticType
         {
             Bitmap,
             Icon,

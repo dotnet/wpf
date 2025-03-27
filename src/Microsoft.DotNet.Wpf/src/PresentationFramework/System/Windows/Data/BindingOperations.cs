@@ -590,7 +590,7 @@ namespace System.Windows.Data
 
             internal List<Exception> Log { get { return _log; } }
 
-            List<Exception> _log = new List<Exception>();
+            private List<Exception> _log = new List<Exception>();
         }
         #endregion Exception logging
     }

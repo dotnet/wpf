@@ -207,8 +207,8 @@ namespace MS.Internal.IO.Packaging
         /// IFilter.Init parameters.
         /// Used to initialize CorePropertyEnumerator.
         /// </summary>
-        IFILTER_INIT _grfFlags = 0;
-        ManagedFullPropSpec[] _aAttributes = null;
+        private IFILTER_INIT _grfFlags = 0;
+        private ManagedFullPropSpec[] _aAttributes = null;
 
         /// <summary>
         /// Chunk ID for the current chunk. Incremented for

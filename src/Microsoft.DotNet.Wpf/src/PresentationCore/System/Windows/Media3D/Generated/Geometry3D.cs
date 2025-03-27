@@ -23,9 +23,7 @@ using System.Windows.Media.Composition;
 
 namespace System.Windows.Media.Media3D
 {
-
-
-    abstract partial class Geometry3D : Animatable, DUCE.IResource
+    public abstract partial class Geometry3D : Animatable, DUCE.IResource
     {
         //------------------------------------------------------
         //

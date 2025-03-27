@@ -25,9 +25,7 @@ using System.Windows.Media.Converters;
 
 namespace System.Windows.Media
 {
-
-
-    sealed partial class DrawingImage : ImageSource
+    public sealed partial class DrawingImage : ImageSource
     {
         //------------------------------------------------------
         //

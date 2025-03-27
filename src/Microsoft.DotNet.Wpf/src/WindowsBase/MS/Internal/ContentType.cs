@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -655,12 +655,12 @@ namespace MS.Internal
 
         //This array is sorted by the ascii value of these characters.
         private static ReadOnlySpan<char> AllowedCharacters => [
-           '!' /*33*/, '#' /*35*/ , '$'  /*36*/,
-           '%' /*37*/, '&' /*38*/ , '\'' /*39*/,
-           '*' /*42*/, '+' /*43*/ , '-'  /*45*/,
-           '.' /*46*/, '^' /*94*/ , '_'  /*95*/,
-           '`' /*96*/, '|' /*124*/, '~'  /*126*/, 
-         ];
+        '!' /*33*/, '#' /*35*/ , '$'  /*36*/,
+        '%' /*37*/, '&' /*38*/ , '\'' /*39*/,
+        '*' /*42*/, '+' /*43*/ , '-'  /*45*/,
+        '.' /*46*/, '^' /*94*/ , '_'  /*95*/,
+        '`' /*96*/, '|' /*124*/, '~'  /*126*/,
+        ];
         
         //Linear White Space characters
         private static readonly char[] _linearWhiteSpaceChars = [

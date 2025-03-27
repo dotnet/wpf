@@ -96,10 +96,10 @@ namespace System.Windows.Media
                 Point* scratchForLine = stackalloc Point[1];
                 scratchForLine[0] = point;
                 GenericPolyTo(scratchForLine,
-                              1 /* count */,
+                              count: 1,
                               isStroked,
                               isSmoothJoin,
-                              false /* does not have curves */,
+                              hasCurves: false,
                               MIL_SEGMENT_TYPE.MilSegmentPolyLine);
             }
         }
@@ -117,10 +117,10 @@ namespace System.Windows.Media
                 scratchForQuadraticBezier[0] = point1;
                 scratchForQuadraticBezier[1] = point2;
                 GenericPolyTo(scratchForQuadraticBezier,
-                              2 /* count */,
+                              count: 2,
                               isStroked,
                               isSmoothJoin,
-                              true /* has curves */,
+                              hasCurves: true,
                               MIL_SEGMENT_TYPE.MilSegmentPolyQuadraticBezier);
             }
         }
@@ -139,10 +139,10 @@ namespace System.Windows.Media
                 scratchForBezier[1] = point2;
                 scratchForBezier[2] = point3;
                 GenericPolyTo(scratchForBezier,
-                              3 /* count */,
+                              count: 3,
                               isStroked,
                               isSmoothJoin,
-                              true /* has curves */,
+                              hasCurves: true,
                               MIL_SEGMENT_TYPE.MilSegmentPolyBezier);
             }
         }
@@ -157,8 +157,8 @@ namespace System.Windows.Media
             GenericPolyTo(points, 
                           isStroked, 
                           isSmoothJoin, 
-                          false /* does not have curves */,
-                          1 /* pointCountMultiple */,
+                          hasCurves: false,
+                          pointCountMultiple: 1,
                           MIL_SEGMENT_TYPE.MilSegmentPolyLine);
         }
 
@@ -172,8 +172,8 @@ namespace System.Windows.Media
             GenericPolyTo(points, 
                           isStroked, 
                           isSmoothJoin, 
-                          true /* has curves */,
-                          2 /* pointCountMultiple */,
+                          hasCurves: true,
+                          pointCountMultiple: 2,
                           MIL_SEGMENT_TYPE.MilSegmentPolyQuadraticBezier);
         }
 
@@ -187,8 +187,8 @@ namespace System.Windows.Media
             GenericPolyTo(points, 
                           isStroked, 
                           isSmoothJoin, 
-                          true /* has curves */,
-                          3 /* pointCountMultiple */,
+                          hasCurves: true,
+                          pointCountMultiple: 3,
                           MIL_SEGMENT_TYPE.MilSegmentPolyBezier);
         }
 
@@ -353,7 +353,7 @@ namespace System.Windows.Media
                 Invariant.Assert(_currOffset >= bufferOffset+cbDataSize);
             }
 
-            ReadWriteData(true /* reading */, pbData, cbDataSize, 0, ref bufferOffset);
+            ReadWriteData(reading: true, pbData, cbDataSize, 0, ref bufferOffset);
         }
         
         /// <summary>
@@ -377,7 +377,7 @@ namespace System.Windows.Media
                 Invariant.Assert(newOffset <= _currOffset);
             }
 
-            ReadWriteData(false /* writing */, pbData, cbDataSize, 0, ref bufferOffset);
+            ReadWriteData(reading: false, pbData, cbDataSize, 0, ref bufferOffset);
         }
         
         /// <summary>
@@ -405,7 +405,7 @@ namespace System.Windows.Media
                 _chunkList.Add(chunk);
             }
 
-            ReadWriteData(false /* writing */, pbData, cbDataSize, _chunkList.Count-1, ref _currChunkOffset);
+            ReadWriteData(reading: false, pbData, cbDataSize, _chunkList.Count-1, ref _currChunkOffset);
 
             _currOffset = newOffset;
         }
@@ -756,7 +756,7 @@ namespace System.Windows.Media
 
         private bool _disposed;
         private int _currChunkOffset;
-        FrugalStructList<byte []> _chunkList;
+        private FrugalStructList<byte []> _chunkList;
         private int _currOffset;
         private MIL_PATHGEOMETRY _currentPathGeometryData;
         private MIL_PATHFIGURE _currentPathFigureData;
@@ -770,7 +770,7 @@ namespace System.Windows.Media
         private const int c_maxChunkSize = 1024*1024;
 
         [ThreadStatic]
-        static byte[] _pooledChunk;
+        private static byte[] _pooledChunk;
 
         #endregion Fields
     }

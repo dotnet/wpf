@@ -180,7 +180,7 @@ namespace System.Windows.Input
         // Returns the root visual of the containing element.
         internal static DependencyObject GetRootVisual(DependencyObject o)
         {
-            return GetRootVisual(o, true /* enable2DTo3DTransition */);
+            return GetRootVisual(o, enable2DTo3DTransition: true);
         }
         
         internal static DependencyObject GetRootVisual(DependencyObject o, bool enable2DTo3DTransition)
@@ -237,7 +237,7 @@ namespace System.Windows.Input
 
                 bool isUpSimple = false;
                 isUpSimple = vFrom.TrySimpleTransformToAncestor(rootFrom,
-                                                                false, /* do not apply inverse */
+                                                                inverse: false,
                                                                 out gUp,
                                                                 out mUp);               
                 if (isUpSimple)
@@ -306,7 +306,7 @@ namespace System.Windows.Input
                         }
 
                         bool isDownSimple = vToAsVisual.TrySimpleTransformToAncestor(rootTo,
-                                                                                     true, /* apply inverse */
+                                                                                     inverse: true,
                                                                                      out gDown,
                                                                                      out mDown);
 

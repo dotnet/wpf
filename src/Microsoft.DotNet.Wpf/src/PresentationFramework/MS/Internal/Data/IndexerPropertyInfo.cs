@@ -23,7 +23,7 @@ namespace MS.Internal.Data
             get { return _instance; }
         }
 
-        static readonly IndexerPropertyInfo _instance = new IndexerPropertyInfo();
+        private static readonly IndexerPropertyInfo _instance = new IndexerPropertyInfo();
 
         #region PropertyInfo overrides
 

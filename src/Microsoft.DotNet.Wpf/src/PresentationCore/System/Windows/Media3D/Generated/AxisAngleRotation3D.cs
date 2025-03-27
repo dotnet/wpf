@@ -23,9 +23,7 @@ using System.Windows.Media.Composition;
 
 namespace System.Windows.Media.Media3D
 {
-
-
-    sealed partial class AxisAngleRotation3D : Rotation3D
+    public sealed partial class AxisAngleRotation3D : Rotation3D
     {
         //------------------------------------------------------
         //

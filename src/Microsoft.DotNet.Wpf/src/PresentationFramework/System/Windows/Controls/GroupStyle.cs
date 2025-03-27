@@ -220,17 +220,16 @@ namespace System.Windows.Controls
         //
         //------------------------------------------------------
 
-        ItemsPanelTemplate      _panel;
-        Style                   _containerStyle;
-        StyleSelector           _containerStyleSelector;
-        DataTemplate            _headerTemplate;
-        DataTemplateSelector    _headerTemplateSelector;
-        string                  _headerStringFormat;
-        bool                    _hidesIfEmpty;
-        bool                    _isAlternationCountSet;
-        int                     _alternationCount;
-
-        static GroupStyle       s_DefaultGroupStyle;
+        private ItemsPanelTemplate      _panel;
+        private Style                   _containerStyle;
+        private StyleSelector           _containerStyleSelector;
+        private DataTemplate            _headerTemplate;
+        private DataTemplateSelector    _headerTemplateSelector;
+        private string                  _headerStringFormat;
+        private bool                    _hidesIfEmpty;
+        private bool                    _isAlternationCountSet;
+        private int                     _alternationCount;
+        private static GroupStyle       s_DefaultGroupStyle;
 
         /// <summary>The default panel template.</summary>
         internal static ItemsPanelTemplate DefaultStackPanel;

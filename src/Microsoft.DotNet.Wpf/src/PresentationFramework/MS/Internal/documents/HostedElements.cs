@@ -200,9 +200,9 @@ namespace System.Windows.Documents
 
         #region Private Fields
 
-        ReadOnlyCollection<TextSegment> _textSegments;
-        TextPointer _currentPosition;
-        int _currentTextSegment;
+        private ReadOnlyCollection<TextSegment> _textSegments;
+        private TextPointer _currentPosition;
+        private int _currentTextSegment;
 
         #endregion Private Fields
     }

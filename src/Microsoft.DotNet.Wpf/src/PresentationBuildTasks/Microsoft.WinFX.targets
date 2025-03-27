@@ -79,7 +79,7 @@
   <PropertyGroup>
         <!-- Add Markup compilation to the CoreCompileDependsOn so that the IDE inproc compilers (particularly VB)
              can "see" the generated source files. -->
-      <CoreCompileDependsOn Condition="'$(BuildingInsideVisualStudio)' == 'true' ">
+      <CoreCompileDependsOn Condition="'$(BuildingInsideVisualStudio)' == 'true' Or '$(DesignTimeBuild)' == 'true'">
           DesignTimeMarkupCompilation;
           $(CoreCompileDependsOn)
       </CoreCompileDependsOn>
@@ -88,7 +88,7 @@
 
   <Target Name="DesignTimeMarkupCompilation">
         <!-- Only if we are not actually performing a compile i.e. we are in design mode -->
-        <CallTarget Condition="'$(BuildingProject)' != 'true' Or $(DesignTimeBuild) == 'true'"
+        <CallTarget Condition="'$(BuildingProject)' != 'true' Or '$(DesignTimeBuild)' == 'true'"
                 Targets="MarkupCompilePass1" />
   </Target>
 
@@ -205,7 +205,7 @@
         -->
         <PropertyGroup>
             <_IntellisenseOnlyCompile>false</_IntellisenseOnlyCompile>
-            <_IntellisenseOnlyCompile Condition="'$(BuildingProject)' != 'true'">true</_IntellisenseOnlyCompile>
+            <_IntellisenseOnlyCompile Condition="'$(BuildingProject)' != 'true' Or '$(DesignTimeBuild)' == 'true'">true</_IntellisenseOnlyCompile>
         </PropertyGroup>
 
         <MarkupCompilePass1

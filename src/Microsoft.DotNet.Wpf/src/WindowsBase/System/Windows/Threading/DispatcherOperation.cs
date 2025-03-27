@@ -696,9 +696,9 @@ namespace System.Windows.Threading
         private Exception _exception;
 
         internal PriorityItem<DispatcherOperation> _item; // The Dispatcher sets this when it enques/deques the item.
-        
-        EventHandler _aborted;
-        EventHandler _completed;
+
+        private EventHandler _aborted;
+        private EventHandler _completed;
 
         internal readonly DispatcherOperationTaskSource _taskSource; // also used from Dispatcher
         private readonly bool _useAsyncSemantics;

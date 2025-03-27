@@ -547,8 +547,8 @@ namespace System.Windows.Automation.Peers
                 }
             }
 
-            ItemsControlAutomationPeer _peer;
-            ItemPeersStorage<ItemAutomationPeer> _oldChildren;
+            private ItemsControlAutomationPeer _peer;
+            private ItemPeersStorage<ItemAutomationPeer> _oldChildren;
         }
     }
 
@@ -775,9 +775,9 @@ namespace System.Windows.Automation.Peers
             }
         }
 
-        ItemsControl _itemsControl;
-        DependencyObject _container;
-        object _item;
+        private ItemsControl _itemsControl;
+        private DependencyObject _container;
+        private object _item;
     }
 }
 

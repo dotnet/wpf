@@ -116,7 +116,7 @@ namespace System.Windows.Media
 
         #region Data members
 
-        SafeProfileHandle _profileHandle;
+        private SafeProfileHandle _profileHandle;
 
         #endregion
     }

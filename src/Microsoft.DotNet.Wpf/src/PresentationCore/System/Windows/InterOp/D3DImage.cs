@@ -717,8 +717,7 @@ namespace System.Windows.Interop
                 channel.SendCommand(
                     (byte*)&data,
                     sizeof(DUCE.MILCMD_D3DIMAGE_PRESENT),
-                    true /* sendInSeparateBatch */
-                    );
+                    sendInSeparateBatch: true);
             }
 
             _isDirty = false;
@@ -805,8 +804,7 @@ namespace System.Windows.Interop
                     channel.SendCommand(
                         (byte*)&data,
                         sizeof(DUCE.MILCMD_D3DIMAGE),
-                        false /* sendInSeparateBatch */
-                        );
+                        sendInSeparateBatch: false);
                 }
 
                 // Presents only happen on the async channel so don't let RTB flip this bit
@@ -824,7 +822,7 @@ namespace System.Windows.Interop
             {
                 AddRefOnChannelAnimations(channel);
 
-                UpdateResource(channel, true /* skip "on channel" check - we already know that we're on channel */ );
+                UpdateResource(channel, skipOnChannelCheck: true /* We already know that we're on channel */ );
                 
                 // If we are being put onto the asynchronous compositor channel in
                 // a dirty state, we need to subscribe to the commit batch event.

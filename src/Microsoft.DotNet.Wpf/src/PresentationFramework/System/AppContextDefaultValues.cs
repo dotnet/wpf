@@ -32,6 +32,7 @@ namespace System
             LocalAppContext.DefineSwitchDefault(FrameworkAppContextSwitches.KeyboardNavigationFromHyperlinkInItemsControlIsNotRelativeToFocusedElementSwitchName, false);
             LocalAppContext.DefineSwitchDefault(FrameworkAppContextSwitches.ItemAutomationPeerKeepsItsItemAliveSwitchName, false);
             LocalAppContext.DefineSwitchDefault(FrameworkAppContextSwitches.DisableFluentThemeWindowBackdropSwitchName, false);
+            LocalAppContext.DefineSwitchDefault(FrameworkAppContextSwitches.DisableDynamicResourceOptimizationSwitchName, true);
 
 #pragma warning restore CS0436 // Type conflicts with imported type
         }

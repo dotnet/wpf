@@ -1194,11 +1194,11 @@ namespace System.Windows.Automation
         //  Private Methods
         //
         //------------------------------------------------------
- 
+
         #region Private Methods
 
         // Lookup a cached AutomationPattern or AutomationProperty
-        object LookupCachedValue(AutomationIdentifier id, bool throwIfNotRequested, bool wrap)
+        private object LookupCachedValue(AutomationIdentifier id, bool throwIfNotRequested, bool wrap)
         {
             if (_cachedValues == null)
             {

@@ -16,7 +16,7 @@ using MS.Win32;
 namespace MS.Internal.AutomationProxies
 {
     // This class represents ListBox and ListBox with check buttons.
-    class WindowsListBox: ProxyHwnd, ISelectionProvider
+    internal class WindowsListBox: ProxyHwnd, ISelectionProvider
     {
         // ------------------------------------------------------
         //
@@ -641,7 +641,7 @@ namespace MS.Internal.AutomationProxies
         #region ListBoxItem
 
         // Summary description for WindowsListboxItem.
-        class ListboxItem : ProxySimple, ISelectionItemProvider, IScrollItemProvider, IToggleProvider
+        private class ListboxItem : ProxySimple, ISelectionItemProvider, IScrollItemProvider, IToggleProvider
         {
             // ------------------------------------------------------
             //

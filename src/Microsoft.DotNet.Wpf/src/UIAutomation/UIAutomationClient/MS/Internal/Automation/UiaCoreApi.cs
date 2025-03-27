@@ -41,7 +41,7 @@ namespace MS.Internal.Automation
         [StructLayout(LayoutKind.Sequential)]
         internal struct UiaCondition
         {
-            ConditionType _conditionType;
+            private ConditionType _conditionType;
 
             internal UiaCondition(ConditionType conditionType)
             {
@@ -52,11 +52,11 @@ namespace MS.Internal.Automation
         [StructLayout(LayoutKind.Sequential)]
         internal struct UiaPropertyCondition
         {
-            ConditionType _conditionType;
-            int _propertyId;
+            private ConditionType _conditionType;
+            private int _propertyId;
             [MarshalAs(UnmanagedType.Struct)] // UnmanagedType.Struct == use VARIANT
-            object _value;
-            PropertyConditionFlags _flags;
+            private object _value;
+            private PropertyConditionFlags _flags;
 
             internal UiaPropertyCondition(int propertyId, object value, PropertyConditionFlags flags)
             {
@@ -70,7 +70,7 @@ namespace MS.Internal.Automation
         [StructLayout(LayoutKind.Sequential)]
         internal struct UiaAndOrCondition
         {
-            ConditionType _conditionType;
+            private ConditionType _conditionType;
             public IntPtr _conditions; // ptr to array-of-ptrs to conditions
             public int _conditionCount;
 
@@ -85,7 +85,7 @@ namespace MS.Internal.Automation
         [StructLayout(LayoutKind.Sequential)]
         internal struct UiaNotCondition
         {
-            ConditionType _conditionType;
+            private ConditionType _conditionType;
             public IntPtr _condition;
 
             internal UiaNotCondition(IntPtr condition)
@@ -1553,7 +1553,7 @@ namespace MS.Internal.Automation
         [DllImport(DllImport.UIAutomationCore, CharSet = CharSet.Unicode)]
         private static extern void UiaRegisterProviderCallback(UiaProviderCallback pCallback);
 
-        static GCHandle _gchandle;
+        private static GCHandle _gchandle;
 
         static UiaCoreApi()
         {

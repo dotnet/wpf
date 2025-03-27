@@ -25,9 +25,7 @@ using System.Windows.Media.Converters;
 
 namespace System.Windows.Media
 {
-
-
-    abstract partial class TileBrush : Brush
+    public abstract partial class TileBrush : Brush
     {
         //------------------------------------------------------
         //

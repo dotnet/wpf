@@ -172,7 +172,7 @@ namespace MS.Internal.Data
 
         // Change the status to the new status.  Return true if this is allowed.
         // Do it all atomically.
-        bool ChangeStatus(AsyncRequestStatus newStatus)
+        private bool ChangeStatus(AsyncRequestStatus newStatus)
         {
             bool allowChange = false;
 
@@ -208,16 +208,14 @@ namespace MS.Internal.Data
         //
         //------------------------------------------------------
 
-        AsyncRequestStatus _status;
-        object _result;
-        object _bindingState;
-        object[] _args;
-        Exception _exception;
-
-        AsyncRequestCallback _workCallback;
-        AsyncRequestCallback _completedCallback;
-
-        readonly object SyncRoot = new object();     // for synchronization
+        private AsyncRequestStatus _status;
+        private object _result;
+        private object _bindingState;
+        private object[] _args;
+        private Exception _exception;
+        private AsyncRequestCallback _workCallback;
+        private AsyncRequestCallback _completedCallback;
+        private readonly object SyncRoot = new object();     // for synchronization
     }
 
 
@@ -264,8 +262,8 @@ namespace MS.Internal.Data
         //
         //------------------------------------------------------
 
-        object _item;
-        string _propertyName;
+        private object _item;
+        private string _propertyName;
     }
 
 
@@ -317,9 +315,9 @@ namespace MS.Internal.Data
         //
         //------------------------------------------------------
 
-        object _item;
-        string _propertyName;
-        object _value;
+        private object _item;
+        private string _propertyName;
+        private object _value;
     }
 }
 

@@ -27,7 +27,7 @@ namespace System.Windows.Media.Media3D
     [Serializable]
     [TypeConverter(typeof(Point4DConverter))]
     [ValueSerializer(typeof(Point4DValueSerializer))] // Used by MarkupWriter
-    partial struct Point4D : IFormattable
+    public partial struct Point4D : IFormattable
     {
         //------------------------------------------------------
         //

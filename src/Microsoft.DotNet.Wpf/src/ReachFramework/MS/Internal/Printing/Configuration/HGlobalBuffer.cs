@@ -15,7 +15,7 @@ namespace MS.Internal.Printing.Configuration
     /// <summary>
     /// An HGlobal allocated buffer that knows its byte length
     /// </summary>
-    sealed class HGlobalBuffer
+    internal sealed class HGlobalBuffer
     {
         public static HGlobalBuffer Null = new HGlobalBuffer();
 

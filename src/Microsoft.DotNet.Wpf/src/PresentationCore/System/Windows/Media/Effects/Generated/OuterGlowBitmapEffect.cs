@@ -18,9 +18,7 @@ using System.Windows.Media.Imaging;
 
 namespace System.Windows.Media.Effects
 {
-
-
-    sealed partial class OuterGlowBitmapEffect : BitmapEffect
+    public sealed partial class OuterGlowBitmapEffect : BitmapEffect
     {
         //------------------------------------------------------
         //

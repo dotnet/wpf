@@ -870,8 +870,7 @@ namespace System.Windows.Xps.Serialization
             }
         }
 
-        private
-        BatchOperationType  _type;
-        Object              _serializedObject;
+        private BatchOperationType  _type;
+        private Object _serializedObject;
     };
 }

@@ -12,7 +12,7 @@ namespace System.Xaml.Schema
     [DebuggerDisplay("{ToString()}")]
     public class XamlTypeName
     {
-        List<XamlTypeName> _typeArguments;
+        private List<XamlTypeName> _typeArguments;
 
         public string Name { get; set; }
         public string Namespace { get; set; }
@@ -148,16 +148,14 @@ namespace System.Xaml.Schema
             }
         }
 
-        internal static string ConvertListToStringInternal(IList<XamlTypeName> typeNameList,
-            Func<string, string> prefixGenerator)
+        internal static string ConvertListToStringInternal(IList<XamlTypeName> typeNameList, Func<string, string> prefixGenerator)
         {
             StringBuilder result = new StringBuilder();
             ConvertListToStringInternal(result, typeNameList, prefixGenerator);
             return result.ToString();
         }
 
-        internal static void ConvertListToStringInternal(StringBuilder result, IList<XamlTypeName> typeNameList,
-            Func<string, string> prefixGenerator)
+        internal static void ConvertListToStringInternal(StringBuilder result, IList<XamlTypeName> typeNameList, Func<string, string> prefixGenerator)
         {
             bool first = true;
             foreach (XamlTypeName typeName in typeNameList)
@@ -188,8 +186,7 @@ namespace System.Xaml.Schema
             return xamlTypeName;
         }
 
-        internal static IList<XamlTypeName> ParseListInternal(string typeNameList,
-            Func<string, string> prefixResolver, out string error)
+        internal static IList<XamlTypeName> ParseListInternal(string typeNameList, Func<string, string> prefixResolver, out string error)
         {
             GenericTypeNameParser nameParser = new GenericTypeNameParser(prefixResolver);
             IList<XamlTypeName> xamlTypeName = nameParser.ParseList(typeNameList, out error);
@@ -239,8 +236,7 @@ namespace System.Xaml.Schema
             if (HasTypeArgs)
             {
                 // The subscript goes after the type args
-                string subscript;
-                string name = GenericTypeNameScanner.StripSubscript(Name, out subscript);
+                ReadOnlySpan<char> name = GenericTypeNameScanner.StripSubscript(Name, out ReadOnlySpan<char> subscript);
                 result.Append(name);
 
                 result.Append('(');

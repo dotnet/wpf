@@ -140,7 +140,7 @@ namespace System.Windows.Media.Effects
             return _imageEffectEmulation;
         }        
 
-        DropShadowEffect _imageEffectEmulation;
+        private DropShadowEffect _imageEffectEmulation;
 
         private const double _MAX_EMULATED_BLUR_RADIUS = 25.0;
     }

@@ -14,7 +14,7 @@ using MS.Win32;
 
 namespace MS.Internal.AutomationProxies
 {
-    class WindowsTreeView : ProxyHwnd, ISelectionProvider
+    internal class WindowsTreeView : ProxyHwnd, ISelectionProvider
     {
         // ------------------------------------------------------
         //
@@ -705,7 +705,7 @@ namespace MS.Internal.AutomationProxies
         #region TreeViewItem
 
         // Summary description for TreeViewItem.
-        class TreeViewItem : ProxyFragment, ISelectionItemProvider, IExpandCollapseProvider, IValueProvider, IToggleProvider, IScrollItemProvider, IInvokeProvider
+        private class TreeViewItem : ProxyFragment, ISelectionItemProvider, IExpandCollapseProvider, IValueProvider, IToggleProvider, IScrollItemProvider, IInvokeProvider
         {
             // ------------------------------------------------------
             //

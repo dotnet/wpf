@@ -18,7 +18,7 @@ using System.Windows.Media.Animation;
 
 namespace System.Windows
 {
-    partial class ContentElement : IAnimatable
+    public partial class ContentElement : IAnimatable
     {
         static private readonly Type _typeofThis = typeof(ContentElement);
 

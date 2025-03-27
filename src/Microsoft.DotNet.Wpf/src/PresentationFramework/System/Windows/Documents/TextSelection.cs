@@ -2781,7 +2781,7 @@ namespace System.Windows.Documents
         // Flag set true after scheduling a callback to UpdateCaretStateWorker.
         // Used to prevent unbounded callback allocations on the Dispatcher queue --
         // we fold redundant update requests into a single queue item.
-        bool _pendingUpdateCaretStateCallback;
+        private bool _pendingUpdateCaretStateCallback;
 
         #endregion Private Fields
     }

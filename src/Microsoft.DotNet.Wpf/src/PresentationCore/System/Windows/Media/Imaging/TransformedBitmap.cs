@@ -70,7 +70,7 @@ namespace System.Windows.Media.Imaging
             WritePreamble();
             _bitmapInit.EndInit();
 
-            IsValidForFinalizeCreation(/* throwIfInvalid = */ true);
+            IsValidForFinalizeCreation(throwIfInvalid: true);
             FinalizeCreation();
         }
 

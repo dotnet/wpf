@@ -51,7 +51,7 @@ namespace MS.Utility
         Hashtable
     }
 
-    abstract class FrugalMapBase
+    internal abstract class FrugalMapBase
     {
         public abstract FrugalMapStoreState InsertEntry(int key, Object value);
 

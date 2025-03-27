@@ -485,7 +485,7 @@ namespace Microsoft.Windows.Controls.Ribbon
 
         // Packed boolean information
         private BitVector32 _bits = new BitVector32(0);
-        Image _image = null;
+        private Image _image = null;
 
         private const string ImageTemplatePart = "PART_Image";
 

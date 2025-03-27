@@ -2099,7 +2099,7 @@ namespace System.Windows.Controls
                     }
                     else
                     {
-                        throw new InvalidOperationException(SR.Format(SR.InvalidItemContainer, this.GetType().Name, typeof(MenuItem).Name, typeof(Separator).Name, itemContainer));
+                        throw new InvalidOperationException(SR.Format(SR.InvalidItemContainer, this.GetType().Name, nameof(MenuItem), nameof(Separator), itemContainer));
                     }
                 }
             }
@@ -2695,9 +2695,8 @@ namespace System.Windows.Controls
 
         private MenuItem _currentSelection;
         private Popup _submenuPopup;
-
-        DispatcherTimer _openHierarchyTimer;
-        DispatcherTimer _closeHierarchyTimer;
+        private DispatcherTimer _openHierarchyTimer;
+        private DispatcherTimer _closeHierarchyTimer;
 
         private bool _userInitiatedPress;
         #endregion

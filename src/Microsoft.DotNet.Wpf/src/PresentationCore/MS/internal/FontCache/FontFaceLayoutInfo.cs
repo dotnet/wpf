@@ -38,9 +38,9 @@ namespace MS.Internal.FontCache
         private byte[] _gpos;
         private byte[] _gdef;
 
-        Text.TextInterface.Font _font;
+        private Text.TextInterface.Font _font;
 
-        ushort _blankGlyphIndex;
+        private ushort _blankGlyphIndex;
 
         
         //------------------------------------------------------

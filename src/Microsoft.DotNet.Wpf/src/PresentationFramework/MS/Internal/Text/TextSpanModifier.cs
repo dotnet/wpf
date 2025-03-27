@@ -170,8 +170,8 @@ namespace MS.Internal.Text
 
         private class MergedTextRunProperties : TextRunProperties
         {
-            TextRunProperties _runProperties;
-            TextDecorationCollection _textDecorations;
+            private TextRunProperties _runProperties;
+            private TextDecorationCollection _textDecorations;
 
             internal MergedTextRunProperties(
                 TextRunProperties runProperties, 

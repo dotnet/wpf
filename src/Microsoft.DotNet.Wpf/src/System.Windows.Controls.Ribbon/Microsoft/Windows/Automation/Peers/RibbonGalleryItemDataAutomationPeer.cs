@@ -149,12 +149,12 @@ namespace Microsoft.Windows.Automation.Peers
                 return null;
             }
         }
-        
+
         #endregion
 
         #region data
 
-        RibbonGalleryCategoryDataAutomationPeer _parentCategoryDataAutomationPeer;
+        private RibbonGalleryCategoryDataAutomationPeer _parentCategoryDataAutomationPeer;
 
         #endregion
 

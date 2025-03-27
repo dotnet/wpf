@@ -670,7 +670,7 @@ namespace System.Windows.Automation.Peers
             Date = date;
         }
 
-       CalendarMode ButtonMode;
-       DateTime Date;
+        private CalendarMode ButtonMode;
+        private DateTime Date;
     }
 }

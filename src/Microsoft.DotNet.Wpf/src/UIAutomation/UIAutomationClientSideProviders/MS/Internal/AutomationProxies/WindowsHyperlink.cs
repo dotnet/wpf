@@ -14,7 +14,7 @@ using MS.Win32;
 namespace MS.Internal.AutomationProxies
 {
     // Implementation of the Hyperlink (SysLink) proxy.
-    class WindowsHyperlink: ProxyHwnd
+    internal class WindowsHyperlink: ProxyHwnd
     {
         // ------------------------------------------------------
         //
@@ -23,8 +23,8 @@ namespace MS.Internal.AutomationProxies
         // ------------------------------------------------------
 
         #region Constructors
-        
-        WindowsHyperlink (IntPtr hwnd, ProxyFragment parent, int item)
+
+        private WindowsHyperlink (IntPtr hwnd, ProxyFragment parent, int item)
             : base( hwnd, parent, item)
         {
             // Set the strings to return properly the properties.
@@ -340,7 +340,7 @@ namespace MS.Internal.AutomationProxies
     //------------------------------------------------------
 
     // Implementation of the PAW WindowsHyperlinkItem (SysLink) proxy.
-    class WindowsHyperlinkItem : ProxySimple, IInvokeProvider
+    internal class WindowsHyperlinkItem : ProxySimple, IInvokeProvider
     {
         // ------------------------------------------------------
         //

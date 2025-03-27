@@ -17,13 +17,12 @@ namespace MS.Internal.Xaml.Context
         private XamlContextStack<ObjectWriterFrame> _stack;
 
         private object _rootInstance;
-
-        ServiceProviderContext _serviceProviderContext;
-        XamlRuntime _runtime;
-        int _savedDepth;     // The depth of the "saved" part this context is based on.
-        bool _nameResolutionComplete;
-        XamlObjectWriterSettings _settings;
-        List<NameScopeInitializationCompleteSubscriber> _nameScopeInitializationCompleteSubscribers;
+        private ServiceProviderContext _serviceProviderContext;
+        private XamlRuntime _runtime;
+        private int _savedDepth;     // The depth of the "saved" part this context is based on.
+        private bool _nameResolutionComplete;
+        private XamlObjectWriterSettings _settings;
+        private List<NameScopeInitializationCompleteSubscriber> _nameScopeInitializationCompleteSubscribers;
 
         public ObjectWriterContext(XamlSavedContext savedContext,
             XamlObjectWriterSettings settings, XAML3.INameScope rootNameScope, XamlRuntime runtime)
@@ -39,7 +38,7 @@ namespace MS.Internal.Xaml.Context
             BaseUri = savedContext.BaseUri;
             // If the bottom of the stack is a (no XamlType) Value (reparse) then back-up onto it.
             // Otherwise add a blank frame to isolate template use from the saved context.
-            switch(savedContext.SaveContextType)
+            switch (savedContext.SaveContextType)
             {
             case SavedContextType.Template:
                 // Templates always need a root namescope, to isolate them from the rest of the doc
@@ -1048,7 +1047,7 @@ namespace MS.Internal.Xaml.Context
 
         internal class NameScopeInitializationCompleteSubscriber
         {
-            List<XAML3.INameScopeDictionary> _nameScopeDictionaryList = new List<XAML3.INameScopeDictionary>();
+            private List<XAML3.INameScopeDictionary> _nameScopeDictionaryList = new List<XAML3.INameScopeDictionary>();
 
             public EventHandler Handler
             {
@@ -1063,7 +1062,7 @@ namespace MS.Internal.Xaml.Context
 
         private class StackWalkNameResolver : IXamlNameResolver
         {
-            List<XAML3.INameScopeDictionary> _nameScopeDictionaryList;
+            private List<XAML3.INameScopeDictionary> _nameScopeDictionaryList;
 
             public StackWalkNameResolver(List<XAML3.INameScopeDictionary> nameScopeDictionaryList)
             {

@@ -102,7 +102,7 @@ namespace System.Windows.Media.Animation
         }
     }
 
-    TimeSpan       _offset = TimeSpan.Zero;
-    TimeSeekOrigin _origin = TimeSeekOrigin.BeginTime;
+        private TimeSpan       _offset = TimeSpan.Zero;
+        private TimeSeekOrigin _origin = TimeSeekOrigin.BeginTime;
 }
 }

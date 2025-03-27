@@ -204,11 +204,11 @@ namespace System.Windows.Input.StylusPlugIns
 
         /////////////////////////////////////////////////////////////////////
 
-        RawStylusInputReport    _report;
-        GeneralTransform        _tabletToElementTransform;
-        StylusPlugInCollection  _targetPlugInCollection;
-        StylusPointCollection   _stylusPoints;
-        StylusPlugIn            _currentNotifyPlugIn;
-        RawStylusInputCustomDataList    _customData;
-}
+        private RawStylusInputReport    _report;
+        private GeneralTransform        _tabletToElementTransform;
+        private StylusPlugInCollection  _targetPlugInCollection;
+        private StylusPointCollection   _stylusPoints;
+        private StylusPlugIn            _currentNotifyPlugIn;
+        private RawStylusInputCustomDataList _customData;
+    }
 }

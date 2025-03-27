@@ -14,27 +14,24 @@ namespace MS.Internal.Xaml
 {
     internal class NodeStreamSorter: IEnumerator<XamlNode>
     {
-        XamlParserContext _context;
-        XamlXmlReaderSettings _settings;
-        IEnumerator<XamlNode> _source;
-        Queue<XamlNode> _buffer;
-        XamlNode _current;
+        private XamlParserContext _context;
+        private XamlXmlReaderSettings _settings;
+        private IEnumerator<XamlNode> _source;
+        private Queue<XamlNode> _buffer;
+        private XamlNode _current;
+        private ReorderInfo[] _sortingInfoArray;
+        private XamlNode[] _originalNodesInOrder;
+        private Dictionary<string, string> _xmlnsDictionary;
 
-        ReorderInfo[] _sortingInfoArray;
-        XamlNode[] _originalNodesInOrder;
-
-        Dictionary<string, string> _xmlnsDictionary;
-
-        class SeenCtorDirectiveFlags
+        private class SeenCtorDirectiveFlags
         {
             public bool SeenInstancingProperty;
             public bool SeenOutOfOrderCtorDirective;
         }
 
-        List<SeenCtorDirectiveFlags> _seenStack = new List<SeenCtorDirectiveFlags>();
-        int _startObjectDepth;
-
-        List<int> _moveList;
+        private List<SeenCtorDirectiveFlags> _seenStack = new List<SeenCtorDirectiveFlags>();
+        private int _startObjectDepth;
+        private List<int> _moveList;
 
         private void InitializeObjectFrameStack()
         {
@@ -50,7 +47,7 @@ namespace MS.Internal.Xaml
         private void StartObjectFrame()
         {
             _startObjectDepth += 1;
-            if(_seenStack.Count <=_startObjectDepth)
+            if (_seenStack.Count <=_startObjectDepth)
             {
                 _seenStack.Add(new SeenCtorDirectiveFlags());
             }
@@ -64,19 +61,19 @@ namespace MS.Internal.Xaml
             _startObjectDepth -= 1;
         }
 
-        bool HaveSeenInstancingProperty
+        private bool HaveSeenInstancingProperty
         {
             get { return _seenStack[_startObjectDepth].SeenInstancingProperty; }
             set { _seenStack[_startObjectDepth].SeenInstancingProperty = value; }
         }
 
-        bool HaveSeenOutOfOrderCtorDirective
+        private bool HaveSeenOutOfOrderCtorDirective
         {
             get { return _seenStack[_startObjectDepth].SeenOutOfOrderCtorDirective; }
             set { _seenStack[_startObjectDepth].SeenOutOfOrderCtorDirective = value; }
         }
 
-        struct ReorderInfo
+        private struct ReorderInfo
         {
             public int Depth { get; set; }
             public int OriginalOrderIndex { get; set; }
@@ -277,7 +274,7 @@ namespace MS.Internal.Xaml
             // then dig in and correct the stream.
             //
             // if (HaveSeenOutOfOrderCtorDirective)
-            if(_moveList is not null)
+            if (_moveList is not null)
             {
                 SortContentsOfReadAheadBuffer();
             }
@@ -616,9 +613,9 @@ namespace MS.Internal.Xaml
             end = current;
             int originalIdx = _sortingInfoArray[current].OriginalOrderIndex;
             XamlMember nextMember = _originalNodesInOrder[originalIdx].Member;
-            while(!IsInstancingMember(nextMember))
+            while (!IsInstancingMember(nextMember))
             {
-                if(!AdvanceTo(current, XamlNodeType.StartMember, depth, out end))
+                if (!AdvanceTo(current, XamlNodeType.StartMember, depth, out end))
                 {
                     return false;
                 }
@@ -708,7 +705,7 @@ namespace MS.Internal.Xaml
             {
                 XamlNodeType currentNodeType = _sortingInfoArray[idx].XamlNodeType;
                 int nodeDepth = _sortingInfoArray[idx].Depth;
-                if(nodeDepth == searchDepth)
+                if (nodeDepth == searchDepth)
                 {
                     if (currentNodeType == nodeType)
                     {

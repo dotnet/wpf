@@ -2339,7 +2339,7 @@ namespace System.Windows.Documents
                 get { return _ranges[0]; }
             }
 
-            static readonly DoublePropertyRange[] _ranges = new DoublePropertyRange[]
+            private static readonly DoublePropertyRange[] _ranges = new DoublePropertyRange[]
             { 
                 // 1st entry is the default value range for properties not having explicit ranges specified here.
                 new DoublePropertyRange(null, 0, double.MaxValue),

@@ -384,7 +384,7 @@ namespace System.Windows
         private static readonly object Synchronized = new object();
 
         // Conditions
-        TriggerCondition[] _triggerConditions;
+        private TriggerCondition[] _triggerConditions;
 
         // Fields to implement DO's inheritance context
         private DependencyObject _inheritanceContext = null;

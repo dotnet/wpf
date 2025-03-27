@@ -9,10 +9,10 @@ using System.Xaml.Schema;
 
 namespace MS.Internal.Xaml.Parser
 {
-    class GenericTypeNameParser
+    internal class GenericTypeNameParser
     {
         [Serializable]
-        class TypeNameParserException : Exception
+        private class TypeNameParserException : Exception
         {
             public TypeNameParserException(string message)
                 : base(message)
@@ -28,7 +28,7 @@ namespace MS.Internal.Xaml.Parser
         private GenericTypeNameScanner _scanner;
         private string _inputText;
         private Func<string, string> _prefixResolver;
-        Stack<TypeNameFrame> _stack;
+        private Stack<TypeNameFrame> _stack;
 
         public GenericTypeNameParser(Func<string, string> prefixResolver)
         {
@@ -261,7 +261,7 @@ namespace MS.Internal.Xaml.Parser
             _stack.Push(frame);
         }
 
-        void Callout_FoundName(string prefix, string name)
+        private void Callout_FoundName(string prefix, string name)
         {
             TypeNameFrame frame = new TypeNameFrame
             {
@@ -272,7 +272,7 @@ namespace MS.Internal.Xaml.Parser
             _stack.Push(frame);
         }
 
-        void Callout_EndOfType()
+        private void Callout_EndOfType()
         {
             TypeNameFrame frame = _stack.Pop();
             XamlTypeName typeName = new XamlTypeName(frame.Namespace, frame.Name, frame.TypeArgs);
@@ -286,7 +286,7 @@ namespace MS.Internal.Xaml.Parser
             frame.TypeArgs.Add(typeName);
         }
 
-        void Callout_Subscript(string subscript)
+        private void Callout_Subscript(string subscript)
         {
             TypeNameFrame frame = _stack.Peek();
             frame.Name += subscript;
@@ -323,9 +323,9 @@ namespace MS.Internal.Xaml.Parser
         }
     }
 
-    class TypeNameFrame
+    internal class TypeNameFrame
     {
-        List<XamlTypeName> _typeArgs;
+        private List<XamlTypeName> _typeArgs;
 
         public string Namespace { get; set; }
         public string Name { get; set; }

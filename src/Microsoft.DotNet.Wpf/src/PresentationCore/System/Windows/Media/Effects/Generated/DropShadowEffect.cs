@@ -18,9 +18,7 @@ using System.Windows.Media.Imaging;
 
 namespace System.Windows.Media.Effects
 {
-
-
-    sealed partial class DropShadowEffect : Effect
+    public sealed partial class DropShadowEffect : Effect
     {
         //------------------------------------------------------
         //

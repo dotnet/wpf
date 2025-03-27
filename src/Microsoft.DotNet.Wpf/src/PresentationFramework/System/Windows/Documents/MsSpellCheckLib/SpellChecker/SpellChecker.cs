@@ -259,7 +259,7 @@ namespace System.Windows.Documents
                 return callSucceeded ? id : null;
             }
 
-            string GetId(bool suppressCOMExceptions = true)
+            private string GetId(bool suppressCOMExceptions = true)
             {
                 return _disposed ? null : GetIdImplWithRetries(suppressCOMExceptions);
             }
@@ -648,7 +648,7 @@ namespace System.Windows.Documents
             private string _languageTag;
 
             // Change notification related fields
-            SpellCheckerChangedEventHandler _spellCheckerChangedEventHandler;
+            private SpellCheckerChangedEventHandler _spellCheckerChangedEventHandler;
             private uint? _eventCookie = null;
             private event EventHandler<SpellCheckerChangedEventArgs> _changed;
 
@@ -660,7 +660,7 @@ namespace System.Windows.Documents
                 public bool HasErrors { get { return Item2; } }
             }
             private List<HasErrorsResult> _hasErrorsCache;
-            const int HasErrorsCacheCapacity = 10;      // cache the most recent 10 results
+            private const int HasErrorsCacheCapacity = 10;      // cache the most recent 10 results
 
             private bool _disposed = false;
 

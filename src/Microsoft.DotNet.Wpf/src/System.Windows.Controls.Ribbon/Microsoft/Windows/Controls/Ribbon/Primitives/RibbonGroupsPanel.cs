@@ -25,11 +25,11 @@ namespace Microsoft.Windows.Controls.Ribbon.Primitives
         #region Fields
 
         private double _cachedRemainingSpace; // A cached copy of the remaining space from the previous layout pass.
-        WeakHashSet<IProvideStarLayoutInfo> _registeredStarLayoutProviders = new WeakHashSet<IProvideStarLayoutInfo>();
-        double _nextGroupIncreaseWidth = double.NaN;
-        int _cachedChildCount = 0;
-        WeakDictionary<RibbonGroup, double> _changedWidthGroups = new WeakDictionary<RibbonGroup, double>();
-        bool _processGroupWidthChangeQueued = false;
+        private WeakHashSet<IProvideStarLayoutInfo> _registeredStarLayoutProviders = new WeakHashSet<IProvideStarLayoutInfo>();
+        private double _nextGroupIncreaseWidth = double.NaN;
+        private int _cachedChildCount = 0;
+        private WeakDictionary<RibbonGroup, double> _changedWidthGroups = new WeakDictionary<RibbonGroup, double>();
+        private bool _processGroupWidthChangeQueued = false;
 
         #endregion
 

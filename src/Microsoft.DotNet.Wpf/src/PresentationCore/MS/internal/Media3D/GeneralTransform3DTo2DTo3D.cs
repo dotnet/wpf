@@ -159,8 +159,8 @@ namespace MS.Internal.Media3D
             _transform2DTo3D = transform._transform2DTo3D;
         }
 
-        GeneralTransform3DTo2D _transform3DTo2D;
-        GeneralTransform2DTo3D _transform2DTo3D;
+        private GeneralTransform3DTo2D _transform3DTo2D;
+        private GeneralTransform2DTo3D _transform2DTo3D;
     } 
 }
 

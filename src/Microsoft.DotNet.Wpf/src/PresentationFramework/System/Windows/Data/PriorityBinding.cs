@@ -127,12 +127,12 @@ public class PriorityBinding : BindingBase, IAddChild
         CheckSealed();
     }
 
-    //------------------------------------------------------
-    //
-    //  Private Fields
-    //
-    //------------------------------------------------------
+        //------------------------------------------------------
+        //
+        //  Private Fields
+        //
+        //------------------------------------------------------
 
-    BindingCollection       _bindingCollection;
+        private BindingCollection       _bindingCollection;
 }
 }

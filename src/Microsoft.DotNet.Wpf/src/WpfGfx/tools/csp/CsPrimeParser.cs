@@ -98,7 +98,7 @@ namespace MS.Internal.Csp
         //------------------------------------------------------
 
         #region Internal Properties
-        string Result
+        private string Result
         {
             get
             {
@@ -511,7 +511,7 @@ namespace MS.Internal.Csp
 
         // The output C# code
         private StringBuilder _stringBuilder;
-        bool _inMiddleOfOutputLine;
+        private bool _inMiddleOfOutputLine;
         #endregion Private Fields
     }
 }

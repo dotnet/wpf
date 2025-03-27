@@ -456,10 +456,10 @@ namespace System.Windows.Controls
         //
         //------------------------------------------------------
 
-        ItemContainerGenerator _generator;
+        private ItemContainerGenerator _generator;
         private Panel _itemsHost;
-        FrameworkElement _header;
-        Expander _expander;
+        private FrameworkElement _header;
+        private Expander _expander;
 
         internal static readonly UncommonField<bool> MustDisableVirtualizationField = new UncommonField<bool>();
         internal static readonly UncommonField<bool> InBackgroundLayoutField = new UncommonField<bool>();

@@ -37,11 +37,11 @@ namespace Microsoft.Internal.AlphaFlattener
 
     internal class SegmentTree
     {
-        double _min;
-        double _max;
-        SegmentTree _left;
-        SegmentTree _right;
-        List<int> _sList;
+        private double _min;
+        private double _max;
+        private SegmentTree _left;
+        private SegmentTree _right;
+        private List<int> _sList;
 
         /// <summary>
         /// Build a balanced Segment Tree from a sorted intersection list
@@ -143,7 +143,7 @@ namespace Microsoft.Internal.AlphaFlattener
         protected Coordinate[] _yCoord;  // = null;
         protected int          _yCount;  // = 0;
 
-        static Coordinate[] RemoveDuplication(Coordinate[] values)
+        private static Coordinate[] RemoveDuplication(Coordinate[] values)
         {
             int last = 0;
             int len = values.Length;

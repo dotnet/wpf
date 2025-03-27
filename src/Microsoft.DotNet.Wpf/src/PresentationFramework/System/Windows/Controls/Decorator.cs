@@ -220,7 +220,7 @@ namespace System.Windows.Controls
 
         #region Private Members
 
-        UIElement _child;
+        private UIElement _child;
         #endregion Private Members
     }
 }

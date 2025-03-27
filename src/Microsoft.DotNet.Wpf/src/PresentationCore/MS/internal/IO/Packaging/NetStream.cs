@@ -1261,11 +1261,11 @@ namespace MS.Internal.IO.Packaging
         //------------------------------------------------------
         private enum ReadEvent { FullDownloadReadEvent = 0, ByteRangeReadEvent = 1, MaxReadEventEnum };
 
-        Uri                     _uri;               // uri we are resolving
+        private Uri                     _uri;               // uri we are resolving
 
-        WebRequest              _originalRequest;   // Proxy member is Critical
-        Stream                  _tempFileStream;    // local temp stream we are writing to and reading from - protected by _tempFileMutex
-        long                    _position;          // our "logical stream position"
+        private WebRequest              _originalRequest;   // Proxy member is Critical
+        private Stream                  _tempFileStream;    // local temp stream we are writing to and reading from - protected by _tempFileMutex
+        private long                    _position;          // our "logical stream position"
 
         // syncObject - provides mutually-exclusive access control to the following entities:
         // 1. _highWaterMark - this is actually queried outside of a lock in get_Length, but this is safe as a stale value only impacts perf

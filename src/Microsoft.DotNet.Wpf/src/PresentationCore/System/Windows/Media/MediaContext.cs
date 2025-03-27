@@ -1390,7 +1390,7 @@ namespace System.Windows.Media
         /// <summary>
         /// Called by the Dispatcher to let us know that we are going away.
         /// </summary>
-        void OnDestroyContext(object sender, EventArgs e)
+        private void OnDestroyContext(object sender, EventArgs e)
         {
             Debug.Assert(CheckAccess());
             Dispose();
@@ -2403,7 +2403,7 @@ namespace System.Windows.Media
             if (_resourcesUpdatedHandlers != null)
             {
                 DUCE.ChannelSet channelSet = GetChannels();
-                _resourcesUpdatedHandlers(channelSet.Channel, false /* do not skip the "on channel" check */);
+                _resourcesUpdatedHandlers(channelSet.Channel, skipOnChannelCheck: false);
                 _resourcesUpdatedHandlers = null;
             }
         }

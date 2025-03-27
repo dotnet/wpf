@@ -38,18 +38,18 @@
                     </Border>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="True">
-                                <Setter TargetName="RootGrid" Property="Background" Value="{DynamicResource GridsplitterBackgroundPointerOver}" />
+                            <Setter TargetName="RootGrid" Property="Background" Value="{DynamicResource GridsplitterBackgroundPointerOver}" />
                         </Trigger>
                         <Trigger Property="IsDragging" Value="True">
-                                <Setter TargetName="RootGrid" Property="Background" Value="{DynamicResource GridsplitterBackgroundPressed}" />
+                            <Setter TargetName="RootGrid" Property="Background" Value="{DynamicResource GridsplitterBackgroundPressed}" />
                         </Trigger>
                         <Trigger Property="IsEnabled"  Value="False">
-                                <Setter TargetName="RootGrid" Property="Background" Value="{DynamicResource GridsplitterBackgroundDisabled}" />
-                                <Setter TargetName="PART_Thumb" Property="Opacity" Value="0.45"/>
+                            <Setter TargetName="RootGrid" Property="Background" Value="{DynamicResource GridsplitterBackgroundDisabled}" />
+                            <Setter TargetName="PART_Thumb" Property="Opacity" Value="0.45"/>
                         </Trigger>
-                        <Trigger Property="ResizeDirection" Value="Rows">
-                                <Setter TargetName="PART_Thumb" Property="Width" Value="{DynamicResource GridsplitterThumbHeight}"/>
-                                <Setter TargetName="PART_Thumb" Property="Height" Value="{DynamicResource GridsplitterThumbWidth}"/>
+                        <Trigger Property="Cursor" Value="SizeNS">
+                            <Setter TargetName="PART_Thumb" Property="Width" Value="{DynamicResource GridsplitterThumbHeight}"/>
+                            <Setter TargetName="PART_Thumb" Property="Height" Value="{DynamicResource GridsplitterThumbWidth}"/>
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>

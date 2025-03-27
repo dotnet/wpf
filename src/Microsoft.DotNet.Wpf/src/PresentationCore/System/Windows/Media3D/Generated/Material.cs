@@ -23,9 +23,7 @@ using System.Windows.Media.Composition;
 
 namespace System.Windows.Media.Media3D
 {
-
-
-    abstract partial class Material : Animatable, IFormattable, DUCE.IResource
+    public abstract partial class Material : Animatable, IFormattable, DUCE.IResource
     {
         //------------------------------------------------------
         //

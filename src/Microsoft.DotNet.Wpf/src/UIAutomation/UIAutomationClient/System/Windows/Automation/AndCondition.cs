@@ -74,11 +74,11 @@ namespace System.Windows.Automation
         //  Private Fields
         //
         //------------------------------------------------------
- 
+
         #region Private Fields
 
-        Condition [ ] _conditions;
-        SafeConditionMemoryHandle _conditionArrayHandle;
+        private Condition[ ] _conditions;
+        private SafeConditionMemoryHandle _conditionArrayHandle;
 
         #endregion Private Fields
     }

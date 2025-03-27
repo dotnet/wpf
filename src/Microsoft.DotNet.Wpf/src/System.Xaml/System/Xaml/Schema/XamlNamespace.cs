@@ -5,6 +5,9 @@
 #nullable disable
 
 using System.Collections.Concurrent;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Diagnostics;
 using System.Reflection;
 using System.Xaml.MS.Impl;
 using MS.Internal.Xaml.Parser;
@@ -70,8 +73,7 @@ namespace System.Xaml.Schema
         private XamlType TryGetXamlType(string typeName)
         {
             // Look up the type in our cache. If it's there, we're done.
-            XamlType xamlType;
-            if (_typeCache.TryGetValue(typeName, out xamlType))
+            if (_typeCache.TryGetValue(typeName, out XamlType xamlType))
             {
                 return xamlType;
             }
@@ -99,12 +101,11 @@ namespace System.Xaml.Schema
 
             // It is not possible to get an array of open generic and then call
             // MakeGenericType on it so we need to process array subscripts.
-            string subscript;
-            typeName = GenericTypeNameScanner.StripSubscript(typeName, out subscript);
-            typeName = MangleGenericTypeName(typeName, typeArgs.Length);
+            ReadOnlySpan<char> typeNameSpan = GenericTypeNameScanner.StripSubscript(typeName, out ReadOnlySpan<char> subscript);
+            string mangledTypeName = MangleGenericTypeName(typeNameSpan, typeArgs.Length);
 
             // Get the open generic type.
-            XamlType openXamlType = TryGetXamlType(typeName);
+            XamlType openXamlType = TryGetXamlType(mangledTypeName);
             Type openType = openXamlType?.UnderlyingType;
             if (openType is null)
             {
@@ -113,7 +114,7 @@ namespace System.Xaml.Schema
 
             // Close the open generic type.
             Type closedType = openType.MakeGenericType(typeArgs);
-            if (!string.IsNullOrEmpty(subscript))
+            if (!subscript.IsEmpty)
             {
                 closedType = MakeArrayType(closedType, subscript);
                 if (closedType is null)
@@ -126,7 +127,7 @@ namespace System.Xaml.Schema
             return SchemaContext.GetXamlType(closedType);
         }
 
-        private static Type MakeArrayType(Type elementType, string subscript)
+        private static Type MakeArrayType(Type elementType, ReadOnlySpan<char> subscript)
         {
             Type type = elementType;
             int pos = 0;
@@ -145,9 +146,9 @@ namespace System.Xaml.Schema
             return type;
         }
 
-        private static string MangleGenericTypeName(string typeName, int paramNum)
+        private static string MangleGenericTypeName(ReadOnlySpan<char> typeName, int paramNum)
         {
-            return typeName + KnownStrings.GraveQuote + paramNum;
+            return $"{typeName}{KnownStrings.GraveQuote}{paramNum}";
         }
 
         private Type[] ConvertArrayOfXamlTypesToTypes(XamlType[] typeArgs)
@@ -248,7 +249,7 @@ namespace System.Xaml.Schema
 
         private Type SearchAssembliesForShortName(string shortName)
         {
-            foreach(AssemblyNamespacePair assemblyNamespacePair in _assemblyNamespaces)
+            foreach (AssemblyNamespacePair assemblyNamespacePair in _assemblyNamespaces)
             {
                 Assembly asm = assemblyNamespacePair.Assembly;
                 if (asm is null)

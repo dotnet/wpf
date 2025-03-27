@@ -15,7 +15,7 @@ using global::System.Runtime.CompilerServices;
 namespace MS.Internal.WindowsRuntime.Windows.Foundation.Collections
 {
     [Guid("BBE1FA4C-B0E3-4583-BAEF-1F1B2E483E56")]
-    interface IVectorView<T> : IIterable<T>
+    internal interface IVectorView<T> : IIterable<T>
     {
         T GetAt(uint index);
         bool IndexOf(T value, out uint index);
@@ -360,7 +360,8 @@ namespace MS.Internal.WindowsRuntime.ABI.System.Collections.Generic
             _obj = obj;
             _FromVectorView = new FromAbiHelper(this);
         }
-        FromAbiHelper _FromVectorView;
+
+        private FromAbiHelper _FromVectorView;
 
         public unsafe T GetAt(uint index)
         {

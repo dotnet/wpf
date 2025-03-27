@@ -329,17 +329,17 @@ namespace System.Windows.Forms.Integration
             UpdateBackground();
         }
 
-        void CallUpdateBackground(object sender, EventArgs e)
+        private void CallUpdateBackground(object sender, EventArgs e)
         {
             UpdateBackground();
         }
 
-        void UpdateBackground()
+        private void UpdateBackground()
         {
             OnPropertyChanged("BackgroundImage", BackgroundImage); //Update the background
         }
 
-        void childFrameworkElement_SizeChanged(object sender, SizeChangedEventArgs e)
+        private void childFrameworkElement_SizeChanged(object sender, SizeChangedEventArgs e)
         {
             if (AutoSize)
             {

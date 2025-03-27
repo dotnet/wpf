@@ -209,51 +209,6 @@ namespace MS.Internal.Shaping
         }
     }
 
-    internal class Feature
-    {
-        public Feature(
-            ushort  startIndex,
-            ushort  length,
-            uint    tag,
-            uint    parameter //0 if disabled
-            )
-        {
-            _startIndex = startIndex;
-            _length = length;
-            _tag = tag;
-            _parameter = parameter;
-        }
-
-        public uint Tag
-        {
-            get { return _tag; }
-            set { _tag = value; }
-        }
-
-        public uint Parameter
-        {
-            get { return _parameter; }
-            set { _parameter = value; }
-        }
-
-        public ushort StartIndex
-        {
-            get { return _startIndex; }
-            set { _startIndex = value; }
-        }
-
-        public ushort Length
-        {
-            get { return _length; }
-            set { _length = value; }
-        }
-
-        private ushort  _startIndex;   // first to be applied
-        private ushort  _length;       // length to be applied
-        private uint    _tag;          // OpenType feature tag
-        private uint    _parameter;    // feature parameter
-    }
-
     /// <summary>
     /// OpenTypeLayout class provides access to OpenType Layout services
     /// </summary>

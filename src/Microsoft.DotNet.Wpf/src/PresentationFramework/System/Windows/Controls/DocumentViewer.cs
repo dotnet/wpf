@@ -876,7 +876,7 @@ namespace System.Windows.Controls
             // Update the toolbar with our current document state.
             if (_findToolbar != null)
             {
-                _findToolbar.DocumentLoaded = (Document != null) ? true : false;
+                _findToolbar.DocumentLoaded = Document is not null;
             }
 
             // We do not automatically go to the first page on the _first_ content
@@ -2102,7 +2102,7 @@ namespace System.Windows.Controls
                     _findToolbar.FindClicked += new EventHandler(OnFindInvoked);
 
                     //set initial DocumentLoaded state.
-                    _findToolbar.DocumentLoaded = (Document != null) ? true : false;
+                    _findToolbar.DocumentLoaded = Document is not null;
                 }
 
                 // Now insert the toolbar, if it isn't already parented elsewhere.

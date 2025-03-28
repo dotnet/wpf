@@ -2736,7 +2736,7 @@ namespace System.Windows.Navigation
                 throw;
             }
 
-            bool isRefresh = navInfo == null ? false : navInfo.NavigationMode == NavigationMode.Refresh;
+            bool isRefresh = navInfo is not null && navInfo.NavigationMode is NavigationMode.Refresh;
             WpfWebRequestHelper.ConfigCachePolicy(request, isRefresh);
 
             return request;
@@ -3592,7 +3592,7 @@ namespace System.Windows.Navigation
 
         static internal bool IsPageFunction(object content)
         {
-            return (content as PageFunctionBase == null ? false : true);
+            return content is PageFunctionBase;
         }
         //
         // The pagefunction model works by allowing listeners to attach to events before a navigation occurs.

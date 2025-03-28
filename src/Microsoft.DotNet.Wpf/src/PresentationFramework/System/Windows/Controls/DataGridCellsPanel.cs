@@ -1041,7 +1041,7 @@ namespace System.Windows.Controls
             int blockIndex = 0;
             int blockCount = blockList.Count;
             RealizedColumnsBlock block = (blockCount > 0 ? blockList[blockIndex] : new RealizedColumnsBlock(-1, -1, -1));
-            bool pastLastBlock = (blockCount > 0 ? false : true);
+            bool pastLastBlock = blockCount <= 0;
 
             int cleanupRangeStart = -1;
             int cleanupCount = 0;

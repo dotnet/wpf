@@ -549,7 +549,7 @@ namespace MS.Internal.Documents
         {
             get
             {
-                return (_scrollData != null) ? _scrollData.CanVerticallyScroll : false;
+                return _scrollData is not null && _scrollData.CanVerticallyScroll;
             }
             set
             {
@@ -567,7 +567,7 @@ namespace MS.Internal.Documents
         {
             get
             {
-                return (_scrollData != null) ? _scrollData.CanHorizontallyScroll : false;
+                return _scrollData is not null && _scrollData.CanHorizontallyScroll;
             }
             set
             {

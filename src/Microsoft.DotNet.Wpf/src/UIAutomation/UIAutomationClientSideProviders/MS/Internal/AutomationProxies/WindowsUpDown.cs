@@ -305,7 +305,7 @@ namespace MS.Internal.AutomationProxies
             int hr = Accessible.AccessibleObjectFromWindow(hwnd, NativeMethods.OBJID_CLIENT, ref acc);
 
             // Verify the role
-            return hr == NativeMethods.S_OK && acc != null ? acc.Role == AccessibleRole.SpinButton : false;
+            return hr == NativeMethods.S_OK && acc is not null && acc.Role is AccessibleRole.SpinButton;
         }
 
         #endregion

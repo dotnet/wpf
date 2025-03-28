@@ -158,7 +158,7 @@ namespace System.Windows.Documents
                 }
 
                 // Set the line bold and squiggle
-                bool lineBold = attributeRange.TextServicesDisplayAttribute.IsBoldLine ? true : false;
+                bool lineBold = attributeRange.TextServicesDisplayAttribute.IsBoldLine;
                 bool squiggle = false;
                 bool hasVirtualSelection = (attributeRange.TextServicesDisplayAttribute.AttrInfo & UnsafeNativeMethods.TF_DA_ATTR_INFO.TF_ATTR_TARGET_CONVERTED) != 0;
 

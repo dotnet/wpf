@@ -1647,7 +1647,7 @@ namespace System.Windows.Input
                                 }
                             }
 
-                            _isPhysicallyOver = mouseOver == null ? false : isPhysicallyOver;
+                            _isPhysicallyOver = mouseOver is not null && isPhysicallyOver;
 
                             // Now that we've determine what element the mouse is over now (mouseOver)
                             // - we need to check if it's changed

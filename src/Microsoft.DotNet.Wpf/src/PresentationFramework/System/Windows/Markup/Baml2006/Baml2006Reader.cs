@@ -1534,7 +1534,7 @@ namespace System.Windows.Baml2006
                     break;
                 case Baml2006SchemaContext.KnownTypes.BooleanConverter:
                     Debug.Assert(dataByteSize == 1);
-                    _xamlNodesWriter.WriteValue((_binaryReader.ReadBytes(1)[0] == 0) ? false : true);
+                    _xamlNodesWriter.WriteValue(_binaryReader.ReadBytes(1)[0] != 0);
                     break;
                 case Baml2006SchemaContext.KnownTypes.StringConverter:
                     _xamlNodesWriter.WriteValue(_binaryReader.ReadString());

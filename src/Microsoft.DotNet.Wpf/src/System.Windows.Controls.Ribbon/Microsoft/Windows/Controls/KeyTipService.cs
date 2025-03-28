@@ -753,7 +753,7 @@ namespace Microsoft.Windows.Controls
             DependencyObject globalScope = GetGlobalScopeForElement(keyArgs.OriginalSource as DependencyObject);
             if (globalScope != null)
             {
-                if (EnterKeyTipMode(globalScope, (keyArgs.SystemKey == Key.F10 ? false : true), true))
+                if (EnterKeyTipMode(globalScope, keyArgs.SystemKey is not Key.F10, true))
                 {
                     keyArgs.Handled = true;
                     _focusRibbonOnKeyTipKeyUp = true;

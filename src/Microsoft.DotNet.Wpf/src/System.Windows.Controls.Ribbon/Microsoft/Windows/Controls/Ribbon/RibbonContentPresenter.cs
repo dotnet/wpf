@@ -186,17 +186,17 @@ namespace Microsoft.Windows.Controls.Ribbon
 
         internal bool ChildHasLargeImage
         {
-            get { return (_templateRoot != null) ? (RibbonControlService.GetLargeImageSource(_templateRoot) != null) : false; }
+            get { return _templateRoot is not null && RibbonControlService.GetLargeImageSource(_templateRoot) is not null; }
         }
 
         internal bool ChildHasSmallImage
         {
-            get { return (_templateRoot != null) ? (RibbonControlService.GetSmallImageSource(_templateRoot) != null) : false; }
+            get { return _templateRoot is not null && RibbonControlService.GetSmallImageSource(_templateRoot) is not null; }
         }
 
         internal bool ChildHasLabel
         {
-            get { return (_templateRoot != null) ? !string.IsNullOrEmpty(RibbonControlService.GetLabel(_templateRoot)) : false; }
+            get { return _templateRoot is not null && !string.IsNullOrEmpty(RibbonControlService.GetLabel(_templateRoot)); }
         }
 
         #endregion

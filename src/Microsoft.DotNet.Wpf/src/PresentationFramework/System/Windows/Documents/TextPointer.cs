@@ -1514,7 +1514,7 @@ namespace System.Windows.Documents
         {
             get
             {
-                return _tree.TextView == null ? false : _tree.TextView.IsValid && _tree.TextView.Contains(this);
+                return _tree.TextView is not null && _tree.TextView.IsValid && _tree.TextView.Contains(this);
             }
         }
 

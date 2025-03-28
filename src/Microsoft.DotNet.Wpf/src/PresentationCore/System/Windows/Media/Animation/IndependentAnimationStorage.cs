@@ -230,20 +230,16 @@ namespace System.Windows.Media.Animation
         {
             Debug.Assert(d != null);
             Debug.Assert(dp != null);
-            Debug.Assert(d is Animatable ? ((Animatable)d).HasAnimatedProperties : true);
+            Debug.Assert(d is not Animatable animatable || animatable.HasAnimatedProperties);
 
-            IndependentAnimationStorage storage = AnimationStorage.GetStorage(d, dp) as IndependentAnimationStorage;
-
-            if (storage == null)
+            if (GetStorage(d, dp) is not IndependentAnimationStorage storage)
             {
                 return DUCE.ResourceHandle.Null;
             }
-            else
-            {
-                Debug.Assert(storage._duceResource.IsOnChannel(channel));
 
-                return ((DUCE.IResource)storage).GetHandle(channel);
-            }
+            Debug.Assert(storage._duceResource.IsOnChannel(channel));
+
+            return ((DUCE.IResource)storage).GetHandle(channel);
         }
 
         #endregion

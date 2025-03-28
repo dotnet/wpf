@@ -3318,7 +3318,7 @@ namespace System.Windows
             container = feContainer;
             oldTemplate = oldFrameworkTemplate;
             newTemplate = newFrameworkTemplate;
-            newTemplateHasResourceReferences = (newFrameworkTemplate != null) ? newFrameworkTemplate.HasResourceReferences : false;
+            newTemplateHasResourceReferences = newFrameworkTemplate is not null && newFrameworkTemplate.HasResourceReferences;
 
             // If the template wants to watch for the Loaded and/or Unloaded events, set the
             // flag that says we want to receive it.  Otherwise, if it was set in the old template, clear it.
@@ -3372,7 +3372,7 @@ namespace System.Windows
                 oldFactory = oldFrameworkTemplate?.VisualTree;
                 newFactory = newFrameworkTemplate?.VisualTree;
 
-                canBuildVisualTree = (oldFrameworkTemplate != null) ? oldFrameworkTemplate.CanBuildVisualTree : false;
+                canBuildVisualTree = oldFrameworkTemplate is not null && oldFrameworkTemplate.CanBuildVisualTree;
                 hasTemplateGeneratedSubTree = feContainer.HasTemplateGeneratedSubTree;
                 oldContainerDependents = (oldFrameworkTemplate != null) ? oldFrameworkTemplate.ContainerDependents : StyleHelper.EmptyContainerDependents;
                 newContainerDependents = (newFrameworkTemplate != null) ? newFrameworkTemplate.ContainerDependents : StyleHelper.EmptyContainerDependents;
@@ -5503,7 +5503,7 @@ namespace System.Windows
 
             // temporarily mark the element as "initialized", so that we always get
             // the desired expression (see GetInstanceValue).
-            bool isInitialized = (fe != null) ? fe.IsInitialized : (fce != null) ? fce.IsInitialized : true;
+            bool isInitialized = fe is not null ? fe.IsInitialized : fce is null || fce.IsInitialized;
             if (!isInitialized)
             {
                 if (fe != null)

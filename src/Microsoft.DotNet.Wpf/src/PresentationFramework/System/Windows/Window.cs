@@ -2808,7 +2808,7 @@ namespace System.Windows
             // CalculateWindowLocation must be in DEVICE units.  It will return true,
             // if it updated theinput values of left, top.
             //
-            updateHwndPlacement = (CalculateWindowLocation(ref xDeviceUnits, ref yDeviceUnits, sizeDeviceUnits)? true: updateHwndPlacement);
+            updateHwndPlacement = (CalculateWindowLocation(ref xDeviceUnits, ref yDeviceUnits, sizeDeviceUnits) || updateHwndPlacement);
 
             // We need to update the hwnd size before we set RootVisual b/c setting RootVisual
             // results in a Measure/Arrange/Layout and we want to set the correct hwnd size

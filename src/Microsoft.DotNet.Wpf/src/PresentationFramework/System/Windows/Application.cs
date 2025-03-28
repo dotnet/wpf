@@ -2095,7 +2095,7 @@ namespace System.Windows
         private bool WmActivateApp(Int32 wParam)
         {
             int temp = wParam;
-            bool isActivated = (temp == 0? false : true);
+            bool isActivated = temp != 0;
 
             // Event handler exception continuality: if exception occurs in Activate/Deactivate event handlers, our state would not
             // be corrupted because no internal state are affected by Activate/Deactivate. Please check Event handler exception continuality

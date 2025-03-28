@@ -1374,8 +1374,8 @@ namespace System.Windows.Interop
                 else
                 {
                     // We have excluded SizeToContent == SizeToContent.Manual before entering this.
-                    bool sizeToWidth = (SizeToContent == SizeToContent.Height) ? false : true;
-                    bool sizeToHeight = (SizeToContent == SizeToContent.Width) ? false : true;
+                    bool sizeToWidth = SizeToContent is not SizeToContent.Height;
+                    bool sizeToHeight = SizeToContent is not SizeToContent.Width;
 
                     // Update WindowPos with the size we want.
                     if ((sizeToWidth) && (windowPos.cx != newCX))
@@ -1417,7 +1417,7 @@ namespace System.Windows.Interop
             // 3. We also don't need to do anything if it's minimized.
 
             // Keeps the status of whether the Window is in Minimized state or not.
-            _isWindowInMinimizeState = (NativeMethods.IntPtrToInt32(wParam) == NativeMethods.SIZE_MINIMIZED) ? true : false;
+            _isWindowInMinimizeState = (NativeMethods.IntPtrToInt32(wParam) == NativeMethods.SIZE_MINIMIZED);
 
             if ((!_myOwnUpdate) && (_sizeToContent != SizeToContent.WidthAndHeight) && !_isWindowInMinimizeState)
             {

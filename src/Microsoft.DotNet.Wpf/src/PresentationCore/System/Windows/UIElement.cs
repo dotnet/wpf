@@ -490,8 +490,8 @@ namespace System.Windows
             //if(!v.CheckFlagsAnd(VisualFlags.IsLayoutSuspended)) return;
 
             //that can be true only on top of recursion, if suspended v is being connected to suspended parent.
-            bool parentIsSuspended = parent == null ? false : parent.CheckFlagsAnd(VisualFlags.IsLayoutSuspended);
-            uint parentTreeLevel   = parent == null ? 0     : parent.TreeLevel;
+            bool parentIsSuspended = parent is not null && parent.CheckFlagsAnd(VisualFlags.IsLayoutSuspended);
+            uint parentTreeLevel = parent is null ? 0 : parent.TreeLevel;
 
             if(parentIsSuspended) return;
 

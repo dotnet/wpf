@@ -283,8 +283,7 @@ namespace System.Windows.Input.StylusPlugIns
         /// </summary>
         internal void InvalidateIsActiveForInput()
         {
-            bool newIsActive = (_pic != null) ? (Enabled && _pic.Contains(this) &&
-                _pic.IsActiveForInput) : false;
+            bool newIsActive = (_pic != null) && (Enabled && _pic.Contains(this) && _pic.IsActiveForInput);
 
             if (newIsActive != _activeForInput)
             {

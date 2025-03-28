@@ -1814,7 +1814,7 @@ namespace System.Windows.Data
                 // when the group is implicitly discovered, always add the root binding to the group's collection.
                 // When the binding is added explicitly - via BindingGroup.BindingExpressions.Add() -
                 // check first to see if it has already been added
-                bool addToGroup = explicitJoin ? !bg.BindingExpressions.Contains(root) : true;
+                bool addToGroup = !explicitJoin || !bg.BindingExpressions.Contains(root);
                 if (addToGroup)
                 {
                     bg.BindingExpressions.Add(root);

@@ -1196,12 +1196,12 @@ namespace System.Windows.Controls
             if (pageNumberChanged)
             {
                 SetValue(PageNumberPropertyKey, (CurrentViewer != null) ? CurrentViewer.PageNumber : 0);
-                SetValue(CanGoToPreviousPagePropertyKey, (CurrentViewer != null) ? CurrentViewer.CanGoToPreviousPage : false);
+                SetValue(CanGoToPreviousPagePropertyKey, CurrentViewer is not null && CurrentViewer.CanGoToPreviousPage);
             }
 
             if (pageCountChanged || pageNumberChanged)
             {
-                SetValue(CanGoToNextPagePropertyKey, (CurrentViewer != null) ? CurrentViewer.CanGoToNextPage : false);
+                SetValue(CanGoToNextPagePropertyKey, CurrentViewer is not null && CurrentViewer.CanGoToNextPage);
             }
         }
 

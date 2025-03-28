@@ -1,4 +1,4 @@
-using Microsoft.Win32;
+﻿using Microsoft.Win32;
 using System.Windows.Appearance;
 using System.Windows.Navigation;
 
@@ -122,7 +122,7 @@ internal static class ThemeManager
         if (Application.Current.ThemeMode != themeMode)
         {
             Application.Current.ThemeMode = themeMode;
-            return themeMode == ThemeMode.None ? false : true;
+            return themeMode != ThemeMode.None;
         }
         
         return false;

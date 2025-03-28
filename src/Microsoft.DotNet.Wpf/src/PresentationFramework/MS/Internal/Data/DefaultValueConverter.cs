@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -147,8 +147,8 @@ namespace MS.Internal.Data
 
             // try using the source's type converter
             typeConverter = GetConverter(sourceType);
-            canConvertTo = (typeConverter != null) ? typeConverter.CanConvertTo(targetType) : false;
-            canConvertFrom = (typeConverter != null) ? typeConverter.CanConvertFrom(targetType) : false;
+            canConvertTo = typeConverter is not null && typeConverter.CanConvertTo(targetType);
+            canConvertFrom = typeConverter is not null && typeConverter.CanConvertFrom(targetType);
 
             if ((canConvertTo || targetType.IsAssignableFrom(sourceType)) &&
                 (!targetToSource || canConvertFrom || sourceType.IsAssignableFrom(targetType)))
@@ -159,8 +159,8 @@ namespace MS.Internal.Data
 
             // if that doesn't work, try using the target's type converter
             typeConverter = GetConverter(targetType);
-            canConvertTo = (typeConverter != null) ? typeConverter.CanConvertTo(sourceType) : false;
-            canConvertFrom = (typeConverter != null) ? typeConverter.CanConvertFrom(sourceType) : false;
+            canConvertTo = typeConverter is not null && typeConverter.CanConvertTo(sourceType);
+            canConvertFrom = typeConverter is not null && typeConverter.CanConvertFrom(sourceType);
 
             if ((canConvertFrom || targetType.IsAssignableFrom(sourceType)) &&
                 (!targetToSource || canConvertTo || sourceType.IsAssignableFrom(targetType)))

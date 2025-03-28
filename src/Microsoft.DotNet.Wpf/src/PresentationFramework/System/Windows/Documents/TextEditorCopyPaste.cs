@@ -913,9 +913,8 @@ namespace System.Windows.Documents
                 {
                     // Parse the fragment into a separate subtree
                     object xamlObject = XamlReader.Load(new XmlTextReader(new System.IO.StringReader(pasteXaml)), useRestrictiveXamlReader: true);
-                    TextElement flowContent = xamlObject as TextElement;
 
-                    success = flowContent == null ? false : PasteTextElement(This, flowContent);
+                    success = xamlObject is TextElement flowContent && PasteTextElement(This, flowContent);
                 }
                 catch (XamlParseException e)
                 {

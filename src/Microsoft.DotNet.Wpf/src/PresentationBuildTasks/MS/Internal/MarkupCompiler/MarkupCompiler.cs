@@ -347,7 +347,7 @@ namespace MS.Internal
 
         internal bool IsBamlNeeded
         {
-            get { return IsCompilingEntryPointClass ? _isBamlNeeded : true; }
+            get { return !IsCompilingEntryPointClass || _isBamlNeeded; }
             set { _isBamlNeeded = value; }
         }
 

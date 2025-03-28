@@ -296,7 +296,7 @@ namespace MS.Internal.Data
             get
             {
                 EnsureSnapshot();
-                return (_view != null) ? _view.IsEmpty : true;
+                return _view is null || _view.IsEmpty;
             }
         }
 

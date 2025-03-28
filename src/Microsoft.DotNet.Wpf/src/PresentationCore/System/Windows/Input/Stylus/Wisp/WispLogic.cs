@@ -706,7 +706,7 @@ namespace System.Windows.Input.StylusWisp
                                             // is actually inside the client area (we will only see those wisptis
                                             // events and can thus eat this one).
                                             Point ptMouse = new Point(mouseInputReport.X, mouseInputReport.Y);
-                                            bool stylusIsDown = (CurrentStylusDevice != null) ? !CurrentStylusDevice.InAir : false;
+                                            bool stylusIsDown = CurrentStylusDevice is not null && !CurrentStylusDevice.InAir;
                                             if (!stylusIsDown && Mouse.Captured != null && !InWindowClientRect(ptMouse, mouseInputReport.InputSource))
                                             {
                                                 handled = false;

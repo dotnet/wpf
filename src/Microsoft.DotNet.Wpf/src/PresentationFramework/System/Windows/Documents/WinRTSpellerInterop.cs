@@ -334,7 +334,7 @@ namespace System.Windows.Documents
                 }
             }
 
-            return (_spellCheckers[culture] == null ? false : true);
+            return _spellCheckers[culture] is not null;
         }
 
         /// <summary>

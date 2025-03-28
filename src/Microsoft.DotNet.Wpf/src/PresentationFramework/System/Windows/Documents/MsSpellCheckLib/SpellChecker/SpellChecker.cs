@@ -387,7 +387,7 @@ namespace System.Windows.Documents
             public bool HasErrorsImpl(string text)
             {
                 IEnumSpellingError errors = _speller.Value.ComprehensiveCheck(text);
-                return (errors != null) ? errors.HasErrors(false, true) : false;
+                return errors is not null && errors.HasErrors(false, true);
             }
 
             public bool HasErrorsImplWithRetries(string text, bool shouldSuppressCOMExceptions = true)
@@ -400,7 +400,7 @@ namespace System.Windows.Documents
                         preamble: () => Init(shouldSuppressCOMExceptions),
                         ignoredExceptions: SuppressedExceptions[shouldSuppressCOMExceptions]);
 
-                return callSucceeded ? hasErrors : false;
+                return callSucceeded && hasErrors;
             }
 
             public bool HasErrors(string text, bool shouldSuppressCOMExceptions = true)

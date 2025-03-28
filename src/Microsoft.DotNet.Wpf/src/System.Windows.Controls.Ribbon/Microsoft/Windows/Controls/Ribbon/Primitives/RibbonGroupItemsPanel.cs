@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -37,7 +37,7 @@ namespace Microsoft.Windows.Controls.Ribbon.Primitives
             IContainsStarLayoutManager iContainsStarLayoutManager = (IContainsStarLayoutManager)this;
 
             RibbonHelper.InitializeStarLayoutManager(this);
-            bool isStarLayoutPass = (iContainsStarLayoutManager.StarLayoutManager == null ? false : iContainsStarLayoutManager.StarLayoutManager.IsStarLayoutPass);
+            bool isStarLayoutPass = iContainsStarLayoutManager.StarLayoutManager is not null && iContainsStarLayoutManager.StarLayoutManager.IsStarLayoutPass;
 
             if (!isStarLayoutPass)
             {

@@ -376,7 +376,7 @@ namespace MS.Internal.Documents.Application
         bool canGetFromTempPackage =
             (_tempPackage != null) && (_tempPackage.PartExists(partUri));
         bool canGetFromOriginalPackage =
-            canGetFromTempPackage ? false : _originalPackage.PartExists(partUri);
+            !canGetFromTempPackage && _originalPackage.PartExists(partUri);
 
         if (_activeParts.ContainsKey(normalizedPartUri)
             && (canGetFromTempPackage || canGetFromOriginalPackage))

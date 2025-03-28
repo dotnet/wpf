@@ -591,7 +591,7 @@ namespace MS.Internal.Xaml.Context
 
         public bool GrandParentIsObjectFromMember
         {
-            get { return (_stack.PreviousPreviousFrame is not null) ? _stack.PreviousPreviousFrame.IsObjectFromMember : false; }
+            get { return _stack.PreviousPreviousFrame is not null && _stack.PreviousPreviousFrame.IsObjectFromMember; }
         }
 
         public bool CurrentIsPropertyValueSet

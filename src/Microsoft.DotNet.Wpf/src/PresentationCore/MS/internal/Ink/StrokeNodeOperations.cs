@@ -1264,11 +1264,7 @@ namespace MS.Internal.Ink
            in ContourSegment hitSegment, in StrokeNodeData beginNode, Vector spineVector, double pressureDelta)
         {
             double findex = StrokeFIndices.BeforeFirst;
-            bool clipIt = hitSegment.IsArc ? true
-                //? (WhereIsVectorAboutArc(beginNode.Position - hitSegment.Begin - hitSegment.Radius,
-                //            -hitSegment.Radius, hitSegment.Vector - hitSegment.Radius) == HitResult.Hit)
-                : (WhereIsVectorAboutVector(
-                                   beginNode.Position - hitSegment.Begin, hitSegment.Vector) == HitResult.Left);
+            bool clipIt = hitSegment.IsArc || WhereIsVectorAboutVector(beginNode.Position - hitSegment.Begin, hitSegment.Vector) is HitResult.Left;
             if (clipIt)
             {
                 findex = hitSegment.IsArc

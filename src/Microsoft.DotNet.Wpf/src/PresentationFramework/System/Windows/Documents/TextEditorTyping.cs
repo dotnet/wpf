@@ -393,7 +393,7 @@ namespace System.Windows.Documents
                 // We'll delay the event handling, batching it up with other
                 // input if layout is too slow to keep up with the input stream.
                 KeyboardDevice keyboard = e.Device as KeyboardDevice;
-                TextEditorTyping.ScheduleInput(This, new TextInputItem(This, e.Text, /*isInsertKeyToggled:*/keyboard != null ? keyboard.IsKeyToggled(Key.Insert) : false));
+                TextEditorTyping.ScheduleInput(This, new TextInputItem(This, e.Text, isInsertKeyToggled: keyboard is not null && keyboard.IsKeyToggled(Key.Insert)));
             }
         }
 

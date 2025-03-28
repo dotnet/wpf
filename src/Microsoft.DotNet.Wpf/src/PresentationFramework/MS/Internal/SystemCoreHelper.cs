@@ -14,7 +14,7 @@ namespace MS.Internal
         internal static bool IsIDynamicMetaObjectProvider(object item)
         {
             SystemCoreExtensionMethods extensions = AssemblyHelper.ExtensionsForSystemCore();
-            return (extensions != null) ? extensions.IsIDynamicMetaObjectProvider(item) : false;
+            return extensions is not null && extensions.IsIDynamicMetaObjectProvider(item);
         }
 
         // return a new DynamicPropertyAccessor

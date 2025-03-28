@@ -113,7 +113,7 @@ namespace System.Windows.Media
         public override bool Equals(Object obj)
         {
             // Can't use "as" since we're looking for a value type
-            return obj is PixelFormatChannelMask ? this == (PixelFormatChannelMask)obj : false;
+            return obj is PixelFormatChannelMask && this == (PixelFormatChannelMask)obj;
         }
 
         /// <summary>

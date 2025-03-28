@@ -153,8 +153,7 @@ namespace MS.Internal.Text
         // ------------------------------------------------------------------
         internal static bool GetKeepTogether(DependencyObject element)
         {
-            Paragraph p = element as Paragraph;
-            return (p != null) ? p.KeepTogether : false;
+            return element is Paragraph paragraph && paragraph.KeepTogether;
         }
 
         // ------------------------------------------------------------------
@@ -162,8 +161,7 @@ namespace MS.Internal.Text
         // ------------------------------------------------------------------
         internal static bool GetKeepWithNext(DependencyObject element)
         {
-            Paragraph p = element as Paragraph;
-            return (p != null) ? p.KeepWithNext : false;
+            return element is Paragraph paragraph && paragraph.KeepWithNext;
         }
 
         // ------------------------------------------------------------------

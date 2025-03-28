@@ -478,7 +478,7 @@ namespace MS.Internal
         public bool MoveNext()
         {
             _current++;
-            return _current < _spans.Count ? true : false;
+            return _current < _spans.Count;
         }
 
         /// <summary>

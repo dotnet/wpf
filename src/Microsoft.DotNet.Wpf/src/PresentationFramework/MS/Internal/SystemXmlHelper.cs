@@ -20,14 +20,14 @@ namespace MS.Internal
         internal static bool IsXmlNode(object item)
         {
             SystemXmlExtensionMethods extensions = AssemblyHelper.ExtensionsForSystemXml();
-            return (extensions != null) ? extensions.IsXmlNode(item) : false;
+            return extensions is not null && extensions.IsXmlNode(item);
         }
 
         // return true if the item is an XmlNamespaceManager
         internal static bool IsXmlNamespaceManager(object item)
         {
             SystemXmlExtensionMethods extensions = AssemblyHelper.ExtensionsForSystemXml();
-            return (extensions != null) ? extensions.IsXmlNamespaceManager(item) : false;
+            return extensions is not null && extensions.IsXmlNamespaceManager(item);
         }
 
         // if the item is an XmlNode, get the value corresponding to the given name
@@ -59,7 +59,7 @@ namespace MS.Internal
         internal static bool IsEmptyXmlDataCollection(object parent)
         {
             SystemXmlExtensionMethods extensions = AssemblyHelper.ExtensionsForSystemXml();
-            return (extensions != null) ? extensions.IsEmptyXmlDataCollection(parent) : false;
+            return extensions is not null && extensions.IsEmptyXmlDataCollection(parent);
         }
 
         // when item is an XmlNode, get its tag name (using the target DO as context

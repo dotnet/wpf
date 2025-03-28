@@ -1564,7 +1564,7 @@ namespace System.Windows.Markup
         {
             get
             {
-                return _flags[_sharedSection] == 1 ? true : false;
+                return _flags[_sharedSection] == 1;
             }
 
             set
@@ -1578,7 +1578,7 @@ namespace System.Windows.Markup
         {
             get
             {
-                return _flags[_sharedSetSection] == 1 ? true : false;
+                return _flags[_sharedSetSection] == 1;
             }
 
             set
@@ -1731,7 +1731,7 @@ namespace System.Windows.Markup
         {
             get
             {
-                return _flags[_sharedSection] == 1 ? true : false;
+                return _flags[_sharedSection] == 1;
             }
 
             set
@@ -1745,7 +1745,7 @@ namespace System.Windows.Markup
         {
             get
             {
-                return _flags[_sharedSetSection] == 1 ? true : false;
+                return _flags[_sharedSetSection] == 1;
             }
 
             set
@@ -2410,14 +2410,14 @@ namespace System.Windows.Markup
         // For DynamicResourceExtension, if the value is itself a simple TypeExtension
         public bool IsValueTypeExtension
         {
-            get { return _flags[_isValueTypeExtensionSection] == 1 ? true : false; }
+            get { return _flags[_isValueTypeExtensionSection] == 1; }
             set { _flags[_isValueTypeExtensionSection] = value ? 1 : 0; }
         }
 
         // For DynamicResourceExtension, if the value is itself a simple StaticExtension
         public bool IsValueStaticExtension
         {
-            get { return _flags[_isValueStaticExtensionSection] == 1 ? true : false; }
+            get { return _flags[_isValueStaticExtensionSection] == 1; }
             set { _flags[_isValueStaticExtensionSection] = value ? 1 : 0; }
         }
 
@@ -2850,13 +2850,13 @@ namespace System.Windows.Markup
         // a conversion from binary custom data to a ValueObject has occurred.
         internal bool ValueObjectSet
         {
-            get { return _flags[_isValueSetSection] == 1 ? true : false; }
+            get { return _flags[_isValueSetSection] == 1; }
             set { _flags[_isValueSetSection] = value ? 1 : 0; }
         }
 
         internal bool IsValueTypeId
         {
-            get { return _flags[_isValueTypeIdSection] == 1 ? true : false; }
+            get { return _flags[_isValueTypeIdSection] == 1; }
             set { _flags[_isValueTypeIdSection] = value ? 1 : 0; }
         }
 
@@ -2864,7 +2864,7 @@ namespace System.Windows.Markup
         // converted into an enum as the Type is not available yet.
         internal bool IsRawEnumValueSet
         {
-            get { return _flags[_isRawEnumValueSetSection] == 1 ? true : false; }
+            get { return _flags[_isRawEnumValueSetSection] == 1; }
             set { _flags[_isRawEnumValueSetSection] = value ? 1 : 0; }
         }
 
@@ -3256,7 +3256,7 @@ namespace System.Windows.Markup
         {
             get
             {
-                return _flags[_useTypeConverter] == 1 ? true : false;
+                return _flags[_useTypeConverter] == 1;
             }
 
             set
@@ -3270,7 +3270,7 @@ namespace System.Windows.Markup
         {
             get
             {
-                return _flags[_isInjected] == 1 ? true : false;
+                return _flags[_isInjected] == 1;
             }
 
             set
@@ -3642,14 +3642,14 @@ namespace System.Windows.Markup
         // If the value is itself a simple TypeExtension
         public bool IsValueTypeExtension
         {
-            get { return _flags[_isValueTypeExtensionSection] == 1 ? true : false; }
+            get { return _flags[_isValueTypeExtensionSection] == 1; }
             set { _flags[_isValueTypeExtensionSection] = value ? 1 : 0; }
         }
 
         // If the value is itself a simple StaticExtension
         public bool IsValueStaticExtension
         {
-            get { return _flags[_isValueStaticExtensionSection] == 1 ? true : false; }
+            get { return _flags[_isValueStaticExtensionSection] == 1; }
             set { _flags[_isValueStaticExtensionSection] = value ? 1 : 0; }
         }
 
@@ -4878,7 +4878,7 @@ namespace System.Windows.Markup
         {
             get
             {
-                return _flags[_isInternalSection] == 1 ? true : false;
+                return _flags[_isInternalSection] == 1;
             }
 
             set

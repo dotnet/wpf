@@ -920,7 +920,7 @@ namespace System.Windows.Documents
         {
             get
             {
-                return _uiScope == null ? true : (bool)_uiScope.GetValue(KeyboardNavigation.AcceptsReturnProperty);
+                return _uiScope is null || (bool)_uiScope.GetValue(KeyboardNavigation.AcceptsReturnProperty);
             }
         }
 
@@ -932,7 +932,7 @@ namespace System.Windows.Documents
         {
             get
             {
-                return _uiScope == null ? true : (bool)_uiScope.GetValue(TextBoxBase.AcceptsTabProperty);
+                return _uiScope is null || (bool)_uiScope.GetValue(TextBoxBase.AcceptsTabProperty);
             }
             set
             {
@@ -962,7 +962,7 @@ namespace System.Windows.Documents
                 }
                 else
                 {
-                    return _uiScope == null ? false : (bool)_uiScope.GetValue(TextEditor.IsReadOnlyProperty);
+                    return _uiScope is not null && (bool)_uiScope.GetValue(TextEditor.IsReadOnlyProperty);
                 }
             }
             set
@@ -985,7 +985,7 @@ namespace System.Windows.Documents
         {
             get
             {
-                return _uiScope == null ? false : (bool)_uiScope.GetValue(SpellCheck.IsEnabledProperty);
+                return _uiScope is not null && (bool)_uiScope.GetValue(SpellCheck.IsEnabledProperty);
             }
             set
             {
@@ -1017,7 +1017,7 @@ namespace System.Windows.Documents
         {
             get
             {
-                return _uiScope == null ? true : (bool)_uiScope.GetValue(TextEditor.AllowOvertypeProperty);
+                return _uiScope is null || (bool)_uiScope.GetValue(TextEditor.AllowOvertypeProperty);
             }
         }
 
@@ -1054,7 +1054,7 @@ namespace System.Windows.Documents
         {
             get
             {
-                return _uiScope == null ? false : (bool)_uiScope.GetValue(RichTextBox.AutoWordSelectionProperty);
+                return _uiScope is not null && (bool)_uiScope.GetValue(RichTextBox.AutoWordSelectionProperty);
             }
         }
 
@@ -1066,7 +1066,7 @@ namespace System.Windows.Documents
         {
             get
             {
-                return _uiScope == null ? false : (bool)_uiScope.GetValue(TextBoxBase.IsReadOnlyCaretVisibleProperty);
+                return _uiScope is not null && (bool)_uiScope.GetValue(TextBoxBase.IsReadOnlyCaretVisibleProperty);
             }
         }
 
@@ -1297,7 +1297,7 @@ namespace System.Windows.Documents
         {
             get
             {
-                return _uiScope == null ? false : _uiScope.IsEnabled;
+                return _uiScope is not null && _uiScope.IsEnabled;
             }
         }
 

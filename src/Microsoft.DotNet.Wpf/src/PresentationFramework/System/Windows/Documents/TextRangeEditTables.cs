@@ -577,7 +577,7 @@ namespace System.Windows.Documents
 
             TableCell cell = GetTableCellFromPosition(selection.MovingPosition);
 
-            return (cell == null) ? false : !cell.Contains(selection.AnchorPosition);
+            return cell is not null && !cell.Contains(selection.AnchorPosition);
         }
 
         // Returns a new movingPosition at the first insertion position of the next Table row.

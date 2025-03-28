@@ -34,7 +34,6 @@ public sealed class BitmapImageTests
     public void Initialization_StreamSource_PNG_Succeeds()
     {
         using MemoryStream stream = new(s_png120DPI1x1);
-
         BitmapImage image = new BitmapImage();
 
         // InitializeInit

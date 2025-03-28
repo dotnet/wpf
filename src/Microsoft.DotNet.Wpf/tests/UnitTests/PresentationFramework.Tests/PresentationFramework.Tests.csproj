@@ -1,0 +1,41 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <AssemblyName>PresentationFramework.Tests</AssemblyName>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <GenerateRuntimeConfigurationFiles>true</GenerateRuntimeConfigurationFiles>
+    <Nullable>enable</Nullable>
+    <Platforms>x64;x86;arm64</Platforms>
+    <EnableUnsafeBinaryFormatterSerialization>true</EnableUnsafeBinaryFormatterSerialization>
+    <NoWarn>$(NoWarn)</NoWarn>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <TargetFramework Condition="!$(TargetFramework.Contains('windows'))">$(TargetFramework)-windows</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="$(WpfSourceDir)DirectWriteForwarder\DirectWriteForwarder.vcxproj">
+      <UndefineProperties>TargetFramework;TargetFrameworks</UndefineProperties>
+    </ProjectReference>
+    <ProjectReference Include="$(WpfSourceDir)PresentationCore\PresentationCore.csproj" />
+    <ProjectReference Include="$(WpfSourceDir)PresentationFramework\PresentationFramework.csproj" />
+    <ProjectReference Include="$(WpfSourceDir)WindowsBase\WindowsBase.csproj" />
+    <ProjectReference Include="$(WpfSourceDir)System.Xaml\System.Xaml.csproj" />
+    <ProjectReference Include="$(WpfSourceDir)Extensions\PresentationFramework-SystemDrawing\PresentationFramework-SystemDrawing.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <MicrosoftPrivateWinFormsReference Include="System.Private.Windows.Core" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Moq" Version="$(MoqPackageVersion)" />
+    <PackageReference Include="xunit.stafact" Version="$(XUnitStaFactPackageVersion)" />
+    <PackageReference Include="FluentAssertions" Version="$(FluentAssertionsVersion)" />
+    <PackageReference Include="System.Configuration.ConfigurationManager" Version="$(SystemConfigurationConfigurationManagerPackageVersion)" />
+    <PackageReference Include="$(SystemIOPackagingPackage)" Version="$(SystemIOPackagingVersion)" />
+    <PackageReference Include="System.Runtime.Serialization.Formatters" Version="$(SystemRuntimeSerializationFormattersPackageVersion)" />
+    <PackageReference Include="$(SystemDrawingCommonPackage)" Version="$(SystemDrawingCommonVersion)" />
+    <PackageReference Include="System.Private.Windows.Core.TestUtilities" Version="$(SystemPrivateWindowsCoreTestUtilitiesVersion)" />
+  </ItemGroup>
+
+</Project>

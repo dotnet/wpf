@@ -9,17 +9,10 @@
 // Please see MilCodeGen.html for more information.
 //
 
-using MS.Internal;
-using MS.Internal.Collections;
-using MS.Utility;
-using System.Collections;
-using System.ComponentModel;
-using System.Globalization;
-using System.Text;
+using System.Windows.Media.Media3D;
 using System.Windows.Markup;
-using System.Windows.Media.Media3D.Converters;
-using System.Windows.Media.Animation;
-using System.Windows.Media.Composition;
+
+using ConverterHelper = System.Windows.Markup.TypeConverterHelper;
 
 namespace System.Windows.Media.Media3D.Converters
 {
@@ -43,12 +36,7 @@ namespace System.Windows.Media.Media3D.Converters
         public override bool CanConvertToString(object value, IValueSerializerContext context)
         {
             // Validate the input type
-            if (!(value is Point3DCollection))
-            {
-                return false;
-            }
-
-            return true;
+            return value is Point3DCollection;
         }
 
         /// <summary>
@@ -56,14 +44,7 @@ namespace System.Windows.Media.Media3D.Converters
         /// </summary>
         public override object ConvertFromString(string value, IValueSerializerContext context)
         {
-            if (value != null)
-            {
-                return Point3DCollection.Parse(value );
-            }
-            else
-            {
-                return base.ConvertFromString( value, context );
-            }
+            return value is not null ? Point3DCollection.Parse(value) : base.ConvertFromString(value, context);
         }
 
         /// <summary>
@@ -71,13 +52,13 @@ namespace System.Windows.Media.Media3D.Converters
         /// </summary>
         public override string ConvertToString(object value, IValueSerializerContext context)
         {
-            if (value is Point3DCollection instance)
+            if (value is not Point3DCollection point3DCollection)
             {
-
-                return instance.ConvertToString(null, System.Windows.Markup.TypeConverterHelper.InvariantEnglishUS);
+                // Let base throw an exception.
+                return base.ConvertToString(value, context);
             }
 
-            return base.ConvertToString(value, context);
+            return point3DCollection.ConvertToString(null, ConverterHelper.InvariantEnglishUS);
         }
     }
 }

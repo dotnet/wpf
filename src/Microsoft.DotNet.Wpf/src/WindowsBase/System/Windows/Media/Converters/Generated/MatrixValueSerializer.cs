@@ -9,11 +9,10 @@
 // Please see MilCodeGen.html for more information.
 //
 
-using MS.Internal;
-using System.ComponentModel;
-using System.Globalization;
+using System.Windows.Media;
 using System.Windows.Markup;
-using System.Windows.Media.Converters;
+
+using ConverterHelper = System.Windows.Markup.TypeConverterHelper;
 
 namespace System.Windows.Media.Converters
 {
@@ -37,12 +36,7 @@ namespace System.Windows.Media.Converters
         public override bool CanConvertToString(object value, IValueSerializerContext context)
         {
             // Validate the input type
-            if (!(value is Matrix))
-            {
-                return false;
-            }
-
-            return true;
+            return value is Matrix;
         }
 
         /// <summary>
@@ -50,14 +44,7 @@ namespace System.Windows.Media.Converters
         /// </summary>
         public override object ConvertFromString(string value, IValueSerializerContext context)
         {
-            if (value != null)
-            {
-                return Matrix.Parse(value );
-            }
-            else
-            {
-                return base.ConvertFromString( value, context );
-            }
+            return value is not null ? Matrix.Parse(value) : base.ConvertFromString(value, context);
         }
 
         /// <summary>
@@ -65,13 +52,13 @@ namespace System.Windows.Media.Converters
         /// </summary>
         public override string ConvertToString(object value, IValueSerializerContext context)
         {
-            if (value is Matrix instance)
+            if (value is not Matrix matrix)
             {
-
-                return instance.ConvertToString(null, System.Windows.Markup.TypeConverterHelper.InvariantEnglishUS);
+                // Let base throw an exception.
+                return base.ConvertToString(value, context);
             }
 
-            return base.ConvertToString(value, context);
+            return matrix.ConvertToString(null, ConverterHelper.InvariantEnglishUS);
         }
     }
 }

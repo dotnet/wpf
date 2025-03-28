@@ -9,19 +9,10 @@
 // Please see MilCodeGen.html for more information.
 //
 
-using MS.Internal;
-using MS.Internal.KnownBoxes;
-using MS.Internal.Collections;
-using MS.Utility;
-using System.Collections;
-using System.ComponentModel;
-using System.Globalization;
-using System.Text;
-using System.Windows.Media.Effects;
-using System.Windows.Media.Animation;
-using System.Windows.Media.Composition;
+using System.Windows.Media;
 using System.Windows.Markup;
-using System.Windows.Media.Converters;
+
+using ConverterHelper = System.Windows.Markup.TypeConverterHelper;
 
 namespace System.Windows.Media.Converters
 {
@@ -45,14 +36,7 @@ namespace System.Windows.Media.Converters
         public override bool CanConvertToString(object value, IValueSerializerContext context)
         {
             // When invoked by the serialization engine we can convert to string only for some instances
-            if (!(value is Transform))
-            {
-                return false;
-            }
-
-            Transform instance  = (Transform) value;
-
-            return instance.CanSerializeToString();
+            return value is Transform transform && transform.CanSerializeToString();
         }
 
         /// <summary>
@@ -60,14 +44,7 @@ namespace System.Windows.Media.Converters
         /// </summary>
         public override object ConvertFromString(string value, IValueSerializerContext context)
         {
-            if (value != null)
-            {
-                return Transform.Parse(value );
-            }
-            else
-            {
-                return base.ConvertFromString( value, context );
-            }
+            return value is not null ? Transform.Parse(value) : base.ConvertFromString(value, context);
         }
 
         /// <summary>
@@ -75,19 +52,14 @@ namespace System.Windows.Media.Converters
         /// </summary>
         public override string ConvertToString(object value, IValueSerializerContext context)
         {
-            if (value is Transform instance)
+            // When invoked by the serialization engine we can convert to string only for some instances
+            if (value is not Transform transform || !transform.CanSerializeToString())
             {
-                // When invoked by the serialization engine we can convert to string only for some instances
-                if (!instance.CanSerializeToString())
-                {
-                    // Let base throw an exception.
-                    return base.ConvertToString(value, context);
-                }
-
-                return instance.ConvertToString(null, System.Windows.Markup.TypeConverterHelper.InvariantEnglishUS);
+                // Let base throw an exception.
+                return base.ConvertToString(value, context);
             }
 
-            return base.ConvertToString(value, context);
+            return transform.ConvertToString(null, ConverterHelper.InvariantEnglishUS);
         }
     }
 }

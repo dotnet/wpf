@@ -81,33 +81,6 @@ namespace System.Windows.Media.Composition
     /// </summary>
     internal partial class DUCE
     {
-        /// <summary>
-        /// CopyBytes - Poor-man's mem copy.  Copies cbData from pbFrom to pbTo.
-        /// pbFrom and pbTo must be DWORD aligned, and cbData must be a multiple of 4.
-        /// </summary>
-        /// <param name="pbTo"> byte* pointing to the "to" array.  Must be DWORD aligned. </param>
-        /// <param name="pbFrom"> byte* pointing to the "from" array.  Must be DWORD aligned. </param>
-        /// <param name="cbData"> int - count of bytes to copy.  Must be a multiple of 4. </param>
-        internal static unsafe void CopyBytes(byte* pbTo,
-                                              byte* pbFrom,
-                                              int cbData)
-        {
-            // We'd like to only handle QWORD aligned data, but the CLR can't enforce this.
-            // If there's no data to copy, it's ok if the pointers aren't aligned
-            Debug.Assert((cbData == 0) || ((Int64)(IntPtr)pbFrom) % 4 == 0);
-            Debug.Assert((cbData == 0) || ((Int64)(IntPtr)pbTo) % 4 == 0);
-            Debug.Assert(cbData % 4 == 0);
-            Debug.Assert(cbData >= 0);
-
-            Int32* pCurFrom32 = (Int32*)pbFrom;
-            Int32* pCurTo32 = (Int32*)pbTo;
-
-            for (int i = 0; i < cbData / 4; i++)
-            {
-                pCurTo32[i] = pCurFrom32[i];
-            }
-        }
-
         private static class UnsafeNativeMethods
         {
             [DllImport(DllImport.MilCore)]

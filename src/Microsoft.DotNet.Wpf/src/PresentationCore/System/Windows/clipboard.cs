@@ -31,7 +31,11 @@ public static class Clipboard
     /// <summary>
     ///  Return <see langword="true"/> if Clipboard contains the specified data format. Otherwise, return <see langword="false"/>.
     /// </summary>
-    public static bool ContainsData(string format) => !string.IsNullOrWhiteSpace(format) && ContainsDataInternal(format);
+    public static bool ContainsData(string format)
+    {
+        ArgumentException.ThrowIfNullOrEmpty(format);
+        return ContainsDataInternal(format);
+    }
 
     /// <summary>
     ///  Return <see langword="true"/> if Clipboard contains the file drop list format. Otherwise, return <see langword="false"/>.

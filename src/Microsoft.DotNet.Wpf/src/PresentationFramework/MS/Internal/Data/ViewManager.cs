@@ -195,9 +195,6 @@ namespace MS.Internal.Data
         // overload operator for ==, to be same as Equal implementation.
         public static bool operator ==(WeakRefKey left, WeakRefKey right)
         {
-            if ((object)left == null)
-                return (object)right == null;
-
             return left.Equals(right);
         }
 

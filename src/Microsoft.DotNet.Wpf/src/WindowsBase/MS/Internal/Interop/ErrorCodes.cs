@@ -317,7 +317,7 @@ namespace MS.Internal.Interop
                         var error = (Win32Error)publicStaticField.GetValue(null);
                         if ((HRESULT)error == this)
                         {
-                            return "HRESULT_FROM_WIN32(" + publicStaticField.Name + ")";
+                            return $"HRESULT_FROM_WIN32({publicStaticField.Name})";
                         }
                     }
                 }

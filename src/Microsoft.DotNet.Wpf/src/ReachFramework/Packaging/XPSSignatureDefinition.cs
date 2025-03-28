@@ -377,7 +377,7 @@ namespace System.Windows.Xps.Packaging
             if (SignBy != null)
             {
                 writer.WriteStartElement(XpsS0Markup.SignBy);
-                writer.WriteString(((DateTime)SignBy).ToUniversalTime().ToString("s", DateTimeFormatInfo.InvariantInfo) + "Z");
+                writer.WriteString(string.Create(CultureInfo.InvariantCulture, $"{((DateTime)SignBy).ToUniversalTime():s}Z"));
                 writer.WriteEndElement();
             }
 

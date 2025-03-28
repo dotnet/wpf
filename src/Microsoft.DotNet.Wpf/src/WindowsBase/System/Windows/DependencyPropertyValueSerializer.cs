@@ -27,7 +27,7 @@ namespace System.Windows
                 ValueSerializer typeSerializer = ValueSerializer.GetSerializerFor(typeof(Type), context);
                 if (typeSerializer != null)
                 {
-                    return typeSerializer.ConvertToString(property.OwnerType, context) + "." + property.Name;
+                    return $"{typeSerializer.ConvertToString(property.OwnerType, context)}.{property.Name}";
                 }
             }
 

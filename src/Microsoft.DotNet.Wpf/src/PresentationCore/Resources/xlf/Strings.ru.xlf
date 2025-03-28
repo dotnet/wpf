@@ -1217,6 +1217,11 @@
         <target state="translated">Ошибка ввода-вывода при открытии файла "{0}".</target>
         <note />
       </trans-unit>
+      <trans-unit id="ITypeDataObject_Not_Implemented">
+        <source>Data object '{0}' doesn't implement the 'ITypedDataObject' interface and can't be read using 'TryGetData&lt;T&gt;(string, out T)' methods.</source>
+        <target state="new">Data object '{0}' doesn't implement the 'ITypedDataObject' interface and can't be read using 'TryGetData&lt;T&gt;(string, out T)' methods.</target>
+        <note />
+      </trans-unit>
       <trans-unit id="Image_AlphaThresholdOutOfRange">
         <source>Alpha threshold must be from 0 through 100.</source>
         <target state="translated">Порог Alpha должен находиться в диапазоне от 0 до 100.</target>

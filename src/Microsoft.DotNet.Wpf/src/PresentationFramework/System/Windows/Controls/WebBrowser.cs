@@ -506,30 +506,21 @@ namespace System.Windows.Controls
         {
             VerifyAccess();
 
-            if (Navigating != null)
-            {
-                Navigating(this, e);
-            }
+            Navigating?.Invoke(this, e);
         }
 
         internal void OnNavigated(NavigationEventArgs e)
         {
             VerifyAccess();
 
-            if (Navigated != null)
-            {
-                Navigated(this, e);
-            }
+            Navigated?.Invoke(this, e);
         }
 
         internal void OnLoadCompleted(NavigationEventArgs e)
         {
             VerifyAccess();
 
-            if (LoadCompleted != null)
-            {
-                LoadCompleted(this, e);
-            }
+            LoadCompleted?.Invoke(this, e);
         }
 
 

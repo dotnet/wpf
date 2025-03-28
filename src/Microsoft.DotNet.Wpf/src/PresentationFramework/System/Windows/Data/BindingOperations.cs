@@ -483,15 +483,13 @@ namespace System.Windows.Data
         // Raise the CollectionRegistering event
         internal static void OnCollectionRegistering(IEnumerable collection, object parent)
         {
-            if (CollectionRegistering != null)
-                CollectionRegistering(null, new CollectionRegisteringEventArgs(collection, parent));
+            CollectionRegistering?.Invoke(null, new CollectionRegisteringEventArgs(collection, parent));
         }
 
         // Raise the CollectionViewRegistering event
         internal static void OnCollectionViewRegistering(CollectionView view)
         {
-            if (CollectionViewRegistering != null)
-                CollectionViewRegistering(null, new CollectionViewRegisteringEventArgs(view));
+            CollectionViewRegistering?.Invoke(null, new CollectionViewRegisteringEventArgs(view));
         }
 
         #if LiveShapingInstrumentation

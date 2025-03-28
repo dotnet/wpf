@@ -1674,10 +1674,7 @@ namespace Microsoft.Windows.Controls.Ribbon
 
         protected virtual void OnHighlightedItemChanged(DependencyPropertyChangedEventArgs e)
         {
-            if (HighlightChanged != null)
-            {
-                HighlightChanged(this, EventArgs.Empty);
-            }
+            HighlightChanged?.Invoke(this, EventArgs.Empty);
 
             if (ShouldExecuteCommand && e.OldValue != null)
             {

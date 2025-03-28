@@ -125,8 +125,7 @@ namespace System.Windows.Controls
                         break;
                 }
 
-                if (StatusChanged != null)
-                    StatusChanged(this, EventArgs.Empty);
+                StatusChanged?.Invoke(this, EventArgs.Empty);
             }
         }
 
@@ -474,10 +473,7 @@ namespace System.Windows.Controls
                 SetAlternationCount();
 
                 // tell generators what happened
-                if (MapChanged != null)
-                {
-                    MapChanged(null, -1, 0, uib, 0, 0);
-                }
+                MapChanged?.Invoke(null, -1, 0, uib, 0, 0);
             }
         }
 
@@ -1294,8 +1290,7 @@ namespace System.Windows.Controls
 
         internal void OnPanelChanged()
         {
-            if (PanelChanged != null)
-                PanelChanged(this, EventArgs.Empty);
+            PanelChanged?.Invoke(this, EventArgs.Empty);
         }
 
         //------------------------------------------------------
@@ -1813,8 +1808,7 @@ namespace System.Windows.Controls
             newBlock.ItemCount += count;
 
             // tell generators what happened
-            if (MapChanged != null)
-                MapChanged(block, offset, count, newBlock, newOffset, deltaCount);
+            MapChanged?.Invoke(block, offset, count, newBlock, newOffset, deltaCount);
         }
 
         // Set the AlternationIndex on a newly-realized container.  Also, reset
@@ -2086,10 +2080,7 @@ namespace System.Windows.Controls
                     ((IItemContainerGenerator)this).Remove(position, 1);
 
                     // inform layout as if the group just got removed
-                    if (ItemsChanged != null)
-                    {
-                        ItemsChanged(this, new ItemsChangedEventArgs(NotifyCollectionChangedAction.Remove, position, 1, 1));
-                    }
+                    ItemsChanged?.Invoke(this, new ItemsChangedEventArgs(NotifyCollectionChangedAction.Remove, position, 1, 1));
 
                     // create the placeholder
                     AddEmptyGroupItem(group);
@@ -2505,16 +2496,10 @@ namespace System.Windows.Controls
             }
 
             // tell generators what happened
-            if (MapChanged != null)
-            {
-                MapChanged(null, index, +1, uib, 0, 0);
-            }
+            MapChanged?.Invoke(null, index, +1, uib, 0, 0);
 
             // tell layout what happened
-            if (ItemsChanged != null)
-            {
-                ItemsChanged(this, new ItemsChangedEventArgs(NotifyCollectionChangedAction.Add, position, 1, 0));
-            }
+            ItemsChanged?.Invoke(this, new ItemsChangedEventArgs(NotifyCollectionChangedAction.Add, position, 1, 0));
         }
 
 
@@ -2550,16 +2535,10 @@ namespace System.Windows.Controls
             RemoveAndCoalesceBlocksIfNeeded(block);
 
             // tell generators what happened
-            if (MapChanged != null)
-            {
-                MapChanged(null, itemIndex, -1, null, 0, 0);
-            }
+            MapChanged?.Invoke(null, itemIndex, -1, null, 0, 0);
 
             // tell layout what happened
-            if (ItemsChanged != null)
-            {
-                ItemsChanged(this, new ItemsChangedEventArgs(NotifyCollectionChangedAction.Remove, position, 1, containerCount));
-            }
+            ItemsChanged?.Invoke(this, new ItemsChangedEventArgs(NotifyCollectionChangedAction.Remove, position, 1, containerCount));
 
             // unhook the container.  Do this after layout has (presumably) removed it from
             // the UI, so that it doesn't inherit DataContext falsely.
@@ -2615,10 +2594,7 @@ namespace System.Windows.Controls
                     rib.RealizeItem(offsetFromBlockStart, newItem, newContainer);
                     LinkContainerToItem(newContainer, newItem);
 
-                    if (ItemsChanged != null)
-                    {
-                        ItemsChanged(this, new ItemsChangedEventArgs(NotifyCollectionChangedAction.Replace, position, 1, 1));
-                    }
+                    ItemsChanged?.Invoke(this, new ItemsChangedEventArgs(NotifyCollectionChangedAction.Replace, position, 1, 1));
 
                     // after layout has removed the old container, unlink it
                     UnlinkContainerFromItem(container, oldItem);
@@ -2726,10 +2702,7 @@ namespace System.Windows.Controls
             DependencyObject parent = VisualTreeHelper.GetParentInternal(container);
 
             // tell layout what happened
-            if (ItemsChanged != null)
-            {
-                ItemsChanged(this, new ItemsChangedEventArgs(NotifyCollectionChangedAction.Move, position, oldPosition, 1, containerCount));
-            }
+            ItemsChanged?.Invoke(this, new ItemsChangedEventArgs(NotifyCollectionChangedAction.Move, position, oldPosition, 1, containerCount));
 
             // unhook the container.  Do this after layout has (presumably) removed it from
             // the UI, so that it doesn't inherit DataContext falsely.

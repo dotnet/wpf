@@ -1050,18 +1050,12 @@ namespace Microsoft.Windows.Controls.Ribbon
 
         private void OnDropDownOpened(EventArgs e)
         {
-            if (DropDownOpened != null)
-            {
-                DropDownOpened(this, e);
-            }
+            DropDownOpened?.Invoke(this, e);
         }
 
         private void OnDropDownClosed(EventArgs e)
         {
-            if (DropDownClosed != null)
-            {
-                DropDownClosed(this, e);
-            }
+            DropDownClosed?.Invoke(this, e);
         }
 
         private static void OnIsDropDownOpenChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)

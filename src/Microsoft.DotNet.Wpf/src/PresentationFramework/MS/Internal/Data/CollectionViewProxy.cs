@@ -1034,16 +1034,14 @@ namespace MS.Internal.Data
         {
             //             VerifyAccess();    // will throw an exception if caller is not in correct UiContext
 
-            if (PrivateCurrentChanging != null)
-                PrivateCurrentChanging(this, args);
+            PrivateCurrentChanging?.Invoke(this, args);
         }
 
         private void _OnCurrentChanged(object sender, EventArgs args)
         {
             //             VerifyAccess();    // will throw an exception if caller is not in correct UiContext
 
-            if (PrivateCurrentChanged != null)
-                PrivateCurrentChanged(this, args);
+            PrivateCurrentChanged?.Invoke(this, args);
         }
 
         private IndexedEnumerable EnumerableWrapper

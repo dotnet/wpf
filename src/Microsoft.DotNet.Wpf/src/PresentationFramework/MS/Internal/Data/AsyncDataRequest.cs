@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -124,8 +124,7 @@ namespace MS.Internal.Data
             if (ChangeStatus(AsyncRequestStatus.Completed))
             {
                 _result = result;
-                if (_completedCallback != null)
-                    _completedCallback(this);
+                _completedCallback?.Invoke(this);
             }
         }
 
@@ -149,8 +148,7 @@ namespace MS.Internal.Data
             if (ChangeStatus(AsyncRequestStatus.Failed))
             {
                 _exception = exception;
-                if (_completedCallback != null)
-                    _completedCallback(this);
+                _completedCallback?.Invoke(this);
             }
         }
 

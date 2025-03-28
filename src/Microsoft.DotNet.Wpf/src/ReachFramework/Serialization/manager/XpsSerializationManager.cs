@@ -1095,10 +1095,7 @@ namespace System.Windows.Xps.Serialization
 
                 XpsSerializationPrintTicketRequired(this,e);
 
-                if (XpsSerializationPrintTicketRequiredOnXpsDriverDocEvent != null)
-                {
-                    XpsSerializationPrintTicketRequiredOnXpsDriverDocEvent(this, e);
-                }
+                XpsSerializationPrintTicketRequiredOnXpsDriverDocEvent?.Invoke(this, e);
             }
         }
 
@@ -1109,10 +1106,7 @@ namespace System.Windows.Xps.Serialization
         {
             XpsSerializationProgressChangedEventArgs e = operationState as XpsSerializationProgressChangedEventArgs;
 
-            if(XpsSerializationProgressChanged != null)
-            {
-                XpsSerializationProgressChanged(this,e);
-            }
+            XpsSerializationProgressChanged?.Invoke(this, e);
         }
 
         internal
@@ -1121,10 +1115,7 @@ namespace System.Windows.Xps.Serialization
             XpsSerializationXpsDriverDocEventArgs e
             )
         {
-            if (XpsSerializationXpsDriverDocEvent != null)
-            {
-                XpsSerializationXpsDriverDocEvent(this, e);
-            }
+            XpsSerializationXpsDriverDocEvent?.Invoke(this, e);
         }
 
         private

@@ -1588,10 +1588,7 @@ namespace System.Windows.Controls
         // Announces a layout change to any listeners.
         private void FireTextViewUpdatedEvent()
         {
-            if (UpdatedEvent != null)
-            {
-                UpdatedEvent(this, EventArgs.Empty);
-            }
+            UpdatedEvent?.Invoke(this, EventArgs.Empty);
         }
 
         // Returns the index of a line containing point, or -1 if no such

@@ -525,10 +525,7 @@ namespace System.Windows.Navigation
         {
             BackStack.OnCollectionChanged();
             ForwardStack.OnCollectionChanged();
-            if (_backForwardStateChange != null)
-            {
-                _backForwardStateChange(this, EventArgs.Empty);
-            }
+            _backForwardStateChange?.Invoke(this, EventArgs.Empty);
         }
 
         /// <summary> Returns the entry the GoBack command would navigate to; null/-1 if can't go back. </summary>

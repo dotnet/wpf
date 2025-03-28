@@ -214,10 +214,7 @@ namespace System.Windows.Documents
         /// <param name="e">Event arguments for the GetPageCompleted event.</param>
         protected virtual void OnGetPageCompleted(GetPageCompletedEventArgs e)
         {
-            if (this.GetPageCompleted != null)
-            {
-                this.GetPageCompleted(this, e);
-            }
+            this.GetPageCompleted?.Invoke(this, e);
         }
 
         /// <summary>
@@ -226,10 +223,7 @@ namespace System.Windows.Documents
         /// <param name="e">Event arguments for the ComputePageCountCompleted event.</param>
         protected virtual void OnComputePageCountCompleted(AsyncCompletedEventArgs e)
         {
-            if (this.ComputePageCountCompleted != null)
-            {
-                this.ComputePageCountCompleted(this, e);
-            }
+            this.ComputePageCountCompleted?.Invoke(this, e);
         }
 
         /// <summary>
@@ -238,10 +232,7 @@ namespace System.Windows.Documents
         /// <param name="e">Event arguments for the PagesChanged event.</param>
         protected virtual void OnPagesChanged(PagesChangedEventArgs e)
         {
-            if (this.PagesChanged != null)
-            {
-                this.PagesChanged(this, e);
-            }
+            this.PagesChanged?.Invoke(this, e);
         }
 
         #endregion Protected Methods

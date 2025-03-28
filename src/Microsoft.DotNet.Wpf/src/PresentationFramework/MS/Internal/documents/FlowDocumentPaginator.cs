@@ -677,10 +677,7 @@ namespace MS.Internal.Documents
         /// </summary>
         private void InvalidateBRT()
         {
-            if (BreakRecordTableInvalidated != null)
-            {
-                BreakRecordTableInvalidated(this, EventArgs.Empty);
-            }
+            BreakRecordTableInvalidated?.Invoke(this, EventArgs.Empty);
 
             _brt.OnInvalidateLayout();
         }

@@ -298,11 +298,7 @@ namespace System.Windows.Input
             _weakFocusChangedHandlers.Process(
                         delegate(object item)
                         {
-                            KeyboardFocusChangedEventHandler handler = item as KeyboardFocusChangedEventHandler;
-                            if (handler != null)
-                            {
-                                handler(sender, e);
-                            }
+                            (item as KeyboardFocusChangedEventHandler)?.Invoke(sender, e);
                             return false;
                         } );
         }
@@ -3442,11 +3438,7 @@ namespace System.Windows.Input
             _weakFocusEnterMainFocusScopeHandlers.Process(
                         delegate(object item)
                         {
-                            EventHandler handler = item as EventHandler;
-                            if (handler != null)
-                            {
-                                handler(sender, e);
-                            }
+                            (item as EventHandler)?.Invoke(sender, e);
                             return false;
                         } );
         }

@@ -835,10 +835,7 @@ namespace System.Windows.Interop
                                                    0, 0, newWidth, newHeight,
                                                    NativeMethods.SWP_NOMOVE | NativeMethods.SWP_NOZORDER | NativeMethods.SWP_NOACTIVATE);
 
-                    if (AutoResized != null)
-                    {
-                        AutoResized(this, new AutoResizedEventArgs(newSize));
-                    }
+                    AutoResized?.Invoke(this, new AutoResizedEventArgs(newSize));
                 }
             }
             finally
@@ -1508,10 +1505,7 @@ namespace System.Windows.Interop
                 rootUIElement.UpdateLayout(); //finalizes layout
 
 
-                if (SizeToContentChanged != null)
-                {
-                    SizeToContentChanged(this, EventArgs.Empty);
-                }
+                SizeToContentChanged?.Invoke(this, EventArgs.Empty);
             }
         }
 

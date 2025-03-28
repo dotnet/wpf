@@ -1958,8 +1958,7 @@ namespace System.Windows
             // Setting WindowBackdrop
             WindowBackdropManager.SetBackdrop(this, WindowBackdropType);
 
-            EventHandler handler = (EventHandler)Events[EVENT_SOURCEINITIALIZED];
-            if (handler != null) handler(this, e);
+            ((EventHandler)Events[EVENT_SOURCEINITIALIZED])?.Invoke(this, e);
         }
 
         /// <summary>
@@ -1976,8 +1975,7 @@ namespace System.Windows
         protected virtual void OnActivated(EventArgs e)
         {
             VerifyContextAndObjectState();
-            EventHandler handler = (EventHandler)Events[EVENT_ACTIVATED];
-            if (handler != null) handler(this, e);
+            ((EventHandler)Events[EVENT_ACTIVATED])?.Invoke(this, e);
         }
 
         /// <summary>
@@ -1993,8 +1991,7 @@ namespace System.Windows
         protected virtual void OnDeactivated(EventArgs e)
         {
             VerifyContextAndObjectState();
-            EventHandler handler = (EventHandler)Events[EVENT_DEACTIVATED];
-            if (handler != null) handler(this, e);
+            ((EventHandler)Events[EVENT_DEACTIVATED])?.Invoke(this, e);
         }
 
         /// <summary>
@@ -2010,8 +2007,7 @@ namespace System.Windows
         protected virtual void OnStateChanged(EventArgs e)
         {
             VerifyContextAndObjectState();
-            EventHandler handler = (EventHandler)Events[EVENT_STATECHANGED];
-            if (handler != null) handler(this, e);
+            ((EventHandler)Events[EVENT_STATECHANGED])?.Invoke(this, e);
         }
 
         /// <summary>
@@ -2027,8 +2023,7 @@ namespace System.Windows
         protected virtual void OnLocationChanged(EventArgs e)
         {
             VerifyContextAndObjectState();
-            EventHandler handler = (EventHandler)Events[EVENT_LOCATIONCHANGED];
-            if (handler != null) handler(this, e);
+            ((EventHandler)Events[EVENT_LOCATIONCHANGED])?.Invoke(this, e);
         }
 
         /// <summary>
@@ -2045,8 +2040,7 @@ namespace System.Windows
         protected virtual void OnClosing(CancelEventArgs e)
         {
             VerifyContextAndObjectState();
-            CancelEventHandler handler = (CancelEventHandler)Events[EVENT_CLOSING];
-            if (handler != null) handler(this, e);
+            ((CancelEventHandler)Events[EVENT_CLOSING])?.Invoke(this, e);
         }
 
         /// <summary>
@@ -2062,8 +2056,7 @@ namespace System.Windows
         protected virtual void OnClosed(EventArgs e)
         {
             VerifyContextAndObjectState();
-            EventHandler handler = (EventHandler)Events[EVENT_CLOSED];
-            if (handler != null) handler(this, e);
+            ((EventHandler)Events[EVENT_CLOSED])?.Invoke(this, e);
         }
 
         /// <summary>
@@ -2083,8 +2076,7 @@ namespace System.Windows
                 focusedElement?.Focus();
             }
 
-            EventHandler handler = (EventHandler)Events[EVENT_CONTENTRENDERED];
-            if (handler != null) handler(this, e);
+            ((EventHandler)Events[EVENT_CONTENTRENDERED])?.Invoke(this, e);
         }
         #endregion Protected Methods
 

@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -210,11 +210,7 @@ namespace System.Windows.Shell
 
         private void NotifyDependencyPropertyChanged(DependencyPropertyChangedEventArgs e)
         {
-            DependencyPropertyChangedEventHandler handler = PropertyChanged;
-            if (handler != null)
-            {
-                handler(this, e);
-            }
+            PropertyChanged?.Invoke(this, e);
         }
 
         // Used by Window to receive notifications about sub-property changes.

@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -769,11 +769,7 @@ namespace System.Windows
                 {
                     if (listener.HasHandler)
                     {
-                        EventHandler handler = (EventHandler)listener.Handler;
-                        if (handler != null)
-                        {
-                            handler(sender, args);
-                        }
+                        ((EventHandler)listener.Handler)?.Invoke(sender, args);
                     }
                     else
                     {

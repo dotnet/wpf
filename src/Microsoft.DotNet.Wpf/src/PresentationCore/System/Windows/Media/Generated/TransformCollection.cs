@@ -563,18 +563,12 @@ namespace System.Windows.Media
 
         private void OnInsert(object item)
         {
-            if (ItemInserted != null)
-            {
-                ItemInserted(this, item);
-            }
+            ItemInserted?.Invoke(this, item);
         }
 
         private void OnRemove(object oldValue)
         {
-            if (ItemRemoved != null)
-            {
-                ItemRemoved(this, oldValue);
-            }
+            ItemRemoved?.Invoke(this, oldValue);
         }
 
         private void OnSet(object oldValue, object newValue)

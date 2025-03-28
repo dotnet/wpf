@@ -440,8 +440,7 @@ namespace System.Windows.Data
 
         private void OnContainedCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
-            if (ContainedCollectionChanged != null)
-                ContainedCollectionChanged(sender, e);
+            ContainedCollectionChanged?.Invoke(sender, e);
         }
 
         #endregion Internal Events
@@ -499,28 +498,19 @@ namespace System.Windows.Data
             _hasRepeatedCollectionIsValid = false;
 #endif
 
-            if (CollectionChanged != null)
-            {
-                CollectionChanged(this, new NotifyCollectionChangedEventArgs(action));
-            }
+            CollectionChanged?.Invoke(this, new NotifyCollectionChangedEventArgs(action));
         }
 
         // raise CollectionChanged event to any listeners
         private void OnCollectionChanged(NotifyCollectionChangedAction action, object item, int index)
         {
-            if (CollectionChanged != null)
-            {
-                CollectionChanged(this, new NotifyCollectionChangedEventArgs(action, item, index));
-            }
+            CollectionChanged?.Invoke(this, new NotifyCollectionChangedEventArgs(action, item, index));
         }
 
         /// raise CollectionChanged event to any listeners
         private void OnCollectionChanged(NotifyCollectionChangedAction action, object oldItem, object newItem, int index)
         {
-            if (CollectionChanged != null)
-            {
-                CollectionChanged(this, new NotifyCollectionChangedEventArgs(action, newItem, oldItem, index));
-            }
+            CollectionChanged?.Invoke(this, new NotifyCollectionChangedEventArgs(action, newItem, oldItem, index));
         }
 
         #endregion Private Methods

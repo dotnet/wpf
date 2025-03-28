@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -302,10 +302,7 @@ namespace System.Windows.Data
         /// </summary>
         protected virtual void OnPropertyChanged(PropertyChangedEventArgs e)
         {
-            if (PropertyChanged != null)
-            {
-                PropertyChanged(this, e);
-            }
+            PropertyChanged?.Invoke(this, e);
         }
 
         /// <summary>
@@ -373,15 +370,11 @@ namespace System.Windows.Data
 
             _data = newData;
 
-            if (completionWork != null)
-                completionWork(callbackArgs);
+            completionWork?.Invoke(callbackArgs);
 
             // notify any listeners
             OnPropertyChanged(new PropertyChangedEventArgs(nameof(Data)));
-            if (DataChanged != null)
-            {
-                DataChanged(this, EventArgs.Empty);
-            }
+            DataChanged?.Invoke(this, EventArgs.Empty);
             if (errorChanged)
                 OnPropertyChanged(new PropertyChangedEventArgs(nameof(Error)));
         }

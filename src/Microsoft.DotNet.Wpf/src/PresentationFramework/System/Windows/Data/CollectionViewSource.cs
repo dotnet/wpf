@@ -1133,12 +1133,7 @@ namespace System.Windows.Data
         private bool WrapFilter(object item)
         {
             FilterEventArgs args = new FilterEventArgs(item);
-            FilterEventHandler handlers = FilterHandlersField.GetValue(this);
-
-            if (handlers != null)
-            {
-                handlers(this, args);
-            }
+            FilterHandlersField.GetValue(this)?.Invoke(this, args);
 
             return args.Accepted;
         }

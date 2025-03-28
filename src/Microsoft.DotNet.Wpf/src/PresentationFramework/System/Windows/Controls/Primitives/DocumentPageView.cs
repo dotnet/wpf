@@ -801,10 +801,7 @@ namespace System.Windows.Controls.Primitives
         private void OnPageDisconnected()
         {
             _textView?.OnPageDisconnected();
-            if (this.PageDisconnected != null)
-            {
-                this.PageDisconnected(this, EventArgs.Empty);
-            }
+            this.PageDisconnected?.Invoke(this, EventArgs.Empty);
         }
 
         /// <summary>

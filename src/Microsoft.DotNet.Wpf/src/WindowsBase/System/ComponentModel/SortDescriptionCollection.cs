@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -105,19 +105,13 @@ namespace System.ComponentModel
         /// </summary>
         private void OnCollectionChanged(NotifyCollectionChangedAction action, object item, int index)
         {
-            if (CollectionChanged != null)
-            {
-                CollectionChanged(this, new NotifyCollectionChangedEventArgs(action, item, index));
-            }
+            CollectionChanged?.Invoke(this, new NotifyCollectionChangedEventArgs(action, item, index));
         }
 
         // raise CollectionChanged event to any listeners
         private void OnCollectionChanged(NotifyCollectionChangedAction action)
         {
-            if (CollectionChanged != null)
-            {
-                CollectionChanged(this, new NotifyCollectionChangedEventArgs(action));
-            }
+            CollectionChanged?.Invoke(this, new NotifyCollectionChangedEventArgs(action));
         }
         #endregion Protected Methods
 

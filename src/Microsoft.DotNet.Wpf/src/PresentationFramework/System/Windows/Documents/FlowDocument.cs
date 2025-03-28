@@ -1242,12 +1242,9 @@ namespace System.Windows.Documents
                 fd._formatter?.OnContentInvalidated(true);
 
                 // Fire notification about the PageSize change - needed in RichTextBox
-                if (fd.PageSizeChanged != null)
-                {
-                    // NOTE: May execute external code, so it is possible to get
-                    //       an exception here.
-                    fd.PageSizeChanged(fd, EventArgs.Empty);
-                }
+                // NOTE: May execute external code, so it is possible to get
+                //       an exception here.
+                fd.PageSizeChanged?.Invoke(fd, EventArgs.Empty);
             }
         }
 

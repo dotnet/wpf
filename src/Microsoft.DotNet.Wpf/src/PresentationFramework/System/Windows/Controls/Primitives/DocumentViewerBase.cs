@@ -450,10 +450,7 @@ namespace System.Windows.Controls.Primitives
         protected virtual void OnPageViewsChanged()
         {
             // Raise notification about change to DocumentPageView collection.
-            if (this.PageViewsChanged != null)
-            {
-                this.PageViewsChanged(this, EventArgs.Empty);
-            }
+            this.PageViewsChanged?.Invoke(this, EventArgs.Empty);
             // Change of DocumentPageView collection may cause invalidation of content
             // represented by DocumentPageViews.
             OnMasterPageNumberChanged();

@@ -319,10 +319,7 @@ namespace MS.Internal
                     dumpDocumentPage = _documentPageToDumpHandler[t] as DumpCustomDocumentPage;
                     t = t.BaseType;
                 }
-                if (dumpDocumentPage != null)
-                {
-                    dumpDocumentPage(writer, page);
-                }                
+                dumpDocumentPage?.Invoke(writer, page);
             }
 
             writer.WriteEndElement();

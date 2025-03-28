@@ -1198,10 +1198,7 @@ namespace MS.Internal.Documents
         /// <param name="args">The event arguments</param>
         private void RaiseRMStatusChange(RightsManagementStatusEventArgs args)
         {
-            if (RMStatusChange != null)
-            {
-                RMStatusChange(this, args);
-            }
+            RMStatusChange?.Invoke(this, args);
         }
 
         /// <summary>
@@ -1223,10 +1220,7 @@ namespace MS.Internal.Documents
         /// <param name="args">The event arguments</param>
         private void RaiseRMPolicyChange(RightsManagementPolicyEventArgs args)
         {
-            if (RMPolicyChange != null)
-            {
-                RMPolicyChange(this, args);
-            }
+            RMPolicyChange?.Invoke(this, args);
         }
 
         /// <summary>
@@ -1245,10 +1239,7 @@ namespace MS.Internal.Documents
         /// <param name="args">The event arguments</param>
         private void RaisePublishLicenseChange(EventArgs args)
         {
-            if (PublishLicenseChange != null)
-            {
-                PublishLicenseChange(this, args);
-            }
+            PublishLicenseChange?.Invoke(this, args);
         }
 
         /// <summary>

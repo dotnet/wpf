@@ -33,5 +33,5 @@ namespace System.Windows.Media
         ///     Repeat - Repeat - The gradient is drawn again and again.
         /// </summary>
         Repeat = 2,
-    }   
+    }
 }

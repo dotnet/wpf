@@ -36,5 +36,5 @@ namespace System.Windows
         ///     Baseline - Baseline position
         /// </summary>
         Baseline = 3,
-    }   
+    }
 }

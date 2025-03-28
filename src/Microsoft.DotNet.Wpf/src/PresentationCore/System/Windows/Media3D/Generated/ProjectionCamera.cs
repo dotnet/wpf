@@ -108,7 +108,7 @@ namespace System.Windows.Media.Media3D
         {
             get
             {
-                return (double) GetValue(NearPlaneDistanceProperty);
+                return (double)GetValue(NearPlaneDistanceProperty);
             }
             set
             {
@@ -123,7 +123,7 @@ namespace System.Windows.Media.Media3D
         {
             get
             {
-                return (double) GetValue(FarPlaneDistanceProperty);
+                return (double)GetValue(FarPlaneDistanceProperty);
             }
             set
             {
@@ -138,7 +138,7 @@ namespace System.Windows.Media.Media3D
         {
             get
             {
-                return (Point3D) GetValue(PositionProperty);
+                return (Point3D)GetValue(PositionProperty);
             }
             set
             {
@@ -153,7 +153,7 @@ namespace System.Windows.Media.Media3D
         {
             get
             {
-                return (Vector3D) GetValue(LookDirectionProperty);
+                return (Vector3D)GetValue(LookDirectionProperty);
             }
             set
             {
@@ -168,7 +168,7 @@ namespace System.Windows.Media.Media3D
         {
             get
             {
-                return (Vector3D) GetValue(UpDirectionProperty);
+                return (Vector3D)GetValue(UpDirectionProperty);
             }
             set
             {

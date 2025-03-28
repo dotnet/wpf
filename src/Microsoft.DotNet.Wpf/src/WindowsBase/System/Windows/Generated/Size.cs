@@ -78,7 +78,7 @@ namespace System.Windows
         /// </returns>
         /// <param name='size1'>The first Size to compare</param>
         /// <param name='size2'>The second Size to compare</param>
-        public static bool Equals (Size size1, Size size2)
+        public static bool Equals(Size size1, Size size2)
         {
             if (size1.IsEmpty)
             {

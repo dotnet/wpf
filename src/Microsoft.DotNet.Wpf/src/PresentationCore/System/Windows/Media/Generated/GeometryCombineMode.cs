@@ -41,5 +41,5 @@ namespace System.Windows.Media
         ///     first geometry but not the second geometry.
         /// </summary>
         Exclude = 3,
-    }   
+    }
 }

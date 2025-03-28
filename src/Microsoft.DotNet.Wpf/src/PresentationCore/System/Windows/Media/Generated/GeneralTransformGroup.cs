@@ -76,7 +76,7 @@ namespace System.Windows.Media
         {
             get
             {
-                return (GeneralTransformCollection) GetValue(ChildrenProperty);
+                return (GeneralTransformCollection)GetValue(ChildrenProperty);
             }
             set
             {

@@ -592,7 +592,7 @@ namespace MS.Internal.MilCodeGen.Generators
                                 _renderData.WriteDataRecord(MILCMD.Mil[[renderdataInstruction.Name]],
                                                             (byte*)&record,
                                                             [[renderdataInstruction.GetPaddedSize(false /* no animations */)]] /* sizeof([[renderdataInstruction.StructName]]) */);
-                            }                           
+                            }
                             
                             [[WriteStackOperation(renderdataInstruction, true)]]                            
                             [[WriteEffectStackOperation(renderdataInstruction)]]                                                                                  
@@ -666,7 +666,7 @@ namespace MS.Internal.MilCodeGen.Generators
                                     "h{propertyName}Animations = UseAnimations({localName}, {localName}Animations);")]]
 
                                 [[renderdataInstruction.StructName]]_ANIMATE record =
-                                    new [[renderdataInstruction.StructName]]_ANIMATE (
+                                    new [[renderdataInstruction.StructName]]_ANIMATE(
                                         [[callingListAnimate]]
                                         );
 
@@ -676,7 +676,7 @@ namespace MS.Internal.MilCodeGen.Generators
                                 _renderData.WriteDataRecord(MILCMD.Mil[[renderdataInstruction.Name]]Animate,
                                                             (byte*)&record,
                                                             [[renderdataInstruction.GetPaddedSize(true /* include animations */)]] /* sizeof([[renderdataInstruction.StructName]]_ANIMATE) */);
-                            }                            
+                            }
                             
                             [[WriteStackOperation(renderdataInstruction, true)]]
                             [[WriteEffectStackOperation(renderdataInstruction)]]                                                        
@@ -907,7 +907,7 @@ namespace MS.Internal.MilCodeGen.Generators
                     foreach(McgField field in instruction.BasicPublicFields)
                     {
                         // Field is a resource that can not be passed by value.
-                        if(!field.Type.IsValueType)
+                        if (!field.Type.IsValueType)
                         {
                             string handleName = "data.h" + field.PropertyName;
 
@@ -992,7 +992,7 @@ namespace MS.Internal.MilCodeGen.Generators
                         foreach(McgField field in instruction.AllPublicFields)
                         {
                             // Field is a resource that can not be passed by value or an animation
-                            if(!field.Type.IsValueType || field.IsAnimated)
+                            if (!field.Type.IsValueType || field.IsAnimated)
                             {
                                 string handleName = "data.h" + field.PropertyName;
 
@@ -1089,7 +1089,7 @@ namespace MS.Internal.MilCodeGen.Generators
                 foreach(McgField field in instruction.BasicPublicFields)
                 {
                     // Field is a resource that can not be passed by value.
-                    if(!field.Type.IsValueType)
+                    if (!field.Type.IsValueType)
                     {
                         param = "(" + field.Type.Name + ")DependentLookup(data->h" + field.PropertyName + ")";
                     }
@@ -1147,7 +1147,7 @@ namespace MS.Internal.MilCodeGen.Generators
                     foreach(McgField field in instruction.AllPublicFields)
                     {
                         // Field is a resource that can not be passed by value.
-                        if(!field.Type.IsValueType)
+                        if (!field.Type.IsValueType)
                         {
                             param = "(" + field.Type.Name + ")DependentLookup(data->h" + field.PropertyName + ")";
 
@@ -1179,7 +1179,7 @@ namespace MS.Internal.MilCodeGen.Generators
                                     // of the animated properties.
                                     //
                                     bool hasAdvancedFields = ResourceModel.Filter(instruction.AllPublicFields, ResourceModel.IsAdvancedField).Length > 0;
-                                    if(field.IsAnimated && hasAdvancedFields)
+                                    if (field.IsAnimated && hasAdvancedFields)
                                     {
                                         animatedParamList.Append("null");
                                     }
@@ -1671,7 +1671,7 @@ namespace MS.Internal.MilCodeGen.Generators
                                 }
 
                                 *(reinterpret_cast<UINT*>(&pData->coordinate)) = m_rgpGuidelineKits.GetCount() - 1;
-                            }              
+                            }
                     [[/inline]]
                     );
             }
@@ -1888,7 +1888,7 @@ namespace MS.Internal.MilCodeGen.Generators
                 }
                 // If in-parameters can cause the operation to become a no-op, write a check
                 // that no-ops the operation when the no-op conditions are met.
-                else if(instruction.NoOpGroups != null &&
+                else if (instruction.NoOpGroups != null &&
                         instruction.NoOpGroups.Length > 0)
                 {
                     returnString = WriteNoOpCheck(instruction, isManaged, indent);
@@ -2405,7 +2405,7 @@ namespace MS.Internal.MilCodeGen.Generators
             foreach(McgField field in fields)
             {
                 // Field is a resource that can not be passed by value or an animation
-                if(!field.Type.IsValueType || (animated && field.IsAnimated))
+                if (!field.Type.IsValueType || (animated && field.IsAnimated))
                 {
                     return true;
                 }

@@ -30,6 +30,6 @@ namespace System.Windows.Media
             return (value == AlignmentX.Left) || 
                    (value == AlignmentX.Center) || 
                    (value == AlignmentX.Right);
-        }                                
+        }
     }
 }

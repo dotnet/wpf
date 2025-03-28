@@ -69,7 +69,7 @@ namespace System.Windows.Media.Effects
         {
             get
             {
-                return (BitmapEffectCollection) GetValue(ChildrenProperty);
+                return (BitmapEffectCollection)GetValue(ChildrenProperty);
             }
             set
             {

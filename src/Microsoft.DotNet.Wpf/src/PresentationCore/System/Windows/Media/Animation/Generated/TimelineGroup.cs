@@ -66,7 +66,7 @@ namespace System.Windows.Media.Animation
         {
             get
             {
-                return (TimelineCollection) GetValue(ChildrenProperty);
+                return (TimelineCollection)GetValue(ChildrenProperty);
             }
             set
             {

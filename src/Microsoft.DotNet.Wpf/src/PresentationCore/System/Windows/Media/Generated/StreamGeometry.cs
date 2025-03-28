@@ -82,7 +82,7 @@ namespace System.Windows.Media
         {
             get
             {
-                return (FillRule) GetValue(FillRuleProperty);
+                return (FillRule)GetValue(FillRuleProperty);
             }
             set
             {

@@ -95,7 +95,7 @@ namespace System.Windows.Media
         {
             get
             {
-                return (FillRule) GetValue(FillRuleProperty);
+                return (FillRule)GetValue(FillRuleProperty);
             }
             set
             {
@@ -110,7 +110,7 @@ namespace System.Windows.Media
         {
             get
             {
-                return (PathFigureCollection) GetValue(FiguresProperty);
+                return (PathFigureCollection)GetValue(FiguresProperty);
             }
             set
             {

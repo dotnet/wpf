@@ -118,7 +118,7 @@ namespace System.Windows.Media.Effects
         {
             get
             {
-                return (PixelShader) GetValue(PixelShaderProperty);
+                return (PixelShader)GetValue(PixelShaderProperty);
             }
             set
             {

@@ -111,7 +111,7 @@ namespace System.Windows.Media
         {
             get
             {
-                return (MediaPlayer) GetValue(PlayerProperty);
+                return (MediaPlayer)GetValue(PlayerProperty);
             }
             set
             {
@@ -126,7 +126,7 @@ namespace System.Windows.Media
         {
             get
             {
-                return (Rect) GetValue(RectProperty);
+                return (Rect)GetValue(RectProperty);
             }
             set
             {

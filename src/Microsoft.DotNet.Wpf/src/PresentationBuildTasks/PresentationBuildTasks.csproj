@@ -75,7 +75,7 @@
 
   <ItemGroup>
     <Compile Include="SR.cs" />
-    <Compile Include="$(WpfCommonDir)src\System\SR.cs" >
+    <Compile Include="$(WpfCommonDir)src\System\SR.cs">
       <Link>Common\System\SR.cs</Link>
     </Compile>
 
@@ -206,9 +206,6 @@
     </Compile>
     <Compile Include="$(WpfSourceDir)\PresentationFramework\System\Windows\Markup\TemplateXamlParser.cs">
       <Link>PresentationFramework\System\Windows\Markup\TemplateXamlParser.cs</Link>
-    </Compile>
-    <Compile Include="$(WpfSourceDir)\PresentationFramework\System\Windows\Markup\TreeBuilder.cs">
-      <Link>PresentationFramework\System\Windows\Markup\TreeBuilder.cs</Link>
     </Compile>
     <Compile Include="$(WpfSourceDir)\PresentationFramework\System\Windows\Markup\TypeContext.cs">
       <Link>PresentationFramework\System\Windows\Markup\TypeContext.cs</Link>

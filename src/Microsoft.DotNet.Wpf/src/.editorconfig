@@ -200,9 +200,6 @@ dotnet_diagnostic.IDE0062.severity = suggestion
 # IDE0063: Use simple 'using' statement
 dotnet_diagnostic.IDE0063.severity = suggestion
 
-# IDE0065: Misplaced using directive
-dotnet_diagnostic.IDE0065.severity = suggestion
-
 # IDE0066: Convert switch statement to expression
 dotnet_diagnostic.IDE0066.severity = suggestion
 
@@ -214,9 +211,6 @@ dotnet_diagnostic.IDE0074.severity = suggestion
 
 # IDE0075: Simplify conditional expression
 dotnet_diagnostic.IDE0075.severity = suggestion
-
-# IDE0076: Invalid global 'SuppressMessageAttribute'
-dotnet_diagnostic.IDE0076.severity = suggestion
 
 # IDE0077: Avoid legacy global suppression format
 dotnet_diagnostic.IDE0077.severity = suggestion

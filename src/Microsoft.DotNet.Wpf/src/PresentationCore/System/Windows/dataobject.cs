@@ -2316,7 +2316,7 @@ namespace System.Windows
             public int Skip(int celt)
             {
                 // Make sure we don't overflow on the skip.
-                _current = _current + (int)Math.Min(celt, Int32.MaxValue - _current);
+                _current += (int)Math.Min(celt, Int32.MaxValue - _current);
 
                 return (_current < _formats.Length) ? NativeMethods.S_OK : NativeMethods.S_FALSE;
             }

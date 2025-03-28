@@ -176,7 +176,7 @@ namespace System.Windows.Controls
 
             if (_complexContent == null)
             {
-                Text = Text + text;
+                Text += text;
             }
             else
             {
@@ -2328,7 +2328,7 @@ Debug.Assert(lineCount == LineCount);
                                        && TextPointerBase.IsNextToAnyBreak(endOfLineTextPointer, LogicalDirection.Backward))
                                     {
                                         double endOfParaGlyphWidth = FontSize * CaretElement.c_endOfParaMagicMultiplier;
-                                        rect.Width = rect.Width + endOfParaGlyphWidth;
+                                        rect.Width += endOfParaGlyphWidth;
                                     }
 
                                     RectangleGeometry rectGeometry = new RectangleGeometry(rect);

@@ -919,7 +919,7 @@ namespace System.Windows.Data
                     else
                     {
                         int delta = (NewItemPlaceholderPosition == NewItemPlaceholderPosition.AtBeginning) ? 1 : 0;
-                        index = index - delta;
+                        index -= delta;
                     }
 
                     // remove the item from the list
@@ -2370,7 +2370,7 @@ namespace System.Windows.Data
             LiveShapingFlags result = 0;
 
             if (IsLiveGrouping == true)
-                result = result | LiveShapingFlags.Grouping;
+                result |= LiveShapingFlags.Grouping;
 
             return result;
         }

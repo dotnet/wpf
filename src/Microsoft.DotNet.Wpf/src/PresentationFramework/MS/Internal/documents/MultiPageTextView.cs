@@ -760,7 +760,7 @@ namespace MS.Internal.Documents
             Invariant.Assert(Math.Abs(request.NewCount) >= Math.Abs(linesMoved));
             request.NewPosition = newPosition;
             request.NewSuggestedX = newSuggestedX;
-            request.NewCount = request.NewCount - linesMoved;
+            request.NewCount -= linesMoved;
             request.NewPageNumber = pageNumber;
 
             if (request.NewCount == 0)
@@ -832,7 +832,7 @@ namespace MS.Internal.Documents
             Invariant.Assert(Math.Abs(request.NewCount) >= Math.Abs(pagesMoved));
             request.NewPosition = newPosition;
             request.NewSuggestedOffset = newSuggestedOffset;
-            request.NewCount = request.NewCount - pagesMoved;
+            request.NewCount -= pagesMoved;
 
             if (request.NewCount == 0 || newPageNumber == -1)
             {
@@ -1385,7 +1385,7 @@ namespace MS.Internal.Documents
                             newPosition = pageTextView.GetTextPositionFromPoint(new Point(-1, -1), true);
                             if (newPosition != null)
                             {
-                                lineRequest.NewCount = lineRequest.NewCount - 1;
+                                lineRequest.NewCount -= 1;
                             }
                         }
                         else
@@ -1393,7 +1393,7 @@ namespace MS.Internal.Documents
                             newPosition = pageTextView.GetTextPositionFromPoint((Point)pageTextView.RenderScope.RenderSize, true);
                             if (newPosition != null)
                             {
-                                lineRequest.NewCount = lineRequest.NewCount + 1;
+                                lineRequest.NewCount += 1;
                             }
                         }
 

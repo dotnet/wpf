@@ -2,16 +2,16 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-using MS.Win32;
-using System.Windows.Interop;
-using MS.Utility;
-using System.Runtime.InteropServices;
 using MS.Internal;
 using MS.Internal.Interop;
-using System.Threading;
+using MS.Utility;
+using MS.Win32;
 using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
 using System.Runtime.CompilerServices;
+using System.Runtime.InteropServices;
+using System.Threading;
+using System.Windows.Interop;
 
 namespace System.Windows.Threading
 {
@@ -47,14 +47,11 @@ namespace System.Windows.Threading
             get
             {
                 // Find the dispatcher for this thread.
-                Dispatcher currentDispatcher = FromThread(Thread.CurrentThread);;
+                Dispatcher currentDispatcher = FromThread(Thread.CurrentThread);
 
                 // Auto-create the dispatcher if there is no dispatcher for
                 // this thread (if we are allowed to).
-                if(currentDispatcher == null)
-                {
-                    currentDispatcher = new Dispatcher();
-                }
+                currentDispatcher ??= new Dispatcher();
 
                 return currentDispatcher;
             }
@@ -70,98 +67,102 @@ namespace System.Windows.Threading
         /// </remarks>
         public static Dispatcher FromThread(Thread thread)
         {
-            lock(_globalLock)
+            lock (_globalLock)
             {
+                if (thread is null)
+                {
+                    return null;
+                }
+
+                // Shortcut: we track one static reference to the last current
+                // dispatcher we gave out.  For single-threaded apps, this will
+                // be set all the time.  For multi-threaded apps, this will be
+                // set for periods of time during which accessing CurrentDispatcher
+                // is cheap.  When a thread switch happens, the next call to
+                // CurrentDispatcher is expensive, but then the rest are fast
+                // again.
+
+                if (
+                    _possibleDispatcher.Target is Dispatcher last &&
+                    last.Thread == thread)
+                {
+                    return last;
+                }
+
+                // The "possible" dispatcher either was null or belongs to
+                // the a different thread.
                 Dispatcher dispatcher = null;
 
-                if(thread != null)
+                // Spin over the list of dispatchers looking for one that belongs
+                // to this thread.  We could use TLS here, but managed TLS is very
+                // expensive, so we think it is cheaper to search our own data
+                // structure.
+                //
+                // Note: Do not cache _dispatchers.Count because we rely on it
+                // being updated if we encounter a dead weak reference.
+                for (int i = 0; i < _dispatchers.Count; i++)
                 {
-                    // Shortcut: we track one static reference to the last current
-                    // dispatcher we gave out.  For single-threaded apps, this will
-                    // be set all the time.  For multi-threaded apps, this will be
-                    // set for periods of time during which accessing CurrentDispatcher
-                    // is cheap.  When a thread switch happens, the next call to
-                    // CurrentDispatcher is expensive, but then the rest are fast
-                    // again.
-                    dispatcher = _possibleDispatcher.Target as Dispatcher;
-                    if(dispatcher == null || dispatcher.Thread != thread)
+                    if (_dispatchers[i].Target is not Dispatcher d)
                     {
-                        // The "possible" dispatcher either was null or belongs to
-                        // the a different thread.
-                        dispatcher = null;
+                        // We found a dead reference, so remove it from
+                        // the list, and adjust the index so we account
+                        // for it.
+                        _dispatchers.RemoveAt(i);
+                        i--;
+                        continue;
+                    }
 
-                        // Spin over the list of dispatchers looking for one that belongs
-                        // to this thread.  We could use TLS here, but managed TLS is very
-                        // expensive, so we think it is cheaper to search our own data
-                        // structure.
-                        //
-                        // Note: Do not cache _dispatchers.Count because we rely on it
-                        // being updated if we encounter a dead weak reference.
-                        for(int i = 0; i < _dispatchers.Count; i++)
-                        {
-                            if (_dispatchers[i].Target is Dispatcher d)
-                            {
-                                // Note: we compare the thread objects themselves to protect
-                                // against threads reusing old thread IDs.
-                                Thread dispatcherThread = d.Thread;
-                                if (dispatcherThread == thread)
-                                {
-                                    dispatcher = d;
+                    // Note: we compare the thread objects themselves to protect
+                    // against threads reusing old thread IDs.
+                    Thread dispatcherThread = d.Thread;
+                    if (dispatcherThread != thread)
+                    {
+                        continue;
 
-                                    // Do not exit the loop early since we are also
-                                    // looking for dead references.
-                                }
-                            }
-                            else
-                            {
-                                // We found a dead reference, so remove it from
-                                // the list, and adjust the index so we account
-                                // for it.
-                                _dispatchers.RemoveAt(i);
-                                i--;
-                            }
-                        }
+                        // Do not exit the loop early since we are also
+                        // looking for dead references.
+                    }
+                    dispatcher = d;
+                }
 
-                        // Stash this dispatcher as a "possible" dispatcher for the
-                        // next call to FromThread.
-                        if(dispatcher != null)
-                        {
-                            // We expect this call to be frequent so we want to
-                            // avoid uneccesary allocations, such as a new
-                            // WeakReference.  However, we discovered late
-                            // in Dev11 that sometimes this code is called
-                            // during finalization, and the existing
-                            // WeakReference may throw when you try to change
-                            // the Target because the GC has already discarded
-                            // the handle for the WeakReference.
-                            //
-                            // Ideally we would re-work the code to avoid
-                            // calling this method from a finalizer path.  But
-                            // that is tricky: we are destroying an HWND
-                            // (appropriate for a finalizer) that has a managed
-                            // WndProc, which calls Dispatcher.Invoke to get
-                            // under the exception filters.  Changing all of that
-                            // code would be very risky at this point.
-                            //
-                            // There is no good API to check if running on the
-                            // finalizer thread, or if the handle of the
-                            // WeakReference has been reclaimed by the GC.
-                            // The best we can do is check IsAlive, which will
-                            // return false if either the handle has been
-                            // reclaimed or the target has been collected.
-                            // If that happens, we allocate a new
-                            // WeakReference instance, rather than reusing the
-                            // existing one.
-                            if(_possibleDispatcher.IsAlive)
-                            {
-                                _possibleDispatcher.Target = dispatcher;
-                            }
-                            else
-                            {
-                                _possibleDispatcher = new WeakReference(dispatcher);
-                            }
-                        }
-}
+                // Stash this dispatcher as a "possible" dispatcher for the
+                // next call to FromThread.
+                if (dispatcher is not null)
+                {
+                    // We expect this call to be frequent so we want to
+                    // avoid uneccesary allocations, such as a new
+                    // WeakReference.  However, we discovered late
+                    // in Dev11 that sometimes this code is called
+                    // during finalization, and the existing
+                    // WeakReference may throw when you try to change
+                    // the Target because the GC has already discarded
+                    // the handle for the WeakReference.
+                    //
+                    // Ideally we would re-work the code to avoid
+                    // calling this method from a finalizer path.  But
+                    // that is tricky: we are destroying an HWND
+                    // (appropriate for a finalizer) that has a managed
+                    // WndProc, which calls Dispatcher.Invoke to get
+                    // under the exception filters.  Changing all of that
+                    // code would be very risky at this point.
+                    //
+                    // There is no good API to check if running on the
+                    // finalizer thread, or if the handle of the
+                    // WeakReference has been reclaimed by the GC.
+                    // The best we can do is check IsAlive, which will
+                    // return false if either the handle has been
+                    // reclaimed or the target has been collected.
+                    // If that happens, we allocate a new
+                    // WeakReference instance, rather than reusing the
+                    // existing one.
+                    if (_possibleDispatcher.IsAlive)
+                    {
+                        _possibleDispatcher.Target = dispatcher;
+                    }
+                    else
+                    {
+                        _possibleDispatcher = new WeakReference(dispatcher);
+                    }
                 }
 
                 return dispatcher;
@@ -170,13 +171,7 @@ namespace System.Windows.Threading
 
         /// <summary>
         /// </summary>
-        public Thread Thread
-        {
-            get
-            {
-                return _dispatcherThread;
-            }
-        }
+        public Thread Thread => _dispatcherThread;
 
         /// <summary>
         ///     Checks that the calling thread has access to this object.
@@ -208,16 +203,18 @@ namespace System.Windows.Threading
         [System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]
         public void VerifyAccess()
         {
-            if(!CheckAccess())
+            if (CheckAccess())
             {
-                // Used to inline VerifyAccess.
-                [DoesNotReturn]
-                [MethodImpl(MethodImplOptions.NoInlining)]
-                static void ThrowVerifyAccess()
-                    => throw new InvalidOperationException(SR.VerifyAccess);
-
-                ThrowVerifyAccess();
+                return;
             }
+
+            // Used to inline VerifyAccess.
+            [DoesNotReturn]
+            [MethodImpl(MethodImplOptions.NoInlining)]
+            static void ThrowVerifyAccess()
+                => throw new InvalidOperationException(SR.VerifyAccess);
+
+            ThrowVerifyAccess();
         }
 
         /// <summary>
@@ -249,24 +246,12 @@ namespace System.Windows.Threading
         /// <summary>
         ///     Whether or not the dispatcher is shutting down.
         /// </summary>
-        public bool HasShutdownStarted
-        {
-            get
-            {
-                return _hasShutdownStarted; // Free-Thread access OK.
-            }
-        }
+        public bool HasShutdownStarted => _hasShutdownStarted; // Free-Thread access OK.
 
         /// <summary>
         ///     Whether or not the dispatcher has been shut down.
         /// </summary>
-        public bool HasShutdownFinished
-        {
-            get
-            {
-                return _hasShutdownFinished; // Free-Thread access OK.
-            }
-        }
+        public bool HasShutdownFinished => _hasShutdownFinished; // Free-Thread access OK.
 
         /// <summary>
         ///     Raised when the dispatcher is shutting down.
@@ -300,17 +285,17 @@ namespace System.Windows.Threading
             ArgumentNullException.ThrowIfNull(frame);
 
             Dispatcher dispatcher = Dispatcher.CurrentDispatcher;
-            if(dispatcher._hasShutdownFinished) // Dispatcher thread - no lock needed for read
+            if (dispatcher._hasShutdownFinished) // Dispatcher thread - no lock needed for read
             {
                 throw new InvalidOperationException(SR.DispatcherHasShutdown);
             }
 
-            if(frame.Dispatcher != dispatcher)
+            if (frame.Dispatcher != dispatcher)
             {
                 throw new InvalidOperationException(SR.MismatchedDispatchers);
             }
 
-            if(dispatcher._disableProcessingCount > 0)
+            if (dispatcher._disableProcessingCount > 0)
             {
                 throw new InvalidOperationException(SR.DispatcherProcessingDisabled);
             }
@@ -325,14 +310,18 @@ namespace System.Windows.Threading
         {
 
             Dispatcher dispatcher = Dispatcher.CurrentDispatcher;
-            if(dispatcher._frameDepth > 0)
-            {
-                dispatcher._exitAllFrames = true;
 
-                // Post a message so that the message pump will wake up and
-                // check our continue state.
-                dispatcher.BeginInvoke(DispatcherPriority.Send, (Action) delegate {});
+            if (dispatcher._frameDepth <= 0)
+            {
+                return;
             }
+
+            dispatcher._exitAllFrames = true;
+
+            // Post a message so that the message pump will wake up and
+            // check our continue state.
+            dispatcher.BeginInvoke(DispatcherPriority.Send, (Action)delegate
+            { });
         }
 
         /// <summary>
@@ -352,13 +341,12 @@ namespace System.Windows.Threading
         {
             ValidatePriority(priority, "priority");
 
-            Dispatcher currentDispatcher = FromThread(Thread.CurrentThread);;
-            if(currentDispatcher == null)
-            {
-                throw new InvalidOperationException(SR.DispatcherYieldNoAvailableDispatcher);
-            }
+            Dispatcher currentDispatcher = FromThread(Thread.CurrentThread);
 
-            return new DispatcherPriorityAwaitable(currentDispatcher, priority);
+            return
+                currentDispatcher is null
+                ? throw new InvalidOperationException(SR.DispatcherYieldNoAvailableDispatcher)
+                : new DispatcherPriorityAwaitable(currentDispatcher, priority);
         }
 
         /// <summary>
@@ -566,7 +554,7 @@ namespace System.Windows.Threading
             ArgumentNullException.ThrowIfNull(callback);
             ValidatePriority(priority, "priority");
 
-            if( timeout.TotalMilliseconds < 0 &&
+            if (timeout.TotalMilliseconds < 0 &&
                 timeout != TimeSpan.FromMilliseconds(-1))
             {
                 throw new ArgumentOutOfRangeException(nameof(timeout));
@@ -575,20 +563,20 @@ namespace System.Windows.Threading
             // Fast-Path: if on the same thread, and invoking at Send priority,
             // and the cancellation token is not already canceled, then just
             // call the callback directly.
-            if(!cancellationToken.IsCancellationRequested && priority == DispatcherPriority.Send && CheckAccess())
+            if (!cancellationToken.IsCancellationRequested && priority == DispatcherPriority.Send && CheckAccess())
             {
                 SynchronizationContext oldSynchronizationContext = SynchronizationContext.Current;
 
                 try
                 {
                     DispatcherSynchronizationContext newSynchronizationContext;
-                    if(BaseCompatibilityPreferences.GetReuseDispatcherSynchronizationContextInstance())
+                    if (BaseCompatibilityPreferences.GetReuseDispatcherSynchronizationContextInstance())
                     {
                         newSynchronizationContext = _defaultDispatcherSynchronizationContext;
                     }
                     else
                     {
-                        if(BaseCompatibilityPreferences.GetFlowDispatcherSynchronizationContextPriority())
+                        if (BaseCompatibilityPreferences.GetFlowDispatcherSynchronizationContextPriority())
                         {
                             newSynchronizationContext = new DispatcherSynchronizationContext(this, priority);
                         }
@@ -609,7 +597,7 @@ namespace System.Windows.Threading
             }
 
             // Slow-Path: go through the queue.
-            DispatcherOperation operation = new DispatcherOperation(this, priority, callback);
+            DispatcherOperation operation = new(this, priority, callback);
             InvokeImpl(operation, cancellationToken, timeout);
         }
 
@@ -708,7 +696,7 @@ namespace System.Windows.Threading
             ArgumentNullException.ThrowIfNull(callback);
             ValidatePriority(priority, "priority");
 
-            if( timeout.TotalMilliseconds < 0 &&
+            if (timeout.TotalMilliseconds < 0 &&
                 timeout != TimeSpan.FromMilliseconds(-1))
             {
                 throw new ArgumentOutOfRangeException(nameof(timeout));
@@ -717,20 +705,20 @@ namespace System.Windows.Threading
             // Fast-Path: if on the same thread, and invoking at Send priority,
             // and the cancellation token is not already canceled, then just
             // call the callback directly.
-            if(!cancellationToken.IsCancellationRequested && priority == DispatcherPriority.Send && CheckAccess())
+            if (!cancellationToken.IsCancellationRequested && priority == DispatcherPriority.Send && CheckAccess())
             {
                 SynchronizationContext oldSynchronizationContext = SynchronizationContext.Current;
 
                 try
                 {
                     DispatcherSynchronizationContext newSynchronizationContext;
-                    if(BaseCompatibilityPreferences.GetReuseDispatcherSynchronizationContextInstance())
+                    if (BaseCompatibilityPreferences.GetReuseDispatcherSynchronizationContextInstance())
                     {
                         newSynchronizationContext = _defaultDispatcherSynchronizationContext;
                     }
                     else
                     {
-                        if(BaseCompatibilityPreferences.GetFlowDispatcherSynchronizationContextPriority())
+                        if (BaseCompatibilityPreferences.GetFlowDispatcherSynchronizationContextPriority())
                         {
                             newSynchronizationContext = new DispatcherSynchronizationContext(this, priority);
                         }
@@ -750,8 +738,8 @@ namespace System.Windows.Threading
             }
 
             // Slow-Path: go through the queue.
-            DispatcherOperation<TResult> operation = new DispatcherOperation<TResult>(this, priority, callback);
-            return (TResult) InvokeImpl(operation, cancellationToken, timeout);
+            DispatcherOperation<TResult> operation = new(this, priority, callback);
+            return (TResult)InvokeImpl(operation, cancellationToken, timeout);
         }
 
         /// <summary>
@@ -821,7 +809,7 @@ namespace System.Windows.Threading
             ArgumentNullException.ThrowIfNull(callback);
             ValidatePriority(priority, "priority");
 
-            DispatcherOperation operation = new DispatcherOperation(this, priority, callback);
+            DispatcherOperation operation = new(this, priority, callback);
             InvokeAsyncImpl(operation, cancellationToken);
 
             return operation;
@@ -891,7 +879,7 @@ namespace System.Windows.Threading
             ArgumentNullException.ThrowIfNull(callback);
             ValidatePriority(priority, "priority");
 
-            DispatcherOperation<TResult> operation = new DispatcherOperation<TResult>(this, priority, callback);
+            DispatcherOperation<TResult> operation = new(this, priority, callback);
             InvokeAsyncImpl(operation, cancellationToken);
 
             return operation;
@@ -902,7 +890,7 @@ namespace System.Windows.Threading
             ValidatePriority(priority, "priority");
             ArgumentNullException.ThrowIfNull(method);
 
-            DispatcherOperation operation = new DispatcherOperation(this, method, priority, args, numArgs);
+            DispatcherOperation operation = new(this, method, priority, args, numArgs);
             InvokeAsyncImpl(operation, CancellationToken.None);
 
             return operation;
@@ -914,7 +902,7 @@ namespace System.Windows.Threading
             bool succeeded = false;
 
             // Could be a non-dispatcher thread, lock to read
-            lock(_instanceLock)
+            lock (_instanceLock)
             {
                 if (!cancellationToken.IsCancellationRequested &&
                     !_hasShutdownFinished &&
@@ -942,28 +930,7 @@ namespace System.Windows.Threading
                 }
             }
 
-            if (succeeded == true)
-            {
-                // We have enqueued the operation.  Register a callback
-                // with the cancellation token to abort the operation
-                // when cancellation is requested.
-                if(cancellationToken.CanBeCanceled)
-                {
-                    CancellationTokenRegistration cancellationRegistration = cancellationToken.Register(s => ((DispatcherOperation)s).Abort(), operation);
-
-                    // Revoke the cancellation when the operation is done.
-                    operation.Aborted += (s,e) => cancellationRegistration.Dispose();
-                    operation.Completed += (s,e) => cancellationRegistration.Dispose();
-                }
-
-                hooks?.RaiseOperationPosted(this, operation);
-
-                if (EventTrace.IsEnabled(EventTrace.Keyword.KeywordDispatcher | EventTrace.Keyword.KeywordPerf, EventTrace.Level.Info))
-                {
-                    EventTrace.EventProvider.TraceEvent(EventTrace.Event.WClientUIContextPost, EventTrace.Keyword.KeywordDispatcher | EventTrace.Keyword.KeywordPerf, EventTrace.Level.Info, operation.Priority, operation.Name, operation.Id);
-                }
-            }
-            else
+            if (!succeeded)
             {
                 // We failed to enqueue the operation, and the caller that
                 // created the operation does not expose it before we return,
@@ -972,6 +939,26 @@ namespace System.Windows.Threading
                 // return to the user.
                 operation._status = DispatcherOperationStatus.Aborted;
                 operation._taskSource.SetCanceled();
+                return;
+            }
+
+            // We have enqueued the operation.  Register a callback
+            // with the cancellation token to abort the operation
+            // when cancellation is requested.
+            if (cancellationToken.CanBeCanceled)
+            {
+                CancellationTokenRegistration cancellationRegistration = cancellationToken.Register(s => ((DispatcherOperation)s).Abort(), operation);
+
+                // Revoke the cancellation when the operation is done.
+                operation.Aborted += (s, e) => cancellationRegistration.Dispose();
+                operation.Completed += (s, e) => cancellationRegistration.Dispose();
+            }
+
+            hooks?.RaiseOperationPosted(this, operation);
+
+            if (EventTrace.IsEnabled(EventTrace.Keyword.KeywordDispatcher | EventTrace.Keyword.KeywordPerf, EventTrace.Level.Info))
+            {
+                EventTrace.EventProvider.TraceEvent(EventTrace.Event.WClientUIContextPost, EventTrace.Keyword.KeywordDispatcher | EventTrace.Keyword.KeywordPerf, EventTrace.Level.Info, operation.Priority, operation.Name, operation.Id);
             }
         }
 
@@ -1245,17 +1232,17 @@ namespace System.Windows.Threading
         internal object LegacyInvokeImpl(DispatcherPriority priority, TimeSpan timeout, Delegate method, object args, int numArgs)
         {
             ValidatePriority(priority, "priority");
-            if(priority == DispatcherPriority.Inactive)
+            if (priority == DispatcherPriority.Inactive)
             {
                 throw new ArgumentException(SR.InvalidPriority, nameof(priority));
             }
 
             ArgumentNullException.ThrowIfNull(method);
 
-            if ( timeout.TotalMilliseconds < 0 &&
+            if (timeout.TotalMilliseconds < 0 &&
                 timeout != TimeSpan.FromMilliseconds(-1))
             {
-                if(CheckAccess())
+                if (CheckAccess())
                 {
                     // Application Compat
                     // In versions before 4.5, when invoking on the same
@@ -1273,20 +1260,20 @@ namespace System.Windows.Threading
 
             // Fast-Path: if on the same thread, and invoking at Send priority,
             // then just call the callback directly within the exception wrappers.
-            if(priority == DispatcherPriority.Send && CheckAccess())
+            if (priority == DispatcherPriority.Send && CheckAccess())
             {
                 SynchronizationContext oldSynchronizationContext = SynchronizationContext.Current;
 
                 try
                 {
                     DispatcherSynchronizationContext newSynchronizationContext;
-                    if(BaseCompatibilityPreferences.GetReuseDispatcherSynchronizationContextInstance())
+                    if (BaseCompatibilityPreferences.GetReuseDispatcherSynchronizationContextInstance())
                     {
                         newSynchronizationContext = _defaultDispatcherSynchronizationContext;
                     }
                     else
                     {
-                        if(BaseCompatibilityPreferences.GetFlowDispatcherSynchronizationContextPriority())
+                        if (BaseCompatibilityPreferences.GetFlowDispatcherSynchronizationContextPriority())
                         {
                             newSynchronizationContext = new DispatcherSynchronizationContext(this, priority);
                         }
@@ -1306,92 +1293,93 @@ namespace System.Windows.Threading
             }
 
             // Slow-Path: go through the queue.
-            DispatcherOperation operation = new DispatcherOperation(this, method, priority, args, numArgs);
+            DispatcherOperation operation = new(this, method, priority, args, numArgs);
             return InvokeImpl(operation, CancellationToken.None, timeout);
         }
 
         private object InvokeImpl(DispatcherOperation operation, CancellationToken cancellationToken, TimeSpan timeout)
         {
-            object result = null;
-
             Debug.Assert(timeout.TotalMilliseconds >= 0 || timeout == TimeSpan.FromMilliseconds(-1));
             Debug.Assert(operation.Priority != DispatcherPriority.Send || !CheckAccess()); // should be handled by caller
 
-            if(!cancellationToken.IsCancellationRequested)
+            if (cancellationToken.IsCancellationRequested)
             {
-                // This operation must be queued since it was invoked either to
-                // another thread, or at a priority other than Send.
-                InvokeAsyncImpl(operation, cancellationToken);
+                return null;
+            }
 
-                CancellationToken ctTimeout = CancellationToken.None;
-                CancellationTokenRegistration ctTimeoutRegistration = new CancellationTokenRegistration();
-                CancellationTokenSource ctsTimeout = null;
+            // This operation must be queued since it was invoked either to
+            // another thread, or at a priority other than Send.
+            InvokeAsyncImpl(operation, cancellationToken);
 
-                if(timeout.TotalMilliseconds >= 0)
+            CancellationToken ctTimeout = CancellationToken.None;
+            CancellationTokenRegistration ctTimeoutRegistration = new CancellationTokenRegistration();
+            CancellationTokenSource ctsTimeout = null;
+
+            if (timeout.TotalMilliseconds >= 0)
+            {
+                // Create a CancellationTokenSource that will abort the
+                // operation after the timeout.  Note that this does not
+                // cancel the operation, just abort it if it is still pending.
+                ctsTimeout = new CancellationTokenSource(timeout);
+                ctTimeout = ctsTimeout.Token;
+                ctTimeoutRegistration = ctTimeout.Register(s => ((DispatcherOperation)s).Abort(), operation);
+            }
+
+            object result = null;
+
+            // We have already registered with the cancellation tokens
+            // (both provided by the user, and one for the timeout) to
+            // abort the operation when they are canceled.  If the
+            // operation has already started when the timeout expires,
+            // we still wait for it to complete.  This is different
+            // than simply waiting on the operation with a timeout
+            // because we are the ones queueing the dispatcher
+            // operation, not the caller.  We can't leave the operation
+            // in a state that it might execute if we return that it did not
+            // invoke.
+            try
+            {
+                operation.Wait();
+
+                Debug.Assert(operation.Status == DispatcherOperationStatus.Completed ||
+                             operation.Status == DispatcherOperationStatus.Aborted);
+
+                // Old async semantics return from Wait without
+                // throwing an exception if the operation was aborted.
+                // There is no need to test the timout condition, since
+                // the old async semantics would just return the result,
+                // which would be null.
+
+                // This should not block because either the operation
+                // is using the old async sematics, or the operation
+                // completed successfully.
+                result = operation.Result;
+            }
+            catch (OperationCanceledException)
+            {
+                Debug.Assert(operation.Status == DispatcherOperationStatus.Aborted);
+
+                // New async semantics will throw an exception if the
+                // operation was aborted.  Here we convert that
+                // exception into a timeout exception if the timeout
+                // has expired (admittedly a weak relationship
+                // assuming causality).
+                if (ctTimeout.IsCancellationRequested)
                 {
-                    // Create a CancellationTokenSource that will abort the
-                    // operation after the timeout.  Note that this does not
-                    // cancel the operation, just abort it if it is still pending.
-                    ctsTimeout = new CancellationTokenSource(timeout);
-                    ctTimeout = ctsTimeout.Token;
-                    ctTimeoutRegistration = ctTimeout.Register(s => ((DispatcherOperation)s).Abort(), operation);
+                    // The operation was canceled because of the
+                    // timeout, throw a TimeoutException instead.
+                    throw new TimeoutException();
                 }
-
-
-                // We have already registered with the cancellation tokens
-                // (both provided by the user, and one for the timeout) to
-                // abort the operation when they are canceled.  If the
-                // operation has already started when the timeout expires,
-                // we still wait for it to complete.  This is different
-                // than simply waiting on the operation with a timeout
-                // because we are the ones queueing the dispatcher
-                // operation, not the caller.  We can't leave the operation
-                // in a state that it might execute if we return that it did not
-                // invoke.
-                try
+                else
                 {
-                    operation.Wait();
-
-                    Debug.Assert(operation.Status == DispatcherOperationStatus.Completed ||
-                                 operation.Status == DispatcherOperationStatus.Aborted);
-
-                    // Old async semantics return from Wait without
-                    // throwing an exception if the operation was aborted.
-                    // There is no need to test the timout condition, since
-                    // the old async semantics would just return the result,
-                    // which would be null.
-
-                    // This should not block because either the operation
-                    // is using the old async sematics, or the operation
-                    // completed successfully.
-                    result = operation.Result;
+                    // The operation was canceled from some other reason.
+                    throw;
                 }
-                catch(OperationCanceledException)
-                {
-                    Debug.Assert(operation.Status == DispatcherOperationStatus.Aborted);
-
-                    // New async semantics will throw an exception if the
-                    // operation was aborted.  Here we convert that
-                    // exception into a timeout exception if the timeout
-                    // has expired (admittedly a weak relationship
-                    // assuming causality).
-                    if (ctTimeout.IsCancellationRequested)
-                    {
-                        // The operation was canceled because of the
-                        // timeout, throw a TimeoutException instead.
-                        throw new TimeoutException();
-                    }
-                    else
-                    {
-                        // The operation was canceled from some other reason.
-                        throw;
-                    }
-                }
-                finally
-                {
-                    ctTimeoutRegistration.Dispose();
-                    ctsTimeout?.Dispose();
-                }
+            }
+            finally
+            {
+                ctTimeoutRegistration.Dispose();
+                ctsTimeout?.Dispose();
             }
 
             return result;
@@ -1414,109 +1402,109 @@ namespace System.Windows.Threading
             // Turn off processing.
             _disableProcessingCount++;
 
-            DispatcherProcessingDisabled dpd = new DispatcherProcessingDisabled
+            DispatcherProcessingDisabled dpd = new()
             {
                 _dispatcher = this
             };
             return dpd;
         }
 
-/*
-        /// <summary>
-        ///     Reports the range of priorities that are considered
-        ///     as foreground priorities.
-        /// </summary>
-        /// <remarks>
-        ///     A foreground priority is processed before input.
-        /// </remarks>
-        public static PriorityRange ForegroundPriorityRange
-        {
-            get
-            {
-                return _foregroundPriorityRange;
-            }
-        }
+        /*
+                /// <summary>
+                ///     Reports the range of priorities that are considered
+                ///     as foreground priorities.
+                /// </summary>
+                /// <remarks>
+                ///     A foreground priority is processed before input.
+                /// </remarks>
+                public static PriorityRange ForegroundPriorityRange
+                {
+                    get
+                    {
+                        return _foregroundPriorityRange;
+                    }
+                }
 
-        /// <summary>
-        ///     Reports the range of priorities that are considered
-        ///     as background priorities.
-        /// </summary>
-        /// <remarks>
-        ///     A background priority is processed after input.
-        /// </remarks>
-        public static PriorityRange BackgroundPriorityRange
-        {
-            get
-            {
-                return _backgroundPriorityRange;
-            }
-        }
+                /// <summary>
+                ///     Reports the range of priorities that are considered
+                ///     as background priorities.
+                /// </summary>
+                /// <remarks>
+                ///     A background priority is processed after input.
+                /// </remarks>
+                public static PriorityRange BackgroundPriorityRange
+                {
+                    get
+                    {
+                        return _backgroundPriorityRange;
+                    }
+                }
 
-        /// <summary>
-        ///     Reports the range of priorities that are considered
-        ///     as idle priorities.
-        /// </summary>
-        /// <remarks>
-        ///     An idle priority is processed periodically after background
-        ///     priorities have been processed.
-        /// </remarks>
-        public static PriorityRange IdlePriorityRange
-        {
-            get
-            {
-                return _idlePriorityRange;
-            }
-        }
+                /// <summary>
+                ///     Reports the range of priorities that are considered
+                ///     as idle priorities.
+                /// </summary>
+                /// <remarks>
+                ///     An idle priority is processed periodically after background
+                ///     priorities have been processed.
+                /// </remarks>
+                public static PriorityRange IdlePriorityRange
+                {
+                    get
+                    {
+                        return _idlePriorityRange;
+                    }
+                }
 
-        /// <summary>
-        ///     Represents a convenient foreground priority.
-        /// </summary>
-        /// <remarks>
-        ///     A foreground priority is processed before input.  In general
-        ///     you should define your own foreground priority to allow for
-        ///     more fine-grained ordering of queued items.
-        /// </remarks>
-        public static Priority ForegroundPriority
-        {
-            get
-            {
-                return _foregroundPriority;
-            }
-        }
+                /// <summary>
+                ///     Represents a convenient foreground priority.
+                /// </summary>
+                /// <remarks>
+                ///     A foreground priority is processed before input.  In general
+                ///     you should define your own foreground priority to allow for
+                ///     more fine-grained ordering of queued items.
+                /// </remarks>
+                public static Priority ForegroundPriority
+                {
+                    get
+                    {
+                        return _foregroundPriority;
+                    }
+                }
 
-        /// <summary>
-        ///     Represents a convenient background priority.
-        /// </summary>
-        /// <remarks>
-        ///     A background priority is processed after input.  In general you
-        ///     should define your own background priority to allow for more
-        ///     fine-grained ordering of queued items.
-        /// </remarks>
-        public static Priority BackgroundPriority
-        {
-            get
-            {
-                return _backgroundPriority;
-            }
-        }
+                /// <summary>
+                ///     Represents a convenient background priority.
+                /// </summary>
+                /// <remarks>
+                ///     A background priority is processed after input.  In general you
+                ///     should define your own background priority to allow for more
+                ///     fine-grained ordering of queued items.
+                /// </remarks>
+                public static Priority BackgroundPriority
+                {
+                    get
+                    {
+                        return _backgroundPriority;
+                    }
+                }
 
-        /// <summary>
-        ///     Represents a convenient idle priority.
-        /// </summary>
-        /// <remarks>
-        ///     An idle priority is processed periodically after background
-        ///     priorities have been processed.  In general you should define
-        ///     your own idle priority to allow for more fine-grained ordering
-        ///     of queued items.
-        /// </remarks>
-        public static Priority IdlePriority
-        {
-            get
-            {
-                return _idlePriority;
-            }
-        }
-*/
+                /// <summary>
+                ///     Represents a convenient idle priority.
+                /// </summary>
+                /// <remarks>
+                ///     An idle priority is processed periodically after background
+                ///     priorities have been processed.  In general you should define
+                ///     your own idle priority to allow for more fine-grained ordering
+                ///     of queued items.
+                /// </remarks>
+                public static Priority IdlePriority
+                {
+                    get
+                    {
+                        return _idlePriority;
+                    }
+                }
+        */
 
         /// <summary>
         ///     Validates that a priority is suitable for use by the dispatcher.
@@ -1536,7 +1524,7 @@ namespace System.Windows.Threading
 
             // Second, make sure the priority is in a range recognized by
             // the dispatcher.
-            if(!_foregroundPriorityRange.Contains(priority) &&
+            if (!_foregroundPriorityRange.Contains(priority) &&
                !_backgroundPriorityRange.Contains(priority) &&
                !_idlePriorityRange.Contains(priority) &&
                DispatcherPriority.Inactive != priority)  // NOTE: should be Priority.Min
@@ -1565,12 +1553,9 @@ namespace System.Windows.Threading
             {
                 DispatcherHooks hooks = null;
 
-                lock(_instanceLock)
+                lock (_instanceLock)
                 {
-                    if(_hooks == null)
-                    {
-                        _hooks = new DispatcherHooks();
-                    }
+                    _hooks ??= new DispatcherHooks();
 
                     hooks = _hooks;
                 }
@@ -1627,7 +1612,7 @@ namespace System.Windows.Threading
         /// </summary>
         internal object Reserved0
         {
-            get { return _reserved0; }
+            get => _reserved0;
 
             set { _reserved0 = value; }
         }
@@ -1637,7 +1622,7 @@ namespace System.Windows.Threading
         /// </summary>
         internal object Reserved1
         {
-            get { return _reserved1; }
+            get => _reserved1;
 
             set { _reserved1 = value; }
         }
@@ -1647,7 +1632,7 @@ namespace System.Windows.Threading
         /// </summary>
         internal object Reserved2
         {
-            get { return _reserved2; }
+            get => _reserved2;
 
             set { _reserved2 = value; }
         }
@@ -1657,7 +1642,7 @@ namespace System.Windows.Threading
         /// </summary>
         internal object Reserved3
         {
-            get { return _reserved3; }
+            get => _reserved3;
 
             set { _reserved3 = value; }
         }
@@ -1667,7 +1652,7 @@ namespace System.Windows.Threading
         /// </summary>
         internal object Reserved4
         {
-            get { return _reserved4; }
+            get => _reserved4;
 
             set { _reserved4 = value; }
         }
@@ -1703,14 +1688,14 @@ namespace System.Windows.Threading
 
         internal object InputMethod
         {
-            get { return _reservedInputMethod; }
+            get => _reservedInputMethod;
 
             set { _reservedInputMethod = value; }
         }
 
         internal object InputManager
         {
-            get { return _reservedInputManager; }
+            get => _reservedInputManager;
 
             set { _reservedInputManager = value; }
         }
@@ -1723,7 +1708,7 @@ namespace System.Windows.Threading
             _dispatcherThread = Thread.CurrentThread;
 
             // Add ourselves to the map of dispatchers to threads.
-            lock(_globalLock)
+            lock (_globalLock)
             {
                 _dispatchers.Add(new WeakReference(this));
             }
@@ -1765,66 +1750,67 @@ namespace System.Windows.Threading
 
         private void StartShutdownImpl()
         {
-            if(!_startingShutdown)
+            if (_startingShutdown)
             {
-                // We only need this to prevent reentrancy if the ShutdownStarted event
-                // tries to shut down again.
-                _startingShutdown = true;
+                return;
+            }
 
-                // Call the ShutdownStarted event before we actually mark ourselves
-                // as shutting down.  This is so the handlers can actaully do work
-                // when they get this event without throwing exceptions.
-                if(ShutdownStarted != null)
-                {
-                    ShutdownStarted(this, EventArgs.Empty);
-                }
+            // We only need this to prevent reentrancy if the ShutdownStarted event
+            // tries to shut down again.
+            _startingShutdown = true;
 
-                _hasShutdownStarted = true;
+            // Call the ShutdownStarted event before we actually mark ourselves
+            // as shutting down.  This is so the handlers can actaully do work
+            // when they get this event without throwing exceptions.
+            ShutdownStarted?.Invoke(this, EventArgs.Empty);
 
-                // Because we may have to defer the actual shutting-down until
-                // later, we need to remember the execution context we started
-                // the shutdown from.
-                _shutdownExecutionContext = CulturePreservingExecutionContext.Capture();
+            _hasShutdownStarted = true;
 
-                // Tell Win32 to exit the message loop for this thread.
-                //
-                // This call to PostQuitMessage is commented out because PostQuitMessage
-                // not only shuts down the message pump associated with the Dispatcher, but also
-                // shuts down any process that might be hosting WPF content (like IE).
-                // UnsafeNativeMethods.PostQuitMessage(0);
-                if(_frameDepth > 0)
-                {
-                    // If there are any frames running, we have to wait for them
-                    // to unwind before we can safely destroy the dispatcher.
-                }
-                else
-                {
-                    // The current thread is not spinning inside of the Dispatcher,
-                    // so we can go ahead and destroy it.
-                    ShutdownImpl();
-                }
+            // Because we may have to defer the actual shutting-down until
+            // later, we need to remember the execution context we started
+            // the shutdown from.
+            _shutdownExecutionContext = CulturePreservingExecutionContext.Capture();
+
+            // Tell Win32 to exit the message loop for this thread.
+            //
+            // This call to PostQuitMessage is commented out because PostQuitMessage
+            // not only shuts down the message pump associated with the Dispatcher, but also
+            // shuts down any process that might be hosting WPF content (like IE).
+            // UnsafeNativeMethods.PostQuitMessage(0);
+            if (_frameDepth > 0)
+            {
+                // If there are any frames running, we have to wait for them
+                // to unwind before we can safely destroy the dispatcher.
+            }
+            else
+            {
+                // The current thread is not spinning inside of the Dispatcher,
+                // so we can go ahead and destroy it.
+                ShutdownImpl();
             }
         }
 
         private void ShutdownImpl()
         {
-            if(!_hasShutdownFinished) // Dispatcher thread - no lock needed for read
+            if (_hasShutdownFinished) // Dispatcher thread - no lock needed for read
             {
-                if(_shutdownExecutionContext is not null)
-                {
-                    // Continue using the execution context that was active when the shutdown
-                    // was initiated.
-                    CulturePreservingExecutionContext.Run(_shutdownExecutionContext, new ContextCallback(ShutdownImplInSecurityContext), null);
-                }
-                else
-                {
-                    // It is possible to be called from WM_DESTROY, in which case no one has begun
-                    // the shutdown process, so there is no execution context to use.
-                    ShutdownImplInSecurityContext(null);
-                }
-
-                _shutdownExecutionContext = null;
+                return;
             }
+
+            if (_shutdownExecutionContext is not null)
+            {
+                // Continue using the execution context that was active when the shutdown
+                // was initiated.
+                CulturePreservingExecutionContext.Run(_shutdownExecutionContext, new ContextCallback(ShutdownImplInSecurityContext), null);
+            }
+            else
+            {
+                // It is possible to be called from WM_DESTROY, in which case no one has begun
+                // the shutdown process, so there is no execution context to use.
+                ShutdownImplInSecurityContext(null);
+            }
+
+            _shutdownExecutionContext = null;
         }
 
         private void ShutdownImplInSecurityContext(Object state)
@@ -1832,10 +1818,7 @@ namespace System.Windows.Threading
             // Call the ShutdownFinished event before we actually mark ourselves
             // as shut down.  This is so the handlers can actaully do work
             // when they get this event without throwing exceptions.
-            if(ShutdownFinished != null)
-            {
-                ShutdownFinished(this, EventArgs.Empty);
-            }
+            ShutdownFinished?.Invoke(this, EventArgs.Empty);
 
             // Destroy the message-only window we use to process Win32 messages
             //
@@ -1843,7 +1826,7 @@ namespace System.Windows.Threading
             // as shutdown.  This is because the window will need the dispatcher
             // to execute the window proc.
             MessageOnlyHwndWrapper window = null;
-            lock(_instanceLock)
+            lock (_instanceLock)
             {
                 window = _window;
                 _window = null;
@@ -1852,7 +1835,7 @@ namespace System.Windows.Threading
 
             // Mark this dispatcher as shut down.  Attempts to BeginInvoke
             // or Invoke will result in an exception.
-            lock(_instanceLock)
+            lock (_instanceLock)
             {
                 _hasShutdownFinished = true; // Dispatcher thread - lock to write
             }
@@ -1862,9 +1845,9 @@ namespace System.Windows.Threading
             DispatcherOperation operation = null;
             do
             {
-                lock(_instanceLock)
+                lock (_instanceLock)
                 {
-                    if(_queue.MaxPriority != DispatcherPriority.Invalid)
+                    if (_queue.MaxPriority != DispatcherPriority.Invalid)
                     {
                         operation = _queue.Peek();
                     }
@@ -1875,10 +1858,10 @@ namespace System.Windows.Threading
                 }
 
                 operation?.Abort();
-            } while(operation != null);
+            } while (operation is not null);
 
             // clear out the fields that could be holding onto large graphs of objects.
-            lock(_instanceLock)
+            lock (_instanceLock)
             {
                 // We should not need the queue any more.
                 _queue = null;
@@ -1909,14 +1892,14 @@ namespace System.Windows.Threading
             bool notify = false;
             DispatcherHooks hooks = null;
 
-            lock(_instanceLock)
+            lock (_instanceLock)
             {
-                if(_queue != null && operation._item.IsQueued)
+                if (_queue is not null && operation._item.IsQueued)
                 {
                     _queue.ChangeItemPriority(operation._item, priority);
                     notify = true;
 
-                    if(notify)
+                    if (notify)
                     {
                         // Make sure we will wake up to process this operation.
                         RequestProcessing();
@@ -1945,9 +1928,9 @@ namespace System.Windows.Threading
             bool notify = false;
             DispatcherHooks hooks = null;
 
-            lock(_instanceLock)
+            lock (_instanceLock)
             {
-                if(_queue != null && operation._item.IsQueued)
+                if (_queue is not null && operation._item.IsQueued)
                 {
                     _queue.RemoveItem(operation._item);
                     operation._status = DispatcherOperationStatus.Aborted;
@@ -1965,7 +1948,7 @@ namespace System.Windows.Threading
                 {
                     EventTrace.EventProvider.TraceEvent(EventTrace.Event.WClientUIContextAbort, EventTrace.Keyword.KeywordDispatcher | EventTrace.Keyword.KeywordPerf, EventTrace.Level.Info, operation.Priority, operation.Name, operation.Id);
                 }
-}
+            }
 
             return notify;
         }
@@ -1978,7 +1961,7 @@ namespace System.Windows.Threading
 
             //
             // Dequeue the next operation if appropriate.
-            lock(_instanceLock)
+            lock (_instanceLock)
             {
                 _postedProcessingType = PROCESS_NONE;
 
@@ -1988,13 +1971,13 @@ namespace System.Windows.Threading
 
                 maxPriority = _queue.MaxPriority;
 
-                if(maxPriority != DispatcherPriority.Invalid &&  // Nothing. NOTE: should be Priority.Invalid
+                if (maxPriority != DispatcherPriority.Invalid &&  // Nothing. NOTE: should be Priority.Invalid
                    maxPriority != DispatcherPriority.Inactive)   // Not processed. // NOTE: should be Priority.Min
                 {
-                    if(_foregroundPriorityRange.Contains(maxPriority) || backgroundProcessingOK)
+                    if (_foregroundPriorityRange.Contains(maxPriority) || backgroundProcessingOK)
                     {
-                         op = _queue.Dequeue();
-                         hooks = _hooks;
+                        op = _queue.Dequeue();
+                        hooks = _hooks;
                     }
                 }
 
@@ -2006,7 +1989,7 @@ namespace System.Windows.Threading
                 RequestProcessing();
             }
 
-            if(op != null)
+            if (op is not null)
             {
                 bool eventlogged = false;
 
@@ -2034,7 +2017,7 @@ namespace System.Windows.Threading
 
                 // All done, ready for reentrancy in case the completions are inlined.
                 op.InvokeCompletions();
-}
+            }
         }
 
         internal delegate void ShutdownCallback();
@@ -2048,7 +2031,7 @@ namespace System.Windows.Threading
         {
             SynchronizationContext oldSyncContext = null;
             SynchronizationContext newSyncContext = null;
-            MSG msg = new MSG();
+            MSG msg = new();
 
             _frameDepth++;
             try
@@ -2060,7 +2043,7 @@ namespace System.Windows.Threading
 
                 try
                 {
-                    while(frame.Continue)
+                    while (frame.Continue)
                     {
                         if (!GetMessage(ref msg, IntPtr.Zero, 0, 0))
                             break;
@@ -2070,9 +2053,9 @@ namespace System.Windows.Threading
 
                     // If this was the last frame to exit after a quit, we
                     // can now dispose the dispatcher.
-                    if(_frameDepth == 1)
+                    if (_frameDepth == 1)
                     {
-                        if(_hasShutdownStarted)
+                        if (_hasShutdownStarted)
                         {
                             ShutdownImpl();
                         }
@@ -2087,7 +2070,7 @@ namespace System.Windows.Threading
             finally
             {
                 _frameDepth--;
-                if(_frameDepth == 0)
+                if (_frameDepth == 0)
                 {
                     // We have exited all frames.
                     _exitAllFrames = false;
@@ -2105,7 +2088,7 @@ namespace System.Windows.Threading
             UnsafeNativeMethods.ITfMessagePump messagePump = GetMessagePump();
             try
             {
-                if (messagePump == null)
+                if (messagePump is null)
                 {
                     // We have foreground items to process.
                     // By posting a message, Win32 will service us fairly promptly.
@@ -2116,14 +2099,13 @@ namespace System.Windows.Threading
                 }
                 else
                 {
-                    int intResult;
 
                     messagePump.GetMessageW(
                         ref msg,
                         hwnd,
                         minMessage,
                         maxMessage,
-                        out intResult);
+                        out System.Int32 intResult);
 
                     if (intResult == -1)
                     {
@@ -2141,7 +2123,8 @@ namespace System.Windows.Threading
             }
             finally
             {
-                if (messagePump != null) Marshal.ReleaseComObject(messagePump);
+                if (messagePump is not null)
+                    Marshal.ReleaseComObject(messagePump);
             }
 
             return result;
@@ -2150,31 +2133,34 @@ namespace System.Windows.Threading
         //  Get ITfMessagePump interface from Cicero.
         private UnsafeNativeMethods.ITfMessagePump GetMessagePump()
         {
-            UnsafeNativeMethods.ITfMessagePump messagePump = null;
-
-            if (_isTSFMessagePumpEnabled)
+            if (!_isTSFMessagePumpEnabled)
             {
-                // If the current thread is not STA, Cicero just does not work.
-                // Probably this Dispatcher is running for worker thread.
-                if (Thread.CurrentThread.GetApartmentState() == ApartmentState.STA)
-                {
-                    // If there is no text services, we don't have to use ITfMessagePump.
-                    if (TextServicesLoader.ServicesInstalled)
-                    {
-                        UnsafeNativeMethods.ITfThreadMgr threadManager;
-                        threadManager = TextServicesLoader.Load();
-
-                        // ThreadManager does not exist. No MessagePump yet.
-                        if (threadManager != null)
-                        {
-                            // QI ITfMessagePump.
-                            messagePump = threadManager as UnsafeNativeMethods.ITfMessagePump;
-                        }
-                    }
-                }
+                return null;
             }
 
-            return messagePump;
+            // If the current thread is not STA, Cicero just does not work.
+            // Probably this Dispatcher is running for worker thread.
+            if (Thread.CurrentThread.GetApartmentState() != ApartmentState.STA)
+            {
+                return null;
+            }
+
+            // If there is no text services, we don't have to use ITfMessagePump.
+            if (!TextServicesLoader.ServicesInstalled)
+            {
+                return null;
+            }
+
+            UnsafeNativeMethods.ITfThreadMgr threadManager = TextServicesLoader.Load();
+
+            // ThreadManager does not exist. No MessagePump yet.
+            if (threadManager is null)
+            {
+                return null;
+            }
+
+            // QI ITfMessagePump.
+            return threadManager as UnsafeNativeMethods.ITfMessagePump;
         }
 
         /// <summary>
@@ -2199,7 +2185,7 @@ namespace System.Windows.Threading
 
             handled = ComponentDispatcher.RaiseThreadMessage(ref msg);
 
-            if(!handled)
+            if (!handled)
             {
                 UnsafeNativeMethods.TranslateMessage(ref msg);
                 UnsafeNativeMethods.DispatchMessage(ref msg);
@@ -2209,25 +2195,25 @@ namespace System.Windows.Threading
         private IntPtr WndProcHook(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
         {
             WindowMessage message = (WindowMessage)msg;
-            if(_disableProcessingCount > 0)
+            if (_disableProcessingCount > 0)
             {
                 throw new InvalidOperationException(SR.DispatcherProcessingDisabledButStillPumping);
             }
 
-            if(message == WindowMessage.WM_DESTROY)
+            if (message == WindowMessage.WM_DESTROY)
             {
-                if(!_hasShutdownStarted && !_hasShutdownFinished) // Dispatcher thread - no lock needed for read
+                if (!_hasShutdownStarted && !_hasShutdownFinished) // Dispatcher thread - no lock needed for read
                 {
                     // Aack!  We are being torn down rudely!  Try to
                     // shut the dispatcher down as nicely as we can.
                     ShutdownImpl();
                 }
             }
-            else if(message == _msgProcessQueue)
+            else if (message == _msgProcessQueue)
             {
                 ProcessQueue();
             }
-            else if(message == WindowMessage.WM_TIMER && (int) wParam == TIMERID_BACKGROUND)
+            else if (message == WindowMessage.WM_TIMER && (int)wParam == TIMERID_BACKGROUND)
             {
                 // This timer is just used to process background operations.
                 // Stop the timer so that it doesn't fire again.
@@ -2235,7 +2221,7 @@ namespace System.Windows.Threading
 
                 ProcessQueue();
             }
-            else if(message == WindowMessage.WM_TIMER && (int) wParam == TIMERID_TIMERS)
+            else if (message == WindowMessage.WM_TIMER && (int)wParam == TIMERID_TIMERS)
             {
                 // We want 1-shot only timers.  So stop the timer
                 // that just fired.
@@ -2250,9 +2236,9 @@ namespace System.Windows.Threading
             DispatcherHooks hooks = null;
             bool idle = false;
 
-            lock(_instanceLock)
+            lock (_instanceLock)
             {
-                idle = (_postedProcessingType < PROCESS_BACKGROUND);
+                idle = _postedProcessingType < PROCESS_BACKGROUND;
                 if (idle)
                 {
                     hooks = _hooks;
@@ -2266,7 +2252,7 @@ namespace System.Windows.Threading
                 ComponentDispatcher.RaiseIdle();
             }
 
-            return IntPtr.Zero ;
+            return IntPtr.Zero;
         }
 
         private bool IsInputPending()
@@ -2321,10 +2307,9 @@ namespace System.Windows.Threading
             return CriticalRequestProcessing(false);
         }
 
+        /// <returns>Boolean value indicating whether operation succeeded</returns>
         internal bool CriticalRequestProcessing(bool force)
         {
-            bool succeeded = true;
-
             // This method is called from within the instance lock.  So we
             // can reliably check the _window field without worrying about
             // it being changed out from underneath us during shutdown.
@@ -2333,96 +2318,96 @@ namespace System.Windows.Threading
 
             DispatcherPriority priority = _queue.MaxPriority;
 
-            if (priority != DispatcherPriority.Invalid &&
-                priority != DispatcherPriority.Inactive)
+            if (priority == DispatcherPriority.Invalid ||
+                priority == DispatcherPriority.Inactive)
             {
-                // If forcing the processing request, we will discard any
-                // existing request (timer or message) and request again.
-                if (force)
-                {
-                    if (_postedProcessingType == PROCESS_BACKGROUND)
-                    {
-                        SafeNativeMethods.KillTimer(new HandleRef(this, _window.Handle), TIMERID_BACKGROUND);
-                    }
-                    else if (_postedProcessingType == PROCESS_FOREGROUND)
-                    {
-                        // Preserve the thread's current "extra message info"
-                        // (PeekMessage overwrites it).
-                        IntPtr extraInformation = UnsafeNativeMethods.GetMessageExtraInfo();
-
-                        MSG msg = new MSG();
-                        UnsafeNativeMethods.PeekMessage(ref msg, new HandleRef(this, _window.Handle), _msgProcessQueue, _msgProcessQueue, NativeMethods.PM_REMOVE);
-
-                        UnsafeNativeMethods.SetMessageExtraInfo(extraInformation);
-                    }
-                    _postedProcessingType = PROCESS_NONE;
-                }
-
-                if (_foregroundPriorityRange.Contains(priority))
-                {
-                    succeeded = RequestForegroundProcessing();
-                }
-                else
-                {
-                    succeeded = RequestBackgroundProcessing();
-                }
+                return true;
             }
 
-            return succeeded;
+            // If forcing the processing request, we will discard any
+            // existing request (timer or message) and request again.
+            if (force)
+            {
+                if (_postedProcessingType == PROCESS_BACKGROUND)
+                {
+                    SafeNativeMethods.KillTimer(new HandleRef(this, _window.Handle), TIMERID_BACKGROUND);
+                }
+                else if (_postedProcessingType == PROCESS_FOREGROUND)
+                {
+                    // Preserve the thread's current "extra message info"
+                    // (PeekMessage overwrites it).
+                    IntPtr extraInformation = UnsafeNativeMethods.GetMessageExtraInfo();
+
+                    MSG msg = new();
+                    UnsafeNativeMethods.PeekMessage(ref msg, new HandleRef(this, _window.Handle), _msgProcessQueue, _msgProcessQueue, NativeMethods.PM_REMOVE);
+
+                    UnsafeNativeMethods.SetMessageExtraInfo(extraInformation);
+                }
+                _postedProcessingType = PROCESS_NONE;
+            }
+
+            if (_foregroundPriorityRange.Contains(priority))
+            {
+                return RequestForegroundProcessing();
+            }
+            else
+            {
+                return RequestBackgroundProcessing();
+            }
         }
 
         private bool IsWindowNull() => _window is null;
 
         private bool RequestForegroundProcessing()
         {
-            if(_postedProcessingType < PROCESS_FOREGROUND)
+            if (_postedProcessingType >= PROCESS_FOREGROUND)
             {
-                // If we have already set a timer to do background processing,
-                // make sure we stop it before posting a message for foreground
-                // processing.
-                if(_postedProcessingType == PROCESS_BACKGROUND)
-                {
-                    SafeNativeMethods.KillTimer(new HandleRef(this, _window.Handle), TIMERID_BACKGROUND);
-                }
-
-                _postedProcessingType = PROCESS_FOREGROUND;
-
-                // We have foreground items to process.
-                // By posting a message, Win32 will service us fairly promptly.
-                bool succeeded = UnsafeNativeMethods.TryPostMessage(new HandleRef(this, _window.Handle), _msgProcessQueue, IntPtr.Zero, IntPtr.Zero);
-                if (!succeeded)
-                {
-                    OnRequestProcessingFailure("TryPostMessage");
-                }
-                return succeeded;
+                return true;
             }
 
-            return true;
+            // If we have already set a timer to do background processing,
+            // make sure we stop it before posting a message for foreground
+            // processing.
+            if (_postedProcessingType == PROCESS_BACKGROUND)
+            {
+                SafeNativeMethods.KillTimer(new HandleRef(this, _window.Handle), TIMERID_BACKGROUND);
+            }
+
+            _postedProcessingType = PROCESS_FOREGROUND;
+
+            // We have foreground items to process.
+            // By posting a message, Win32 will service us fairly promptly.
+            bool succeeded = UnsafeNativeMethods.TryPostMessage(new HandleRef(this, _window.Handle), _msgProcessQueue, IntPtr.Zero, IntPtr.Zero);
+            if (!succeeded)
+            {
+                OnRequestProcessingFailure("TryPostMessage");
+            }
+            return succeeded;
         }
 
         private bool RequestBackgroundProcessing()
         {
-            bool succeeded = true;
-
-            if(_postedProcessingType < PROCESS_BACKGROUND)
+            if (_postedProcessingType >= PROCESS_BACKGROUND)
             {
-                // If there is Win32 input pending, we can't do any background
-                // processing until it is done.  We use a short timer to
-                // get processing time after the input.
-                if(IsInputPending())
-                {
-                    _postedProcessingType = PROCESS_BACKGROUND;
+                return true;
+            }
 
-                    succeeded = SafeNativeMethods.TrySetTimer(new HandleRef(this, _window.Handle), TIMERID_BACKGROUND, DELTA_BACKGROUND);
-                    if (!succeeded)
-                    {
-                        OnRequestProcessingFailure("TrySetTimer");
-                    }
-                }
-                else
-                {
-                    succeeded = RequestForegroundProcessing();
-                }
+            if (!IsInputPending())
+            {
+                return RequestForegroundProcessing();
+            }
+
+            // If there is Win32 input pending, we can't do any background
+            // processing until it is done.  We use a short timer to
+            // get processing time after the input.
+
+            _postedProcessingType = PROCESS_BACKGROUND;
+
+            bool succeeded = SafeNativeMethods.TrySetTimer(new HandleRef(this, _window.Handle), TIMERID_BACKGROUND, DELTA_BACKGROUND);
+
+            if (!succeeded)
+            {
+                OnRequestProcessingFailure("TrySetTimer");
             }
 
             return succeeded;
@@ -2494,11 +2479,11 @@ namespace System.Windows.Threading
                 List<DispatcherTimer> timers = null;
                 long timersVersion = 0;
 
-                lock(_instanceLock)
+                lock (_instanceLock)
                 {
-                    if(!_hasShutdownFinished) // Could be a non-dispatcher thread, lock to read
+                    if (!_hasShutdownFinished) // Could be a non-dispatcher thread, lock to read
                     {
-                        if(_dueTimeFound && _dueTimeInTicks - currentTimeInTicks <= 0)
+                        if (_dueTimeFound && _dueTimeInTicks - currentTimeInTicks <= 0)
                         {
                             timers = _timers;
                             timersVersion = _timersVersion;
@@ -2506,47 +2491,49 @@ namespace System.Windows.Threading
                     }
                 }
 
-                if(timers != null)
+                if (timers is null)
                 {
-                    DispatcherTimer timer = null;
-                    int iTimer = 0;
+                    return;
+                }
 
-                    do
+                DispatcherTimer timer = null;
+                int iTimer = 0;
+
+                do
+                {
+                    lock (_instanceLock)
                     {
-                        lock(_instanceLock)
+                        timer = null;
+
+                        // If the timers collection changed while we are in the middle of
+                        // looking for timers, start over.
+                        if (timersVersion != _timersVersion)
                         {
-                            timer = null;
-
-                            // If the timers collection changed while we are in the middle of
-                            // looking for timers, start over.
-                            if(timersVersion != _timersVersion)
-                            {
-                                timersVersion = _timersVersion;
-                                iTimer = 0;
-                            }
-
-                            while(iTimer < _timers.Count)
-                            {
-                                // WARNING: this is vulnerable to wrapping
-                                if(timers[iTimer]._dueTimeInTicks - currentTimeInTicks <= 0)
-                                {
-                                    // Remove this timer from our list.
-                                    // Do not increment the index.
-                                    timer = timers[iTimer];
-                                    timers.RemoveAt(iTimer);
-                                    break;
-                                }
-                                else
-                                {
-                                    iTimer++;
-                                }
-                            }
+                            timersVersion = _timersVersion;
+                            iTimer = 0;
                         }
 
-                        // Now that we are outside of the lock, promote the timer.
-                        timer?.Promote();
-                    } while(timer != null);
-}
+                        while (iTimer < _timers.Count)
+                        {
+                            // WARNING: this is vulnerable to wrapping
+                            if (timers[iTimer]._dueTimeInTicks - currentTimeInTicks <= 0)
+                            {
+                                // Remove this timer from our list.
+                                // Do not increment the index.
+                                timer = timers[iTimer];
+                                timers.RemoveAt(iTimer);
+                                break;
+                            }
+                            else
+                            {
+                                iTimer++;
+                            }
+                        }
+                    }
+
+                    // Now that we are outside of the lock, promote the timer.
+                    timer?.Promote();
+                } while (timer is not null);
             }
             finally
             {
@@ -2556,9 +2543,9 @@ namespace System.Windows.Threading
 
         internal void AddTimer(DispatcherTimer timer)
         {
-            lock(_instanceLock)
+            lock (_instanceLock)
             {
-                if(!_hasShutdownFinished) // Could be a non-dispatcher thread, lock to read
+                if (!_hasShutdownFinished) // Could be a non-dispatcher thread, lock to read
                 {
                     _timers.Add(timer);
                     _timersVersion++;
@@ -2569,9 +2556,9 @@ namespace System.Windows.Threading
 
         internal void RemoveTimer(DispatcherTimer timer)
         {
-            lock(_instanceLock)
+            lock (_instanceLock)
             {
-                if(!_hasShutdownFinished) // Could be a non-dispatcher thread, lock to read
+                if (!_hasShutdownFinished) // Could be a non-dispatcher thread, lock to read
                 {
                     _timers.Remove(timer);
                     _timersVersion++;
@@ -2582,7 +2569,7 @@ namespace System.Windows.Threading
 
         internal void UpdateWin32Timer() // Called from DispatcherTimer
         {
-            if(CheckAccess())
+            if (CheckAccess())
             {
                 UpdateWin32TimerFromDispatcherThread(null);
             }
@@ -2596,82 +2583,88 @@ namespace System.Windows.Threading
 
         private object UpdateWin32TimerFromDispatcherThread(object unused)
         {
-            lock(_instanceLock)
+            lock (_instanceLock)
             {
-                if(!_hasShutdownFinished) // Dispatcher thread, does not technically need the lock to read
+                if (_hasShutdownFinished) // Dispatcher thread, does not technically need the lock to read
                 {
-                    bool oldDueTimeFound = _dueTimeFound;
-                    int oldDueTimeInTicks = _dueTimeInTicks;
-                    _dueTimeFound = false;
-                    _dueTimeInTicks = 0;
+                    return null;
+                }
 
-                    if(_timers.Count > 0)
+                bool oldDueTimeFound = _dueTimeFound;
+                int oldDueTimeInTicks = _dueTimeInTicks;
+                _dueTimeFound = false;
+                _dueTimeInTicks = 0;
+
+                if (_timers.Count > 0)
+                {
+                    // We could do better if we sorted the list of timers.
+                    for (int i = 0; i < _timers.Count; i++)
                     {
-                        // We could do better if we sorted the list of timers.
-                        for(int i = 0; i < _timers.Count; i++)
+                        DispatcherTimer timer = _timers[i];
+
+                        if (!_dueTimeFound || timer._dueTimeInTicks - _dueTimeInTicks < 0)
                         {
-                            DispatcherTimer timer = _timers[i];
-
-                            if(!_dueTimeFound || timer._dueTimeInTicks - _dueTimeInTicks < 0)
-                            {
-                                _dueTimeFound = true;
-                                _dueTimeInTicks = timer._dueTimeInTicks;
-                            }
+                            _dueTimeFound = true;
+                            _dueTimeInTicks = timer._dueTimeInTicks;
                         }
-                    }
-
-                    if(_dueTimeFound)
-                    {
-                        if(!_isWin32TimerSet || !oldDueTimeFound || (oldDueTimeInTicks != _dueTimeInTicks))
-                        {
-                            SetWin32Timer(_dueTimeInTicks);
-                        }
-                    }
-                    else if(oldDueTimeFound)
-                    {
-                        KillWin32Timer();
                     }
                 }
-            }
 
-            return null;
+                if (_dueTimeFound)
+                {
+                    if (!_isWin32TimerSet || !oldDueTimeFound || (oldDueTimeInTicks != _dueTimeInTicks))
+                    {
+                        SetWin32Timer(_dueTimeInTicks);
+                    }
+                }
+                else if (oldDueTimeFound)
+                {
+                    KillWin32Timer();
+                }
+
+                return null;
+            }
         }
 
         private void SetWin32Timer(int dueTimeInTicks)
         {
-            if(!IsWindowNull())
+            if (IsWindowNull())
             {
-                int delta = dueTimeInTicks - Environment.TickCount;
-                if(delta < 1)
-                {
-                    delta = 1;
-                }
-
-                // We are being called on the dispatcher thread so we can rely on
-                // _window.Value being non-null without taking the instance lock.
-
-                SafeNativeMethods.SetTimer(
-                    new HandleRef(this, _window.Handle),
-                    TIMERID_TIMERS,
-                    delta);
-
-                _isWin32TimerSet = true;
+                return;
             }
+
+            int delta = dueTimeInTicks - Environment.TickCount;
+            if (delta < 1)
+            {
+                delta = 1;
+            }
+
+            // We are being called on the dispatcher thread so we can rely on
+            // _window.Value being non-null without taking the instance lock.
+
+            SafeNativeMethods.SetTimer(
+                new HandleRef(this, _window.Handle),
+                TIMERID_TIMERS,
+                delta);
+
+            _isWin32TimerSet = true;
         }
 
         private void KillWin32Timer()
         {
-            if(!IsWindowNull())
+            if (IsWindowNull())
             {
-                // We are being called on the dispatcher thread so we can rely on
-                // _window.Value being non-null without taking the instance lock.
-
-                SafeNativeMethods.KillTimer(
-                    new HandleRef(this, _window.Handle),
-                    TIMERID_TIMERS);
-
-                _isWin32TimerSet = false;
+                return;
             }
+
+            // We are being called on the dispatcher thread so we can rely on
+            // _window.Value being non-null without taking the instance lock.
+
+            SafeNativeMethods.KillTimer(
+                new HandleRef(this, _window.Handle),
+                TIMERID_TIMERS);
+
+            _isWin32TimerSet = false;
         }
 
         // Exception filter returns true if exception should be caught.
@@ -2702,7 +2695,7 @@ namespace System.Windows.Threading
 
             // The app can hook up an ExceptionFilter to avoid catching it.
             // ExceptionFilter will run REGARDLESS of whether there are exception handlers.
-            if (_unhandledExceptionFilter != null)
+            if (_unhandledExceptionFilter is not null)
             {
                 // The default requestCatch value that is passed in the args
                 // should be returned unchanged if filters don't set them explicitly.
@@ -2742,34 +2735,33 @@ namespace System.Windows.Threading
         // The exception filter called for catching an unhandled exception.
         private bool CatchException(Exception e)
         {
+            if (UnhandledException is null)
+            {
+                return false;
+            }
+
             bool handled = false;
 
-            if (UnhandledException != null)
+            _unhandledExceptionEventArgs.Initialize(e, false);
+
+            bool bSuccess = false;
+            try
             {
-                _unhandledExceptionEventArgs.Initialize(e, false);
+                UnhandledException(this, _unhandledExceptionEventArgs);
+                handled = _unhandledExceptionEventArgs.Handled;
+                bSuccess = true;
+            }
+            finally
+            {
+                if (!bSuccess)
+                    handled = false;
+            }
 
-                bool bSuccess = false;
-                try
-                {
-                    UnhandledException(this, _unhandledExceptionEventArgs);
-                    handled = _unhandledExceptionEventArgs.Handled;
-                    bSuccess = true;
-                }
-                finally
-                {
-                    if (!bSuccess)
-                        handled = false;
-                }
-}
-
-            return(handled);
+            return handled;
         }
 
         // This is called by DRT (via reflection) to see if there is a UnhandledException handler.
-        private bool HasUnhandledExceptionHandler
-        {
-            get { return (UnhandledException != null); }
-        }
+        private bool HasUnhandledExceptionHandler => (UnhandledException is not null);
 
         internal object WrappedInvoke(Delegate callback, object args, int numArgs, Delegate catchHandler)
         {
@@ -2778,9 +2770,9 @@ namespace System.Windows.Threading
 
         private object[] CombineParameters(object arg, object[] args)
         {
-            object[] parameters = new object[1 + (args == null ? 1 : args.Length)];
+            object[] parameters = new object[1 + (args is null ? 1 : args.Length)];
             parameters[0] = arg;
-            if (args != null)
+            if (args is not null)
             {
                 Array.Copy(args, 0, parameters, 1, args.Length);
             }
@@ -2817,27 +2809,27 @@ namespace System.Windows.Threading
 
         internal int _disableProcessingCount; // read by DispatcherSynchronizationContext, decremented by DispatcherProcessingDisabled
 
-        private static PriorityRange _foregroundPriorityRange = new PriorityRange(DispatcherPriority.Loaded, true, DispatcherPriority.Send, true);
-        private static PriorityRange _backgroundPriorityRange = new PriorityRange(DispatcherPriority.Background, true, DispatcherPriority.Input, true);
-        private static PriorityRange _idlePriorityRange = new PriorityRange(DispatcherPriority.SystemIdle, true, DispatcherPriority.ContextIdle, true);
+        private static PriorityRange _foregroundPriorityRange = new(DispatcherPriority.Loaded, true, DispatcherPriority.Send, true);
+        private static PriorityRange _backgroundPriorityRange = new(DispatcherPriority.Background, true, DispatcherPriority.Input, true);
+        private static PriorityRange _idlePriorityRange = new(DispatcherPriority.SystemIdle, true, DispatcherPriority.ContextIdle, true);
 
         private MessageOnlyHwndWrapper _window;
 
-        private HwndWrapperHook _hook;
+        private readonly HwndWrapperHook _hook;
 
         private int _postedProcessingType;
-        private static WindowMessage _msgProcessQueue;
+        private static readonly WindowMessage _msgProcessQueue;
 
-        private static ExceptionWrapper _exceptionWrapper;
+        private static readonly ExceptionWrapper _exceptionWrapper;
         private static readonly object ExceptionDataKey = new object();
 
         // Preallocated arguments for exception handling.
         // This helps avoid allocations in the handler code, a potential
         // source of secondary exceptions (i.e. in Out-Of-Memory cases).
-        private DispatcherUnhandledExceptionEventArgs _unhandledExceptionEventArgs;
+        private readonly DispatcherUnhandledExceptionEventArgs _unhandledExceptionEventArgs;
 
         private DispatcherUnhandledExceptionFilterEventHandler _unhandledExceptionFilter;
-        private DispatcherUnhandledExceptionFilterEventArgs _exceptionFilterEventArgs;
+        private readonly DispatcherUnhandledExceptionFilterEventArgs _exceptionFilterEventArgs;
 
         private object _reserved0;
         private object _reserved1;

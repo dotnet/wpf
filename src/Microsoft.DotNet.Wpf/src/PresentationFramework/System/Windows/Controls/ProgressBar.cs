@@ -274,7 +274,11 @@ namespace System.Windows.Controls
         {
             // We change the visual state to determinate when not IsVisible for performance reasons.
             // By default, the animation for the Indeterminate state will continue even when the progress bar is not visible.
-            if (!IsIndeterminate || !IsVisible)
+
+            // However, we can only allow ourselves to do that if the ProgressBar is not being cached, since when the UIElement is defined within
+            // resources, IsVisible property will always evaluate to false as the UIElement is not a part of the visual tree at that point. (#8960)
+
+            if (!IsIndeterminate || (!IsVisible && CacheMode is null))
             {
                 VisualStateManager.GoToState(this, VisualStates.StateDeterminate, useTransitions);
             }

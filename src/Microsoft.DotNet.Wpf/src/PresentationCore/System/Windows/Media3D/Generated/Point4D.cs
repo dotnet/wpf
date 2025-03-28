@@ -105,15 +105,9 @@ namespace System.Windows.Media.Media3D
         /// bool - true if the object is an instance of Point4D and if it's equal to "this".
         /// </returns>
         /// <param name='o'>The object to compare to "this"</param>
-        public override bool Equals(object o)
+        public override readonly bool Equals(object o)
         {
-            if ((null == o) || !(o is Point4D))
-            {
-                return false;
-            }
-
-            Point4D value = (Point4D)o;
-            return Point4D.Equals(this,value);
+            return o is Point4D other && Point4D.Equals(this, other);
         }
 
         /// <summary>
@@ -127,7 +121,7 @@ namespace System.Windows.Media.Media3D
         /// bool - true if "value" is equal to "this".
         /// </returns>
         /// <param name='value'>The Point4D to compare to "this"</param>
-        public bool Equals(Point4D value)
+        public readonly bool Equals(Point4D value)
         {
             return Point4D.Equals(this, value);
         }
@@ -137,7 +131,7 @@ namespace System.Windows.Media.Media3D
         /// <returns>
         /// int - the HashCode for this Point4D
         /// </returns>
-        public override int GetHashCode()
+        public override readonly int GetHashCode()
         {
             // Perform field-by-field XOR of HashCodes
             return X.GetHashCode() ^
@@ -191,7 +185,7 @@ namespace System.Windows.Media.Media3D
         /// </summary>
         public double X
         {
-            get
+            readonly get
             {
                 return _x;
             }
@@ -208,7 +202,7 @@ namespace System.Windows.Media.Media3D
         /// </summary>
         public double Y
         {
-            get
+            readonly get
             {
                 return _y;
             }
@@ -225,7 +219,7 @@ namespace System.Windows.Media.Media3D
         /// </summary>
         public double Z
         {
-            get
+            readonly get
             {
                 return _z;
             }
@@ -242,7 +236,7 @@ namespace System.Windows.Media.Media3D
         /// </summary>
         public double W
         {
-            get
+            readonly get
             {
                 return _w;
             }

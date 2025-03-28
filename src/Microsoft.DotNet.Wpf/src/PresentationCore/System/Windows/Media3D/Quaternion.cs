@@ -598,7 +598,7 @@ namespace System.Windows.Media.Media3D
         /// </summary>
         public double X
         {
-            get
+            readonly get
             {
                 return _x;
             }
@@ -619,7 +619,7 @@ namespace System.Windows.Media.Media3D
         /// </summary>
         public double Y
         {
-            get
+            readonly get
             {
                 return _y;
             }
@@ -640,7 +640,7 @@ namespace System.Windows.Media.Media3D
         /// </summary>
         public double Z
         {
-            get
+            readonly get
             {
                 return _z;
             }
@@ -661,7 +661,7 @@ namespace System.Windows.Media.Media3D
         /// </summary>
         public double W
         {
-            get
+            readonly get
             {
                 if (IsDistinguishedIdentity)
                 {
@@ -710,7 +710,7 @@ namespace System.Windows.Media.Media3D
 
         private bool IsDistinguishedIdentity
         {
-            get 
+            readonly get
             {
                 return !_isNotDistinguishedIdentity;
             }

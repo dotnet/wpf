@@ -668,7 +668,7 @@ namespace System.Windows.Media.Media3D
         /// </summary>
         public double M11
         {
-            get
+            readonly get
             {
                 if (IsDistinguishedIdentity)
                 {
@@ -695,7 +695,7 @@ namespace System.Windows.Media.Media3D
         /// </summary>
         public double M12
         {
-            get
+            readonly get
             {
                 return _m12;
             }
@@ -715,7 +715,7 @@ namespace System.Windows.Media.Media3D
         /// </summary>
         public double M13
         {
-            get
+            readonly get
             {
                 return _m13;
             }
@@ -735,7 +735,7 @@ namespace System.Windows.Media.Media3D
         /// </summary>
         public double M14
         {
-            get
+            readonly get
             {
                 return _m14;
             }
@@ -756,7 +756,7 @@ namespace System.Windows.Media.Media3D
         /// </summary>
         public double M21
         {
-            get
+            readonly get
             {
                 return _m21;
             }
@@ -776,7 +776,7 @@ namespace System.Windows.Media.Media3D
         /// </summary>
         public double M22
         {
-            get
+            readonly get
             {
                 if (IsDistinguishedIdentity)
                 {
@@ -803,7 +803,7 @@ namespace System.Windows.Media.Media3D
         /// </summary>
         public double M23
         {
-            get
+            readonly get
             {
                 return _m23;
             }
@@ -823,7 +823,7 @@ namespace System.Windows.Media.Media3D
         /// </summary>
         public double M24
         {
-            get
+            readonly get
             {
                 return _m24;
             }
@@ -845,7 +845,7 @@ namespace System.Windows.Media.Media3D
         /// </summary>
         public double M31
         {
-            get
+            readonly get
             {
                 return _m31;
             }
@@ -865,7 +865,7 @@ namespace System.Windows.Media.Media3D
         /// </summary>
         public double M32
         {
-            get
+            readonly get
             {
                 return _m32;
             }
@@ -885,7 +885,7 @@ namespace System.Windows.Media.Media3D
         /// </summary>
         public double M33
         {
-            get
+            readonly get
             {
                 if (IsDistinguishedIdentity)
                 {
@@ -912,7 +912,7 @@ namespace System.Windows.Media.Media3D
         /// </summary>
         public double M34
         {
-            get
+            readonly get
             {
                 return _m34;
             }
@@ -933,7 +933,7 @@ namespace System.Windows.Media.Media3D
         /// </summary>
         public double OffsetX
         {
-            get
+            readonly get
             {
                 return _offsetX;
             }
@@ -952,7 +952,7 @@ namespace System.Windows.Media.Media3D
         /// </summary>
         public double OffsetY
         {
-            get
+            readonly get
             {
                 return _offsetY;
             }
@@ -971,7 +971,7 @@ namespace System.Windows.Media.Media3D
         /// </summary>
         public double OffsetZ
         {
-            get
+            readonly get
             {
                 return _offsetZ;
             }
@@ -992,7 +992,7 @@ namespace System.Windows.Media.Media3D
         /// </summary>
         public double M44
         {
-            get
+            readonly get
             {
                 if (IsDistinguishedIdentity)
                 {
@@ -1391,7 +1391,7 @@ namespace System.Windows.Media.Media3D
         //
         private bool IsDistinguishedIdentity
         {
-            get
+            readonly get
             {
                 Debug.Assert(
                     _isNotKnownToBeIdentity

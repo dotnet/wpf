@@ -37,7 +37,7 @@ namespace System.Windows
         /// <summary>
         /// Returns true if this Int32Rect is the Empty integer rectangle.
         /// </summary>
-        public bool IsEmpty
+        public readonly bool IsEmpty
         {
             get
             {

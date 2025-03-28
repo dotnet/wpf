@@ -53,7 +53,7 @@ namespace System.Windows
         /// Note: If size is 0 this Size still contains a 0 or 1 dimensional set
         /// of points, so this method should not be used to check for 0 area.
         /// </summary>
-        public bool IsEmpty
+        public readonly bool IsEmpty
         {
             get
             {
@@ -66,7 +66,7 @@ namespace System.Windows
         /// </summary>
         public double Width
         {
-            get
+            readonly get
             {
                 return _width;
             }
@@ -91,7 +91,7 @@ namespace System.Windows
         /// </summary>
         public double Height
         {
-            get
+            readonly get
             {
                 return _height;
             }

@@ -143,15 +143,9 @@ namespace System.Windows.Media.Media3D
         /// bool - true if the object is an instance of Matrix3D and if it's equal to "this".
         /// </returns>
         /// <param name='o'>The object to compare to "this"</param>
-        public override bool Equals(object o)
+        public override readonly bool Equals(object o)
         {
-            if ((null == o) || !(o is Matrix3D))
-            {
-                return false;
-            }
-
-            Matrix3D value = (Matrix3D)o;
-            return Matrix3D.Equals(this,value);
+            return o is Matrix3D other && Matrix3D.Equals(this, other);
         }
 
         /// <summary>
@@ -165,7 +159,7 @@ namespace System.Windows.Media.Media3D
         /// bool - true if "value" is equal to "this".
         /// </returns>
         /// <param name='value'>The Matrix3D to compare to "this"</param>
-        public bool Equals(Matrix3D value)
+        public readonly bool Equals(Matrix3D value)
         {
             return Matrix3D.Equals(this, value);
         }
@@ -175,7 +169,7 @@ namespace System.Windows.Media.Media3D
         /// <returns>
         /// int - the HashCode for this Matrix3D
         /// </returns>
-        public override int GetHashCode()
+        public override readonly int GetHashCode()
         {
             if (IsDistinguishedIdentity)
             {

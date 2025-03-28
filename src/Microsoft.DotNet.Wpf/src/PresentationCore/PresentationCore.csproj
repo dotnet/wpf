@@ -84,7 +84,6 @@
     <Compile Include="$(WpfSharedDir)\MS\Internal\Ink\BitStream.cs" />
     <Compile Include="$(WpfSharedDir)\MS\Internal\Ink\Native.cs" />
     <Compile Include="$(WpfSharedDir)\MS\Internal\IO\SynchronizingStream.cs" />
-    <Compile Include="$(WpfSharedDir)\MS\Internal\WindowsRuntime\ReflectionHelper.cs" />
     <Compile Include="$(WpfSharedDir)\MS\Win32\SafeSystemMetrics.cs" />
     <Compile Include="$(WpfSharedDir)\MS\Win32\UnsafeNativeMethodsCompiler.cs" />
     <Compile Include="$(WpfSharedDir)\MS\Win32\WinInet.cs" />

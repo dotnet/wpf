@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -44,22 +44,19 @@ namespace System.Windows
 
             EntryIndex entryIndex = instance.LookupEntry(_globalIndex);
 
-            // Set the value if it's not the default, otherwise remove the value.
-            if (!object.ReferenceEquals(value, _defaultValue))
+            // Special case boolean operations to avoid boxing with (mostly) UIA code paths
+            if (typeof(T) == typeof(bool))
             {
-                object valueObject;
-
-                if (typeof(T) == typeof(bool))
-                {
-                    // Use shared boxed instances rather than creating new objects for each SetValue call.
-                    valueObject = BooleanBoxes.Box(Unsafe.As<T, bool>(ref value));
-                }
-                else
-                {
-                    valueObject = value;
-                }
+                // Use shared boxed instances rather than creating new objects for each SetValue call.
+                object valueObject = BooleanBoxes.Box(Unsafe.BitCast<T, bool>(value));
 
                 instance.SetEffectiveValue(entryIndex, dp: null, _globalIndex, metadata: null, valueObject, BaseValueSourceInternal.Local);
+                _hasBeenSet = true;
+            }
+            // Set the value if it's not the default, otherwise remove the value.
+            else if (!ReferenceEquals(value, _defaultValue))
+            {
+                instance.SetEffectiveValue(entryIndex, dp: null, _globalIndex, metadata: null, value, BaseValueSourceInternal.Local);
                 _hasBeenSet = true;
             }
             else

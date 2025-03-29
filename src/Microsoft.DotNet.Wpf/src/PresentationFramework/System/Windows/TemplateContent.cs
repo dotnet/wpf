@@ -450,7 +450,7 @@ namespace System.Windows
                     {
                         // Check to see if the parent object needs to have the name set
                         if (stack.Depth > 0 &&
-!stack.CurrentFrame.NameSet &&
+                            !stack.CurrentFrame.NameSet &&
                             stack.CurrentFrame.Type != null &&
                             !stack.CurrentFrame.IsInNameScope &&
                             !stack.CurrentFrame.IsInStyleOrTemplate)

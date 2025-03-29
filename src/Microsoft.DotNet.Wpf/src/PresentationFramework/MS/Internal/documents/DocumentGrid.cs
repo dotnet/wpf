@@ -700,7 +700,7 @@ namespace MS.Internal.Documents
 
                     //Clear out our visual collection so that the old pages (pointing to old content)
                     //will be replaced with new ones on the next Measure/Arrange pass.
-                    ResetVisualTree(false /*pruneOnly*/);
+                    ResetVisualTree(pruneOnly: false);
                     ResetPageViewCollection();
 
                     //Reset our visible pages.
@@ -1336,7 +1336,7 @@ namespace MS.Internal.Documents
             //If not, we can just clear our visual collection and return.
             if (_rowCache.RowCount == 0)
             {
-                ResetVisualTree(false /*pruneOnly*/);
+                ResetVisualTree(pruneOnly: false);
                 ResetPageViewCollection();
                 _firstVisibleRow = 0;
                 _visibleRowCount = 0;
@@ -1361,7 +1361,7 @@ namespace MS.Internal.Documents
             //Do we have no visible rows at all?  Then clear the Visual collection and return.
             if (newVisibleRowCount == 0)
             {
-                ResetVisualTree(false /*pruneOnly*/);
+                ResetVisualTree(pruneOnly: false);
                 ResetPageViewCollection();
                 _firstVisibleRow = 0;
                 _visibleRowCount = 0;
@@ -1453,7 +1453,7 @@ namespace MS.Internal.Documents
                 //the MultiPageTextView's list of visible DocumentPageViews.
                 //First, prune our visual tree so it only contains the set of pages that are visible
                 //before and after the layout change.
-                ResetVisualTree(true /*pruneOnly*/);
+                ResetVisualTree(pruneOnly: true);
 
                 Collection<DocumentPageView> documentPageViews =
                     new Collection<DocumentPageView>();
@@ -1812,7 +1812,7 @@ namespace MS.Internal.Documents
                     Rect boundingRect = (data.Rect != Rect.Empty) ? data.Rect : data.Visual.VisualContentBounds;
 
                     Rect offsetRect = transform.TransformBounds(boundingRect);
-                    MakeRectVisible(offsetRect, false /* alwaysCenter */);
+                    MakeRectVisible(offsetRect, alwaysCenter: false);
                 }
             }
             else if (data.ContentPosition != null)
@@ -1823,7 +1823,7 @@ namespace MS.Internal.Documents
                 //we can make the TextPointer's Rect visible...
                 if (TextViewContains(tp))
                 {
-                    MakeRectVisible(TextView.GetRectangleFromTextPosition(tp), false /* alwaysCenter */);
+                    MakeRectVisible(TextView.GetRectangleFromTextPosition(tp), alwaysCenter: false);
                 }
             }
             else
@@ -2852,7 +2852,7 @@ namespace MS.Internal.Documents
             {
                 //Now we make the selection visible.
                 MakeRectVisible(TextView.GetRectangleFromTextPosition(
-                    selection), true /* alwaysCenter */);
+                    selection), alwaysCenter: true);
             }
         }
 

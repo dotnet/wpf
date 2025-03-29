@@ -146,7 +146,7 @@ namespace System.Windows.Documents
         {
             get
             {
-                return new BlockCollection(this, /*isOwnerParent*/true);
+                return new BlockCollection(this, isOwnerParent: true);
             }
         }
 
@@ -1213,7 +1213,7 @@ namespace System.Windows.Documents
             if (textContainer == null)
             {
                 // Create text tree that contains content of the element.
-                textContainer = new TextContainer(this, false /* plainTextOnly */);
+                textContainer = new TextContainer(this, plainTextOnly: false);
             }
 
             // Create structural cache object
@@ -1625,7 +1625,7 @@ namespace System.Windows.Documents
         {
             ArgumentNullException.ThrowIfNull(value);
 
-            if (!TextSchema.IsValidChildOfContainer(/*parentType:*/_typeofThis, /*childType:*/value.GetType()))
+            if (!TextSchema.IsValidChildOfContainer(parentType: _typeofThis, childType: value.GetType()))
             {
                 throw new ArgumentException(SR.Format(SR.TextSchema_ChildTypeIsInvalid, _typeofThis.Name, value.GetType().Name));
             }

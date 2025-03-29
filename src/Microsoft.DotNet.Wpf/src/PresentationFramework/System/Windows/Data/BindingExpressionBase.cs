@@ -1799,7 +1799,7 @@ namespace System.Windows.Data
                 root = bindingExpr;
 
                 // bindings in a group update Explicitly, unless declared otherwise
-                bindingExpr.OnBindingGroupChanged(/*joining*/true);
+                bindingExpr.OnBindingGroupChanged(joining: true);
 
                 bg.AddToValueTable(bindingExpr);
             }
@@ -2003,7 +2003,7 @@ namespace System.Windows.Data
                 if (_value == DefaultValueObject)
                 {
                     // don't notify listeners.  This isn't a real value change.
-                    ChangeValue(UseFallbackValue(), false /*notify*/);
+                    ChangeValue(UseFallbackValue(), notify: false);
                 }
                 return _value;
             }

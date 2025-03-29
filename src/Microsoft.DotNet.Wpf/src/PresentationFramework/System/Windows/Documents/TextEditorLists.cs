@@ -236,7 +236,7 @@ namespace System.Windows.Documents
                     if (paragraphOrBlockUIContainer is BlockUIContainer)
                     {
                         // Increment BlockUIContainer's leading margin.
-                        TextRangeEdit.IncrementParagraphLeadingMargin(thisSelection, /*increment:*/20, PropertyValueAction.IncreaseByAbsoluteValue);
+                        TextRangeEdit.IncrementParagraphLeadingMargin(thisSelection, increment: 20, PropertyValueAction.IncreaseByAbsoluteValue);
                     }
                     else
                     {
@@ -259,14 +259,14 @@ namespace System.Windows.Documents
                         else
                         {
                             // Increment paragraph leading margin.
-                            TextRangeEdit.IncrementParagraphLeadingMargin(thisSelection, /*increment:*/20, PropertyValueAction.IncreaseByAbsoluteValue);
+                            TextRangeEdit.IncrementParagraphLeadingMargin(thisSelection, increment: 20, PropertyValueAction.IncreaseByAbsoluteValue);
                         }
                     }
                 }
                 else
                 {
                     // For non-empty selection, always increment paragraph margin.
-                    TextRangeEdit.IncrementParagraphLeadingMargin(thisSelection, /*increment:*/20, PropertyValueAction.IncreaseByAbsoluteValue);
+                    TextRangeEdit.IncrementParagraphLeadingMargin(thisSelection, increment: 20, PropertyValueAction.IncreaseByAbsoluteValue);
                 }
             }
         }
@@ -291,7 +291,7 @@ namespace System.Windows.Documents
                     if (paragraphOrBlockUIContainer is BlockUIContainer)
                     {
                         // Decrement BlockUIContainer's leading margin.
-                        TextRangeEdit.IncrementParagraphLeadingMargin(thisSelection, /*increment:*/20, PropertyValueAction.DecreaseByAbsoluteValue);
+                        TextRangeEdit.IncrementParagraphLeadingMargin(thisSelection, increment: 20, PropertyValueAction.DecreaseByAbsoluteValue);
                     }
                     else
                     {
@@ -315,14 +315,14 @@ namespace System.Windows.Documents
                         else
                         {
                             // Decrement paragraph leading margin.
-                            TextRangeEdit.IncrementParagraphLeadingMargin(thisSelection, /*increment:*/20, PropertyValueAction.DecreaseByAbsoluteValue);
+                            TextRangeEdit.IncrementParagraphLeadingMargin(thisSelection, increment: 20, PropertyValueAction.DecreaseByAbsoluteValue);
                         }
                     }
                 }
                 else
                 {
                     // For non-empty selection, always decrement paragraph margin.
-                    TextRangeEdit.IncrementParagraphLeadingMargin(thisSelection, /*increment:*/20, PropertyValueAction.DecreaseByAbsoluteValue);
+                    TextRangeEdit.IncrementParagraphLeadingMargin(thisSelection, increment: 20, PropertyValueAction.DecreaseByAbsoluteValue);
                 }
             }
         }

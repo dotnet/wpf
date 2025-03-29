@@ -140,7 +140,7 @@ namespace System.Windows.Baml2006
             }
             else
             {
-                result = new WpfXamlMember(DependencyProperty, false /*isAttachable*/);
+                result = new WpfXamlMember(DependencyProperty, isAttachable: false);
             }
             result.ApplyGetterFallback = true;
             return result;

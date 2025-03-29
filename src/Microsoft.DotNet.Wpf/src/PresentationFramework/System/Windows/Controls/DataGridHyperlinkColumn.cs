@@ -173,7 +173,7 @@ namespace System.Windows.Controls
 
             link.TargetName = TargetName;
 
-            ApplyStyle(/* isEditing = */ false, /* defaultToElementStyle = */ false, outerBlock);
+            ApplyStyle(isEditing: false, defaultToElementStyle: false, outerBlock);
             ApplyBinding(link, Hyperlink.NavigateUriProperty);
             ApplyContentBinding(innerContentPresenter, ContentPresenter.ContentProperty);
 
@@ -189,7 +189,7 @@ namespace System.Windows.Controls
         {
             TextBox textBox = new TextBox();
 
-            ApplyStyle(/* isEditing = */ true, /* defaultToElementStyle = */ false, textBox);
+            ApplyStyle(isEditing: true, defaultToElementStyle: false, textBox);
             ApplyBinding(textBox, TextBox.TextProperty);
 
             DataGridHelper.RestoreFlowDirection(textBox, cell);

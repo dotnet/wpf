@@ -399,7 +399,7 @@ namespace MS.Internal.Annotations.Anchoring
                 ArgumentOutOfRangeException.ThrowIfGreaterThanOrEqual(offset, realLocator.Parts.Count);
             }
 
-            return InternalResolveLocator(locator, offset, startNode, false /*skipStartNode*/, out attachmentLevel);
+            return InternalResolveLocator(locator, offset, startNode, skipStartNode: false, out attachmentLevel);
         }
 
 

@@ -470,7 +470,7 @@ namespace System.Windows.Controls
                     "delta:", offset - HorizontalOffset);
             }
 
-            ClearAnchorInformation(true /*shouldAbort*/);
+            ClearAnchorInformation(shouldAbort: true);
             SetHorizontalOffsetImpl(offset, setAnchorInformation:false);
         }
 
@@ -598,7 +598,7 @@ namespace System.Windows.Controls
                     "delta:", offset - VerticalOffset);
             }
 
-            ClearAnchorInformation(true /*shouldAbort*/);
+            ClearAnchorInformation(shouldAbort: true);
             SetVerticalOffsetImpl(offset, setAnchorInformation:false);
         }
 
@@ -761,7 +761,7 @@ namespace System.Windows.Controls
                                     //
                                     // Retry the pending AnchorOperation
                                     //
-                                    OnAnchorOperation(true /*isAnchorOperationPending*/);
+                                    OnAnchorOperation(isAnchorOperationPending: true);
 
                                     //
                                     // Adjust offsets
@@ -833,7 +833,7 @@ namespace System.Windows.Controls
             ItemsControl.GetItemsOwnerInternal(this, out itemsControl);
             if (itemsControl == null || !VisualTreeHelper.IsAncestorOf(this, _scrollData._firstContainerInViewport))
             {
-                ClearAnchorInformation(isAnchorOperationPending /*shouldAbort*/);
+                ClearAnchorInformation(shouldAbort: isAnchorOperationPending);
                 return;
             }
 
@@ -960,7 +960,7 @@ namespace System.Windows.Controls
                 // If we are at the right position with respect to the anchor then
                 // we dont need the anchor element any more. So clear it.
                 //
-                ClearAnchorInformation(isAnchorOperationPending /*shouldAbort*/);
+                ClearAnchorInformation(shouldAbort: isAnchorOperationPending);
 
                 if (isTracing)
                 {
@@ -1076,7 +1076,7 @@ namespace System.Windows.Controls
                 }
                 else
                 {
-                    ClearAnchorInformation(isAnchorOperationPending /*shouldAbort*/);
+                    ClearAnchorInformation(shouldAbort: isAnchorOperationPending);
                 }
             }
         }
@@ -1195,8 +1195,8 @@ namespace System.Windows.Controls
                             viewportElement,
                             fe,
                             direction,
-                            false /*fullyVisible*/,
-                            !isVSP45Compat /*ignorePerpendicularAxis*/,
+                            fullyVisible: false,
+                            ignorePerpendicularAxis: !isVSP45Compat,
                             out elementRect,
                             out layoutRect);
 
@@ -1476,7 +1476,7 @@ namespace System.Windows.Controls
         // Note: This code presently assumes we/children are layout clean.  See work item 22269 for more detail.
         public Rect MakeVisible(Visual visual, Rect rectangle)
         {
-            ClearAnchorInformation(true /*shouldAbort*/);
+            ClearAnchorInformation(shouldAbort: true);
 
             Vector newOffset = new Vector();
             Rect newRect = new Rect();
@@ -1692,7 +1692,7 @@ namespace System.Windows.Controls
                 child = generator.GenerateNext(out newlyRealized) as UIElement;
                 if (child != null)
                 {
-                    visualOrderChanged = AddContainerFromGenerator(childIndex, child, newlyRealized, false /*isBeforeViewport*/);
+                    visualOrderChanged = AddContainerFromGenerator(childIndex, child, newlyRealized, isBeforeViewport: false);
 
                     if (visualOrderChanged)
                     {
@@ -2170,7 +2170,7 @@ namespace System.Windows.Controls
                     //
                     // Fetch the owner for this panel. That could either be an ItemsControl or a GroupItem.
                     //
-                    GetOwners(true /*shouldSetVirtualizationState*/, isHorizontal, out itemsControl, out groupItem, out itemStorageProvider, out virtualizationInfoProvider, out parentItem, out parentItemStorageProvider, out mustDisableVirtualization);
+                    GetOwners(shouldSetVirtualizationState: true, isHorizontal, out itemsControl, out groupItem, out itemStorageProvider, out virtualizationInfoProvider, out parentItem, out parentItemStorageProvider, out mustDisableVirtualization);
 
                     // ===================================================================================
                     // ===================================================================================
@@ -2450,8 +2450,8 @@ namespace System.Windows.Controls
                                                 (i < firstItemInViewportIndex) || isAlwaysBeforeFirstItem,
                                                 isAlwaysAfterFirstItem,
                                                 isAlwaysAfterLastItem,
-                                                false /*skipActualMeasure*/,
-                                                false /*skipGeneration*/,
+                                                skipActualMeasure: false,
+                                                skipGeneration: false,
                                                 ref hasBringIntoViewContainerBeenMeasured,
                                                 ref hasVirtualizingChildren);
 
@@ -2483,7 +2483,7 @@ namespace System.Windows.Controls
                                                         ref uniformOrAverageContainerSize,
                                                         ref hasAverageContainerSizeChanged,
                                                         isHorizontal,
-                                                        false /* evaluateAreContainersUniformlySized */);
+                                                        evaluateAreContainersUniformlySized: false);
                                                 }
                                                 else
                                                 {
@@ -2501,7 +2501,7 @@ namespace System.Windows.Controls
                                                         ref uniformOrAverageContainerPixelSize,
                                                         ref hasAverageContainerSizeChanged,
                                                         isHorizontal,
-                                                        false /* evaluateAreContainersUniformlySized */);
+                                                        evaluateAreContainersUniformlySized: false);
                                                 }
 
                                                 ComputeFirstItemInViewportIndexAndOffset(items, itemCount, itemStorageProvider, viewport, cacheSize,
@@ -2547,11 +2547,11 @@ namespace System.Windows.Controls
                                                             ref stackLogicalSizeInCacheBeforeViewport,
                                                             ref stackLogicalSizeInCacheAfterViewport,
                                                             ref mustDisableVirtualization,
-                                                            false /*isBeforeFirstItem*/,
-                                                            false /*isAfterFirstItem*/,
-                                                            false /*isAfterLastItem*/,
-                                                            true /*skipActualMeasure*/,
-                                                            true /*skipGeneration*/,
+                                                            isBeforeFirstItem: false,
+                                                            isAfterFirstItem: false,
+                                                            isAfterLastItem: false,
+                                                            skipActualMeasure: true,
+                                                            skipGeneration: true,
                                                             ref hasBringIntoViewContainerBeenMeasured,
                                                             ref hasVirtualizingChildren);
 
@@ -2753,8 +2753,8 @@ namespace System.Windows.Controls
                                             isAlwaysBeforeFirstItem,
                                             (i > firstItemInViewportIndex) || isAlwaysAfterFirstItem,
                                             (i > lastItemInViewportIndex) || isAlwaysAfterLastItem,
-                                            false /*skipActualMeasure*/,
-                                            false /*skipGeneration*/,
+                                            skipActualMeasure: false,
+                                            skipGeneration: false,
                                             ref hasBringIntoViewContainerBeenMeasured,
                                             ref hasVirtualizingChildren);
 
@@ -2901,7 +2901,7 @@ namespace System.Windows.Controls
                             ref uniformOrAverageContainerSize,
                             ref hasAverageContainerSizeChanged,
                             isHorizontal,
-                            false /* evaluateAreContainersUniformlySized */);
+                            evaluateAreContainersUniformlySized: false);
                     }
                     else
                     {
@@ -2919,7 +2919,7 @@ namespace System.Windows.Controls
                             ref uniformOrAverageContainerPixelSize,
                             ref hasAverageContainerSizeChanged,
                             isHorizontal,
-                            false /* evaluateAreContainersUniformlySized */);
+                            evaluateAreContainersUniformlySized: false);
                     }
 
                     if (IsVirtualizing)
@@ -2950,7 +2950,7 @@ namespace System.Windows.Controls
                             _firstItemInExtendedViewportIndex,
                             _firstItemInExtendedViewportChildIndex,
                             firstItemInViewportIndex,
-                            true /*before */);
+                            before: true);
 
                         ExtendPixelAndLogicalSizes(
                             children,
@@ -3193,7 +3193,7 @@ namespace System.Windows.Controls
                             }
                             else
                             {
-                                EnsureCleanupOperation(false /*delay*/);
+                                EnsureCleanupOperation(delay: false);
                             }
                         }
                         HasVirtualizingChildren = hasVirtualizingChildren;
@@ -3323,7 +3323,7 @@ namespace System.Windows.Controls
                     //
                     // Fetch the owner for this panel. That could either be an ItemsControl or a GroupItem.
                     //
-                    GetOwners(false /*shouldSetVirtualizationState*/, isHorizontal, out itemsControl, out groupItem, out itemStorageProvider, out virtualizationInfoProvider, out parentItem, out parentItemStorageProvider, out mustDisableVirtualization);
+                    GetOwners(shouldSetVirtualizationState: false, isHorizontal, out itemsControl, out groupItem, out itemStorageProvider, out virtualizationInfoProvider, out parentItem, out parentItemStorageProvider, out mustDisableVirtualization);
 
                     if (ScrollTracer.IsEnabled && ScrollTracer.IsTracing(this))
                     {
@@ -3438,7 +3438,7 @@ namespace System.Windows.Controls
                                         itemStorageProvider,
                                         areContainersUniformlySized,
                                         uniformOrAverageContainerSize,
-                                        true /*beforeExtendedViewport*/,
+                                        beforeExtendedViewport: true,
                                         ref rcChildBeforeViewport,
                                         ref previousChildSizeBeforeViewport,
                                         ref previousChildOffsetBeforeViewport,
@@ -3488,7 +3488,7 @@ namespace System.Windows.Controls
                                 itemStorageProvider,
                                 areContainersUniformlySized,
                                 uniformOrAverageContainerSize,
-                                false /*beforeExtendedViewport*/,
+                                beforeExtendedViewport: false,
                                 ref rcChild,
                                 ref previousChildSize,
                                 ref previousChildOffset,
@@ -3741,11 +3741,11 @@ namespace System.Windows.Controls
                             UpdateExtent(areItemChangesLocal);
 
                             IItemContainerGenerator generator = vp.ItemContainerGenerator;
-                            int index = ((ItemContainerGenerator)generator).IndexFromContainer(itemsOwner, true /*returnLocalIndex*/);
+                            int index = ((ItemContainerGenerator)generator).IndexFromContainer(itemsOwner, returnLocalIndex: true);
                             ItemsChangedEventArgs newArgs = new ItemsChangedEventArgs(NotifyCollectionChangedAction.Reset,
                                 generator.GeneratorPositionFromIndex(index), 1, 1);
 
-                            shouldItemsChangeAffectLayout = vp.ShouldItemsChangeAffectLayout(false /*areItemChangesLocal*/, newArgs);
+                            shouldItemsChangeAffectLayout = vp.ShouldItemsChangeAffectLayout(areItemChangesLocal: false, newArgs);
                         }
                         else
                         {
@@ -3776,7 +3776,7 @@ namespace System.Windows.Controls
             IContainItemStorage parentItemStorageProvider;
             bool mustDisableVirtualization;
 
-            GetOwners(false /*shouldSetVirtualizationState*/, isHorizontal,
+            GetOwners(shouldSetVirtualizationState: false, isHorizontal,
                 out itemsControl, out groupItem, out itemStorageProvider,
                 out virtualizationInfoProvider, out parentItem,
                 out parentItemStorageProvider, out mustDisableVirtualization);
@@ -3820,7 +3820,7 @@ namespace System.Windows.Controls
                         ref uniformOrAverageContainerSize,
                         ref hasAverageContainerSizeChanged,
                         isHorizontal,
-                        true /* evaluateAreContainersUniformlySized */);
+                        evaluateAreContainersUniformlySized: true);
                 }
                 else
                 {
@@ -3839,7 +3839,7 @@ namespace System.Windows.Controls
                         ref uniformOrAverageContainerPixelSize,
                         ref hasAverageContainerSizeChanged,
                         isHorizontal,
-                        true /* evaluateAreContainersUniformlySized */);
+                        evaluateAreContainersUniformlySized: true);
                 }
 
                 if (hasAverageContainerSizeChanged && !IsVSP45Compat)
@@ -5903,7 +5903,7 @@ namespace System.Windows.Controls
                 double pixelDistance;
                 ComputeDistance(items, itemStorageProvider, isHorizontal, areContainersUniformlySized,
                     uniformOrAverageContainerSize,
-                    1.0 /*uniformOrAverageContainerPixelSize*/, // dummy - pixelDistance not used
+                    uniformOrAverageContainerPixelSize: 1.0, // dummy - pixelDistance not used
                     startIndex, itemCount, out distance, out pixelDistance);
                 return;
             }
@@ -6024,7 +6024,7 @@ namespace System.Windows.Controls
                 GetContainerSizeForItem(itemStorageProvider, item, isHorizontal,
                     areContainersUniformlySized,
                     uniformOrAverageContainerSize,
-                    1.0 /*uniformOrAverageContainerPixelSize*/, // dummy - pixelSize not used
+                    uniformOrAverageContainerPixelSize: 1.0, // dummy - pixelSize not used
                     out containerSize,
                     out containerPixelSize);
                 return;
@@ -6818,7 +6818,7 @@ namespace System.Windows.Controls
             Panel childItemsHost = virtualizingChild.ItemsHost;
             if (childItemsHost != null)
             {
-                Helper.InvalidateMeasureOnPath(childItemsHost, this, true /*duringMeasure*/);
+                Helper.InvalidateMeasureOnPath(childItemsHost, this, duringMeasure: true);
 
                 if (!(childItemsHost is VirtualizingStackPanel))
                 {
@@ -8591,7 +8591,7 @@ namespace System.Windows.Controls
 
                 if (IsPixelBased)
                 {
-                    int currChildItemIndex = ((ItemContainerGenerator)generator).IndexFromContainer(child, true /*returnLocalIndex*/);
+                    int currChildItemIndex = ((ItemContainerGenerator)generator).IndexFromContainer(child, returnLocalIndex: true);
                     double distance;
 
                     if (beforeExtendedViewport)
@@ -8644,7 +8644,7 @@ namespace System.Windows.Controls
 
                 if (IsPixelBased)
                 {
-                    int currChildItemIndex = ((ItemContainerGenerator)generator).IndexFromContainer(child, true /*returnLocalIndex*/);
+                    int currChildItemIndex = ((ItemContainerGenerator)generator).IndexFromContainer(child, returnLocalIndex: true);
                     double distance;
 
                     if (beforeExtendedViewport)
@@ -9008,8 +9008,8 @@ namespace System.Windows.Controls
             CleanupContainers(firstItemInExtendedViewportIndex,
                 itemsInExtendedViewportCount,
                 itemsControl,
-                false /*timeBound*/,
-                0 /*startTickCount*/);
+                timeBound: false,
+                startTickCount: 0);
         }
 
         /// <summary>
@@ -9362,7 +9362,7 @@ namespace System.Windows.Controls
 
             if (needsMoreCleanup)
             {
-                EnsureCleanupOperation(true /* delay */);
+                EnsureCleanupOperation(delay: true);
             }
 
             return null;
@@ -9409,7 +9409,7 @@ namespace System.Windows.Controls
                     needsMoreCleanup = CleanupContainers(_firstItemInExtendedViewportIndex,
                         _actualItemsInExtendedViewportCount,
                         itemsControl,
-                        true /*timeBound*/,
+                        timeBound: true,
                         startMilliseconds);
                 }
             }
@@ -10984,11 +10984,11 @@ namespace System.Windows.Controls
             IContainItemStorage parentItemStorageProvider;
             bool mustDisableVirtualization;
 
-            GetOwners(false /*shouldSetVirtualizationState*/, isHorizontal, out itemsControl, out groupItem, out itemStorageProvider, out virtualizationInfoProvider,out parentItem, out parentItemStorageProvider, out mustDisableVirtualization);
+            GetOwners(shouldSetVirtualizationState: false, isHorizontal, out itemsControl, out groupItem, out itemStorageProvider, out virtualizationInfoProvider,out parentItem, out parentItemStorageProvider, out mustDisableVirtualization);
 
             ItemContainerGenerator generator = (ItemContainerGenerator)Generator;
             IList items = generator.ItemsInternal;
-            int itemIndex = generator.IndexFromContainer(child, true /*returnLocalIndex*/);
+            int itemIndex = generator.IndexFromContainer(child, returnLocalIndex: true);
 
             double distance = 0;
 

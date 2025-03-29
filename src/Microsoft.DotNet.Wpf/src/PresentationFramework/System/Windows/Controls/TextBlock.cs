@@ -135,7 +135,7 @@ namespace System.Windows.Controls
             Type valueType = value.GetType();
 
             // Do implicit conversion to allowed inline type - if possible
-            if (!TextSchema.IsValidChildOfContainer(parentType, /*childType*/valueType))
+            if (!TextSchema.IsValidChildOfContainer(parentType, childType: valueType))
             {
                 if (value is UIElement)
                 {
@@ -425,7 +425,7 @@ namespace System.Windows.Controls
         {
             get
             {
-                return new InlineCollection(this, /*isOwnerParent*/true);
+                return new InlineCollection(this, isOwnerParent: true);
             }
         }
 
@@ -2864,7 +2864,7 @@ Debug.Assert(lineCount == LineCount);
             {
                 if (textContainer == null)
                 {
-                    textContainer = new TextContainer(IsContentPresenterContainer ? null : this, false /* plainTextOnly */);
+                    textContainer = new TextContainer(IsContentPresenterContainer ? null : this, plainTextOnly: false);
                 }
 
                 _complexContent = new ComplexContent(this, textContainer, false, Text);
@@ -3910,7 +3910,7 @@ Debug.Assert(lineCount == LineCount);
                 // Add content
                 if (content != null && content.Length > 0)
                 {
-                    TextBlock.InsertTextRun(this.TextContainer.End, content, /*whitespacesIgnorable:*/false);
+                    TextBlock.InsertTextRun(this.TextContainer.End, content, whitespacesIgnorable: false);
                 }
 
                 // Create TextView associated with TextContainer.
@@ -4096,7 +4096,7 @@ Debug.Assert(lineCount == LineCount);
                     try
                     {
                         ((TextContainer)text._complexContent.TextContainer).DeleteContentInternal((TextPointer)text._complexContent.TextContainer.Start, (TextPointer)text._complexContent.TextContainer.End);
-                        InsertTextRun(text._complexContent.TextContainer.End, newText, /*whitespacesIgnorable:*/true);
+                        InsertTextRun(text._complexContent.TextContainer.End, newText, whitespacesIgnorable: true);
                         exceptionThrown = false;
                     }
                     finally

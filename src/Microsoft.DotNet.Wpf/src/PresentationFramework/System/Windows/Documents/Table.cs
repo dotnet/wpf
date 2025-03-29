@@ -281,7 +281,7 @@ namespace System.Windows.Documents
         /// </summary>
         internal void InvalidateColumns()
         {
-            NotifyTypographicPropertyChanged(true /* affectsMeasureOrArrange */, true /* localValueChanged */, null);
+            NotifyTypographicPropertyChanged(affectsMeasureOrArrange: true, localValueChanged: true, null);
         }
 
         /// <summary>

@@ -1873,7 +1873,7 @@ namespace System.Windows.Controls
                 direction,
                 startingElement,
                 itemNavigateArgs,
-                false /*shouldFocus*/,
+                shouldFocus: false,
                 out container);
         }
 
@@ -1913,7 +1913,7 @@ namespace System.Windows.Controls
                 direction,
                 startingElement,
                 itemNavigateArgs,
-                true /*shouldFocus*/,
+                shouldFocus: true,
                 out container);
         }
 
@@ -1998,7 +1998,7 @@ namespace System.Windows.Controls
                                 ElementViewportPosition elementPosition = GetElementViewportPosition(viewport,
                                     TryGetTreeViewItemHeader(nextElement) as FrameworkElement,
                                     direction,
-                                    false /*fullyVisible*/,
+                                    fullyVisible: false,
                                     out currentRect);
                                 if (elementPosition == ElementViewportPosition.CompletelyInViewport ||
                                     elementPosition == ElementViewportPosition.PartiallyInViewport)
@@ -2013,7 +2013,7 @@ namespace System.Windows.Controls
                                         GetElementViewportPosition(viewport,
                                             startingElement,
                                             direction,
-                                            false /*fullyVisible*/,
+                                            fullyVisible: false,
                                             out startingRect);
                                         bool isInDirection = IsInDirectionForLineNavigation(startingRect, currentRect, direction, isHorizontal);
                                         if (isInDirection)
@@ -2160,7 +2160,7 @@ namespace System.Windows.Controls
             // start navigating again, scroll it back into view.
             if (startingElement != null)
             {
-                MakeVisible(startingElement, direction, /*alwaysAtTopOfViewport*/ false);
+                MakeVisible(startingElement, direction, alwaysAtTopOfViewport: false);
             }
             else
             {
@@ -2174,7 +2174,7 @@ namespace System.Windows.Controls
                 direction,
                 startingElement,
                 itemNavigateArgs,
-                false /*shouldFocus*/,
+                shouldFocus: false,
                 out container);
         }
 
@@ -2206,7 +2206,7 @@ namespace System.Windows.Controls
             // start navigating again, scroll it back into view.
             if (startingElement != null)
             {
-                MakeVisible(startingElement, direction, /*alwaysAtTopOfViewport*/ false);
+                MakeVisible(startingElement, direction, alwaysAtTopOfViewport: false);
             }
             else
             {
@@ -2221,7 +2221,7 @@ namespace System.Windows.Controls
                 direction,
                 startingElement,
                 itemNavigateArgs,
-                true /*shouldFocus*/,
+                shouldFocus: true,
                 out container);
         }
 
@@ -2326,7 +2326,7 @@ namespace System.Windows.Controls
         internal void NavigateToStart(ItemNavigateArgs itemNavigateArgs)
         {
             FrameworkElement container;
-            NavigateToStartInternal(itemNavigateArgs, true /*shouldFocus*/, out container);
+            NavigateToStartInternal(itemNavigateArgs, shouldFocus: true, out container);
         }
 
         internal bool NavigateToStartInternal(ItemNavigateArgs itemNavigateArgs, bool shouldFocus, out FrameworkElement container)
@@ -2364,7 +2364,7 @@ namespace System.Windows.Controls
                 }
 
                 FrameworkElement firstElement;
-                FrameworkElement hopefulFirstElement = FindEndFocusableLeafContainer(ItemsHost, false /*last*/);
+                FrameworkElement hopefulFirstElement = FindEndFocusableLeafContainer(ItemsHost, last: false);
                 object firstItem = GetFirstItemOnCurrentPage(hopefulFirstElement,
                     FocusNavigationDirection.Up,
                     out firstElement);
@@ -2392,7 +2392,7 @@ namespace System.Windows.Controls
         internal void NavigateToEnd(ItemNavigateArgs itemNavigateArgs)
         {
             FrameworkElement container;
-            NavigateToEndInternal(itemNavigateArgs, true /*shouldFocus*/, out container);
+            NavigateToEndInternal(itemNavigateArgs, shouldFocus: true, out container);
         }
 
         internal bool NavigateToEndInternal(ItemNavigateArgs itemNavigateArgs, bool shouldFocus, out FrameworkElement container)
@@ -2430,7 +2430,7 @@ namespace System.Windows.Controls
                 }
 
                 FrameworkElement lastElement;
-                FrameworkElement hopefulLastElement = FindEndFocusableLeafContainer(ItemsHost, true /*last*/);
+                FrameworkElement hopefulLastElement = FindEndFocusableLeafContainer(ItemsHost, last: true);
                 object lastItem = GetFirstItemOnCurrentPage(hopefulLastElement,
                     FocusNavigationDirection.Down,
                     out lastElement);
@@ -2514,12 +2514,12 @@ namespace System.Windows.Controls
 
         internal void NavigateToItem(object item, ItemNavigateArgs itemNavigateArgs)
         {
-            NavigateToItem(item, -1, itemNavigateArgs, false /* alwaysAtTopOfViewport */);
+            NavigateToItem(item, -1, itemNavigateArgs, alwaysAtTopOfViewport: false);
         }
 
         internal void NavigateToItem(object item, int itemIndex, ItemNavigateArgs itemNavigateArgs)
         {
-            NavigateToItem(item, itemIndex, itemNavigateArgs, false /* alwaysAtTopOfViewport */);
+            NavigateToItem(item, itemIndex, itemNavigateArgs, alwaysAtTopOfViewport: false);
         }
 
         internal void NavigateToItem(object item, ItemNavigateArgs itemNavigateArgs, bool alwaysAtTopOfViewport)
@@ -2659,12 +2659,12 @@ namespace System.Windows.Controls
         {
             if (info != null)
             {
-                MakeVisible(info.Index, direction, false /*alwaysAtTopOfViewport*/, out container);
+                MakeVisible(info.Index, direction, alwaysAtTopOfViewport: false, out container);
                 info.Container = container;
             }
             else
             {
-                MakeVisible(-1, direction, false /*alwaysAtTopOfViewport*/, out container);
+                MakeVisible(-1, direction, alwaysAtTopOfViewport: false, out container);
             }
         }
 
@@ -2680,7 +2680,7 @@ namespace System.Windows.Controls
 
                 FrameworkElement viewportElement = GetViewportElement();
 
-                while (container != null && !IsOnCurrentPage(viewportElement, container, direction, false /*fullyVisible*/))
+                while (container != null && !IsOnCurrentPage(viewportElement, container, direction, fullyVisible: false))
                 {
                     oldHorizontalOffset = ScrollHost.HorizontalOffset;
                     oldVerticalOffset = ScrollHost.VerticalOffset;
@@ -2833,7 +2833,7 @@ namespace System.Windows.Controls
                     ElementViewportPosition elementPosition = GetElementViewportPosition(viewportElement,
                         startingElement,
                         direction,
-                        false /*fullyVisible*/);
+                        fullyVisible: false);
                     if (elementPosition == ElementViewportPosition.CompletelyInViewport ||
                         elementPosition == ElementViewportPosition.PartiallyInViewport)
                     {

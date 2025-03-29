@@ -86,7 +86,7 @@ namespace System.Windows.Documents
         {
             get
             {
-                return  new BlockCollection(this, /*isOwnerParent*/true);
+                return  new BlockCollection(this, isOwnerParent: true);
             }
         }
 
@@ -103,7 +103,7 @@ namespace System.Windows.Documents
                     return null;
                 }
 
-                return new ListItemCollection(this, /*isOwnerParent*/false);
+                return new ListItemCollection(this, isOwnerParent: false);
             }
         }
 

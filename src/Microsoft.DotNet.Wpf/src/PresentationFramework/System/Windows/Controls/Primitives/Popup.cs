@@ -355,7 +355,7 @@ namespace System.Windows.Controls.Primitives
 
                     // Cancel any pending async create requests, we're creating now
                     popup.CancelAsyncCreate();
-                    popup.CreateWindow(false /*asyncCall*/);
+                    popup.CreateWindow(asyncCall: false);
 
                     // It is possible that the popup is destroyed by CreateWindow or one of its callbacks
                     if (popup._secHelper.IsWindowAlive())
@@ -1461,7 +1461,7 @@ namespace System.Windows.Controls.Primitives
         {
             Popup popup = (Popup)arg;
             popup._asyncCreate = null;
-            popup.CreateWindow(true /*asyncCall*/);
+            popup.CreateWindow(asyncCall: true);
 
             return null;
         }

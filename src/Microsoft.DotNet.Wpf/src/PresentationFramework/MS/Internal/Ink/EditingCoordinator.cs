@@ -91,7 +91,7 @@ namespace MS.Internal.Ink
                     //we pass true for userInitiated because we've simply consulted the InputDevice
                     //(and only StylusDevice or MouseDevice) for the current position of the device
                     InitializeCapture(inputDevice, (IStylusEditing)dynamicBehavior, 
-                        true /*userInitiated*/, false/*Don't reset the RTI*/);
+                        userInitiated: true, false/*Don't reset the RTI*/);
                     fSucceeded = true;
                 }
                 finally

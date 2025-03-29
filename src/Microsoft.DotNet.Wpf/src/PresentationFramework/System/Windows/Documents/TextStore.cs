@@ -364,7 +364,7 @@ namespace System.Windows.Documents
                 {
                     // Setting a caret.  Make sure we set Backward direction to
                     // keep the caret tight with the composition text.
-                    this.TextSelection.SetCaretToPosition(start, LogicalDirection.Backward, /*allowStopAtLineEnd:*/true, /*allowStopNearSpace:*/true);
+                    this.TextSelection.SetCaretToPosition(start, LogicalDirection.Backward, allowStopAtLineEnd: true, allowStopNearSpace: true);
                 }
                 else if (selection[0].style.ase == UnsafeNativeMethods.TsActiveSelEnd.TS_AE_START)
                 {
@@ -513,7 +513,7 @@ namespace System.Windows.Documents
 
             try
             {
-                ITextRange range = new TextRange(start, end, true /* ignoreTextUnitBoundaries */);
+                ITextRange range = new TextRange(start, end, ignoreTextUnitBoundaries: true);
 
                 this.TextEditor.SetText(range, filteredText, InputLanguageManager.Current.CurrentInputLanguage);
 
@@ -672,7 +672,7 @@ namespace System.Windows.Documents
             //
 
             ITextRange range = new TextRange(this.TextSelection.AnchorPosition, this.TextSelection.MovingPosition);
-            range.ApplyTypingHeuristics(false /* overType */);
+            range.ApplyTypingHeuristics(overType: false);
 
             ITextPointer start;
             ITextPointer end;
@@ -711,7 +711,7 @@ namespace System.Windows.Documents
                     // We still need to call ApplyTypingHeuristics, even though
                     // we already did the work above, because it might need
                     // to spring load formatting.
-                    this.TextSelection.ApplyTypingHeuristics(false /* overType */);
+                    this.TextSelection.ApplyTypingHeuristics(overType: false);
 
                     //Invariant.Assert(this.TextSelection.Start.CompareTo(range.Start) == 0 && this.TextSelection.End.CompareTo(range.End) == 0);
                     // We cannot make this Assertion because TextRange will normalize
@@ -1950,7 +1950,7 @@ namespace System.Windows.Documents
                 //
                 // If we're here it means composition is being finalized
                 //
-                range = new TextRange(composition._ResultStart, composition._ResultEnd, true /* ignoreTextUnitBoundaries */);
+                range = new TextRange(composition._ResultStart, composition._ResultEnd, ignoreTextUnitBoundaries: true);
                 text = this.TextEditor._FilterText(composition.Text, range);
 
                 if (text.Length != composition.Text.Length)
@@ -1960,8 +1960,8 @@ namespace System.Windows.Documents
             }
             else
             {
-                range = new TextRange(composition._CompositionStart, composition._CompositionEnd, true /* ignoreTextUnitBoundaries */);
-                text = this.TextEditor._FilterText(composition.CompositionText, range, /*filterMaxLength:*/false);
+                range = new TextRange(composition._CompositionStart, composition._CompositionEnd, ignoreTextUnitBoundaries: true);
+                text = this.TextEditor._FilterText(composition.CompositionText, range, filterMaxLength: false);
 
                 // A change in length should not happen other than for MaxLength filtering during finalization since we cover those
                 // cases and reject input if necessary when the IME edits the document in the first place.
@@ -2002,7 +2002,7 @@ namespace System.Windows.Documents
                 }
                 else
                 {
-                    this.TextSelection.SetCaretToPosition(range.End, LogicalDirection.Backward, /*allowStopAtLineEnd:*/true, /*allowStopNearSpace:*/true);
+                    this.TextSelection.SetCaretToPosition(range.End, LogicalDirection.Backward, allowStopAtLineEnd: true, allowStopNearSpace: true);
                 }
 
                 compositionUndoUnit.RecordRedoSelectionState(range.End, range.End);
@@ -2242,7 +2242,7 @@ namespace System.Windows.Documents
                     try
                     {
                         _textChangeReentrencyCount++;
-                        _sink.OnTextChange(0 /* flags */, ref change);
+                        _sink.OnTextChange(flags: 0, ref change);
                     }
                     finally
                     {
@@ -2364,7 +2364,7 @@ namespace System.Windows.Documents
                             // Skip the public events for the changing of the composition
                             // by Cicero, but the below HandleCompositionEvents will raise
                             // the public events about the composition and text change.
-                            textEditor.Selection.EndChange(false /* disableScroll */, true /* skipEvents */);
+                            textEditor.Selection.EndChange(disableScroll: false, skipEvents: true);
                         }
                         finally
                         {
@@ -2672,7 +2672,7 @@ namespace System.Windows.Documents
 
             // Move the selection.
             container = this.TextContainer;
-            TextSelection.SetCaretToPosition(position, LogicalDirection.Backward, /*allowStopAtLineEnd:*/false, /*allowStopNearSpace:*/false);
+            TextSelection.SetCaretToPosition(position, LogicalDirection.Backward, allowStopAtLineEnd: false, allowStopNearSpace: false);
         }
 
         // Inserts an InkInteropObject at a specified position.
@@ -3268,7 +3268,7 @@ namespace System.Windows.Documents
         // filter MaxLength.
         private string FilterCompositionString(string text, int charsToReplaceCount)
         {
-            string newText = this.TextEditor._FilterText(text, charsToReplaceCount, /*filterMaxLength:*/false);
+            string newText = this.TextEditor._FilterText(text, charsToReplaceCount, filterMaxLength: false);
 
             // if the length has been changed, there is no way to recover and we finalize the composition string.
             if (newText.Length != text.Length)
@@ -3978,7 +3978,7 @@ namespace System.Windows.Documents
             finally
             {
                 _replayingIMEChangeReentrancyCount += deltaReplayingIMEChangeReentrancyCount;
-                this.TextSelection.EndChange(false /* disableScroll */, true /* skipEvents */);
+                this.TextSelection.EndChange(disableScroll: false, skipEvents: true);
             }
 
             if (IsTracing)
@@ -4006,7 +4006,7 @@ namespace System.Windows.Documents
                 }
                 finally
                 {
-                    this.TextSelection.EndChange(false /* disableScroll */, true /* skipEvents */);
+                    this.TextSelection.EndChange(disableScroll: false, skipEvents: true);
                 }
 
                 if (IsTracing)
@@ -4035,7 +4035,7 @@ namespace System.Windows.Documents
                 }
                 finally
                 {
-                    this.TextSelection.EndChange(false /* disableScroll */, true /* skipEvents */);
+                    this.TextSelection.EndChange(disableScroll: false, skipEvents: true);
                 }
 
                 if (IsTracing)

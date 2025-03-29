@@ -137,7 +137,7 @@ namespace System.Windows.Controls
             // Turn off highlight
             this._owner.HoverStart = null;
 
-            ClearInternal(true /*fireChangeNotification*/);
+            ClearInternal(fireChangeNotification: true);
         }
 
         /// <summary>
@@ -341,7 +341,7 @@ namespace System.Windows.Controls
 
         internal void ClearInternal()
         {
-            ClearInternal(false /*fireChangeNotification*/);
+            ClearInternal(fireChangeNotification: false);
         }
 
         internal void ClearInternal(bool fireChangeNotification)

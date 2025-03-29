@@ -1044,12 +1044,12 @@ namespace System.Windows.Controls
             var column = d as DataGridColumn;
 
             bool basePropertyHasModifiers;
-            BaseValueSourceInternal baseValueSource = column.GetValueSource(CanUserSortProperty, /*metadata*/ null, out basePropertyHasModifiers);
+            BaseValueSourceInternal baseValueSource = column.GetValueSource(CanUserSortProperty, metadata: null, out basePropertyHasModifiers);
 
             if (column.DataGridOwner != null)
             {
                 bool parentPropertyHasModifiers;
-                BaseValueSourceInternal parentValueSource = column.DataGridOwner.GetValueSource(DataGrid.CanUserSortColumnsProperty, /*metadata*/ null, out parentPropertyHasModifiers);
+                BaseValueSourceInternal parentValueSource = column.DataGridOwner.GetValueSource(DataGrid.CanUserSortColumnsProperty, metadata: null, out parentPropertyHasModifiers);
                 if (parentValueSource == baseValueSource && !basePropertyHasModifiers && parentPropertyHasModifiers)
                 {
                     return column.DataGridOwner.GetValue(DataGrid.CanUserSortColumnsProperty);

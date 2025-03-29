@@ -491,7 +491,7 @@ namespace System.Windows.Markup.Primitives
             PartiallyOrderedList<string, MarkupProperty> deferredProperties = null;
             Formatting previousFormatting = (_xmlTextWriter != null) ? _xmlTextWriter.Formatting : Formatting.None;
 
-            foreach (MarkupProperty property in item.GetProperties(false /*mapToConstructorArgs*/))
+            foreach (MarkupProperty property in item.GetProperties(mapToConstructorArgs: false))
             {
                 if (property.IsConstructorArgument)
                 {

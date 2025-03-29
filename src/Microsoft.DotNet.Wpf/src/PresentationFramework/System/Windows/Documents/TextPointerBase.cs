@@ -119,7 +119,7 @@ namespace System.Windows.Documents
         // IsAtInsertionPosition when only formatting scopes are important.
         internal static bool IsAtFormatNormalizedPosition(ITextPointer position)
         {
-            return IsAtNormalizedPosition(position, false /* respectCaretUnitBoundaries */);
+            return IsAtNormalizedPosition(position, respectCaretUnitBoundaries: false);
         }
 #endif
 
@@ -131,7 +131,7 @@ namespace System.Windows.Documents
         /// </value>
         internal static bool IsAtInsertionPosition(ITextPointer position)
         {
-            return IsAtNormalizedPosition(position, true /* respectCaretUnitBoundaries */);
+            return IsAtNormalizedPosition(position, respectCaretUnitBoundaries: true);
         }
 
         // Tests if a position is between structural symbols where Run is potentially insertable,
@@ -177,7 +177,7 @@ namespace System.Windows.Documents
         {
             Invariant.Assert(backwardPosition.HasEqualScope(forwardPosition));
 
-            if (TextSchema.IsValidChild(/*position*/backwardPosition, /*childType*/typeof(Run)))
+            if (TextSchema.IsValidChild(position: backwardPosition, /*childType*/typeof(Run)))
             {
                 Type forwardType = forwardPosition.GetElementType(LogicalDirection.Forward);
                 Type backwardType = backwardPosition.GetElementType(LogicalDirection.Backward);
@@ -401,12 +401,12 @@ namespace System.Windows.Documents
 
         internal static bool IsAtFormatNormalizedPosition(ITextPointer position, LogicalDirection direction)
         {
-            return IsAtNormalizedPosition(position, direction, false /* respectCaretUnitBoundaries */);
+            return IsAtNormalizedPosition(position, direction, respectCaretUnitBoundaries: false);
         }
 
         internal static bool IsAtInsertionPosition(ITextPointer position, LogicalDirection direction)
         {
-            return IsAtNormalizedPosition(position, direction, true /* respectCaretUnitBoundaries */);
+            return IsAtNormalizedPosition(position, direction, respectCaretUnitBoundaries: true);
         }
 
         internal static bool IsAtNormalizedPosition(ITextPointer position, LogicalDirection direction, bool respectCaretUnitBoundaries)
@@ -542,7 +542,7 @@ namespace System.Windows.Documents
 
             // Find the corresponding word start edge.
             ITextPointer wordStart;
-            if (moved && IsAtWordBoundary(thisPosition, /*insideWordDirection:*/LogicalDirection.Forward))
+            if (moved && IsAtWordBoundary(thisPosition, insideWordDirection: LogicalDirection.Forward))
             {
                 wordStart = thisPosition;
             }
@@ -619,7 +619,7 @@ namespace System.Windows.Documents
         internal static bool IsNextToPlainLineBreak(ITextPointer thisPosition, LogicalDirection direction)
         {
             char[] textBuffer = new char[2];
-            int actualCount = thisPosition.GetTextInRun(direction, textBuffer, /*startIndex:*/0, /*count:*/2);
+            int actualCount = thisPosition.GetTextInRun(direction, textBuffer, startIndex: 0, count: 2);
 
             return
                 (actualCount == 1 && IsCharUnicodeNewLine(textBuffer[0]))
@@ -795,7 +795,7 @@ namespace System.Windows.Documents
         //resulting in infinite loops, no line navigation etc.
         internal static int MoveToLineBoundary(ITextPointer thisPointer, ITextView textView, int count)
         {
-            return MoveToLineBoundary(thisPointer, textView, count, false /* respectNonMeargeableInlineStart */);
+            return MoveToLineBoundary(thisPointer, textView, count, respectNonMeargeableInlineStart: false);
         }
 
         // <see cref="System.Windows.Documents.TextPointer.MoveToLineBoundary"/>
@@ -853,7 +853,7 @@ namespace System.Windows.Documents
 
         internal static Rect GetCharacterRect(ITextPointer thisPointer, LogicalDirection direction)
         {
-            return GetCharacterRect(thisPointer, direction, /*transformToUiScope*/true);
+            return GetCharacterRect(thisPointer, direction, transformToUiScope: true);
         }
 
         // <see cref="TextPointer.GetCharacterRect"/>
@@ -894,7 +894,7 @@ namespace System.Windows.Documents
                 }
                 else if (thisPointer.TextContainer.Parent is Visual)
                 {
-                    Invariant.Assert(textView.RenderScope == thisPointer.TextContainer.Parent || ((Visual)thisPointer.TextContainer.Parent).IsAncestorOf( /*descendant:*/textView.RenderScope),
+                    Invariant.Assert(textView.RenderScope == thisPointer.TextContainer.Parent || ((Visual)thisPointer.TextContainer.Parent).IsAncestorOf( descendant: textView.RenderScope),
                         "Unexpected location of RenderScope within visual tree");
                     templatedParent = (Visual)thisPointer.TextContainer.Parent;
                 }
@@ -903,10 +903,10 @@ namespace System.Windows.Documents
                     templatedParent = null;
                 }
 
-                if (templatedParent != null && templatedParent.IsAncestorOf( /*descendant:*/textView.RenderScope))
+                if (templatedParent != null && templatedParent.IsAncestorOf( descendant: textView.RenderScope))
                 {
                     // translate the rect from renderscope to uiscope coordinate system (from FlowDocumentView to RichTextBox)
-                    GeneralTransform transformFromRenderToUiScope = textView.RenderScope.TransformToAncestor(/*ancestor:*/templatedParent);
+                    GeneralTransform transformFromRenderToUiScope = textView.RenderScope.TransformToAncestor(ancestor: templatedParent);
 
                     rect = transformFromRenderToUiScope.TransformBounds(rect);
                 }
@@ -920,7 +920,7 @@ namespace System.Windows.Documents
         // MoveToNextInsertionPosition when only formatting scopes are important.
         internal static bool MoveToFormatNormalizedPosition(ITextPointer thisNavigator, LogicalDirection direction)
         {
-            return NormalizePosition(thisNavigator, direction, false /* respectCaretUnitBoundaries */);
+            return NormalizePosition(thisNavigator, direction, respectCaretUnitBoundaries: false);
         }
 
         /// <summary>
@@ -933,7 +933,7 @@ namespace System.Windows.Documents
         /// </summary>
         internal static bool MoveToInsertionPosition(ITextPointer thisNavigator, LogicalDirection direction)
         {
-            return NormalizePosition(thisNavigator, direction, true /* respectCaretUnitBoundaries */);
+            return NormalizePosition(thisNavigator, direction, respectCaretUnitBoundaries: true);
         }
 
         /// <summary>
@@ -1083,7 +1083,7 @@ namespace System.Windows.Documents
                     break;
                 }
 
-                if (IsAtWordBoundary(thisNavigator, /*insideWordDirection:*/LogicalDirection.Forward))
+                if (IsAtWordBoundary(thisNavigator, insideWordDirection: LogicalDirection.Forward))
                 {
                     // Note that we always use Forward direction for word orientation.
                     break;
@@ -1303,7 +1303,7 @@ namespace System.Windows.Documents
                 // The inner edge of a Hyperlink is not a valid insertion position.
                 return false;
             }
-            else if (TextSchema.IsValidChild(/*position*/position, /*childType*/typeof(string)))
+            else if (TextSchema.IsValidChild(position: position, /*childType*/typeof(string)))
             {
                 return respectCaretUnitBoundaries ? IsAtCaretUnitBoundary(position) : true;
             }

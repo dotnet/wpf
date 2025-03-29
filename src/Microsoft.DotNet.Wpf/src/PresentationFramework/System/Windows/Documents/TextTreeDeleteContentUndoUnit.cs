@@ -239,7 +239,7 @@ namespace System.Windows.Documents
             text = new char[count];
 
             // Copy the text.
-            TextTreeText.ReadText(this.TextContainer.RootTextBlock, symbolOffset, count, text, 0 /*startIndex*/);
+            TextTreeText.ReadText(this.TextContainer.RootTextBlock, symbolOffset, count, text, startIndex: 0);
 
             container = new TextContentContainer(text);
 

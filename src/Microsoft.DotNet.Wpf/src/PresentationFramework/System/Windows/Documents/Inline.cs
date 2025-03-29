@@ -55,7 +55,7 @@ namespace System.Windows.Documents
                     return null;
                 }
 
-                return new InlineCollection(this, /*isOwnerParent*/false);
+                return new InlineCollection(this, isOwnerParent: false);
             }
         }
 

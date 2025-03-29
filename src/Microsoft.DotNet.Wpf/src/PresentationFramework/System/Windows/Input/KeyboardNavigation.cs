@@ -983,7 +983,7 @@ namespace System.Windows.Input
             {
                 case FocusNavigationDirection.Next:
                     _navigationProperty = (modifierKeys & ModifierKeys.Control) == ModifierKeys.Control ? ControlTabNavigationProperty : TabNavigationProperty;
-                    nextTab = GetNextTab(currentElement, GetGroupParent(currentElement, true /*includeCurrent*/), false);
+                    nextTab = GetNextTab(currentElement, GetGroupParent(currentElement, includeCurrent: true), false);
                     break;
 
                 case FocusNavigationDirection.Previous:
@@ -1273,7 +1273,7 @@ namespace System.Windows.Input
 
         internal DependencyObject PredictFocusedElement(DependencyObject sourceElement, FocusNavigationDirection direction)
         {
-            return PredictFocusedElement(sourceElement, direction, /*treeViewNavigation*/ false);
+            return PredictFocusedElement(sourceElement, direction, treeViewNavigation: false);
         }
 
         internal DependencyObject PredictFocusedElement(DependencyObject sourceElement, FocusNavigationDirection direction, bool treeViewNavigation)
@@ -1858,7 +1858,7 @@ namespace System.Windows.Input
 
         private DependencyObject GetGroupParent(DependencyObject e)
         {
-            return GetGroupParent(e, false /*includeCurrent*/);
+            return GetGroupParent(e, includeCurrent: false);
         }
 
         // Go up thru the parent chain until we find TabNavigation != Continue
@@ -2702,7 +2702,7 @@ namespace System.Windows.Input
 
         private DependencyObject GetNextInDirection(DependencyObject sourceElement, FocusNavigationDirection direction)
         {
-            return GetNextInDirection(sourceElement, direction, /*treeViewNavigation*/ false);
+            return GetNextInDirection(sourceElement, direction, treeViewNavigation: false);
         }
 
         private DependencyObject GetNextInDirection(DependencyObject sourceElement, FocusNavigationDirection direction, bool treeViewNavigation)
@@ -2989,7 +2989,7 @@ namespace System.Windows.Input
                 ElementViewportPosition sourceElementPosition = ItemsControl.GetElementViewportPosition(viewportBoundsElement,
                     ItemsControl.TryGetTreeViewItemHeader(sourceElement) as UIElement,
                     direction,
-                    false /*fullyVisible*/,
+                    fullyVisible: false,
                     out sourceRect);
                 if (sourceElementPosition == ElementViewportPosition.None)
                 {
@@ -3021,7 +3021,7 @@ namespace System.Windows.Input
                         viewportBoundsElement,
                         currentRectElement as UIElement,
                         direction,
-                        false /*fullyVisible*/,
+                        fullyVisible: false,
                         out currentRect);
 
                     // Compute directionScore of the current element. Higher the

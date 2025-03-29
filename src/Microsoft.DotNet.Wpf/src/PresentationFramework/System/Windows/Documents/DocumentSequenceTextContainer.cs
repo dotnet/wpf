@@ -63,7 +63,7 @@ namespace System.Windows.Documents
 
         void ITextContainer.EndChange()
         {
-            ((ITextContainer)this).EndChange(false /* skipEvents */);
+            ((ITextContainer)this).EndChange(skipEvents: false);
         }
 
         /// <summary>
@@ -552,7 +552,7 @@ namespace System.Windows.Documents
                     _changes = new TextContainerChangedEventArgs();
                 }
 
-                _changes.AddChange(precursorTextChange, DocumentSequenceTextPointer.GetOffsetToPosition(_start, startPosition), symbolCount, false /* collectTextChanges */);
+                _changes.AddChange(precursorTextChange, DocumentSequenceTextPointer.GetOffsetToPosition(_start, startPosition), symbolCount, collectTextChanges: false);
 
                 if (this.Change != null)
                 {

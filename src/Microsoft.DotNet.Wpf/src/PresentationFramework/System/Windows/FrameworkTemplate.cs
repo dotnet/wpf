@@ -792,7 +792,7 @@ namespace System.Windows
                     // Allocate a slot for this unshared DP value in the per-instance store for MarkupExtensions
 
                     HybridDictionary instanceValues = StyleHelper.EnsureInstanceData(StyleHelper.TemplateDataField, templatedParent, InstanceStyleData.InstanceValues);
-                    StyleHelper.ProcessInstanceValue(dependencyObject, childIndex, instanceValues, dependencyProperty, StyleHelper.UnsharedTemplateContentPropertyIndex, true /*apply*/);
+                    StyleHelper.ProcessInstanceValue(dependencyObject, childIndex, instanceValues, dependencyProperty, StyleHelper.UnsharedTemplateContentPropertyIndex, apply: true);
 
                     value = bindingExpr.ParentBindingBase;
                 }
@@ -808,7 +808,7 @@ namespace System.Windows
                     // Allocate a slot for this unshared DP value in the per-instance store for MarkupExtensions
 
                     HybridDictionary instanceValues = StyleHelper.EnsureInstanceData(StyleHelper.TemplateDataField, templatedParent, InstanceStyleData.InstanceValues);
-                    StyleHelper.ProcessInstanceValue(dependencyObject, childIndex, instanceValues, dependencyProperty, StyleHelper.UnsharedTemplateContentPropertyIndex, true /*apply*/);
+                    StyleHelper.ProcessInstanceValue(dependencyObject, childIndex, instanceValues, dependencyProperty, StyleHelper.UnsharedTemplateContentPropertyIndex, apply: true);
 
                     // Create a Binding equivalent to the TemplateBindingExtension
 
@@ -870,8 +870,8 @@ namespace System.Windows
                     dependencyProperty.GetMetadata(dependencyObject.DependencyObjectType),
                     new EffectiveValueEntry() /* oldEntry */,
                 ref entry,
-                    false /* coerceWithDeferredReference */,
-                    false /* coerceWithCurrentValue */,
+                    coerceWithDeferredReference: false,
+                    coerceWithCurrentValue: false,
                     OperationType.Unknown);
 
             return true;
@@ -1418,7 +1418,7 @@ namespace System.Windows
         //
         internal void CopyParserContext(ParserContext parserContext)
         {
-            _parserContext = parserContext.ScopedCopy(false /*copyNameScopeStack*/ );
+            _parserContext = parserContext.ScopedCopy(copyNameScopeStack: false);
 
             // We need to clear the Journal bit, because we know we won't be able to honor it correctly.
             // Journaling journals the properties in the logical tree, so doesn't journal properties in the

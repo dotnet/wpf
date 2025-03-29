@@ -124,7 +124,7 @@ namespace System.Windows.Documents
                     if (this.TextView.IsValid)
                     {
                         Point mouseDownPoint = e.GetPosition(_textEditor.TextView.RenderScope);
-                        ITextPointer cursorPosition = this.TextView.GetTextPositionFromPoint(mouseDownPoint, /*snapToText:*/true);
+                        ITextPointer cursorPosition = this.TextView.GetTextPositionFromPoint(mouseDownPoint, snapToText: true);
                         if (cursorPosition != null)
                         {
                             _textEditor.Selection.SetSelectionByMouse(cursorPosition, mouseDownPoint);
@@ -168,7 +168,7 @@ namespace System.Windows.Documents
                 // Prepare data object (including side effects from application customization)
 
                 // Note: _CreateDataObject raises a public event which might throw a recoverable exception.
-                IDataObject dataObject = TextEditorCopyPaste._CreateDataObject(_textEditor, /*isDragDrop:*/true);
+                IDataObject dataObject = TextEditorCopyPaste._CreateDataObject(_textEditor, isDragDrop: true);
 
                 if (dataObject != null) // null would mean that application cancelled the command
                 {
@@ -281,7 +281,7 @@ namespace System.Windows.Documents
 
                     // Add the caret.
                     // Create caret to show it during the dragging operation.
-                    _caretDragDrop = new CaretElement(_textEditor, /*isBlinkEnabled:*/false);
+                    _caretDragDrop = new CaretElement(_textEditor, isBlinkEnabled: false);
 
                     // Initialize the caret.
                     // (psarrett) Understand why this call is so important for AdornerLayer.
@@ -415,7 +415,7 @@ namespace System.Windows.Documents
                             Brush caretBrush = TextSelection.GetCaretBrush(_textEditor);
 
                             // Show the caret on the dropable position.
-                            _caretDragDrop.Update(/*visible:*/true, caretRectangle, caretBrush, 0.5, italic, CaretScrollMethod.None, /*wordWrappingPosition*/ double.NaN);
+                            _caretDragDrop.Update(visible: true, caretRectangle, caretBrush, 0.5, italic, CaretScrollMethod.None, /*wordWrappingPosition*/ double.NaN);
                         }
                     }
                 }
@@ -445,7 +445,7 @@ namespace System.Windows.Documents
                     transform.TryTransform(point, out point); 
                 }
 
-                ITextPointer dropPosition = this.TextView.GetTextPositionFromPoint(point, /*snapToText:*/true);
+                ITextPointer dropPosition = this.TextView.GetTextPositionFromPoint(point, snapToText: true);
                 
                 // For rich text content we adjust drop position to word boundary
                 if (dropPosition != null)
@@ -461,7 +461,7 @@ namespace System.Windows.Documents
                             // The drop position must be before of end of line
                             dropPosition.CompareTo(lineRange.End) < 0 &&
                             // We check if we are not at word boundary already:
-                            !TextPointerBase.IsAtWordBoundary(dropPosition, /*insideWordDirection:*/LogicalDirection.Forward) &&
+                            !TextPointerBase.IsAtWordBoundary(dropPosition, insideWordDirection: LogicalDirection.Forward) &&
                             // We do not do it if the source range was not on word boundaries from both ends
                             _dragSourceTextRange != null && //
                             TextPointerBase.IsAtWordBoundary(_dragSourceTextRange.Start, LogicalDirection.Forward) && //
@@ -545,7 +545,7 @@ namespace System.Windows.Documents
                         // nothing happened.
 
                         // Set caret to this position.
-                        selection.SetCaretToPosition(dropPosition, LogicalDirection.Backward, /*allowStopAtLineEnd:*/false, /*allowStopNearSpace:*/true);
+                        selection.SetCaretToPosition(dropPosition, LogicalDirection.Backward, allowStopAtLineEnd: false, allowStopNearSpace: true);
 
                         // Indicate the resulting effect of an action
                         // Note that dropResult may stay equal to DragDropResult.Drop
@@ -573,10 +573,10 @@ namespace System.Windows.Documents
                             // When we drop outside of selection,
                             // we should ignore current selection and
                             // move ip into dropping point.
-                            selection.SetCaretToPosition(dropPosition, LogicalDirection.Backward, /*allowStopAtLineEnd:*/false, /*allowStopNearSpace:*/true);
+                            selection.SetCaretToPosition(dropPosition, LogicalDirection.Backward, allowStopAtLineEnd: false, allowStopNearSpace: true);
 
                             // _DoPaste raises a public event -- could raise recoverable exception.
-                            e.Handled = TextEditorCopyPaste._DoPaste(_textEditor, e.Data, /*isDragDrop:*/true);
+                            e.Handled = TextEditorCopyPaste._DoPaste(_textEditor, e.Data, isDragDrop: true);
                             //  So we consider a case when we pasted nothing as non-handled. This is inconsistent with otherwise "static" approach to event handling across editing. Need to revisit this.
                         }
                     }

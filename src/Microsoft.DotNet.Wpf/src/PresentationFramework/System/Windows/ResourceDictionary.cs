@@ -216,7 +216,7 @@ namespace System.Windows
                 // It can be a sync/async converter. It's the converter's responsiblity to close the stream.
                 // If it fails to find a convert, this call will return null.
                 System.Windows.Markup.XamlReader asyncObjectConverter;
-                ResourceDictionary loadedRD = MimeObjectFactory.GetObjectAndCloseStreamCore(s, contentType, uri, false, false, false /*allowAsync*/, false /*isJournalNavigation*/, out asyncObjectConverter, IsUnsafe)
+                ResourceDictionary loadedRD = MimeObjectFactory.GetObjectAndCloseStreamCore(s, contentType, uri, false, false, allowAsync: false, isJournalNavigation: false, out asyncObjectConverter, IsUnsafe)
                                             as ResourceDictionary;
 
                 if (loadedRD == null)
@@ -1301,7 +1301,7 @@ namespace System.Windows
                 // to a entry in a sub-dictionary inside the deferred entry.   There is other code, later
                 // when evaluating StaticResourceHolders, that does an search of the part that is missed here.
                 staticResourceWorker.ResourceKey = keyValue;
-                object obj = staticResourceWorker.TryProvideValueInternal(serviceProvider, true /*allowDeferredReference*/, true /* mustReturnDeferredResourceReference */);
+                object obj = staticResourceWorker.TryProvideValueInternal(serviceProvider, allowDeferredReference: true, mustReturnDeferredResourceReference: true);
 
                 Debug.Assert(obj is DeferredResourceReference);
                 staticResources[i] = new StaticResourceHolder(keyValue, obj as DeferredResourceReference);
@@ -1326,8 +1326,8 @@ namespace System.Windows
                     {
                         staticResourceValues[i] = context.BamlReader.FindResourceInParentChain(
                             ((StaticResourceExtension)staticResourceValues[i]).ResourceKey,
-                            true /*allowDeferredResourceReference*/,
-                            true /*mustReturnDeferredResourceReference*/);
+                            allowDeferredResourceReference: true,
+                            mustReturnDeferredResourceReference: true);
                     }
                     else
                     {
@@ -1340,8 +1340,8 @@ namespace System.Windows
 
                         object value = context.BamlReader.FindResourceInParserStack(
                             srHolder.ResourceKey,
-                            true /*allowDeferredResourceReference*/,
-                            true /*mustReturnDeferredResourceReference*/);
+                            allowDeferredResourceReference: true,
+                            mustReturnDeferredResourceReference: true);
 
                         if (value == DependencyProperty.UnsetValue)
                         {
@@ -1700,7 +1700,7 @@ namespace System.Windows
                 resourceKey,
                 allowDeferredResourceReference,
                 mustReturnDeferredResourceReference,
-                true /*canCacheAsThemeResource*/,
+                canCacheAsThemeResource: true,
                 out canCache);
         }
 

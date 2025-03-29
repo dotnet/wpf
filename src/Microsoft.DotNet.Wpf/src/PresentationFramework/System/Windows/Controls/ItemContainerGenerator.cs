@@ -261,7 +261,7 @@ namespace System.Windows.Controls
         /// </summary>
         void IItemContainerGenerator.Remove(GeneratorPosition position, int count)
         {
-            Remove(position, count, /*isRecycling = */ false);
+            Remove(position, count, isRecycling: false);
         }
 
         /// <summary>
@@ -427,7 +427,7 @@ namespace System.Windows.Controls
         /// </summary>
         void IItemContainerGenerator.RemoveAll()
         {
-            RemoveAllInternal(false /*saveRecycleQueue*/);
+            RemoveAllInternal(saveRecycleQueue: false);
         }
 
         internal void RemoveAllInternal(bool saveRecycleQueue)

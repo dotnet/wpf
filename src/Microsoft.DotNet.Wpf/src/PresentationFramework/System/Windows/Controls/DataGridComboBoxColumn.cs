@@ -486,7 +486,7 @@ namespace System.Windows.Controls
         {
             TextBlockComboBox comboBox = new TextBlockComboBox();
 
-            ApplyStyle(/* isEditing = */ false, /* defaultToElementStyle = */ false, comboBox);
+            ApplyStyle(isEditing: false, defaultToElementStyle: false, comboBox);
             ApplyColumnProperties(comboBox);
 
             DataGridHelper.RestoreFlowDirection(comboBox, cell);
@@ -501,7 +501,7 @@ namespace System.Windows.Controls
         {
             ComboBox comboBox = new ComboBox();
 
-            ApplyStyle(/* isEditing = */ true, /* defaultToElementStyle = */ false, comboBox);
+            ApplyStyle(isEditing: true, defaultToElementStyle: false, comboBox);
             ApplyColumnProperties(comboBox);
 
             DataGridHelper.RestoreFlowDirection(comboBox, cell);

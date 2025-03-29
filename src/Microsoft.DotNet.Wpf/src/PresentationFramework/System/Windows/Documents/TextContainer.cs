@@ -326,19 +326,19 @@ namespace System.Windows.Documents
 
         internal void BeginChange()
         {
-            BeginChange(true /* undo */);
+            BeginChange(undo: true);
         }
 
         internal void BeginChangeNoUndo()
         {
-            BeginChange(false /* undo */);
+            BeginChange(undo: false);
         }
 
         /// <summary>
         /// </summary>
         internal void EndChange()
         {
-            EndChange(false /* skipEvents */);
+            EndChange(skipEvents: false);
         }
 
         /// <summary>
@@ -413,7 +413,7 @@ namespace System.Windows.Documents
         /// </summary>
         void ITextContainer.EndChange()
         {
-            EndChange(false /* skipEvents */);
+            EndChange(skipEvents: false);
         }
 
         /// <summary>
@@ -485,7 +485,7 @@ namespace System.Windows.Documents
             DemandCreatePositionState();
 
             // Add +1 to offset because we're converting from external to internal offsets.
-            GetNodeAndEdgeAtOffset(offset + 1, false /* splitNode */, out node, out edge);
+            GetNodeAndEdgeAtOffset(offset + 1, splitNode: false, out node, out edge);
 
             nodeOffset = (offset + 1) - node.GetSymbolOffset(this.Generation);
 
@@ -764,7 +764,7 @@ namespace System.Windows.Documents
                              textChange != PrecursorTextChangeType.ElementExtracted,
                              "Need second TextPointer for ElementAdded/Extracted operations!");
 
-            AddChange(startPosition, null, symbolCount, /* leftEdgeCharCount */ 0, charCount, textChange, property, affectsRenderOnly);
+            AddChange(startPosition, null, symbolCount, leftEdgeCharCount: 0, charCount, textChange, property, affectsRenderOnly);
         }
 
         // Adds a change to the current change block.
@@ -904,7 +904,7 @@ namespace System.Windows.Documents
 
             // Update the symbol counts.
             textNode.SymbolCount += textLength; // This simultaneously updates textNode.IMECharCount.
-            UpdateContainerSymbolCount(containingNode, /* symbolCount */ textLength, /* charCount */ textLength);
+            UpdateContainerSymbolCount(containingNode, symbolCount: textLength, charCount: textLength);
 
             // Insert the raw text.
             symbolOffset = textNode.GetSymbolOffset(this.Generation);
@@ -914,9 +914,9 @@ namespace System.Windows.Documents
             TextTreeUndo.CreateInsertUndoUnit(this, symbolOffset, textLength);
 
             // Announce the change.
-            NextGeneration(false /* deletedContent */);
+            NextGeneration(deletedContent: false);
 
-            AddChange(originalPosition, /* symbolCount */ textLength, /* charCount */ textLength, PrecursorTextChangeType.ContentAdded);
+            AddChange(originalPosition, symbolCount: textLength, charCount: textLength, PrecursorTextChangeType.ContentAdded);
 
             // Notify the TextElement of a content change.
             TextElement textElement = position.Parent as TextElement;
@@ -976,7 +976,7 @@ namespace System.Windows.Documents
                 {
                     // ExtractElementInternal will raise LogicalTree events which
                     // could raise exceptions from external code.
-                    elementText = element.TextContainer.ExtractElementInternal(element, true /* deep */, out extractChangeEventArgs);
+                    elementText = element.TextContainer.ExtractElementInternal(element, deep: true, out extractChangeEventArgs);
                     exceptionThrown = false;
                 }
                 finally
@@ -1083,7 +1083,7 @@ namespace System.Windows.Documents
                 TextTreeText.InsertText(_rootNode.RootTextBlock, symbolOffset, elementText);
             }
 
-            NextGeneration(false /* deletedContent */);
+            NextGeneration(deletedContent: false);
 
             // Handle undo.
             TextTreeUndo.CreateInsertElementUndoUnit(this, symbolOffset, elementText != null /* deep */);
@@ -1189,7 +1189,7 @@ namespace System.Windows.Documents
             symbolOffset = objectNode.GetSymbolOffset(this.Generation);
             TextTreeText.InsertObject(_rootNode.RootTextBlock, symbolOffset);
 
-            NextGeneration(false /* deletedContent */);
+            NextGeneration(deletedContent: false);
 
             // Handle undo.
             TextTreeUndo.CreateInsertUndoUnit(this, symbolOffset, 1);
@@ -1268,7 +1268,7 @@ namespace System.Windows.Documents
 
         internal void GetNodeAndEdgeAtOffset(int offset, out SplayTreeNode node, out ElementEdge edge)
         {
-            GetNodeAndEdgeAtOffset(offset, true /* splitNode */, out node, out edge);
+            GetNodeAndEdgeAtOffset(offset, splitNode: true, out node, out edge);
         }
 
         // Finds a node/edge pair matching a given symbol offset in the tree.
@@ -1569,7 +1569,7 @@ namespace System.Windows.Documents
         {
             ExtractChangeEventArgs extractChangeEventArgs;
 
-            ExtractElementInternal(element, false /* deep */, out extractChangeEventArgs);
+            ExtractElementInternal(element, deep: false, out extractChangeEventArgs);
         }
 
         // Wrapper for this.TextView.IsAtCaretUnitBoundary, adds a cache.
@@ -2295,7 +2295,7 @@ namespace System.Windows.Documents
             {
                 if (newFirstIMEVisibleNode)
                 {
-                    UpdateContainerSymbolCount(containingNode, /* symbolCount */ 0, /* charCount */ -1);
+                    UpdateContainerSymbolCount(containingNode, symbolCount: 0, charCount: -1);
                 }
                 charCount = 0;
                 return 0;
@@ -2371,7 +2371,7 @@ namespace System.Windows.Documents
 
                 UpdateContainerSymbolCount(containingNode, -symbolCount, -charCount + nextNodeCharDelta);
                 TextTreeText.RemoveText(_rootNode.RootTextBlock, symbolOffset, symbolCount);
-                NextGeneration(true /* deletedContent */);
+                NextGeneration(deletedContent: true);
 
                 // Notify the TextElement of a content change. Note that any full TextElements
                 // between startPosition and endPosition will be handled by CutTopLevelLogicalNodes,
@@ -2437,17 +2437,17 @@ namespace System.Windows.Documents
                     // textElementNode.TextElement's TextElementNode will be updated
                     // with a deep copy of all contained nodes. We need a deep copy
                     // to ensure the new element/tree has no TextPointer references.
-                    ExtractElementFromSiblingTree(containingNode, elementNode, true /* deep */);
+                    ExtractElementFromSiblingTree(containingNode, elementNode, deep: true);
                     // Assert that the TextElement now points to a new TextElementNode, not the original one.
                     Invariant.Assert(elementNode.TextElement.TextElementNode != elementNode);
                     // We want to start referring to the copied node, update elementNode.
                     elementNode = elementNode.TextElement.TextElementNode;
 
                     UpdateContainerSymbolCount(containingNode, -elementNode.SymbolCount, -imeCharCountInOriginalContainer);
-                    NextGeneration(true /* deletedContent */);
+                    NextGeneration(deletedContent: true);
 
                     // Stick it in a private tree so it's safe for the outside world to play with.
-                    tree = new TextContainer(null, false /* plainTextOnly */);
+                    tree = new TextContainer(null, plainTextOnly: false);
                     newTreeStart = tree.Start;
 
                     tree.InsertElementToSiblingTree(newTreeStart, newTreeStart, elementNode);
@@ -2455,7 +2455,7 @@ namespace System.Windows.Documents
                     tree.UpdateContainerSymbolCount(elementNode.GetContainingNode(), elementNode.SymbolCount, elementNode.IMECharCount);
                     tree.DemandCreateText();
                     TextTreeText.InsertText(tree.RootTextBlock, 1 /* symbolOffset */, elementText);
-                    tree.NextGeneration(false /* deletedContent */);
+                    tree.NextGeneration(deletedContent: false);
 
                     currentLogicalChild = elementNode.TextElement;
 
@@ -2875,10 +2875,10 @@ namespace System.Windows.Documents
             }
             else
             {
-                UpdateContainerSymbolCount(containingNode, /* symbolCount */ -2, /* charCount */ -imeLeftEdgeCharCount + nextNodeCharDelta + containedNodeCharDelta);
+                UpdateContainerSymbolCount(containingNode, symbolCount: -2, charCount: -imeLeftEdgeCharCount + nextNodeCharDelta + containedNodeCharDelta);
             }
 
-            NextGeneration(true /* deletedContent */);
+            NextGeneration(deletedContent: true);
 
             undoUnit?.SetTreeHashCode();
 
@@ -2889,7 +2889,7 @@ namespace System.Windows.Documents
             }
             else if (empty)
             {
-                AddChange(startPosition, /* symbolCount */ 2, /* charCount */ imeCharCount, PrecursorTextChangeType.ContentRemoved);
+                AddChange(startPosition, symbolCount: 2, charCount: imeCharCount, PrecursorTextChangeType.ContentRemoved);
             }
             else
             {
@@ -3405,7 +3405,7 @@ namespace System.Windows.Documents
 
             // Next node was the old first node.  Its IMECharCount
             // just bumped up, report that.
-            AddChange(startEdgePosition, /* symbolCount */ 0, /* IMECharCount */ 1, PrecursorTextChangeType.ContentAdded);
+            AddChange(startEdgePosition, symbolCount: 0, /* IMECharCount */ 1, PrecursorTextChangeType.ContentAdded);
         }
 
         // Fires Change events for IMELeftEdgeCharCount deltas to a node after it
@@ -3417,7 +3417,7 @@ namespace System.Windows.Documents
 
             // node was the old second node.  Its IMECharCount
             // just dropped down, report that.
-            AddChange(startEdgePosition, /* symbolCount */ 0, /* IMECharCount */ 1, PrecursorTextChangeType.ContentRemoved);
+            AddChange(startEdgePosition, symbolCount: 0, /* IMECharCount */ 1, PrecursorTextChangeType.ContentRemoved);
         }
 
         // Sets boolean state.

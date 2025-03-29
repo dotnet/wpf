@@ -555,7 +555,7 @@ namespace MS.Internal.Data
 
         public ObjectTargetConverter(Type sourceType, DataBindEngine engine) :
             base(null, sourceType, typeof(object),
-                 true /* shouldConvertFrom */, false /* shouldConvertTo */, engine)
+                 shouldConvertFrom: true, shouldConvertTo: false, engine)
         {
         }
 
@@ -602,7 +602,7 @@ namespace MS.Internal.Data
 
         public ObjectSourceConverter(Type targetType, DataBindEngine engine) :
             base(null, typeof(object), targetType,
-                 true /* shouldConvertFrom */, false /* shouldConvertTo */, engine)
+                 shouldConvertFrom: true, shouldConvertTo: false, engine)
         {
         }
 

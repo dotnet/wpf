@@ -1349,7 +1349,7 @@ namespace System.Windows.Data
             // tell each expression it is leaving the group
             foreach (BindingExpressionBase expr in list)
             {
-                expr.OnBindingGroupChanged(/*joining*/ false);
+                expr.OnBindingGroupChanged(joining: false);
 
                 // also remove the expression from our collection.  Normally this is
                 // a no-op, as we only get here after the expression has been removed,

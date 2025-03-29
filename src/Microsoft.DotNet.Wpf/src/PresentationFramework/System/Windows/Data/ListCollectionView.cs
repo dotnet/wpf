@@ -640,12 +640,12 @@ namespace System.Windows.Data
                         if (oldIndex >= 0)
                         {
                             int index = (oldIndex == 0) ? 0 : _group.Items.Count - 1;
-                            _group.RemoveSpecialItem(index, NewItemPlaceholder, false /*loading*/);
+                            _group.RemoveSpecialItem(index, NewItemPlaceholder, loading: false);
                         }
                         if (newIndex >= 0)
                         {
                             int index = (newIndex == 0) ? 0 : _group.Items.Count;
-                            _group.InsertSpecialItem(index, NewItemPlaceholder, false /*loading*/);
+                            _group.InsertSpecialItem(index, NewItemPlaceholder, loading: false);
                         }
                     }
 
@@ -921,7 +921,7 @@ namespace System.Windows.Data
             object newItem = EndAddNew(false);
 
             // remove item from its temporary position
-            _group.RemoveSpecialItem(index, newItem, false /*loading*/);
+            _group.RemoveSpecialItem(index, newItem, loading: false);
 
             // now pretend it just got added to the collection.  This will add it
             // to the internal list with sort/filter, and to the groups
@@ -2950,10 +2950,10 @@ namespace System.Windows.Data
             // into groups (with special cases for placeholder and new item)
             if (NewItemPlaceholderPosition == NewItemPlaceholderPosition.AtBeginning)
             {
-                _group.InsertSpecialItem(0, NewItemPlaceholder, true /*loading*/);
+                _group.InsertSpecialItem(0, NewItemPlaceholder, loading: true);
                 if (IsAddingNew)
                 {
-                    _group.InsertSpecialItem(1, _newItem, true /*loading*/);
+                    _group.InsertSpecialItem(1, _newItem, loading: true);
                 }
             }
 
@@ -2967,17 +2967,17 @@ namespace System.Windows.Data
 
                 if (!IsAddingNew || !System.Windows.Controls.ItemsControl.EqualsEx(_newItem, item))
                 {
-                    _group.AddToSubgroups(item, lsi, true /*loading*/);
+                    _group.AddToSubgroups(item, lsi, loading: true);
                 }
             }
 
             if (IsAddingNew && NewItemPlaceholderPosition != NewItemPlaceholderPosition.AtBeginning)
             {
-                _group.InsertSpecialItem(_group.Items.Count, _newItem, true /*loading*/);
+                _group.InsertSpecialItem(_group.Items.Count, _newItem, loading: true);
             }
             if (NewItemPlaceholderPosition == NewItemPlaceholderPosition.AtEnd)
             {
-                _group.InsertSpecialItem(_group.Items.Count, NewItemPlaceholder, true /*loading*/);
+                _group.InsertSpecialItem(_group.Items.Count, NewItemPlaceholder, loading: true);
             }
         }
 
@@ -3036,11 +3036,11 @@ namespace System.Windows.Data
                         break;
                 }
 
-                _group.InsertSpecialItem(index, item, false /*loading*/);
+                _group.InsertSpecialItem(index, item, loading: false);
             }
             else
             {
-                _group.AddToSubgroups(item, lsi, false /*loading*/);
+                _group.AddToSubgroups(item, lsi, loading: false);
             }
         }
 

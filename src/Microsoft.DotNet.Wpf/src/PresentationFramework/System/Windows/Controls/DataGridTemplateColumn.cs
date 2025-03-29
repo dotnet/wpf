@@ -179,7 +179,7 @@ namespace System.Windows.Controls
         /// </summary>
         protected override FrameworkElement GenerateElement(DataGridCell cell, object dataItem)
         {
-            return LoadTemplateContent(/* isEditing = */ false, dataItem, cell);
+            return LoadTemplateContent(isEditing: false, dataItem, cell);
         }
 
         /// <summary>
@@ -187,7 +187,7 @@ namespace System.Windows.Controls
         /// </summary>
         protected override FrameworkElement GenerateEditingElement(DataGridCell cell, object dataItem)
         {
-            return LoadTemplateContent(/* isEditing = */ true, dataItem, cell);
+            return LoadTemplateContent(isEditing: true, dataItem, cell);
         }
 
         #endregion

@@ -793,7 +793,7 @@ namespace System.Windows.Documents
 
             if (te != null)
             {
-                TextSchema.ValidateChild(/*parent:*/this, /*child:*/te, true /* throwIfIllegalChild */, true /* throwIfIllegalHyperlinkDescendent */);
+                TextSchema.ValidateChild(parent: this, child: te, throwIfIllegalChild: true, throwIfIllegalHyperlinkDescendent: true);
                 Append(te);
             }
             else
@@ -825,7 +825,7 @@ namespace System.Windows.Documents
                         }
                         else
                         {
-                            if (TextSchema.IsValidChild(/*parent:*/this, /*childType:*/typeof(InlineUIContainer)))
+                            if (TextSchema.IsValidChild(parent: this, childType: typeof(InlineUIContainer)))
                             {
                                 // Create implicit InlineUIContainer wrapper for this UIElement
                                 InlineUIContainer implicitInlineUIContainer = Inline.CreateImplicitInlineUIContainer(this);
@@ -859,14 +859,14 @@ namespace System.Windows.Documents
 
             // Check if text run is allowed in this element,
             // and create implicit Run if possible.
-            if (TextSchema.IsValidChild(/*parent:*/this, /*childType:*/typeof(string)))
+            if (TextSchema.IsValidChild(parent: this, childType: typeof(string)))
             {
                 Append(text);
             }
             else
             {
                 // Implicit Run creation
-                if (TextSchema.IsValidChild(/*parent:*/this, /*childType:*/typeof(Run)))
+                if (TextSchema.IsValidChild(parent: this, childType: typeof(Run)))
                 {
                     // NOTE: Do not use new Run(text) constructor to avoid TextContainer creation
                     // which would hit parser perf
@@ -1552,7 +1552,7 @@ namespace System.Windows.Documents
             }
             else
             {
-                tree = new TextContainer(null, false /* plainTextOnly */);
+                tree = new TextContainer(null, plainTextOnly: false);
                 start = tree.Start;
 
                 tree.BeginChange();

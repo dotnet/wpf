@@ -296,7 +296,7 @@ namespace System.Windows.Navigation
             // It also replays CustomContentState.
             Debug.Assert(_navStatus == NavigationStatus.Navigating);
             _navStatus = NavigationStatus.Navigated;
-            HandleNavigated(navState, false/*navigatedToNewContent*/);
+            HandleNavigated(navState, navigatedToNewContent: false);
         }
 
 
@@ -1105,7 +1105,7 @@ namespace System.Windows.Navigation
             Debug.Assert(bpu == null ||
                          navInfo == null ||
                          navInfo.Source == null ||
-                         IsSameUri(null, navInfo.Source, bpu, false /* withFragment */),
+                         IsSameUri(null, navInfo.Source, bpu, withFragment: false),
                          "Source in OnContentReady does not match source in NavigateInfo");
             if (bpu == null)
             {
@@ -1192,7 +1192,7 @@ namespace System.Windows.Navigation
             }
 
             // This will fire Navigated event and LoadCompleted event if all sub-loads are done
-            HandleNavigated(navState, !objectRefresh/*navigatedToNewContent*/);
+            HandleNavigated(navState, navigatedToNewContent: !objectRefresh);
         }
 
         // <summary>
@@ -1732,7 +1732,7 @@ namespace System.Windows.Navigation
             // Not checking for IsDisposed since that checks for app shutdown too and we need to
             // stop current loads during app shutdown
 
-            DoStopLoading(true/*clearRecursiveNavigations*/, true/*fireEvents*/);
+            DoStopLoading(clearRecursiveNavigations: true, fireEvents: true);
         }
 
         /// <summary>
@@ -1846,7 +1846,7 @@ namespace System.Windows.Navigation
                 fireStopped = true;
             }
 
-            _navigatorHostImpl?.OnSourceUpdatedFromNavService(true /* journalOrCancel */);
+            _navigatorHostImpl?.OnSourceUpdatedFromNavService(journalOrCancel: true);
 
             // Event handler exception continuality: if exception occurs in NavigationStopped event handler,
             // we want to finish stopping navigation.
@@ -1886,7 +1886,7 @@ namespace System.Windows.Navigation
                     {
                         for (; i < _childNavigationServices.Count; ++i)
                         {
-                            ((NavigationService)_childNavigationServices[i]).DoStopLoading(true, false/*fireEvents*/);
+                            ((NavigationService)_childNavigationServices[i]).DoStopLoading(true, fireEvents: false);
                         }
                     }
 
@@ -2007,7 +2007,7 @@ namespace System.Windows.Navigation
                 Debug.Assert(this.Application != null &&
                              this.Application.CheckAccess() == true &&
                              IsSameUri(null, Application.StartupUri,
-                                                     navigateInfo.Source, false /* withFragment */),
+                                                     navigateInfo.Source, withFragment: false),
                              "Encountered unexpected condition in FireNavigating, see comments in the file");
                 // Only allow this navigation to continue if the user has not
                 // reqeusted another navigation in the mean time.
@@ -2058,7 +2058,7 @@ namespace System.Windows.Navigation
                 Debug.Assert(navigateInfo.IsConsistent);
                 Debug.Assert(source == null ||
                              navigateInfo.Source == null ||
-                             IsSameUri(null, navigateInfo.Source, source, false /* withFragment */),
+                             IsSameUri(null, navigateInfo.Source, source, withFragment: false),
                              "Source argument does not match NavigateInfo.Source");
                 // Don't want to overwrite one passed in
                 if (source == null)
@@ -2105,7 +2105,7 @@ namespace System.Windows.Navigation
 
             if (allowNavigation == true)
             {
-                DoStopLoading(false /*clearRecursiveLoads*/, true /*fireEvents*/);
+                DoStopLoading(false /*clearRecursiveLoads*/, fireEvents: true);
                 Debug.Assert(PendingNavigationList.Count == 0,
                              "Pending child navigations were not stopped before starting a new navigation");
 
@@ -2142,7 +2142,7 @@ namespace System.Windows.Navigation
             // and the caller could now proceed with the navigation
             _recursiveNavigateList.Remove(localNavigateQueueItem);
 
-            _navigatorHostImpl?.OnSourceUpdatedFromNavService(true /* journalOrCancel */);
+            _navigatorHostImpl?.OnSourceUpdatedFromNavService(journalOrCancel: true);
 
             // Browser downloading state not reset; case 4.
             InformBrowserAboutStoppedNavigation();
@@ -2878,7 +2878,7 @@ namespace System.Windows.Navigation
                 // o will be null.
                 // We don't support browser hosting since .NET Core 3.0, so therefore canUseTopLevelBrowserForHTMLRendering = false
                 bool canUseTopLevelBrowserForHTMLRendering = false;
-                Object o = MimeObjectFactory.GetObjectAndCloseStreamCore(bindStream, contentType, destinationUri, canUseTopLevelBrowserForHTMLRendering, sandBoxContent, true /*allowAsync*/, IsJournalNavigation(navigateInfo), out _asyncObjectConverter, IsUnsafe);
+                Object o = MimeObjectFactory.GetObjectAndCloseStreamCore(bindStream, contentType, destinationUri, canUseTopLevelBrowserForHTMLRendering, sandBoxContent, allowAsync: true, IsJournalNavigation(navigateInfo), out _asyncObjectConverter, IsUnsafe);
 
                 if (o != null)
                 {

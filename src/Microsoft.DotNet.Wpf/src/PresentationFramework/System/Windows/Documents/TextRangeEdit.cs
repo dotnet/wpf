@@ -48,7 +48,7 @@ namespace System.Windows.Documents
 
         internal static TextPointer SplitFormattingElements(TextPointer splitPosition, bool keepEmptyFormatting)
         {
-            return SplitFormattingElements(splitPosition, keepEmptyFormatting, /*limitingAncestor*/null);
+            return SplitFormattingElements(splitPosition, keepEmptyFormatting, limitingAncestor: null);
         }
 
         internal static TextPointer SplitFormattingElement(TextPointer splitPosition, bool keepEmptyFormatting)
@@ -409,8 +409,8 @@ namespace System.Windows.Documents
             if (start.CompareTo(end) < 0)
             {
                 // Split formatting elements at range boundaries
-                start = SplitFormattingElements(start, /*keepEmptyFormatting:*/false, /*preserveStructuralFormatting*/true, /*limitingAncestor*/null);
-                end = SplitFormattingElements(end, /*keepEmptyFormatting:*/false, /*preserveStructuralFormatting*/true, /*limitingAncestor*/null);
+                start = SplitFormattingElements(start, keepEmptyFormatting: false, preserveStructuralFormatting: true, limitingAncestor: null);
+                end = SplitFormattingElements(end, keepEmptyFormatting: false, preserveStructuralFormatting: true, limitingAncestor: null);
 
                 while (start.CompareTo(end) < 0)
                 {
@@ -633,7 +633,7 @@ namespace System.Windows.Documents
             TextPointer breakPosition = position;
 
             // Split all inline elements up to this paragraph
-            breakPosition = SplitFormattingElements(breakPosition, /*keepEmptyFormatting:*/true);
+            breakPosition = SplitFormattingElements(breakPosition, keepEmptyFormatting: true);
             Invariant.Assert(breakPosition.Parent == paragraph, "breakPosition must be in paragraph scope after splitting formatting elements");
 
             // Decide whether we need to split ListItem around this paragraph (if any).
@@ -677,7 +677,7 @@ namespace System.Windows.Documents
         /// </returns>
         internal static TextPointer InsertLineBreak(TextPointer position)
         {
-            if (!TextSchema.IsValidChild(/*position*/position, /*childType*/typeof(LineBreak)))
+            if (!TextSchema.IsValidChild(position: position, /*childType*/typeof(LineBreak)))
             {
                 // Ensure insertion position, in case position's parent is not a paragraph/span element.
                 position = TextRangeEditTables.EnsureInsertionPosition(position);
@@ -689,7 +689,7 @@ namespace System.Windows.Documents
                 position = SplitElement(position);
             }
 
-            Invariant.Assert(TextSchema.IsValidChild(/*position*/position, /*childType*/typeof(LineBreak)), 
+            Invariant.Assert(TextSchema.IsValidChild(position: position, /*childType*/typeof(LineBreak)), 
                 "position must be in valid scope now to insert a LineBreak element");
 
             LineBreak lineBreak = new LineBreak();
@@ -1232,9 +1232,9 @@ namespace System.Windows.Documents
                     // Swap left and right values
                     object newValue = new Thickness(
                         /*left*/((Thickness)value).Right, 
-                        /*top:*/((Thickness)value).Top,
-                        /*right:*/((Thickness)value).Left, 
-                        /*bottom:*/((Thickness)value).Bottom);
+                        top: ((Thickness)value).Top,
+                        right: ((Thickness)value).Left, 
+                        bottom: ((Thickness)value).Bottom);
 
                     SetPropertyValue(block, Block.MarginProperty, value, newValue);
                 }
@@ -1714,7 +1714,7 @@ namespace System.Windows.Documents
 
         private static TextPointer SplitFormattingElements(TextPointer splitPosition, bool keepEmptyFormatting, TextElement limitingAncestor)
         {
-            return SplitFormattingElements(splitPosition, keepEmptyFormatting, /*preserveStructuralFormatting*/false, limitingAncestor);
+            return SplitFormattingElements(splitPosition, keepEmptyFormatting, preserveStructuralFormatting: false, limitingAncestor);
         }
 
         /// <summary>
@@ -1869,8 +1869,8 @@ namespace System.Windows.Documents
         private static void SetNonStructuralInlineProperty(TextPointer start, TextPointer end, DependencyProperty formattingProperty, object value, PropertyValueAction propertyValueAction)
         {
             // Split formatting elements at range boundaries
-            start = SplitFormattingElements(start, /*keepEmptyFormatting:*/false, /*preserveStructuralFormatting*/true, /*limitingAncestor*/null);
-            end = SplitFormattingElements(end, /*keepEmptyFormatting:*/false, /*preserveStructuralFormatting*/true, /*limitingAncestor*/null);
+            start = SplitFormattingElements(start, keepEmptyFormatting: false, preserveStructuralFormatting: true, limitingAncestor: null);
+            end = SplitFormattingElements(end, keepEmptyFormatting: false, preserveStructuralFormatting: true, limitingAncestor: null);
 
             Run run = TextRangeEdit.GetNextRun(start, end);
 
@@ -2047,8 +2047,8 @@ namespace System.Windows.Documents
             if (conflictingParent != null)
             {
                 TextElement limit = (TextElement)conflictingParent.Parent;
-                SplitFormattingElements(child.ElementStart, /*keepEmptyFormatting*/false, limit);
-                TextPointer end = SplitFormattingElements(child.ElementEnd, /*keepEmptyFormatting*/false, limit);
+                SplitFormattingElements(child.ElementStart, keepEmptyFormatting: false, limit);
+                TextPointer end = SplitFormattingElements(child.ElementEnd, keepEmptyFormatting: false, limit);
 
                 Span parent = (Span)end.GetAdjacentElement(LogicalDirection.Backward);
 
@@ -2143,8 +2143,8 @@ namespace System.Windows.Documents
             else
             {
                 // Split elements at start and end boundaries.
-                start = SplitFormattingElements(start, /*keepEmptyFormatting:*/false, /*limitingAncestor*/run.Parent as TextElement);
-                end = SplitFormattingElements(end, /*keepEmptyFormatting:*/false, /*limitingAncestor*/run.Parent as TextElement);
+                start = SplitFormattingElements(start, keepEmptyFormatting: false, limitingAncestor: run.Parent as TextElement);
+                end = SplitFormattingElements(end, keepEmptyFormatting: false, limitingAncestor: run.Parent as TextElement);
 
                 run = (Run)start.GetAdjacentElement(LogicalDirection.Forward);
                 run.SetValue(formattingProperty, value);
@@ -2156,8 +2156,8 @@ namespace System.Windows.Documents
 
         private static void ApplyStructuralInlinePropertyAcrossInline(TextPointer start, TextPointer end, TextElement commonAncestor, DependencyProperty formattingProperty, object value)
         {
-            start = SplitFormattingElements(start, /*keepEmptyFormatting:*/false, commonAncestor);
-            end = SplitFormattingElements(end, /*keepEmptyFormatting:*/false, commonAncestor);
+            start = SplitFormattingElements(start, keepEmptyFormatting: false, commonAncestor);
+            end = SplitFormattingElements(end, keepEmptyFormatting: false, commonAncestor);
 
             DependencyObject forwardElement = start.GetAdjacentElement(LogicalDirection.Forward);
             DependencyObject backwardElement = end.GetAdjacentElement(LogicalDirection.Backward);

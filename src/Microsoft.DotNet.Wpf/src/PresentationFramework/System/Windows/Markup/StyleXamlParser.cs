@@ -1240,10 +1240,10 @@ namespace System.Windows.Markup
                                                                         assemblyName,
                                                                         KnownTypes.Types[(int)KnownElements.EventSetter].FullName,
                                                                         KnownTypes.Types[(int)KnownElements.EventSetter],
-                                                                        null /*serializerType*/,
-                                                                        false /*isEmptyElement*/,
-                                                                        false /*needsDictionaryKey*/,
-                                                                        false /*isInjected*/));
+                                                                        serializerType: null,
+                                                                        isEmptyElement: false,
+                                                                        needsDictionaryKey: false,
+                                                                        isInjected: false));
 
                         XamlPropertyNode xamlPropertyNode = new XamlPropertyNode(xamlClrEventNode.LineNumber,
                                                                                  xamlClrEventNode.LinePosition,

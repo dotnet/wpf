@@ -706,7 +706,7 @@ namespace System.Windows
 
                 // Track properties on the container that are being driven by
                 // the Style so that they can be invalidated during style changes
-                StyleHelper.AddContainerDependent(propertyValue.Property, false /*fromVisualTrigger*/, ref ContainerDependents);
+                StyleHelper.AddContainerDependent(propertyValue.Property, fromVisualTrigger: false, ref ContainerDependents);
             }
         }
 
@@ -752,7 +752,7 @@ namespace System.Windows
 
                         // Track properties on the container that are being driven by
                         // the Style so that they can be invalidated during style changes
-                        StyleHelper.AddContainerDependent(propertyValue.Property, true /*fromVisualTrigger*/, ref this.ContainerDependents);
+                        StyleHelper.AddContainerDependent(propertyValue.Property, fromVisualTrigger: true, ref this.ContainerDependents);
 
                         StyleHelper.UpdateTables(ref propertyValue, ref ChildRecordFromChildIndex,
                             ref TriggerSourceRecordFromChildIndex, ref ResourceDependents, ref _dataTriggerRecordFromBinding,

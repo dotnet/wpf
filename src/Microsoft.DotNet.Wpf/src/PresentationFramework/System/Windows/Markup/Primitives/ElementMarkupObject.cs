@@ -1041,7 +1041,7 @@ namespace System.Windows.Markup.Primitives
 
         public override object Value
         {
-            get { return ElementProperty.CheckForMarkupExtension(PropertyType, _value, Context, true /*convertEnums*/); }
+            get { return ElementProperty.CheckForMarkupExtension(PropertyType, _value, Context, convertEnums: true); }
         }
 
         public override AttributeCollection Attributes

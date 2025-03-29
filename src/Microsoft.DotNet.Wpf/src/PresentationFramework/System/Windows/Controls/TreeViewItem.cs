@@ -106,7 +106,7 @@ namespace System.Windows.Controls
                 // sub tree through the ItemsPresenter leading up to the ItemsHost
                 // panel. If we didnt do this the offsets could get skewed.
                 item.InvalidateMeasure();
-                Helper.InvalidateMeasureOnPath(itemsHostPresenter, item, false /*duringMeasure*/);
+                Helper.InvalidateMeasureOnPath(itemsHostPresenter, item, duringMeasure: false);
             }
 
             TreeViewItemAutomationPeer peer = UIElementAutomationPeer.FromElement(item) as TreeViewItemAutomationPeer;
@@ -913,7 +913,7 @@ namespace System.Windows.Controls
                 VirtualizingPanel vp = ItemsHost as VirtualizingPanel;
                 vp?.OnClearChildrenInternal();
 
-                ItemContainerGenerator.RemoveAllInternal(true /*saveRecycleQueue*/);
+                ItemContainerGenerator.RemoveAllInternal(saveRecycleQueue: true);
             }
 
             // this container is going away - forget about its selection

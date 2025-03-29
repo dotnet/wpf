@@ -54,7 +54,7 @@ namespace System.Windows.Documents
         }
 
         internal TextRange(ITextPointer position1, ITextPointer position2)
-            : this(position1, position2, false /* ignoreTextUnitBoundaries */)
+            : this(position1, position2, ignoreTextUnitBoundaries: false)
         {
         }
 
@@ -242,7 +242,7 @@ namespace System.Windows.Documents
         {
             // ATTENTION: This implementation *must* be pure redirect to TextRangeBase. Otherwise TextSelection extensibility is broken
             // DO NOT ANY CODE IN THIS METHOD!
-            TextRangeBase.EndChange(this, false /* disableScroll */, false /* skipEvents */);
+            TextRangeBase.EndChange(this, disableScroll: false, skipEvents: false);
         }
 
         /// <summary>
@@ -260,7 +260,7 @@ namespace System.Windows.Documents
         /// </summary>
         IDisposable ITextRange.DeclareChangeBlock()
         {
-            return new ChangeBlock(this, false /* disableScroll */);
+            return new ChangeBlock(this, disableScroll: false);
         }
 
         /// <summary>
@@ -729,7 +729,7 @@ namespace System.Windows.Documents
         /// </remarks>
         public void ApplyPropertyValue(DependencyProperty formattingProperty, object value)
         {
-            this.ApplyPropertyValue(formattingProperty, value, /*applyToParagraphs*/false, PropertyValueAction.SetValue);
+            this.ApplyPropertyValue(formattingProperty, value, applyToParagraphs: false, PropertyValueAction.SetValue);
         }
 
         /// <summary>
@@ -1599,7 +1599,7 @@ namespace System.Windows.Documents
                     {
                         // Use InlineUIContainer
                         InlineUIContainer inlineUIContainer = new InlineUIContainer(embeddedElement);
-                        TextPointer insertionPosition = TextRangeEdit.SplitFormattingElements(this.Start, /*keepEmptyFormatting:*/false);
+                        TextPointer insertionPosition = TextRangeEdit.SplitFormattingElements(this.Start, keepEmptyFormatting: false);
                         insertionPosition.InsertTextElement(inlineUIContainer);
                         this.Select(inlineUIContainer.ElementStart, inlineUIContainer.ElementEnd);
                     }
@@ -1847,7 +1847,7 @@ namespace System.Windows.Documents
 
             void IDisposable.Dispose()
             {
-                _range.EndChange(_disableScroll, false /* skipEvents */);
+                _range.EndChange(_disableScroll, skipEvents: false);
                 GC.SuppressFinalize(this);
             }
 

@@ -831,7 +831,7 @@ namespace System.Windows.Controls
             // We don't use the static ctor because there are cases
             // where another control will want to alias our properties
             // but doesn't need this overhead.
-            TextEditor.RegisterCommandHandlers(typeof(PasswordBox), /*acceptsRichContent:*/false, /*readOnly*/false, /*registerEventListeners*/false);
+            TextEditor.RegisterCommandHandlers(typeof(PasswordBox), acceptsRichContent: false, readOnly: false, registerEventListeners: false);
 
             // Create TextContainer
             InitializeTextContainer(new PasswordTextContainer(this));

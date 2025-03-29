@@ -83,7 +83,7 @@ namespace System.Windows
 
         internal object ProvideValueInternal(IServiceProvider serviceProvider, bool allowDeferredReference)
         {
-            object value = TryProvideValueInternal(serviceProvider, allowDeferredReference, false /* mustReturnDeferredResourceReference */);
+            object value = TryProvideValueInternal(serviceProvider, allowDeferredReference, mustReturnDeferredResourceReference: false);
 
             if (value == DependencyProperty.UnsetValue)
             {
@@ -267,7 +267,7 @@ namespace System.Windows
 
         internal object FindResourceInDeferredContent(IServiceProvider serviceProvider, bool allowDeferredReference, bool mustReturnDeferredResourceReference)
         {
-            ResourceDictionary dictionaryWithKey = FindTheResourceDictionary(serviceProvider, /* isDeferredContentSearch */ true);
+            ResourceDictionary dictionaryWithKey = FindTheResourceDictionary(serviceProvider, isDeferredContentSearch: true);
             object value = DependencyProperty.UnsetValue;
 
             if (dictionaryWithKey != null)
@@ -316,7 +316,7 @@ namespace System.Windows
                                                 bool allowDeferredReference,
                                                 bool mustReturnDeferredResourceReference)
         {
-            ResourceDictionary dictionaryWithKey = FindTheResourceDictionary(serviceProvider, /* isDeferredContentSearch */ false);
+            ResourceDictionary dictionaryWithKey = FindTheResourceDictionary(serviceProvider, isDeferredContentSearch: false);
 
             if (dictionaryWithKey != null)
             {

@@ -693,13 +693,13 @@ namespace System.Windows
                         // Inline Template case:
                         if (staticResource.GetType() == typeof(StaticResourceExtension))
                         {
-                            obj = staticResource.TryProvideValueInternal(TemplateLoadData.ServiceProviderWrapper, true/*allowDeferredReference*/, true/*mustReturnDeferredResourceReference*/);
+                            obj = staticResource.TryProvideValueInternal(TemplateLoadData.ServiceProviderWrapper, allowDeferredReference: true, mustReturnDeferredResourceReference: true);
                         }
 
                         // Template in a Resource Dictionary entry case:
                         else if (staticResource.GetType() == typeof(StaticResourceHolder))
                         {
-                            obj = staticResource.FindResourceInDeferredContent(TemplateLoadData.ServiceProviderWrapper, true/*allowDeferredReference*/, false/*mustReturnDeferredResourceReference*/);
+                            obj = staticResource.FindResourceInDeferredContent(TemplateLoadData.ServiceProviderWrapper, allowDeferredReference: true, mustReturnDeferredResourceReference: false);
                             if (obj == DependencyProperty.UnsetValue)
                             {
                                 obj = null;  // value is only interesting if it improves the previous value.
@@ -776,7 +776,7 @@ namespace System.Windows
             // If the StaicResource was in NodeList form then it would not have been pre-resolved.
             // So do a full walk now, not a Live-Stack only.
             // Resolve the StaticResource value including lookup to the app and the theme
-            DeferredResourceReference value = (DeferredResourceReference)resource.TryProvideValueInternal(TemplateLoadData.ServiceProviderWrapper, true/*allowDeferredReference*/, true/*mustReturnDeferredResourceReference*/);
+            DeferredResourceReference value = (DeferredResourceReference)resource.TryProvideValueInternal(TemplateLoadData.ServiceProviderWrapper, allowDeferredReference: true, mustReturnDeferredResourceReference: true);
 
             // Return the value that will be written out the unshareable node list;
             return new StaticResourceHolder(resource.ResourceKey, value);

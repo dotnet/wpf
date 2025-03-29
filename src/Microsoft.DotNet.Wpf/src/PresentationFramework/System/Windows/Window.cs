@@ -81,11 +81,11 @@ namespace System.Windows
             EventManager.RegisterClassHandler(typeof(Window),
                 UIElement.ManipulationCompletedEvent,
                 new EventHandler<ManipulationCompletedEventArgs>(OnStaticManipulationCompleted),
-                /*handledEventsToo*/ true);
+                handledEventsToo: true);
             EventManager.RegisterClassHandler(typeof(Window),
                 UIElement.ManipulationInertiaStartingEvent,
                 new EventHandler<ManipulationInertiaStartingEventArgs>(OnStaticManipulationInertiaStarting),
-                /*handledEventsToo*/ true);
+                handledEventsToo: true);
 
             Window.DpiChangedEvent = EventManager.RegisterRoutedEvent("DpiChanged", RoutingStrategy.Bubble,
                 typeof (System.Windows.DpiChangedEventHandler), typeof (Window));

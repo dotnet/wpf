@@ -86,7 +86,7 @@ namespace System.Windows.Documents
 
             // Start counting tags needed to be closed.
             // EmptyDocumentDepth==1 - counts FlowDocument opened in WriteRootFlowDocument above.
-            int elementLevel = EmptyDocumentDepth + WriteOpeningTags(range, range.Start, commonAncestor, xmlWriter, xamlTypeMapper, /*reduceElement:*/wpfPayload == null, out ignoreWriteHyperlinkEnd, ref ignoreList, preserveTextElements);
+            int elementLevel = EmptyDocumentDepth + WriteOpeningTags(range, range.Start, commonAncestor, xmlWriter, xamlTypeMapper, reduceElement: wpfPayload == null, out ignoreWriteHyperlinkEnd, ref ignoreList, preserveTextElements);
 
             if (range.IsTableCellRange)
             {
@@ -253,7 +253,7 @@ namespace System.Windows.Documents
 
                         elementLevel++;
                         textReader.MoveToNextContextPosition(LogicalDirection.Forward);
-                        WriteStartXamlElement(/*range:*/null, textReader, xmlWriter, xamlTypeMapper, /*reduceElement:*/wpfPayload == null, preserveTextElements);
+                        WriteStartXamlElement(range: null, textReader, xmlWriter, xamlTypeMapper, reduceElement: wpfPayload == null, preserveTextElements);
 
                         break;
 
@@ -361,7 +361,7 @@ namespace System.Windows.Documents
 
                     ITextRange textRange = new TextRange(textSegment.Start, textSegment.End);
 
-                    elementLevel += WriteOpeningTags(textRange, textSegment.Start, pointer, xmlWriter, xamlTypeMapper, /*reduceElement:*/wpfPayload == null, out ignoreWriteHyperlinkEnd, ref ignoreList, preserveTextElements);
+                    elementLevel += WriteOpeningTags(textRange, textSegment.Start, pointer, xmlWriter, xamlTypeMapper, reduceElement: wpfPayload == null, out ignoreWriteHyperlinkEnd, ref ignoreList, preserveTextElements);
                 }
 
                 // Output the cell segment for one row
@@ -554,7 +554,7 @@ namespace System.Windows.Documents
                     // Note that this condition is consistent with the one in WriteEmbeddedObject -
                     // so that when we reduce the element type fromm UIContainer to Run/Paragraph
                     // we also output just a space instead of the embedded object conntained in it.
-                    elementTypeStandardized = TextSchema.GetStandardElementType(elementType, /*reduceElement:*/true);
+                    elementTypeStandardized = TextSchema.GetStandardElementType(elementType, reduceElement: true);
                 }
             }
             else if (preserveTextElements)
@@ -580,8 +580,8 @@ namespace System.Windows.Documents
 
             // Write properties
             DependencyObject complexProperties = new DependencyObject();
-            WriteInheritableProperties(elementTypeStandardized, textReader, xmlWriter, /*onlyAffected:*/true, complexProperties);
-            WriteNoninheritableProperties(elementTypeStandardized, textReader, xmlWriter, /*onlyAffected:*/true, complexProperties);
+            WriteInheritableProperties(elementTypeStandardized, textReader, xmlWriter, onlyAffected: true, complexProperties);
+            WriteNoninheritableProperties(elementTypeStandardized, textReader, xmlWriter, onlyAffected: true, complexProperties);
             if (customTextElement)
             {
                 WriteLocallySetProperties(elementTypeStandardized, textReader, xmlWriter, complexProperties);
@@ -621,7 +621,7 @@ namespace System.Windows.Documents
 
                 for (int i = startColumn; i <= endColumn && i < columns.Count; i++)
                 {
-                    WriteXamlAtomicElement(columns[i], xmlWriter, /*reduceElement:*/false);
+                    WriteXamlAtomicElement(columns[i], xmlWriter, reduceElement: false);
                 }
 
                 // Close the element for the complex property
@@ -698,14 +698,14 @@ namespace System.Windows.Documents
             }
             else
             {
-                WriteInheritableProperties(rootType, context, xmlWriter, /*onlyAffected:*/false, complexProperties);
+                WriteInheritableProperties(rootType, context, xmlWriter, onlyAffected: false, complexProperties);
             }
 
             if (rootType == typeof(Span))
             {
                 // Root element is not real element to paste. It is just a property bag for contextual properties.
                 // So we collect non-inheritable properties only for inline content; not needing it for block one.
-                WriteNoninheritableProperties(typeof(Span), context, xmlWriter, /*onlyAffected:*/false, complexProperties);
+                WriteNoninheritableProperties(typeof(Span), context, xmlWriter, onlyAffected: false, complexProperties);
             }
 
             // Write an indicator that last paragraph must be merged on paste
@@ -810,7 +810,7 @@ namespace System.Windows.Documents
                         else
                         {
                             // Regular case: serialize a property with its own name
-                            propertyName = GetPropertyNameForElement(property, elementTypeStandardized, /*forceComplexName:*/false);
+                            propertyName = GetPropertyNameForElement(property, elementTypeStandardized, forceComplexName: false);
                         }
                         xmlWriter.WriteAttributeString(propertyName, stringValue);
                     }
@@ -977,7 +977,7 @@ namespace System.Windows.Documents
                     {
                         stringValue = FilterNaNStringValueForDoublePropertyType(stringValue, locallySetProperty.PropertyType);
 
-                        string propertyName = GetPropertyNameForElement(locallySetProperty, elementTypeStandardized, /*forceComplexName:*/false);
+                        string propertyName = GetPropertyNameForElement(locallySetProperty, elementTypeStandardized, forceComplexName: false);
                         xmlWriter.WriteAttributeString(propertyName, stringValue);
                     }
                     else
@@ -1065,7 +1065,7 @@ namespace System.Windows.Documents
                 LocalValueEntry propertyEntry = properties.Current;
 
                 // Build an appropriate name for the complex property
-                string complexPropertyName = GetPropertyNameForElement(propertyEntry.Property, elementType, /*forceComplexName:*/true);
+                string complexPropertyName = GetPropertyNameForElement(propertyEntry.Property, elementType, forceComplexName: true);
 
                 // Write the start element for the complex property.
                 xmlWriter.WriteStartElement(complexPropertyName);
@@ -1177,7 +1177,7 @@ namespace System.Windows.Documents
                                 object value = image.GetValue(property);
 
                                 // Write the property as attribute string or add it to a list of complex properties.
-                                WriteNoninheritableProperty(xmlWriter, property, value, elementTypeStandardized, /*onlyAffected:*/true, complexProperties, image.ReadLocalValue(property));
+                                WriteNoninheritableProperty(xmlWriter, property, value, elementTypeStandardized, onlyAffected: true, complexProperties, image.ReadLocalValue(property));
                             }
                         }
 
@@ -1299,7 +1299,7 @@ namespace System.Windows.Documents
             if (fragment is Span)
             {
                 // Split structure at insertion point in target
-                insertionPosition = TextRangeEdit.SplitFormattingElements(insertionPosition, /*keepEmptyFormatting:*/false);
+                insertionPosition = TextRangeEdit.SplitFormattingElements(insertionPosition, keepEmptyFormatting: false);
                 Invariant.Assert(insertionPosition.Parent is Paragraph, "insertionPosition must be in a scope of a Paragraph after splitting formatting elements");
 
                 // Move the whole Span into the insertion point
@@ -1341,13 +1341,13 @@ namespace System.Windows.Documents
                 // Merge paragraphs on fragment boundaries
                 if (needFirstParagraphMerging)
                 {
-                    MergeParagraphsAtPosition(fragmentStart, /*mergingOnFragmentStart:*/true);
+                    MergeParagraphsAtPosition(fragmentStart, mergingOnFragmentStart: true);
                 }
 
                 // Get an indication that we need to merge last paragraph
                 if (!((Section)fragment).HasTrailingParagraphBreakOnPaste)
                 {
-                    MergeParagraphsAtPosition(fragmentEnd, /*mergingOnFragmentStart:*/false);
+                    MergeParagraphsAtPosition(fragmentEnd, mergingOnFragmentStart: false);
                 }
             }
 
@@ -1431,7 +1431,7 @@ namespace System.Windows.Documents
             else
             {
                 // split paragraph to create an insertion positionn at block level
-                insertionPosition = TextRangeEdit.InsertParagraphBreak(insertionPosition, /*moveIntoSecondParagraph:*/false);
+                insertionPosition = TextRangeEdit.InsertParagraphBreak(insertionPosition, moveIntoSecondParagraph: false);
             }
 
             // When insertionPosition is inside a ListItem, then InsertParagraphBreak will

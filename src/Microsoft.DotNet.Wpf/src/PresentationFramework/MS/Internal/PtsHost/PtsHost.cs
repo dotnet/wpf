@@ -1437,7 +1437,7 @@ namespace MS.Internal.PtsHost
                 TextParaClient paraClient = PtsContext.HandleToObject(pfsparaclient) as TextParaClient;
                 PTS.ValidateHandle(paraClient);
                 para.FormatLine(paraClient, iArea, dcp, pbrlineIn, fswdir, urStartLine, durLine, urStartTrack, durTrack, urPageLeftMargin, 
-                    true/*fAllowHyphenation*/, PTS.ToBoolean(fClearOnLeft), PTS.ToBoolean(fClearOnRight), PTS.ToBoolean(fTreatAsFirstInPara), PTS.ToBoolean(fTreatAsLastInPara), 
+                    fAllowHyphenation: true, PTS.ToBoolean(fClearOnLeft), PTS.ToBoolean(fClearOnRight), PTS.ToBoolean(fTreatAsFirstInPara), PTS.ToBoolean(fTreatAsLastInPara), 
                     PTS.ToBoolean(fSuppressTopSpace), out pfsline, out dcpLine, out ppbrlineOut, out fForcedBrokenIgnore, out fsflres, 
                     out dvrAscent, out dvrDescent, out urBBox, out durBBox,  out dcpDepend, 
                     out fReformatNeighborsAsLastLineIgnore);

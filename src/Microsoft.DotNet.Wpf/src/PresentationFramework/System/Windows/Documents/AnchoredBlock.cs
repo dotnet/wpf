@@ -80,7 +80,7 @@ namespace System.Windows.Documents
         {
             get
             {
-                return new BlockCollection(this, /*isOwnerParent*/true);
+                return new BlockCollection(this, isOwnerParent: true);
             }
         }
 

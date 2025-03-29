@@ -257,7 +257,7 @@ namespace MS.Internal.PtsHost
 
             if (formattingOwner.Formatter is FlowDocumentFormatter)
             {
-                _section.StructuralCache.BackgroundFormatInfo.BackgroundFormat(formattingOwner.BottomlessFormatter, false /* ignoreThrottle */);
+                _section.StructuralCache.BackgroundFormatInfo.BackgroundFormat(formattingOwner.BottomlessFormatter, ignoreThrottle: false);
             }
         }
 

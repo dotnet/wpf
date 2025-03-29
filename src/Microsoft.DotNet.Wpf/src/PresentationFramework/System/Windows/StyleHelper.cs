@@ -943,7 +943,7 @@ namespace System.Windows
 
                                 // Track properties on the container that are being driven by
                                 // the Template so that they can be invalidated during Template changes
-                                StyleHelper.AddContainerDependent(propertyValue.Property, true /*fromVisualTrigger*/, ref containerDependents);
+                                StyleHelper.AddContainerDependent(propertyValue.Property, fromVisualTrigger: true, ref containerDependents);
                             }
 
                             StyleHelper.UpdateTables(ref propertyValue, ref childRecordFromChildIndex,
@@ -2282,7 +2282,7 @@ namespace System.Windows
                         foWalk,
                         childIndices[i],
                         ref oldFrameworkTemplate.ChildRecordFromChildIndex,
-                        true /*isDetach*/,
+                        isDetach: true,
                         oldFrameworkTemplate.VisualTree);
 
                 // Unapply unshared instance values on the current node
@@ -2302,7 +2302,7 @@ namespace System.Windows
                         {
                             // Clear the entry for this unshared value in the per-instance store for MarkupExtensions
 
-                            StyleHelper.ProcessInstanceValue(walk, childIndex, instanceValues, dp, -1, false /*apply*/);
+                            StyleHelper.ProcessInstanceValue(walk, childIndex, instanceValues, dp, -1, apply: false);
                         }
 
                         // Invalidate this property so that we no longer use the template applied value
@@ -3163,7 +3163,7 @@ namespace System.Windows
                     StyleHelper.StyleDataField,
                     fe, fce,
                     oldStyle, newStyle,
-                    null /* oldFrameworkTemplate */, null /* newFrameworkTemplate */,
+                    oldFrameworkTemplate: null, newFrameworkTemplate: null,
                     (InternalFlags)0);
 
                 // If this new style has resource references (either for the container
@@ -3245,7 +3245,7 @@ namespace System.Windows
                     StyleHelper.ThemeStyleDataField,
                     fe, fce,
                     oldThemeStyle, newThemeStyle,
-                    null /* oldFrameworkTemplate */, null /* newFrameworkTemplate */,
+                    oldFrameworkTemplate: null, newFrameworkTemplate: null,
                     (InternalFlags)0);
 
                 // If this new style has resource references (either for the container
@@ -3335,8 +3335,8 @@ namespace System.Windows
                 // this needs to happen for the *first* Template.
                 StyleHelper.UpdateInstanceData(
                     StyleHelper.TemplateDataField,
-                    feContainer /* fe */, null /* fce */,
-                    null /*oldStyle */, null /* newStyle */,
+                    fe: feContainer, fce: null,
+                    oldStyle: null, newStyle: null,
                     oldFrameworkTemplate, newFrameworkTemplate,
                     InternalFlags.HasTemplateGeneratedSubTree);
 
@@ -3394,7 +3394,7 @@ namespace System.Windows
 
                 // Propagate invalidation for resource references that may be
                 // picking stuff from the style's ResourceDictionary
-                DoTemplateResourcesInvalidations(container, feContainer, null /*fce*/, oldTemplate, newTemplate);
+                DoTemplateResourcesInvalidations(container, feContainer, fce: null, oldTemplate, newTemplate);
 
                 Debug.Assert(feContainer != null);
                 feContainer.OnTemplateChangedInternal(oldFrameworkTemplate, newFrameworkTemplate);
@@ -3462,7 +3462,7 @@ namespace System.Windows
                     // Set the ShouldLookupImplicitStyles flag if the given style's Resources has implicit styles.
                     SetShouldLookupImplicitStyles(new FrameworkObject(fe, fce), newStyleTables);
 
-                    TreeWalkHelper.InvalidateOnResourcesChange(fe, fce, new ResourcesChangeInfo(oldStyleTables, newStyleTables, true /*isStyleResourcesChange*/, false /*isTemplateResourcesChange*/, container));
+                    TreeWalkHelper.InvalidateOnResourcesChange(fe, fce, new ResourcesChangeInfo(oldStyleTables, newStyleTables, isStyleResourcesChange: true, isTemplateResourcesChange: false, container));
                 }
             }
         }
@@ -3509,7 +3509,7 @@ namespace System.Windows
                     // Set the ShouldLookupImplicitStyles flag if the given template's Resources has implicit styles.
                     SetShouldLookupImplicitStyles(new FrameworkObject(fe, fce), newResourceTable);
 
-                    TreeWalkHelper.InvalidateOnResourcesChange(fe, fce, new ResourcesChangeInfo(oldResourceTable, newResourceTable, false /*isStyleResourcesChange*/, true /*isTemplateResourcesChange*/, container));
+                    TreeWalkHelper.InvalidateOnResourcesChange(fe, fce, new ResourcesChangeInfo(oldResourceTable, newResourceTable, isStyleResourcesChange: false, isTemplateResourcesChange: true, container));
                 }
             }
         }
@@ -3642,7 +3642,7 @@ namespace System.Windows
                 DependencyProperty dp = oldContainerDependents[i].Property;
 
                 // Invalidate the property only if it is not locally set
-                if (!IsSetOnContainer(dp, ref exclusionContainerDependents, false /*alsoFromTriggers*/))
+                if (!IsSetOnContainer(dp, ref exclusionContainerDependents, alsoFromTriggers: false))
                 {
                     // call GetValueCore to get value from Style/Template
                     container.InvalidateProperty(dp);
@@ -3662,8 +3662,8 @@ namespace System.Windows
                     // Invalidate the property only if it
                     // - is not a part of oldContainerDependents and
                     // - is not locally set
-                    if (!IsSetOnContainer(dp, ref exclusionContainerDependents, false /*alsoFromTriggers*/) &&
-                        !IsSetOnContainer(dp, ref oldContainerDependents, false /*alsoFromTriggers*/))
+                    if (!IsSetOnContainer(dp, ref exclusionContainerDependents, alsoFromTriggers: false) &&
+                        !IsSetOnContainer(dp, ref oldContainerDependents, alsoFromTriggers: false))
                     {
                         ApplyStyleOrTemplateValue(fo, dp);
                     }
@@ -3700,8 +3700,8 @@ namespace System.Windows
                         dp.GetMetadata(target.DependencyObjectType),
                         new EffectiveValueEntry() /* oldEntry */,
                     ref newEntry,
-                        false /* coerceWithDeferredReference */,
-                        false /* coerceWithCurrentValue */,
+                        coerceWithDeferredReference: false,
+                        coerceWithCurrentValue: false,
                         OperationType.Unknown);
             }
         }
@@ -3840,8 +3840,8 @@ namespace System.Windows
                       dp.GetMetadata(target.DependencyObjectType),
                       new EffectiveValueEntry() /* oldEntry */,
                       ref newEntry,
-                      false /* coerceWithDeferredReference */,
-                      false /* coerceWithCurrentValue */,
+                      coerceWithDeferredReference: false,
+                      coerceWithCurrentValue: false,
                       OperationType.Unknown);
             }
         }
@@ -4066,7 +4066,7 @@ namespace System.Windows
                 //  2. If the data tells us the key in the dictionary that was modified and this property is refering to it or
                 //  3. If it tells us info about the changed dictionaries and this property was refering to one of their entries
                 //  4. If this a theme change
-                if (info.Contains(resourceDependents[i].Name, false /*isImplicitStyleKey*/))
+                if (info.Contains(resourceDependents[i].Name, isImplicitStyleKey: false))
                 {
                     DependencyObject child = null;
                     DependencyProperty invalidProperty = resourceDependents[i].Property;
@@ -4133,7 +4133,7 @@ namespace System.Windows
             for (int i = 0; i < count; i++)
             {
                 if (resourceDependents[i].ChildIndex == childIndex &&
-                    info.Contains(resourceDependents[i].Name, false /*isImplicitStyleKey*/))
+                    info.Contains(resourceDependents[i].Name, isImplicitStyleKey: false))
                 {
                     DependencyProperty dp = resourceDependents[i].Property;
                     // Update property on child
@@ -4777,7 +4777,7 @@ namespace System.Windows
                 if( !deferredActions.TryGetValue(triggerContainer, out actionList) )
                 {
                     actionList = new List<DeferredAction>();
-                    deferredActions.Add(/* key */triggerContainer,/* value */actionList);
+                    deferredActions.Add(key: triggerContainer,value: actionList);
                 }
 
                 actionList.Add(deferredAction);

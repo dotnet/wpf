@@ -44,7 +44,7 @@ namespace System.Windows.Documents
                     return null;
                 }
 
-                return new BlockCollection(this, /*isOwnerParent*/false);
+                return new BlockCollection(this, isOwnerParent: false);
             }
         }
 

@@ -149,7 +149,7 @@ namespace System.Windows.Automation.Peers
                     if (owningButton != null && owningButton.DataContext is DateTime)
                     {
                         date = (DateTime)owningButton.DataContext;
-                        peer = GetOrCreateDateTimeAutomationPeer(date, OwningCalendar.DisplayMode, /*addParentInfo*/ false);
+                        peer = GetOrCreateDateTimeAutomationPeer(date, OwningCalendar.DisplayMode, addParentInfo: false);
                         peers.Add(peer);
 
                         DateTimeCalendarModePair key = new DateTimeCalendarModePair(date, OwningCalendar.DisplayMode);
@@ -190,7 +190,7 @@ namespace System.Windows.Automation.Peers
                         focusedDate = owner.DisplayDate;
                     }
 
-                    DateTimeAutomationPeer focusedItem = GetOrCreateDateTimeAutomationPeer(focusedDate, owner.DisplayMode, /*addParentInfo*/ false);
+                    DateTimeAutomationPeer focusedItem = GetOrCreateDateTimeAutomationPeer(focusedDate, owner.DisplayMode, addParentInfo: false);
                     FrameworkElement focusedButton = focusedItem.OwningButton;
 
                     if (focusedButton == null || !focusedButton.IsKeyboardFocused)
@@ -211,7 +211,7 @@ namespace System.Windows.Automation.Peers
 
         private DateTimeAutomationPeer GetOrCreateDateTimeAutomationPeer(DateTime date, CalendarMode buttonMode)
         {
-            return GetOrCreateDateTimeAutomationPeer(date, buttonMode, /*addParentInfo*/ true);
+            return GetOrCreateDateTimeAutomationPeer(date, buttonMode, addParentInfo: true);
         }
         
         private DateTimeAutomationPeer GetOrCreateDateTimeAutomationPeer(DateTime date, CalendarMode buttonMode, bool addParentInfo)

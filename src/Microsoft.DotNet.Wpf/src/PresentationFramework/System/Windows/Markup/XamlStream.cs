@@ -218,7 +218,7 @@ namespace System.Windows.Markup
             int bufferIndex;
 
             byte[] readBuffer = GetBufferFromFilePosition(
-                ReadPosition,true /*reader*/,
+                ReadPosition,reader: true,
                 out bufferOffset, out bufferIndex);
 
 

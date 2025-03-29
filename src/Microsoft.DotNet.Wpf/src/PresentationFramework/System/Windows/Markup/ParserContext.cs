@@ -628,7 +628,7 @@ namespace System.Windows.Markup
 #if !PBTCOMPILER
         internal ParserContext ScopedCopy()
         {
-            return ScopedCopy( true /* copyNameScopeStack */ );
+            return ScopedCopy( copyNameScopeStack: true);
         }
 #endif
 

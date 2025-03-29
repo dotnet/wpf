@@ -162,7 +162,7 @@ namespace System.Windows.Documents
             RtfToken token = new RtfToken();
             while (nSkip > 0 && rtfToXamlError == RtfToXamlError.None)
             {
-                rtfToXamlError = Next(token, /*formatState:*/null);
+                rtfToXamlError = Next(token, formatState: null);
 
                 if (rtfToXamlError != RtfToXamlError.None)
                     break;

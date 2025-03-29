@@ -72,7 +72,7 @@ namespace System.Windows.Documents
         {
             get
             {
-                return new InlineCollection(this, /*isOwnerParent*/true);
+                return new InlineCollection(this, isOwnerParent: true);
             }
         }
 

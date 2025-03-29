@@ -165,7 +165,7 @@ namespace System.Windows.Documents
                 position = endPosition.CreateDynamicTextPointer(direction);
             }
 
-            SpellingError spellingError = GetError(position, direction, false /* forceEvaluation */);
+            SpellingError spellingError = GetError(position, direction, forceEvaluation: false);
             return spellingError?.Start;
         }
 
@@ -701,8 +701,8 @@ namespace System.Windows.Documents
             _spellerInterop.Mode = SpellerInteropBase.SpellerMode.WordBreaking;
 
             XmlLanguage language = GetCurrentLanguage(caretPosition);
-            wordBreakLeft = SearchForWordBreaks(caretPosition, LogicalDirection.Backward, language, 1, false /* stopOnError */);
-            wordBreakRight = SearchForWordBreaks(caretPosition, LogicalDirection.Forward, language, 1, false /* stopOnError */);
+            wordBreakLeft = SearchForWordBreaks(caretPosition, LogicalDirection.Backward, language, 1, stopOnError: false);
+            wordBreakRight = SearchForWordBreaks(caretPosition, LogicalDirection.Forward, language, 1, stopOnError: false);
 
             textMap = new TextMap(wordBreakLeft, wordBreakRight, caretPosition, caretPosition);
             segments = new ArrayList(2);
@@ -1112,11 +1112,11 @@ namespace System.Windows.Documents
 
             // 1. Search outward, into surrounding text.  We need MinWordBreaksForContext
             // word breaks to handle multi-word errors.
-            outwardPosition = SearchForWordBreaks(position, direction, language, MinWordBreaksForContext, true /* stopOnError */);
+            outwardPosition = SearchForWordBreaks(position, direction, language, MinWordBreaksForContext, stopOnError: true);
 
             // 2. Search inward, towards content.  We just need one word break inward.
             inwardDirection = direction == LogicalDirection.Forward ? LogicalDirection.Backward : LogicalDirection.Forward;
-            inwardPosition = SearchForWordBreaks(position, inwardDirection, language, 1, false /* stopOnError */);
+            inwardPosition = SearchForWordBreaks(position, inwardDirection, language, 1, stopOnError: false);
 
             // Get combined word breaks.  This may not be the same as we calculated
             // in two parts above, since we don't know yet whether or not position is
@@ -1474,7 +1474,7 @@ namespace System.Windows.Documents
                 end = position;
             }
 
-            ScanRange(start, end, Int64.MaxValue /* timeLimit */);
+            ScanRange(start, end, timeLimit: Int64.MaxValue);
         }
 
         // Returns the XmlLanguage of the parent element at position.

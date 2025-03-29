@@ -66,7 +66,7 @@ namespace System.Windows.Documents
             // Execute the command
             if (args.Command == EditingCommands.InsertTable)
             {
-                ((TextSelection)This.Selection).InsertTable(/*rowCount:*/4, /*columnCount:*/4);
+                ((TextSelection)This.Selection).InsertTable(rowCount: 4, columnCount: 4);
             }
             else if (args.Command == EditingCommands.InsertRows)
             {

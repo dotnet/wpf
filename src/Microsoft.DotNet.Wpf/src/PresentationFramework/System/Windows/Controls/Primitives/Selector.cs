@@ -335,7 +335,7 @@ namespace System.Windows.Controls.Primitives
             if (!s.SelectionChange.IsActive)
             {
                 int newIndex = (int) e.NewValue;
-                s.SelectionChange.SelectJustThisItem(s.ItemInfoFromIndex(newIndex), true /* assumeInItemsCollection */);
+                s.SelectionChange.SelectJustThisItem(s.ItemInfoFromIndex(newIndex), assumeInItemsCollection: true);
             }
         }
 
@@ -387,7 +387,7 @@ namespace System.Windows.Controls.Primitives
 
             if (!s.SelectionChange.IsActive)
             {
-                s.SelectionChange.SelectJustThisItem(s.NewItemInfo(e.NewValue), false /* assumeInItemsCollection */);
+                s.SelectionChange.SelectJustThisItem(s.NewItemInfo(e.NewValue), assumeInItemsCollection: false);
             }
         }
 
@@ -497,7 +497,7 @@ namespace System.Windows.Controls.Primitives
 
                     // We can assume it's in the collection because we just searched
                     // through the collection to find it.
-                    SelectionChange.SelectJustThisItem(NewItemInfo(item, null, index), true /* assumeInItemsCollection */);
+                    SelectionChange.SelectJustThisItem(NewItemInfo(item, null, index), assumeInItemsCollection: true);
                 }
                 else
                 {
@@ -827,7 +827,7 @@ namespace System.Windows.Controls.Primitives
                         // Make sure that we can select every items.
                         foreach (object item in selectedItems)
                         {
-                            if (!SelectionChange.Select(NewUnresolvedItemInfo(item), false /* assumeInItemsCollection */))
+                            if (!SelectionChange.Select(NewUnresolvedItemInfo(item), assumeInItemsCollection: false))
                             {
                                 SelectionChange.Cancel();
                                 return false;
@@ -873,7 +873,7 @@ namespace System.Windows.Controls.Primitives
                         if (e.NewItems.Count != 1)
                             throw new NotSupportedException(SR.RangeActionsNotSupported);
 
-                        SelectionChange.Select(NewUnresolvedItemInfo(e.NewItems[0]), false /* assumeInItemsCollection */);
+                        SelectionChange.Select(NewUnresolvedItemInfo(e.NewItems[0]), assumeInItemsCollection: false);
                         break;
 
                     case NotifyCollectionChangedAction.Remove:
@@ -894,7 +894,7 @@ namespace System.Windows.Controls.Primitives
 
                         for (int i = 0; i < userSelectedItems.Count; i++)
                         {
-                            SelectionChange.Select(NewUnresolvedItemInfo(userSelectedItems[i]), false /* assumeInItemsCollection */);
+                            SelectionChange.Select(NewUnresolvedItemInfo(userSelectedItems[i]), assumeInItemsCollection: false);
                         }
                         break;
 
@@ -903,7 +903,7 @@ namespace System.Windows.Controls.Primitives
                             throw new NotSupportedException(SR.RangeActionsNotSupported);
 
                         SelectionChange.Unselect(NewUnresolvedItemInfo(e.OldItems[0]));
-                        SelectionChange.Select(NewUnresolvedItemInfo(e.NewItems[0]), false /* assumeInItemsCollection */);
+                        SelectionChange.Select(NewUnresolvedItemInfo(e.NewItems[0]), assumeInItemsCollection: false);
                         break;
 
                     case NotifyCollectionChangedAction.Move:
@@ -1042,7 +1042,7 @@ namespace System.Windows.Controls.Primitives
                 foreach (object current in Items)
                 {
                     ItemInfo info = NewItemInfo(current, null, index++);
-                    SelectionChange.Select(info, true /* assumeInItemsCollection */);
+                    SelectionChange.Select(info, assumeInItemsCollection: true);
                 }
             }
             finally
@@ -1147,7 +1147,7 @@ namespace System.Windows.Controls.Primitives
                         // If we added something, see if it was set be selected and sync.
                         if (InfoGetIsSelected(info))
                         {
-                            SelectionChange.Select(info, true /* assumeInItemsCollection */);
+                            SelectionChange.Select(info, assumeInItemsCollection: true);
                         }
                     }
                     finally
@@ -1226,7 +1226,7 @@ namespace System.Windows.Controls.Primitives
                                     {
                                         if (!_selectedItems.Contains(info))
                                         {
-                                            SelectionChange.Select(info, true /* assumeInItemsCollection */);
+                                            SelectionChange.Select(info, assumeInItemsCollection: true);
                                         }
                                     }
                                 }
@@ -1438,7 +1438,7 @@ namespace System.Windows.Controls.Primitives
 
                 if (selected)
                 {
-                    SelectionChange.Select(info, true /* assumeInItemsCollection */);
+                    SelectionChange.Select(info, assumeInItemsCollection: true);
                 }
                 else
                 {
@@ -1532,7 +1532,7 @@ namespace System.Windows.Controls.Primitives
 
                     if (item != null && ItemGetIsSelectable(item))
                     {
-                        SelectionChange.SelectJustThisItem(NewItemInfo(item, null, Items.CurrentPosition), true /* assumeInItemsCollection */);
+                        SelectionChange.SelectJustThisItem(NewItemInfo(item, null, Items.CurrentPosition), assumeInItemsCollection: true);
                     }
                     else
                     {

@@ -109,6 +109,13 @@ namespace System.Windows.Interop
 
             return new InteropBitmap(section, pixelWidth, pixelHeight, format, stride, offset);
         }
-}
+
+        public static BitmapSource CreateBitmapSourceFromWICBitmapSource(IntPtr wicBitmapSource)
+        {
+            BitmapSourceSafeMILHandle bitmapSourceSafeMilHandle = new BitmapSourceSafeMILHandle(wicBitmapSource);
+            UnmanagedBitmapWrapper unmanagedBitmapWrapper = new UnmanagedBitmapWrapper(bitmapSourceSafeMilHandle);
+            return unmanagedBitmapWrapper;
+        }
+    }
 }
 

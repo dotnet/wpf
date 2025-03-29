@@ -91,14 +91,14 @@ namespace System.Windows.Media
 
                             if (!baseUri.IsAbsoluteUri)
                             {
-                                baseUri = new Uri(BaseUriHelper.BaseUri, baseUri);
+                                baseUri = new Uri(BaseUriHelper.PackAppBaseUri, baseUri);
                             }
                         }
                         else
                         {
                             // If we reach here, the base uri we got from IUriContext is "".
                             // Here we resolve it to application's base
-                            baseUri = BaseUriHelper.BaseUri;
+                            baseUri = BaseUriHelper.PackAppBaseUri;
                         }
                     }
                 }

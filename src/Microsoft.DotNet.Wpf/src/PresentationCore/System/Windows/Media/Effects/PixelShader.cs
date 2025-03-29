@@ -76,7 +76,7 @@ namespace System.Windows.Media.Effects
                 {
                     if (!newUri.IsAbsoluteUri)
                     {
-                         newUri = BaseUriHelper.GetResolvedUri(BaseUriHelper.BaseUri, newUri);
+                         newUri = BaseUriHelper.GetResolvedUri(BaseUriHelper.PackAppBaseUri, newUri);
                     }
 
                     Debug.Assert(newUri.IsAbsoluteUri);

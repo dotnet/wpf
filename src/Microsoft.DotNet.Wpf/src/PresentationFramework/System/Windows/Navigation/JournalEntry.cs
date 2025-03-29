@@ -336,11 +336,11 @@ namespace System.Windows.Navigation
                 else
                 {
                     string relativeUri = uri.AbsolutePath + uri.Query + uri.Fragment;
-                    string part, assy, assyVers, assyKey;
-                    BaseUriHelper.GetAssemblyNameAndPart(new Uri(relativeUri, UriKind.Relative), out part, out assy, out assyVers, out assyKey);
-                    if (!string.IsNullOrEmpty(assy))
+
+                    BaseUriHelper.GetAssemblyNameAndPart(new Uri(relativeUri, UriKind.Relative), out AssemblyPackageInfo assemblyInfo);
+                    if (!assemblyInfo.AssemblyName.IsEmpty)
                     {
-                        displayName = part;
+                        displayName = assemblyInfo.PackagePartName.ToString();
                     }
                     else
                     {

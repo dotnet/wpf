@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -59,11 +59,7 @@ namespace MS.Internal.FontCache
             // Perform a sanity check to make sure the assumption stays the same.
             Debug.Assert(uri.IsAbsoluteUri && uri.Scheme == PackUriHelper.UriSchemePack && BaseUriHelper.IsPackApplicationUri(uri));
 
-            Assembly uriAssembly;
-            string escapedPath;
-
-            BaseUriHelper.GetAssemblyAndPartNameFromPackAppUri(uri, out uriAssembly, out escapedPath);
-
+            BaseUriHelper.GetAssemblyAndPartNameFromPackAppUri(uri, out Assembly uriAssembly, out ReadOnlySpan<char> escapedPath);
             if (uriAssembly == null)
                 return null;
 
@@ -71,7 +67,7 @@ namespace MS.Internal.FontCache
             if (isFolder)
             {
                 Debug.Assert(escapedPath.EndsWith(FakeFileName, StringComparison.OrdinalIgnoreCase));
-                escapedPath = escapedPath.Substring(0, escapedPath.Length - FakeFileName.Length);
+                escapedPath = escapedPath.Slice(0, escapedPath.Length - FakeFileName.Length);
             }
 
             Dictionary<string, List<string>> folderResourceMap;
@@ -86,8 +82,7 @@ namespace MS.Internal.FontCache
                 }
             }
 
-            List<string> ret;
-            folderResourceMap.TryGetValue(escapedPath, out ret);
+            folderResourceMap.GetAlternateLookup<ReadOnlySpan<char>>().TryGetValue(escapedPath, out List<string> ret);
             return ret;
         }
 
@@ -143,9 +138,8 @@ namespace MS.Internal.FontCache
             folderResourceMap[resourceFullName].Add(String.Empty);
         }
 
-        private static Dictionary<Assembly, Dictionary<string, List<string>>> _assemblyCaches
-            = new Dictionary<Assembly, Dictionary<string, List<string>>>(1);
         // Set the initial capacity to 1 because a single entry assembly is the most common case.
+        private static readonly Dictionary<Assembly, Dictionary<string, List<string>>> _assemblyCaches = new(1);
     }
 }
 

@@ -5,8 +5,8 @@
 
 using System.Runtime.CompilerServices;
 using System.Reflection.Metadata;
+using System.Diagnostics;
 using System.Reflection;
-using System.Text;
 using System;
 
 namespace MS.Internal
@@ -90,8 +90,8 @@ namespace MS.Internal
         /// This should only be passed a RuntimeAssembly to ensure proper functionality.
         /// </summary>
         /// <param name="assembly">The RuntimeAssembly which will provide properly formatted full name.</param>
-        /// <param name="version">If present, returns the value of Version portion, otherwise Empty result.</param>
-        /// <param name="token">If present, returns the value of PublicKeyToken portion. Empty result is returned when the value is "null" or not present.</param>
+        /// <param name="assemblyVersion">If present, returns the value of Version portion, otherwise Empty result.</param>
+        /// <param name="assemblyToken">If present, returns the value of PublicKeyToken portion. Empty result is returned when the value is "null" or not present.</param>
         internal static void GetAssemblyVersionPlusToken(Assembly assembly, out ReadOnlySpan<char> assemblyVersion, out ReadOnlySpan<char> assemblyToken)
         {
             ArgumentNullException.ThrowIfNull(assembly, nameof(assembly));
@@ -123,6 +123,34 @@ namespace MS.Internal
                 if (assemblyToken.Length != 16)
                     assemblyToken = ReadOnlySpan<char>.Empty;
             }
+        }
+
+        /// <summary>
+        /// Compares whether two PublicKeyTokens are the same.
+        /// If both <paramref name="reqToken"/> and <paramref name="curToken"/> are <see langword="null"/>, <see langword="true"/> is returned.
+        /// </summary>
+        /// <param name="reqToken">First PublicKeyToken to compare.</param>
+        /// <param name="curToken">Second PublicKeyToken to compare.</param>
+        /// <returns><see langword="true"/> if both parameters are <see langword="null"/> or equal in sequence, <see langword="false"/> otherwise.</returns>
+        internal static bool IsSamePublicKeyToken(byte[] reqToken, byte[] curToken)
+        {
+            Debug.Assert((reqToken is null || reqToken.Length is 0 or 8) && (curToken is null || curToken.Length is 0 or 8), "Provided PublicKeyToken has invalid length");
+
+            return (reqToken is null && curToken is null) || (curToken is not null && reqToken is not null && reqToken.AsSpan().SequenceEqual(curToken));
+        }
+
+        /// <summary>
+        /// Compares whether two PublicKeyTokens are the same.
+        /// If both <paramref name="reqToken"/> and <paramref name="curToken"/> are <see cref="ReadOnlySpan{byte}.Empty"/>, <see langword="true"/> is returned.
+        /// </summary>
+        /// <param name="reqToken">First PublicKeyToken to compare.</param>
+        /// <param name="curToken">Second PublicKeyToken to compare.</param>
+        /// <returns><see langword="true"/> if both parameters are <see cref="ReadOnlySpan{byte}.Empty"/> or equal in sequence, <see langword="false"/> otherwise.</returns>
+        internal static bool IsSamePublicKeyToken(ReadOnlySpan<byte> reqToken, ReadOnlySpan<byte> curToken)
+        {
+            Debug.Assert((reqToken.IsEmpty || reqToken.Length == 8) && (curToken.IsEmpty || curToken.Length == 8), "Provided PublicKeyToken has invalid length");
+
+            return reqToken.SequenceEqual(curToken);
         }
 #endif
     }

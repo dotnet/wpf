@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -428,7 +428,7 @@ namespace MS.Win32
         internal static bool GetCursorPos(ref NativeMethods.POINT pt)
         {
             bool returnValue = IntGetCursorPos(ref pt);
-            if (returnValue == false)
+            if (!returnValue)
             {
                 throw new Win32Exception();
             }
@@ -445,7 +445,7 @@ namespace MS.Win32
             // Sometimes Win32 will fail this call, such as if you are
             // not running in the interactive desktop.  For example,
             // a secure screen saver may be running.
-            if (returnValue == false)
+            if (!returnValue)
             {
                 System.Diagnostics.Debug.WriteLine("GetCursorPos failed!");
 

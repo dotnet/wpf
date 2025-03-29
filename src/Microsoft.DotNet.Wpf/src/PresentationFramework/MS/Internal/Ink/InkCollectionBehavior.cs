@@ -205,7 +205,7 @@ namespace MS.Internal.Ink
         /// <returns></returns>
         protected override Cursor GetCurrentCursor()
         {
-            if ( EditingCoordinator.UserIsEditing == true )
+            if ( EditingCoordinator.UserIsEditing)
             {
                 return Cursors.None;
             }

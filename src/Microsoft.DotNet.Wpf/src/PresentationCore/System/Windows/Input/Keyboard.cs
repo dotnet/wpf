@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -382,13 +382,13 @@ namespace System.Windows.Input
             UIElement uie = element as UIElement;
             if(uie != null)
             {
-                if(uie.IsVisible == false)
+                if(!uie.IsVisible)
                 {
                     return false;
                 }
             }
 
-            if((bool)element.GetValue(UIElement.IsEnabledProperty) == false)
+            if(!(bool)element.GetValue(UIElement.IsEnabledProperty))
             {
                 return false;
             }

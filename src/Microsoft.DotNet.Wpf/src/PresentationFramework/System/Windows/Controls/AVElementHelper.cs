@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -455,7 +455,7 @@ namespace System.Windows.Controls
                 // We shouldn't have a clock to open because this would have a state
                 // request of MediaState.Manual.
                 //
-                Invariant.Assert(openClock == false);
+                Invariant.Assert(!openClock);
 
                 //
                 // If we had a clock, get rid of it now. This is to handle the case

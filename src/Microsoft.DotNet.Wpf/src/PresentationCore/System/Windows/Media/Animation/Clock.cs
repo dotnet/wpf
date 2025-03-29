@@ -607,7 +607,7 @@ namespace System.Windows.Media.Animation
                 if (!_resolvedDuration.HasTimeSpan || _resolvedDuration.TimeSpan > TimeSpan.Zero)
                 {
                     // Verify that we only use SlipBehavior in supported scenarios
-                    if ((_timeline.AutoReverse == true) ||
+                    if ((_timeline.AutoReverse) ||
                         (_timeline.AccelerationRatio > 0) ||
                         (_timeline.DecelerationRatio > 0))
                     {
@@ -3170,7 +3170,7 @@ namespace System.Windows.Media.Animation
             Debug.Assert(!_syncData.IsInSyncPeriod);
 
             // Verify our limitations on slip functionality, but don't throw here for perf
-            Debug.Assert(_timeline.AutoReverse == false);
+            Debug.Assert(!_timeline.AutoReverse);
             Debug.Assert(_timeline.AccelerationRatio == 0);
             Debug.Assert(_timeline.DecelerationRatio == 0);
 

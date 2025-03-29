@@ -1738,7 +1738,7 @@ namespace System.Windows.Documents
                     case Key.RightShift:
                         // Only support RTL flow direction in case of having the installed
                         // bidi input language.
-                        if (TextSelection.IsBidiInputLanguageInstalled() == true)
+                        if (TextSelection.IsBidiInputLanguageInstalled())
                         {
                             TextEditorTyping.OnFlowDirectionCommand(TextEditor, _key);
                         }

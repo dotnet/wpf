@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -90,7 +90,7 @@ namespace MS.Internal.Utility
             {
                 newUri = null;
             }
-            else if (orgUri.IsAbsoluteUri == false)
+            else if (!orgUri.IsAbsoluteUri)
             {
                 // if the orgUri is an absolute Uri, don't need to resolve it again.
                 

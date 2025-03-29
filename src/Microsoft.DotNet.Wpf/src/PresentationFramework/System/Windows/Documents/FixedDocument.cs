@@ -183,7 +183,7 @@ namespace System.Windows.Documents
         #region IFixedNavigate
         void IFixedNavigate.NavigateAsync(string elementID)
         {
-            if (IsPageCountValid == true)
+            if (IsPageCountValid)
             {
                 FixedHyperLink.NavigateToElement(this, elementID);
             }
@@ -868,8 +868,8 @@ namespace System.Windows.Documents
             if (baseUri.Scheme.Equals(PackUriHelper.UriSchemePack, StringComparison.OrdinalIgnoreCase))
             {
                 // avoid the case of pack://application,,,
-                if (baseUri.Host.Equals(BaseUriHelper.PackAppBaseUri.Host) != true &&
-                    baseUri.Host.Equals(BaseUriHelper.SiteOfOriginBaseUri.Host) != true)
+                if (!baseUri.Host.Equals(BaseUriHelper.PackAppBaseUri.Host) &&
+                    !baseUri.Host.Equals(BaseUriHelper.SiteOfOriginBaseUri.Host))
                 {
                     Uri structureUri = GetStructureUriFromRelationship(baseUri, _structureRelationshipName);
                     if (structureUri != null)
@@ -896,8 +896,8 @@ namespace System.Windows.Documents
             if (baseUri.Scheme.Equals(PackUriHelper.UriSchemePack, StringComparison.OrdinalIgnoreCase))
             {
                 // avoid the case of pack://application,,,
-                if (baseUri.Host.Equals(BaseUriHelper.PackAppBaseUri.Host) != true &&
-                    baseUri.Host.Equals(BaseUriHelper.SiteOfOriginBaseUri.Host) != true)
+                if (!baseUri.Host.Equals(BaseUriHelper.PackAppBaseUri.Host) &&
+                    !baseUri.Host.Equals(BaseUriHelper.SiteOfOriginBaseUri.Host))
                 {
                     Uri structureUri = GetStructureUriFromRelationship(baseUri, _storyFragmentsRelationshipName);
 

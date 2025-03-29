@@ -1199,7 +1199,7 @@ namespace System.Windows.Controls.Primitives
 
                     // This is to support the MasterDetail scenario.
                     // When the Items is refreshed, Items.Current could be the old selection for this view.
-                    if (Items.CurrentItem != null && IsSynchronizedWithCurrentItemPrivate == true)
+                    if (Items.CurrentItem != null && IsSynchronizedWithCurrentItemPrivate)
                     {
                         // This won't work if the items are the containers and they have IsSelected=true.
 
@@ -1426,7 +1426,7 @@ namespace System.Windows.Controls.Primitives
 
             selectable = ItemGetIsSelectable(item);
 
-            if (selectable == false && selected)
+            if (!selectable && selected)
             {
                 throw new InvalidOperationException(SR.CannotSelectNotSelectableItem);
             }
@@ -2847,7 +2847,7 @@ namespace System.Windows.Controls.Primitives
                 get { return _set != null; }
                 set
                 {
-                    if (value == true && _set == null)
+                    if (value && _set == null)
                     {
                         _set = new Dictionary<ItemInfo, ItemInfo>(_list.Count);
                         for (int i=0; i<_list.Count; ++i)
@@ -2855,7 +2855,7 @@ namespace System.Windows.Controls.Primitives
                             _set.Add(_list[i], _list[i]);
                         }
                     }
-                    else if (value == false)
+                    else if (!value)
                     {
                         _set = null;
                     }

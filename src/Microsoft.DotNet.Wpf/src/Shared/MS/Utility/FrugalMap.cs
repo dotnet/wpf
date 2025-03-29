@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -409,7 +409,7 @@ namespace MS.Utility
         {
             // If we're unsorted and we have entries to sort, do a simple
             // sort.  Sort the pairs (0,1), (1,2) and then (0,1) again.  
-            if ((false == _sorted) && (_count > 1))
+            if ((!_sorted) && (_count > 1))
             {
                 Entry temp;
                 if (_entry0.Key > _entry1.Key)
@@ -913,7 +913,7 @@ namespace MS.Utility
             // If we're unsorted and we have entries to sort, do a simple
             // bubble sort. Sort the pairs, 0..5, and then again until we no
             // longer do any swapping.
-            if ((false == _sorted) && (_count > 1))
+            if ((!_sorted) && (_count > 1))
             {
                 bool swapped;
 
@@ -1216,7 +1216,7 @@ namespace MS.Utility
 
         public override void Sort()
         {
-            if ((false == _sorted) && (_count > 1))
+            if ((!_sorted) && (_count > 1))
             {
                 QSort(0, (_count - 1));
                 _sorted = true;

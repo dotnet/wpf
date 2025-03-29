@@ -340,7 +340,7 @@ namespace System.Windows.Media.Imaging
                     int stride
                     )
         {
-            if (pixelFormat.Palettized == true && palette == null)
+            if (pixelFormat.Palettized && palette == null)
                 throw new InvalidOperationException(SR.Image_IndexedPixelFormatRequiresPalette);
 
             if (pixelFormat.Format == PixelFormatEnum.Default && pixelFormat.Guid == WICPixelFormatGUIDs.WICPixelFormatDontCare)

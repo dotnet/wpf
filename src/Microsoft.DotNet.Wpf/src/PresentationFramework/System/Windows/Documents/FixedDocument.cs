@@ -869,7 +869,7 @@ namespace System.Windows.Documents
             {
                 // avoid the case of pack://application,,,
                 if (!baseUri.Host.Equals(BaseUriHelper.PackAppBaseUri.Host) &&
-!baseUri.Host.Equals(BaseUriHelper.SiteOfOriginBaseUri.Host))
+                    !baseUri.Host.Equals(BaseUriHelper.SiteOfOriginBaseUri.Host))
                 {
                     Uri structureUri = GetStructureUriFromRelationship(baseUri, _structureRelationshipName);
                     if (structureUri != null)
@@ -897,7 +897,7 @@ namespace System.Windows.Documents
             {
                 // avoid the case of pack://application,,,
                 if (!baseUri.Host.Equals(BaseUriHelper.PackAppBaseUri.Host) &&
-!baseUri.Host.Equals(BaseUriHelper.SiteOfOriginBaseUri.Host))
+                    !baseUri.Host.Equals(BaseUriHelper.SiteOfOriginBaseUri.Host))
                 {
                     Uri structureUri = GetStructureUriFromRelationship(baseUri, _storyFragmentsRelationshipName);
 

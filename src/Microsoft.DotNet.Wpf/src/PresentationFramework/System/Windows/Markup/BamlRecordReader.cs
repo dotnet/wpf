@@ -2038,7 +2038,7 @@ namespace System.Windows.Markup
             WpfPropertyDefinition propertyDefinition = new WpfPropertyDefinition(
                                     this,
                                     attributeId,
-                                    ReaderFlags.DependencyObject == CurrentContext.ContextType /*targetIsDependencyObject*/ );
+                                    targetIsDependencyObject: ReaderFlags.DependencyObject == CurrentContext.ContextType);
 
             // Try DependencyProperty optimization.
             if (propertyDefinition.DependencyProperty != null)
@@ -4161,7 +4161,7 @@ namespace System.Windows.Markup
             if (!SystemResources.IsSystemResourcesParsing)
             {
                 object source;
-                result = FrameworkElement.FindResourceFromAppOrSystem(resourceNameObject, out source, false /*throwOnError*/, allowDeferredResourceReference, mustReturnDeferredResourceReference);
+                result = FrameworkElement.FindResourceFromAppOrSystem(resourceNameObject, out source, disableThrowOnResourceNotFound: false, allowDeferredResourceReference, mustReturnDeferredResourceReference);
             }
             else
             {

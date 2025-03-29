@@ -47,7 +47,7 @@ namespace System.Windows.Documents
             _textEditor = textEditor;
 
             // Initialize active pointers of the selection - anchor and moving pointers
-            SetActivePositions(/*AnchorPosition:*/thisSelection.Start, thisSelection.End);
+            SetActivePositions(anchorPosition: thisSelection.Start, thisSelection.End);
 
             // Activate selection in case if this control has keyboard focus already
             thisSelection.UpdateCaretAndHighlight();

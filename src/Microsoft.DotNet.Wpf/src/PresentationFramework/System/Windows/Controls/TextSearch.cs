@@ -68,7 +68,7 @@ namespace System.Windows.Controls
         /// </summary>
         public static readonly DependencyProperty TextPathProperty
             = DependencyProperty.RegisterAttached("TextPath", typeof(string), typeof(TextSearch),
-                                                  new FrameworkPropertyMetadata(String.Empty /* default value */));
+                                                  new FrameworkPropertyMetadata(defaultValue: String.Empty));
 
         /// <summary>
         ///     Writes the attached property to the given element.
@@ -154,7 +154,7 @@ namespace System.Windows.Controls
         /// </summary>
         private static readonly DependencyPropertyKey TextSearchInstancePropertyKey =
             DependencyProperty.RegisterAttachedReadOnly("TextSearchInstance", typeof(TextSearch), typeof(TextSearch),
-                                                new FrameworkPropertyMetadata((object)null /* default value */));
+                                                new FrameworkPropertyMetadata(defaultValue: (object)null));
 
         /// <summary>
         ///     Instance of TextSearch -- attached property so that the instance can be stored on the element

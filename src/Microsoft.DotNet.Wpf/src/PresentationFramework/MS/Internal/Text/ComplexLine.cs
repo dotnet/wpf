@@ -345,7 +345,7 @@ namespace MS.Internal.Text
             //      For properties that can be applied to Highlight services,
             //      need to use 'textHighlights'.
             //      Right now only background is properly retrieved.
-            TextRunProperties textProps = new TextProperties(element, position, false /* inline objects */, true /* get background */, PixelsPerDip);
+            TextRunProperties textProps = new TextProperties(element, position, inlineObjects: false, getBackground: true, PixelsPerDip);
 
             // Calculate the end of the run by finding either:
             //      a) the next intersection of highlight ranges, or
@@ -394,7 +394,7 @@ namespace MS.Internal.Text
                 // Empty TextElement should affect line metrics.
                 // TextFormatter does not support this feature right now, so as workaround
                 // TextRun with ZERO WIDTH SPACE is used.
-                TextRunProperties textProps = new TextProperties(element, position, false /* inline objects */, true /* get background */, PixelsPerDip);
+                TextRunProperties textProps = new TextProperties(element, position, inlineObjects: false, getBackground: true, PixelsPerDip);
                 char[] textBuffer = new char[_elementEdgeCharacterLength * 2];
                 textBuffer[0] = (char)0x200B;
                 textBuffer[1] = (char)0x200B;
@@ -527,7 +527,7 @@ namespace MS.Internal.Text
             {
                 //  Need to Handle visibility collapsed.
 
-                TextRunProperties textProps = new TextProperties(element, position, true /* inline objects */, true /* get background */, PixelsPerDip);
+                TextRunProperties textProps = new TextProperties(element, position, inlineObjects: true, getBackground: true, PixelsPerDip);
 
                 // Create object run.
                 run = new InlineObject(dcp, TextContainerHelper.EmbeddedObjectLength, (UIElement)element, textProps, _owner);

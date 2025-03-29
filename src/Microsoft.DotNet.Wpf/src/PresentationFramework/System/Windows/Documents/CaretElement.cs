@@ -985,7 +985,7 @@ namespace System.Windows.Documents
                     // so that Win32 application will have the compatibility who listen the caret event.
                     // Specified height with the current caret height will sync the win32 caret which
                     // Win32 Magnifer rely on the caret height to scroll their window.
-                    NativeMethods.BitmapHandle bitmap = UnsafeNativeMethods.CreateBitmap(width: 1, /*height*/ ConvertToInt32(deviceHeight), /*panels*/ 1, bitsPerPixel: 1, /*bits*/ null);
+                    NativeMethods.BitmapHandle bitmap = UnsafeNativeMethods.CreateBitmap(width: 1, height: ConvertToInt32(deviceHeight), planes: 1, bitsPerPixel: 1, lpvBits: null);
 
                     // Specified width and height as zero since they will be ignored by setting the bitmap.
                     bool returnValue = UnsafeNativeMethods.CreateCaret(new HandleRef(null, hwnd), bitmap, width: 0, height: 0);

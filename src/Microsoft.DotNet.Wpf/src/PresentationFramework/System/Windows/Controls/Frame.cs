@@ -1318,7 +1318,7 @@ namespace System.Windows.Controls
             if (_ownJournalScope == null)
             {
                 // Entries created for this frame in the parent's journal have to be removed.
-                JournalNavigationScope parentJns = GetParentJournal(false/*don't create*/);
+                JournalNavigationScope parentJns = GetParentJournal(create: false);
                 parentJns?.Journal.RemoveEntries(_navigationService.GuidId);
 
                 _ownJournalScope = new JournalNavigationScope(this);

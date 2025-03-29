@@ -720,10 +720,10 @@ namespace System.Windows.Controls
             //
             //  create the border geometry
             //
-            ctx.BeginFigure(topLeft, true /* is filled */, true /* is closed */);
+            ctx.BeginFigure(topLeft, isFilled: true, isClosed: true);
 
             // Top line
-            ctx.LineTo(topRight, true /* is stroked */, false /* is smooth join */);
+            ctx.LineTo(topRight, isStroked: true, isSmoothJoin: false);
 
             // Upper-right corner
             double radiusX = rect.TopRight.X - topRight.X;
@@ -735,7 +735,7 @@ namespace System.Windows.Controls
             }
 
             // Right line
-            ctx.LineTo(rightBottom, true /* is stroked */, false /* is smooth join */);
+            ctx.LineTo(rightBottom, isStroked: true, isSmoothJoin: false);
 
             // Lower-right corner
             radiusX = rect.BottomRight.X - bottomRight.X;
@@ -747,7 +747,7 @@ namespace System.Windows.Controls
             }
 
             // Bottom line
-            ctx.LineTo(bottomLeft, true /* is stroked */, false /* is smooth join */);
+            ctx.LineTo(bottomLeft, isStroked: true, isSmoothJoin: false);
 
             // Lower-left corner
             radiusX = bottomLeft.X - rect.BottomLeft.X;
@@ -759,7 +759,7 @@ namespace System.Windows.Controls
             }
 
             // Left line
-            ctx.LineTo(leftTop, true /* is stroked */, false /* is smooth join */);
+            ctx.LineTo(leftTop, isStroked: true, isSmoothJoin: false);
 
             // Upper-left corner
             radiusX = topLeft.X - rect.TopLeft.X;

@@ -251,14 +251,14 @@ namespace System.Windows.Controls.Primitives
                 // whether they're going into the overflow or not.
                 // overflowExtent will be the size of the Always elements, which is not actually
                 // needed for subsequent calculations.
-                bool hasAlwaysOverflowItems = MeasureGeneratedItems(/* asNeeded = */ false, layoutSlotSize, horizontal, maxExtent, ref stackDesiredSize, out overflowExtent);
+                bool hasAlwaysOverflowItems = MeasureGeneratedItems(asNeededPass: false, layoutSlotSize, horizontal, maxExtent, ref stackDesiredSize, out overflowExtent);
 
                 // At this point, the desired size is the minimum size of the ToolBar.
                 MinLength = horizontal ? stackDesiredSize.Width : stackDesiredSize.Height;
 
                 // This second call will measure all of the AsNeeded elements and place
                 // them in the appropriate location.
-                bool hasAsNeededOverflowItems = MeasureGeneratedItems(/* asNeeded = */ true, layoutSlotSize, horizontal, maxExtent, ref stackDesiredSize, out overflowExtent);
+                bool hasAsNeededOverflowItems = MeasureGeneratedItems(asNeededPass: true, layoutSlotSize, horizontal, maxExtent, ref stackDesiredSize, out overflowExtent);
 
                 // At this point, the desired size is complete. The desired size plus overflowExtent
                 // is the maximum size of the ToolBar.

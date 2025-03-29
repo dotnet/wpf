@@ -1269,7 +1269,7 @@ namespace System.Windows.Controls
                     {
                         // Format line. Set showParagraphEllipsis flag to false because we do not know whether or not the line will have
                         // paragraph ellipsis at this time. Since TextBlock is auto-sized we do not know the RenderSize until we finish Measure
-                        line.Format(dcp, contentSize.Width, GetLineProperties(dcp == 0, lineProperties), textLineBreakIn, _textBlockCache._textRunCache, /*Show paragraph ellipsis*/ false);
+                        line.Format(dcp, contentSize.Width, GetLineProperties(dcp == 0, lineProperties), textLineBreakIn, _textBlockCache._textRunCache, showParagraphEllipsis: false);
 
                         double lineHeight = CalcLineAdvance(line.Height, lineProperties);
 

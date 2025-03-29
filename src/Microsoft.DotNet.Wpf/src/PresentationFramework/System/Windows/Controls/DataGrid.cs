@@ -2893,12 +2893,12 @@ namespace System.Windows.Controls
                 {
                     // There is a row edit pending and the current cell changed to another row.
                     // Commit the row, which also commits the cell.
-                    dataGrid.EndEdit(CommitEditCommand, dataGrid._currentCellContainer, DataGridEditingUnit.Row, /* exitEditingMode = */ true);
+                    dataGrid.EndEdit(CommitEditCommand, dataGrid._currentCellContainer, DataGridEditingUnit.Row, exitEditMode: true);
                 }
                 else if (dataGrid._currentCellContainer.IsEditing)
                 {
                     // Only the cell needs to commit.
-                    dataGrid.EndEdit(CommitEditCommand, dataGrid._currentCellContainer, DataGridEditingUnit.Cell, /* exitEditingMode = */ true);
+                    dataGrid.EndEdit(CommitEditCommand, dataGrid._currentCellContainer, DataGridEditingUnit.Cell, exitEditMode: true);
                 }
             }
 
@@ -4744,7 +4744,7 @@ namespace System.Windows.Controls
                     if (_currentCellContainer != null && _currentCellContainer.IsEditing)
                     {
                         // End the pending edit even for the same row
-                        EndEdit(CommitEditCommand, _currentCellContainer, DataGridEditingUnit.Cell, /* exitEditingMode = */ true);
+                        EndEdit(CommitEditCommand, _currentCellContainer, DataGridEditingUnit.Cell, exitEditMode: true);
                     }
                 }
             }
@@ -5176,7 +5176,7 @@ namespace System.Windows.Controls
                 }
             }
 
-            UpdateSelectedItems(info, /* Add = */ true);
+            UpdateSelectedItems(info, add: true);
         }
 
         private void UnselectItem(ItemInfo info)
@@ -5191,7 +5191,7 @@ namespace System.Windows.Controls
                 }
             }
 
-            UpdateSelectedItems(info, /*Add = */ false);
+            UpdateSelectedItems(info, add: false);
         }
 
         /// <summary>
@@ -7079,8 +7079,7 @@ namespace System.Windows.Controls
             {
                 DefaultSort(
                     eventArgs.Column,
-                    /* clearExistinSortDescriptions */
-                    (Keyboard.Modifiers & ModifierKeys.Shift) != ModifierKeys.Shift);
+                    clearExistingSortDescriptions: (Keyboard.Modifiers & ModifierKeys.Shift) != ModifierKeys.Shift);
             }
         }
 
@@ -8250,7 +8249,7 @@ namespace System.Windows.Controls
                 // Add column headers if enabled
                 if (ClipboardCopyMode == DataGridClipboardCopyMode.IncludeHeader)
                 {
-                    DataGridRowClipboardEventArgs preparingRowClipboardContentEventArgs = new DataGridRowClipboardEventArgs(null, minColumnDisplayIndex, maxColumnDisplayIndex, true /*IsColumnHeadersRow*/);
+                    DataGridRowClipboardEventArgs preparingRowClipboardContentEventArgs = new DataGridRowClipboardEventArgs(null, minColumnDisplayIndex, maxColumnDisplayIndex, isColumnHeadersRow: true);
                     OnCopyingRowClipboardContent(preparingRowClipboardContentEventArgs);
 
                     foreach (string format in formats)
@@ -8267,7 +8266,7 @@ namespace System.Windows.Controls
                     // Row has a selecion
                     if (_selectedCells.Intersects(i))
                     {
-                        DataGridRowClipboardEventArgs preparingRowClipboardContentEventArgs = new DataGridRowClipboardEventArgs(row, minColumnDisplayIndex, maxColumnDisplayIndex, false /*IsColumnHeadersRow*/, i);
+                        DataGridRowClipboardEventArgs preparingRowClipboardContentEventArgs = new DataGridRowClipboardEventArgs(row, minColumnDisplayIndex, maxColumnDisplayIndex, isColumnHeadersRow: false, i);
                         OnCopyingRowClipboardContent(preparingRowClipboardContentEventArgs);
 
                         foreach (string format in formats)
@@ -8290,7 +8289,7 @@ namespace System.Windows.Controls
 
             try
             {
-                Clipboard.CriticalSetDataObject(dataObject, true /* Copy */);
+                Clipboard.CriticalSetDataObject(dataObject, copy: true);
             }
             catch (ExternalException)
             {

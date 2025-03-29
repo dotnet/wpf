@@ -380,7 +380,7 @@ namespace System.Windows.Controls.Primitives
                 {
                     if (((DataGridColumn)d).IsVisible)
                     {
-                        InvalidateDataGridCellsPanelMeasureAndArrangeImpl((e.Property == DataGridColumn.WidthProperty)/*invalidateMeasureUptoRowsPresenter*/);
+                        InvalidateDataGridCellsPanelMeasureAndArrangeImpl(invalidateMeasureUptoRowsPresenter: (e.Property == DataGridColumn.WidthProperty));
                     }
                 }
                 else if (e.Property == DataGrid.FrozenColumnCountProperty ||

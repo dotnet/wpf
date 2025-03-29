@@ -144,7 +144,7 @@ namespace System.Windows
                                                                         out source,
                                                                         false, // disableThrowOnResourceFailure
                                                                         true,  // allowDeferredResourceReference
-                                                                        false  /* mustReturnDeferredResourceReference*/);
+                                                                        mustReturnDeferredResourceReference: false);
             }
 
             if (resource == null)

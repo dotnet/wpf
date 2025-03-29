@@ -4504,7 +4504,7 @@ namespace System.Windows
             while (ownedWindows.Count > 0)
             {
                 // if parent window is closing, child window Closing cannot be cancelled.
-                ownedWindows[0].InternalClose(false, true /* Ignore cancel */);
+                ownedWindows[0].InternalClose(false, ignoreCancel: true);
             }
 
             Debug.Assert(ownedWindows.Count == 0, "All owned windows should now be gone");

@@ -169,7 +169,7 @@ namespace MS.Internal.PtsHost
                     // Update structural cache info. The DestroyStructureCache parameter is set to true if
                     // the name table is not preserved. If the name table is to be preserved, e.g. for highlight
                     // changed, we do not clear structure cache
-                    _section.StructuralCache.ClearUpdateInfo(/*destroy structure cache:*/ _section.StructuralCache.DestroyStructure);
+                    _section.StructuralCache.ClearUpdateInfo(destroyStructureCache: _section.StructuralCache.DestroyStructure);
                 } 
                 // If there is DRT list, invalidate entire NameTable starting from the 
                 // position of the first DTR.

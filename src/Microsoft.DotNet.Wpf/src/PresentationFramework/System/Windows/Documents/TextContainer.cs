@@ -1068,7 +1068,7 @@ namespace System.Windows.Documents
             }
 
             // Ancester nodes gain the two edge symbols.
-            UpdateContainerSymbolCount(elementNode.GetContainingNode(), /* symbolCount */ elementText == null ? 2 : elementText.Length, deltaCharCount + formerFirstIMEVisibleNodeCharDelta + newFirstIMEVisibleNodeCharDelta);
+            UpdateContainerSymbolCount(elementNode.GetContainingNode(), symbolCount: elementText == null ? 2 : elementText.Length, deltaCharCount + formerFirstIMEVisibleNodeCharDelta + newFirstIMEVisibleNodeCharDelta);
 
             symbolOffset = elementNode.GetSymbolOffset(this.Generation);
 
@@ -1086,7 +1086,7 @@ namespace System.Windows.Documents
             NextGeneration(deletedContent: false);
 
             // Handle undo.
-            TextTreeUndo.CreateInsertElementUndoUnit(this, symbolOffset, elementText != null /* deep */);
+            TextTreeUndo.CreateInsertElementUndoUnit(this, symbolOffset, deep: elementText != null);
 
             // If we extracted the TextElement from another tree, raise that event now.
             // We can't raise this event any earlier, because prior to now _this_ tree
@@ -1148,7 +1148,7 @@ namespace System.Windows.Documents
             // We only need to do this if we created a new element node.
             if (newElementNode)
             {
-                ReparentLogicalChildren(elementNode, elementNode.TextElement, parentLogicalNode /* oldParent */);
+                ReparentLogicalChildren(elementNode, elementNode.TextElement, oldParentLogicalNode: parentLogicalNode);
             }
 
             // Notify the TextElement of a content change if it was moved to parent new content. This 
@@ -2454,7 +2454,7 @@ namespace System.Windows.Documents
                     Invariant.Assert(elementText.Length == elementNode.SymbolCount);
                     tree.UpdateContainerSymbolCount(elementNode.GetContainingNode(), elementNode.SymbolCount, elementNode.IMECharCount);
                     tree.DemandCreateText();
-                    TextTreeText.InsertText(tree.RootTextBlock, 1 /* symbolOffset */, elementText);
+                    TextTreeText.InsertText(tree.RootTextBlock, offset: 1, elementText);
                     tree.NextGeneration(deletedContent: false);
 
                     currentLogicalChild = elementNode.TextElement;
@@ -2916,7 +2916,7 @@ namespace System.Windows.Documents
 
             if (!deep && !empty)
             {
-                ReparentLogicalChildren(firstContainedChildNode, lastContainedChildNode, oldLogicalParent /* new parent */, element /* old parent */);
+                ReparentLogicalChildren(firstContainedChildNode, lastContainedChildNode, newParentLogicalNode: oldLogicalParent, oldParentLogicalNode: element);
             }
 
             //

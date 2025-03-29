@@ -1375,7 +1375,7 @@ namespace System.Windows
 
             Uri baseUri = (_rootElement is IUriContext) ? ((IUriContext)_rootElement).BaseUri : _baseUri;
             return WpfXamlLoader.LoadDeferredContent(
-                    xamlReader, _objectWriterFactory, false /*skipJournaledProperites*/,
+                    xamlReader, _objectWriterFactory, skipJournaledProperties: false,
                     _rootElement, _objectWriterSettings, baseUri);
         }
 
@@ -1745,7 +1745,7 @@ namespace System.Windows
                                 _weakDeferredResourceReferences = new WeakReferenceList();
                             }
 
-                            _weakDeferredResourceReferences.Add(deferredResourceReference, true /*SkipFind*/);
+                            _weakDeferredResourceReferences.Add(deferredResourceReference, skipFind: true);
                         }
                         else
                         {

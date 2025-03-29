@@ -469,7 +469,7 @@ namespace MS.Internal.Documents
             EventTrace.EasyTraceEvent(EventTrace.Keyword.KeywordXPS, EventTrace.Event.WClientDRXLayoutBegin);
 
             QueueUpdateDocumentLayout(
-                new DocumentLayout(1 /* one column */, ViewMode.PageWidth));
+                new DocumentLayout(columns: 1, ViewMode.PageWidth));
         }
 
         /// <summary>
@@ -481,7 +481,7 @@ namespace MS.Internal.Documents
             EventTrace.EasyTraceEvent(EventTrace.Keyword.KeywordXPS, EventTrace.Event.WClientDRXLayoutBegin);
 
             QueueUpdateDocumentLayout(
-                new DocumentLayout(1 /* one column */, ViewMode.PageHeight));
+                new DocumentLayout(columns: 1, ViewMode.PageHeight));
         }
 
         /// <summary>
@@ -494,7 +494,7 @@ namespace MS.Internal.Documents
             EventTrace.EasyTraceEvent(EventTrace.Keyword.KeywordXPS, EventTrace.Event.WClientDRXLayoutBegin);
 
             QueueUpdateDocumentLayout(
-                new DocumentLayout(1 /* one column, arbitrary */, ViewMode.Thumbnails));
+                new DocumentLayout(columns: 1 /* arbitrary */, ViewMode.Thumbnails));
         }
 
         //------------------------------------------------------

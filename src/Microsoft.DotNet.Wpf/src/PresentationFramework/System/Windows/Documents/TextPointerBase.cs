@@ -177,7 +177,7 @@ namespace System.Windows.Documents
         {
             Invariant.Assert(backwardPosition.HasEqualScope(forwardPosition));
 
-            if (TextSchema.IsValidChild(position: backwardPosition, /*childType*/typeof(Run)))
+            if (TextSchema.IsValidChild(position: backwardPosition, childType: typeof(Run)))
             {
                 Type forwardType = forwardPosition.GetElementType(LogicalDirection.Forward);
                 Type backwardType = backwardPosition.GetElementType(LogicalDirection.Backward);
@@ -1303,7 +1303,7 @@ namespace System.Windows.Documents
                 // The inner edge of a Hyperlink is not a valid insertion position.
                 return false;
             }
-            else if (TextSchema.IsValidChild(position: position, /*childType*/typeof(string)))
+            else if (TextSchema.IsValidChild(position: position, childType: typeof(string)))
             {
                 return respectCaretUnitBoundaries ? IsAtCaretUnitBoundary(position) : true;
             }

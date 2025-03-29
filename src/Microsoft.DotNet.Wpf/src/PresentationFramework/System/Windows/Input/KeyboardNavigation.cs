@@ -251,7 +251,7 @@ namespace System.Windows.Input
                         new FrameworkPropertyMetadata(
                                 BooleanBoxes.FalseBox,
                                 FrameworkPropertyMetadataOptions.Inherits | FrameworkPropertyMetadataOptions.OverridesInheritanceBehavior,
-                                null /* No PropertyChangedCallback */,
+                                propertyChangedCallback: null,
                                 new CoerceValueCallback(CoerceShowKeyboardCues)));
 
         // Coercion for ShowKeyboardCuesProperty

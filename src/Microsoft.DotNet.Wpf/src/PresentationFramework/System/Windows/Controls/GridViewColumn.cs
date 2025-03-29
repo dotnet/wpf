@@ -378,7 +378,7 @@ namespace System.Windows.Controls
             FrameworkElement.WidthProperty.AddOwner(
                 typeof(GridViewColumn),
                 new PropertyMetadata(
-                    Double.NaN /* default value */,
+                    defaultValue: Double.NaN,
                     new PropertyChangedCallback(OnWidthChanged))
             );
 

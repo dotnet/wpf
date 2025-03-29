@@ -688,8 +688,8 @@ namespace System.Windows.Controls
                         "CharacterCasing", // Property name
                         typeof(CharacterCasing), // Property type
                         typeof(TextBox), // Property owner
-                        new FrameworkPropertyMetadata(CharacterCasing.Normal /*default value*/),
-                        new ValidateValueCallback(CharacterCasingValidateValue) /*validation callback*/);
+                        new FrameworkPropertyMetadata(defaultValue: CharacterCasing.Normal),
+                        validateValueCallback: new ValidateValueCallback(CharacterCasingValidateValue));
 
         /// <summary>
         /// Character casing of the TextBox
@@ -723,7 +723,7 @@ namespace System.Windows.Controls
                     "MaxLength", // Property name
                     typeof(int), // Property type
                     typeof(TextBox), // Property owner
-                    new FrameworkPropertyMetadata(0), /*default value*/
+                    new FrameworkPropertyMetadata(defaultValue: 0),
                     new ValidateValueCallback(MaxLengthValidateValue));
 
 
@@ -1440,7 +1440,7 @@ namespace System.Windows.Controls
 
             if (TextEditor.GetTextView(this.RenderScope).Validate(point))
             {
-                textPointer = (TextPointer)TextEditor.GetTextView(this.RenderScope).GetTextPositionFromPoint(point, /* snap to text */ true);
+                textPointer = (TextPointer)TextEditor.GetTextView(this.RenderScope).GetTextPositionFromPoint(point, snapToText: true);
                 textPointer = (TextPointer)TextEditor.GetTextView(this.RenderScope).GetLineRange(textPointer).Start.CreatePointer(textPointer.LogicalDirection);
             }
             else
@@ -1469,7 +1469,7 @@ namespace System.Windows.Controls
 
             if (TextEditor.GetTextView(this.RenderScope).Validate(point))
             {
-                textPointer = (TextPointer)TextEditor.GetTextView(this.RenderScope).GetTextPositionFromPoint(point, /* snap to text */ true);
+                textPointer = (TextPointer)TextEditor.GetTextView(this.RenderScope).GetTextPositionFromPoint(point, snapToText: true);
                 textPointer = (TextPointer)TextEditor.GetTextView(this.RenderScope).GetLineRange(textPointer).End.CreatePointer(textPointer.LogicalDirection);
 
                 // Hit testing ignores line breaks, so the position returned will be between the last visible character

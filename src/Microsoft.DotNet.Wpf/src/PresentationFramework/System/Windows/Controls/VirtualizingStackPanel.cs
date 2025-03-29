@@ -417,11 +417,11 @@ namespace System.Windows.Controls
             // find the top container(s)
             double firstContainerOffsetFromViewport;
             FrameworkElement deepestTopContainer = ComputeFirstContainerInViewport(
-                this,   /* viewportElement */
+                viewportElement: this,
                 isHorizontal ? FocusNavigationDirection.Right : FocusNavigationDirection.Down,
-                this,   /* itemsHost */
-                null,   /* action callback */
-                true,   /* findTopContainer */
+                itemsHost: this,
+                action: null,
+                findTopContainer: true,
                 out firstContainerOffsetFromViewport);
 
             // there are two cases where we can still use the simple approach:
@@ -541,11 +541,11 @@ namespace System.Windows.Controls
                             {
                                 double topContainerOffset;
                                 FrameworkElement deepestTopContainer = ComputeFirstContainerInViewport(
-                                    this,   /* viewportElement */
+                                    viewportElement: this,
                                     FocusNavigationDirection.Right,
-                                    this,   /* itemsHost */
-                                    null,   /* action callback */
-                                    true,   /* findTopContainer */
+                                    itemsHost: this,
+                                    action: null,
+                                    findTopContainer: true,
                                     out topContainerOffset);
 
                                 if (topContainerOffset > 0.0)
@@ -669,11 +669,11 @@ namespace System.Windows.Controls
                             {
                                 double topContainerOffset;
                                 FrameworkElement deepestTopContainer = ComputeFirstContainerInViewport(
-                                    this,   /* viewportElement */
+                                    viewportElement: this,
                                     FocusNavigationDirection.Down,
-                                    this,   /* itemsHost */
-                                    null,   /* action callback */
-                                    true,   /* findTopContainer */
+                                    itemsHost: this,
+                                    action: null,
+                                    findTopContainer: true,
                                     out topContainerOffset);
 
                                 if (topContainerOffset > 0.0)
@@ -788,7 +788,7 @@ namespace System.Windows.Controls
                                             // the leaf container that will serve as an anchor for the current scroll operation.
                                             d.SetCurrentValue(VirtualizingPanel.IsContainerVirtualizableProperty, false);
                                         },
-                                        false,  /* findTopContainer */
+                                        findTopContainer: false,
                                         out _scrollData._firstContainerOffsetFromViewport);
 
                                     if (_scrollData._firstContainerInViewport != null)
@@ -882,7 +882,7 @@ namespace System.Windows.Controls
                 isHorizontal ? FocusNavigationDirection.Right : FocusNavigationDirection.Down,
                 this,
                 null,
-                false,   /* findTopContainer */
+                findTopContainer: false,
                 out currFirstContainerOffsetFromViewport);
             Debug.Assert(currFirstContainerInViewport != null, "Cannot find container in viewport");
             double currFirstContainerOffset = FindScrollOffset(currFirstContainerInViewport);
@@ -905,7 +905,7 @@ namespace System.Windows.Controls
                         isHorizontal ? FocusNavigationDirection.Right : FocusNavigationDirection.Down,
                         this,
                         null,
-                        true,   /* findTopContainer*/
+                        findTopContainer: true,
                         out topContainerOffset);
                     double diff = actualDistanceBetweenViewports - _scrollData._expectedDistanceBetweenViewports;
                     success = (!LayoutDoubleUtil.LessThan(diff, 0.0) &&
@@ -2966,7 +2966,7 @@ namespace System.Windows.Controls
                             _firstItemInExtendedViewportIndex + _actualItemsInExtendedViewportCount,
                             _firstItemInExtendedViewportChildIndex + _actualItemsInExtendedViewportCount,
                             -1,                     // firstItemInViewportIndex - ignored in 'after' call
-                            false /*before */);
+                            before: false);
                     }
 
                     // ===================================================================================

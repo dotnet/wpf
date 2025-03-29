@@ -538,7 +538,7 @@ namespace MS.Internal.Annotations.Anchoring
                 {
                     // Now we try to resolve.  If any locator parts were matched to the startNode we want to 
                     // start resolving with its children, skipping a revisit to the startNode.
-                    anchor = InternalResolveLocator(locator, locatorPartIdx, startNode, locatorPartIdx != 0 /*skipStartNode*/, out attachmentLevel);
+                    anchor = InternalResolveLocator(locator, locatorPartIdx, startNode, skipStartNode: locatorPartIdx != 0, out attachmentLevel);
                 }
 
                 // If nothing was returned, we base our return values on the results

@@ -1637,7 +1637,7 @@ namespace System.Windows.Data
 
             if (bindingGroup != null)
             {
-                JoinBindingGroup(bindingGroup, /*explicit*/false);
+                JoinBindingGroup(bindingGroup, explicitJoin: false);
             }
         }
 
@@ -1679,7 +1679,7 @@ namespace System.Windows.Data
                 root.LeaveBindingGroup();
                 if (newBindingGroup != null)
                 {
-                    JoinBindingGroup(newBindingGroup, /*explicit*/false);
+                    JoinBindingGroup(newBindingGroup, explicitJoin: false);
                 }
             }
         }

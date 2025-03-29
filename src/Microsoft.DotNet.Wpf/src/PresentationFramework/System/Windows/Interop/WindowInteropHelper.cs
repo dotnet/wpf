@@ -96,7 +96,7 @@ namespace System.Windows.Interop
 
             if (Handle == IntPtr.Zero)
             {
-                _window.CreateSourceWindow(false /*create hwnd during show*/);
+                _window.CreateSourceWindow(duringShow: false);
             }
 
             return Handle;

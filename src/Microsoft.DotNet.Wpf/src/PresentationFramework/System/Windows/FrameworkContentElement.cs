@@ -723,7 +723,7 @@ namespace System.Windows
                     if (Style != null)
                     {
                         StyleHelper.OnTriggerSourcePropertyInvalidated(Style, null, this, dp, e, invalidateOnlyContainer: true,
-                            ref Style.TriggerSourceRecordFromChildIndex, ref Style.PropertyTriggersWithActions, 0 /*sourceChildId*/); // Style can only have triggers that are driven by properties on the container
+                            ref Style.TriggerSourceRecordFromChildIndex, ref Style.PropertyTriggersWithActions, sourceChildIndex: 0); // Style can only have triggers that are driven by properties on the container
                     }
 
                     // Do not validate Template during an invalidation if the Template was

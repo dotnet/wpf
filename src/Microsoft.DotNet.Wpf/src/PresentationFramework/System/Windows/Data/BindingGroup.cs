@@ -1302,7 +1302,7 @@ namespace System.Windows.Data
             {
                 case NotifyCollectionChangedAction.Add:
                     bindingExpr = e.NewItems[0] as BindingExpressionBase;
-                    bindingExpr.JoinBindingGroup(this, /*explicit*/ true);
+                    bindingExpr.JoinBindingGroup(this, explicitJoin: true);
                     break;
                 case NotifyCollectionChangedAction.Remove:
                     bindingExpr = e.OldItems[0] as BindingExpressionBase;
@@ -1314,7 +1314,7 @@ namespace System.Windows.Data
                     bindingExpr = e.OldItems[0] as BindingExpressionBase;
                     RemoveBindingExpression(bindingExpr);
                     bindingExpr = e.NewItems[0] as BindingExpressionBase;
-                    bindingExpr.JoinBindingGroup(this, /*explicit*/ true);
+                    bindingExpr.JoinBindingGroup(this, explicitJoin: true);
                     break;
                 case NotifyCollectionChangedAction.Reset:
                     // the only way this collection can raise Reset is due to Clear()
@@ -1452,7 +1452,7 @@ namespace System.Windows.Data
                         // reassign error's owner to this BindingGroup
                         ValidationError newError = new ValidationError(
                                         validationError.RuleInError,
-                                        this,   /* bindingInError */
+                                        bindingInError: this,
                                         validationError.ErrorContent,
                                         validationError.Exception);
                         AddValidationError(newError);

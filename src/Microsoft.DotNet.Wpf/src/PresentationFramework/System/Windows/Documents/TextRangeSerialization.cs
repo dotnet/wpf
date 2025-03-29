@@ -1126,7 +1126,7 @@ namespace System.Windows.Documents
                     System.ComponentModel.TypeConverter typeConverter = System.ComponentModel.TypeDescriptor.GetConverter(property.PropertyType);
                     Invariant.Assert(typeConverter != null, "typeConverter==null: is not expected for atomic elements");
                     Invariant.Assert(typeConverter.CanConvertTo(typeof(string)), "type is expected to be convertable into string type");
-                    string stringValue = (string)typeConverter.ConvertTo(/*ITypeDescriptorContext:*/null, CultureInfo.InvariantCulture, propertyValue, typeof(string));
+                    string stringValue = (string)typeConverter.ConvertTo(context: null, CultureInfo.InvariantCulture, propertyValue, typeof(string));
                     Invariant.Assert(stringValue != null, "expecting non-null stringValue");
                     xmlWriter.WriteAttributeString(property.Name, stringValue);
                 }

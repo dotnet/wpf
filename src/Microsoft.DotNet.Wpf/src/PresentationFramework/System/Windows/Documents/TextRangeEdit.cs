@@ -677,7 +677,7 @@ namespace System.Windows.Documents
         /// </returns>
         internal static TextPointer InsertLineBreak(TextPointer position)
         {
-            if (!TextSchema.IsValidChild(position: position, /*childType*/typeof(LineBreak)))
+            if (!TextSchema.IsValidChild(position: position, childType: typeof(LineBreak)))
             {
                 // Ensure insertion position, in case position's parent is not a paragraph/span element.
                 position = TextRangeEditTables.EnsureInsertionPosition(position);
@@ -689,7 +689,7 @@ namespace System.Windows.Documents
                 position = SplitElement(position);
             }
 
-            Invariant.Assert(TextSchema.IsValidChild(position: position, /*childType*/typeof(LineBreak)), 
+            Invariant.Assert(TextSchema.IsValidChild(position: position, childType: typeof(LineBreak)), 
                 "position must be in valid scope now to insert a LineBreak element");
 
             LineBreak lineBreak = new LineBreak();
@@ -1231,7 +1231,7 @@ namespace System.Windows.Documents
                 {
                     // Swap left and right values
                     object newValue = new Thickness(
-                        /*left*/((Thickness)value).Right, 
+                        left: ((Thickness)value).Right, 
                         top: ((Thickness)value).Top,
                         right: ((Thickness)value).Left, 
                         bottom: ((Thickness)value).Bottom);

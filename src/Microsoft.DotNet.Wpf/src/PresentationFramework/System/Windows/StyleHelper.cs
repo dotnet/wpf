@@ -1243,7 +1243,7 @@ namespace System.Windows
                     // that the childIndex is 0.
                     StyleHelper.AddEventDependent(0, eventHandlersStore, ref eventDependents);
                 }
-                eventHandlersStore.AddRoutedEventHandler(routedEvent, StyleHelper.EventTriggerHandlerOnContainer, false/* HandledEventsToo */);
+                eventHandlersStore.AddRoutedEventHandler(routedEvent, StyleHelper.EventTriggerHandlerOnContainer, handledEventsToo: false);
             }
             else
             {
@@ -1256,7 +1256,7 @@ namespace System.Windows
                     // the current FEF's EventHandlersStore.
                     StyleHelper.AddEventDependent(childIndex, childFef.EventHandlersStore, ref eventDependents);
                 }
-                childFef.EventHandlersStore.AddRoutedEventHandler(routedEvent, StyleHelper.EventTriggerHandlerOnChild, false/* HandledEventsToo */);
+                childFef.EventHandlersStore.AddRoutedEventHandler(routedEvent, StyleHelper.EventTriggerHandlerOnChild, handledEventsToo: false);
             }
         }
 
@@ -1287,7 +1287,7 @@ namespace System.Windows
             StyleHelper.AddEventDependent( childIndex,
                                            eventHandlersStore,
                                            ref eventDependents );
-            eventHandlersStore.AddRoutedEventHandler(routedEvent, StyleHelper.EventTriggerHandlerOnChild, false/* HandledEventsToo */);
+            eventHandlersStore.AddRoutedEventHandler(routedEvent, StyleHelper.EventTriggerHandlerOnChild, handledEventsToo: false);
 
         }
 
@@ -3698,7 +3698,7 @@ namespace System.Windows
                         target.LookupEntry(dp.GlobalIndex),
                         dp,
                         dp.GetMetadata(target.DependencyObjectType),
-                        new EffectiveValueEntry() /* oldEntry */,
+                        oldEntry: new EffectiveValueEntry(),
                     ref newEntry,
                         coerceWithDeferredReference: false,
                         coerceWithCurrentValue: false,
@@ -3838,7 +3838,7 @@ namespace System.Windows
                       target.LookupEntry(dp.GlobalIndex),
                       dp,
                       dp.GetMetadata(target.DependencyObjectType),
-                      new EffectiveValueEntry() /* oldEntry */,
+                      oldEntry: new EffectiveValueEntry(),
                       ref newEntry,
                       coerceWithDeferredReference: false,
                       coerceWithCurrentValue: false,

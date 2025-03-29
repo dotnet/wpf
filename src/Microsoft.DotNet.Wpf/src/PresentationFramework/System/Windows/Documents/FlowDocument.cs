@@ -1402,7 +1402,7 @@ namespace System.Windows.Documents
                 // We DTR invalidate if we're using a formatter as well for incremental update.
                 if (_formatter == null || !(_formatter is FlowDocumentFormatter))
                 {
-                    _structuralCache.InvalidateFormatCache(/*Clear structure*/ false);
+                    _structuralCache.InvalidateFormatCache(destroyStructure: false);
                 }
 
                 // Notify formatter about content invalidation.
@@ -1497,7 +1497,7 @@ namespace System.Windows.Documents
                 else
                 {
                     // Clear format caches.
-                    _structuralCache.InvalidateFormatCache(/*Clear structure*/ false);
+                    _structuralCache.InvalidateFormatCache(destroyStructure: false);
                 }
 
                 // Notify formatter about content invalidation.
@@ -1559,7 +1559,7 @@ namespace System.Windows.Documents
         private static bool IsValidPagePadding(object o)
         {
             Thickness value = (Thickness)o;
-            return Block.IsValidThickness(value, /*allow NaN*/true);
+            return Block.IsValidThickness(value, allowNaN: true);
         }
 
         private static bool IsValidColumnRuleWidth(object o)

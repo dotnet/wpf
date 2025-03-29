@@ -83,7 +83,7 @@ namespace System.Windows.Markup
             }
 
             byte[] writeBuffer = GetBufferFromFilePosition(
-                                    WritePosition,false /*writer*/,
+                                    WritePosition, reader: false,
                                     out bufferOffset, out bufferIndex);
 
             Debug.Assert(null != writeBuffer,"Null writeBuffer returned");

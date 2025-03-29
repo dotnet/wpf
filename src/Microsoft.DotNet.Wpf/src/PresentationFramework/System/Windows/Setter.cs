@@ -232,7 +232,7 @@ namespace System.Windows
             if (me is StaticResourceExtension)
             {
                 var sr = me as StaticResourceExtension;
-                setter.Value = sr.ProvideValueInternal(eventArgs.ServiceProvider, true /*allowDeferedReference*/);
+                setter.Value = sr.ProvideValueInternal(eventArgs.ServiceProvider, allowDeferredReference: true);
                 eventArgs.Handled = true;
             }
             else if (me is DynamicResourceExtension || me is BindingBase)

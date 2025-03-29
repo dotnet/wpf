@@ -484,7 +484,7 @@ namespace MS.Internal.Ink
 
         internal void TransformStrokes(StrokeCollection strokes, Matrix matrix)
         {
-            strokes.Transform(matrix, false /*Don't apply the transform to StylusTip*/);
+            strokes.Transform(matrix, applyToStylusTip: false);
         }
 
         internal InkCanvasSelectionHitResult HitTestSelection(Point pointOnInkCanvas)

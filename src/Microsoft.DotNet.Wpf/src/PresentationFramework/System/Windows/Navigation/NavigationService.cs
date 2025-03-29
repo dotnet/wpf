@@ -271,7 +271,7 @@ namespace System.Windows.Navigation
             // Do not record a new [fragment] navigation if the address bar will not change.
             if (navMode == NavigationMode.Back || navMode == NavigationMode.Forward ||
                 (targetElementExists &&
-                 !IsSameUri(null, _currentSource, uri, true /* with Fragment */)))
+                 !IsSameUri(null, _currentSource, uri, withFragment: true)))
             {
                 Debug.Assert(navMode != NavigationMode.Refresh); // because of !IsSameUri() above
 
@@ -404,7 +404,7 @@ namespace System.Windows.Navigation
         {
             if (_journalScope == null && _navigatorHost != null)
             {
-                _journalScope = _navigatorHost.GetJournal(true/*do create*/);
+                _journalScope = _navigatorHost.GetJournal(create: true);
             }
             //Throw if no JNS?
             return _journalScope;
@@ -1526,7 +1526,7 @@ namespace System.Windows.Navigation
                     // between two different instances of the same page (URI).
                     isFragment = (navInfo == null || navInfo.JournalEntry == null
                                    || navInfo.JournalEntry.ContentId == _contentId)
-                        && IsSameUri(null, resolvedSource, _currentSource, false /* without Fragment */);
+                        && IsSameUri(null, resolvedSource, _currentSource, withFragment: false);
                 }
 
                 // If this is a refresh, we want to refresh the whole page so set isFragment to false
@@ -1875,7 +1875,7 @@ namespace System.Windows.Navigation
                     {
                         // if there is an exception (succeed == false), we want to stop children's loading without
                         // firing the events.
-                        ((NavigationService)_childNavigationServices[i]).DoStopLoading(true, succeed/*fireEvent: we only fire when succeed*/);
+                        ((NavigationService)_childNavigationServices[i]).DoStopLoading(true, fireEvents: succeed/*we only fire when succeed*/);
                     }
                 }
                 finally
@@ -2086,7 +2086,7 @@ namespace System.Windows.Navigation
             // that source changed.
             if ((_navigatorHostImpl != null) && (!navigateOnSourceChanged))
             {
-                _navigatorHostImpl.OnSourceUpdatedFromNavService(IsJournalNavigation(navigateInfo) /* journalOrCancel */);
+                _navigatorHostImpl.OnSourceUpdatedFromNavService(journalOrCancel: IsJournalNavigation(navigateInfo));
             }
 
             // Event handler exception continuality: if exception occurs in Navigating event handler, the cleanup action is
@@ -2105,7 +2105,7 @@ namespace System.Windows.Navigation
 
             if (allowNavigation == true)
             {
-                DoStopLoading(false /*clearRecursiveLoads*/, fireEvents: true);
+                DoStopLoading(clearRecursiveNavigations: false, fireEvents: true);
                 Debug.Assert(PendingNavigationList.Count == 0,
                              "Pending child navigations were not stopped before starting a new navigation");
 
@@ -3957,7 +3957,7 @@ namespace System.Windows.Navigation
             {
                 if (_journalScope == null && _navigatorHost != null)
                 {
-                    _journalScope = _navigatorHost.GetJournal(false/*don't create*/);
+                    _journalScope = _navigatorHost.GetJournal(create: false);
                 }
                 return _journalScope;
             }

@@ -959,7 +959,7 @@ namespace System.Windows.Documents
             }
 
             // Do the hittest.
-            position = view.GetTextPositionFromPoint(milPoint, (flags & UnsafeNativeMethods.GetPositionFromPointFlags.GXFPF_NEAREST) != 0 /* snapToText */);
+            position = view.GetTextPositionFromPoint(milPoint, snapToText: (flags & UnsafeNativeMethods.GetPositionFromPointFlags.GXFPF_NEAREST) != 0);
             if (position == null)
             {
                 // GXFPF_ROUND_NEAREST was clear and we didn't hit a char.

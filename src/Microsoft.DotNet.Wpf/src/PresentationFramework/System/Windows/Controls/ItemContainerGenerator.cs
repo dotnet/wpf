@@ -490,7 +490,7 @@ namespace System.Windows.Controls
 
         void IRecyclingItemContainerGenerator.Recycle(GeneratorPosition position, int count)
         {
-            Remove(position, count, /*isRecyling = */ true);
+            Remove(position, count, isRecycling: true);
         }
 
         /// <summary>

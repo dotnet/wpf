@@ -33,7 +33,7 @@ namespace MS.Internal.Data
 
         // create the new CompositeCollectionView for a CompositeCollection
         internal CompositeCollectionView(CompositeCollection collection)
-            : base(collection, -1 /* don't move to first */)    // base.ctor also subscribes to CollectionChanged event of CompositeCollection
+            : base(collection, moveToFirst: -1)    // base.ctor also subscribes to CollectionChanged event of CompositeCollection
         {
             _collection = collection;
             _collection.ContainedCollectionChanged += new NotifyCollectionChangedEventHandler(OnContainedCollectionChanged);

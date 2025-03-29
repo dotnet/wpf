@@ -851,8 +851,8 @@ namespace System.Windows
                     // invalidated these properties.
                     if (!fce.HasStyleChanged)
                     {
-                        StyleHelper.InvalidateResourceDependents(d, info, ref fce.Style.ResourceDependents, !
-                            false /*invalidateVisualTreeToo */);
+                        StyleHelper.InvalidateResourceDependents(d, info, ref fce.Style.ResourceDependents,
+                            invalidateVisualTreeToo: !false);
                     }
                 }
 

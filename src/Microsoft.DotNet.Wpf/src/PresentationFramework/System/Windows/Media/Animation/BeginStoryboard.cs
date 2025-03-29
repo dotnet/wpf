@@ -207,11 +207,11 @@ public sealed class BeginStoryboard : TriggerAction
 
         if( Name != null )
         {
-            Storyboard.BeginCommon(targetObject, nameScope, _handoffBehavior, true /* == is controllable */, layer );
+            Storyboard.BeginCommon(targetObject, nameScope, _handoffBehavior, isControllable: true, layer );
         }
         else
         {
-            Storyboard.BeginCommon(targetObject, nameScope, _handoffBehavior, false /* == not controllable */, layer );
+            Storyboard.BeginCommon(targetObject, nameScope, _handoffBehavior, isControllable: false, layer );
         }
     }
 

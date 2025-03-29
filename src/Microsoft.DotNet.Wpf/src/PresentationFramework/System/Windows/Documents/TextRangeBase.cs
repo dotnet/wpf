@@ -1354,7 +1354,7 @@ namespace System.Windows.Documents
                     // Store the fact that implicit paragraph was inserted to exclude ane extra paragraph break
                     // from the end of pasted fragment
                     bool implicitParagraphInserted = insertPosition is TextPointer &&
-                        TextSchema.IsValidChild(position: insertPosition, /*childType*/typeof(Block)) &&
+                        TextSchema.IsValidChild(position: insertPosition, childType: typeof(Block)) &&
                         (insertPosition.GetPointerContext(LogicalDirection.Backward) == TextPointerContext.None ||
                         insertPosition.GetPointerContext(LogicalDirection.Backward) == TextPointerContext.ElementStart) &&
                         (insertPosition.GetPointerContext(LogicalDirection.Forward) == TextPointerContext.None ||

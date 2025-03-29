@@ -142,7 +142,7 @@ namespace System.Windows.Documents
                 }
 
                 Invariant.Assert(start.Parent == end.Parent);
-                Invariant.Assert(TextSchema.IsValidChild(position: start, /*childType*/typeof(Span)));
+                Invariant.Assert(TextSchema.IsValidChild(position: start, childType: typeof(Span)));
 
                 this.Reposition(start, end);
             }

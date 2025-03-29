@@ -491,7 +491,7 @@ namespace System.Windows.Controls.Primitives
                         "AcceptsTab", // Property name
                         typeof(bool), // Property type
                         typeof(TextBoxBase), // Property owner
-                        new FrameworkPropertyMetadata(false /*default value*/));
+                        new FrameworkPropertyMetadata(defaultValue: false));
 
         /// <summary>
         /// Whether or not the Textbox accepts tabs

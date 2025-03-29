@@ -868,7 +868,7 @@ namespace System.Windows
                     dependencyObject.LookupEntry(dependencyProperty.GlobalIndex),
                     dependencyProperty,
                     dependencyProperty.GetMetadata(dependencyObject.DependencyObjectType),
-                    new EffectiveValueEntry() /* oldEntry */,
+                    oldEntry: new EffectiveValueEntry(),
                 ref entry,
                     coerceWithDeferredReference: false,
                     coerceWithCurrentValue: false,

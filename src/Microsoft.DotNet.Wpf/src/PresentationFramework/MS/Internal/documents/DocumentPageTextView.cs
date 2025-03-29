@@ -423,7 +423,7 @@ namespace MS.Internal.Documents
 
                     while (this.IsValid && !Contains(position))
                     {
-                        backgroundFormatInfo.BackgroundFormat(formatter, true /* ignoreThrottle */);
+                        backgroundFormatInfo.BackgroundFormat(formatter, ignoreThrottle: true);
                         _owner.UpdateLayout(); // May invalidate the view.
 
                         // Break if background layout is not progressing.

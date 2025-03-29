@@ -267,7 +267,7 @@ namespace System.Windows
             {
                 DependencyObject d = eventRoute[i];
                 RoutedEventArgs args = new RoutedEventArgs(routedEvent, d);
-                FrameworkObject fo = new FrameworkObject(d, true /*throwIfNeither*/);
+                FrameworkObject fo = new FrameworkObject(d, throwIfNeither: true);
 
                 if (routedEvent == FrameworkElement.LoadedEvent)
                 {

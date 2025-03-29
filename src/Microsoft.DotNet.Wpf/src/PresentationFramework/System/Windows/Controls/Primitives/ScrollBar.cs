@@ -143,7 +143,7 @@ namespace System.Windows.Controls.Primitives
                 double newValue = Track.ValueFromPoint(pt);
                 if (System.Windows.Shapes.Shape.IsDoubleFinite(newValue))
                 {
-                    ChangeValue(newValue, false /* defer */);
+                    ChangeValue(newValue, defer: false);
                 }
 
                 if (Track.Thumb != null && Track.Thumb.IsMouseOver)
@@ -345,7 +345,7 @@ namespace System.Windows.Controls.Primitives
                     if (!DoubleUtil.AreClose(currentValue, newValue))
                     {
                         _hasScrolled = true;
-                        ChangeValue(newValue, true /* defer */);
+                        ChangeValue(newValue, defer: true);
                         RaiseScrollEvent(ScrollEventType.ThumbTrack);
                     }
                 }
@@ -399,7 +399,7 @@ namespace System.Windows.Controls.Primitives
             if (command.CanExecute(value, target))
             {
                 // If we were reporting drag commands, we need to give a final scroll command
-                ChangeValue(value, false /* defer */);
+                ChangeValue(value, defer: false);
             }
         }
         
@@ -453,7 +453,7 @@ namespace System.Windows.Controls.Primitives
                 double newValue = Track.ValueFromPoint(_latestRightButtonClickPoint);
                 if (System.Windows.Shapes.Shape.IsDoubleFinite(newValue))
                 {
-                    ChangeValue(newValue, false /* defer */);
+                    ChangeValue(newValue, defer: false);
                     _latestRightButtonClickPoint = pt;
                     RaiseScrollEvent(ScrollEventType.ThumbPosition);
                 }

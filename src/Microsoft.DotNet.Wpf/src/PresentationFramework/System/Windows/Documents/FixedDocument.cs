@@ -328,7 +328,7 @@ namespace System.Windows.Documents
                 //
                 // If we are not out of bound, try next page
                 //
-                FixedPage page = SyncGetPage(pageNumber, false/*forceReload*/);
+                FixedPage page = SyncGetPage(pageNumber, forceReload: false);
 
                 if (page == null)
                 {
@@ -639,7 +639,7 @@ namespace System.Windows.Documents
         {
             if (IsValidPageIndex(index))
             {
-                return SyncGetPage(index, false /*forceReload*/);
+                return SyncGetPage(index, forceReload: false);
             }
             DocumentsTrace.FixedFormat.FixedDocument.Trace($"SyncGetPageWithCheck {index} is invalid page");
             return null;
@@ -729,7 +729,7 @@ namespace System.Windows.Documents
                 FixedPage p = null;
                 if (!_pendingPages.Contains(Pages[pageNumber]))
                 {
-                    p = SyncGetPage(pageNumber, false /*forceReload*/);
+                    p = SyncGetPage(pageNumber, forceReload: false);
                 }
 #if DEBUG
                 else
@@ -1169,7 +1169,7 @@ namespace System.Windows.Documents
 
             foreach (int i in dirtyPages)
             {
-                HighlightVisual hv = HighlightVisual.GetHighlightVisual(SyncGetPage(i, false /*forceReload*/));
+                HighlightVisual hv = HighlightVisual.GetHighlightVisual(SyncGetPage(i, forceReload: false));
 
                 hv?.InvalidateHighlights();
             }
@@ -1191,7 +1191,7 @@ namespace System.Windows.Documents
                 _pendingPages.Add(pc);
                 // Initiate an async loading of the page
                 pc.GetPageRootCompleted += new GetPageRootCompletedEventHandler(OnGetPageRootCompleted);
-                pc.GetPageRootAsync(false /*forceReload*/);
+                pc.GetPageRootAsync(forceReload: false);
                 if (asyncRequest.Cancelled)
                 {
                     pc.GetPageRootAsyncCancel();

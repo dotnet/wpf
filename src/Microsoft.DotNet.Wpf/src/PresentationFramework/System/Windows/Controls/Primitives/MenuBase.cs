@@ -220,7 +220,7 @@ namespace System.Windows.Controls.Primitives
             if (!menu.IsKeyboardFocusWithin && !menu.HasPushedMenuMode)
             {
                 // Call PushMenuMode just before focus enters the menu...
-                menu.PushMenuMode(/*isAcquireFocusMenuMode*/ true);
+                menu.PushMenuMode(isAcquireFocusMenuMode: true);
             }
         }
 
@@ -817,7 +817,7 @@ namespace System.Windows.Controls.Primitives
                             // is set within the menu), push it now.
                             if (!HasPushedMenuMode)
                             {
-                                PushMenuMode(/*isAcquireFocusMenuMode*/ false);
+                                PushMenuMode(isAcquireFocusMenuMode: false);
                             }
                             
                             RaiseClrEvent(InternalMenuModeChangedKey, EventArgs.Empty);

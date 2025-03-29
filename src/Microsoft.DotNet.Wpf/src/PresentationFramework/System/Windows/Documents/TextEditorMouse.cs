@@ -62,7 +62,7 @@ namespace System.Windows.Documents
         internal static void SetCaretPositionOnMouseEvent(TextEditor This, Point mouseDownPoint, MouseButton changedButton, int clickCount)
         {
             // Get the character position of the mouse event.
-            ITextPointer cursorPosition = This.TextView.GetTextPositionFromPoint(mouseDownPoint, /*snapToText:*/true);
+            ITextPointer cursorPosition = This.TextView.GetTextPositionFromPoint(mouseDownPoint, snapToText: true);
 
             if (cursorPosition == null)
             {
@@ -481,7 +481,7 @@ namespace System.Windows.Documents
                 Invariant.Assert(This.Selection != null);
 
                 // Find a text position for this mouse point
-                ITextPointer snappedCursorPosition = This.TextView.GetTextPositionFromPoint(mouseMovePoint, /*snapToText:*/true);
+                ITextPointer snappedCursorPosition = This.TextView.GetTextPositionFromPoint(mouseMovePoint, snapToText: true);
 
                 // For bug 1547567, remove when resolved.
                 Invariant.Assert(This.Selection != null);
@@ -521,13 +521,13 @@ namespace System.Windows.Documents
                             {
                                 Rect targetRect = This.TextView.GetRectangleFromTextPosition(snappedCursorPosition);
                                 targetPoint = new Point(targetPoint.X, targetRect.Bottom - pageHeight);
-                                acceleratedCursorPosition = This.TextView.GetTextPositionFromPoint(targetPoint, /*snapToText:*/true);
+                                acceleratedCursorPosition = This.TextView.GetTextPositionFromPoint(targetPoint, snapToText: true);
                             }
                             else if (pointScroller.Y > pageHeight + slowAreaDelta)
                             {
                                 Rect targetRect = This.TextView.GetRectangleFromTextPosition(snappedCursorPosition);
                                 targetPoint = new Point(targetPoint.X, targetRect.Top + pageHeight);
-                                acceleratedCursorPosition = This.TextView.GetTextPositionFromPoint(targetPoint, /*snapToText:*/true);
+                                acceleratedCursorPosition = This.TextView.GetTextPositionFromPoint(targetPoint, snapToText: true);
                             }
 
                             double pageWidth = (double)((TextBoxBase)This.UiScope).ViewportWidth;
@@ -537,12 +537,12 @@ namespace System.Windows.Documents
                             if (pointScroller.X < 0)
                             {
                                 targetPoint = new Point(targetPoint.X - slowAreaDelta, targetPoint.Y);
-                                acceleratedCursorPosition = This.TextView.GetTextPositionFromPoint(targetPoint, /*snapToText:*/true);
+                                acceleratedCursorPosition = This.TextView.GetTextPositionFromPoint(targetPoint, snapToText: true);
                             }
                             else if (pointScroller.X > pageWidth)
                             {
                                 targetPoint = new Point(targetPoint.X + slowAreaDelta, targetPoint.Y);
-                                acceleratedCursorPosition = This.TextView.GetTextPositionFromPoint(targetPoint, /*snapToText:*/true);
+                                acceleratedCursorPosition = This.TextView.GetTextPositionFromPoint(targetPoint, snapToText: true);
                             }
 
                             // Use acceleratedcursorPosition instead of real one to make scrolling reasonable faster
@@ -710,7 +710,7 @@ namespace System.Windows.Documents
         // Return a UIElement when mouseMovePoint is within the ui element's bounding Rect. Null otherwise.
         private static UIElement GetUIElementWhenMouseOver(TextEditor This, Point mouseMovePoint)
         {
-            ITextPointer mouseMovePosition = This.TextView.GetTextPositionFromPoint(mouseMovePoint, /*snapToText:*/false);
+            ITextPointer mouseMovePosition = This.TextView.GetTextPositionFromPoint(mouseMovePoint, snapToText: false);
             if (mouseMovePosition == null)
             {
                 return null;

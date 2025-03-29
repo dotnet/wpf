@@ -152,7 +152,7 @@ namespace System.Windows.Documents
 
             TextEditorTyping._FlushPendingInputItems(This);
 
-            using (This.Selection.DeclareChangeBlock(true /* disableScroll */))
+            using (This.Selection.DeclareChangeBlock(disableScroll: true))
             {
                 This.Selection.Select(This.TextContainer.Start, This.TextContainer.End);
 
@@ -186,7 +186,7 @@ namespace System.Windows.Documents
             }
 
             LogicalDirection movementDirection = IsFlowDirectionRightToLeftThenTopToBottom(This) ? LogicalDirection.Backward : LogicalDirection.Forward;
-            MoveToCharacterLogicalDirection(This, movementDirection, /*extend:*/false);
+            MoveToCharacterLogicalDirection(This, movementDirection, extend: false);
         }
 
         /// <summary>
@@ -202,7 +202,7 @@ namespace System.Windows.Documents
             }
 
             LogicalDirection movementDirection = IsFlowDirectionRightToLeftThenTopToBottom(This) ? LogicalDirection.Forward : LogicalDirection.Backward;
-            MoveToCharacterLogicalDirection(This, movementDirection, /*extend:*/false);
+            MoveToCharacterLogicalDirection(This, movementDirection, extend: false);
         }
 
 
@@ -267,7 +267,7 @@ namespace System.Windows.Documents
                     // for LineEnd condition - choose inner position within a line.
                     ITextPointer position = TextEditorSelection.GetEndInner(This);
 
-                    This.Selection.SetCaretToPosition(position, position.LogicalDirection, /*allowStopAtLineEnd:*/true, /*allowStopNearSpace:*/true);
+                    This.Selection.SetCaretToPosition(position, position.LogicalDirection, allowStopAtLineEnd: true, allowStopNearSpace: true);
                     TextEditorSelection._ClearSuggestedX(This); // So that when we will request suggestedX below it will take it from the new moving position
                 }
                 Invariant.Assert(This.Selection.IsEmpty);
@@ -296,7 +296,7 @@ namespace System.Windows.Documents
                     TextEditorSelection.UpdateSuggestedXOnColumnOrPageBoundary(This, newSuggestedX);
 
                     // Move insertion point to next or previous line
-                    This.Selection.SetCaretToPosition(newMovingPosition, newMovingPosition.LogicalDirection, /*allowStopAtLineEnd:*/true, /*allowStopNearSpace:*/true);
+                    This.Selection.SetCaretToPosition(newMovingPosition, newMovingPosition.LogicalDirection, allowStopAtLineEnd: true, allowStopNearSpace: true);
                 }
                 else
                 {
@@ -312,7 +312,7 @@ namespace System.Windows.Documents
                         ITextPointer lineEndPosition = GetPositionAtLineEnd(originalMovingPosition);
                         ITextPointer nextPosition = lineEndPosition.GetNextInsertionPosition(LogicalDirection.Forward);
                         This.Selection.SetCaretToPosition(nextPosition ?? lineEndPosition,
-                            originalMovingPosition.LogicalDirection, /*allowStopAtLineEnd:*/true, /*allowStopNearSpace:*/true);
+                            originalMovingPosition.LogicalDirection, allowStopAtLineEnd: true, allowStopNearSpace: true);
                     }
                     else if (IsPaginated(This.TextView))
                     {
@@ -356,7 +356,7 @@ namespace System.Windows.Documents
                     // It is Word behavior for setting a cratet on moving down from nonempty selection.
                     ITextPointer position = TextEditorSelection.GetStartInner(This);
 
-                    This.Selection.SetCaretToPosition(position, position.LogicalDirection, /*allowStopAtLineEnd:*/true, /*allowStopNearSpace:*/true);
+                    This.Selection.SetCaretToPosition(position, position.LogicalDirection, allowStopAtLineEnd: true, allowStopNearSpace: true);
                     TextEditorSelection._ClearSuggestedX(This); // So that when we will request suggestedX below it will take it from the new moving position
                 }
                 Invariant.Assert(This.Selection.IsEmpty);
@@ -386,7 +386,7 @@ namespace System.Windows.Documents
 
                     // Move insertion point to next or previous line
                     //  position must be normalized not randomly here (bug)
-                    This.Selection.SetCaretToPosition(newMovingPosition, newMovingPosition.LogicalDirection, /*allowStopAtLineEnd:*/true, /*allowStopNearSpace:*/true);
+                    This.Selection.SetCaretToPosition(newMovingPosition, newMovingPosition.LogicalDirection, allowStopAtLineEnd: true, allowStopNearSpace: true);
                 }
                 else
                 {
@@ -402,7 +402,7 @@ namespace System.Windows.Documents
                         ITextPointer lineStartPosition = GetPositionAtLineStart(originalMovingPosition);
                         ITextPointer previousPosition = lineStartPosition.GetNextInsertionPosition(LogicalDirection.Backward);
                         This.Selection.SetCaretToPosition(previousPosition ?? lineStartPosition,
-                            originalMovingPosition.LogicalDirection, /*allowStopAtLineEnd:*/true, /*allowStopNearSpace:*/true);
+                            originalMovingPosition.LogicalDirection, allowStopAtLineEnd: true, allowStopNearSpace: true);
                     }
                     else if (IsPaginated(This.TextView))
                     {
@@ -453,7 +453,7 @@ namespace System.Windows.Documents
                     // for LineEnd condition - choose inner position within a line.
                     ITextPointer position = TextEditorSelection.GetEndInner(This);
 
-                    This.Selection.SetCaretToPosition(position, position.LogicalDirection, /*allowStopAtLineEnd:*/false, /*allowStopNearSpace:*/false);
+                    This.Selection.SetCaretToPosition(position, position.LogicalDirection, allowStopAtLineEnd: false, allowStopNearSpace: false);
                 }
 
                 ITextPointer movingPointer = This.Selection.MovingPosition.CreatePointer();
@@ -465,12 +465,12 @@ namespace System.Windows.Documents
                 {
                     // Next paragraph found. Set selection to its start
                     paragraphRange.SelectParagraph(movingPointer);
-                    This.Selection.SetCaretToPosition(paragraphRange.Start, LogicalDirection.Backward, /*allowStopAtLineEnd:*/false, /*allowStopNearSpace:*/false);
+                    This.Selection.SetCaretToPosition(paragraphRange.Start, LogicalDirection.Backward, allowStopAtLineEnd: false, allowStopNearSpace: false);
                 }
                 else
                 {
                     // Next paragraph does not exist. Set selectionn to the end of current paragraph
-                    This.Selection.SetCaretToPosition(paragraphRange.End, LogicalDirection.Backward, /*allowStopAtLineEnd:*/false, /*allowStopNearSpace:*/false);
+                    This.Selection.SetCaretToPosition(paragraphRange.End, LogicalDirection.Backward, allowStopAtLineEnd: false, allowStopNearSpace: false);
                 }
             }
         }
@@ -505,7 +505,7 @@ namespace System.Windows.Documents
                     // It is Word behavior for setting a cratet on moving down from nonempty selection.
                     ITextPointer position = TextEditorSelection.GetStartInner(This);
 
-                    This.Selection.SetCaretToPosition(position, position.LogicalDirection, /*allowStopAtLineEnd:*/false, /*allowStopNearSpace:*/false);
+                    This.Selection.SetCaretToPosition(position, position.LogicalDirection, allowStopAtLineEnd: false, allowStopNearSpace: false);
                 }
                 ITextPointer movingPointer = This.Selection.MovingPosition.CreatePointer();
                 ITextRange paragraphRange = new TextRange(movingPointer, movingPointer);
@@ -514,7 +514,7 @@ namespace System.Windows.Documents
                 if (This.Selection.Start.CompareTo(paragraphRange.Start) > 0)
                 {
                     // We are in the middle of a paragraph. Move to its start
-                    This.Selection.SetCaretToPosition(paragraphRange.Start, LogicalDirection.Backward, /*allowStopAtLineEnd:*/false, /*allowStopNearSpace:*/false);
+                    This.Selection.SetCaretToPosition(paragraphRange.Start, LogicalDirection.Backward, allowStopAtLineEnd: false, allowStopNearSpace: false);
                 }
                 else
                 {
@@ -523,7 +523,7 @@ namespace System.Windows.Documents
                     {
                         // Previous paragraph found. Set selection to its start
                         paragraphRange.SelectParagraph(movingPointer);
-                        This.Selection.SetCaretToPosition(paragraphRange.Start, LogicalDirection.Backward, /*allowStopAtLineEnd:*/false, /*allowStopNearSpace:*/false);
+                        This.Selection.SetCaretToPosition(paragraphRange.Start, LogicalDirection.Backward, allowStopAtLineEnd: false, allowStopNearSpace: false);
                     }
                 }
             }
@@ -558,7 +558,7 @@ namespace System.Windows.Documents
                     // for LineEnd condition - choose inner position within a line.
                     ITextPointer position = TextEditorSelection.GetEndInner(This);
 
-                    This.Selection.SetCaretToPosition(position, position.LogicalDirection, /*allowStopAtLineEnd:*/true, /*allowStopNearSpace:*/true);
+                    This.Selection.SetCaretToPosition(position, position.LogicalDirection, allowStopAtLineEnd: true, allowStopNearSpace: true);
                 }
 
                 ITextPointer movingPosition;
@@ -600,7 +600,7 @@ namespace System.Windows.Documents
                             TextEditorSelection.UpdateSuggestedXOnColumnOrPageBoundary(This, newSuggestedX);
 
                             // If shift key isn't down, collapse the range.
-                            This.Selection.SetCaretToPosition(targetPosition, targetPosition.LogicalDirection, /*allowStopAtLineEnd:*/true, /*allowStopNearSpace:*/false);
+                            This.Selection.SetCaretToPosition(targetPosition, targetPosition.LogicalDirection, allowStopAtLineEnd: true, allowStopNearSpace: false);
                         }
                         else if (IsPaginated(This.TextView))
                         {
@@ -615,7 +615,7 @@ namespace System.Windows.Documents
                     // Calculate target position - at a specified distance from current movingPosition
                     Rect targetRect = This.TextView.GetRectangleFromTextPosition(movingPosition);
                     Point targetPoint = new Point(GetViewportXOffset(This.TextView, suggestedX), targetRect.Top + pageHeight);
-                    targetPosition = This.TextView.GetTextPositionFromPoint(targetPoint, /*snapToText:*/true);
+                    targetPosition = This.TextView.GetTextPositionFromPoint(targetPoint, snapToText: true);
 
                     if (targetPosition == null)
                     {
@@ -638,7 +638,7 @@ namespace System.Windows.Documents
                     This.TextView.RenderScope.UpdateLayout();
 
                     // If shift key isn't down, collapse the range.
-                    This.Selection.SetCaretToPosition(targetPosition, targetPosition.LogicalDirection, /*allowStopAtLineEnd:*/true, /*allowStopNearSpace:*/false);
+                    This.Selection.SetCaretToPosition(targetPosition, targetPosition.LogicalDirection, allowStopAtLineEnd: true, allowStopNearSpace: false);
                 }
 
                 // Discard typing undo unit merging
@@ -675,7 +675,7 @@ namespace System.Windows.Documents
                     // It is Word behavior for setting a cratet on moving down from nonempty selection.
                     ITextPointer position = TextEditorSelection.GetStartInner(This);
 
-                    This.Selection.SetCaretToPosition(position, position.LogicalDirection, /*allowStopAtLineEnd:*/true, /*allowStopNearSpace:*/true);
+                    This.Selection.SetCaretToPosition(position, position.LogicalDirection, allowStopAtLineEnd: true, allowStopNearSpace: true);
                 }
 
                 ITextPointer movingPosition;
@@ -714,7 +714,7 @@ namespace System.Windows.Documents
                             TextEditorSelection.UpdateSuggestedXOnColumnOrPageBoundary(This, newSuggestedX);
 
                             // If shift key isn't down, collapse the range.
-                            This.Selection.SetCaretToPosition(targetPosition, targetPosition.LogicalDirection, /*allowStopAtLineEnd:*/true, /*allowStopNearSpace:*/false);
+                            This.Selection.SetCaretToPosition(targetPosition, targetPosition.LogicalDirection, allowStopAtLineEnd: true, allowStopNearSpace: false);
                         }
                         else if (IsPaginated(This.TextView))
                         {
@@ -729,7 +729,7 @@ namespace System.Windows.Documents
                     // Calculate target position - at a specified distance from current movingPosition
                     Rect targetRect = This.TextView.GetRectangleFromTextPosition(movingPosition);
                     Point targetPoint = new Point(GetViewportXOffset(This.TextView, suggestedX), targetRect.Bottom - pageHeight);
-                    targetPosition = This.TextView.GetTextPositionFromPoint(targetPoint, /*snapToText:*/true);
+                    targetPosition = This.TextView.GetTextPositionFromPoint(targetPoint, snapToText: true);
 
                     if (targetPosition == null)
                     {
@@ -752,8 +752,7 @@ namespace System.Windows.Documents
                     This.TextView.RenderScope.UpdateLayout();
 
                     // If shift key isn't down, collapse the range.
-                    This.Selection.SetCaretToPosition(targetPosition, targetPosition.LogicalDirection, /*allowStopAtLineEnd:*/
-                                                      true, /*allowStopNearSpace:*/false);
+                    This.Selection.SetCaretToPosition(targetPosition, targetPosition.LogicalDirection, allowStopAtLineEnd: true, allowStopNearSpace: false);
                 }
 
                 // Discard typing undo unit merging
@@ -803,7 +802,7 @@ namespace System.Windows.Documents
                 ITextPointer caretPosition = lineRange.Start.GetFrozenPointer(LogicalDirection.Forward);
 
                 // Set caret to beginning of a line
-                This.Selection.SetCaretToPosition(caretPosition, LogicalDirection.Forward, /*allowStopAtLineEnd:*/true, /*allowStopNearSpace:*/true);
+                This.Selection.SetCaretToPosition(caretPosition, LogicalDirection.Forward, allowStopAtLineEnd: true, allowStopNearSpace: true);
 
                 // Forget previously suggested horizontal position
                 TextEditorSelection._ClearSuggestedX(This);
@@ -855,7 +854,7 @@ namespace System.Windows.Documents
                 ITextPointer caretPosition = lineRange.End.GetFrozenPointer(orientation);
 
                 // Set caret to the end of line
-                This.Selection.SetCaretToPosition(caretPosition, orientation, /*allowStopAtLineEnd:*/true, /*allowStopNearSpace:*/true);
+                This.Selection.SetCaretToPosition(caretPosition, orientation, allowStopAtLineEnd: true, allowStopNearSpace: true);
 
                 // Forget previously suggested horizontal position
                 TextEditorSelection._ClearSuggestedX(This);
@@ -883,7 +882,7 @@ namespace System.Windows.Documents
 
             using (This.Selection.DeclareChangeBlock())
             {
-                This.Selection.SetCaretToPosition(This.TextContainer.Start, LogicalDirection.Forward, /*allowStopAtLineEnd:*/false, /*allowStopNearSpace:*/false);
+                This.Selection.SetCaretToPosition(This.TextContainer.Start, LogicalDirection.Forward, allowStopAtLineEnd: false, allowStopNearSpace: false);
 
                 // Forget previously suggested horizontal position
                 TextEditorSelection._ClearSuggestedX(This);
@@ -912,7 +911,7 @@ namespace System.Windows.Documents
             using (This.Selection.DeclareChangeBlock())
             {
                 // Orientation is standard - forward, because text cannot wrap by flow at this position
-                This.Selection.SetCaretToPosition(This.TextContainer.End, LogicalDirection.Backward, /*allowStopAtLineEnd:*/false, /*allowStopNearSpace:*/false);
+                This.Selection.SetCaretToPosition(This.TextContainer.End, LogicalDirection.Backward, allowStopAtLineEnd: false, allowStopNearSpace: false);
 
                 // Forget previously suggested horizontal position
                 TextEditorSelection._ClearSuggestedX(This);
@@ -944,7 +943,7 @@ namespace System.Windows.Documents
             }
 
             LogicalDirection movementDirection = IsFlowDirectionRightToLeftThenTopToBottom(This) ? LogicalDirection.Backward : LogicalDirection.Forward;
-            MoveToCharacterLogicalDirection(This, movementDirection, /*extend:*/true);
+            MoveToCharacterLogicalDirection(This, movementDirection, extend: true);
         }
 
         /// <summary>
@@ -960,7 +959,7 @@ namespace System.Windows.Documents
             }
 
             LogicalDirection movementDirection = IsFlowDirectionRightToLeftThenTopToBottom(This) ? LogicalDirection.Forward : LogicalDirection.Backward;
-            MoveToCharacterLogicalDirection(This, movementDirection, /*extend:*/true);
+            MoveToCharacterLogicalDirection(This, movementDirection, extend: true);
         }
 
         /// <summary>
@@ -1443,7 +1442,7 @@ namespace System.Windows.Documents
                     // Calculate target position - at a specified distance from current movingPosition
                     Rect targetRect = This.TextView.GetRectangleFromTextPosition(movingPosition);
                     Point targetPoint = new Point(GetViewportXOffset(This.TextView, suggestedX), targetRect.Top + pageHeight);
-                    targetPosition = This.TextView.GetTextPositionFromPoint(targetPoint, /*snapToText:*/true);
+                    targetPosition = This.TextView.GetTextPositionFromPoint(targetPoint, snapToText: true);
 
                     if (targetPosition == null)
                     {
@@ -1539,7 +1538,7 @@ namespace System.Windows.Documents
                     // Calculate target position - at a specified distance from current movingPosition
                     Rect targetRect = This.TextView.GetRectangleFromTextPosition(movingPosition);
                     Point targetPoint = new Point(GetViewportXOffset(This.TextView, suggestedX), targetRect.Bottom - pageHeight);
-                    targetPosition = This.TextView.GetTextPositionFromPoint(targetPoint, /*snapToText:*/true);
+                    targetPosition = This.TextView.GetTextPositionFromPoint(targetPoint, snapToText: true);
 
                     if (targetPosition == null)
                     {
@@ -1782,7 +1781,7 @@ namespace System.Windows.Documents
                     TextEditorSelection.UpdateSuggestedXOnColumnOrPageBoundary(This, e.NewSuggestedX);
 
                     // Move insertion point to next or previous line
-                    This.Selection.SetCaretToPosition(e.NewPosition, e.NewPosition.LogicalDirection, /*allowStopAtLineEnd:*/true, /*allowStopNearSpace:*/true);
+                    This.Selection.SetCaretToPosition(e.NewPosition, e.NewPosition.LogicalDirection, allowStopAtLineEnd: true, allowStopNearSpace: true);
                 }
             }
         }
@@ -1812,7 +1811,7 @@ namespace System.Windows.Documents
                     TextEditorSelection.UpdateSuggestedXOnColumnOrPageBoundary(This, e.NewSuggestedOffset.X);
 
                     // Move insertion point to next or previous page
-                    This.Selection.SetCaretToPosition(e.NewPosition, e.NewPosition.LogicalDirection, /*allowStopAtLineEnd:*/true, /*allowStopNearSpace:*/true);
+                    This.Selection.SetCaretToPosition(e.NewPosition, e.NewPosition.LogicalDirection, allowStopAtLineEnd: true, allowStopNearSpace: true);
                 }
             }
         }
@@ -2074,7 +2073,7 @@ namespace System.Windows.Documents
                         // This means that when we pass a space by keyboard we will respect its formatting,
                         // while when we click next to a space we always ignore space's formatting
                         // and prefer neighboring non-space character formatting instead.
-                        textEditor.Selection.SetCaretToPosition(movingEnd, contentDirection, /*allowStopAtLineEnd:*/false, /*allowStopNearSpace:*/false);
+                        textEditor.Selection.SetCaretToPosition(movingEnd, contentDirection, allowStopAtLineEnd: false, allowStopNearSpace: false);
                     }
                 }
 
@@ -2118,7 +2117,7 @@ namespace System.Windows.Documents
                     if (!textEditor.Selection.IsEmpty && TextPointerBase.IsAtWordBoundary(textEditor.Selection.End, LogicalDirection.Forward))
                     {
                         // If the selection is non-empty and ends on a word boundary, collapse it to that boundary.
-                        textEditor.Selection.SetCaretToPosition(textEditor.Selection.End, LogicalDirection.Backward, /*allowStopAtLineEnd:*/false, /*allowStopNearSpace:*/false);
+                        textEditor.Selection.SetCaretToPosition(textEditor.Selection.End, LogicalDirection.Backward, allowStopAtLineEnd: false, allowStopNearSpace: false);
                         // Note that we are using a "smart" version of SetCaretToPosition
                         // to choose caret orientation on formattinng switches appropriately.
                     }
@@ -2127,7 +2126,7 @@ namespace System.Windows.Documents
                         ITextPointer wordBoundary = textEditor.Selection.End.CreatePointer();
                         TextPointerBase.MoveToNextWordBoundary(wordBoundary, LogicalDirection.Forward);
 
-                        textEditor.Selection.SetCaretToPosition(wordBoundary, LogicalDirection.Backward, /*allowStopAtLineEnd:*/false, /*allowStopNearSpace:*/false);
+                        textEditor.Selection.SetCaretToPosition(wordBoundary, LogicalDirection.Backward, allowStopAtLineEnd: false, allowStopNearSpace: false);
                         // Note that we are using a "smart" version of SetCaretToPosition
                         // to choose caret orientation on formattinng switches appropriately.
                     }
@@ -2138,7 +2137,7 @@ namespace System.Windows.Documents
                     if (!textEditor.Selection.IsEmpty && TextPointerBase.IsAtWordBoundary(textEditor.Selection.Start, LogicalDirection.Forward))
                     {
                         // If the selection is non-empty and starts at word boundary, collapse it to that boundary.
-                        textEditor.Selection.SetCaretToPosition(textEditor.Selection.Start, LogicalDirection.Forward, /*allowStopAtLineEnd:*/false, /*allowStopNearSpace:*/false);
+                        textEditor.Selection.SetCaretToPosition(textEditor.Selection.Start, LogicalDirection.Forward, allowStopAtLineEnd: false, allowStopNearSpace: false);
                         // Note that we are using a "smart" version of SetCaretToPosition
                         // to choose caret orientation on formattinng switches appropriately.
                     }
@@ -2147,7 +2146,7 @@ namespace System.Windows.Documents
                         ITextPointer wordBoundary = textEditor.Selection.Start.CreatePointer();
                         TextPointerBase.MoveToNextWordBoundary(wordBoundary, LogicalDirection.Backward);
 
-                        textEditor.Selection.SetCaretToPosition(wordBoundary, LogicalDirection.Forward, /*allowStopAtLineEnd:*/false, /*allowStopNearSpace:*/false);
+                        textEditor.Selection.SetCaretToPosition(wordBoundary, LogicalDirection.Forward, allowStopAtLineEnd: false, allowStopNearSpace: false);
                         // Note that we are using a "smart" version of SetCaretToPosition
                         // to choose caret orientation on formattinng switches appropriately.
                     }
@@ -2396,7 +2395,7 @@ namespace System.Windows.Documents
                 ITextPointer position = This.Selection.Start.GetNextInsertionPosition(LogicalDirection.Backward);
                 if (position != null)
                 {
-                    This.Selection.SetCaretToPosition(position, LogicalDirection.Forward, /*allowStopAtLineEnd:*/false, /*allowStopNearSpace:*/false);
+                    This.Selection.SetCaretToPosition(position, LogicalDirection.Forward, allowStopAtLineEnd: false, allowStopNearSpace: false);
                 }
             }
         }

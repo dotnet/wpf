@@ -1003,7 +1003,7 @@ namespace System.Windows.Data
             if (ShouldUpdateWithCurrentValue(target, out currentValue))
             {
                 initialTransferIsUpdate = true;
-                ChangeValue(currentValue, /*notify*/false);
+                ChangeValue(currentValue, notify: false);
                 NeedsUpdate = true;
             }
 

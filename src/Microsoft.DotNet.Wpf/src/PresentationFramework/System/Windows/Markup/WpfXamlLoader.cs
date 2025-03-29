@@ -154,7 +154,7 @@ namespace System.Windows.Markup
 
                 IStyleConnector styleConnector = rootObject as IStyleConnector;
                 TransformNodes(xamlReader, xamlWriter,
-                    false /*onlyLoadOneNode*/,
+                    onlyLoadOneNode: false,
                     skipJournaledProperties,
                     shouldPassLineNumberInfo, xamlLineInfo, xamlLineInfoConsumer,
                     stack, styleConnector);

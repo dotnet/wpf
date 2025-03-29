@@ -1247,9 +1247,9 @@ namespace System.Windows.Markup
                         lastTextWasPreserved = (xmlSpacePreserveSet) ? true : false;
 
                         string collapsedText = CollapseText(XmlReader.Value,
-                            stripAllLeadingSpaces /* stripAllLeadingSpaces */,
-                            false /* stripAllRightWhitespace */ ,
-                            lastTextWasPreserved /* preserve */,
+                            stripAllLeadingSpaces: stripAllLeadingSpaces,
+                            stripAllRightWhitespace: false,
+                            preserve: lastTextWasPreserved,
                             out  stripAllLeadingSpaces); // set stripAllLeading spaces based on result.
 
                         textValueStringBuilder.Append(collapsedText);
@@ -4241,7 +4241,7 @@ namespace System.Windows.Markup
             // consistent downstream, always generate a Dictionary element tag now.
             string startElementAssemblyName = propertyType.Assembly.FullName;
             WriteElementStart(startElementAssemblyName, propertyType.FullName,
-                            depth, propertyType, serializerType, true /*isInjected*/);
+                            depth, propertyType, serializerType, isInjected: true);
 
             // Since a dictionary element is being explicitly injected and it cannot be created
             // via the TypeConverter syntax, we can reset the state now so that the token reader
@@ -4418,7 +4418,7 @@ namespace System.Windows.Markup
                 ParentContext.FirstChildRead = true;  // may already be true
 
             WriteElementStart(assemblyName, typeFullName, depth,
-                          currentObjectType, serializerType, false /*isInjected*/);
+                          currentObjectType, serializerType, isInjected: false);
 
             CurrentContext.ContextData = currentObjectType;
             CurrentContext.NamespaceUri = namespaceURI;
@@ -6442,7 +6442,7 @@ namespace System.Windows.Markup
                     {
                         // possible to have Text in the Buffer for the
                         // EndDocument if there is text at the root.
-                        textNodeAdded = CollapseAndAddTextNode(textFlowData, true /* stripAllRightWhitespace */);
+                        textNodeAdded = CollapseAndAddTextNode(textFlowData, stripAllRightWhitespace: true);
                         break;
                     }
 
@@ -6491,7 +6491,7 @@ namespace System.Windows.Markup
                         // !!! important set addNodeToBuffer to false so passed in text isn't added yet
                         // to the outputBuffer.
                         addNodeToBuffer = false;
-                        textNodeAdded = CollapseAndAddTextNode(textFlowData, false /* stripAllRightWhitespace */);
+                        textNodeAdded = CollapseAndAddTextNode(textFlowData, stripAllRightWhitespace: false);
 
                         // set the new text as the TextRun and update leading spaces
                         textFlowData.TextNode = (XamlTextNode)xamlNode;
@@ -6560,7 +6560,7 @@ namespace System.Windows.Markup
                             }
                             else
                             {
-                                textNodeAdded = CollapseAndAddTextNode(textFlowData, /*stripAllRightWhitespace:*/true);
+                                textNodeAdded = CollapseAndAddTextNode(textFlowData, stripAllRightWhitespace: true);
                             }
                         }
                         TextFlowStackData flowData = new TextFlowStackData();
@@ -6574,7 +6574,7 @@ namespace System.Windows.Markup
                 case XamlNodeType.PropertyIListEnd:
                 case XamlNodeType.PropertyIDictionaryEnd:
                     Debug.Assert(0 == textFlowData.InlineCount, "Text stack still has an inline count");
-                    textNodeAdded = CollapseAndAddTextNode(textFlowData, /*stripAllRightWhitespace:*/true);
+                    textNodeAdded = CollapseAndAddTextNode(textFlowData, stripAllRightWhitespace: true);
                     _textFlowStack.Pop();
                     break;
 

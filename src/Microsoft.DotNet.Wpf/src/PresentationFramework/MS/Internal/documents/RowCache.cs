@@ -675,7 +675,7 @@ namespace MS.Internal.Documents
             while (currentPage > 0)
             {
                 //Create our row, specifying a backwards direction
-                RowInfo newRow = CreateDynamicRow(currentPage - 1, pivotRowWidth, false /* backwards */);
+                RowInfo newRow = CreateDynamicRow(currentPage - 1, pivotRowWidth, createForward: false);
                 currentPage = newRow.FirstPage;
                 tempRows.Add(newRow);
             }
@@ -699,7 +699,7 @@ namespace MS.Internal.Documents
             while (currentPage < PageCache.PageCount)
             {
                 //Create our row, specifying a forward direction
-                RowInfo newRow = CreateDynamicRow(currentPage, pivotRowWidth, true /*forwards */);
+                RowInfo newRow = CreateDynamicRow(currentPage, pivotRowWidth, createForward: true);
                 currentPage += newRow.PageCount;
                 AddRow(newRow);
             }

@@ -225,17 +225,17 @@ namespace System.Windows.Controls
             switch (e.Action)
             {
                 case NotifyCollectionChangedAction.Add:
-                    UpdateDataGridReference(e.NewItems, /* clear = */ false);
+                    UpdateDataGridReference(e.NewItems, clear: false);
                     UpdateColumnSizeConstraints(e.NewItems);
                     break;
 
                 case NotifyCollectionChangedAction.Remove:
-                    UpdateDataGridReference(e.OldItems, /* clear = */ true);
+                    UpdateDataGridReference(e.OldItems, clear: true);
                     break;
 
                 case NotifyCollectionChangedAction.Replace:
-                    UpdateDataGridReference(e.OldItems, /* clear = */ true);
-                    UpdateDataGridReference(e.NewItems, /* clear = */ false);
+                    UpdateDataGridReference(e.OldItems, clear: true);
+                    UpdateDataGridReference(e.NewItems, clear: false);
                     UpdateColumnSizeConstraints(e.NewItems);
                     break;
 
@@ -1804,7 +1804,7 @@ namespace System.Windows.Controls
                         if (row != null)
                         {
                             _hasAutoScrolled = true;
-                            HandleSelectionForRowHeaderAndDetailsInput(row, /* startDragging = */ false);
+                            HandleSelectionForRowHeaderAndDetailsInput(row, startDragging: false);
                             SetCurrentItem(info.Item);
                             return true;
                         }
@@ -1817,7 +1817,7 @@ namespace System.Windows.Controls
                         if (cell != null)
                         {
                             _hasAutoScrolled = true;
-                            HandleSelectionForCellInput(cell, /* startDragging = */ false, /* allowsExtendSelect = */ true, /* allowsMinimalSelect = */ true);
+                            HandleSelectionForCellInput(cell, startDragging: false, allowsExtendSelect: true, allowsMinimalSelect: true);
                             cell.Focus();
                             return true;
                         }
@@ -2225,7 +2225,7 @@ namespace System.Windows.Controls
                         CancelRowItem();
 
                         // Display the new item placeholder again
-                        UpdateNewItemPlaceholder(/* isAddingNewItem = */ false);
+                        UpdateNewItemPlaceholder(isAddingNewItem: false);
 
                         // Put focus back on the placeholder
                         SetCurrentItemToPlaceholder();
@@ -2316,7 +2316,7 @@ namespace System.Windows.Controls
         /// </summary>
         protected virtual void OnCanExecuteCommitEdit(CanExecuteRoutedEventArgs e)
         {
-            if (CanEndEdit(e, /* commit = */ true))
+            if (CanEndEdit(e, commit: true))
             {
                 e.CanExecute = true;
                 e.Handled = true;
@@ -2484,7 +2484,7 @@ namespace System.Windows.Controls
         /// </summary>
         protected virtual void OnCanExecuteCancelEdit(CanExecuteRoutedEventArgs e)
         {
-            if (CanEndEdit(e, /* commit = */ false))
+            if (CanEndEdit(e, commit: false))
             {
                 e.CanExecute = true;
                 e.Handled = true;
@@ -2689,7 +2689,7 @@ namespace System.Windows.Controls
                         if (cell != null)
                         {
                             _selectionAnchor = null;
-                            HandleSelectionForCellInput(cell, /* startDragging = */ false, /* allowsExtendSelect = */ false, /* allowsMinimalSelect = */ false);
+                            HandleSelectionForCellInput(cell, startDragging: false, allowsExtendSelect: false, allowsMinimalSelect: false);
                         }
                     }
                 }
@@ -2893,12 +2893,12 @@ namespace System.Windows.Controls
                 {
                     // There is a row edit pending and the current cell changed to another row.
                     // Commit the row, which also commits the cell.
-                    dataGrid.EndEdit(CommitEditCommand, dataGrid._currentCellContainer, DataGridEditingUnit.Row, /* exitEditingMode = */ true);
+                    dataGrid.EndEdit(CommitEditCommand, dataGrid._currentCellContainer, DataGridEditingUnit.Row, exitEditMode: true);
                 }
                 else if (dataGrid._currentCellContainer.IsEditing)
                 {
                     // Only the cell needs to commit.
-                    dataGrid.EndEdit(CommitEditCommand, dataGrid._currentCellContainer, DataGridEditingUnit.Cell, /* exitEditingMode = */ true);
+                    dataGrid.EndEdit(CommitEditCommand, dataGrid._currentCellContainer, DataGridEditingUnit.Cell, exitEditMode: true);
                 }
             }
 
@@ -3138,7 +3138,7 @@ namespace System.Windows.Controls
         /// <returns>true if the current cell or row enters edit mode, false otherwise.</returns>
         public bool BeginEdit()
         {
-            return BeginEdit(/* editingEventArgs = */ null);
+            return BeginEdit(editingEventArgs: null);
         }
 
         /// <summary>
@@ -3286,12 +3286,12 @@ namespace System.Windows.Controls
             if (IsAddingNewItem || IsEditingRowItem)
             {
                 // There is a row edit in progress, commit it, which will also commit the cell edit.
-                return CommitEdit(DataGridEditingUnit.Row, /* exitEditingMode = */ true);
+                return CommitEdit(DataGridEditingUnit.Row, exitEditingMode: true);
             }
             else if (IsEditingCurrentCell)
             {
                 // Commit the current cell edit.
-                return CommitEdit(DataGridEditingUnit.Cell, /* exitEditingMode = */ true);
+                return CommitEdit(DataGridEditingUnit.Cell, exitEditingMode: true);
             }
 
             return true;
@@ -3435,12 +3435,12 @@ namespace System.Windows.Controls
 
         private static void OnCanUserAddRowsChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            ((DataGrid)d).UpdateNewItemPlaceholder(/* isAddingNewItem = */ false);
+            ((DataGrid)d).UpdateNewItemPlaceholder(isAddingNewItem: false);
         }
 
         private static object OnCoerceCanUserAddRows(DependencyObject d, object baseValue)
         {
-            return OnCoerceCanUserAddOrDeleteRows((DataGrid)d, (bool)baseValue, /* canUserAddRowsProperty = */ true);
+            return OnCoerceCanUserAddOrDeleteRows((DataGrid)d, (bool)baseValue, canUserAddRowsProperty: true);
         }
 
         private static bool OnCoerceCanUserAddOrDeleteRows(DataGrid dataGrid, bool baseValue, bool canUserAddRowsProperty)
@@ -3491,7 +3491,7 @@ namespace System.Windows.Controls
 
         private static object OnCoerceCanUserDeleteRows(DependencyObject d, object baseValue)
         {
-            return OnCoerceCanUserAddOrDeleteRows((DataGrid)d, (bool)baseValue, /* canUserAddRowsProperty = */ false);
+            return OnCoerceCanUserAddOrDeleteRows((DataGrid)d, (bool)baseValue, canUserAddRowsProperty: false);
         }
 
         /// <summary>
@@ -3544,7 +3544,7 @@ namespace System.Windows.Controls
             Debug.Assert(!IsAddingNewItem, "AddNewItem called when a pending add is taking place.");
 
             // Hide the placeholder
-            UpdateNewItemPlaceholder(/* isAddingNewItem = */ true);
+            UpdateNewItemPlaceholder(isAddingNewItem: true);
 
             // Create the new item (with app's help, or not)
             object newItem = null;
@@ -3602,7 +3602,7 @@ namespace System.Windows.Controls
                 EditableItems.CommitNew();
 
                 // Show the placeholder again
-                UpdateNewItemPlaceholder(/* isAddingNewItem = */ false);
+                UpdateNewItemPlaceholder(isAddingNewItem: false);
             }
         }
 
@@ -3658,7 +3658,7 @@ namespace System.Windows.Controls
                 EditableItems.CancelNew();
 
                 // Show the placeholder again
-                UpdateNewItemPlaceholder(/* isAddingNewItem = */ false);
+                UpdateNewItemPlaceholder(isAddingNewItem: false);
 
                 if (wasCurrent)
                 {
@@ -4510,7 +4510,7 @@ namespace System.Windows.Controls
                     for (int i = 0; i < count; i++)
                     {
                         ItemInfo rowInfo = e.RemovedInfos[i];
-                        UpdateSelectionOfCellsInRow(rowInfo, /* isSelected = */ false);
+                        UpdateSelectionOfCellsInRow(rowInfo, isSelected: false);
                     }
 
                     // Add cells of rows that were selected
@@ -4518,7 +4518,7 @@ namespace System.Windows.Controls
                     for (int i = 0; i < count; i++)
                     {
                         ItemInfo rowInfo = e.AddedInfos[i];
-                        UpdateSelectionOfCellsInRow(rowInfo, /* isSelected = */ true);
+                        UpdateSelectionOfCellsInRow(rowInfo, isSelected: true);
                     }
                 }
             }
@@ -4540,8 +4540,8 @@ namespace System.Windows.Controls
 
         private void UpdateIsSelected()
         {
-            UpdateIsSelected(_pendingUnselectedCells, /* isSelected = */ false);
-            UpdateIsSelected(_pendingSelectedCells, /* isSelected = */ true);
+            UpdateIsSelected(_pendingUnselectedCells, isSelected: false);
+            UpdateIsSelected(_pendingSelectedCells, isSelected: true);
         }
 
         /// <summary>
@@ -4744,7 +4744,7 @@ namespace System.Windows.Controls
                     if (_currentCellContainer != null && _currentCellContainer.IsEditing)
                     {
                         // End the pending edit even for the same row
-                        EndEdit(CommitEditCommand, _currentCellContainer, DataGridEditingUnit.Cell, /* exitEditingMode = */ true);
+                        EndEdit(CommitEditCommand, _currentCellContainer, DataGridEditingUnit.Cell, exitEditMode: true);
                     }
                 }
             }
@@ -4752,7 +4752,7 @@ namespace System.Windows.Controls
             // Select a row when the mode is not None and the unit allows selecting rows
             if (CanSelectRows)
             {
-                MakeFullRowSelection(rowInfo, /* allowsExtendSelect = */ true, /* allowsMinimalSelect = */ true);
+                MakeFullRowSelection(rowInfo, allowsExtendSelect: true, allowsMinimalSelect: true);
 
                 if (startDragging)
                 {
@@ -5176,7 +5176,7 @@ namespace System.Windows.Controls
                 }
             }
 
-            UpdateSelectedItems(info, /* Add = */ true);
+            UpdateSelectedItems(info, add: true);
         }
 
         private void UnselectItem(ItemInfo info)
@@ -5191,7 +5191,7 @@ namespace System.Windows.Controls
                 }
             }
 
-            UpdateSelectedItems(info, /*Add = */ false);
+            UpdateSelectedItems(info, add: false);
         }
 
         /// <summary>
@@ -5450,11 +5450,11 @@ namespace System.Windows.Controls
                         cell.Focus();
                         if (ShouldSelectRowHeader)
                         {
-                            HandleSelectionForRowHeaderAndDetailsInput(cell.RowOwner, /* startDragging = */ false);
+                            HandleSelectionForRowHeaderAndDetailsInput(cell.RowOwner, startDragging: false);
                         }
                         else
                         {
-                            HandleSelectionForCellInput(cell, /* startDragging = */ false, /* allowsExtendSelect = */ false, /* allowsMinimalSelect = */ false);
+                            HandleSelectionForCellInput(cell, startDragging: false, allowsExtendSelect: false, allowsMinimalSelect: false);
                         }
                     }
                 }
@@ -5825,7 +5825,7 @@ namespace System.Windows.Controls
                         ((startElement != null) && startElement.MoveFocus(request)) ||
                         ((startContentElement != null) && startContentElement.MoveFocus(request)))
                     {
-                        SelectAndEditOnFocusMove(e, currentCellContainer, wasEditing, /* allowsExtendSelect = */ true, /* ignoreControlKey = */ true);
+                        SelectAndEditOnFocusMove(e, currentCellContainer, wasEditing, allowsExtendSelect: true, ignoreControlKey: true);
                     }
                 }
             }
@@ -5928,7 +5928,7 @@ namespace System.Windows.Controls
 
                         // When doing TAB and SHIFT+TAB focus movement, don't confuse the selection
                         // code, which also relies on SHIFT to know whether to extend selection or not.
-                        SelectAndEditOnFocusMove(e, currentCellContainer, wasEditing, /* allowsExtendSelect = */ false, /* ignoreControlKey = */ true);
+                        SelectAndEditOnFocusMove(e, currentCellContainer, wasEditing, allowsExtendSelect: false, ignoreControlKey: true);
                     }
                 }
             }
@@ -5968,7 +5968,7 @@ namespace System.Windows.Controls
                             SetCurrentValueInternal(CurrentCellProperty, new DataGridCellInfo(rowInfo, column, this));
 
                             // Will never edit on ENTER, so just say that the old cell wasn't in edit mode
-                            SelectAndEditOnFocusMove(e, currentCellContainer, /* wasEditing = */ false, /* allowsExtendSelect = */ false, /* ignoreControlKey = */ true);
+                            SelectAndEditOnFocusMove(e, currentCellContainer, wasEditing: false, allowsExtendSelect: false, ignoreControlKey: true);
                         }
                         else
                         {
@@ -6005,11 +6005,11 @@ namespace System.Windows.Controls
                 {
                     if (ShouldSelectRowHeader && allowsExtendSelect)
                     {
-                        HandleSelectionForRowHeaderAndDetailsInput(newCell.RowOwner, /* startDragging = */ false);
+                        HandleSelectionForRowHeaderAndDetailsInput(newCell.RowOwner, startDragging: false);
                     }
                     else
                     {
-                        HandleSelectionForCellInput(newCell, /* startDragging = */ false, allowsExtendSelect, /* allowsMinimalSelect = */ false);
+                        HandleSelectionForCellInput(newCell, startDragging: false, allowsExtendSelect, allowsMinimalSelect: false);
                     }
                 }
 
@@ -6063,11 +6063,11 @@ namespace System.Windows.Controls
                     cell.Focus();
                     if (ShouldSelectRowHeader)
                     {
-                        HandleSelectionForRowHeaderAndDetailsInput(cell.RowOwner, /* startDragging = */ false);
+                        HandleSelectionForRowHeaderAndDetailsInput(cell.RowOwner, startDragging: false);
                     }
                     else
                     {
-                        HandleSelectionForCellInput(cell, /* startDragging = */ false, /* allowsExtendSelect = */ true, /* allowsMinimalSelect = */ false);
+                        HandleSelectionForCellInput(cell, startDragging: false, allowsExtendSelect: true, allowsMinimalSelect: false);
                     }
                 }
             }
@@ -6117,11 +6117,11 @@ namespace System.Windows.Controls
                                 cell.Focus();
                                 if (ShouldSelectRowHeader)
                                 {
-                                    HandleSelectionForRowHeaderAndDetailsInput(cell.RowOwner, /* startDragging = */ false);
+                                    HandleSelectionForRowHeaderAndDetailsInput(cell.RowOwner, startDragging: false);
                                 }
                                 else
                                 {
-                                    HandleSelectionForCellInput(cell, /* startDragging = */ false, /* allowsExtendSelect = */ true, /* allowsMinimalSelect = */ false);
+                                    HandleSelectionForCellInput(cell, startDragging: false, allowsExtendSelect: true, allowsMinimalSelect: false);
                                 }
                             }
                         }
@@ -6181,11 +6181,11 @@ namespace System.Windows.Controls
                                 cell.Focus();
                                 if (ShouldSelectRowHeader)
                                 {
-                                    HandleSelectionForRowHeaderAndDetailsInput(cell.RowOwner, /* startDragging = */ false);
+                                    HandleSelectionForRowHeaderAndDetailsInput(cell.RowOwner, startDragging: false);
                                 }
                                 else
                                 {
-                                    HandleSelectionForCellInput(cell, /* startDragging = */ false, /* allowsExtendSelect = */ true, /* allowsMinimalSelect = */ false);
+                                    HandleSelectionForCellInput(cell, startDragging: false, allowsExtendSelect: true, allowsMinimalSelect: false);
                                 }
                             }
                         }
@@ -6230,7 +6230,7 @@ namespace System.Windows.Controls
                                 if ((row != null) && (row.Item != CurrentItem))
                                 {
                                     // Continue a row header drag to the given row
-                                    HandleSelectionForRowHeaderAndDetailsInput(row, /* startDragging = */ false);
+                                    HandleSelectionForRowHeaderAndDetailsInput(row, startDragging: false);
                                     SetCurrentItem(row.Item);
                                     e.Handled = true;
                                 }
@@ -6252,7 +6252,7 @@ namespace System.Windows.Controls
 
                                 if ((cell != null) && (cell != CurrentCellContainer))
                                 {
-                                    HandleSelectionForCellInput(cell, /* startDragging = */ false, /* allowsExtendSelect = */ true, /* allowsMinimalSelect = */ true);
+                                    HandleSelectionForCellInput(cell, startDragging: false, allowsExtendSelect: true, allowsMinimalSelect: true);
                                     cell.Focus();
                                     e.Handled = true;
                                 }
@@ -6268,7 +6268,7 @@ namespace System.Windows.Controls
                                 if ((row != null) && (row.Item != CurrentItem))
                                 {
                                     // The mouse is directly to the left or right of the row
-                                    HandleSelectionForRowHeaderAndDetailsInput(row, /* startDragging = */ false);
+                                    HandleSelectionForRowHeaderAndDetailsInput(row, startDragging: false);
                                     SetCurrentItem(row.Item);
                                     e.Handled = true;
                                 }
@@ -6348,7 +6348,7 @@ namespace System.Windows.Controls
             if ((cell != null) && !cell.IsSelected && !cell.IsKeyboardFocusWithin)
             {
                 cell.Focus();
-                HandleSelectionForCellInput(cell, /* startDragging = */ false, /* allowsExtendSelect = */ true, /* allowsMinimalSelect = */ true);
+                HandleSelectionForCellInput(cell, startDragging: false, allowsExtendSelect: true, allowsMinimalSelect: true);
             }
 
             if (rowHeader != null)
@@ -6356,7 +6356,7 @@ namespace System.Windows.Controls
                 DataGridRow parentRow = rowHeader.ParentRow;
                 if (parentRow != null && !parentRow.IsSelected)
                 {
-                    HandleSelectionForRowHeaderAndDetailsInput(parentRow, /* startDragging = */ false);
+                    HandleSelectionForRowHeaderAndDetailsInput(parentRow, startDragging: false);
                 }
             }
         }
@@ -6726,12 +6726,12 @@ namespace System.Windows.Controls
 
         internal void SetCellAutomationValue(object item, DataGridColumn column, string value)
         {
-            SetCellValue(item, column, value, false /*clipboard*/);
+            SetCellValue(item, column, value, clipboard: false);
         }
 
         internal void SetCellClipboardValue(object item, DataGridColumn column, object value)
         {
-            SetCellValue(item, column, value, true /*clipboard*/);
+            SetCellValue(item, column, value, clipboard: true);
         }
 
         private void SetCellValue(object item, DataGridColumn column, object value, bool clipboard)
@@ -7079,8 +7079,7 @@ namespace System.Windows.Controls
             {
                 DefaultSort(
                     eventArgs.Column,
-                    /* clearExistinSortDescriptions */
-                    (Keyboard.Modifiers & ModifierKeys.Shift) != ModifierKeys.Shift);
+                    clearExistingSortDescriptions: (Keyboard.Modifiers & ModifierKeys.Shift) != ModifierKeys.Shift);
             }
         }
 
@@ -7516,7 +7515,7 @@ namespace System.Windows.Controls
 
                 // We need to call this in case CanUserAddRows has remained true (the default value)
                 // since startup and no one has set the placeholder position.
-                UpdateNewItemPlaceholder(/* isAddingNewItem = */ false);
+                UpdateNewItemPlaceholder(isAddingNewItem: false);
 
                 // always use an ItemBindingGroup
                 EnsureItemBindingGroup();
@@ -7626,7 +7625,7 @@ namespace System.Windows.Controls
 
             ResetRowHeaderActualWidth();
 
-            UpdateNewItemPlaceholder(/* isAddingNewItem = */ false);
+            UpdateNewItemPlaceholder(isAddingNewItem: false);
 
             HasCellValidationError = false;
             HasRowValidationError = false;
@@ -8250,7 +8249,7 @@ namespace System.Windows.Controls
                 // Add column headers if enabled
                 if (ClipboardCopyMode == DataGridClipboardCopyMode.IncludeHeader)
                 {
-                    DataGridRowClipboardEventArgs preparingRowClipboardContentEventArgs = new DataGridRowClipboardEventArgs(null, minColumnDisplayIndex, maxColumnDisplayIndex, true /*IsColumnHeadersRow*/);
+                    DataGridRowClipboardEventArgs preparingRowClipboardContentEventArgs = new DataGridRowClipboardEventArgs(null, minColumnDisplayIndex, maxColumnDisplayIndex, isColumnHeadersRow: true);
                     OnCopyingRowClipboardContent(preparingRowClipboardContentEventArgs);
 
                     foreach (string format in formats)
@@ -8267,7 +8266,7 @@ namespace System.Windows.Controls
                     // Row has a selecion
                     if (_selectedCells.Intersects(i))
                     {
-                        DataGridRowClipboardEventArgs preparingRowClipboardContentEventArgs = new DataGridRowClipboardEventArgs(row, minColumnDisplayIndex, maxColumnDisplayIndex, false /*IsColumnHeadersRow*/, i);
+                        DataGridRowClipboardEventArgs preparingRowClipboardContentEventArgs = new DataGridRowClipboardEventArgs(row, minColumnDisplayIndex, maxColumnDisplayIndex, isColumnHeadersRow: false, i);
                         OnCopyingRowClipboardContent(preparingRowClipboardContentEventArgs);
 
                         foreach (string format in formats)
@@ -8285,12 +8284,12 @@ namespace System.Windows.Controls
 
             foreach (string format in formats)
             {
-                dataObject.SetData(format, dataGridStringBuilders[format].ToString(), false /*autoConvert*/);
+                dataObject.SetData(format, dataGridStringBuilders[format].ToString(), autoConvert: false);
             }
 
             try
             {
-                Clipboard.CriticalSetDataObject(dataObject, true /* Copy */);
+                Clipboard.CriticalSetDataObject(dataObject, copy: true);
             }
             catch (ExternalException)
             {

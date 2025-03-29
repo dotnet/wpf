@@ -137,7 +137,7 @@ namespace System.Windows.Controls
             StyleProperty.OverrideMetadata(ownerType, new FrameworkPropertyMetadata(defaultStyle));
             DefaultStyleKeyProperty.OverrideMetadata(ownerType, new FrameworkPropertyMetadata(typeof(InkCanvas)));
 
-            FocusVisualStyleProperty.OverrideMetadata(ownerType, new FrameworkPropertyMetadata((object)null /* default value */));
+            FocusVisualStyleProperty.OverrideMetadata(ownerType, new FrameworkPropertyMetadata(defaultValue: (object)null));
         }
 
         /// <summary>
@@ -1317,7 +1317,7 @@ namespace System.Windows.Controls
         {
             Debug.Assert(e != null, "EventArg can not be null");
 
-            _editingCoordinator.UpdateEditingState(false /* EditingMode */);
+            _editingCoordinator.UpdateEditingState(inverted: false);
 
             this.OnEditingModeChanged(e);
         }
@@ -1371,7 +1371,7 @@ namespace System.Windows.Controls
         {
             Debug.Assert(e != null, "EventArg can not be null");
 
-            _editingCoordinator.UpdateEditingState(true /* EditingModeInverted */);
+            _editingCoordinator.UpdateEditingState(inverted: true);
 
             this.OnEditingModeInvertedChanged(e);
         }

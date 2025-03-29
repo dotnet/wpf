@@ -340,7 +340,7 @@ namespace System.Windows.Controls
                     if (_uiElementCollection == null)
                     {
                         // First access on a regular panel
-                        EnsureEmptyChildren(/* logicalParent = */ this);
+                        EnsureEmptyChildren(logicalParent: this);
                     }
                 }
 
@@ -618,7 +618,7 @@ namespace System.Windows.Controls
                 ConnectToGenerator();
 
                 // Children of this panel should not have their logical parent reset
-                EnsureEmptyChildren(/* logicalParent = */ null);
+                EnsureEmptyChildren(logicalParent: null);
 
                 GenerateChildren();
             }

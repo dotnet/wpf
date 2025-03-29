@@ -56,7 +56,7 @@ namespace System.Windows.Documents
         // Creates undo unit for this action.
         internal static void _OnApplyProperty(TextEditor This, DependencyProperty formattingProperty, object propertyValue)
         {
-            _OnApplyProperty(This, formattingProperty, propertyValue, /*applyToParagraphs*/false, PropertyValueAction.SetValue);
+            _OnApplyProperty(This, formattingProperty, propertyValue, applyToParagraphs: false, PropertyValueAction.SetValue);
         }
 
         internal static void _OnApplyProperty(TextEditor This, DependencyProperty formattingProperty, object propertyValue, bool applyToParagraphs)
@@ -314,7 +314,7 @@ namespace System.Windows.Documents
             else
             {
                 // Apply font size in incremental mode to a nonempty selection
-                TextEditorCharacters._OnApplyProperty(This, TextElement.FontSizeProperty, OneFontPoint, /*applyToParagraphs:*/false, PropertyValueAction.IncreaseByAbsoluteValue);
+                TextEditorCharacters._OnApplyProperty(This, TextElement.FontSizeProperty, OneFontPoint, applyToParagraphs: false, PropertyValueAction.IncreaseByAbsoluteValue);
             }
         }
 
@@ -355,7 +355,7 @@ namespace System.Windows.Documents
             else
             {
                 // Apply font size in decremental mode to a nonempty selection
-                TextEditorCharacters._OnApplyProperty(This, TextElement.FontSizeProperty, OneFontPoint, /*applyToParagraphs:*/false, PropertyValueAction.DecreaseByAbsoluteValue);
+                TextEditorCharacters._OnApplyProperty(This, TextElement.FontSizeProperty, OneFontPoint, applyToParagraphs: false, PropertyValueAction.DecreaseByAbsoluteValue);
             }
         }
 

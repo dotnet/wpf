@@ -166,12 +166,12 @@ namespace System.Windows.Baml2006
 
         protected override XamlMember LookupMember(string name, bool skipReadOnlyCheck)
         {
-            return FindMember(name, false /* isAttached */, skipReadOnlyCheck);
+            return FindMember(name, isAttached: false, skipReadOnlyCheck);
         }
 
         protected override XamlMember LookupAttachableMember(string name)
         {
-            return FindMember(name, true /* isAttached */, false /* skipReadOnlyCheck doens't matter for Attached */);
+            return FindMember(name, isAttached: true, false /* skipReadOnlyCheck doens't matter for Attached */);
         }
 
         protected override IEnumerable<XamlMember> LookupAllMembers()

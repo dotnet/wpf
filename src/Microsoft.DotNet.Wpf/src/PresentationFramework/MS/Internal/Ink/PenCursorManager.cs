@@ -89,7 +89,7 @@ namespace MS.Internal.Ink
             }
 
             // Forward to GetPenCursor.
-            return GetPenCursor(da, true, false/*isRightToLeft*/, dpiScaleX, dpiScaleY);
+            return GetPenCursor(da, true, isRightToLeft: false, dpiScaleX, dpiScaleY);
         }
 
         /// <summary>

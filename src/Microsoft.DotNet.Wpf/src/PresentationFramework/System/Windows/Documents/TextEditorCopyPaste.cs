@@ -99,7 +99,7 @@ namespace System.Windows.Documents
                     // and will be not created when there is no images in the range.
 
                     // Create in-memory wpf package, and serialize the content of selection into it
-                    string xamlTextWithImages = WpfPayload.SaveRange(This.Selection, ref wpfContainerMemory, /*useFlowDocumentAsRoot:*/false);
+                    string xamlTextWithImages = WpfPayload.SaveRange(This.Selection, ref wpfContainerMemory, useFlowDocumentAsRoot: false);
 
                     if (xamlTextWithImages.Length > 0)
                     {
@@ -133,7 +133,7 @@ namespace System.Windows.Documents
                 // Need to re-serialize xaml to avoid image references within a container:
                 StringWriter stringWriter = new StringWriter(CultureInfo.InvariantCulture);
                 XmlTextWriter xmlWriter = new XmlTextWriter(stringWriter);
-                TextRangeSerialization.WriteXaml(xmlWriter, This.Selection, /*useFlowDocumentAsRoot:*/false, /*wpfPayload:*/null);
+                TextRangeSerialization.WriteXaml(xmlWriter, This.Selection, useFlowDocumentAsRoot: false, wpfPayload: null);
                 string xamlText = stringWriter.ToString();
                 //  Use WpfPayload.SaveRangeAsXaml method to produce correct image.Source properties.
 
@@ -149,7 +149,7 @@ namespace System.Windows.Documents
             }
 
             // Notify application about our data object preparation completion
-            DataObjectCopyingEventArgs dataObjectCopyingEventArgs = new DataObjectCopyingEventArgs(dataObject, /*isDragDrop:*/isDragDrop);
+            DataObjectCopyingEventArgs dataObjectCopyingEventArgs = new DataObjectCopyingEventArgs(dataObject, isDragDrop: isDragDrop);
             This.UiScope.RaiseEvent(dataObjectCopyingEventArgs);
             if (dataObjectCopyingEventArgs.CommandCancelled)
             {
@@ -279,7 +279,7 @@ namespace System.Windows.Documents
                 // Copy content onto the clipboard
 
                 // Note: _CreateDataObject raises a public event which might throw a recoverable exception.
-                DataObject dataObject = TextEditorCopyPaste._CreateDataObject(This, /*isDragDrop:*/false);
+                DataObject dataObject = TextEditorCopyPaste._CreateDataObject(This, isDragDrop: false);
 
                 if (dataObject != null)
                 {
@@ -325,7 +325,7 @@ namespace System.Windows.Documents
             if (This.Selection != null && !This.Selection.IsEmpty)
             {
                 // Note: _CreateDataObject raises a public event which might throw a recoverable exception.
-                DataObject dataObject = TextEditorCopyPaste._CreateDataObject(This, /*isDragDrop:*/false);
+                DataObject dataObject = TextEditorCopyPaste._CreateDataObject(This, isDragDrop: false);
 
                 if (dataObject != null)
                 {
@@ -391,11 +391,11 @@ namespace System.Windows.Documents
                     TextEditorSelection._ClearSuggestedX(This);
 
                     // _DoPaste raises a public event -- could raise recoverable exception.
-                    if (TextEditorCopyPaste._DoPaste(This, dataObject, /*isDragDrop:*/false))
+                    if (TextEditorCopyPaste._DoPaste(This, dataObject, isDragDrop: false))
                     {
                         // Collapse selection to the end
                         // Use backward direction to stay oriented towards pasted content
-                        This.Selection.SetCaretToPosition(This.Selection.End, LogicalDirection.Backward, /*allowStopAtLineEnd:*/false, /*allowStopNearSpace:*/true);
+                        This.Selection.SetCaretToPosition(This.Selection.End, LogicalDirection.Backward, allowStopAtLineEnd: false, allowStopNearSpace: true);
 
                         // Clear springload formatting
                         if (This.Selection is TextSelection)

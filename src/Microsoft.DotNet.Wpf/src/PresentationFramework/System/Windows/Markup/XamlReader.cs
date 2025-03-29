@@ -402,7 +402,7 @@ namespace System.Windows.Markup
 
                 while (!_textReader.IsEof)
                 {
-                    WpfXamlLoader.TransformNodes(xamlReader, _objectWriter, true /*onlyLoadOneNode*/, _skipJournaledProperties, shouldPassLineNumberInfo, xamlLineInfo, xamlLineInfoConsumer, _stack, _styleConnector);
+                    WpfXamlLoader.TransformNodes(xamlReader, _objectWriter, onlyLoadOneNode: true, _skipJournaledProperties, shouldPassLineNumberInfo, xamlLineInfo, xamlLineInfoConsumer, _stack, _styleConnector);
 
                     if (xamlReader.NodeType == System.Xaml.XamlNodeType.StartMember)
                     {
@@ -595,7 +595,7 @@ namespace System.Windows.Markup
 
                 while (!xamlReader.IsEof && !_parseCancelled)
                 {
-                    WpfXamlLoader.TransformNodes(xamlReader, _objectWriter, true /*onlyLoadOneNode*/, _skipJournaledProperties, shouldPassLineNumberInfo, xamlLineInfo, xamlLineInfoConsumer, _stack, _styleConnector);
+                    WpfXamlLoader.TransformNodes(xamlReader, _objectWriter, onlyLoadOneNode: true, _skipJournaledProperties, shouldPassLineNumberInfo, xamlLineInfo, xamlLineInfoConsumer, _stack, _styleConnector);
 
                     if (xamlReader.NodeType == System.Xaml.XamlNodeType.Value && _stack.CurrentFrame.Property == synchronousRecordProperty)
                     {

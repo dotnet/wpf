@@ -159,7 +159,7 @@ namespace System.Windows.Documents
         /// </returns>
         internal static string SaveRange(ITextRange range, ref Stream stream, bool useFlowDocumentAsRoot)
         {
-            return SaveRange(range, ref stream, useFlowDocumentAsRoot, false /* preserveTextElements */);
+            return SaveRange(range, ref stream, useFlowDocumentAsRoot, preserveTextElements: false);
         }
 
         /// <summary>
@@ -189,7 +189,7 @@ namespace System.Windows.Documents
             ArgumentNullException.ThrowIfNull(range);
 
             // Create the wpf package in the stream
-            WpfPayload wpfPayload = new WpfPayload(/*package:*/null);
+            WpfPayload wpfPayload = new WpfPayload(package: null);
 
             // Create a string representing serialized xaml
             StringWriter stringWriter = new StringWriter(CultureInfo.InvariantCulture);
@@ -240,7 +240,7 @@ namespace System.Windows.Documents
             MemoryStream stream = new MemoryStream();
 
             // Create the wpf package in the stream
-            WpfPayload wpfPayload = new WpfPayload(/*package:*/null);
+            WpfPayload wpfPayload = new WpfPayload(package: null);
 
             // Create a package in the stream
             using (wpfPayload.CreatePackage(stream))
@@ -649,8 +649,8 @@ namespace System.Windows.Documents
             Byte[] buffer1 = new Byte[bufferSize];
             Byte[] buffer2 = new Byte[bufferSize];
 
-            imageSource1.CopyPixels(buffer1, stride, /*offset:*/0);
-            imageSource2.CopyPixels(buffer2, stride, /*offset:*/0);
+            imageSource1.CopyPixels(buffer1, stride, offset: 0);
+            imageSource2.CopyPixels(buffer2, stride, offset: 0);
             for (int i = 0; i < bufferSize; i++)
             {
                 if (buffer1[i] != buffer2[i])

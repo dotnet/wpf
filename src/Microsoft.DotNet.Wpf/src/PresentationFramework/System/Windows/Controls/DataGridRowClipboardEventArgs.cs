@@ -68,7 +68,7 @@ namespace System.Windows.Controls
             int count = ClipboardRowContent.Count;
             for (int i = 0; i < count; i++)
             {
-                DataGridClipboardHelper.FormatCell(ClipboardRowContent[i].Content, i == 0 /* firstCell */, i == count - 1 /* lastCell */, sb, format);
+                DataGridClipboardHelper.FormatCell(ClipboardRowContent[i].Content, firstCell: i == 0, lastCell: i == count - 1, sb, format);
             }
 
             return sb.ToString();

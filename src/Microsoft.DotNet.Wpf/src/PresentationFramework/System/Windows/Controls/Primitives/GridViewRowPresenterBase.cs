@@ -56,7 +56,7 @@ namespace System.Windows.Controls.Primitives
                 typeof(GridViewColumnCollection),
                 typeof(GridViewRowPresenterBase),
                 new FrameworkPropertyMetadata(
-                    (GridViewColumnCollection)null /* default value */,
+                    defaultValue: (GridViewColumnCollection)null,
                     FrameworkPropertyMetadataOptions.AffectsMeasure,
                     new PropertyChangedCallback(ColumnsPropertyChanged))
             );
@@ -225,7 +225,7 @@ namespace System.Windows.Controls.Primitives
             {
                 if (_uiElementCollection == null) //nobody used it yet
                 {
-                    _uiElementCollection = new UIElementCollection(this /* visual parent */, this /* logical parent */);
+                    _uiElementCollection = new UIElementCollection(visualParent: this, logicalParent: this);
                 }
 
                 return _uiElementCollection;

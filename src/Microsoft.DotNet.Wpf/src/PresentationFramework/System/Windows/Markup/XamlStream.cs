@@ -83,7 +83,7 @@ namespace System.Windows.Markup
             }
 
             byte[] writeBuffer = GetBufferFromFilePosition(
-                                    WritePosition,false /*writer*/,
+                                    WritePosition, reader: false,
                                     out bufferOffset, out bufferIndex);
 
             Debug.Assert(null != writeBuffer,"Null writeBuffer returned");
@@ -218,7 +218,7 @@ namespace System.Windows.Markup
             int bufferIndex;
 
             byte[] readBuffer = GetBufferFromFilePosition(
-                ReadPosition,true /*reader*/,
+                ReadPosition,reader: true,
                 out bufferOffset, out bufferIndex);
 
 

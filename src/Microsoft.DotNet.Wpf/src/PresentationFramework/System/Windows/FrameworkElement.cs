@@ -819,7 +819,7 @@ namespace System.Windows
 
             ArgumentNullException.ThrowIfNull(resourceKey);
 
-            object resource = FrameworkElement.FindResourceInternal(this, null /* fce */, resourceKey);
+            object resource = FrameworkElement.FindResourceInternal(this, fce: null, resourceKey);
 
             if (resource == DependencyProperty.UnsetValue)
             {
@@ -847,7 +847,7 @@ namespace System.Windows
 
             ArgumentNullException.ThrowIfNull(resourceKey);
 
-            object resource = FrameworkElement.FindResourceInternal(this, null /* fce */, resourceKey);
+            object resource = FrameworkElement.FindResourceInternal(this, fce: null, resourceKey);
 
             if (resource == DependencyProperty.UnsetValue)
             {
@@ -2088,8 +2088,8 @@ namespace System.Windows
                         FrameworkTemplate frameworkTemplate = feTemplatedParent.TemplateInternal;
                         if (frameworkTemplate != null)
                         {
-                            StyleHelper.OnTriggerSourcePropertyInvalidated(null, frameworkTemplate, TemplatedParent, dp, e, false /*invalidateOnlyContainer*/,
-                                ref frameworkTemplate.TriggerSourceRecordFromChildIndex, ref frameworkTemplate.PropertyTriggersWithActions, TemplateChildIndex /*sourceChildIndex*/);
+                            StyleHelper.OnTriggerSourcePropertyInvalidated(null, frameworkTemplate, TemplatedParent, dp, e, invalidateOnlyContainer: false,
+                                ref frameworkTemplate.TriggerSourceRecordFromChildIndex, ref frameworkTemplate.PropertyTriggersWithActions, sourceChildIndex: TemplateChildIndex);
                         }
                     }
 
@@ -2097,23 +2097,23 @@ namespace System.Windows
                     // never used before (dependents do not need invalidation)
                     if (Style != null)
                     {
-                        StyleHelper.OnTriggerSourcePropertyInvalidated(Style, null, this, dp, e, true /*invalidateOnlyContainer*/,
-                            ref Style.TriggerSourceRecordFromChildIndex, ref Style.PropertyTriggersWithActions, 0 /*sourceChildIndex*/); // Style can only have triggers that are driven by properties on the container
+                        StyleHelper.OnTriggerSourcePropertyInvalidated(Style, null, this, dp, e, invalidateOnlyContainer: true,
+                            ref Style.TriggerSourceRecordFromChildIndex, ref Style.PropertyTriggersWithActions, sourceChildIndex: 0); // Style can only have triggers that are driven by properties on the container
                     }
 
                     // Do not validate Template during an invalidation if the Template was
                     // never used before (dependents do not need invalidation)
                     if (TemplateInternal != null)
                     {
-                        StyleHelper.OnTriggerSourcePropertyInvalidated(null, TemplateInternal, this, dp, e, !HasTemplateGeneratedSubTree /*invalidateOnlyContainer*/,
-                            ref TemplateInternal.TriggerSourceRecordFromChildIndex, ref TemplateInternal.PropertyTriggersWithActions, 0 /*sourceChildIndex*/); // These are driven by the container
+                        StyleHelper.OnTriggerSourcePropertyInvalidated(null, TemplateInternal, this, dp, e, invalidateOnlyContainer: !HasTemplateGeneratedSubTree,
+                            ref TemplateInternal.TriggerSourceRecordFromChildIndex, ref TemplateInternal.PropertyTriggersWithActions, sourceChildIndex: 0); // These are driven by the container
                     }
 
                     // There may be container dependents in the ThemeStyle. Invalidate them.
                     if (ThemeStyle != null && Style != ThemeStyle)
                     {
-                        StyleHelper.OnTriggerSourcePropertyInvalidated(ThemeStyle, null, this, dp, e, true /*invalidateOnlyContainer*/,
-                            ref ThemeStyle.TriggerSourceRecordFromChildIndex, ref ThemeStyle.PropertyTriggersWithActions, 0 /*sourceChildIndex*/); // ThemeStyle can only have triggers that are driven by properties on the container
+                        StyleHelper.OnTriggerSourcePropertyInvalidated(ThemeStyle, null, this, dp, e, invalidateOnlyContainer: true,
+                            ref ThemeStyle.TriggerSourceRecordFromChildIndex, ref ThemeStyle.PropertyTriggersWithActions, sourceChildIndex: 0); // ThemeStyle can only have triggers that are driven by properties on the container
                     }
                 }
             }
@@ -2643,7 +2643,7 @@ namespace System.Windows
                         // inheritance behavior.
                         // This must have no performance effect as the subtree of this
                         // element is empty (no children yet added).
-                        TreeWalkHelper.InvalidateOnTreeChange(/*fe:*/this, /*fce:*/null, _parent, true);
+                        TreeWalkHelper.InvalidateOnTreeChange(fe: this, fce: null, _parent, true);
                     }
                 }
                 else

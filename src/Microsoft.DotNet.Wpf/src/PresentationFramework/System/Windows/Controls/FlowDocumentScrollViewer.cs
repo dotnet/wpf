@@ -1324,7 +1324,7 @@ namespace System.Windows.Controls
             _commandLineRight = new RoutedUICommand(String.Empty, "FDSV_LineRight", typeof(FlowDocumentScrollViewer));
 
             // Register editing command handlers
-            TextEditor.RegisterCommandHandlers(typeof(FlowDocumentScrollViewer), /*acceptsRichContent:*/true, /*readOnly:*/!IsEditingEnabled, /*registerEventListeners*/true);
+            TextEditor.RegisterCommandHandlers(typeof(FlowDocumentScrollViewer), acceptsRichContent: true, readOnly: !IsEditingEnabled, registerEventListeners: true);
 
             // Command: ApplicationCommands.Find
             CommandHelpers.RegisterCommandHandler(typeof(FlowDocumentScrollViewer), ApplicationCommands.Find,

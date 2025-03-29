@@ -35,7 +35,7 @@ namespace System.Windows.Documents
         // Worker for TextBox/RichTextBox.GetSpellingErrorAtPosition.
         internal static SpellingError GetSpellingErrorAtPosition(TextEditor This, ITextPointer position, LogicalDirection direction)
         {
-            return This.Speller?.GetError(position, direction, true /* forceEvaluation */);
+            return This.Speller?.GetError(position, direction, forceEvaluation: true);
         }
 
         // Returns the error (if any) at the current selection.
@@ -59,13 +59,13 @@ namespace System.Windows.Documents
             LogicalDirection direction = This.Selection.IsEmpty ? This.Selection.Start.LogicalDirection : LogicalDirection.Forward;
 
             char character;
-            ITextPointer position = GetNextTextPosition(This.Selection.Start, null /* limit */, direction, out character);
+            ITextPointer position = GetNextTextPosition(This.Selection.Start, limit: null, direction, out character);
             if (position == null)
             {
                 // There is no next character -- flip direction.
                 // This is the end-of-document or end-of-paragraph case.
                 direction = (direction == LogicalDirection.Forward) ? LogicalDirection.Backward : LogicalDirection.Forward;
-                position = GetNextTextPosition(This.Selection.Start, null /* limit */, direction, out character);
+                position = GetNextTextPosition(This.Selection.Start, limit: null, direction, out character);
             }
             else if (Char.IsWhiteSpace(character))
             {
@@ -80,7 +80,7 @@ namespace System.Windows.Documents
                 if (This.Selection.IsEmpty)
                 {
                     direction = (direction == LogicalDirection.Forward) ? LogicalDirection.Backward : LogicalDirection.Forward;
-                    position = GetNextTextPosition(This.Selection.Start, null /* limit */, direction, out character);
+                    position = GetNextTextPosition(This.Selection.Start, limit: null, direction, out character);
                 }
                 else
                 {
@@ -89,12 +89,12 @@ namespace System.Windows.Documents
                     if (position == null)
                     {
                         direction = LogicalDirection.Backward;
-                        position = GetNextTextPosition(This.Selection.Start, null /* limit */, direction, out character);
+                        position = GetNextTextPosition(This.Selection.Start, limit: null, direction, out character);
                     }
                 }
             }
 
-            return (position == null) ? null : This.Speller.GetError(position, direction, false /* forceEvaluation */);
+            return (position == null) ? null : This.Speller.GetError(position, direction, forceEvaluation: false);
         }
 
         // Worker for TextBox/RichTextBox.GetNextSpellingErrorPosition.

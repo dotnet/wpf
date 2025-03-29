@@ -561,7 +561,7 @@ namespace System.Windows.Documents
             }
             else
             {
-                document = docRef.GetDocument(false /*forceReload*/);
+                document = docRef.GetDocument(forceReload: false);
                 if (document != null)
                 {
                     paginator = document.DocumentPaginator as DynamicDocumentPaginator;

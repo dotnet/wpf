@@ -30,7 +30,7 @@ namespace System.Windows.Baml2006
                     xType = CreateKnownBamlType(type.Name, false, _useV3Rules);
                     if (xType == null || xType.UnderlyingType != type)
                     {
-                        xType = new WpfXamlType(type, this, false /* isBamlType */, _useV3Rules);
+                        xType = new WpfXamlType(type, this, isBamlScenario: false, _useV3Rules);
                     }
                     _masterTypeTable.Add(type, xType);
                 }

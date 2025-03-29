@@ -794,7 +794,7 @@ namespace System.Windows
                                 treeNodeFO,
                                 _childIndex,
                                 ref _frameworkTemplate.ChildRecordFromChildIndex,
-                                false /*isDetach*/,
+                                isDetach: false,
                                 this);
 
                 }

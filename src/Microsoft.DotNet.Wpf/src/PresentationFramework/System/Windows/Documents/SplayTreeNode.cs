@@ -354,7 +354,7 @@ namespace System.Windows.Documents
             if (edge == ElementEdge.BeforeStart || edge == ElementEdge.AfterEnd)
             {
                 // Insert to this node's tree.
-                InsertAtNode(positionNode, edge == ElementEdge.BeforeStart /* insertBefore */);
+                InsertAtNode(positionNode, insertBefore: edge == ElementEdge.BeforeStart);
             }
             else
             {

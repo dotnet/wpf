@@ -338,7 +338,7 @@ namespace System.Windows.Documents
                                 nextPosition,
                                 position.CreatePointer() /* need unfrozen pointer */,
                                 LogicalDirection.Forward,
-                                false /* matchLast */,
+                                matchLast: false,
                                 findText,
                                 findTextPositionMap);
 

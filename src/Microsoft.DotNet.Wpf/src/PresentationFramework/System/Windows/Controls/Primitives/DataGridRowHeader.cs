@@ -561,7 +561,7 @@ namespace System.Windows.Controls.Primitives
             DataGridRow parentRow = ParentRow;
             if ((dataGridOwner != null) && (parentRow != null))
             {
-                dataGridOwner.HandleSelectionForRowHeaderAndDetailsInput(parentRow, /* startDragging = */ true);
+                dataGridOwner.HandleSelectionForRowHeaderAndDetailsInput(parentRow, startDragging: true);
             }
         }
 

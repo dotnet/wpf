@@ -225,7 +225,7 @@ namespace System.Windows.Documents
 
                 DocumentsTrace.FixedDocumentSequence.TextOM.Trace($"Loading TextContainer {_docRef}");
                 // Load the TextContainer
-                IDocumentPaginatorSource idp = _docRef.GetDocument(false /*forceReload*/);
+                IDocumentPaginatorSource idp = _docRef.GetDocument(forceReload: false);
                 IServiceProvider isp = idp as IServiceProvider;
                 if (isp != null)
                 {

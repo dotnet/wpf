@@ -985,7 +985,7 @@ namespace MS.Internal.Documents
                     Point point = TransformToDescendant(pageTextView.RenderScope, suggestedOffset);
 
                     // Query inner TextView for requested page to find position at that point. 
-                    positionOut = newPageTextView.GetTextPositionFromPoint(point, /*snapToText*/true);
+                    positionOut = newPageTextView.GetTextPositionFromPoint(point, snapToText: true);
                     if (positionOut != null)
                     {
                         Rect rect = newPageTextView.GetRectangleFromTextPosition(positionOut);

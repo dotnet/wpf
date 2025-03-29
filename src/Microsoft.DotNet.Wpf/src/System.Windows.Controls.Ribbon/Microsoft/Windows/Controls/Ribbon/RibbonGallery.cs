@@ -1317,7 +1317,7 @@ namespace Microsoft.Windows.Controls.Ribbon
                             RibbonComboBox comboBoxParent = LogicalTreeHelper.GetParent(this) as RibbonComboBox;
                             if (comboBoxParent != null &&
                                 this == comboBoxParent.FirstGallery &&
-!comboBoxParent.IsSelectedItemCached)
+                                !comboBoxParent.IsSelectedItemCached)
                             {
                                 comboBoxParent.UpdateSelectionProperties();
                             }

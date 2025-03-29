@@ -2639,9 +2639,7 @@ namespace System.Windows.Interop
         {
             get
             {
-                return !_isDisposed &&
-                       _hwndTarget != null &&
-!_hwndTarget.IsDisposed;
+                return !_isDisposed && _hwndTarget is not null && !_hwndTarget.IsDisposed;
             }
         }
 

@@ -569,10 +569,8 @@ namespace System.Windows
                                 stack.CurrentFrame.ContentSourceSet = true;
                         }
 
-                        if (!stack.CurrentFrame.IsInNameScope &&
-!xamlReader.Member.IsDirective)
+                        if (!stack.CurrentFrame.IsInNameScope && !xamlReader.Member.IsDirective)
                         {
-
                             // Try to see if the property is shareable
                             PropertyValue? sharedValue;
                             var iReader = xamlReader as IXamlIndexingReader;

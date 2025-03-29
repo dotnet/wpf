@@ -3933,7 +3933,7 @@ namespace System.Windows.Controls
         internal void OnLoadingRowDetailsWrapper(DataGridRow row)
         {
             if (row != null &&
-!row.DetailsLoaded &&
+                !row.DetailsLoaded &&
                 row.DetailsVisibility == Visibility.Visible &&
                 row.DetailsPresenter != null)
             {
@@ -7046,7 +7046,7 @@ namespace System.Windows.Controls
             DataGrid dataGrid = (DataGrid)d;
             if (DataGridHelper.IsPropertyTransferEnabled(dataGrid, CanUserSortColumnsProperty) &&
                 DataGridHelper.IsDefaultValue(dataGrid, CanUserSortColumnsProperty) &&
-!dataGrid.Items.CanSort)
+                !dataGrid.Items.CanSort)
             {
                 return false;
             }

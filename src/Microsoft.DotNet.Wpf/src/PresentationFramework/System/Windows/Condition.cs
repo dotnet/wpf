@@ -191,7 +191,7 @@ namespace System.Windows
                 case ValueLookupType.PropertyTriggerResource:
                     if (_property == null)
                     {
-                        throw new InvalidOperationException(SR.Format(SR.NullPropertyIllegal, "Property"));
+                        throw new InvalidOperationException(SR.Format(SR.NullPropertyIllegal, nameof(Property)));
                     }
 
                     if (!_property.IsValidValue(_value))
@@ -204,7 +204,7 @@ namespace System.Windows
                 case ValueLookupType.DataTriggerResource:
                     if (_binding == null)
                     {
-                        throw new InvalidOperationException(SR.Format(SR.NullPropertyIllegal, "Binding"));
+                        throw new InvalidOperationException(SR.Format(SR.NullPropertyIllegal, nameof(Binding)));
                     }
                     break;
 

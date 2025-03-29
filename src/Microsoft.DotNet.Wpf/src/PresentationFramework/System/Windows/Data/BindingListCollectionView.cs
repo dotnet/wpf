@@ -304,7 +304,7 @@ namespace System.Windows.Data
                 if (!CanCustomFilter)
                     throw new NotSupportedException(SR.BindingListCannotCustomFilter);
                 if (IsAddingNew || IsEditingItem)
-                    throw new InvalidOperationException(SR.Format(SR.MemberNotAllowedDuringAddOrEdit, "CustomFilter"));
+                    throw new InvalidOperationException(SR.Format(SR.MemberNotAllowedDuringAddOrEdit, nameof(CustomFilter)));
                 if (AllowsCrossThreadChanges)
                     VerifyAccess();
 
@@ -367,7 +367,7 @@ namespace System.Windows.Data
                 if (!CanGroup)
                     throw new NotSupportedException();
                 if (IsAddingNew || IsEditingItem)
-                    throw new InvalidOperationException(SR.Format(SR.MemberNotAllowedDuringAddOrEdit, "GroupBySelector"));
+                    throw new InvalidOperationException(SR.Format(SR.MemberNotAllowedDuringAddOrEdit, nameof(GroupBySelector)));
 
                 _group.GroupBySelector = value;
 
@@ -427,7 +427,7 @@ namespace System.Windows.Data
                 VerifyRefreshNotDeferred();
 
                 if (value != _newItemPlaceholderPosition && IsAddingNew)
-                    throw new InvalidOperationException(SR.Format(SR.MemberNotAllowedDuringTransaction, "NewItemPlaceholderPosition", "AddNew"));
+                    throw new InvalidOperationException(SR.Format(SR.MemberNotAllowedDuringTransaction, nameof(NewItemPlaceholderPosition), "AddNew"));
 
                 if (value != _newItemPlaceholderPosition && _isRemoving)
                 {
@@ -1120,7 +1120,7 @@ namespace System.Windows.Data
         public bool? IsLiveSorting
         {
             get { return IsDataView ? (bool?)true : (bool?)null; }
-            set { throw new InvalidOperationException(SR.Format(SR.CannotChangeLiveShaping, "IsLiveSorting", "CanChangeLiveSorting")); }
+            set { throw new InvalidOperationException(SR.Format(SR.CannotChangeLiveShaping, nameof(IsLiveSorting), nameof(CanChangeLiveSorting))); }
         }
 
         ///<summary>
@@ -1132,7 +1132,7 @@ namespace System.Windows.Data
         public bool? IsLiveFiltering
         {
             get { return IsDataView ? (bool?)true : (bool?)null; }
-            set { throw new InvalidOperationException(SR.Format(SR.CannotChangeLiveShaping, "IsLiveFiltering", "CanChangeLiveFiltering")); }
+            set { throw new InvalidOperationException(SR.Format(SR.CannotChangeLiveShaping, nameof(IsLiveFiltering), nameof(CanChangeLiveFiltering))); }
         }
 
         ///<summary>

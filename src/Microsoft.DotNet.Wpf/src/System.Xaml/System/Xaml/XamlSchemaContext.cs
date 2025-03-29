@@ -317,7 +317,7 @@ namespace System.Xaml
                 {
                     if (typeArg is null)
                     {
-                        throw new ArgumentException(SR.Format(SR.CollectionCannotContainNulls, "typeArguments"));
+                        throw new ArgumentException(SR.Format(SR.CollectionCannotContainNulls, nameof(typeArguments)));
                     }
 
                     if (typeArg.UnderlyingType is null)

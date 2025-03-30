@@ -1,8 +1,5 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
-
-#nullable disable
 
 using System.Xaml.MS.Impl;
 
@@ -10,60 +7,61 @@ namespace System.Xaml.Schema
 {
     internal static class ClrNamespaceUriParser
     {
-        public static string GetUri(string clrNs, string assemblyName)
+        public static string GetUri(ReadOnlySpan<char> clrNs, ReadOnlySpan<char> assemblyName)
         {
             return $"{KnownStrings.UriClrNamespace}:{clrNs};{KnownStrings.UriAssembly}={assemblyName}";
         }
 
-        public static bool TryParseUri(string uriInput, out string clrNs, out string assemblyName)
+        public static bool TryParseUri(string uriInput, out ReadOnlySpan<char> clrNs, out ReadOnlySpan<char> assemblyName)
         {
-            clrNs = null;
-            assemblyName = null;
+            clrNs = ReadOnlySpan<char>.Empty;
+            assemblyName = ReadOnlySpan<char>.Empty;
 
             // xmlns:foo="clr-namespace:System.Windows;assembly=myassemblyname"
             // xmlns:bar="clr-namespace:MyAppsNs"
             // xmlns:spam="clr-namespace:MyAppsNs;assembly="
 
-            int colonIdx = KS.IndexOf(uriInput, ':');
+            int colonIdx = uriInput.IndexOf(':', StringComparison.Ordinal);
             if (colonIdx == -1)
             {
                 return false;
             }
 
-            ReadOnlySpan<char> keyword = uriInput.AsSpan(0, colonIdx);
-            if (!KS.Eq(keyword, KnownStrings.UriClrNamespace))
+            ReadOnlySpan<char> uriInputSpan = uriInput;
+
+            ReadOnlySpan<char> keyword = uriInputSpan.Slice(0, colonIdx);
+            if (!keyword.Equals(KnownStrings.UriClrNamespace, StringComparison.Ordinal))
             {
                 return false;
             }
 
             int clrNsStartIdx = colonIdx + 1;
-            int semicolonIdx = KS.IndexOf(uriInput, ';');
+            int semicolonIdx = uriInput.IndexOf(';', StringComparison.Ordinal);
             if (semicolonIdx == -1)
             {
-                clrNs = uriInput.Substring(clrNsStartIdx);
-                assemblyName = null;
+                clrNs = uriInputSpan.Slice(clrNsStartIdx);
                 return true;
             }
             else
             {
-                int clrnsLength = semicolonIdx - clrNsStartIdx;
-                clrNs = uriInput.Substring(clrNsStartIdx, clrnsLength);
+                int clrNsLength = semicolonIdx - clrNsStartIdx;
+                clrNs = uriInputSpan.Slice(clrNsStartIdx, clrNsLength);
             }
 
-            int assemblyKeywordStartIdx = semicolonIdx+1;
-            int equalIdx = KS.IndexOf(uriInput, '=');
+            int assemblyKeywordStartIdx = semicolonIdx + 1;
+            int equalIdx = uriInput.IndexOf('=', StringComparison.Ordinal);
             if (equalIdx == -1)
             {
                 return false;
             }
 
-            keyword = uriInput.AsSpan(assemblyKeywordStartIdx, equalIdx - assemblyKeywordStartIdx);
-            if (!KS.Eq(keyword, KnownStrings.UriAssembly))
+            keyword = uriInputSpan.Slice(assemblyKeywordStartIdx, equalIdx - assemblyKeywordStartIdx);
+            if (!keyword.Equals(KnownStrings.UriAssembly, StringComparison.Ordinal))
             {
                 return false;
             }
 
-            assemblyName = uriInput.Substring(equalIdx + 1);
+            assemblyName = uriInputSpan.Slice(equalIdx + 1);
             return true;
         }
     }

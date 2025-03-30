@@ -349,9 +349,7 @@ namespace System.Xaml
             // First, substitute in the LocalAssembly if needed
             if (_mergedSettings.LocalAssembly is not null)
             {
-                string clrNs, assemblyName;
-                if (ClrNamespaceUriParser.TryParseUri(xmlNamespace, out clrNs, out assemblyName) &&
-                    string.IsNullOrEmpty(assemblyName))
+                if (ClrNamespaceUriParser.TryParseUri(xmlNamespace, out ReadOnlySpan<char> clrNs, out ReadOnlySpan<char> assemblyName) && assemblyName.IsEmpty)
                 {
                     assemblyName = _mergedSettings.LocalAssembly.FullName;
                     newXmlNamespace = ClrNamespaceUriParser.GetUri(clrNs, assemblyName);

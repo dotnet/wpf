@@ -29,12 +29,12 @@ namespace System.Xaml.Schema
             SchemaContext = schemaContext;
         }
 
-        // This ctor is used for "clr-namespace" uri's where there is only one pair
-        public XamlNamespace(XamlSchemaContext schemaContext, string clrNs, string assemblyName)
+        // This ctor is used for "clr-namespace" URIs where there is only one pair
+        public XamlNamespace(XamlSchemaContext schemaContext, ReadOnlySpan<char> clrNs, ReadOnlySpan<char> assemblyName)
         {
             SchemaContext = schemaContext;
             _assemblyNamespaces = GetClrNamespacePair(clrNs, assemblyName);
-            // For now we just ignore failures, including swalloing assembly load exceptions.
+            // For now we just ignore failures, including swallowing assembly load exceptions.
             // Any types in this namespace will be treated as unknown. But it would be useful to
             // surface errors here through tracing or an event.
             if (_assemblyNamespaces is not null)
@@ -234,17 +234,11 @@ namespace System.Xaml.Schema
             return xamlTypeList.AsReadOnly();
         }
 
-        private List<AssemblyNamespacePair> GetClrNamespacePair(string clrNs, string assemblyName)
+        private List<AssemblyNamespacePair> GetClrNamespacePair(ReadOnlySpan<char> clrNs, ReadOnlySpan<char> assemblyName)
         {
-            Assembly asm = SchemaContext.OnAssemblyResolve(assemblyName);
-            if (asm is null)
-            {
-                return null;
-            }
+            Assembly assembly = SchemaContext.OnAssemblyResolve(assemblyName.ToString());
 
-            List<AssemblyNamespacePair> onePair = new List<AssemblyNamespacePair>();
-            onePair.Add(new AssemblyNamespacePair(asm, clrNs));
-            return onePair;
+            return assembly is null ? null : new List<AssemblyNamespacePair>(1) { new AssemblyNamespacePair(assembly, clrNs.ToString()) };
         }
 
         private Type SearchAssembliesForShortName(string shortName)

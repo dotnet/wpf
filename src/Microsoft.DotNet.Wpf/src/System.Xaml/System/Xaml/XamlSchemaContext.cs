@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -145,8 +145,7 @@ namespace System.Xaml
                 InitializePreferredPrefixes();
             }
 
-            string result;
-            if (!_preferredPrefixes.TryGetValue(xmlns, out result))
+            if (!_preferredPrefixes.TryGetValue(xmlns, out string result))
             {
                 if (XamlLanguage.XamlNamespaces.Contains(xmlns))
                 {
@@ -154,8 +153,7 @@ namespace System.Xaml
                 }
                 else
                 {
-                    string clrNs, assemblyName;
-                    if (ClrNamespaceUriParser.TryParseUri(xmlns, out clrNs, out assemblyName))
+                    if (ClrNamespaceUriParser.TryParseUri(xmlns, out ReadOnlySpan<char> clrNs, out ReadOnlySpan<char> assemblyName))
                     {
                         result = GetPrefixForClrNs(clrNs, assemblyName);
                     }
@@ -171,26 +169,26 @@ namespace System.Xaml
             return result;
         }
 
-        private string GetPrefixForClrNs(string clrNs, string assemblyName)
+        private static string GetPrefixForClrNs(ReadOnlySpan<char> clrNs, ReadOnlySpan<char> assemblyName)
         {
-            if (string.IsNullOrEmpty(assemblyName))
+            if (assemblyName.IsEmpty)
             {
                 return KnownStrings.LocalPrefix;
             }
 
-            StringBuilder sb = new();
-            ReadOnlySpan<char> values = clrNs.AsSpan();
-            foreach (Range segment in values.Split('.'))
+            StringBuilder stringBuilder = new();
+
+            foreach (Range segment in clrNs.Split('.'))
             {
-                if (!values[segment].IsEmpty)
+                if (!clrNs[segment].IsEmpty)
                 {
-                    sb.Append(char.ToLower(values[segment][0], TypeConverterHelper.InvariantEnglishUS));
+                    stringBuilder.Append(char.ToLowerInvariant(clrNs[segment][0]));
                 }
             }
 
-            if (sb.Length > 0)
+            if (stringBuilder.Length > 0)
             {
-                string result = sb.ToString();
+                string result = stringBuilder.ToString();
 
                 if (KS.Eq(result, XamlLanguage.PreferredPrefix))
                 {
@@ -945,15 +943,12 @@ namespace System.Xaml
 
         private XamlNamespace GetXamlNamespace(string xmlns)
         {
-            XamlNamespace xamlNamespace = null;
-
-            if (NamespaceByUriList.TryGetValue(xmlns, out xamlNamespace))
+            if (NamespaceByUriList.TryGetValue(xmlns, out XamlNamespace xamlNamespace))
             {
                 return xamlNamespace;
             }
 
-            string clrNs, assemblyName;
-            if (ClrNamespaceUriParser.TryParseUri(xmlns, out clrNs, out assemblyName))
+            if (ClrNamespaceUriParser.TryParseUri(xmlns, out ReadOnlySpan<char> clrNs, out ReadOnlySpan<char> assemblyName))
             {
                 xamlNamespace = new XamlNamespace(this, clrNs, assemblyName);
             }
@@ -1037,17 +1032,16 @@ namespace System.Xaml
         {
             XmlNsInfo nsInfo = GetXmlNsInfo(assembly);
             ConcurrentDictionary<string, IList<string>> assemblyMappings = nsInfo.ClrToXmlNs;
-            IList<string> result;
 
-            clrNs = clrNs ?? string.Empty;
+            clrNs ??= string.Empty;
 
-            if (!assemblyMappings.TryGetValue(clrNs, out result))
+            if (!assemblyMappings.TryGetValue(clrNs, out IList<string> result))
             {
-                string assemblyName = FullyQualifyAssemblyNamesInClrNamespaces ? assembly.FullName : ReflectionUtils.GetAssemblyPartialName(assembly).ToString();
+                ReadOnlySpan<char> assemblyName = FullyQualifyAssemblyNamesInClrNamespaces ? assembly.FullName : ReflectionUtils.GetAssemblyPartialName(assembly);
                 string xmlns = ClrNamespaceUriParser.GetUri(clrNs, assemblyName);
-                List<string> list = new List<string>();
-                list.Add(xmlns);
-                result = list.AsReadOnly();
+
+                result = new ReadOnlyCollection<string>(new List<string>(1) { xmlns });
+
                 TryAdd(assemblyMappings, clrNs, result);
             }
 
@@ -1247,18 +1241,9 @@ namespace System.Xaml
         protected internal virtual Assembly OnAssemblyResolve(string assemblyName)
         {
             if (string.IsNullOrEmpty(assemblyName))
-            {
                 return null;
-            }
 
-            if (_referenceAssemblies is not null)
-            {
-                return ResolveReferenceAssembly(assemblyName);
-            }
-            else
-            {
-                return ResolveAssembly(assemblyName);
-            }
+            return _referenceAssemblies is not null ? ResolveReferenceAssembly(assemblyName) : ResolveAssembly(assemblyName);
         }
 
         private Assembly ResolveReferenceAssembly(string assemblyName)
@@ -1319,7 +1304,7 @@ namespace System.Xaml
             return true;
         }
 
-        private Assembly ResolveAssembly(string assemblyName)
+        private static Assembly ResolveAssembly(string assemblyName)
         {
             // First see if the assembly is already loaded. This is necessary because Assembly.Load
             // won't match to assemblies in the LoadFile or LoadFrom contexts.

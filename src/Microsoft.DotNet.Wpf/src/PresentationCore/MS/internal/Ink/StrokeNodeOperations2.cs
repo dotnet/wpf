@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -61,7 +61,7 @@ namespace MS.Internal.Ink
                 prevResult = hitResult;
                 vertex = nextVertex;
             }
-            return (false == IsOutside(firstResult, hitResult));
+            return (!IsOutside(firstResult, hitResult));
         }
 
         /// <summary>
@@ -75,7 +75,7 @@ namespace MS.Internal.Ink
         /// <returns>true if hit, false otherwise</returns>
         internal static bool HitTestQuadSegment(Quad quad, Point hitBegin, Point hitEnd)
         {
-            System.Diagnostics.Debug.Assert(quad.IsEmpty == false);
+            System.Diagnostics.Debug.Assert(!quad.IsEmpty);
 
             HitResult hitResult = HitResult.Right, firstResult = HitResult.Right, prevResult = HitResult.Right;
             int count = 4;
@@ -91,7 +91,7 @@ namespace MS.Internal.Ink
                 {
                     return true;
                 }
-                if (true == IsOutside(hitResult, prevResult))
+                if (IsOutside(hitResult, prevResult))
                 {
                     return false;
                 }
@@ -102,7 +102,7 @@ namespace MS.Internal.Ink
                 prevResult = hitResult;
                 vertex = nextVertex;
             }
-            return (false == IsOutside(firstResult, hitResult));
+            return (!IsOutside(firstResult, hitResult));
         }
 
         /// <summary>
@@ -501,7 +501,7 @@ namespace MS.Internal.Ink
             Vector nearestOnSecond = GetProjection(hitPoint, hitPoint + linesVector);
 
             Vector shortest = nearestOnFirst - nearestOnSecond;
-            System.Diagnostics.Debug.Assert((false == DoubleUtil.IsZero(shortest.X)) || (false == DoubleUtil.IsZero(shortest.Y)));
+            System.Diagnostics.Debug.Assert((!DoubleUtil.IsZero(shortest.X)) || (!DoubleUtil.IsZero(shortest.Y)));
 
             //return DoubleUtil.IsZero(shortest.X) ? (nearestOnFirst.Y / shortest.Y) : (nearestOnFirst.X / shortest.X);
             return Math.Sqrt(nearestOnFirst.LengthSquared / shortest.LengthSquared);

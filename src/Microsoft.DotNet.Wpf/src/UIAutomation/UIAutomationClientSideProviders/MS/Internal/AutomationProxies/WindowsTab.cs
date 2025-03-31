@@ -1066,7 +1066,7 @@ namespace MS.Internal.AutomationProxies
                 throw new InvalidOperationException(SR.OperationCannotBePerformed);
             }
 
-            if (((ISelectionItemProvider)this).IsSelected == false)
+            if (!((ISelectionItemProvider)this).IsSelected)
             {
                 Select();
             }
@@ -1094,7 +1094,7 @@ namespace MS.Internal.AutomationProxies
             }
 
             // If multiple selections allowed, add requested selection
-            if (WindowsTab.SupportMultipleSelection(_hwnd) == true)
+            if (WindowsTab.SupportMultipleSelection(_hwnd))
             {
                 // Press ctrl and mouse click tab
                 NativeMethods.Win32Point pt = new NativeMethods.Win32Point();
@@ -1131,7 +1131,7 @@ namespace MS.Internal.AutomationProxies
             }
 
             // If multiple selections allowed, unselect element
-            if (WindowsTab.SupportMultipleSelection(_hwnd) == true)
+            if (WindowsTab.SupportMultipleSelection(_hwnd))
             {
                 NativeMethods.Win32Point pt = new NativeMethods.Win32Point();
                 if (GetClickablePoint(out pt, true))

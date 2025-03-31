@@ -103,7 +103,7 @@ namespace System.Windows
             {
                 // set the default statics
                 // DO NOT move this from the begining of this constructor
-                if (_appCreatedInThisAppDomain == false)
+                if (!_appCreatedInThisAppDomain)
                 {
                     Debug.Assert(_appInstance == null, "_appInstance must be null here.");
                     _appInstance = this;
@@ -241,7 +241,7 @@ namespace System.Windows
         {
             VerifyAccess();
             //Already called once??
-            if (IsShuttingDown == true)
+            if (IsShuttingDown)
             {
                 return;
             }
@@ -352,7 +352,7 @@ namespace System.Windows
             if (resourceLocator.OriginalString == null)
                 throw new ArgumentException(SR.Format(SR.ArgumentPropertyMustNotBeNull,"resourceLocator", "OriginalString"));
 
-            if (resourceLocator.IsAbsoluteUri == true)
+            if (resourceLocator.IsAbsoluteUri)
                 throw new ArgumentException(SR.AbsoluteUriNotAllowed);
 
             // Passed a relative Uri here.
@@ -379,7 +379,7 @@ namespace System.Windows
             // Check if this component was originally being created from the same Uri by the BamlConverter
             // or LoadComponent(uri).
             //
-            if (IsComponentBeingLoadedFromOuterLoadBaml(currentUri) == true)
+            if (IsComponentBeingLoadedFromOuterLoadBaml(currentUri))
             {
                 NestedBamlLoadInfo nestedBamlLoadInfo = s_NestedBamlLoadInfo.Peek();
 
@@ -442,7 +442,7 @@ namespace System.Windows
             if (resourceLocator.OriginalString == null)
                 throw new ArgumentException(SR.Format(SR.ArgumentPropertyMustNotBeNull,"resourceLocator", "OriginalString"));
 
-            if (resourceLocator.IsAbsoluteUri == true)
+            if (resourceLocator.IsAbsoluteUri)
                 throw new ArgumentException(SR.AbsoluteUriNotAllowed);
 
             return LoadComponent(resourceLocator, false);
@@ -579,7 +579,7 @@ namespace System.Windows
             if (uriResource.OriginalString == null)
                 throw new ArgumentException(SR.Format(SR.ArgumentPropertyMustNotBeNull, "uriResource", "OriginalString"));
 
-            if (uriResource.IsAbsoluteUri == true && !BaseUriHelper.IsPackApplicationUri(uriResource))
+            if (uriResource.IsAbsoluteUri && !BaseUriHelper.IsPackApplicationUri(uriResource))
             {
                 throw new ArgumentException(SR.NonPackAppAbsoluteUriNotAllowed);
             }
@@ -611,7 +611,7 @@ namespace System.Windows
             if (uriContent.OriginalString == null)
                 throw new ArgumentException(SR.Format(SR.ArgumentPropertyMustNotBeNull, "uriContent", "OriginalString"));
 
-            if (uriContent.IsAbsoluteUri == true && !BaseUriHelper.IsPackApplicationUri(uriContent))
+            if (uriContent.IsAbsoluteUri && !BaseUriHelper.IsPackApplicationUri(uriContent))
             {
                 throw new ArgumentException(SR.NonPackAppAbsoluteUriNotAllowed);
             }
@@ -640,9 +640,9 @@ namespace System.Windows
             if (uriRemote.OriginalString == null)
                 throw new ArgumentException(SR.Format(SR.ArgumentPropertyMustNotBeNull, "uriRemote", "OriginalString"));
 
-            if (uriRemote.IsAbsoluteUri == true)
+            if (uriRemote.IsAbsoluteUri)
             {
-                if (BaseUriHelper.SiteOfOriginBaseUri.IsBaseOf(uriRemote) != true)
+                if (!BaseUriHelper.SiteOfOriginBaseUri.IsBaseOf(uriRemote))
                 {
                     throw new ArgumentException(SR.NonPackSooAbsoluteUriNotAllowed);
                 }
@@ -699,7 +699,7 @@ namespace System.Windows
             }
 
             // When stream is not null, sooPart cannot be null either
-            Debug.Assert( ((stream != null) && (sooPart == null)) != true,  "When stream is not null, sooPart cannot be null either");
+            Debug.Assert(stream == null || sooPart != null,  "When stream is not null, sooPart cannot be null either");
 
             return (stream == null) ? null : new StreamResourceInfo(stream, sooPart.ContentType);
         }
@@ -836,7 +836,7 @@ namespace System.Windows
                 {
                     throw new InvalidEnumArgumentException("value", (int)value, typeof(ShutdownMode));
                 }
-                if (IsShuttingDown == true || _appIsShutdown == true)
+                if (IsShuttingDown || _appIsShutdown)
                 {
                     throw new InvalidOperationException(SR.ShutdownModeWhenAppShutdown);
                 }
@@ -1529,7 +1529,7 @@ namespace System.Windows
 
             if (StartupUri != null)
             {
-                if (StartupUri.IsAbsoluteUri == false)
+                if (!StartupUri.IsAbsoluteUri)
                 {
                     // Resolve it against the ApplicationMarkupBaseUri.
                     StartupUri = new Uri(ApplicationMarkupBaseUri, StartupUri);
@@ -1586,7 +1586,7 @@ namespace System.Windows
         /// </summary>
         internal virtual void DoShutdown()
         {
-            Debug.Assert(CheckAccess() == true, "DoShutdown can only be called on the Dispatcer thread");
+            Debug.Assert(CheckAccess(), "DoShutdown can only be called on the Dispatcer thread");
             // We need to know if we have been shut down already.
             // We cannot check the IsShuttingDown variable because it is set true
             // in the function that calls us.
@@ -1676,19 +1676,19 @@ namespace System.Windows
             // In this case, we should throw an exception when Run is called for the second time.
             // When app is shutdown, _appIsShutdown is set to true.  If it is true here, then we
             // throw an exception
-            if (_appIsShutdown == true)
+            if (_appIsShutdown)
             {
                 throw new InvalidOperationException(SR.Format(SR.CannotCallRunMultipleTimes, this.GetType().FullName));
             }
 
             if (window != null)
             {
-                if (window.CheckAccess() == false)
+                if (!window.CheckAccess())
                 {
                     throw new ArgumentException(SR.Format(SR.WindowPassedShouldBeOnApplicationThread, window.GetType().FullName, this.GetType().FullName));
                 }
 
-                if (WindowsInternal.HasItem(window) == false)
+                if (!WindowsInternal.HasItem(window))
                 {
                     WindowsInternal.Add(window);
                 }
@@ -2100,7 +2100,7 @@ namespace System.Windows
             // Event handler exception continuality: if exception occurs in Activate/Deactivate event handlers, our state would not
             // be corrupted because no internal state are affected by Activate/Deactivate. Please check Event handler exception continuality
             // if a state depending on those events is added.
-            if (isActivated == true)
+            if (isActivated)
             {
                 OnActivated(EventArgs.Empty);
             }
@@ -2123,7 +2123,7 @@ namespace System.Windows
             OnSessionEnding( secEventArgs );
 
             // shut down the app if not cancelled
-            if ( secEventArgs.Cancel == false )
+            if (!secEventArgs.Cancel)
             {
                 Shutdown();
                 // return true to the wnd proc to signal that we can terminate properly
@@ -2149,7 +2149,7 @@ namespace System.Windows
             {
                 // calling thread is the same as the wc[i] thread so synchronously invalidate
                 // resouces, else, post a dispatcher workitem to invalidate resources.
-                if (wc[i].CheckAccess() == true)
+                if (wc[i].CheckAccess())
                 {
                     // Set the ShouldLookupImplicitStyles flag on the App's windows
                     // to true if App.Resources has implicit styles.
@@ -2211,7 +2211,7 @@ namespace System.Windows
             finally
             {
                 // Quit the dispatcher if we ran our own.
-                if (_ownDispatcherStarted == true)
+                if (_ownDispatcherStarted)
                 {
                     Dispatcher.CriticalInvokeShutdown();
                 }

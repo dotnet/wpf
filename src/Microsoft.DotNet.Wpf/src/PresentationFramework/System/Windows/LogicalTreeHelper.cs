@@ -90,7 +90,7 @@ namespace System.Windows
             {
                 childEnumerator.Reset();
                 while( namedElement == null &&
-                       childEnumerator.MoveNext() == true)
+                       childEnumerator.MoveNext())
                 {
                     childNode = childEnumerator.Current as DependencyObject;
 

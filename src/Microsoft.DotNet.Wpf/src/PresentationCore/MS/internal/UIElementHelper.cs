@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -189,7 +189,7 @@ namespace MS.Internal
             e = o as UIElement;
             if (e != null)
             {
-                if (e.HasAutomationPeer == true)
+                if (e.HasAutomationPeer)
                     ap = e.GetAutomationPeer();
             }
             else
@@ -197,7 +197,7 @@ namespace MS.Internal
                 ce = o as ContentElement;
                 if (ce != null)
                 {
-                    if (ce.HasAutomationPeer == true)
+                    if (ce.HasAutomationPeer)
                         ap = ce.GetAutomationPeer();
                 }
                 else
@@ -205,7 +205,7 @@ namespace MS.Internal
                     e3d = o as UIElement3D;
                     if (e3d != null)
                     {
-                        if (e3d.HasAutomationPeer == true)
+                        if (e3d.HasAutomationPeer)
                             ap = e3d.GetAutomationPeer();
                     }
                 }

@@ -629,7 +629,7 @@ namespace System.Windows.Controls
             // in this case.
             //
             // See MenuBase.OnIsKeyboardFocusWithinChanged
-            if((bool)e.NewValue == false)
+            if(!(bool)e.NewValue)
             {
                 _weakRefToPreviousFocus = null;
             }

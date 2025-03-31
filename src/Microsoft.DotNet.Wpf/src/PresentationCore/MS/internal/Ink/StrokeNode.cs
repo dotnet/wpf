@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -34,7 +34,7 @@ namespace MS.Internal.Ink
             bool isLastNode)
         {
             System.Diagnostics.Debug.Assert(operations != null);
-            System.Diagnostics.Debug.Assert((nodeData.IsEmpty == false) && (index >= 0));
+            System.Diagnostics.Debug.Assert((!nodeData.IsEmpty) && (index >= 0));
           
 
             _operations = operations;
@@ -863,7 +863,7 @@ namespace MS.Internal.Ink
         /// <returns></returns>
         internal StrokeFIndices CutTest(StrokeNode hitNode)
         {
-            if ((IsValid == false) || (hitNode.IsValid == false))
+            if ((!IsValid) || (!hitNode.IsValid))
             {
                 return StrokeFIndices.Empty;
             }
@@ -886,7 +886,7 @@ namespace MS.Internal.Ink
         /// <returns></returns>
         internal StrokeFIndices CutTest(Point begin, Point end)
         {
-            if (IsValid == false)
+            if (!IsValid)
             {
                 return StrokeFIndices.Empty;
             }
@@ -915,7 +915,7 @@ namespace MS.Internal.Ink
         {
             System.Diagnostics.Debug.Assert(IsValid && (_index >= 0));
 
-            if (fragment.IsEmpty == false)
+            if (!fragment.IsEmpty)
             {
                 // Adjust only findices which are on this segment of thew spine (i.e. between 0 and 1)
                 if (!DoubleUtil.AreClose(fragment.BeginFIndex, StrokeFIndices.BeforeFirst))
@@ -1000,7 +1000,7 @@ namespace MS.Internal.Ink
             {
                 System.Diagnostics.Debug.Assert(IsValid);
 
-                if (_isQuadCached == false)
+                if (!_isQuadCached)
                 {
                     _connectingQuad = _operations.GetConnectingQuad(_lastNode, _thisNode);
                     _isQuadCached = true;

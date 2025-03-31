@@ -439,7 +439,7 @@ namespace MS.Internal.AutomationProxies
             {
                 CPRect r = rectList[i];
 
-                if (r._fNotCovered == true && (r._right - r._left) * (r._bottom - r._top) > 0)
+                if (r._fNotCovered && (r._right - r._left) * (r._bottom - r._top) > 0)
                 {
                     // Skip if the rectangle is empty
                     if (r._right > r._left && r._bottom > r._top)

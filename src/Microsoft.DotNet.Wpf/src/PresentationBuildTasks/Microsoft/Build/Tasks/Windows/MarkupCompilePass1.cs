@@ -974,7 +974,7 @@ namespace Microsoft.Build.Tasks.Windows
                     break;
             }
 
-            if (isSupported == false)
+            if (!isSupported)
             {
                 Log.LogErrorWithCodeFromResources(nameof(SR.TargetIsNotSupported), outputType);
 
@@ -1020,7 +1020,7 @@ namespace Microsoft.Build.Tasks.Windows
 
                 bValidItem = IsValidInputFile(inputItem.ItemSpec);
 
-                if (bValidItem == false)
+                if (!bValidItem)
                 {
                     bValid = false;
                 }

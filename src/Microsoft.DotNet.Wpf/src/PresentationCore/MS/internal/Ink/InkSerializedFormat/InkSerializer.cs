@@ -118,7 +118,7 @@ namespace MS.Internal.Ink.InkSerializedFormat
                         DecodeRawISF(ms);
                     }
                 }
-                else if (true == isGif)
+                else if (isGif)
                 {
                     DecodeRawISF(SystemDrawingHelper.GetCommentFromGifStream(inkData));
                 }
@@ -1468,7 +1468,7 @@ namespace MS.Internal.Ink.InkSerializedFormat
                 }
             }
 
-            if (false == fSetDefault)
+            if (!fSetDefault)
             {
                 // We will come here if the property is not found in the Optional List
                 // All other cases, we will have only default values
@@ -2550,7 +2550,7 @@ namespace MS.Internal.Ink.InkSerializedFormat
                         break;
                     }
                 }
-                if (false == fMatch)
+                if (!fMatch)
                 {
                     _strokeDescriptorTable.Add(strokeDescriptor);
                     _strokeLookupTable[stroke].StrokeDescriptorTableIndex = (uint)_strokeDescriptorTable.Count - 1;
@@ -2579,7 +2579,7 @@ namespace MS.Internal.Ink.InkSerializedFormat
                     }
                 }
 
-                if (false == fMatch)
+                if (!fMatch)
                 {
                     _metricTable.Add(metricBlock);
                     _strokeLookupTable[stroke].MetricDescriptorTableIndex = (uint)(_metricTable.Count - 1);
@@ -2596,7 +2596,7 @@ namespace MS.Internal.Ink.InkSerializedFormat
                 // First check to see if this matches with any existing Transform Blocks
                 for (int i = 0; i < _transformTable.Count; i++)
                 {
-                    if (true == xform.Compare(_transformTable[i]))
+                    if (xform.Compare(_transformTable[i]))
                     {
                         fMatch = true;
                         _strokeLookupTable[stroke].TransformTableIndex = (uint)i;
@@ -2604,7 +2604,7 @@ namespace MS.Internal.Ink.InkSerializedFormat
                     }
                 }
 
-                if (false == fMatch)
+                if (!fMatch)
                 {
                     _transformTable.Add(xform);
                     _strokeLookupTable[stroke].TransformTableIndex = (uint)(_transformTable.Count - 1);
@@ -2618,7 +2618,7 @@ namespace MS.Internal.Ink.InkSerializedFormat
                 // First check to see if this matches with any existing transform blocks
                 for (int i = 0; i < _drawingAttributesTable.Count; i++)
                 {
-                    if (true == drattrs.Equals(_drawingAttributesTable[i]))
+                    if (drattrs.Equals(_drawingAttributesTable[i]))
                     {
                         fMatch = true;
                         _strokeLookupTable[stroke].DrawingAttributesTableIndex = (uint)i;
@@ -2626,7 +2626,7 @@ namespace MS.Internal.Ink.InkSerializedFormat
                     }
                 }
 
-                if (false == fMatch)
+                if (!fMatch)
                 {
                     _drawingAttributesTable.Add(drattrs);
                     _strokeLookupTable[stroke].DrawingAttributesTableIndex = (uint)_drawingAttributesTable.Count - 1;

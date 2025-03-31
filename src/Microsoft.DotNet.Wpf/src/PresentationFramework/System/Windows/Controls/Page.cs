@@ -169,7 +169,7 @@ namespace System.Windows.Controls
                     PageHelperObject._windowTitle = value;
                     PropertyIsSet(SetPropertyFlags.WindowTitle);
                 }
-                else if (_isTopLevel == true) // only top level page can set this property
+                else if (_isTopLevel) // only top level page can set this property
                 {
                     WindowService.Title = value;
                     PropertyIsSet(SetPropertyFlags.WindowTitle);
@@ -224,7 +224,7 @@ namespace System.Windows.Controls
                     PageHelperObject._windowHeight = value;
                     PropertyIsSet(SetPropertyFlags.WindowHeight);
                 }
-                else if (_isTopLevel == true)// only top level page can set this property
+                else if (_isTopLevel)// only top level page can set this property
                 {
                     if (!WindowService.UserResized)
                     {
@@ -276,7 +276,7 @@ namespace System.Windows.Controls
                     PageHelperObject._windowWidth = value;
                     PropertyIsSet(SetPropertyFlags.WindowWidth);
                 }
-                else if (_isTopLevel == true) // only top level page can set this property
+                else if (_isTopLevel) // only top level page can set this property
                 {
                     if (!WindowService.UserResized)
                     {
@@ -382,7 +382,7 @@ namespace System.Windows.Controls
                     PageHelperObject._showsNavigationUI = value;
                     PropertyIsSet(SetPropertyFlags.ShowsNavigationUI);
                 }
-                else if (_isTopLevel == true) // only top level page can set this property
+                else if (_isTopLevel) // only top level page can set this property
                 {
                     SetShowsNavigationUI(value);
                     PropertyIsSet(SetPropertyFlags.ShowsNavigationUI);
@@ -693,7 +693,7 @@ namespace System.Windows.Controls
                 }
             }
 
-            if (isParentValid == false)
+            if (!isParentValid)
             {
                 throw new InvalidOperationException(SR.ParentOfPageMustBeWindowOrFrame);
             }
@@ -745,7 +745,7 @@ namespace System.Windows.Controls
 
             if (_currentIws != null)
             {
-                if (_isTopLevel == true)
+                if (_isTopLevel)
                 {
                     PropagateProperties();
                 }

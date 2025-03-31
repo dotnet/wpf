@@ -6,7 +6,7 @@ namespace System.Windows.Controls;
 public partial class Grid
 {
     /// <summary>
-    /// Helper class for representing a key for a span in <see cref="Dictionary{TKey, TValue}"/>.
+    /// Helper struct for representing a key for a span in <see cref="Dictionary{TKey, TValue}"/>.
     /// </summary>
     private readonly struct GridSpanKey : IEquatable<GridSpanKey>
     {
@@ -21,8 +21,8 @@ public partial class Grid
         internal int Count { get; }
 
         /// <summary>
-        /// Returns <c>true</c> if this is a column span.
-        /// <c>false</c> if this is a row span.
+        /// Returns <see langword="true"/> if this is a column span.
+        /// <see langword="false"/> if this is a row span.
         /// </summary>
         internal bool U { get; }
 
@@ -31,7 +31,7 @@ public partial class Grid
         /// </summary>
         /// <param name="start">Starting index of the span.</param>
         /// <param name="count">Span count.</param>
-        /// <param name="u"><c>true</c> for columns; <c>false</c> for rows.</param>
+        /// <param name="u"><see langword="true"/> for columns; <see langword="false"/> for rows.</param>
         internal GridSpanKey(int start, int count, bool u)
         {
             Start = start;

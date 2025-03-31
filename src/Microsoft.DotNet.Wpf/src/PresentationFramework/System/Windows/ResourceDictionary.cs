@@ -735,12 +735,11 @@ namespace System.Windows
                 }
 
                 containsBamlObjectFactory = keyRecord is not null;
-            }
 
-            if (contains
-                && containsBamlObjectFactory)
-            {
-                return;
+                if (containsBamlObjectFactory)
+                {
+                    return;
+                }
             }
 
             //Search for the value in the Merged Dictionaries
@@ -754,14 +753,8 @@ namespace System.Windows
                     {
                         mergedDictionary.Contains(key, mustReturnDeferredResourceReference, out contains, out containsBamlObjectFactory);
 
-                        if (mustReturnDeferredResourceReference
-                            && contains)
-                        {
-                            return;
-                        }
-
-                        if (contains
-                            && containsBamlObjectFactory)
+                        if (containsBamlObjectFactory
+                            || (mustReturnDeferredResourceReference && contains))
                         {
                             return;
                         }

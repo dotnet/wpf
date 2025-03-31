@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
 using System.Windows.Input;
@@ -52,21 +52,21 @@ namespace System.Windows.Automation.Peers
 
             return element.GetAutomationPeer();
         }
+
+        public delegate bool IteratorCallback<T>(ref T capture, AutomationPeer peer);
             
          /// 
         override protected List<AutomationPeer> GetChildrenCore()
         {
             List<AutomationPeer> children = null;
 
-            iterate(_owner,
-                    (IteratorCallback)delegate(AutomationPeer peer)
-                    {
-                        if (children == null)
-                            children = new List<AutomationPeer>();
+            Iterate(_owner, ref children, static (ref List<AutomationPeer> children, AutomationPeer peer) =>
+            {
+                children ??= new List<AutomationPeer>();
+                children.Add(peer);
 
-                        children.Add(peer);
-                        return (false);
-                    });
+                return false;
+            });
 
             return children;
         }
@@ -76,14 +76,14 @@ namespace System.Windows.Automation.Peers
         {
             AutomationPeer root = null;
 
-            iterate(rootVisual,
-                    (IteratorCallback)delegate(AutomationPeer peer)
-                    {
-                        root = peer;
-                        return (true);
-                    });
+            Iterate(rootVisual, ref root, static (ref AutomationPeer root, AutomationPeer peer) =>
+            {
+                root = peer;
 
-            if (root != null)
+                return true;
+            });
+
+            if (root is not null)
             {
                 root.Hwnd = hwnd;
             }
@@ -91,40 +91,35 @@ namespace System.Windows.Automation.Peers
             return root;
         }
 
-        private delegate bool IteratorCallback(AutomationPeer peer);
-
-        //
-        private static bool iterate(DependencyObject parent, IteratorCallback callback)
+        /// <summary>
+        /// Iterates through the children of the given <paramref name="parent"/> and either attempts to create
+        /// or retrieve the current <see cref="AutomationPeer"/> for the given <see cref="UIElement"/> / <see cref="UIElement3D"/>.
+        /// </summary>
+        private static bool Iterate<T>(DependencyObject parent, ref T callbackParameter, IteratorCallback<T> callback)
         {
+            // If there's no parent, there are no children
+            if (parent is null)
+                return false;
+
+            int childrenCount = VisualTreeHelper.GetChildrenCount(parent);
             bool done = false;
 
-            if(parent != null)
+            for (int i = 0; i < childrenCount && !done; i++)
             {
-                AutomationPeer peer = null;
-                int count = VisualTreeHelper.GetChildrenCount(parent);
-                for (int i = 0; i < count && !done; i++)
+                DependencyObject child = VisualTreeHelper.GetChild(parent, i);
+                AutomationPeer peer;
+
+                if ((child is UIElement uiElement && (peer = uiElement.CreateAutomationPeer()) is not null) ||
+                    (child is UIElement3D uiElement3D && (peer = uiElement3D.CreateAutomationPeer()) is not null))
                 {
-                    DependencyObject child = VisualTreeHelper.GetChild(parent, i);
-                    
-                    if(     child != null
-                        &&  child is UIElement 
-                        &&  (peer = CreatePeerForElement((UIElement)child)) != null  )
-                    {
-                        done = callback(peer);
-                    }
-                    else if ( child != null
-                        &&    child is UIElement3D
-                        &&    (peer = UIElement3DAutomationPeer.CreatePeerForElement(((UIElement3D)child))) != null )
-                    {
-                        done = callback(peer);
-                    }
-                    else
-                    {
-                        done = iterate(child, callback);
-                    }
+                    done = callback(ref callbackParameter, peer);
+                }
+                else
+                {
+                    done = Iterate(child, ref callbackParameter, callback);
                 }
             }
-            
+
             return done;
         }
 

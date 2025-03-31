@@ -91,17 +91,18 @@ namespace MS.Internal
         {
             for (int i = 0; i < parameters.Length; i++)
             {
-                object o = parameters[i];
+                object objectParam = parameters[i];
                 traceBuilder.Append(" ");
-                if (o is string s)
+
+                if (objectParam is string stringValue)
                 {
-                    traceBuilder.Append(s);
+                    traceBuilder.Append(stringValue);
                 }
-                else if (o != null)
+                else if (objectParam is not null)
                 {
-                    traceBuilder.Append(o.GetType().Name);
+                    traceBuilder.Append(objectParam.GetType().Name);
                     traceBuilder.Append(":");
-                    Describe(traceBuilder, o);
+                    Describe(traceBuilder, objectParam);
                 }
                 else
                 {

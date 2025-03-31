@@ -249,12 +249,10 @@ namespace MS.Internal
         public string Trace(TraceEventType type, int eventId, string message, string[] labels, params ReadOnlySpan<object> parameters)
         {
             // Don't bother building the string if this trace is going to be ignored.
-
-            if (_traceSource == null || !_traceSource.Switch.ShouldTrace(type))
+            if (_traceSource is null || !_traceSource.Switch.ShouldTrace(type))
                 return null;
 
             // Compose the trace string.
-
             AvTraceBuilder traceBuilder = new AvTraceBuilder(AntiFormat(message)); // Holds the format string
             object[] combinedArgs = null; // Holds the combined labels & parameters arrays.
             int formatIndex = 0;
@@ -264,7 +262,7 @@ namespace MS.Internal
                 // Create array of pre-computed size
                 int combinedArgsLength = Math.Min(labels.Length - 1, parameters.Length) * 2;
                 if (combinedArgsLength > 0)
-                    combinedArgs = new object[combinedArgsLength];             
+                    combinedArgs = new object[combinedArgsLength];
 
                 int i = 1, j = 0;
                 for (; i < labels.Length && j < parameters.Length; i++, j++)
@@ -278,14 +276,13 @@ namespace MS.Internal
 
                     // If the parameter is null, convert to "<null>"; otherwise,
                     // when a string.format is ultimately called it produces bad results.
-                    if (parameters[j] == null)
+                    if (parameters[j] is null)
                     {
                         combinedArgs[j * 2 + 1] = "<null>";
                     }
 
                     // Otherwise, if this is an interesting object, add the hash code and type to
                     // the format string explicitly.
-
                     else if (!SuppressGeneratedParameters
                              && parameters[j].GetType() != typeof(string)
                              && parameters[j] is not ValueType
@@ -296,10 +293,10 @@ namespace MS.Internal
                         traceBuilder.Append($"; {labels[i]}.Type='{GetTypeHelper(parameters[j])}'");
 
                         // Add the parameter to the combined list.
-
                         combinedArgs[j * 2 + 1] = parameters[j];
                     }
-                    else // Add the parameter to the combined list.
+                    // Add the parameter to the combined list.
+                    else
                     {
                         combinedArgs[j * 2 + 1] = parameters[j];
                     }
@@ -307,8 +304,7 @@ namespace MS.Internal
 
                 // It's OK if we terminate because we have more labels than parameters;
                 // this is used by traces to have out-values in the Stop message.
-
-                if (TraceExtraMessages != null && j < parameters.Length)
+                if (TraceExtraMessages is not null && j < parameters.Length)
                 {
                     TraceExtraMessages(traceBuilder, parameters.Slice(j));
                 }

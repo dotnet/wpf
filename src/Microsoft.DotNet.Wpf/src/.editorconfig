@@ -203,9 +203,6 @@ dotnet_diagnostic.IDE0063.severity = suggestion
 # IDE0066: Convert switch statement to expression
 dotnet_diagnostic.IDE0066.severity = suggestion
 
-# IDE0073: The file header is missing or not located at the top of the file
-dotnet_diagnostic.IDE0073.severity = suggestion
-
 # IDE0074: Use compound assignment
 dotnet_diagnostic.IDE0074.severity = suggestion
 

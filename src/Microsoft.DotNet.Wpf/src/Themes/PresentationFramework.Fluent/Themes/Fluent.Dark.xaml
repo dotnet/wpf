@@ -306,6 +306,15 @@
       <GradientStop Offset="1.0" Color="{StaticResource ControlStrokeColorDefault}" />
     </LinearGradientBrush.GradientStops>
   </LinearGradientBrush>
+  <LinearGradientBrush x:Key="TextControlElevationBorderFocusedBrush" MappingMode="Absolute" StartPoint="0,0" EndPoint="0,2">
+    <LinearGradientBrush.RelativeTransform>
+      <ScaleTransform ScaleY="-1" CenterY="0.5" />
+    </LinearGradientBrush.RelativeTransform>
+    <LinearGradientBrush.GradientStops>
+      <GradientStop Offset="1.0" Color="{StaticResource SystemAccentColorLight2}" />
+      <GradientStop Offset="1.0" Color="{StaticResource ControlStrokeColorDefault}" />
+    </LinearGradientBrush.GradientStops>
+  </LinearGradientBrush>
   <SolidColorBrush x:Key="SystemColorWindowTextColorBrush" Color="{StaticResource SystemColorWindowTextColor}" />
   <SolidColorBrush x:Key="SystemColorWindowColorBrush" Color="{StaticResource SystemColorWindowColor}" />
   <SolidColorBrush x:Key="SystemColorButtonFaceColorBrush" Color="{StaticResource SystemColorButtonFaceColor}" />

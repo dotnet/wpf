@@ -168,7 +168,6 @@
     <Compile Include="MS\Internal\FontCache\CanonicalFontFamilyReference.cs" />
     <Compile Include="MS\Internal\FontCache\DWriteFactory.cs" />
     <Compile Include="MS\Internal\FontCache\FamilyCollection.cs" />
-    <Compile Include="MS\Internal\FontCache\fontcacheconstants.cs" />
     <Compile Include="MS\Internal\FontCache\FontCacheUtil.cs" />
     <Compile Include="MS\Internal\FontCache\FontFaceLayoutInfo.cs" />
     <Compile Include="MS\Internal\FontCache\FontResourceCache.cs" />
@@ -265,11 +264,8 @@
     <Compile Include="MS\Internal\Shaping\IShapeableTextCollector.cs" />
     <Compile Include="MS\Internal\Shaping\OpenTypeCommon.cs" />
     <Compile Include="MS\Internal\Shaping\OpenTypeLayout.cs" />
-    <Compile Include="MS\Internal\Shaping\OpenTypeLayoutCache.cs" />
     <Compile Include="MS\Internal\Shaping\Positioning.cs" />
-    <Compile Include="MS\Internal\Shaping\ShaperBuffers.cs" />
     <Compile Include="MS\Internal\Shaping\ShapeTypeface.cs" />
-    <Compile Include="MS\Internal\Shaping\ShapingOptions.cs" />
     <Compile Include="MS\Internal\Shaping\Substitution.cs" />
     <Compile Include="MS\Internal\Shaping\TypefaceMap.cs" />
     <Compile Include="MS\Internal\Shaping\UshortList2.cs" />

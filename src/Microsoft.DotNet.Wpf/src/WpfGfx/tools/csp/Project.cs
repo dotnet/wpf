@@ -10,15 +10,13 @@
 //              a set of "C# prime" files, then executes the project.
 //
 
+using System.CodeDom.Compiler;
+using System.Collections;
+using System.Reflection;
+using System.Text;
+
 namespace MS.Internal.Csp
 {
-    using System;
-    using System.IO;
-    using System.Text;
-    using System.Collections;
-    using System.Reflection;
-    using System.CodeDom.Compiler;
-
     // This kind of exception is thrown when csp detects an
     // error in the project.
     public class CspProjectException : ApplicationException

@@ -11,14 +11,12 @@
 //
 //
 
+using System.Text.RegularExpressions;
+using System.Collections;
+using System.Text;
+
 namespace MS.Internal.Csp
 {
-    using System;
-    using System.IO;
-    using System.Text;
-    using System.Text.RegularExpressions;
-    using System.Collections;
-
     internal sealed class CsPrimeParser
     {
         private struct Position

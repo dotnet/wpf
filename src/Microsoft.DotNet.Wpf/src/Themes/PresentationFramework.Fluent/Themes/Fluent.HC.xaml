@@ -201,6 +201,7 @@
   <SolidColorBrush x:Key="CircleElevationBorderBrush" Color="{StaticResource SystemColorWindowTextColor}" />
   <SolidColorBrush x:Key="AccentControlElevationBorderBrush" Color="{StaticResource SystemColorWindowTextColor}" />
   <SolidColorBrush x:Key="TextControlElevationBorderBrush" Color="{StaticResource SystemColorWindowTextColor}" />
+  <SolidColorBrush x:Key="TextControlElevationBorderFocusedBrush" Color="{StaticResource SystemColorHighlightColor}" />
   <SolidColorBrush x:Key="SystemColorWindowTextColorBrush" Color="{StaticResource SystemColorWindowTextColor}" />
   <SolidColorBrush x:Key="SystemColorWindowColorBrush" Color="{StaticResource SystemColorWindowColor}" />
   <SolidColorBrush x:Key="SystemColorButtonFaceColorBrush" Color="{StaticResource SystemColorButtonFaceColor}" />

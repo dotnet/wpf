@@ -79,14 +79,11 @@ namespace System.Windows.Interop
         /// constructor for ActiveXHost
         internal ActiveXHost(Guid clsid, bool fTrusted ) : base( fTrusted )
         {
-            // Thread.ApartmentState is [Obsolete]
-            #pragma warning disable 0618
             // What if the control is marked as free-threaded?
-            if (Thread.CurrentThread.ApartmentState != ApartmentState.STA)
+            if (Thread.CurrentThread.GetApartmentState() is not ApartmentState.STA)
             {
                 throw new ThreadStateException(SR.Format(SR.AxRequiresApartmentThread, clsid.ToString()));
             }
-            #pragma warning restore 0618
 
             _clsid = clsid;
 

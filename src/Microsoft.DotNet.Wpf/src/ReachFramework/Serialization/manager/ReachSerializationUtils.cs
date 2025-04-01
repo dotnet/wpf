@@ -1172,19 +1172,13 @@ namespace System.Windows.Xps.Serialization
         Size
         ValidateDocumentSize(Size documentSize, PrintTicket printTicket)
         {
-            if (documentSize.Width == 0 ||
-               documentSize.Height == 0 ||
-               double.IsNaN(documentSize.Width) ||
-               double.IsNaN(documentSize.Height) ||
-               Double.IsPositiveInfinity(documentSize.Width) ||
-               Double.IsPositiveInfinity(documentSize.Height) ||
-               Double.IsNegativeInfinity(documentSize.Width) ||
-               Double.IsNegativeInfinity(documentSize.Height)
-               )
+            if (documentSize.Width == 0 || documentSize.Height == 0 ||
+                !double.IsFinite(documentSize.Width) ||
+                !double.IsFinite(documentSize.Height))
             {
                 Size sz = new Size(0, 0);
 
-                //if print ticket definied, use printTicket dimensions
+                // if print ticket defined, use printTicket dimensions
                 if (printTicket != null &&
                     printTicket.PageMediaSize != null &&
                     printTicket.PageMediaSize.Width.HasValue &&

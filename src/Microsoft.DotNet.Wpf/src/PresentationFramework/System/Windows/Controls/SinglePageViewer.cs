@@ -1445,7 +1445,8 @@ namespace System.Windows.Controls
         private static bool ZoomValidateValue(object o)
         {
             double value = (double)o;
-            return (!Double.IsNaN(value) && !Double.IsInfinity(value) && DoubleUtil.GreaterThanZero(value));
+
+            return double.IsFinite(value) && DoubleUtil.GreaterThanZero(value);
         }
 
         /// <summary>

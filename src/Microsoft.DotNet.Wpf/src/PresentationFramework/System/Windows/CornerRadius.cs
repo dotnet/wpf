@@ -190,53 +190,14 @@ namespace System.Windows
 
         #region Internal Methods Properties
 
-        internal bool IsValid(bool allowNegative, bool allowNaN, bool allowPositiveInfinity, bool allowNegativeInfinity)
+        internal readonly bool IsValid()
         {
-            if (!allowNegative)
+            if (_topLeft < 0d || _topRight < 0d || _bottomLeft < 0d || _bottomRight < 0d)
             {
-                if (_topLeft < 0d || _topRight < 0d || _bottomLeft < 0d || _bottomRight < 0d)
-                {
-                    return (false);
-                }
+                return false;
             }
 
-            if (!allowNaN)
-            {
-                if (double.IsNaN(_topLeft) || double.IsNaN(_topRight) || double.IsNaN(_bottomLeft) || double.IsNaN(_bottomRight))
-                {
-                    return (false);
-                }
-            }
-
-            if (!allowPositiveInfinity)
-            {
-                if (Double.IsPositiveInfinity(_topLeft) || Double.IsPositiveInfinity(_topRight) || Double.IsPositiveInfinity(_bottomLeft) || Double.IsPositiveInfinity(_bottomRight))
-                {
-                    return (false);
-                }
-            }
-
-            if (!allowNegativeInfinity)
-            {
-                if (Double.IsNegativeInfinity(_topLeft) || Double.IsNegativeInfinity(_topRight) || Double.IsNegativeInfinity(_bottomLeft) || Double.IsNegativeInfinity(_bottomRight))
-                {
-                    return (false);
-                }
-            }
-
-            return (true);
-        }
-
-        internal bool IsZero
-        {
-            get
-            {
-                return (    DoubleUtil.IsZero(_topLeft)
-                        &&  DoubleUtil.IsZero(_topRight)
-                        &&  DoubleUtil.IsZero(_bottomRight)
-                        &&  DoubleUtil.IsZero(_bottomLeft)
-                        );
-            }
+            return double.IsFinite(_topLeft) && double.IsFinite(_topRight) && double.IsFinite(_bottomLeft) && double.IsFinite(_bottomRight);
         }
 
         #endregion Internal Methods Properties

@@ -519,13 +519,15 @@ namespace System.Windows.Shapes
         // Double verification helpers.  Property system will verify type for us; we only need to verify the value.
         internal static bool IsDoubleFiniteNonNegative(object o)
         {
-            double d = (double)o;
-            return !(Double.IsInfinity(d) || double.IsNaN(d) || d < 0.0);
+            double value = (double)o;
+
+            return double.IsFinite(value) && value >= 0.0;
         }
         internal static bool IsDoubleFinite(object o)
         {
-            double d = (double)o;
-            return !(Double.IsInfinity(d) || double.IsNaN(d));
+            double value = (double)o;
+
+            return double.IsFinite(value);
         }
         internal static bool IsDoubleFiniteOrNaN(object o)
         {

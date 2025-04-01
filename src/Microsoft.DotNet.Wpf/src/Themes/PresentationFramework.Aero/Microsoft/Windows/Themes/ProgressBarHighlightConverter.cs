@@ -47,8 +47,7 @@ namespace Microsoft.Windows.Themes
             double height = (double)values[2];
 
             // if an invalid height, return a null brush
-            if (width <= 0.0 || Double.IsInfinity(width) || Double.IsNaN(width) ||
-                height <= 0.0 || Double.IsInfinity(height) || Double.IsNaN(height) )
+            if (width <= 0.0 || !double.IsFinite(width) || height <= 0.0 || !double.IsFinite(height))
             {
                 return null;
             }

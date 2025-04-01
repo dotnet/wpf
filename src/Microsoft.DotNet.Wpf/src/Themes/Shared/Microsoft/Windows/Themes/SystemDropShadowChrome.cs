@@ -65,8 +65,7 @@ namespace Microsoft.Windows.Themes
         {
             CornerRadius cr = (CornerRadius)value;
             return !(cr.TopLeft < 0.0 || cr.TopRight < 0.0 || cr.BottomLeft < 0.0 || cr.BottomRight < 0.0 ||
-                     double.IsNaN(cr.TopLeft) || double.IsNaN(cr.TopRight) || double.IsNaN(cr.BottomLeft) || double.IsNaN(cr.BottomRight) ||
-                     double.IsInfinity(cr.TopLeft) || double.IsInfinity(cr.TopRight) || double.IsInfinity(cr.BottomLeft) || double.IsInfinity(cr.BottomRight));
+                     !double.IsFinite(cr.TopLeft) || !double.IsFinite(cr.TopRight) || !double.IsFinite(cr.BottomLeft) || !double.IsFinite(cr.BottomRight));
         }
 
         /// <summary>

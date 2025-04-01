@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
 
@@ -81,7 +81,7 @@ namespace Microsoft.Windows.Controls
             }
             set
             {
-                if (double.IsInfinity(value) || double.IsNaN(value))
+                if (!double.IsFinite(value))
                 {
                     throw new ArgumentException(Microsoft.Windows.Controls.SR.InvalidKeyTipOffset);
                 }
@@ -100,7 +100,7 @@ namespace Microsoft.Windows.Controls
             }
             set
             {
-                if (double.IsInfinity(value) || double.IsNaN(value))
+                if (!double.IsFinite(value))
                 {
                     throw new ArgumentException(Microsoft.Windows.Controls.SR.InvalidKeyTipOffset);
                 }

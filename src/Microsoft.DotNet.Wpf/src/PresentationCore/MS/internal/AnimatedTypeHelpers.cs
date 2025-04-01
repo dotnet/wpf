@@ -632,12 +632,7 @@ namespace MS.Internal.PresentationCore
 
         internal static bool IsValidAnimationValueDouble(Double value)
         {
-            if (IsInvalidDouble(value))
-            {
-                return false;
-            }
-
-            return true;
+            return double.IsFinite(value);
         }
 
         internal static bool IsValidAnimationValueInt16(Int16 value)
@@ -662,45 +657,23 @@ namespace MS.Internal.PresentationCore
 
         internal static bool IsValidAnimationValuePoint(Point value)
         {
-            if (IsInvalidDouble(value.X) || IsInvalidDouble(value.Y))
-            {
-                return false;
-            }
-
-            return true;
+            return double.IsFinite(value.X) && double.IsFinite(value.Y);
         }
 
         internal static bool IsValidAnimationValuePoint3D(Point3D value)
         {
-            if (IsInvalidDouble(value.X) || IsInvalidDouble(value.Y) || IsInvalidDouble(value.Z))
-            {
-                return false;
-            }
-
-            return true;
+            return double.IsFinite(value.X) && double.IsFinite(value.Y) && double.IsFinite(value.Z);
         }
 
         internal static bool IsValidAnimationValueQuaternion(Quaternion value)
         {
-            if (   IsInvalidDouble(value.X) || IsInvalidDouble(value.Y)
-                || IsInvalidDouble(value.Z) || IsInvalidDouble(value.W))
-            {
-                return false;
-            }
-
-            return true;
+            return double.IsFinite(value.X) && double.IsFinite(value.Y) && double.IsFinite(value.Z) && double.IsFinite(value.W);
         }
 
         internal static bool IsValidAnimationValueRect(Rect value)
         {
-            if (   IsInvalidDouble(value.Location.X) || IsInvalidDouble(value.Location.Y)
-                || IsInvalidDouble(value.Size.Width) || IsInvalidDouble(value.Size.Height)
-                || value.IsEmpty)
-            {
-                return false;
-            }
-
-            return true;
+            return double.IsFinite(value.Location.X) && double.IsFinite(value.Location.Y) &&
+                   double.IsFinite(value.Size.Width) && double.IsFinite(value.Size.Height) && !value.IsEmpty;
         }
 
         internal static bool IsValidAnimationValueRotation3D(Rotation3D value)
@@ -708,49 +681,29 @@ namespace MS.Internal.PresentationCore
             return IsValidAnimationValueQuaternion(value.InternalQuaternion);
         }
 
-        internal static bool IsValidAnimationValueSingle(Single value)
+        internal static bool IsValidAnimationValueSingle(float value)
         {
-            if (IsInvalidDouble(value))
-            {
-                return false;
-            }
-
-            return true;
+            return double.IsFinite(value);
         }
 
         internal static bool IsValidAnimationValueSize(Size value)
         {
-            if (IsInvalidDouble(value.Width) || IsInvalidDouble(value.Height))
-            {
-                return false;
-            }
-
-            return true;
+            return double.IsFinite(value.Width) && double.IsFinite(value.Height);
         }
 
-        internal static bool IsValidAnimationValueString(String value)
+        internal static bool IsValidAnimationValueString(string value)
         {
             return true;
         }
 
-        internal static bool IsValidAnimationValueVector(System.Windows.Vector value)
+        internal static bool IsValidAnimationValueVector(Vector value)
         {
-            if (IsInvalidDouble(value.X) || IsInvalidDouble(value.Y))
-            {
-                return false;
-            }
-
-            return true;
+            return double.IsFinite(value.X) && double.IsFinite(value.Y);
         }
 
         internal static bool IsValidAnimationValueVector3D(Vector3D value)
         {
-            if (IsInvalidDouble(value.X) || IsInvalidDouble(value.Y) || IsInvalidDouble(value.Z))
-            {
-                return false;
-            }
-
-            return true;
+            return double.IsFinite(value.X) && double.IsFinite(value.Y) && double.IsFinite(value.Z);
         }
 
         #endregion
@@ -839,14 +792,5 @@ namespace MS.Internal.PresentationCore
 
         #endregion
 
-        #region Helpers
-
-        private static Boolean IsInvalidDouble(Double value)
-        {
-            return Double.IsInfinity(value)
-                || double.IsNaN(value);
-        }
-
-        #endregion
     }
 }

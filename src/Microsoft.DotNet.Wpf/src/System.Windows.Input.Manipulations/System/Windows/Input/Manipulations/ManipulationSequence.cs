@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
 using System.Collections.Generic;
@@ -272,7 +272,7 @@ namespace System.Windows.Input.Manipulations
                 result = this.cumulativeScale;
             }
 
-            Debug.Assert(!float.IsNaN(result) && !float.IsInfinity(result));
+            Debug.Assert(float.IsFinite(result));
             return result;
         }
 
@@ -1546,11 +1546,11 @@ namespace System.Windows.Input.Manipulations
 
             public ManipulationState(in PointF position, float scale, float expansion, float orientation, Int64 timestamp)
             {
-                Debug.Assert(!float.IsNaN(position.X) && !float.IsNaN(position.Y));
-                Debug.Assert(!float.IsInfinity(position.Y) && !float.IsInfinity(position.Y));
-                Debug.Assert(!float.IsNaN(scale) && !float.IsInfinity(scale) && scale > 0);
-                Debug.Assert(!float.IsNaN(expansion) && !float.IsInfinity(expansion));
-                Debug.Assert(!float.IsNaN(orientation) && !float.IsInfinity(orientation));
+                Debug.Assert(float.IsFinite(position.X));
+                Debug.Assert(float.IsFinite(position.Y));
+                Debug.Assert(float.IsFinite(expansion));
+                Debug.Assert(float.IsFinite(orientation));
+                Debug.Assert(float.IsFinite(scale) && scale > 0);
 
                 Position = position;
                 Scale = scale;

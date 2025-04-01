@@ -795,8 +795,11 @@ namespace System.Windows.Controls
             //  Infinity size from measure, which is a regression from the old scrolling model.
             // They also have the incidental affect of probably avoiding reinvalidation at Arrange
             //   when inside a parent that measures you to Infinity.
-            if (Double.IsInfinity(viewport.Width)) viewport.Width = extent.Width;
-            if (Double.IsInfinity(viewport.Height)) viewport.Height = extent.Height;
+            if (double.IsInfinity(viewport.Width))
+                viewport.Width = extent.Width;
+
+            if (double.IsInfinity(viewport.Height))
+                viewport.Height = extent.Height;
 
             fValid &= DoubleUtil.AreClose(viewport, _scrollData._viewport);
             fValid &= DoubleUtil.AreClose(extent, _scrollData._extent);

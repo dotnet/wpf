@@ -38,17 +38,17 @@ namespace System.Windows.Ink
         ///</summary>
         internal StylusShape(StylusTip tip, double width, double height, double rotation)
         {
-            if (Double.IsNaN(width) || Double.IsInfinity(width) || width < DrawingAttributes.MinWidth || width > DrawingAttributes.MaxWidth)
+            if (!double.IsFinite(width) || width < DrawingAttributes.MinWidth || width > DrawingAttributes.MaxWidth)
             {
                 throw new ArgumentOutOfRangeException(nameof(width));
             }
 
-            if (Double.IsNaN(height) || Double.IsInfinity(height) || height < DrawingAttributes.MinHeight || height > DrawingAttributes.MaxHeight)
+            if (!double.IsFinite(height) || height < DrawingAttributes.MinHeight || height > DrawingAttributes.MaxHeight)
             {
                 throw new ArgumentOutOfRangeException(nameof(height));
             }
 
-            if (Double.IsNaN(rotation) || Double.IsInfinity(rotation))
+            if (!double.IsFinite(rotation))
             {
                 throw new ArgumentOutOfRangeException(nameof(rotation));
             }

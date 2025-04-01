@@ -1834,14 +1834,10 @@ namespace System.Windows.Controls
         {
             VerifyAccess();
 
-            if (double.IsNaN(point.X) ||
-                double.IsNaN(point.Y) ||
-                Double.IsInfinity(point.X)||
-                Double.IsInfinity(point.Y) )
+            if (!double.IsFinite(point.X) || !double.IsFinite(point.Y))
             {
-                    throw new ArgumentException(SR.InvalidPoint, nameof(point));
+                throw new ArgumentException(SR.InvalidPoint, nameof(point));
             }
-
 
             //
             // only do this if the user is not editing (input active)

@@ -1085,9 +1085,7 @@ namespace System.Windows
             {
                 newValue = Math.Round(value * dpiScale) / dpiScale;
                 // If rounding produces a value unacceptable to layout (NaN, Infinity or MaxValue), use the original value.
-                if (double.IsNaN(newValue) ||
-                    Double.IsInfinity(newValue) ||
-                    DoubleUtil.AreClose(newValue, Double.MaxValue))
+                if (!double.IsFinite(newValue) || DoubleUtil.AreClose(newValue, double.MaxValue))
                 {
                     newValue = value;
                 }
@@ -1388,9 +1386,9 @@ namespace System.Windows
 
         private static bool IsRenderTransformOriginValid(object value)
         {
-            Point v = (Point)value;
-            return (    (!double.IsNaN(v.X) && !Double.IsPositiveInfinity(v.X) && !Double.IsNegativeInfinity(v.X))
-                     && (!double.IsNaN(v.Y) && !Double.IsPositiveInfinity(v.Y) && !Double.IsNegativeInfinity(v.Y)));
+            Point origin = (Point)value;
+
+            return double.IsFinite(origin.X) && double.IsFinite(origin.Y);
         }
 
 

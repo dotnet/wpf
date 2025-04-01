@@ -1783,17 +1783,6 @@ namespace System.Windows.Controls
         }
 
         /// <summary>
-        /// Validate Zoom, MaxZoom, MinZoom and ZoomIncrement value.
-        /// </summary>
-        /// <param name="o">Value to validate.</param>
-        /// <returns>True if the value is valid, false otherwise.</returns>
-        private static bool ZoomValidateValue(object o)
-        {
-            double value = (double)o;
-            return (!Double.IsNaN(value) && !Double.IsInfinity(value) && DoubleUtil.GreaterThanZero(value));
-        }
-
-        /// <summary>
         /// PropertyChanged callback for a property that affects the selection or caret rendering.
         /// </summary>
         private static void UpdateCaretElement(DependencyObject d, DependencyPropertyChangedEventArgs e)

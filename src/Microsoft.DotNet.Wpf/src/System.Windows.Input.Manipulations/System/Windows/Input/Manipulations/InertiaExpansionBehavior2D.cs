@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
 namespace System.Windows.Input.Manipulations
@@ -309,7 +309,7 @@ namespace System.Windows.Input.Manipulations
         /// <param name="paramName"></param>
         private static void CheckRadius(float value, string paramName)
         {
-            if (value < 1 || double.IsInfinity(value) || double.IsNaN(value))
+            if (value < 1 || !double.IsFinite(value))
             {
                 throw Exceptions.IllegialInertiaRadius(paramName, value);
             }

@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
 //
@@ -404,8 +404,7 @@ namespace System.Windows.Media.Media3D
                         return;
                     }
 
-                    Debug.Assert(!double.IsInfinity(pz / pw) && !double.IsNaN(pz / pw),
-                        "Expected near/far tests to cull -Inf/+Inf and NaN.");
+                    Debug.Assert(double.IsFinite(pz / pw), "Expected near/far tests to cull -Inf/+Inf and NaN.");
                 }
 
                 double dist = (worldPointHit - rayParams.Origin).Length;
@@ -490,8 +489,7 @@ namespace System.Windows.Media.Media3D
                         return;
                     }
 
-                    Debug.Assert(!double.IsInfinity(pz / pw) && !double.IsNaN(pz / pw),
-                        "Expected near/far tests to cull -Inf/+Inf and NaN.");
+                    Debug.Assert(double.IsFinite(pz / pw), "Expected near/far tests to cull -Inf/+Inf and NaN.");
                 }
 
                 Point3D a = v0, b = v1, c = v2;

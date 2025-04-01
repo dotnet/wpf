@@ -1415,9 +1415,9 @@ namespace System.Windows.Controls
         /// <returns>Returns False if value is NaN or NegativeInfinity or PositiveInfinity. Otherwise, returns True.</returns>
         private static bool IsValidDoubleValue(object value)
         {
-            double d = (double)value;
+            double valueDouble = (double)value;
 
-            return !(double.IsNaN(d) || double.IsInfinity(d));
+            return double.IsFinite(valueDouble);
         }
 
 

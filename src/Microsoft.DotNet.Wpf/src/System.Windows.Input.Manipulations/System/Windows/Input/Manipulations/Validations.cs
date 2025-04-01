@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
 using System.Diagnostics;
@@ -11,16 +11,6 @@ namespace System.Windows.Input.Manipulations
     internal static class Validations
     {
         /// <summary>
-        /// Gets whether the specified value is finite.
-        /// </summary>
-        /// <param name="value"></param>
-        /// <returns></returns>
-        public static bool IsFinite(float value)
-        {
-            return !float.IsNaN(value) && !float.IsInfinity(value);
-        }
-
-        /// <summary>
         /// Throws unless the specified value is finite.
         /// </summary>
         /// <param name="value"></param>
@@ -28,7 +18,8 @@ namespace System.Windows.Input.Manipulations
         public static void CheckFinite(float value, string paramName)
         {
             Debug.Assert(paramName != null);
-            if (!IsFinite(value))
+
+            if (!float.IsFinite(value))
             {
                 throw Exceptions.ValueMustBeFinite(paramName, value);
             }
@@ -52,6 +43,7 @@ namespace System.Windows.Input.Manipulations
         public static void CheckFiniteOrNaN(float value, string paramName)
         {
             Debug.Assert(paramName != null);
+
             if (!IsFiniteOrNaN(value))
             {
                 throw Exceptions.ValueMustBeFiniteOrNaN(paramName, value);
@@ -65,7 +57,7 @@ namespace System.Windows.Input.Manipulations
         /// <returns></returns>
         public static bool IsFiniteNonNegative(float value)
         {
-            return !float.IsInfinity(value) && !float.IsNaN(value) && (value >= 0);
+            return float.IsFinite(value) && value >= 0;
         }
 
         /// <summary>

@@ -77,7 +77,7 @@ namespace System.Windows.Documents
             if ((targetType == typeof(string)) || (targetType == typeof(object)))
             {
                 // Check that value is a valid double.
-                if ((double.IsNaN(percent)) || (double.IsInfinity(percent)))
+                if (!double.IsFinite(percent))
                 {
                     return DependencyProperty.UnsetValue;
                 }

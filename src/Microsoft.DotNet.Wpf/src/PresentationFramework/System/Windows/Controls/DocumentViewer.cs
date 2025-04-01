@@ -2261,41 +2261,6 @@ namespace System.Windows.Controls
         }
 
         /// <summary>
-        /// Determines if the parameter represents a valid double (that is a value other
-        /// than NaN, PositiveInfinity, or NegativeInfinity).
-        /// </summary>
-        /// <param name="value">The double value to be checked</param>
-        /// <returns>True if the double value is valid, false otherwise.</returns>
-        private static bool DoubleValue_Validate(object value)
-        {
-            // Place this helper method
-            // in a location with standard utilities.
-
-            bool ok;
-
-            // Ensure value is double
-            if (value is double checkValue)
-            {
-
-                // Check if double is within an assumed range
-                if ((double.IsNaN(checkValue)) ||
-                    (double.IsInfinity(checkValue)))
-                {
-                    ok = false;
-                }
-                else
-                {
-                    ok = true;
-                }
-            }
-            else
-            {
-                ok = false;
-            }
-            return ok;
-        }
-
-        /// <summary>
         /// Converts an IDocumentScrollInfo's Scale value to a Zoom
         /// </summary>
         /// <param name="scale">A valid IDocumentScrollInfo.Scale value.</param>
@@ -2325,7 +2290,7 @@ namespace System.Windows.Controls
         /// <returns>True if the offset is valid, false otherwise.</returns>
         private static bool ValidateOffset(object value)
         {
-            return DoubleValue_Validate(value) && ((double)value >= 0.0);
+            return value is double doubleValue && double.IsFinite(doubleValue) && doubleValue >= 0.0;
         }
 
         /// <summary>
@@ -2508,7 +2473,7 @@ namespace System.Windows.Controls
         /// <returns>True if the offset is valid, false otherwise.</returns>
         private static bool ValidatePageSpacing(object value)
         {
-            return DoubleValue_Validate(value) && ((double)value >= 0.0);
+            return value is double doubleValue && double.IsFinite(doubleValue) && doubleValue >= 0.0;
         }
 
         /// <summary>

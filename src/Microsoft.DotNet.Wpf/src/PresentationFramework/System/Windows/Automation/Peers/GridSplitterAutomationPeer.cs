@@ -39,10 +39,10 @@ namespace System.Windows.Automation.Peers
             if (!IsEnabled())
                 throw new ElementNotEnabledException();
 
-            if (double.IsInfinity(x) || double.IsNaN(x))
+            if (!double.IsFinite(x))
                 throw new ArgumentOutOfRangeException(nameof(x));
 
-            if (double.IsInfinity(y) || double.IsNaN(y))
+            if (!double.IsFinite(y))
                 throw new ArgumentOutOfRangeException(nameof(y));
 
             ((GridSplitter)Owner).KeyboardMoveSplitter(x, y);

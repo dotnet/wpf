@@ -53,14 +53,16 @@ namespace System.Windows.Automation.Peers
             return element.GetAutomationPeer();
         }
 
-        public delegate bool IteratorCallback<T>(ref T capture, AutomationPeer peer);
-            
-         /// 
-        override protected List<AutomationPeer> GetChildrenCore()
-        {
-            List<AutomationPeer> children = null;
+#nullable enable
 
-            Iterate(_owner, ref children, static (ref List<AutomationPeer> children, AutomationPeer peer) =>
+        public delegate bool IteratorCallback<T>(ref T? capture, AutomationPeer peer);
+
+        /// 
+        protected override List<AutomationPeer>? GetChildrenCore()
+        {
+            List<AutomationPeer>? children = null;
+
+            Iterate(_owner, ref children, static (ref List<AutomationPeer>? children, AutomationPeer peer) =>
             {
                 children ??= new List<AutomationPeer>();
                 children.Add(peer);
@@ -72,11 +74,11 @@ namespace System.Windows.Automation.Peers
         }
 
         /// 
-        internal static AutomationPeer GetRootAutomationPeer(Visual rootVisual, IntPtr hwnd)
+        internal static AutomationPeer? GetRootAutomationPeer(Visual rootVisual, IntPtr hwnd)
         {
-            AutomationPeer root = null;
+            AutomationPeer? root = null;
 
-            Iterate(rootVisual, ref root, static (ref AutomationPeer root, AutomationPeer peer) =>
+            Iterate(rootVisual, ref root, static (ref AutomationPeer? root, AutomationPeer peer) =>
             {
                 root = peer;
 
@@ -95,33 +97,35 @@ namespace System.Windows.Automation.Peers
         /// Iterates through the children of the given <paramref name="parent"/> and either attempts to create
         /// or retrieve the current <see cref="AutomationPeer"/> for the given <see cref="UIElement"/> / <see cref="UIElement3D"/>.
         /// </summary>
-        private static bool Iterate<T>(DependencyObject parent, ref T callbackParameter, IteratorCallback<T> callback)
+        private static bool Iterate<T>(DependencyObject? parent, ref T? callbackParameter, IteratorCallback<T> callback)
         {
-            // If there's no parent, there are no children
-            if (parent is null)
-                return false;
-
-            int childrenCount = VisualTreeHelper.GetChildrenCount(parent);
             bool done = false;
 
-            for (int i = 0; i < childrenCount && !done; i++)
+            if (parent is not null)
             {
-                DependencyObject child = VisualTreeHelper.GetChild(parent, i);
-                AutomationPeer peer;
+                int childrenCount = VisualTreeHelper.GetChildrenCount(parent);
 
-                if ((child is UIElement uiElement && (peer = uiElement.CreateAutomationPeer()) is not null) ||
-                    (child is UIElement3D uiElement3D && (peer = uiElement3D.CreateAutomationPeer()) is not null))
+                for (int i = 0; i < childrenCount && !done; i++)
                 {
-                    done = callback(ref callbackParameter, peer);
-                }
-                else
-                {
-                    done = Iterate(child, ref callbackParameter, callback);
+                    DependencyObject child = VisualTreeHelper.GetChild(parent, i);
+                    AutomationPeer? peer;
+
+                    if ((child is UIElement uiElement && (peer = uiElement.CreateAutomationPeer()) is not null) ||
+                        (child is UIElement3D uiElement3D && (peer = uiElement3D.CreateAutomationPeer()) is not null))
+                    {
+                        done = callback(ref callbackParameter, peer);
+                    }
+                    else
+                    {
+                        done = Iterate(child, ref callbackParameter, callback);
+                    }
                 }
             }
 
             return done;
         }
+
+#nullable disable
 
         /// 
         override public object GetPattern(PatternInterface patternInterface)

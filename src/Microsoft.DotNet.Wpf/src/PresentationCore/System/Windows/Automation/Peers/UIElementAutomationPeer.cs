@@ -55,8 +55,6 @@ namespace System.Windows.Automation.Peers
 
 #nullable enable
 
-        private delegate bool IteratorCallback<T>(ref T? capture, AutomationPeer peer);
-
         /// <summary>
         /// Retrieves the automation peers for the <see cref="UIElement"/> / <see cref="UIElement3D"/> children of this <see cref="_owner"/>.
         /// </summary>
@@ -67,7 +65,7 @@ namespace System.Windows.Automation.Peers
         {
             List<AutomationPeer>? children = null;
 
-            Iterate(_owner, ref children, static (ref List<AutomationPeer>? children, AutomationPeer peer) =>
+            UIElementAutomationUtils.Iterate(_owner, ref children, static (ref List<AutomationPeer>? children, AutomationPeer peer) =>
             {
                 children ??= new List<AutomationPeer>();
                 children.Add(peer);
@@ -83,7 +81,7 @@ namespace System.Windows.Automation.Peers
         {
             AutomationPeer? root = null;
 
-            Iterate(rootVisual, ref root, static (ref AutomationPeer? root, AutomationPeer peer) =>
+            UIElementAutomationUtils.Iterate(rootVisual, ref root, static (ref AutomationPeer? root, AutomationPeer peer) =>
             {
                 root = peer;
 
@@ -96,38 +94,6 @@ namespace System.Windows.Automation.Peers
             }
 
             return root;
-        }
-
-        /// <summary>
-        /// Iterates through the children of the given <paramref name="parent"/> and either attempts to create
-        /// or retrieve the current <see cref="AutomationPeer"/> for the given <see cref="UIElement"/> / <see cref="UIElement3D"/>.
-        /// </summary>
-        private static bool Iterate<T>(DependencyObject? parent, ref T? callbackParameter, IteratorCallback<T> callback)
-        {
-            bool done = false;
-
-            if (parent is not null)
-            {
-                int childrenCount = VisualTreeHelper.GetChildrenCount(parent);
-
-                for (int i = 0; i < childrenCount && !done; i++)
-                {
-                    DependencyObject child = VisualTreeHelper.GetChild(parent, i);
-                    AutomationPeer? peer;
-
-                    if ((child is UIElement uiElement && (peer = uiElement.CreateAutomationPeer()) is not null) ||
-                        (child is UIElement3D uiElement3D && (peer = uiElement3D.CreateAutomationPeer()) is not null))
-                    {
-                        done = callback(ref callbackParameter, peer);
-                    }
-                    else
-                    {
-                        done = Iterate(child, ref callbackParameter, callback);
-                    }
-                }
-            }
-
-            return done;
         }
 
 #nullable disable

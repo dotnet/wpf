@@ -160,7 +160,8 @@ namespace System.Windows.Media.Media3D
 
             ReadOnlySpan<char> firstToken = tokenizer.NextTokenRequired();
 
-            value = new Point4D(double.Parse(firstToken, formatProvider),
+            value = new Point4D(
+                double.Parse(firstToken, formatProvider),
                 double.Parse(tokenizer.NextTokenRequired(), formatProvider),
                 double.Parse(tokenizer.NextTokenRequired(), formatProvider),
                 double.Parse(tokenizer.NextTokenRequired(), formatProvider));

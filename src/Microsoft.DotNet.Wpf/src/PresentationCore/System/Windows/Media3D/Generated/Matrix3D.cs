@@ -219,13 +219,14 @@ namespace System.Windows.Media.Media3D
 
             // The token will already have had whitespace trimmed so we can do a
             // simple string compare.
-            if (firstToken == "Identity")
+            if (firstToken.Equals("Identity", StringComparison.Ordinal))
             {
                 value = Identity;
             }
             else
             {
-                value = new Matrix3D(double.Parse(firstToken, formatProvider),
+                value = new Matrix3D(
+                    double.Parse(firstToken, formatProvider),
                     double.Parse(tokenizer.NextTokenRequired(), formatProvider),
                     double.Parse(tokenizer.NextTokenRequired(), formatProvider),
                     double.Parse(tokenizer.NextTokenRequired(), formatProvider),

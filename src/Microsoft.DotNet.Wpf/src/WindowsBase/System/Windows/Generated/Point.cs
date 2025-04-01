@@ -148,8 +148,9 @@ namespace System.Windows
 
             ReadOnlySpan<char> firstToken = tokenizer.NextTokenRequired();
 
-            value = new Point(double.Parse(firstToken, formatProvider),
-                              double.Parse(tokenizer.NextTokenRequired(), formatProvider));
+            value = new Point(
+                double.Parse(firstToken, formatProvider),
+                double.Parse(tokenizer.NextTokenRequired(), formatProvider));
 
             // There should be no more tokens in this string.
             tokenizer.LastTokenRequired();

@@ -182,13 +182,14 @@ namespace System.Windows.Media.Media3D
 
             // The token will already have had whitespace trimmed so we can do a
             // simple string compare.
-            if (firstToken == "Empty")
+            if (firstToken.Equals("Empty", StringComparison.Ordinal))
             {
                 value = Empty;
             }
             else
             {
-                value = new Rect3D(double.Parse(firstToken, formatProvider),
+                value = new Rect3D(
+                    double.Parse(firstToken, formatProvider),
                     double.Parse(tokenizer.NextTokenRequired(), formatProvider),
                     double.Parse(tokenizer.NextTokenRequired(), formatProvider),
                     double.Parse(tokenizer.NextTokenRequired(), formatProvider),

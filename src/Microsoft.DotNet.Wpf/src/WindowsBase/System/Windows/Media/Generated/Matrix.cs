@@ -183,13 +183,14 @@ namespace System.Windows.Media
 
             // The token will already have had whitespace trimmed so we can do a
             // simple string compare.
-            if (firstToken == "Identity")
+            if (firstToken.Equals("Identity", StringComparison.Ordinal))
             {
                 value = Identity;
             }
             else
             {
-                value = new Matrix(double.Parse(firstToken, formatProvider),
+                value = new Matrix(
+                    double.Parse(firstToken, formatProvider),
                     double.Parse(tokenizer.NextTokenRequired(), formatProvider),
                     double.Parse(tokenizer.NextTokenRequired(), formatProvider),
                     double.Parse(tokenizer.NextTokenRequired(), formatProvider),

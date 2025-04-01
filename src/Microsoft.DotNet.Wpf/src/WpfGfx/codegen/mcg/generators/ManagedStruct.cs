@@ -523,7 +523,7 @@ namespace MS.Internal.MilCodeGen.Generators
                         [[inline]]
                             // The token will already have had whitespace trimmed so we can do a
                             // simple string compare.
-                            if ([[firstToken]] == "[[resource.EmptyField.Name]]")
+                            if ([[firstToken]].Equals("[[resource.EmptyField.Name]]", StringComparison.Ordinal))
                             {
                                 value = [[resource.EmptyField.Name]];
                             }

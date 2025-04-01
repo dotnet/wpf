@@ -164,13 +164,14 @@ namespace System.Windows
 
             // The token will already have had whitespace trimmed so we can do a
             // simple string compare.
-            if (firstToken == "Empty")
+            if (firstToken.Equals("Empty", StringComparison.Ordinal))
             {
                 value = Empty;
             }
             else
             {
-                value = new Size(double.Parse(firstToken, formatProvider),
+                value = new Size(
+                    double.Parse(firstToken, formatProvider),
                     double.Parse(tokenizer.NextTokenRequired(), formatProvider));
             }
 

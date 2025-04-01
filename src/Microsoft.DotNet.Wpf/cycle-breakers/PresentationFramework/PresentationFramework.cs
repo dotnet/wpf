@@ -984,8 +984,8 @@ namespace System.Windows
         OK = 0,
         OKCancel = 1,
         RetryCancel = 5,
-        YesNoCancel = 3,
         YesNo = 4,
+        YesNoCancel = 3,
     }
     public enum MessageBoxImage
     {
@@ -2067,7 +2067,7 @@ namespace System.Windows
         [System.ComponentModel.TypeConverterAttribute(typeof(System.Windows.ThemeModeConverter))]
         [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("WPF0001")]
         public System.Windows.ThemeMode ThemeMode { get { throw null; } set { } }
-        
+
         [System.Windows.LocalizabilityAttribute(System.Windows.LocalizationCategory.Title)]
         public string Title { get { throw null; } set { } }
         [System.ComponentModel.TypeConverterAttribute("System.Windows.LengthConverter, PresentationFramework, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, Custom=null")]

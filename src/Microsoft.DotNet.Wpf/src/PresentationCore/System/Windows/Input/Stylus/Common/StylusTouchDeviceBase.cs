@@ -235,7 +235,7 @@ namespace System.Windows.Input
         #region Member Variables
 
         [ThreadStatic]
-        private static int _activeDeviceCount = 0;
+        private static int _activeDeviceCount;
 
         private TouchAction _lastAction = TouchAction.Move;
 

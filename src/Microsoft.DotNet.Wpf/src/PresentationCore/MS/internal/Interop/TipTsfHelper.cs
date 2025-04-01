@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
 //
@@ -41,7 +41,7 @@ namespace MS.Internal.Interop
         /// Cache any in progress operation in case we get multiple calls.
         /// </summary>
         [ThreadStatic]
-        private static DispatcherOperation s_KbOperation = null;
+        private static DispatcherOperation s_KbOperation;
 
         /// <summary>
         /// If DispatcherProcessing is disabled, this will BeginInvoke the appropriate KB operation

@@ -1,23 +1,34 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
-using System.Text;
 using System.Windows.Threading;
-using System.Runtime.InteropServices;
-using MS.Win32;
+using System.ComponentModel;
 using Microsoft.Win32;
+using MS.Win32;
 
 namespace System.Windows.Input
 {
-    //
-    // Modes of AltNumpad.
-    //
+    /// <summary>
+    /// Modes when entering characters via Alt+Numpad keys.
+    /// </summary>
     internal enum AltNumpadConversionMode
     {
-        DefaultCodePage,         // ACP code page encoding. Alt+Numpad0+NumpadX
-        OEMCodePage,             // OEM code page encoding. Alt+NumpadX
-        HexDefaultCodePage,      // HEX value in ACP.       Alt+NumpadDOT+NumpadX
-        HexUnicode,              // HEX value in Unicode.   Alt+NumpadPlus+NumpadX
+        /// <summary>
+        /// ACP code page encoding: Alt+Numpad0+NumpadX
+        /// </summary>
+        DefaultCodePage,
+        /// <summary>
+        /// OEM code page encoding: Alt+NumpadX
+        /// </summary>
+        OEMCodePage,
+        /// <summary>
+        /// HEX value in ACP: Alt+NumpadDOT+NumpadX
+        /// </summary>
+        HexDefaultCodePage,
+        /// <summary>
+        /// HEX value in Unicode: Alt+NumpadPlus+NumpadX
+        /// </summary>
+        HexUnicode,
     }
 
     /// <summary>
@@ -374,31 +385,33 @@ namespace System.Windows.Input
 
         private static string GetCurrentOEMCPEncoding(int code)
         {
-            int cp =  UnsafeNativeMethods.GetOEMCP();
-            return CharacterEncoding(cp, code);
+            int codePage = UnsafeNativeMethods.GetOEMCP();
+
+            return CharacterEncoding(codePage, code);
         }
 
-        // Convert code to the string based on the code page.
-        private static string CharacterEncoding(int cp, int code)
+        /// <summary>
+        /// Convert <paramref name="code"/> to a string based on the <paramref name="codePage"/>.
+        /// </summary>
+        private static unsafe string CharacterEncoding(int codePage, int code)
         {
-            Byte[] bytes = ConvertCodeToByteArray(code);
-            StringBuilder sbuilder = new StringBuilder(EncodingBufferLen);
-
-            // Win32K uses MB_PRECOMPOSED | MB_USEGLYPHCHARS.
-            int nret = UnsafeNativeMethods.MultiByteToWideChar(cp, 
-                                                   UnsafeNativeMethods.MB_PRECOMPOSED | UnsafeNativeMethods.MB_USEGLYPHCHARS,
-                                                   bytes, bytes.Length,
-                                                   sbuilder, EncodingBufferLen);
-
-            if (nret == 0)
-            {
-                int win32Err = Marshal.GetLastWin32Error(); 
-                throw new System.ComponentModel.Win32Exception(win32Err);
+            ReadOnlySpan<byte> multiByte = ConvertCodeToByteArray(code, stackalloc byte[2]);
+            Span<char> outputChars = stackalloc char[EncodingBufferLen]; // 4
+         
+            int charsWritten;
+            // Since we do not use [LibraryImport], Span<T> marshallers are not available by default
+            fixed (byte* ptrMultiByte = multiByte)
+            fixed (char* ptrOutputChars = outputChars)
+            {                                                                    // Win32K uses MB_PRECOMPOSED | MB_USEGLYPHCHARS.
+                charsWritten = UnsafeNativeMethods.MultiByteToWideChar(codePage, UnsafeNativeMethods.MB_PRECOMPOSED | UnsafeNativeMethods.MB_USEGLYPHCHARS,
+                                                                       ptrMultiByte, multiByte.Length, ptrOutputChars, outputChars.Length);
             }
 
-            // set the length as MultiByteToWideChar returns.
-            sbuilder.Length = nret;
-            return sbuilder.ToString();
+            if (charsWritten == 0)
+                throw new Win32Exception(); // Initializes with Marshal.GetLastPInvokeError()
+
+            // Set the length as MultiByteToWideChar returns
+            return new string(outputChars.Slice(0, charsWritten));
         }
 
         // PreProcessInput event handler
@@ -470,40 +483,37 @@ namespace System.Windows.Input
         private void PostProcessInput(object sender, ProcessInputEventArgs e)
         {
             // KeyUp
-            if(e.StagingItem.Input.RoutedEvent == Keyboard.KeyUpEvent)
+            if (e.StagingItem.Input.RoutedEvent == Keyboard.KeyUpEvent)
             {
-                KeyEventArgs keyArgs = (KeyEventArgs) e.StagingItem.Input;
-                if(!keyArgs.Handled)
+                KeyEventArgs keyArgs = (KeyEventArgs)e.StagingItem.Input;
+                if (!keyArgs.Handled)
                 {
-                    if(keyArgs.RealKey == Key.LeftAlt || keyArgs.RealKey == Key.RightAlt)
+                    if (keyArgs.RealKey is Key.LeftAlt or Key.RightAlt)
                     {
                         // Make sure both Alt keys are up.
                         ModifierKeys modifiers = keyArgs.KeyboardDevice.Modifiers;
-                        if((modifiers & ModifierKeys.Alt) == 0)
+                        if ((modifiers & ModifierKeys.Alt) == 0)
                         {
-                            if(_altNumpadEntryMode)
+                            if (_altNumpadEntryMode)
                             {
                                 _altNumpadEntryMode = false;
 
                                 // Generate the Unicode equivalent if we
                                 // actually entered a number via the numpad.
-                                if(_altNumpadEntry != 0)
+                                if (_altNumpadEntry != 0)
                                 {
                                     _altNumpadcomposition.ClearTexts();
-                                    if (_altNumpadConversionMode == AltNumpadConversionMode.OEMCodePage)
+                                    if (_altNumpadConversionMode is AltNumpadConversionMode.OEMCodePage)
                                     {
                                         _altNumpadcomposition.SetText(GetCurrentOEMCPEncoding(_altNumpadEntry));
                                     }
-                                    else if ((_altNumpadConversionMode == AltNumpadConversionMode.DefaultCodePage) ||
-                                             (_altNumpadConversionMode == AltNumpadConversionMode.HexDefaultCodePage))
+                                    else if (_altNumpadConversionMode is AltNumpadConversionMode.DefaultCodePage or AltNumpadConversionMode.HexDefaultCodePage)
                                     {
                                         _altNumpadcomposition.SetText(CharacterEncoding(InputLanguageManager.Current.CurrentInputLanguage.TextInfo.ANSICodePage, _altNumpadEntry));
                                     }
-                                    else if (_altNumpadConversionMode == AltNumpadConversionMode.HexUnicode)
+                                    else if (_altNumpadConversionMode is AltNumpadConversionMode.HexUnicode)
                                     {
-                                        Char[] chars = new Char[1];
-                                        chars[0] = (Char) _altNumpadEntry;
-                                        _altNumpadcomposition.SetText(new string(chars));
+                                        _altNumpadcomposition.SetText(((char)_altNumpadEntry).ToString());
                                     }
                                 }
                             }
@@ -839,22 +849,25 @@ namespace System.Windows.Input
             return NumpadScanCode.DigitFromScanCode(scanCode);
         }
 
-        // Convert the code to byte array for DBCS/SBCS.
-        private static Byte[] ConvertCodeToByteArray(int codeEntry)
+        /// <summary>
+        /// Convert the code to byte array for DBCS/SBCS.
+        /// </summary>
+        private static ReadOnlySpan<byte> ConvertCodeToByteArray(int codeEntry, Span<byte> destination)
         {
-            Byte[] bytes;
-            if (codeEntry > 0xff)
+            Debug.Assert(destination.Length == 2, "Invalid buffer length");
+
+            if (codeEntry > 0xFF)
             {
-                bytes = new Byte[2];
-                bytes[0] = (Byte)(codeEntry >> 8);
-                bytes[1] = (Byte)codeEntry;
+                destination[0] = (byte)(codeEntry >> 8);
+                destination[1] = (byte)codeEntry;
             }
             else
             {
-                bytes = new Byte[1];
-                bytes[0] = (Byte)codeEntry;
+                destination = destination.Slice(0, 1);
+                destination[0] = (byte)codeEntry;
             }
-            return bytes;
+
+            return destination;
         }
 
         // clear the altnumpad composition object and reset entry.
@@ -875,13 +888,7 @@ namespace System.Windows.Input
         // Return true if we're in hex conversion mode.
         private bool HexConversionMode
         {
-            get 
-            {
-                if ((_altNumpadConversionMode == AltNumpadConversionMode.HexDefaultCodePage) ||
-                    (_altNumpadConversionMode == AltNumpadConversionMode.HexUnicode))
-                    return true;
-                return false;
-            }
+            get => _altNumpadConversionMode is AltNumpadConversionMode.HexDefaultCodePage or AltNumpadConversionMode.HexUnicode;
         }
 
         /// <summary>
@@ -893,15 +900,11 @@ namespace System.Windows.Input
             {
                 if (!_isHexNumpadRegistryChecked)
                 {
-                    object obj;
-                    RegistryKey key;
-
-                    key = Registry.CurrentUser.OpenSubKey("Control Panel\\Input Method");
+                    RegistryKey key = Registry.CurrentUser.OpenSubKey("Control Panel\\Input Method");
                     if (key != null)
                     {
-                        obj = key.GetValue("EnableHexNumpad");
-
-                        if ((obj is string) && ((string)obj != "0"))
+                        object obj = key.GetValue("EnableHexNumpad");
+                        if (obj is string value && value != "0")
                         {
                             _isHexNumpadEnabled = true;
                         }
@@ -909,6 +912,7 @@ namespace System.Windows.Input
 
                     _isHexNumpadRegistryChecked = true;
                 }
+
                 return _isHexNumpadEnabled;
             }
         }
@@ -951,23 +955,21 @@ namespace System.Windows.Input
         // ScanCode of Numpad keys.
         internal static class NumpadScanCode
         {
-            internal static int DigitFromScanCode(int scanCode)
+            internal static int DigitFromScanCode(int scanCode) => scanCode switch
             {
-                switch (scanCode)
-                {
-                    case Numpad0: return 0;
-                    case Numpad1: return 1;
-                    case Numpad2: return 2;
-                    case Numpad3: return 3;
-                    case Numpad4: return 4;
-                    case Numpad5: return 5;
-                    case Numpad6: return 6;
-                    case Numpad7: return 7;
-                    case Numpad8: return 8;
-                    case Numpad9: return 9;
-                }
-                return -1;
-            }
+                Numpad0 => 0,
+                Numpad1 => 1,
+                Numpad2 => 2,
+                Numpad3 => 3,
+                Numpad4 => 4,
+                Numpad5 => 5,
+                Numpad6 => 6,
+                Numpad7 => 7,
+                Numpad8 => 8,
+                Numpad9 => 9,
+                _ => -1,
+            };
+
             internal const int NumpadDot      =  0x53;
             internal const int NumpadPlus     =  0x4e;
             internal const int Numpad0        =  0x52;

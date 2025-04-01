@@ -55,7 +55,7 @@ namespace System.Windows.Automation.Peers
 
 #nullable enable
 
-        public delegate bool IteratorCallback<T>(ref T? capture, AutomationPeer peer);
+        private delegate bool IteratorCallback<T>(ref T? capture, AutomationPeer peer);
 
         /// <summary>
         /// Retrieves the automation peers for the <see cref="UIElement"/> / <see cref="UIElement3D"/> children of this <see cref="_owner"/>.

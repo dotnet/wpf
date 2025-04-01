@@ -57,7 +57,12 @@ namespace System.Windows.Automation.Peers
 
         public delegate bool IteratorCallback<T>(ref T? capture, AutomationPeer peer);
 
-        /// 
+        /// <summary>
+        /// Retrieves the automation peers for the <see cref="UIElement"/> / <see cref="UIElement3D"/> children of this <see cref="_owner"/>.
+        /// </summary>
+        /// <returns>
+        /// Returns <see langword="null"/> if the <see cref="_owner"/> has no children of given type, otherwise a list of children.
+        /// </returns>
         protected override List<AutomationPeer>? GetChildrenCore()
         {
             List<AutomationPeer>? children = null;

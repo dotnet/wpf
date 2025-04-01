@@ -484,7 +484,7 @@ namespace MS.Win32
                 // we should "throw" here.  But we don't want to
                 // introduce new "throws" w/o time to follow up on any
                 // new problems that causes.
-                Debug.WriteLine("GetWindowLongPtr failed.  Error = " + error);
+                Debug.WriteLine($"GetWindowLongPtr failed.  Error = {error}");
                 // throw new System.ComponentModel.Win32Exception(error);
             }
 
@@ -518,7 +518,7 @@ namespace MS.Win32
                 // we should "throw" here.  But we don't want to
                 // introduce new "throws" w/o time to follow up on any
                 // new problems that causes.
-                Debug.WriteLine("GetWindowLong failed.  Error = " + error);
+                Debug.WriteLine($"GetWindowLong failed.  Error = {error}");
                 // throw new System.ComponentModel.Win32Exception(error);
             }
 
@@ -658,7 +658,7 @@ namespace MS.Win32
 
             if(!success)
             {
-                Debug.WriteLine("GetIconInfo failed.  Error = " + error);
+                Debug.WriteLine($"GetIconInfo failed.  Error = {error}");
 
                 throw new Win32Exception();
             }

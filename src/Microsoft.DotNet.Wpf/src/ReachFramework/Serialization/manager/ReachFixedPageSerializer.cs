@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
 /*++
@@ -334,10 +334,8 @@ namespace System.Windows.Xps.Serialization
                 if (propertyValue is Type)
                 {
                     int index = valueAsString.LastIndexOf('.');
-                    valueAsString = string.Concat(
-                        XpsSerializationManager.TypeOfString,
-                        index > 0 ? valueAsString.AsSpan(index + 1) : valueAsString,
-                        "}");
+                    valueAsString = $"{XpsSerializationManager.TypeOfString}" +
+                                    $"{(index > 0 ? valueAsString.AsSpan(index + 1) : valueAsString)}}}";
                 }
             }
             else

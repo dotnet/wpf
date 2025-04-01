@@ -197,9 +197,9 @@ namespace MS.Internal
         {
             // build the full display name of the extension assembly
             string assemblyName = Assembly.GetExecutingAssembly().FullName;
-            string extensionAssemblyName = assemblyName.Replace("WindowsBase", "PresentationFramework-" + name)
+            string extensionAssemblyName = assemblyName.Replace("WindowsBase", $"PresentationFramework-{name}")
                                                         .Replace(BuildInfo.WCP_PUBLIC_KEY_TOKEN, BuildInfo.DEVDIV_PUBLIC_KEY_TOKEN);
-            string extensionTypeName = "MS.Internal." + name + "Extension";
+            string extensionTypeName = $"MS.Internal.{name}Extension";
             object result = null;
 
             // create the instance of the extension class

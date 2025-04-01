@@ -101,7 +101,7 @@ namespace MS.Internal.IO.Packaging
             idAttr.Value = XTable.Get(XTable.ID.SignaturePropertyIdAttrValue);
             signatureProperty.Attributes.Append(idAttr);
             XmlAttribute targetAttr = xDoc.CreateAttribute(XTable.Get(XTable.ID.TargetAttrName));
-            targetAttr.Value = "#" + signatureId;
+            targetAttr.Value = $"#{signatureId}";
             signatureProperty.Attributes.Append(targetAttr);
 
             // <SignatureTime>
@@ -424,7 +424,7 @@ namespace MS.Internal.IO.Packaging
                 {
                     //If the Target attribute has a non-empty string then
                     //it must match the <Signature> tag Id attribute value
-                    if (signatureId != null && string.Equals(idTargetValue, "#" + signatureId, StringComparison.Ordinal))
+                    if (signatureId != null && string.Equals(idTargetValue, $"#{signatureId}", StringComparison.Ordinal))
                         return true;
                     else
                         return false;

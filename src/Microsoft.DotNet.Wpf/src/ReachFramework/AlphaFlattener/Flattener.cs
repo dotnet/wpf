@@ -343,7 +343,7 @@ namespace Microsoft.Internal.AlphaFlattener
 
                 Console.WriteLine();
 
-                Console.WriteLine("Primitives in display list: {0}", count);
+                Console.WriteLine($"Primitives in display list: {count}");
 
                 Console.WriteLine();
             }
@@ -416,7 +416,7 @@ namespace Microsoft.Internal.AlphaFlattener
         private void DeleteCommand(int i)
         {
 #if DEBUG
-            Console.WriteLine("Delete command {0}", i);
+            Console.WriteLine($"Delete command {i}");
 #endif
 
             PrimitiveInfo pi = _dl.Commands[i];
@@ -727,7 +727,7 @@ namespace Microsoft.Internal.AlphaFlattener
                         if (proceedBlending && pi.primitive.IsOpaque)
                         {
 #if DEBUG
-                            Console.WriteLine("Make {0} opaque", i);
+                            Console.WriteLine($"Make {i} opaque");
 
 #endif
 
@@ -988,18 +988,14 @@ namespace Microsoft.Internal.AlphaFlattener
                 }
 
                 Console.WriteLine();
-                Console.WriteLine("Interesting primitives: {0}", vip);
-                Console.WriteLine("Area with transparency: {0}", DisplayList.LeftPad(target, 0));
+                Console.WriteLine($"Interesting primitives: {vip}");
+                Console.WriteLine($"Area with transparency: {DisplayList.LeftPad(target, 0)}");
                 Console.WriteLine();
 
                 for (int i = 0; i < transparentCluster.Count; i++)
                 {
-                    Console.WriteLine(
-                        "Cluster {0}: {1} {2} {3}",
-                        i + 1,
-                        DisplayList.LeftPad(transparentCluster[i].DebugBounds, 0),
-                        DisplayList.LeftPad(transparentCluster[i].DebugPrimitives, 0),
-                        transparentCluster[i].DebugRasterize);
+                    Console.WriteLine($"Cluster {i + 1}: {DisplayList.LeftPad(transparentCluster[i].DebugBounds, 0)} " +
+                                        $"{DisplayList.LeftPad(transparentCluster[i].DebugPrimitives, 0)} {transparentCluster[i].DebugRasterize}");
                 }
 
                 Console.WriteLine();
@@ -1060,12 +1056,12 @@ namespace Microsoft.Internal.AlphaFlattener
                     {
                         if (vipID != 0)
                         {
-                            name = "vip" + vipID + ".xaml";
+                            name = $"vip{vipID}.xaml";
                         }
 
                         SerializeVisual(dv, _dl.m_width, _dl.m_height, name);
 
-                        Console.WriteLine("Serialized primitives to " + name);
+                        Console.WriteLine($"Serialized primitives to {name}");
 
                         name = null;
                     }
@@ -1073,7 +1069,7 @@ namespace Microsoft.Internal.AlphaFlattener
                     {
                         Console.WriteLine(e.ToString());
 
-                        name = "vip" + vipID + ".xaml";
+                        name = $"vip{vipID}.xaml";
                     }
 
                     vipID++;

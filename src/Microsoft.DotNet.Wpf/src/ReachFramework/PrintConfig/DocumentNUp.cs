@@ -553,8 +553,7 @@ namespace MS.Internal.Printing.Configuration
         /// <returns>A string that represents this document NUp setting.</returns>
         public override string ToString()
         {
-            return PagesPerSheet.ToString(CultureInfo.CurrentCulture) + ", " +
-                   PresentationDirection.ToString();
+            return $"{PagesPerSheet}, {PresentationDirection}";
         }
 
         #endregion Public Methods

@@ -155,7 +155,7 @@ namespace MS.Internal.IO.Packaging
                     // NOTE: this is executing an XPath query
                     // idValue has already been tested as an NCName (unless overridden for compatibility), so there's no
                     // escaping that needs to be done here.
-                    XmlNodeList nodeList = element.SelectNodes(".//*[@Id='" + idValue + "']");
+                    XmlNodeList nodeList = element.SelectNodes($".//*[@Id='{idValue}']");
 
                     if (nodeList.Count > 0)
                     {
@@ -264,7 +264,7 @@ namespace MS.Internal.IO.Packaging
         #endregion Registry access
 
         private const string _XAdESNameSpace = @"http://uri.etsi.org/01903/v1.2.2#";
-        private const string _XAdESTargetType = _XAdESNameSpace + @"SignedProperties";
+        private const string _XAdESTargetType = $@"{_XAdESNameSpace}SignedProperties";
     }
 }
 

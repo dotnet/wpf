@@ -164,7 +164,7 @@ namespace System.Windows.Xps.Packaging
             //
             if( !Uri.IsAbsoluteUri)
             {
-                Uri = new Uri( new Uri(Directory.GetCurrentDirectory()+"/"), this.Uri );
+                Uri = new Uri( new Uri($"{Directory.GetCurrentDirectory()}/"), this.Uri );
             }
 
             CurrentXpsManager.XpsDocument = this;

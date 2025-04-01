@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
 
@@ -9,13 +9,13 @@ using System.Windows.Documents;
 namespace System.Windows.Xps.Serialization
 {
     /// <summary>
-    /// 
+    ///
     /// </summary>
     internal class DocumentSequenceSerializer :
                    ReachSerializer
     {
         /// <summary>
-        /// 
+        ///
         /// </summary>
         public
         DocumentSequenceSerializer(
@@ -23,7 +23,7 @@ namespace System.Windows.Xps.Serialization
             ):
         base(manager)
         {
-            
+
         }
 
         /// <summary>
@@ -59,7 +59,7 @@ namespace System.Windows.Xps.Serialization
                     //
                     // Pick the data for the PrintTicket if it existed
                     //
-                    XpsSerializationPrintTicketRequiredEventArgs e = 
+                    XpsSerializationPrintTicketRequiredEventArgs e =
                     new XpsSerializationPrintTicketRequiredEventArgs(PrintTicketLevel.FixedDocumentSequencePrintTicket,
                                                                      0);
 
@@ -91,7 +91,7 @@ namespace System.Windows.Xps.Serialization
             //
             // Signal to any registered callers that the Sequence has been serialized
             //
-            XpsSerializationProgressChangedEventArgs progressEvent = 
+            XpsSerializationProgressChangedEventArgs progressEvent =
             new XpsSerializationProgressChangedEventArgs(XpsWritingProgressChangeLevel.FixedDocumentSequenceWritingProgress,
                                                          0,
                                                          0,
@@ -103,9 +103,9 @@ namespace System.Windows.Xps.Serialization
             }
             ((IXpsSerializationManager)SerializationManager).OnXPSSerializationProgressChanged(progressEvent);
         }
-    
+
         /// <summary>
-        /// 
+        ///
         /// </summary>
         public
         override
@@ -145,7 +145,7 @@ namespace System.Windows.Xps.Serialization
 
             attributeValue = GetValueOfAttributeAsString(serializablePropertyContext);
 
-            if ( (attributeValue != null) && 
+            if ( (attributeValue != null) &&
                  (attributeValue.Length > 0) )
             {
                 //
@@ -179,10 +179,8 @@ namespace System.Windows.Xps.Serialization
                 if (propertyValue is Type)
                 {
                     int index = valueAsString.LastIndexOf('.');
-                    valueAsString = string.Concat(
-                        XpsSerializationManager.TypeOfString,
-                        index > 0 ? valueAsString.AsSpan(index + 1) : valueAsString,
-                        "}");
+                    valueAsString = $"{XpsSerializationManager.TypeOfString}" +
+                                    $"{(index > 0 ? valueAsString.AsSpan(index + 1) : valueAsString)}}}";
                 }
             }
             else
@@ -194,5 +192,5 @@ namespace System.Windows.Xps.Serialization
         }
     };
 }
-    
+
 

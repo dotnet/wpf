@@ -271,7 +271,7 @@ namespace MS.Internal
                     // Append to the format string a "; {0} = '{1}'", where the index increments (e.g. the second iteration will
                     // produce {2} & {3}).
 
-                    traceBuilder.Append("; {" + (formatIndex++).ToString() + "}='{" + (formatIndex++).ToString() + "}'" );
+                    traceBuilder.Append($"; {{{(formatIndex++)}}}='{{{(formatIndex++)}}}'");
 
                     // If this parameter is null, convert to "<null>"; otherwise, when a string.format is ultimately called
                     // it produces bad results.
@@ -290,11 +290,9 @@ namespace MS.Internal
                              && !(parameters[j] is Type)
                              && !(parameters[j] is DependencyProperty) )
                     {
-                        traceBuilder.Append("; " + labels[i].ToString() + ".HashCode='"
-                                                    + GetHashCodeHelper(parameters[j]).ToString() + "'" );
+                        traceBuilder.Append($"; {labels[i]}.HashCode='{GetHashCodeHelper(parameters[j])}'");
 
-                        traceBuilder.Append("; " + labels[i].ToString() + ".Type='"
-                                                    + GetTypeHelper(parameters[j]).ToString() + "'" );
+                        traceBuilder.Append($"; {labels[i]}.Type='{GetTypeHelper(parameters[j])}'");
                     }
 
 

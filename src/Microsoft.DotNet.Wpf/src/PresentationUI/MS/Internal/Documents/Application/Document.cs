@@ -310,10 +310,7 @@ namespace MS.Internal.Documents.Application
     {
         Invariant.Assert(
             _isDisposed,
-            string.Format(
-                System.Globalization.CultureInfo.CurrentCulture,
-                "{0} was not disposed.",
-                this));
+            $"{this} was not disposed.");
     }
 
     /// <summary>

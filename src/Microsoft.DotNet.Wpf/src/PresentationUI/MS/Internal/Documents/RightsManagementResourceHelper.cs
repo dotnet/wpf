@@ -40,7 +40,7 @@ namespace MS.Internal.Documents
         internal static DocumentStatusResources GetDocumentLevelResources(RightsManagementStatus status)
         {
             DocumentStatusResources docStatusResources = new DocumentStatusResources();
-            
+
             // Set appropriate Text and ToolTip values.
             switch (status)
             {
@@ -74,7 +74,7 @@ namespace MS.Internal.Documents
                 case (AuthenticationType.Windows):
                     accountName = String.Format(
                                         CultureInfo.CurrentCulture,
-                                        SR.RMCredManagementWindowsAccount, 
+                                        SR.RMCredManagementWindowsAccount,
                                         user.Name);
                     break;
                 case (AuthenticationType.Passport):
@@ -132,9 +132,7 @@ namespace MS.Internal.Documents
                 if (_brushResources[index] == null)
                 {
                     // Determine resource name.
-                    string resourceName = "PUIRMStatus"
-                        + Enum.GetName(status)
-                        + "BrushKey";
+                    string resourceName = $"PUIRMStatus{Enum.GetName(status)}BrushKey";
 
                     // Acquire reference to the brush.
                     object resource = _frameworkElement.FindResource(

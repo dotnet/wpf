@@ -2,12 +2,12 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 
 //
-// 
+//
 //
 // Description: Creates ITfThreadMgr instances, the root object of the Text
 //              Services Framework.
 //
-//  
+//
 //
 //
 
@@ -44,7 +44,7 @@ namespace MS.Internal
         private TextServicesLoader() {}
 
         #endregion Constructors
- 
+
         //------------------------------------------------------
         //
         //  Public Methods
@@ -68,7 +68,7 @@ namespace MS.Internal
         //  Protected Methods
         //
         //------------------------------------------------------
- 
+
         //------------------------------------------------------
         //
         //  Internal Methods
@@ -82,7 +82,7 @@ namespace MS.Internal
         //------------------------------------------------------
 
         #region Internal Properties
-        
+
         /// <summary>
         /// Loads an instance of the Text Services Framework.
         /// </summary>
@@ -92,7 +92,7 @@ namespace MS.Internal
         internal static UnsafeNativeMethods.ITfThreadMgr Load()
         {
             UnsafeNativeMethods.ITfThreadMgr threadManager;
-            
+
             Invariant.Assert(Thread.CurrentThread.GetApartmentState() == ApartmentState.STA, "Load called on MTA thread!");
 
             if (ServicesInstalled)
@@ -219,13 +219,13 @@ namespace MS.Internal
             // Loop through all the langid entries for TIP.
 
             // First, check current user.
-            result = IterateSubKeys(Registry.CurrentUser, "SOFTWARE\\Microsoft\\CTF\\TIP\\" + subKeyName + "\\LanguageProfile", new IterateHandler(IsLangidEnabled), false);
+            result = IterateSubKeys(Registry.CurrentUser, $"SOFTWARE\\Microsoft\\CTF\\TIP\\{subKeyName}\\LanguageProfile", new IterateHandler(IsLangidEnabled), false);
 
             // Any explicit value short circuits the process.
             // Otherwise check local machine.
             if (result == EnableState.None || result == EnableState.Error)
             {
-                result = IterateSubKeys(keyLocalMachine, subKeyName + "\\LanguageProfile", new IterateHandler(IsLangidEnabled), true);
+                result = IterateSubKeys(keyLocalMachine, $"{subKeyName}\\LanguageProfile", new IterateHandler(IsLangidEnabled), true);
 
                 if (result == EnableState.None)
                 {
@@ -337,7 +337,7 @@ namespace MS.Internal
 
         // Status of a TIP assembly.
         private enum EnableState
-        { 
+        {
             Error,      // Invalid entry.
             None,       // No explicit Enable entry on the assembly.
             Enabled,    // Assembly is enabled.
@@ -349,7 +349,7 @@ namespace MS.Internal
 
         // Install state.
         private enum InstallState
-        { 
+        {
             Unknown,        // Haven't checked to see if any TIPs are installed yet.
             Installed,      // Checked and installed.
             NotInstalled    // Checked and not installed.

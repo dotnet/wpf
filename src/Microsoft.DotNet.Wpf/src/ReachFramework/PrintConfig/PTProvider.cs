@@ -228,12 +228,9 @@ namespace MS.Internal.Printing.Configuration
 
                     if (hResult == (uint)NativeErrorCode.E_PRINTTICKET_FORMAT)
                     {
-                        throw new ArgumentException(String.Format(CultureInfo.CurrentCulture,
-                                      "{0} {1} {2}",
-                                      PrintSchemaTags.Framework.PrintTicketRoot,
-                                      PTUtility.GetTextFromResource("FormatException.XMLNotWellFormed"),
-                                      errorMsg),
-                                      nameof(printTicket));
+                        throw new ArgumentException($"{PrintSchemaTags.Framework.PrintTicketRoot} " +
+                                                        $"{PTUtility.GetTextFromResource("FormatException.XMLNotWellFormed")} {errorMsg}",
+                                                    nameof(printTicket));
                     }
                     else
                     {
@@ -333,12 +330,10 @@ namespace MS.Internal.Printing.Configuration
                         if ((hResult == (uint)NativeErrorCode.E_PRINTTICKET_FORMAT) ||
                              (hResult == (uint)NativeErrorCode.E_DELTA_PRINTTICKET_FORMAT))
                         {
-                            throw new ArgumentException(String.Format(CultureInfo.CurrentCulture,
-                                          "{0} {1} {2}",
-                                          PrintSchemaTags.Framework.PrintTicketRoot,
-                                          PTUtility.GetTextFromResource("FormatException.XMLNotWellFormed"),
-                                          errorMsg),
-                                          (hResult == (uint)NativeErrorCode.E_PRINTTICKET_FORMAT) ? "basePrintTicket" : "deltaPrintTicket");
+                            throw new ArgumentException(
+                                            $"{PrintSchemaTags.Framework.PrintTicketRoot} " +
+                                                $"{PTUtility.GetTextFromResource("FormatException.XMLNotWellFormed")} {errorMsg}",
+                                            (hResult == (uint)NativeErrorCode.E_PRINTTICKET_FORMAT) ? "basePrintTicket" : "deltaPrintTicket");
                         }
                         else
                         {
@@ -494,12 +489,9 @@ namespace MS.Internal.Printing.Configuration
             if ((hResult == (uint)NativeErrorCode.E_XML_INVALID) ||
                 (hResult == (uint)NativeErrorCode.E_PRINTTICKET_FORMAT))
             {
-                throw new ArgumentException(String.Format(CultureInfo.CurrentCulture,
-                              "{0} {1} {2}",
-                              PrintSchemaTags.Framework.PrintTicketRoot,
-                              PTUtility.GetTextFromResource("FormatException.XMLNotWellFormed"),
-                              errorMsg),
-                              nameof(printTicket));
+                throw new ArgumentException($"{PrintSchemaTags.Framework.PrintTicketRoot} " +
+                                                $"{PTUtility.GetTextFromResource("FormatException.XMLNotWellFormed")} {errorMsg}",
+                                            nameof(printTicket));
             }
 
             throw new PrintQueueException((int)hResult,

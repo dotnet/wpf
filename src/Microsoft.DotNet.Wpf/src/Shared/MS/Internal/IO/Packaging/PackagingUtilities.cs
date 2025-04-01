@@ -528,7 +528,7 @@ namespace MS.Internal.IO.Packaging
             {
                 // inspect registry and look for user profile via SID
                 string userSid = System.Security.Principal.WindowsIdentity.GetCurrent().User.Value;
-                userProfileKey = Registry.LocalMachine.OpenSubKey(_profileListKeyName + @"\" + userSid);
+                userProfileKey = Registry.LocalMachine.OpenSubKey($@"{_profileListKeyName}\{userSid}");
                 userHasProfile = userProfileKey != null;
             }
             finally
@@ -826,6 +826,6 @@ namespace MS.Internal.IO.Packaging
         /// ProfileListKeyName
         /// </summary>
         private const string _profileListKeyName = @"SOFTWARE\Microsoft\Windows NT\CurrentVersion\ProfileList";
-        private const string _fullProfileListKeyName = @"HKEY_LOCAL_MACHINE\" + _profileListKeyName;
+        private const string _fullProfileListKeyName = $@"HKEY_LOCAL_MACHINE\{_profileListKeyName}";
     }
 }

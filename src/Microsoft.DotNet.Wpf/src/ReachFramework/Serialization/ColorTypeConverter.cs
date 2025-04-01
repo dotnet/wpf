@@ -177,18 +177,14 @@ namespace System.Windows.Xps.Serialization
                 IFormatProvider provider = culture;
                 char separator = MS.Internal.TokenizerHelper.GetNumericListSeparator(provider);
 
-                sb.AppendFormat(provider, "ContextColor {0} ", uriString);
-                sb.AppendFormat(provider, "{1:R}{0}", separator, color.ScA);
+                sb.Append(provider, $"ContextColor {uriString} ");
+                sb.Append(provider, $"{color.ScA:R}{separator}");
                 for (int i = 0; i < color.GetNativeColorValues().Length; ++i)
                 {
-                    sb.AppendFormat(provider, "{0:R}", color.GetNativeColorValues()[i]);
-                    if (i < color.GetNativeColorValues().Length - 1)
-                    {
-                        sb.AppendFormat(provider, "{0}", separator);
-                    }
+                    sb.Append(provider, $"{color.GetNativeColorValues()[i]:R}{separator}");
                 }
 
-                colorString = sb.ToString();
+                colorString = sb.ToString(0, sb.Length - 1);
             }
 
             return colorString;

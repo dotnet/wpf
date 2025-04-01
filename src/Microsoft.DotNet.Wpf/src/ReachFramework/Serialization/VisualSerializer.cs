@@ -279,7 +279,7 @@ namespace System.Windows.Xps.Serialization
             }
 
             _objects.Add(sBrush);
-            _objnams.Add("b" + _brushId);
+            _objnams.Add($"b{_brushId}");
 
             // Replace brush ID place holder with the real ID:
             //   Can't put ID in for brush reuse.
@@ -287,7 +287,7 @@ namespace System.Windows.Xps.Serialization
 
             // <LinearGradientBrush x:Key="bxx"  ->
             // <LinearGradientBrush x:Key="bid"  ->
-            sbBrush = sbBrush.Replace("bxx", "b" + _brushId, 0, 40);
+            sbBrush = sbBrush.Replace("bxx", $"b{_brushId}", 0, 40);
 
             _brushId++;
 
@@ -348,7 +348,7 @@ namespace System.Windows.Xps.Serialization
         // Write GradientStopCollection
         protected void WriteGradientStops(string prefix, GradientStopCollection gsc)
         {
-            _writer.WriteStartElement(prefix + ".GradientStops");
+            _writer.WriteStartElement($"{prefix}.GradientStops");
 
             int count = gsc.Count;
 
@@ -652,15 +652,15 @@ namespace System.Windows.Xps.Serialization
                     {
                         string sourceProfile = ColorTypeConverter.SerializeColorContext(_context,colorConvertedBitmap.SourceColorContext);
 
-                        bitmapUri = "{ColorConvertedBitmap " + bitmapUri + " " + sourceProfile;
+                        bitmapUri = $"{{ColorConvertedBitmap {bitmapUri} {sourceProfile}";
 
                         if (new ColorContext(PixelFormats.Default) != colorConvertedBitmap.DestinationColorContext)
                         {
                             string destinationProfile = ColorTypeConverter.SerializeColorContext(_context, colorConvertedBitmap.DestinationColorContext);
-                            bitmapUri = bitmapUri + " " + destinationProfile;
+                            bitmapUri = $"{bitmapUri} {destinationProfile}";
                         }
 
-                        bitmapUri = bitmapUri + "}";
+                        bitmapUri = $"{bitmapUri}}}";
                     }
                 }
 
@@ -896,11 +896,11 @@ namespace System.Windows.Xps.Serialization
 
                     if ((_manager != null) || (_forceGeneral >= 1) ) // to container | within resource dictionary
                     {
-                        _writer.WriteAttributeString(attribute, "{StaticResource " + ob + "}");
+                        _writer.WriteAttributeString(attribute, $"{{StaticResource {ob}}}");
                     }                     // to loose files
                     else
                     {
-                        _writer.WriteAttributeString(attribute, "{DynamicResource " + ob + "}");
+                        _writer.WriteAttributeString(attribute, $"{{DynamicResource {ob}}}");
                     }
                 }
             }
@@ -953,7 +953,7 @@ namespace System.Windows.Xps.Serialization
                     }
                     else
                     {
-                        string doubleString = GetString(dashes)+" "+GetString(dashes);
+                        string doubleString = $"{GetString(dashes)} {GetString(dashes)}";
                         _writer.WriteAttributeString("StrokeDashArray",doubleString );
                     }
                 }
@@ -1121,7 +1121,7 @@ namespace System.Windows.Xps.Serialization
                     }
                     else
                     {
-                        _writer.WriteStartElement(ps.ToString() + "PathSegment not handled");
+                        _writer.WriteStartElement($"{ps}PathSegment not handled");
                     }
 
                     if (!ps.IsStroked)
@@ -1459,7 +1459,7 @@ namespace System.Windows.Xps.Serialization
                 }
 
                 // Output as element
-                _writer.WriteStartElement(element + "." + attribute);
+                _writer.WriteStartElement($"{element}.{attribute}");
             }
 
             _writer.WriteStartElement("PathGeometry");
@@ -2129,7 +2129,7 @@ namespace System.Windows.Xps.Serialization
                 // Prefix it with '{}' to avoid being confused with markup extension
                 if (characters[0] == '{')
                 {
-                    characters = "{}" + characters;
+                    characters = $"{{}}{characters}";
                 }
 
                 if (serializeGlyphRun.Characters.Count > MaxGlyphCount)

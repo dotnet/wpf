@@ -43,11 +43,7 @@ namespace MS.Internal.Documents
             if (IsMailtoUri(mailtoUri))
             {
                 // Create the address from the URI
-                address = string.Format(
-                    CultureInfo.CurrentCulture,
-                    _addressTemplate,
-                    mailtoUri.GetComponents(UriComponents.UserInfo, UriFormat.Unescaped),
-                    mailtoUri.GetComponents(UriComponents.Host, UriFormat.Unescaped));                                                   
+                address = $"{mailtoUri.GetComponents(UriComponents.UserInfo, UriFormat.Unescaped)}@{mailtoUri.GetComponents(UriComponents.Host, UriFormat.Unescaped)}";                                                   
             }
 
             return address;
@@ -64,45 +60,17 @@ namespace MS.Internal.Documents
             // Add the scheme to the e-mail address to form a URI object
             if (!string.IsNullOrEmpty(address))
             {
-                return new Uri(string.Format(
-                    CultureInfo.CurrentCulture,
-                    _mailtoUriTemplate,
-                    Uri.UriSchemeMailto,
-                    _mailtoSchemeDelimiter,
-                    address));
+                // The delimiter between the scheme and the address in a mailto URI.
+                // We unfortunately cannot use the Uri class SchemeDelimiter because
+                // it is by default set to "://", which makes mailto: URIs generated
+                // look like "mailto://user@host", which in turn cannot be parsed
+                // properly by this class.
+                return new Uri($"{Uri.UriSchemeMailto}:{address}");
             }
 
             return null;
         }
 
         #endregion Internal Methods
-
-        #region Private Fields
-        //--------------------------------------------------------------------------
-        // Private Fields
-        //--------------------------------------------------------------------------
-
-        /// <summary>
-        /// The template for an e-mail address with a user name and a host.
-        /// </summary>
-        private const string _addressTemplate = "{0}@{1}";
-
-        /// <summary>
-        /// The template for a mailto scheme URI with the mailto scheme and an
-        /// address.
-        /// </summary>
-        private const string _mailtoUriTemplate = "{0}{1}{2}";
-
-        /// <summary>
-        /// The delimiter between the scheme and the address in a mailto URI.
-        /// We unfortunately cannot use the Uri class SchemeDelimiter because
-        /// it is by default set to "://", which makes mailto: URIs generated
-        /// look like "mailto://user@host", whicn in turn cannot be parsed
-        /// properly by this class.
-        /// </summary>
-        private const string _mailtoSchemeDelimiter = ":";        
-
-        #endregion Private Fields
-
     }
 }

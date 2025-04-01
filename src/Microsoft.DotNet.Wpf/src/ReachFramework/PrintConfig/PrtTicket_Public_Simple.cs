@@ -107,11 +107,9 @@ namespace System.Printing
         /// <returns>String that shows the page media size setting.</returns>
         public override string ToString()
         {
-            return ((PageMediaSizeName != null) ? String.Format(CultureInfo.CurrentCulture, "{0}", PageMediaSizeName) : "Null") + " (" +
-                   ((Width != null) ? String.Format(CultureInfo.CurrentCulture, "{0}", Width) : "Null") +
-                   " x " +
-                   ((Height != null) ? String.Format(CultureInfo.CurrentCulture, "{0}", Height) : "Null") +
-                   ")";
+            const string nullString = "Null";
+            return $"{PageMediaSizeName?.ToString() ?? nullString} " +
+                        $"({Width?.ToString() ?? nullString} x {Height?.ToString() ?? nullString})";
         }
         #endregion Public Methods
 
@@ -215,12 +213,9 @@ namespace System.Printing
         /// <returns>String that shows the page resolution setting.</returns>
         public override string ToString()
         {
-            return ((X != null) ? String.Format(CultureInfo.CurrentCulture, "{0}", X) : "Null") +
-                   " x " +
-                   ((Y != null) ? String.Format(CultureInfo.CurrentCulture, "{0}", Y) : "Null") +
-                   " (QualitativeResolution: " +
-                   ((QualitativeResolution != null) ? QualitativeResolution.ToString() : "Null") +
-                   ")";
+            const string nullString = "Null";
+            return $"{X?.ToString() ?? nullString} x {Y?.ToString() ?? nullString} " +
+                        $"(QualitativeResolution: {QualitativeResolution?.ToString() ?? nullString})";
         }
 
         #endregion Public Methods

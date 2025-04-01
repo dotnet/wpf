@@ -306,7 +306,7 @@ namespace MS.Internal.Printing.Configuration
                         }
                         else
                         {
-                            optionLocalName = string.Format(CultureInfo.InvariantCulture, "User{0:0000000000}", bins[i]);
+                            optionLocalName = string.Create(CultureInfo.InvariantCulture, $"User{bins[i]:0000000000}");
                             string optionDisplayName = (i < binDisplayNames.Count) ? binDisplayNames[i] : null;
                             WriteStartOption(this._privateNamespace, optionLocalName, optionDisplayName, "None");
                             WriteEndOption();
@@ -414,7 +414,7 @@ namespace MS.Internal.Printing.Configuration
                         }
                         else
                         {
-                            optionLocalName = string.Format(CultureInfo.InvariantCulture, "User{0:0000000000}", mediaTypes[i]);
+                            optionLocalName = string.Create(CultureInfo.InvariantCulture, $"User{mediaTypes[i]:0000000000}");
                             optionDisplayName = (i < mediaTypeDisplayNames.Count) ? mediaTypeDisplayNames[i] : null;
                             pskFrontCoating = null;
                             pskBackCoating = null;
@@ -517,7 +517,7 @@ namespace MS.Internal.Printing.Configuration
                             {
                                 string x = XmlConvert.ToString(resolutions[i].x);
                                 string y = XmlConvert.ToString(resolutions[i].y);
-                                WriteStartOption(this._privateNamespace, null, x + " x " + y, "None");
+                                WriteStartOption(this._privateNamespace, null, $"{x} x {y}", "None");
                                 {
                                     WriteStartScoredProperty(PrintSchemaNamespaces.StandardKeywordSet, "ResolutionX");
                                     {

@@ -278,7 +278,7 @@ namespace System.Windows.Threading
         {
             get
             {
-                return _method.Method.DeclaringType + "." + _method.Method.Name;
+                return $"{_method.Method.DeclaringType}.{_method.Method.Name}";
             }
         }
 

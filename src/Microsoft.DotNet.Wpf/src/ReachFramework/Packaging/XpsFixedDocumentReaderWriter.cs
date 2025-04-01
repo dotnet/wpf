@@ -863,11 +863,7 @@ namespace System.Windows.Xps.Packaging
                 xmlWriter.WriteRaw ("<PageContent.LinkTargets>");
                 foreach (String nameElement in linkTargetStream)
                 {
-                     xmlWriter.WriteRaw (String.Format(
-                        System.Globalization.CultureInfo.InvariantCulture,
-                        "<LinkTarget Name=\"{0}\" />",
-                        nameElement)
-                        );
+                     xmlWriter.WriteRaw($"<LinkTarget Name=\"{nameElement}\" />");
                 }
                 xmlWriter.WriteRaw ("</PageContent.LinkTargets>");
             }

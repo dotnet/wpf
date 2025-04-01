@@ -207,11 +207,11 @@ namespace MS.Internal.Printing.Configuration
             for (index = 0; index < limit; index++)
             {
                 // the new prefix is in the format like: "psk0000" "xsi0001" "xsd0100"
-                prefix = prefix_header + index.ToString(CultureInfo.InvariantCulture).PadLeft(4, '0');
+                prefix = string.Create(CultureInfo.InvariantCulture, $"{prefix_header}{index:0000}");
 
-                if (root.Attributes["xmlns:" + prefix] == null)
+                if (root.Attributes[$"xmlns:{prefix}"] == null)
                 {
-                    root.SetAttribute("xmlns:" + prefix, nsURI);
+                    root.SetAttribute($"xmlns:{prefix}", nsURI);
                     break;
                 }
             }
@@ -448,7 +448,7 @@ namespace MS.Internal.Printing.Configuration
             }
             else
             {
-                QName = prefix + ":" + localName;
+                QName = $"{prefix}:{localName}";
             }
 
             // Console.WriteLine("URI:{0}, localName:{1} ===> QName:{2}", URI, localName, QName);

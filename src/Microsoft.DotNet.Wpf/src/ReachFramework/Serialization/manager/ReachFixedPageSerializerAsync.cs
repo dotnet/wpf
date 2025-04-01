@@ -1,14 +1,14 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
 /*++
-                                                                              
-                                                                   
+
+
     Abstract:
         This file contains the definition of a class that
-        defines the common functionality required to serialize 
+        defines the common functionality required to serialize
         a FixedPage
-                                                                        
+
 --*/
 using System.ComponentModel;
 using System.Xml;
@@ -42,13 +42,13 @@ namespace System.Windows.Xps.Serialization
             ):
         base(manager)
         {
-            
+
         }
 
         #endregion Constructor
-        
+
         #region Public Methods
-        
+
         public
         override
         void
@@ -58,7 +58,7 @@ namespace System.Windows.Xps.Serialization
         {
             if(context != null)
             {
-                switch (context.Action) 
+                switch (context.Action)
                 {
                     case SerializerAction.endPersistObjectData:
                     {
@@ -116,11 +116,11 @@ namespace System.Windows.Xps.Serialization
         #endregion Public Methods
 
         #region Internal Methods
-        
+
         /// <summary>
         /// The main method that is called to serialize the FixedPage
-        /// and that is usually called from within the serialization manager 
-        /// when a node in the graph of objects is at a turn where it should 
+        /// and that is usually called from within the serialization manager
+        /// when a node in the graph of objects is at a turn where it should
         /// be serialized.
         /// </summary>
         /// <param name="serializedProperty">
@@ -149,7 +149,7 @@ namespace System.Windows.Xps.Serialization
         }
 
         /// <summary>
-        /// The method is called once the object data is discovered at that 
+        /// The method is called once the object data is discovered at that
         /// point of the serialization process.
         /// </summary>
         /// <param name="serializableObjectContext">
@@ -183,7 +183,7 @@ namespace System.Windows.Xps.Serialization
             else
             {
                 XmlWriter.WriteStartElement(serializableObjectContext.Name);
-                
+
                 XmlWriter.WriteAttributeString(XpsS0Markup.Xmlns, xmlnsForType);
                 XmlWriter.WriteAttributeString(XpsS0Markup.XmlnsX, XpsS0Markup.XmlnsXSchema);
 
@@ -201,9 +201,9 @@ namespace System.Windows.Xps.Serialization
             {
                 Size fixedPageSize = new Size(fixedPage.Width, fixedPage.Height);
                 ((IXpsSerializationManager)SerializationManager).FixedPageSize = fixedPageSize;
-            
+
                 //
-                // Before we serialize any properties on the FixedPage, we need to 
+                // Before we serialize any properties on the FixedPage, we need to
                 // serialize the FixedPage as a Visual
                 //
                 Visual fixedPageAsVisual = serializableObjectContext.TargetObject as Visual;
@@ -226,7 +226,7 @@ namespace System.Windows.Xps.Serialization
                     ((IXpsSerializationManagerAsync)SerializationManager).OperationStack.Push(context);
 
                     PrintTicket printTicket = ((IXpsSerializationManager)SerializationManager).FixedPagePrintTicket;
-                    
+
                     if(printTicket != null)
                     {
                         PrintTicketSerializer serializer = new PrintTicketSerializer(SerializationManager);
@@ -265,7 +265,7 @@ namespace System.Windows.Xps.Serialization
 
             attributeValue = GetValueOfAttributeAsString(serializablePropertyContext);
 
-            if ( (attributeValue != null) && 
+            if ( (attributeValue != null) &&
                  (attributeValue.Length > 0) )
             {
                 //
@@ -276,7 +276,7 @@ namespace System.Windows.Xps.Serialization
         }
 
         /// <summary>
-        /// Converts the Value of the Attribute to a String by calling into 
+        /// Converts the Value of the Attribute to a String by calling into
         /// the appropriate type converters.
         /// </summary>
         /// <param name="serializablePropertyContext">
@@ -306,10 +306,8 @@ namespace System.Windows.Xps.Serialization
                 if (propertyValue is Type)
                 {
                     int index = valueAsString.LastIndexOf('.');
-                    valueAsString = string.Concat(
-                        XpsSerializationManager.TypeOfString,
-                        index > 0 ? valueAsString.AsSpan(index + 1) : valueAsString,
-                        "}");
+                    valueAsString = $"{XpsSerializationManager.TypeOfString}" +
+                                    $"{(index > 0 ? valueAsString.AsSpan(index + 1) : valueAsString)}}}";
                 }
             }
             else
@@ -321,9 +319,9 @@ namespace System.Windows.Xps.Serialization
         }
 
         #endregion Internal Methods
-    
+
         #region Public Properties
-        
+
         /// <summary>
         /// Queries / Set the XmlWriter for a FixedPage.
         /// </summary>
@@ -350,7 +348,7 @@ namespace System.Windows.Xps.Serialization
         }
 
         #endregion Public Properties
-        
+
         #region Private Methods
 
         private
@@ -413,7 +411,7 @@ namespace System.Windows.Xps.Serialization
 
                 XmlWriter.WriteEndElement();
                 //
-                //Release used resources 
+                //Release used resources
                 //
                 XmlWriter = null;
                 //
@@ -428,7 +426,7 @@ namespace System.Windows.Xps.Serialization
                 //
                 // Signal to any registered callers that the Page has been serialized
                 //
-                XpsSerializationProgressChangedEventArgs progressEvent = 
+                XpsSerializationProgressChangedEventArgs progressEvent =
                 new XpsSerializationProgressChangedEventArgs(XpsWritingProgressChangeLevel.FixedPageWritingProgress,
                                                              0,
                                                              0,

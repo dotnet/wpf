@@ -94,8 +94,7 @@ namespace System.Printing
         /// <returns>String that shows the page imageable area capability.</returns>
         public override string ToString()
         {
-            return String.Format(CultureInfo.CurrentCulture, "({0}, {1}), ({2}, {3})",
-                                 OriginWidth, OriginHeight, ExtentWidth, ExtentHeight);
+            return $"({OriginWidth}, {OriginHeight}), ({ExtentWidth}, {ExtentHeight})";
         }
 
         #endregion Public Methods
@@ -157,11 +156,7 @@ namespace System.Printing
         /// Converts the page scaling factor range to human-readable string.
         /// </summary>
         /// <returns>String that shows the page scaling factor range.</returns>
-        public override string ToString()
-        {
-            return String.Format(CultureInfo.CurrentCulture, "({0}, {1})",
-                                 MinimumScale, MaximumScale);
-        }
+        public override string ToString() => $"({MinimumScale}, {MaximumScale})";
 
         #endregion Public Methods
 

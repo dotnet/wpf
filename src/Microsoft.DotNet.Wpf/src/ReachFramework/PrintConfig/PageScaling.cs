@@ -115,10 +115,11 @@ namespace MS.Internal.Printing.Configuration
         /// <returns>A string that represents this scaling option.</returns>
         public override string ToString()
         {
-            return Value.ToString() + ": " +
-                   ((CustomScaleWidth != null) ? CustomScaleWidth.ToString() : "null") + " x " +
-                   ((CustomScaleHeight != null) ? CustomScaleHeight.ToString() : "null") + " x " +
-                   ((CustomSquareScale != null) ? CustomSquareScale.ToString() : "null");
+            const string nullString = "null";
+
+            return $"{Value}: {CustomScaleWidth?.ToString() ?? nullString} x " +
+                    $"{CustomScaleHeight?.ToString() ?? nullString} x " +
+                    $"{CustomSquareScale?.ToString() ?? nullString}";
         }
 
         #endregion Public Methods
@@ -545,10 +546,7 @@ namespace MS.Internal.Printing.Configuration
             }
             else
             {
-                return Value.ToString() +
-                       ", ScaleWidth=" + CustomScaleWidth.ToString(CultureInfo.CurrentCulture) +
-                       ", ScaleHeight=" + CustomScaleHeight.ToString(CultureInfo.CurrentCulture) +
-                       ", SquareScale=" + CustomSquareScale.ToString(CultureInfo.CurrentCulture);
+                return $"{Value}, ScaleWidth={CustomScaleWidth}, ScaleHeight={CustomScaleHeight}, SquareScale={CustomSquareScale}";
             }
         }
 

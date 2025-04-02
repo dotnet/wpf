@@ -1,6 +1,5 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 // This class wraps a System.Diagnostics.TraceSource.  The purpose of
 // wrapping is so that we can have a common point of enabling/disabling
@@ -374,38 +373,50 @@ namespace MS.Internal
         }
 
 
-        // replace { and } by {{ and }} - call if literal string will be passed to Format
-        static public string AntiFormat(string s)
+        /// <summary> Replaces '{' and '}' occurrences with '{{' and '}}'.
+        /// <para>
+        /// Call if literal string will be passed to StringBuilder.AppendFormat() overloads.
+        /// </para>
+        /// </summary>
+        /// <param name="value">The string to replace formatting characters in.</param>
+        /// <returns>A formatted string, no-op in case there are no '{' or '}'. </returns>
+        public static string AntiFormat(string value)
         {
-            int formatIndex = s.IndexOfAny(FormatChars);
-            if (formatIndex < 0)
-                return s;
+            ReadOnlySpan<char> input = value.AsSpan();
 
-            StringBuilder sb = new StringBuilder();
-            int index = 0;
-            int lengthMinus1 = s.Length - 1;
+            // Check if there are any chars present
+            int formatIndex = input.IndexOfAny(FormatChars);
+            if (formatIndex == -1)
+                return value;
 
-            while (formatIndex >= 0)
+            StringBuilder sb = new(value.Length * 2);
+
+            while (input.Length > 0)
             {
-                if (formatIndex < lengthMinus1 && s[formatIndex] == s[formatIndex+1])
+                if (formatIndex == -1)
                 {
-                    // formatting character is already duplicated - leave them alone
-                    formatIndex = s.IndexOfAny(FormatChars, formatIndex+2);
+                    // No formatting character found, append rest of the string and exit
+                    sb.Append(input);
+                    break;
+                }
+                else if (input.Length > formatIndex + 1 && input[formatIndex] == input[formatIndex + 1])
+                {
+                    // Formatting character is already duplicated (append string only)
+                    sb.Append(input.Slice(0, formatIndex + 2));
+
+                    input = input.Slice(formatIndex + 2);
                 }
                 else
                 {
-                    // duplicate the formatting character
-                    sb.Append(s.AsSpan(index, formatIndex - index + 1));
-                    sb.Append(s[formatIndex]);
+                    // Duplicate the formatting character and append string
+                    sb.Append(input.Slice(0, formatIndex + 1));
+                    sb.Append(input[formatIndex]);
 
-                    index = formatIndex + 1;
-                    formatIndex = s.IndexOfAny(FormatChars, index);
+                    input = input.Slice(formatIndex + 1);
                 }
-            }
 
-            if (index <= lengthMinus1)
-            {
-                sb.Append(s.AsSpan(index));
+                // Find the next formatting character
+                formatIndex = input.IndexOfAny(FormatChars);
             }
 
             return sb.ToString();
@@ -491,61 +502,62 @@ namespace MS.Internal
         // Cache used by IsWpfTracingEnabledInRegistry
         private static Nullable<bool> _enabledInRegistry = null;
 
-        private static char[] FormatChars = new char[]{ '{', '}' };
+        private static ReadOnlySpan<char> FormatChars => ['{', '}'];
+
     }
 
-    internal delegate void AvTraceEventHandler( AvTraceBuilder traceBuilder, object[] parameters, int start );
+    internal delegate void AvTraceEventHandler(AvTraceBuilder traceBuilder, object[] parameters, int start);
 
     internal class AvTraceBuilder
     {
-        private StringBuilder  _sb;
+        private readonly StringBuilder _sb;
 
         public AvTraceBuilder()
         {
             _sb = new StringBuilder();
         }
 
-        public AvTraceBuilder( string message )
+        public AvTraceBuilder(string message)
         {
-            _sb = new StringBuilder( message );
+            _sb = new StringBuilder(message);
         }
 
-        public void Append( string message )
+        public void Append(string message)
         {
-            _sb.Append( message );
+            _sb.Append(message);
         }
 
-        public void AppendFormat( string message, params object[] args )
+        public void AppendFormat(string message, params object[] args)
         {
             object[] argstrs = new object[args.Length];
             for (int i = 0; i < args.Length; ++i)
             {
-                argstrs[i] = (args[i] is string s) ? s : AvTrace.ToStringHelper(args[i]);
+                argstrs[i] = (args[i] is string value) ? value : AvTrace.ToStringHelper(args[i]);
             }
-            _sb.AppendFormat( CultureInfo.InvariantCulture, message, argstrs );
+            _sb.AppendFormat(CultureInfo.InvariantCulture, message, argstrs);
         }
 
-        public void AppendFormat( string message, object arg1 )
+        public void AppendFormat(string message, object arg1)
         {
-            _sb.AppendFormat( CultureInfo.InvariantCulture, message, new object[] { AvTrace.ToStringHelper(arg1) } );
+            _sb.AppendFormat(CultureInfo.InvariantCulture, message, AvTrace.ToStringHelper(arg1));
         }
 
-        public void AppendFormat( string message, object arg1, object arg2 )
+        public void AppendFormat(string message, object arg1, object arg2)
         {
-            _sb.AppendFormat( CultureInfo.InvariantCulture, message, new object[] { AvTrace.ToStringHelper(arg1), AvTrace.ToStringHelper(arg2) } );
+            _sb.AppendFormat(CultureInfo.InvariantCulture, message, AvTrace.ToStringHelper(arg1), AvTrace.ToStringHelper(arg2));
         }
 
-        public void AppendFormat( string message, string arg1 )
+        public void AppendFormat(string message, string arg1)
         {
-            _sb.AppendFormat( CultureInfo.InvariantCulture, message, new object[] { AvTrace.AntiFormat(arg1) } );
+            _sb.AppendFormat(CultureInfo.InvariantCulture, message, AvTrace.AntiFormat(arg1));
         }
 
-        public void AppendFormat( string message, string arg1, string arg2 )
+        public void AppendFormat(string message, string arg1, string arg2)
         {
-            _sb.AppendFormat( CultureInfo.InvariantCulture, message, new object[] { AvTrace.AntiFormat(arg1), AvTrace.AntiFormat(arg2) } );
+            _sb.AppendFormat(CultureInfo.InvariantCulture, message, AvTrace.AntiFormat(arg1), AvTrace.AntiFormat(arg2));
         }
 
-        public override string ToString( )
+        public override string ToString()
         {
             return _sb.ToString();
         }

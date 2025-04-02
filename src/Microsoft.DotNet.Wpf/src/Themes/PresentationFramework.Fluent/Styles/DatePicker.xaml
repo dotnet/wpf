@@ -132,9 +132,9 @@
                     <Grid>
                         <Grid.Resources>
                             <Style x:Key="CalendarButtonStyle" TargetType="Button">
-                                <Setter Property="Background" Value="Transparent" />
-                                <Setter Property="BorderBrush" Value="Transparent" />
-                                <Setter Property="BorderThickness" Value="1" />
+                                <Setter Property="Foreground" Value="{DynamicResource TextControlButtonForeground}" />
+                                <Setter Property="Background" Value="{DynamicResource TextControlButtonBackground}" />
+                                <Setter Property="BorderBrush" Value="{DynamicResource TextControlButtonBorderBrush}" />
                                 <Setter Property="Border.CornerRadius" Value="{DynamicResource ControlCornerRadius}" />
                                 <Setter Property="Width" Value="{Binding ActualHeight, RelativeSource={RelativeSource Self}}" />
                                 <Setter Property="OverridesDefaultStyle" Value="True" />
@@ -154,12 +154,14 @@
                                             </Border>
                                             <ControlTemplate.Triggers>
                                                 <Trigger Property="IsMouseOver" Value="True">
-                                                    <Setter Property="Background" Value="{DynamicResource SubtleFillColorSecondaryBrush}" />
-                                                    <Setter Property="BorderBrush" Value="{DynamicResource SubtleFillColorSecondaryBrush}" />
+                                                    <Setter Property="Background" Value="{DynamicResource TextControlButtonBackgroundPointerOver}" />
+                                                    <Setter Property="BorderBrush" Value="{DynamicResource TextControlButtonBorderBrushPointerOver}" />
+                                                    <Setter Property="Foreground" Value="{DynamicResource TextControlButtonForegroundPointerOver}" />
                                                 </Trigger>
                                                 <Trigger Property="IsPressed" Value="True">
-                                                    <Setter Property="Background" Value="{DynamicResource SubtleFillColorTertiaryBrush}" />
-                                                    <Setter Property="BorderBrush" Value="{DynamicResource SubtleFillColorTertiaryBrush}" />
+                                                    <Setter Property="Background" Value="{DynamicResource TextControlButtonBackgroundPressed}" />
+                                                    <Setter Property="BorderBrush" Value="{DynamicResource TextControlButtonBorderBrushPressed}" />
+                                                    <Setter Property="Foreground" Value="{DynamicResource TextControlButtonForegroundPressed}" />
                                                 </Trigger>
                                             </ControlTemplate.Triggers>
                                         </ControlTemplate>

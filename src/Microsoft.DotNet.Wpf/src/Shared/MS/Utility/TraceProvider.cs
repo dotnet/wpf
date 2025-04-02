@@ -1,6 +1,5 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 // A Managed wrapper for Event Tracing for Windows
 // Based on TraceEvent.cs found in nt\base\wmi\trace.net

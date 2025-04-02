@@ -1,6 +1,5 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 using Accessibility;
 using System.Runtime.InteropServices;
@@ -214,7 +213,7 @@ namespace MS.Win32
         public const int MB_USEGLYPHCHARS          = 0x00000004;
         public const int MB_ERR_INVALID_CHARS      = 0x00000008;
         [DllImport(ExternDll.Kernel32, ExactSpelling=true, CharSet=CharSet.Unicode, SetLastError=true)]
-        public static extern int MultiByteToWideChar(int CodePage, int dwFlags, byte[] lpMultiByteStr, int cchMultiByte, [Out, MarshalAs(UnmanagedType.LPWStr)] StringBuilder lpWideCharStr, int cchWideChar);
+        public static unsafe extern int MultiByteToWideChar(int CodePage, int dwFlags, byte* lpMultiByteStr, int cchMultiByte, char* lpWideCharStr, int cchWideChar);
         [DllImport(ExternDll.Kernel32, SetLastError = true, ExactSpelling = true, CharSet = CharSet.Unicode)]
         public static extern int WideCharToMultiByte(int codePage, int flags, [MarshalAs(UnmanagedType.LPWStr)]string wideStr, int chars, [In,Out]byte[] pOutBytes, int bufferBytes, IntPtr defaultChar, IntPtr pDefaultUsed);
 

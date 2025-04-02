@@ -1,6 +1,5 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 
 using System.Windows.Data;
@@ -843,10 +842,8 @@ namespace Microsoft.Windows.Controls
         {
             get
             {
-                if (_dummyElement == null)
-                {
-                    _dummyElement = new DummyObject();
-                }
+                _dummyElement ??= new DummyObject();
+
                 return _dummyElement;
             }
         }
@@ -886,7 +883,7 @@ namespace Microsoft.Windows.Controls
         private DispatcherTimer _timeoutTimer;
 
         [ThreadStatic]
-        private static DummyObject _dummyElement = new DummyObject();
+        private static DummyObject _dummyElement;
 
         #endregion
 

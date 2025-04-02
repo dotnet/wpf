@@ -3224,7 +3224,7 @@ namespace System.Windows.Documents
 
             if (position.TextContainer != this)
             {
-                throw new InvalidOperationException(SR.Format(SR.NotInThisTree, "position"));
+                throw new InvalidOperationException(SR.Format(SR.NotInThisTree, nameof(position)));
             }
 
             position.SyncToTreeGeneration();

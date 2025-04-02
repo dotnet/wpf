@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
 #if !SILVERLIGHTXAML
@@ -112,7 +112,6 @@ namespace MS.Win32
             public UInt32 Flags;
         };
 
-
         internal enum WMIDPREQUESTCODE
         {
             GetAllData = 0,
@@ -141,9 +140,6 @@ namespace MS.Win32
 
         [DllImport("Advapi32.dll")]
         internal static extern byte GetTraceEnableLevel(ulong traceHandle);
-
-        [DllImport("Advapi32.dll")]
-        internal static extern long GetTraceLoggerHandle(WNODE_HEADER* data);
 
         #region TraceEvent()
         // Structures for TraceEvent API.

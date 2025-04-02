@@ -2473,4 +2473,7 @@
   <data name="PenImcSxSRegistrationFailed" xml:space="preserve">
     <value>SxS COM registration of {0} failed.</value>
   </data>
+  <data name="ITypeDataObject_Not_Implemented" xml:space="preserve">
+    <value>Data object '{0}' doesn't implement the 'ITypedDataObject' interface and can't be read using 'TryGetData&lt;T&gt;(string, out T)' methods.</value>
+  </data>
 </root>

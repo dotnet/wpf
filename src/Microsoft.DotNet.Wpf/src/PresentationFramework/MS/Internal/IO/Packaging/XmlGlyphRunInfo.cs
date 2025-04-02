@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
 //
@@ -10,7 +10,7 @@
 using System.Xml;                       // For DOM objects
 using System.Globalization;             // For CultureInfo
 using System.Windows;                   // For ExceptionStringTable
-using Windows = System.Windows;         // For Windows.Point (as distinct from System.Drawing.Point)
+using WindowsPoint = System.Windows.Point;         // For Windows.Point (as distinct from System.Drawing.Point)
 using System.Windows.Markup;            // For XmlLanguage
 
 namespace MS.Internal.IO.Packaging
@@ -56,7 +56,7 @@ namespace MS.Internal.IO.Packaging
         /// The point is given in page coordinates.
         /// double.NaN can be returned in either coordinate when the input glyph run is invalid.
         /// </remarks>
-        internal override Windows.Point StartPosition 
+        internal override WindowsPoint StartPosition
         { 
             get
             {
@@ -72,7 +72,7 @@ namespace MS.Internal.IO.Packaging
         /// The point is given in page coordinates.
         /// double.NaN can be returned in either coordinate when the input glyph run is invalid.
         /// </remarks>
-        internal override Windows.Point EndPosition 
+        internal override WindowsPoint EndPosition
         { 
             get
             {

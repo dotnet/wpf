@@ -463,7 +463,7 @@ namespace System.Windows
         /// </summary>
         /// <param name="windowHandle">
         /// The window handle that can accept drop.
-        /// </param>        
+        /// </param>
         internal static void RevokeDropTarget(IntPtr windowHandle)
         {
             if (windowHandle != IntPtr.Zero)
@@ -575,10 +575,10 @@ namespace System.Windows
             // We don't need to check the error return since PreserveSig attribute is defined as "false"
             // which will pops up the exception automatically.
             OleServicesContext.CurrentOleServicesContext.OleDoDragDrop(
-                                                            (IComDataObject)dataObject,
-                                                            (UnsafeNativeMethods.IOleDropSource)oleDragSource,
-                                                            (int)allowedEffects,
-                                                            dwEffect);
+                (IComDataObject)dataObject,
+                (UnsafeNativeMethods.IOleDropSource)oleDragSource,
+                (int)allowedEffects,
+                dwEffect);
 
             // return the drop effect of DragDrop.
             return (DragDropEffects)dwEffect[0];
@@ -587,7 +587,7 @@ namespace System.Windows
         #endregion Private Methods
     }
 
-    #endregion DragDrop    
+    #endregion DragDrop
 
 
     #region OleDragSource

@@ -6,11 +6,11 @@
 // Holds the data for Avalon BindProducts in the journal
 //
 
-
 using System.Collections;
 using System.Collections.Specialized;
 using System.Formats.Nrbf;
 using System.IO;
+using System.Private.Windows.BinaryFormat;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Windows;
 using System.Windows.Controls;

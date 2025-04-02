@@ -189,7 +189,9 @@
                             <DatePickerTextBox x:Name="PART_TextBox" 
                                             Padding="{TemplateBinding Padding}"
                                             HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                            VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                                            VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                            Foreground="{TemplateBinding Foreground}"
+                                            Focusable="{TemplateBinding Focusable}"/>
 
                             <Button x:Name="PART_Button" 
                                 Grid.Column="1"
@@ -218,18 +220,19 @@
                         <Trigger Property="IsMouseOver" Value="True">
                             <Setter TargetName="BorderElement" Property="Background" Value="{DynamicResource DatePickerBackgroundPointerOver}" />
                             <Setter TargetName="BorderElement" Property="BorderBrush" Value="{DynamicResource DatePickerBorderBrushPointerOver}" />
-                            <Setter Property="Foreground" Value="{DynamicResource DatePickerForegroundPointerOver}" />
+                            <Setter TargetName="PART_TextBox" Property="Foreground" Value="{DynamicResource DatePickerForegroundPointerOver}" />
                         </Trigger>
                         <Trigger Property="IsKeyboardFocusWithin" Value="True">
                             <Setter TargetName="BorderElement" Property="Background" Value="{DynamicResource DatePickerBackgroundFocused}" />
                             <Setter TargetName="BorderElement" Property="BorderBrush" Value="{DynamicResource DatePickerBorderBrushFocused}" />
-                            <Setter Property="Foreground" Value="{DynamicResource DatePickerForegroundFocused}" />
+                            <Setter TargetName="PART_TextBox" Property="Foreground" Value="{DynamicResource DatePickerForegroundFocused}" />
                             <Setter TargetName="BorderElement" Property="BorderThickness" Value="{DynamicResource TextControlBorderThemeThicknessFocused}" />
                         </Trigger>
                         <Trigger Property="IsEnabled" Value="False">
                             <Setter TargetName="BorderElement" Property="Background" Value="{DynamicResource DatePickerBackgroundDisabled}" />
                             <Setter TargetName="BorderElement" Property="BorderBrush" Value="{DynamicResource DatePickerBorderBrushDisabled}" />
-                            <Setter Property="Foreground" Value="{DynamicResource DatePickerForegroundDisabled}" />
+                            <Setter TargetName="PART_TextBox" Property="Foreground" Value="{DynamicResource DatePickerForegroundDisabled}" />
+                            <Setter TargetName="PART_Button" Property="Foreground" Value="{DynamicResource DatePickerForegroundDisabled}" />
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>

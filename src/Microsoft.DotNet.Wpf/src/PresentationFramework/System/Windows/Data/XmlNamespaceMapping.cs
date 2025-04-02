@@ -81,21 +81,15 @@ namespace System.Windows.Data
         /// <summary>
         /// Equality comparison by value
         /// </summary>
-        public static bool operator == (XmlNamespaceMapping mappingA, XmlNamespaceMapping mappingB)
+        public static bool operator ==(XmlNamespaceMapping mappingA, XmlNamespaceMapping mappingB)
         {
-            // cannot just compare with (mappingX == null), it'll cause recursion and stack overflow!
-            if (object.ReferenceEquals(mappingA, null))
-                return object.ReferenceEquals(mappingB, null);
-            if (object.ReferenceEquals(mappingB, null))
-                return false;
-
-            return ((mappingA.Prefix == mappingB.Prefix) && (mappingA.Uri == mappingB.Uri)) ;
+            return mappingA is null ? mappingB is null : mappingB is not null && (mappingA.Prefix == mappingB.Prefix) && (mappingA.Uri == mappingB.Uri);
         }
 
         /// <summary>
         /// Inequality comparison by value
         /// </summary>
-        public static bool operator != (XmlNamespaceMapping mappingA, XmlNamespaceMapping mappingB)
+        public static bool operator !=(XmlNamespaceMapping mappingA, XmlNamespaceMapping mappingB)
         {
             return !(mappingA == mappingB);
         }

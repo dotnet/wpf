@@ -66,7 +66,7 @@ namespace System.Windows.Documents
         // force object comparision
         public static bool IsNull(FlowNode flow)
         {
-            return (object)flow == null;
+            return flow is null;
         }
 
 

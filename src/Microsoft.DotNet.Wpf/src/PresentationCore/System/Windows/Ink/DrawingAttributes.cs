@@ -516,19 +516,7 @@ namespace System.Windows.Ink
         /// if two DrawingAttributes are equal</summary>
         public static bool operator ==(DrawingAttributes first, DrawingAttributes second)
         {
-            // compare the GC ptrs for the obvious reference equality
-            if (((object)first == null && (object)second == null) ||
-                ((object)first == (object)second))
-            {
-                return true;
-            }
-                // otherwise, if one of the ptrs are null, but not the other then return false
-            else if ((object)first == null || (object)second == null)
-            {
-                return false;
-            }
-            // finally use the full `blown value-style comparison against the collection contents
-            return first.Equals(second);
+            return first is null ? second is null : ReferenceEquals(first, second) || first.Equals(second);
         }
 
         /// <summary>Overload of the not equals operator to determine if two

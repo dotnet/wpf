@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
 
@@ -91,13 +91,7 @@ namespace MS.Internal
         /// <returns>True if the objects are not equal, otherwise False</returns>
         public static bool operator !=(DpiScale2 dpiScaleA, DpiScale2 dpiScaleB)
         {
-            if ((object.ReferenceEquals(dpiScaleA, null) && !object.ReferenceEquals(dpiScaleB, null)) ||
-                (!object.ReferenceEquals(dpiScaleA, null) && object.ReferenceEquals(dpiScaleB, null)))
-            {
-                return true;
-            }
-
-            return !dpiScaleA.Equals(dpiScaleB);
+            return !(dpiScaleA == dpiScaleB);
         }
 
         /// <summary>
@@ -108,13 +102,7 @@ namespace MS.Internal
         /// <returns>True if the two objects are equal, otherwise False</returns>
         public static bool operator ==(DpiScale2 dpiScaleA, DpiScale2 dpiScaleB)
         {
-            if (object.ReferenceEquals(dpiScaleA, null) && 
-                object.ReferenceEquals(dpiScaleB, null))
-            {
-                return true;
-            }
-
-            return dpiScaleA.Equals(dpiScaleB);
+            return dpiScaleA is null ? dpiScaleB is null : dpiScaleA.Equals(dpiScaleB);
         }
 
         /// <summary>
@@ -149,12 +137,7 @@ namespace MS.Internal
         /// </remarks>
         public bool Equals(DpiScale2 dpiScale2)
         {
-            if (object.ReferenceEquals(dpiScale2, null))
-            {
-                return false;
-            }
-
-            return this.Equals(dpiScale2.dpiScale);
+            return dpiScale2 is not null && this.Equals(dpiScale2.dpiScale);
         }
 
         /// <summary>

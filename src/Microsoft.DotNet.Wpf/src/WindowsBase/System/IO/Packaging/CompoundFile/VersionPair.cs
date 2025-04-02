@@ -118,23 +118,7 @@ namespace MS.Internal.IO.Packaging.CompoundFile
         /// <param name="v2">version to be compared</param>
         public static bool operator ==(VersionPair v1, VersionPair v2)
         {
-            bool result = false;
-
-            // If both v1 & v2 are null they are same
-            if ((Object) v1 == null && (Object) v2 == null)
-            {
-                result = true;
-            }
-            // Do comparison only if both v1 and v2 are not null
-            else if ((Object) v1 != null && (Object) v2 != null)
-            {
-                if (v1.Major == v2.Major && v1.Minor == v2.Minor)
-                {
-                    result = true;
-                }
-            }
-
-            return result;
+            return v1 is null ? v2 is null : v2 is not null && (v1.Major == v2.Major && v1.Minor == v2.Minor);
         }
 
         /// <summary>
@@ -158,11 +142,11 @@ namespace MS.Internal.IO.Packaging.CompoundFile
         {
             bool result = false;
 
-            if ((Object) v1 == null && (Object) v2 != null)
+            if (v1 is null && v2 is not null)
             {
                 result = true;
             }
-            else if ((Object) v1 != null && (object) v2 != null)
+            else if (v1 is not null && v2 is not null)
             {
                 // == is previously define so it can be used
                 if (v1.Major < v2.Major || ((v1.Major == v2.Major) && (v1.Minor < v2.Minor)))
@@ -183,12 +167,12 @@ namespace MS.Internal.IO.Packaging.CompoundFile
         {
             bool result = false;
 
-            if ((Object) v1 != null && (Object) v2 == null)
+            if (v1 is not null && v2 is null)
             {
                 result = true;
             }
             // Comare only if neither v1 nor v2 are not null
-            else if ((Object) v1 != null && (object) v2 != null)
+            else if (v1 is not null && v2 is not null)
             {
                 // < and == are previously define so it can be used
                 if (!(v1 < v2) && v1 != v2)

@@ -279,10 +279,7 @@ namespace MS.Internal.Annotations.Component
         /// <returns></returns>
         public static bool operator ==(AdornerPresentationContext left, AdornerPresentationContext right)
         {
-            if ((object)left == null)
-                return (object)right == null;
-
-            return left.Equals(right);
+            return left is null ? right is null : left.Equals(right);
         }
 
         /// <summary>

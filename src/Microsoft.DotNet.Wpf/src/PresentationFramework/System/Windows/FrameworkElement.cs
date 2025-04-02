@@ -1404,7 +1404,7 @@ namespace System.Windows
         internal static object FindTemplateResourceInternal(DependencyObject target, object item, Type templateType)
         {
             // Data styling doesn't apply to UIElement (bug 1007133).
-            if (item == null || (item is UIElement))
+            if (item is null or UIElement)
             {
                 return null;
             }
@@ -1420,14 +1420,10 @@ namespace System.Windows
 
             while (dataType != null)
             {
-                TemplateKey key = null;
                 if (templateType == typeof(ItemContainerTemplate))
-                    key = new ItemContainerTemplateKey(dataType);
+                    keys.Add(new ItemContainerTemplateKey(dataType));
                 else if (templateType == typeof(DataTemplate))
-                    key = new DataTemplateKey(dataType);
-
-                if (key != null)
-                    keys.Add(key);
+                    keys.Add(new DataTemplateKey(dataType));
 
                 // all keys added for the given item type itself count as an exact match
                 if (exactMatch == -1)

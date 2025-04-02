@@ -13,16 +13,17 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:sys="clr-namespace:System;assembly=mscorlib">
 
-    <!-- .NET 9 Keys -->
-    <!-- <Thickness x:Key="DatePickerBorderThemeThickness">1,1,1,0</Thickness>
+    <!-- Deprecated DatePicker Resources ( Used in .NET 9 ) -->
+    <Thickness x:Key="DatePickerBorderThemeThickness">1,1,1,0</Thickness>
     <Thickness x:Key="DatePickerAccentBorderThemeThickness">0,0,0,1</Thickness>
     <Thickness x:Key="DatePickerLeftIconMargin">10,8,0,0</Thickness>
     <Thickness x:Key="DatePickerRightIconMargin">0,8,10,0</Thickness>
-    <Thickness x:Key="DatePickerCalendarButtonMargin">0,5,4,0</Thickness>
     <Thickness x:Key="DatePickerCalendarButtonPadding">0,0,0,0</Thickness>
     <sys:Double x:Key="DatePickerCalendarButtonHeight">24</sys:Double>
-    <sys:Double x:Key="DatePickerCalendarButtonIconSize">14</sys:Double>
-    <sys:String x:Key="CalendarGlyph">&#xE787;</sys:String> -->
+    <sys:String x:Key="CalendarGlyph">&#xE787;</sys:String>
+    <!-- Reused in .NET 10 -->
+    <!-- <Thickness x:Key="DatePickerCalendarButtonMargin">0,5,4,0</Thickness> -->
+    <!-- <sys:Double x:Key="DatePickerCalendarButtonIconSize">14</sys:Double> -->
 
     <!-- .NET 10 Keys -->
     <Thickness x:Key="DatePickerCalendarButtonMargin">0,4,4,4</Thickness>

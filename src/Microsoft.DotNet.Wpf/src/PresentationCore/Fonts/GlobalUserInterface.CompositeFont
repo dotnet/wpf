@@ -1716,10 +1716,6 @@
             -->
             <!-- CHS -->
             <FontFamilyMap
-                Unicode     = "2EBF0-323AF"
-                Target      = "SimSun-ExtG"
-                Scale       = "1.0" />
-            <FontFamilyMap
                 Unicode     = "20000-2EBE0"
                 Target      = "SimSun-ExtB"
                 Scale       = "1.0" />
@@ -1807,7 +1803,10 @@
                 Target      = "SimSun-ExtB"
                 Scale       = "1.0" />
 
-            <!-- (unassigned)                  2EBF0-2F7FF -->
+            <FontFamilyMap
+                Unicode     = "2EBF0-2EE5F"
+                Target      = "SimSun-ExtG"
+                Scale       = "1.0" />
 
             <!-- CJK Compatibility Ideographs Supplement 2F800-2FA1F -->
             <!-- Vista, Win7, Win8:
@@ -1853,7 +1852,10 @@
 
             <!-- (unassigned)                  2FA20-2FFFF -->
 
-            <!-- (unassigned)                  30000-3FFFF -->
+            <FontFamilyMap
+                Unicode     = "30000-323AF"
+                Target      = "SimSun-ExtG"
+                Scale       = "1.0" />
 
             <!-- Ignoring planes 4 to 16 -->
 

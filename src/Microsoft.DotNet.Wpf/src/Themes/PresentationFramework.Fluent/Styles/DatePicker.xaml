@@ -113,7 +113,7 @@
         <Setter Property="CalendarStyle" Value="{DynamicResource DatePickerCalendarStyle}" />
         <Setter Property="Foreground" Value="{DynamicResource DatePickerForeground}" />
         <Setter Property="Background" Value="{DynamicResource DatePickerBackground}" />
-        <Setter Property="BorderBrush" Value="{DynamicResource TextControlElevationBorderBrush}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource DatePickerBorderBrush}" />
         <Setter Property="BorderThickness" Value="{StaticResource DatePickerBorderThickness}" />
         <Setter Property="HorizontalAlignment" Value="Stretch" />
         <Setter Property="VerticalAlignment" Value="Center" />
@@ -216,16 +216,19 @@
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="True">
                             <Setter TargetName="BorderElement" Property="Background" Value="{DynamicResource DatePickerBackgroundPointerOver}" />
+                            <Setter TargetName="BorderElement" Property="BorderBrush" Value="{DynamicResource DatePickerBorderBrushPointerOver}" />
+                            <Setter Property="Foreground" Value="{DynamicResource DatePickerForegroundPointerOver}" />
                         </Trigger>
                         <Trigger Property="IsKeyboardFocusWithin" Value="True">
                             <Setter TargetName="BorderElement" Property="Background" Value="{DynamicResource DatePickerBackgroundFocused}" />
-                            <Setter TargetName="BorderElement" Property="BorderBrush" Value="{DynamicResource TextControlElevationBorderFocusedBrush}" />
+                            <Setter TargetName="BorderElement" Property="BorderBrush" Value="{DynamicResource DatePickerBorderBrushFocused}" />
+                            <Setter Property="Foreground" Value="{DynamicResource DatePickerForegroundFocused}" />
                             <Setter TargetName="BorderElement" Property="BorderThickness" Value="{DynamicResource TextControlBorderThemeThicknessFocused}" />
                         </Trigger>
                         <Trigger Property="IsEnabled" Value="False">
-                            <Setter TargetName="BorderElement" Property="Background" Value="{DynamicResource ControlFillColorDisabledBrush}" />
-                            <Setter TargetName="BorderElement" Property="BorderBrush" Value="{DynamicResource ControlStrokeColorDefaultBrush}" />
-                            <Setter Property="Foreground" Value="{DynamicResource TextFillColorDisabledBrush}" />
+                            <Setter TargetName="BorderElement" Property="Background" Value="{DynamicResource DatePickerBackgroundDisabled}" />
+                            <Setter TargetName="BorderElement" Property="BorderBrush" Value="{DynamicResource DatePickerBorderBrushDisabled}" />
+                            <Setter Property="Foreground" Value="{DynamicResource DatePickerForegroundDisabled}" />
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>

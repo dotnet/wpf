@@ -494,14 +494,49 @@
   <SolidColorBrush x:Key="DataGridRowSelectedBackgroundThemeBrush" Color="{StaticResource SystemAccentColorDark1}" />
   <SolidColorBrush x:Key="DataGridRowSelectedForegroundThemeBrush" Color="{StaticResource TextOnAccentFillColorPrimary}" />
   <!--  DatePicker  -->
+  <!-- <SolidColorBrush x:Key="DatePickerTextBoxForeground" Color="{StaticResource TextFillColorPrimary}" /> -->
+  <!-- <SolidColorBrush x:Key="DatePickerFocusedBorderBrush" Color="{StaticResource SystemAccentColorDark1}" /> -->
   <SolidColorBrush x:Key="DatePickerForeground" Color="{StaticResource TextFillColorPrimary}" />
+  <SolidColorBrush x:Key="DatePickerForegroundPointerOver" Color="{StaticResource TextFillColorPrimary}" />
+  <SolidColorBrush x:Key="DatePickerForegroundFocused" Color="{StaticResource TextFillColorPrimary}" />
+  <SolidColorBrush x:Key="DatePickerForegroundDisabled" Color="{StaticResource TextFillColorDisabled}" />
   <SolidColorBrush x:Key="DatePickerBackground" Color="{StaticResource ControlFillColorDefault}" />
-  <SolidColorBrush x:Key="DatePickerTextBoxForeground" Color="{StaticResource TextFillColorPrimary}" />
-  <SolidColorBrush x:Key="DatePickerTextBoxCaretBrush" Color="{StaticResource TextFillColorPrimary}" />
-  <SolidColorBrush x:Key="DatePickerFocusedBorderBrush" Color="{StaticResource SystemAccentColorDark1}" />
-  <SolidColorBrush x:Key="DatePickerBackgroundFocused" Color="{StaticResource ControlFillColorInputActive}" />
   <SolidColorBrush x:Key="DatePickerBackgroundPointerOver" Color="{StaticResource ControlFillColorSecondary}" />
+  <SolidColorBrush x:Key="DatePickerBackgroundFocused" Color="{StaticResource ControlFillColorInputActive}" />
+  <SolidColorBrush x:Key="DatePickerBackgroundDisabled" Color="{StaticResource ControlFillColorDisabled}" />
+  <LinearGradientBrush x:Key="DatePickerBorderBrush" MappingMode="Absolute" StartPoint="0,0" EndPoint="0,2">
+    <LinearGradientBrush.RelativeTransform>
+      <ScaleTransform ScaleY="-1" CenterY="0.5" />
+    </LinearGradientBrush.RelativeTransform>
+    <LinearGradientBrush.GradientStops>
+      <GradientStop Offset="0.5" Color="{StaticResource ControlStrongStrokeColorDefault}" />
+      <GradientStop Offset="1.0" Color="{StaticResource ControlStrokeColorDefault}" />
+    </LinearGradientBrush.GradientStops>
+  </LinearGradientBrush>
+  <LinearGradientBrush x:Key="DatePickerBorderBrushPointerOver" MappingMode="Absolute" StartPoint="0,0" EndPoint="0,2">
+    <LinearGradientBrush.RelativeTransform>
+      <ScaleTransform ScaleY="-1" CenterY="0.5" />
+    </LinearGradientBrush.RelativeTransform>
+    <LinearGradientBrush.GradientStops>
+      <GradientStop Offset="0.5" Color="{StaticResource ControlStrongStrokeColorDefault}" />
+      <GradientStop Offset="1.0" Color="{StaticResource ControlStrokeColorDefault}" />
+    </LinearGradientBrush.GradientStops>
+  </LinearGradientBrush>
+  <LinearGradientBrush x:Key="DatePickerBorderBrushFocused" MappingMode="Absolute" StartPoint="0,0" EndPoint="0,2">
+    <LinearGradientBrush.RelativeTransform>
+      <ScaleTransform ScaleY="-1" CenterY="0.5" />
+    </LinearGradientBrush.RelativeTransform>
+    <LinearGradientBrush.GradientStops>
+      <GradientStop Offset="1.0" Color="{StaticResource SystemAccentColorDark1}" />
+      <GradientStop Offset="1.0" Color="{StaticResource ControlStrokeColorDefault}" />
+    </LinearGradientBrush.GradientStops>
+  </LinearGradientBrush>
+  <SolidColorBrush x:Key="DatePickerBorderBrushDisabled" Color="{StaticResource ControlStrokeColorDefault}" />
+  <SolidColorBrush x:Key="DatePickerTextBoxCaretBrush" Color="{StaticResource TextFillColorPrimary}" />
   <SolidColorBrush x:Key="DatePickerPopupBackground" Color="{StaticResource AcrylicBackgroundFillColorDefault}" />
+  <!-- Deprecated DatePicker Brushes -->
+  <SolidColorBrush x:Key="DatePickerTextBoxForeground" Color="{StaticResource TextFillColorPrimary}" />
+  <SolidColorBrush x:Key="DatePickerFocusedBorderBrush" Color="{StaticResource SystemAccentColorDark1}" />
   <!--  DynamicScrollBar  -->
   <SolidColorBrush x:Key="ScrollBarButtonBackground" Color="{StaticResource SubtleFillColorTransparent}" />
   <SolidColorBrush x:Key="ScrollBarButtonArrowForeground" Color="{StaticResource ControlStrongFillColorDefault}" />
@@ -2282,7 +2317,7 @@
     <Setter Property="CalendarStyle" Value="{DynamicResource DatePickerCalendarStyle}" />
     <Setter Property="Foreground" Value="{DynamicResource DatePickerForeground}" />
     <Setter Property="Background" Value="{DynamicResource DatePickerBackground}" />
-    <Setter Property="BorderBrush" Value="{DynamicResource TextControlElevationBorderBrush}" />
+    <Setter Property="BorderBrush" Value="{DynamicResource DatePickerBorderBrush}" />
     <Setter Property="BorderThickness" Value="{StaticResource DatePickerBorderThickness}" />
     <Setter Property="HorizontalAlignment" Value="Stretch" />
     <Setter Property="VerticalAlignment" Value="Center" />
@@ -2349,16 +2384,19 @@
           <ControlTemplate.Triggers>
             <Trigger Property="IsMouseOver" Value="True">
               <Setter TargetName="BorderElement" Property="Background" Value="{DynamicResource DatePickerBackgroundPointerOver}" />
+              <Setter TargetName="BorderElement" Property="BorderBrush" Value="{DynamicResource DatePickerBorderBrushPointerOver}" />
+              <Setter Property="Foreground" Value="{DynamicResource DatePickerForegroundPointerOver}" />
             </Trigger>
             <Trigger Property="IsKeyboardFocusWithin" Value="True">
               <Setter TargetName="BorderElement" Property="Background" Value="{DynamicResource DatePickerBackgroundFocused}" />
-              <Setter TargetName="BorderElement" Property="BorderBrush" Value="{DynamicResource TextControlElevationBorderFocusedBrush}" />
+              <Setter TargetName="BorderElement" Property="BorderBrush" Value="{DynamicResource DatePickerBorderBrushFocused}" />
+              <Setter Property="Foreground" Value="{DynamicResource DatePickerForegroundFocused}" />
               <Setter TargetName="BorderElement" Property="BorderThickness" Value="{DynamicResource TextControlBorderThemeThicknessFocused}" />
             </Trigger>
             <Trigger Property="IsEnabled" Value="False">
-              <Setter TargetName="BorderElement" Property="Background" Value="{DynamicResource ControlFillColorDisabledBrush}" />
-              <Setter TargetName="BorderElement" Property="BorderBrush" Value="{DynamicResource ControlStrokeColorDefaultBrush}" />
-              <Setter Property="Foreground" Value="{DynamicResource TextFillColorDisabledBrush}" />
+              <Setter TargetName="BorderElement" Property="Background" Value="{DynamicResource DatePickerBackgroundDisabled}" />
+              <Setter TargetName="BorderElement" Property="BorderBrush" Value="{DynamicResource DatePickerBorderBrushDisabled}" />
+              <Setter Property="Foreground" Value="{DynamicResource DatePickerForegroundDisabled}" />
             </Trigger>
           </ControlTemplate.Triggers>
         </ControlTemplate>

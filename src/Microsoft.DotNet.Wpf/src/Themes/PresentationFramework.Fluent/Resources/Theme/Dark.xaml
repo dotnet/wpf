@@ -489,13 +489,47 @@
 
     <!--  DatePicker  -->
     <SolidColorBrush x:Key="DatePickerForeground" Color="{StaticResource TextFillColorPrimary}" />
+    <SolidColorBrush x:Key="DatePickerForegroundPointerOver" Color="{StaticResource TextFillColorPrimary}" />
+    <SolidColorBrush x:Key="DatePickerForegroundFocused" Color="{StaticResource TextFillColorPrimary}" />
+    <SolidColorBrush x:Key="DatePickerForegroundDisabled" Color="{StaticResource TextFillColorDisabled}" />
     <SolidColorBrush x:Key="DatePickerBackground" Color="{StaticResource ControlFillColorDefault}" />
-    <SolidColorBrush x:Key="DatePickerTextBoxForeground" Color="{StaticResource TextFillColorPrimary}" />
-    <SolidColorBrush x:Key="DatePickerTextBoxCaretBrush" Color="{StaticResource TextFillColorPrimary}" />
-    <SolidColorBrush x:Key="DatePickerFocusedBorderBrush" Color="{StaticResource SystemAccentColorLight2}" />
-    <SolidColorBrush x:Key="DatePickerBackgroundFocused" Color="{StaticResource ControlFillColorInputActive}" />
     <SolidColorBrush x:Key="DatePickerBackgroundPointerOver" Color="{StaticResource ControlFillColorSecondary}" />
+    <SolidColorBrush x:Key="DatePickerBackgroundFocused" Color="{StaticResource ControlFillColorInputActive}" />
+    <SolidColorBrush x:Key="DatePickerBackgroundDisabled" Color="{StaticResource ControlFillColorDisabled}" />
+    <LinearGradientBrush x:Key="DatePickerBorderBrush" MappingMode="Absolute" StartPoint="0,0" EndPoint="0,2">
+        <LinearGradientBrush.RelativeTransform>
+            <ScaleTransform ScaleY="-1" CenterY="0.5" />
+          </LinearGradientBrush.RelativeTransform>
+        <LinearGradientBrush.GradientStops>
+            <GradientStop Offset="0.5" Color="{StaticResource ControlStrongStrokeColorDefault}" />
+            <GradientStop Offset="1.0" Color="{StaticResource ControlStrokeColorDefault}" />
+        </LinearGradientBrush.GradientStops>
+    </LinearGradientBrush>
+    <LinearGradientBrush x:Key="DatePickerBorderBrushPointerOver" MappingMode="Absolute" StartPoint="0,0" EndPoint="0,2">
+        <LinearGradientBrush.RelativeTransform>
+            <ScaleTransform ScaleY="-1" CenterY="0.5" />
+          </LinearGradientBrush.RelativeTransform>
+        <LinearGradientBrush.GradientStops>
+            <GradientStop Offset="0.5" Color="{StaticResource ControlStrongStrokeColorDefault}" />
+            <GradientStop Offset="1.0" Color="{StaticResource ControlStrokeColorDefault}" />
+        </LinearGradientBrush.GradientStops>
+    </LinearGradientBrush>
+    <LinearGradientBrush x:Key="DatePickerBorderBrushFocused" MappingMode="Absolute" StartPoint="0,0" EndPoint="0,2">
+        <LinearGradientBrush.RelativeTransform>
+          <ScaleTransform ScaleY="-1" CenterY="0.5" />
+        </LinearGradientBrush.RelativeTransform>
+        <LinearGradientBrush.GradientStops>
+          <GradientStop Offset="1.0" Color="{StaticResource SystemAccentColorLight2}" />
+          <GradientStop Offset="1.0" Color="{StaticResource ControlStrokeColorDefault}" />
+        </LinearGradientBrush.GradientStops>
+    </LinearGradientBrush>
+    <SolidColorBrush x:Key="DatePickerBorderBrushDisabled" Color="{StaticResource ControlStrokeColorDefault}" />
+    <SolidColorBrush x:Key="DatePickerTextBoxCaretBrush" Color="{StaticResource TextFillColorPrimary}" />
     <SolidColorBrush x:Key="DatePickerPopupBackground" Color="{StaticResource AcrylicBackgroundFillColorDefault}"/>
+
+    <!-- Deprecated DatePicker Brushes -->
+    <SolidColorBrush x:Key="DatePickerTextBoxForeground" Color="{StaticResource TextFillColorPrimary}" />
+    <SolidColorBrush x:Key="DatePickerFocusedBorderBrush" Color="{StaticResource SystemAccentColorLight2}" />
 
     <!--  DynamicScrollBar  -->
     <SolidColorBrush x:Key="ScrollBarButtonBackground" Color="{StaticResource SubtleFillColorTransparent}" />

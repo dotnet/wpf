@@ -609,14 +609,14 @@ namespace System.Windows.Controls
         private bool FocusFirstItem()
         {
             FrameworkElement container;
-            return NavigateToStartInternal(new ItemNavigateArgs(Keyboard.PrimaryDevice, Keyboard.Modifiers), true /*shouldFocus*/, out container);
+            return NavigateToStartInternal(new ItemNavigateArgs(Keyboard.PrimaryDevice, Keyboard.Modifiers), shouldFocus: true, out container);
         }
 
 
         private bool FocusLastItem()
         {
             FrameworkElement container;
-            return NavigateToEndInternal(new ItemNavigateArgs(Keyboard.PrimaryDevice, Keyboard.Modifiers), true /*shouldFocus*/, out container);
+            return NavigateToEndInternal(new ItemNavigateArgs(Keyboard.PrimaryDevice, Keyboard.Modifiers), shouldFocus: true, out container);
         }
 
         private bool HandleScrollKeys(Key key)

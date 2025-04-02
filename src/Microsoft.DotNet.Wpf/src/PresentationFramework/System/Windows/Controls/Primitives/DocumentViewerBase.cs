@@ -1455,7 +1455,7 @@ namespace System.Windows.Controls.Primitives
                 executedHandler, canExecuteHandler); // no key gesture
 
             // Register editing command handlers - After our commands to let editor handle them first
-            TextEditor.RegisterCommandHandlers(typeof(DocumentViewerBase), /*acceptsRichContent:*/true, /*readOnly:*/!IsEditingEnabled, /*registerEventListeners*/true);
+            TextEditor.RegisterCommandHandlers(typeof(DocumentViewerBase), acceptsRichContent: true, readOnly: !IsEditingEnabled, registerEventListeners: true);
         }
 
         /// <summary>

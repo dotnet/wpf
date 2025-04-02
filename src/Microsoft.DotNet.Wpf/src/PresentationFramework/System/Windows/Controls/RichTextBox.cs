@@ -90,7 +90,7 @@ namespace System.Windows.Controls
             // We don't use the static ctor because there are cases
             // where another control will want to alias our properties
             // but doesn't need this overhead.
-            TextEditor.RegisterCommandHandlers(typeof(RichTextBox), /*acceptsRichContent:*/true, /*readOnly*/false, /*registerEventListeners*/false);
+            TextEditor.RegisterCommandHandlers(typeof(RichTextBox), acceptsRichContent: true, readOnly: false, registerEventListeners: false);
 
             // Create TextContainer and TextEditor associated with it
             if (document == null)
@@ -575,7 +575,7 @@ namespace System.Windows.Controls
                 {
                     throw new ArgumentException(SR.RichTextBox_PointerNotInSameDocument, nameof(value));
                 }
-                Selection.SetCaretToPosition(value, value.LogicalDirection, /*allowStopAtLineEnd:*/true, /*allowStopNearSpace:*/false);
+                Selection.SetCaretToPosition(value, value.LogicalDirection, allowStopAtLineEnd: true, allowStopNearSpace: false);
             }
         }
         

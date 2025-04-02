@@ -274,8 +274,8 @@ namespace Microsoft.Win32
                     NativeMethods.RECT dialogRect = new NativeMethods.RECT();
                     SafeNativeMethods.GetWindowRect(hWnd, ref dialogRect);
 
-                    Size dialogSize = new Size((dialogRect.right - dialogRect.left),  /*width*/
-                                               (dialogRect.bottom - dialogRect.top)); /*height*/
+                    Size dialogSize = new Size(width: (dialogRect.right - dialogRect.left),
+                                               height: (dialogRect.bottom - dialogRect.top));
 
                     // create variables that will receive the new position of the dialog
                     double x = 0;

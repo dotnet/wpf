@@ -79,7 +79,7 @@ namespace System.Windows.Controls
                 // For defered selection we should allow only Add method
                 if (index == Count)
                 {
-                    _selector.SelectionChange.Select(_selector.NewItemInfo(item), true /* assumeInItemsCollection */);
+                    _selector.SelectionChange.Select(_selector.NewItemInfo(item), assumeInItemsCollection: true);
                 }
                 else
                 {
@@ -225,7 +225,7 @@ namespace System.Windows.Controls
                 throw new InvalidOperationException(SR.DeferSelectionNotActive);
             }
 
-            _selector.SelectionChange.Select(info, true /* assumeInItemsCollection */);
+            _selector.SelectionChange.Select(info, assumeInItemsCollection: true);
         }
 
         /// <summary>

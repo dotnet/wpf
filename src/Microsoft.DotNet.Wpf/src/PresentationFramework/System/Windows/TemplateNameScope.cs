@@ -86,7 +86,7 @@ namespace System.Windows
 
             Helper.DowncastToFEorFCE( scopedElement as DependencyObject,
                                       out fe, out fce,
-                                      false /*throwIfNeither*/ );
+                                      throwIfNeither: false);
 
             int childIndex;
 

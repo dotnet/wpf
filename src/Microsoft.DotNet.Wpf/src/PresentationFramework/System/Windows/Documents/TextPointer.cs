@@ -1436,7 +1436,7 @@ namespace System.Windows.Documents
             _tree.BeginChange();
             try
             {
-                position = TextRangeEdit.InsertParagraphBreak(this, /*moveIntoSecondParagraph:*/true);
+                position = TextRangeEdit.InsertParagraphBreak(this, moveIntoSecondParagraph: true);
             }
             finally
             {
@@ -3537,7 +3537,7 @@ namespace System.Windows.Documents
             TextPointer position = this;
 
             // Check for hyperlink schema validity first -- we'll throw on an illegal Hyperlink descendent insert.
-            bool isValidChild = TextSchema.ValidateChild(position, /*childType*/inline.GetType(), false /* throwIfIllegalChild */, true /* throwIfIllegalHyperlinkDescendent */);
+            bool isValidChild = TextSchema.ValidateChild(position, childType: inline.GetType(), throwIfIllegalChild: false, throwIfIllegalHyperlinkDescendent: true);
 
             // Now, it is safe to assume that !isValidChild will be the case of incomplete content.
             if (!isValidChild)
@@ -3561,10 +3561,10 @@ namespace System.Windows.Documents
                 else
                 {
                     // Position is parented by Run, split formatting elements to prepare for inserting inline at this position.
-                    position = TextRangeEdit.SplitFormattingElement(position, /*keepEmptyFormatting:*/false);
+                    position = TextRangeEdit.SplitFormattingElement(position, keepEmptyFormatting: false);
                 }
 
-                Invariant.Assert(TextSchema.IsValidChild(position, /*childType*/inline.GetType()));
+                Invariant.Assert(TextSchema.IsValidChild(position, childType: inline.GetType()));
             }
 
             inline.RepositionWithContent(position);

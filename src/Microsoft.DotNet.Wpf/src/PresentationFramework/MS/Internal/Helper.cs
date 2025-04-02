@@ -960,7 +960,7 @@ namespace MS.Internal
                     // for "fake" properties (no corresponding DP - e.g. VSP's desired-size),
                     // set the property directly into the effective value table
                     EntryIndex entryIndex = container.LookupEntry(dpIndex);
-                    container.SetEffectiveValue(entryIndex, null /*dp*/, dpIndex, null /*metadata*/, value, BaseValueSourceInternal.Local);
+                    container.SetEffectiveValue(entryIndex, dp: null, dpIndex, metadata: null, value, BaseValueSourceInternal.Local);
                 }
             }
         }
@@ -1313,7 +1313,7 @@ namespace MS.Internal
         /// <param name="pathEndElement">ancestor to stop invalidation at</param>
         internal static void InvalidateMeasureOnPath(DependencyObject pathStartElement, DependencyObject pathEndElement, bool duringMeasure)
         {
-            InvalidateMeasureOnPath(pathStartElement, pathEndElement, duringMeasure, false /*includePathEnd*/);
+            InvalidateMeasureOnPath(pathStartElement, pathEndElement, duringMeasure, includePathEnd: false);
         }
 
         /// <summary>

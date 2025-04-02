@@ -821,7 +821,7 @@ namespace System.Windows.Controls
 
         internal void AddRegion(int rowIndex, int columnIndex, int rowCount, int columnCount)
         {
-            AddRegion(rowIndex, columnIndex, rowCount, columnCount, /* notify = */ true);
+            AddRegion(rowIndex, columnIndex, rowCount, columnCount, notify: true);
         }
 
         private void AddRegion(int rowIndex, int columnIndex, int rowCount, int columnCount, bool notify)
@@ -991,7 +991,7 @@ namespace System.Windows.Controls
                     for (int i = 0; i < numKeptRegions; i++)
                     {
                         CellRegion keptRegion = keepRegions[i];
-                        AddRegion(keptRegion.Top + 1, keptRegion.Left, keptRegion.Height, keptRegion.Width, /* notify = */ false);
+                        AddRegion(keptRegion.Top + 1, keptRegion.Left, keptRegion.Height, keptRegion.Width, notify: false);
                     }
                 }
             }
@@ -1023,7 +1023,7 @@ namespace System.Windows.Controls
                     for (int i = 0; i < numKeptRegions; i++)
                     {
                         CellRegion keptRegion = keepRegions[i];
-                        AddRegion(keptRegion.Top - 1, keptRegion.Left, keptRegion.Height, keptRegion.Width, /* notify = */ false);
+                        AddRegion(keptRegion.Top - 1, keptRegion.Left, keptRegion.Height, keptRegion.Width, notify: false);
                     }
                 }
 
@@ -1079,7 +1079,7 @@ namespace System.Windows.Controls
                     for (int i = 0; i < numKeptRegions; i++)
                     {
                         CellRegion keptRegion = slideRegions[i];
-                        AddRegion(keptRegion.Top - 1, keptRegion.Left, keptRegion.Height, keptRegion.Width, /* notify = */ false);
+                        AddRegion(keptRegion.Top - 1, keptRegion.Left, keptRegion.Height, keptRegion.Width, notify: false);
                     }
                 }
 
@@ -1095,7 +1095,7 @@ namespace System.Windows.Controls
                     for (int i = 0; i < numMovedRegions; i++)
                     {
                         CellRegion movedRegion = movedRegions[i];
-                        AddRegion(newIndex, movedRegion.Left, movedRegion.Height, movedRegion.Width, /* notify = */ false);
+                        AddRegion(newIndex, movedRegion.Left, movedRegion.Height, movedRegion.Width, notify: false);
                     }
                 }
 
@@ -1107,7 +1107,7 @@ namespace System.Windows.Controls
                     for (int i = 0; i < numKeptRegions; i++)
                     {
                         CellRegion keptRegion = slideRegions[i];
-                        AddRegion(keptRegion.Top + 1, keptRegion.Left, keptRegion.Height, keptRegion.Width, /* notify = */ false);
+                        AddRegion(keptRegion.Top + 1, keptRegion.Left, keptRegion.Height, keptRegion.Width, notify: false);
                     }
                 }
             }
@@ -1164,11 +1164,11 @@ namespace System.Windows.Controls
                     for (int i = 0; i < numKeptRegions; i++)
                     {
                         CellRegion keptRegion = keepRegions[i];
-                        AddRegion(keptRegion.Top, keptRegion.Left + 1, keptRegion.Height, keptRegion.Width, /* notify = */ false);
+                        AddRegion(keptRegion.Top, keptRegion.Left + 1, keptRegion.Height, keptRegion.Width, notify: false);
                     }
                 }
 
-                FillInFullRowRegions(selectedRows, columnIndex, /* notify = */ true);
+                FillInFullRowRegions(selectedRows, columnIndex, notify: true);
             }
         }
 
@@ -1211,7 +1211,7 @@ namespace System.Windows.Controls
                     for (int i = 0; i < numKeptRegions; i++)
                     {
                         CellRegion keptRegion = keepRegions[i];
-                        AddRegion(keptRegion.Top, keptRegion.Left - 1, keptRegion.Height, keptRegion.Width, /* notify = */ false);
+                        AddRegion(keptRegion.Top, keptRegion.Left - 1, keptRegion.Height, keptRegion.Width, notify: false);
                     }
                 }
 
@@ -1240,7 +1240,7 @@ namespace System.Windows.Controls
             }
 
             // Restore cells in full rows belonging to the new column
-            FillInFullRowRegions(selectedRows, columnIndex, /* notify = */ true);
+            FillInFullRowRegions(selectedRows, columnIndex, notify: true);
         }
 
         private void OnMoveColumn(int oldIndex, int newIndex)
@@ -1270,7 +1270,7 @@ namespace System.Windows.Controls
                     for (int i = 0; i < numKeptRegions; i++)
                     {
                         CellRegion keptRegion = slideRegions[i];
-                        AddRegion(keptRegion.Top, keptRegion.Left - 1, keptRegion.Height, keptRegion.Width, /* notify = */ false);
+                        AddRegion(keptRegion.Top, keptRegion.Left - 1, keptRegion.Height, keptRegion.Width, notify: false);
                     }
                 }
 
@@ -1285,7 +1285,7 @@ namespace System.Windows.Controls
                     for (int i = 0; i < numMovedRegions; i++)
                     {
                         CellRegion movedRegion = movedRegions[i];
-                        AddRegion(movedRegion.Top, newIndex, movedRegion.Height, movedRegion.Width, /* notify = */ false);
+                        AddRegion(movedRegion.Top, newIndex, movedRegion.Height, movedRegion.Width, notify: false);
                     }
                 }
 
@@ -1297,7 +1297,7 @@ namespace System.Windows.Controls
                     for (int i = 0; i < numKeptRegions; i++)
                     {
                         CellRegion keptRegion = slideRegions[i];
-                        AddRegion(keptRegion.Top, keptRegion.Left + 1, keptRegion.Height, keptRegion.Width, /* notify = */ false);
+                        AddRegion(keptRegion.Top, keptRegion.Left + 1, keptRegion.Height, keptRegion.Width, notify: false);
                     }
                 }
             }

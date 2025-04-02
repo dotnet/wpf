@@ -404,8 +404,8 @@ namespace System.Windows
                                 fMetadata,
                                 oldEntry,
                                 ref newEntry,
-                                false /* coerceWithDeferredReference */,
-                                false /* coerceWithCurrentValue */,
+                                coerceWithDeferredReference: false,
+                                coerceWithCurrentValue: false,
                                 operationType)
                             & (UpdateResult.ValueChanged | UpdateResult.InheritedValueOverridden))
                             == UpdateResult.ValueChanged;
@@ -424,8 +424,8 @@ namespace System.Windows
                                 fMetadata,
                                 oldEntry,
                                 ref newEntry,
-                                false /* coerceWithDeferredReference */,
-                                false /* coerceWithCurrentValue */,
+                                coerceWithDeferredReference: false,
+                                coerceWithCurrentValue: false,
                                 operationType)
                             & (UpdateResult.ValueChanged | UpdateResult.InheritedValueOverridden))
                             == UpdateResult.ValueChanged;
@@ -521,7 +521,7 @@ namespace System.Windows
         {
             Debug.Assert(d != null, "Must have non-null current node");
 
-            bool containsTypeOfKey = info.Contains(d.DependencyObjectType.SystemType, true /*isImplicitStyleKey*/);
+            bool containsTypeOfKey = info.Contains(d.DependencyObjectType.SystemType, isImplicitStyleKey: true);
             bool isSystemResourcesChange = info.IsThemeChange;
             bool isStyleResourcesChange = info.IsStyleResourcesChange;
             bool isTemplateResourcesChange = info.IsTemplateResourcesChange;
@@ -709,7 +709,7 @@ namespace System.Windows
                     {
                         // Record this property if it is referring
                         // to a resource that is being changed
-                        if (info.Contains(resource.ResourceKey, false /*isImplicitStyleKey*/))
+                        if (info.Contains(resource.ResourceKey, isImplicitStyleKey: false))
                         {
                             resources[invalidationCount]  = resource;
                             invalidationCount++;
@@ -776,7 +776,7 @@ namespace System.Windows
                     if (!fe.HasStyleChanged)
                     {
                         StyleHelper.InvalidateResourceDependents(d, info, ref fe.Style.ResourceDependents,
-                            false /* invalidateVisualTreeToo */);
+                            invalidateVisualTreeToo: false);
                     }
                 }
 
@@ -785,7 +785,7 @@ namespace System.Windows
                     // Check for resource references contained within associated Template.
                     // If found, invalidate all properties that are being driven by a resource
                     StyleHelper.InvalidateResourceDependents(d, info, ref fe.TemplateInternal.ResourceDependents,
-                        false /* invalidateVisualTreeToo */);
+                        invalidateVisualTreeToo: false);
                 }
 
                 if (fe.TemplateChildIndex > 0)
@@ -818,7 +818,7 @@ namespace System.Windows
                         if (themeStyle != fe.Style)
                         {
                             StyleHelper.InvalidateResourceDependents(d, info, ref themeStyle.ResourceDependents,
-                                false /* invalidateVisualTreeToo */);
+                                invalidateVisualTreeToo: false);
                         }
                     }
                 }
@@ -850,8 +850,8 @@ namespace System.Windows
                     // invalidated these properties.
                     if (!fce.HasStyleChanged)
                     {
-                        StyleHelper.InvalidateResourceDependents(d, info, ref fce.Style.ResourceDependents, !
-                            false /*invalidateVisualTreeToo */);
+                        StyleHelper.InvalidateResourceDependents(d, info, ref fce.Style.ResourceDependents,
+                            invalidateVisualTreeToo: !false);
                     }
                 }
 
@@ -885,7 +885,7 @@ namespace System.Windows
                         if (themeStyle != fce.Style)
                         {
                             StyleHelper.InvalidateResourceDependents(d, info, ref themeStyle.ResourceDependents,
-                                false /*invalidateVisualTreeToo */);
+                                invalidateVisualTreeToo: false);
                         }
                     }
                 }
@@ -1055,8 +1055,8 @@ namespace System.Windows
                             metadata,
                             oldEntry,
                             ref newEntry,
-                            false /* coerceWithDeferredReference */,
-                            false /* coerceWithCurrentValue */,
+                            coerceWithDeferredReference: false,
+                            coerceWithCurrentValue: false,
                             OperationType.Inherit)
                         & (UpdateResult.ValueChanged | UpdateResult.InheritedValueOverridden))
                         == UpdateResult.ValueChanged;
@@ -1075,8 +1075,8 @@ namespace System.Windows
                             metadata,
                             oldEntry,
                             ref newEntry,
-                            false /* coerceWithDeferredReference */,
-                            false /* coerceWithCurrentValue */,
+                            coerceWithDeferredReference: false,
+                            coerceWithCurrentValue: false,
                             OperationType.Inherit)
                         & (UpdateResult.ValueChanged | UpdateResult.InheritedValueOverridden))
                         == UpdateResult.ValueChanged;

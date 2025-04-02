@@ -192,7 +192,7 @@ namespace System.Windows.Documents
 
             return IdentifyTableElements((
                 TextPointer)anchorPosition, (TextPointer)movingPosition,
-                /*includeCellAtMovingPosition:*/true,
+                includeCellAtMovingPosition: true,
                 out anchorCell, out movingCell,
                 out anchorRow, out movingRow,
                 out anchorRowGroup, out movingRowGroup,
@@ -435,7 +435,7 @@ namespace System.Windows.Documents
             TableCell anchorCell;
             TableCell movingCell;
             if (TextRangeEditTables.IsTableCellRange(selection.AnchorPosition, (TextPointer)movingPosition,
-                /*includeCellAtMovingPosition:*/false,
+                includeCellAtMovingPosition: false,
                 out anchorCell, out movingCell))
             {
                 // anchorCell is a corner cell of a table where selection has been started.
@@ -686,10 +686,10 @@ namespace System.Windows.Documents
         private static Thickness GetCellBorder(double thickness, int rowIndex, int columnIndex, int rowSpan, int columnSpan, int rowCount, int columnCount)
         {
             return new Thickness(
-                /*left:*/thickness,
-                /*top:*/thickness,
-                /*right:*/columnIndex + columnSpan < columnCount ? 0 : thickness,
-                /*bottom:*/rowIndex + rowSpan < rowCount ? 0 : thickness);
+                left: thickness,
+                top: thickness,
+                right: columnIndex + columnSpan < columnCount ? 0 : thickness,
+                bottom: rowIndex + rowSpan < rowCount ? 0 : thickness);
         }
 
         #endregion Table Insertion
@@ -872,13 +872,13 @@ namespace System.Windows.Documents
             }
 
             TextPointer insertionPosition;
-            if (TextSchema.IsValidChild(/*position:*/position, /*childType:*/typeof(Inline)))
+            if (TextSchema.IsValidChild(position: position, childType: typeof(Inline)))
             {
                 insertionPosition = CreateImplicitRun(position);
             }
             else
             {
-                Invariant.Assert(TextSchema.IsValidChild(/*position:*/position, /*childType:*/typeof(Block)), "Expecting valid parent-child relationship");
+                Invariant.Assert(TextSchema.IsValidChild(position: position, childType: typeof(Block)), "Expecting valid parent-child relationship");
                 insertionPosition = CreateImplicitParagraph(position);
             }
 
@@ -962,8 +962,8 @@ namespace System.Windows.Documents
                 start.CompareTo(end) < 0
                 &&
                 IdentifyTableElements(
-                    /*anchorPosition:*/start, /*movingPosition:*/end,
-                    /*includeCellAtMovingPosition:*/false,
+                    anchorPosition: start, movingPosition: end,
+                    includeCellAtMovingPosition: false,
                     out startCell, out endCell,
                     out startRow, out endRow,
                     out startRowGroup, out endRowGroup,
@@ -973,9 +973,9 @@ namespace System.Windows.Documents
                 {
                     bool isTableCellRange;
                     List<TextSegment> textSegments = TextRangeEditTables.BuildTableRange(
-                        /*anchorPosition:*/start,
-                        /*movingPosition:*/end,
-                        /*includeCellAtMovingPosition*/false,
+                        anchorPosition: start,
+                        movingPosition: end,
+                        includeCellAtMovingPosition: false,
                         out isTableCellRange);
 
                     if (isTableCellRange && textSegments != null)
@@ -1179,7 +1179,7 @@ namespace System.Windows.Documents
                     {
                         // Create new cell and transfer all formatting properties to it from a source cell.
                         // All properties except for RowSpan will be transferred.
-                        AddCellCopy(newRow, currentCell, -1/*negative means at the endPosition*/, /*copyRowSpan:*/false, /*copyColumnSpan:*/true);
+                        AddCellCopy(newRow, currentCell, -1/*negative means at the endPosition*/, copyRowSpan: false, copyColumnSpan: true);
                     }
                 }
 
@@ -1331,7 +1331,7 @@ namespace System.Windows.Documents
                             {
                                 cellIndex++;
                             }
-                            TableCell newCell = AddCellCopy(nextRow, spannedCell, cellIndex, /*copyRowSpan:*/false, /*copyColumnSpan:*/true);
+                            TableCell newCell = AddCellCopy(nextRow, spannedCell, cellIndex, copyRowSpan: false, copyColumnSpan: true);
                             Invariant.Assert(spannedCell.RowSpan - (nextRow.Index - spannedCell.Row.Index) > 0, "expecting: spannedCell.RowSpan - (nextRow.Index - spannedCell.Row.Index) > 0");
                             newCell.ContentStart.TextContainer.SetValue(newCell.ContentStart, TableCell.RowSpanProperty, spannedCell.RowSpan - (nextRow.Index - spannedCell.Row.Index));
                             cellIndex++;
@@ -1438,7 +1438,7 @@ namespace System.Windows.Documents
             TableRowGroup endRowGroup;
             Table startTable;
             Table endTable;
-            if (!IdentifyTableElements(textRange.Start, textRange.End, /*includeCellAtMovingPosition:*/false, out startCell, out endCell, out startRow, out endRow, out startRowGroup, out endRowGroup, out startTable, out endTable))
+            if (!IdentifyTableElements(textRange.Start, textRange.End, includeCellAtMovingPosition: false, out startCell, out endCell, out startRow, out endRow, out startRowGroup, out endRowGroup, out startTable, out endTable))
             {
                 if (textRange.IsTableCellRange)
                 {
@@ -1540,7 +1540,7 @@ namespace System.Windows.Documents
 
             if (!IsTableCellRange(
                 textRange.Start, textRange.End,
-                /*includeCellAtMovingPosition:*/false,
+                includeCellAtMovingPosition: false,
                 out startCell, out endCell))
             {
                 return false;
@@ -1832,7 +1832,7 @@ namespace System.Windows.Documents
             TableRowGroup endRowGroup;
             Table startTable;
             Table endTable;
-            if (!IdentifyTableElements(textRange.Start, textRange.End, /*includeCellAtMovingPosition:*/false, out startCell, out endCell, out startRow, out endRow, out startRowGroup, out endRowGroup, out startTable, out endTable))
+            if (!IdentifyTableElements(textRange.Start, textRange.End, includeCellAtMovingPosition: false, out startCell, out endCell, out startRow, out endRow, out startRowGroup, out endRowGroup, out startTable, out endTable))
             {
                 return null;
             }
@@ -1883,7 +1883,7 @@ namespace System.Windows.Documents
             TableRowGroup endRowGroup;
             Table startTable;
             Table endTable;
-            if (!IdentifyTableElements(textRange.Start, textRange.End, /*includeCellAtMovingPosition:*/false, out startCell, out endCell, out startRow, out endRow, out startRowGroup, out endRowGroup, out startTable, out endTable))
+            if (!IdentifyTableElements(textRange.Start, textRange.End, includeCellAtMovingPosition: false, out startCell, out endCell, out startRow, out endRow, out startRowGroup, out endRowGroup, out startTable, out endTable))
             {
                 return null;
             }
@@ -1920,7 +1920,7 @@ namespace System.Windows.Documents
             // Perform a split horizontally
             while (splitCountHorizontal > 0)
             {
-                AddCellCopy(startCell.Row, startCell, startCellIndex + 1, /*copyRowSpan:*/true, /*copyColumnSpan:*/false);
+                AddCellCopy(startCell.Row, startCell, startCellIndex + 1, copyRowSpan: true, copyColumnSpan: false);
                 startCell.ContentStart.TextContainer.SetValue(startCell.ContentStart, TableCell.ColumnSpanProperty, startCell.ColumnSpan - 1);
                 if (startCell.ColumnSpan == 1)
                 {

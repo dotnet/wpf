@@ -144,7 +144,7 @@ namespace MS.Internal.Ink
                             // Now add the previous points to the lasso behavior
                             // The SelectionBehavior doesn't check userInitiated, pass false
                             // even if our _userInitiated flag is true
-                            newBehavior.AddStylusPoints(cachedPoints, false/*userInitiated*/);
+                            newBehavior.AddStylusPoints(cachedPoints, userInitiated: false);
                         }
 
                         break;

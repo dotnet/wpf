@@ -77,7 +77,7 @@ namespace System.Windows.Documents
         {
             get
             {
-                return new ListItemCollection(this, /*isOwnerParent*/true);
+                return new ListItemCollection(this, isOwnerParent: true);
             }
         }
 

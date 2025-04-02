@@ -535,7 +535,7 @@ namespace System.Windows.Markup
         private void ReadDocumentEndRecord()
         {
             Debug.Assert(0 == ReaderContextStack.Count); // if not zero we missed an EndElement
-            SetPropertyValueToParent(false /*fromStartTag*/);
+            SetPropertyValueToParent(fromStartTag: false);
             ParserContext.RootElement = null;
             MapTable.ClearConverterCache();
             EndOfDocument = true;
@@ -778,7 +778,7 @@ namespace System.Windows.Markup
                 XamlParseException.ThrowException( ParserContext,
                                                LineNumber,
                                                LinePosition,
-                                               String.Empty /*message*/,
+                                               message: String.Empty,
                                                e );
             }
 #endif
@@ -1195,7 +1195,7 @@ namespace System.Windows.Markup
             // Check if the element on the stack needs to be added to the tree as a child
             // If not, then continue and see if the element should be added to a list, dictionary,
             // array, set as a property value, etc.
-            SetPropertyValueToParent(false /*fromStartTag*/);
+            SetPropertyValueToParent(fromStartTag: false);
 
             Debug.Assert(!CurrentContext.CheckFlag(ReaderFlags.NeedToAddToTree), "Failed to add Element to tree before popping stack");
 
@@ -1253,7 +1253,7 @@ namespace System.Windows.Markup
         internal virtual void ReadKeyElementEndRecord()
         {
             object key = ProvideValueFromMarkupExtension((MarkupExtension)GetCurrentObjectData(),
-                                                         ParentObjectData, null /*member*/);
+                                                         ParentObjectData, member: null);
 
             SetKeyOnContext(key, XamlReaderHelper.DefinitionName, ParentContext, GrandParentContext);
             PopContext();
@@ -1668,7 +1668,7 @@ namespace System.Windows.Markup
         internal virtual void ReadDeferableContentStart(
             BamlDeferableContentStartRecord bamlRecord)
         {
-            ResourceDictionary dictionary = GetDictionaryFromContext(CurrentContext, true /*toInsert*/) as ResourceDictionary;
+            ResourceDictionary dictionary = GetDictionaryFromContext(CurrentContext, toInsert: true) as ResourceDictionary;
 
             if (dictionary != null)
             {
@@ -2037,7 +2037,7 @@ namespace System.Windows.Markup
             WpfPropertyDefinition propertyDefinition = new WpfPropertyDefinition(
                                     this,
                                     attributeId,
-                                    ReaderFlags.DependencyObject == CurrentContext.ContextType /*targetIsDependencyObject*/ );
+                                    targetIsDependencyObject: ReaderFlags.DependencyObject == CurrentContext.ContextType);
 
             // Try DependencyProperty optimization.
             if (propertyDefinition.DependencyProperty != null)
@@ -2964,7 +2964,7 @@ namespace System.Windows.Markup
         {
             short  attributeId = bamlPropertyArrayStartRecord.AttributeId;
             object parent = GetCurrentObjectData();
-            BamlCollectionHolder holder = new BamlCollectionHolder(this, parent, attributeId, false /*needDefault*/);
+            BamlCollectionHolder holder = new BamlCollectionHolder(this, parent, attributeId, needDefault: false);
 
             if (!holder.PropertyType.IsArray)
             {
@@ -3197,7 +3197,7 @@ namespace System.Windows.Markup
                 }
                 else if (context.ContextType == ReaderFlags.PropertyIList)
                 {
-                    BamlCollectionHolder holder = GetCollectionHolderFromContext(context, true /*toInsert*/);
+                    BamlCollectionHolder holder = GetCollectionHolderFromContext(context, toInsert: true);
 
                     result = holder.List;
                 }
@@ -3218,7 +3218,7 @@ namespace System.Windows.Markup
                 }
                 else if (context.ContextType == ReaderFlags.PropertyIAddChild)
                 {
-                    BamlCollectionHolder holder = GetCollectionHolderFromContext(context, false /*toInsert*/);
+                    BamlCollectionHolder holder = GetCollectionHolderFromContext(context, toInsert: false);
 
                     result = BamlRecordManager.AsIAddChild(holder.Collection);
                 }
@@ -3241,7 +3241,7 @@ namespace System.Windows.Markup
                 }
                 else if (context.ContextType == ReaderFlags.PropertyArray)
                 {
-                    BamlCollectionHolder holder = GetCollectionHolderFromContext(context, true /*toInsert*/);
+                    BamlCollectionHolder holder = GetCollectionHolderFromContext(context, toInsert: true);
 
                     result = holder.ArrayExt;
                 }
@@ -3365,7 +3365,7 @@ namespace System.Windows.Markup
             try
             {
                 // make sure parent is a dictionary
-                GetDictionaryFromContext(parentContext, true /*toInsert*/);
+                GetDictionaryFromContext(parentContext, toInsert: true);
             }
             catch (XamlParseException e)
             {
@@ -3990,7 +3990,7 @@ namespace System.Windows.Markup
             // directly instead of a StaticResource extension.  Check to see if the
             // attribute value is a resource key.
             string message = string.Empty;
-            if (FindResourceInParserStack(attribValue.Trim(), false /*allowDeferredResourceReference*/, false /*mustReturnDeferredResourceReference*/) == DependencyProperty.UnsetValue)
+            if (FindResourceInParserStack(attribValue.Trim(), allowDeferredResourceReference: false, mustReturnDeferredResourceReference: false) == DependencyProperty.UnsetValue)
             {
                 if (propertyType == typeof(Type))
                 {
@@ -4070,7 +4070,7 @@ namespace System.Windows.Markup
                 for (int i = contextStack.Count-1; i >= 0; i--)
                 {
                     ReaderContextStackData stackData = (ReaderContextStackData) contextStack[i];
-                    IDictionary dictionary = GetDictionaryFromContext(stackData, false /*toInsert*/);
+                    IDictionary dictionary = GetDictionaryFromContext(stackData, toInsert: false);
 
                     if (dictionary != null && dictionary.Contains(resourceNameObject))
                     {
@@ -4082,7 +4082,7 @@ namespace System.Windows.Markup
                         FrameworkElement feParent;
                         FrameworkContentElement fceParent;
 
-                        Helper.DowncastToFEorFCE(feOrfceParent, out feParent, out fceParent, false /*throwIfNeither*/);
+                        Helper.DowncastToFEorFCE(feOrfceParent, out feParent, out fceParent, throwIfNeither: false);
                         if (feParent != null)
                         {
                             value = feParent.FindResourceOnSelf(resourceNameObject, allowDeferredResourceReference, mustReturnDeferredResourceReference);
@@ -4160,7 +4160,7 @@ namespace System.Windows.Markup
             if (!SystemResources.IsSystemResourcesParsing)
             {
                 object source;
-                result = FrameworkElement.FindResourceFromAppOrSystem(resourceNameObject, out source, false /*throwOnError*/, allowDeferredResourceReference, mustReturnDeferredResourceReference);
+                result = FrameworkElement.FindResourceFromAppOrSystem(resourceNameObject, out source, disableThrowOnResourceNotFound: false, allowDeferredResourceReference, mustReturnDeferredResourceReference);
             }
             else
             {
@@ -4214,7 +4214,7 @@ namespace System.Windows.Markup
                ThrowException(nameof(SR.ParserNoResource), resourceNameString);
             }
 
-            object value = FindResourceInParentChain(resourceNameObject, false /*allowDeferredResourceReference*/, false /*mustReturnDeferredResourceReference*/);
+            object value = FindResourceInParentChain(resourceNameObject, allowDeferredResourceReference: false, mustReturnDeferredResourceReference: false);
             if (value == DependencyProperty.UnsetValue)
             {
                 ThrowException(nameof(SR.ParserNoResource) , $"{{{resourceNameObject}}}");
@@ -4623,14 +4623,14 @@ namespace System.Windows.Markup
 
                 // Handle parent as a dictionary:
 
-                IDictionary dictionary = GetDictionaryFromContext(parentContext, true /*toInsert*/);
+                IDictionary dictionary = GetDictionaryFromContext(parentContext, toInsert: true);
                 if (dictionary != null)
                 {
                     // if this SetPropertyValueToParent call occurred during ReadElementStart, then we
                     // don't have a key for this element yet, and should wait until ReadElementEnd
                     if (!fromStartTag)
                     {
-                        currentObject = GetElementValue(currentObject, dictionary, null /*contentProperty*/, ref isMarkupExtension);
+                        currentObject = GetElementValue(currentObject, dictionary, contentProperty: null, ref isMarkupExtension);
 
                         if (currentContext.Key == null)
                         {
@@ -4651,7 +4651,7 @@ namespace System.Windows.Markup
                 IList list = GetListFromContext(parentContext);
                 if (list != null)
                 {
-                    currentObject = GetElementValue(currentObject, list, null /*contentProperty*/, ref isMarkupExtension);
+                    currentObject = GetElementValue(currentObject, list, contentProperty: null, ref isMarkupExtension);
 
                     list.Add(currentObject);
 
@@ -4664,7 +4664,7 @@ namespace System.Windows.Markup
                 ArrayExtension arrayExt = GetArrayExtensionFromContext(parentContext);
                 if (arrayExt != null)
                 {
-                    currentObject = GetElementValue(currentObject, arrayExt, null /*contentProperty*/, ref isMarkupExtension);
+                    currentObject = GetElementValue(currentObject, arrayExt, contentProperty: null, ref isMarkupExtension);
 
                     arrayExt.AddChild(currentObject);
 
@@ -4686,7 +4686,7 @@ namespace System.Windows.Markup
                 IAddChild iac = GetIAddChildFromContext(parentContext);
                 if (iac != null)
                 {
-                    currentObject = GetElementValue(currentObject, iac, null /*contentProperty*/, ref isMarkupExtension);
+                    currentObject = GetElementValue(currentObject, iac, contentProperty: null, ref isMarkupExtension);
 
                     // The object may have changed to a string if it was a MarkupExtension
                     // that returned a string from ProvideValue, so check for this and

@@ -338,7 +338,7 @@ namespace System.Windows
 
             ArgumentNullException.ThrowIfNull(resourceKey);
 
-            object resource = FrameworkElement.FindResourceInternal(null /* fe */, this, resourceKey);
+            object resource = FrameworkElement.FindResourceInternal(fe: null, this, resourceKey);
 
             if (resource == DependencyProperty.UnsetValue)
             {
@@ -365,7 +365,7 @@ namespace System.Windows
 
             ArgumentNullException.ThrowIfNull(resourceKey);
 
-            object resource = FrameworkElement.FindResourceInternal(null /* fe */, this, resourceKey);
+            object resource = FrameworkElement.FindResourceInternal(fe: null, this, resourceKey);
 
             if (resource == DependencyProperty.UnsetValue)
             {
@@ -713,16 +713,16 @@ namespace System.Windows
                         FrameworkElement feTemplatedParent = TemplatedParent as FrameworkElement;
 
                         FrameworkTemplate frameworkTemplate = feTemplatedParent.TemplateInternal;
-                        StyleHelper.OnTriggerSourcePropertyInvalidated(null, frameworkTemplate, TemplatedParent, dp, e, false /*invalidateOnlyContainer*/,
-                            ref frameworkTemplate.TriggerSourceRecordFromChildIndex, ref frameworkTemplate.PropertyTriggersWithActions, TemplateChildIndex /*sourceChildIndex*/);
+                        StyleHelper.OnTriggerSourcePropertyInvalidated(null, frameworkTemplate, TemplatedParent, dp, e, invalidateOnlyContainer: false,
+                            ref frameworkTemplate.TriggerSourceRecordFromChildIndex, ref frameworkTemplate.PropertyTriggersWithActions, sourceChildIndex: TemplateChildIndex);
                     }
 
                     // Do not validate Style during an invalidation if the Style was
                     // never used before (dependents do not need invalidation)
                     if (Style != null)
                     {
-                        StyleHelper.OnTriggerSourcePropertyInvalidated(Style, null, this, dp, e, true /*invalidateOnlyContainer*/,
-                            ref Style.TriggerSourceRecordFromChildIndex, ref Style.PropertyTriggersWithActions, 0 /*sourceChildId*/); // Style can only have triggers that are driven by properties on the container
+                        StyleHelper.OnTriggerSourcePropertyInvalidated(Style, null, this, dp, e, invalidateOnlyContainer: true,
+                            ref Style.TriggerSourceRecordFromChildIndex, ref Style.PropertyTriggersWithActions, sourceChildIndex: 0); // Style can only have triggers that are driven by properties on the container
                     }
 
                     // Do not validate Template during an invalidation if the Template was
@@ -731,8 +731,8 @@ namespace System.Windows
                     // There may be container dependents in the ThemeStyle. Invalidate them.
                     if (ThemeStyle != null && Style != ThemeStyle)
                     {
-                        StyleHelper.OnTriggerSourcePropertyInvalidated(ThemeStyle, null, this, dp, e, true /*invalidateOnlyContainer*/,
-                            ref ThemeStyle.TriggerSourceRecordFromChildIndex, ref ThemeStyle.PropertyTriggersWithActions, 0 /*sourceChildIndex*/); // ThemeStyle can only have triggers that are driven by properties on the container
+                        StyleHelper.OnTriggerSourcePropertyInvalidated(ThemeStyle, null, this, dp, e, invalidateOnlyContainer: true,
+                            ref ThemeStyle.TriggerSourceRecordFromChildIndex, ref ThemeStyle.PropertyTriggersWithActions, sourceChildIndex: 0); // ThemeStyle can only have triggers that are driven by properties on the container
                     }
                 }
             }
@@ -1504,7 +1504,7 @@ namespace System.Windows
                         // inheritance behavior.
                         // This must have no performance effect as the subtree of this
                         // element is empty (no children yet added).
-                        TreeWalkHelper.InvalidateOnTreeChange(/*fe:*/null, /*fce:*/this, _parent, true);
+                        TreeWalkHelper.InvalidateOnTreeChange(fe: null, fce: this, _parent, true);
                     }
                 }
                 else

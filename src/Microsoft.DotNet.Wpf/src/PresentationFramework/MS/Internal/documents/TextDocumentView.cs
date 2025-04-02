@@ -753,7 +753,7 @@ namespace MS.Internal.Documents
                 Invariant.Assert(nestedParagraphs != null, "Paragraph collection is null.");
                 if (nestedParagraphs.Count > 0)
                 {
-                    position = GetTextPositionFromPoint(nestedParagraphs, _emptyParagraphCollection, point, snapToText, /* snap to text for floating elements*/ false);
+                    position = GetTextPositionFromPoint(nestedParagraphs, _emptyParagraphCollection, point, snapToText, snapToTextInFloatingElements: false);
                 }
                 else
                 {

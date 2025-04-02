@@ -117,7 +117,7 @@ namespace System.Windows.Documents
                         // If we're not over the selection, move the caret.
                         if (!This.Selection.Contains(renderScopeMouseDownPoint))
                         {
-                            TextEditorMouse.SetCaretPositionOnMouseEvent(This, renderScopeMouseDownPoint, MouseButton.Right, 1 /* clickCount */);
+                            TextEditorMouse.SetCaretPositionOnMouseEvent(This, renderScopeMouseDownPoint, MouseButton.Right, clickCount: 1);
                         }
                     }
                 }

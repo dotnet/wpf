@@ -379,7 +379,7 @@ namespace System.Windows.Controls.Primitives
                 {
                     if (((DataGridColumn)d).IsVisible)
                     {
-                        InvalidateDataGridCellsPanelMeasureAndArrangeImpl((e.Property == DataGridColumn.WidthProperty)/*invalidateMeasureUptoRowsPresenter*/);
+                        InvalidateDataGridCellsPanelMeasureAndArrangeImpl(invalidateMeasureUptoRowsPresenter: (e.Property == DataGridColumn.WidthProperty));
                     }
                 }
                 else if (e.Property == DataGrid.FrozenColumnCountProperty ||
@@ -393,11 +393,11 @@ namespace System.Windows.Controls.Primitives
                 }
                 else if (string.Equals(propertyName, "RealizedColumnsBlockListForNonVirtualizedRows", StringComparison.Ordinal))
                 {
-                    InvalidateDataGridCellsPanelMeasureAndArrange(/* withColumnVirtualization */ false);
+                    InvalidateDataGridCellsPanelMeasureAndArrange(withColumnVirtualization: false);
                 }
                 else if (string.Equals(propertyName, "RealizedColumnsBlockListForVirtualizedRows", StringComparison.Ordinal))
                 {
-                    InvalidateDataGridCellsPanelMeasureAndArrange(/* withColumnVirtualization */ true);
+                    InvalidateDataGridCellsPanelMeasureAndArrange(withColumnVirtualization: true);
                 }
                 else if (e.Property == DataGrid.RowHeightProperty || e.Property == HeightProperty)
                 {
@@ -471,7 +471,7 @@ namespace System.Windows.Controls.Primitives
                 return;
             }
 
-            if (DataGridHelper.IsGridLineVisible(dataGrid, /*isHorizontal = */ true))
+            if (DataGridHelper.IsGridLineVisible(dataGrid, isHorizontal: true))
             {
                 double thickness = dataGrid.HorizontalGridLineThickness;
                 Rect rect = new Rect(new Size(RenderSize.Width, thickness))
@@ -537,7 +537,7 @@ namespace System.Windows.Controls.Primitives
                     DataGrid dataGrid = DataGridOwner;
                     if(dataGrid != null && dataGrid.InternalItemsHost != null)
                     {
-                        Helper.InvalidateMeasureOnPath(_internalItemsHost, dataGrid.InternalItemsHost, false/*duringMeasure*/, true/*includePathEnd*/);
+                        Helper.InvalidateMeasureOnPath(_internalItemsHost, dataGrid.InternalItemsHost, duringMeasure: false, includePathEnd: true);
                     }
                 }
             }

@@ -122,7 +122,7 @@ namespace MS.Internal.Ink
                             && newBehavior != null )
                         {
                             // Now add the previous points to the lasso behavior
-                            newBehavior.AddStylusPoints(cachedPoints, false/*userInitiated*/);
+                            newBehavior.AddStylusPoints(cachedPoints, userInitiated: false);
                         }
 
                         break;

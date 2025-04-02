@@ -1489,7 +1489,7 @@ namespace MS.Internal.PtsHost
                 // This textProperties object is eventually used in creation of LineProperties, which leads to creation of a TextMarkerSource. TextMarkerSource relies on PixelsPerDip
                 // from TextProperties, therefore it must be set here properly.
 
-                TextProperties defaultTextProperties = new TextProperties(Element, StaticTextPointer.Null, false /* inline objects */, false /* get background */,
+                TextProperties defaultTextProperties = new TextProperties(Element, StaticTextPointer.Null, inlineObjects: false, getBackground: false,
                     StructuralCache.TextFormatterHost.PixelsPerDip);
                 
                 _lineProperties = new LineProperties(Element, StructuralCache.FormattingOwner, defaultTextProperties, null); // No marker properties

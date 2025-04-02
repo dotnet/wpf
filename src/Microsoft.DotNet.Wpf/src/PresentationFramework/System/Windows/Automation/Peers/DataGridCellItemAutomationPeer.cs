@@ -631,7 +631,7 @@ namespace System.Windows.Automation.Peers
                     }
 
                     // other cells may need to be de-selected, let the DataGrid handle that.
-                    this.OwningDataGrid.HandleSelectionForCellInput(cell, /* startDragging = */ false, /* allowsExtendSelect = */ false, /* allowsMinimalSelect = */ false);
+                    this.OwningDataGrid.HandleSelectionForCellInput(cell, startDragging: false, allowsExtendSelect: false, allowsMinimalSelect: false);
 
                     // the cell is now the datagrid's "current" cell, so BeginEdit will put
                     // it into edit mode
@@ -902,7 +902,7 @@ namespace System.Windows.Automation.Peers
                     DataGridAutomationPeer dataGridPeer = FrameworkElementAutomationPeer.CreatePeerForElement(OwningDataGrid) as DataGridAutomationPeer;
                     if (dataGridPeer != null)
                     {
-                        return dataGridPeer.GetExistingPeerByItem(Item, /*checkInWeakRefStorage*/ true) as DataGridItemAutomationPeer;
+                        return dataGridPeer.GetExistingPeerByItem(Item, checkInWeakRefStorage: true) as DataGridItemAutomationPeer;
                     }
                 }
                 return null;

@@ -89,7 +89,7 @@ namespace System.Windows.Controls
         /// </summary>
         protected override FrameworkElement GenerateElement(DataGridCell cell, object dataItem)
         {
-            return GenerateCheckBox(/* isEditing = */ false, cell);
+            return GenerateCheckBox(isEditing: false, cell);
         }
 
         /// <summary>
@@ -97,7 +97,7 @@ namespace System.Windows.Controls
         /// </summary>
         protected override FrameworkElement GenerateEditingElement(DataGridCell cell, object dataItem)
         {
-            return GenerateCheckBox(/* isEditing = */ true, cell);
+            return GenerateCheckBox(isEditing: true, cell);
         }
 
         private CheckBox GenerateCheckBox(bool isEditing, DataGridCell cell)
@@ -110,7 +110,7 @@ namespace System.Windows.Controls
 
             checkBox.IsThreeState = IsThreeState;
 
-            ApplyStyle(isEditing, /* defaultToElementStyle = */ true, checkBox);
+            ApplyStyle(isEditing, defaultToElementStyle: true, checkBox);
             ApplyBinding(checkBox, CheckBox.IsCheckedProperty);
 
             return checkBox;

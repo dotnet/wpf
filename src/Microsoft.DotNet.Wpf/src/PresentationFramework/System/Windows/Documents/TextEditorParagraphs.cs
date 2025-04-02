@@ -68,7 +68,7 @@ namespace System.Windows.Documents
                 return;
             }
 
-            TextEditorCharacters._OnApplyProperty(This, Block.TextAlignmentProperty, TextAlignment.Left, /*applyToParagraphs*/true);
+            TextEditorCharacters._OnApplyProperty(This, Block.TextAlignmentProperty, TextAlignment.Left, applyToParagraphs: true);
         }
 
         /// <summary>
@@ -83,7 +83,7 @@ namespace System.Windows.Documents
                 return;
             }
 
-            TextEditorCharacters._OnApplyProperty(This, Block.TextAlignmentProperty, TextAlignment.Center, /*applyToParagraphs*/true);
+            TextEditorCharacters._OnApplyProperty(This, Block.TextAlignmentProperty, TextAlignment.Center, applyToParagraphs: true);
         }
 
         /// <summary>
@@ -98,7 +98,7 @@ namespace System.Windows.Documents
                 return;
             }
 
-            TextEditorCharacters._OnApplyProperty(This, Block.TextAlignmentProperty, TextAlignment.Right, /*applyToParagraphs*/true);
+            TextEditorCharacters._OnApplyProperty(This, Block.TextAlignmentProperty, TextAlignment.Right, applyToParagraphs: true);
         }
 
         /// <summary>
@@ -113,7 +113,7 @@ namespace System.Windows.Documents
                 return;
             }
 
-            TextEditorCharacters._OnApplyProperty(This, Block.TextAlignmentProperty, TextAlignment.Justify, /*applyToParagraphs*/true);
+            TextEditorCharacters._OnApplyProperty(This, Block.TextAlignmentProperty, TextAlignment.Justify, applyToParagraphs: true);
         }
 
         private static void OnApplySingleSpace(object sender, ExecutedRoutedEventArgs e)
@@ -138,7 +138,7 @@ namespace System.Windows.Documents
         {
             TextEditor This = TextEditor._GetTextEditor(sender);
             TextEditorCharacters._OnApplyProperty(This, FrameworkElement.FlowDirectionProperty,
-                FlowDirection.LeftToRight, /*applyToParagraphs*/true);
+                FlowDirection.LeftToRight, applyToParagraphs: true);
         }
 
         /// <summary>
@@ -148,7 +148,7 @@ namespace System.Windows.Documents
         {
             TextEditor This = TextEditor._GetTextEditor(sender);
             TextEditorCharacters._OnApplyProperty(This, FrameworkElement.FlowDirectionProperty,
-                FlowDirection.RightToLeft, /*applyToParagraphs*/true);
+                FlowDirection.RightToLeft, applyToParagraphs: true);
         }
 
         // ----------------------------------------------------------

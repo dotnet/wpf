@@ -93,7 +93,7 @@ namespace System.Windows.Documents
 #if UNUSED
         internal static bool IsValidChild(TextElement parent, TextElement child)
         {
-            return ValidateChild(parent, child, false /* throwIfIllegalChild */, false /* throwIfIllegalHyperlinkDescendent */);
+            return ValidateChild(parent, child, throwIfIllegalChild: false, throwIfIllegalHyperlinkDescendent: false);
         }
 #endif
 
@@ -118,7 +118,7 @@ namespace System.Windows.Documents
 
         internal static bool IsValidChild(TextElement parent, Type childType)
         {
-            return ValidateChild(parent, childType, false /* throwIfIllegalChild */, false /* throwIfIllegalHyperlinkDescendent */);
+            return ValidateChild(parent, childType, throwIfIllegalChild: false, throwIfIllegalHyperlinkDescendent: false);
         }
 
         internal static bool ValidateChild(TextElement parent, Type childType, bool throwIfIllegalChild, bool throwIfIllegalHyperlinkDescendent)
@@ -149,7 +149,7 @@ namespace System.Windows.Documents
 
         internal static bool IsValidChild(TextPointer position, Type childType)
         {
-            return ValidateChild(position, childType, false /* throwIfIllegalChild */, false /* throwIfIllegalHyperlinkDescendent */);
+            return ValidateChild(position, childType, throwIfIllegalChild: false, throwIfIllegalHyperlinkDescendent: false);
         }
 
         internal static bool ValidateChild(TextPointer position, Type childType, bool throwIfIllegalChild, bool throwIfIllegalHyperlinkDescendent)

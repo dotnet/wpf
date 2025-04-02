@@ -549,7 +549,7 @@ namespace System.Windows.Controls
                 {
                     if (!addedDate.HasValue)
                     {
-                        c.SelectedDates.ClearInternal(true /*fireChangeNotification*/);
+                        c.SelectedDates.ClearInternal(fireChangeNotification: true);
                     }
                     else
                     {
@@ -626,7 +626,7 @@ namespace System.Windows.Controls
             Debug.Assert(c != null);
 
             c.HoverStart = c.HoverEnd = null;
-            c.SelectedDates.ClearInternal(true /*fireChangeNotification*/);
+            c.SelectedDates.ClearInternal(fireChangeNotification: true);
             c.OnSelectionModeChanged(EventArgs.Empty);
         }
 

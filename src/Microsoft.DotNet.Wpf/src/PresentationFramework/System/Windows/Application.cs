@@ -319,7 +319,7 @@ namespace System.Windows
         internal object FindResourceInternal(object resourceKey)
         {
             // Call Forwarded
-            return FindResourceInternal(resourceKey, false /*allowDeferredResourceReference*/, false /*mustReturnDeferredResourceReference*/);
+            return FindResourceInternal(resourceKey, allowDeferredResourceReference: false, mustReturnDeferredResourceReference: false);
         }
 
         internal object FindResourceInternal(object resourceKey, bool allowDeferredResourceReference, bool mustReturnDeferredResourceReference)
@@ -713,7 +713,7 @@ namespace System.Windows
         /// </Remarks>
         public static string GetCookie(Uri uri)
         {
-            return CookieHandler.GetCookie(uri, true/*throwIfNoCookie*/);
+            return CookieHandler.GetCookie(uri, throwIfNoCookie: true);
         }
 
         /// <summary>

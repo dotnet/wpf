@@ -111,7 +111,7 @@ namespace System.Windows.Documents
         /// </param>
         internal static void Select(ITextRange thisRange, ITextPointer position1, ITextPointer position2)
         {
-            Select(thisRange, position1, position2, /*includeCellAtMovingPosition:*/false);
+            Select(thisRange, position1, position2, includeCellAtMovingPosition: false);
         }
 
         /// <summary>
@@ -154,7 +154,7 @@ namespace System.Windows.Documents
             {
                 // This is initializing call from TextRange constructor.
                 // No need in change notifications, no need in position verification.
-                TextRangeBase.SelectPrivate(thisRange, position1, position2, includeCellAtMovingPosition, /*markRangeChanged*/false);
+                TextRangeBase.SelectPrivate(thisRange, position1, position2, includeCellAtMovingPosition, markRangeChanged: false);
             }
             else
             {
@@ -164,7 +164,7 @@ namespace System.Windows.Documents
                 TextRangeBase.BeginChange(thisRange);
                 try
                 {
-                    TextRangeBase.SelectPrivate(thisRange, position1, position2, includeCellAtMovingPosition, /*markRangeChanged*/true);
+                    TextRangeBase.SelectPrivate(thisRange, position1, position2, includeCellAtMovingPosition, markRangeChanged: true);
                 }
                 finally
                 {
@@ -556,7 +556,7 @@ namespace System.Windows.Documents
         /// </summary>
         internal static void EndChange(ITextRange thisRange)
         {
-            EndChange(thisRange, false /* disableScroll */, false /* skipEvents */ );
+            EndChange(thisRange, disableScroll: false, skipEvents: false);
         }
 
         /// <summary>
@@ -1353,7 +1353,7 @@ namespace System.Windows.Documents
                     // Store the fact that implicit paragraph was inserted to exclude ane extra paragraph break
                     // from the end of pasted fragment
                     bool implicitParagraphInserted = insertPosition is TextPointer &&
-                        TextSchema.IsValidChild(/*position*/insertPosition, /*childType*/typeof(Block)) &&
+                        TextSchema.IsValidChild(position: insertPosition, childType: typeof(Block)) &&
                         (insertPosition.GetPointerContext(LogicalDirection.Backward) == TextPointerContext.None ||
                         insertPosition.GetPointerContext(LogicalDirection.Backward) == TextPointerContext.ElementStart) &&
                         (insertPosition.GetPointerContext(LogicalDirection.Forward) == TextPointerContext.None ||
@@ -1443,7 +1443,7 @@ namespace System.Windows.Documents
                     }
 
                     // Select the range
-                    TextRangeBase.SelectPrivate(thisRange, newStart, newEnd, /*includeCellAtMovingPosition:*/false, /*markRangeChanged*/true);
+                    TextRangeBase.SelectPrivate(thisRange, newStart, newEnd, includeCellAtMovingPosition: false, markRangeChanged: true);
                 }
             }
             finally
@@ -1460,7 +1460,7 @@ namespace System.Windows.Documents
             StringWriter stringWriter = new StringWriter(CultureInfo.InvariantCulture);
             XmlTextWriter xmlWriter = new XmlTextWriter(stringWriter);
 
-            TextRangeSerialization.WriteXaml(xmlWriter, thisRange, /*useFlowDocumentAsRoot:*/false, /*wpfPayload:*/null);
+            TextRangeSerialization.WriteXaml(xmlWriter, thisRange, useFlowDocumentAsRoot: false, wpfPayload: null);
 
             return stringWriter.ToString();
         }
@@ -1511,21 +1511,21 @@ namespace System.Windows.Documents
                 XmlTextWriter xamlXmlWriter = new XmlTextWriter(xamlStreamWriter);
                 // Passing null as wpfPayload parameter we request to produce
                 // xaml without images - all of them will be repllaced by whitespaces.
-                TextRangeSerialization.WriteXaml(xamlXmlWriter, thisRange, /*useFlowDocumentAsRoot:*/false, /*wpfPayload:*/null, preserveTextElements);
+                TextRangeSerialization.WriteXaml(xamlXmlWriter, thisRange, useFlowDocumentAsRoot: false, wpfPayload: null, preserveTextElements);
                 xamlXmlWriter.Flush();
             }
             else if (dataFormat == DataFormats.XamlPackage)
             {
                 // Non-null stream here means unconditional request to create a WPF package for the range
                 // independently whether there are images in it or not.
-                WpfPayload.SaveRange(thisRange, ref stream, /*useFlowDocumentAsRoot:*/false, preserveTextElements);
+                WpfPayload.SaveRange(thisRange, ref stream, useFlowDocumentAsRoot: false, preserveTextElements);
             }
             else if (dataFormat == DataFormats.Rtf)
             {
                 Stream wpfPayloadMemory = null;
                 // Passing null as a wpfPayloadStream we allow to not create wpf package
                 // when it is not needed (there is no images in the range)
-                string xamlText = WpfPayload.SaveRange(thisRange, ref wpfPayloadMemory, /*useFlowDocumentAsRoot:*/false);
+                string xamlText = WpfPayload.SaveRange(thisRange, ref wpfPayloadMemory, useFlowDocumentAsRoot: false);
                 // Convert xaml to rtf text to set rtf data into data object.
                 string rtfText = TextEditorCopyPaste.ConvertXamlToRtf(xamlText, wpfPayloadMemory);
                 StreamWriter rtfStreamWriter = new StreamWriter(stream);
@@ -1926,7 +1926,7 @@ namespace System.Windows.Documents
 
                 // We cannot open a change block here (even though the content of thisRange may change),
                 // because it will cause another normalization request, leading to stack overflow.
-                SelectPrivate(thisRange, start, end, /*includeCellAtMovingPosition:*/false, /*markRangeChanged*/false);
+                SelectPrivate(thisRange, start, end, includeCellAtMovingPosition: false, markRangeChanged: false);
             }
             else
             {
@@ -1988,8 +1988,8 @@ namespace System.Windows.Documents
             if (position1 is TextPointer)
             {
                 textSegments = TextRangeEditTables.BuildTableRange(
-                    /*anchorPosition:*/(TextPointer)position1, 
-                    /*movingPosition:*/(TextPointer)position2, 
+                    anchorPosition: (TextPointer)position1, 
+                    movingPosition: (TextPointer)position2, 
                     includeCellAtMovingPosition, 
                     out isTableCellRange);
             }
@@ -2045,9 +2045,9 @@ namespace System.Windows.Documents
                         // position1/position2.
                         // Note: we use includeCellAtMovingPosition=false here because the movingPosition is taken from a constructed table range, not from input
                         textSegments = TextRangeEditTables.BuildTableRange(
-                            /*anchorPosition:*/(TextPointer)finalStart, 
-                            /*movingPosition:*/(TextPointer)finalEnd, 
-                            /*includeCellAtMovingPosition:*/false, 
+                            anchorPosition: (TextPointer)finalStart, 
+                            movingPosition: (TextPointer)finalEnd, 
+                            includeCellAtMovingPosition: false, 
                             out isTableCellRange);
                         if (textSegments != null)
                         {

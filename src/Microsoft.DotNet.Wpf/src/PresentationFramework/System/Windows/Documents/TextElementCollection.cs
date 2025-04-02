@@ -439,7 +439,7 @@ namespace System.Windows.Documents
 
         int IList.IndexOf(object value)
         {
-            return IndexOfInternal(value, false /* isCacheSafePreviousIndex */);
+            return IndexOfInternal(value, isCacheSafePreviousIndex: false);
         }
 
         void IList.Insert(int index, object value)

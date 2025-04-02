@@ -145,7 +145,7 @@ namespace System.Windows.Documents
         {
             get
             {
-                return new BlockCollection(this, /*isOwnerParent*/true);
+                return new BlockCollection(this, isOwnerParent: true);
             }
         }
 
@@ -1212,7 +1212,7 @@ namespace System.Windows.Documents
             if (textContainer == null)
             {
                 // Create text tree that contains content of the element.
-                textContainer = new TextContainer(this, false /* plainTextOnly */);
+                textContainer = new TextContainer(this, plainTextOnly: false);
             }
 
             // Create structural cache object
@@ -1401,7 +1401,7 @@ namespace System.Windows.Documents
                 // We DTR invalidate if we're using a formatter as well for incremental update.
                 if (_formatter == null || !(_formatter is FlowDocumentFormatter))
                 {
-                    _structuralCache.InvalidateFormatCache(/*Clear structure*/ false);
+                    _structuralCache.InvalidateFormatCache(destroyStructure: false);
                 }
 
                 // Notify formatter about content invalidation.
@@ -1496,7 +1496,7 @@ namespace System.Windows.Documents
                 else
                 {
                     // Clear format caches.
-                    _structuralCache.InvalidateFormatCache(/*Clear structure*/ false);
+                    _structuralCache.InvalidateFormatCache(destroyStructure: false);
                 }
 
                 // Notify formatter about content invalidation.
@@ -1558,7 +1558,7 @@ namespace System.Windows.Documents
         private static bool IsValidPagePadding(object o)
         {
             Thickness value = (Thickness)o;
-            return Block.IsValidThickness(value, /*allow NaN*/true);
+            return Block.IsValidThickness(value, allowNaN: true);
         }
 
         private static bool IsValidColumnRuleWidth(object o)
@@ -1624,7 +1624,7 @@ namespace System.Windows.Documents
         {
             ArgumentNullException.ThrowIfNull(value);
 
-            if (!TextSchema.IsValidChildOfContainer(/*parentType:*/_typeofThis, /*childType:*/value.GetType()))
+            if (!TextSchema.IsValidChildOfContainer(parentType: _typeofThis, childType: value.GetType()))
             {
                 throw new ArgumentException(SR.Format(SR.TextSchema_ChildTypeIsInvalid, _typeofThis.Name, value.GetType().Name));
             }

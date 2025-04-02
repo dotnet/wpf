@@ -1964,7 +1964,7 @@ namespace System.Windows.Controls
         private double GiveAwayWidthToColumns(DataGridColumn ignoredColumn, double giveAwayWidth, bool recomputeStars)
         {
             double originalGiveAwayWidth = giveAwayWidth;
-            giveAwayWidth = GiveAwayWidthToScrollViewerExcess(giveAwayWidth, /*includedInColumnsWidth*/ ignoredColumn != null);
+            giveAwayWidth = GiveAwayWidthToScrollViewerExcess(giveAwayWidth, includedInColumnsWidth: ignoredColumn != null);
             giveAwayWidth = GiveAwayWidthToNonStarColumns(ignoredColumn, giveAwayWidth);
 
             if (DoubleUtil.GreaterThanZero(giveAwayWidth) || recomputeStars)

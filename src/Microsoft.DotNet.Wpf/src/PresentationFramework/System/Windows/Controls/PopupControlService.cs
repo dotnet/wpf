@@ -965,7 +965,7 @@ namespace System.Windows.Controls
         private bool RaiseContextMenuOpeningEvent(IInputElement source, double x, double y,bool userInitiated)
         {
             // Fire the event
-            ContextMenuEventArgs args = new ContextMenuEventArgs(source, true /* opening */, x, y);
+            ContextMenuEventArgs args = new ContextMenuEventArgs(source, opening: true, x, y);
             DependencyObject sourceDO = source as DependencyObject;
             if (userInitiated && sourceDO != null)
             {
@@ -1053,7 +1053,7 @@ namespace System.Windows.Controls
                         if (!IsPresentationSourceNull(uie))
                         {
                             IInputElement inputElement = (o is ContentElement || o is UIElement3D) ? (IInputElement)o : (IInputElement)uie;
-                            ContextMenuEventArgs args = new ContextMenuEventArgs(inputElement, false /*opening */);
+                            ContextMenuEventArgs args = new ContextMenuEventArgs(inputElement, opening: false);
                             inputElement.RaiseEvent(args);
                         }
                     }

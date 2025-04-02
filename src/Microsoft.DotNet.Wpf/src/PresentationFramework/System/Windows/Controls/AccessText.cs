@@ -507,7 +507,7 @@ namespace System.Windows.Controls
         /// </summary>
         private void CreateTextBlock()
         {
-            _textContainer = new TextContainer(this, false /* plainTextOnly */);
+            _textContainer = new TextContainer(this, plainTextOnly: false);
             _textBlock = new TextBlock();
             AddVisualChild(_textBlock);
             _textBlock.IsContentPresenterContainer = true;

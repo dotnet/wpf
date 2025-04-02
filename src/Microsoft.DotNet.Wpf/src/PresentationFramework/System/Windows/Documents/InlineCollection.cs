@@ -57,7 +57,7 @@ namespace System.Windows.Documents
 
             if (text != null)
             {
-                index = AddText(text, true /* returnIndex */);
+                index = AddText(text, returnIndex: true);
             }
             else
             {
@@ -68,7 +68,7 @@ namespace System.Windows.Documents
 
                     if (uiElement != null)
                     {
-                        index = AddUIElement(uiElement, true /* returnIndex */);
+                        index = AddUIElement(uiElement, returnIndex: true);
                     }
                     else
                     {
@@ -91,7 +91,7 @@ namespace System.Windows.Documents
         /// </param>
         public void Add(string text)
         {
-            AddText(text, false /* returnIndex */);
+            AddText(text, returnIndex: false);
         }
 
         /// <summary>
@@ -102,7 +102,7 @@ namespace System.Windows.Documents
         /// </param>
         public void Add(UIElement uiElement)
         {
-            AddUIElement(uiElement, false /* returnIndex */);
+            AddUIElement(uiElement, returnIndex: false);
         }
 
         #endregion Public Methods
@@ -158,7 +158,7 @@ namespace System.Windows.Documents
 
             if (this.Parent is TextElement)
             {
-                TextSchema.ValidateChild((TextElement)this.Parent, child, true /* throwIfIllegalChild */, true /* throwIfIllegalHyperlinkDescendent */);
+                TextSchema.ValidateChild((TextElement)this.Parent, child, throwIfIllegalChild: true, throwIfIllegalHyperlinkDescendent: true);
             }
             else
             {

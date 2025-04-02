@@ -80,11 +80,11 @@ namespace System.Windows
             EventManager.RegisterClassHandler(typeof(Window),
                 UIElement.ManipulationCompletedEvent,
                 new EventHandler<ManipulationCompletedEventArgs>(OnStaticManipulationCompleted),
-                /*handledEventsToo*/ true);
+                handledEventsToo: true);
             EventManager.RegisterClassHandler(typeof(Window),
                 UIElement.ManipulationInertiaStartingEvent,
                 new EventHandler<ManipulationInertiaStartingEventArgs>(OnStaticManipulationInertiaStarting),
-                /*handledEventsToo*/ true);
+                handledEventsToo: true);
 
             Window.DpiChangedEvent = EventManager.RegisterRoutedEvent("DpiChanged", RoutingStrategy.Bubble,
                 typeof (System.Windows.DpiChangedEventHandler), typeof (Window));
@@ -4503,7 +4503,7 @@ namespace System.Windows
             while (ownedWindows.Count > 0)
             {
                 // if parent window is closing, child window Closing cannot be cancelled.
-                ownedWindows[0].InternalClose(false, true /* Ignore cancel */);
+                ownedWindows[0].InternalClose(false, ignoreCancel: true);
             }
 
             Debug.Assert(ownedWindows.Count == 0, "All owned windows should now be gone");

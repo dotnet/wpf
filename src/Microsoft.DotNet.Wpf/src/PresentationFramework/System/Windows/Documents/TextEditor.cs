@@ -119,7 +119,7 @@ namespace System.Windows.Documents
         {
             // Detach TextStore that TextStore will be unregisted from Cicero.
             // And clean all reference of the native resources.
-            DetachTextStore(true /* finalizer */);
+            DetachTextStore(finalizer: true);
         }
 
         #endregion Finalizer
@@ -177,7 +177,7 @@ namespace System.Windows.Documents
             _pendingTextStoreInit = false;
 
             // Shut down the Cicero.
-            DetachTextStore(false /* finalizer */);
+            DetachTextStore(finalizer: false);
 
             // Shut down IMM32.
             if (_immCompositionForDetach != null)
@@ -1908,7 +1908,7 @@ namespace System.Windows.Documents
             internal override void OnShutDown(object target, object sender, EventArgs e)
             {
                 TextEditor editor = (TextEditor)target;
-                editor.DetachTextStore(false /* finalizer */);
+                editor.DetachTextStore(finalizer: false);
             }
         }
 

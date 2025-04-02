@@ -255,7 +255,7 @@ namespace System.Windows.Controls
                         ComboBox cb = (ComboBox)arg;
                         if (cb.IsItemsHostVisible)
                         {
-                            cb.NavigateToItem(cb.InternalSelectedInfo, ItemNavigateArgs.Empty, true /* alwaysAtTopOfViewport */);
+                            cb.NavigateToItem(cb.InternalSelectedInfo, ItemNavigateArgs.Empty, alwaysAtTopOfViewport: true);
                         }
                         return null;
                     },
@@ -1249,7 +1249,7 @@ namespace System.Windows.Controls
             object item = ItemContainerGenerator.ItemFromContainer(comboBoxItem);
             if (item != null)
             {
-                SelectionChange.SelectJustThisItem(NewItemInfo(item, comboBoxItem), true /* assumeInItemsCollection */);
+                SelectionChange.SelectJustThisItem(NewItemInfo(item, comboBoxItem), assumeInItemsCollection: true);
             }
 
             Close();
@@ -1335,7 +1335,7 @@ namespace System.Windows.Controls
                     handled = true;
                     if ((e.KeyboardDevice.Modifiers & ModifierKeys.Alt) == ModifierKeys.Alt)
                     {
-                        KeyboardToggleDropDown(true /* commitSelection */);
+                        KeyboardToggleDropDown(commitSelection: true);
                     }
                     else
                     {
@@ -1357,7 +1357,7 @@ namespace System.Windows.Controls
                     handled = true;
                     if ((e.KeyboardDevice.Modifiers & ModifierKeys.Alt) == ModifierKeys.Alt)
                     {
-                        KeyboardToggleDropDown(true /* commitSelection */);
+                        KeyboardToggleDropDown(commitSelection: true);
                     }
                     else
                     {
@@ -1376,7 +1376,7 @@ namespace System.Windows.Controls
                 case Key.F4:
                     if ((e.KeyboardDevice.Modifiers & ModifierKeys.Alt) == 0)
                     {
-                        KeyboardToggleDropDown(true /* commitSelection */);
+                        KeyboardToggleDropDown(commitSelection: true);
                         handled = true;
                     }
                     break;
@@ -1384,7 +1384,7 @@ namespace System.Windows.Controls
                 case Key.Escape:
                     if (IsDropDownOpen)
                     {
-                        KeyboardCloseDropDown(false /* commitSelection */);
+                        KeyboardCloseDropDown(commitSelection: false);
                         handled = true;
                     }
                     break;
@@ -1392,7 +1392,7 @@ namespace System.Windows.Controls
                 case Key.Enter:
                     if (IsDropDownOpen)
                     {
-                        KeyboardCloseDropDown(true /* commitSelection */);
+                        KeyboardCloseDropDown(commitSelection: true);
                         handled = true;
                     }
                     break;
@@ -1568,7 +1568,7 @@ namespace System.Windows.Controls
                 DependencyObject container = ItemContainerGenerator.ContainerFromIndex(i);
                 if (IsSelectableHelper(item) && IsSelectableHelper(container))
                 {
-                    SelectionChange.SelectJustThisItem(NewItemInfo(item, container, i), true /* assumeInItemsCollection */);
+                    SelectionChange.SelectJustThisItem(NewItemInfo(item, container, i), assumeInItemsCollection: true);
                     break;
                 }
             }
@@ -1829,7 +1829,7 @@ namespace System.Windows.Controls
         /// </summary>
         private void KeyboardCloseDropDown(bool commitSelection)
         {
-            KeyboardToggleDropDown(false /* openDropDown */, commitSelection);
+            KeyboardToggleDropDown(openDropDown: false, commitSelection);
         }
 
         private void KeyboardToggleDropDown(bool openDropDown, bool commitSelection)
@@ -1848,7 +1848,7 @@ namespace System.Windows.Controls
 
             if (openDropDown == false && commitSelection && (infoToSelect != null))
             {
-                SelectionChange.SelectJustThisItem(infoToSelect, true /* assumeInItemsCollection */);
+                SelectionChange.SelectJustThisItem(infoToSelect, assumeInItemsCollection: true);
             }
         }
 
@@ -1857,7 +1857,7 @@ namespace System.Windows.Controls
             ItemInfo infoToSelect = HighlightedInfo;
             if (infoToSelect != null)
             {
-                SelectionChange.SelectJustThisItem(infoToSelect, true /* assumeInItemsCollection */);
+                SelectionChange.SelectJustThisItem(infoToSelect, assumeInItemsCollection: true);
             }
         }
 

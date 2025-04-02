@@ -82,10 +82,10 @@ namespace System.Windows.Controls
             // We don't use the static ctor because there are cases
             // where another control will want to alias our properties
             // but doesn't need this overhead.
-            TextEditor.RegisterCommandHandlers(typeof(TextBox), /*acceptsRichContent:*/false, /*readOnly*/false, /*registerEventListeners*/false);
+            TextEditor.RegisterCommandHandlers(typeof(TextBox), acceptsRichContent: false, readOnly: false, registerEventListeners: false);
 
             // Create TextContainer and TextEditor associated with it
-            TextContainer container = new TextContainer(this, true /* plainTextOnly */)
+            TextContainer container = new TextContainer(this, plainTextOnly: true)
             {
                 CollectTextChanges = true
             };
@@ -417,7 +417,7 @@ namespace System.Windows.Controls
         /// <returns>leading edge rectangle of the given character, or Rect.Empty if no layout information is available.</returns>
         public Rect GetRectFromCharacterIndex(int charIndex)
         {
-            return GetRectFromCharacterIndex(charIndex, /*trailingEdge*/false);
+            return GetRectFromCharacterIndex(charIndex, trailingEdge: false);
         }
 
         /// <summary>
@@ -455,7 +455,7 @@ namespace System.Windows.Controls
 
             // NB: rect will be Rect.Empty if no layout is available.
             Rect rect;
-            GetRectangleFromTextPositionInternal(textPointer, /*relativeToTextBox*/true, out rect);
+            GetRectangleFromTextPositionInternal(textPointer, relativeToTextBox: true, out rect);
             return rect;
         }
 
@@ -687,8 +687,8 @@ namespace System.Windows.Controls
                         "CharacterCasing", // Property name
                         typeof(CharacterCasing), // Property type
                         typeof(TextBox), // Property owner
-                        new FrameworkPropertyMetadata(CharacterCasing.Normal /*default value*/),
-                        new ValidateValueCallback(CharacterCasingValidateValue) /*validation callback*/);
+                        new FrameworkPropertyMetadata(defaultValue: CharacterCasing.Normal),
+                        validateValueCallback: new ValidateValueCallback(CharacterCasingValidateValue));
 
         /// <summary>
         /// Character casing of the TextBox
@@ -722,7 +722,7 @@ namespace System.Windows.Controls
                     "MaxLength", // Property name
                     typeof(int), // Property type
                     typeof(TextBox), // Property owner
-                    new FrameworkPropertyMetadata(0), /*default value*/
+                    new FrameworkPropertyMetadata(defaultValue: 0),
                     new ValidateValueCallback(MaxLengthValidateValue));
 
 
@@ -1439,7 +1439,7 @@ namespace System.Windows.Controls
 
             if (TextEditor.GetTextView(this.RenderScope).Validate(point))
             {
-                textPointer = (TextPointer)TextEditor.GetTextView(this.RenderScope).GetTextPositionFromPoint(point, /* snap to text */ true);
+                textPointer = (TextPointer)TextEditor.GetTextView(this.RenderScope).GetTextPositionFromPoint(point, snapToText: true);
                 textPointer = (TextPointer)TextEditor.GetTextView(this.RenderScope).GetLineRange(textPointer).Start.CreatePointer(textPointer.LogicalDirection);
             }
             else
@@ -1468,7 +1468,7 @@ namespace System.Windows.Controls
 
             if (TextEditor.GetTextView(this.RenderScope).Validate(point))
             {
-                textPointer = (TextPointer)TextEditor.GetTextView(this.RenderScope).GetTextPositionFromPoint(point, /* snap to text */ true);
+                textPointer = (TextPointer)TextEditor.GetTextView(this.RenderScope).GetTextPositionFromPoint(point, snapToText: true);
                 textPointer = (TextPointer)TextEditor.GetTextView(this.RenderScope).GetLineRange(textPointer).End.CreatePointer(textPointer.LogicalDirection);
 
                 // Hit testing ignores line breaks, so the position returned will be between the last visible character

@@ -46,7 +46,7 @@ namespace System.Windows.Documents
             _textEditor = textEditor;
 
             // Initialize active pointers of the selection - anchor and moving pointers
-            SetActivePositions(/*AnchorPosition:*/thisSelection.Start, thisSelection.End);
+            SetActivePositions(anchorPosition: thisSelection.Start, thisSelection.End);
 
             // Activate selection in case if this control has keyboard focus already
             thisSelection.UpdateCaretAndHighlight();
@@ -106,7 +106,7 @@ namespace System.Windows.Documents
                 TextRangeBase.SelectWord(this, position);
 
                 ITextSelection thisSelection = this;
-                SetActivePositions(/*anchorPosition:*/thisSelection.Start, thisSelection.End);
+                SetActivePositions(anchorPosition: thisSelection.Start, thisSelection.End);
             }
             finally
             {
@@ -126,7 +126,7 @@ namespace System.Windows.Documents
 
                 // Check whether this behave correctly on double-click-drag; double-Click-extendwithkeyboard
                 ITextSelection thisSelection = this;
-                SetActivePositions(/*anchorPosition:*/position, thisSelection.End);
+                SetActivePositions(anchorPosition: position, thisSelection.End);
             }
             finally
             {
@@ -284,7 +284,7 @@ namespace System.Windows.Documents
                     if (this.IsEmpty)
                     {
                         // We need to ensure appropriate caret visual position.
-                        ((ITextSelection)this).SetCaretToPosition(((ITextRange)this).End, LogicalDirection.Forward, /*allowStopAtLineEnd:*/false, /*allowStopNearSpace:*/false);
+                        ((ITextSelection)this).SetCaretToPosition(((ITextRange)this).End, LogicalDirection.Forward, allowStopAtLineEnd: false, allowStopNearSpace: false);
                     }
 
                     Invariant.Assert(!this.IsTableCellRange);
@@ -661,7 +661,7 @@ namespace System.Windows.Documents
 
             bool contains = false;
 
-            ITextPointer position = this.TextView.GetTextPositionFromPoint(point, /*snapToText:*/false);
+            ITextPointer position = this.TextView.GetTextPositionFromPoint(point, snapToText: false);
 
             // Did we hit any text?
             if (position != null && thisSelection.Contains(position))
@@ -779,7 +779,7 @@ namespace System.Windows.Documents
             if ((Keyboard.Modifiers & ModifierKeys.Shift) != 0)
             {
                 // Shift modifier pressed - extending selection from existing one
-                thisSelection.ExtendSelectionByMouse(cursorPosition, /*forceWordSelection:*/false, /*forceParagraphSelection*/false);
+                thisSelection.ExtendSelectionByMouse(cursorPosition, forceWordSelection: false, forceParagraphSelection: false);
             }
             else
             {
@@ -832,7 +832,7 @@ namespace System.Windows.Documents
 
                 // Note that we use includeCellAtMovingPosition=true because we want that hit-tested table cell
                 // be included into selection no matter whether it's empty or not.
-                TextRangeBase.Select(this, startPosition, movingPosition, /*includeCellAtMovingPosition:*/true);
+                TextRangeBase.Select(this, startPosition, movingPosition, includeCellAtMovingPosition: true);
                 SetActivePositions(anchorPosition, movingPosition);
 
                 // Store previous cursor position - for the next extension event
@@ -956,7 +956,7 @@ namespace System.Windows.Documents
                         _anchorWordRangeHasBeenCrossedOnce = true;
 
                         if (!_allowWordExpansionOnAnchorEnd || //
-                            TextPointerBase.IsAtWordBoundary(anchorPosition, /*insideWordDirection:*/LogicalDirection.Forward))
+                            TextPointerBase.IsAtWordBoundary(anchorPosition, insideWordDirection: LogicalDirection.Forward))
                         {
                             // We collapse anchorPosition in two cases:
                             // If we have been re-entering the initial word before -
@@ -970,7 +970,7 @@ namespace System.Windows.Documents
                         }
 
                         if (TextPointerBase.IsAfterLastParagraph(cursorPosition) ||
-                            TextPointerBase.IsAtWordBoundary(cursorPosition, /*insideWordDirection:*/LogicalDirection.Forward))
+                            TextPointerBase.IsAtWordBoundary(cursorPosition, insideWordDirection: LogicalDirection.Forward))
                         {
                             cursorWordRange = new TextSegment(cursorPosition, cursorPosition);
                         }
@@ -1022,7 +1022,7 @@ namespace System.Windows.Documents
             Invariant.Assert(_anchorPosition != null);
             Invariant.Assert(_movingPositionEdge != MovingEdge.None);
 
-            if (!TextRangeEditTables.IsTableCellRange((TextPointer)_anchorPosition, (TextPointer)((ITextSelection)this).MovingPosition, /*includeCellAtMovingPosition:*/false, out anchorCell, out movingCell))
+            if (!TextRangeEditTables.IsTableCellRange((TextPointer)_anchorPosition, (TextPointer)((ITextSelection)this).MovingPosition, includeCellAtMovingPosition: false, out anchorCell, out movingCell))
             {
                 return false;
             }
@@ -1367,7 +1367,7 @@ namespace System.Windows.Documents
                 {
                     TextPointer cellStart = table.RowGroups[0].Rows[0].Cells[0].ContentStart;
 
-                    this.SetCaretToPosition(cellStart, LogicalDirection.Backward, /*allowStopAtLineEnd:*/false, /*allowStopNearSpace:*/false);
+                    this.SetCaretToPosition(cellStart, LogicalDirection.Backward, allowStopAtLineEnd: false, allowStopNearSpace: false);
                 }
 
                 return table;
@@ -1947,7 +1947,7 @@ namespace System.Windows.Documents
             // Move selection to this position
             if (movingPosition == null)
             {
-                thisSelection.SetCaretToPosition(cursorPosition, cursorPosition.LogicalDirection, /*allowStopAtLineEnd:*/true, /*allowStopNearSpace:*/false);
+                thisSelection.SetCaretToPosition(cursorPosition, cursorPosition.LogicalDirection, allowStopAtLineEnd: true, allowStopNearSpace: false);
             }
             else
             {

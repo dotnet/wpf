@@ -389,7 +389,7 @@ namespace System.Windows.Controls
 
             ((INotifyPropertyChanged)column).PropertyChanged += new PropertyChangedEventHandler(ColumnPropertyChanged);
 
-            return new GridViewColumnCollectionChangedEventArgs(NotifyCollectionChangedAction.Add, column, index, count /* actual index*/);
+            return new GridViewColumnCollectionChangedEventArgs(NotifyCollectionChangedAction.Add, column, index, actualIndex: count);
         }
 
         // This[index] = newColumn

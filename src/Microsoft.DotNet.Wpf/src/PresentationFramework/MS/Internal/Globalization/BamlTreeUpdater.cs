@@ -87,8 +87,8 @@ namespace MS.Internal.Globalization
                             BamlStartElementNode newNode = new BamlStartElementNode(
                                 treeMap.Resolver.ResolveAssemblyFromClass(key.ClassName),
                                 key.ClassName,
-                                false, /*isInjected*/
-                                false /*CreateUsingTypeConverter*/
+                                isInjected: false,
+                                useTypeConverter: false
                                 );
 
                             // create new x:Uid node for this element node
@@ -513,8 +513,8 @@ namespace MS.Internal.Globalization
                     bamlNode = new BamlStartElementNode(
                         assemblyName,
                         className,
-                        false, /*isInjected*/
-                        false /*CreateUsingTypeConverter*/
+                        isInjected: false,
+                        useTypeConverter: false
                         );
 
                     if (tagUid != null)

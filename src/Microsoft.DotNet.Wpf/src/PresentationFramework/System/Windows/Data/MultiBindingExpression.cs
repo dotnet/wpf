@@ -232,7 +232,7 @@ namespace System.Windows.Data
         if (ShouldUpdateWithCurrentValue(target, out currentValue))
         {
             initialTransferIsUpdate = true;
-            ChangeValue(currentValue, /*notify*/false);
+            ChangeValue(currentValue, notify: false);
             NeedsUpdate = true;
         }
 
@@ -366,7 +366,7 @@ namespace System.Windows.Data
         // attach to things that need tree context.  Do it synchronously
         // if possible, otherwise post a task.  This gives the parser et al.
         // a chance to assemble the tree before we start walking it.
-        AttachToContext(false /* lastChance */);
+        AttachToContext(lastChance: false);
         if (TransferIsDeferred)
         {
             Engine.AddTask(this, TaskOps.AttachToContext);

@@ -598,7 +598,7 @@ namespace System.Windows.Controls.Primitives
                     case CalendarSelectionMode.SingleRange:
                         {
                             DateTime? lastDate = this.Owner.CurrentDate;
-                            this.Owner.SelectedDates.ClearInternal(true /*fireChangeNotification*/);
+                            this.Owner.SelectedDates.ClearInternal(fireChangeNotification: true);
                             if (shift && lastDate.HasValue)
                             {
                                 this.Owner.SelectedDates.AddRangeInternal(lastDate.Value, clickedDate);
@@ -617,7 +617,7 @@ namespace System.Windows.Controls.Primitives
                         {
                             if (!ctrl)
                             {
-                                this.Owner.SelectedDates.ClearInternal(true /*fireChangeNotification*/);
+                                this.Owner.SelectedDates.ClearInternal(fireChangeNotification: true);
                             }
 
                             if (shift)

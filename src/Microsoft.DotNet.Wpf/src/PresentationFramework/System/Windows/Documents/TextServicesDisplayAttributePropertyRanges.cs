@@ -149,7 +149,7 @@ namespace System.Windows.Documents
 
 #if UNUSED_IME_HIGHLIGHT_LAYER
                         // Need to pass the foreground and background color of the composition
-                        _highlightLayer.Add(start, end, /*TextDecorationCollection:*/null);
+                        _highlightLayer.Add(start, end, TextDecorationCollection: null);
 #endif
 
                             // Add the attribute range into CompositionAdorner.

@@ -980,7 +980,7 @@ namespace MS.Internal.IO.Packaging
         /// The default content descriptor has content in child nodes, no title, and block-type content.
         /// </summary>
         private readonly ContentDescriptor _defaultContentDescriptor  =
-            new ContentDescriptor(true /*hasIndexableContent*/, false /*isInline*/, null, null);
+            new ContentDescriptor(hasIndexableContent: true, isInline: false, null, null);
 
         private readonly ContentDescriptor _nonIndexableElementDescriptor =
             new ContentDescriptor(false);

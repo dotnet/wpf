@@ -308,11 +308,11 @@ namespace System.Windows.Controls.Primitives
                 }
                 else if (string.Equals(propertyName, "RealizedColumnsBlockListForNonVirtualizedRows", StringComparison.Ordinal))
                 {
-                    InvalidateDataGridCellsPanelMeasureAndArrange(/* withColumnVirtualization */ false);
+                    InvalidateDataGridCellsPanelMeasureAndArrange(withColumnVirtualization: false);
                 }
                 else if (string.Equals(propertyName, "RealizedColumnsBlockListForVirtualizedRows", StringComparison.Ordinal))
                 {
-                    InvalidateDataGridCellsPanelMeasureAndArrange(/* withColumnVirtualization */ true);
+                    InvalidateDataGridCellsPanelMeasureAndArrange(withColumnVirtualization: true);
                 }
                 else if (e.Property == DataGrid.CellsPanelActualWidthProperty)
                 {

@@ -366,8 +366,7 @@ namespace System.Windows.Controls
                     "AllowsColumnReorder",
                     typeof(bool),
                     typeof(GridView),
-                    new FrameworkPropertyMetadata(BooleanBoxes.TrueBox  /* default value */
-                        )
+                    new FrameworkPropertyMetadata(defaultValue: BooleanBoxes.TrueBox)
                 );
 
         /// <summary>

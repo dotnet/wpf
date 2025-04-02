@@ -977,7 +977,7 @@ namespace System.Windows.Documents
             }
 
             // UpdateCompositionText raises a PUBLIC EVENT....
-            UpdateCompositionText(composition, resultLength, true /* includeResultText */, out _startComposition, out _endComposition);
+            UpdateCompositionText(composition, resultLength, includeResultText: true, out _startComposition, out _endComposition);
 
             if (_compositionModifiedByEventListener)
             {
@@ -1007,7 +1007,7 @@ namespace System.Windows.Documents
             }
 
             // UpdateCompositionText raises a PUBLIC EVENT....
-            UpdateCompositionText(composition, resultLength, false /* includeResultText */, out _startComposition, out _endComposition);
+            UpdateCompositionText(composition, resultLength, includeResultText: false, out _startComposition, out _endComposition);
 
             if (_compositionModifiedByEventListener)
             {
@@ -1047,8 +1047,7 @@ namespace System.Windows.Documents
             ITextPointer start;
             ITextPointer end;
 
-            UpdateCompositionText(composition, 0, true /* includeResultText */
-                                                                              , out start, out end);
+            UpdateCompositionText(composition, 0, includeResultText: true, out start, out end);
         }
 
         // Inserts composition text into the document.
@@ -1094,7 +1093,7 @@ namespace System.Windows.Documents
                         //
                         // If we're here it means composition is being finalized
                         //
-                        range = new TextRange(composition._ResultStart, composition._ResultEnd, true /* ignoreTextUnitBoundaries */);
+                        range = new TextRange(composition._ResultStart, composition._ResultEnd, ignoreTextUnitBoundaries: true);
                         text = this._editor._FilterText(composition.Text, range);
                         isTextFiltered = (text != composition.Text);
                         if (isTextFiltered)
@@ -1108,7 +1107,7 @@ namespace System.Windows.Documents
                     }
                     else
                     {
-                        range = new TextRange(composition._CompositionStart, composition._CompositionEnd, true /* ignoreTextUnitBoundaries */);
+                        range = new TextRange(composition._CompositionStart, composition._CompositionEnd, ignoreTextUnitBoundaries: true);
                         text = composition.CompositionText;
                     }
 
@@ -1217,7 +1216,7 @@ namespace System.Windows.Documents
                                 }
 
                                 // Need to pass the foreground and background color of the composition
-                                _highlightLayer.Add(startClause, endClause, /*TextDecorationCollection:*/null);
+                                _highlightLayer.Add(startClause, endClause, TextDecorationCollection: null);
 #endif
 
                     TextServicesDisplayAttribute textServiceDisplayAttribute = new TextServicesDisplayAttribute(displayAttribute);

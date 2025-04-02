@@ -314,7 +314,7 @@ namespace System.Windows
                 // Store the RoutedEventHandler & target for use in DisconnectOneTrigger
                 eventTrigger._routedEventHandler = new RoutedEventHandler(listener.Handler);
                 eventTrigger._source.AddHandler( eventTrigger.RoutedEvent, eventTrigger._routedEventHandler,
-                                                 false /* HandledEventsToo */ );
+                                                 handledEventsToo: false);
             }
             else
             {

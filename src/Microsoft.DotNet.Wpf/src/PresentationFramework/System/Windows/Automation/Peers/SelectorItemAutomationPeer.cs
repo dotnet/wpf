@@ -40,7 +40,7 @@ namespace System.Windows.Automation.Peers
                 throw new InvalidOperationException(SR.UIA_OperationCannotBePerformed);
             }
 
-            parentSelector.SelectionChange.SelectJustThisItem(parentSelector.NewItemInfo(Item), true /* assumeInItemsCollection */);
+            parentSelector.SelectionChange.SelectJustThisItem(parentSelector.NewItemInfo(Item), assumeInItemsCollection: true);
         }
 
 

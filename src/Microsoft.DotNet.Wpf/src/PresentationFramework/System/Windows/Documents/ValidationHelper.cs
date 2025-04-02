@@ -102,7 +102,7 @@ namespace System.Windows.Documents
                 throw new ArgumentNullException(paramName);
             }
 
-            if (!TextSchema.IsValidChild(/*position:*/position, /*childType:*/child.GetType()))
+            if (!TextSchema.IsValidChild(position: position, childType: child.GetType()))
             {
                 throw new ArgumentException(SR.Format(SR.TextSchema_ChildTypeIsInvalid, position.Parent.GetType().Name, child.GetType().Name));
             }

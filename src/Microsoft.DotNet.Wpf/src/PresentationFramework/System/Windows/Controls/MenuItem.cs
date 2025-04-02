@@ -180,7 +180,7 @@ namespace System.Windows.Controls
             KeyboardNavigation.DirectionalNavigationProperty.OverrideMetadata(typeof(MenuItem), new FrameworkPropertyMetadata(KeyboardNavigationMode.None));
 
             // Disable default focus visual for MenuItem.
-            FocusVisualStyleProperty.OverrideMetadata(typeof(MenuItem), new FrameworkPropertyMetadata((object)null /* default value */));
+            FocusVisualStyleProperty.OverrideMetadata(typeof(MenuItem), new FrameworkPropertyMetadata(defaultValue: (object)null));
 
 
             // While the menu is opened, Input Method should be suspended.

@@ -90,12 +90,12 @@ namespace MS.Internal.AppModel
                     // assumed safe - because we're only allowing this for mailto urls. 
                     // 
 
-                    UnsafeNativeMethods.ShellExecute(new HandleRef(null, IntPtr.Zero), /*hwnd*/
-                                                      null, /*operation*/
-                                                      BindUriHelper.UriToString(destinationUri), /*file*/
-                                                      null, /*parameters*/
-                                                      null, /*directory*/
-                                                      0); /*nShowCmd*/
+                    UnsafeNativeMethods.ShellExecute(hwnd: new HandleRef(null, IntPtr.Zero),
+                                                      lpOperation: null,
+                                                      lpFile: BindUriHelper.UriToString(destinationUri),
+                                                      lpParameters: null,
+                                                      lpDirectory: null,
+                                                      nShowCmd: 0);
                     launched = LaunchResult.Launched;
                 }
             }

@@ -1381,8 +1381,8 @@ namespace System.Windows.Controls
 
             for (int i = 0, n = s_DPList[0].Length; i < n; i++)
             {
-                UpdateHeaderProperty(header, s_DPList[2][i] /* header */,
-                    s_DPList[1][i] /* column */, s_DPList[0][i] /* GV */);
+                UpdateHeaderProperty(header, targetDP: s_DPList[2][i],
+                    columnDP: s_DPList[1][i], gvDP: s_DPList[0][i]);
             }
         }
 

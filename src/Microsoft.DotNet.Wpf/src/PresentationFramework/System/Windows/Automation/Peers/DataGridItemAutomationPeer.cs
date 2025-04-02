@@ -446,7 +446,7 @@ namespace System.Windows.Automation.Peers
 
                     if (column != null)
                     {
-                        DataGridCellItemAutomationPeer peer = GetOrCreateCellItemPeer(column,/*addParentInfo*/ false );
+                        DataGridCellItemAutomationPeer peer = GetOrCreateCellItemPeer(column,addParentInfo: false);
                         children.Add(peer);
                         newChildren[column] = peer;
                     }
@@ -460,7 +460,7 @@ namespace System.Windows.Automation.Peers
 
         internal DataGridCellItemAutomationPeer GetOrCreateCellItemPeer(DataGridColumn column)
         {
-            return GetOrCreateCellItemPeer(column, /*addParentInfo*/ true);
+            return GetOrCreateCellItemPeer(column, addParentInfo: true);
         }
 
         /// <summary>

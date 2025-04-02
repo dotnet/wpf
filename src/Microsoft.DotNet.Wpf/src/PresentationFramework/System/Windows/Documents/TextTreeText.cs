@@ -311,7 +311,7 @@ namespace System.Windows.Documents
                 {
                     newBlock = new TextTreeTextBlock(TextTreeTextBlock.MaxBlockSize);
                     textOffset += newBlock.InsertText(0, text, textOffset, textEndOffset);
-                    newBlock.InsertAtNode(leftBlock, false /* insertBefore */);
+                    newBlock.InsertAtNode(leftBlock, insertBefore: false);
                     leftBlock = newBlock;
                 }
                 Invariant.Assert(newBlockCount == 1 || textOffset == textEndOffset, "Not all text copied!");
@@ -373,7 +373,7 @@ namespace System.Windows.Documents
                 {
                     newBlock = new TextTreeTextBlock(TextTreeTextBlock.MaxBlockSize);
                     textOffset += newBlock.InsertText(0, text, textOffset, textEndOffset);
-                    newBlock.InsertAtNode(leftBlock, false /* insertBefore */);
+                    newBlock.InsertAtNode(leftBlock, insertBefore: false);
                     leftBlock = newBlock;
                 }
                 Invariant.Assert(textOffset == textEndOffset, "Not all text copied!");

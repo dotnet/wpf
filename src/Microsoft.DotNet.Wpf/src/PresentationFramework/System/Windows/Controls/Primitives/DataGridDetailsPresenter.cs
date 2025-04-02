@@ -130,7 +130,7 @@ namespace System.Windows.Controls.Primitives
                     dataGridOwner.ScrollIntoView(rowOwner.Item, dataGridOwner.ColumnFromDisplayIndex(0));
                 }
 
-                dataGridOwner.HandleSelectionForRowHeaderAndDetailsInput(rowOwner, /* startDragging = */ Mouse.Captured == null);
+                dataGridOwner.HandleSelectionForRowHeaderAndDetailsInput(rowOwner, startDragging: Mouse.Captured == null);
             }
         }
 
@@ -216,10 +216,10 @@ namespace System.Windows.Controls.Primitives
             }
 
             if (row.DetailsPresenterDrawsGridLines && 
-                DataGridHelper.IsGridLineVisible(dataGrid, /*isHorizontal = */ true))
+                DataGridHelper.IsGridLineVisible(dataGrid, isHorizontal: true))
             {
                 double thickness = dataGrid.HorizontalGridLineThickness;
-                Size desiredSize = base.MeasureOverride(DataGridHelper.SubtractFromSize(availableSize, thickness, /*height = */ true));
+                Size desiredSize = base.MeasureOverride(DataGridHelper.SubtractFromSize(availableSize, thickness, height: true));
                 desiredSize.Height += thickness;
                 return desiredSize;
             }
@@ -250,10 +250,10 @@ namespace System.Windows.Controls.Primitives
             }
 
             if (row.DetailsPresenterDrawsGridLines &&
-                DataGridHelper.IsGridLineVisible(dataGrid, /*isHorizontal = */ true))
+                DataGridHelper.IsGridLineVisible(dataGrid, isHorizontal: true))
             {
                 double thickness = dataGrid.HorizontalGridLineThickness;
-                Size returnSize = base.ArrangeOverride(DataGridHelper.SubtractFromSize(finalSize, thickness, /*height = */ true));
+                Size returnSize = base.ArrangeOverride(DataGridHelper.SubtractFromSize(finalSize, thickness, height: true));
                 returnSize.Height += thickness;
                 return returnSize;
             }
@@ -284,7 +284,7 @@ namespace System.Windows.Controls.Primitives
             }
 
             if (row.DetailsPresenterDrawsGridLines &&
-                DataGridHelper.IsGridLineVisible(dataGrid, /*isHorizontal = */ true))
+                DataGridHelper.IsGridLineVisible(dataGrid, isHorizontal: true))
             {
                 double thickness = dataGrid.HorizontalGridLineThickness;
                 Rect rect = new Rect(new Size(RenderSize.Width, thickness))

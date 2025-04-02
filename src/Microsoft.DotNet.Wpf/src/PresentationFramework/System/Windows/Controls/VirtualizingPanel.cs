@@ -522,7 +522,7 @@ namespace System.Windows.Controls
 
             OnItemsChanged(sender, args);
 
-            return ShouldItemsChangeAffectLayout(true /*areItemChangesLocal*/, args);
+            return ShouldItemsChangeAffectLayout(areItemChangesLocal: true, args);
         }
 
         internal override void OnClearChildrenInternal()

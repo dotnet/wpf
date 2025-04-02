@@ -122,7 +122,7 @@ namespace System.Windows
             {
                 FrameworkElement fe;
                 FrameworkContentElement fce;
-                Helper.DowncastToFEorFCE(_mentorCache, out fe, out fce, true /*throwIfNeither*/);
+                Helper.DowncastToFEorFCE(_mentorCache, out fe, out fce, throwIfNeither: true);
 
                 // If there is a mentor do a FindResource call starting at that node
                 resource = FrameworkElement.FindResourceInternal(fe,
@@ -143,7 +143,7 @@ namespace System.Windows
                                                                         out source,
                                                                         false, // disableThrowOnResourceFailure
                                                                         true,  // allowDeferredResourceReference
-                                                                        false  /* mustReturnDeferredResourceReference*/);
+                                                                        mustReturnDeferredResourceReference: false);
             }
 
             if (resource == null)

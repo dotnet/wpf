@@ -81,7 +81,7 @@ namespace System.Windows.Controls
 
             SyncProperties(textBlock);
 
-            ApplyStyle(/* isEditing = */ false, /* defaultToElementStyle = */ false, textBlock);
+            ApplyStyle(isEditing: false, defaultToElementStyle: false, textBlock);
             ApplyBinding(textBlock, TextBlock.TextProperty);
 
             DataGridHelper.RestoreFlowDirection(textBlock, cell);
@@ -98,7 +98,7 @@ namespace System.Windows.Controls
 
             SyncProperties(textBox);
 
-            ApplyStyle(/* isEditing = */ true, /* defaultToElementStyle = */ false, textBox);
+            ApplyStyle(isEditing: true, defaultToElementStyle: false, textBox);
             ApplyBinding(textBox, TextBox.TextProperty);
 
             DataGridHelper.RestoreFlowDirection(textBox, cell);
@@ -234,7 +234,7 @@ namespace System.Windows.Controls
 
         private static bool PlaceCaretOnTextBox(TextBox textBox, Point position)
         {
-            int characterIndex = textBox.GetCharacterIndexFromPoint(position, /* snapToText = */ false);
+            int characterIndex = textBox.GetCharacterIndexFromPoint(position, snapToText: false);
             if (characterIndex >= 0)
             {
                 textBox.Select(characterIndex, 0);

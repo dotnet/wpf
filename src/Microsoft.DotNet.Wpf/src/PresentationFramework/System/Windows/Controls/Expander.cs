@@ -92,7 +92,7 @@ namespace System.Windows.Controls
                         typeof(ExpandDirection),
                         typeof(Expander),
                         new FrameworkPropertyMetadata(
-                                ExpandDirection.Down /* default value */,
+                                defaultValue: ExpandDirection.Down,
                                 FrameworkPropertyMetadataOptions.BindsTwoWayByDefault,
                                 new PropertyChangedCallback(OnVisualStatePropertyChanged)),
                         new ValidateValueCallback(IsValidExpandDirection));
@@ -117,7 +117,7 @@ namespace System.Windows.Controls
                         typeof(bool),
                         typeof(Expander),
                         new FrameworkPropertyMetadata(
-                                BooleanBoxes.FalseBox /* default value */,
+                                defaultValue: BooleanBoxes.FalseBox,
                                 FrameworkPropertyMetadataOptions.BindsTwoWayByDefault | FrameworkPropertyMetadataOptions.Journal,
                                 new PropertyChangedCallback(OnIsExpandedChanged)));
 

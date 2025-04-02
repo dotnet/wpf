@@ -147,7 +147,7 @@ namespace System.Windows.Controls
         /// </summary>
         internal void EndChange()
         {
-            EndChange(false /* skipEvents */);
+            EndChange(skipEvents: false);
         }
 
         /// <summary>
@@ -195,7 +195,7 @@ namespace System.Windows.Controls
         /// </summary>
         void ITextContainer.EndChange()
         {
-            EndChange(false /* skipEvents */);
+            EndChange(skipEvents: false);
         }
 
         /// <summary>
@@ -633,7 +633,7 @@ namespace System.Windows.Controls
                 _changes = new TextContainerChangedEventArgs();
             }
 
-            _changes.AddChange(precursorTextChange, startPosition.Offset, symbolCount, false /* collectTextChanges */);
+            _changes.AddChange(precursorTextChange, startPosition.Offset, symbolCount, collectTextChanges: false);
 
             if (this.Change != null)
             {

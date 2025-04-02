@@ -62,8 +62,8 @@ namespace System.Windows.Documents
             var onQueryStatusNYI = new CanExecuteRoutedEventHandler(OnQueryStatusNYI);
             var onQueryStatusEnterBreak = new CanExecuteRoutedEventHandler(OnQueryStatusEnterBreak);
             
-            EventManager.RegisterClassHandler(controlType, Mouse.MouseMoveEvent, new MouseEventHandler(OnMouseMove), true /* handledEventsToo */);
-            EventManager.RegisterClassHandler(controlType, Mouse.MouseLeaveEvent, new MouseEventHandler(OnMouseLeave), true /* handledEventsToo */);
+            EventManager.RegisterClassHandler(controlType, Mouse.MouseMoveEvent, new MouseEventHandler(OnMouseMove), handledEventsToo: true);
+            EventManager.RegisterClassHandler(controlType, Mouse.MouseLeaveEvent, new MouseEventHandler(OnMouseLeave), handledEventsToo: true);
 
             CommandHelpers.RegisterCommandHandler(controlType, ApplicationCommands.CorrectionList   , new ExecutedRoutedEventHandler(OnCorrectionList)       , new CanExecuteRoutedEventHandler(OnQueryStatusCorrectionList)       , nameof(SR.KeyCorrectionList),   nameof(SR.KeyCorrectionListDisplayString)         );
             CommandHelpers.RegisterCommandHandler(controlType, EditingCommands.ToggleInsert         , new ExecutedRoutedEventHandler(OnToggleInsert)         , onQueryStatusNYI                  , KeyGesture.CreateFromResourceStrings(KeyToggleInsert,     nameof(SR.KeyToggleInsertDisplayString)           ));
@@ -392,7 +392,7 @@ namespace System.Windows.Documents
                 // We'll delay the event handling, batching it up with other
                 // input if layout is too slow to keep up with the input stream.
                 KeyboardDevice keyboard = e.Device as KeyboardDevice;
-                TextEditorTyping.ScheduleInput(This, new TextInputItem(This, e.Text, /*isInsertKeyToggled:*/keyboard != null ? keyboard.IsKeyToggled(Key.Insert) : false));
+                TextEditorTyping.ScheduleInput(This, new TextInputItem(This, e.Text, isInsertKeyToggled: keyboard != null ? keyboard.IsKeyToggled(Key.Insert) : false));
             }
         }
 
@@ -427,7 +427,7 @@ namespace System.Windows.Documents
             if (This.TextStore != null)
             {
                 // Don't do actual reconversion, it just checks if the current selection is reconvertable.
-                args.CanExecute = This.TextStore.QueryRangeOrReconvertSelection( /*fDoReconvert:*/ false);
+                args.CanExecute = This.TextStore.QueryRangeOrReconvertSelection( fDoReconvert: false);
             }
             else
             {
@@ -448,7 +448,7 @@ namespace System.Windows.Documents
                 return;
             }
 
-            This.TextStore?.QueryRangeOrReconvertSelection( /*fDoReconvert:*/ true);
+            This.TextStore?.QueryRangeOrReconvertSelection( fDoReconvert: true);
         }
 
         /// <summary>
@@ -599,7 +599,7 @@ namespace System.Windows.Documents
                         TextRangeEditLists.ConvertListItemsToParagraphs((TextRange)This.Selection);
                     }
                     else if (This.AcceptsRichContent &&
-                             (IsAtListItemChildStart(position, false /* emptyChildOnly */) || IsAtIndentedParagraphOrBlockUIContainerStart(This.Selection.Start)))
+                             (IsAtListItemChildStart(position, emptyChildOnly: false) || IsAtIndentedParagraphOrBlockUIContainerStart(This.Selection.Start)))
                     {
                         // Unindent the list by one level.
                         TextEditorLists.DecreaseIndentation(This);
@@ -710,7 +710,7 @@ namespace System.Windows.Documents
                 // because we want to appear close to previous character.
                 // However, we do not allow to stop at end of line.
                 // We alow to stop next to space - to be consistent with typing behavior.
-                This.Selection.SetCaretToPosition(position, LogicalDirection.Backward, /*allowStopAtLineEnd:*/false, /*allowStopNearSpace:*/true);
+                This.Selection.SetCaretToPosition(position, LogicalDirection.Backward, allowStopAtLineEnd: false, allowStopNearSpace: true);
             }
         }
 
@@ -758,7 +758,7 @@ namespace System.Windows.Documents
             }
 
             // Set caret position.
-            This.Selection.SetCaretToPosition(deletePosition, directionOfDelete, /*allowStopAtLineEnd:*/false, /*allowStopNearSpace:*/true);
+            This.Selection.SetCaretToPosition(deletePosition, directionOfDelete, allowStopAtLineEnd: false, allowStopNearSpace: true);
 
             if (directionOfDelete == LogicalDirection.Backward)
             {
@@ -1068,7 +1068,7 @@ namespace System.Windows.Documents
                 if (wasSelectionChanged)
                 {
                     // Position the caret.
-                    This.Selection.SetCaretToPosition(This.Selection.End, LogicalDirection.Forward, /*allowStopAtLineEnd:*/false, /*allowStopNearSpace:*/false);
+                    This.Selection.SetCaretToPosition(This.Selection.End, LogicalDirection.Forward, allowStopAtLineEnd: false, allowStopNearSpace: false);
 
                     // Forget previously suggested horizontal position
                     TextEditorSelection._ClearSuggestedX(This);
@@ -1108,7 +1108,7 @@ namespace System.Windows.Documents
                     }
                     else
                     {
-                        newEnd = TextRangeEdit.InsertParagraphBreak(newEnd, /*moveIntoSecondParagraph*/true);
+                        newEnd = TextRangeEdit.InsertParagraphBreak(newEnd, moveIntoSecondParagraph: true);
                     }
                 }
                 else if (command == EditingCommands.EnterLineBreak)
@@ -1159,10 +1159,10 @@ namespace System.Windows.Documents
             {
                 // For both ParagraphBreak and LineBreak commands, insert a new row after the current one
                 TextRange range = ((TextSelection)This.Selection).InsertRows(+1);
-                This.Selection.SetCaretToPosition(range.Start, LogicalDirection.Forward, /*allowStopAtLineEnd:*/false, /*allowStopNearSpace:*/false);
+                This.Selection.SetCaretToPosition(range.Start, LogicalDirection.Forward, allowStopAtLineEnd: false, allowStopNearSpace: false);
             }
             else if (This.Selection.IsEmpty &&
-                     (TextPointerBase.IsInEmptyListItem(position) || IsAtListItemChildStart(position, true /* emptyChildOnly */)) &&
+                     (TextPointerBase.IsInEmptyListItem(position) || IsAtListItemChildStart(position, emptyChildOnly: true)) &&
                      command == EditingCommands.EnterParagraphBreak)
             {
                 // Unindent the list by one level.
@@ -1212,7 +1212,7 @@ namespace System.Windows.Documents
                     if (This.AcceptsRichContent && (This.Selection is TextSelection))
                     {
                         // NOTE: We do not call OnApplyProperty to avoid recursion for FlushPendingInput
-                        ((TextSelection)This.Selection).ApplyPropertyValue(FlowDocument.FlowDirectionProperty, FlowDirection.LeftToRight, /*applyToParagraphs*/true);
+                        ((TextSelection)This.Selection).ApplyPropertyValue(FlowDocument.FlowDirectionProperty, FlowDirection.LeftToRight, applyToParagraphs: true);
                     }
                     else
                     {
@@ -1228,7 +1228,7 @@ namespace System.Windows.Documents
                     if (This.AcceptsRichContent && (This.Selection is TextSelection))
                     {
                         // NOTE: We do not call OnApplyProperty to avoid recursion for FlushPendingInput
-                        ((TextSelection)This.Selection).ApplyPropertyValue(FlowDocument.FlowDirectionProperty, FlowDirection.RightToLeft, /*applyToParagraphs*/true);
+                        ((TextSelection)This.Selection).ApplyPropertyValue(FlowDocument.FlowDirectionProperty, FlowDirection.RightToLeft, applyToParagraphs: true);
                     }
                     else
                     {
@@ -1275,7 +1275,7 @@ namespace System.Windows.Documents
 
             This.TextView?.ThrottleBackgroundTasksForUserInput();
 
-            ScheduleInput(This, new TextInputItem(This, " ", /*isInsertKeyToggled:*/!This._OvertypeMode));
+            ScheduleInput(This, new TextInputItem(This, " ", isInsertKeyToggled: !This._OvertypeMode));
         }
 
         // ...........................................................................
@@ -1343,7 +1343,7 @@ namespace System.Windows.Documents
             else
             {
                 // In plain text we treat tab as a characters always
-                DoTextInput(This, "\t", /*isInsertKeyToggled:*/!This._OvertypeMode, /*acceptControlCharacters:*/true);
+                DoTextInput(This, "\t", isInsertKeyToggled: !This._OvertypeMode, acceptControlCharacters: true);
             }
         }
 
@@ -1375,7 +1375,7 @@ namespace System.Windows.Documents
             else
             {
                 // In plain text we treat tab as a characters always
-                DoTextInput(This, "\t", /*isInsertKeyToggled:*/!This._OvertypeMode, /*acceptControlCharacters:*/true);
+                DoTextInput(This, "\t", isInsertKeyToggled: !This._OvertypeMode, acceptControlCharacters: true);
             }
         }
 
@@ -1392,7 +1392,7 @@ namespace System.Windows.Documents
             {
                 // When table cell range is selected, Tab simply collapses
                 // a selection to a content of a first cell
-                This.Selection.SetCaretToPosition(This.Selection.Start, LogicalDirection.Backward, /*allowStopAtLineEnd:*/false, /*allowStopNearSpace:*/false);
+                This.Selection.SetCaretToPosition(This.Selection.Start, LogicalDirection.Backward, allowStopAtLineEnd: false, allowStopNearSpace: false);
                 return true;
             }
 
@@ -1543,7 +1543,7 @@ namespace System.Windows.Documents
                     ITextPointer caretPosition = This.Selection.End.CreatePointer(LogicalDirection.Backward);
 
                     // Set selection at the end of input content
-                    This.Selection.SetCaretToPosition(caretPosition, LogicalDirection.Backward, /*allowStopAtLineEnd:*/true, /*allowStopNearSpace:*/true);
+                    This.Selection.SetCaretToPosition(caretPosition, LogicalDirection.Backward, allowStopAtLineEnd: true, allowStopNearSpace: true);
                     // Note: Using explicit backward orientation we keep formatting with
                     // a previous character during typing.
 
@@ -1703,7 +1703,7 @@ namespace System.Windows.Documents
                     return;
                 }
 
-                DoTextInput(TextEditor, _text, _isInsertKeyToggled, /*acceptControlCharacters:*/false);
+                DoTextInput(TextEditor, _text, _isInsertKeyToggled, acceptControlCharacters: false);
             }
 
             // Text to input.

@@ -450,7 +450,7 @@ namespace System.Windows.Controls
                                     else if ((Keyboard.Modifiers & (ModifierKeys.Control | ModifierKeys.Shift)) == ModifierKeys.Shift)
                                     {
                                         // Only SHIFT
-                                        MakeAnchorSelection(source, true /* clearCurrent */);
+                                        MakeAnchorSelection(source, clearCurrent: true);
                                     }
                                     else if ((Keyboard.Modifiers & ModifierKeys.Shift) == 0)
                                     {
@@ -793,7 +793,7 @@ namespace System.Windows.Controls
             {
                 ItemInfo info = ItemInfoFromContainer(listItem);
 
-                SelectionChange.SelectJustThisItem(info, true /* assumeInItemsCollection */);
+                SelectionChange.SelectJustThisItem(info, assumeInItemsCollection: true);
 
                 listItem.Focus();
 
@@ -879,7 +879,7 @@ namespace System.Windows.Controls
                     enumerator.MoveNext();
                     if (index >= start)
                     {
-                        SelectionChange.Select(NewItemInfo(enumerator.Current, null, index), true /* assumeInItemsCollection */);
+                        SelectionChange.Select(NewItemInfo(enumerator.Current, null, index), assumeInItemsCollection: true);
                     }
                 }
 

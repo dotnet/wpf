@@ -570,7 +570,7 @@ namespace System.Windows.Navigation
 
                 // Calling the internal Navigate from Frame and NavWin's Source DP's property changed callbacks
                 // We would not set value back in this case.
-                navWin._navigationService.Navigate(uriToNavigate, null, false, true/* navigateOnSourceChanged */);
+                navWin._navigationService.Navigate(uriToNavigate, null, false, navigateOnSourceChanged: true);
             }
         }
 

@@ -43,7 +43,7 @@ namespace System.Windows.Documents
                     return null;
                 }
 
-                return new BlockCollection(this, /*isOwnerParent*/false);
+                return new BlockCollection(this, isOwnerParent: false);
             }
         }
 
@@ -431,19 +431,19 @@ namespace System.Windows.Documents
         internal static bool IsValidMargin(object o)
         {
             Thickness t = (Thickness)o;
-            return IsValidThickness(t, /*allow NaN*/true);
+            return IsValidThickness(t, allowNaN: true);
         }
 
         internal static bool IsValidPadding(object o)
         {
             Thickness t = (Thickness)o;
-            return IsValidThickness(t, /*allow NaN*/true);
+            return IsValidThickness(t, allowNaN: true);
         }
 
         internal static bool IsValidBorderThickness(object o)
         {
             Thickness t = (Thickness)o;
-            return IsValidThickness(t, /*allow NaN*/false);
+            return IsValidThickness(t, allowNaN: false);
         }
 
         #endregion Internal Methods

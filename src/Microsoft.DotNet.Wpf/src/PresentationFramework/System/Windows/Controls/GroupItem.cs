@@ -79,7 +79,7 @@ namespace System.Windows.Controls
                         // remeasure the sub tree through the ItemsPresenter leading up to the
                         // ItemsHost panel. If we didnt do this the offsets could get skewed.
                         groupItem.InvalidateMeasure();
-                        Helper.InvalidateMeasureOnPath(itemsHostPresenter, groupItem, false /*duringMeasure*/);
+                        Helper.InvalidateMeasureOnPath(itemsHostPresenter, groupItem, duringMeasure: false);
                     }
                 }
             }
@@ -162,7 +162,7 @@ namespace System.Windows.Controls
                 }
                 else
                 {
-                    Generator.RemoveAllInternal(true /*saveRecycleQueue*/);
+                    Generator.RemoveAllInternal(saveRecycleQueue: true);
                 }
             }
 
@@ -248,7 +248,7 @@ namespace System.Windows.Controls
                 VirtualizingPanel vp = _itemsHost as VirtualizingPanel;
                 vp?.OnClearChildrenInternal();
 
-                Generator.RemoveAllInternal(true /*saveRecycleQueue*/);
+                Generator.RemoveAllInternal(saveRecycleQueue: true);
             }
             else
             {

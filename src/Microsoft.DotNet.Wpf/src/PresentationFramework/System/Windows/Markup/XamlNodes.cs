@@ -1095,9 +1095,9 @@ namespace System.Windows.Markup
                         typeFullName,
                         elementType,
                         serializerType,
-                        false /*isEmptyElement*/,
-                        false /*needsDictionaryKey*/,
-                        false /*isInjected*/)
+                        isEmptyElement: false,
+                        needsDictionaryKey: false,
+                        isInjected: false)
             {
             }
 

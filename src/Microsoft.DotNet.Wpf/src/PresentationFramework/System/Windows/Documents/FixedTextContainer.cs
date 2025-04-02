@@ -64,7 +64,7 @@ namespace System.Windows.Documents
         /// </summary>
         void ITextContainer.EndChange()
         {
-            ((ITextContainer)this).EndChange(false /* skipEvents */);
+            ((ITextContainer)this).EndChange(skipEvents: false);
         }
 
         /// <summary>

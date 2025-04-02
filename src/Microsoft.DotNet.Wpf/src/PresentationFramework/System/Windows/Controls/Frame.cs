@@ -268,7 +268,7 @@ namespace System.Windows.Controls
 
                 // Calling the internal Navigate from Frame and NavWin's Source DP's property changed callbacks
                 // We would not set value back in this case.
-                frame._navigationService.Navigate(uriToNavigate, null, false, true/* navigateOnSourceChanged */);
+                frame._navigationService.Navigate(uriToNavigate, null, false, navigateOnSourceChanged: true);
             }
         }
 
@@ -1317,7 +1317,7 @@ namespace System.Windows.Controls
             if (_ownJournalScope == null)
             {
                 // Entries created for this frame in the parent's journal have to be removed.
-                JournalNavigationScope parentJns = GetParentJournal(false/*don't create*/);
+                JournalNavigationScope parentJns = GetParentJournal(create: false);
                 parentJns?.Journal.RemoveEntries(_navigationService.GuidId);
 
                 _ownJournalScope = new JournalNavigationScope(this);

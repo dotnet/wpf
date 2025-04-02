@@ -98,7 +98,7 @@ namespace System.Windows
         internal static object FindResourceInternal(object key)
         {
             // Call Forwarded
-            return FindResourceInternal(key, false /*allowDeferredResourceReference*/, false /*mustReturnDeferredResourceReference*/);
+            return FindResourceInternal(key, allowDeferredResourceReference: false, mustReturnDeferredResourceReference: false);
         }
 
         internal static object FindResourceInternal(object key, bool allowDeferredResourceReference, bool mustReturnDeferredResourceReference)
@@ -618,7 +618,7 @@ namespace System.Windows
                         bool external = (_themedLocation == ResourceDictionaryLocation.ExternalAssembly);
                         if (external)
                         {
-                            LoadExternalAssembly(false /* classic */, false /* generic */, out _themedDictionaryAssembly, out dictionaryAssemblyName);
+                            LoadExternalAssembly(classic: false, generic: false, out _themedDictionaryAssembly, out dictionaryAssemblyName);
                         }
                         else
                         {
@@ -633,7 +633,7 @@ namespace System.Windows
                             {
                                 // Themed resources should have been inside the source assembly, but failed to load.
                                 // Try falling back to external in case this is a theme that shipped later.
-                                LoadExternalAssembly(false /* classic */, false /* generic */, out _themedDictionaryAssembly, out dictionaryAssemblyName);
+                                LoadExternalAssembly(classic: false, generic: false, out _themedDictionaryAssembly, out dictionaryAssemblyName);
                                 if (_themedDictionaryAssembly != null)
                                 {
                                     dictionary = LoadDictionary(_themedDictionaryAssembly, dictionaryAssemblyName, ThemedResourceName, isTraceEnabled, out _themedDictionarySourceUri);
@@ -646,7 +646,7 @@ namespace System.Windows
                             // If a non-classic dictionary failed to load, then try to load classic.
                             if (external)
                             {
-                                LoadExternalAssembly(true /* classic */, false /* generic */, out _themedDictionaryAssembly, out dictionaryAssemblyName);
+                                LoadExternalAssembly(classic: true, generic: false, out _themedDictionaryAssembly, out dictionaryAssemblyName);
                             }
                             else
                             {
@@ -705,7 +705,7 @@ namespace System.Windows
                         string dictionaryAssemblyName;
                         if (_genericLocation == ResourceDictionaryLocation.ExternalAssembly)
                         {
-                            LoadExternalAssembly(false /* classic */, true /* generic */, out _genericDictionaryAssembly, out dictionaryAssemblyName);
+                            LoadExternalAssembly(classic: false, generic: true, out _genericDictionaryAssembly, out dictionaryAssemblyName);
                         }
                         else
                         {
@@ -1943,7 +1943,7 @@ namespace System.Windows
                     // Only cache keys that would be located by FindResourceInternal
                     if ((key is Type || key is ResourceKey) && _canCacheAsThemeResource && canCache)
                     {
-                        SystemResources.CacheResource(key, value, false /*isTraceEnabled*/);
+                        SystemResources.CacheResource(key, value, isTraceEnabled: false);
                     }
 
                     return value;

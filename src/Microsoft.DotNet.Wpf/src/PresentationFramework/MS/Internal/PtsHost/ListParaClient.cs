@@ -58,7 +58,7 @@ namespace MS.Internal.PtsHost
             
             // This textProperties object is eventually used in creation of LineProperties, which leads to creation of a TextMarkerSource. TextMarkerSource relies on PixelsPerDip
             // from TextProperties, therefore it must be set here properly.
-            TextProperties textProperties = new TextProperties(Paragraph.Element, StaticTextPointer.Null, false /* inline objects */, false /* get background */,
+            TextProperties textProperties = new TextProperties(Paragraph.Element, StaticTextPointer.Null, inlineObjects: false, getBackground: false,
                 Paragraph.StructuralCache.TextFormatterHost.PixelsPerDip);
 
             // There might be possibility to get empty sub-track, skip the sub-track in such case.

@@ -777,20 +777,20 @@ namespace System.Windows.Controls
             // Remove space from the constraint (since it implicitly includes the GridLine's thickness),
             // call the base implementation, and add the thickness back for the returned size.
             DataGrid dataGridOwner = DataGridOwner;
-            bool horizontalLinesVisible = DataGridHelper.IsGridLineVisible(dataGridOwner, /*isHorizontal = */ true);
-            bool verticalLinesVisible = DataGridHelper.IsGridLineVisible(dataGridOwner, /*isHorizontal = */ false);
+            bool horizontalLinesVisible = DataGridHelper.IsGridLineVisible(dataGridOwner, isHorizontal: true);
+            bool verticalLinesVisible = DataGridHelper.IsGridLineVisible(dataGridOwner, isHorizontal: false);
             double horizontalLineThickness = 0;
             double verticalLineThickness = 0;
 
             if (horizontalLinesVisible)
             {
                 horizontalLineThickness = dataGridOwner.HorizontalGridLineThickness;
-                constraint = DataGridHelper.SubtractFromSize(constraint, horizontalLineThickness, /*height = */ true);
+                constraint = DataGridHelper.SubtractFromSize(constraint, horizontalLineThickness, height: true);
             }
             if (verticalLinesVisible)
             {
                 verticalLineThickness = dataGridOwner.VerticalGridLineThickness;
-                constraint = DataGridHelper.SubtractFromSize(constraint, verticalLineThickness, /*height = */ false);
+                constraint = DataGridHelper.SubtractFromSize(constraint, verticalLineThickness, height: false);
             }
             Size desiredSize = base.MeasureOverride(constraint);
             if (horizontalLinesVisible)
@@ -813,19 +813,19 @@ namespace System.Windows.Controls
             // We don't need to adjust the Arrange position of the content.  By default it is arranged at 0,0 and we're
             // adding a line to the right and bottom.  All we have to do is compress and extend the size, just like Measure.
             DataGrid dataGridOwner = DataGridOwner;
-            bool horizontalLinesVisible = DataGridHelper.IsGridLineVisible(dataGridOwner, /*isHorizontal = */ true);
-            bool verticalLinesVisible = DataGridHelper.IsGridLineVisible(dataGridOwner, /*isHorizontal = */ false);
+            bool horizontalLinesVisible = DataGridHelper.IsGridLineVisible(dataGridOwner, isHorizontal: true);
+            bool verticalLinesVisible = DataGridHelper.IsGridLineVisible(dataGridOwner, isHorizontal: false);
             double horizontalLineThickness = 0;
             double verticalLineThickness = 0;
             if (horizontalLinesVisible)
             {
                 horizontalLineThickness = dataGridOwner.HorizontalGridLineThickness;
-                arrangeSize = DataGridHelper.SubtractFromSize(arrangeSize, horizontalLineThickness, /*height = */ true);
+                arrangeSize = DataGridHelper.SubtractFromSize(arrangeSize, horizontalLineThickness, height: true);
             }
             if (verticalLinesVisible)
             {
                 verticalLineThickness = dataGridOwner.VerticalGridLineThickness;
-                arrangeSize = DataGridHelper.SubtractFromSize(arrangeSize, verticalLineThickness, /*height = */ false);
+                arrangeSize = DataGridHelper.SubtractFromSize(arrangeSize, verticalLineThickness, height: false);
             }
             Size returnSize = base.ArrangeOverride(arrangeSize);
             if (horizontalLinesVisible)
@@ -848,7 +848,7 @@ namespace System.Windows.Controls
             base.OnRender(drawingContext);
             DataGrid dataGrid = DataGridOwner;
 
-            if (DataGridHelper.IsGridLineVisible(dataGrid, /*isHorizontal = */ false))
+            if (DataGridHelper.IsGridLineVisible(dataGrid, isHorizontal: false))
             {
                 double thickness = DataGridOwner.VerticalGridLineThickness;
                 Rect rect = new Rect(new Size(thickness, RenderSize.Height))
@@ -859,7 +859,7 @@ namespace System.Windows.Controls
                 drawingContext.DrawRectangle(DataGridOwner.VerticalGridLinesBrush, null, rect);
             }
 
-            if (DataGridHelper.IsGridLineVisible(dataGrid, /*isHorizontal = */ true))
+            if (DataGridHelper.IsGridLineVisible(dataGrid, isHorizontal: true))
             {
                 double thickness = dataGrid.HorizontalGridLineThickness;
                 Rect rect = new Rect(new Size(RenderSize.Width, thickness))
@@ -897,7 +897,7 @@ namespace System.Windows.Controls
                 {
                     // The cell was clicked, which means that other cells may
                     // need to be de-selected, let the DataGrid handle that.
-                    dataGridOwner.HandleSelectionForCellInput(this, /* startDragging = */ false, /* allowsExtendSelect = */ true, /* allowsMinimalSelect = */ false);
+                    dataGridOwner.HandleSelectionForCellInput(this, startDragging: false, allowsExtendSelect: true, allowsMinimalSelect: false);
 
                     if (!IsEditing && !IsReadOnly)
                     {
@@ -921,7 +921,7 @@ namespace System.Windows.Controls
 
                 DataGrid dataGridOwner = DataGridOwner;
                 // Let the DataGrid process selection
-                dataGridOwner?.HandleSelectionForCellInput(this, /* startDragging = */ Mouse.Captured == null, /* allowsExtendSelect = */ true, /* allowsMinimalSelect = */ true);
+                dataGridOwner?.HandleSelectionForCellInput(this, startDragging: Mouse.Captured == null, allowsExtendSelect: true, allowsMinimalSelect: true);
 
                 e.Handled = true;
             }

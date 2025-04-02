@@ -142,7 +142,7 @@ namespace System.Windows.Controls
             object objHeaders = (object)additionalHeaders;
 
             Uri uri = new Uri(source);
-            DoNavigate(uri, ref objTargetFrameName, ref objPostData, ref objHeaders, true /* ignoreEscaping */);
+            DoNavigate(uri, ref objTargetFrameName, ref objPostData, ref objHeaders, ignoreEscaping: true);
         }
 
         /// <summary>

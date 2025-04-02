@@ -194,7 +194,7 @@ namespace MS.Internal.PtsHost
 
             if (_pendingBackgroundFormatter != null)
             {
-                BackgroundFormat(_pendingBackgroundFormatter, true /* ignoreThrottle */);
+                BackgroundFormat(_pendingBackgroundFormatter, ignoreThrottle: true);
                 _pendingBackgroundFormatter = null;
             }
         }

@@ -22,6 +22,9 @@
     <Color x:Key="KeyboardFocusBorderColor">#BE000000</Color>
     <SolidColorBrush x:Key="KeyboardFocusBorderColorBrush" Color="{StaticResource KeyboardFocusBorderColor}" />
 
+    <!-- Common Variables -->
+    <Thickness x:Key="TextControlBorderThemeThicknessFocused">1,1,1,2</Thickness>
+
     <!--  Colors  -->
 
     <Color x:Key="TextFillColorPrimary">#E4000000</Color>

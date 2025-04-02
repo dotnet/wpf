@@ -34,6 +34,9 @@
     <!--  Same as SystemColorWindowTextColor  -->
     <SolidColorBrush x:Key="KeyboardFocusBorderColorBrush" Color="{StaticResource SystemColorWindowTextColor}" />
 
+    <!-- Common Variables -->
+    <Thickness x:Key="TextControlBorderThemeThicknessFocused">2</Thickness>
+
     <!-- Accent Colors and Brushes -->
 
     <DynamicResource x:Key="SystemAccentColor" ResourceKey="{x:Static SystemColors.AccentColorKey}" />

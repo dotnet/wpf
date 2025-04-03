@@ -115,11 +115,19 @@ namespace MS.Win32
         /// </returns>
         internal IntPtr Attach(IntPtr hwnd)
         {
+            if (hwnd == IntPtr.Zero)
+                throw new ArgumentNullException(nameof(hwnd));
 
             if (_bond != Bond.Unattached)
                 throw new InvalidOperationException(SR.HwndSubclassMultipleAttach);
 
-            return CriticalAttach( hwnd ) ;
+            NativeMethods.WndProc newWndProc = new NativeMethods.WndProc(SubclassWndProc);
+            IntPtr oldWndProc = UnsafeNativeMethods.GetWindowLongPtr(new HandleRef(this, hwnd), NativeMethods.GWL_WNDPROC);
+
+            HookWindowProc(hwnd, newWndProc, oldWndProc);
+
+            // Return the GC handle as a unique identifier of this
+            return (IntPtr)_gcHandle;
         }
 
 
@@ -370,25 +378,6 @@ namespace MS.Win32
         }
 
         private DispatcherOperationCallback _dispatcherOperationCallback = null;
-
-        internal IntPtr CriticalAttach( IntPtr hwnd )
-        {
-            if(hwnd == IntPtr.Zero)
-            {
-                throw new ArgumentNullException(nameof(hwnd));
-            }
-            if(_bond != Bond.Unattached)
-            {
-                throw new InvalidOperationException();
-            }
-
-            NativeMethods.WndProc newWndProc = new NativeMethods.WndProc(SubclassWndProc);
-            IntPtr oldWndProc = UnsafeNativeMethods.GetWindowLongPtr(new HandleRef(this,hwnd), NativeMethods.GWL_WNDPROC);
-            HookWindowProc(hwnd, newWndProc, oldWndProc);
-
-            // Return the GC handle as a unique identifier of this
-            return (IntPtr) _gcHandle;
-        }
 
         private object DispatcherCallbackOperation(object o)
         {

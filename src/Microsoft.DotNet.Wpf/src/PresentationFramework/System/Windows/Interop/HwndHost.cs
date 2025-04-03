@@ -1046,7 +1046,7 @@ namespace System.Windows.Interop
 #endif
             {
                 _hwndSubclass = new HwndSubclass(_hwndSubclassHook);
-                _hwndSubclass.CriticalAttach(_hwnd.Handle);
+                _hwndSubclass.Attach(_hwnd.Handle);
             }
 
             // Initially make sure the window is hidden.  We will show it later during rendering.

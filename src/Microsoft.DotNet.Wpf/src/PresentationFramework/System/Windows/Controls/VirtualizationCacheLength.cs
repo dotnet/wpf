@@ -119,7 +119,7 @@ namespace System.Windows.Controls
         /// <param name="oCompare">Reference to an object for comparison.</param>
         /// <returns><c>true</c>if this VirtualizationCacheLength instance has the same value 
         /// and unit type as oCompare.</returns>
-        override public bool Equals(object oCompare)
+        public override bool Equals(object oCompare)
         {
             if (oCompare is VirtualizationCacheLength l)
             {

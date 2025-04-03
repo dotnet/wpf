@@ -341,7 +341,7 @@ namespace System.Windows.Media
             return points;
         }
 
-        private unsafe static void GetPointList(Point * points, uint pointsCount, Point center, double radiusX, double radiusY)
+        private static unsafe void GetPointList(Point * points, uint pointsCount, Point center, double radiusX, double radiusY)
         {
             Invariant.Assert(pointsCount >= c_pointCount);
 

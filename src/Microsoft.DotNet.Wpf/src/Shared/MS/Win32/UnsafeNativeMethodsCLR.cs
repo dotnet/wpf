@@ -162,7 +162,7 @@ namespace MS.Win32
         public const int MB_USEGLYPHCHARS = 0x00000004;
 
         [DllImport(ExternDll.Kernel32, ExactSpelling = true, CharSet = CharSet.Unicode, SetLastError = true)]
-        public static unsafe extern int MultiByteToWideChar(int CodePage, int dwFlags, byte* lpMultiByteStr, int cchMultiByte, char* lpWideCharStr, int cchWideChar);
+        public static extern unsafe int MultiByteToWideChar(int CodePage, int dwFlags, byte* lpMultiByteStr, int cchMultiByte, char* lpWideCharStr, int cchWideChar);
 
 #if DRT_NATIVEMETHODS
         [DllImport(ExternDll.User32, ExactSpelling=true, EntryPoint="keybd_event", CharSet=CharSet.Auto)]
@@ -2552,7 +2552,7 @@ namespace MS.Win32
             }
 
             // Convert a object[] into an array of VARIANT, allocated with CoTask allocators.
-            public unsafe static IntPtr ArrayToVARIANTVector(object[] args)
+            public static unsafe IntPtr ArrayToVARIANTVector(object[] args)
             {
                 IntPtr mem = IntPtr.Zero;
                 int i = 0;
@@ -2583,7 +2583,7 @@ namespace MS.Win32
             // Free a Variant array created with the above function
             /// <param name="mem">The allocated memory to be freed.</param>
             /// <param name="len">The length of the Variant vector to be cleared.</param>
-            public unsafe static void FreeVARIANTVector(IntPtr mem, int len)
+            public static unsafe void FreeVARIANTVector(IntPtr mem, int len)
             {
                 int hr = NativeMethods.S_OK;
                 byte* a = (byte*)(void*)mem;

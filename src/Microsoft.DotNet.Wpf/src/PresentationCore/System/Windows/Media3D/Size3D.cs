@@ -184,7 +184,7 @@ namespace System.Windows.Media.Media3D
             
         #region Private Fields
 
-        private readonly static Size3D s_empty = CreateEmptySize3D();
+        private static readonly Size3D s_empty = CreateEmptySize3D();
 
         #endregion Private Fields
     }

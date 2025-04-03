@@ -110,7 +110,7 @@ namespace MS.Internal.Printing.Configuration
             return cap;
         }
 
-        internal override sealed bool AddOptionCallback(PrintCapabilityOption baseOption)
+        internal sealed override bool AddOptionCallback(PrintCapabilityOption baseOption)
         {
             bool added = false;
 
@@ -135,33 +135,33 @@ namespace MS.Internal.Printing.Configuration
             return added;
         }
 
-        internal override sealed void AddSubFeatureCallback(PrintCapabilityFeature subFeature)
+        internal sealed override void AddSubFeatureCallback(PrintCapabilityFeature subFeature)
         {
             // no sub-feature
             return;
         }
 
-        internal override sealed bool FeaturePropCallback(PrintCapabilityFeature feature, XmlPrintCapReader reader)
+        internal sealed override bool FeaturePropCallback(PrintCapabilityFeature feature, XmlPrintCapReader reader)
         {
             // no feature property to handle
             return false;
         }
 
-        internal override sealed PrintCapabilityOption NewOptionCallback(PrintCapabilityFeature baseFeature)
+        internal sealed override PrintCapabilityOption NewOptionCallback(PrintCapabilityFeature baseFeature)
         {
             OutputColorOption option = new OutputColorOption(baseFeature);
 
             return option;
         }
 
-        internal override sealed void OptionAttrCallback(PrintCapabilityOption baseOption, XmlPrintCapReader reader)
+        internal sealed override void OptionAttrCallback(PrintCapabilityOption baseOption, XmlPrintCapReader reader)
         {
             // no option attribute to handle
             return;
         }
 
         /// <exception cref="XmlException">XML is not well-formed.</exception>
-        internal override sealed bool OptionPropCallback(PrintCapabilityOption baseOption, XmlPrintCapReader reader)
+        internal sealed override bool OptionPropCallback(PrintCapabilityOption baseOption, XmlPrintCapReader reader)
         {
             // no option property to handle
             return false;
@@ -171,7 +171,7 @@ namespace MS.Internal.Printing.Configuration
 
         #region Internal Properties
 
-        internal override sealed bool IsValid
+        internal sealed override bool IsValid
         {
             get
             {
@@ -179,7 +179,7 @@ namespace MS.Internal.Printing.Configuration
             }
         }
 
-        internal override sealed string FeatureName
+        internal sealed override string FeatureName
         {
             get
             {
@@ -187,7 +187,7 @@ namespace MS.Internal.Printing.Configuration
             }
         }
 
-        internal override sealed bool HasSubFeature
+        internal sealed override bool HasSubFeature
         {
             get
             {

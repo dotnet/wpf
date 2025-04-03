@@ -50,7 +50,7 @@ namespace MS.Utility
         }
 
         internal abstract void Register(Guid providerGuid);
-        internal unsafe abstract uint EventWrite(EventTrace.Event eventID, EventTrace.Keyword keywords, EventTrace.Level level, int argc, EventData* argv);
+        internal abstract unsafe uint EventWrite(EventTrace.Event eventID, EventTrace.Keyword keywords, EventTrace.Level level, int argc, EventData* argv);
 
         internal uint TraceEvent(EventTrace.Event eventID, EventTrace.Keyword keywords, EventTrace.Level level)
         {
@@ -485,7 +485,7 @@ namespace MS.Utility
         }
 
         // pack the argv data and emit the event using TraceEvent
-        internal unsafe override uint EventWrite(EventTrace.Event eventID, EventTrace.Keyword keywords, EventTrace.Level level, int argc, EventData* argv)
+        internal override unsafe uint EventWrite(EventTrace.Event eventID, EventTrace.Keyword keywords, EventTrace.Level level, int argc, EventData* argv)
         {
             ClassicEtw.EVENT_HEADER header;
             header.Header.ClientContext = 0;
@@ -523,7 +523,7 @@ namespace MS.Utility
         {
         }
 
-        internal unsafe override void Register(Guid providerGuid)
+        internal override unsafe void Register(Guid providerGuid)
         {
             _etwEnabledCallback =new ManifestEtw.EtwEnableCallback(EtwEnableCallback);
             ulong registrationHandle = 0;
@@ -556,7 +556,7 @@ namespace MS.Utility
             }
         }
 
-        internal unsafe override uint EventWrite(EventTrace.Event eventID, EventTrace.Keyword keywords, EventTrace.Level level, int argc, EventData* argv)
+        internal override unsafe uint EventWrite(EventTrace.Event eventID, EventTrace.Keyword keywords, EventTrace.Level level, int argc, EventData* argv)
         {
             ManifestEtw.EventDescriptor eventDescriptor;
             eventDescriptor.Id = (ushort) eventID;

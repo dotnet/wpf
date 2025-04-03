@@ -22,7 +22,7 @@ namespace MS.Internal.Printing.Configuration
     /// Do not use.
     /// Abstract base class of <see cref="InternalPrintTicket"/> feature.
     /// </summary>
-    abstract internal class PrintTicketFeature
+    internal abstract class PrintTicketFeature
     {
         #region Constructors
 

@@ -105,7 +105,7 @@ namespace System.Windows.Automation.Peers
             return base.GetPattern(patternInterface);
         }
 
-        override protected ItemAutomationPeer CreateItemAutomationPeer(object item)
+        protected override ItemAutomationPeer CreateItemAutomationPeer(object item)
         {
             return new DataGridItemAutomationPeer(item, this);
         }

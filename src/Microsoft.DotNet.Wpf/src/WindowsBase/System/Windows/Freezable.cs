@@ -701,7 +701,7 @@ namespace System.Windows
         /// Freezable can't be frozen.</exception>
         //  Future Note: Consider removing if we move Freezables to DO's, and moving it into
         // SetFreezableContextCore directly.  What situations would remain for subclasses to need to call it?
-        static protected internal bool Freeze(Freezable freezable, bool isChecking)
+        protected internal static bool Freeze(Freezable freezable, bool isChecking)
         {
             if (freezable != null)
             {

@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
 using System.Diagnostics;
@@ -14,14 +14,14 @@ namespace System.Windows.Markup
 {
     // Helper functions for baml records
 
-    static internal class BamlRecordHelper
+    internal static class BamlRecordHelper
     {
 #if !PBTCOMPILER
         // 
         // This method checks to see if the baml record type is one of the records used
         // to build up the map table, e.g. type information.
         //
-        static internal bool IsMapTableRecordType( BamlRecordType bamlRecordType )
+        internal static bool IsMapTableRecordType( BamlRecordType bamlRecordType )
         {
             switch( bamlRecordType )
             {

@@ -534,7 +534,7 @@ namespace Microsoft.Internal.AlphaFlattener
         /// <param name="j">second command</param>
         /// <param name="pj">command[j]</param>
         /// <param name="disconnect">Disconnect (i,j) overlap/underlay relationship</param>
-        static private void SwitchCommands(List<PrimitiveInfo> commands, int i, PrimitiveInfo pi, int j, PrimitiveInfo pj, bool disconnect)
+        private static void SwitchCommands(List<PrimitiveInfo> commands, int i, PrimitiveInfo pi, int j, PrimitiveInfo pj, bool disconnect)
         {
             if ((pi != null) && (pj != null) && disconnect)
             {

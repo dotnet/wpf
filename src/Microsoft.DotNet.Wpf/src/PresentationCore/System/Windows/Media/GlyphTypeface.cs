@@ -1606,7 +1606,7 @@ namespace System.Windows.Media
         // Need ability to add ref and get pointer to the DWrite font face for the rendering
         // thread to access
         //
-        unsafe internal IntPtr GetDWriteFontAddRef
+        internal unsafe IntPtr GetDWriteFontAddRef
         {
             get
             {

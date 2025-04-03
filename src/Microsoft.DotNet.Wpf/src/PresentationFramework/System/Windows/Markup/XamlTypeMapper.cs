@@ -951,7 +951,7 @@ namespace System.Windows.Markup
 
 #if PBTCOMPILER
         // Checks to see if a given event handler delegate type is accessible.
-        static private bool IsAllowedEventDelegateType(Type delegateType)
+        private static bool IsAllowedEventDelegateType(Type delegateType)
         {
             if (!ReflectionHelper.IsPublicType(delegateType))
             {
@@ -1114,7 +1114,7 @@ namespace System.Windows.Markup
 
         // Checks to see if a given property's set method is accessible.
         // Used only in compiled Baml Load sceanrios.
-        static internal bool IsAllowedPropertySet(PropertyInfo pi, bool allowProtected, out bool isPublic)
+        internal static bool IsAllowedPropertySet(PropertyInfo pi, bool allowProtected, out bool isPublic)
         {
             MethodInfo mi = pi.GetSetMethod(true);
             bool isProtected = allowProtected && mi != null && mi.IsFamily;
@@ -1127,7 +1127,7 @@ namespace System.Windows.Markup
 
         // Checks to see if a given property's get method is accessible.
         // Used only in compiled Baml Load sceanrios.
-        static private bool IsAllowedPropertyGet(PropertyInfo pi, bool allowProtected, out bool isPublic)
+        private static bool IsAllowedPropertyGet(PropertyInfo pi, bool allowProtected, out bool isPublic)
         {
             MethodInfo mi = pi.GetGetMethod(true);
             bool isProtected = allowProtected && mi != null && mi.IsFamily;
@@ -1140,7 +1140,7 @@ namespace System.Windows.Markup
 
         // Checks to see if a given event's add method is accessible.
         // Used only in compiled Baml Load sceanrios.
-        static private bool IsAllowedEvent(EventInfo ei, bool allowProtected, out bool isPublic)
+        private static bool IsAllowedEvent(EventInfo ei, bool allowProtected, out bool isPublic)
         {
             MethodInfo mi = ei.GetAddMethod(true);
             bool isProtected = allowProtected && mi != null && mi.IsFamily;
@@ -1154,7 +1154,7 @@ namespace System.Windows.Markup
 
         // Checks to see if a given event's add method is public.
         // Used in all (xaml load, xaml compile & compiled Baml Load sceanrios.
-        static private bool IsPublicEvent(EventInfo ei)
+        private static bool IsPublicEvent(EventInfo ei)
         {
             MethodInfo mi = ei.GetAddMethod(true);
             return (mi != null && mi.IsPublic);

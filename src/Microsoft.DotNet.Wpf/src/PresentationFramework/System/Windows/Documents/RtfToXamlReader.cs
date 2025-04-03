@@ -932,7 +932,7 @@ namespace System.Windows.Documents
                 && UnicodeSkip == formatState.UnicodeSkip;
         }
 
-        static internal FormatState EmptyFormatState
+        internal static FormatState EmptyFormatState
         {
             get
             {
@@ -1960,7 +1960,7 @@ namespace System.Windows.Documents
             CF < 0 ? string.Create(CultureInfo.InvariantCulture, stackalloc char[128], $"\\brdrs\\brdrw{EffectiveWidth}") :
             string.Create(CultureInfo.InvariantCulture, stackalloc char[128], $"\\brdrs\\brdrw{EffectiveWidth}\\brdrcf{CF}");
 
-        static internal BorderFormat EmptyBorderFormat
+        internal static BorderFormat EmptyBorderFormat
         {
             get
             {
@@ -1994,7 +1994,7 @@ namespace System.Windows.Documents
         private long _cf;
         private long _width;
         private BorderType _type;
-        static private BorderFormat _emptyBorderFormat = null;
+        private static BorderFormat _emptyBorderFormat = null;
     }
 
     internal class ParaBorder

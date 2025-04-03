@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
 #define TRACE
@@ -75,7 +75,7 @@ namespace MS.Internal
 
         // determine whether an extended trace should be produced for the given
         // object
-        static public bool IsExtendedTraceEnabled(object element, TraceDataLevel level)
+        public static bool IsExtendedTraceEnabled(object element, TraceDataLevel level)
         {
             if (TraceData.IsEnabled)
             {
@@ -87,7 +87,7 @@ namespace MS.Internal
         }
 
         // report/describe any additional parameters passed to TraceData.Trace()
-        static public void OnTrace( AvTraceBuilder traceBuilder, object[] parameters, int start )
+        public static void OnTrace( AvTraceBuilder traceBuilder, object[] parameters, int start )
         {
             for( int i = start; i < parameters.Length; i++ )
             {
@@ -124,7 +124,7 @@ namespace MS.Internal
         /// <param name="o">object to be described;
         /// currently recognized types: BindingExpression, Binding, DependencyObject, Exception</param>
         /// <returns>a string that describes the object</returns>
-        static public void Describe(AvTraceBuilder traceBuilder, object o)
+        public static void Describe(AvTraceBuilder traceBuilder, object o)
         {
             if (o == null)
             {
@@ -177,7 +177,7 @@ namespace MS.Internal
         /// <param name="traceBuilder">description will be appended to this builder</param>
         /// <param name="o">a source object (e.g. element in a Binding Path, DataItem in BindingExpression, ContextElement)</param>
         /// <returns>a string that describes the object</returns>
-        static public void DescribeSourceObject(AvTraceBuilder traceBuilder, object o)
+        public static void DescribeSourceObject(AvTraceBuilder traceBuilder, object o)
         {
             if (o == null)
             {
@@ -199,7 +199,7 @@ namespace MS.Internal
 
         /// <summary>
         /// </summary>
-        static public string DescribeSourceObject(object o)
+        public static string DescribeSourceObject(object o)
         {
             AvTraceBuilder atb = new AvTraceBuilder(null);
             DescribeSourceObject(atb, o);
@@ -213,7 +213,7 @@ namespace MS.Internal
         /// <param name="targetElement">TargetElement</param>
         /// <param name="targetProperty">TargetProperty</param>
         /// <returns>a string that describes TargetElement and TargetProperty</returns>
-        static public void DescribeTarget(AvTraceBuilder traceBuilder, DependencyObject targetElement, DependencyProperty targetProperty)
+        public static void DescribeTarget(AvTraceBuilder traceBuilder, DependencyObject targetElement, DependencyProperty targetProperty)
         {
             if (targetElement != null)
             {
@@ -233,14 +233,14 @@ namespace MS.Internal
 
         /// <summary>
         /// </summary>
-        static public string DescribeTarget(DependencyObject targetElement, DependencyProperty targetProperty)
+        public static string DescribeTarget(DependencyObject targetElement, DependencyProperty targetProperty)
         {
             AvTraceBuilder atb = new AvTraceBuilder(null);
             DescribeTarget(atb, targetElement, targetProperty);
             return atb.ToString();
         }
 
-        static public string Identify(object o)
+        public static string Identify(object o)
         {
             if (o == null)
                 return "<null>";
@@ -261,7 +261,7 @@ namespace MS.Internal
             };
         }
 
-        static public string IdentifyWeakEvent(Type type)
+        public static string IdentifyWeakEvent(Type type)
         {
             const string suffix = "EventManager";
             string name = type.Name;
@@ -273,7 +273,7 @@ namespace MS.Internal
             return name;
         }
 
-        static public string IdentifyAccessor(object accessor)
+        public static string IdentifyAccessor(object accessor)
         {
             return accessor switch
             {
@@ -284,7 +284,7 @@ namespace MS.Internal
             };
         }
 
-        static public string IdentifyException(Exception ex)
+        public static string IdentifyException(Exception ex)
         {
             if (ex == null)
                 return "<no error>";

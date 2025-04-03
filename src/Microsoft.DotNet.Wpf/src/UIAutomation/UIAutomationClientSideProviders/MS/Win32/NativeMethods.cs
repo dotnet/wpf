@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
 // Description: Win32 consts methods used by UIAutomation proxies
@@ -1034,7 +1034,7 @@ namespace MS.Win32
             internal int iHeight;
         }
 
-        static internal class Util
+        internal static class Util
         {
             internal static int MAKELONG (int low, int high)
             {
@@ -1196,7 +1196,7 @@ namespace MS.Win32
                 }
             }
 
-            static internal Win32Rect Empty
+            internal static Win32Rect Empty
             {
                 get
                 {
@@ -1204,7 +1204,7 @@ namespace MS.Win32
                 }
             }
 
-            static public explicit operator Rect (Win32Rect rc)
+            public static explicit operator Rect (Win32Rect rc)
             {
                 // Convert to Windows.Rect (x, y, witdh, heigh)
                 
@@ -1249,7 +1249,7 @@ namespace MS.Win32
                 this.y = y;
             }
             
-            static public explicit operator Win32Point(Point pt)
+            public static explicit operator Win32Point(Point pt)
             {
                 return checked (new Win32Point((int)pt.X, (int)pt.Y));
             }                        

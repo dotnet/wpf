@@ -74,13 +74,13 @@ namespace MS.Internal.PtsHost
         //-------------------------------------------------------------------
         // CreateParaclient
         //-------------------------------------------------------------------
-        internal override abstract void CreateParaclient(
+        internal abstract override void CreateParaclient(
             out IntPtr paraClientHandle);       // OUT: opaque to PTS paragraph client
         
         //-------------------------------------------------------------------
         // CollapseMargin
         //-------------------------------------------------------------------
-        internal override abstract void CollapseMargin(
+        internal abstract override void CollapseMargin(
             BaseParaClient paraClient,          // IN:
             MarginCollapsingState mcs,          // IN:  input margin collapsing state
             uint fswdir,                        // IN:  current direction (of the track, in which margin collapsing is happening)
@@ -98,7 +98,7 @@ namespace MS.Internal.PtsHost
         //-------------------------------------------------------------------
         // GetFloaterPolygons
         //-------------------------------------------------------------------
-        internal unsafe virtual void GetFloaterPolygons(
+        internal virtual unsafe void GetFloaterPolygons(
             FloaterBaseParaClient paraClient,       // IN:
             uint fswdirTrack,                   // IN:  direction of Track
             int ncVertices,                     // IN:  size of array of vertex counts (= number of polygons)

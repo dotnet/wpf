@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
 using System.Diagnostics.CodeAnalysis;
@@ -12474,7 +12474,7 @@ namespace System.Windows.Media.Media3D
     public partial class ModelVisual3D : System.Windows.Media.Media3D.Visual3D, System.Windows.Markup.IAddChild
     {
         public static readonly System.Windows.DependencyProperty ContentProperty;
-        public static readonly new System.Windows.DependencyProperty TransformProperty;
+        public static new readonly System.Windows.DependencyProperty TransformProperty;
         public ModelVisual3D() { }
         [System.ComponentModel.DesignerSerializationVisibilityAttribute(System.ComponentModel.DesignerSerializationVisibility.Content)]
         public System.Windows.Media.Media3D.Visual3DCollection Children { get { throw null; } }

@@ -195,7 +195,7 @@ namespace System.Windows.Navigation
 
         // Tests if two uris resolve to the same Uri.  The Uri fragments are also
         // compared.  Neither comparison is case sensitive.
-        static private bool IsSameUri(Uri baseUri, Uri a, Uri b, bool withFragment)
+        private static bool IsSameUri(Uri baseUri, Uri a, Uri b, bool withFragment)
         {
             if (object.ReferenceEquals(a, b)) // also handles both null
             {
@@ -458,7 +458,7 @@ namespace System.Windows.Navigation
         /// </summary>
         /// <param name="targetName"></param>
         /// <returns></returns>
-        static internal INavigatorBase FindTargetInApplication(string targetName)
+        internal static INavigatorBase FindTargetInApplication(string targetName)
         {
             // Application has two window collections. One for Application windows (windows
             // created on the same thread as the app) and the other for all other windows.
@@ -484,7 +484,7 @@ namespace System.Windows.Navigation
             return navigator;
         }
 
-        static private INavigatorBase FindTargetInWindowCollection(WindowCollection wc, string targetName)
+        private static INavigatorBase FindTargetInWindowCollection(WindowCollection wc, string targetName)
         {
             INavigatorBase navigator = null;
             NavigationWindow nw = null;
@@ -529,7 +529,7 @@ namespace System.Windows.Navigation
         /// <param name="navigationWindow">Navigation Window</param>
         /// <param name="navigatorId">NavigatorId to search</param>
         /// <returns></returns>
-        static private INavigatorBase FindTargetInNavigationWindow(NavigationWindow navigationWindow, string navigatorId)
+        private static INavigatorBase FindTargetInNavigationWindow(NavigationWindow navigationWindow, string navigatorId)
         {
             if (navigationWindow != null)
             {
@@ -3589,7 +3589,7 @@ namespace System.Windows.Navigation
             return null;
         }
 
-        static internal bool IsPageFunction(object content)
+        internal static bool IsPageFunction(object content)
         {
             return (content as PageFunctionBase == null ? false : true);
         }

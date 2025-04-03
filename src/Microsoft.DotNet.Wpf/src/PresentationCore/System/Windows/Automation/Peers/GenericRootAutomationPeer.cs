@@ -16,19 +16,19 @@ namespace System.Windows.Automation.Peers
         {}
     
         ///
-        override protected string GetClassNameCore()
+        protected override string GetClassNameCore()
         {
             return "Pane";
         }
 
         ///
-        override protected AutomationControlType GetAutomationControlTypeCore()
+        protected override AutomationControlType GetAutomationControlTypeCore()
         {
             return AutomationControlType.Pane;
         }
 
         ///
-        override protected string GetNameCore()
+        protected override string GetNameCore()
         {
             string name = base.GetNameCore();
 
@@ -57,7 +57,7 @@ namespace System.Windows.Automation.Peers
         }
 
         ///
-        override protected Rect GetBoundingRectangleCore()
+        protected override Rect GetBoundingRectangleCore()
         {
             Rect bounds = new Rect(0,0,0,0);
             

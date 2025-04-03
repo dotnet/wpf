@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
 //  Synopsis: Implements class Parsers for internal use of type converters
@@ -163,7 +163,7 @@ namespace MS.Internal.Markup
     /// SVG path spec is closely followed http://www.w3.org/TR/SVG11/paths.html
     /// 3/23/2006, new parser for performance (fyuan)
     /// </summary>
-    sealed internal class AbbreviatedGeometryParser
+    internal sealed class AbbreviatedGeometryParser
     {
         private const bool      AllowSign    = true;
         private const bool      AllowComma   = true;

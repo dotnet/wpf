@@ -68,7 +68,7 @@ namespace System.Windows.Automation.Peers
         }
 
         ///
-        override protected AutomationPeer GetLabeledByCore()
+        protected override AutomationPeer GetLabeledByCore()
         {
             AutomationPeer labelPeer = base.GetLabeledByCore();
             if (labelPeer == null)

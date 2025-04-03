@@ -553,7 +553,7 @@ namespace MS.Internal.AutomationProxies
 
             #region Internal Methods
 
-            static internal Rect GetBoundingRectangle(IntPtr hwnd, WindowsUpDown.SpinItem item)
+            internal static Rect GetBoundingRectangle(IntPtr hwnd, WindowsUpDown.SpinItem item)
             {
                 NativeMethods.Win32Rect updownRect = new NativeMethods.Win32Rect();
 

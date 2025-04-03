@@ -98,7 +98,7 @@ namespace System.Windows.Controls
         /// <param name="oCompare">Reference to an object for comparison.</param>
         /// <returns><c>true</c>if this HierarchicalVirtualizationConstraints instance has the same CacheLength, CacheLengthUnit 
         /// and Viewport as oCompare.</returns>
-        override public bool Equals(object oCompare)
+        public override bool Equals(object oCompare)
         {
             if (oCompare is HierarchicalVirtualizationConstraints constraints)
             {

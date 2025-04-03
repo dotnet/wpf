@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
 //
@@ -165,7 +165,7 @@ namespace System.Windows.Controls
         /// <param name="cacheLength">VirtualizationCacheLength.</param>
         /// <param name="cultureInfo">Culture Info.</param>
         /// <returns>Newly created string instance.</returns>
-        static internal string ToString(VirtualizationCacheLength cacheLength, CultureInfo cultureInfo)
+        internal static string ToString(VirtualizationCacheLength cacheLength, CultureInfo cultureInfo)
         {
             char listSeparator = TokenizerHelper.GetNumericListSeparator(cultureInfo);
 
@@ -178,7 +178,7 @@ namespace System.Windows.Controls
         /// <param name="s">String to parse from.</param>
         /// <param name="cultureInfo">Culture Info.</param>
         /// <returns>Newly created VirtualizationCacheLength instance.</returns>
-        static internal VirtualizationCacheLength FromString(string s, CultureInfo cultureInfo)
+        internal static VirtualizationCacheLength FromString(string s, CultureInfo cultureInfo)
         {
             TokenizerHelper th = new TokenizerHelper(s, cultureInfo);
             double[] lengths = new double[2];

@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
 using System.Text;
@@ -63,7 +63,7 @@ namespace MS.Internal.Utility
         
 #if PRESENTATION_CORE || PRESENTATIONFRAMEWORK
         // Base Uri.
-        static internal Uri BaseUri
+        internal static Uri BaseUri
         {
             get
             {
@@ -75,13 +75,13 @@ namespace MS.Internal.Utility
             }
         }
 
-        static internal bool DoSchemeAndHostMatch(Uri first, Uri second)
+        internal static bool DoSchemeAndHostMatch(Uri first, Uri second)
         {
             // Check that both the scheme and the host match. 
             return string.Equals(first.Scheme, second.Scheme, StringComparison.OrdinalIgnoreCase) && string.Equals(first.Host, second.Host);
         }
 
-        static internal Uri GetResolvedUri(Uri baseUri, Uri orgUri)
+        internal static Uri GetResolvedUri(Uri baseUri, Uri orgUri)
         {
             Uri newUri;
             

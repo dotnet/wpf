@@ -1154,7 +1154,7 @@ namespace System.Windows.Documents
             _fixedPage = page;
         }
 
-        override protected void OnRender(DrawingContext dc)
+        protected override void OnRender(DrawingContext dc)
         {
             if (_fixedPage.DrawDebugVisualSelection == (int) DrawDebugVisual.None)
             {

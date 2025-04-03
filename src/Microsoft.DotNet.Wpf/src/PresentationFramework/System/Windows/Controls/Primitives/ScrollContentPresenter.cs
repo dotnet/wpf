@@ -16,7 +16,7 @@ namespace System.Windows.Controls
 {
     /// <summary>
     /// </summary>
-    sealed public class ScrollContentPresenter : ContentPresenter, IScrollInfo
+    public sealed class ScrollContentPresenter : ContentPresenter, IScrollInfo
     {
         //-------------------------------------------------------------------
         //
@@ -359,7 +359,7 @@ namespace System.Windows.Controls
         /// <summary>
         /// Gets or sets the template child of the FrameworkElement.
         /// </summary>
-        override internal UIElement TemplateChild
+        internal override UIElement TemplateChild
         {
             get
             {
@@ -672,7 +672,7 @@ namespace System.Windows.Controls
             return topView;
         }
 
-        static internal double ValidateInputOffset(double offset, string parameterName)
+        internal static double ValidateInputOffset(double offset, string parameterName)
         {
             if (double.IsNaN(offset))
             {
@@ -813,7 +813,7 @@ namespace System.Windows.Controls
 
         // Returns an offset coerced into the [0, Extent - Viewport] range.
         // Internal because it is also used by other Avalon ISI implementations (just to avoid code duplication).
-        static internal double CoerceOffset(double offset, double extent, double viewport)
+        internal static double CoerceOffset(double offset, double extent, double viewport)
         {
             if (offset > extent - viewport) { offset = extent - viewport; }
             if (offset < 0) { offset = 0; }
@@ -835,7 +835,7 @@ namespace System.Windows.Controls
 
         // This property is structurally important; we can't do layout without it set right.
         // So, we synchronously make changes.
-        static private void OnCanContentScrollChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        private static void OnCanContentScrollChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             ScrollContentPresenter scp = (ScrollContentPresenter)d;
             if (scp._scrollInfo == null)

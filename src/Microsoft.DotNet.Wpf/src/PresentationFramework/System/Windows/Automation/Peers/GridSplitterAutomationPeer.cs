@@ -14,13 +14,13 @@ namespace System.Windows.Automation.Peers
         {}
     
         ///
-        override protected string GetClassNameCore()
+        protected override string GetClassNameCore()
         {
             return "GridSplitter";
         }
 
         /// 
-        override public object GetPattern(PatternInterface patternInterface)
+        public override object GetPattern(PatternInterface patternInterface)
         {
             if (patternInterface == PatternInterface.Transform)
                 return this;

@@ -28,7 +28,7 @@ namespace MS.Internal.Automation
             get { return handle == IntPtr.Zero; }
         }
 
-        override protected bool ReleaseHandle()
+        protected override bool ReleaseHandle()
         {
             return UiaCoreApi.UiaNodeRelease(handle);
         }
@@ -51,7 +51,7 @@ namespace MS.Internal.Automation
             get { return handle == IntPtr.Zero; }
         }
 
-        override protected bool ReleaseHandle()
+        protected override bool ReleaseHandle()
         {
             return UiaCoreApi.UiaPatternRelease(handle);
         }
@@ -71,7 +71,7 @@ namespace MS.Internal.Automation
             get { return handle == IntPtr.Zero; }
         }
 
-        override protected bool ReleaseHandle()
+        protected override bool ReleaseHandle()
         {
             UiaCoreApi.UiaRemoveEvent(handle);
             return true;

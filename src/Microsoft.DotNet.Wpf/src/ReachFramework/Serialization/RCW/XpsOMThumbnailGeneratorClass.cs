@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
 using System.Runtime.CompilerServices;
@@ -26,6 +26,6 @@ namespace System.Windows.Xps.Serialization.RCW
 
         [MethodImpl(MethodImplOptions.InternalCall)]
         [return: MarshalAs(UnmanagedType.Interface)]
-        public virtual extern IXpsOMImageResource GenerateThumbnail([In] IXpsOMPage page, [In][ComAliasName("System.Windows.Xps.Serialization.RCW.XPS_IMAGE_TYPE")] XPS_IMAGE_TYPE thumbnailType, [In][ComAliasName("System.Windows.Xps.Serialization.RCW.XPS_THUMBNAIL_SIZE")] XPS_THUMBNAIL_SIZE thumbnailSize, [In] IOpcPartUri imageResourcePartName);
+        public extern virtual IXpsOMImageResource GenerateThumbnail([In] IXpsOMPage page, [In][ComAliasName("System.Windows.Xps.Serialization.RCW.XPS_IMAGE_TYPE")] XPS_IMAGE_TYPE thumbnailType, [In][ComAliasName("System.Windows.Xps.Serialization.RCW.XPS_THUMBNAIL_SIZE")] XPS_THUMBNAIL_SIZE thumbnailSize, [In] IOpcPartUri imageResourcePartName);
     }
 }

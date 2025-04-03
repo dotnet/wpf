@@ -744,8 +744,8 @@ namespace MS.Internal.AutomationProxies
         private WindowsEditBox.EditboxType _type;
 
         // Used in RaiseEvents() to track changes in the selection endpoints.
-        static private int _raiseEventsOldSelectionStart;
-        static private int _raiseEventsOldSelectionEnd;
+        private static int _raiseEventsOldSelectionStart;
+        private static int _raiseEventsOldSelectionEnd;
         private const int _NO_ENDPOINT = -1;
 
         #endregion private Fields

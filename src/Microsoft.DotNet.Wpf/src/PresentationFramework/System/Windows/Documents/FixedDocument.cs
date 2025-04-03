@@ -961,7 +961,7 @@ namespace System.Windows.Documents
          /// <summary>
         /// Retrieves the Uri for the DocumentStructure from the container's relationship
         /// </summary>
-        static private Uri GetStructureUriFromRelationship(Uri contentUri, string relationshipName)
+        private static Uri GetStructureUriFromRelationship(Uri contentUri, string relationshipName)
         {
             Uri absTargetUri = null;
             if (contentUri != null && relationshipName != null)

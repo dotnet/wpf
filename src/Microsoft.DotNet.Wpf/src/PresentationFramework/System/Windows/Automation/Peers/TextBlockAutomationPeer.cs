@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
 
@@ -59,7 +59,7 @@ namespace System.Windows.Automation.Peers
         /// <summary>
         /// <see cref="AutomationPeer.IsControlElementCore"/>
         /// </summary>
-        override protected bool IsControlElementCore()
+        protected override bool IsControlElementCore()
         {
             // Return false if TextBlock is part of a ControlTemplate, otherwise return the base method
             TextBlock tb = (TextBlock)Owner;

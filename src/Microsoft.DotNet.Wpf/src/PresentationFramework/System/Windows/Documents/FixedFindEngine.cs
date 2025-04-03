@@ -444,7 +444,7 @@ namespace System.Windows.Documents
         }
 
 
-        static private string [] _predefinedNamespaces = new string [2] { 
+        private static string [] _predefinedNamespaces = new string [2] { 
             "http://schemas.microsoft.com/xps/2005/06",
             XamlReaderHelper.DefinitionMetroNamespaceURI
         };

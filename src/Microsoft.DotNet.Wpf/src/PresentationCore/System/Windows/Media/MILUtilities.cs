@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
 //
@@ -144,13 +144,13 @@ namespace System.Windows.Media
         };
 
         [DllImport(DllImport.MilCore)]
-        private extern static /*HRESULT*/ int MIL3DCalcProjected2DBounds(
+        private static extern /*HRESULT*/ int MIL3DCalcProjected2DBounds(
             ref D3DMATRIX pFullTransform3D,
             ref MILRect3D pboxBounds,
             out MilRectF prcDestRect); 
 
         [DllImport(DllImport.MilCore, EntryPoint = "MilUtility_CopyPixelBuffer", PreserveSig = false)]
-        internal extern static unsafe void MILCopyPixelBuffer(
+        internal static extern unsafe void MILCopyPixelBuffer(
             byte *  pOutputBuffer,
             uint    outputBufferSize,
             uint    outputBufferStride,

@@ -727,7 +727,7 @@ namespace System.Windows.Markup
         //  end of string.
         // throws exception on improper formatting
         // It is assumed that caller has already converted to lower-case.
-        static private int ParseSubtag(string ietfLanguageTag, StringReader reader, bool isPrimary)
+        private static int ParseSubtag(string ietfLanguageTag, StringReader reader, bool isPrimary)
         {
             int c;
             bool ok;
@@ -777,23 +777,23 @@ namespace System.Windows.Markup
             }
         }
 
-        static private bool IsLowerAlpha(int c)
+        private static bool IsLowerAlpha(int c)
         {
             return (c >= 'a' && c <= 'z');
         }
 
-        static private bool IsDigit(int c)
+        private static bool IsDigit(int c)
         {
             return c >= '0' && c <= '9';
         }
 
-        static private void ThrowParseException(string ietfLanguageTag)
+        private static void ThrowParseException(string ietfLanguageTag)
         {
              throw new ArgumentException(SR.Format(SR.XmlLangMalformed, ietfLanguageTag), nameof(ietfLanguageTag));
         }
 
         // throws if there is a non-7-bit ascii character
-        static private string AsciiToLower(string tag)
+        private static string AsciiToLower(string tag)
         {
             int length = tag.Length;
 

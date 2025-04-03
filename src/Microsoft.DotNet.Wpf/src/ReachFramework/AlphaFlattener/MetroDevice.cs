@@ -406,7 +406,7 @@ namespace Microsoft.Internal.AlphaFlattener
     /// </summary>
     internal class MetroToGdiConverter : IMetroDrawingContext
     {
-        static protected object         s_TestingHook;
+        protected static object         s_TestingHook;
 
         protected  MetroDevice0         m_Flattener;
         protected  ILegacyDevice        m_GDIExporter;
@@ -751,7 +751,7 @@ namespace Microsoft.Internal.AlphaFlattener
         /// Called before StartDocument to by-pass GDIExporter and send result to DrawingContext
         /// </summary>
         /// <param name="obj"></param>
-        static public void TestingHook(Object obj)
+        public static void TestingHook(Object obj)
         {
             if (obj != null)
             {

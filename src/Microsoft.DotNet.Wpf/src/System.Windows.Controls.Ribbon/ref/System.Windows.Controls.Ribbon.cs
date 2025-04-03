@@ -1877,7 +1877,7 @@ namespace System.Windows.Controls.Ribbon
         public static readonly System.Windows.DependencyProperty HasTwoLinesProperty;
         public static readonly System.Windows.DependencyProperty LineHeightProperty;
         public static readonly System.Windows.DependencyProperty LineStackingStrategyProperty;
-        public static readonly new System.Windows.DependencyProperty PaddingProperty;
+        public static new readonly System.Windows.DependencyProperty PaddingProperty;
         public static readonly System.Windows.DependencyProperty PathDataProperty;
         public static readonly System.Windows.DependencyProperty PathFillProperty;
         public static readonly System.Windows.DependencyProperty PathStrokeProperty;

@@ -94,7 +94,7 @@ namespace System.Windows.Controls
         /// </summary>
         /// <param name="parent">listview reference</param>
         /// <returns>GridView automation peer</returns>
-        internal protected override IViewAutomationPeer GetAutomationPeer(ListView parent)
+        protected internal override IViewAutomationPeer GetAutomationPeer(ListView parent)
         {
             return new GridViewAutomationPeer(this, parent);
         }

@@ -16,7 +16,7 @@ using MS.Internal.PrintWin32Thunk.Win32ApiThunk;
 
 namespace System.Printing
 {
-    abstract internal class  PrinterHResult
+    internal abstract class  PrinterHResult
     {
         ///<summary>
         ///

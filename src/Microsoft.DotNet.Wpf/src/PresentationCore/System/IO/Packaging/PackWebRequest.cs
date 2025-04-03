@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
 //
@@ -570,12 +570,12 @@ namespace System.IO.Packaging
         private RequestCachePolicy  _cachePolicy;           // outer cache-policy
 
         // statics
-        static private RequestCachePolicy _defaultCachePolicy = new RequestCachePolicy(RequestCacheLevel.CacheIfAvailable);
+        private static RequestCachePolicy _defaultCachePolicy = new RequestCachePolicy(RequestCacheLevel.CacheIfAvailable);
 
         // These are "cached" inner Uri's taken from the available application: and SiteOfOrigin: Uri's.  
         // They are kept in statics to eliminate overhead of reparsing them on every request.
         // We are essentially extracting the "application://" out of "pack://application:,,"
-        static private Uri _siteOfOriginUri = PackUriHelper.GetPackageUri(System.Windows.Navigation.BaseUriHelper.SiteOfOriginBaseUri);
-        static private Uri _appBaseUri = PackUriHelper.GetPackageUri(System.Windows.Navigation.BaseUriHelper.PackAppBaseUri);
+        private static Uri _siteOfOriginUri = PackUriHelper.GetPackageUri(System.Windows.Navigation.BaseUriHelper.SiteOfOriginBaseUri);
+        private static Uri _appBaseUri = PackUriHelper.GetPackageUri(System.Windows.Navigation.BaseUriHelper.PackAppBaseUri);
     }
 }

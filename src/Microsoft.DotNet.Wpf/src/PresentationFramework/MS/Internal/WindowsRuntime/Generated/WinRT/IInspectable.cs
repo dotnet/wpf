@@ -62,7 +62,7 @@ namespace WinRT
                 return 0;
             }
 
-            private unsafe static int Do_Abi_GetRuntimeClassName(IntPtr pThis, out IntPtr className)
+            private static unsafe int Do_Abi_GetRuntimeClassName(IntPtr pThis, out IntPtr className)
             {
                 className = default;
                 try

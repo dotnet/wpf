@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
 /*++
@@ -441,7 +441,7 @@ namespace System.Windows.Xps.Packaging
         #region Private data
         private PackageDigitalSignature _packageSignature; 
         private XpsDocument _package;
-        static private Dictionary<string, string> _optionalSignedTypes;
+        private static Dictionary<string, string> _optionalSignedTypes;
         #endregion Private data       
     }
     

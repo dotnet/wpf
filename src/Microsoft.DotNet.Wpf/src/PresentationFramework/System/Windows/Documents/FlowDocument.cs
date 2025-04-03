@@ -62,7 +62,7 @@ namespace System.Windows.Documents
     [ContentProperty("Blocks")]
     public class FlowDocument : FrameworkContentElement, IDocumentPaginatorSource, IServiceProvider, IAddChild
     {
-        static private readonly Type _typeofThis = typeof(FlowDocument);
+        private static readonly Type _typeofThis = typeof(FlowDocument);
 
         //-------------------------------------------------------------------
         //

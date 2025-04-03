@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
 using System.Windows.Media.Media3D;
@@ -196,7 +196,7 @@ namespace System.Windows.Media.Composition
             );
 
         [DllImport(DllImport.MilCore)]
-        internal unsafe static extern int MilUtility_GetPointAtLengthFraction(
+        internal static extern unsafe int MilUtility_GetPointAtLengthFraction(
             MilMatrix3x2D *pMatrix,
             FillRule fillRule,
             byte *pPathData,
@@ -206,7 +206,7 @@ namespace System.Windows.Media.Composition
             out Point vecTangent);
 
         [DllImport(DllImport.MilCore)]
-        internal unsafe static extern int MilUtility_PolygonBounds(
+        internal static extern unsafe int MilUtility_PolygonBounds(
             MilMatrix3x2D *pWorldMatrix,
             MIL_PEN_DATA *pPenData,
             double *pDashArray,
@@ -221,7 +221,7 @@ namespace System.Windows.Media.Composition
             Rect *pBounds);
 
         [DllImport(DllImport.MilCore)]
-        internal unsafe static extern int MilUtility_PolygonHitTest(
+        internal static extern unsafe int MilUtility_PolygonHitTest(
             MilMatrix3x2D *pGeometryMatrix,
             MIL_PEN_DATA *pPenData,
             double *pDashArray,
@@ -235,7 +235,7 @@ namespace System.Windows.Media.Composition
             out bool pDoesContain);
 
         [DllImport(DllImport.MilCore)]
-        internal unsafe static extern int MilUtility_PathGeometryHitTest(
+        internal static extern unsafe int MilUtility_PathGeometryHitTest(
             MilMatrix3x2D *pMatrix,
             MIL_PEN_DATA* pPenData,
             double* pDashArray,
@@ -248,7 +248,7 @@ namespace System.Windows.Media.Composition
             out bool pDoesContain);
 
         [DllImport(DllImport.MilCore)]
-        internal unsafe static extern int MilUtility_PathGeometryHitTestPathGeometry(
+        internal static extern unsafe int MilUtility_PathGeometryHitTestPathGeometry(
             MilMatrix3x2D *pMatrix1,
             FillRule fillRule1,
             byte *pPathData1,
@@ -262,7 +262,7 @@ namespace System.Windows.Media.Composition
             IntersectionDetail* pDetail);
 
         [DllImport(DllImport.MilCore)]
-        internal unsafe static extern int MilUtility_GeometryGetArea(
+        internal static extern unsafe int MilUtility_GeometryGetArea(
             FillRule fillRule,
             byte *pPathData,
             UInt32 nSize,
@@ -272,7 +272,7 @@ namespace System.Windows.Media.Composition
             double* pArea);
 
         [DllImport(DllImport.MilCore)]
-        internal unsafe static extern void MilUtility_ArcToBezier(
+        internal static extern unsafe void MilUtility_ArcToBezier(
             Point ptStart,              // The arc's start point
             Size rRadii,                // The ellipse's X and Y radii
             double rRotation,           // Rotation angle of the ellipse's x axis

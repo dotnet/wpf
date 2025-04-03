@@ -75,7 +75,7 @@ namespace MS.Internal.TextFormatting
         /// This method breaks line using Ideal width such that it will be
         /// consistent with FullTextLine
         /// </remarks>
-        static public TextLine  Create(
+        public static TextLine  Create(
             FormatSettings          settings,
             int                     cpFirst,
             int                     paragraphWidth,
@@ -390,7 +390,7 @@ namespace MS.Internal.TextFormatting
         /// <param name="formatter">formatter</param>
         /// <param name="trailing">trailing spaces</param>
         /// <param name="trailingSpaceWidth">trailing spaces width in ideal values</param>
-        static private void CollectTrailingSpaces(
+        private static void CollectTrailingSpaces(
             ArrayList           runs,
             TextFormatterImp    formatter,
             ref int             trailing,
@@ -418,7 +418,7 @@ namespace MS.Internal.TextFormatting
         /// <summary>
         /// Collecting glyph runs
         /// </summary>
-        static private void AddRun(
+        private static void AddRun(
             ArrayList       runs,
             SimpleRun       run,
             ref int         nonHiddenLength
@@ -1382,7 +1382,7 @@ namespace MS.Internal.TextFormatting
         /// <param name="widthMax">maximum column width</param>
         /// <param name="idealRunOffsetUnRounded">run's offset from the beginning of the line</param>
         /// <returns>a SimpleRun object</returns>
-        static public SimpleRun Create(
+        public static SimpleRun Create(
             FormatSettings          settings,
             int                     cp,
             int                     cpFirst,
@@ -1429,7 +1429,7 @@ namespace MS.Internal.TextFormatting
         /// <param name="widthLeft">maximum run width</param>
         /// <param name="idealRunOffsetUnRounded">run's offset from the beginning of the line</param>
         /// <returns>a SimpleRun object</returns>
-        static public SimpleRun Create(
+        public static SimpleRun Create(
             FormatSettings          settings,
             CharacterBufferRange    charString,
             TextRun                 textRun,
@@ -1571,7 +1571,7 @@ namespace MS.Internal.TextFormatting
         /// <param name="settings">text formatting settings</param>
         /// <param name="textRun">text run</param>
         /// <param name="idealRunOffsetUnRounded">run's offset from the beginning of the line</param>
-        static private SimpleRun CreateSimpleRunForTab(
+        private static SimpleRun CreateSimpleRunForTab(
             FormatSettings settings,
             TextRun textRun,
             int idealRunOffsetUnRounded,
@@ -1632,7 +1632,7 @@ namespace MS.Internal.TextFormatting
         /// Returns whether the conditions are met to make it possible to process tabs
         /// in the simple shaping path.
         /// </summary>
-        static private bool CanProcessTabsInSimpleShapingPath(
+        private static bool CanProcessTabsInSimpleShapingPath(
             ParaProp           textParagraphProperties,
             TextFormattingMode textFormattingMode
             )
@@ -1644,7 +1644,7 @@ namespace MS.Internal.TextFormatting
         /// Create simple run of text,
         /// returning null if the specified text run cannot be correctly formatted as simple run
         /// </summary>
-        static internal SimpleRun CreateSimpleTextRun(
+        internal static SimpleRun CreateSimpleTextRun(
             CharacterBufferRange    charBufferRange,
             TextRun                 textRun,
             TextFormatterImp        formatter,

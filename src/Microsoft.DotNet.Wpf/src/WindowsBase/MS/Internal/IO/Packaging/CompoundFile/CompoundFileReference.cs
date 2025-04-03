@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
 // Notes:
@@ -48,7 +48,7 @@ namespace MS.Internal.IO.Packaging.CompoundFile
         /// <summary>
         /// Full name of the stream or storage this reference refers to (see StreamInfo and StorageInfo)
         /// </summary>
-        abstract public string FullName {get;}
+        public abstract string FullName {get;}
 
         #endregion
 
@@ -92,7 +92,7 @@ namespace MS.Internal.IO.Packaging.CompoundFile
         /// This method will alter the stream pointer of the underlying stream as a side effect.
         /// Passing null simply calculates how many bytes would be written.</param>
         /// <returns>number of bytes written including any padding</returns>
-        static internal int Save(CompoundFileReference reference, BinaryWriter writer)
+        internal static int Save(CompoundFileReference reference, BinaryWriter writer)
         {
             int bytes = 0;
 

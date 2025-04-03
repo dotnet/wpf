@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
 //
@@ -1476,7 +1476,7 @@ namespace MS.Internal.TextFormatting
             );
 
         [DllImport(DllImport.PresentationNative, EntryPoint="LoSetTabs")]
-        internal static unsafe extern LsErr LoSetTabs(
+        internal static extern unsafe LsErr LoSetTabs(
             IntPtr                  ploc,
             int                     durIncrementalTab,
             int                     tabCount,
@@ -1549,7 +1549,7 @@ namespace MS.Internal.TextFormatting
             );
 
         [DllImport(DllImport.PresentationNative, EntryPoint="LocbkGetObjectHandlerInfo")]
-        internal unsafe static extern LsErr LocbkGetObjectHandlerInfo(
+        internal static extern unsafe LsErr LocbkGetObjectHandlerInfo(
             IntPtr                  ploc,               // Line Services context
             uint                    objectId,           // installed object id
             void*                   objectInfo          // object handler info
@@ -1587,27 +1587,27 @@ namespace MS.Internal.TextFormatting
         /// This method creates an object that implements IDWriteTextAnalysisSink that is defined in PresentationNative*.dll.
         /// </summary>
         [DllImport(DllImport.PresentationNative, EntryPoint = "CreateTextAnalysisSink")]
-        internal unsafe static extern void* CreateTextAnalysisSink();
+        internal static extern unsafe void* CreateTextAnalysisSink();
 
         /// <summary>
         /// This method is passed the IDWriteTextAnalysisSink object we get using CreateTextAnalysisSink to retrieve
         /// the results from analyzing the scripts.
         /// </summary>
         [DllImport(DllImport.PresentationNative, EntryPoint = "GetScriptAnalysisList")]
-        internal unsafe static extern void* GetScriptAnalysisList(void* textAnalysisSink);
+        internal static extern unsafe void* GetScriptAnalysisList(void* textAnalysisSink);
 
         /// <summary>
         /// This method is passed the IDWriteTextAnalysisSink object we get using CreateTextAnalysisSink to retrieve
         /// the results from analyzing the number substitution.
         /// </summary>
         [DllImport(DllImport.PresentationNative, EntryPoint = "GetNumberSubstitutionList")]
-        internal unsafe static extern void* GetNumberSubstitutionList(void* textAnalysisSink);
+        internal static extern unsafe void* GetNumberSubstitutionList(void* textAnalysisSink);
 
         /// <summary>
         /// This method creates an object that implements IDWriteTextAnalysiSource that is defined in PresentationNative*.dll.
         /// </summary>
         [DllImport(DllImport.PresentationNative, EntryPoint = "CreateTextAnalysisSource")]
-        internal unsafe static extern int CreateTextAnalysisSource(char* text,
+        internal static extern unsafe int CreateTextAnalysisSource(char* text,
                                                                    uint    length,
                                                                    char*   culture,
                                                                    void*   factory,

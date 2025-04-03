@@ -235,7 +235,7 @@ namespace MS.Internal.FontCache
         /// <param name="numBytes">Size of the memory block in bytes</param>
         /// <param name="hash">Previous hash code to combine with</param>
         /// <returns>Hash code</returns>
-        internal unsafe static int HashMemory(void * pv, int numBytes, int hash)
+        internal static unsafe int HashMemory(void * pv, int numBytes, int hash)
         {
             byte * pb = (byte*)pv;
 

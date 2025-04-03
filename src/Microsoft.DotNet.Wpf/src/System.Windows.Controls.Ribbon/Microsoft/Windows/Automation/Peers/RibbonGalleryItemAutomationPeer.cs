@@ -34,7 +34,7 @@ namespace Microsoft.Windows.Automation.Peers
         #region AutomationPeer override
 
         ///
-        override protected string GetClassNameCore()
+        protected override string GetClassNameCore()
         {
             return "RibbonGalleryItem";
         }
@@ -71,7 +71,7 @@ namespace Microsoft.Windows.Automation.Peers
         }
 
         ///
-        override protected AutomationControlType GetAutomationControlTypeCore()
+        protected override AutomationControlType GetAutomationControlTypeCore()
         {
             return AutomationControlType.ListItem;
         }

@@ -724,7 +724,7 @@ namespace MS.Internal.AutomationProxies
 
         // retrieve an id of the group to which this lvitem belongs
         // valid only if lv has groups enabled
-        static internal int GetGroupID (IntPtr hwnd, int lvItem)
+        internal static int GetGroupID (IntPtr hwnd, int lvItem)
         {
             System.Diagnostics.Debug.Assert (WindowsListView.IsGroupViewEnabled (hwnd), "GetGroupID: called when lv does not have groups");
 
@@ -892,7 +892,7 @@ namespace MS.Internal.AutomationProxies
         }
 
         // detect if this listviewitem needs to support GridItem pattern
-        static private bool IsImplementingGrid (IntPtr hwnd)
+        private static bool IsImplementingGrid (IntPtr hwnd)
         {
             // in the detail mode, GridItem will be implemented on the subitem
             // and not item

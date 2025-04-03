@@ -406,12 +406,12 @@ namespace MS.Internal.AutomationProxies
 
         #region Internal Methods
 
-        static internal bool HasVerticalScrollBar (IntPtr hwnd)
+        internal static bool HasVerticalScrollBar (IntPtr hwnd)
         {
             return Misc.IsBitSet(Misc.GetWindowStyle(hwnd), NativeMethods.WS_VSCROLL);
         }
 
-        static internal bool HasHorizontalScrollBar (IntPtr hwnd)
+        internal static bool HasHorizontalScrollBar (IntPtr hwnd)
         {
             return Misc.IsBitSet(Misc.GetWindowStyle(hwnd), NativeMethods.WS_HSCROLL);
         }

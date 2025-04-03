@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
 //  Synopsis: Implements class Parsers for internal use of type converters
@@ -14,7 +14,7 @@ namespace MS.Internal
         private const int s_aLower   = (int) 'a';
         private const int s_aUpper   = (int) 'A';
 
-        static private int ParseHexChar(char c )
+        private static int ParseHexChar(char c )
         {
             int intChar = (int) c;
 
@@ -35,7 +35,7 @@ namespace MS.Internal
             throw new FormatException(SR.Parsers_IllegalToken);
         }
 
-        static private Color ParseHexColor(string trimmedColor)
+        private static Color ParseHexColor(string trimmedColor)
         {
             int a,r,g,b;
             a = 255;
@@ -80,7 +80,7 @@ namespace MS.Internal
     internal const string s_ContextColor = "ContextColor ";
     internal const string s_ContextColorNoSpace = "ContextColor";
 
-    static private Color ParseContextColor(string trimmedColor, IFormatProvider formatProvider, ITypeDescriptorContext context)
+    private static Color ParseContextColor(string trimmedColor, IFormatProvider formatProvider, ITypeDescriptorContext context)
         {
             if (!trimmedColor.StartsWith(s_ContextColor, StringComparison.OrdinalIgnoreCase))
             {
@@ -136,7 +136,7 @@ namespace MS.Internal
             return result;
         }
 
-        static private Color ParseScRgbColor(string trimmedColor, IFormatProvider formatProvider)
+        private static Color ParseScRgbColor(string trimmedColor, IFormatProvider formatProvider)
         {
             if (!trimmedColor.StartsWith("sc#", StringComparison.Ordinal))
             {

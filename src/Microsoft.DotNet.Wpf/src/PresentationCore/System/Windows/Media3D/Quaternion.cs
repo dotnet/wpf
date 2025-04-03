@@ -571,7 +571,7 @@ namespace System.Windows.Media.Media3D
 
         #region Private Methods
             
-        static private double Max(double a, double b, double c, double d)
+        private static double Max(double a, double b, double c, double d)
         {
             if (b > a)
                 a = b;

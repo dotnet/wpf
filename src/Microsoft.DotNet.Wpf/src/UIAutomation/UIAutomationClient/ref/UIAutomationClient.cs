@@ -458,7 +458,7 @@ namespace System.Windows.Automation
     {
         internal TableItemPattern() { }
         public static readonly System.Windows.Automation.AutomationProperty ColumnHeaderItemsProperty;
-        public static readonly new System.Windows.Automation.AutomationPattern Pattern;
+        public static new readonly System.Windows.Automation.AutomationPattern Pattern;
         public static readonly System.Windows.Automation.AutomationProperty RowHeaderItemsProperty;
         public new System.Windows.Automation.TableItemPattern.TableItemPatternInformation Cached { get { throw null; } }
         public new System.Windows.Automation.TableItemPattern.TableItemPatternInformation Current { get { throw null; } }
@@ -477,7 +477,7 @@ namespace System.Windows.Automation
     {
         internal TablePattern() { }
         public static readonly System.Windows.Automation.AutomationProperty ColumnHeadersProperty;
-        public static readonly new System.Windows.Automation.AutomationPattern Pattern;
+        public static new readonly System.Windows.Automation.AutomationPattern Pattern;
         public static readonly System.Windows.Automation.AutomationProperty RowHeadersProperty;
         public static readonly System.Windows.Automation.AutomationProperty RowOrColumnMajorProperty;
         public new System.Windows.Automation.TablePattern.TablePatternInformation Cached { get { throw null; } }

@@ -3733,9 +3733,9 @@ namespace System.Windows.Markup
             CurrentContext.ExpectedType = null;
         }
 
-        static private Type NullableType = typeof(Nullable<>);
+        private static Type NullableType = typeof(Nullable<>);
 
-        static internal bool IsNullable(Type t)
+        internal static bool IsNullable(Type t)
         {
             return t.IsGenericType && t.GetGenericTypeDefinition() == NullableType;
         }
@@ -3760,7 +3760,7 @@ namespace System.Windows.Markup
         // This is a form of OptionallyMakeNullable that doesn't throw.  We split it out so that the different callers
         // can throw their own exception (StyleHelper uses this too).
 
-        static internal bool TryOptionallyMakeNullable( Type propertyType, string propName, ref object o  )
+        internal static bool TryOptionallyMakeNullable( Type propertyType, string propName, ref object o  )
         {
             // if o was nullable, it has been unwrapped and boxed when it was passed into this function
 

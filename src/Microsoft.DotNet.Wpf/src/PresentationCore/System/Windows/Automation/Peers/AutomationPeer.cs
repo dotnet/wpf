@@ -264,10 +264,10 @@ namespace System.Windows.Automation.Peers
         //
 
         ///
-        abstract protected List<AutomationPeer> GetChildrenCore();
+        protected abstract List<AutomationPeer> GetChildrenCore();
 
         ///
-        abstract public object GetPattern(PatternInterface patternInterface);
+        public abstract object GetPattern(PatternInterface patternInterface);
 
 
         //
@@ -292,7 +292,7 @@ namespace System.Windows.Automation.Peers
         /// not specifically for some element. The Automation can hook up "broadcast listeners" so the
         /// per-element info is basically unavailable.
         ///</summary>
-        static public bool ListenerExists(AutomationEvents eventId)
+        public static bool ListenerExists(AutomationEvents eventId)
         {
             return (EventMap.HasRegisteredEvent(eventId));
         }
@@ -518,7 +518,7 @@ namespace System.Windows.Automation.Peers
         }
 
         // To determine if the peer corresponds to DataItem
-        virtual internal bool IsDataItemAutomationPeer()
+        internal virtual bool IsDataItemAutomationPeer()
         {
             return false;
         }
@@ -528,14 +528,14 @@ namespace System.Windows.Automation.Peers
         // changes to the visual tree and/or automation tree may have eliminated
         // the need for UpdatePeer, or even made it a mistake.
         // Subclasses can override this method if they can detect this situation.
-        virtual internal bool IgnoreUpdatePeer()
+        internal virtual bool IgnoreUpdatePeer()
         {
             return false;
         }
 
         // This is mainly for enabling ITemsControl to keep the Cache of the Item's Proxy Weak Ref to
         // re-use the item peers being passed to clinet and still exist in memory
-        virtual internal void AddToParentProxyWeakRefCache()
+        internal virtual void AddToParentProxyWeakRefCache()
         {
             //do nothing
         }
@@ -578,7 +578,7 @@ namespace System.Windows.Automation.Peers
         /// To obtain the IRawElementProviderSimple interface, the peer should use
         /// System.Windows.Automation.AutomationInteropProvider.HostProviderFromHandle(hwnd).
         ///</summary>
-        virtual protected HostedWindowWrapper GetHostRawElementProviderCore()
+        protected virtual HostedWindowWrapper GetHostRawElementProviderCore()
         {
             HostedWindowWrapper host = null;
 
@@ -601,92 +601,92 @@ namespace System.Windows.Automation.Peers
         /// Returns 'true' only if this is a peer that hosts HWND in Avalon (WindowsFormsHost or Popup for example).
         /// Such peers also have to override GetHostRawElementProviderCore method.
         ///</summary>
-        virtual protected internal bool IsHwndHost { get { return false; }}
+        protected internal virtual bool IsHwndHost { get { return false; }}
 
         //
         // P R O P E R T I E S
         //
 
         ///
-        abstract protected Rect GetBoundingRectangleCore();
+        protected abstract Rect GetBoundingRectangleCore();
 
         ///
-        abstract protected bool IsOffscreenCore();
+        protected abstract bool IsOffscreenCore();
 
         ///
-        abstract protected AutomationOrientation GetOrientationCore();
+        protected abstract AutomationOrientation GetOrientationCore();
 
         ///
-        abstract protected string GetItemTypeCore();
+        protected abstract string GetItemTypeCore();
 
         ///
-        abstract protected string GetClassNameCore();
+        protected abstract string GetClassNameCore();
 
         ///
-        abstract protected string GetItemStatusCore();
+        protected abstract string GetItemStatusCore();
 
         ///
-        abstract protected bool IsRequiredForFormCore();
+        protected abstract bool IsRequiredForFormCore();
 
         ///
-        abstract protected bool IsKeyboardFocusableCore();
+        protected abstract bool IsKeyboardFocusableCore();
 
         ///
-        abstract protected bool HasKeyboardFocusCore();
+        protected abstract bool HasKeyboardFocusCore();
 
         ///
-        abstract protected bool IsEnabledCore();
+        protected abstract bool IsEnabledCore();
 
         ///
-        abstract protected bool IsPasswordCore();
+        protected abstract bool IsPasswordCore();
 
         ///
-        abstract protected string GetAutomationIdCore();
+        protected abstract string GetAutomationIdCore();
 
         ///
-        abstract protected string GetNameCore();
+        protected abstract string GetNameCore();
 
         ///
-        abstract protected AutomationControlType GetAutomationControlTypeCore();
+        protected abstract AutomationControlType GetAutomationControlTypeCore();
 
         ///
-        virtual protected string GetLocalizedControlTypeCore()
+        protected virtual string GetLocalizedControlTypeCore()
         {
             ControlType controlType = GetControlType();
             return controlType.LocalizedControlType;
         }
 
         ///
-        abstract protected bool IsContentElementCore();
+        protected abstract bool IsContentElementCore();
 
         ///
-        abstract protected bool IsControlElementCore();
+        protected abstract bool IsControlElementCore();
 
         ///
-        virtual protected bool IsDialogCore(){
+        protected virtual bool IsDialogCore(){
             return false;
         }
 
         ///
-        abstract protected AutomationPeer GetLabeledByCore();
+        protected abstract AutomationPeer GetLabeledByCore();
 
         ///
-        abstract protected string GetHelpTextCore();
+        protected abstract string GetHelpTextCore();
 
         ///
-        abstract protected string GetAcceleratorKeyCore();
+        protected abstract string GetAcceleratorKeyCore();
 
         ///
-        abstract protected string GetAccessKeyCore();
+        protected abstract string GetAccessKeyCore();
 
         ///
-        abstract protected Point GetClickablePointCore();
+        protected abstract Point GetClickablePointCore();
 
         ///
-        abstract protected void SetFocusCore();
+        protected abstract void SetFocusCore();
 
         ///
-        virtual protected AutomationLiveSetting GetLiveSettingCore()
+        protected virtual AutomationLiveSetting GetLiveSettingCore()
         {
             return AutomationLiveSetting.Off;
         }
@@ -697,7 +697,7 @@ namespace System.Windows.Automation.Peers
         /// <returns>
         /// A list of AutomationPeers for the controlled elements.
         /// </returns>
-        virtual protected List<AutomationPeer> GetControlledPeersCore()
+        protected virtual List<AutomationPeer> GetControlledPeersCore()
         {
             return null;
         }
@@ -705,7 +705,7 @@ namespace System.Windows.Automation.Peers
         /// <summary>
         /// Override this method to provide UIAutomation with an integer value describing the size of a group or set this element belongs to.
         /// </summary>
-        virtual protected int GetSizeOfSetCore()
+        protected virtual int GetSizeOfSetCore()
         {
             return AutomationProperties.AutomationSizeOfSetDefault;
         }
@@ -713,7 +713,7 @@ namespace System.Windows.Automation.Peers
         /// <summary>
         /// Override this method to provide UIAutomation with a 1-based integer value describing the position this element occupies in a group or set.
         /// </summary>
-        virtual protected int GetPositionInSetCore()
+        protected virtual int GetPositionInSetCore()
         {
             return AutomationProperties.AutomationPositionInSetDefault;
         }
@@ -721,7 +721,7 @@ namespace System.Windows.Automation.Peers
         /// <summary>
         /// Override this method to provide UIAutomation with the heading level of this element.
         /// </summary>
-        virtual protected AutomationHeadingLevel GetHeadingLevelCore()
+        protected virtual AutomationHeadingLevel GetHeadingLevelCore()
         {
             return AutomationHeadingLevel.None;
         }
@@ -729,7 +729,7 @@ namespace System.Windows.Automation.Peers
         //
         // INTERNAL STUFF - NOT OVERRIDABLE
         //
-        virtual internal Rect GetVisibleBoundingRectCore()
+        internal virtual Rect GetVisibleBoundingRectCore()
         {
             // Too late to add abstract methods, since this class has already shipped(using default definition)!
             return GetBoundingRectangle();
@@ -1999,7 +1999,7 @@ namespace System.Windows.Automation.Peers
         }
 
         // internal handling of structure changed events
-        virtual internal IDisposable UpdateChildren()
+        internal virtual IDisposable UpdateChildren()
         {
             UpdateChildrenInternal(AutomationInteropProvider.InvalidateLimit);
             return null;

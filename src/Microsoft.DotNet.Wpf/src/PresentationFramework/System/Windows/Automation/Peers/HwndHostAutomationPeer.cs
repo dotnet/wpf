@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
 using System.Windows.Interop;
@@ -16,18 +16,18 @@ namespace System.Windows.Automation.Peers
         }
     
         ///
-        override protected string GetClassNameCore()
+        protected override string GetClassNameCore()
         {
             return "HwndHost";
         }
         
         ///
-        override protected AutomationControlType GetAutomationControlTypeCore()
+        protected override AutomationControlType GetAutomationControlTypeCore()
         {
             return AutomationControlType.Pane;
         }
 
-        override internal InteropAutomationProvider GetInteropChild()
+        internal override InteropAutomationProvider GetInteropChild()
         {
             if (_interopProvider == null)
             {

@@ -394,7 +394,7 @@ namespace MS.Internal.AppModel
         }
 
         [ThreadStatic]
-        static private BinaryFormatter _formatter;
+        private static BinaryFormatter _formatter;
 
         private HybridDictionary _subStreams = new HybridDictionary(3);
 

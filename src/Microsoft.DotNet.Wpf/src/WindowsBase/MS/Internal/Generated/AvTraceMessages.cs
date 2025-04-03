@@ -6,9 +6,9 @@
 
 namespace MS.Internal
 {
-    static internal partial class TraceDependencyProperty
+    internal static partial class TraceDependencyProperty
     {
-        static private AvTrace _avTrace = new AvTrace(
+        private static AvTrace _avTrace = new AvTrace(
                 delegate() { return PresentationTraceSources.DependencyPropertySource; },
                 delegate() { PresentationTraceSources._DependencyPropertySource = null; }
                 );
@@ -28,7 +28,7 @@ namespace MS.Internal
         }
 
         private static AvTraceDetails _Register;
-		static public AvTraceDetails Register
+		public static AvTraceDetails Register
         {
             get
             {
@@ -42,7 +42,7 @@ namespace MS.Internal
         }
 
         private static AvTraceDetails _UpdateEffectiveValueStart;
-		static public AvTraceDetails UpdateEffectiveValueStart
+		public static AvTraceDetails UpdateEffectiveValueStart
         {
             get
             {
@@ -56,7 +56,7 @@ namespace MS.Internal
         }
 
         private static AvTraceDetails _UpdateEffectiveValueStop;
-		static public AvTraceDetails UpdateEffectiveValueStop
+		public static AvTraceDetails UpdateEffectiveValueStop
         {
             get
             {
@@ -70,78 +70,78 @@ namespace MS.Internal
         }
 
         /// <summary> Send a single trace output </summary>
-        static public void Trace( TraceEventType type, AvTraceDetails traceDetails, params object[] parameters )
+        public static void Trace( TraceEventType type, AvTraceDetails traceDetails, params object[] parameters )
         {
             _avTrace.Trace( type, traceDetails.Id, traceDetails.Message, traceDetails.Labels, parameters );
         }
 
         /// <summary> These help delay allocation of object array </summary>
-        static public void Trace( TraceEventType type, AvTraceDetails traceDetails )
+        public static void Trace( TraceEventType type, AvTraceDetails traceDetails )
         {
             _avTrace.Trace( type, traceDetails.Id, traceDetails.Message, traceDetails.Labels, Array.Empty<object>() );
         }
-        static public void Trace( TraceEventType type, AvTraceDetails traceDetails, object p1 )
+        public static void Trace( TraceEventType type, AvTraceDetails traceDetails, object p1 )
         {
             _avTrace.Trace( type, traceDetails.Id, traceDetails.Message, traceDetails.Labels, new object[] { p1 } );
         }
-        static public void Trace( TraceEventType type, AvTraceDetails traceDetails, object p1, object p2 )
+        public static void Trace( TraceEventType type, AvTraceDetails traceDetails, object p1, object p2 )
         {
             _avTrace.Trace( type, traceDetails.Id, traceDetails.Message, traceDetails.Labels, new object[] { p1, p2 } );
         }
-        static public void Trace( TraceEventType type, AvTraceDetails traceDetails, object p1, object p2, object p3 )
+        public static void Trace( TraceEventType type, AvTraceDetails traceDetails, object p1, object p2, object p3 )
         {
             _avTrace.Trace( type, traceDetails.Id, traceDetails.Message, traceDetails.Labels, new object[] { p1, p2, p3 } );
         }
 
         /// <summary> Send a singleton "activity" trace (really, this sends the same trace as both a Start and a Stop) </summary>
-        static public void TraceActivityItem( AvTraceDetails traceDetails, params Object[] parameters )
+        public static void TraceActivityItem( AvTraceDetails traceDetails, params Object[] parameters )
         {
             _avTrace.TraceStartStop( traceDetails.Id, traceDetails.Message, traceDetails.Labels, parameters );
         }
 
         /// <summary> These help delay allocation of object array </summary>
-        static public void TraceActivityItem( AvTraceDetails traceDetails )
+        public static void TraceActivityItem( AvTraceDetails traceDetails )
         {
             _avTrace.TraceStartStop( traceDetails.Id, traceDetails.Message, traceDetails.Labels, Array.Empty<object>() );
         }
-        static public void TraceActivityItem( AvTraceDetails traceDetails, object p1 )
+        public static void TraceActivityItem( AvTraceDetails traceDetails, object p1 )
         {
             _avTrace.TraceStartStop( traceDetails.Id, traceDetails.Message, traceDetails.Labels, new object[] { p1 } );
         }
-        static public void TraceActivityItem( AvTraceDetails traceDetails, object p1, object p2 )
+        public static void TraceActivityItem( AvTraceDetails traceDetails, object p1, object p2 )
         {
             _avTrace.TraceStartStop( traceDetails.Id, traceDetails.Message, traceDetails.Labels, new object[] { p1, p2 } );
         }
-        static public void TraceActivityItem( AvTraceDetails traceDetails, object p1, object p2, object p3 )
+        public static void TraceActivityItem( AvTraceDetails traceDetails, object p1, object p2, object p3 )
         {
             _avTrace.TraceStartStop( traceDetails.Id, traceDetails.Message, traceDetails.Labels, new object[] { p1, p2, p3 } );
         }
 
-        static public bool IsEnabled
+        public static bool IsEnabled
         {
             get { return _avTrace != null && _avTrace.IsEnabled; }
         }
 
         /// <summary> Is there a Tracesource?  (See comment on AvTrace.IsEnabledOverride.) </summary>
-        static public bool IsEnabledOverride
+        public static bool IsEnabledOverride
         {
             get { return _avTrace.IsEnabledOverride; }
         }
 
         /// <summary> Re-read the configuration for this trace source </summary>
-        static public void Refresh()
+        public static void Refresh()
         {
             _avTrace.Refresh();
         }
 	}
-    static internal partial class TraceFreezable
+    internal static partial class TraceFreezable
     {
-        static private AvTrace _avTrace = new AvTrace(
+        private static AvTrace _avTrace = new AvTrace(
                 delegate() { return PresentationTraceSources.FreezableSource; },
                 delegate() { PresentationTraceSources._FreezableSource = null; }
                 );
         private static AvTraceDetails _UnableToFreezeExpression;
-		static public AvTraceDetails UnableToFreezeExpression
+		public static AvTraceDetails UnableToFreezeExpression
         {
             get
             {
@@ -155,7 +155,7 @@ namespace MS.Internal
         }
 
         private static AvTraceDetails _UnableToFreezeDispatcherObjectWithThreadAffinity;
-		static public AvTraceDetails UnableToFreezeDispatcherObjectWithThreadAffinity
+		public static AvTraceDetails UnableToFreezeDispatcherObjectWithThreadAffinity
         {
             get
             {
@@ -169,7 +169,7 @@ namespace MS.Internal
         }
 
         private static AvTraceDetails _UnableToFreezeFreezableSubProperty;
-		static public AvTraceDetails UnableToFreezeFreezableSubProperty
+		public static AvTraceDetails UnableToFreezeFreezableSubProperty
         {
             get
             {
@@ -183,7 +183,7 @@ namespace MS.Internal
         }
 
         private static AvTraceDetails _UnableToFreezeAnimatedProperties;
-		static public AvTraceDetails UnableToFreezeAnimatedProperties
+		public static AvTraceDetails UnableToFreezeAnimatedProperties
         {
             get
             {
@@ -197,79 +197,79 @@ namespace MS.Internal
         }
 
         /// <summary> Send a single trace output </summary>
-        static public void Trace( TraceEventType type, AvTraceDetails traceDetails, params object[] parameters )
+        public static void Trace( TraceEventType type, AvTraceDetails traceDetails, params object[] parameters )
         {
             _avTrace.Trace( type, traceDetails.Id, traceDetails.Message, traceDetails.Labels, parameters );
         }
 
         /// <summary> These help delay allocation of object array </summary>
-        static public void Trace( TraceEventType type, AvTraceDetails traceDetails )
+        public static void Trace( TraceEventType type, AvTraceDetails traceDetails )
         {
             _avTrace.Trace( type, traceDetails.Id, traceDetails.Message, traceDetails.Labels, Array.Empty<object>() );
         }
-        static public void Trace( TraceEventType type, AvTraceDetails traceDetails, object p1 )
+        public static void Trace( TraceEventType type, AvTraceDetails traceDetails, object p1 )
         {
             _avTrace.Trace( type, traceDetails.Id, traceDetails.Message, traceDetails.Labels, new object[] { p1 } );
         }
-        static public void Trace( TraceEventType type, AvTraceDetails traceDetails, object p1, object p2 )
+        public static void Trace( TraceEventType type, AvTraceDetails traceDetails, object p1, object p2 )
         {
             _avTrace.Trace( type, traceDetails.Id, traceDetails.Message, traceDetails.Labels, new object[] { p1, p2 } );
         }
-        static public void Trace( TraceEventType type, AvTraceDetails traceDetails, object p1, object p2, object p3 )
+        public static void Trace( TraceEventType type, AvTraceDetails traceDetails, object p1, object p2, object p3 )
         {
             _avTrace.Trace( type, traceDetails.Id, traceDetails.Message, traceDetails.Labels, new object[] { p1, p2, p3 } );
         }
 
         /// <summary> Send a singleton "activity" trace (really, this sends the same trace as both a Start and a Stop) </summary>
-        static public void TraceActivityItem( AvTraceDetails traceDetails, params Object[] parameters )
+        public static void TraceActivityItem( AvTraceDetails traceDetails, params Object[] parameters )
         {
             _avTrace.TraceStartStop( traceDetails.Id, traceDetails.Message, traceDetails.Labels, parameters );
         }
 
         /// <summary> These help delay allocation of object array </summary>
-        static public void TraceActivityItem( AvTraceDetails traceDetails )
+        public static void TraceActivityItem( AvTraceDetails traceDetails )
         {
             _avTrace.TraceStartStop( traceDetails.Id, traceDetails.Message, traceDetails.Labels, Array.Empty<object>() );
         }
-        static public void TraceActivityItem( AvTraceDetails traceDetails, object p1 )
+        public static void TraceActivityItem( AvTraceDetails traceDetails, object p1 )
         {
             _avTrace.TraceStartStop( traceDetails.Id, traceDetails.Message, traceDetails.Labels, new object[] { p1 } );
         }
-        static public void TraceActivityItem( AvTraceDetails traceDetails, object p1, object p2 )
+        public static void TraceActivityItem( AvTraceDetails traceDetails, object p1, object p2 )
         {
             _avTrace.TraceStartStop( traceDetails.Id, traceDetails.Message, traceDetails.Labels, new object[] { p1, p2 } );
         }
-        static public void TraceActivityItem( AvTraceDetails traceDetails, object p1, object p2, object p3 )
+        public static void TraceActivityItem( AvTraceDetails traceDetails, object p1, object p2, object p3 )
         {
             _avTrace.TraceStartStop( traceDetails.Id, traceDetails.Message, traceDetails.Labels, new object[] { p1, p2, p3 } );
         }
 
-        static public bool IsEnabled
+        public static bool IsEnabled
         {
             get { return _avTrace != null && _avTrace.IsEnabled; }
         }
 
         /// <summary> Is there a Tracesource?  (See comment on AvTrace.IsEnabledOverride.) </summary>
-        static public bool IsEnabledOverride
+        public static bool IsEnabledOverride
         {
             get { return _avTrace.IsEnabledOverride; }
         }
 
         /// <summary> Re-read the configuration for this trace source </summary>
-        static public void Refresh()
+        public static void Refresh()
         {
             _avTrace.Refresh();
         }
 	}
-    static internal partial class TraceNameScope
+    internal static partial class TraceNameScope
     {
-        static private AvTrace _avTrace = new AvTrace(
+        private static AvTrace _avTrace = new AvTrace(
                 delegate() { return PresentationTraceSources.NameScopeSource; },
                 delegate() { PresentationTraceSources._NameScopeSource = null; }
                 );
 
         private static AvTraceDetails _RegisterName;
-		static public AvTraceDetails RegisterName
+		public static AvTraceDetails RegisterName
         {
             get
             {
@@ -283,7 +283,7 @@ namespace MS.Internal
         }
 
         private static AvTraceDetails _UnregisterName;
-		static public AvTraceDetails UnregisterName
+		public static AvTraceDetails UnregisterName
         {
             get
             {
@@ -297,66 +297,66 @@ namespace MS.Internal
         }
 
         /// <summary> Send a single trace output </summary>
-        static public void Trace( TraceEventType type, AvTraceDetails traceDetails, params object[] parameters )
+        public static void Trace( TraceEventType type, AvTraceDetails traceDetails, params object[] parameters )
         {
             _avTrace.Trace( type, traceDetails.Id, traceDetails.Message, traceDetails.Labels, parameters );
         }
 
         /// <summary> These help delay allocation of object array </summary>
-        static public void Trace( TraceEventType type, AvTraceDetails traceDetails )
+        public static void Trace( TraceEventType type, AvTraceDetails traceDetails )
         {
             _avTrace.Trace( type, traceDetails.Id, traceDetails.Message, traceDetails.Labels, Array.Empty<object>() );
         }
-        static public void Trace( TraceEventType type, AvTraceDetails traceDetails, object p1 )
+        public static void Trace( TraceEventType type, AvTraceDetails traceDetails, object p1 )
         {
             _avTrace.Trace( type, traceDetails.Id, traceDetails.Message, traceDetails.Labels, new object[] { p1 } );
         }
-        static public void Trace( TraceEventType type, AvTraceDetails traceDetails, object p1, object p2 )
+        public static void Trace( TraceEventType type, AvTraceDetails traceDetails, object p1, object p2 )
         {
             _avTrace.Trace( type, traceDetails.Id, traceDetails.Message, traceDetails.Labels, new object[] { p1, p2 } );
         }
-        static public void Trace( TraceEventType type, AvTraceDetails traceDetails, object p1, object p2, object p3 )
+        public static void Trace( TraceEventType type, AvTraceDetails traceDetails, object p1, object p2, object p3 )
         {
             _avTrace.Trace( type, traceDetails.Id, traceDetails.Message, traceDetails.Labels, new object[] { p1, p2, p3 } );
         }
 
         /// <summary> Send a singleton "activity" trace (really, this sends the same trace as both a Start and a Stop) </summary>
-        static public void TraceActivityItem( AvTraceDetails traceDetails, params Object[] parameters )
+        public static void TraceActivityItem( AvTraceDetails traceDetails, params Object[] parameters )
         {
             _avTrace.TraceStartStop( traceDetails.Id, traceDetails.Message, traceDetails.Labels, parameters );
         }
 
         /// <summary> These help delay allocation of object array </summary>
-        static public void TraceActivityItem( AvTraceDetails traceDetails )
+        public static void TraceActivityItem( AvTraceDetails traceDetails )
         {
             _avTrace.TraceStartStop( traceDetails.Id, traceDetails.Message, traceDetails.Labels, Array.Empty<object>() );
         }
-        static public void TraceActivityItem( AvTraceDetails traceDetails, object p1 )
+        public static void TraceActivityItem( AvTraceDetails traceDetails, object p1 )
         {
             _avTrace.TraceStartStop( traceDetails.Id, traceDetails.Message, traceDetails.Labels, new object[] { p1 } );
         }
-        static public void TraceActivityItem( AvTraceDetails traceDetails, object p1, object p2 )
+        public static void TraceActivityItem( AvTraceDetails traceDetails, object p1, object p2 )
         {
             _avTrace.TraceStartStop( traceDetails.Id, traceDetails.Message, traceDetails.Labels, new object[] { p1, p2 } );
         }
-        static public void TraceActivityItem( AvTraceDetails traceDetails, object p1, object p2, object p3 )
+        public static void TraceActivityItem( AvTraceDetails traceDetails, object p1, object p2, object p3 )
         {
             _avTrace.TraceStartStop( traceDetails.Id, traceDetails.Message, traceDetails.Labels, new object[] { p1, p2, p3 } );
         }
 
-        static public bool IsEnabled
+        public static bool IsEnabled
         {
             get { return _avTrace != null && _avTrace.IsEnabled; }
         }
 
         /// <summary> Is there a Tracesource?  (See comment on AvTrace.IsEnabledOverride.) </summary>
-        static public bool IsEnabledOverride
+        public static bool IsEnabledOverride
         {
             get { return _avTrace.IsEnabledOverride; }
         }
 
         /// <summary> Re-read the configuration for this trace source </summary>
-        static public void Refresh()
+        public static void Refresh()
         {
             _avTrace.Refresh();
         }

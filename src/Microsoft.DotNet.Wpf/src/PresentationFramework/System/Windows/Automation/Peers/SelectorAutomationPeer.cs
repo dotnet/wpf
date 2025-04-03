@@ -15,13 +15,13 @@ namespace System.Windows.Automation.Peers
         {}
 
         ///
-        override protected AutomationControlType GetAutomationControlTypeCore()
+        protected override AutomationControlType GetAutomationControlTypeCore()
         {
             return AutomationControlType.List;
         }
 
         ///
-        override public object GetPattern(PatternInterface patternInterface)
+        public override object GetPattern(PatternInterface patternInterface)
         {
             if(patternInterface == PatternInterface.Selection)
             {

@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
 using System.Runtime.InteropServices;
@@ -910,7 +910,7 @@ internal enum MILCMD
             _bottom = bottom;
         }
 
-        static internal MilRectD Empty
+        internal static MilRectD Empty
         {
             get
             {
@@ -918,7 +918,7 @@ internal enum MILCMD
             }
         }
 
-        static internal MilRectD NaN
+        internal static MilRectD NaN
         {
             get
             {

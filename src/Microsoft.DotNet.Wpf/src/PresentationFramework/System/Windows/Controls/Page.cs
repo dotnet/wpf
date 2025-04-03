@@ -343,7 +343,7 @@ namespace System.Windows.Controls
         }
 
         // If the Title has changed we want to set the flag.
-        static private void OnTitleChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        private static void OnTitleChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             ((Page)d).PropertyIsSet(SetPropertyFlags.Title);
         }

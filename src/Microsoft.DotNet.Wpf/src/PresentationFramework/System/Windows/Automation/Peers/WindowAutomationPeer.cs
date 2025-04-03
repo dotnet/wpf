@@ -16,13 +16,13 @@ namespace System.Windows.Automation.Peers
         {}
     
         ///
-        override protected string GetClassNameCore()
+        protected override string GetClassNameCore()
         {
             return "Window";
         }
 
         ///
-        override protected string GetNameCore()
+        protected override string GetNameCore()
         {
             string name = base.GetNameCore();
 
@@ -51,7 +51,7 @@ namespace System.Windows.Automation.Peers
         }
 
         ///
-        override protected AutomationControlType GetAutomationControlTypeCore()
+        protected override AutomationControlType GetAutomationControlTypeCore()
         {
             return AutomationControlType.Window;
         }
@@ -59,7 +59,7 @@ namespace System.Windows.Automation.Peers
 
 
         ///
-        override protected Rect GetBoundingRectangleCore()
+        protected override Rect GetBoundingRectangleCore()
         {
             Window window = (Window)Owner;
             Rect bounds = new Rect(0,0,0,0);

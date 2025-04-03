@@ -493,7 +493,7 @@ namespace MS.Internal.AutomationProxies
         }
 
         // set the check state for the specified item
-        private unsafe static bool SetCheckState (IntPtr hwnd, IntPtr item, bool check)
+        private static unsafe bool SetCheckState (IntPtr hwnd, IntPtr item, bool check)
         {
             uint val = (check) ? 2U : 1U;
 

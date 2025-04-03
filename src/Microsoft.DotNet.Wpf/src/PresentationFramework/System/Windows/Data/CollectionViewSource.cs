@@ -801,7 +801,7 @@ namespace System.Windows.Data
         // Return the default view for the given source.  This view is never
         // affiliated with any CollectionViewSource.  It may be a
         // CollectionViewProxy over the original view
-        static internal CollectionView GetDefaultCollectionView(object source, bool createView, Func<object, object> GetSourceItem=null)
+        internal static CollectionView GetDefaultCollectionView(object source, bool createView, Func<object, object> GetSourceItem=null)
         {
             if (!IsValidSourceForView(source))
                 return null;

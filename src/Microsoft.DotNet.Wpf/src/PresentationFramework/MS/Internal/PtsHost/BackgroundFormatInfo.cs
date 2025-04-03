@@ -154,7 +154,7 @@ namespace MS.Internal.PtsHost
         /// <summary>
         /// Whether background layout is globally enabled
         /// </summary>
-        static internal bool IsBackgroundFormatEnabled { get { return _isBackgroundFormatEnabled; } }
+        internal static bool IsBackgroundFormatEnabled { get { return _isBackgroundFormatEnabled; } }
 
         /// <summary>
         /// Does the final dtr extend through the sum of the text

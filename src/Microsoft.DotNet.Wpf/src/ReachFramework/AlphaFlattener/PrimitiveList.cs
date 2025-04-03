@@ -68,7 +68,7 @@ namespace Microsoft.Internal.AlphaFlattener
             return s.PadLeft(len, ' ');
         }
 
-        static internal void PrintPrimitive(PrimitiveInfo info, int index, bool verbose)
+        internal static void PrintPrimitive(PrimitiveInfo info, int index, bool verbose)
         {
             if (index < 0)
             {

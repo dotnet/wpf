@@ -175,7 +175,7 @@ namespace MS.Internal.Printing.Configuration
         #region Internal Methods
 
         /// <exception cref="XmlException">XML parser finds non-well-formness of XML</exception>
-        internal override sealed bool BuildProperty(XmlPrintCapReader reader)
+        internal sealed override bool BuildProperty(XmlPrintCapReader reader)
         {
             #if _DEBUG
             Trace.Assert(reader.CurrentElementNodeType == PrintSchemaNodeTypes.Property,

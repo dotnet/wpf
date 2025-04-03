@@ -1063,8 +1063,7 @@ namespace System.Windows.Controls
                         // GestureRecognizer.Recognize demands unmanaged code, we assert it here
                         // as this codepath is only called in response to user input
                         //
-                        ReadOnlyCollection<GestureRecognitionResult> results =
-                            this.GestureRecognizer.CriticalRecognize(strokes);
+                        ReadOnlyCollection<GestureRecognitionResult> results = GestureRecognizer.Recognize(strokes);
 
                         if (results.Count > 0)
                         {

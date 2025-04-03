@@ -1686,21 +1686,6 @@ namespace System.Windows.Interop
         /// contract, which limits IntelliSense on derived types like WebBrowser) while sticking protected
         /// virtuals next to them. Those virtuals contain our base implementation, while the explicit
         /// interface implementation methods do call trivially into the virtuals.
-        ///
-        /// This comment outlines the security rationale applied to those methods.
-        ///
-        /// <SecurityNote Name="IKeyboardInputSink_Implementation">
-        ///     The security attributes on the virtual methods within this region mirror the corresponding
-        ///     IKeyboardInputSink methods; customers can override those methods, so we insert a LinkDemand
-        ///     to encourage them to have a LinkDemand too (via FxCop).
-        ///
-        ///     While the methods have LinkDemands on them, the bodies of the methods typically contain
-        ///     full demands through a SecurityHelper.DemandUnmanagedCode call. This might seem redundant.
-        ///     The point here is we do a full demand for stronger protection of our built-in implementation
-        ///     compared to the LinkDemand on the public interface. We really want full demands here but
-        ///     declarative Demand doesn't work on interface methods. In addition, we try to take advantage
-        ///     of the fact LinkDemands are consistently enforced between base and overridden virtual methods,
-        ///     something full Demands do not give us, even when applied declaratively.
 
         private class MSGDATA
         {
@@ -1888,7 +1873,6 @@ namespace System.Windows.Interop
         ///     is returned.
         /// </summary>
         /// <remarks>
-        ///     This API requires unrestricted UI Window permission.
         ///     We explicitly don't make this method overridable as we want to keep the
         ///     precise implementation fixed and make sure the _keyboardInputSinkChildren
         ///     state is kep consistent. By making the method protected, implementors can

@@ -213,14 +213,8 @@ namespace System.Windows.Interop
 
         /// <summary>
         /// Attaches a hwndTarget to the hWnd
-        /// <remarks>
-        ///     This API link demands for UIWindowPermission.AllWindows
-        /// </remarks>
         /// </summary>
         /// <param name="hwnd">The HWND to which the HwndTarget will draw.</param>
-        /// <remarks>
-        ///     Callers must have UIPermission(UIPermissionWindow.AllWindows) to call this API.
-        /// </remarks>
         public HwndTarget(IntPtr hwnd)
         {
             bool exceptionThrown = true;
@@ -297,7 +291,7 @@ namespace System.Windows.Interop
         }
 
         /// <summary>
-        /// Disables hyphen ligatures if user has exlicitly wants it
+        /// Disables hyphen ligatures if user has explicitly wants it
         /// </summary>
         private void CheckAndDisableSpecialCharacterLigature()
         {

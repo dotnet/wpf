@@ -1703,10 +1703,6 @@ namespace System.Windows.Documents
 
         // Called when the selection changes position.
         // Called explicitly by the TextEditor.
-        /// <summary>
-        /// Critical - calls unmanaged code (_sink)
-        /// TreatAsSafe - notifies of selection change, no potential data leak, this is safe
-        /// </summary>
         internal void OnSelectionChanged()
         {
             if (_compositionEventState == CompositionEventState.RaisingEvents)

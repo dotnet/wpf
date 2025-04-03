@@ -2116,7 +2116,7 @@ namespace System.Windows.Input
                 if (hwndHit != IntPtr.Zero)
                 {
                     // See if this is one of our windows.
-                    sourceHit = HwndSource.CriticalFromHwnd(hwndHit);
+                    sourceHit = HwndSource.FromHwnd(hwndHit);
                 }
                 if (sourceHit != null && sourceHit.Dispatcher == inputSource.CompositionTarget.Dispatcher)
                 {

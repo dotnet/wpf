@@ -2953,7 +2953,7 @@ namespace System.Windows.Input.StylusWisp
                 if (hwndHit != IntPtr.Zero)
                 {
                     // See if this is one of our windows.
-                    sourceHit = HwndSource.CriticalFromHwnd(hwndHit);
+                    sourceHit = HwndSource.FromHwnd(hwndHit);
 
                     // We need to check if the point is over the client or
                     // non-client area.  We only care about being over the
@@ -3530,7 +3530,7 @@ namespace System.Windows.Input.StylusWisp
         internal void OnWindowEnableChanged(IntPtr hwnd, bool disabled)
         {
             // See if this is one of our windows.
-            HwndSource sourceHit = HwndSource.CriticalFromHwnd(hwnd);
+            HwndSource sourceHit = HwndSource.FromHwnd(hwnd);
 
             // We need to check if the point is over the client or
             // non-client area.  We only care about being over the

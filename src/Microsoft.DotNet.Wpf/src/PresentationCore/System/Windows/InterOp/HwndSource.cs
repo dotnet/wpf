@@ -663,11 +663,6 @@ namespace System.Windows.Interop
         ///</remarks>
         public static HwndSource FromHwnd(IntPtr hwnd)
         {
-            return CriticalFromHwnd(hwnd);
-        }
-
-        internal static HwndSource CriticalFromHwnd(IntPtr hwnd)
-        {
             if (hwnd == IntPtr.Zero)
             {
                 throw new ArgumentException(SR.NullHwnd);
@@ -686,7 +681,6 @@ namespace System.Windows.Interop
             }
             return hwndSource;
         }
-
 
         /// <summary>
         ///     The visual manager for the visuals being presented in the source.

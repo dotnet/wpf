@@ -1541,7 +1541,7 @@ namespace System.Windows.Input.StylusWisp
                     IntPtr hwndHit = UnsafeNativeMethods.WindowFromPoint((int)ptScreen.X, (int)ptScreen.Y);
                     if (hwndHit != IntPtr.Zero)
                     {
-                        HwndSource newHwndSource = HwndSource.CriticalFromHwnd(hwndHit);
+                        HwndSource newHwndSource = HwndSource.FromHwnd(hwndHit);
                         if (newHwndSource != null && newHwndSource.Dispatcher == Dispatcher)
                         {
                             newSource = newHwndSource;

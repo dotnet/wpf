@@ -3003,7 +3003,7 @@ namespace System.Windows.Controls.Primitives
                 HwndSource parent = null;
                 if (isChildPopup)
                 {
-                     parent = HwndSource.CriticalFromHwnd(ParentHandle);
+                     parent = HwndSource.FromHwnd(ParentHandle);
                 }
 
                 Point devicePoint = clientPt;

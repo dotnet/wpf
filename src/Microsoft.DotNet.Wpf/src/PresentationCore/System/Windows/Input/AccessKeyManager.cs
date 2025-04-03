@@ -472,7 +472,7 @@ namespace System.Windows.Input
         {
             IntPtr hwnd = MS.Win32.UnsafeNativeMethods.GetActiveWindow();
             if (hwnd != IntPtr.Zero)
-                return HwndSource.CriticalFromHwnd(hwnd);
+                return HwndSource.FromHwnd(hwnd);
 
             return null;
         }

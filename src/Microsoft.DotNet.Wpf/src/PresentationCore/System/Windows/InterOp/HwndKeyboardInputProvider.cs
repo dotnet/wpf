@@ -733,7 +733,7 @@ namespace System.Windows.Interop
 
             if(hwnd != IntPtr.Zero)
             {
-                HwndSource hwndSource = HwndSource.CriticalFromHwnd(hwnd);
+                HwndSource hwndSource = HwndSource.FromHwnd(hwnd);
                 if(hwndSource != null)
                 {
                     if(hwndSource.Dispatcher == _source.Dispatcher)

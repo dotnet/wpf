@@ -608,7 +608,7 @@ namespace System.Windows.Controls.Primitives
                 // non-WPF HWNDs, or even child HWNDs of other WPF top-level
                 // windows to retain focus when menus are dismissed.
                 IntPtr hwndWithFocus = MS.Win32.UnsafeNativeMethods.GetFocus();
-                HwndSource hwndSourceWithFocus = hwndWithFocus != IntPtr.Zero ? HwndSource.CriticalFromHwnd(hwndWithFocus) : null;
+                HwndSource hwndSourceWithFocus = hwndWithFocus != IntPtr.Zero ? HwndSource.FromHwnd(hwndWithFocus) : null;
                 if(hwndSourceWithFocus != null)
                 {
                     // We restore focus by setting focus to the parent's focus

@@ -3276,7 +3276,7 @@ namespace System.Windows.Input
 
                     if (activeWindow != IntPtr.Zero)
                     {
-                        source = HwndSource.CriticalFromHwnd(activeWindow);
+                        source = HwndSource.FromHwnd(activeWindow);
                     }
                 }
 

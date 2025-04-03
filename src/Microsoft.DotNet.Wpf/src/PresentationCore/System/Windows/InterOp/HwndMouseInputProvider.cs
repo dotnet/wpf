@@ -1182,7 +1182,7 @@ namespace System.Windows.Interop
 
             if(hwnd != IntPtr.Zero)
             {
-                hwndSource = HwndSource.CriticalFromHwnd(hwnd);
+                hwndSource = HwndSource.FromHwnd(hwnd);
 
                 if(hwndSource != null)
                 {

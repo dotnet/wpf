@@ -1105,7 +1105,7 @@ namespace System.Windows.Interop
                     break;
 
                 case WindowMessage.WM_GETOBJECT:
-                    result = CriticalHandleWMGetobject( wparam, lparam, RootVisual, _hWnd );
+                    result = HandleWM_GETOBJECT(wparam, lparam, RootVisual, _hWnd);
                     break;
 
                 case WindowMessage.WM_WINDOWPOSCHANGING:
@@ -1429,7 +1429,7 @@ namespace System.Windows.Interop
             return peer;
         }
 
-        private static IntPtr CriticalHandleWMGetobject(IntPtr wparam, IntPtr lparam, Visual root, IntPtr handle)
+        private static IntPtr HandleWM_GETOBJECT(IntPtr wParam, IntPtr lParam, Visual root, IntPtr handle)
         {
             try
             {
@@ -1451,7 +1451,7 @@ namespace System.Windows.Interop
                 // it's guaranteed to be a connected one (it's initialized as root already)
                 IRawElementProviderSimple el = ElementProxy.StaticWrap(peer, peer);
 
-                return AutomationInteropProvider.ReturnRawElementProvider(handle, wparam, lparam, el);
+                return AutomationInteropProvider.ReturnRawElementProvider(handle, wParam, lParam, el);
             }
             catch (Exception e)
             {

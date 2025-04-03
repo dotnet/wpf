@@ -19,11 +19,32 @@ namespace System.Security.RightsManagement
         /// AuthenticationType.Windows or AuthenticationType.Passport, all other Authentication 
         /// types(AuthenticationType.WindowsPassport or AuthenticationType.Internal) are not allowed.
         /// </summary>
-        public static SecureEnvironment Create(string applicationManifest,
-                                               ContentUser user)
+        /// <remarks>Client Application can use GetActivatedUsers property to enumerate Activated users.</remarks>
+        public static SecureEnvironment Create(string applicationManifest, ContentUser user)
         {
-    
-            return CriticalCreate(applicationManifest, user);
+            ArgumentNullException.ThrowIfNull(applicationManifest);
+            ArgumentNullException.ThrowIfNull(user);
+
+            // we only let specifically identified users to be used here  
+            if (user.AuthenticationType is not AuthenticationType.Windows and not AuthenticationType.Passport)
+                throw new ArgumentOutOfRangeException(nameof(user));
+
+            if (!IsUserActivated(user))
+                throw new RightsManagementException(RightsManagementFailureCode.NeedsGroupIdentityActivation);
+
+            ClientSession clientSession = new ClientSession(user);
+
+            try
+            {
+                clientSession.BuildSecureEnvironment(applicationManifest);
+
+                return new SecureEnvironment(applicationManifest, user, clientSession);
+            }
+            catch
+            {
+                clientSession.Dispose();
+                throw;
+            }
         }
 
 
@@ -40,14 +61,61 @@ namespace System.Security.RightsManagement
         /// Regardless of Windows or Passport Authentication, all Temporary created activation will be 
         /// destroyed when SecureEnvironment instance is Disposed or Finalized.  
         /// </summary>   
-        public static SecureEnvironment Create(string applicationManifest, 
-                                                                                        AuthenticationType authentication, 
-                                                                                        UserActivationMode userActivationMode)
+        public static SecureEnvironment Create(string applicationManifest, AuthenticationType authentication, UserActivationMode userActivationMode)
         {
+            ArgumentNullException.ThrowIfNull(applicationManifest);
 
-            return CriticalCreate(applicationManifest, 
-                                            authentication,
-                                            userActivationMode);
+            if (authentication is not AuthenticationType.Windows and not AuthenticationType.Passport)
+                throw new ArgumentOutOfRangeException(nameof(authentication));
+
+            if (userActivationMode is not UserActivationMode.Permanent and not UserActivationMode.Temporary)
+                throw new ArgumentOutOfRangeException(nameof(userActivationMode));
+
+            // build user with the given authentication type and a default name 
+            // only authentication type is critical in this case 
+            ContentUser user;
+
+            using (ClientSession tempClientSession = ClientSession.DefaultUserClientSession(authentication))
+            {
+                // Activate Machine if necessary
+                if (!tempClientSession.IsMachineActivated())
+                {
+                    // activate Machine
+                    tempClientSession.ActivateMachine(authentication);
+                }
+
+                // Activate User (we will force start activation at this point)
+                // at this point we should have a real user name 
+                user = tempClientSession.ActivateUser(authentication, userActivationMode);
+            }
+
+            Debug.Assert(IsUserActivated(user));
+
+            ClientSession clientSession = new ClientSession(user, userActivationMode);
+
+            try
+            {
+                try
+                {
+                    // make sure we have a Client Licensor Certificate 
+                    clientSession.AcquireClientLicensorCertificate();
+                }
+                catch (RightsManagementException)
+                {
+                    // In case of the RightsManagement exception we are willing to proceed
+                    // as ClientLicensorCertificate only required for publishing not for consumption 
+                    // and therefore it is optional to have one.
+                }
+
+                clientSession.BuildSecureEnvironment(applicationManifest);
+
+                return new SecureEnvironment(applicationManifest, user, clientSession);
+            }
+            catch
+            {
+                clientSession.Dispose();
+                throw;
+            }
         }
         
         /// <summary>
@@ -223,109 +291,6 @@ namespace System.Security.RightsManagement
                 Invariant.Assert(_clientSession != null);
             
                 return _clientSession;
-            }
-        }
-
-        /// <summary>
-        /// This static Method builds a new instance of a secure environment for a given user that is assumed to be already activated. 
-        /// client Application can use GetActivatedUsers property to enumerate Activated users.
-        /// </summary>
-        private static SecureEnvironment CriticalCreate(string applicationManifest, ContentUser user)
-        {
-            ArgumentNullException.ThrowIfNull(applicationManifest);
-            ArgumentNullException.ThrowIfNull(user);
-
-            // we only let specifically identifyed users to be used here  
-            if ((user.AuthenticationType != AuthenticationType.Windows) && 
-                 (user.AuthenticationType != AuthenticationType.Passport))
-            {
-                throw new ArgumentOutOfRangeException(nameof(user));
-            }
-
-            if (!IsUserActivated(user))
-            {
-                throw new RightsManagementException(RightsManagementFailureCode.NeedsGroupIdentityActivation);
-            }
-            
-            ClientSession clientSession = new ClientSession(user);
-
-            try
-            {
-                clientSession.BuildSecureEnvironment(applicationManifest);
-
-                return new SecureEnvironment(applicationManifest, user, clientSession);
-            }
-            catch
-            {
-                clientSession.Dispose();
-                throw;
-            }
-        }
-
-        private static SecureEnvironment CriticalCreate(
-            string applicationManifest, 
-            AuthenticationType authentication,
-            UserActivationMode userActivationMode)
-        {
-            ArgumentNullException.ThrowIfNull(applicationManifest);
-
-            if ((authentication != AuthenticationType.Windows) && 
-                 (authentication != AuthenticationType.Passport))
-            {
-                throw new ArgumentOutOfRangeException(nameof(authentication));
-            }
-
-            if ((userActivationMode != UserActivationMode.Permanent) &&
-                 (userActivationMode != UserActivationMode.Temporary))
-            {
-                throw new ArgumentOutOfRangeException(nameof(userActivationMode));            
-            }
-
-            //build user with the given authnetication type and a default name 
-            // only authentication type is critical in this case 
-            ContentUser user; 
-            
-            using (ClientSession tempClientSession =
-                ClientSession.DefaultUserClientSession(authentication))
-            {
-                //Activate Machine if neccessary
-                if (!tempClientSession.IsMachineActivated())
-                {
-                    // activate Machine
-                    tempClientSession.ActivateMachine(authentication);
-                }
-
-                //Activate User (we will force start activation at this point)
-                // at this point we should have a real user name 
-                user = tempClientSession.ActivateUser(authentication, userActivationMode);
-            }
-
-            Debug.Assert(IsUserActivated(user));
-
-            ClientSession clientSession = new ClientSession(user, userActivationMode);
-
-            try
-            {
-                try
-                {
-                    // make sure we have a Client Licensor Certificate 
-                    clientSession.AcquireClientLicensorCertificate();
-                }
-                catch (RightsManagementException)
-                {
-                    // In case of the RightsMnaagement exception we are willing to proceed
-                    // as ClientLicensorCertificate only required for publishing not for consumption 
-                    // and therefore it is optional to have one.
-                }
-            
-                clientSession.BuildSecureEnvironment(applicationManifest);
-
-                return new SecureEnvironment(applicationManifest, user, clientSession);
-            }
-            catch
-            {
-                clientSession.Dispose();
-                throw;
             }
         }
 

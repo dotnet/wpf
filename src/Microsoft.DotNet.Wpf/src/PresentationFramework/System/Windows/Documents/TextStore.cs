@@ -1165,8 +1165,7 @@ namespace System.Windows.Documents
         // See msdn's ITextStoreACP documentation for a full description.
         void UnsafeNativeMethods.ITextStoreACP.GetWnd(int viewCookie, out IntPtr hwnd)
         {
-            hwnd = IntPtr.Zero;
-            hwnd = CriticalSourceWnd;
+            hwnd = GetSourceWindowHandle();
         }
 
         #endregion ITextStoreACP
@@ -2143,15 +2142,6 @@ namespace System.Windows.Documents
         {
             get { return _transitoryExtensionSinkCookie; }
             set { _transitoryExtensionSinkCookie = value; }
-        }
-
-        internal IntPtr CriticalSourceWnd
-        {
-            get
-            {
-                bool callerIsTrusted = true;
-                return( GetSourceWnd(callerIsTrusted) );
-            }
         }
 
         #endregion Internal Properties
@@ -3286,28 +3276,14 @@ namespace System.Windows.Documents
             return null;
         }
 
-        private IntPtr GetSourceWnd(bool callerIsTrusted)
+        internal nint GetSourceWindowHandle()
         {
-            IntPtr hwnd = IntPtr.Zero;
-            if (RenderScope != null)
+            if (RenderScope is not null && PresentationSource.FromVisual(RenderScope) is IWin32Window win32Window)
             {
-                IWin32Window win32Window;
-
-                if (callerIsTrusted)
-                {
-                    win32Window = PresentationSource.CriticalFromVisual(RenderScope) as IWin32Window;
-                }
-                else
-                {
-                    win32Window = PresentationSource.FromVisual(RenderScope) as IWin32Window;
-                }
-
-                if (win32Window != null)
-                {
-                    hwnd = win32Window.Handle;
-                }
+                return win32Window.Handle;
             }
-            return hwnd;
+
+            return nint.Zero;
         }
 
         // Detects errors in the change notifications we send TSF.

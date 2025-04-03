@@ -2962,10 +2962,6 @@ namespace System.Windows.Controls.Primitives
             {
             }
 
-            /////////////////////////////////////////////////////////////////////////////////////
-            // Helper's Critical-TreatAsSafe Methods - Safe to expose
-            /////////////////////////////////////////////////////////////////////////////////////
-
             /// <summary>
             /// returns whether this is a restricted popup window or not
             /// </summary>

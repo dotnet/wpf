@@ -212,9 +212,6 @@ namespace System.Windows
         ///     OnShutdown method to raise the Shutdown event.
         ///     Requires SecurityPermission for unmanaged code
         /// </summary>
-        /// <remarks>
-        ///     Requires UIPermission with AllWindows access
-        /// </remarks>
         public void Shutdown()
         {
             Shutdown(0);
@@ -228,9 +225,6 @@ namespace System.Windows
         ///     The exitCode parameter passed in at Shutdown will be returned as a
         ///     return parameter on the run() method, so it can be passed back to the OS.
         /// </summary>
-        /// <remarks>
-        ///     Callers must have UIPermission(UIPermissionWindow.AllWindows) to call this API.
-        /// </remarks>
         /// <param name="exitCode">returned to the Application.Run() method. Typically this will be returned to the OS</param>
         public void Shutdown(int exitCode)
         {

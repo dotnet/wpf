@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
 
@@ -81,35 +81,12 @@ namespace System.Windows.Controls
 
             int bytecountEndOfFragment = bytecountPrefixContext + destinationBytes.Length;
             int bytecountEndOfHtml = bytecountEndOfFragment + bytecountSuffixContext;
+            const string htmlStartFragment = "<HTML>\r\n<BODY>\r\n<!--StartFragment-->";
             string prefix = string.Create(CultureInfo.InvariantCulture,
-                $"""
-                 Version:1.0
-
-                 StartHTML:00000097
-
-                 EndHTML:{bytecountEndOfHtml:00000000}
-
-                 StartFragment:00000133
-
-                 EndFragment:{bytecountEndOfFragment:00000000}
-
-                 <HTML>
-
-                 <BODY>
-
-                 <!--StartFragment-->
-                 """);
+                $"Version:1.0\r\nStartHTML:00000097\r\nEndHTML:{bytecountEndOfHtml:00000000}\r\nStartFragment:00000133\r\nEndFragment:{bytecountEndOfFragment:00000000}\r\n{htmlStartFragment}");
             content.Insert(0, prefix);
-            content.Append(
-                """
-
-
-                <!--EndFragment-->
-
-                </BODY>
-
-                </HTML>
-                """);
+            const string htmlEndFragment = "\r\n<!--EndFragment-->\r\n</BODY>\r\n</HTML>";
+            content.Append(htmlEndFragment);
         }
 
         private static void FormatPlainText(string s, bool csv, TextWriter output, ref bool escapeApplied)

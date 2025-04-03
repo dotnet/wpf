@@ -252,9 +252,7 @@ namespace System.Windows.Media
         /// Creates a collection of font families in the Windows Fonts folder.
         /// </summary>
         /// <remarks>
-        /// This method is used to initialized the static _defaultFontCollection field. By having this
-        /// safe wrapper for CreateFamilyCollection we avoid having to create a static initializer and
-        /// declare it critical.
+        /// This method is used to initialized the static _defaultFontCollection field.
         /// </remarks>
         private static ICollection<FontFamily> CreateDefaultFamilyCollection()
         {

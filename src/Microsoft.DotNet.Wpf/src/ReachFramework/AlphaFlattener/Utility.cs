@@ -1434,7 +1434,7 @@ namespace Microsoft.Internal.AlphaFlattener
 
                 for (int y = 0; y < height; y ++)
                 {
-                    bitmapSource.CriticalCopyPixels(rect, pixels, stride, 0);
+                    bitmapSource.CopyPixelsEx(rect, pixels, stride, 0);
 
                     int p = 0;
 

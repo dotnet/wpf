@@ -23,8 +23,7 @@ namespace System.Windows.Media
         /// </summary>
         /// <remarks>
         /// The common agreement (avcomptm, avpttrev) is that channel creation 
-        /// should be considered unsafe and therefore subject to control via 
-        /// the SecurityCritical/SecurityTreatAsSafe mechanism.
+        /// should be considered unsafe.
         /// 
         /// On the other hand, using a channel that has been created by the 
         /// MediaContext is considered safe. 

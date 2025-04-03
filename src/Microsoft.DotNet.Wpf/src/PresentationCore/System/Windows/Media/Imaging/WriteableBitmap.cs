@@ -752,7 +752,7 @@ namespace System.Windows.Media.Imaging
                 {
                     Int32Rect rcFull = new Int32Rect(0, 0, _pixelWidth, _pixelHeight);
                     int bufferSize = checked(_backBufferStride * source.PixelHeight);
-                    source.CriticalCopyPixels(rcFull, _backBuffer, bufferSize, _backBufferStride);
+                    source.CopyPixelsImpl(rcFull, _backBuffer, bufferSize, _backBufferStride);
                     AddDirtyRect(rcFull);
                 }
                 finally

@@ -347,7 +347,7 @@ namespace System.Windows.Media.Imaging
             // Demand Site Of origin on the URI if it passes then this  information is ok to expose
             CheckIfSiteOfOrigin();
 
-            CriticalCopyPixels(sourceRect, pixels, stride, offset);
+            CopyPixelsEx(sourceRect, pixels, stride, offset);
         }
 
         /// <summary>
@@ -389,7 +389,7 @@ namespace System.Windows.Media.Imaging
             // Demand Site Of origin on the URI if it passes then this  information is ok to expose
             CheckIfSiteOfOrigin();
 
-            CriticalCopyPixels(sourceRect, buffer, bufferSize, stride);
+            CopyPixelsImpl(sourceRect, buffer, bufferSize, stride);
         }
 
         /// <summary>
@@ -625,13 +625,13 @@ namespace System.Windows.Media.Imaging
         }
 
         /// <summary>
-        /// CriticalCopyPixels
+        /// CopyPixelsEx
         /// </summary>
         /// <param name="sourceRect"></param>
         /// <param name="pixels"></param>
         /// <param name="stride"></param>
         /// <param name="offset"></param>
-        internal unsafe void CriticalCopyPixels(Int32Rect sourceRect, Array pixels, int stride, int offset)
+        internal unsafe void CopyPixelsEx(Int32Rect sourceRect, Array pixels, int stride, int offset)
         {
             ReadPreamble();
             _bitmapInit.EnsureInitializedComplete();
@@ -668,17 +668,17 @@ namespace System.Windows.Media.Imaging
                 throw new IndexOutOfRangeException();
 
             fixed (byte* pixelArray = &Unsafe.AddByteOffset(ref MemoryMarshal.GetArrayDataReference(pixels), (nint)offset * elementSize))
-                CriticalCopyPixels(sourceRect, (nint)pixelArray, destBufferSize, stride);
+                CopyPixelsImpl(sourceRect, (nint)pixelArray, destBufferSize, stride);
         }
 
         /// <summary>
-        /// CriticalCopyPixels
+        /// CopyPixelsImpl
         /// </summary>
         /// <param name="sourceRect"></param>
         /// <param name="buffer"></param>
         /// <param name="bufferSize"></param>
         /// <param name="stride"></param>
-        internal void CriticalCopyPixels(Int32Rect sourceRect, IntPtr buffer, int bufferSize, int stride)
+        internal void CopyPixelsImpl(Int32Rect sourceRect, IntPtr buffer, int bufferSize, int stride)
         {
             if (buffer == IntPtr.Zero)
                 throw new ArgumentNullException(nameof(buffer));

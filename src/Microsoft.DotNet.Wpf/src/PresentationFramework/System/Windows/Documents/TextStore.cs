@@ -3272,12 +3272,7 @@ namespace System.Windows.Documents
 
         internal nint GetSourceWindowHandle()
         {
-            if (RenderScope is not null && PresentationSource.FromVisual(RenderScope) is IWin32Window win32Window)
-            {
-                return win32Window.Handle;
-            }
-
-            return nint.Zero;
+            return PresentationSource.FromNullableVisual(RenderScope) is IWin32Window win32Window ? win32Window.Handle : nint.Zero;
         }
 
         // Detects errors in the change notifications we send TSF.

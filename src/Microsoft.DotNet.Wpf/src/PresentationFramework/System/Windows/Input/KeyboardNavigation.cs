@@ -3265,8 +3265,7 @@ namespace System.Windows.Input
 
                 if (eventSource != null)
                 {
-                    Visual eventSourceVisual = eventSource as Visual;
-                    source = (eventSourceVisual != null) ? PresentationSource.FromVisual(eventSourceVisual) : null;
+                    source = PresentationSource.FromNullableVisual(eventSource as Visual);
                 }
                 else
                 {

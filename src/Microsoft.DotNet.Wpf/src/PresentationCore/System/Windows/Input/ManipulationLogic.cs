@@ -571,7 +571,7 @@ namespace System.Windows.Input
             if (newContainer != null)
             {
                 // get the new root
-                PresentationSource presentationSource = PresentationSource.FromVisual((DependencyObject)newContainer);
+                PresentationSource presentationSource = PresentationSource.FromVisual((Visual)newContainer);
                 if (presentationSource != null)
                 {
                     _root = presentationSource.RootVisual as UIElement;

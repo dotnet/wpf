@@ -2,6 +2,7 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 
 using System.Collections;
+using System.Runtime.CompilerServices;
 using System.Windows.Threading;
 using System.Windows.Media;
 using System.Windows.Input;
@@ -75,7 +76,7 @@ namespace System.Windows
         /// <returns>The source in which the visual is being presented.</returns>
         public static PresentationSource FromVisual(Visual visual)
         {
-            return FromVisual((DependencyObject)visual);
+            return FromVisual(visual, enable2DTo3DTransition: true);
         }
 
         /// <summary>
@@ -85,7 +86,7 @@ namespace System.Windows
         /// <returns>The source in which the dependency object is being presented.</returns>
         public static PresentationSource FromDependencyObject(DependencyObject dependencyObject)
         {
-            return FromVisual(dependencyObject);
+            return FromVisual(dependencyObject, enable2DTo3DTransition: true);
         }
 
         /// <summary>
@@ -505,6 +506,22 @@ namespace System.Windows
                 UpdateSourceOfElement(uie, e.Ancestor, e.OldParent);
             }
         }
+
+#nullable enable
+        /// <summary>
+        /// Returns the source in which the visual is being presented.
+        /// </summary>
+        /// <param name="visual">The visual to find the source for.</param>
+        /// <returns>
+        /// The source in which the visual is being presented or <see langword="null"/> in case <paramref name="visual"/> was <see langword="null"/>.
+        /// </returns>
+        /// <remarks>Unlike <see cref="FromVisual"/>, this allows <see langword="null"/> passed to <paramref name="visual"/>.</remarks>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        internal static PresentationSource? FromNullableVisual(DependencyObject? visual, bool enable2DTo3DTransition = true)
+        {
+            return visual is not null ? FromVisual(visual, enable2DTo3DTransition) : null;
+        }
+#nullable disable
 
         /// <param name="visual">The dependency object to find the source for</param>
         /// <param name="enable2DTo3DTransition">

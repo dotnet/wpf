@@ -1485,7 +1485,7 @@ namespace System.Windows.Controls.Primitives
             // get target's visual
             Visual targetVisual = GetTarget();
             // defer creation?
-            if ((targetVisual != null) && PopupSecurityHelper.IsVisualPresentationSourceNull(targetVisual))
+            if (targetVisual is not null && PresentationSource.FromVisual(targetVisual) is null)
             {
                 // This is a case where the Popup is in a tree and its target is not hooked up to a window.
                 if (!asyncCall)
@@ -2983,9 +2983,7 @@ namespace System.Windows.Controls.Primitives
             internal Point ClientToScreen(Visual rootVisual, Point clientPoint)
             {
                 // Get the HwndSource of the target element.
-                HwndSource targetWindow = PopupSecurityHelper.GetPresentationSource(rootVisual) as HwndSource;
-
-                if (targetWindow != null)
+                if (PresentationSource.FromNullableVisual(rootVisual) is HwndSource targetWindow)
                 {
                     return PointUtil.ToPoint(ClientToScreen(targetWindow, clientPoint));
                 }
@@ -3024,12 +3022,7 @@ namespace System.Windows.Controls.Primitives
                 if (Mouse.DirectlyOver != null)
                 {
                     // get target window info
-                    HwndSource hwndSource = null;
-                    if (targetVisual != null)
-                    {
-                        hwndSource = PopupSecurityHelper.GetPresentationSource(targetVisual) as HwndSource;
-                    }
-
+                    HwndSource hwndSource = PresentationSource.FromNullableVisual(targetVisual) as HwndSource;
                     IInputElement relativeTarget = targetVisual as IInputElement;
 
                     if (relativeTarget != null)
@@ -3119,13 +3112,7 @@ namespace System.Windows.Controls.Primitives
 
             internal static Matrix GetTransformToDevice(Visual targetVisual)
             {
-                HwndSource hwndSource = null;
-                if (targetVisual != null)
-                {
-                    hwndSource = PopupSecurityHelper.GetPresentationSource(targetVisual) as HwndSource;
-                }
-
-                if (hwndSource != null)
+                if (PresentationSource.FromNullableVisual(targetVisual) is HwndSource hwndSource)
                 {
                     CompositionTarget ct = hwndSource.CompositionTarget;
                     if (ct != null && !ct.IsDisposed)
@@ -3151,11 +3138,6 @@ namespace System.Windows.Controls.Primitives
             internal void SetWindowRootVisual(Visual v)
             {
                 _window.RootVisual = v;
-            }
-
-            internal static bool IsVisualPresentationSourceNull(Visual visual)
-            {
-                return (PopupSecurityHelper.GetPresentationSource(visual) == null);
             }
 
             internal void ShowWindow()
@@ -3300,12 +3282,9 @@ namespace System.Windows.Controls.Primitives
                     mainTreeVisual = FindMainTreeVisual(placementTarget);
                 }
 
-                // get visual's PresentationSource
-                HwndSource hwndSource = PopupSecurityHelper.GetPresentationSource(mainTreeVisual) as HwndSource;
-
-                // get parent handle
+                // get visual's PresentationSource and parent handle
                 IntPtr parent = IntPtr.Zero;
-                if (hwndSource != null)
+                if (PresentationSource.FromNullableVisual(mainTreeVisual) is HwndSource hwndSource)
                 {
                     parent = PopupSecurityHelper.GetHandle(hwndSource);
                 }
@@ -3413,11 +3392,6 @@ namespace System.Windows.Controls.Primitives
             private IntPtr Handle => GetHandle(_window);
 
             private IntPtr ParentHandle => GetParentHandle(_window);
-
-            private static PresentationSource GetPresentationSource(Visual visual)
-            {
-                return visual is not null ? PresentationSource.FromVisual(visual) : null;
-            }
 
             /// <summary>
             /// This function is required to force the MSAAtoUIA bridge for popups which is broken due the deficiencey in UIAutomationCore

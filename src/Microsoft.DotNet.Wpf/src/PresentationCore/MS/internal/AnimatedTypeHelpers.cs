@@ -683,7 +683,7 @@ namespace MS.Internal.PresentationCore
 
         internal static bool IsValidAnimationValueSingle(float value)
         {
-            return double.IsFinite(value);
+            return float.IsFinite(value);
         }
 
         internal static bool IsValidAnimationValueSize(Size value)

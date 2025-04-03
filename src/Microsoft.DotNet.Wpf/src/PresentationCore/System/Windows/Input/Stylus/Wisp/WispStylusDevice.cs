@@ -1680,7 +1680,7 @@ namespace System.Windows.Input.StylusWisp
 
                         if (inputManager != null)
                         {
-                            if (inputManager.PrimaryMouseDevice.CriticalActiveSource != mouseInputSource)
+                            if (inputManager.PrimaryMouseDevice.ActiveSource != mouseInputSource)
                             {
                                 actions |= RawMouseActions.Activate;
                             }

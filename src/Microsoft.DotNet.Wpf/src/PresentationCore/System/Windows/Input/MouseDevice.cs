@@ -115,7 +115,7 @@ namespace System.Windows.Input
             {
                 try
                 {
-                    PresentationSource activeSource = CriticalActiveSource;
+                    PresentationSource activeSource = ActiveSource;
                     if (activeSource != null)
                     {
                         ptScreen = PointUtil.ClientToScreen(_lastPosition, activeSource);
@@ -142,7 +142,7 @@ namespace System.Windows.Input
             Point ptClient = new Point(0, 0);
             try
             {
-                PresentationSource activeSource = CriticalActiveSource;
+                PresentationSource activeSource = ActiveSource;
                 if (activeSource != null)
                 {
                     ptClient = GetClientPosition(activeSource);
@@ -191,16 +191,7 @@ namespace System.Windows.Input
         /// <summary>
         ///     Returns the PresentationSource that is reporting input for this device.
         /// </summary>
-        /// <remarks>
-        ///     Callers must have UIPermission(UIPermissionWindow.AllWindows) to call this API.
-        /// </remarks>
-
         public override PresentationSource ActiveSource => _inputSource;
-
-        /// <summary>
-        ///     Returns the PresentationSource that is reporting input for this device.
-        /// </summary>
-        internal PresentationSource CriticalActiveSource => _inputSource;
 
         /// <summary>
         ///     Returns the element that the mouse is over.
@@ -794,7 +785,7 @@ namespace System.Windows.Input
             if (presentationSource == null)
                 return false;
 
-            if (presentationSource != CriticalActiveSource)
+            if (presentationSource != ActiveSource)
                 return false;
 
             return true;
@@ -875,7 +866,7 @@ namespace System.Windows.Input
 //             VerifyAccess();
 
             // Simulate a mouse move
-            PresentationSource activeSource = CriticalActiveSource;
+            PresentationSource activeSource = ActiveSource;
             if (activeSource != null && activeSource.CompositionTarget != null && !activeSource.CompositionTarget.IsDisposed)
             {
                 int timeStamp = Environment.TickCount;

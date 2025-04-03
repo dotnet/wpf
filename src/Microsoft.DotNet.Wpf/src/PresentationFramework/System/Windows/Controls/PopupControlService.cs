@@ -1586,7 +1586,7 @@ namespace System.Windows.Controls
             internal bool ContainsMousePoint()
             {
                 // get the coordinates of the current mouse point, relative to the Active source
-                PresentationSource mouseSource = Mouse.PrimaryDevice.CriticalActiveSource;
+                PresentationSource mouseSource = Mouse.PrimaryDevice.ActiveSource;
                 System.Windows.Point pt = Mouse.PrimaryDevice.NonRelativePosition;
 
                 // translate the point to our source's coordinates, if necessary

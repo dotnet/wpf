@@ -530,7 +530,7 @@ namespace System.Windows.Input.StylusWisp
                                             {
                                                 MouseDevice mouseDevice = _inputManager.PrimaryMouseDevice;
 
-                                                if (mouseDevice.CriticalActiveSource == mouseInputReport.InputSource)
+                                                if (mouseDevice.ActiveSource == mouseInputReport.InputSource)
                                                 {
 #if !MULTICAPTURE
                                                     // Update over to be null when deactivating.
@@ -600,7 +600,7 @@ namespace System.Windows.Input.StylusWisp
                                         {
                                             // Check to se if we have already Activated the mouse from a stylus event.
                                             // If not then we need to let this one go through marked from us if we are in range!
-                                            if (mouseInputReport.InputSource != _inputManager.PrimaryMouseDevice.CriticalActiveSource)
+                                            if (mouseInputReport.InputSource != _inputManager.PrimaryMouseDevice.ActiveSource)
                                             {
                                                 Point pt;
 
@@ -1262,7 +1262,7 @@ namespace System.Windows.Input.StylusWisp
                 StylusEventArgs eventArgsOutOfRange = (StylusEventArgs)e.StagingItem.Input;
 
                 // See if we need to set the Mouse Activate flag.
-                PresentationSource mouseSource = _inputManager.PrimaryMouseDevice.CriticalActiveSource;
+                PresentationSource mouseSource = _inputManager.PrimaryMouseDevice.ActiveSource;
 
                 // See if we need to change the stylus over state state and send a mouse deactivate.
                 // We send the cached Deactivate through if we saw mouse deactivate before out of range event
@@ -1758,7 +1758,7 @@ namespace System.Windows.Input.StylusWisp
                                 // of straight touch events.
 
                                 // See if we need to set the Mouse Activate flag.
-                                if (_inputManager.PrimaryMouseDevice.CriticalActiveSource != mouseInputSource)
+                                if (_inputManager.PrimaryMouseDevice.ActiveSource != mouseInputSource)
                                 {
                                     actions |= RawMouseActions.Activate;
                                 }
@@ -2841,7 +2841,7 @@ namespace System.Windows.Input.StylusWisp
                 // Don't set Activate flag if a synchronize is requested!
                 if (!isSynchronize)
                 {
-                    if (_inputManager.PrimaryMouseDevice.CriticalActiveSource != mouseInputSource)
+                    if (_inputManager.PrimaryMouseDevice.ActiveSource != mouseInputSource)
                     {
                         actions |= RawMouseActions.Activate;
                     }

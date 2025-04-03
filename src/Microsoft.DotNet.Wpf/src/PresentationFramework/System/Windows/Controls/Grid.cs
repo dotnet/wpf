@@ -260,6 +260,7 @@ namespace System.Windows.Controls
         /// <summary>
         /// Returns a ColumnDefinitionCollection of column definitions.
         /// </summary>
+        [TypeConverter(typeof(ColumnDefinitionCollectionConverter))]
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
         public ColumnDefinitionCollection ColumnDefinitions
         {
@@ -270,11 +271,38 @@ namespace System.Windows.Controls
 
                 return (_data.ColumnDefinitions);
             }
+            set
+            {
+                if (value?.Owner is not null)
+                {
+                    if (value.Owner == this)
+                    {
+                        return;
+                    }
+
+                    throw new ArgumentException(SR.Format(SR.GridCollection_InOtherCollection, nameof(value), nameof(ColumnDefinitionCollection)));
+                }
+
+                _data ??= new ExtendedData();
+                if (_data.ColumnDefinitions is { } columnDefinitions)
+                {
+                    columnDefinitions.Owner = null;
+                }
+
+                _data.ColumnDefinitions = null;
+                
+                if (value is not null)
+                {
+                    value.Owner = this;
+                    _data.ColumnDefinitions = value;
+                }
+            }
         }
 
         /// <summary>
         /// Returns a RowDefinitionCollection of row definitions.
         /// </summary>
+        [TypeConverter(typeof(RowDefinitionCollectionConverter))]
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
         public RowDefinitionCollection RowDefinitions
         {
@@ -284,6 +312,32 @@ namespace System.Windows.Controls
                 if (_data.RowDefinitions == null) { _data.RowDefinitions = new RowDefinitionCollection(this); }
 
                 return (_data.RowDefinitions);
+            }
+            set
+            {
+                if (value?.Owner is not null)
+                {
+                    if (value.Owner == this)
+                    {
+                        return;
+                    }
+                    
+                    throw new ArgumentException(SR.Format(SR.GridCollection_InOtherCollection, nameof(value), nameof(RowDefinitionCollection)));
+                }
+
+                _data ??= new ExtendedData();
+                if (_data.RowDefinitions is { } rowDefinitions)
+                {
+                    rowDefinitions.Owner = null;
+                }
+
+                _data.RowDefinitions = null;
+
+                if (value is not null)
+                {
+                    value.Owner = this;
+                    _data.RowDefinitions = value;
+                }
             }
         }
 

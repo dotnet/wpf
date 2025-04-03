@@ -780,9 +780,9 @@ namespace System.Windows.Interop
 
                                     // Create a DrawingGroup that only contains an ImageDrawing that wraps the bitmap.
                                     drawingGroup = new DrawingGroup();
-                                    System.Windows.Media.Imaging.BitmapSource bitmapSource = Imaging.CriticalCreateBitmapSourceFromHBitmap(hBitmap.Handle, IntPtr.Zero, Int32Rect.Empty, null, WICBitmapAlphaChannelOption.WICBitmapIgnoreAlpha);
-                                    Rect rectElement    = new Rect(RenderSize);
-                                    drawingGroup.Children.Add(new ImageDrawing(bitmapSource, rectElement));
+                                    Media.Imaging.BitmapSource bitmapSource = Imaging.CreateBitmapSourceFromHBitmap(hBitmap.Handle, IntPtr.Zero, Int32Rect.Empty, null, WICBitmapAlphaChannelOption.WICBitmapIgnoreAlpha);
+
+                                    drawingGroup.Children.Add(new ImageDrawing(bitmapSource, new Rect(RenderSize)));
                                     drawingGroup.Freeze();
                                 }
                                 finally

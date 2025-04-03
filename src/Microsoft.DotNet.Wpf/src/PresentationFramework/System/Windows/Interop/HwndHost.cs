@@ -546,8 +546,6 @@ namespace System.Windows.Interop
         ///<remarks> Not available in Internet zone</remarks>
         protected virtual IntPtr WndProc(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
         {
-            DemandIfUntrusted();
-
             switch ((WindowMessage)msg)
             {
                 case WindowMessage.WM_NCDESTROY:
@@ -685,9 +683,7 @@ namespace System.Windows.Interop
         ///<remarks> Not available in Internet zone</remarks>
         protected override Size MeasureOverride(Size constraint)
         {
-            DemandIfUntrusted();
-
-            Size desiredSize = new Size(0,0);
+            Size desiredSize = new Size(0, 0);
 
             // Measure to our desired size.  If we have a 0-length dimension,
             // the system will assume we don't care about that dimension.
@@ -829,16 +825,6 @@ namespace System.Windows.Interop
             _weakEventDispatcherShutdown = new WeakEventDispatcherShutdown(this, this.Dispatcher);
         }
 
-        ///<summary>
-        ///     Use this method as a defense-in-depth measure only.
-        ///</summary>
-        private void DemandIfUntrusted()
-        {
-            if ( ! _fTrusted )
-            {
-            }
-        }
-
         private void OnSourceChanged(object sender, SourceChangedEventArgs e)
         {
             // Remove ourselves as an IKeyboardInputSinks child of our previous
@@ -905,8 +891,6 @@ namespace System.Windows.Interop
         // 3) a parent window is not present, hide the child window by parenting it to SystemResources.Hwnd window.
         private void BuildOrReparentWindow()
         {
-            DemandIfUntrusted();
-
             // Verify the thread has access to the context.
             // VerifyAccess();
 
@@ -1002,9 +986,6 @@ namespace System.Windows.Interop
 
         private void BuildWindow(HandleRef hwndParent)
         {
-            // Demand unmanaged code to the caller. IT'S RISKY TO REMOVE THIS
-            DemandIfUntrusted();
-
             // Allow the derived class to build our HWND.
             _hwnd = BuildWindowCore(hwndParent);
 

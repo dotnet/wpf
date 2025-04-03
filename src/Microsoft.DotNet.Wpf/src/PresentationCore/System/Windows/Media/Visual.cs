@@ -4092,12 +4092,7 @@ namespace System.Windows.Media
                 }
 
                 // If there is a handler on this node, then fire it.
-                AncestorChangedEventHandler handler = AncestorChangedEventField.GetValue(eAsVisual);
-
-                if(handler != null)
-                {
-                    handler(eAsVisual, args);
-                }
+                AncestorChangedEventField.GetValue(eAsVisual)?.Invoke(eAsVisual, args);
 
                 // Decend into the children.
                 int count = eAsVisual.InternalVisual2DOr3DChildrenCount;

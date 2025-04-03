@@ -455,10 +455,7 @@ namespace System.Windows.Ink
         protected void OnSelectionChanged(LassoSelectionChangedEventArgs  eventArgs)
         {
             System.Diagnostics.Debug.Assert(eventArgs != null);
-            if (SelectionChanged != null)
-            {
-                SelectionChanged(this, eventArgs);
-            }
+            SelectionChanged?.Invoke(this, eventArgs);
         }
 
 
@@ -571,10 +568,7 @@ namespace System.Windows.Ink
         protected void OnStrokeHit(StrokeHitEventArgs eventArgs)
         {
             System.Diagnostics.Debug.Assert(eventArgs != null);
-            if (StrokeHit != null)
-            {
-                StrokeHit(this, eventArgs);
-            }
+            StrokeHit?.Invoke(this, eventArgs);
         }
 
         #endregion

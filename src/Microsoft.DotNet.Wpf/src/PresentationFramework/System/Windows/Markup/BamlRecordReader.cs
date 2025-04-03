@@ -70,38 +70,6 @@ namespace System.Windows.Markup
     /// </summary>
     internal class BamlRecordReader
     {
-#region Constructor
-        /// <summary>
-        /// Eventually should need xamltypemapper when finish compiler integration
-        /// and namespaceMaps are written to Baml.
-        /// </summary>summary>
-        internal BamlRecordReader(
-            Stream        bamlStream,
-            ParserContext parserContext)
-            : this(bamlStream,parserContext,true)
-        {
-            XamlParseMode = XamlParseMode.Synchronous;
-        }
-
-        internal BamlRecordReader(
-            Stream           bamlStream,
-            ParserContext    parserContext,
-            object           root)
-        {
-            Debug.Assert(null != bamlStream);
-            Debug.Assert(null != parserContext && null != parserContext.XamlTypeMapper);
-
-            ParserContext = parserContext;
-            _rootElement = root;
-            _bamlAsForest = (root != null);
-            if (_bamlAsForest)
-            {
-                ParserContext.RootElement = _rootElement;
-            }
-            _rootList = new ArrayList(1);
-            BamlStream = bamlStream;
-        }
-
         /// <summary>
         /// BamlRecordReader constructor
         /// </summary>
@@ -133,19 +101,7 @@ namespace System.Windows.Markup
         {
         }
 
-#endregion Constructor
-
 #region Methods
-
-        /// <summary>
-        /// Set up the XamlTypeMapper and baml map table prior to starting to read.
-        /// </summary>
-        internal void Initialize()
-        {
-            MapTable.Initialize();
-            XamlTypeMapper.Initialize();
-            ParserContext.Initialize();
-        }
 
         /// <summary>
         /// Array of root objects contained in the baml stream.  This is added to
@@ -157,26 +113,6 @@ namespace System.Windows.Markup
             set { _rootList = value; }
         }
 
-
-        /// <summary>
-        /// True if tree is to be built strictly (well, more or less strictly)
-        /// top down.
-        /// </summary>
-        internal bool BuildTopDown
-        {
-            get { return _buildTopDown; }
-            set { _buildTopDown = value; }
-        }
-
-        internal int BytesAvailible
-        {
-            get
-            {
-                Stream stream = BinaryReader.BaseStream;
-                return (int)(stream.Length - stream.Position);
-            }
-        }
-
         /// <summary>
         /// Read a BamlRecord from the underlying binary stream and return it.
         /// If we're at the end of the stream, return null.
@@ -185,92 +121,76 @@ namespace System.Windows.Markup
         {
             BamlRecord bamlRecord = null;
 
-            if (null == PreParsedRecordsStart)
+            Stream stream = BinaryReader.BaseStream;
+
+            // If we have a ReaderStream we know we are coming from XAML (check if can read full record)
+            // When reading BAML we don't get a ReaderStream so:
+            //      network - should check for number of bits downloaded but currently
+            //          no way to get this information. For now read sync.
+            //          NOTE:  This has to be addressed if we want async download
+            //                 of BAML.
+            //      local file - in memory or something, so else read the record sync.
+
+            if (null != XamlReaderStream)
             {
-                Stream stream = BinaryReader.BaseStream;
+                long currentPosition = stream.Position;
+                long bytesAvailable = stream.Length - currentPosition;
 
-                // If we have a ReaderStream we know we are coming from XAML (check if can read full record)
-                // When reading BAML we don't get a ReaderStream so:
-                //      network - should check for number of bits downloaded but currently
-                //          no way to get this information. For now read sync.
-                //          NOTE:  This has to be addressed if we want async download
-                //                 of BAML.
-                //      local file - in memory or something, so else read the record sync.
-
-                if (null != XamlReaderStream)
+                // Make sure there is room for the record type in the stream.
+                if (BamlRecord.RecordTypeFieldLength > bytesAvailable)
                 {
-                    long currentPosition = stream.Position;
-                    long bytesAvailable = stream.Length - currentPosition;
+                    return null;
+                }
 
-                    // Make sure there is room for the record type in the stream.
-                    if (BamlRecord.RecordTypeFieldLength > bytesAvailable)
-                    {
-                        return null;
-                    }
+                BamlRecordType recordType = (BamlRecordType)BinaryReader.ReadByte();
 
-                    BamlRecordType recordType = (BamlRecordType)BinaryReader.ReadByte();
+                // We've read the record type, so decrement available bytes.
+                bytesAvailable -= BamlRecord.RecordTypeFieldLength;
 
-                    // We've read the record type, so decrement available bytes.
-                    bytesAvailable -= BamlRecord.RecordTypeFieldLength;
+                // call GetNextRecord passing in the record type.  If this returns null,
+                // then the complete record was not yet available and could not be
+                // read.
+                bamlRecord = ReadNextRecordWithDebugExtension(bytesAvailable, recordType);
 
-                    // call GetNextRecord passing in the record type.  If this returns null,
-                    // then the complete record was not yet available and could not be
-                    // read.
-                    bamlRecord = ReadNextRecordWithDebugExtension(bytesAvailable, recordType);
-
-                    if (bamlRecord == null)
-                    {
+                if (bamlRecord == null)
+                {
 #if DEBUG
-                        // this case can happen if doing BAML Async and entire record hasn't
-                        // been downloaded.
-                        Debug.Assert(false == XamlReaderStream.IsWriteComplete,
-                                "not enough bytes for RecordSize but write is complete");
+                    // this case can happen if doing BAML Async and entire record hasn't
+                    // been downloaded.
+                    Debug.Assert(false == XamlReaderStream.IsWriteComplete,
+                            "not enough bytes for RecordSize but write is complete");
 #endif
-                        stream.Seek(currentPosition,SeekOrigin.Begin);
-                        return null;
-                    }
+                    stream.Seek(currentPosition,SeekOrigin.Begin);
+                    return null;
+                }
 
-                    // tell stream we are done with these file bits.
-                    XamlReaderStream.ReaderDoneWithFileUpToPosition(stream.Position -1);
-                }
-                else
-                {
-                    // default to reading a single record synchronous.  Don't attempt
-                    // to read if its already at the end of the stream.
-                    bool keepOnReading = true;
-                    while (keepOnReading)
-                    {
-                        if (BinaryReader.BaseStream.Length >
-                            BinaryReader.BaseStream.Position)
-                        {
-                            // If we are supposed to skip info records, then just advance the stream
-                            // for info records and continue until we get a non-info record, or we
-                            // run out of stream data to read.
-                            BamlRecordType recordType = (BamlRecordType)BinaryReader.ReadByte();
-                            bamlRecord = ReadNextRecordWithDebugExtension(Int64.MaxValue, recordType);
-                            keepOnReading = false;
-                        }
-                        else
-                        {
-                            keepOnReading = false;
-                        }
-                    }
-                }
+                // tell stream we are done with these file bits.
+                XamlReaderStream.ReaderDoneWithFileUpToPosition(stream.Position -1);
             }
-            else if (PreParsedCurrentRecord != null) // If the preparsed list has not reached its end
+            else
             {
-                bamlRecord = PreParsedCurrentRecord;   // return the record pointed to index
-                PreParsedCurrentRecord = PreParsedCurrentRecord.Next;
-
-                // if the next record is a debug record then process it and advance over it.
-                // The Debug record extension record is process BEFORE the current record because
-                // it is debug information regarding the current record.
-                if (BamlRecordHelper.HasDebugExtensionRecord(ParserContext.IsDebugBamlStream, bamlRecord))
+                // default to reading a single record synchronous.  Don't attempt
+                // to read if its already at the end of the stream.
+                bool keepOnReading = true;
+                while (keepOnReading)
                 {
-                    ProcessDebugBamlRecord(PreParsedCurrentRecord);
-                    PreParsedCurrentRecord = PreParsedCurrentRecord.Next;
+                    if (BinaryReader.BaseStream.Length >
+                        BinaryReader.BaseStream.Position)
+                    {
+                        // If we are supposed to skip info records, then just advance the stream
+                        // for info records and continue until we get a non-info record, or we
+                        // run out of stream data to read.
+                        BamlRecordType recordType = (BamlRecordType)BinaryReader.ReadByte();
+                        bamlRecord = ReadNextRecordWithDebugExtension(Int64.MaxValue, recordType);
+                        keepOnReading = false;
+                    }
+                    else
+                    {
+                        keepOnReading = false;
+                    }
                 }
             }
+            
             return bamlRecord;
         }
 
@@ -334,18 +254,7 @@ namespace System.Windows.Markup
         /// </summary>
         internal BamlRecordType GetNextRecordType()
         {
-            BamlRecordType bamlRecordType;
-
-            if (null == PreParsedRecordsStart)
-            {
-                bamlRecordType = (BamlRecordType)BinaryReader.PeekChar();
-            }
-            else
-            {
-                bamlRecordType = PreParsedCurrentRecord.RecordType;
-            }
-
-            return bamlRecordType;
+            return (BamlRecordType)BinaryReader.PeekChar();
         }
 
         /// <summary>
@@ -357,163 +266,10 @@ namespace System.Windows.Markup
             EndOfDocument = true;
         }
 
-        /// <summary>
-        /// Read the Baml and buld a Tree.
-        /// </summary>
-        internal bool Read(bool singleRecord)
-        {
-            BamlRecord bamlRecord = null;
-            bool moreData = true;
-
-            // loop through the records until the end building the Tree.
-            while ( (true == moreData)
-                && null != (bamlRecord = GetNextRecord()))
-            {
-                moreData = ReadRecord(bamlRecord);
-
-                // if singleRecordMode then break
-                if (singleRecord)
-                {
-                    break;
-                }
-            }
-
-            // if next bamlRecord read comes back null
-            // then moreData is false
-            if (null == bamlRecord)
-            {
-                moreData = false;
-            }
-
-            // return true for more data meaning it is worth calling
-            // read again if in Single Record mode. May or may not
-            // really be another record.
-
-            return moreData;
-        }
-
-        /// <summary>
-        /// Synchronous read from Baml
-        /// </summary>
-        internal bool Read()
-        {
-            return Read(false); // not in single record mode.
-        }
-
-        /// <summary>
-        /// Synchronous read callback that passes line information from original xaml file.
-        /// This line information is used when reporting errors.  Make certain that the
-        /// parser context line numbers are correct, since this is passed to subparsers and
-        /// serializers and they may wish to report line information also.
-        /// </summary>
-        internal bool Read(
-            BamlRecord bamlRecord,
-            int        lineNumber,
-            int        linePosition)
-        {
-            LineNumber = lineNumber;
-            LinePosition = linePosition;
-
-            return ReadRecord(bamlRecord);
-        }
-
         internal void ReadVersionHeader()
         {
             BamlVersionHeader version = new BamlVersionHeader();
             version.LoadVersion(BinaryReader);
-        }
-
-        /// <summary>
-        /// Read the Baml starting at the current location until the end of this
-        /// element scope has been reached.  Return the object parsed.
-        /// </summary>
-        /// <remarks>
-        /// Note that the first record read MUST be a BamlElementStartRecord, and
-        /// reading will continue until the matching BamlElementEndRecord is reached.
-        ///
-        /// The dictionaryKey property, if set, indicates that this element is in a
-        /// dictionary, and this was the key used to identify it.  This is used to
-        /// provide better exception messages for deferred instantiation from a dictionary.
-        /// </remarks>
-        internal object ReadElement(Int64 startPosition,
-                                    XamlObjectIds contextXamlObjectIds,
-                                    object dictionaryKey )
-        {
-            BamlRecord bamlRecord = null;
-            bool moreData = true;
-            BinaryReader.BaseStream.Position = startPosition;
-            int elementDepth = 0;
-            object data = null;
-            bool isKeySetInContext = false;
-
-            // Push a special context onto the stack that is used as a placeholder
-            // for surrounding context information about this element.
-
-            PushContext(ReaderFlags.RealizeDeferContent, null, null, 0);
-            CurrentContext.ElementNameOrPropertyName = contextXamlObjectIds.Name;
-            CurrentContext.Uid = contextXamlObjectIds.Uid;
-            CurrentContext.Key = dictionaryKey;
-
-            #if DEBUG
-            int stackDepth = ReaderContextStack.Count;
-            #endif
-
-            // Loop through the records until the matching end record is reached.
-            while ( moreData
-                && null != (bamlRecord = GetNextRecord()))
-            {
-                // Count start and end records and stop when we've reached the end
-                // record associated with the first start record.  Note that
-                // serializers handle the end record, so don't increment the element
-                // depth for types that have serializers (such as styles).
-                BamlElementStartRecord startRecord = bamlRecord as BamlElementStartRecord;
-                if (startRecord != null)
-                {
-                    if (!MapTable.HasSerializerForTypeId(startRecord.TypeId))
-                    {
-                        elementDepth++;
-                    }
-                }
-                else if (bamlRecord is BamlElementEndRecord)
-                {
-                    elementDepth--;
-                }
-
-                moreData = ReadRecord(bamlRecord);
-
-                // If we got a key from the caller, it indicates that this element is being
-                // defer-loaded from a dictionary, and this was the element's key.  Set it into
-                // the context, as would happen in the non-deferred case, so that it is available to
-                // make a good exception message.
-
-                if( !isKeySetInContext )
-                {
-                    CurrentContext.Key = dictionaryKey;
-                    isKeySetInContext = true;
-                }
-
-                // if singleRecordMode then break
-                if (elementDepth == 0)
-                {
-                    break;
-                }
-            }
-
-            // Get the element out of the context, then restore it
-            // to null (as it was from the PushContext above).
-
-            data = CurrentContext.ObjectData;
-            CurrentContext.ObjectData = null;
-
-            #if DEBUG  // ifdef's around Debug.Assert are necessary because stackDepth is only DEBUG defined
-            Debug.Assert( stackDepth == ReaderContextStack.Count );
-            #endif
-
-            PopContext();
-
-            MapTable.ClearConverterCache();
-
-            return data;
         }
 
         protected virtual void ReadConnectionId(BamlConnectionIdRecord bamlConnectionIdRecord)
@@ -992,47 +748,37 @@ namespace System.Windows.Markup
             ReaderFlags   flags = ReaderFlags.Unknown;
             ReaderContextStackData currentContext = CurrentContext;
 
-            if (_bamlAsForest && currentContext == null)
+            if (null != currentContext &&
+                (ReaderFlags.PropertyComplexClr == currentContext.ContextType ||
+                    ReaderFlags.PropertyComplexDP == currentContext.ContextType) &&
+                null == currentContext.ExpectedType)
             {
-                Debug.Assert(_rootElement != null);
-                element = _rootElement;
-
-                flags = GetFlagsFromType(element.GetType());
+                string propName = GetPropNameFrom(currentContext.ObjectData);
+                ThrowException(nameof(SR.ParserNoComplexMulti), propName);
             }
-            else
+
+            // If this is the very top element as indicated by there not being a
+            // parent context, then we have to add this element to the rootlist
+            // by calling SetPropertyValueToParent.  For all other cases we don't want to
+            // call this here since we may be building a subtree bottom up and want
+            // to defer addition of elements.  
+            if (null == ParentContext)
             {
-                if (null != currentContext &&
-                    (ReaderFlags.PropertyComplexClr == currentContext.ContextType ||
-                     ReaderFlags.PropertyComplexDP == currentContext.ContextType) &&
-                    null == currentContext.ExpectedType)
-                {
-                    string propName = GetPropNameFrom(currentContext.ObjectData);
-                    ThrowException(nameof(SR.ParserNoComplexMulti), propName);
-                }
-
-                // If this is the very top element as indicated by there not being a
-                // parent context, then we have to add this element to the rootlist
-                // by calling SetPropertyValueToParent.  For all other cases we don't want to
-                // call this here since we may be building a subtree bottom up and want
-                // to defer addition of elements.  
-                if (null == ParentContext)
-                {
-                    SetPropertyValueToParent(true);
-                }
-
-                // Get an instance of the element, if it is to be created now.  Also set
-                // the flags to indicate what the element is and how to treat it.
-                GetElementAndFlags(bamlElementRecord, out element, out flags,
-                                   out delayCreatedType, out delayCreatedTypeId);
+                SetPropertyValueToParent(true);
             }
+
+            // Get an instance of the element, if it is to be created now.  Also set
+            // the flags to indicate what the element is and how to treat it.
+            GetElementAndFlags(bamlElementRecord, out element, out flags,
+                                out delayCreatedType, out delayCreatedTypeId);
+
 
             Stream bamlStream = BamlStream;
 
-            if (!_bamlAsForest &&
-                currentContext == null &&
+            if (currentContext == null &&
                 element != null &&
                 bamlStream != null &&
-                !(bamlStream is ReaderStream) &&
+                bamlStream is not ReaderStream &&
                 StreamPosition == StreamLength)
             {
                 // We are here because the root element was loaded from this baml stream
@@ -1051,11 +797,6 @@ namespace System.Windows.Markup
                 {
                     RootList.Add(element);
                 }
-
-                // Set a flag to prevent the TreeBuilder from clobbering the
-                // XamlTypeMapper's xmlns hashtable on the root element as this
-                // would have already been set by the inner Baml loading Context.
-                IsRootAlreadyLoaded = true;
             }
             else
             {
@@ -1088,11 +829,7 @@ namespace System.Windows.Markup
                 // of the logical tree.  Other objects, such as Freezables, are added bottom-up
                 // to aid in having all properties set prior to adding them to the tree.
                 // See PS workitem #19080
-                if (BuildTopDown &&
-                    element != null &&
-                    ((element is UIElement) ||
-                    (element is ContentElement) ||
-                    (element is UIElement3D)))
+                if (element is not null and (UIElement or ContentElement or UIElement3D))
                 {
                     SetPropertyValueToParent(true);
                 }
@@ -4111,116 +3848,11 @@ namespace System.Windows.Markup
                     }
                 }
 
-
-                // If we reach the end of this reader's context stack, see if we should
-                // look at another one.
-
-                bool newContextStackFound = false;
-                while (reader._previousBamlRecordReader != null)
-                {
-                    // Yes, move to the next reader
-                    reader = reader._previousBamlRecordReader;
-
-                    if (reader.ReaderContextStack != contextStack)
-                    {
-                        contextStack = reader.ReaderContextStack;
-                        newContextStackFound = true;
-                        break;
-                    }
-                }
-
-                if( !newContextStackFound )
-                {
-                    // Terminate the loop
-                    contextStack = null;
-                }
+                // Terminate the loop
+                contextStack = null;
             }
 
             return DependencyProperty.UnsetValue;
-        }
-
-        /// <summary>
-        /// Helper function for loading a Resources from RootElement/AppResources/SystemResources.
-        /// The passed in object must be a trimmed string or a type.
-        /// </summary>
-        /// <returns>
-        ///  The resource value, if found.  Otherwise DependencyProperty.UnsetValue.
-        /// </returns>
-        private object FindResourceInRootOrAppOrTheme(
-            object  resourceNameObject,
-            bool    allowDeferredResourceReference,
-            bool    mustReturnDeferredResourceReference)
-        {
-            // This method should not exist since resource references should be references
-            // and not looked up at this point.
-            // That not being the case, we need to look at SystemResources and App Resources
-            // even when we don't have a reference to an element or tree.
-            // System resources lucked out, though...
-            object result;
-            if (!SystemResources.IsSystemResourcesParsing)
-            {
-                object source;
-                result = FrameworkElement.FindResourceFromAppOrSystem(resourceNameObject, out source, false /*throwOnError*/, allowDeferredResourceReference, mustReturnDeferredResourceReference);
-            }
-            else
-            {
-                result = SystemResources.FindResourceInternal(resourceNameObject, allowDeferredResourceReference, mustReturnDeferredResourceReference);
-            }
-
-            if (result != null)
-            {
-                return result;
-            }
-
-            return DependencyProperty.UnsetValue;
-        }
-
-        // Given a key, find object in the parser stack that may hold a
-        // ResourceDictionary and search for an object keyed by that key.
-        internal object FindResourceInParentChain(
-            object  resourceNameObject,
-            bool    allowDeferredResourceReference,
-            bool    mustReturnDeferredResourceReference)
-        {
-            // Try the parser stack first.
-            object resource = FindResourceInParserStack(resourceNameObject, allowDeferredResourceReference, mustReturnDeferredResourceReference);
-
-            if (resource == DependencyProperty.UnsetValue)
-            {
-                // If we get to here, we've either walked off the top of the reader stack, or haven't
-                // found a value on an element that is in the tree.  In that case, give the RootElement
-                // and the parent held in the parser context one last try.  This would occur if the
-                // parser is used for literal content that did not contain a DependencyObject tree.
-                resource = FindResourceInRootOrAppOrTheme(resourceNameObject, allowDeferredResourceReference, mustReturnDeferredResourceReference);
-            }
-
-            if (resource == DependencyProperty.UnsetValue && mustReturnDeferredResourceReference)
-            {
-                resource = new DeferredResourceReferenceHolder(resourceNameObject, DependencyProperty.UnsetValue);
-            }
-
-            return resource;
-        }
-
-        // Given a string key, find objects in the parser stack that may hold a
-        // ResourceDictionary and call the XamlTypeMapper to try and resolve the key using
-        // those objects.
-        internal object LoadResource(string resourceNameString)
-        {
-            string  resourceName = resourceNameString.Substring(1, resourceNameString.Length-2);
-            object  resourceNameObject = XamlTypeMapper.GetDictionaryKey(resourceName, ParserContext);
-            if (resourceNameObject == null)
-            {
-               ThrowException(nameof(SR.ParserNoResource), resourceNameString);
-            }
-
-            object value = FindResourceInParentChain(resourceNameObject, false /*allowDeferredResourceReference*/, false /*mustReturnDeferredResourceReference*/);
-            if (value == DependencyProperty.UnsetValue)
-            {
-                ThrowException(nameof(SR.ParserNoResource) , $"{{{resourceNameObject}}}");
-            }
-
-            return value;
         }
 
         private object GetObjectDataFromContext(ReaderContextStackData context)
@@ -5331,45 +4963,10 @@ namespace System.Windows.Markup
                 f?.Freeze();
             }
         }
-        internal void PreParsedBamlReset()
-        {
-            PreParsedCurrentRecord = PreParsedRecordsStart;
-        }
-
-
-        //+--------------------------------------------------------------------------------------------------------------
-        //
-        //  SetPreviousBamlRecordReader
-        //
-        //  Link this nested BamlRecordReader to one that is higher in the stack.
-        //
-        //+--------------------------------------------------------------------------------------------------------------
-
-        protected internal void SetPreviousBamlRecordReader( BamlRecordReader previousBamlRecordReader )
-        {
-            _previousBamlRecordReader = previousBamlRecordReader;
-        }
 
         #endregion Methods
 
         #region Properties
-
-        // List of preparsed BamlRecords that are used instead of a
-        // record stream.  This is used when reading the contents of
-        // a resource dictionary.
-        internal BamlRecord PreParsedRecordsStart
-        {
-            get { return _preParsedBamlRecordsStart; }
-            set { _preParsedBamlRecordsStart = value; }
-        }
-
-        // Index into the list of preparsed records for the next
-        // record to be read.
-        internal BamlRecord PreParsedCurrentRecord
-        {
-            get { return _preParsedIndexRecord; }
-            set { _preParsedIndexRecord= value; }
-        }
 
         // Stream that contains baml records in binary form.  This is used when
         // reading from a file.
@@ -5436,21 +5033,6 @@ namespace System.Windows.Markup
                 }
                 return _typeConvertContext;
             }
-        }
-
-        // Determines sync and async parsing modes.  Not used directly by the record
-        // reader, but is needed when spinning off other deserializers
-        internal XamlParseMode XamlParseMode
-        {
-            get { return _parseMode; }
-            set { _parseMode = value; }
-        }
-
-        // The maximum number of records to read while in async mode
-        internal int MaxAsyncRecords
-        {
-            get { return _maxAsyncRecords; }
-            set { _maxAsyncRecords = value; }
         }
 
         // Table for mapping types, attributes and assemblies.
@@ -5549,13 +5131,6 @@ namespace System.Windows.Markup
             get { return _xamlReaderStream; }
         }
 
-        // The stack of context information accumulated during reading.
-        internal ParserStack ContextStack
-        {
-            get { return _contextStack; }
-            set { _contextStack = value; }
-        }
-
         internal int LineNumber
         {
             get { return ParserContext.LineNumber; }
@@ -5584,20 +5159,6 @@ namespace System.Windows.Markup
             get { return _bamlStream.Length; }
         }
 
-        internal bool IsRootAlreadyLoaded
-        {
-            get { return _isRootAlreadyLoaded; }
-            set { _isRootAlreadyLoaded = value; }
-        }
-
-        // The PreviousBamlRecordReader is set when this BRR is nested inside
-        // another.
-
-        internal BamlRecordReader PreviousBamlRecordReader
-        {
-            get { return _previousBamlRecordReader; }
-        }
-
 #endregion Properties
 
 #region Data
@@ -5605,28 +5166,18 @@ namespace System.Windows.Markup
         // state vars
         private IComponentConnector          _componentConnector;
         private object                       _rootElement;
-        private bool                         _bamlAsForest;
-        private bool                         _isRootAlreadyLoaded;
         private ArrayList                    _rootList;
         private ParserContext                _parserContext;   // XamlTypeMapper, namespace state, lang/space values
         private TypeConvertContext           _typeConvertContext;
         private int                          _persistId;
         private ParserStack                  _contextStack = new ParserStack();
-        private XamlParseMode                _parseMode = XamlParseMode.Synchronous;
-        private int                          _maxAsyncRecords;
         // end of state vars
 
         private Stream                       _bamlStream;
         private ReaderStream                 _xamlReaderStream;
         private BamlBinaryReader             _binaryReader;
         private BamlRecordManager            _bamlRecordManager;
-        private BamlRecord                   _preParsedBamlRecordsStart = null;
-        private BamlRecord                   _preParsedIndexRecord = null;
         private bool                         _endOfDocument = false;
-        private bool                         _buildTopDown = true;
-
-        // The outer BRR, when this one is nested.
-        private BamlRecordReader             _previousBamlRecordReader;
 
         private static List<ReaderContextStackData> _stackDataFactoryCache = new List<ReaderContextStackData>();
 

@@ -895,9 +895,8 @@ namespace System.Windows.Input
                     inputReportEventArgs = new InputReportEventArgs(this, report);
                 }
 
-                inputReportEventArgs.RoutedEvent=InputManager.PreviewInputReportEvent;
+                inputReportEventArgs.RoutedEvent = InputManager.PreviewInputReportEvent;
 
-                //ProcessInput has a linkdemand
                 _inputManager.ProcessInput(inputReportEventArgs);
             }
         }
@@ -926,7 +925,7 @@ namespace System.Windows.Input
                 Cursor = Cursors.Arrow,
                 RoutedEvent = Mouse.QueryCursorEvent
             };
-            //ProcessInput has a linkdemand
+
             _inputManager.ProcessInput(queryCursor);
             return queryCursor.Handled;
         }
@@ -1117,7 +1116,7 @@ namespace System.Windows.Input
                         RoutedEvent = Mouse.LostMouseCaptureEvent,
                         Source = oldMouseCapture
                     };
-                    //ProcessInput has a linkdemand
+
                     _inputManager.ProcessInput(lostCapture);
                 }
                 if (_mouseCapture != null)
@@ -1127,7 +1126,7 @@ namespace System.Windows.Input
                         RoutedEvent = Mouse.GotMouseCaptureEvent,
                         Source = _mouseCapture
                     };
-                    //ProcessInput has a linkdemand
+
                     _inputManager.ProcessInput(gotCapture);
                 }
 
@@ -1319,7 +1318,7 @@ namespace System.Windows.Input
                             {
                                 RoutedEvent = Mouse.PreviewMouseDownOutsideCapturedElementEvent
                             };
-                            //ProcessInput has a linkdemand
+
                             _inputManager.ProcessInput(clickThrough);
                         }
                     }
@@ -1337,7 +1336,7 @@ namespace System.Windows.Input
                             {
                                 RoutedEvent = Mouse.PreviewMouseUpOutsideCapturedElementEvent
                             };
-                            //ProcessInput has a linkdemand
+
                             _inputManager.ProcessInput(clickThrough);
                         }
                     }

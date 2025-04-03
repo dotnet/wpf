@@ -192,13 +192,6 @@ namespace System.Windows.Interop
         // contract, which limits IntelliSense on derived types like WebBrowser) while sticking protected
         // virtuals next to them. Those virtuals contain our base implementation, while the explicit
         // interface implementation methods do call trivially into the virtuals.
-        //
-        // This comment outlines the security rationale applied to those methods.
-        //
-        // <SecurityNote Name="IKeyboardInputSink_Implementation">
-        //     The security attributes on the virtual methods within this region mirror the corresponding
-        //     IKeyboardInputSink methods; customers can override those methods, so we insert a LinkDemand
-        //     to encourage them to have a LinkDemand too (via FxCop).
 
         /// <summary>
         ///     Registers a IKeyboardInputSink with the HwndSource in order
@@ -467,18 +460,15 @@ namespace System.Windows.Interop
                 return;
             }
 
-
-            if(disposing)
+            if (disposing)
             {
                 // Verify the thread has access to the context.
-                 VerifyAccess();
+                VerifyAccess();
 
-
-                // Remove our subclass.  Even if this fails, it will be forcably removed
-                // when the window is destroyed.
+                // Remove our subclass.  Even if this fails, it will be forcibly removed when the window is destroyed.
                 if (_hwndSubclass != null)
                 {
-                    // Check if it is trusted (WebOC and AddInHost), call CriticalDetach to avoid the Demand.
+                    // Check if it is trusted (WebOC and AddInHost), otherwise call DetachWndProcHook.
                     if (_fTrusted == true)
                     {
                         _hwndSubclass.DetachWndProcHook(force: false);

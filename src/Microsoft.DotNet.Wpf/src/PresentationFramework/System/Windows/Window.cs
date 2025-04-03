@@ -2240,14 +2240,8 @@ namespace System.Windows
             {
                 // close window synchronously
 
-                // We demand for UIPermission AllWindows at the public API, Window.Close(), level.
-                // It can be called when shutting down the app.
-                // The public entry to that code path Application.Shutdown is
-                // also protected with a demand for UIPermission with AllWindow access
-
-                // SendMessage's return value is dependent on the message send.  WM_CLOSE
-                // return value just signify whether the WndProc handled the
-                // message or not, so it is not interesting
+                // SendMessage's return value is dependent on the message send.
+                // WM_CLOSE return value just signify whether the WndProc handled the message or not, so it is not interesting
                 UnsafeNativeMethods.UnsafeSendMessage(Handle, WindowMessage.WM_CLOSE, new IntPtr(), new IntPtr());
             }
         }

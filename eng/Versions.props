@@ -22,7 +22,7 @@
   </PropertyGroup>
   <!-- Packages that come from https://github.com/dotnet/winforms -->
   <PropertyGroup>
-    <MicrosoftPrivateWinformsVersion>10.0.0-preview.4.25201.5</MicrosoftPrivateWinformsVersion>
+    <MicrosoftPrivateWinformsVersion>10.0.0-preview.4.25201.6</MicrosoftPrivateWinformsVersion>
   </PropertyGroup>
   <!-- Packages that come from https://github.com/dotnet/runtime -->
   <PropertyGroup>
@@ -33,7 +33,7 @@
     <SystemCodeDomPackageVersion>10.0.0-preview.4.25181.8</SystemCodeDomPackageVersion>
     <SystemConfigurationConfigurationManagerPackageVersion>10.0.0-preview.4.25181.8</SystemConfigurationConfigurationManagerPackageVersion>
     <SystemDiagnosticsEventLogPackageVersion>10.0.0-preview.4.25181.8</SystemDiagnosticsEventLogPackageVersion>
-    <SystemDrawingCommonVersion>10.0.0-preview.4.25201.5</SystemDrawingCommonVersion>
+    <SystemDrawingCommonVersion>10.0.0-preview.4.25201.6</SystemDrawingCommonVersion>
     <SystemDirectoryServicesVersion>10.0.0-preview.4.25181.8</SystemDirectoryServicesVersion>
     <SystemFormatsNrbfVersion>10.0.0-preview.4.25181.8</SystemFormatsNrbfVersion>
     <SystemIOPackagingVersion>10.0.0-preview.4.25181.8</SystemIOPackagingVersion>

@@ -981,7 +981,7 @@ namespace System.Windows.Controls
             if (Orientation == Orientation.Horizontal)
             {
                 // Calculate part size for HorizontalSlider
-                if (DoubleUtil.AreClose(range, 0d) || (DoubleUtil.AreClose(trackSize.Width, thumbSize.Width)))
+                if (DoubleUtil.IsZero(range) || (DoubleUtil.AreClose(trackSize.Width, thumbSize.Width)))
                 {
                     valueToSize = 0d;
                 }
@@ -1003,7 +1003,7 @@ namespace System.Windows.Controls
             else
             {
                 // Calculate part size for VerticalSlider
-                if (DoubleUtil.AreClose(range, 0d) || (DoubleUtil.AreClose(trackSize.Height, thumbSize.Height)))
+                if (DoubleUtil.IsZero(range) || (DoubleUtil.AreClose(trackSize.Height, thumbSize.Height)))
                 {
                     valueToSize = 0d;
                 }
@@ -1046,7 +1046,7 @@ namespace System.Windows.Controls
             if (Orientation == Orientation.Horizontal)
             {
                 // Calculate part size for HorizontalSlider
-                if (DoubleUtil.AreClose(range, 0d) || (DoubleUtil.AreClose(trackSize.Width, thumbSize.Width)))
+                if (DoubleUtil.IsZero(range) || (DoubleUtil.AreClose(trackSize.Width, thumbSize.Width)))
                 {
                     valueToSize = 0d;
                 }
@@ -1070,7 +1070,7 @@ namespace System.Windows.Controls
             else
             {
                 // Calculate part size for VerticalSlider
-                if (DoubleUtil.AreClose(range, 0d) || (DoubleUtil.AreClose(trackSize.Height, thumbSize.Height)))
+                if (DoubleUtil.IsZero(range) || (DoubleUtil.AreClose(trackSize.Height, thumbSize.Height)))
                 {
                     valueToSize = 0d;
                 }

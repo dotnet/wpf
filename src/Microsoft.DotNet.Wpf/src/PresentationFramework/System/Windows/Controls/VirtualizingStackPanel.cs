@@ -2614,7 +2614,7 @@ namespace System.Windows.Controls
 
                                                         double spanBeforeViewport = Math.Max(isHorizontal ? viewport.X : viewport.Y, 0.0);
                                                         double newContainerSpan = isHorizontal ? newContainerSize.Width : newContainerSize.Height;
-                                                        bool endsAfterViewport = DoubleUtil.AreClose(spanBeforeViewport, 0) ||
+                                                        bool endsAfterViewport = DoubleUtil.IsZero(spanBeforeViewport) ||
                                                             LayoutDoubleUtil.LessThan(spanBeforeViewport, firstItemInViewportOffset + newContainerSpan);
 
                                                         if (!endsAfterViewport)
@@ -2794,7 +2794,7 @@ namespace System.Windows.Controls
                     if (IsVirtualizing &&
                         !IsPixelBased &&
                         (hasVirtualizingChildren || virtualizationInfoProvider != null) &&
-                        (MeasureCaches || (DoubleUtil.AreClose(cacheSize.CacheBeforeViewport, 0) && DoubleUtil.AreClose(cacheSize.CacheAfterViewport, 0))))
+                        (MeasureCaches || (DoubleUtil.IsZero(cacheSize.CacheBeforeViewport) && DoubleUtil.IsZero(cacheSize.CacheAfterViewport))))
                     {
                         //
                         // All of the descendent panels in hierarchical item scrolling scenarios that are after the extended
@@ -5558,7 +5558,7 @@ namespace System.Windows.Controls
                 }
                 else
                 {
-                    if (DoubleUtil.AreClose(spanBeforeViewport, 0))
+                    if (DoubleUtil.IsZero(spanBeforeViewport))
                     {
                         foundFirstItemInViewport = true;
                         firstItemInViewportOffset = 0.0;
@@ -6446,8 +6446,8 @@ namespace System.Windows.Controls
 
             // compute the desired inset, avoiding catastrophic cancellation errors
             Size itemsSize = itemsHost.DesiredSize;
-            double left = DoubleUtil.AreClose(0, itemsRect.Left) ? 0 : -itemsRect.Left;
-            double top = DoubleUtil.AreClose(0, itemsRect.Top) ? 0 : -itemsRect.Top;
+            double left = DoubleUtil.IsZero(itemsRect.Left) ? 0 : -itemsRect.Left;
+            double top = DoubleUtil.IsZero(itemsRect.Top) ? 0 : -itemsRect.Top;
             double right = DoubleUtil.AreClose(itemsSize.Width, itemsRect.Right) ? 0 : itemsRect.Right-itemsSize.Width;
             double bottom = DoubleUtil.AreClose(itemsSize.Height, itemsRect.Bottom) ? 0 : itemsRect.Bottom-itemsSize.Height;
             Thickness inset = new Thickness(left, top, right, bottom);
@@ -6645,11 +6645,11 @@ namespace System.Windows.Controls
         {
             if (isHorizontal)
             {
-                return DoubleUtil.AreClose(viewport.Width, 0.0);
+                return DoubleUtil.IsZero(viewport.Width);
             }
             else
             {
-                return DoubleUtil.AreClose(viewport.Height, 0.0);
+                return DoubleUtil.IsZero(viewport.Height);
             }
         }
 
@@ -7201,7 +7201,7 @@ namespace System.Windows.Controls
                         // If the child is beyond the viewport in the opposite orientation to this panel then we musn't count that child in.
                         //
                         if (DoubleUtil.GreaterThanOrClose(childViewport.Y, childPixelSize.Height) ||
-                            DoubleUtil.AreClose(childViewport.Height, 0.0))
+                            DoubleUtil.IsZero(childViewport.Height))
                         {
                             return;
                         }
@@ -7219,7 +7219,7 @@ namespace System.Windows.Controls
                         // If the child is beyond the viewport in the opposite orientation to this panel then we musn't count that child in.
                         //
                         if (DoubleUtil.GreaterThanOrClose(childViewport.Y, childLogicalSize.Height) ||
-                            DoubleUtil.AreClose(childViewport.Height, 0.0))
+                            DoubleUtil.IsZero(childViewport.Height))
                         {
                             return;
                         }
@@ -7293,7 +7293,7 @@ namespace System.Windows.Controls
                         // If the child is beyond the viewport in the opposite orientation to this panel then we musn't count that child in.
                         //
                         if (DoubleUtil.GreaterThanOrClose(childViewport.X, childPixelSize.Width) ||
-                            DoubleUtil.AreClose(childViewport.Width, 0.0))
+                            DoubleUtil.IsZero(childViewport.Width))
                         {
                             return;
                         }
@@ -7311,7 +7311,7 @@ namespace System.Windows.Controls
                         // If the child is beyond the viewport in the opposite orientation to this panel then we musn't count that child in.
                         //
                         if (DoubleUtil.GreaterThanOrClose(childViewport.X, childLogicalSize.Width) ||
-                            DoubleUtil.AreClose(childViewport.Width, 0.0))
+                            DoubleUtil.IsZero(childViewport.Width))
                         {
                             return;
                         }
@@ -9694,12 +9694,12 @@ namespace System.Windows.Controls
             // returning an infinite desired size, which is forbidden.
             if (!Double.IsPositiveInfinity(constraint.Width))
             {
-                stackPixelSize.Width = IsPixelBased || DoubleUtil.AreClose(computedViewportOffset.X, 0) ?
+                stackPixelSize.Width = IsPixelBased || DoubleUtil.IsZero(computedViewportOffset.X) ?
                     Math.Min(stackPixelSize.Width, constraint.Width) : constraint.Width;
             }
             if (!Double.IsPositiveInfinity(constraint.Height))
             {
-                stackPixelSize.Height = IsPixelBased || DoubleUtil.AreClose(computedViewportOffset.Y, 0) ?
+                stackPixelSize.Height = IsPixelBased || DoubleUtil.IsZero(computedViewportOffset.Y) ?
                     Math.Min(stackPixelSize.Height, constraint.Height) : constraint.Height;
             }
 
@@ -9710,13 +9710,13 @@ namespace System.Windows.Controls
                 // to accumulate the fractional changes, but only the whole value is used for further computations.
                 if (isHorizontal)
                 {
-                    Debug.Assert(DoubleUtil.AreClose(viewportSize.Width - Math.Floor(viewportSize.Width), 0.0), "The viewport size must not contain fractional values when in item scrolling mode.");
-                    Debug.Assert(DoubleUtil.AreClose(extentSize.Width - Math.Floor(extentSize.Width), 0.0), "The extent size must not contain fractional values when in item scrolling mode.");
+                    Debug.Assert(DoubleUtil.IsZero(viewportSize.Width - Math.Floor(viewportSize.Width)), "The viewport size must not contain fractional values when in item scrolling mode.");
+                    Debug.Assert(DoubleUtil.IsZero(extentSize.Width - Math.Floor(extentSize.Width)), "The extent size must not contain fractional values when in item scrolling mode.");
                 }
                 else
                 {
-                    Debug.Assert(DoubleUtil.AreClose(viewportSize.Height - Math.Floor(viewportSize.Height), 0.0), "The viewport size must not contain fractional values when in item scrolling mode.");
-                    Debug.Assert(DoubleUtil.AreClose(extentSize.Height - Math.Floor(extentSize.Height), 0.0), "The extent size must not contain fractional values when in item scrolling mode.");
+                    Debug.Assert(DoubleUtil.IsZero(viewportSize.Height - Math.Floor(viewportSize.Height)), "The viewport size must not contain fractional values when in item scrolling mode.");
+                    Debug.Assert(DoubleUtil.IsZero(extentSize.Height - Math.Floor(extentSize.Height)), "The extent size must not contain fractional values when in item scrolling mode.");
                 }
             }
 #endif
@@ -10004,7 +10004,7 @@ namespace System.Windows.Controls
                             viewportOffset.X = Double.PositiveInfinity;
                             StorePreviouslyMeasuredOffset(ref previouslyMeasuredOffsets, computedViewportOffset.X);
 
-                            if (DoubleUtil.AreClose(viewportSize.Width, 0))
+                            if (DoubleUtil.IsZero(viewportSize.Width))
                             {
                                 viewportSize.Width = _scrollData._viewport.Width;
                             }
@@ -10045,8 +10045,8 @@ namespace System.Windows.Controls
                         // was initially intended.
                         else if (_scrollData.HorizontalScrollType == ScrollType.Absolute)
                         {
-                            if (!DoubleUtil.AreClose(_scrollData._extent.Width, 0) &&
-                                !DoubleUtil.AreClose(extentSize.Width, 0))
+                            if (!DoubleUtil.IsZero(_scrollData._extent.Width) &&
+                                !DoubleUtil.IsZero(extentSize.Width))
                             {
                                 if (IsPixelBased)
                                 {
@@ -10112,8 +10112,8 @@ namespace System.Windows.Controls
                         // was initially intended.
                         else if (_scrollData.VerticalScrollType == ScrollType.Absolute)
                         {
-                            if (!DoubleUtil.AreClose(_scrollData._extent.Height, 0) &&
-                                !DoubleUtil.AreClose(extentSize.Height, 0))
+                            if (!DoubleUtil.IsZero(_scrollData._extent.Height) &&
+                                !DoubleUtil.IsZero(extentSize.Height))
                             {
                                 if (!LayoutDoubleUtil.AreClose(computedViewportOffset.Y/extentSize.Height, _scrollData._offset.Y/_scrollData._extent.Height))
                                 {
@@ -10221,7 +10221,7 @@ namespace System.Windows.Controls
                             viewportOffset.Y = Double.PositiveInfinity;
                             StorePreviouslyMeasuredOffset(ref previouslyMeasuredOffsets, computedViewportOffset.Y);
 
-                            if (DoubleUtil.AreClose(viewportSize.Height, 0))
+                            if (DoubleUtil.IsZero(viewportSize.Height))
                             {
                                 viewportSize.Height = _scrollData._viewport.Height;
                             }
@@ -10262,8 +10262,8 @@ namespace System.Windows.Controls
                         // was initially intended.
                         else if (_scrollData.VerticalScrollType == ScrollType.Absolute)
                         {
-                            if (!DoubleUtil.AreClose(_scrollData._extent.Height, 0) &&
-                                !DoubleUtil.AreClose(extentSize.Height, 0))
+                            if (!DoubleUtil.IsZero(_scrollData._extent.Height) &&
+                                !DoubleUtil.IsZero(extentSize.Height))
                             {
                                 if (IsPixelBased)
                                 {
@@ -10328,8 +10328,8 @@ namespace System.Windows.Controls
                         // was initially intended.
                         else if (_scrollData.HorizontalScrollType == ScrollType.Absolute)
                         {
-                            if (!DoubleUtil.AreClose(_scrollData._extent.Width, 0) &&
-                                !DoubleUtil.AreClose(extentSize.Width, 0))
+                            if (!DoubleUtil.IsZero(_scrollData._extent.Width) &&
+                                !DoubleUtil.IsZero(extentSize.Width))
                             {
                                 if (!LayoutDoubleUtil.AreClose(computedViewportOffset.X/extentSize.Width, _scrollData._offset.X/_scrollData._extent.Width))
                                 {
@@ -10543,12 +10543,12 @@ namespace System.Windows.Controls
             // returning an infinite desired size, which is forbidden.
             if (!Double.IsPositiveInfinity(constraint.Width))
             {
-                stackPixelSize.Width = IsPixelBased || DoubleUtil.AreClose(computedViewportOffset.X, 0) ?
+                stackPixelSize.Width = IsPixelBased || DoubleUtil.IsZero(computedViewportOffset.X) ?
                     Math.Min(stackPixelSize.Width, constraint.Width) : constraint.Width;
             }
             if (!Double.IsPositiveInfinity(constraint.Height))
             {
-                stackPixelSize.Height = IsPixelBased || DoubleUtil.AreClose(computedViewportOffset.Y, 0) ?
+                stackPixelSize.Height = IsPixelBased || DoubleUtil.IsZero(computedViewportOffset.Y) ?
                     Math.Min(stackPixelSize.Height, constraint.Height) : constraint.Height;
             }
 
@@ -10559,13 +10559,13 @@ namespace System.Windows.Controls
                 // to accumulate the fractional changes, but only the whole value is used for further computations.
                 if (isHorizontal)
                 {
-                    Debug.Assert(DoubleUtil.AreClose(viewportSize.Width - Math.Floor(viewportSize.Width), 0.0), "The viewport size must not contain fractional values when in item scrolling mode.");
-                    Debug.Assert(DoubleUtil.AreClose(extentSize.Width - Math.Floor(extentSize.Width), 0.0), "The extent size must not contain fractional values when in item scrolling mode.");
+                    Debug.Assert(DoubleUtil.IsZero(viewportSize.Width - Math.Floor(viewportSize.Width)), "The viewport size must not contain fractional values when in item scrolling mode.");
+                    Debug.Assert(DoubleUtil.IsZero(extentSize.Width - Math.Floor(extentSize.Width)), "The extent size must not contain fractional values when in item scrolling mode.");
                 }
                 else
                 {
-                    Debug.Assert(DoubleUtil.AreClose(viewportSize.Height - Math.Floor(viewportSize.Height), 0.0), "The viewport size must not contain fractional values when in item scrolling mode.");
-                    Debug.Assert(DoubleUtil.AreClose(extentSize.Height - Math.Floor(extentSize.Height), 0.0), "The extent size must not contain fractional values when in item scrolling mode.");
+                    Debug.Assert(DoubleUtil.IsZero(viewportSize.Height - Math.Floor(viewportSize.Height)), "The viewport size must not contain fractional values when in item scrolling mode.");
+                    Debug.Assert(DoubleUtil.IsZero(extentSize.Height - Math.Floor(extentSize.Height)), "The extent size must not contain fractional values when in item scrolling mode.");
                 }
             }
 #endif
@@ -10669,7 +10669,7 @@ namespace System.Windows.Controls
                             viewportOffset.X = _scrollData._offset.X;
                             StorePreviouslyMeasuredOffset(ref previouslyMeasuredOffsets, computedViewportOffset.X);
 
-                            if (DoubleUtil.AreClose(viewportSize.Width, 0))
+                            if (DoubleUtil.IsZero(viewportSize.Width))
                             {
                                 viewportSize.Width = _scrollData._viewport.Width;
                             }
@@ -10716,8 +10716,8 @@ namespace System.Windows.Controls
                                 (_scrollData._firstContainerInViewport == null && computedViewportOffsetChanged && !LayoutDoubleUtil.AreClose(computedViewportOffset.X, _scrollData._computedOffset.X));
 
                             if (isAbsoluteMove &&
-                                !DoubleUtil.AreClose(_scrollData._extent.Width, 0) &&
-                                !DoubleUtil.AreClose(extentSize.Width, 0))
+                                !DoubleUtil.IsZero(_scrollData._extent.Width) &&
+                                !DoubleUtil.IsZero(extentSize.Width))
                             {
                                 if (IsPixelBased)
                                 {
@@ -10800,7 +10800,7 @@ namespace System.Windows.Controls
                             viewportOffset.Y = _scrollData._offset.Y;
                             StorePreviouslyMeasuredOffset(ref previouslyMeasuredOffsets, computedViewportOffset.Y);
 
-                            if (DoubleUtil.AreClose(viewportSize.Height, 0))
+                            if (DoubleUtil.IsZero(viewportSize.Height))
                             {
                                 viewportSize.Height = _scrollData._viewport.Height;
                             }
@@ -10847,8 +10847,8 @@ namespace System.Windows.Controls
                                 (_scrollData._firstContainerInViewport == null && computedViewportOffsetChanged && !LayoutDoubleUtil.AreClose(computedViewportOffset.Y, _scrollData._computedOffset.Y));
 
                             if (isAbsoluteMove &&
-                                !DoubleUtil.AreClose(_scrollData._extent.Height, 0) &&
-                                !DoubleUtil.AreClose(extentSize.Height, 0))
+                                !DoubleUtil.IsZero(_scrollData._extent.Height) &&
+                                !DoubleUtil.IsZero(extentSize.Height))
                             {
                                 if (IsPixelBased)
                                 {

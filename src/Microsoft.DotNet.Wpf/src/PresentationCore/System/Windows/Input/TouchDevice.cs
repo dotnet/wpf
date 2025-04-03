@@ -144,7 +144,7 @@ namespace System.Windows.Input
         /// <returns>A list of points in the coordinate space of relativeTo.</returns>
         public abstract TouchPointCollection GetIntermediateTouchPoints(IInputElement relativeTo);
 
-        private IInputElement CriticalHitTest(Point point, bool isSynchronize)
+        private IInputElement HitTest(Point point, bool isSynchronize)
         {
             IInputElement over = null;
 
@@ -782,7 +782,7 @@ namespace System.Windows.Input
             if (touchPoint != null)
             {
                 Point position = touchPoint.Position;
-                newDirectlyOver = CriticalHitTest(position, isSynchronize);
+                newDirectlyOver = HitTest(position, isSynchronize);
             }
 
             if (newDirectlyOver != _directlyOver)

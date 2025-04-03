@@ -231,7 +231,7 @@ namespace MS.Internal.Ink
                 return Cursors.Arrow;
             }
 
-            cursor = CursorInteropHelper.CriticalCreate(finalCursor);
+            cursor = CursorInteropHelper.Create(finalCursor);
             return cursor;
         }
 

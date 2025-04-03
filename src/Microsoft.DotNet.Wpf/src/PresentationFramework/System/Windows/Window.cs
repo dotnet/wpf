@@ -105,38 +105,9 @@ namespace System.Windows
         /// </remarks>
         public Window()
         {
-            _inTrustedSubWindow = false;
-
             Initialize();
         }
 
-        /// <summary>
-        ///     Constructs a window object
-        /// </summary>
-        /// <remarks>
-        ///     Automatic determination of current Dispatcher. Use alternative constructor
-        ///     that accepts a Dispatcher for best performance.
-        ///
-        ///     Initializes the Width/Height, Top/Left properties to use windows
-        ///     default. Updates Application object properties if inside app.
-        ///
-        ///     Also, window style is set to WS_CHILD inside CreateSourceWindow
-        ///     for browser hosted case
-        ///
-        ///     This method currently requires full trust to run.
-        /// </remarks>
-        internal Window(bool inRbw):base()
-        {
-            if (inRbw)
-            {
-                _inTrustedSubWindow = true;
-            }
-            else
-            {
-                _inTrustedSubWindow = false;
-            }
-            Initialize();
-}
         #endregion Constructors
 
         //---------------------------------------------------
@@ -2991,9 +2962,6 @@ namespace System.Windows
         // called as a result of Height/MinHeight/MaxHeight and Width/MinWidth/MaxWidth property changing to update the hwnd size
         private void UpdateHwndSizeOnWidthHeightChange(double widthLogicalUnits, double heightLogicalUnits)
         {
-            if (!_inTrustedSubWindow)
-            {
-            }
             Debug.Assert( IsSourceWindowNull == false , "IsSourceWindowNull cannot be true when calling this function");
 
             Point ptDeviceUnits = LogicalToDeviceUnits(new Point(widthLogicalUnits, heightLogicalUnits));
@@ -6928,11 +6896,8 @@ namespace System.Windows
 
         private void VerifyConsistencyWithShowActivated()
         {
-            //
             // We don't support to show a maximized non-activated window.
-            // Don't check this consistency in a RBW (would break because Visibility is set when launching the RBW).
-            //
-            if (!_inTrustedSubWindow && WindowState == WindowState.Maximized && !ShowActivated)
+            if (WindowState == WindowState.Maximized && !ShowActivated)
                 throw new InvalidOperationException(SR.ShowNonActivatedAndMaximized);
         }
 
@@ -7253,9 +7218,6 @@ namespace System.Windows
         private ThemeMode           _themeMode = ThemeMode.None;
         internal bool               _deferThemeLoading = false;
         private bool                _useDarkMode = false;
-
-        //Never expose this at any cost
-        private bool                        _inTrustedSubWindow;
 
         private ImageSource _icon;
 

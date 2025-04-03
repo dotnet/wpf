@@ -156,10 +156,6 @@ namespace System.Windows.Interop
         /// <internalonly>
         ///     Overridden to plug the ActiveX control into Avalon's layout manager.
         /// </internalonly>
-        /// <SecurityNote >
-        ///     Critical - accesses ActiveXSite critical property
-        ///     Not making TAS - you may be able to spoof content of web-pages if you could position any arbitrary
-        ///                      control over a WebOC.
         protected override void OnWindowPositionChanged(Rect bounds)
         {
             //Its okay to process this if we the control is not yet created

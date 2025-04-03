@@ -53,7 +53,6 @@ namespace MS.Internal.Printing.Configuration
 
             if (this._strings != null)
             {
-                // Security Critical call
                 this._strings.Release();
 
                 this._strings = null;

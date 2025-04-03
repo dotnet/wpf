@@ -1782,7 +1782,7 @@ namespace System.Windows.Interop
                 // pending operations, so that the operation we just posted
                 // is guaranteed to get dispatched after any pending WM_CHAR
                 // messages are dispatched.
-                Dispatcher.CriticalRequestProcessing(true);
+                Dispatcher.RequestProcessing(force: true);
 
                 msgdata.handled = CriticalTranslateAccelerator(ref msgdata.msg, modifierKeys);
                 if(!msgdata.handled)

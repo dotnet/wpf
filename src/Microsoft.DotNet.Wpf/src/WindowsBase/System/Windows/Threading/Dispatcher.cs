@@ -2304,13 +2304,7 @@ namespace System.Windows.Threading
             return retVal == 0;
         }
 
-
-        private bool RequestProcessing()
-        {
-            return CriticalRequestProcessing(false);
-        }
-
-        internal bool CriticalRequestProcessing(bool force)
+        internal bool RequestProcessing(bool force = false)
         {
             bool succeeded = true;
 

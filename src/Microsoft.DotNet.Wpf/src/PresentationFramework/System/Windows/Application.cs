@@ -234,12 +234,9 @@ namespace System.Windows
         /// <param name="exitCode">returned to the Application.Run() method. Typically this will be returned to the OS</param>
         public void Shutdown(int exitCode)
         {
-            CriticalShutdown(exitCode);
-        }
-        internal void CriticalShutdown(int exitCode)
-        {
             VerifyAccess();
-            //Already called once??
+
+            // Already called once??
             if (IsShuttingDown == true)
             {
                 return;
@@ -250,7 +247,7 @@ namespace System.Windows
             SetExitCode(exitCode);
             IsShuttingDown = true;
             Dispatcher.BeginInvoke(DispatcherPriority.Normal, new DispatcherOperationCallback(ShutdownCallback), null);
-}
+        }
 
         /// <summary>
         ///     Searches for a resource with the passed resourceKey and returns it

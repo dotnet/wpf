@@ -4531,7 +4531,7 @@ namespace System.Windows
                         if (((App.Windows.Count == 0) && (App.ShutdownMode == ShutdownMode.OnLastWindowClose))
                          || ((App.MainWindow == this) && (App.ShutdownMode == ShutdownMode.OnMainWindowClose)))
                         {
-                            App.CriticalShutdown(0);
+                            App.Shutdown(0);
                         }
                     }
 

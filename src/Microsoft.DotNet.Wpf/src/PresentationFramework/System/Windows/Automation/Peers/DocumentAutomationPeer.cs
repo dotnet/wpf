@@ -134,12 +134,11 @@ namespace System.Windows.Automation.Peers
         /// </summary>
         protected override Rect GetBoundingRectangleCore()
         {
-            UIElement uiScope;
-            Rect boundingRect = CalculateBoundingRect(false, out uiScope);
-            if (boundingRect != Rect.Empty && uiScope != null)
+            Rect boundingRect = CalculateBoundingRect(clipToVisible: false, out UIElement uiScope);
+
+            if (boundingRect != Rect.Empty && uiScope is not null)
             {
-                var hwndSource = PresentationSource.FromVisual((DependencyObject)uiScope) as HwndSource;
-                if (hwndSource != null)
+                if (PresentationSource.FromVisual(uiScope) is HwndSource hwndSource)
                 {
                     boundingRect = PointUtil.ElementToRoot(boundingRect, uiScope, hwndSource);
                     boundingRect = PointUtil.RootToClient(boundingRect, hwndSource);
@@ -154,21 +153,20 @@ namespace System.Windows.Automation.Peers
         /// </summary>
         protected override Point GetClickablePointCore()
         {
-            Point point = new Point();
-            UIElement uiScope;
-            Rect boundingRect = CalculateBoundingRect(true, out uiScope);
-            if (boundingRect != Rect.Empty && uiScope != null)
+            Rect boundingRect = CalculateBoundingRect(clipToVisible: true, out UIElement uiScope);
+
+            if (boundingRect != Rect.Empty && uiScope is not null)
             {
-                var hwndSource = PresentationSource.FromVisual((DependencyObject)uiScope) as HwndSource;
-                if (hwndSource != null)
+                if (PresentationSource.FromVisual(uiScope) is HwndSource hwndSource)
                 {
                     boundingRect = PointUtil.ElementToRoot(boundingRect, uiScope, hwndSource);
                     boundingRect = PointUtil.RootToClient(boundingRect, hwndSource);
                     boundingRect = PointUtil.ClientToScreen(boundingRect, hwndSource);
-                    point = new Point(boundingRect.Left + boundingRect.Width * 0.1, boundingRect.Top + boundingRect.Height * 0.1);
+                    return new Point(boundingRect.Left + boundingRect.Width * 0.1, boundingRect.Top + boundingRect.Height * 0.1);
                 }
             }
-            return point;
+
+            return new Point();
         }
 
         /// <summary>

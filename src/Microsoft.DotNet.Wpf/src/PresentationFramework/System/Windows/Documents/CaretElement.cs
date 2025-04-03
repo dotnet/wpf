@@ -964,7 +964,7 @@ namespace System.Windows.Documents
                 // Create Win32 caret to support Win32 application(like Magnifier) that want to
                 // sync Avalon caret position.
                 IntPtr hwnd = IntPtr.Zero;
-                PresentationSource source = PresentationSource.FromVisual((DependencyObject)this);
+                PresentationSource source = PresentationSource.FromVisual(this);
 
                 if (source != null)
                 {
@@ -1053,8 +1053,7 @@ namespace System.Windows.Documents
             }
 
             // Get the presentation source to find a root visual.
-            PresentationSource source = null;
-            source = PresentationSource.FromVisual((DependencyObject)this);
+            PresentationSource source = PresentationSource.FromVisual(this);
             if (source != null)
             {
                 // Calculate the current caret position then transform the point to the window's client position

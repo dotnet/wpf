@@ -410,7 +410,7 @@ namespace System.Windows.Input
                 }
                 else if(uie != null && uie.InternalVisualParent == null)
                 {
-                    PresentationSource presentationSource = PresentationSource.FromVisual((DependencyObject)uie);
+                    PresentationSource presentationSource = PresentationSource.FromVisual(uie);
                     if(presentationSource != null)
                     {
                         // A UIElements that is the root of a PresentationSource is considered focusable.

@@ -23,7 +23,7 @@ namespace System.Windows.Input
         private ManipulationDevice(UIElement element) : base()
         {
             _target = element;
-            _activeSource = PresentationSource.FromVisual((DependencyObject)element);
+            _activeSource = PresentationSource.FromVisual(element);
 
             _inputManager = InputManager.Current;
             _inputManager.PostProcessInput += new ProcessInputEventHandler(PostProcessInput);

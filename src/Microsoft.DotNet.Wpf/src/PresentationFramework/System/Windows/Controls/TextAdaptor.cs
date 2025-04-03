@@ -390,7 +390,7 @@ namespace MS.Internal.Automation
         /// </summary>
         private Point ObsoleteClientToScreen(Point point, Visual visual)
         {
-            PresentationSource presentationSource = PresentationSource.FromVisual((DependencyObject)visual);
+            PresentationSource presentationSource = PresentationSource.FromVisual(visual);
             if (presentationSource != null)
             {
                 GeneralTransform transform = visual.TransformToAncestor(presentationSource.RootVisual);
@@ -430,7 +430,7 @@ namespace MS.Internal.Automation
         /// </summary>
         private Point ObsoleteScreenToClient(Point point, Visual visual)
         {
-            PresentationSource presentationSource = PresentationSource.FromVisual((DependencyObject)visual);
+            PresentationSource presentationSource = PresentationSource.FromVisual(visual);
             point = PointUtil.ScreenToClient(point, presentationSource);
             if (presentationSource != null)
             {

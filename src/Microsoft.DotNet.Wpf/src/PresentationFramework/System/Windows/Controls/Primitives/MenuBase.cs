@@ -885,9 +885,12 @@ namespace System.Windows.Controls.Primitives
 
         private void PushMenuMode(bool isAcquireFocusMenuMode)
         {
-            Debug.Assert(_pushedMenuMode == null);
-            _pushedMenuMode = PresentationSource.FromVisual((DependencyObject)this);
-            Debug.Assert(_pushedMenuMode != null);
+            Debug.Assert(_pushedMenuMode is null);
+
+            _pushedMenuMode = PresentationSource.FromVisual(this);
+
+            Debug.Assert(_pushedMenuMode is not null);
+
             IsAcquireFocusMenuMode = isAcquireFocusMenuMode;
             InputManager.Current.PushMenuMode(_pushedMenuMode);
         }

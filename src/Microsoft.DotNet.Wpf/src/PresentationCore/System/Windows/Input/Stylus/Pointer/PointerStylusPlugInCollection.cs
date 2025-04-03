@@ -55,7 +55,7 @@ namespace System.Windows.Input.StylusPointer
             // See if we should be enabled
             if (element.IsVisible && element.IsEnabled && element.IsHitTestVisible)
             {
-                PresentationSource presentationSource = PresentationSource.FromVisual((DependencyObject)(element as Visual));
+                PresentationSource presentationSource = PresentationSource.FromVisual(element);
 
                 if (presentationSource != null)
                 {

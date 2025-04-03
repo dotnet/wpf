@@ -308,7 +308,7 @@ namespace System.Windows
                 // PresentationSource
                 if (!control.IsVisible)
                 {
-                    controlInTree = (PresentationSource.FromVisual((DependencyObject)control) != null);
+                    controlInTree = (PresentationSource.FromVisual(control) != null);
                 }
             }
 
@@ -316,7 +316,7 @@ namespace System.Windows
             {
                 if (!stateGroupsRoot.IsVisible)
                 {
-                    stateGroupsRootInTree = (PresentationSource.FromVisual((DependencyObject)stateGroupsRoot) != null);
+                    stateGroupsRootInTree = (PresentationSource.FromVisual(stateGroupsRoot) != null);
                 }
             }
 

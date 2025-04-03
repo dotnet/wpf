@@ -56,7 +56,7 @@ namespace System.Windows.Automation.Peers
 
             if (geometry != null)
             {
-                PresentationSource presentationSource = PresentationSource.FromVisual((DependencyObject)textView.RenderScope);
+                PresentationSource presentationSource = PresentationSource.FromVisual(textView.RenderScope);
 
                 if (presentationSource == null)
                 {
@@ -98,7 +98,7 @@ namespace System.Windows.Automation.Peers
                 return pt;
             }
 
-            PresentationSource presentationSource = PresentationSource.FromVisual((DependencyObject)textView.RenderScope);
+            PresentationSource presentationSource = PresentationSource.FromVisual(textView.RenderScope);
 
             if (presentationSource == null)
             {

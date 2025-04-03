@@ -61,7 +61,7 @@ namespace System.Xaml
         internal static Point ClientToScreen(UIElement relativeTo, Point point)
         {
             GeneralTransform transform;
-            PresentationSource source = PresentationSource.FromVisual((DependencyObject)relativeTo);
+            PresentationSource source = PresentationSource.FromVisual(relativeTo);
 
             if (source == null)
             {

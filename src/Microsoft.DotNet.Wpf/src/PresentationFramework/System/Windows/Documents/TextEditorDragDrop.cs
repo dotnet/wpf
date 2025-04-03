@@ -648,9 +648,9 @@ namespace System.Windows.Documents
             /// </summary>
             private void Win32SetForegroundWindow()
             {
-                PresentationSource source = null;
+                PresentationSource source = PresentationSource.FromVisual(_textEditor.UiScope);
                 IntPtr hwnd = IntPtr.Zero;
-                source = PresentationSource.FromVisual((DependencyObject)_textEditor.UiScope);
+
                 if (source != null)
                 {
                     hwnd = (source as IWin32Window).Handle;

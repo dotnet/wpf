@@ -2323,8 +2323,7 @@ namespace System.Windows.Interop
                 if (focusElement == null && hasFocus)
                 {
                     focusElement = Keyboard.PrimaryDevice.FocusedElement;
-                    if (focusElement != null &&
-                        PresentationSource.FromVisual((DependencyObject)focusElement) != this)
+                    if (focusElement != null && FromVisual((DependencyObject)focusElement) != this)
                     {
                         focusElement = null;
                     }

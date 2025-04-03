@@ -1847,8 +1847,8 @@ namespace System.Windows.Input.StylusWisp
                     rightButtonDown = mouseDevice.RightButton == MouseButtonState.Pressed;
                     timestamp = mouseInputReport.Timestamp;
 
-                    // Get presentationsource from element.
-                    source = PresentationSource.FromVisual((DependencyObject)(_activeMousePlugInCollection.Element as Visual));
+                    // Get PresentationSource from element.
+                    source = PresentationSource.FromVisual(_activeMousePlugInCollection.Element);
                 }
                 else
                 {
@@ -1892,7 +1892,7 @@ namespace System.Windows.Input.StylusWisp
                     }
 
                     // Take the presentation source which is associated to the directly over element.
-                    source = PresentationSource.FromVisual((DependencyObject)directlyOverVisual);
+                    source = PresentationSource.FromVisual(directlyOverVisual);
 }
 
                 PenContexts penContexts = GetPenContextsFromHwnd(source);

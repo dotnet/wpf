@@ -2818,9 +2818,7 @@ namespace System.Windows.Documents
                         attrval.val.data1 = (IntPtr)0;
 
                         // Get the transformation that is relative from source.
-                        PresentationSource source = null;
-
-                        source = PresentationSource.FromVisual((DependencyObject)(Visual)RenderScope);
+                        PresentationSource source = PresentationSource.FromVisual(RenderScope);
                         if (source != null)
                         {
                             Visual root = source.RootVisual;

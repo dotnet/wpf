@@ -1594,16 +1594,14 @@ namespace System.Windows.Documents
         // win32 message queue for processing.
         // Avalon doesn't keep a separate queue for input events.  Instead
         // it interleaves work items with the win32 input queue.
-        private static bool IsMouseInputPending(TextEditor This)
+        private static bool IsMouseInputPending(TextEditor textEditor)
         {
             bool mouseInputPending = false;
-            var win32Window = PresentationSource.FromVisual((DependencyObject)This.UiScope) as IWin32Window;
-            if (win32Window != null)
+            if (PresentationSource.FromVisual(textEditor.UiScope) is IWin32Window win32Window)
             {
-                IntPtr hwnd = IntPtr.Zero;
-                hwnd = win32Window.Handle;
+                IntPtr hwnd = win32Window.Handle;
 
-                if (hwnd != (IntPtr)0)
+                if (hwnd != IntPtr.Zero)
                 {
                     System.Windows.Interop.MSG message = new System.Windows.Interop.MSG();
                     mouseInputPending = UnsafeNativeMethods.PeekMessage(ref message, new HandleRef(null, hwnd), WindowMessage.WM_MOUSEFIRST, WindowMessage.WM_MOUSELAST, NativeMethods.PM_NOREMOVE);

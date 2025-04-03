@@ -2497,20 +2497,9 @@ namespace Microsoft.Windows.Controls.Ribbon
 
         #region KeyTips
 
-#if RIBBON_IN_FRAMEWORK
-#endif
         public static PresentationSource GetPresentationSourceFromVisual(Visual visual)
         {
-            if (visual == null)
-            {
-                return null;
-            }
-
-#if RIBBON_IN_FRAMEWORK
-            return PresentationSource.FromVisual((DependencyObject)visual);
-#else
-            return PresentationSource.FromVisual(visual);
-#endif
+            return visual is null ? null : PresentationSource.FromVisual(visual);
         }
 
         /// <summary>

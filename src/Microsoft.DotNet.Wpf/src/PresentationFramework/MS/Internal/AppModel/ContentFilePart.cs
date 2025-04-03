@@ -68,7 +68,7 @@ namespace MS.Internal.AppModel
                 _fullPath = System.IO.Path.Combine(System.IO.Path.GetDirectoryName(location), filePath);
             }
 
-            stream = CriticalOpenFile(_fullPath);
+            stream = File.Open(_fullPath, FileMode.Open, FileAccess.Read, ResourceContainer.FileShare);
 
             if (stream == null)
             {
@@ -116,11 +116,6 @@ namespace MS.Internal.AppModel
             }
 
             return entryLocation;
-        }
-
-        private Stream CriticalOpenFile(string filename)
-        {
-            return System.IO.File.Open(filename, FileMode.Open, FileAccess.Read, ResourceContainer.FileShare);
         }
 
         #endregion

@@ -175,9 +175,6 @@ namespace System.Windows.Input.StylusPointer
         /// <summary>
         ///     Returns the PresentationSource that is reporting input for this device.
         /// </summary>
-        /// <remarks>
-        ///     Callers must have UIPermission(UIPermissionWindow.AllWindows) to call this API.
-        /// </remarks>
         internal override PresentationSource ActiveSource => _inputSource;
 
         #endregion
@@ -322,11 +319,6 @@ namespace System.Windows.Input.StylusPointer
         #region StylusDeviceBase Properties
 
         internal override StylusPlugInCollection CurrentVerifiedTarget { get; set; }
-
-        /// <summary>
-        ///     Returns the PresentationSource that is reporting input for this device.
-        /// </summary>
-        internal override PresentationSource CriticalActiveSource => _inputSource;
 
         /// <summary>
         /// Returns the button collection that is associated with the StylusDevice.
@@ -837,7 +829,7 @@ namespace System.Windows.Input.StylusPointer
             RawStylusSystemGestureInputReport report = new RawStylusSystemGestureInputReport(
                            InputMode.Foreground,
                            Environment.TickCount,
-                           CriticalActiveSource,
+                           ActiveSource,
                            () => { return PointerTabletDevice.StylusPointDescription; },
                            TabletDevice.Id,
                            Id,

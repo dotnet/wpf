@@ -686,7 +686,7 @@ namespace System.Windows.Input
             }
 
             if (currentStylusDevice != null &&
-                currentStylusDevice.CriticalActiveSource != presentationSource &&
+                currentStylusDevice.ActiveSource != presentationSource &&
                 currentStylusDevice.Captured == null)
             {
                 return false;

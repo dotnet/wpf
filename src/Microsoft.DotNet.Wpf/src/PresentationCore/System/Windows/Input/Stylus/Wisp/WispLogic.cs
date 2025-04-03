@@ -1023,8 +1023,8 @@ namespace System.Windows.Input.StylusWisp
                         if (!_inDragDrop && !rawStylusInputReport.PenContext.Contexts.IsWindowDisabled && !stylusDevice.IgnoreStroke)
                         {
                             Point position = stylusDevice.GetRawPosition(null);
-                            position = DeviceUnitsFromMeasureUnits(stylusDevice.CriticalActiveSource, position); // change back to device coords.
-                            IInputElement target = stylusDevice.FindTarget(stylusDevice.CriticalActiveSource, position);
+                            position = DeviceUnitsFromMeasureUnits(stylusDevice.ActiveSource, position); // change back to device coords.
+                            IInputElement target = stylusDevice.FindTarget(stylusDevice.ActiveSource, position);
                             SelectStylusDevice(stylusDevice, target, true);
                         }
                         else
@@ -1075,8 +1075,8 @@ namespace System.Windows.Input.StylusWisp
                         bBarrelPressed = true;
                     }
 
-                    Point pPixelPoint = DeviceUnitsFromMeasureUnits(stylusDevice.CriticalActiveSource, ptClient);
-                    Point pLastPixelPoint = DeviceUnitsFromMeasureUnits(stylusDevice.CriticalActiveSource, stylusDevice.LastTapPoint);
+                    Point pPixelPoint = DeviceUnitsFromMeasureUnits(stylusDevice.ActiveSource, ptClient);
+                    Point pLastPixelPoint = DeviceUnitsFromMeasureUnits(stylusDevice.ActiveSource, stylusDevice.LastTapPoint);
 
                     // How long since the last click? (deals with tickcount wrapping too)
                     //  Here's some info on how this works...

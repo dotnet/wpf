@@ -134,11 +134,6 @@ namespace System.Windows.Input.StylusWisp
         internal override PresentationSource ActiveSource => _inputSource;
 
         /// <summary>
-        ///     Returns the PresentationSource that is reporting input for this device.
-        /// </summary>
-        internal override PresentationSource CriticalActiveSource => _inputSource;
-
-        /// <summary>
         ///     Returns the currently active PenContext (if seen) for this device.
         ///     Gets set on InRange and cleared on the out of range event (that matches PenContext).
         /// </summary>
@@ -1907,7 +1902,7 @@ namespace System.Windows.Input.StylusWisp
         {
             if (_touchDevice != null)
             {
-                PresentationSource activeSource = CriticalActiveSource;
+                PresentationSource activeSource = ActiveSource;
                 if (activeSource != null)
                 {
                     _touchDevice.ChangeActiveSource(activeSource);

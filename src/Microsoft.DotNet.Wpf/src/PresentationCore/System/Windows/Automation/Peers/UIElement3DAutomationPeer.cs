@@ -172,7 +172,7 @@ namespace System.Windows.Automation.Peers
         {
             rect = Rect.Empty;
             
-            PresentationSource presentationSource = PresentationSource.CriticalFromVisual(_owner);
+            PresentationSource presentationSource = PresentationSource.FromVisual(_owner);
 
             // If there's no source, the element is not visible, return empty rect
             if(presentationSource == null)

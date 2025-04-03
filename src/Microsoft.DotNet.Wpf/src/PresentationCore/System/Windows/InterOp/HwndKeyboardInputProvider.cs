@@ -346,7 +346,7 @@ namespace System.Windows.Interop
                                 DependencyObject focusedDO = Keyboard.FocusedElement as DependencyObject;
                                 if (focusedDO != null)
                                 {
-                                    HwndSource hwndSource = PresentationSource.CriticalFromVisual(focusedDO) as HwndSource;
+                                    HwndSource hwndSource = PresentationSource.FromVisual(focusedDO) as HwndSource;
                                     if (hwndSource == _source)
                                     {
                                         _restoreFocus = focusedDO as IInputElement;
@@ -472,7 +472,7 @@ namespace System.Windows.Interop
                         {
                             // Only restore focus to an element if that
                             // element still belongs to this HWND.
-                            HwndSource hwndSource = PresentationSource.CriticalFromVisual(restoreFocusDO) as HwndSource;
+                            HwndSource hwndSource = PresentationSource.FromVisual(restoreFocusDO) as HwndSource;
                             if (hwndSource != thisSource)
                             {
                                 restoreFocusDO = null;
@@ -495,7 +495,7 @@ namespace System.Windows.Interop
                             restoreFocusDO = (DependencyObject)Keyboard.FocusedElement;
                             if (restoreFocusDO != null)
                             {
-                                HwndSource hwndSource = PresentationSource.CriticalFromVisual(restoreFocusDO) as HwndSource;
+                                HwndSource hwndSource = PresentationSource.FromVisual(restoreFocusDO) as HwndSource;
                                 if (hwndSource != thisSource)
                                 {
                                     Keyboard.ClearFocus();

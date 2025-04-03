@@ -1927,7 +1927,7 @@ namespace System.Windows.Controls
                 Panel itemsHost = ItemsHost;
                 if (itemsHost != null)
                 {
-                    HwndSource source = PresentationSource.CriticalFromVisual(itemsHost) as HwndSource;
+                    PresentationSource source = PresentationSource.FromVisual((DependencyObject)itemsHost) as HwndSource;
 
                     if (source != null && !source.IsDisposed && source.RootVisual != null)
                     {

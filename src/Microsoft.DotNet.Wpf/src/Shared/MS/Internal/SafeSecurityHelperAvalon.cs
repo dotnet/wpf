@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
 /***************************************************************************\
@@ -42,7 +42,7 @@ namespace MS.Internal.Drt
         {
             bool isConnected = false; 
 
-            isConnected = PresentationSource.CriticalFromVisual(visual ) != null;
+            isConnected = PresentationSource.FromVisual((DependencyObject)visual) != null;
 
             return isConnected ; 
         }

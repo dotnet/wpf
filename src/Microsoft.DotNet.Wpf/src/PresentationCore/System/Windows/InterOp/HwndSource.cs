@@ -2016,7 +2016,7 @@ namespace System.Windows.Interop
                         // This is a behavioral breaking change, so we've decided to only do it when IsInExclusiveMenuMode
                         // is true to force the user to opt-in.
                         DependencyObject focusObject = Keyboard.FocusedElement as DependencyObject;
-                        HwndSource mnemonicScope = (focusObject == null ? null : PresentationSource.CriticalFromVisual(focusObject) as HwndSource);
+                        HwndSource mnemonicScope = (focusObject == null ? null : PresentationSource.FromVisual(focusObject) as HwndSource);
                         if (mnemonicScope != null &&
                             mnemonicScope != this &&
                             IsInExclusiveMenuMode)
@@ -2324,7 +2324,7 @@ namespace System.Windows.Interop
                 {
                     focusElement = Keyboard.PrimaryDevice.FocusedElement;
                     if (focusElement != null &&
-                        PresentationSource.CriticalFromVisual((DependencyObject)focusElement) != this)
+                        PresentationSource.FromVisual((DependencyObject)focusElement) != this)
                     {
                         focusElement = null;
                     }

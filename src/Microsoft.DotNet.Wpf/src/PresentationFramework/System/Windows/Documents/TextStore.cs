@@ -2584,7 +2584,7 @@ namespace System.Windows.Documents
         // Throws TS_E_NOLAYOUT if they are not available.
         private void GetVisualInfo(out PresentationSource source, out IWin32Window win32Window, out ITextView view)
         {
-            source = PresentationSource.CriticalFromVisual(RenderScope);
+            source = PresentationSource.FromVisual((DependencyObject)RenderScope);
             win32Window = source as IWin32Window;
 
             if (win32Window == null)
@@ -2820,7 +2820,7 @@ namespace System.Windows.Documents
                         // Get the transformation that is relative from source.
                         PresentationSource source = null;
 
-                        source = PresentationSource.CriticalFromVisual((Visual)RenderScope);
+                        source = PresentationSource.FromVisual((DependencyObject)(Visual)RenderScope);
                         if (source != null)
                         {
                             Visual root = source.RootVisual;

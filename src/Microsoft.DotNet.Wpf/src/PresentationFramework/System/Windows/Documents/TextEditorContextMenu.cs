@@ -294,7 +294,7 @@ namespace System.Windows.Documents
             }
 
             // Clip to the window client rect.
-            PresentationSource source = PresentationSource.CriticalFromVisual(This.UiScope);
+            PresentationSource source = PresentationSource.FromVisual((DependencyObject)This.UiScope);
             IWin32Window window = source as IWin32Window;
             if (window != null)
             {

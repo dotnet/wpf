@@ -2507,7 +2507,7 @@ namespace Microsoft.Windows.Controls.Ribbon
             }
 
 #if RIBBON_IN_FRAMEWORK
-            return PresentationSource.CriticalFromVisual(visual);
+            return PresentationSource.FromVisual((DependencyObject)visual);
 #else
             return PresentationSource.FromVisual(visual);
 #endif

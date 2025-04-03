@@ -75,8 +75,7 @@ namespace System.Windows
         /// <returns>The source in which the visual is being presented.</returns>
         public static PresentationSource FromVisual(Visual visual)
         {
-
-            return CriticalFromVisual(visual);
+            return FromVisual((DependencyObject)visual);
         }
 
         /// <summary>
@@ -86,8 +85,7 @@ namespace System.Windows
         /// <returns>The source in which the dependency object is being presented.</returns>
         public static PresentationSource FromDependencyObject(DependencyObject dependencyObject)
         {
-
-            return CriticalFromVisual(dependencyObject);
+            return FromVisual(dependencyObject);
         }
 
         /// <summary>
@@ -508,21 +506,16 @@ namespace System.Windows
             }
         }
 
-        internal static PresentationSource CriticalFromVisual(DependencyObject v)
-        {
-            return CriticalFromVisual(v, enable2DTo3DTransition: true);
-        }
-
-        /// <param name="v">The dependency object to find the source for</param>
+        /// <param name="visual">The dependency object to find the source for</param>
         /// <param name="enable2DTo3DTransition">
         ///     Determines whether when walking the tree to enable transitioning from a 2D child
         ///     to a 3D parent or to stop once a 3D parent is encountered.
         /// </param>
-        internal static PresentationSource CriticalFromVisual(DependencyObject v, bool enable2DTo3DTransition)
+        internal static PresentationSource FromVisual(DependencyObject visual, bool enable2DTo3DTransition = true)
         {
-            ArgumentNullException.ThrowIfNull(v);
+            ArgumentNullException.ThrowIfNull(visual);
 
-            PresentationSource source = FindSource(v, enable2DTo3DTransition);
+            PresentationSource source = FindSource(visual, enable2DTo3DTransition);
 
             // Don't hand out a disposed source.
             if (null != source && source.IsDisposed)
@@ -556,10 +549,10 @@ namespace System.Windows
             if (visuals.IsEmpty)
                 return true;
 
-            PresentationSource baseSource = CriticalFromVisual(visuals[0]);
+            PresentationSource baseSource = FromVisual(visuals[0]);
             for (int i = 1; i < visuals.Length; i++)
             {
-                if (baseSource != CriticalFromVisual(visuals[i]))
+                if (baseSource != FromVisual(visuals[i]))
                 {
                     return false;
                 }

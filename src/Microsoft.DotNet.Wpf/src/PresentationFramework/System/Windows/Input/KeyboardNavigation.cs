@@ -145,7 +145,7 @@ namespace System.Windows.Input
         {
             if (d is Visual || d is Visual3D)
             {
-                PresentationSource source = PresentationSource.CriticalFromVisual(d);
+                PresentationSource source = PresentationSource.FromVisual(d);
 
                 if (source != null)
                     return source.RootVisual;
@@ -1094,7 +1094,7 @@ namespace System.Windows.Input
                     return false;
             }
 
-            IKeyboardInputSink inputSink = PresentationSource.CriticalFromVisual(visual) as IKeyboardInputSink;
+            var inputSink = PresentationSource.FromVisual((DependencyObject)visual) as IKeyboardInputSink;
             if (inputSink != null)
             {
                 IKeyboardInputSite ikis = null;
@@ -3267,7 +3267,7 @@ namespace System.Windows.Input
                 if (eventSource != null)
                 {
                     Visual eventSourceVisual = eventSource as Visual;
-                    source = (eventSourceVisual != null) ? PresentationSource.CriticalFromVisual(eventSourceVisual) : null;
+                    source = (eventSourceVisual != null) ? PresentationSource.FromVisual((DependencyObject)eventSourceVisual) : null;
                 }
                 else
                 {

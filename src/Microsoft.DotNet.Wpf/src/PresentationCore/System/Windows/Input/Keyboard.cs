@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
 namespace System.Windows.Input
@@ -410,7 +410,7 @@ namespace System.Windows.Input
                 }
                 else if(uie != null && uie.InternalVisualParent == null)
                 {
-                    PresentationSource presentationSource = PresentationSource.CriticalFromVisual(uie);
+                    PresentationSource presentationSource = PresentationSource.FromVisual((DependencyObject)uie);
                     if(presentationSource != null)
                     {
                         // A UIElements that is the root of a PresentationSource is considered focusable.

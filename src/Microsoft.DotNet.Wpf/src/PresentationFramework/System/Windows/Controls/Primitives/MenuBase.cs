@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
 
@@ -886,7 +886,7 @@ namespace System.Windows.Controls.Primitives
         private void PushMenuMode(bool isAcquireFocusMenuMode)
         {
             Debug.Assert(_pushedMenuMode == null);
-            _pushedMenuMode = PresentationSource.CriticalFromVisual(this);
+            _pushedMenuMode = PresentationSource.FromVisual((DependencyObject)this);
             Debug.Assert(_pushedMenuMode != null);
             IsAcquireFocusMenuMode = isAcquireFocusMenuMode;
             InputManager.Current.PushMenuMode(_pushedMenuMode);

@@ -65,7 +65,7 @@ namespace System.Windows.Input.StylusWisp
                 // See if we should be enabled
                 if (element.IsVisible && element.IsEnabled && element.IsHitTestVisible)
                 {
-                    PresentationSource presentationSource = PresentationSource.CriticalFromVisual(element as Visual);
+                    PresentationSource presentationSource = PresentationSource.FromVisual((DependencyObject)(element as Visual));
 
                     if (presentationSource != null)
                     {

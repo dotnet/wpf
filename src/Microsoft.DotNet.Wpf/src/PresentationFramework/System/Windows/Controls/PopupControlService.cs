@@ -59,7 +59,7 @@ namespace System.Windows.Controls
                                     if (Mouse.CapturedMode != CaptureMode.None)
                                     {
                                         // Get the root visual
-                                        PresentationSource source = PresentationSource.CriticalFromVisual((DependencyObject)directlyOver);
+                                        PresentationSource source = PresentationSource.FromVisual((DependencyObject)directlyOver);
                                         UIElement rootAsUIElement = source != null ? source.RootVisual as UIElement : null;
                                         if (rootAsUIElement != null)
                                         {
@@ -842,7 +842,7 @@ namespace System.Windows.Controls
             if (tooltip != null && !tooltip.FromKeyboard)
             {
                 DependencyObject owner = GetOwner(tooltip);
-                PresentationSource presentationSource = (owner != null) ? PresentationSource.CriticalFromVisual(owner) : null;
+                PresentationSource presentationSource = (owner != null) ? PresentationSource.FromVisual(owner) : null;
 
                 if (presentationSource != null)
                 {
@@ -919,7 +919,7 @@ namespace System.Windows.Controls
             // if the current tooltip's owner is no longer being displayed, the safe area is no longer valid
             // so the mouse has effectively left it
             DependencyObject owner = GetOwner(CurrentToolTip);
-            PresentationSource presentationSource = (owner != null) ? PresentationSource.CriticalFromVisual(owner) : null;
+            PresentationSource presentationSource = (owner != null) ? PresentationSource.FromVisual(owner) : null;
             if (presentationSource == null)
                 return true;
 
@@ -1063,7 +1063,7 @@ namespace System.Windows.Controls
 
         private static bool IsPresentationSourceNull(DependencyObject uie)
         {
-            return PresentationSource.CriticalFromVisual(uie) == null;
+            return PresentationSource.FromVisual(uie) == null;
         }
 
         #endregion

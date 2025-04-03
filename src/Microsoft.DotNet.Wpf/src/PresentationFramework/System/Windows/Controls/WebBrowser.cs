@@ -729,7 +729,7 @@ namespace System.Windows.Controls
         
         private void LoadedHandler(object sender, RoutedEventArgs args)
         {
-            PresentationSource pSource = PresentationSource.CriticalFromVisual(this);
+            var pSource = PresentationSource.FromVisual((DependencyObject)this);
 
             // Note that we cannot assert this condition here. The reason is that this element might have 
             // been disconnected from the tree through one of its parents even while it waited for the 

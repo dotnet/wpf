@@ -339,7 +339,7 @@ namespace System.Windows.Input
                     DependencyObject containingVisual = InputElement.GetContainingVisual(eltDO);
                     if (containingVisual != null)
                     {
-                        PresentationSource captureSource = PresentationSource.CriticalFromVisual(containingVisual);
+                        PresentationSource captureSource = PresentationSource.FromVisual(containingVisual);
                         if (captureSource != null)
                         {
                             mouseInputProvider = captureSource.GetInputProvider(typeof(MouseDevice)) as IMouseInputProvider;
@@ -546,7 +546,7 @@ namespace System.Windows.Input
 
                 if (containingVisual != null)
                 {
-                    relativePresentationSource = PresentationSource.CriticalFromVisual(containingVisual);
+                    relativePresentationSource = PresentationSource.FromVisual(containingVisual);
                 }
             }
             else
@@ -780,7 +780,7 @@ namespace System.Windows.Input
             if (visual == null)
                 return false;
 
-            PresentationSource presentationSource = PresentationSource.CriticalFromVisual(visual);
+            PresentationSource presentationSource = PresentationSource.FromVisual(visual);
 
             if (presentationSource == null)
                 return false;

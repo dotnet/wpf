@@ -531,7 +531,7 @@ namespace System.Windows.Input.StylusPointer
                     timestamp = mouseInputReport.Timestamp;
 
                     // Get presentationsource from element.
-                    source = PresentationSource.CriticalFromVisual(_activeMousePlugInCollection.Element as Visual);
+                    source = PresentationSource.FromVisual((DependencyObject)(_activeMousePlugInCollection.Element as Visual));
                 }
                 else
                 {
@@ -576,7 +576,7 @@ namespace System.Windows.Input.StylusPointer
 
                     // 
                     // Take the presentation source which is associated to the directly over element.
-                    source = PresentationSource.CriticalFromVisual(directlyOverVisual);
+                    source = PresentationSource.FromVisual((DependencyObject)directlyOverVisual);
                 }
 
                 if ((source != null) &&

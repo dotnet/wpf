@@ -3416,7 +3416,7 @@ namespace System.Windows.Controls.Primitives
 
             private static PresentationSource GetPresentationSource(Visual visual)
             {
-                return (visual != null ? PresentationSource.CriticalFromVisual(visual) : null);
+                return (visual != null ? PresentationSource.FromVisual((DependencyObject)visual) : null);
             }
 
             /// <summary>

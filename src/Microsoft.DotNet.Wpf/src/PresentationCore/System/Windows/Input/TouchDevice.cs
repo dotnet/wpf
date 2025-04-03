@@ -563,7 +563,7 @@ namespace System.Windows.Input
             if (visual == null)
                 return false;
 
-            PresentationSource presentationSource = PresentationSource.CriticalFromVisual(visual);
+            PresentationSource presentationSource = PresentationSource.FromVisual(visual);
 
             return ((presentationSource != null) && (presentationSource == _activeSource));
         }

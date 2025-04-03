@@ -708,7 +708,7 @@ namespace System.Windows.Input.StylusPointer
                 DependencyObject containingVisual = InputElement.GetContainingVisual(dependencyObject);
                 if (containingVisual != null)
                 {
-                    relativePresentationSource = PresentationSource.CriticalFromVisual(containingVisual);
+                    relativePresentationSource = PresentationSource.FromVisual(containingVisual);
                 }
             }
             else
@@ -1018,7 +1018,7 @@ namespace System.Windows.Input.StylusPointer
                     UIElement uiElement = InputElement.GetContainingUIElement(stylusCapture as DependencyObject) as UIElement;
                     if (uiElement != null)
                     {
-                        PresentationSource source = PresentationSource.CriticalFromVisual(uiElement as Visual);
+                        PresentationSource source = PresentationSource.FromVisual((DependencyObject)(uiElement as Visual));
 
                         if (source != null)
                         {

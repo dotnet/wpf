@@ -1848,7 +1848,7 @@ namespace System.Windows.Input.StylusWisp
                     timestamp = mouseInputReport.Timestamp;
 
                     // Get presentationsource from element.
-                    source = PresentationSource.CriticalFromVisual(_activeMousePlugInCollection.Element as Visual);
+                    source = PresentationSource.FromVisual((DependencyObject)(_activeMousePlugInCollection.Element as Visual));
                 }
                 else
                 {
@@ -1892,7 +1892,7 @@ namespace System.Windows.Input.StylusWisp
                     }
 
                     // Take the presentation source which is associated to the directly over element.
-                    source = PresentationSource.CriticalFromVisual(directlyOverVisual);
+                    source = PresentationSource.FromVisual((DependencyObject)directlyOverVisual);
 }
 
                 PenContexts penContexts = GetPenContextsFromHwnd(source);

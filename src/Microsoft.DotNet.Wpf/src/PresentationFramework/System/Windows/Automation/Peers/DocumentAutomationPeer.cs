@@ -138,7 +138,7 @@ namespace System.Windows.Automation.Peers
             Rect boundingRect = CalculateBoundingRect(false, out uiScope);
             if (boundingRect != Rect.Empty && uiScope != null)
             {
-                HwndSource hwndSource = PresentationSource.CriticalFromVisual(uiScope) as HwndSource;
+                var hwndSource = PresentationSource.FromVisual((DependencyObject)uiScope) as HwndSource;
                 if (hwndSource != null)
                 {
                     boundingRect = PointUtil.ElementToRoot(boundingRect, uiScope, hwndSource);
@@ -159,7 +159,7 @@ namespace System.Windows.Automation.Peers
             Rect boundingRect = CalculateBoundingRect(true, out uiScope);
             if (boundingRect != Rect.Empty && uiScope != null)
             {
-                HwndSource hwndSource = PresentationSource.CriticalFromVisual(uiScope) as HwndSource;
+                var hwndSource = PresentationSource.FromVisual((DependencyObject)uiScope) as HwndSource;
                 if (hwndSource != null)
                 {
                     boundingRect = PointUtil.ElementToRoot(boundingRect, uiScope, hwndSource);

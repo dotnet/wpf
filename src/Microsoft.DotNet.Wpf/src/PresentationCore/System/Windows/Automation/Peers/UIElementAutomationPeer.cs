@@ -174,7 +174,7 @@ namespace System.Windows.Automation.Peers
         ///
         protected override Rect GetBoundingRectangleCore()
         {
-            PresentationSource presentationSource = PresentationSource.CriticalFromVisual(_owner);
+            PresentationSource presentationSource = PresentationSource.FromVisual((DependencyObject)_owner);
 
             // If there's no source, the element is not visible, return empty rect
             if(presentationSource == null)
@@ -197,7 +197,7 @@ namespace System.Windows.Automation.Peers
         ///
         internal override Rect GetVisibleBoundingRectCore()
         {
-            PresentationSource presentationSource = PresentationSource.CriticalFromVisual(_owner);
+            PresentationSource presentationSource = PresentationSource.FromVisual((DependencyObject)_owner);
 
             // If there's no source, the element is not visible, return empty rect
             if (presentationSource == null)
@@ -491,7 +491,7 @@ namespace System.Windows.Automation.Peers
         {
             Point pt = new Point(double.NaN, double.NaN);
             
-            PresentationSource presentationSource = PresentationSource.CriticalFromVisual(_owner);
+            PresentationSource presentationSource = PresentationSource.FromVisual((DependencyObject)_owner);
 
             // If there's no source, the element is not visible, return (double.NaN, double.NaN) point
             if(presentationSource == null)

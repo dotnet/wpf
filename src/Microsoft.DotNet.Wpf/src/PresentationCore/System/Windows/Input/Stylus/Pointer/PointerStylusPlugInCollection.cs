@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
 
@@ -55,7 +55,7 @@ namespace System.Windows.Input.StylusPointer
             // See if we should be enabled
             if (element.IsVisible && element.IsEnabled && element.IsHitTestVisible)
             {
-                PresentationSource presentationSource = PresentationSource.CriticalFromVisual(element as Visual);
+                PresentationSource presentationSource = PresentationSource.FromVisual((DependencyObject)(element as Visual));
 
                 if (presentationSource != null)
                 {

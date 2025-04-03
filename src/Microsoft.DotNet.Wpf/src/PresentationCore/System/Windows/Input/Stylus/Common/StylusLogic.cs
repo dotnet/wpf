@@ -673,7 +673,7 @@ namespace System.Windows.Input
             if (visual == null)
                 return false;
 
-            PresentationSource presentationSource = PresentationSource.CriticalFromVisual(visual);
+            PresentationSource presentationSource = PresentationSource.FromVisual(visual);
 
             if (presentationSource == null)
             {

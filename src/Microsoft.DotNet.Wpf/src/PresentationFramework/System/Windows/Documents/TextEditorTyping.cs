@@ -1597,7 +1597,7 @@ namespace System.Windows.Documents
         private static bool IsMouseInputPending(TextEditor This)
         {
             bool mouseInputPending = false;
-            IWin32Window win32Window = PresentationSource.CriticalFromVisual(This.UiScope) as IWin32Window;
+            var win32Window = PresentationSource.FromVisual((DependencyObject)This.UiScope) as IWin32Window;
             if (win32Window != null)
             {
                 IntPtr hwnd = IntPtr.Zero;

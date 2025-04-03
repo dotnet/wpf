@@ -578,7 +578,7 @@ namespace System.Windows.Input.StylusWisp
                             UIElement uiElement = InputElement.GetContainingUIElement(stylusCapture as DependencyObject) as UIElement;
                             if (uiElement != null)
                             {
-                                PresentationSource source = PresentationSource.CriticalFromVisual(uiElement as Visual);
+                                PresentationSource source = PresentationSource.FromVisual((DependencyObject)(uiElement as Visual));
 
                                 if (source != null)
                                 {
@@ -903,15 +903,14 @@ namespace System.Windows.Input.StylusWisp
             if (visual == null)
                 return false;
 
-            PresentationSource presentationSource = PresentationSource.CriticalFromVisual(visual);
+            PresentationSource presentationSource = PresentationSource.FromVisual(visual);
 
             if (presentationSource == null)
             {
                 return false;
             }
 
-            if (CriticalActiveSource != presentationSource &&
-                Captured == null)
+            if (ActiveSource != presentationSource && Captured == null)
             {
                 return false;
             }
@@ -1165,7 +1164,7 @@ namespace System.Windows.Input.StylusWisp
                 DependencyObject containingVisual = InputElement.GetContainingVisual(dependencyObject);
                 if (containingVisual != null)
                 {
-                    relativePresentationSource = PresentationSource.CriticalFromVisual(containingVisual);
+                    relativePresentationSource = PresentationSource.FromVisual(containingVisual);
                 }
             }
             else
@@ -1504,7 +1503,7 @@ namespace System.Windows.Input.StylusWisp
                 if (_stylusCapture != null)
                 {
                     DependencyObject containingVisual = InputElement.GetContainingVisual(_stylusCapture as DependencyObject);
-                    PresentationSource capturedSource = PresentationSource.CriticalFromVisual(containingVisual);
+                    PresentationSource capturedSource = PresentationSource.FromVisual(containingVisual);
 
                     if (capturedSource != null &&
                         capturedSource.CompositionTarget != null &&
@@ -1715,7 +1714,7 @@ namespace System.Windows.Input.StylusWisp
                     DependencyObject mouseCapturedVisual = InputElement.GetContainingVisual((DependencyObject)mouseCaptured);
                     if (mouseCapturedVisual != null)
                     {
-                        mouseInputSource = PresentationSource.CriticalFromVisual(mouseCapturedVisual);
+                        mouseInputSource = PresentationSource.FromVisual(mouseCapturedVisual);
                     }
                 }
                 else if (_stylusOver != null)

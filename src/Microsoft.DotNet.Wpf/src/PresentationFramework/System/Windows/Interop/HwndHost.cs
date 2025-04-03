@@ -329,8 +329,8 @@ namespace System.Windows.Interop
             CompositionTarget vt = null;
             if (( Handle != IntPtr.Zero) && IsVisible)
             {
-                source = PresentationSource.CriticalFromVisual(this, false /* enable2DTo3DTransition */);
-                if(source != null)
+                source = PresentationSource.FromVisual(this, enable2DTo3DTransition: false);
+                if (source != null)
                 {
                     vt = source.CompositionTarget;
                 }
@@ -545,7 +545,7 @@ namespace System.Windows.Interop
                 // We only allow the changes that are coming from Avalon layout. The hwnd is not allowed to change by itself.
                 // So the size of the hwnd should always be RenderSize and the position be where layout puts it.
                 case WindowMessage.WM_WINDOWPOSCHANGING:
-                    PresentationSource source = PresentationSource.CriticalFromVisual(this, false /* enable2DTo3DTransition */);
+                    PresentationSource source = PresentationSource.FromVisual(this, enable2DTo3DTransition: false);
 
                     if (source != null)
                     {
@@ -828,8 +828,7 @@ namespace System.Windows.Interop
             }
 
             // Add ourselves as an IKeyboardInputSinks child of our containing window.
-            IKeyboardInputSink source = PresentationSource.CriticalFromVisual(this, false /* enable2DTo3DTransition */) as IKeyboardInputSink;
-            if(source != null)
+            if (PresentationSource.FromVisual(this, enable2DTo3DTransition: false) is IKeyboardInputSink source)
             {
                 ((IKeyboardInputSink)this).KeyboardInputSite = source.RegisterKeyboardInputSink(this);
             }
@@ -895,20 +894,15 @@ namespace System.Windows.Interop
             // Find the source window, this must be the parent window of
             // the child window.
             IntPtr hwndParent = IntPtr.Zero;
-            PresentationSource source = PresentationSource.CriticalFromVisual(this, false /* enable2DTo3DTransition */);
-            if(source != null)
+            if (PresentationSource.FromVisual(this, enable2DTo3DTransition: false) is HwndSource hwndSource)
             {
-                HwndSource hwndSource = source as HwndSource ;
-                if(hwndSource != null)
-                {
-                    hwndParent = hwndSource.Handle;
-                }
+                hwndParent = hwndSource.Handle;
             }
             else
             {
                 // attempt to also walk through 3D - if we get a non-null result then we know we are inside of
                 // a 3D scene which is not supported
-                PresentationSource goingThrough3DSource = PresentationSource.CriticalFromVisual(this, true /* enable2DTo3DTransition */);
+                PresentationSource goingThrough3DSource = PresentationSource.FromVisual(this, enable2DTo3DTransition: true);
                 if (goingThrough3DSource != null)
                 {
                     if (TraceHwndHost.IsEnabled)
@@ -1030,7 +1024,7 @@ namespace System.Windows.Interop
 
             // Convert from pixels to measure units.
             // PresentationSource can't be null if we get here.
-            PresentationSource source = PresentationSource.CriticalFromVisual(this, false /* enable2DTo3DTransition */);
+            PresentationSource source = PresentationSource.FromVisual(this, enable2DTo3DTransition: false);
             Point ptUpperLeft = new Point(rc.left, rc.top);
             Point ptLowerRight = new Point(rc.right, rc.bottom);
             ptUpperLeft = source.CompositionTarget.TransformFromDevice.Transform(ptUpperLeft);

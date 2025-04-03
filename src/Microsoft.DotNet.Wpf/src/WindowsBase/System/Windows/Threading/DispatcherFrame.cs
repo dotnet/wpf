@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
 namespace System.Windows.Threading
@@ -18,7 +18,7 @@ namespace System.Windows.Threading
         public DispatcherFrame() : this(true)
         {
         }
-        
+
         /// <summary>
         ///     Constructs a new instance of the DispatcherFrame class.
         /// </summary>
@@ -49,26 +49,29 @@ namespace System.Windows.Threading
             get
             {
                 // This method is free-threaded.
-                    
+
                 // First check if this frame wants to continue.
                 bool shouldContinue = _continue;
-                if(shouldContinue)
+
+                if (!shouldContinue)
                 {
-                    // This frame wants to continue, so next check if it will
-                    // respect the "exit requests" from the dispatcher.
-                    if(_exitWhenRequested)
+                    return shouldContinue;
+                }
+
+                // This frame wants to continue, so next check if it will
+                // respect the "exit requests" from the dispatcher.
+                if (_exitWhenRequested)
+                {
+                    Dispatcher dispatcher = Dispatcher;
+
+                    // This frame is willing to respect the "exit requests" of
+                    // the dispatcher, so check them.
+                    if (dispatcher._exitAllFrames || dispatcher._hasShutdownStarted)
                     {
-                        Dispatcher dispatcher = Dispatcher;
-                        
-                        // This frame is willing to respect the "exit requests" of
-                        // the dispatcher, so check them.
-                        if(dispatcher._exitAllFrames || dispatcher._hasShutdownStarted)
-                        {
-                            shouldContinue = false;
-                        }
+                        shouldContinue = false;
                     }
                 }
-                
+
                 return shouldContinue;
             }
 
@@ -80,11 +83,12 @@ namespace System.Windows.Threading
 
                 // Post a message so that the message pump will wake up and
                 // check our continue state.
-                Dispatcher.BeginInvoke(DispatcherPriority.Send, (DispatcherOperationCallback) delegate(object unused) {return null;}, null);
+                Dispatcher.BeginInvoke(DispatcherPriority.Send, (DispatcherOperationCallback)delegate (object unused)
+                { return null; }, null);
             }
         }
 
-        private bool _exitWhenRequested;
+        private readonly bool _exitWhenRequested;
         private bool _continue;
     }
 }

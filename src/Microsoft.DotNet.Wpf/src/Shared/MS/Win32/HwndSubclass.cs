@@ -113,7 +113,7 @@ namespace MS.Win32
         ///     An identifier that can be used to reference this instance of
         ///     the HwndSubclass class in the static RequestDetach method.
         /// </returns>
-        internal IntPtr Attach(IntPtr hwnd)
+        internal IntPtr AttachWndProcHook(IntPtr hwnd)
         {
             if (hwnd == IntPtr.Zero)
                 throw new ArgumentNullException(nameof(hwnd));
@@ -148,18 +148,12 @@ namespace MS.Win32
         ///     Whether or not this HwndSubclass object was actually removed from
         ///     the WNDPROC chain.
         /// </returns>
-        internal bool Detach(bool force)
-        {
-
-            return CriticalDetach(force);
-        }
-
-        internal bool CriticalDetach(bool force)
+        internal bool DetachWndProcHook(bool force)
         {
             bool detached;
 
             // If we have already detached, return immediately.
-            if(_bond == Bond.Detached || _bond == Bond.Unattached)
+            if (_bond is Bond.Detached or Bond.Unattached)
             {
                 detached = true;
             }
@@ -295,7 +289,7 @@ namespace MS.Win32
                     int param = (int)lParam;    // 0 - normal, 1 - force, 2 - force and forward
                     bool force = (param > 0);
 
-                    retval = CriticalDetach(force) ? new IntPtr(1) : IntPtr.Zero ;
+                    retval = DetachWndProcHook(force) ? new IntPtr(1) : IntPtr.Zero ;
                     handled = (param < 2);
                 }
             }
@@ -345,7 +339,7 @@ namespace MS.Win32
                     // still in the call chain.  This is our last chance to clean
                     // up, and no other message should be received by this window
                     // proc again. It is OK to force a cleanup now.
-                    CriticalDetach(true);
+                    DetachWndProcHook(force: true);
 
                     // Always pass the WM_NCDESTROY message down the chain!
                     handled = false;

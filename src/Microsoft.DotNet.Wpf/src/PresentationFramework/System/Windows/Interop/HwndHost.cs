@@ -481,7 +481,7 @@ namespace System.Windows.Interop
                     // Check if it is trusted (WebOC and AddInHost), call CriticalDetach to avoid the Demand.
                     if (_fTrusted == true)
                     {
-                        _hwndSubclass.CriticalDetach(false);
+                        _hwndSubclass.DetachWndProcHook(force: false);
                     }
                     else
                     {
@@ -1046,7 +1046,7 @@ namespace System.Windows.Interop
 #endif
             {
                 _hwndSubclass = new HwndSubclass(_hwndSubclassHook);
-                _hwndSubclass.Attach(_hwnd.Handle);
+                _hwndSubclass.AttachWndProcHook(_hwnd.Handle);
             }
 
             // Initially make sure the window is hidden.  We will show it later during rendering.

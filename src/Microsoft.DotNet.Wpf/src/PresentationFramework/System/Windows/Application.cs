@@ -2203,7 +2203,7 @@ namespace System.Windows
                 // Quit the dispatcher if we ran our own.
                 if (_ownDispatcherStarted == true)
                 {
-                    Dispatcher.CriticalInvokeShutdown();
+                    Dispatcher.InvokeShutdown();
                 }
             }
         }

@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
 using System.Runtime.InteropServices;
@@ -12,22 +12,6 @@ namespace System.Windows.Interop
     /// <remarks>
     /// For Avalon/WinForms interop to work, WinForms needs to be able to modify MSG structs as they are
     /// processed, so they are passed by ref (it's also a perf gain)
-    ///
-    /// - but in the Partial Trust scenario, this would be a security vulnerability; allowing partially trusted code
-    ///    to intercept and arbitrarily change MSG contents could potentially create a spoofing opportunity.
-    ///
-    /// - so rather than try to secure all posible current and future extensibility points against untrusted code
-    ///    getting write access to a MSG struct during message processing, we decided the simpler,  more performant, and 
-    ///    more secure, both now and going forward, solution was to secure write access to the MSG struct directly
-    ///    at the source.
-    ///
-    /// - get access is unrestricted and should in-line nicely for zero perf cost
-    ///
-    /// - set access is restricted via a call to SecurityHelper.DemandUnrestrictedUIPermission, which is optimized
-    ///    to a no-op in the Full Trust scenario, and will throw a security exception in the Partial Trust scenario
-    ///
-    /// - NOTE: This breaks Avalon/WinForms interop in the Partial Trust scenario, but that's not a supported
-    ///              scenario anyway.
     /// </remarks>
     [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly")]
     [SuppressMessage("Microsoft.Naming", "CA1705:LongAcronymsShouldBePascalCased")]
@@ -206,5 +190,5 @@ namespace System.Windows.Interop
         ///     The Y coordinate of the message POINT struct. 
         /// </summary>
         private int _pt_y;
-}
+    }
 }

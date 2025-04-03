@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
 using System.Windows.Input;
@@ -54,61 +54,31 @@ namespace System.Windows.Automation.Peers
 
             return element.GetAutomationPeer();
         }
-       
-        /// 
-        override protected List<AutomationPeer> GetChildrenCore()
+
+#nullable enable
+
+        /// <summary>
+        /// Retrieves the automation peers for the <see cref="UIElement"/> / <see cref="UIElement3D"/> children of this <see cref="_owner"/>.
+        /// </summary>
+        /// <returns>
+        /// Returns <see langword="null"/> if the <see cref="_owner"/> has no children of given type, otherwise a list of children.
+        /// </returns>
+        protected override List<AutomationPeer>? GetChildrenCore()
         {
-            List<AutomationPeer> children = null;
+            List<AutomationPeer>? children = null;
 
-            iterate(_owner,
-                    (IteratorCallback)delegate(AutomationPeer peer)
-                    {
-                        if (children == null)
-                            children = new List<AutomationPeer>();
+            UIElementAutomationUtils.Iterate(_owner, ref children, static (ref List<AutomationPeer>? children, AutomationPeer peer) =>
+            {
+                children ??= new List<AutomationPeer>();
+                children.Add(peer);
 
-                        children.Add(peer);
-                        return (false);
-                    });
+                return false;
+            });
 
             return children;
         }
 
-        private delegate bool IteratorCallback(AutomationPeer peer);
-        
-        //
-        private static bool iterate(DependencyObject parent, IteratorCallback callback)
-        {
-            bool done = false;
-
-            if(parent != null)
-            {
-                AutomationPeer peer = null;
-                int count = VisualTreeHelper.GetChildrenCount(parent);
-                for (int i = 0; i < count && !done; i++)
-                {
-                    DependencyObject child = VisualTreeHelper.GetChild(parent, i);
-                    
-                    if(     child != null
-                        &&  child is UIElement 
-                        &&  (peer = UIElementAutomationPeer.CreatePeerForElement((UIElement)child)) != null  )
-                    {
-                        done = callback(peer);
-                    }
-                    else if ( child != null
-                        &&    child is UIElement3D
-                        &&    (peer = CreatePeerForElement(((UIElement3D)child))) != null )
-                    {
-                        done = callback(peer);
-                    }
-                    else
-                    {
-                        done = iterate(child, callback);
-                    }
-                }
-            }
-            
-            return done;
-        }
+#nullable disable
 
         /// 
         override public object GetPattern(PatternInterface patternInterface)

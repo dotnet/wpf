@@ -162,7 +162,7 @@ namespace MS.Win32
         public const int MB_USEGLYPHCHARS = 0x00000004;
 
         [DllImport(ExternDll.Kernel32, ExactSpelling = true, CharSet = CharSet.Unicode, SetLastError = true)]
-        public static unsafe extern int MultiByteToWideChar(int CodePage, int dwFlags, byte* lpMultiByteStr, int cchMultiByte, char* lpWideCharStr, int cchWideChar);
+        public static extern unsafe int MultiByteToWideChar(int CodePage, int dwFlags, byte* lpMultiByteStr, int cchMultiByte, char* lpWideCharStr, int cchWideChar);
 
 #if DRT_NATIVEMETHODS
         [DllImport(ExternDll.User32, ExactSpelling=true, EntryPoint="keybd_event", CharSet=CharSet.Auto)]

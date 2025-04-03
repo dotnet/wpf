@@ -38,7 +38,6 @@ namespace MS.Internal.Printing.Configuration
             this._privateNamespace = privateNamespace;
             this._privateQName = privateQname;
 
-            // security critical member
             this._strings = new COMPSTUISR();
         }
 

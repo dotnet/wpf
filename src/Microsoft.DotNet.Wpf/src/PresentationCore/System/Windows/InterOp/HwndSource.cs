@@ -48,9 +48,6 @@ namespace System.Windows.Interop
         /// <param name="parent">
         ///     The Win32 window that should be the parent of this window.
         /// </param>
-        /// <remarks>
-        ///     Callers must have UIPermission(UIPermissionWindow.AllWindows) to call this API.
-        /// </remarks>
         public HwndSource(
             int classStyle,
             int style,
@@ -107,9 +104,6 @@ namespace System.Windows.Interop
         ///     Indicates that HwndSource should include the non-client area
         ///     of the hwnd when it calls the Layout Manager
         /// </param>
-        /// <remarks>
-        ///     Callers must have UIPermission(UIPermissionWindow.AllWindows) to call this API.
-        /// </remarks>
         public HwndSource(int classStyle,
                           int style,
                           int exStyle,
@@ -165,9 +159,6 @@ namespace System.Windows.Interop
         /// <param name="parent">
         ///     The Win32 window that should be the parent of this window.
         /// </param>
-        /// <remarks>
-        ///     Callers must have UIPermission(UIPermissionWindow.AllWindows) to call this API.
-        /// </remarks>
         public HwndSource(
             int classStyle,
             int style,
@@ -195,9 +186,6 @@ namespace System.Windows.Interop
         ///    HwndSource Ctor
         /// </summary>
         /// <param name="parameters"> parameter block </param>
-        /// <remarks>
-        ///     Callers must have UIPermission(UIPermissionWindow.AllWindows) to call this API.
-        /// </remarks>
         public HwndSource(HwndSourceParameters parameters)
         {
             Initialize(parameters);
@@ -329,9 +317,8 @@ namespace System.Windows.Interop
             // Register dropable window.
             if (_hwndWrapper.Handle != IntPtr.Zero)
             {
-                // This call is safe since DragDrop.RegisterDropTarget is checking the unmanged
-                // code permission.
                 DragDrop.RegisterDropTarget(_hwndWrapper.Handle);
+
                 _registeredDropTargetCount++;
             }
         }
@@ -354,9 +341,6 @@ namespace System.Windows.Interop
         /// <param name="hook">
         ///     The hook to add.
         /// </param>
-        ///<remarks>
-        ///     Callers must have UIPermission(UIPermissionWindow.AllWindows) to call this API.
-        ///</remarks>
         public void AddHook(HwndSourceHook hook)
         {
             Verify.IsNotNull(hook, "hook");
@@ -376,13 +360,9 @@ namespace System.Windows.Interop
         /// <param name="hook">
         ///     The hook to remove.
         /// </param>
-        ///<remarks>
-        ///     Callers must have UIPermission(UIPermissionWindow.AllWindows) to call this API.
-        ///</remarks>
         public void RemoveHook(HwndSourceHook hook)
         {
-
-            //this.VerifyAccess();
+            // VerifyAccess();
 
             EventHelper.RemoveHandler(ref _hooks, hook);
             if(_hooks == null)
@@ -540,9 +520,6 @@ namespace System.Windows.Interop
         /// <summary>
         /// The Root Visual for this window. If it is a UIElement
         /// </summary>
-        /// <remarks>
-        ///     Callers must have UIPermission(UIPermissionWindow.AllWindows) to call this API.
-        /// </remarks>
         public override Visual RootVisual
         {
             get
@@ -658,9 +635,6 @@ namespace System.Windows.Interop
         /// </summary>
         /// <param name="hwnd">The window.</param>
         /// <returns>The source that corresponds to the specified window.</returns>
-        ///<remarks>
-        ///     Callers must have UIPermission(UIPermissionWindow.AllWindows) to call this API.
-        ///</remarks>
         public static HwndSource FromHwnd(IntPtr hwnd)
         {
             if (hwnd == IntPtr.Zero)
@@ -2552,9 +2526,8 @@ namespace System.Windows.Interop
                             // Revoke the drop target.
                             if (_hwndWrapper.Handle != IntPtr.Zero && _registeredDropTargetCount > 0)
                             {
-                                // This call is safe since DragDrop.RevokeDropTarget is checking the unmanged
-                                // code permission.
                                 DragDrop.RevokeDropTarget(_hwndWrapper.Handle);
+
                                 _registeredDropTargetCount--;
                             }
 

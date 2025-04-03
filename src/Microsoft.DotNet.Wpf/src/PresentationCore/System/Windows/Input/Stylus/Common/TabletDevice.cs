@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
 using System.Collections.ObjectModel;
@@ -48,9 +48,6 @@ namespace System.Windows.Input
         /// <summary>
         ///     Returns the PresentationSource that is reporting input for this device.
         /// </summary>
-        /// <remarks>
-        ///     Callers must have UIPermission(UIPermissionWindow.AllWindows) to call this API.
-        /// </remarks>
         public override PresentationSource ActiveSource
         {
             get

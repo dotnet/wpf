@@ -113,11 +113,6 @@ namespace System.Windows.Input
         #region WM_POINTER
 
         /// <summary>
-        /// String to use for assert of registry permissions
-        /// </summary>
-        private const string WpfPointerKeyAssert = @"HKEY_CURRENT_USER\" + WpfPointerKey;
-
-        /// <summary>
         /// The key location for the registry switch to configure the touch stack system wide
         /// </summary>
         private const string WpfPointerKey = @"Software\Microsoft\Avalon.Touch\";

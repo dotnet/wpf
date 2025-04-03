@@ -46,7 +46,6 @@ namespace System.IO.Packaging
         /// </summary>
         /// <param name="uri">key uri</param>
         /// <returns>Package</returns>
-        /// <permission cref="EnvironmentPermission"></permission>
         /// <remarks>
         /// </remarks>
         public static Package GetPackage(Uri uri)
@@ -71,7 +70,6 @@ namespace System.IO.Packaging
         /// </summary>
         /// <param name="uri">key uri</param>
         /// <param name="package">package</param>
-        /// <permission cref="EnvironmentPermission"></permission>
         /// <remarks>
         /// If a package with the uri is already in the store,it throws an exception.
         /// The package will not be automatically replaced within the store.
@@ -117,7 +115,6 @@ namespace System.IO.Packaging
         /// Removes a uri, package pair from the package store.
         /// </summary>
         /// <param name="uri">key uri</param>
-        /// <permission cref="EnvironmentPermission"></permission>
         /// <remarks>
         /// </remarks>
         public static void RemovePackage(Uri uri)

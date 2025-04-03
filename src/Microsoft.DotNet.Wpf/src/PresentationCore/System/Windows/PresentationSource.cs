@@ -73,9 +73,6 @@ namespace System.Windows
         /// </summary>
         /// <param name="visual">The visual to find the source for.</param>
         /// <returns>The source in which the visual is being presented.</returns>
-        ///<remarks>
-        ///     Callers must have UIPermission(UIPermissionWindow.AllWindows) to call this API.
-        ///</remarks> 
         public static PresentationSource FromVisual(Visual visual)
         {
 
@@ -87,9 +84,6 @@ namespace System.Windows
         /// </summary>
         /// <param name="dependencyObject">The dependency object to find the source for.</param>
         /// <returns>The source in which the dependency object is being presented.</returns>
-        ///<remarks>
-        ///     Callers must have UIPermission(UIPermissionWindow.AllWindows) to call this API.
-        ///</remarks> 
         public static PresentationSource FromDependencyObject(DependencyObject dependencyObject)
         {
 
@@ -107,7 +101,6 @@ namespace System.Windows
         ///     1) You cannot use the UIElement or ContentElement AddHandler() method.
         ///     2) Class handlers are not allowed.
         ///     3) The handlers will receive the SourceChanged event even if it was handled.
-        ///     Callers must have UIPermission(UIPermissionWindow.AllWindows) to call this API.
         /// </remarks>
         public static void AddSourceChangedHandler(IInputElement element, SourceChangedEventHandler handler)
         {
@@ -287,14 +280,7 @@ namespace System.Windows
         /// <summary>
         ///     The root visual being presented in the source.
         /// </summary>
-        /// <remarks>
-        ///     Callers must have UIPermission(UIPermissionWindow.AllWindows) to call this API.
-        /// </remarks>
-        public abstract Visual RootVisual
-        {
-            get;
-            set;
-        }
+        public abstract Visual RootVisual { get; set; }
 
         /// <summary>
         ///     Causes this PresentationSource to enter "menu mode".
@@ -363,9 +349,6 @@ namespace System.Windows
         ///   over a ReadOnly SnapShot of the List of sources.  The Enumerator
         ///   skips over the any dead weak references in the list.
         /// </summary>
-        /// <remarks>
-        ///     Callers must have UIPermission(UIPermissionWindow.AllWindows) to call this API.
-        /// </remarks>
         public static IEnumerable CurrentSources
         {
             get

@@ -64,9 +64,6 @@ namespace System.Windows.Media.Imaging
         /// <param name="buffer">Pointer to the buffer in memory</param>
         /// <param name="bufferSize">Size of the buffer</param>
         /// <param name="stride">stride</param>
-        /// <remarks>
-        ///     Callers must have UnmanagedCode permission to call this API.
-        /// </remarks>
         public static unsafe BitmapSource Create(
             int pixelWidth,
             int pixelHeight,

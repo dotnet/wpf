@@ -247,10 +247,6 @@ namespace System.Windows.Interop
         // ActiveX wrapper controls that derive from this class should override the
         // below method and return their own AxSite derived object.
         //
-        // This method is protected by an InheritanceDemand (from HwndSource) and
-        // a LinkDemand because extending a site is strictly an advanced feature for
-        // which one needs UnmanagedCode permissions.
-        //
 
         /// Returns an object that will be set as the site for the native ActiveX control.
         /// Implementors of the site can derive from ActiveXSite class.

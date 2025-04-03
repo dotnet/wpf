@@ -59,9 +59,6 @@ namespace System.Windows.Interop
         /// <param name="icon"></param>
         /// <param name="sourceRect"></param>
         /// <param name="sizeOptions"></param>
-        /// <remarks>
-        ///     Callers must have UnmanagedCode permission to call this API.
-        /// </remarks>
         public static unsafe BitmapSource CreateBitmapSourceFromHIcon(
             IntPtr icon,
             Int32Rect sourceRect,
@@ -85,9 +82,6 @@ namespace System.Windows.Interop
         /// <param name="format"></param>
         /// <param name="stride"></param>
         /// <param name="offset"></param>
-        /// <remarks>
-        ///     Callers must have UnmanagedCode permission to call this API.
-        /// </remarks>
         public static unsafe BitmapSource CreateBitmapSourceFromMemorySection(
             IntPtr section,
             int pixelWidth,

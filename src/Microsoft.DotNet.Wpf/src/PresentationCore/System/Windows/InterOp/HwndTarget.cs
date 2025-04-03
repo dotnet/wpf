@@ -631,8 +631,6 @@ namespace System.Windows.Interop
         /// <remarks>
         ///     This property specifies a preference, it does not necessarily change the actual
         ///     rendering mode.  Among other things, this can be trumped by the registry settings.
-        ///     <para/>
-        ///     Callers must have UIPermission(UIPermissionWindow.AllWindows) to set this property.
         /// </remarks>
         public RenderMode RenderMode
         {
@@ -2278,9 +2276,6 @@ namespace System.Windows.Interop
         /// <summary>
         /// Gets and sets the root Visual of this HwndTarget.
         /// </summary>
-        /// <remarks>
-        ///     Callers must have UIPermission(UIPermissionWindow.AllWindows) to call this API.
-        /// </remarks>
         public override Visual RootVisual
         {
             set

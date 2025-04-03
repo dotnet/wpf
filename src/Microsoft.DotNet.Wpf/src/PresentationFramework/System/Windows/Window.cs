@@ -102,12 +102,11 @@ namespace System.Windows
         ///
         ///     Also, window style is set to WS_CHILD inside CreateSourceWindow
         ///     for browser hosted case
-        ///
-        ///     Callers must have UIPermission(UIPermissionWindow.AllWindows) to call this API.
         /// </remarks>
         public Window()
         {
             _inTrustedSubWindow = false;
+
             Initialize();
         }
 
@@ -205,13 +204,10 @@ namespace System.Windows
         ///     user cancels the closing event, the window is not closed.
         ///     Otherwise, the window is closed and the Closed event is
         ///     fired.
-        ///
-        ///     Callers must have UIPermission(UIPermissionWindow.AllWindows) to call this API.
         /// </remarks>
         public void Close()
         {
-            // this call ends up throwing an exception if Close
-            // is not allowed
+            // this call ends up throwing an exception if Close is not allowed
             VerifyApiSupported();
             VerifyContextAndObjectState();
             InternalClose(false, false);
@@ -223,7 +219,6 @@ namespace System.Windows
         /// <remarks>
         ///     To enable custom chrome on Windows. First check if this is the Left MouseButton.
         ///     Will throw exception if it's not, otherwise, will kick off the Windows's MoveWindow loop.
-        ///     Callers must have UIPermission(UIPermissionWindow.AllWindows) to call this API.
         /// </remarks>
         public void DragMove()
         {
@@ -262,9 +257,6 @@ namespace System.Windows
         ///     Shows the window as a modal window
         /// </summary>
         /// <returns>bool?</returns>
-        /// <remarks>
-        ///     Callers must have UIPermission(UIPermissionWindow.AllWindows) to call this API.
-        /// </remarks>
         public Nullable<bool> ShowDialog()
         {
             // this call ends up throwing an exception if ShowDialog
@@ -477,7 +469,6 @@ namespace System.Windows
         /// <remarks>
         ///     This method calls SetForegroundWindow on the hWnd, thus the rules for SetForegroundWindow
         ///     apply to this method.
-        ///     Callers must have UIPermission(UIPermissionWindow.AllWindows) to call this API.
         /// </remarks>
         /// <returns>bool -- indicating whether the window was activated or not</returns>
         public bool Activate()
@@ -866,7 +857,6 @@ namespace System.Windows
         ///
         ///     If Icon property is set, Window does not dispose that object when it
         ///     is closed.
-        ///     Callers must have UIPermission(UIPermissionWindow.AllWindows) to call this API.
         /// </remarks>
         public ImageSource Icon
         {
@@ -1054,9 +1044,6 @@ namespace System.Windows
         ///     If RestoreBounds is queried before the Window has been shown or after it has
         ///     been closed, it will return Rect.Empty.
         /// </summary>
-        /// <remarks>
-        ///     Callers must have UIPermission(UIPermissionWindow.AllWindows) to call this API.
-        /// </remarks>
 
         public Rect RestoreBounds
         {
@@ -1209,9 +1196,6 @@ namespace System.Windows
         ///     still interact with owner window. This property can not be
         ///     set of the top level window.
         /// </summary>
-        ///<remarks>
-        ///     Callers must have UIPermission(UIPermissionWindow.AllWindows) to call this API.
-        ///</remarks>
         [DefaultValue(null)]
         public Window Owner
         {

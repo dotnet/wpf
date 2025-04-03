@@ -17,7 +17,6 @@ namespace System.Windows.Interop
     /// <summary>
     ///     The HwndHost class hosts an HWND inside of an Avalon tree.
     /// </summary>
-    ///<remarks> Subclassing requires unmanaged code permission</remarks>
 
     public abstract class HwndHost : FrameworkElement, IDisposable, IWin32Window, IKeyboardInputSink
     {

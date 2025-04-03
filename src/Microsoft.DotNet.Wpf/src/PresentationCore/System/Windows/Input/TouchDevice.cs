@@ -101,8 +101,6 @@ namespace System.Windows.Input
         ///     Returns the PresentationSource that is reporting input for this device.
         /// </summary>
         /// <remarks>
-        ///     Callers must have UIPermission(UIPermissionWindow.AllWindows) to call this API.
-        ///     
         ///     Subclasses should use SetActiveSource to set this property.
         /// </remarks>
         public sealed override PresentationSource ActiveSource

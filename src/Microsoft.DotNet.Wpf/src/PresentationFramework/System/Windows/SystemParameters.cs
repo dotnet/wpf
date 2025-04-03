@@ -2527,9 +2527,6 @@ namespace System.Windows
         ///     Maps to SM_CXFULLSCREEN
         /// </summary>
         ///
-        /// <remarks>
-        ///     Callers must have UnmanagedCode permission to call this API.
-        /// </remarks>
         public static double FullPrimaryScreenWidth
         {
             get
@@ -2550,9 +2547,6 @@ namespace System.Windows
         /// <summary>
         ///     Maps to SM_CYFULLSCREEN
         /// </summary>
-        /// <remarks>
-        ///     Callers must have UnmanagedCode permission to call this API.
-        /// </remarks>
         public static double FullPrimaryScreenHeight
         {
             get
@@ -2713,9 +2707,6 @@ namespace System.Windows
         /// <summary>
         ///     Maps to SM_CXMAXIMIZED
         /// </summary>
-        /// <remarks>
-        ///     Callers must have UnmanagedCode permission to call this API.
-        /// </remarks>
         public static double MaximizedPrimaryScreenWidth
         {
             get
@@ -2736,9 +2727,6 @@ namespace System.Windows
         /// <summary>
         ///     Maps to SM_CYMAXIMIZED
         /// </summary>
-        /// <remarks>
-        ///     Callers must have UnmanagedCode permission to call this API.
-        /// </remarks>
         public static double MaximizedPrimaryScreenHeight
         {
             get
@@ -2759,9 +2747,6 @@ namespace System.Windows
         /// <summary>
         ///     Maps to SM_CXMAXTRACK
         /// </summary>
-        /// <remarks>
-        ///     Callers must have UnmanagedCode permission to call this API.
-        /// </remarks>
         public static double MaximumWindowTrackWidth
         {
             get
@@ -2885,9 +2870,6 @@ namespace System.Windows
         /// <summary>
         ///     Maps to SM_CXMIN
         /// </summary>
-        /// <remarks>
-        ///     Callers must have UnmanagedCode permission to call this API.
-        /// </remarks>
         public static double MinimumWindowWidth
         {
             get
@@ -2908,9 +2890,6 @@ namespace System.Windows
         /// <summary>
         ///     Maps to SM_CYMIN
         /// </summary>
-        /// <remarks>
-        ///     Callers must have UnmanagedCode permission to call this API.
-        /// </remarks>
         public static double MinimumWindowHeight
         {
             get
@@ -2931,9 +2910,6 @@ namespace System.Windows
         /// <summary>
         ///     Maps to SM_CXMINIMIZED
         /// </summary>
-        /// <remarks>
-        ///     Callers must have UnmanagedCode permission to call this API.
-        /// </remarks>
         public static double MinimizedWindowWidth
         {
             get
@@ -2954,9 +2930,6 @@ namespace System.Windows
         /// <summary>
         ///     Maps to SM_CYMINIMIZED
         /// </summary>
-        /// <remarks>
-        ///     Callers must have UnmanagedCode permission to call this API.
-        /// </remarks>
         public static double MinimizedWindowHeight
         {
             get
@@ -3017,9 +2990,6 @@ namespace System.Windows
         /// <summary>
         ///     Maps to SM_CXMINTRACK
         /// </summary>
-        /// <remarks>
-        ///     Callers must have UnmanagedCode permission to call this API.
-        /// </remarks>
         public static double MinimumWindowTrackWidth
         {
             get
@@ -3040,9 +3010,6 @@ namespace System.Windows
         /// <summary>
         ///     Maps to SM_CYMINTRACK
         /// </summary>
-        /// <remarks>
-        ///     Callers must have UnmanagedCode permission to call this API.
-        /// </remarks>
         public static double MinimumWindowTrackHeight
         {
             get
@@ -3104,9 +3071,6 @@ namespace System.Windows
         /// <summary>
         ///     Maps to SM_CXSIZE
         /// </summary>
-        /// <remarks>
-        ///     Callers must have UnmanagedCode permission to call this API.
-        /// </remarks>
         public static double WindowCaptionButtonWidth
         {
             get
@@ -3268,9 +3232,6 @@ namespace System.Windows
         /// <summary>
         ///     Maps to SM_CXVIRTUALSCREEN
         /// </summary>
-        /// <remarks>
-        ///     Callers must have UnmanagedCode permission to call this API.
-        /// </remarks>
         public static double VirtualScreenWidth
         {
             get
@@ -3291,9 +3252,6 @@ namespace System.Windows
         /// <summary>
         ///     Maps to SM_CYVIRTUALSCREEN
         /// </summary>
-        /// <remarks>
-        ///     Callers must have UnmanagedCode permission to call this API.
-        /// </remarks>
         public static double VirtualScreenHeight
         {
             get
@@ -3355,9 +3313,6 @@ namespace System.Windows
         /// <summary>
         ///     Maps to SM_CYCAPTION
         /// </summary>
-        /// <remarks>
-        ///     Callers must have UnmanagedCode permission to call this API.
-        /// </remarks>
         public static double WindowCaptionHeight
         {
             get
@@ -3379,9 +3334,6 @@ namespace System.Windows
         ///     Maps to SM_CYKANJIWINDOW
         /// </summary>
         ///
-        /// <remarks>
-        ///     Callers must have UnmanagedCode permission to call this API.
-        /// </remarks>
         public static double KanjiWindowHeight
         {
             get
@@ -3402,9 +3354,6 @@ namespace System.Windows
         /// <summary>
         ///     Maps to SM_CYMENU
         /// </summary>
-        /// <remarks>
-        ///     Callers must have UnmanagedCode permission to call this API.
-        /// </remarks>
         public static double MenuBarHeight
         {
             get
@@ -3445,9 +3394,6 @@ namespace System.Windows
         /// <summary>
         ///     Maps to SM_IMMENABLED
         /// </summary>
-        /// <remarks>
-        ///     Callers must have UnmanagedCode permission to call this API.
-        /// </remarks>
         public static bool IsImmEnabled
         {
             get
@@ -3469,9 +3415,6 @@ namespace System.Windows
         ///     Maps to SM_MEDIACENTER
         /// </summary>
         ///
-        /// <remarks>
-        ///     Callers must have UnmanagedCode permission to call this API.
-        /// </remarks>
         public static bool IsMediaCenter
         {
             get
@@ -3512,9 +3455,6 @@ namespace System.Windows
         /// <summary>
         ///     Maps to SM_MIDEASTENABLED
         /// </summary>
-        /// <remarks>
-        ///     Callers must have UnmanagedCode permission to call this API.
-        /// </remarks>
         public static bool IsMiddleEastEnabled
         {
             get
@@ -3575,9 +3515,6 @@ namespace System.Windows
         /// <summary>
         ///     Maps to SM_PENWINDOWS
         /// </summary>
-        /// <remarks>
-        ///     Callers must have UnmanagedCode permission to call this API.
-        /// </remarks>
         public static bool IsPenWindows
         {
             get
@@ -3598,9 +3535,6 @@ namespace System.Windows
         /// <summary>
         ///     Maps to SM_REMOTECONTROL
         /// </summary>
-        /// <remarks>
-        ///     Callers must have UnmanagedCode permission to call this API.
-        /// </remarks>
         public static bool IsRemotelyControlled
         {
             get
@@ -3621,9 +3555,6 @@ namespace System.Windows
         /// <summary>
         ///     Maps to SM_REMOTESESSION
         /// </summary>
-        /// <remarks>
-        ///     Callers must have UnmanagedCode permission to call this API.
-        /// </remarks>
         public static bool IsRemoteSession
         {
             get
@@ -3644,9 +3575,6 @@ namespace System.Windows
         /// <summary>
         ///     Maps to SM_SHOWSOUNDS
         /// </summary>
-        /// <remarks>
-        ///     Callers must have UnmanagedCode permission to call this API.
-        /// </remarks>
         public static bool ShowSounds
         {
             get
@@ -3667,9 +3595,6 @@ namespace System.Windows
         /// <summary>
         ///     Maps to SM_SLOWMACHINE
         /// </summary>
-        /// <remarks>
-        ///     Callers must have UnmanagedCode permission to call this API.
-        /// </remarks>
         public static bool IsSlowMachine
         {
             get
@@ -3690,9 +3615,6 @@ namespace System.Windows
         /// <summary>
         ///     Maps to SM_SWAPBUTTON
         /// </summary>
-        /// <remarks>
-        ///     Callers must have UnmanagedCode permission to call this API.
-        /// </remarks>
         public static bool SwapButtons
         {
             get
@@ -3713,9 +3635,6 @@ namespace System.Windows
         /// <summary>
         ///     Maps to SM_TABLETPC
         /// </summary>
-        /// <remarks>
-        ///     Callers must have UnmanagedCode permission to call this API.
-        /// </remarks>
         public static bool IsTabletPC
         {
             get
@@ -3736,9 +3655,6 @@ namespace System.Windows
         /// <summary>
         ///     Maps to SM_XVIRTUALSCREEN
         /// </summary>
-        /// <remarks>
-        ///     Callers must have UnmanagedCode permission to call this API.
-        /// </remarks>
         public static double VirtualScreenLeft
         {
             get
@@ -3759,9 +3675,6 @@ namespace System.Windows
         /// <summary>
         ///     Maps to SM_YVIRTUALSCREEN
         /// </summary>
-        /// <remarks>
-        ///     Callers must have UnmanagedCode permission to call this API.
-        /// </remarks>
         public static double VirtualScreenTop
         {
             get

@@ -189,17 +189,13 @@ namespace System.Windows.Media.Imaging
 
         // Note: In this method, newWidth, newHeight are not affected by the
         // rotation angle.
-        internal void GetScaledWidthAndHeight(
-            uint width,
-            uint height,
-            out uint newWidth,
-            out uint newHeight)
+        internal void GetScaledWidthAndHeight(uint width, uint height, out uint newWidth, out uint newHeight)
         {
             if (_pixelWidth == 0 && _pixelHeight != 0)
             {
                 Debug.Assert(_preservesAspectRatio == true);
 
-                newWidth = (uint)((_pixelHeight * width)/height);
+                newWidth = (uint)((_pixelHeight * width) / height);
                 newHeight = (uint)_pixelHeight;
             }
             else if (_pixelWidth != 0 && _pixelHeight == 0)
@@ -207,7 +203,7 @@ namespace System.Windows.Media.Imaging
                 Debug.Assert(_preservesAspectRatio == true);
 
                 newWidth = (uint)_pixelWidth;
-                newHeight = (uint)((_pixelWidth * height)/width);
+                newHeight = (uint)((_pixelWidth * height) / width);
             }
             else if (_pixelWidth != 0 && _pixelHeight != 0)
             {

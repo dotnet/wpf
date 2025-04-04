@@ -368,17 +368,21 @@ namespace System.Windows.Interop
                     if (_sizeOptions.DoesScale)
                     {
                         Debug.Assert(_sizeOptions.Rotation == Rotation.Rotate0);
+
                         uint width, height;
 
-                        _sizeOptions.GetScaledWidthAndHeight(
-                            (uint)_sizeOptions.PixelWidth,
-                            (uint)_sizeOptions.PixelHeight,
-                            out width,
-                            out height);
+                        // In case the source clip is Int32.Empty but we're asked to scale, we must scale the original source values
+                        if (_sourceRect.IsEmpty)
+                        {
+                            HRESULT.Check(UnsafeNativeMethods.WICBitmapSource.GetSize(_unmanagedSource, out width, out height));
+                            _sizeOptions.GetScaledWidthAndHeight(width, height, out width, out height);
+                        }
+                        else
+                        {
+                            _sizeOptions.GetScaledWidthAndHeight((uint)_sourceRect.Width, (uint)_sourceRect.Height, out width, out height);
+                        }
 
-                        HRESULT.Check(UnsafeNativeMethods.WICImagingFactory.CreateBitmapScaler(
-                                wicFactory,
-                                out wicTransformer));
+                        HRESULT.Check(UnsafeNativeMethods.WICImagingFactory.CreateBitmapScaler(wicFactory, out wicTransformer));
 
                         lock (_syncObject)
                         {

@@ -1,7 +1,5 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-
-using System.Diagnostics.CodeAnalysis;
 
 namespace System.Windows.Interop
 {
@@ -9,7 +7,6 @@ namespace System.Windows.Interop
     ///     This is the delegate used for registering with the
     ///     ThreadFilterMessage and ThreadPreprocessMessage Events.
     ///</summary>
-    [SuppressMessage("Microsoft.Design", "CA1045:DoNotPassTypesByReference")]
     public delegate void ThreadMessageEventHandler(ref MSG msg, ref bool handled);
 
     /// <summary>
@@ -129,8 +126,8 @@ namespace System.Windows.Interop
         }
 
         /// <summary>
-        ///     Adds the specified handler to the front of the invocation list
-        ///     of the PreprocessMessage event.
+        /// Adds the specified handler to the front of the invocation list
+        /// of the PreprocessMessage event.
         /// <summary>
         internal static void AddThreadPreprocessMessageHandlerFirst(ThreadMessageEventHandler handler)
         {
@@ -138,8 +135,8 @@ namespace System.Windows.Interop
         }
 
         /// <summary>
-        ///     Removes the first occurance of the specified handler from the
-        ///     invocation list of the PreprocessMessage event.
+        /// Removes the first occurrence of the specified handler from the
+        /// invocation list of the PreprocessMessage event.
         /// <summary>
         internal static void RemoveThreadPreprocessMessageHandlerFirst(ThreadMessageEventHandler handler)
         {

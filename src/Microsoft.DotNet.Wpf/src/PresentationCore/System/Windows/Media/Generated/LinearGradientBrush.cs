@@ -24,6 +24,8 @@ using System.Windows.Media.Converters;
 
 namespace System.Windows.Media
 {
+
+
     public sealed partial class LinearGradientBrush : GradientBrush
     {
         //------------------------------------------------------

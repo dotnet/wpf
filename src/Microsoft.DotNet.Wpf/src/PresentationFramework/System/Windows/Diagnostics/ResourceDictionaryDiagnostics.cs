@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
 //
@@ -28,7 +28,6 @@ namespace System.Windows.Diagnostics
     /// </remarks>
     public static class ResourceDictionaryDiagnostics
     {
-        // Calls critical method IsEnvironmentVariableSet, but doesn't expose data
         static ResourceDictionaryDiagnostics()
         {
             IsEnabled = VisualDiagnostics.IsEnabled &&

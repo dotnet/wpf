@@ -528,11 +528,6 @@ namespace System.Windows.Xps.Packaging
             }
         }
 
-        /// <SecurityNote>
-        /// Critical: Calls into COM
-        /// Safe: Does not expose critical resources to the caller
-        /// </SecurityNote>
-        [SecuritySafeCritical]
         private void ReleaseFontResource(Uri uri)
         {
             IXpsOMFontResourceCollection fontCollection = _xpsPartResources.GetFontResources();

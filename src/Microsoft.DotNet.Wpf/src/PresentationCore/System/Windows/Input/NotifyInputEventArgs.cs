@@ -33,30 +33,14 @@ namespace System.Windows.Input
         /// <summary>
         ///     The input manager processing the input event.
         /// </summary>
-        public InputManager InputManager 
+        public InputManager InputManager
         {
-            get 
-            {
-                return _inputManager;
-            }
+            get => _inputManager;
         }
 
-        /// <summary>
-        ///     The input manager processing the input event.
-        ///     *** FOR INTERNAL USE ONLY **** 
-        /// </summary>
-        internal InputManager UnsecureInputManager 
-        {
-            get 
-            {
-                return _inputManager;
-            }
-        }
-        
         private StagingAreaInputItem _input;
-
         private InputManager _inputManager;
-}
+    }
 
     /// <summary>
     ///     Delegate type for handles of events that use

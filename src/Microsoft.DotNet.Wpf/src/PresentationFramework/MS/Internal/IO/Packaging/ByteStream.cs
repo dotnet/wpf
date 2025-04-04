@@ -394,13 +394,7 @@ namespace MS.Internal.IO.Packaging
         //
         //------------------------------------------------------
         #region Private Unmanaged Interface imports
-        
-        // ****CAUTION****: Be careful using this interface, because it suppresses
-        //  the check for unmanaged code security permission.  It is recommended
-        //  that all instances of this interface also have "SecuritySuppressed" in
-        //  its name to make it clear that it is a dangerous interface.  Also, it
-        //  is expected that each use of this interface be reviewed for security
-        //  soundness.
+
         [Guid("0000000c-0000-0000-C000-000000000046")]
         [InterfaceTypeAttribute(ComInterfaceType.InterfaceIsIUnknown)]
         [ComImport]

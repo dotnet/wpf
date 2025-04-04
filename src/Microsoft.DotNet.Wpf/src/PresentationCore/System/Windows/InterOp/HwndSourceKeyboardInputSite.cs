@@ -3,88 +3,68 @@
 
 using System.Windows.Input;
 
-namespace System.Windows.Interop
+namespace System.Windows.Interop;
+
+internal sealed class HwndSourceKeyboardInputSite : IKeyboardInputSite
 {
-    internal class HwndSourceKeyboardInputSite : IKeyboardInputSite
+    private HwndSource _source;
+    private IKeyboardInputSink _sink;
+    private readonly UIElement _sinkElement;
+
+    internal HwndSourceKeyboardInputSite(HwndSource source, IKeyboardInputSink sink)
     {
-        public HwndSourceKeyboardInputSite(HwndSource source, IKeyboardInputSink sink)
-        {
-            ArgumentNullException.ThrowIfNull(source);
-            ArgumentNullException.ThrowIfNull(sink);
-            if (!(sink is UIElement))
-            {
-                throw new ArgumentException(SR.KeyboardSinkMustBeAnElement, nameof(sink));
-            }
-            
-            _source = source;
+        ArgumentNullException.ThrowIfNull(source);
+        ArgumentNullException.ThrowIfNull(sink);
 
-            _sink = sink;
-            _sink.KeyboardInputSite = this;
-
-            _sinkElement = sink as UIElement;
-        }
-        
-#region IKeyboardInputSite
-        /// <summary>
-        ///     Unregisters a child KeyboardInputSink from this sink.
-        /// </summary>
-        /// <remarks> 
-        ///     Requires unmanaged code permission. 
-        /// </remarks> 
-        void IKeyboardInputSite.Unregister()
+        if (sink is not UIElement uiElement)
         {
-            CriticalUnregister(); 
+            throw new ArgumentException(SR.KeyboardSinkMustBeAnElement, nameof(sink));
         }
 
-        /// <summary>
-        ///     Unregisters a child KeyboardInputSink from this sink.
-        /// </summary>
-        internal void CriticalUnregister()
-        {
-            if(_source != null && _sink != null)
-            {
-                _source.CriticalUnregisterKeyboardInputSink(this);
-                _sink.KeyboardInputSite = null;
-            }
+        _source = source;
 
-            _source = null;
-            _sink = null;
-        }           
-        /// <summary>
-        ///     Returns the sink associated with this site (the "child", not
-        ///     the "parent" sink that owns the site).  There's no way of
-        ///     getting from the site to the parent sink.
-        /// </summary> 
-        IKeyboardInputSink IKeyboardInputSite.Sink
+        _sink = sink;
+        _sink.KeyboardInputSite = this;
+
+        _sinkElement = uiElement;
+    }
+
+    /// <summary>
+    ///     Unregisters a child KeyboardInputSink from this sink.
+    /// </summary>
+    void IKeyboardInputSite.Unregister()
+    {
+        if (_source is not null && _sink is not null)
         {
-            get
-            {
-                return _sink;
-            }
+            _source.CriticalUnregisterKeyboardInputSink(this);
+            _sink.KeyboardInputSite = null;
         }
 
-        /// <summary>
-        ///     Components call this when they want to move focus ("tab") but
-        ///     have nowhere further to tab within their own component.  Return
-        ///     value is true if the site moved focus, false if the calling
-        ///     component still has focus and should wrap around.
-        /// </summary> 
-        bool IKeyboardInputSite.OnNoMoreTabStops(TraversalRequest request)
+        _source = null;
+        _sink = null;
+    }
+
+    /// <summary>
+    ///     Returns the sink associated with this site (the "child", not
+    ///     the "parent" sink that owns the site).  There's no way of
+    ///     getting from the site to the parent sink.
+    /// </summary> 
+    IKeyboardInputSink IKeyboardInputSite.Sink
+    {
+        get
         {
-            bool traversed = false;
-
-            if(_sinkElement != null)
-            {
-                traversed = _sinkElement.MoveFocus(request);
-            }
-
-            return traversed;
+            return _sink;
         }
+    }
 
-#endregion IKeyboardInputSite
-        
-        private HwndSource _source;
-        private IKeyboardInputSink _sink;
-        private UIElement _sinkElement;
+    /// <summary>
+    ///     Components call this when they want to move focus ("tab") but
+    ///     have nowhere further to tab within their own component.  Return
+    ///     value is true if the site moved focus, false if the calling
+    ///     component still has focus and should wrap around.
+    /// </summary> 
+    bool IKeyboardInputSite.OnNoMoreTabStops(TraversalRequest request)
+    {
+        return _sinkElement is not null && _sinkElement.MoveFocus(request);
     }
 }

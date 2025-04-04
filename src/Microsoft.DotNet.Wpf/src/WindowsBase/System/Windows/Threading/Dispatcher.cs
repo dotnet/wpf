@@ -222,12 +222,8 @@ namespace System.Windows.Threading
         /// <summary>
         ///     Begins the process of shutting down the dispatcher.
         /// </summary>
-        /// <remarks>
-        ///     This API demand unrestricted UI Permission
-        /// </remarks>
         public void BeginInvokeShutdown(DispatcherPriority priority) // NOTE: should be Priority
         {
-
             BeginInvoke(priority, new ShutdownCallback(ShutdownCallbackInternal));
         }
 
@@ -235,12 +231,6 @@ namespace System.Windows.Threading
         ///     Begins the process of shutting down the dispatcher.
         /// </summary>
         public void InvokeShutdown()
-        {
-
-            CriticalInvokeShutdown();
-        }
-
-        internal void CriticalInvokeShutdown()
         {
             Invoke(DispatcherPriority.Send, new ShutdownCallback(ShutdownCallbackInternal)); // NOTE: should be Priority.Max
         }
@@ -2314,13 +2304,7 @@ namespace System.Windows.Threading
             return retVal == 0;
         }
 
-
-        private bool RequestProcessing()
-        {
-            return CriticalRequestProcessing(false);
-        }
-
-        internal bool CriticalRequestProcessing(bool force)
+        internal bool RequestProcessing(bool force = false)
         {
             bool succeeded = true;
 

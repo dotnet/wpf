@@ -1392,7 +1392,7 @@ namespace System.Windows.Controls
         {
             bool userInitiated = (bool)arg;
             RaiseEvent(new RoutedEventArgs(MenuItem.ClickEvent, this));
-            MS.Internal.Commands.CommandHelpers.CriticalExecuteCommandSource(this, userInitiated);
+            MS.Internal.Commands.CommandHelpers.ExecuteCommandSource(this, userInitiated);
             return null;
         }
 

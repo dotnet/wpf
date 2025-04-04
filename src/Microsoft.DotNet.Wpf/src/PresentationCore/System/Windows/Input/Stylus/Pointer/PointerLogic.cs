@@ -175,7 +175,7 @@ namespace System.Windows.Input.StylusPointer
                     if (!_inDragDrop && stylusDevice.CurrentPointerProvider.IsWindowEnabled)
                     {
                         Point position = stylusDevice.GetPosition(null);
-                        IInputElement target = stylusDevice.FindTarget(stylusDevice.CriticalActiveSource, position);
+                        IInputElement target = stylusDevice.FindTarget(stylusDevice.ActiveSource, position);
                         SelectStylusDevice(stylusDevice, target, true);
                     }
                     else
@@ -1275,7 +1275,7 @@ namespace System.Windows.Input.StylusPointer
 
                 int elapsedTime = Math.Abs(unchecked(stylusDownEventArgs.Timestamp - _lastTapTimeTicks));
 
-                Point ptPixels = DeviceUnitsFromMeasureUnits(stylusDevice.CriticalActiveSource, ptClient);
+                Point ptPixels = DeviceUnitsFromMeasureUnits(stylusDevice.ActiveSource, ptClient);
 
                 Size doubleTapSize = stylusDevice.PointerTabletDevice.DoubleTapSize;
 

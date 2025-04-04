@@ -175,9 +175,6 @@ namespace System.Windows.Input.StylusPointer
         /// <summary>
         ///     Returns the PresentationSource that is reporting input for this device.
         /// </summary>
-        /// <remarks>
-        ///     Callers must have UIPermission(UIPermissionWindow.AllWindows) to call this API.
-        /// </remarks>
         internal override PresentationSource ActiveSource => _inputSource;
 
         #endregion
@@ -322,11 +319,6 @@ namespace System.Windows.Input.StylusPointer
         #region StylusDeviceBase Properties
 
         internal override StylusPlugInCollection CurrentVerifiedTarget { get; set; }
-
-        /// <summary>
-        ///     Returns the PresentationSource that is reporting input for this device.
-        /// </summary>
-        internal override PresentationSource CriticalActiveSource => _inputSource;
 
         /// <summary>
         /// Returns the button collection that is associated with the StylusDevice.
@@ -716,7 +708,7 @@ namespace System.Windows.Input.StylusPointer
                 DependencyObject containingVisual = InputElement.GetContainingVisual(dependencyObject);
                 if (containingVisual != null)
                 {
-                    relativePresentationSource = PresentationSource.CriticalFromVisual(containingVisual);
+                    relativePresentationSource = PresentationSource.FromVisual(containingVisual);
                 }
             }
             else
@@ -837,7 +829,7 @@ namespace System.Windows.Input.StylusPointer
             RawStylusSystemGestureInputReport report = new RawStylusSystemGestureInputReport(
                            InputMode.Foreground,
                            Environment.TickCount,
-                           CriticalActiveSource,
+                           ActiveSource,
                            () => { return PointerTabletDevice.StylusPointDescription; },
                            TabletDevice.Id,
                            Id,
@@ -872,7 +864,7 @@ namespace System.Windows.Input.StylusPointer
             };
 
             // Now send the input report
-            InputManager.UnsecureCurrent.ProcessInput(irea);
+            InputManager.Current.ProcessInput(irea);
         }
 
         #endregion
@@ -1026,7 +1018,7 @@ namespace System.Windows.Input.StylusPointer
                     UIElement uiElement = InputElement.GetContainingUIElement(stylusCapture as DependencyObject) as UIElement;
                     if (uiElement != null)
                     {
-                        PresentationSource source = PresentationSource.CriticalFromVisual(uiElement as Visual);
+                        PresentationSource source = PresentationSource.FromVisual(uiElement);
 
                         if (source != null)
                         {
@@ -1050,7 +1042,7 @@ namespace System.Windows.Input.StylusPointer
                         RoutedEvent = Stylus.LostStylusCaptureEvent,
                         Source = oldStylusCapture
                     };
-                    InputManager.UnsecureCurrent.ProcessInput(lostCapture);
+                    InputManager.Current.ProcessInput(lostCapture);
                 }
                 if (_stylusCapture != null)
                 {
@@ -1059,7 +1051,7 @@ namespace System.Windows.Input.StylusPointer
                         RoutedEvent = Stylus.GotStylusCaptureEvent,
                         Source = _stylusCapture
                     };
-                    InputManager.UnsecureCurrent.ProcessInput(gotCapture);
+                    InputManager.Current.ProcessInput(gotCapture);
                 }
 
                 // Now update the stylus over state (only if this is the current stylus and 

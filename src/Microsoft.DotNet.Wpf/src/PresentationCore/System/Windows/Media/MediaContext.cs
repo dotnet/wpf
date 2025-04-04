@@ -1833,7 +1833,7 @@ namespace System.Windows.Media
                 MediaSystem.PropagateDirtyRectangleSettings();
 
                 // Invalidate the input devices on the InputManager
-                InputManager.UnsecureCurrent.InvalidateInputDevices();
+                InputManager.Current.InvalidateInputDevices();
 
                 //
                 // before we call Render we want to save the in Interlock state so we know

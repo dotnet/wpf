@@ -115,7 +115,7 @@ namespace System.Windows.Input
             {
                 try
                 {
-                    PresentationSource activeSource = CriticalActiveSource;
+                    PresentationSource activeSource = ActiveSource;
                     if (activeSource != null)
                     {
                         ptScreen = PointUtil.ClientToScreen(_lastPosition, activeSource);
@@ -142,7 +142,7 @@ namespace System.Windows.Input
             Point ptClient = new Point(0, 0);
             try
             {
-                PresentationSource activeSource = CriticalActiveSource;
+                PresentationSource activeSource = ActiveSource;
                 if (activeSource != null)
                 {
                     ptClient = GetClientPosition(activeSource);
@@ -191,16 +191,7 @@ namespace System.Windows.Input
         /// <summary>
         ///     Returns the PresentationSource that is reporting input for this device.
         /// </summary>
-        /// <remarks>
-        ///     Callers must have UIPermission(UIPermissionWindow.AllWindows) to call this API.
-        /// </remarks>
-
         public override PresentationSource ActiveSource => _inputSource;
-
-        /// <summary>
-        ///     Returns the PresentationSource that is reporting input for this device.
-        /// </summary>
-        internal PresentationSource CriticalActiveSource => _inputSource;
 
         /// <summary>
         ///     Returns the element that the mouse is over.
@@ -348,7 +339,7 @@ namespace System.Windows.Input
                     DependencyObject containingVisual = InputElement.GetContainingVisual(eltDO);
                     if (containingVisual != null)
                     {
-                        PresentationSource captureSource = PresentationSource.CriticalFromVisual(containingVisual);
+                        PresentationSource captureSource = PresentationSource.FromVisual(containingVisual);
                         if (captureSource != null)
                         {
                             mouseInputProvider = captureSource.GetInputProvider(typeof(MouseDevice)) as IMouseInputProvider;
@@ -400,7 +391,7 @@ namespace System.Windows.Input
 
         //
         // Find an IMouseInputProvider on which the cursor can be set
-        private IMouseInputProvider FindMouseInputProviderForCursor( )
+        private IMouseInputProvider FindMouseInputProviderForCursor()
         {
             // The shape of this API goes on the assumption that, like Win32, the cursor
             // is set for the whole desktop, not just a particular element or a particular
@@ -410,12 +401,12 @@ namespace System.Windows.Input
 
             IMouseInputProvider mouseInputProvider = null;
 
-            IEnumerator inputProviders = _inputManager.UnsecureInputProviders.GetEnumerator();
-
+            // NOTE: This is just wrong, if a new InputProvider was added when MouseDevice.SetCursor is called,
+            // it will end up with up InvalidOperationException right away. The odds are very low you're this good though.
+            IEnumerator inputProviders = _inputManager.InputProviders.GetEnumerator();
             while (inputProviders.MoveNext())
             {
-                IMouseInputProvider provider = inputProviders.Current as IMouseInputProvider;
-                if (provider != null )
+                if (inputProviders.Current is IMouseInputProvider provider)
                 {
                     mouseInputProvider = provider;
                     break;
@@ -555,7 +546,7 @@ namespace System.Windows.Input
 
                 if (containingVisual != null)
                 {
-                    relativePresentationSource = PresentationSource.CriticalFromVisual(containingVisual);
+                    relativePresentationSource = PresentationSource.FromVisual(containingVisual);
                 }
             }
             else
@@ -789,12 +780,12 @@ namespace System.Windows.Input
             if (visual == null)
                 return false;
 
-            PresentationSource presentationSource = PresentationSource.CriticalFromVisual(visual);
+            PresentationSource presentationSource = PresentationSource.FromVisual(visual);
 
             if (presentationSource == null)
                 return false;
 
-            if (presentationSource != CriticalActiveSource)
+            if (presentationSource != ActiveSource)
                 return false;
 
             return true;
@@ -875,7 +866,7 @@ namespace System.Windows.Input
 //             VerifyAccess();
 
             // Simulate a mouse move
-            PresentationSource activeSource = CriticalActiveSource;
+            PresentationSource activeSource = ActiveSource;
             if (activeSource != null && activeSource.CompositionTarget != null && !activeSource.CompositionTarget.IsDisposed)
             {
                 int timeStamp = Environment.TickCount;
@@ -904,9 +895,8 @@ namespace System.Windows.Input
                     inputReportEventArgs = new InputReportEventArgs(this, report);
                 }
 
-                inputReportEventArgs.RoutedEvent=InputManager.PreviewInputReportEvent;
+                inputReportEventArgs.RoutedEvent = InputManager.PreviewInputReportEvent;
 
-                //ProcessInput has a linkdemand
                 _inputManager.ProcessInput(inputReportEventArgs);
             }
         }
@@ -935,7 +925,7 @@ namespace System.Windows.Input
                 Cursor = Cursors.Arrow,
                 RoutedEvent = Mouse.QueryCursorEvent
             };
-            //ProcessInput has a linkdemand
+
             _inputManager.ProcessInput(queryCursor);
             return queryCursor.Handled;
         }
@@ -1126,7 +1116,7 @@ namespace System.Windows.Input
                         RoutedEvent = Mouse.LostMouseCaptureEvent,
                         Source = oldMouseCapture
                     };
-                    //ProcessInput has a linkdemand
+
                     _inputManager.ProcessInput(lostCapture);
                 }
                 if (_mouseCapture != null)
@@ -1136,7 +1126,7 @@ namespace System.Windows.Input
                         RoutedEvent = Mouse.GotMouseCaptureEvent,
                         Source = _mouseCapture
                     };
-                    //ProcessInput has a linkdemand
+
                     _inputManager.ProcessInput(gotCapture);
                 }
 
@@ -1328,7 +1318,7 @@ namespace System.Windows.Input
                             {
                                 RoutedEvent = Mouse.PreviewMouseDownOutsideCapturedElementEvent
                             };
-                            //ProcessInput has a linkdemand
+
                             _inputManager.ProcessInput(clickThrough);
                         }
                     }
@@ -1346,7 +1336,7 @@ namespace System.Windows.Input
                             {
                                 RoutedEvent = Mouse.PreviewMouseUpOutsideCapturedElementEvent
                             };
-                            //ProcessInput has a linkdemand
+
                             _inputManager.ProcessInput(clickThrough);
                         }
                     }
@@ -2116,7 +2106,7 @@ namespace System.Windows.Input
                 if (hwndHit != IntPtr.Zero)
                 {
                     // See if this is one of our windows.
-                    sourceHit = HwndSource.CriticalFromHwnd(hwndHit);
+                    sourceHit = HwndSource.FromHwnd(hwndHit);
                 }
                 if (sourceHit != null && sourceHit.Dispatcher == inputSource.CompositionTarget.Dispatcher)
                 {

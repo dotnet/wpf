@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
 //
@@ -89,13 +89,8 @@ namespace System.Windows.Navigation
         /// <summary>
         /// Exposes extra data object which was optionally passed as a parameter to Navigate.
         /// </summary>
-        public Object ExtraData
+        public object ExtraData
         {
-            //Though we are handing out an object that may potentially contain
-            //sensitive information, no one can use it except the app developer
-            //unless they have type information for this object. One cannot de-serialize
-            //this without Serialization permissions which are not granted by default
-            //in partial trust scenarios.
             get
             {
                 return _extraData;

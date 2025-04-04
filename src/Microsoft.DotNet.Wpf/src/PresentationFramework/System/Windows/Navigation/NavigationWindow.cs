@@ -201,11 +201,6 @@ namespace System.Windows.Navigation
             this.Initialize();
         }
 
-        internal NavigationWindow(bool inRbw): base(inRbw)
-        {
-            this.Initialize();
-        }
-
         private void Initialize()
         {
             Debug.Assert(_navigationService == null && _JNS == null);

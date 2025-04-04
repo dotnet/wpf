@@ -3853,7 +3853,7 @@ namespace System.Windows
                 {
                     // We cannot be visible if we have no visual parent, unless:
                     // 1) We are the root, connected to a PresentationHost.
-                    PresentationSource presentationSource = PresentationSource.CriticalFromVisual(this);
+                    PresentationSource presentationSource = PresentationSource.FromVisual(this);
                     if(presentationSource != null)
                     {
                         constraintAllowsVisible = true;

@@ -712,27 +712,11 @@ namespace System.Windows.Documents
         /// Thrown when the cached <see cref="Dispatcher"/> can not be obtained
         /// </exception>
         /// <exception cref="ArgumentNullException">
-        /// Thrown by <see cref="Dispatcher.BeginInvoke"/> when <paramref name="method"/> is <code>null
-        /// </code></exception>
-        /// <remarks>
-        ///     The usual pattern for methods that deal with delegates is to mark them with
-        ///     the <see cref="SecuritySafeCriticalAttribute"/>. This would ensure that the caller
-        ///     is responsible for managing its CAS attribute appropriately, but the method
-        ///     that receives the delegate and orchestrates its execution can do so successfully
-        ///     irrespective of whether the delegate is Critical or Transparent.
-        ///
-        ///     In this instance, marking this method with <see cref="SecuritySafeCriticalAttribute"/> is
-        ///     unnecessary because <see cref="Dispatcher.BeginInvoke"/> is really what is used to
-        ///     orchestrate the execution of <paramref name="method"/>, and in turn, <see cref="Dispatcher.BeginInvoke"/>
-        ///     takes care of marking its own CAS attribute appropriately.
-        /// </remarks>
+        /// Thrown by <see cref="Dispatcher.BeginInvoke"/> when <paramref name="method"/> is <code>null</code>
+        /// </exception>
         private DispatcherOperation BeginInvokeOnUIThread(Delegate method, DispatcherPriority priority, params object[] args)
         {
-            Dispatcher dispatcher = null;
-
-            if (_dispatcher == null ||
-                !_dispatcher.TryGetTarget(out dispatcher) ||
-                dispatcher == null)
+            if (_dispatcher is null || !_dispatcher.TryGetTarget(out Dispatcher dispatcher) || dispatcher is null)
             {
                 throw new InvalidOperationException();
             }

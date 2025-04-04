@@ -69,8 +69,7 @@ namespace System.Windows.Input
             }
 
             /// <summary>
-            /// Critical - Calls SecurityCritical code OnDoWork which is differred based on the various derived class.
-            ///             Called by PenThreadWorker.ThreadProc().
+            /// Called by PenThreadWorker.ThreadProc().
             /// </summary>
             internal void DoWork()
             {
@@ -85,8 +84,7 @@ namespace System.Windows.Input
 }
 
             /// <summary>
-            /// Critical - Calls SecurityCritical code OnDoWork which is differred based on the various derived class.
-            ///             Called by WorkerOperation.DoWork().
+            /// Called by WorkerOperation.DoWork().
             /// </summary>
             protected abstract void OnDoWork();
 
@@ -900,7 +898,7 @@ namespace System.Windows.Input
             int cButtons;
             int pressureIndex = -1;
 
-            pimcTablet.GetPacketDescriptionInfo(out cProps, out cButtons); // Calls Unmanaged code - SecurityCritical with SUC.
+            pimcTablet.GetPacketDescriptionInfo(out cProps, out cButtons);
             List<StylusPointProperty> properties = new List<StylusPointProperty>(cProps + cButtons + 3);
             for ( int i = 0; i < cProps; i++ )
             {
@@ -908,7 +906,7 @@ namespace System.Windows.Input
                 int min, max;
                 int units;
                 float res;
-                pimcTablet.GetPacketPropertyInfo(i, out guid, out min, out max, out units, out res); // Calls Unmanaged code - SecurityCritical with SUC.
+                pimcTablet.GetPacketPropertyInfo(i, out guid, out min, out max, out units, out res);
 
                 if ( pressureIndex == -1 && guid == StylusPointPropertyIds.NormalPressure )
                 {
@@ -922,7 +920,7 @@ namespace System.Windows.Input
             for ( int i = 0; i < cButtons; i++ )
             {
                 Guid buttonGuid;
-                pimcTablet.GetPacketButtonInfo(i, out buttonGuid); // Calls Unmanaged code - SecurityCritical with SUC.
+                pimcTablet.GetPacketButtonInfo(i, out buttonGuid);
 
                 StylusPointProperty buttonProperty = new StylusPointProperty(buttonGuid, true);
                 properties.Add(buttonProperty);
@@ -958,7 +956,7 @@ namespace System.Windows.Input
         {
             int cCursors;
 
-            pimcTablet.GetCursorCount(out cCursors); // Calls Unmanaged code - SecurityCritical with SUC.
+            pimcTablet.GetCursorCount(out cCursors);
 
             StylusDeviceInfo[] stylusDevicesInfo = new StylusDeviceInfo[cCursors];
 
@@ -967,17 +965,17 @@ namespace System.Windows.Input
                 string sCursorName;
                 int cursorId;
                 bool fCursorInverted;
-                pimcTablet.GetCursorInfo(iCursor, out sCursorName, out cursorId, out fCursorInverted); // Calls Unmanaged code - SecurityCritical with SUC.
+                pimcTablet.GetCursorInfo(iCursor, out sCursorName, out cursorId, out fCursorInverted);
 
                 int cButtons;
 
-                pimcTablet.GetCursorButtonCount(iCursor, out cButtons); // Calls Unmanaged code - SecurityCritical with SUC.
+                pimcTablet.GetCursorButtonCount(iCursor, out cButtons);
                 StylusButton[] buttons = new StylusButton[cButtons];
                 for ( int iButton = 0; iButton < cButtons; iButton++ )
                 {
                     string sButtonName;
                     Guid buttonGuid;
-                    pimcTablet.GetCursorButtonInfo(iCursor, iButton, out sButtonName, out buttonGuid); // Calls Unmanaged code - SecurityCritical with SUC.
+                    pimcTablet.GetCursorButtonInfo(iCursor, iButton, out sButtonName, out buttonGuid);
                     buttons[iButton] = new StylusButton(sButtonName, buttonGuid);
                 }
                 StylusButtonCollection buttonCollection = new StylusButtonCollection(buttons);

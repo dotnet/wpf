@@ -63,7 +63,7 @@ namespace Microsoft.Win32
         {
 
             // Extract the first filename from the ItemNames list.
-            string filename = CriticalItemName;
+            string filename = ItemName;
 
             // If we got an empty or null filename, throw an exception to
             // tell the user we don't have any files to open.

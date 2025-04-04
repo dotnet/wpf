@@ -728,7 +728,7 @@ HRESULT CGDIBitmap::Load(BitmapSource ^ pBitmap, array<Byte>^ buffer, PixelForma
         {
             int offset = y * m_Stride;
 
-            source->CriticalCopyPixels(rect, m_Buffer, m_Stride, offset);
+            source->CopyPixelsEx(rect, m_Buffer, m_Stride, offset);
 
             rect.Y ++;
         }

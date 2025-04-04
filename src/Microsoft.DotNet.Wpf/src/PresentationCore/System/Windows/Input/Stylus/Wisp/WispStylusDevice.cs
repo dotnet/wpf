@@ -134,11 +134,6 @@ namespace System.Windows.Input.StylusWisp
         internal override PresentationSource ActiveSource => _inputSource;
 
         /// <summary>
-        ///     Returns the PresentationSource that is reporting input for this device.
-        /// </summary>
-        internal override PresentationSource CriticalActiveSource => _inputSource;
-
-        /// <summary>
         ///     Returns the currently active PenContext (if seen) for this device.
         ///     Gets set on InRange and cleared on the out of range event (that matches PenContext).
         /// </summary>
@@ -583,7 +578,7 @@ namespace System.Windows.Input.StylusWisp
                             UIElement uiElement = InputElement.GetContainingUIElement(stylusCapture as DependencyObject) as UIElement;
                             if (uiElement != null)
                             {
-                                PresentationSource source = PresentationSource.CriticalFromVisual(uiElement as Visual);
+                                PresentationSource source = PresentationSource.FromVisual(uiElement);
 
                                 if (source != null)
                                 {
@@ -908,15 +903,14 @@ namespace System.Windows.Input.StylusWisp
             if (visual == null)
                 return false;
 
-            PresentationSource presentationSource = PresentationSource.CriticalFromVisual(visual);
+            PresentationSource presentationSource = PresentationSource.FromVisual(visual);
 
             if (presentationSource == null)
             {
                 return false;
             }
 
-            if (CriticalActiveSource != presentationSource &&
-                Captured == null)
+            if (ActiveSource != presentationSource && Captured == null)
             {
                 return false;
             }
@@ -1170,7 +1164,7 @@ namespace System.Windows.Input.StylusWisp
                 DependencyObject containingVisual = InputElement.GetContainingVisual(dependencyObject);
                 if (containingVisual != null)
                 {
-                    relativePresentationSource = PresentationSource.CriticalFromVisual(containingVisual);
+                    relativePresentationSource = PresentationSource.FromVisual(containingVisual);
                 }
             }
             else
@@ -1509,7 +1503,7 @@ namespace System.Windows.Input.StylusWisp
                 if (_stylusCapture != null)
                 {
                     DependencyObject containingVisual = InputElement.GetContainingVisual(_stylusCapture as DependencyObject);
-                    PresentationSource capturedSource = PresentationSource.CriticalFromVisual(containingVisual);
+                    PresentationSource capturedSource = PresentationSource.FromVisual(containingVisual);
 
                     if (capturedSource != null &&
                         capturedSource.CompositionTarget != null &&
@@ -1541,7 +1535,7 @@ namespace System.Windows.Input.StylusWisp
                     IntPtr hwndHit = UnsafeNativeMethods.WindowFromPoint((int)ptScreen.X, (int)ptScreen.Y);
                     if (hwndHit != IntPtr.Zero)
                     {
-                        HwndSource newHwndSource = HwndSource.CriticalFromHwnd(hwndHit);
+                        HwndSource newHwndSource = HwndSource.FromHwnd(hwndHit);
                         if (newHwndSource != null && newHwndSource.Dispatcher == Dispatcher)
                         {
                             newSource = newHwndSource;
@@ -1680,7 +1674,7 @@ namespace System.Windows.Input.StylusWisp
 
                         if (inputManager != null)
                         {
-                            if (inputManager.PrimaryMouseDevice.CriticalActiveSource != mouseInputSource)
+                            if (inputManager.PrimaryMouseDevice.ActiveSource != mouseInputSource)
                             {
                                 actions |= RawMouseActions.Activate;
                             }
@@ -1720,7 +1714,7 @@ namespace System.Windows.Input.StylusWisp
                     DependencyObject mouseCapturedVisual = InputElement.GetContainingVisual((DependencyObject)mouseCaptured);
                     if (mouseCapturedVisual != null)
                     {
-                        mouseInputSource = PresentationSource.CriticalFromVisual(mouseCapturedVisual);
+                        mouseInputSource = PresentationSource.FromVisual(mouseCapturedVisual);
                     }
                 }
                 else if (_stylusOver != null)
@@ -1907,7 +1901,7 @@ namespace System.Windows.Input.StylusWisp
         {
             if (_touchDevice != null)
             {
-                PresentationSource activeSource = CriticalActiveSource;
+                PresentationSource activeSource = ActiveSource;
                 if (activeSource != null)
                 {
                     _touchDevice.ChangeActiveSource(activeSource);

@@ -1599,7 +1599,7 @@ namespace System.Windows.Input
                     if(containingVisual != null)
                     {
                         IWin32Window win32Window = null;
-                        PresentationSource source = PresentationSource.CriticalFromVisual(containingVisual);
+                        PresentationSource source = PresentationSource.FromVisual(containingVisual);
                         if (source != null)
                         {
                             win32Window = source as IWin32Window;

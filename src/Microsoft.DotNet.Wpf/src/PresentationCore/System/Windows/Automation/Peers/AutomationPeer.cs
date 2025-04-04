@@ -493,12 +493,7 @@ namespace System.Windows.Automation.Peers
         }
 
         /// <summary>
-        /// This is responsible for adding parent info like the parent window handle
-        /// and the parent itself to it's child. This is by definition is a securitycritical operation
-        /// for two reasons
-        /// 1. it's doing an action which is securitycritical
-        /// 2. it can not be treated as safe as it doesn't know whether
-        ///    the peer is actually this objects's parent or not and must be used by methods which has
+        /// This is responsible for adding parent info like the parent window handle and the parent itself to it's child.
         /// </summary>
         /// <param name="peer"></param>
         internal bool TrySetParentInfo(AutomationPeer peer)

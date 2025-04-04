@@ -973,7 +973,7 @@ namespace Microsoft.Internal.AlphaFlattener
             converter.DestinationFormat = PixelFormats.Pbgra32;
             converter.EndInit();
 
-            converter.CriticalCopyPixels(new Int32Rect(0, 0, width, height), brushPixels, stride, 0);
+            converter.CopyPixelsEx(new Int32Rect(0, 0, width, height), brushPixels, stride, 0);
 
             return brushPixels;
         }

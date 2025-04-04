@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
 using System.ComponentModel;
@@ -207,10 +207,6 @@ namespace System.Windows.Input
         {
             //Generate a temporal file based on the memory stream.
 
-            // GetTempFileName requires unrestricted Environment permission
-            // FileIOPermission.Write permission.  However, since we don't
-            // know the path of the file to be created we have to give
-            // unrestricted permission here.
             // GetTempFileName documentation does not mention that it throws
             // any exception. However, if it does, CLR reverts the assert.
 

@@ -322,11 +322,13 @@ namespace System.Windows.Input
                 {
                     RoutedEvent = CommandManager.PreviewCanExecuteEvent
                 };
-                CriticalCanExecuteWrapper(parameter, target, trusted, args);
+
+                CanExecuteWrapper(target, trusted, args);
+
                 if (!args.Handled)
                 {
                     args.RoutedEvent = CommandManager.CanExecuteEvent;
-                    CriticalCanExecuteWrapper(parameter, target, trusted, args);
+                    CanExecuteWrapper(target, trusted, args);
                 }
 
                 continueRouting = args.ContinueRouting;
@@ -339,7 +341,7 @@ namespace System.Windows.Input
             }
         }
 
-        private void CriticalCanExecuteWrapper(object parameter, IInputElement target, bool trusted, CanExecuteRoutedEventArgs args)
+        private static void CanExecuteWrapper(IInputElement target, bool trusted, CanExecuteRoutedEventArgs args)
         {
             // This cast is ok since we are already testing for UIElement, ContentElement, or UIElement3D
             // both of which derive from DO
@@ -356,8 +358,9 @@ namespace System.Windows.Input
             else if (targetAsDO is UIElement3D uie3D)
             {
                 uie3D.RaiseEvent(args, trusted);
-            }            
+            }
         }
+
         internal bool ExecuteCore(object parameter, IInputElement target, bool userInitiated)
         {
             if (target == null)

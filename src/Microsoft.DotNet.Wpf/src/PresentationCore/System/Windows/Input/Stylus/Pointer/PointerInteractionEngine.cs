@@ -310,7 +310,7 @@ namespace System.Windows.Input.StylusPointer
                     new RawStylusSystemGestureInputReport(
                         InputMode.Foreground,
                         Environment.TickCount,
-                        _stylusDevice.CriticalActiveSource,
+                        _stylusDevice.ActiveSource,
                         (Func<StylusPointDescription>)null,
                         -1,
                         -1,
@@ -347,7 +347,7 @@ namespace System.Windows.Input.StylusPointer
                     new RawStylusSystemGestureInputReport(
                         InputMode.Foreground,
                         Environment.TickCount,
-                        _stylusDevice.CriticalActiveSource,
+                        _stylusDevice.ActiveSource,
                         (Func<StylusPointDescription>)null,
                         -1,
                         -1,
@@ -440,7 +440,7 @@ namespace System.Windows.Input.StylusPointer
                         new RawStylusSystemGestureInputReport(
                             InputMode.Foreground,
                             Environment.TickCount,
-                            _stylusDevice.CriticalActiveSource,
+                            _stylusDevice.ActiveSource,
                             (Func<StylusPointDescription>)null,
                             -1,
                             -1,
@@ -475,7 +475,7 @@ namespace System.Windows.Input.StylusPointer
                     && (!_flickEngine?.Result?.CanBeFlick ?? true))
                 {
                     // Convert screen pixels to inches using current DPI
-                    DpiScale dpi = VisualTreeHelper.GetDpi(_stylusDevice.CriticalActiveSource.RootVisual);
+                    DpiScale dpi = VisualTreeHelper.GetDpi(_stylusDevice.ActiveSource.RootVisual);
 
                     double xChangeInches = output.arguments.manipulation.cumulative.translationX / dpi.PixelsPerInchX;
                     double yChangeInches = output.arguments.manipulation.cumulative.translationY / dpi.PixelsPerInchY;

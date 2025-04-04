@@ -113,11 +113,6 @@ namespace System.Windows.Input
         #region WM_POINTER
 
         /// <summary>
-        /// String to use for assert of registry permissions
-        /// </summary>
-        private const string WpfPointerKeyAssert = @"HKEY_CURRENT_USER\" + WpfPointerKey;
-
-        /// <summary>
         /// The key location for the registry switch to configure the touch stack system wide
         /// </summary>
         private const string WpfPointerKey = @"Software\Microsoft\Avalon.Touch\";
@@ -261,11 +256,11 @@ namespace System.Windows.Input
                 // Choose between WISP and Pointer stacks
                 if (IsPointerStackEnabled)
                 {
-                    _currentStylusLogic = new PointerLogic(InputManager.UnsecureCurrent);
+                    _currentStylusLogic = new PointerLogic(InputManager.Current);
                 }
                 else
                 {
-                    _currentStylusLogic = new WispLogic(InputManager.UnsecureCurrent);
+                    _currentStylusLogic = new WispLogic(InputManager.Current);
                 }
             }
         }
@@ -678,7 +673,7 @@ namespace System.Windows.Input
             if (visual == null)
                 return false;
 
-            PresentationSource presentationSource = PresentationSource.CriticalFromVisual(visual);
+            PresentationSource presentationSource = PresentationSource.FromVisual(visual);
 
             if (presentationSource == null)
             {
@@ -686,7 +681,7 @@ namespace System.Windows.Input
             }
 
             if (currentStylusDevice != null &&
-                currentStylusDevice.CriticalActiveSource != presentationSource &&
+                currentStylusDevice.ActiveSource != presentationSource &&
                 currentStylusDevice.Captured == null)
             {
                 return false;

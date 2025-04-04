@@ -276,7 +276,7 @@ namespace System.Windows.Interop
                     };
 
                     // Now send the input report
-                    InputManager.UnsecureCurrent.ProcessInput(irea);
+                    InputManager.Current.ProcessInput(irea);
 
                     // If this is not a primary pointer input, we don't want to 
                     // allow it to go to DefWindowProc, so we should handle it.

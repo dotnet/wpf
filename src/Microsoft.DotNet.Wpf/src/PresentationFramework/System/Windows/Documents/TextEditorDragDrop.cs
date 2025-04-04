@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
 using MS.Internal;
@@ -648,9 +648,9 @@ namespace System.Windows.Documents
             /// </summary>
             private void Win32SetForegroundWindow()
             {
-                PresentationSource source = null;
+                PresentationSource source = PresentationSource.FromVisual(_textEditor.UiScope);
                 IntPtr hwnd = IntPtr.Zero;
-                source = PresentationSource.CriticalFromVisual(_textEditor.UiScope);
+
                 if (source != null)
                 {
                     hwnd = (source as IWin32Window).Handle;

@@ -48,9 +48,6 @@ namespace System.Windows.Interop
         /// <param name="parent">
         ///     The Win32 window that should be the parent of this window.
         /// </param>
-        /// <remarks>
-        ///     Callers must have UIPermission(UIPermissionWindow.AllWindows) to call this API.
-        /// </remarks>
         public HwndSource(
             int classStyle,
             int style,
@@ -107,9 +104,6 @@ namespace System.Windows.Interop
         ///     Indicates that HwndSource should include the non-client area
         ///     of the hwnd when it calls the Layout Manager
         /// </param>
-        /// <remarks>
-        ///     Callers must have UIPermission(UIPermissionWindow.AllWindows) to call this API.
-        /// </remarks>
         public HwndSource(int classStyle,
                           int style,
                           int exStyle,
@@ -165,9 +159,6 @@ namespace System.Windows.Interop
         /// <param name="parent">
         ///     The Win32 window that should be the parent of this window.
         /// </param>
-        /// <remarks>
-        ///     Callers must have UIPermission(UIPermissionWindow.AllWindows) to call this API.
-        /// </remarks>
         public HwndSource(
             int classStyle,
             int style,
@@ -195,9 +186,6 @@ namespace System.Windows.Interop
         ///    HwndSource Ctor
         /// </summary>
         /// <param name="parameters"> parameter block </param>
-        /// <remarks>
-        ///     Callers must have UIPermission(UIPermissionWindow.AllWindows) to call this API.
-        /// </remarks>
         public HwndSource(HwndSourceParameters parameters)
         {
             Initialize(parameters);
@@ -329,9 +317,8 @@ namespace System.Windows.Interop
             // Register dropable window.
             if (_hwndWrapper.Handle != IntPtr.Zero)
             {
-                // This call is safe since DragDrop.RegisterDropTarget is checking the unmanged
-                // code permission.
                 DragDrop.RegisterDropTarget(_hwndWrapper.Handle);
+
                 _registeredDropTargetCount++;
             }
         }
@@ -354,9 +341,6 @@ namespace System.Windows.Interop
         /// <param name="hook">
         ///     The hook to add.
         /// </param>
-        ///<remarks>
-        ///     Callers must have UIPermission(UIPermissionWindow.AllWindows) to call this API.
-        ///</remarks>
         public void AddHook(HwndSourceHook hook)
         {
             Verify.IsNotNull(hook, "hook");
@@ -376,13 +360,9 @@ namespace System.Windows.Interop
         /// <param name="hook">
         ///     The hook to remove.
         /// </param>
-        ///<remarks>
-        ///     Callers must have UIPermission(UIPermissionWindow.AllWindows) to call this API.
-        ///</remarks>
         public void RemoveHook(HwndSourceHook hook)
         {
-
-            //this.VerifyAccess();
+            // VerifyAccess();
 
             EventHelper.RemoveHandler(ref _hooks, hook);
             if(_hooks == null)
@@ -540,9 +520,6 @@ namespace System.Windows.Interop
         /// <summary>
         /// The Root Visual for this window. If it is a UIElement
         /// </summary>
-        /// <remarks>
-        ///     Callers must have UIPermission(UIPermissionWindow.AllWindows) to call this API.
-        /// </remarks>
         public override Visual RootVisual
         {
             get
@@ -658,15 +635,7 @@ namespace System.Windows.Interop
         /// </summary>
         /// <param name="hwnd">The window.</param>
         /// <returns>The source that corresponds to the specified window.</returns>
-        ///<remarks>
-        ///     Callers must have UIPermission(UIPermissionWindow.AllWindows) to call this API.
-        ///</remarks>
         public static HwndSource FromHwnd(IntPtr hwnd)
-        {
-            return CriticalFromHwnd(hwnd);
-        }
-
-        internal static HwndSource CriticalFromHwnd(IntPtr hwnd)
         {
             if (hwnd == IntPtr.Zero)
             {
@@ -686,7 +655,6 @@ namespace System.Windows.Interop
             }
             return hwndSource;
         }
-
 
         /// <summary>
         ///     The visual manager for the visuals being presented in the source.
@@ -1692,21 +1660,6 @@ namespace System.Windows.Interop
         /// contract, which limits IntelliSense on derived types like WebBrowser) while sticking protected
         /// virtuals next to them. Those virtuals contain our base implementation, while the explicit
         /// interface implementation methods do call trivially into the virtuals.
-        ///
-        /// This comment outlines the security rationale applied to those methods.
-        ///
-        /// <SecurityNote Name="IKeyboardInputSink_Implementation">
-        ///     The security attributes on the virtual methods within this region mirror the corresponding
-        ///     IKeyboardInputSink methods; customers can override those methods, so we insert a LinkDemand
-        ///     to encourage them to have a LinkDemand too (via FxCop).
-        ///
-        ///     While the methods have LinkDemands on them, the bodies of the methods typically contain
-        ///     full demands through a SecurityHelper.DemandUnmanagedCode call. This might seem redundant.
-        ///     The point here is we do a full demand for stronger protection of our built-in implementation
-        ///     compared to the LinkDemand on the public interface. We really want full demands here but
-        ///     declarative Demand doesn't work on interface methods. In addition, we try to take advantage
-        ///     of the fact LinkDemands are consistently enforced between base and overridden virtual methods,
-        ///     something full Demands do not give us, even when applied declaratively.
 
         private class MSGDATA
         {
@@ -1803,7 +1756,7 @@ namespace System.Windows.Interop
                 // pending operations, so that the operation we just posted
                 // is guaranteed to get dispatched after any pending WM_CHAR
                 // messages are dispatched.
-                Dispatcher.CriticalRequestProcessing(true);
+                Dispatcher.RequestProcessing(force: true);
 
                 msgdata.handled = CriticalTranslateAccelerator(ref msgdata.msg, modifierKeys);
                 if(!msgdata.handled)
@@ -1894,7 +1847,6 @@ namespace System.Windows.Interop
         ///     is returned.
         /// </summary>
         /// <remarks>
-        ///     This API requires unrestricted UI Window permission.
         ///     We explicitly don't make this method overridable as we want to keep the
         ///     precise implementation fixed and make sure the _keyboardInputSinkChildren
         ///     state is kep consistent. By making the method protected, implementors can
@@ -2063,11 +2015,8 @@ namespace System.Windows.Interop
                         //
                         // This is a behavioral breaking change, so we've decided to only do it when IsInExclusiveMenuMode
                         // is true to force the user to opt-in.
-                        DependencyObject focusObject = Keyboard.FocusedElement as DependencyObject;
-                        HwndSource mnemonicScope = (focusObject == null ? null : PresentationSource.CriticalFromVisual(focusObject) as HwndSource);
-                        if (mnemonicScope != null &&
-                            mnemonicScope != this &&
-                            IsInExclusiveMenuMode)
+                        if (FromNullableVisual(Keyboard.FocusedElement as DependencyObject) is HwndSource mnemonicScope &&
+                            mnemonicScope != this && IsInExclusiveMenuMode)
                         {
                             return ((IKeyboardInputSink)mnemonicScope).OnMnemonic(ref msg, modifiers);
                         }
@@ -2371,8 +2320,7 @@ namespace System.Windows.Interop
                 if (focusElement == null && hasFocus)
                 {
                     focusElement = Keyboard.PrimaryDevice.FocusedElement;
-                    if (focusElement != null &&
-                        PresentationSource.CriticalFromVisual((DependencyObject)focusElement) != this)
+                    if (focusElement != null && FromVisual((DependencyObject)focusElement) != this)
                     {
                         focusElement = null;
                     }
@@ -2412,7 +2360,7 @@ namespace System.Windows.Interop
                             // Raise the TranslateAccelerator event on the
                             // InputManager to allow keyboard navigation to
                             // happen on a descendent HwndSource
-                            InputManager.UnsecureCurrent.RaiseTranslateAccelerator(bubbleArgs);
+                            InputManager.Current.RaiseTranslateAccelerator(bubbleArgs);
                             handled = bubbleArgs.Handled;
                         }
                     }
@@ -2574,9 +2522,8 @@ namespace System.Windows.Interop
                             // Revoke the drop target.
                             if (_hwndWrapper.Handle != IntPtr.Zero && _registeredDropTargetCount > 0)
                             {
-                                // This call is safe since DragDrop.RevokeDropTarget is checking the unmanged
-                                // code permission.
                                 DragDrop.RevokeDropTarget(_hwndWrapper.Handle);
+
                                 _registeredDropTargetCount--;
                             }
 

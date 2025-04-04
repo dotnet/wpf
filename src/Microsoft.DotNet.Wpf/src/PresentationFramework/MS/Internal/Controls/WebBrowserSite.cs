@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
 //
@@ -143,14 +143,11 @@ namespace MS.Internal.Controls
             return NativeMethods.E_NOTIMPL;
         }
 
-        /// <summary>
-        ///    Critical: This code access critical member Host.
-        ///    TreatAsSafe: The object returned is sandboxed in the managed environment.
-        /// </summary>
         int UnsafeNativeMethods.IDocHostUIHandler.GetExternal(out object ppDispatch)
         {
             WebBrowser wb = (WebBrowser)Host;
             ppDispatch = wb.HostingAdaptor.ObjectForScripting;
+
             return NativeMethods.S_OK;
         }
 

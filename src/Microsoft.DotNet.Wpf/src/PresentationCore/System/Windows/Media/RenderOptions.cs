@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
 //
@@ -225,8 +225,6 @@ namespace System.Windows.Media
         /// <remarks>
         ///     This property specifies a preference, it does not necessarily change the actual
         ///     rendering mode.  Among other things, this can be trumped by the registry settings.
-        ///     <para/>
-        ///     Callers must have UIPermission(UIPermissionWindow.AllWindows) to set this property.
         /// </remarks>
         public static RenderMode ProcessRenderMode
         {

@@ -50,7 +50,7 @@ namespace System.Windows.Input
                 throw new InvalidOperationException(SR.NotAllowedToAccessStagingArea);
             }
             
-            return this.UnsecureInputManager.PushInput(input, promote);
+            return InputManager.PushInput(input, promote);
         }
 
         /// <summary>
@@ -70,7 +70,7 @@ namespace System.Windows.Input
                 throw new InvalidOperationException(SR.NotAllowedToAccessStagingArea);
             }
             
-            return this.UnsecureInputManager.PushInput(input);
+            return InputManager.PushInput(input);
         }
 
         /// <summary>
@@ -88,7 +88,7 @@ namespace System.Windows.Input
                 throw new InvalidOperationException(SR.NotAllowedToAccessStagingArea);
             }
             
-            return this.UnsecureInputManager.PopInput();
+            return InputManager.PopInput();
         }
 
         /// <summary>
@@ -106,7 +106,7 @@ namespace System.Windows.Input
                 throw new InvalidOperationException(SR.NotAllowedToAccessStagingArea);
             }
             
-            return this.UnsecureInputManager.PeekInput();
+            return InputManager.PeekInput();
         }
 
         private bool _allowAccessToStagingArea;

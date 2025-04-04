@@ -104,7 +104,7 @@ namespace System.Windows.Input
             // We should always have a valid IPimcContext3 interface pointer.
             Debug.Assert(_pimcContext != null);
             
-            _pimcContext.GetPacketDescriptionInfo(out cProps, out cButtons); // Calls Unmanaged code - SecurityCritical with SUC.
+            _pimcContext.GetPacketDescriptionInfo(out cProps, out cButtons);
 
             List<StylusPointPropertyInfo> propertyInfos = new List<StylusPointPropertyInfo>(cProps + cButtons + 3);
             for (int i = 0; i < cProps; i++)
@@ -113,7 +113,7 @@ namespace System.Windows.Input
                 int min, max;
                 int units;
                 float res;
-                _pimcContext.GetPacketPropertyInfo(i, out guid, out min, out max, out units, out res); // Calls Unmanaged code - SecurityCritical with SUC.
+                _pimcContext.GetPacketPropertyInfo(i, out guid, out min, out max, out units, out res);
 
                 if (pressureIndex == -1 && guid == StylusPointPropertyIds.NormalPressure)
                 {
@@ -138,7 +138,7 @@ namespace System.Windows.Input
                 for (int i = 0; i < cButtons; i++)
                 {
                     Guid buttonGuid;
-                    _pimcContext.GetPacketButtonInfo(i, out buttonGuid); // Calls Unmanaged code - SecurityCritical with SUC.
+                    _pimcContext.GetPacketButtonInfo(i, out buttonGuid);
 
                     StylusPointProperty buttonProperty = new StylusPointProperty(buttonGuid, true);
                     StylusPointPropertyInfo buttonInfo = new StylusPointPropertyInfo(buttonProperty);

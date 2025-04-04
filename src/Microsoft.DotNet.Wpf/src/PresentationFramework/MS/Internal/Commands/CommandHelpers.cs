@@ -134,34 +134,23 @@ namespace MS.Internal.Commands
         }
 
         /// <summary>
-        ///     Executes the command on the given command source.
+        /// Executes the command on the given command source.
         /// </summary>
-        internal static void ExecuteCommandSource(ICommandSource commandSource)
-        {
-            CriticalExecuteCommandSource(commandSource, false);
-        }
-
-        /// <summary>
-        ///     Executes the command on the given command source.
-        /// </summary>
-        internal static void CriticalExecuteCommandSource(ICommandSource commandSource, bool userInitiated)
+        internal static void ExecuteCommandSource(ICommandSource commandSource, bool userInitiated = false)
         {
             ICommand command = commandSource.Command;
-            if (command != null)
+            if (command is not null)
             {
                 object parameter = commandSource.CommandParameter;
                 IInputElement target = commandSource.CommandTarget;
 
-                RoutedCommand routed = command as RoutedCommand;
-                if (routed != null)
+                if (command is RoutedCommand routedCommand)
                 {
-                    if (target == null)
+                    target ??= commandSource as IInputElement;
+
+                    if (routedCommand.CanExecute(parameter, target))
                     {
-                        target = commandSource as IInputElement;
-                    }
-                    if (routed.CanExecute(parameter, target))
-                    {
-                        routed.ExecuteCore(parameter, target, userInitiated);
+                        routedCommand.ExecuteCore(parameter, target, userInitiated);
                     }
                 }
                 else if (command.CanExecute(parameter))
@@ -170,6 +159,7 @@ namespace MS.Internal.Commands
                 }
             }
         }
+
         // This allows a caller to override its ICommandSource values (used by Button and ScrollBar)
         internal static void ExecuteCommand(ICommand command, object parameter, IInputElement target)
         {

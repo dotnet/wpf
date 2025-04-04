@@ -89,9 +89,6 @@ namespace System.Windows.Input.StylusPlugIns
         /// <summary>
         /// Replaces the StylusPoints.
         /// </summary>
-        /// <remarks>
-        ///     Callers must have Unmanaged code permission to call this API.
-        /// </remarks>
         /// <param name="stylusPoints">stylusPoints</param>
         public void SetStylusPoints(StylusPointCollection stylusPoints)
         {

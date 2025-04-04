@@ -21,17 +21,13 @@ namespace System.Windows.Interop
         /// <param name="palette"></param>
         /// <param name="sourceRect"></param>
         /// <param name="sizeOptions"></param>
-        /// <remarks>
-        ///     Callers must have UnmanagedCode permission to call this API.
-        /// </remarks>
         public static unsafe BitmapSource CreateBitmapSourceFromHBitmap(
             IntPtr bitmap,
             IntPtr palette,
             Int32Rect sourceRect,
             BitmapSizeOptions sizeOptions)
         {
-
-            return CriticalCreateBitmapSourceFromHBitmap(bitmap, palette, sourceRect, sizeOptions, WICBitmapAlphaChannelOption.WICBitmapUseAlpha);
+            return CreateBitmapSourceFromHBitmap(bitmap, palette, sourceRect, sizeOptions, WICBitmapAlphaChannelOption.WICBitmapUseAlpha);
         }
 
         /// <summary>
@@ -42,7 +38,7 @@ namespace System.Windows.Interop
         /// <param name="sourceRect"></param>
         /// <param name="sizeOptions"></param>
         /// <param name="alphaOptions"></param>
-        internal static unsafe BitmapSource CriticalCreateBitmapSourceFromHBitmap(
+        internal static unsafe BitmapSource CreateBitmapSourceFromHBitmap(
             IntPtr bitmap,
             IntPtr palette,
             Int32Rect sourceRect,
@@ -54,7 +50,7 @@ namespace System.Windows.Interop
                 throw new ArgumentNullException(nameof(bitmap));
             }
 
-            return new InteropBitmap(bitmap, palette, sourceRect, sizeOptions, alphaOptions); // use the critical version
+            return new InteropBitmap(bitmap, palette, sourceRect, sizeOptions, alphaOptions);
         }
         
         /// <summary>
@@ -63,9 +59,6 @@ namespace System.Windows.Interop
         /// <param name="icon"></param>
         /// <param name="sourceRect"></param>
         /// <param name="sizeOptions"></param>
-        /// <remarks>
-        ///     Callers must have UnmanagedCode permission to call this API.
-        /// </remarks>
         public static unsafe BitmapSource CreateBitmapSourceFromHIcon(
             IntPtr icon,
             Int32Rect sourceRect,
@@ -89,9 +82,6 @@ namespace System.Windows.Interop
         /// <param name="format"></param>
         /// <param name="stride"></param>
         /// <param name="offset"></param>
-        /// <remarks>
-        ///     Callers must have UnmanagedCode permission to call this API.
-        /// </remarks>
         public static unsafe BitmapSource CreateBitmapSourceFromMemorySection(
             IntPtr section,
             int pixelWidth,

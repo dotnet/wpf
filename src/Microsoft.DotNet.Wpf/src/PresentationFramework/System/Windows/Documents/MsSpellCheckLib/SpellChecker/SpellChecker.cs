@@ -117,9 +117,6 @@ namespace System.Windows.Documents
 
             private void AddImplWithRetries(string word, bool shouldSuppressCOMExceptions = true)
             {
-                // AddImpl and Init are SecuritySafeCritical, so it is okay to
-                // create an anon. lambdas that calls into them, and pass
-                // those lambdas below.
                 RetryHelper.TryCallAction(
                     action: () => AddImpl(word),
                     preamble: () => Init(shouldSuppressCOMExceptions),
@@ -128,7 +125,8 @@ namespace System.Windows.Documents
 
             public void Add(string word, bool shouldSuppressCOMExceptions = true)
             {
-                if (_disposed) return;
+                if (_disposed)
+                    return;
 
                 AddImplWithRetries(word, shouldSuppressCOMExceptions);
             }
@@ -144,9 +142,6 @@ namespace System.Windows.Documents
 
             public void IgnoreImplWithRetries(string word, bool shouldSuppressCOMExceptions = true)
             {
-                // IgnoreImpl and Init are SecuritySafeCritical, so it is okay to
-                // create anon. lambdas that calls into them, and pass
-                // those lambdas below.
                 RetryHelper.TryCallAction(
                     action: () => IgnoreImpl(word),
                     preamble: () => Init(shouldSuppressCOMExceptions),
@@ -154,7 +149,8 @@ namespace System.Windows.Documents
             }
             public void Ignore(string word, bool shouldSuppressCOMExceptions = true)
             {
-                if (_disposed) return;
+                if (_disposed)
+                    return;
 
                 IgnoreImplWithRetries(word, shouldSuppressCOMExceptions);
             }

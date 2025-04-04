@@ -121,7 +121,7 @@ namespace System.Windows.Input
             DependencyObject containingVisual = InputElement.GetContainingVisual(relativeTo as DependencyObject);
             if (containingVisual != null)
             {
-                PresentationSource relativePresentationSource = PresentationSource.CriticalFromVisual(containingVisual);
+                PresentationSource relativePresentationSource = PresentationSource.FromVisual(containingVisual);
                 Visual rootVisual = relativePresentationSource?.RootVisual;
                 Visual containingVisual2D = VisualTreeHelper.GetContainingVisual2D(containingVisual);
                 if ((rootVisual != null) && (containingVisual2D != null))

@@ -1445,9 +1445,6 @@ namespace MS.Internal.Documents
         // Private Properties
         //------------------------------------------------------
 
-        /// <summary>
-        /// Setup as a clr property to transparently use CriticalDataForSet.
-        /// </summary>
         private IRightsManagementProvider _rmProvider
         {
             get

@@ -123,54 +123,26 @@ namespace System.Windows.Ink
 
         /// <summary>
         /// Performs gesture recognition on the StrokeCollection if a gesture recognizer
-        /// is present and installed on the system.  If not, this method throws an InvalidOperationException.
+        /// is present and installed on the system. If not, this method throws an InvalidOperationException.
         /// To determine if this method will throw an exception, only call this method if
         /// the RecognizerAvailable property returns true.
-        /// 
         /// </summary>
         /// <param name="strokes">The StrokeCollection to perform gesture recognition on</param>
-        /// <returns></returns>
-        /// <remarks>Callers must have UnmanagedCode permission to call this API.</remarks>
         public ReadOnlyCollection<GestureRecognitionResult> Recognize(StrokeCollection strokes)
         {
-            return RecognizeImpl(strokes);
-        }
-
-        /// <summary>
-        /// Performs gesture recognition on the StrokeCollection if a gesture recognizer
-        /// is present and installed on the system.  If not, this method throws an InvalidOperationException.
-        /// To determine if this method will throw an exception, only call this method if
-        /// the RecognizerAvailable property returns true.
-        /// </summary>
-        /// <param name="strokes">The StrokeCollection to perform gesture recognition on</param>
-        /// <returns></returns>
-        // Built into Core, also used by Framework.
-        internal ReadOnlyCollection<GestureRecognitionResult> CriticalRecognize(StrokeCollection strokes)
-        {
-            return RecognizeImpl(strokes);
-        }
-
-        /// <summary>
-        /// Performs gesture recognition on the StrokeCollection if a gesture recognizer
-        /// is present and installed on the system.
-        /// </summary>
-        /// <param name="strokes">The StrokeCollection to perform gesture recognition on</param>
-        /// <returns></returns>
-        private ReadOnlyCollection<GestureRecognitionResult> RecognizeImpl(StrokeCollection strokes)
-        {
             ArgumentNullException.ThrowIfNull(strokes);
+
             if (strokes.Count > 2)
             {
                 throw new ArgumentException(SR.StrokeCollectionCountTooBig, nameof(strokes));
             }
+
             VerifyAccess();
             VerifyDisposed();
             VerifyRecognizerAvailable();
 
             return new ReadOnlyCollection<GestureRecognitionResult>(_nativeRecognizer.Recognize(strokes));
         }
-
-        
 
         #endregion Public Methods
 

@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
 //
@@ -30,9 +30,6 @@ namespace System.Windows.Markup
         /// <returns>
         ///     XAML string representing object instance
         /// </returns>
-        /// <remarks>
-        ///     This API requires unmanaged code permission 
-        /// </remarks>
         public static string Save(object obj)
         {
             // Validate input arguments
@@ -65,9 +62,6 @@ namespace System.Windows.Markup
         /// <param name="writer">
         ///     Text Writer
         /// </param>
-        /// <remarks>
-        ///     This API requires unmanaged code permission 
-        /// </remarks>
         public static void Save(object obj, TextWriter writer)
         {
             // Validate input arguments
@@ -90,9 +84,6 @@ namespace System.Windows.Markup
         /// <param name="stream">
         ///     Stream
         /// </param>
-        /// <remarks>
-        ///     This API requires unmanaged code permission 
-        /// </remarks>
         public static void Save(object obj, Stream stream)
         {
             // Validate input arguments
@@ -117,9 +108,6 @@ namespace System.Windows.Markup
         /// <param name="xmlWriter">
         ///     XmlWriter
         /// </param>
-        /// <remarks>
-        ///     This API requires unmanaged code permission 
-        /// </remarks>
         public static void Save(object obj, XmlWriter xmlWriter)
         {
             // Validate input arguments
@@ -147,9 +135,6 @@ namespace System.Windows.Markup
         /// <param name="manager">
         ///     Serialization Manager
         /// </param>
-        /// <remarks>
-        ///     This API requires unmanaged code permission 
-        /// </remarks>
         public static void Save(object obj, XamlDesignerSerializationManager manager)
         {
             // Validate input arguments

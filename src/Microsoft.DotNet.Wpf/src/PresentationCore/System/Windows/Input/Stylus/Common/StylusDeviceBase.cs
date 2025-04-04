@@ -93,11 +93,6 @@ namespace System.Windows.Input
         internal abstract void UpdateEventStylusPoints(RawStylusInputReport report, bool resetIfNoOverride);
 
         /// <summary>
-        ///     Returns the PresentationSource that is reporting input for this device.
-        /// </summary>
-        internal abstract PresentationSource CriticalActiveSource { get; }
-
-        /// <summary>
         /// The latest stylus point in raw data
         /// </summary>
         internal abstract StylusPoint RawStylusPoint { get; }

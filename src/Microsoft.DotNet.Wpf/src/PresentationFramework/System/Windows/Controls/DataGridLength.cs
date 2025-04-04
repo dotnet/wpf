@@ -72,7 +72,7 @@ namespace System.Windows.Controls
         /// </exception>
         public DataGridLength(double value, DataGridLengthUnitType type, double desiredValue, double displayValue)
         {
-            if (double.IsNaN(value) || Double.IsInfinity(value))
+            if (!double.IsFinite(value))
             {
                 throw new ArgumentException(
                     SR.DataGridLength_Infinity,

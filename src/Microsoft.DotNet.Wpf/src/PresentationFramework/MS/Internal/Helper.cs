@@ -541,17 +541,6 @@ namespace MS.Internal
         }
 
         /// <summary>
-        /// Helper method used for double parameter validation.  Returns false
-        /// if the value is either Infinity (positive or negative) or NaN.
-        /// </summary>
-        /// <param name="value">The double value to test</param>
-        /// <returns>Whether the value is a valid double.</returns>
-        internal static bool IsDoubleValid(double value)
-        {
-            return !(Double.IsInfinity(value) || Double.IsNaN(value));
-        }
-
-        /// <summary>
         /// Checks if the given IProvideValueTarget can receive
         /// a DynamicResource or Binding MarkupExtension.
         /// </summary>

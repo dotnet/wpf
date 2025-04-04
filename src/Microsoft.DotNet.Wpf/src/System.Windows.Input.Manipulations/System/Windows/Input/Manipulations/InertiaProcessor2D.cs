@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
 
@@ -788,9 +788,7 @@ namespace System.Windows.Input.Manipulations
                     double totalScale = this.initialScale;
                     if (this.expansion.ExtrapolationResult != ExtrapolationResult.Skip)
                     {
-                        Debug.Assert(this.expansion.InitialValue > 0 &&
-                            !double.IsInfinity(this.expansion.InitialValue) &&
-                            !double.IsNaN(this.expansion.InitialValue), "Invalid initial expansion value.");
+                        Debug.Assert(expansion.InitialValue > 0 && double.IsFinite(expansion.InitialValue), "Invalid initial expansion value.");
                         totalScale *= extrapolatedExpansion.Value / this.expansion.InitialValue;
                     }
 
@@ -833,9 +831,7 @@ namespace System.Windows.Input.Manipulations
                     double scaleDelta = 1;
                     if (this.expansion.ExtrapolationResult != ExtrapolationResult.Skip)
                     {
-                        Debug.Assert(this.expansion.InitialValue > 0 &&
-                            !double.IsInfinity(this.expansion.InitialValue) &&
-                            !double.IsNaN(this.expansion.InitialValue), "Invalid initial expansion value.");
+                        Debug.Assert(expansion.InitialValue > 0 && double.IsFinite(expansion.InitialValue), "Invalid initial expansion value.");
                         totalScale *= extrapolatedExpansion.Value / this.expansion.InitialValue;
 
                         if (!DoubleUtil.IsZero(extrapolatedExpansion.Delta))
@@ -901,9 +897,9 @@ namespace System.Windows.Input.Manipulations
         private static double GetExtrapolatedValue(double initialValue, double initialVelocity, double deceleration, double timeDelta)
         {
             Debug.Assert(!double.IsNaN(initialVelocity) && !double.IsInfinity(initialValue));
-            Debug.Assert(!double.IsNaN(initialVelocity) && !double.IsInfinity(initialVelocity));
-            Debug.Assert(!double.IsNaN(deceleration) && !double.IsInfinity(deceleration));
-            Debug.Assert(!double.IsNaN(timeDelta) && !double.IsInfinity(timeDelta) && timeDelta >= 0);
+            Debug.Assert(double.IsFinite(initialVelocity));
+            Debug.Assert(double.IsFinite(deceleration));
+            Debug.Assert(double.IsFinite(timeDelta) && timeDelta >= 0);
 
             double result = initialValue + (initialVelocity - deceleration * timeDelta * 0.5) * timeDelta;
             return result;
@@ -917,7 +913,7 @@ namespace System.Windows.Input.Manipulations
         /// <returns></returns>
         private static ExtrapolatedValue GetExtrapolatedValueAndUpdateState(ExtrapolationState state, double timeDelta)
         {
-            Debug.Assert(!double.IsNaN(timeDelta) && !double.IsInfinity(timeDelta) && timeDelta >= 0);
+            Debug.Assert(double.IsFinite(timeDelta) && timeDelta >= 0);
 
             if (state.ExtrapolationResult == ExtrapolationResult.Skip)
             {
@@ -951,7 +947,7 @@ namespace System.Windows.Input.Manipulations
                     resultAction = ExtrapolationResult.Stop;
                 }
             }
-            Debug.Assert(!double.IsNaN(resultValue) && !double.IsInfinity(resultValue), "Calculation error, value should be a finite number.");
+            Debug.Assert(double.IsFinite(resultValue), "Calculation error, value should be a finite number.");
 
             ExtrapolatedValue value = new ExtrapolatedValue(resultValue,
                 resultValue - state.PreviousValue,
@@ -1056,7 +1052,7 @@ namespace System.Windows.Input.Manipulations
         /// </summary>
         private static VectorD GetAbsoluteVector(double length, VectorD baseVector)
         {
-            Debug.Assert(!double.IsNaN(length) && length >= 0 && !double.IsInfinity(length));
+            Debug.Assert(double.IsFinite(length) && length >= 0);
             Debug.Assert(!double.IsInfinity(baseVector.X));
             Debug.Assert(!double.IsInfinity(baseVector.Y));
 
@@ -1259,7 +1255,7 @@ namespace System.Windows.Input.Manipulations
 
                 // convert to milliseconds
                 result = result * timestampTicksPerMillisecond;
-                Debug.Assert(Validations.IsFinite((float)result));
+                Debug.Assert(float.IsFinite((float)result));
                 return (float)result;
             }
 
@@ -1289,8 +1285,8 @@ namespace System.Windows.Input.Manipulations
                     return;
                 }
 
-                Debug.Assert(!double.IsNaN(this.InitialValue) && !double.IsInfinity(this.InitialValue));
-                Debug.Assert(!double.IsNaN(this.InitialVelocity) && !double.IsInfinity(this.InitialVelocity));
+                Debug.Assert(double.IsFinite(InitialValue));
+                Debug.Assert(double.IsFinite(InitialVelocity));
                 Debug.Assert(!double.IsNaN(this.Offset)); // can be infinity
                 Debug.Assert(!double.IsNaN(this.AbsoluteDeceleration) && this.AbsoluteDeceleration >= 0 && !double.IsInfinity(this.InitialVelocity));
                 Debug.Assert(!double.IsNaN(this.Duration) && this.Duration >= 0); // can be infinity
@@ -1333,13 +1329,14 @@ namespace System.Windows.Input.Manipulations
 
             public ExtrapolatedValue(double value, double delta, double total, ExtrapolationResult result)
             {
-                Debug.Assert(!double.IsNaN(value) && !double.IsInfinity(value));
-                Debug.Assert(!double.IsNaN(delta) && !double.IsInfinity(delta));
-                Debug.Assert(!double.IsNaN(total) && !double.IsInfinity(total));
-                this.Value = value;
-                this.Delta = delta;
-                this.Total = total;
-                this.ExtrapolationResult = result;
+                Debug.Assert(double.IsFinite(value));
+                Debug.Assert(double.IsFinite(delta));
+                Debug.Assert(double.IsFinite(total));
+
+                Value = value;
+                Delta = delta;
+                Total = total;
+                ExtrapolationResult = result;
             }
         }
 

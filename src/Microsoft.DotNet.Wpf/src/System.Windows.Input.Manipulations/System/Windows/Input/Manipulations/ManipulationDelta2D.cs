@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
 using System.Diagnostics;
@@ -101,13 +101,14 @@ namespace System.Windows.Input.Manipulations
             float expansionX,
             float expansionY)
         {
-            Debug.Assert(Validations.IsFinite(translationX), "translationX should be finite");
-            Debug.Assert(Validations.IsFinite(translationY), "translationY should be finite");
-            Debug.Assert(Validations.IsFinite(rotation), "rotation should be finite");
+            Debug.Assert(float.IsFinite(translationX), "translationX should be finite");
+            Debug.Assert(float.IsFinite(translationY), "translationY should be finite");
+            Debug.Assert(float.IsFinite(rotation), "rotation should be finite");
             Debug.Assert(Validations.IsFiniteNonNegative(scaleX), "scaleX should be finite and not negative");
             Debug.Assert(Validations.IsFiniteNonNegative(scaleY), "scaleY should be finite and not negative");
-            Debug.Assert(Validations.IsFinite(expansionX), "expansionX should be finite");
-            Debug.Assert(Validations.IsFinite(expansionY), "expansionY should be finite");
+            Debug.Assert(float.IsFinite(expansionX), "expansionX should be finite");
+            Debug.Assert(float.IsFinite(expansionY), "expansionY should be finite");
+
             this.translationX = translationX;
             this.translationY = translationY;
             this.rotation = rotation;

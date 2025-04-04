@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
 
@@ -34,10 +34,11 @@ namespace System.Windows.Input.Manipulations
             ManipulationVelocities2D velocities,
             ManipulationDelta2D total)
         {
-            Debug.Assert(Validations.IsFinite(originX), "originX should be finite");
-            Debug.Assert(Validations.IsFinite(originY), "originY should be finite");
+            Debug.Assert(float.IsFinite(originX), "originX should be finite");
+            Debug.Assert(float.IsFinite(originY), "originY should be finite");
             Debug.Assert(velocities != null, "velocities should not be null");
             Debug.Assert(total != null, "total should not be null");
+
             this.originX = originX;
             this.originY = originY;
             this.velocities = velocities;

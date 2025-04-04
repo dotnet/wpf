@@ -35,7 +35,7 @@ namespace System.Windows.Media.Animation
         /// <param name="count">The number of iterations specified by this RepeatBehavior.</param>
         public RepeatBehavior(double count)
         {
-            if (double.IsInfinity(count) || double.IsNaN(count) || count < 0.0)
+            if (!double.IsFinite(count) || count < 0.0)
                 throw new ArgumentOutOfRangeException(nameof(count), SR.Format(SR.Timing_RepeatBehaviorInvalidIterationCount, count));
 
             _repeatDuration = TimeSpan.Zero;

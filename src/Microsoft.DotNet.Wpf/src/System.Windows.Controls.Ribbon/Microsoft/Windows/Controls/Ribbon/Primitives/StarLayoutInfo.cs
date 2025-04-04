@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
 
@@ -102,9 +102,8 @@ namespace Microsoft.Windows.Controls.Ribbon.Primitives
         private static bool ValidateRequestedStarWeight(object value)
         {
             double starWeight = (double)value;
-            return (!double.IsNaN(starWeight) &&
-                !double.IsInfinity(starWeight) &&
-                DoubleUtil.GreaterThanOrClose(starWeight, 0.0));
+
+            return double.IsFinite(starWeight) && DoubleUtil.GreaterThanOrClose(starWeight, 0.0);
         }
 
         private static void OnRequestedStarMinWidthChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
@@ -116,9 +115,8 @@ namespace Microsoft.Windows.Controls.Ribbon.Primitives
         private static bool ValidateRequestedStarMinWidth(object value)
         {
             double starMinWidth = (double)value;
-            return (!double.IsNaN(starMinWidth) &&
-                !double.IsInfinity(starMinWidth) &&
-                DoubleUtil.GreaterThanOrClose(starMinWidth, 0.0));
+
+            return double.IsFinite(starMinWidth) && DoubleUtil.GreaterThanOrClose(starMinWidth, 0.0);
         }
 
         private static object OnCoerceRequestedStarMaxWidth(DependencyObject d, object baseValue)

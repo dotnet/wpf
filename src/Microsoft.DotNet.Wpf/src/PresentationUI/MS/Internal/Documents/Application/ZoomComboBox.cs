@@ -457,7 +457,7 @@ namespace MS.Internal.Documents.Application
         private static bool ZoomValueToString(double zoomValue, out string zoomString)
         {
             // Check that value is a valid double.
-            if (!(double.IsNaN(zoomValue)) && !(double.IsInfinity(zoomValue)))
+            if (double.IsFinite(zoomValue))
             {
                 try
                 {

@@ -2014,7 +2014,7 @@ namespace System.Windows.Controls
             if (DoubleUtil.AreClose(availableViewportWidth, 0.0) && parentRowsPresenter != null)
             {
                 Size rowPresenterAvailableSize = parentRowsPresenter.AvailableSize;
-                if (!double.IsNaN(rowPresenterAvailableSize.Width) && !Double.IsInfinity(rowPresenterAvailableSize.Width))
+                if (double.IsFinite(rowPresenterAvailableSize.Width))
                 {
                     availableViewportWidth = rowPresenterAvailableSize.Width;
                 }

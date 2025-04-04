@@ -2070,7 +2070,7 @@ namespace Microsoft.Internal.AlphaFlattener
 
             if (!rect.IsEmpty)
             {
-                result = IsValid(rect) && IsFinite(rect) && rect.Width > 0 && rect.Height > 0;
+                result = IsFinite(rect) && rect.Width > 0 && rect.Height > 0;
             }
 
             return result;
@@ -2095,23 +2095,18 @@ namespace Microsoft.Internal.AlphaFlattener
             }
             else
             {
-                return IsValid(rect) && IsFinite(rect) && rect.Width >= 0 && rect.Height >= 0;
+                return IsFinite(rect) && rect.Width >= 0 && rect.Height >= 0;
             }
         }
 
         public static bool IsRenderVisible(Point point)
         {
-            return IsValid(point) && IsFinite(point);
-        }
-
-        public static bool IsRenderVisible(Size size)
-        {
-            return IsValid(size) && IsFinite(size) && size.Width > 0 && size.Height > 0;
+            return double.IsFinite(point.X) && double.IsFinite(point.Y);
         }
 
         public static bool IsRenderVisible(double value)
         {
-            return IsValid(value) && IsFinite(value);
+            return double.IsFinite(value);
         }
 
         public static bool IsRenderVisible(DrawingGroup drawing)
@@ -2147,22 +2142,6 @@ namespace Microsoft.Internal.AlphaFlattener
             return !double.IsNaN(value);
         }
 
-        public static bool IsValid(Point point)
-        {
-            return !double.IsNaN(point.X) && !double.IsNaN(point.Y);
-        }
-
-        /// <summary>
-        /// Returns true if Size is valid.
-        /// </summary>
-        /// <param name="size"></param>
-        /// <returns></returns>
-        /// <remarks>Empty size is treated as valid.</remarks>
-        public static bool IsValid(Size size)
-        {
-            return !double.IsNaN(size.Width) && !double.IsNaN(size.Height);
-        }
-
         /// <summary>
         /// Returns true if Rect is valid.
         /// </summary>
@@ -2193,27 +2172,12 @@ namespace Microsoft.Internal.AlphaFlattener
                 !double.IsNaN(matrix.OffsetY);
         }
 
-        public static bool IsFinite(double value)
-        {
-            return !double.IsInfinity(value);
-        }
-
-        public static bool IsFinite(Point point)
-        {
-            return !double.IsInfinity(point.X) && !double.IsInfinity(point.Y);
-        }
-
-        public static bool IsFinite(Size size)
-        {
-            return !double.IsInfinity(size.Width) && !double.IsInfinity(size.Height);
-        }
-
+        /// <summary>
+        /// Determines whether the <see cref="Rect"/> is finite (not NaN, not Infinity).
+        /// </summary>
         public static bool IsFinite(Rect rect)
         {
-            return !double.IsInfinity(rect.X) &&
-                !double.IsInfinity(rect.Y) &&
-                !double.IsInfinity(rect.Width) &&
-                !double.IsInfinity(rect.Height);
+            return double.IsFinite(rect.X) && double.IsFinite(rect.Y) && double.IsFinite(rect.Width) && double.IsFinite(rect.Height);
         }
 
         /// <summary>

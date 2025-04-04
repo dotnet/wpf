@@ -594,8 +594,7 @@ namespace Microsoft.Windows.Themes
                     double x = (bounds.X + (bounds.Width * 0.5)) / widthScale - (glyphWidth * 0.5);
                     double y = (bounds.Y + (bounds.Height * 0.5)) / heightScale - (glyphHeight * 0.5);
 
-                    if (double.IsNaN(widthScale) || double.IsInfinity(widthScale) || double.IsNaN(heightScale) || double.IsInfinity(heightScale) ||
-                        double.IsNaN(x) || double.IsInfinity(x) || double.IsNaN(y) || double.IsInfinity(y))
+                    if (!double.IsFinite(widthScale) || !double.IsFinite(heightScale) || !double.IsFinite(x) || !double.IsFinite(y))
                     {
                         return;
                     }

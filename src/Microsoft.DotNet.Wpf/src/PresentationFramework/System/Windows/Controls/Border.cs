@@ -159,7 +159,8 @@ namespace System.Windows.Controls
         private static bool IsCornerRadiusValid(object value)
         {
             CornerRadius cr = (CornerRadius)value;
-            return (cr.IsValid(false, false, false, false));
+
+            return cr.IsValid();
         }
 
         /// <summary>

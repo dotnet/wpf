@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
 using System.Diagnostics;
@@ -82,10 +82,10 @@ namespace System.Windows.Input.Manipulations
             float angularVelocity,
             float expansionVelocity)
         {
-            Debug.Assert(Validations.IsFinite(linearVelocityX));
-            Debug.Assert(Validations.IsFinite(linearVelocityY));
-            Debug.Assert(Validations.IsFinite(angularVelocity));
-            Debug.Assert(Validations.IsFinite(expansionVelocity));
+            Debug.Assert(float.IsFinite(linearVelocityX));
+            Debug.Assert(float.IsFinite(linearVelocityY));
+            Debug.Assert(float.IsFinite(angularVelocity));
+            Debug.Assert(float.IsFinite(expansionVelocity));
 
             this.linearVelocityX = new Lazy<float>(linearVelocityX);
             this.linearVelocityY = new Lazy<float>(linearVelocityY);

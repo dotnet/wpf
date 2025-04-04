@@ -422,7 +422,7 @@ namespace MS.Internal.Documents
             {
                 ArgumentOutOfRangeException.ThrowIfLessThanOrEqual(scale, 0.0);
 
-                if (!Helper.IsDoubleValid(scale))
+                if (!double.IsFinite(scale))
                 {
                     throw new ArgumentOutOfRangeException(nameof(scale));
                 }
@@ -798,7 +798,7 @@ namespace MS.Internal.Documents
 
             set
             {
-                if (!Helper.IsDoubleValid(value))
+                if (!double.IsFinite(value))
                 {
                     throw new ArgumentOutOfRangeException(nameof(value));
                 }
@@ -820,7 +820,7 @@ namespace MS.Internal.Documents
 
             set
             {
-                if (!Helper.IsDoubleValid(value))
+                if (!double.IsFinite(value))
                 {
                     throw new ArgumentOutOfRangeException(nameof(value));
                 }

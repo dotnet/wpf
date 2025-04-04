@@ -1673,17 +1673,6 @@ namespace System.Windows.Controls
         }
 
         /// <summary>
-        /// Validate Zoom, MaxZoom, MinZoom and ZoomIncrement value.
-        /// </summary>
-        /// <param name="o">Value to validate.</param>
-        /// <returns>True if the value is valid, false otherwise.</returns>
-        private static bool ZoomValidateValue(object o)
-        {
-            double value = (double)o;
-            return (!Double.IsNaN(value) && !Double.IsInfinity(value) && DoubleUtil.GreaterThanZero(value));
-        }
-
-        /// <summary>
         /// Called from the event handler to make sure the target is visible in the client area.
         /// </summary>
         /// <param name="sender">The instance handling the event.</param>

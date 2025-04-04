@@ -49,7 +49,7 @@ namespace System.Windows.Input
             get { return _desiredDeceleration; }
             set
             {
-                if (Double.IsInfinity(value) || Double.IsNaN(value))
+                if (!double.IsFinite(value))
                 {
                     throw new ArgumentOutOfRangeException(nameof(value));
                 }
@@ -69,7 +69,7 @@ namespace System.Windows.Input
             get { return _desiredRotation; }
             set
             {
-                if (Double.IsInfinity(value) || Double.IsNaN(value))
+                if (!double.IsFinite(value))
                 {
                     throw new ArgumentOutOfRangeException(nameof(value));
                 }

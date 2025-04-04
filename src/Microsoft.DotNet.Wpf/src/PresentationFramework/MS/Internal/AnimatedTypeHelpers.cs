@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
 
@@ -113,28 +113,10 @@ namespace MS.Internal.PresentationFramework
 
         #region IsValidAnimationValue Methods
 
-        private static bool IsValidAnimationValueDouble(Double value)
-        {
-            if (IsInvalidDouble(value))
-            {
-                return false;
-            }
-
-            return true;
-        }
-
         internal static bool IsValidAnimationValueThickness(Thickness value)
         {
             // At least one of the sub-values must be an interpolatable length.
-            if (   IsValidAnimationValueDouble(value.Left)
-                || IsValidAnimationValueDouble(value.Top)
-                || IsValidAnimationValueDouble(value.Right)
-                || IsValidAnimationValueDouble(value.Bottom))
-            {
-                return true;
-            }
-
-            return false;
+            return double.IsFinite(value.Left) || double.IsFinite(value.Top) || double.IsFinite(value.Right) || double.IsFinite(value.Bottom);
         }
 
         #endregion
@@ -157,14 +139,5 @@ namespace MS.Internal.PresentationFramework
 
         #endregion
 
-        #region Helpers
-
-        private static bool IsInvalidDouble(double value)
-        {
-            return Double.IsInfinity(value)
-                || double.IsNaN(value);
-        }
-
-        #endregion
     }
 }

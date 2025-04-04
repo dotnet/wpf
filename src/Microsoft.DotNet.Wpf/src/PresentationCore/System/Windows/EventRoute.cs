@@ -168,7 +168,7 @@ namespace System.Windows
                                 args.Source=newSource;
                         }
                     }
-                    
+
                     // Invoke listeners
 
                     bool traceRoutedEventIsEnabled = TraceRoutedEvent.IsEnabled;
@@ -179,10 +179,10 @@ namespace System.Windows
                             TraceRoutedEvent.InvokeHandlers,
                             _routeItemList[i].Target, args, BooleanBoxes.Box(args.Handled));
                     }
-                    
+
                     _routeItemList[i].InvokeHandler(args);
 
-                    if(traceRoutedEventIsEnabled)
+                    if (traceRoutedEventIsEnabled)
                     {
                         TraceRoutedEvent.Trace(
                             TraceEventType.Stop,

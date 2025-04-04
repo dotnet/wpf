@@ -202,7 +202,7 @@ namespace MS.Internal.Csp
             {
                 // Detect "[[" or "]]", whichever we're expecting
                 int newIndex;
-                newIndex = line.IndexOf(InTag?"]]":"[[", _current.Column);
+                newIndex = line.IndexOf(InTag ? "]]" : "[[", _current.Column);
 
                 // 
 
@@ -212,7 +212,7 @@ namespace MS.Internal.Csp
                     break;
                 }
 
-                ProcessText(line.Substring(_current.Column, newIndex-_current.Column));
+                ProcessText(line.Substring(_current.Column, newIndex - _current.Column));
 
                 if (!InTag)
                 {

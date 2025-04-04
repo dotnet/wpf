@@ -71,7 +71,7 @@ namespace MS.Internal.MilCodeGen.Generators
                     
                     List<string> modifiers = new List<string>();
                     List<string> extends = new List<string>();
-                    string attributes = String.Empty;
+                    string attributes = null;
 
 					// TODO: Add accessibility modifiers in McgType data model
 					if (resource.Name != "ImplicitInputBrush")

@@ -947,7 +947,7 @@ namespace System.Windows.Controls
                     }
 
                 default:
-                    return new CustomPopupPlacement[]{};
+                    return Array.Empty<CustomPopupPlacement>();
             }
         }
 

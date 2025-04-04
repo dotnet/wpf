@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
 #nullable disable
@@ -12,7 +12,6 @@ namespace System.Xaml.Schema
     {
         private static XamlMemberInvoker s_Directive;
         private static XamlMemberInvoker s_Unknown;
-        private static object[] s_emptyObjectArray = Array.Empty<object>();
 
         private XamlMember _member;
         private NullableReference<MethodInfo> _shouldSerializeMethod;
@@ -64,7 +63,7 @@ namespace System.Xaml.Schema
             }
             else
             {
-                return UnderlyingGetter.Invoke(instance, s_emptyObjectArray);
+                return UnderlyingGetter.Invoke(instance, Array.Empty<object>());
             }
         }
 

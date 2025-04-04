@@ -238,7 +238,7 @@ namespace MS.Internal.AutomationProxies
             }
 
             if (range == null)
-                return new ITextRangeProvider[] { };
+                return Array.Empty<ITextRangeProvider>();
             else
                 return new ITextRangeProvider[] { new WindowsRichEditRange(range, this) };
         }
@@ -248,7 +248,7 @@ namespace MS.Internal.AutomationProxies
             ITextRange range = GetVisibleRange();
 
             if (range == null)
-                return new ITextRangeProvider[] { };
+                return Array.Empty<ITextRangeProvider>();
             else
                 return new ITextRangeProvider[] { new WindowsRichEditRange(range, this) };
         }

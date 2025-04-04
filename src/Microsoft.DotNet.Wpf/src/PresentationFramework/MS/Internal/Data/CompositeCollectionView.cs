@@ -1,6 +1,5 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 //
 // Description: CompositeCollectionView provides the flattened view of an CompositeCollection.
@@ -1415,7 +1414,7 @@ namespace MS.Internal.Data
 
         // this method is here just to avoid the compiler error
         // error CS0649: Warning as Error: Field '..._traceLog' is never assigned to, and will always have its default value null
-        void InitializeTraceLog()
+        private void InitializeTraceLog()
         {
             _traceLog = new TraceLog(20);
         }
@@ -1615,17 +1614,16 @@ namespace MS.Internal.Data
 
         #region Private Fields
 
-        TraceLog _traceLog;
-        CompositeCollection _collection;
-
-        int _count = -1;
-        int _version = 0;
+        private TraceLog _traceLog;
+        private CompositeCollection _collection;
+        private int _count = -1;
+        private int _version = 0;
 
         // Using X-Y coordinates to track current position in the composite collection:
         // X is the index in the first-level collection, whose members are items and subcollections
         // Y is the index into the subcollection, if any.  0, if not.
-        int _currentPositionX = -1;
-        int _currentPositionY = 0;
+        private int _currentPositionX = -1;
+        private int _currentPositionY = 0;
 
         private static readonly object s_afterLast = new Object();
 

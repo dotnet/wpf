@@ -1,6 +1,5 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 using System.Windows.Automation.Provider;
 using System.Windows.Controls;
@@ -17,26 +16,26 @@ namespace System.Windows.Automation.Peers
         }
 
         ///
-        override protected AutomationControlType GetAutomationControlTypeCore()
+        protected override AutomationControlType GetAutomationControlTypeCore()
         {
             return AutomationControlType.HeaderItem;
         }
 
         // AutomationControlType.HeaderItem must return IsContentElement false.
         // See http://msdn.microsoft.com/en-us/library/ms742202.aspx
-        override protected bool IsContentElementCore()
+        protected override bool IsContentElementCore()
         {
             return false;
         }
 
         ///
-        override protected string GetClassNameCore()
+        protected override string GetClassNameCore()
         {
             return "GridViewColumnHeader";
         }
 
         /// 
-        override public object GetPattern(PatternInterface patternInterface)
+        public override object GetPattern(PatternInterface patternInterface)
         {
             if (patternInterface == PatternInterface.Invoke || patternInterface == PatternInterface.Transform)
             {

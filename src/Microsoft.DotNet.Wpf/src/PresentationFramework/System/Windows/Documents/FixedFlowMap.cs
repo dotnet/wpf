@@ -1,6 +1,5 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 using System.Collections;
 
@@ -406,8 +405,8 @@ namespace System.Windows.Documents
         private FlowNode  _flowEnd;             // End FlowNode for the flow document.  It flows as new FlowNode gets inserted
 
         // immutable fixed nodes
-        private readonly static FixedNode s_FixedStart = FixedNode.Create(FixedOrderStartPage, 1, FixedOrderStartVisual, -1, null);
-        private readonly static FixedNode s_FixedEnd   = FixedNode.Create(FixedOrderEndPage, 1, FixedOrderEndVisual, -1,  null);
+        private static readonly FixedNode s_FixedStart = FixedNode.Create(FixedOrderStartPage, 1, FixedOrderStartVisual, -1, null);
+        private static readonly FixedNode s_FixedEnd   = FixedNode.Create(FixedOrderEndPage, 1, FixedOrderEndVisual, -1,  null);
         private Hashtable _mapping;
         private FixedNode _cachedFixedNode;
         private List<FixedSOMElement> _cachedEntry;

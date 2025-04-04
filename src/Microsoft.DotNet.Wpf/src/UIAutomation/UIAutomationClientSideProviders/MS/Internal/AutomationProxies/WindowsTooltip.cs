@@ -1,6 +1,5 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 // Description: Tooltip Proxy
 
@@ -13,7 +12,7 @@ using MS.Win32;
 namespace MS.Internal.AutomationProxies
 {
     // Class definition for the WindowsTooltip proxy. 
-    class WindowsTooltip : ProxyHwnd
+    internal class WindowsTooltip : ProxyHwnd
     {
         // ------------------------------------------------------
         //
@@ -24,7 +23,7 @@ namespace MS.Internal.AutomationProxies
         #region Constructors
 
         // Contructor for the tooltip proxy class.
-        WindowsTooltip (IntPtr hwnd, ProxyFragment parent, int item)
+        private WindowsTooltip (IntPtr hwnd, ProxyFragment parent, int item)
             : base( hwnd, parent, item)
         {
             // Set the control type string to return properly the properties.
@@ -350,7 +349,7 @@ namespace MS.Internal.AutomationProxies
 
         #region Private Fields
 
-        private readonly static WinEventTracker.EvtIdProperty[] _toolTipEventIds = new WinEventTracker.EvtIdProperty[] 
+        private static readonly WinEventTracker.EvtIdProperty[] _toolTipEventIds = new WinEventTracker.EvtIdProperty[] 
         {
             new WinEventTracker.EvtIdProperty(NativeMethods.EVENT_OBJECT_HIDE, 0), 
             //see comment in OnToolTipEvents

@@ -1,6 +1,5 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 // Description: Win32 ListView proxy
 //
@@ -44,7 +43,7 @@ namespace MS.Internal.AutomationProxies
     //   UIAutomation will discover a header for us and will hook it up
     //   to our navigation chain, nothing needs to be done on our side, it is just a magic
     //   Please do not add ANY SysHeader32 specific navigation code
-    class WindowsListView: ProxyHwnd, ISelectionProvider, IScrollProvider, IGridProvider, IMultipleViewProvider, ITableProvider
+    internal class WindowsListView: ProxyHwnd, ISelectionProvider, IScrollProvider, IGridProvider, IMultipleViewProvider, ITableProvider
     {
 
         // ------------------------------------------------------
@@ -874,13 +873,13 @@ namespace MS.Internal.AutomationProxies
         #region Internal Methods
 
         // set focus to the specified item
-        static internal bool SetItemFocused (IntPtr hwnd, int item)
+        internal static bool SetItemFocused (IntPtr hwnd, int item)
         {
             return SetItemState(hwnd, item, NativeMethods.LVIS_FOCUSED, NativeMethods.LVIS_FOCUSED);
         }
 
         // set focus to the specified item
-        static internal bool IsItemFocused (IntPtr hwnd, int item)
+        internal static bool IsItemFocused (IntPtr hwnd, int item)
         {
             int state = GetItemState(hwnd, item, NativeMethods.LVIS_FOCUSED);
 
@@ -888,7 +887,7 @@ namespace MS.Internal.AutomationProxies
         }
 
         // detect if listview is in detail mode
-        static internal bool IsDetailMode (IntPtr hwnd)
+        internal static bool IsDetailMode (IntPtr hwnd)
         {
             int view = ListViewGetView (hwnd);
 
@@ -925,7 +924,7 @@ namespace MS.Internal.AutomationProxies
          }
 
         // detect if listview is in list mode
-        static internal bool IsListMode (IntPtr hwnd)
+        internal static bool IsListMode (IntPtr hwnd)
         {
             if (ListViewList(hwnd) || (NativeMethods.LV_VIEW_LIST == ListViewGetView(hwnd)))
             {
@@ -936,7 +935,7 @@ namespace MS.Internal.AutomationProxies
         }
 
         // detect if given listview should support Grid pattern
-        static internal bool IsImplementingGrid (IntPtr hwnd)
+        internal static bool IsImplementingGrid (IntPtr hwnd)
         {
             // in the case when Group is enabled Group will support
             // Grid pattern rather than ListView
@@ -958,7 +957,7 @@ namespace MS.Internal.AutomationProxies
         }
 
         // retrieve count of columns in the listview
-        static internal int GetColumnCount (IntPtr hwnd)
+        internal static int GetColumnCount (IntPtr hwnd)
         {
             if (IsDetailMode (hwnd))
             {
@@ -971,7 +970,7 @@ namespace MS.Internal.AutomationProxies
         }
 
         // retrieve count of rows in the listview
-        static internal int GetRowCount (IntPtr hwnd)
+        internal static int GetRowCount (IntPtr hwnd)
         {
             if (IsDetailMode (hwnd))
             {
@@ -984,7 +983,7 @@ namespace MS.Internal.AutomationProxies
         }
 
         // get count of column in the non-detail lv
-        static internal int GetColumnCountOtherModes (IntPtr hwnd)
+        internal static int GetColumnCountOtherModes (IntPtr hwnd)
         {
             // Check for empty list
             if (GetItemCount(hwnd) <= 0)
@@ -1018,7 +1017,7 @@ namespace MS.Internal.AutomationProxies
         }
 
         // get count of row for the listview when it is in the list mode
-        static internal int GetRowCountListMode (IntPtr hwnd, int itemCount)
+        internal static int GetRowCountListMode (IntPtr hwnd, int itemCount)
         {
             // NOTE: ListView in the List mode is tricky
             // In the List mode during the navigation columns getting
@@ -1173,21 +1172,21 @@ namespace MS.Internal.AutomationProxies
         }
 
         // detect if the listview is in LVS_REPORT mode
-        static internal bool InReportView (IntPtr hwnd)
+        internal static bool InReportView (IntPtr hwnd)
         {
             return ((Misc.GetWindowStyle(hwnd) & NativeMethods.LVS_TYPEMASK) == NativeMethods.LVS_REPORT);
         }
 
         // Removes group from collection
         // and notifies client about LV tree structure change
-        static internal void RemoveGroupAndRaiseLogicalChangedEvent (IntPtr hwnd)
+        internal static void RemoveGroupAndRaiseLogicalChangedEvent (IntPtr hwnd)
         {
             // Raise logical structure changed event
             RaiseLogicalChangedEvent (hwnd);
         }
 
         // Invalidate LV tree structure
-        static internal void RaiseLogicalChangedEvent (IntPtr hwnd)
+        internal static void RaiseLogicalChangedEvent (IntPtr hwnd)
         {
             // remove groupmanager from collection
             _groupsCollection.Remove (hwnd);
@@ -1203,13 +1202,13 @@ namespace MS.Internal.AutomationProxies
         }
 
         // get listview item count
-        static internal int GetItemCount (IntPtr hwnd)
+        internal static int GetItemCount (IntPtr hwnd)
         {
             return Misc.ProxySendMessageInt(hwnd, NativeMethods.LVM_GETITEMCOUNT, IntPtr.Zero, IntPtr.Zero);
         }
 
         // get listview item count os selected items
-        static internal int GetSelectedItemCount (IntPtr hwnd)
+        internal static int GetSelectedItemCount (IntPtr hwnd)
         {
             if (GetItemCount (hwnd) <= 0)
                 return 0;
@@ -1223,7 +1222,7 @@ namespace MS.Internal.AutomationProxies
             return count;
         }
 
-        static internal int GetStartOfSelectedItems (IntPtr hwnd)
+        internal static int GetStartOfSelectedItems (IntPtr hwnd)
         {
             return GetItemNext(hwnd, -1, NativeMethods.LVNI_SELECTED);
         }
@@ -1231,36 +1230,36 @@ namespace MS.Internal.AutomationProxies
         // Search for the next listview item based on the passed in properties
         // pass -1 for item in order to find the first item that matches condition
         // specified by flags
-        static internal int GetItemNext (IntPtr hwnd, int item, int flags)
+        internal static int GetItemNext (IntPtr hwnd, int item, int flags)
         {
             return Misc.ProxySendMessageInt(hwnd, NativeMethods.LVM_GETNEXTITEM, new IntPtr(item), new IntPtr(flags));
         }
 
-        static internal bool IsIconView(IntPtr hwnd)
+        internal static bool IsIconView(IntPtr hwnd)
         {
             return ListViewGetView(hwnd) == NativeMethods.LV_VIEW_ICON;
         }
 
         // Retrieves the current view of the listview control
-        static internal int ListViewGetView (IntPtr hwnd)
+        internal static int ListViewGetView (IntPtr hwnd)
         {
             return Misc.ProxySendMessageInt(hwnd, NativeMethods.LVM_GETVIEW, IntPtr.Zero, IntPtr.Zero);
         }
 
         // simple version of ApproxiamateViewRect
-        static internal int ApproximateViewRect (IntPtr hwnd)
+        internal static int ApproximateViewRect (IntPtr hwnd)
         {
             return Misc.ProxySendMessageInt(hwnd, NativeMethods.LVM_APPROXIMATEVIEWRECT, new IntPtr(-1), NativeMethods.Util.MAKELPARAM(-1, -1));
         }
 
         // Scroll the content of the listview control
-        static internal bool Scroll (IntPtr hwnd, IntPtr dx, IntPtr dy)
+        internal static bool Scroll (IntPtr hwnd, IntPtr dx, IntPtr dy)
         {
             return Misc.ProxySendMessageInt(hwnd, NativeMethods.LVM_SCROLL, dx, dy) != 0;
         }
 
         // get listview rectangle
-        static internal unsafe bool GetItemRect (IntPtr hwnd, int item, int lvir, out NativeMethods.Win32Rect itemRectangle)
+        internal static unsafe bool GetItemRect (IntPtr hwnd, int item, int lvir, out NativeMethods.Win32Rect itemRectangle)
         {
             itemRectangle = NativeMethods.Win32Rect.Empty;
             itemRectangle.left = lvir;
@@ -1283,37 +1282,37 @@ namespace MS.Internal.AutomationProxies
         }
 
         // unselect all items in the listview
-        static internal bool UnselectAll (IntPtr hwnd)
+        internal static bool UnselectAll (IntPtr hwnd)
         {
             return SetItemState(hwnd, -1, NativeMethods.LVIS_SELECTED, 0);
         }
 
         // select specified listview item
-        static internal bool SelectItem (IntPtr hwnd, int item)
+        internal static bool SelectItem (IntPtr hwnd, int item)
         {
             return SetItemState(hwnd, item, NativeMethods.LVIS_SELECTED, NativeMethods.LVIS_SELECTED);
         }
 
         // un-select specified listview item
-        static internal bool UnSelectItem (IntPtr hwnd, int item)
+        internal static bool UnSelectItem (IntPtr hwnd, int item)
         {
             return SetItemState(hwnd, item, NativeMethods.LVIS_SELECTED, 0);
         }
 
         // detect if listview item selected
-        static internal bool IsItemSelected (IntPtr hwnd, int listItem)
+        internal static bool IsItemSelected (IntPtr hwnd, int listItem)
         {
             return Misc.IsBitSet(GetItemState(hwnd, listItem, NativeMethods.LVIS_SELECTED), NativeMethods.LVIS_SELECTED);
         }
 
         // detect if listviewitem has label that can be edited
-        static internal bool ListViewEditable (IntPtr hwnd)
+        internal static bool ListViewEditable (IntPtr hwnd)
         {
             return Misc.IsBitSet(Misc.GetWindowStyle(hwnd), NativeMethods.LVS_EDITLABELS);
         }
 
         // detect if listviewitem can be invoked
-        static internal bool ListViewInvokable(IntPtr hwnd)
+        internal static bool ListViewInvokable(IntPtr hwnd)
         {
             int style = GetExtendedListViewStyle(hwnd);
 
@@ -1341,31 +1340,31 @@ namespace MS.Internal.AutomationProxies
             return ((style & flags) != 0);
         }
 
-        static internal IntPtr ListViewEditLabel(IntPtr hwnd, int item)
+        internal static IntPtr ListViewEditLabel(IntPtr hwnd, int item)
         {
             return Misc.ProxySendMessage(hwnd, NativeMethods.LVM_EDITLABEL, new IntPtr(item), IntPtr.Zero);
         }
 
         // detect if listview enables item activation with one click
-        static internal bool ListViewSingleClickActivate (IntPtr hwnd)
+        internal static bool ListViewSingleClickActivate (IntPtr hwnd)
         {
             return Misc.IsBitSet(GetExtendedListViewStyle(hwnd), NativeMethods.LVS_EX_ONECLICKACTIVATE);
         }
 
         // detect if listview supports multiple selection
-        static internal bool MultiSelected (IntPtr hwnd)
+        internal static bool MultiSelected (IntPtr hwnd)
         {
             return !Misc.IsBitSet(Misc.GetWindowStyle(hwnd), NativeMethods.LVS_SINGLESEL);
         }
 
         // detect if listview contains or potential may contain scrollbar
-        static internal bool Scrollable (IntPtr hwnd)
+        internal static bool Scrollable (IntPtr hwnd)
         {
             return !Misc.IsBitSet(Misc.GetWindowStyle(hwnd), NativeMethods.LVS_NOSCROLL);
         }
 
         // ensure listview item visibility
-        static internal bool EnsureVisible (IntPtr hwnd, int item, bool partialOK)
+        internal static bool EnsureVisible (IntPtr hwnd, int item, bool partialOK)
         {
             IntPtr partialVisible = (partialOK) ? IntPtr.Zero : new IntPtr (1);
 
@@ -1373,13 +1372,13 @@ namespace MS.Internal.AutomationProxies
         }
 
         // return listview header
-        static internal IntPtr ListViewGetHeader (IntPtr hwnd)
+        internal static IntPtr ListViewGetHeader (IntPtr hwnd)
         {
             return Misc.ProxySendMessage(hwnd, NativeMethods.LVM_GETHEADER, IntPtr.Zero, IntPtr.Zero);
         }
 
         // retrieve listview item text
-        static internal string GetItemText (IntPtr hwnd, NativeMethods.LVITEM item)
+        internal static string GetItemText (IntPtr hwnd, NativeMethods.LVITEM item)
         {
             item.cchTextMax = Misc.MaxLengthNameProperty;
 
@@ -1388,14 +1387,14 @@ namespace MS.Internal.AutomationProxies
 
         // perform a hit test on the specific point
         // POINT is in screen coordinates
-        static internal NativeMethods.LVHITTESTINFO_INTERNAL SubitemHitTest (IntPtr hwnd, NativeMethods.Win32Point pt)
+        internal static NativeMethods.LVHITTESTINFO_INTERNAL SubitemHitTest (IntPtr hwnd, NativeMethods.Win32Point pt)
         {
             return SubitemHitTest (hwnd, 0, pt);
         }
 
         // perform a hit test on the specific point
         // POINT is in screen coordinates
-        static internal NativeMethods.LVHITTESTINFO_INTERNAL SubitemHitTest (IntPtr hwnd, int item, NativeMethods.Win32Point pt)
+        internal static NativeMethods.LVHITTESTINFO_INTERNAL SubitemHitTest (IntPtr hwnd, int item, NativeMethods.Win32Point pt)
         {
             // Allocate a local LVHITTESTINFO struct.
             NativeMethods.LVHITTESTINFO_INTERNAL hitTest = new NativeMethods.LVHITTESTINFO_INTERNAL
@@ -1444,19 +1443,19 @@ namespace MS.Internal.AutomationProxies
         }
 
         // retrieve count of header items
-        static internal int HeaderItemCount (IntPtr hwnd)
+        internal static int HeaderItemCount (IntPtr hwnd)
         {
             return Misc.ProxySendMessageInt(hwnd, NativeMethods.HDM_GETITEMCOUNT, IntPtr.Zero, IntPtr.Zero);
         }
 
         // detect if the listview support checkboxes
-        static internal bool CheckBoxes (IntPtr hwnd)
+        internal static bool CheckBoxes (IntPtr hwnd)
         {
             return Misc.IsBitSet(GetExtendedListViewStyle(hwnd), NativeMethods.LVS_EX_CHECKBOXES);
         }
 
         // get listview item check state
-        static internal int GetCheckedState (IntPtr hwnd, int item)
+        internal static int GetCheckedState (IntPtr hwnd, int item)
         {
             int state = GetItemState(hwnd, item, NativeMethods.LVIS_STATEIMAGEMASK);
 
@@ -1464,26 +1463,26 @@ namespace MS.Internal.AutomationProxies
         }
 
         // detect if listview is auto-arranged
-        static internal bool ListViewAutoArrange (IntPtr hwnd)
+        internal static bool ListViewAutoArrange (IntPtr hwnd)
         {
             return Misc.IsBitSet(Misc.GetWindowStyle(hwnd), NativeMethods.LVS_AUTOARRANGE);
         }
 
         // detect if listview supports full row selection
-        static public bool FullRowSelect (IntPtr hwnd)
+        public static bool FullRowSelect (IntPtr hwnd)
         {
             return Misc.IsBitSet(GetExtendedListViewStyle(hwnd), NativeMethods.LVS_EX_FULLROWSELECT);
         }
 
         // detects if icons are lined up in columns that use up the whole view area
-        static public bool HasJustifyColumnsExStyle(IntPtr hwnd)
+        public static bool HasJustifyColumnsExStyle(IntPtr hwnd)
         {
             return Misc.IsBitSet(GetExtendedListViewStyle(hwnd), NativeMethods.LVS_EX_JUSTIFYCOLUMNS);
         }
 
         // gets rectangle of the subitem.
         // This method is inteded to be used with the LVS_REPORT lv
-        static public unsafe bool GetSubItemRect (IntPtr hwnd, int item, int subItem, int lvir, out NativeMethods.Win32Rect itemRectangle)
+        public static unsafe bool GetSubItemRect (IntPtr hwnd, int item, int subItem, int lvir, out NativeMethods.Win32Rect itemRectangle)
         {
             itemRectangle = NativeMethods.Win32Rect.Empty;
             itemRectangle.left = lvir;
@@ -1500,7 +1499,7 @@ namespace MS.Internal.AutomationProxies
             }
         }
 
-        static internal string GetItemToolTipText(IntPtr hwnd)
+        internal static string GetItemToolTipText(IntPtr hwnd)
         {
             IntPtr hwndToolTip = Misc.ProxySendMessage(hwnd, NativeMethods.LVM_GETTOOLTIPS, IntPtr.Zero, IntPtr.Zero);
 
@@ -1517,7 +1516,7 @@ namespace MS.Internal.AutomationProxies
 
         #region Internal Fields
 
-        internal readonly static GroupManagerCollection _groupsCollection = new GroupManagerCollection();
+        internal static readonly GroupManagerCollection _groupsCollection = new GroupManagerCollection();
         // Microsoft Used for MultipleView Pattern, until official table
         // will not be finalyzed
         // May need to be removed after official table is ready
@@ -1738,7 +1737,7 @@ namespace MS.Internal.AutomationProxies
         }
         
         // get count of rows in the non-detail lv
-        static private int GetRowCountOtherModes (IntPtr hwnd)
+        private static int GetRowCountOtherModes (IntPtr hwnd)
         {
             // Assumption: items are autoarranged
             int count = GetItemCount(hwnd);
@@ -1779,13 +1778,13 @@ namespace MS.Internal.AutomationProxies
         }
         
         // detect if the listview has a list style
-        static private bool ListViewList (IntPtr hwnd)
+        private static bool ListViewList (IntPtr hwnd)
         {
             return ((Misc.GetWindowStyle(hwnd) & NativeMethods.LVS_TYPEMASK) == NativeMethods.LVS_LIST);
         }
 
         // get top-left point of the listview item
-        static private unsafe bool GetItemPosition (IntPtr hwnd, int item, out NativeMethods.Win32Point pt)
+        private static unsafe bool GetItemPosition (IntPtr hwnd, int item, out NativeMethods.Win32Point pt)
         {
             pt.x = 0;
             pt.y = 0;
@@ -1802,7 +1801,7 @@ namespace MS.Internal.AutomationProxies
         }
 
         // Get listview extended styles
-        static private int GetExtendedListViewStyle (IntPtr hwnd)
+        private static int GetExtendedListViewStyle (IntPtr hwnd)
         {
             return Misc.ProxySendMessageInt(hwnd, NativeMethods.LVM_GETEXTENDEDLISTVIEWSTYLE, IntPtr.Zero, IntPtr.Zero);
         }
@@ -2017,7 +2016,7 @@ namespace MS.Internal.AutomationProxies
         #region Private Fields
 
         // group specific events. Used for internal tracking
-        private readonly static WinEventTracker.EvtIdProperty [] _groupEvents;
+        private static readonly WinEventTracker.EvtIdProperty [] _groupEvents;
 
         #endregion Private Fields
     }

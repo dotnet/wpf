@@ -1,6 +1,5 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 #nullable disable
 
@@ -14,27 +13,25 @@ namespace System.Xaml
 
     public class XamlBackgroundReader : XamlReader, IXamlLineInfo
     {
-        EventWaitHandle _providerFullEvent;
-        EventWaitHandle _dataReceivedEvent;
+        private EventWaitHandle _providerFullEvent;
+        private EventWaitHandle _dataReceivedEvent;
+        private XamlNode[] _incoming;
+        private int _inIdx;
+        private XamlNode[] _outgoing;
+        private int _outIdx;
+        private int _outValid;
+        private XamlNode _currentNode;
 
-        XamlNode[] _incoming;
-        int _inIdx;
-        XamlNode[] _outgoing;
-        int _outIdx;
-        int _outValid;
+        private XamlReader _wrappedReader;
+        private XamlReader _internalReader;
+        private XamlWriter _writer;
 
-        XamlNode _currentNode;
+        private bool _wrappedReaderHasLineInfo;
+        private int _lineNumber;
+        private int _linePosition;
 
-        XamlReader _wrappedReader;
-        XamlReader _internalReader;
-        XamlWriter _writer;
-
-        bool _wrappedReaderHasLineInfo;
-        int _lineNumber;
-        int _linePosition;
-
-        Thread _thread;
-        Exception _caughtException;
+        private Thread _thread;
+        private Exception _caughtException;
 
         public XamlBackgroundReader(XamlReader wrappedReader)
         {
@@ -63,7 +60,7 @@ namespace System.Xaml
             _writer = new WriterDelegate(xamlNodeAddDelegate, lineInfoAddDelegate, _wrappedReader.SchemaContext);
 
             XamlNodeNextDelegate xamlNodeNextDelegate;
-            if(_wrappedReaderHasLineInfo)
+            if (_wrappedReaderHasLineInfo)
             {
                 xamlNodeNextDelegate = new XamlNodeNextDelegate(Next_ProcessLineInfo);
             }

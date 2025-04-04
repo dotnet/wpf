@@ -1,6 +1,5 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 //
 // Description: DynamicDocumentPaginator associated with FlowDocument.
@@ -917,12 +916,12 @@ namespace MS.Internal.Documents
         /// <summary>
         /// Async request list
         /// </summary>
-        List<AsyncRequest> _asyncRequests = new List<AsyncRequest>(0);
+        private List<AsyncRequest> _asyncRequests = new List<AsyncRequest>(0);
 
         /// <summary>
         /// Background pagination dispatcher operation.
         /// </summary>
-        DispatcherOperation _backgroundPaginationOperation;
+        private DispatcherOperation _backgroundPaginationOperation;
 
         #endregion Private Fields
 

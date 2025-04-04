@@ -1,6 +1,5 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 //
 // Description: This file contains the implementation of TokenizerHelper.
@@ -245,7 +244,7 @@ namespace MS.Internal
         }
 
         // helper to move the _charIndex to the next token or to the end of the string
-        void ScanToNextToken(char separator)
+        private void ScanToNextToken(char separator)
         {
             // if already at end of the string don't bother
             if (_charIndex < _strLen)
@@ -302,7 +301,7 @@ namespace MS.Internal
 
         // Helper to get the numeric list separator for a given IFormatProvider.
         // Separator is a comma [,] if the decimal separator is not a comma, or a semicolon [;] otherwise.
-        static internal char GetNumericListSeparator(IFormatProvider provider)
+        internal static char GetNumericListSeparator(IFormatProvider provider)
         {
             char numericSeparator = ',';
 
@@ -331,13 +330,13 @@ namespace MS.Internal
             }
         }
 
-        char _quoteChar;
-        char _argSeparator;
-        string _str;
-        int _strLen;
-        int _charIndex;
+        private char _quoteChar;
+        private char _argSeparator;
+        private string _str;
+        private int _strLen;
+        private int _charIndex;
         internal int _currentTokenIndex;
         internal int _currentTokenLength;
-        bool _foundSeparator;
+        private bool _foundSeparator;
     }
 }

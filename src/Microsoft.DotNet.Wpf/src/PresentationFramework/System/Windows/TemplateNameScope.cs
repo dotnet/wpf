@@ -1,6 +1,5 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 /***************************************************************************\
 *
@@ -269,7 +268,7 @@ namespace System.Windows
         // Is templated parent an FE or an FCE?
         private bool                   _isTemplatedParentAnFE;
 
-        ProvideValueServiceProvider    _provideValueServiceProvider;
+        private ProvideValueServiceProvider    _provideValueServiceProvider;
 
         // This is a HybridDictionary of Name-Object maps
         private HybridDictionary _nameMap;

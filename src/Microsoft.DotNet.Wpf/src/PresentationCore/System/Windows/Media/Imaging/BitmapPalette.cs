@@ -1,6 +1,5 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 using MS.Internal;
 using MS.Win32.PresentationCore;
@@ -144,7 +143,7 @@ namespace System.Windows.Media.Imaging
         /// bitmap is not paletteized, we return BitmapPalette.Empty. If the
         /// palette is of a known type, we will use BitmapPalettes.
         /// </summary>
-        static internal BitmapPalette CreateFromBitmapSource(BitmapSource source)
+        internal static BitmapPalette CreateFromBitmapSource(BitmapSource source)
         {
             Debug.Assert(source != null);
 
@@ -242,7 +241,7 @@ namespace System.Windows.Media.Imaging
             return false;
         }
 
-        static internal SafeMILHandle CreateInternalPalette()
+        internal static SafeMILHandle CreateInternalPalette()
         {
             SafeMILHandle palette = null;
 
@@ -262,7 +261,7 @@ namespace System.Windows.Media.Imaging
         /// </summary>
         /// Critical - is an unsafe method, calls into native code
         /// TreatAsSafe - No inputs are provided, no information is exposed.
-        unsafe private void UpdateUnmanaged()
+        private unsafe void UpdateUnmanaged()
         {
             Debug.Assert(_palette != null && !_palette.IsInvalid);
 

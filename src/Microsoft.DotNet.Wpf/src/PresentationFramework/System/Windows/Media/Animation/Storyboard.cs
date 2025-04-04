@@ -1,6 +1,5 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 /***************************************************************************\
 *
@@ -2195,10 +2194,10 @@ namespace System.Windows.Media.Animation
             _original = null;
         }
 
-        DependencyObject _target;     // The object to invalidate
-        DependencyProperty _property; // The property to invalidate on the above object.
-        Freezable _clone;             // The cloned Freezable whose Changed event we were listening to.
-        Freezable _original;          // The original Freezable whose Changed event we're also listening to.
+        private DependencyObject _target;     // The object to invalidate
+        private DependencyProperty _property; // The property to invalidate on the above object.
+        private Freezable _clone;             // The cloned Freezable whose Changed event we were listening to.
+        private Freezable _original;          // The original Freezable whose Changed event we're also listening to.
     }
 
     internal static class Layers

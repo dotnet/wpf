@@ -1,6 +1,5 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 #nullable disable
 
@@ -13,12 +12,12 @@ namespace System.Xaml
 
     public class XamlNodeQueue
     {
-        Queue<XamlNode> _nodeQueue;
-        XamlNode _endOfStreamNode;
+        private Queue<XamlNode> _nodeQueue;
+        private XamlNode _endOfStreamNode;
 
-        ReaderDelegate _reader;
-        XamlWriter _writer;
-        bool _hasLineInfo;
+        private ReaderDelegate _reader;
+        private XamlWriter _writer;
+        private bool _hasLineInfo;
 
         public XamlNodeQueue(XamlSchemaContext schemaContext)
         {

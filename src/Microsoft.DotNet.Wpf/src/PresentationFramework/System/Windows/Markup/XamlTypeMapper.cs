@@ -1,6 +1,5 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 //
 // Description:
@@ -952,7 +951,7 @@ namespace System.Windows.Markup
 
 #if PBTCOMPILER
         // Checks to see if a given event handler delegate type is accessible.
-        static private bool IsAllowedEventDelegateType(Type delegateType)
+        private static bool IsAllowedEventDelegateType(Type delegateType)
         {
             if (!ReflectionHelper.IsPublicType(delegateType))
             {
@@ -1115,7 +1114,7 @@ namespace System.Windows.Markup
 
         // Checks to see if a given property's set method is accessible.
         // Used only in compiled Baml Load sceanrios.
-        static internal bool IsAllowedPropertySet(PropertyInfo pi, bool allowProtected, out bool isPublic)
+        internal static bool IsAllowedPropertySet(PropertyInfo pi, bool allowProtected, out bool isPublic)
         {
             MethodInfo mi = pi.GetSetMethod(true);
             bool isProtected = allowProtected && mi != null && mi.IsFamily;
@@ -1128,7 +1127,7 @@ namespace System.Windows.Markup
 
         // Checks to see if a given property's get method is accessible.
         // Used only in compiled Baml Load sceanrios.
-        static private bool IsAllowedPropertyGet(PropertyInfo pi, bool allowProtected, out bool isPublic)
+        private static bool IsAllowedPropertyGet(PropertyInfo pi, bool allowProtected, out bool isPublic)
         {
             MethodInfo mi = pi.GetGetMethod(true);
             bool isProtected = allowProtected && mi != null && mi.IsFamily;
@@ -1141,7 +1140,7 @@ namespace System.Windows.Markup
 
         // Checks to see if a given event's add method is accessible.
         // Used only in compiled Baml Load sceanrios.
-        static private bool IsAllowedEvent(EventInfo ei, bool allowProtected, out bool isPublic)
+        private static bool IsAllowedEvent(EventInfo ei, bool allowProtected, out bool isPublic)
         {
             MethodInfo mi = ei.GetAddMethod(true);
             bool isProtected = allowProtected && mi != null && mi.IsFamily;
@@ -1155,7 +1154,7 @@ namespace System.Windows.Markup
 
         // Checks to see if a given event's add method is public.
         // Used in all (xaml load, xaml compile & compiled Baml Load sceanrios.
-        static private bool IsPublicEvent(EventInfo ei)
+        private static bool IsPublicEvent(EventInfo ei)
         {
             MethodInfo mi = ei.GetAddMethod(true);
             return (mi != null && mi.IsPublic);
@@ -4053,16 +4052,16 @@ namespace System.Windows.Markup
             }
 
             // Private data members
-            string        _clrNamespace;
-            Type          _baseType;
-            bool          _trimSurroundingWhitespace;
-            Hashtable     _dpLookupHashtable;  // Hashtable of PropertyAndType keyed by dp name
-            HybridDictionary     _propertyConverters = new HybridDictionary(); // Dictionary of TypeConverters keyed on dpOrPi
-            bool          _trimSurroundingWhitespaceSet;
+            private string        _clrNamespace;
+            private Type          _baseType;
+            private bool          _trimSurroundingWhitespace;
+            private Hashtable     _dpLookupHashtable;  // Hashtable of PropertyAndType keyed by dp name
+            private HybridDictionary     _propertyConverters = new HybridDictionary(); // Dictionary of TypeConverters keyed on dpOrPi
+            private bool _trimSurroundingWhitespaceSet;
 #if !PBTCOMPILER
-            TypeConverter _typeConverter;
+            private TypeConverter _typeConverter;
 #endif
-            Type          _typeConverterType;
+            private Type          _typeConverterType;
         }
 
         // DP setter method, PropertyInfo and Type record held in _dpLookupHashtable
@@ -4127,27 +4126,27 @@ namespace System.Windows.Markup
         // Map table associated with this XamlTypeMapper.  This contains information
         // about what is stored in BAML.  The XamlTypeMapper makes use of the caches in
         // the BamlMapTable to store some assembly, type and property information.
-        BamlMapTable _mapTable;
+        private BamlMapTable _mapTable;
 
         // Array of assembly names that can be used when resolving clr namespaces
-        string[] _assemblyNames;
+        private string[] _assemblyNames;
 
         // array or namespace map entries such as `http:// mappings.
-        NamespaceMapEntry[] _namespaceMaps;
+        private NamespaceMapEntry[] _namespaceMaps;
 
         // HashTable of cached type lookups and the serializers for that type.  These
         // are always TypeAndSerializer objects
-        Hashtable _typeLookupFromXmlHashtable = new Hashtable();
+        private Hashtable _typeLookupFromXmlHashtable = new Hashtable();
 
         // Hash table of mappings between xmlNamespace and mappings
-        Hashtable _namespaceMapHashList = new Hashtable();
+        private Hashtable _namespaceMapHashList = new Hashtable();
 
         // Hashtable where the key is the fullTypeName + '#' + propertyName and the value
-        HybridDictionary _typeInformationCache = new HybridDictionary();
+        private HybridDictionary _typeInformationCache = new HybridDictionary();
 
 #if !PBTCOMPILER
         // Hashtable where the key is the type and the value is the set of constructors for that type
-        HybridDictionary _constructorInformationCache;
+        private HybridDictionary _constructorInformationCache;
 
         // A SchemaContext that respects the namespace mappings, PIs, and assembly paths
         // passed in to this TypeMapper
@@ -4156,25 +4155,25 @@ namespace System.Windows.Markup
 
         // Hashtable where key is the xmlNamespace, and value is the
         // ClrNamespaceAssemblyPair structure containing clrNamespace and assembly
-        HybridDictionary _piTable =  new HybridDictionary();
+        private HybridDictionary _piTable =  new HybridDictionary();
 
         // Hashtable where key is the clrNamespace + "#" + assemblyName and the
         // value is the corresponding xmlNamespace.  This is used for fast lookups
         // of xmlnamespace if you know the assembly and clr namespace.
-        Dictionary<string, string> _piReverseTable = new Dictionary<string, string>();
+        private Dictionary<string, string> _piReverseTable = new Dictionary<string, string>();
 
         // Hashtable where key is the assembly's short name that has been uppercased,
         // and the value is a path where that assembly can be loaded from.
         // Always lock on this object when writing to it
-        HybridDictionary _assemblyPathTable = new HybridDictionary();
+        private HybridDictionary _assemblyPathTable = new HybridDictionary();
 
         // true if referenced assemblies in the _assemblyPathTable have been loaded
-        bool _referenceAssembliesLoaded = false;
+        private bool _referenceAssembliesLoaded = false;
 
         // Line number and position in original Xaml file corresponding to the
         // current BAML record.
-        int _lineNumber = 0;
-        int _linePosition = 0;
+        private int _lineNumber = 0;
+        private int _linePosition = 0;
 
         // Cache of namespace and assemblies.
         private static XmlnsCache _xmlnsCache = null;
@@ -4371,16 +4370,16 @@ namespace System.Windows.Markup
             set { _isLocalAssembly = value; }
         }
 
-        bool     _isLocalAssembly;
+        private bool _isLocalAssembly;
 #endif
 
 #region Data
 
-        string   _xmlNamespace;
-        string   _assemblyName;
-        string   _assemblyPath;
-        Assembly _assembly;
-        string   _clrNamespace;
+        private string   _xmlNamespace;
+        private string   _assemblyName;
+        private string   _assemblyPath;
+        private Assembly _assembly;
+        private string _clrNamespace;
 
 #endregion Data
     }

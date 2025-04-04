@@ -1,6 +1,5 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 using System.ComponentModel;
 using System.ComponentModel.Design.Serialization;
@@ -145,14 +144,14 @@ namespace System.Windows
 
         #region Internal Methods
 
-        static internal string ToString(CornerRadius cr, CultureInfo cultureInfo)
+        internal static string ToString(CornerRadius cr, CultureInfo cultureInfo)
         {
             char listSeparator = TokenizerHelper.GetNumericListSeparator(cultureInfo);
 
             return string.Create(cultureInfo, stackalloc char[64], $"{cr.TopLeft}{listSeparator}{cr.TopRight}{listSeparator}{cr.BottomRight}{listSeparator}{cr.BottomLeft}");
         }
 
-        static internal CornerRadius FromString(string s, CultureInfo cultureInfo)
+        internal static CornerRadius FromString(string s, CultureInfo cultureInfo)
         {
             TokenizerHelper th = new TokenizerHelper(s, cultureInfo);
             double[] radii = new double[4];

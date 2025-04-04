@@ -1,6 +1,5 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 // Description:
 //      A wrapper class which interoperates with the unmanaged recognition APIS
@@ -761,7 +760,7 @@ namespace MS.Internal.Ink.GestureRecognition
             }
         }
 
-        enum RECO_TYPE : ushort
+        private enum RECO_TYPE : ushort
         {
             RECO_TYPE_WSTRING = 0,
             RECO_TYPE_WCHAR = 1

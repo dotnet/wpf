@@ -1,6 +1,5 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 using System.Collections;
 using System.Globalization;
@@ -22,18 +21,18 @@ namespace System.IO.Packaging
     // Constants
 
     // The header bytes that this version understands and supports
-    const int KnownBytesInMapTableHeader = 8; // Two Int32s == 8 bytes
-    const int KnownBytesInDataSpaceDefinitionHeader = 8;
-    const int KnownBytesInTransformDefinitionHeader = 8;
-    const int AllowedExtraDataMaximumSize = 8192; // 8K
+    private const int KnownBytesInMapTableHeader = 8; // Two Int32s == 8 bytes
+    private const int KnownBytesInDataSpaceDefinitionHeader = 8;
+    private const int KnownBytesInTransformDefinitionHeader = 8;
+    private const int AllowedExtraDataMaximumSize = 8192; // 8K
 
     // Names for streams and storages within the container
-    const string DataSpaceStorageName = "\x0006DataSpaces";
-    const string DataSpaceVersionName = "Version";
-    const string DataSpaceMapTableName= "DataSpaceMap";
-    const string DataSpaceDefinitionsStorageName = "DataSpaceInfo";
-    const string TransformDefinitions = "TransformInfo";
-    const string TransformPrimaryInfo = "\x0006Primary";
+    private const string DataSpaceStorageName = "\x0006DataSpaces";
+    private const string DataSpaceVersionName = "Version";
+    private const string DataSpaceMapTableName= "DataSpaceMap";
+    private const string DataSpaceDefinitionsStorageName = "DataSpaceInfo";
+    private const string TransformDefinitions = "TransformInfo";
+    private const string TransformPrimaryInfo = "\x0006Primary";
 
     // The string used in FormatVersion
     private static readonly string DataSpaceVersionIdentifier = "Microsoft.Container.DataSpaces";
@@ -55,7 +54,7 @@ namespace System.IO.Packaging
     /// There is only one data space manager per container instance.  This
     /// points back to "our" reference.
     /// </summary>
-    StorageRoot _associatedStorage;
+    private StorageRoot _associatedStorage;
 
     /// <summary>
     /// Maps container references to data spaces
@@ -67,13 +66,13 @@ namespace System.IO.Packaging
     /// Values are strings, which are data space labels and can be used
     /// as keys into _dataSpaceDefinitions for more details
     /// </summary>
-    SortedList _dataSpaceMap;
+    private SortedList _dataSpaceMap;
 
     /// <summary>
     /// Extra data in the data space mapping table header is preserved
     /// in this byte array.
     /// </summary>
-    byte[] _mapTableHeaderPreservation;
+    private byte[] _mapTableHeaderPreservation;
 
     /// <summary>
     /// Maps a data space name to a string array of transform names.
@@ -86,7 +85,7 @@ namespace System.IO.Packaging
     /// stack is stored in bottom-up order.  The first transform listed
     /// is the first to get the raw bytes from disk.
     /// </summary>
-    Hashtable _dataSpaceDefinitions;
+    private Hashtable _dataSpaceDefinitions;
 
 
     /// <summary>
@@ -99,7 +98,7 @@ namespace System.IO.Packaging
     /// class defined below, each of which contains information for a
     /// particular transform instance.
     /// </summary>
-    Hashtable _transformDefinitions;
+    private Hashtable _transformDefinitions;
 
     /// <summary>
     /// When shutting down, we need to flush each open transformed stream in
@@ -108,7 +107,7 @@ namespace System.IO.Packaging
     /// data in a state where it could not be written out because parts of the
     /// transform stack has already been disposed.
     /// </summary>
-    ArrayList _transformedStreams;
+    private ArrayList _transformedStreams;
 
     /// <summary>
     /// Table of "well-known" -- that is, "built-in" -- transforms. The keys are
@@ -116,7 +115,7 @@ namespace System.IO.Packaging
     /// such as encryption and compression. The values are the assembly-qualified
     /// .NET class names of the classes that implement the transforms.
     /// </summary>
-    static readonly Hashtable _transformLookupTable;
+    private static readonly Hashtable _transformLookupTable;
 
     /***********************************************************************/
     // Private class for tracking individual transform instances
@@ -381,8 +380,8 @@ namespace System.IO.Packaging
 
     private struct DataSpaceDefinition
     {
-        ArrayList _transformStack;
-        Byte[]    _extraData;
+        private ArrayList _transformStack;
+        private Byte[]    _extraData;
 
         internal DataSpaceDefinition(ArrayList transformStack, Byte[] extraData)
         {
@@ -1006,7 +1005,7 @@ namespace System.IO.Packaging
     /// Reads a data space map from the associated container, if such a thing
     /// is written to the file.
     /// </summary>
-    void ReadDataSpaceMap()
+    private void ReadDataSpaceMap()
     {
         // See if there's even a data spaces storage
         StorageInfo dataSpaceStorage =
@@ -1088,7 +1087,7 @@ namespace System.IO.Packaging
     /// <summary>
     /// Write the data space mapping table to underlying storage.
     /// </summary>
-    void WriteDataSpaceMap()
+    private void WriteDataSpaceMap()
     {
         ThrowIfIncorrectUpdaterVersion();
 
@@ -1164,7 +1163,7 @@ namespace System.IO.Packaging
     /// Read all data space definitions in one chunk.  To be replaced
     /// with on-demand reading mechanism.
     /// </summary>
-    void ReadDataSpaceDefinitions()
+    private void ReadDataSpaceDefinitions()
     {
         ThrowIfIncorrectReaderVersion();
 
@@ -1225,7 +1224,7 @@ namespace System.IO.Packaging
     /// </summary>
     ///
     // Idea: Optimize and write only those dataspaces that have changed.
-    void WriteDataSpaceDefinitions()
+    private void WriteDataSpaceDefinitions()
     {
         ThrowIfIncorrectUpdaterVersion();
 
@@ -1283,7 +1282,7 @@ namespace System.IO.Packaging
     /// </summary>
     // Idea: Replace with on-demand transform definition reading system
 
-    void ReadTransformDefinitions()
+    private void ReadTransformDefinitions()
     {
         ThrowIfIncorrectReaderVersion();
 
@@ -1382,7 +1381,7 @@ namespace System.IO.Packaging
     ///
     // Idea: Replace with system that writes only "dirty" transform definitions
 
-    void WriteTransformDefinitions()
+    private void WriteTransformDefinitions()
     {
         ThrowIfIncorrectUpdaterVersion();
 
@@ -1706,10 +1705,10 @@ internal interface IDataTransform
 /// </summary>
 internal class TransformInitializationEventArgs : EventArgs
 {
-    IDataTransform  dataInstance;
-    string          dataSpaceLabel;
-    string          streamPath;
-    string          transformLabel;
+    private IDataTransform  dataInstance;
+    private string          dataSpaceLabel;
+    private string          streamPath;
+    private string          transformLabel;
 
     internal TransformInitializationEventArgs(
         IDataTransform instance,
@@ -1777,8 +1776,8 @@ internal class TransformInitializationEventArgs : EventArgs
 /// </summary>
 internal  class TransformEnvironment
 {
-    DataSpaceManager transformHost;
-    string  transformLabel;
+    private DataSpaceManager transformHost;
+    private string  transformLabel;
 
     /// <summary>
     /// This object is only created internally by the data space manager.

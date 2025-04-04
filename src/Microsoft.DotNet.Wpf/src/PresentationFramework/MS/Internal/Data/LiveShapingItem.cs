@@ -1,6 +1,5 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 //
 // Description: A proxy for a source item, used in live shaping.
@@ -26,7 +25,8 @@ namespace MS.Internal.Data
 
         internal object Item { get { return _item; } set { _item = value; } }
         internal LiveShapingBlock Block { get { return _block; } set { _block = value; } }
-        LiveShapingList List { get { return Block.List; } }
+
+        private LiveShapingList List { get { return Block.List; } }
 
         internal bool IsSortDirty
         {
@@ -264,8 +264,8 @@ namespace MS.Internal.Data
             IsDeleted = 0x00000040,   // item is deleted - no live shaping needed
         }
 
-        LiveShapingBlock _block;    // the block where I appear
-        object _item;      // the source item I represent
-        PrivateFlags _flags;
+        private LiveShapingBlock _block;    // the block where I appear
+        private object _item;      // the source item I represent
+        private PrivateFlags _flags;
     }
 }

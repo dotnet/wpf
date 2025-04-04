@@ -1,6 +1,5 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 // Description: Support for Windows ListView Group
 //
@@ -16,7 +15,7 @@ using MS.Win32;
 
 namespace MS.Internal.AutomationProxies
 {
-    class WindowsListViewGroup : ProxyFragment, IGridProvider, IExpandCollapseProvider
+    internal class WindowsListViewGroup : ProxyFragment, IGridProvider, IExpandCollapseProvider
     {
         // ------------------------------------------------------
         //
@@ -548,14 +547,14 @@ namespace MS.Internal.AutomationProxies
         // Expose the ability to retrieve count of columns in the Group's grid to the outside proxies
         // LVItem will be one of customer
         // Do not call when LV in  the Detail mode
-        static internal int GetColumnCountExternal (IntPtr hwnd, int groupID)
+        internal static int GetColumnCountExternal (IntPtr hwnd, int groupID)
         {
             System.Diagnostics.Debug.Assert (!WindowsListView.IsDetailMode (hwnd), "GetColumnCountExternal: called when lv is in Detail mode");
             return GetCountOfItemsInDimension (hwnd, groupID, new IsNewItemInDimension (IsNewColumn));
         }
 
         // utility method returning object describing current group
-        static internal GroupManager.GroupInfo GetGroupInfo (IntPtr hwnd, int groupID)
+        internal static GroupManager.GroupInfo GetGroupInfo (IntPtr hwnd, int groupID)
         {
             GroupManager.GroupInfo groupInfo = GroupManager.GroupInfo.Null;
 
@@ -658,7 +657,7 @@ namespace MS.Internal.AutomationProxies
             return CreateListViewItem (groupInfo._items [indexIntoArray]);
         }
 
-        static private bool IsGroupValid (IntPtr hwnd, int groupID)
+        private static bool IsGroupValid (IntPtr hwnd, int groupID)
         {
             GroupManager manager = WindowsListView._groupsCollection [hwnd];
 
@@ -679,7 +678,7 @@ namespace MS.Internal.AutomationProxies
 
         // Detect if 2 lvitems are located in the same column
         // desicion is based on item's rect coordinates
-        static private NewItemInDimension IsNewColumn (NativeMethods.Win32Rect rc1, NativeMethods.Win32Rect rc2)
+        private static NewItemInDimension IsNewColumn (NativeMethods.Win32Rect rc1, NativeMethods.Win32Rect rc2)
         {
             // NOTE: Array of lvitems has the following DIRECTION:
             //  0   1   2
@@ -717,7 +716,7 @@ namespace MS.Internal.AutomationProxies
 
         // Detect if 2 lvitems are located in the same row
         // desicion is based on item's rect coordinates
-        static private NewItemInDimension IsNewRow (NativeMethods.Win32Rect rc1, NativeMethods.Win32Rect rc2)
+        private static NewItemInDimension IsNewRow (NativeMethods.Win32Rect rc1, NativeMethods.Win32Rect rc2)
         {
             // NOTE: Array of lvitems has the following DIRECTION:
             //  0   1   2
@@ -729,7 +728,7 @@ namespace MS.Internal.AutomationProxies
         }
 
         // retrieve number of columns in the group
-        static private int GetColumnCount (IntPtr hwnd, int groupID)
+        private static int GetColumnCount (IntPtr hwnd, int groupID)
         {
             if (WindowsListView.IsDetailMode (hwnd))
             {
@@ -750,7 +749,7 @@ namespace MS.Internal.AutomationProxies
         }
 
         // retrieve number of rows in the group
-        static private int GetRowCount (IntPtr hwnd, int groupID)
+        private static int GetRowCount (IntPtr hwnd, int groupID)
         {
             if (WindowsListView.IsDetailMode (hwnd))
             {
@@ -774,7 +773,7 @@ namespace MS.Internal.AutomationProxies
 
         // This method returns the count of either columns or rows
         // in the Grid.
-        static private int GetCountOfItemsInDimension (IntPtr hwnd, int groupID, IsNewItemInDimension comparer)
+        private static int GetCountOfItemsInDimension (IntPtr hwnd, int groupID, IsNewItemInDimension comparer)
         {
             // Algorithm:
             // Get the rect of the item.

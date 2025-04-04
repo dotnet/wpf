@@ -1,6 +1,5 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 //
 // Description:
@@ -171,7 +170,7 @@ namespace System.Windows.Markup
 
 
         // Parse a FigureLength from a string given the CultureInfo.
-        static internal void FromString(
+        internal static void FromString(
                 string       s, 
                 CultureInfo  cultureInfo,
             out double       value,
@@ -260,7 +259,7 @@ namespace System.Windows.Markup
         };
 
         //  Note: keep this array in sync with the FigureUnitType enum
-        static private FigureUnitTypeStringConvert[] UnitStrings =
+        private static FigureUnitTypeStringConvert[] UnitStrings =
         {
             new FigureUnitTypeStringConvert("auto",    FigureUnitType.Auto),
             new FigureUnitTypeStringConvert("px",      FigureUnitType.Pixel),

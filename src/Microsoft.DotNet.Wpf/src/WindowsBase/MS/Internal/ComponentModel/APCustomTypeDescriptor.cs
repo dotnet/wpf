@@ -1,6 +1,5 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 using System.ComponentModel;
 using System.Windows;
@@ -12,7 +11,7 @@ namespace MS.Internal.ComponentModel
     ///     could just inherit from the CustomTypeDescriptor class, which does most of the forwarding
     ///     work for us, but these are allocated a lot so we want them to be structs.
     /// </summary>
-    struct APCustomTypeDescriptor : ICustomTypeDescriptor {
+    internal struct APCustomTypeDescriptor : ICustomTypeDescriptor {
         //------------------------------------------------------
         //
         //  Constructors

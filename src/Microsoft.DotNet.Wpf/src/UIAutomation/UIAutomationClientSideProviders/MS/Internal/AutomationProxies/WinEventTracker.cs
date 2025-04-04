@@ -1,6 +1,5 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 // Description: Handles WinEvent notifications.
 
@@ -31,7 +30,7 @@ namespace MS.Internal.AutomationProxies
     //     Call the delegate associated with the hwnd to create a raw element.
     //     Call the automation code to queue a new notification for the client.
     //     
-    static class WinEventTracker
+    internal static class WinEventTracker
     {
         #region Internal Methods
 
@@ -44,7 +43,7 @@ namespace MS.Internal.AutomationProxies
         // Param name="hwnd"
         // Param name="raiseEvents" - function to call to create a raw element
         // Param name="aEvtIdProp"
-        static internal void AddToNotificationList(IntPtr hwnd, ProxyRaiseEvents raiseEvents, ReadOnlySpan<EvtIdProperty> aEvtIdProp)
+        internal static void AddToNotificationList(IntPtr hwnd, ProxyRaiseEvents raiseEvents, ReadOnlySpan<EvtIdProperty> aEvtIdProp)
         {
             GetCallbackQueue();
 
@@ -54,7 +53,7 @@ namespace MS.Internal.AutomationProxies
 
 
         // Get the QueueProcessor so MSAA events can use it as well
-        static internal QueueProcessor GetCallbackQueue()
+        internal static QueueProcessor GetCallbackQueue()
         {
             lock (_queueLock)
             {
@@ -73,7 +72,7 @@ namespace MS.Internal.AutomationProxies
         // Param name="hwnd"
         // Param name="raiseEvents" - Callback, should be null for non system-wide events
         // Param name="aEvtIdProp"
-        static internal void RemoveToNotificationList(IntPtr hwnd, ReadOnlySpan<EvtIdProperty> aEvtIdProp, ProxyRaiseEvents raiseEvents)
+        internal static void RemoveToNotificationList(IntPtr hwnd, ReadOnlySpan<EvtIdProperty> aEvtIdProp, ProxyRaiseEvents raiseEvents)
         {
             // Remove the list of Event to Window List
             // NOTE: raiseEvents must be null in the case when event is not a system-wide event
@@ -587,7 +586,7 @@ namespace MS.Internal.AutomationProxies
         private static Hashtable[] _ahp = new Hashtable[EventIdToIndex.Length];
 
         private static uint _globalEventKey = 0;
-        
+
         // Parameters needed to send a notification to a client
         internal struct EventCreateParams
         {

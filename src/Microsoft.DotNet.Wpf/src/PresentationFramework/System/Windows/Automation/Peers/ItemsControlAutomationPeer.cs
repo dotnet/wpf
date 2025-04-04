@@ -1,6 +1,5 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 using System.Collections;
 using System.Windows.Automation.Provider;
@@ -21,7 +20,7 @@ namespace System.Windows.Automation.Peers
         {}
 
         ///
-        override public object GetPattern(PatternInterface patternInterface)
+        public override object GetPattern(PatternInterface patternInterface)
         {
             if(patternInterface == PatternInterface.Scroll)
             {
@@ -324,7 +323,7 @@ namespace System.Windows.Automation.Peers
         /// </summary>
         /// <param name="id">Property Id to be verified</param>
         /// <returns>true if property id is supported else false</returns>
-        virtual internal bool IsPropertySupportedByControlForFindItem(int id)
+        internal virtual bool IsPropertySupportedByControlForFindItem(int id)
         {
             return ItemsControlAutomationPeer.IsPropertySupportedByControlForFindItemInternal(id);
         }
@@ -348,7 +347,7 @@ namespace System.Windows.Automation.Peers
         /// <param name="itemPeer"></param>
         /// <param name="propertyId"></param>
         /// <returns>returns the property value</returns>
-        virtual internal object GetSupportedPropertyValue(ItemAutomationPeer itemPeer, int propertyId)
+        internal virtual object GetSupportedPropertyValue(ItemAutomationPeer itemPeer, int propertyId)
         {
             return ItemsControlAutomationPeer.GetSupportedPropertyValueInternal(itemPeer, propertyId);
         }
@@ -364,7 +363,7 @@ namespace System.Windows.Automation.Peers
         /// </summary>
         /// <param name="item"></param>
         /// <returns></returns>
-        protected virtual internal ItemAutomationPeer FindOrCreateItemAutomationPeer(object item)
+        protected internal virtual ItemAutomationPeer FindOrCreateItemAutomationPeer(object item)
         {
             ItemAutomationPeer peer = ItemPeers[item];
             if (peer == null)
@@ -397,7 +396,7 @@ namespace System.Windows.Automation.Peers
         }
 
         ///
-        abstract protected ItemAutomationPeer CreateItemAutomationPeer(object item);
+        protected abstract ItemAutomationPeer CreateItemAutomationPeer(object item);
 
         internal RecyclableWrapper GetRecyclableWrapperPeer(object item)
         {
@@ -417,7 +416,7 @@ namespace System.Windows.Automation.Peers
 
         // UpdateChildrenIntenal is called with ItemsInvalidateLimit to ensure we don’t fire unnecessary structure change events when items are just scrolled in/out of view in case of
         // virtualized controls.
-        override internal IDisposable UpdateChildren()
+        internal override IDisposable UpdateChildren()
         {
             UpdateChildrenInternal(AutomationInteropProvider.ItemsInvalidateLimit);
             WeakRefElementProxyStorage.PurgeWeakRefCollection();
@@ -547,8 +546,8 @@ namespace System.Windows.Automation.Peers
                 }
             }
 
-            ItemsControlAutomationPeer _peer;
-            ItemPeersStorage<ItemAutomationPeer> _oldChildren;
+            private ItemsControlAutomationPeer _peer;
+            private ItemPeersStorage<ItemAutomationPeer> _oldChildren;
         }
     }
 
@@ -775,9 +774,9 @@ namespace System.Windows.Automation.Peers
             }
         }
 
-        ItemsControl _itemsControl;
-        DependencyObject _container;
-        object _item;
+        private ItemsControl _itemsControl;
+        private DependencyObject _container;
+        private object _item;
     }
 }
 

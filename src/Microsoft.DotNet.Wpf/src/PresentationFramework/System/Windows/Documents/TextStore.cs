@@ -1,6 +1,5 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 //
 // Description: ITextStoreACP implementation.
@@ -4656,11 +4655,11 @@ namespace System.Windows.Documents
         {
             #region static members
 
-            const int s_CtfFormatVersion = 1;   // Format of output file
-            const int s_MaxTraceRecords = 3000;    // max length of in-memory _traceList
-            const int s_MinTraceRecords = 500;     // keep this many records after flushing
+            private const int s_CtfFormatVersion = 1;   // Format of output file
+            private const int s_MaxTraceRecords = 3000;    // max length of in-memory _traceList
+            private const int s_MinTraceRecords = 500;     // keep this many records after flushing
 
-            static string _targetName;
+            private static string _targetName;
             static IMECompositionTracer()
             {
                 _targetName = FrameworkCompatibilityPreferences.GetIMECompositionTraceTarget();
@@ -4705,7 +4704,7 @@ namespace System.Windows.Documents
                 }
             }
 
-            static bool _isEnabled;
+            private static bool _isEnabled;
             internal static bool IsEnabled { get { return _isEnabled; } }
 
             // for use from VS Immediate window
@@ -4732,8 +4731,8 @@ namespace System.Windows.Documents
                 return (target == o);
             }
 
-            static string _fileName;
-            static int _flushDepth;
+            private static string _fileName;
+            private static int _flushDepth;
 
             // for use from VS Immediate window
             internal static void Flush()
@@ -4883,7 +4882,7 @@ namespace System.Windows.Documents
             }
 
             // when app shuts down, flush pending info to the file
-            static void OnApplicationExit(object sender, ExitEventArgs e)
+            private static void OnApplicationExit(object sender, ExitEventArgs e)
             {
                 Application app = sender as Application;
                 if (app != null)
@@ -4895,7 +4894,7 @@ namespace System.Windows.Documents
             }
 
             // in case of unhandled exception, flush pending info to the file
-            static void OnUnhandledException(object sender, DispatcherUnhandledExceptionEventArgs e)
+            private static void OnUnhandledException(object sender, DispatcherUnhandledExceptionEventArgs e)
             {
                 Application app = sender as Application;
                 if (app != null)
@@ -4956,7 +4955,7 @@ namespace System.Windows.Documents
                 = new List<Tuple<WeakReference<FrameworkElement>,TraceList>>();
             private static int s_seqno;
 
-            static TraceList TraceListForUiScope(FrameworkElement target)
+            private static TraceList TraceListForUiScope(FrameworkElement target)
             {
                 TraceList traceList = null;
 
@@ -5020,7 +5019,7 @@ namespace System.Windows.Documents
             }
 
             // Must be called under "lock (s_TargetToTraceListMap)"
-            static void CloseAllTraceLists()
+            private static void CloseAllTraceLists()
             {
                 for (int i=0, n=s_TargetToTraceListMap.Count; i<n; ++i)
                 {
@@ -5133,7 +5132,7 @@ namespace System.Windows.Documents
             }
         }
 
-        static readonly UncommonField<IMECompositionTracingInfo>
+        private static readonly UncommonField<IMECompositionTracingInfo>
             IMECompositionTracingInfoField = new UncommonField<IMECompositionTracingInfo>();
 
         #endregion IMECompositionTracingInfo

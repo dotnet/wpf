@@ -1,6 +1,5 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 #nullable disable
 
@@ -28,14 +27,14 @@ namespace System.Xaml
 
         // We don't expect a lot of contention on our dictionaries, so avoid the overhead of
         // extra lock partitioning
-        const int ConcurrencyLevel = 1;
-        const int DictionaryCapacity = 17;
+        private const int ConcurrencyLevel = 1;
+        private const int DictionaryCapacity = 17;
 
         // Immutable, initialized in constructor
         private readonly ReadOnlyCollection<Assembly> _referenceAssemblies;
 
         // take this lock when iterating new assemblies in the AppDomain/RefAssm
-        object _syncExaminingAssemblies;
+        private object _syncExaminingAssemblies;
 
         #endregion
 
@@ -213,7 +212,7 @@ namespace System.Xaml
             }
         }
 
-        void InitializePreferredPrefixes()
+        private void InitializePreferredPrefixes()
         {
             // To avoid an assignment race condition, prevent new assemblies from being processed while we're
             // iterating the existing list
@@ -229,7 +228,7 @@ namespace System.Xaml
             }
         }
 
-        void UpdatePreferredPrefixes(XmlNsInfo newNamespaces, ConcurrentDictionary<string, string> prefixDict)
+        private void UpdatePreferredPrefixes(XmlNsInfo newNamespaces, ConcurrentDictionary<string, string> prefixDict)
         {
             foreach (KeyValuePair<string, string> nsToPrefix in newNamespaces.Prefixes)
             {
@@ -712,15 +711,15 @@ namespace System.Xaml
         private ConcurrentDictionary<Assembly, XmlNsInfo> _xmlnsInfoForUnreferencedAssemblies;
 
         // immutable, initialized in ctor
-        AssemblyLoadHandler _assemblyLoadHandler;
+        private AssemblyLoadHandler _assemblyLoadHandler;
 
         // tracks new assemblies seen by the AssemblyLoad handler, but not yet reflected
         private IList<Assembly> _unexaminedAssemblies;
-        bool _isGCCallbackPending;
+        private bool _isGCCallbackPending;
 
         // take this lock when modifying _unexaminedAssemblies or _isGCCallbackPending
         // Acquisition order: If also taking _syncExaminingAssemblies, take it first
-        object _syncAccessingUnexaminedAssemblies;
+        private object _syncAccessingUnexaminedAssemblies;
 
         // This dictionary is also thread-safe for single reads and writes, but if you're
         // iterating them, lock on _syncExaminingAssemblies to ensure consistent results
@@ -1088,7 +1087,7 @@ namespace System.Xaml
             }
         }
 
-        void SchemaContextAssemblyLoadEventHandler(object sender, AssemblyLoadEventArgs args)
+        private void SchemaContextAssemblyLoadEventHandler(object sender, AssemblyLoadEventArgs args)
         {
             lock (_syncAccessingUnexaminedAssemblies)
             {
@@ -1181,7 +1180,7 @@ namespace System.Xaml
             return foundNew;
         }
 
-        bool UpdateNamespaceByUriList(XmlNsInfo nsInfo)
+        private bool UpdateNamespaceByUriList(XmlNsInfo nsInfo)
         {
             bool foundNew = false;
             IList<XmlNsInfo.XmlNsDefinition> xmlnsDefs = nsInfo.NsDefs;
@@ -1383,7 +1382,7 @@ namespace System.Xaml
         // WeakRef wrapper around XSC so that it can hook AppDomain event without getting rooted
         private class AssemblyLoadHandler
         {
-            WeakReference schemaContextRef;
+            private WeakReference schemaContextRef;
 
             public AssemblyLoadHandler(XamlSchemaContext schemaContext)
             {

@@ -1,6 +1,5 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 /***************************************************************************\
 *
@@ -80,7 +79,7 @@ namespace System.Windows.Media
             MatrixUtil.MultiplyMatrix(ref result, ref matrixToMultiplyBy);
         }
 
-        internal unsafe virtual void ConvertToD3DMATRIX(/* out */ D3DMATRIX* milMatrix)
+        internal virtual unsafe void ConvertToD3DMATRIX(/* out */ D3DMATRIX* milMatrix)
         {
             Matrix matrix = Value;
             MILUtilities.ConvertToD3DMATRIX(&matrix, milMatrix);

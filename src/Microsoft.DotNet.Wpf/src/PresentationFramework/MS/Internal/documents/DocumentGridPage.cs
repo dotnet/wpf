@@ -1,6 +1,5 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 //
 // Description: DocumentGridPage displays a graphical representation of an
@@ -210,7 +209,7 @@ namespace MS.Internal.Documents
         /// </summary>
         /// <param name="availableSize">Available size that parent can give to the child. This is soft constraint.</param>
         /// <returns>The DocumentGridPage's desired size.</returns>
-        protected override sealed Size MeasureOverride(Size availableSize)
+        protected sealed override Size MeasureOverride(Size availableSize)
         {
             CheckDisposed();
 
@@ -250,7 +249,7 @@ namespace MS.Internal.Documents
         /// Content arrangement.
         /// </summary>
         /// <param name="arrangeSize">The final size that element should use to arrange itself and its children.</param>
-        protected override sealed Size ArrangeOverride(Size arrangeSize)
+        protected sealed override Size ArrangeOverride(Size arrangeSize)
         {
             CheckDisposed();
 

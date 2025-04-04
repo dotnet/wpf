@@ -1,6 +1,5 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 //
 // Description:
@@ -450,9 +449,9 @@ namespace System.Windows.Markup
 #endif
 
 #if PBTCOMPILER
-        bool _localAssembly;
+        private bool _localAssembly;
 #endif
-        string _assemblyName;
-        string _clrNamespace;
+        private string _assemblyName;
+        private string _clrNamespace;
     }
 }

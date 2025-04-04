@@ -1,6 +1,5 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 // Description: HWND-based Menu Proxy
 
@@ -22,7 +21,7 @@ using MS.Win32;
 namespace MS.Internal.AutomationProxies
 {
     // Win32 menu proxy
-    class WindowsMenu: ProxyHwnd
+    internal class WindowsMenu: ProxyHwnd
     {
         // ------------------------------------------------------
         //
@@ -1109,7 +1108,7 @@ namespace MS.Internal.AutomationProxies
         private MenuType _type;
 
         // Menu-specific events
-        private readonly static WinEventTracker.EvtIdProperty [] _menuEvents = new WinEventTracker.EvtIdProperty [] {
+        private static readonly WinEventTracker.EvtIdProperty [] _menuEvents = new WinEventTracker.EvtIdProperty [] {
                 new WinEventTracker.EvtIdProperty(NativeMethods.EventSystemMenuPopupStart, ExpandCollapsePattern.ExpandCollapseStateProperty),
                 new WinEventTracker.EvtIdProperty(NativeMethods.EventSystemMenuPopupEnd, ExpandCollapsePattern.ExpandCollapseStateProperty),
                 new WinEventTracker.EvtIdProperty(NativeMethods.EventObjectInvoke, InvokePattern.InvokedEvent)
@@ -2983,7 +2982,7 @@ namespace MS.Internal.AutomationProxies
 
             #region Private Fields
 
-            IntPtr _hwndParent;
+            private IntPtr _hwndParent;
 
             #endregion
         }

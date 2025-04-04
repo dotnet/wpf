@@ -1,6 +1,5 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 
 //#define Profiling
@@ -1746,7 +1745,7 @@ namespace System.Windows.Controls
         ///     Attached property for use on the ItemsControl that is the host for the items being
         ///     presented by this panel. Use this property to turn virtualization on/off.
         /// </summary>
-        public new static readonly DependencyProperty IsVirtualizingProperty =
+        public static new readonly DependencyProperty IsVirtualizingProperty =
             VirtualizingPanel.IsVirtualizingProperty;
 
         /// <summary>
@@ -1755,7 +1754,7 @@ namespace System.Windows.Controls
         ///
         ///     Note that this property can only be set before the panel has been initialized
         /// </summary>
-        public new static readonly DependencyProperty VirtualizationModeProperty =
+        public static new readonly DependencyProperty VirtualizationModeProperty =
             VirtualizingPanel.VirtualizationModeProperty;
 
         /// <summary>
@@ -11983,12 +11982,12 @@ namespace System.Windows.Controls
         {
             #region static members
 
-            const int s_StfFormatVersion = 3;   // Format of output file
-            const int s_MaxTraceRecords = 30000;    // max length of in-memory _traceList
-            const int s_MinTraceRecords = 5000;     // keep this many records after flushing
-            const int s_DefaultLayoutUpdatedThreshold = 20; // see _luThreshold
+            private const int s_StfFormatVersion = 3;   // Format of output file
+            private const int s_MaxTraceRecords = 30000;    // max length of in-memory _traceList
+            private const int s_MinTraceRecords = 5000;     // keep this many records after flushing
+            private const int s_DefaultLayoutUpdatedThreshold = 20; // see _luThreshold
 
-            static string _targetName;
+            private static string _targetName;
             static ScrollTracer()
             {
                 _targetName = FrameworkCompatibilityPreferences.GetScrollingTraceTarget();
@@ -12042,7 +12041,7 @@ namespace System.Windows.Controls
                 }
             }
 
-            static bool _isEnabled;
+            private static bool _isEnabled;
             internal static bool IsEnabled { get { return _isEnabled; } }
 
             // for use from VS Immediate window
@@ -12069,9 +12068,9 @@ namespace System.Windows.Controls
                 return (target == o);
             }
 
-            static string _fileName;
-            static int _flushDepth;
-            static int _luThreshold;    // go inactive after this many consecutive LayoutUpdated
+            private static string _fileName;
+            private static int _flushDepth;
+            private static int _luThreshold;    // go inactive after this many consecutive LayoutUpdated
 
             // for use from VS Immediate window
             internal static void SetFileAndDepth(string filename, int flushDepth)
@@ -12082,7 +12081,7 @@ namespace System.Windows.Controls
             }
 
             // for use from VS Immediate window
-            static void Flush()
+            private static void Flush()
             {
                 lock (s_TargetToTraceListMap)
                 {
@@ -12094,7 +12093,7 @@ namespace System.Windows.Controls
             }
 
             // for use from VS Immediate window
-            static void Mark(params ReadOnlySpan<object> args)
+            private static void Mark(params ReadOnlySpan<object> args)
             {
                 ScrollTraceRecord record = new ScrollTraceRecord(ScrollTraceOp.Mark, null, -1, 0, 0, BuildDetail(args));
                 lock (s_TargetToTraceListMap)
@@ -12303,7 +12302,7 @@ namespace System.Windows.Controls
             }
 
             // when app shuts down, flush pending info to the file
-            static void OnApplicationExit(object sender, ExitEventArgs e)
+            private static void OnApplicationExit(object sender, ExitEventArgs e)
             {
                 Application app = sender as Application;
                 if (app != null)
@@ -12315,7 +12314,7 @@ namespace System.Windows.Controls
             }
 
             // in case of unhandled exception, flush pending info to the file
-            static void OnUnhandledException(object sender, DispatcherUnhandledExceptionEventArgs e)
+            private static void OnUnhandledException(object sender, DispatcherUnhandledExceptionEventArgs e)
             {
                 Application app = sender as Application;
                 if (app != null)
@@ -12475,7 +12474,7 @@ namespace System.Windows.Controls
                 = new List<Tuple<WeakReference<ItemsControl>,TraceList>>();
             private static int s_seqno;
 
-            static TraceList TraceListForItemsControl(ItemsControl target)
+            private static TraceList TraceListForItemsControl(ItemsControl target)
             {
                 TraceList traceList = null;
 
@@ -12539,7 +12538,7 @@ namespace System.Windows.Controls
             }
 
             // Must be called under "lock (s_TargetToTraceListMap)"
-            static void CloseAllTraceLists()
+            private static void CloseAllTraceLists()
             {
                 for (int i=0, n=s_TargetToTraceListMap.Count; i<n; ++i)
                 {
@@ -12672,7 +12671,7 @@ namespace System.Windows.Controls
             }
         }
 
-        static readonly UncommonField<ScrollTracingInfo>
+        private static readonly UncommonField<ScrollTracingInfo>
             ScrollTracingInfoField = new UncommonField<ScrollTracingInfo>();
 
         #endregion ScrollTracingInfo
@@ -12770,7 +12769,7 @@ namespace System.Windows.Controls
             internal int                    ItemIndex   { get; private set; }
             internal string                 Detail      { get; set; }
 
-            object _extraData;
+            private object _extraData;
 
             internal Snapshot Snapshot
             {

@@ -1,6 +1,5 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 using MS.Internal;
 using MS.Win32;
@@ -113,9 +112,9 @@ namespace System.Windows.Media
     internal class StreamAsIStream
     {
         #region Instance Data
-        const int STREAM_SEEK_SET = 0x0;
-        const int STREAM_SEEK_CUR = 0x1;
-        const int STREAM_SEEK_END = 0x2;
+        private const int STREAM_SEEK_SET = 0x0;
+        private const int STREAM_SEEK_CUR = 0x1;
+        private const int STREAM_SEEK_END = 0x2;
 
         protected System.IO.Stream dataStream;
         private Exception _lastException;
@@ -543,7 +542,7 @@ namespace System.Windows.Media
             return (StreamAsIStream.FromSD(ref pSD)).Revert();
         }
 
-        internal unsafe static int Seek(ref StreamDescriptor pSD, long offset, uint origin, long* plibNewPostion)
+        internal static unsafe int Seek(ref StreamDescriptor pSD, long offset, uint origin, long* plibNewPostion)
         {
             return (StreamAsIStream.FromSD(ref pSD)).Seek(offset, origin, plibNewPostion);
         }
@@ -664,7 +663,7 @@ namespace System.Windows.Media
         #endregion
 
         [DllImport(DllImport.MilCore)]//CASRemoval:
-        private extern static int /* HRESULT */ MILIStreamWrite(IntPtr pStream, [MarshalAs(UnmanagedType.LPArray, SizeParamIndex = 2)]byte[] buffer, uint cb, out uint cbWritten);
+        private static extern int /* HRESULT */ MILIStreamWrite(IntPtr pStream, [MarshalAs(UnmanagedType.LPArray, SizeParamIndex = 2)]byte[] buffer, uint cb, out uint cbWritten);
     }
     #endregion
 }

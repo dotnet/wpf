@@ -163,6 +163,7 @@
     <SolidColorBrush x:Key="CircleElevationBorderBrush" Color="{StaticResource SystemColorWindowTextColor}" />
     <SolidColorBrush x:Key="AccentControlElevationBorderBrush" Color="{StaticResource SystemColorWindowTextColor}" />
     <SolidColorBrush x:Key="TextControlElevationBorderBrush" Color="{StaticResource SystemColorWindowTextColor}" />
+    <SolidColorBrush x:Key="TextControlElevationBorderFocusedBrush" Color="{StaticResource SystemColorHighlightColor}" />
 
     <SolidColorBrush x:Key="SystemColorWindowTextColorBrush" Color="{StaticResource SystemColorWindowTextColor}" />
     <SolidColorBrush x:Key="SystemColorWindowColorBrush" Color="{StaticResource SystemColorWindowColor}" />
@@ -183,16 +184,16 @@
     <!--  Button  -->
     <SolidColorBrush x:Key="AccentButtonBackground" Color="{StaticResource SystemColorHighlightColor}" />
     <SolidColorBrush x:Key="AccentButtonBackgroundPointerOver" Color="{StaticResource SystemColorButtonTextColor}" />
-    <SolidColorBrush x:Key="AccentButtonBackgroundPressed" Color="{StaticResource SystemColorHighlightColor}" />
-    <!--<SolidColorBrush x:Key="AccentButtonBackgroundDisabled" ResourceKey="AccentFillColorDisabledBrush" />-->
+    <SolidColorBrush x:Key="AccentButtonBackgroundPressed" Color="{StaticResource SystemColorButtonFaceColor}" />
+    <SolidColorBrush x:Key="AccentButtonBackgroundDisabled" Color="{StaticResource SystemColorButtonFaceColor}" />
     <SolidColorBrush x:Key="AccentButtonForeground" Color="{StaticResource SystemColorHighlightTextColor}" />
     <SolidColorBrush x:Key="AccentButtonForegroundPointerOver" Color="{StaticResource SystemColorButtonFaceColor}" />
     <SolidColorBrush x:Key="AccentButtonForegroundPressed" Color="{StaticResource SystemColorHighlightColor}" />
-    <!--<SolidColorBrush x:Key="AccentButtonForegroundDisabled" ResourceKey="TextOnAccentFillColorDisabled" />-->
-    <!--<SolidColorBrush x:Key="AccentButtonBorderBrush" Color="{StaticResource AccentControlElevationBorder}" />-->
-    <!--<SolidColorBrush x:Key="AccentButtonBorderBrushPointerOver" Color="{StaticResource AccentControlElevationBorder}" />-->
+    <SolidColorBrush x:Key="AccentButtonForegroundDisabled" Color="{StaticResource SystemColorGrayTextColor}" />
+    <SolidColorBrush x:Key="AccentButtonBorderBrush" Color="{StaticResource SystemColorHighlightColor}" />
+    <SolidColorBrush x:Key="AccentButtonBorderBrushPointerOver" Color="{StaticResource SystemColorHighlightColor}" />
     <SolidColorBrush x:Key="AccentButtonBorderBrushPressed" Color="{StaticResource SystemColorHighlightColor}" />
-    <!--<SolidColorBrush x:Key="AccentButtonBorderBrushDisabled" Color="{StaticResource ControlFillColorTransparentBrush}" />-->
+    <SolidColorBrush x:Key="AccentButtonBorderBrushDisabled" Color="{StaticResource SystemColorGrayTextColor}" />
     <SolidColorBrush x:Key="ButtonBackground" Color="{StaticResource SystemColorButtonFaceColor}" />
     <SolidColorBrush x:Key="ButtonBackgroundPointerOver" Color="{StaticResource SystemColorHighlightTextColor}" />
     <SolidColorBrush x:Key="ButtonBackgroundPressed" Color="{StaticResource SystemColorHighlightTextColor}" />
@@ -201,10 +202,10 @@
     <SolidColorBrush x:Key="ButtonForegroundPointerOver" Color="{StaticResource SystemColorHighlightColor}" />
     <SolidColorBrush x:Key="ButtonForegroundPressed" Color="{StaticResource SystemColorHighlightColor}" />
     <SolidColorBrush x:Key="ButtonForegroundDisabled" Color="{StaticResource SystemColorGrayTextColor}" />
-    <!--<SolidColorBrush x:Key="ButtonBorderBrush" Color="{StaticResource ControlElevationBorder}" />-->
-    <!--<SolidColorBrush x:Key="ButtonBorderBrushPointerOver" Color="{StaticResource ControlElevationBorder}" />-->
-    <SolidColorBrush x:Key="ButtonBorderBrushPressed" Color="Transparent" />
-    <SolidColorBrush x:Key="ButtonBorderBrushDisabled" Color="Transparent" />
+    <SolidColorBrush x:Key="ButtonBorderBrush" Color="{StaticResource SystemColorButtonTextColor}" />
+    <SolidColorBrush x:Key="ButtonBorderBrushPointerOver" Color="{StaticResource SystemColorHighlightColor}" />
+    <SolidColorBrush x:Key="ButtonBorderBrushPressed" Color="{StaticResource SystemColorHighlightTextColor}" />
+    <SolidColorBrush x:Key="ButtonBorderBrushDisabled" Color="{StaticResource SystemColorGrayTextColor}" />
 
     <!--  Calendar  -->
     <SolidColorBrush x:Key="CalendarViewForeground" Color="{StaticResource SystemColorButtonTextColor}" />
@@ -350,6 +351,14 @@
     <SolidColorBrush x:Key="FlyoutBackground" Color="{StaticResource SystemColorWindowColor}" />
     <SolidColorBrush x:Key="FlyoutBorderBrush" Color="{StaticResource SystemColorWindowTextColor}" />
 
+    <!--  Frame  -->
+    <SolidColorBrush x:Key="FrameBackground" Color="Transparent" />
+    <SolidColorBrush x:Key="FrameForeground" Color="{StaticResource SystemColorWindowTextColor}" />
+    <SolidColorBrush x:Key="FrameMenuItemBackground" Color="Transparent" />
+    <SolidColorBrush x:Key="FrameMenuItemBorderBrush" Color="Transparent" />
+    <SolidColorBrush x:Key="FrameMenuItemBackgroundSelected" Color="{StaticResource SystemColorButtonFaceColor}" />
+    <SolidColorBrush x:Key="FrameMenuItemForegroundDisabled" Color="{StaticResource SystemColorGrayTextColor}" />
+
     <!-- GridSplitter -->
     <SolidColorBrush x:Key="GridsplitterBackground" Color="Transparent" />
     <SolidColorBrush x:Key="GridsplitterBackgroundPointerOver" Color="{StaticResource SystemColorHighlightTextColor}" />
@@ -449,6 +458,10 @@
     <SolidColorBrush x:Key="NavigationViewItemBackgroundSelectedLeftFluent" Color="{StaticResource SystemColorWindowColor}" />
     <SolidColorBrush x:Key="NavigationViewItemForegroundLeftFluent" Color="{StaticResource SystemColorWindowTextColor}" />
     <SolidColorBrush x:Key="NavigationViewItemForegroundPointerOverLeftFluent" Color="{StaticResource SystemColorWindowTextColor}" />
+
+    <!--  NavigationWindow  -->
+    <SolidColorBrush x:Key="NavigationWindowBackground" Color="{StaticResource SystemColorWindowColor}" />
+    <SolidColorBrush x:Key="NavigationWindowForeground" Color="{StaticResource SystemColorWindowTextColor}" />
 
     <!-- Page -->
     <SolidColorBrush x:Key="PageForeground" Color="{StaticResource SystemColorWindowTextColor}" />
@@ -668,7 +681,7 @@
 
     <Color x:Key="ControlStrongFillColorDefault">#2D3236</Color>
     <Color x:Key="ControlStrongFillColorDisabled">#2D3236</Color>
-    
+
     <Color x:Key="ControlSolidFillColorDefault">#2D3236</Color>
 
     <Color x:Key="SubtleFillColorTransparent">#2D3236</Color>

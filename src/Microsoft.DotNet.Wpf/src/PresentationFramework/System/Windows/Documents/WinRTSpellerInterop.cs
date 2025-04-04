@@ -1,6 +1,5 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 using MS.Internal.WindowsRuntime.Windows.Data.Text;
 using System.Diagnostics.CodeAnalysis;
@@ -1022,7 +1021,7 @@ namespace System.Windows.Documents
             #region Private Fields
 
 
-            SpellChecker _spellChecker;
+            private SpellChecker _spellChecker;
             private IReadOnlyList<string> _suggestions;
             private bool? _isClean = null;
 

@@ -1,6 +1,5 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 using System.Windows.Automation.Provider;
 using System.Windows.Controls;
@@ -196,7 +195,7 @@ namespace System.Windows.Automation.Peers
             }
         }
 
-        override protected AutomationLiveSetting GetLiveSettingCore()
+        protected override AutomationLiveSetting GetLiveSettingCore()
         {
             AutomationPeer wrapperPeer = OwningCellPeer;
             AutomationLiveSetting liveSetting = AutomationLiveSetting.Off;
@@ -351,7 +350,7 @@ namespace System.Windows.Automation.Peers
         }
 
         ///
-        override protected AutomationHeadingLevel GetHeadingLevelCore()
+        protected override AutomationHeadingLevel GetHeadingLevelCore()
         {
             AutomationPeer wrapperPeer = OwningCellPeer;
             AutomationHeadingLevel headingLevel = AutomationHeadingLevel.None;
@@ -368,7 +367,7 @@ namespace System.Windows.Automation.Peers
             return headingLevel;
         }
 
-        override internal Rect GetVisibleBoundingRectCore()
+        internal override Rect GetVisibleBoundingRectCore()
         {
             AutomationPeer wrapperPeer = OwningCellPeer;
             if (wrapperPeer != null)
@@ -493,12 +492,12 @@ namespace System.Windows.Automation.Peers
                 ThrowElementNotAvailableException();
         }
 
-        override internal bool IsDataItemAutomationPeer()
+        internal override bool IsDataItemAutomationPeer()
         {
             return true;
         }
 
-        override internal void AddToParentProxyWeakRefCache()
+        internal override void AddToParentProxyWeakRefCache()
         {
             DataGridItemAutomationPeer owningItemPeer = this.OwningItemPeer;
             owningItemPeer?.AddProxyToWeakRefStorage(this.ElementProxyWeakReference, this);

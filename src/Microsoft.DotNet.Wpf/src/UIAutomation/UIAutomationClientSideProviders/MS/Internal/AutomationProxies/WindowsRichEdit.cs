@@ -1,6 +1,5 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 // Description: HWND-based RichEdit Proxy
 
@@ -16,7 +15,7 @@ using NativeMethodsSetLastError = MS.Internal.UIAutomationClientSideProviders.Na
 
 namespace MS.Internal.AutomationProxies
 {
-    class WindowsRichEdit : ProxyHwnd, IValueProvider, ITextProvider
+    internal class WindowsRichEdit : ProxyHwnd, IValueProvider, ITextProvider
     {
         // ------------------------------------------------------
         //
@@ -26,7 +25,7 @@ namespace MS.Internal.AutomationProxies
 
         #region Constructors
 
-        WindowsRichEdit (IntPtr hwnd, ProxyFragment parent, int style)
+        private WindowsRichEdit (IntPtr hwnd, ProxyFragment parent, int style)
             : base( hwnd, parent, style )
         {
             _type = WindowsEditBox.GetEditboxtype(hwnd);
@@ -745,8 +744,8 @@ namespace MS.Internal.AutomationProxies
         private WindowsEditBox.EditboxType _type;
 
         // Used in RaiseEvents() to track changes in the selection endpoints.
-        static private int _raiseEventsOldSelectionStart;
-        static private int _raiseEventsOldSelectionEnd;
+        private static int _raiseEventsOldSelectionStart;
+        private static int _raiseEventsOldSelectionEnd;
         private const int _NO_ENDPOINT = -1;
 
         #endregion private Fields

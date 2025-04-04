@@ -1,6 +1,5 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 //
 // Description: allows the author of a IValueConverter
@@ -98,7 +97,7 @@ namespace System.Windows.Data
         ///<summary>
         ///     Returns the hash code for this instance.
         ///</summary>
-        override public int GetHashCode()
+        public override int GetHashCode()
         {
             // the default implementation does some funky enumeration over its fields
             // we can do better and use the 2 mandatory fields source/targetType's hash codes

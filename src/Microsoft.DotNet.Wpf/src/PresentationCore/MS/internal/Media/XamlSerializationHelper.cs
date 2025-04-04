@@ -1,6 +1,5 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 //
 // Description: Utilities for converting types to custom Binary format
@@ -77,9 +76,9 @@ namespace MS.Internal.Media
             }
         }
         
-        double _x ;
-        double _y ; 
-        double _z ; 
+        private double _x ;
+        private double _y ;
+        private double _z ; 
             
     }
 

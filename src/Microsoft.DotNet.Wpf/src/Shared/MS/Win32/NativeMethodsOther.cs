@@ -1,6 +1,5 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 using System;
 using System.Runtime.InteropServices;
@@ -1222,7 +1221,7 @@ namespace MS.Win32
             /// </summary>
             /// <param name="oCompare"></param>
             /// <returns></returns>
-            override public bool Equals(object oCompare)
+            public override bool Equals(object oCompare)
             {
                 HWND hr = Cast((HWND)oCompare);
                 return (h == hr.h);
@@ -1330,7 +1329,7 @@ namespace MS.Win32
         /// <param name="lpvOutData">Structure to receive data</param>
         /// <returns>0 if escape not implemented, negative if error, otherwise succeeds</returns>
         [DllImport("gdi32.dll")]
-        public static unsafe extern Int32 ExtEscape(HDC hdc, Int32 nEscape, Int32 cbInput, PrinterEscape* lpvInData, Int32 cbOutput, [Out] void* lpvOutData);
+        public static extern unsafe Int32 ExtEscape(HDC hdc, Int32 nEscape, Int32 cbInput, PrinterEscape* lpvInData, Int32 cbOutput, [Out] void* lpvOutData);
 
         public const int MM_ISOTROPIC = 7;
 
@@ -1358,7 +1357,7 @@ namespace MS.Win32
         /// <param name="docInfo">Document information</param>
         /// <returns>More than zero if succeeded</returns>
         [DllImport("gdi32.dll")]
-        public unsafe static extern Int32 StartDoc(HDC hdc, ref DocInfo docInfo);
+        public static extern unsafe Int32 StartDoc(HDC hdc, ref DocInfo docInfo);
 
         /// <summary>
         ///
@@ -1368,7 +1367,7 @@ namespace MS.Win32
         /// <param name="pDefaults"></param>
         /// <returns></returns>
         [DllImport("winspool.drv", BestFitMapping = false, ThrowOnUnmappableChar = true)]
-        public unsafe static extern Int32 OpenPrinterA(String printerName, IntPtr* phPrinter, void* pDefaults);
+        public static extern unsafe Int32 OpenPrinterA(String printerName, IntPtr* phPrinter, void* pDefaults);
 
         /// <summary>
         ///

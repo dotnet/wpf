@@ -1,6 +1,5 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 // Description: Windows Button Proxy
 
@@ -12,7 +11,7 @@ using MS.Win32;
 namespace MS.Internal.AutomationProxies
 {
     // Windows Button proxy
-    class WindowsButton : ProxyHwnd, IInvokeProvider, IToggleProvider, ISelectionProvider, ISelectionItemProvider
+    internal class WindowsButton : ProxyHwnd, IInvokeProvider, IToggleProvider, ISelectionProvider, ISelectionItemProvider
     {
         // ------------------------------------------------------
         //
@@ -657,7 +656,7 @@ namespace MS.Internal.AutomationProxies
             }
         }
         
-        unsafe private bool ContainsRadioButtons()
+        private unsafe bool ContainsRadioButtons()
         {
             bool radiobuttonChildFound = false;
             // WinForm GroupBoxes have a parent/child relationship.  Win32 GroupBoxes do not.
@@ -668,7 +667,7 @@ namespace MS.Internal.AutomationProxies
             return radiobuttonChildFound;
         }
 
-        unsafe private bool FindRadioButtonChild(IntPtr hwnd, void* lParam)
+        private unsafe bool FindRadioButtonChild(IntPtr hwnd, void* lParam)
         {
             // Only be concerned with Winforms child controls.
             if (!WindowsFormsHelper.IsWindowsFormsControl(hwnd))

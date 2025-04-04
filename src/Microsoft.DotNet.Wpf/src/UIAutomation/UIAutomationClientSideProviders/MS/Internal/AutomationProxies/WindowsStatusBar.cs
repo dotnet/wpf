@@ -1,6 +1,5 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 // Description: Windows Status Proxy
 
@@ -13,7 +12,7 @@ using MS.Win32;
 
 namespace MS.Internal.AutomationProxies
 {
-    class WindowsStatusBar : ProxyHwnd, IGridProvider, IRawElementProviderHwndOverride
+    internal class WindowsStatusBar : ProxyHwnd, IGridProvider, IRawElementProviderHwndOverride
     {
         // ------------------------------------------------------
         //
@@ -343,7 +342,7 @@ namespace MS.Internal.AutomationProxies
             }
         }
 
-        unsafe static private IntPtr GetChildHwnd(IntPtr hwnd, Rect rc)
+        private static unsafe IntPtr GetChildHwnd(IntPtr hwnd, Rect rc)
         {
             UnsafeNativeMethods.ENUMCHILDWINDOWFROMRECT info = new UnsafeNativeMethods.ENUMCHILDWINDOWFROMRECT
             {
@@ -359,7 +358,7 @@ namespace MS.Internal.AutomationProxies
             return info.hwnd;
         }
 
-        unsafe static private bool FindChildFromRect(IntPtr hwnd, void* lParam)
+        private static unsafe bool FindChildFromRect(IntPtr hwnd, void* lParam)
         {
             NativeMethods.Win32Rect rc = NativeMethods.Win32Rect.Empty;
             if (!Misc.GetClientRectInScreenCoordinates(hwnd, ref rc))
@@ -407,7 +406,7 @@ namespace MS.Internal.AutomationProxies
 
         #region WindowsStatusBarPane 
 
-        class WindowsStatusBarPane : ProxySimple, IGridItemProvider, IValueProvider
+        private class WindowsStatusBarPane : ProxySimple, IGridItemProvider, IValueProvider
         {
 
             // ------------------------------------------------------
@@ -554,7 +553,7 @@ namespace MS.Internal.AutomationProxies
             #region Internal Methods
 
             // Retrieves the bounding rectangle of the Status Bar Pane.
-            static internal Rect GetBoundingRectangle (IntPtr hwnd, int item)
+            internal static Rect GetBoundingRectangle (IntPtr hwnd, int item)
             {
                 if( !WindowsFormsHelper.IsWindowsFormsControl(hwnd))
                 {
@@ -633,7 +632,7 @@ namespace MS.Internal.AutomationProxies
 
         #region WindowsStatusBarPaneChildOverrideProxy
 
-        class WindowsStatusBarPaneChildOverrideProxy : ProxyHwnd, IGridItemProvider
+        private class WindowsStatusBarPaneChildOverrideProxy : ProxyHwnd, IGridItemProvider
         {
             // ------------------------------------------------------
             //
@@ -739,7 +738,7 @@ namespace MS.Internal.AutomationProxies
 
         #region StatusBarGrip
 
-        class StatusBarGrip: ProxyFragment
+        private class StatusBarGrip: ProxyFragment
         {
             // ------------------------------------------------------
             //

@@ -1,6 +1,5 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 //
 //
@@ -314,7 +313,7 @@ namespace MS.Internal.Annotations.Anchoring
         ///     the passed in node; null is returned if the locator part cannot
         ///     be created for the node
         /// </returns>
-        static internal ContentLocatorPart CreateLocatorPart(int page)
+        internal static ContentLocatorPart CreateLocatorPart(int page)
         {
             Debug.Assert(page >= 0, "page can not be negative");
 

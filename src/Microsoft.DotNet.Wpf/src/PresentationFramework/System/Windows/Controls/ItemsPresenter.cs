@@ -1,6 +1,5 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 //
 // Description: ItemsPresenter object - site of the panel for layout of groups or items.
@@ -200,7 +199,7 @@ namespace System.Windows.Controls
         //------------------------------------------------------
 
         // initialize (called during measure, from ApplyTemplate)
-        void AttachToOwner()
+        private void AttachToOwner()
         {
             DependencyObject templatedParent = this.TemplatedParent;
             ItemsControl owner = templatedParent as ItemsControl;
@@ -254,7 +253,7 @@ namespace System.Windows.Controls
             Template = template;
         }
 
-        void UseGenerator(ItemContainerGenerator generator)
+        private void UseGenerator(ItemContainerGenerator generator)
         {
             if (generator == _generator)
                 return;
@@ -331,9 +330,9 @@ namespace System.Windows.Controls
         //
         //------------------------------------------------------
 
-        ItemsControl _owner;
-        ItemContainerGenerator _generator;
-        ItemsPanelTemplate _templateCache;
+        private ItemsControl _owner;
+        private ItemContainerGenerator _generator;
+        private ItemsPanelTemplate _templateCache;
     }
 }
 

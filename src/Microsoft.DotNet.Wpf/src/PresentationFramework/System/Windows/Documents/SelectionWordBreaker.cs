@@ -1,6 +1,5 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 using MS.Win32;
 using MS.Internal; // Invariant
@@ -302,17 +301,22 @@ namespace System.Windows.Documents
         #region Private Fields
 
         // Unicode line feed char.
-        const char LineFeedChar = (char)0x000a;
+        private const char LineFeedChar = (char)0x000a;
+
         // Unicode carriage return char.
-        const char CarriageReturnChar = (char)0x000d;
+        private const char CarriageReturnChar = (char)0x000d;
+
         // Unicode quotation mark char.
-        const char QuotationMarkChar = (char)0x0022;
+        private const char QuotationMarkChar = (char)0x0022;
+
         // Unicode apostrophe char.
-        const char ApostropheChar = (char)0x0027;
+        private const char ApostropheChar = (char)0x0027;
+
         // Unicode soft hyphen char.
-        const char SoftHyphenChar = (char)0x00ad;
+        private const char SoftHyphenChar = (char)0x00ad;
+
         // Unicode right single quotation char.
-        const char RightSingleQuotationChar = (char)0x2019;
+        private const char RightSingleQuotationChar = (char)0x2019;
         // Unicode object replacement char.
         private const char ObjectReplacementChar = (char)0xfffc;
 
@@ -332,7 +336,7 @@ namespace System.Windows.Documents
         }
 
         // Character classifications for u+0000 - u+00ff.
-        static readonly byte []_latinClasses = new byte[] {
+        private static readonly byte []_latinClasses = new byte[] {
         0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x14, //0x00
         0x00, 0x13, 0x14, 0x14, 0x14, 0x14, 0x00, 0x00, //0x08
         0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, //0x10

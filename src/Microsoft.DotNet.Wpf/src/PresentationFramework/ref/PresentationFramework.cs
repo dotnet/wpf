@@ -1,3 +1,6 @@
+﻿// Licensed to the .NET Foundation under one or more agreements.
+// The .NET Foundation licenses this file to you under the MIT license.
+
 namespace Microsoft.Win32
 {
     public abstract partial class CommonDialog
@@ -7739,9 +7742,9 @@ namespace System.Windows.Controls
     public partial class VirtualizingStackPanel : System.Windows.Controls.VirtualizingPanel, System.Windows.Controls.Primitives.IScrollInfo
     {
         public static readonly System.Windows.RoutedEvent CleanUpVirtualizedItemEvent;
-        public static readonly new System.Windows.DependencyProperty IsVirtualizingProperty;
+        public static new readonly System.Windows.DependencyProperty IsVirtualizingProperty;
         public static readonly System.Windows.DependencyProperty OrientationProperty;
-        public static readonly new System.Windows.DependencyProperty VirtualizationModeProperty;
+        public static new readonly System.Windows.DependencyProperty VirtualizationModeProperty;
         public VirtualizingStackPanel() { }
         protected override bool CanHierarchicallyScrollAndVirtualizeCore { get { throw null; } }
         [System.ComponentModel.DefaultValueAttribute(false)]

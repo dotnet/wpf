@@ -1,6 +1,5 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 // Description:
 //      Helper routines for doing cross-process SendMessage to Common Controls
@@ -14,7 +13,7 @@ using MS.Win32;
 
 namespace MS.Internal.AutomationProxies
 {
-    static class XSendMessage
+    internal static class XSendMessage
     {
         //------------------------------------------------------
         //
@@ -1570,7 +1569,7 @@ namespace MS.Internal.AutomationProxies
             }
 
             // This operator should only be called when TCITEM is a 64 bit structure
-            static public explicit operator NativeMethods.TCITEM(TCITEM_32 item)
+            public static explicit operator NativeMethods.TCITEM(TCITEM_32 item)
             {
                 NativeMethods.TCITEM nativeItem = new NativeMethods.TCITEM
                 {
@@ -1613,7 +1612,7 @@ namespace MS.Internal.AutomationProxies
             }
 
             // This operator should only be called when TCITEM is a 32 bit structure
-            static public explicit operator NativeMethods.TCITEM(TCITEM_64 item)
+            public static explicit operator NativeMethods.TCITEM(TCITEM_64 item)
             {
                 NativeMethods.TCITEM nativeItem = new NativeMethods.TCITEM
                 {
@@ -1662,7 +1661,7 @@ namespace MS.Internal.AutomationProxies
             }
 
             // This operator should only be called when HDITEM is a 64 bit structure
-            static public explicit operator NativeMethods.HDITEM(HDITEM_32 item)
+            public static explicit operator NativeMethods.HDITEM(HDITEM_32 item)
             {
                 NativeMethods.HDITEM nativeItem = new NativeMethods.HDITEM
                 {
@@ -1715,7 +1714,7 @@ namespace MS.Internal.AutomationProxies
             }
 
             // This operator should only be called when HDITEM is a 32 bit structure
-            static public explicit operator NativeMethods.HDITEM(HDITEM_64 item)
+            public static explicit operator NativeMethods.HDITEM(HDITEM_64 item)
             {
                 NativeMethods.HDITEM nativeItem = new NativeMethods.HDITEM
                 {
@@ -1766,7 +1765,7 @@ namespace MS.Internal.AutomationProxies
             }
 
             // This operator should only be called when LVITEM is a 64 bit structure
-            static public explicit operator NativeMethods.LVITEM(LVITEM_32 item)
+            public static explicit operator NativeMethods.LVITEM(LVITEM_32 item)
             {
                 NativeMethods.LVITEM nativeItem = new NativeMethods.LVITEM
                 {
@@ -1818,7 +1817,7 @@ namespace MS.Internal.AutomationProxies
             }
 
             // This operator should only be called when LVITEM is a 32 bit structure
-            static public explicit operator NativeMethods.LVITEM(LVITEM_64 item)
+            public static explicit operator NativeMethods.LVITEM(LVITEM_64 item)
             {
                 NativeMethods.LVITEM nativeItem = new NativeMethods.LVITEM
                 {
@@ -1874,7 +1873,7 @@ namespace MS.Internal.AutomationProxies
             }
 
             // This operator should only be called when LVITEM_V6 is a 64 bit structure
-            static public explicit operator NativeMethods.LVITEM_V6(LVITEM_V6_32 item)
+            public static explicit operator NativeMethods.LVITEM_V6(LVITEM_V6_32 item)
             {
                 NativeMethods.LVITEM_V6 nativeItem = new NativeMethods.LVITEM_V6
                 {
@@ -1937,7 +1936,7 @@ namespace MS.Internal.AutomationProxies
             }
 
             // This operator should only be called when LVITEM_V6 is a 32 bit structure
-            static public explicit operator NativeMethods.LVITEM_V6(LVITEM_V6_64 item)
+            public static explicit operator NativeMethods.LVITEM_V6(LVITEM_V6_64 item)
             {
                 NativeMethods.LVITEM_V6 nativeItem = new NativeMethods.LVITEM_V6
                 {
@@ -1990,7 +1989,7 @@ namespace MS.Internal.AutomationProxies
             }
 
             // This operator should only be called when LVGROUP is a 64 bit structure
-            static public explicit operator NativeMethods.LVGROUP(LVGROUP_32 item)
+            public static explicit operator NativeMethods.LVGROUP(LVGROUP_32 item)
             {
                 NativeMethods.LVGROUP nativeItem = new NativeMethods.LVGROUP
                 {
@@ -2072,7 +2071,7 @@ namespace MS.Internal.AutomationProxies
             }
 
             // This operator should only be called when LVGROUP is a 64 bit structure
-            static public explicit operator NativeMethods.LVGROUP_V6(LVGROUP_V6_32 item)
+            public static explicit operator NativeMethods.LVGROUP_V6(LVGROUP_V6_32 item)
             {
                 NativeMethods.LVGROUP_V6 nativeItem = new NativeMethods.LVGROUP_V6
                 {
@@ -2140,7 +2139,7 @@ namespace MS.Internal.AutomationProxies
             }
 
             // This operator should only be called when LVGROUP is a 32 bit structure
-            static public explicit operator NativeMethods.LVGROUP(LVGROUP_64 item)
+            public static explicit operator NativeMethods.LVGROUP(LVGROUP_64 item)
             {
                 NativeMethods.LVGROUP nativeItem = new NativeMethods.LVGROUP
                 {
@@ -2224,7 +2223,7 @@ namespace MS.Internal.AutomationProxies
             }
 
             // This operator should only be called when LVGROUP is a 32 bit structure
-            static public explicit operator NativeMethods.LVGROUP_V6(LVGROUP_V6_64 item)
+            public static explicit operator NativeMethods.LVGROUP_V6(LVGROUP_V6_64 item)
             {
                 NativeMethods.LVGROUP_V6 nativeItem = new NativeMethods.LVGROUP_V6
                 {
@@ -2286,7 +2285,7 @@ namespace MS.Internal.AutomationProxies
             }
 
             // This operator should only be called when TBBUTTON is a 64 bit structure
-            static public explicit operator NativeMethods.TBBUTTON(TBBUTTON_32 item)
+            public static explicit operator NativeMethods.TBBUTTON(TBBUTTON_32 item)
             {
                 NativeMethods.TBBUTTON nativeItem = new NativeMethods.TBBUTTON
                 {
@@ -2332,7 +2331,7 @@ namespace MS.Internal.AutomationProxies
             }
 
             // This operator should only be called when TBBUTTON is a 32 bit structure
-            static public explicit operator NativeMethods.TBBUTTON(TBBUTTON_64 item)
+            public static explicit operator NativeMethods.TBBUTTON(TBBUTTON_64 item)
             {
                 NativeMethods.TBBUTTON nativeItem = new NativeMethods.TBBUTTON
                 {
@@ -2386,7 +2385,7 @@ namespace MS.Internal.AutomationProxies
             }
 
             // This operator should only be called when TVITEM is a 64 bit structure
-            static public explicit operator NativeMethods.TVITEM(TVITEM_32 item)
+            public static explicit operator NativeMethods.TVITEM(TVITEM_32 item)
             {
                 NativeMethods.TVITEM nativeItem = new NativeMethods.TVITEM
                 {
@@ -2438,7 +2437,7 @@ namespace MS.Internal.AutomationProxies
             }
 
             // This operator should only be called when TVITEM is a 32 bit structure
-            static public explicit operator NativeMethods.TVITEM(TVITEM_64 item)
+            public static explicit operator NativeMethods.TVITEM(TVITEM_64 item)
             {
                 NativeMethods.TVITEM nativeItem = new NativeMethods.TVITEM
                 {
@@ -2474,7 +2473,7 @@ namespace MS.Internal.AutomationProxies
             }
 
             // This operator should only be called when TVHITTESTINFO is a 64 bit structure
-            static public explicit operator NativeMethods.TVHITTESTINFO(TVHITTESTINFO_32 hitTestInfo)
+            public static explicit operator NativeMethods.TVHITTESTINFO(TVHITTESTINFO_32 hitTestInfo)
             {
                 NativeMethods.TVHITTESTINFO nativeHitTestInfo = new NativeMethods.TVHITTESTINFO
                 {
@@ -2503,7 +2502,7 @@ namespace MS.Internal.AutomationProxies
             }
 
             // This operator should only be called when hitTestInfo is a 32 bit structure
-            static public explicit operator NativeMethods.TVHITTESTINFO(TVHITTESTINFO_64 hitTestInfo64)
+            public static explicit operator NativeMethods.TVHITTESTINFO(TVHITTESTINFO_64 hitTestInfo64)
             {
                 NativeMethods.TVHITTESTINFO nativeHitTestInfo = new NativeMethods.TVHITTESTINFO
                 {
@@ -2541,7 +2540,7 @@ namespace MS.Internal.AutomationProxies
             }
 
             // This operator should only be called when TOOLINFO is a 64 bit structure
-            static public explicit operator NativeMethods.TOOLINFO(TOOLINFO_32 item)
+            public static explicit operator NativeMethods.TOOLINFO(TOOLINFO_32 item)
             {
                 NativeMethods.TOOLINFO nativeItem = new NativeMethods.TOOLINFO
                 {
@@ -2585,7 +2584,7 @@ namespace MS.Internal.AutomationProxies
             }
 
             // This operator should only be called when LVGROUP is a 32 bit structure
-            static public explicit operator NativeMethods.TOOLINFO(TOOLINFO_64 item)
+            public static explicit operator NativeMethods.TOOLINFO(TOOLINFO_64 item)
             {
                 NativeMethods.TOOLINFO nativeItem = new NativeMethods.TOOLINFO
                 {

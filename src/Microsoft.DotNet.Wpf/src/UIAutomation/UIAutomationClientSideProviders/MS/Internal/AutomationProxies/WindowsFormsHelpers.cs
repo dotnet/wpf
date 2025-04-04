@@ -1,6 +1,5 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 // Description:
 //      This proxy is the base class for all proxies that support Windows
@@ -15,7 +14,7 @@ using MS.Win32;
 namespace MS.Internal.AutomationProxies
 {
     // Helper static class used by the Win32 proxies to get Winforms information
-    static class WindowsFormsHelper
+    internal static class WindowsFormsHelper
     {
         #region Proxy Create
 
@@ -112,26 +111,26 @@ namespace MS.Internal.AutomationProxies
 
         // Checks if an hwnd is a winform.
         // Returns True/False if the hwnd is a winform.
-        static internal FormControlState GetControlState(IntPtr hwnd)
+        internal static FormControlState GetControlState(IntPtr hwnd)
         {
             return IsWindowsFormsControl(hwnd) ? FormControlState.True : FormControlState.False;
         }
 
         // Checks if an a class name is a winform classname.
         // Returns True/False if the classname is a winform.
-        static internal bool IsWindowsFormsControl(string className)
+        internal static bool IsWindowsFormsControl(string className)
         {
             return className.IndexOf(_WindowsFormsClassName, StringComparison.OrdinalIgnoreCase) > -1;
         }
 
         // Checks if an a class name is a winform classname.
         // Returns True/False if the classname is a winform.
-        static internal bool IsWindowsFormsControl(IntPtr hwnd)
+        internal static bool IsWindowsFormsControl(IntPtr hwnd)
         {
             return IsWindowsFormsControl(Misc.GetClassName(hwnd));
         }
 
-        static internal bool IsWindowsFormsControl(IntPtr hwnd, ref FormControlState state)
+        internal static bool IsWindowsFormsControl(IntPtr hwnd, ref FormControlState state)
         {
             if (state == FormControlState.Undeterminate)
             {
@@ -142,14 +141,14 @@ namespace MS.Internal.AutomationProxies
         }
 
         // The control name is the only real "Persistent" ID in Windows Forms
-        static internal string WindowsFormsID(IntPtr hwnd)
+        internal static string WindowsFormsID(IntPtr hwnd)
         {
             return GetControlName(hwnd);
         }
 
         // Extract the internal Name property of the Windows Forms control using
         // the WM_GETCONTROLNAME message.
-        static internal string GetControlName(IntPtr hwnd)
+        internal static string GetControlName(IntPtr hwnd)
         {
             string winFormsID = "";
             if (XSendMessage.XSend(hwnd, WM_GETCONTROLNAME, new IntPtr(Misc.MaxLengthNameProperty), ref winFormsID, Misc.MaxLengthNameProperty))

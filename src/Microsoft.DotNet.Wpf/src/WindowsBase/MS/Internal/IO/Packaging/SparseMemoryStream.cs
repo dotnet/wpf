@@ -1,6 +1,5 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 // Description:
 //  This is an internal class that is build around ArrayList of Memory streams to enable really large (63 bit size)
@@ -17,7 +16,7 @@ namespace MS.Internal.IO.Packaging
         //  Public Methods
         //
         //------------------------------------------------------
-        override public bool CanRead
+        public override bool CanRead
         {
             get
             {
@@ -25,7 +24,7 @@ namespace MS.Internal.IO.Packaging
             }
         }
 
-        override public bool CanSeek
+        public override bool CanSeek
         {
             get
             {
@@ -33,7 +32,7 @@ namespace MS.Internal.IO.Packaging
             }
         }
 
-        override public bool CanWrite
+        public override bool CanWrite
         {
             get
             {
@@ -41,7 +40,7 @@ namespace MS.Internal.IO.Packaging
             }
         }
 
-        override public long Length
+        public override long Length
         {
             get
             {
@@ -51,7 +50,7 @@ namespace MS.Internal.IO.Packaging
             }
         }
 
-        override public long Position
+        public override long Position
         {
             get
             {
@@ -133,7 +132,7 @@ namespace MS.Internal.IO.Packaging
 #endif
         }
 
-        override public long Seek(long offset, SeekOrigin origin)
+        public override long Seek(long offset, SeekOrigin origin)
         {
             CheckDisposed();
             long newStreamPosition = _currentStreamPosition;
@@ -164,7 +163,7 @@ namespace MS.Internal.IO.Packaging
             return _currentStreamPosition;
         }
 
-        override public int Read(byte[] buffer, int offset, int count)
+        public override int Read(byte[] buffer, int offset, int count)
         {
             CheckDisposed();
 
@@ -241,7 +240,7 @@ namespace MS.Internal.IO.Packaging
             }
         }
 
-        override public void Write(byte[] buffer, int offset, int count)
+        public override void Write(byte[] buffer, int offset, int count)
         {
             CheckDisposed();
 #if DEBUG
@@ -282,7 +281,7 @@ namespace MS.Internal.IO.Packaging
 #endif
         }
 
-        override public void Flush()
+        public override void Flush()
         {
             CheckDisposed();
         }

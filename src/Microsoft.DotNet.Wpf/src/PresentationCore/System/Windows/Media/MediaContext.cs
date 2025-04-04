@@ -1,6 +1,5 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 using System.Threading;
 using System.Windows.Threading;
@@ -1390,7 +1389,7 @@ namespace System.Windows.Media
         /// <summary>
         /// Called by the Dispatcher to let us know that we are going away.
         /// </summary>
-        void OnDestroyContext(object sender, EventArgs e)
+        private void OnDestroyContext(object sender, EventArgs e)
         {
             Debug.Assert(CheckAccess());
             Dispose();
@@ -2899,7 +2898,7 @@ namespace System.Windows.Media
         /// </summary>
         private MIL_PRESENTATION_RESULTS _lastPresentationResults = MIL_PRESENTATION_RESULTS.MIL_PRESENTATION_VSYNC_UNSUPPORTED;
 
-        static private long _perfCounterFreq;
+        private static long _perfCounterFreq;
 
         private const long MaxTicksWithoutInput = TimeSpan.TicksPerSecond / 2;
 

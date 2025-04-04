@@ -1,6 +1,5 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 
 using System.Collections;              // for ArrayList
@@ -450,9 +449,9 @@ namespace Microsoft.Internal.AlphaFlattener
 
 #if DEBUG
 
-        static int vipID; // = 0;
+        private static int vipID; // = 0;
 
-        static void SerializeVisual(Visual visual, double width, double height, String filename)
+        private static void SerializeVisual(Visual visual, double width, double height, String filename)
         {
             FileStream    stream = new FileStream(filename, FileMode.Create, FileAccess.ReadWrite);
             XmlTextWriter writer = new System.Xml.XmlTextWriter(stream, System.Text.Encoding.UTF8)
@@ -535,7 +534,7 @@ namespace Microsoft.Internal.AlphaFlattener
         /// <param name="j">second command</param>
         /// <param name="pj">command[j]</param>
         /// <param name="disconnect">Disconnect (i,j) overlap/underlay relationship</param>
-        static private void SwitchCommands(List<PrimitiveInfo> commands, int i, PrimitiveInfo pi, int j, PrimitiveInfo pj, bool disconnect)
+        private static void SwitchCommands(List<PrimitiveInfo> commands, int i, PrimitiveInfo pi, int j, PrimitiveInfo pj, bool disconnect)
         {
             if ((pi != null) && (pj != null) && disconnect)
             {
@@ -955,7 +954,7 @@ namespace Microsoft.Internal.AlphaFlattener
 
 #if DEBUG
 
-        static bool HasUnmanagedCodePermission()
+        private static bool HasUnmanagedCodePermission()
         {
             return true;
         }

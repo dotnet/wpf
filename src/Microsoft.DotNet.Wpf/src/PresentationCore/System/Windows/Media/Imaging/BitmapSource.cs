@@ -1,6 +1,5 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 using System.Windows.Media.Composition;
 using System.Runtime.CompilerServices;
@@ -68,7 +67,7 @@ namespace System.Windows.Media.Imaging
         /// <remarks>
         ///     Callers must have UnmanagedCode permission to call this API.
         /// </remarks>
-        unsafe public static BitmapSource Create(
+        public static unsafe BitmapSource Create(
             int pixelWidth,
             int pixelHeight,
             double dpiX,
@@ -632,7 +631,7 @@ namespace System.Windows.Media.Imaging
         /// <param name="pixels"></param>
         /// <param name="stride"></param>
         /// <param name="offset"></param>
-        unsafe internal void CriticalCopyPixels(Int32Rect sourceRect, Array pixels, int stride, int offset)
+        internal unsafe void CriticalCopyPixels(Int32Rect sourceRect, Array pixels, int stride, int offset)
         {
             ReadPreamble();
             _bitmapInit.EnsureInitializedComplete();
@@ -1587,7 +1586,7 @@ namespace System.Windows.Media.Imaging
 
         /// List of supported DUCE formats
         /// NOTE: Please add formats in increasing bpp order
-        private readonly static PixelFormat[] s_supportedDUCEFormats =
+        private static readonly PixelFormat[] s_supportedDUCEFormats =
             new PixelFormat[13]
             {
                 PixelFormats.Indexed1,

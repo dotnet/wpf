@@ -1,6 +1,5 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 using System.ComponentModel;
 using System.Runtime.InteropServices;
@@ -1124,7 +1123,7 @@ namespace System.Windows.Media
         #region Private Fields
 
         [MarshalAs(UnmanagedType.Interface)]
-        ColorContext context;
+        private ColorContext context;
 
         private struct MILColorF // this structure is the "milrendertypes.h" structure and should be identical for performance
         {

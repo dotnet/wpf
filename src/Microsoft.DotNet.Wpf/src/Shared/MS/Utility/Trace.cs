@@ -1,6 +1,5 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 // Implements ETW tracing for Avalon Managed Code
 
@@ -14,13 +13,13 @@ namespace MS.Utility
 {
     #region Trace
 
-    static internal partial class EventTrace
+    internal static partial class EventTrace
     {
-        static readonly internal TraceProvider EventProvider;
+        internal static readonly TraceProvider EventProvider;
 
         // EasyTraceEvent
         // Checks the keyword and level before emiting the event
-        static internal void EasyTraceEvent(Keyword keywords, Event eventID)
+        internal static void EasyTraceEvent(Keyword keywords, Event eventID)
         {
             if (IsEnabled(keywords, Level.Info))
             {
@@ -30,7 +29,7 @@ namespace MS.Utility
 
         // EasyTraceEvent
         // Checks the keyword and level before emiting the event
-        static internal void EasyTraceEvent(Keyword keywords, Level level, Event eventID)
+        internal static void EasyTraceEvent(Keyword keywords, Level level, Event eventID)
         {
             if (IsEnabled(keywords, level))
             {
@@ -40,7 +39,7 @@ namespace MS.Utility
 
         // EasyTraceEvent
         // Checks the keyword and level before emiting the event
-        static internal void EasyTraceEvent<T1>(Keyword keywords, Event eventID, T1 param1)
+        internal static void EasyTraceEvent<T1>(Keyword keywords, Event eventID, T1 param1)
         {
             if (IsEnabled(keywords, Level.Info))
             {
@@ -50,7 +49,7 @@ namespace MS.Utility
 
         // EasyTraceEvent
         // Checks the keyword and level before emiting the event
-        static internal void EasyTraceEvent<T1>(Keyword keywords, Level level, Event eventID, T1 param1)
+        internal static void EasyTraceEvent<T1>(Keyword keywords, Level level, Event eventID, T1 param1)
         {
             if (IsEnabled(keywords, level))
             {
@@ -60,7 +59,7 @@ namespace MS.Utility
 
         // EasyTraceEvent
         // Checks the keyword and level before emiting the event
-        static internal void EasyTraceEvent<T1, T2>(Keyword keywords, Event eventID, T1 param1, T2 param2)
+        internal static void EasyTraceEvent<T1, T2>(Keyword keywords, Event eventID, T1 param1, T2 param2)
         {
             if (IsEnabled(keywords, Level.Info))
             {
@@ -68,7 +67,7 @@ namespace MS.Utility
             }
         }
 
-        static internal void EasyTraceEvent<T1, T2>(Keyword keywords, Level level, Event eventID, T1 param1, T2 param2)
+        internal static void EasyTraceEvent<T1, T2>(Keyword keywords, Level level, Event eventID, T1 param1, T2 param2)
         {
             if (IsEnabled(keywords, Level.Info))
             {
@@ -78,7 +77,7 @@ namespace MS.Utility
 
         // EasyTraceEvent
         // Checks the keyword and level before emiting the event
-        static internal void EasyTraceEvent<T1, T2, T3>(Keyword keywords, Event eventID, T1 param1, T2 param2, T3 param3)
+        internal static void EasyTraceEvent<T1, T2, T3>(Keyword keywords, Event eventID, T1 param1, T2 param2, T3 param3)
         {
             if (IsEnabled(keywords, Level.Info))
             {
@@ -100,7 +99,7 @@ namespace MS.Utility
         /// <summary>
         /// Callers use this to check if they should be logging.
         /// </summary>
-        static internal bool IsEnabled(Keyword flag, Level level)
+        internal static bool IsEnabled(Keyword flag, Level level)
         {
             return EventProvider.IsEnabled(flag, level);
         }
@@ -125,7 +124,7 @@ namespace MS.Utility
             EventProvider.Register(providerGuid);
         }
 
-        static bool IsClassicETWRegistryEnabled()
+        private static bool IsClassicETWRegistryEnabled()
         {
             string regKey = @"HKEY_CURRENT_USER\Software\Microsoft\Avalon.Graphics\";                
             return int.Equals(1, Microsoft.Win32.Registry.GetValue(regKey, "ClassicETW", 0));

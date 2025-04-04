@@ -1,6 +1,5 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 // Description: Win32 TreeView proxy
 
@@ -14,7 +13,7 @@ using MS.Win32;
 
 namespace MS.Internal.AutomationProxies
 {
-    class WindowsTreeView : ProxyHwnd, ISelectionProvider
+    internal class WindowsTreeView : ProxyHwnd, ISelectionProvider
     {
         // ------------------------------------------------------
         //
@@ -494,7 +493,7 @@ namespace MS.Internal.AutomationProxies
         }
 
         // set the check state for the specified item
-        private unsafe static bool SetCheckState (IntPtr hwnd, IntPtr item, bool check)
+        private static unsafe bool SetCheckState (IntPtr hwnd, IntPtr item, bool check)
         {
             uint val = (check) ? 2U : 1U;
 
@@ -705,7 +704,7 @@ namespace MS.Internal.AutomationProxies
         #region TreeViewItem
 
         // Summary description for TreeViewItem.
-        class TreeViewItem : ProxyFragment, ISelectionItemProvider, IExpandCollapseProvider, IValueProvider, IToggleProvider, IScrollItemProvider, IInvokeProvider
+        private class TreeViewItem : ProxyFragment, ISelectionItemProvider, IExpandCollapseProvider, IValueProvider, IToggleProvider, IScrollItemProvider, IInvokeProvider
         {
             // ------------------------------------------------------
             //

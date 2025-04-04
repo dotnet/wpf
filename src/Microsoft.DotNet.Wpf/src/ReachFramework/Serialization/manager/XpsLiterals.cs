@@ -1,6 +1,5 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 /*++
                                                                               
@@ -25,8 +24,8 @@ namespace System.Windows.Xps.Packaging
         {
         }
 
-        static
         public
+        static
         String
         PrintTicketProperty
         {
@@ -36,8 +35,8 @@ namespace System.Windows.Xps.Packaging
             }
         }
 
-        static
         public
+        static
         String
         ClrProperty
         {
@@ -59,8 +58,8 @@ namespace System.Windows.Xps.Packaging
 
     internal class XpsS0Markup
     {
-        static
         public
+        static
         String
         PackageRelationshipUri
         {
@@ -70,8 +69,8 @@ namespace System.Windows.Xps.Packaging
             }
         }
 
-        static
         public
+        static
         String
         ObfuscatedFontExt
         {
@@ -81,8 +80,8 @@ namespace System.Windows.Xps.Packaging
             }
         }
 
-        static
         public
+        static
         String
         PageWidth
         {
@@ -92,8 +91,8 @@ namespace System.Windows.Xps.Packaging
             }
         }
 
-        static
         public
+        static
         String
         PageHeight
         {
@@ -103,8 +102,8 @@ namespace System.Windows.Xps.Packaging
             }
         }
 
-        static
         public
+        static
         String
         FixedPage
         {
@@ -114,8 +113,8 @@ namespace System.Windows.Xps.Packaging
             }
         }
 
-        static
         public
+        static
         String
         FixedDocument
         {
@@ -125,8 +124,8 @@ namespace System.Windows.Xps.Packaging
             }
         }
 
-        static
         public
+        static
         String
         FixedDocumentSequence
         {
@@ -136,8 +135,8 @@ namespace System.Windows.Xps.Packaging
             }
         }
 
-        static
         public
+        static
         String
         PageContent
         {
@@ -147,8 +146,8 @@ namespace System.Windows.Xps.Packaging
             }
         }
 
-        static
         public
+        static
         String
         DocumentReference
         {
@@ -158,8 +157,8 @@ namespace System.Windows.Xps.Packaging
             }
         }
 
-        static
         public
+        static
         String
         StoryFragments
         {
@@ -171,8 +170,8 @@ namespace System.Windows.Xps.Packaging
 
 
  
-        static
         public
+        static
         String
         Xmlns
         {
@@ -182,8 +181,8 @@ namespace System.Windows.Xps.Packaging
             }
         }
 
-        static
         public
+        static
         String
         XmlnsX
         {
@@ -193,8 +192,8 @@ namespace System.Windows.Xps.Packaging
             }
         }
 
-        static
         public
+        static
         String
         XmlLang
         {
@@ -204,8 +203,8 @@ namespace System.Windows.Xps.Packaging
             }
         }
 
-        static
         public
+        static
         String
         XmlnsXSchema
         {
@@ -215,8 +214,8 @@ namespace System.Windows.Xps.Packaging
             }
         }
 
-        static
         public
+        static
         String
         XmlLangValue
         {
@@ -226,8 +225,8 @@ namespace System.Windows.Xps.Packaging
             }
         }
 
-        static
         public
+        static
         String
         XmlEngLangValue
         {
@@ -237,8 +236,8 @@ namespace System.Windows.Xps.Packaging
             }
         }
 
-        static
         public
+        static
         String
         ImageUriPlaceHolder
         {
@@ -248,8 +247,8 @@ namespace System.Windows.Xps.Packaging
             }
         }
 
-        static
         public
+        static
         String
         ColorContextUriPlaceHolder
         {
@@ -259,8 +258,8 @@ namespace System.Windows.Xps.Packaging
             }
         }
 
-        static
         public
+        static
         String
         ResourceDictionaryUriPlaceHolder
         {
@@ -270,8 +269,8 @@ namespace System.Windows.Xps.Packaging
             }
         }
 
-        static
         public
+        static
         String
         FontUriPlaceHolder
         {
@@ -281,8 +280,8 @@ namespace System.Windows.Xps.Packaging
             }
         }
 
-        static
         public
+        static
         String
         ResourceDictionary
         {
@@ -292,8 +291,8 @@ namespace System.Windows.Xps.Packaging
             }
         }
 
-        static
         public
+        static
         String
         PageResources
         {
@@ -304,8 +303,8 @@ namespace System.Windows.Xps.Packaging
         }
 
 
-        static
         public
+        static
         String
         SignatureDefinition
         {
@@ -315,8 +314,8 @@ namespace System.Windows.Xps.Packaging
             }
         }
 
-        static
         public
+        static
         String
         SignatureDefinitions
         {
@@ -326,8 +325,8 @@ namespace System.Windows.Xps.Packaging
             }
         }
 
-        static
         public
+        static
         String
         RequestedSigner
         {
@@ -337,8 +336,8 @@ namespace System.Windows.Xps.Packaging
             }
         }
 
-        static
         public
+        static
         String
         SpotLocation
         {
@@ -348,8 +347,8 @@ namespace System.Windows.Xps.Packaging
             }
         }
 
-        static
         public
+        static
         String
         PageUri
         {
@@ -359,8 +358,8 @@ namespace System.Windows.Xps.Packaging
             }
         }
 
-        static
         public
+        static
         String
         StartX
         {
@@ -370,8 +369,8 @@ namespace System.Windows.Xps.Packaging
             }
         }
 
-        static
         public
+        static
         String
         StartY
         {
@@ -381,8 +380,8 @@ namespace System.Windows.Xps.Packaging
             }
         }
 
-        static
         public
+        static
         String
         Intent
         {
@@ -392,8 +391,8 @@ namespace System.Windows.Xps.Packaging
             }
         }
 
-        static
         public
+        static
         String
         SignBy
         {
@@ -403,8 +402,8 @@ namespace System.Windows.Xps.Packaging
             }
         }
 
-        static
         public
+        static
         String
         SigningLocale
         {
@@ -414,8 +413,8 @@ namespace System.Windows.Xps.Packaging
             }
         }
 
-        static
         public
+        static
         String
         SpotId
         {
@@ -425,8 +424,8 @@ namespace System.Windows.Xps.Packaging
             }
         }
 
-        static
         public
+        static
         String
         GetXmlnsUri(
             int index
@@ -435,8 +434,8 @@ namespace System.Windows.Xps.Packaging
             return _xmlnsUri[index];
         }
 
-        static
         public
+        static
         XmlnsUriContainer
         XmlnsUri
         {
@@ -446,8 +445,8 @@ namespace System.Windows.Xps.Packaging
             }
         }
 
-        static
         public
+        static
         ContentType
         ApplicationXaml
         {
@@ -457,8 +456,8 @@ namespace System.Windows.Xps.Packaging
             }
         }
 
-        static
         public
+        static
         ContentType
         DocumentSequenceContentType
         {
@@ -470,8 +469,8 @@ namespace System.Windows.Xps.Packaging
         }
 
 
-        static
         public
+        static
         ContentType
         FixedDocumentContentType      
         {
@@ -482,8 +481,8 @@ namespace System.Windows.Xps.Packaging
         }
 
 
-        static
         public
+        static
         ContentType
         FixedPageContentType          
         {
@@ -494,8 +493,8 @@ namespace System.Windows.Xps.Packaging
         }
 
 
-        static
         public
+        static
         ContentType
         DocumentStructureContentType          
         {
@@ -506,8 +505,8 @@ namespace System.Windows.Xps.Packaging
         }
 
 
-        static
         public
+        static
         ContentType
         StoryFragmentsContentType
         {
@@ -519,8 +518,8 @@ namespace System.Windows.Xps.Packaging
 
 
 
-        static
         public
+        static
         ContentType
         SignatureDefintionType          
         {
@@ -530,8 +529,8 @@ namespace System.Windows.Xps.Packaging
             }
         }
 
-        static
         public
+        static
         ContentType
         CoreDocumentPropertiesType          
         {
@@ -542,8 +541,8 @@ namespace System.Windows.Xps.Packaging
         }
 
 
-        static
         public
+        static
         ContentType
         PrintTicketContentType       
         {
@@ -553,8 +552,8 @@ namespace System.Windows.Xps.Packaging
             }
         }
 
-        static
         public
+        static
         ContentType
         ResourceContentType          
         {
@@ -564,8 +563,8 @@ namespace System.Windows.Xps.Packaging
             }
         }
 
-        static
         public
+        static
         ContentType
         FontContentType              
         {
@@ -575,8 +574,8 @@ namespace System.Windows.Xps.Packaging
             }
         }
 
-        static
         public
+        static
         ContentType
         FontObfuscatedContentType              
         {
@@ -586,8 +585,8 @@ namespace System.Windows.Xps.Packaging
             }
         }
 
-        static
         public
+        static
         ContentType
         ColorContextContentType              
         {
@@ -599,8 +598,8 @@ namespace System.Windows.Xps.Packaging
 
 
 
-        static
         public
+        static
         ContentType
         JpgContentType              
         {
@@ -610,8 +609,8 @@ namespace System.Windows.Xps.Packaging
             }
         }
 
-        static
         public
+        static
         ContentType
         SigOriginContentType              
         {
@@ -621,8 +620,8 @@ namespace System.Windows.Xps.Packaging
             }
         }
 
-        static
         public
+        static
         ContentType
         SigCertContentType              
         {
@@ -632,8 +631,8 @@ namespace System.Windows.Xps.Packaging
             }
         }
 
-        static
         public
+        static
         ContentType
         DiscardContentType              
         {
@@ -643,8 +642,8 @@ namespace System.Windows.Xps.Packaging
             }
         }
         
-        static
         public
+        static
         ContentType
         RelationshipContentType              
         {
@@ -654,8 +653,8 @@ namespace System.Windows.Xps.Packaging
             }
         }
 
-        static
         public
+        static
         String
         JpgExtension              
         {
@@ -665,8 +664,8 @@ namespace System.Windows.Xps.Packaging
             }
         }
 
-        static
         public
+        static
         ContentType
         PngContentType              
         {
@@ -676,8 +675,8 @@ namespace System.Windows.Xps.Packaging
             }
         }
 
-        static
         public
+        static
         String
         PngExtension              
         {
@@ -687,8 +686,8 @@ namespace System.Windows.Xps.Packaging
             }
         }
         
-        static
         public
+        static
         ContentType
         TifContentType              
         {
@@ -698,8 +697,8 @@ namespace System.Windows.Xps.Packaging
             }
         }
 
-        static
         public
+        static
         String
         TifExtension              
         {
@@ -709,8 +708,8 @@ namespace System.Windows.Xps.Packaging
             }
         }
         
-        static
         public
+        static
         ContentType
         WdpContentType              
         {
@@ -720,8 +719,8 @@ namespace System.Windows.Xps.Packaging
             }
         }
 
-        static
         public
+        static
         String
         WdpExtension              
         {
@@ -731,8 +730,8 @@ namespace System.Windows.Xps.Packaging
             }
         }
 
-        static
         public
+        static
         ContentType
         WmpContentType
         {
@@ -742,8 +741,8 @@ namespace System.Windows.Xps.Packaging
             }
         }
 
-        static
         public
+        static
         ContentType
         ResourceDictionaryContentType
         {
@@ -753,8 +752,8 @@ namespace System.Windows.Xps.Packaging
             }
         }
 
-        static
         public
+        static
         String
         DocumentSequenceNamespace
         {
@@ -764,8 +763,8 @@ namespace System.Windows.Xps.Packaging
             }
         }
 
-        static
         public
+        static
         String
         FixedDocumentNamespace
         {
@@ -775,8 +774,8 @@ namespace System.Windows.Xps.Packaging
             }
         }
 
-        static
         public
+        static
         String
         SignatureDefinitionNamespace
         {
@@ -786,8 +785,8 @@ namespace System.Windows.Xps.Packaging
             }
         }
 
-        static
         public
+        static
         String
         CorePropertiesRelationshipType
         {
@@ -797,8 +796,8 @@ namespace System.Windows.Xps.Packaging
             }
         }
 
-        static
         public
+        static
         String
         StructureRelationshipName
         {
@@ -808,8 +807,8 @@ namespace System.Windows.Xps.Packaging
             }
         }
 
-        static
         public
+        static
         String
         StoryFragmentsRelationshipName
         {
@@ -819,8 +818,8 @@ namespace System.Windows.Xps.Packaging
             }
         }
 
-        static
         public
+        static
         String
         ReachPackageStartingPartRelationshipType
         {
@@ -830,8 +829,8 @@ namespace System.Windows.Xps.Packaging
             }
         }
         
-        static
         public
+        static
         String
         ResourceRelationshipName
         {
@@ -841,8 +840,8 @@ namespace System.Windows.Xps.Packaging
             }
         }
 
-        static
         public
+        static
         String
         PrintTicketRelationshipName
         {
@@ -852,8 +851,8 @@ namespace System.Windows.Xps.Packaging
             }
         }
 
-        static
         public
+        static
         String
         SignatureDefinitionRelationshipName
         {
@@ -863,8 +862,8 @@ namespace System.Windows.Xps.Packaging
             }
         }
 
-        static
         public
+        static
         String
         RestrictedFontRelationshipType
         {
@@ -874,8 +873,8 @@ namespace System.Windows.Xps.Packaging
             }
         }
 
-        static
         public
+        static
         String
         DitialSignatureRelationshipType
         {
@@ -886,8 +885,8 @@ namespace System.Windows.Xps.Packaging
         }
 
 
-        static
         public
+        static
         String
         ThumbnailRelationshipName
         {
@@ -897,8 +896,8 @@ namespace System.Windows.Xps.Packaging
             }
         }
 
-        static
         public
+        static
         String
         VersionExtensiblityNamespace
         {
@@ -1058,119 +1057,119 @@ namespace System.Windows.Xps.Packaging
         const
         String  _spotId                             = "SpotID";
 
-        static
         private
+        static
         readonly
         String[]  _xmlnsUri                         = {"http://schemas.microsoft.com/xps/2005/06",
                                                        "http://schemas.microsoft.com/xps/2005/06",
                                                        "http://schemas.microsoft.com/xps/2005/06"};
 
-        static
         private
+        static
         ContentType _applicationXaml                     = new ContentType("application/xaml+xml");
 
-        static
         private
+        static
         ContentType _documentSequenceContentType         = new ContentType("application/vnd.ms-package.xps-fixeddocumentsequence+xml");
 
-        static
         private
+        static
         ContentType _fixedDocumentContentType            = new ContentType("application/vnd.ms-package.xps-fixeddocument+xml");
 
-        static
         private
+        static
         ContentType _fixedPageContentType                = new ContentType("application/vnd.ms-package.xps-fixedpage+xml");
 
-        static
         private
+        static
         ContentType _documentStructureContentType        = new ContentType("application/vnd.ms-package.xps-documentstructure+xml");
 
-        static
         private
+        static
         ContentType _storyFragmentsContentType           = new ContentType("application/vnd.ms-package.xps-storyfragments+xml");
 
-        static
         private
+        static
         ContentType _printTicketContentType              = new ContentType("application/vnd.ms-printing.printticket+xml");
 
-        static
         private
+        static
         ContentType _signatureDefinitionType             = new ContentType("application/xml");
 
-        static
         private
+        static
         ContentType _coreDocumentPropertiesContentType   = new ContentType("application/vnd.openxmlformats-package.core-properties+xml");
 
-        static
         private
+        static
         ContentType _resourceContentType                 = new ContentType("application/resource-PLACEHOLDER");
 
-        static
         private
+        static
         ContentType _fontContentType                     = new ContentType("application/vnd.ms-opentype");
 
-        static
         private
+        static
         ContentType _colorContextContentType             = new ContentType("application/vnd.ms-color.iccprofile");
 
-        static
         private
+        static
         ContentType _obfuscatedContentType               = new ContentType("application/vnd.ms-package.obfuscated-opentype");
 
-        static
         private
+        static
         ContentType _jpgContentType                      = new ContentType("image/jpeg");
 
-        static
         private
+        static
         ContentType _sigOriginContentType                      = new ContentType("application/vnd.openxmlformats-package.digital-signature-origin");
 
-        static
         private
+        static
         ContentType _sigCertContentType                      = new ContentType("application/vnd.openxmlformats-package.digital-signature-certificate");
 
-        static
         private
+        static
         ContentType _discardContentType                      = new ContentType("application/vnd.ms-package.xps-discard-control+xml");
 
-        static
         private
+        static
         ContentType _relationshipContentType                 = new ContentType("application/vnd.openxmlformats-package.relationships+xml");
 
         private
         const
         string _jpgExtension                             = "jpg";
 
-        static
         private
+        static
         ContentType _pngContentType                      = new ContentType("image/png");
 
         private
         const
         string _pngExtension                             = "png";
 
-        static
         private
+        static
         ContentType _tifContentType                      = new ContentType("image/tiff");
 
-        static
         private
+        static
         string _tifExtension                             = "tif";
 
-        static
         private
+        static
         ContentType _wdpContentType                      = new ContentType("image/vnd.ms-photo");
 
         private
         const
         string _wdpExtension                             = "wdp";
 
-        static
         private
+        static
         ContentType _wmpContentType                      = new ContentType("image/vnd.ms-photo");
 
-        static
         private
+        static
         ContentType _resourceDictionaryContentType       = new ContentType("application/vnd.ms-package.xps-resourcedictionary+xml");
 
         private
@@ -1225,8 +1224,8 @@ namespace System.Windows.Xps.Packaging
         const
         string _ditialSignatureRelationshipType           = "http://schemas.openxmlformats.org/package/2006/relationships/digital-signature/signature";
    
-        static
         private
+        static
         XmlnsUriContainer  _xmlnsUriContainer            = new XmlnsUriContainer();
 
         private
@@ -1242,8 +1241,8 @@ namespace System.Windows.Xps.Packaging
         {
         }
 
-        static
         public
+        static
         String
         Source
         {

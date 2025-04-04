@@ -1,6 +1,5 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 //---------------------------------------------------------------------------
 //
@@ -216,7 +215,7 @@ namespace MS.Internal
         /// Get fixed address of the character buffer and Pin if necessary.
         /// Note: This call should only be used when we know that we are not pinning 
         /// memory for a long time so as not to fragment the heap.
-        public unsafe override IntPtr PinAndGetCharacterPointer(int offset, out GCHandle gcHandle)
+        public override unsafe IntPtr PinAndGetCharacterPointer(int offset, out GCHandle gcHandle)
         {
             gcHandle = GCHandle.Alloc(_characterArray, GCHandleType.Pinned);
             return new IntPtr(((char*)gcHandle.AddrOfPinnedObject().ToPointer()) + offset);
@@ -315,7 +314,7 @@ namespace MS.Internal
         /// Get fixed address of the character buffer and Pin if necessary.
         /// Note: This call should only be used when we know that we are not pinning 
         /// memory for a long time so as not to fragment the heap.
-        public unsafe override IntPtr PinAndGetCharacterPointer(int offset, out GCHandle gcHandle)
+        public override unsafe IntPtr PinAndGetCharacterPointer(int offset, out GCHandle gcHandle)
         {
             gcHandle = GCHandle.Alloc(_string, GCHandleType.Pinned);
             return new IntPtr(((char*)gcHandle.AddrOfPinnedObject().ToPointer()) + offset);

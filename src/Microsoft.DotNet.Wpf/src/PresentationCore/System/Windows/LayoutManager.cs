@@ -1,6 +1,5 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 using System.Windows.Threading;
 using System.Windows.Media;
@@ -20,7 +19,7 @@ namespace System.Windows
             Dispatcher.ShutdownFinished += _shutdownHandler;
         }
 
-        void OnDispatcherShutdown(object sender, EventArgs e)
+        private void OnDispatcherShutdown(object sender, EventArgs e)
         {
             if(_shutdownHandler != null)
                 Dispatcher.ShutdownFinished -= _shutdownHandler;

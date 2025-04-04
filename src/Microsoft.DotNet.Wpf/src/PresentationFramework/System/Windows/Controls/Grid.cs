@@ -1,6 +1,5 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 //
 // Description: Grid implementation.
@@ -3232,7 +3231,7 @@ namespace System.Windows.Controls
         /// <summary>
         /// Returns *-weight, adjusted for scale computed during Phase 1
         /// </summary>
-        static double StarWeight(DefinitionBase def, double scale)
+        private static double StarWeight(DefinitionBase def, double scale)
         {
             if (scale < 0.0)
             {
@@ -3261,10 +3260,10 @@ namespace System.Windows.Controls
         private GridLinesRenderer _gridLinesRenderer;
 
         // Keeps track of definition indices.
-        int[] _definitionIndices;
+        private int[] _definitionIndices;
 
         // Stores unrounded values and rounding errors during layout rounding.
-        double[] _roundingErrors;
+        private double[] _roundingErrors;
 
         #endregion Private Fields
 

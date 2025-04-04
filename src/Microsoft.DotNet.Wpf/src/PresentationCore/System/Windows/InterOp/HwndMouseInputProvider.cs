@@ -1,6 +1,5 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 using System.Windows.Threading;
 using System.Windows.Input;
@@ -1470,7 +1469,7 @@ namespace System.Windows.Interop
         private NativeMethods.TRACKMOUSEEVENT _tme = new NativeMethods.TRACKMOUSEEVENT();
 
         // accessors into PresentationFramework classes
-        const string PresentationFrameworkAssemblyFullName = "PresentationFramework, Version=" + BuildInfo.WCP_VERSION + ", Culture=neutral, PublicKeyToken=" + BuildInfo.WCP_PUBLIC_KEY_TOKEN;
+        private const string PresentationFrameworkAssemblyFullName = "PresentationFramework, Version=" + BuildInfo.WCP_VERSION + ", Culture=neutral, PublicKeyToken=" + BuildInfo.WCP_PUBLIC_KEY_TOKEN;
         private static DependencyProperty WindowChromeWorkerProperty;
         private static MethodInfo GetEffectiveClientAreaMI;
 

@@ -277,9 +277,6 @@
   <SolidColorBrush x:Key="SystemFillColorSolidNeutralBackgroundBrush" Color="{StaticResource SystemFillColorSolidNeutralBackground}" />
   <!--  Elevation border brushes  -->
   <LinearGradientBrush x:Key="ControlElevationBorderBrush" MappingMode="Absolute" StartPoint="0,0" EndPoint="0,3">
-    <!--<LinearGradientBrush.RelativeTransform>
-            <ScaleTransform CenterY="0.5" ScaleY="-1" />
-        </LinearGradientBrush.RelativeTransform>-->
     <LinearGradientBrush.GradientStops>
       <GradientStop Offset="0.33" Color="{StaticResource ControlStrokeColorSecondary}" />
       <GradientStop Offset="1.0" Color="{StaticResource ControlStrokeColorDefault}" />
@@ -291,16 +288,31 @@
       <GradientStop Offset="0.50" Color="{StaticResource ControlStrokeColorDefault}" />
     </LinearGradientBrush.GradientStops>
   </LinearGradientBrush>
-  <LinearGradientBrush x:Key="AccentControlElevationBorderBrush" MappingMode="RelativeToBoundingBox" StartPoint="0,1" EndPoint="0,0">
+  <LinearGradientBrush x:Key="AccentControlElevationBorderBrush" MappingMode="Absolute" StartPoint="0,0" EndPoint="0,3">
+    <LinearGradientBrush.RelativeTransform>
+      <ScaleTransform ScaleY="-1" CenterY="0.5" />
+    </LinearGradientBrush.RelativeTransform>
     <LinearGradientBrush.GradientStops>
-      <GradientStop Offset="0.025" Color="{StaticResource ControlStrokeColorOnAccentSecondary}" />
-      <GradientStop Offset="0.075" Color="{StaticResource ControlStrokeColorOnAccentDefault}" />
+      <GradientStop Offset="0.33" Color="{StaticResource ControlStrokeColorOnAccentSecondary}" />
+      <GradientStop Offset="1.0" Color="{StaticResource ControlStrokeColorOnAccentDefault}" />
     </LinearGradientBrush.GradientStops>
   </LinearGradientBrush>
-  <LinearGradientBrush x:Key="TextControlElevationBorderBrush" MappingMode="RelativeToBoundingBox" StartPoint="0,1" EndPoint="0,0">
+  <LinearGradientBrush x:Key="TextControlElevationBorderBrush" MappingMode="Absolute" StartPoint="0,0" EndPoint="0,2">
+    <LinearGradientBrush.RelativeTransform>
+      <ScaleTransform ScaleY="-1" CenterY="0.5" />
+    </LinearGradientBrush.RelativeTransform>
     <LinearGradientBrush.GradientStops>
-      <GradientStop Offset="0.025" Color="{StaticResource ControlStrongStrokeColorDefault}" />
-      <GradientStop Offset="0.05" Color="{StaticResource ControlStrokeColorDefault}" />
+      <GradientStop Offset="0.5" Color="{StaticResource ControlStrongStrokeColorDefault}" />
+      <GradientStop Offset="1.0" Color="{StaticResource ControlStrokeColorDefault}" />
+    </LinearGradientBrush.GradientStops>
+  </LinearGradientBrush>
+  <LinearGradientBrush x:Key="TextControlElevationBorderFocusedBrush" MappingMode="Absolute" StartPoint="0,0" EndPoint="0,2">
+    <LinearGradientBrush.RelativeTransform>
+      <ScaleTransform ScaleY="-1" CenterY="0.5" />
+    </LinearGradientBrush.RelativeTransform>
+    <LinearGradientBrush.GradientStops>
+      <GradientStop Offset="1.0" Color="{StaticResource SystemAccentColorLight2}" />
+      <GradientStop Offset="1.0" Color="{StaticResource ControlStrokeColorDefault}" />
     </LinearGradientBrush.GradientStops>
   </LinearGradientBrush>
   <SolidColorBrush x:Key="SystemColorWindowTextColorBrush" Color="{StaticResource SystemColorWindowTextColor}" />
@@ -320,15 +332,33 @@
   <SolidColorBrush x:Key="AccentButtonBackground" Color="{StaticResource SystemAccentColorLight2}" />
   <SolidColorBrush x:Key="AccentButtonBackgroundPointerOver" Color="{StaticResource SystemAccentColorLight2}" Opacity="0.9" />
   <SolidColorBrush x:Key="AccentButtonBackgroundPressed" Color="{StaticResource SystemAccentColorLight2}" Opacity="0.8" />
-  <!--<SolidColorBrush x:Key="AccentButtonBackgroundDisabled" ResourceKey="AccentFillColorDisabledBrush" />-->
+  <SolidColorBrush x:Key="AccentButtonBackgroundDisabled" Color="{StaticResource AccentFillColorDisabled}" />
   <SolidColorBrush x:Key="AccentButtonForeground" Color="{StaticResource TextOnAccentFillColorPrimary}" />
   <SolidColorBrush x:Key="AccentButtonForegroundPointerOver" Color="{StaticResource TextOnAccentFillColorPrimary}" />
   <SolidColorBrush x:Key="AccentButtonForegroundPressed" Color="{StaticResource TextOnAccentFillColorSecondary}" />
-  <!--<SolidColorBrush x:Key="AccentButtonForegroundDisabled" ResourceKey="TextOnAccentFillColorDisabled" />-->
-  <!--<SolidColorBrush x:Key="AccentButtonBorderBrush" Color="{DynamicResource AccentControlElevationBorder}" />-->
-  <!--<SolidColorBrush x:Key="AccentButtonBorderBrushPointerOver" Color="{DynamicResource AccentControlElevationBorder}" />-->
+  <SolidColorBrush x:Key="AccentButtonForegroundDisabled" Color="{StaticResource TextOnAccentFillColorDisabled}" />
+  <!-- AccentButtonBorderBrush == AccentControlElevationBorderBrush -->
+  <LinearGradientBrush x:Key="AccentButtonBorderBrush" MappingMode="Absolute" StartPoint="0,0" EndPoint="0,3">
+    <LinearGradientBrush.RelativeTransform>
+      <ScaleTransform ScaleY="-1" CenterY="0.5" />
+    </LinearGradientBrush.RelativeTransform>
+    <LinearGradientBrush.GradientStops>
+      <GradientStop Offset="0.33" Color="{StaticResource ControlStrokeColorOnAccentSecondary}" />
+      <GradientStop Offset="1.0" Color="{StaticResource ControlStrokeColorOnAccentDefault}" />
+    </LinearGradientBrush.GradientStops>
+  </LinearGradientBrush>
+  <!-- AccentButtonBorderBrushPointerOver == AccentControlElevationBorderBrush -->
+  <LinearGradientBrush x:Key="AccentButtonBorderBrushPointerOver" MappingMode="Absolute" StartPoint="0,0" EndPoint="0,3">
+    <LinearGradientBrush.RelativeTransform>
+      <ScaleTransform ScaleY="-1" CenterY="0.5" />
+    </LinearGradientBrush.RelativeTransform>
+    <LinearGradientBrush.GradientStops>
+      <GradientStop Offset="0.33" Color="{StaticResource ControlStrokeColorOnAccentSecondary}" />
+      <GradientStop Offset="1.0" Color="{StaticResource ControlStrokeColorOnAccentDefault}" />
+    </LinearGradientBrush.GradientStops>
+  </LinearGradientBrush>
   <SolidColorBrush x:Key="AccentButtonBorderBrushPressed" Color="{DynamicResource ControlFillColorTransparent}" />
-  <!--<SolidColorBrush x:Key="AccentButtonBorderBrushDisabled" Color="{DynamicResource ControlFillColorTransparentBrush}" />-->
+  <SolidColorBrush x:Key="AccentButtonBorderBrushDisabled" Color="{DynamicResource ControlFillColorTransparent}" />
   <SolidColorBrush x:Key="ButtonBackground" Color="{StaticResource ControlFillColorDefault}" />
   <SolidColorBrush x:Key="ButtonBackgroundPointerOver" Color="{StaticResource ControlFillColorSecondary}" />
   <SolidColorBrush x:Key="ButtonBackgroundPressed" Color="{StaticResource ControlFillColorTertiary}" />
@@ -337,8 +367,20 @@
   <SolidColorBrush x:Key="ButtonForegroundPointerOver" Color="{StaticResource TextFillColorPrimary}" />
   <SolidColorBrush x:Key="ButtonForegroundPressed" Color="{StaticResource TextFillColorSecondary}" />
   <SolidColorBrush x:Key="ButtonForegroundDisabled" Color="{StaticResource TextFillColorDisabled}" />
-  <!--<SolidColorBrush x:Key="ButtonBorderBrush" Color="{StaticResource ControlElevationBorder}" />-->
-  <!--<SolidColorBrush x:Key="ButtonBorderBrushPointerOver" Color="{StaticResource ControlElevationBorder}" />-->
+  <!-- ButtonBorderBrush == ControlElevationBorderBrush -->
+  <LinearGradientBrush x:Key="ButtonBorderBrush" MappingMode="Absolute" StartPoint="0,0" EndPoint="0,3">
+    <LinearGradientBrush.GradientStops>
+      <GradientStop Offset="0.33" Color="{StaticResource ControlStrokeColorSecondary}" />
+      <GradientStop Offset="1.0" Color="{StaticResource ControlStrokeColorDefault}" />
+    </LinearGradientBrush.GradientStops>
+  </LinearGradientBrush>
+  <!-- ButtonBorderBrushPointerOver == ControlElevationBorderBrush -->
+  <LinearGradientBrush x:Key="ButtonBorderBrushPointerOver" MappingMode="Absolute" StartPoint="0,0" EndPoint="0,3">
+    <LinearGradientBrush.GradientStops>
+      <GradientStop Offset="0.33" Color="{StaticResource ControlStrokeColorSecondary}" />
+      <GradientStop Offset="1.0" Color="{StaticResource ControlStrokeColorDefault}" />
+    </LinearGradientBrush.GradientStops>
+  </LinearGradientBrush>
   <SolidColorBrush x:Key="ButtonBorderBrushPressed" Color="{StaticResource ControlStrokeColorDefault}" />
   <SolidColorBrush x:Key="ButtonBorderBrushDisabled" Color="{StaticResource ControlStrokeColorDefault}" />
   <!--  Calendar  -->
@@ -469,6 +511,13 @@
   <!--  Flyout  -->
   <SolidColorBrush x:Key="FlyoutBackground" Color="{StaticResource AcrylicBackgroundFillColorDefault}" />
   <SolidColorBrush x:Key="FlyoutBorderBrush" Color="{StaticResource SurfaceStrokeColorFlyout}" />
+  <!--  Frame  -->
+  <SolidColorBrush x:Key="FrameBackground" Color="Transparent" />
+  <SolidColorBrush x:Key="FrameForeground" Color="{StaticResource TextFillColorPrimary}" />
+  <SolidColorBrush x:Key="FrameMenuItemBackground" Color="Transparent" />
+  <SolidColorBrush x:Key="FrameMenuItemBorderBrush" Color="Transparent" />
+  <SolidColorBrush x:Key="FrameMenuItemBackgroundSelected" Color="{StaticResource SubtleFillColorTertiary}" />
+  <SolidColorBrush x:Key="FrameMenuItemForegroundDisabled" Color="{StaticResource TextFillColorDisabled}" />
   <!-- GridSplitter -->
   <SolidColorBrush x:Key="GridsplitterBackground" Color="{StaticResource ControlAltFillColorTransparent}" />
   <SolidColorBrush x:Key="GridsplitterBackgroundPointerOver" Color="{StaticResource ControlAltFillColorTertiary}" />
@@ -552,6 +601,9 @@
   <SolidColorBrush x:Key="NavigationViewItemBackgroundSelectedLeftFluent" Color="{StaticResource ControlFillColorDefault}" />
   <SolidColorBrush x:Key="NavigationViewItemForegroundLeftFluent" Color="{StaticResource TextFillColorPrimary}" />
   <SolidColorBrush x:Key="NavigationViewItemForegroundPointerOverLeftFluent" Color="{StaticResource TextFillColorPrimary}" />
+  <!--  NavigationWindow  -->
+  <SolidColorBrush x:Key="NavigationWindowBackground" Color="{StaticResource ApplicationBackgroundColor}" />
+  <SolidColorBrush x:Key="NavigationWindowForeground" Color="{StaticResource TextFillColorPrimary}" />
   <!-- Page -->
   <SolidColorBrush x:Key="PageForeground" Color="{StaticResource TextFillColorPrimary}" />
   <SolidColorBrush x:Key="PageBackground" Color="{StaticResource SubtleFillColorTransparent}" />
@@ -728,7 +780,7 @@
     <Setter Property="FocusVisualStyle" Value="{DynamicResource DefaultControlFocusVisualStyle}" />
     <Setter Property="Background" Value="{DynamicResource ButtonBackground}" />
     <Setter Property="Foreground" Value="{DynamicResource ButtonForeground}" />
-    <Setter Property="BorderBrush" Value="{DynamicResource ControlElevationBorderBrush}" />
+    <Setter Property="BorderBrush" Value="{DynamicResource ButtonBorderBrush}" />
     <Setter Property="BorderThickness" Value="{StaticResource ButtonBorderThemeThickness}" />
     <Setter Property="Padding" Value="{StaticResource ButtonPadding}" />
     <Setter Property="HorizontalAlignment" Value="Left" />
@@ -743,12 +795,12 @@
       <Setter.Value>
         <ControlTemplate TargetType="{x:Type ButtonBase}">
           <Border x:Name="ContentBorder" Width="{TemplateBinding Width}" Height="{TemplateBinding Height}" MinWidth="{TemplateBinding MinWidth}" MinHeight="{TemplateBinding MinHeight}" Padding="{TemplateBinding Padding}" HorizontalAlignment="{TemplateBinding HorizontalAlignment}" VerticalAlignment="{TemplateBinding VerticalAlignment}" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="{TemplateBinding Border.CornerRadius}">
-            <ContentPresenter x:Name="ContentPresenter" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}" Content="{TemplateBinding Content}" ContentTemplate="{TemplateBinding ContentTemplate}" TextElement.Foreground="{TemplateBinding Foreground}" />
+            <ContentPresenter x:Name="ContentPresenter" RecognizesAccessKey="True" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}" Content="{TemplateBinding Content}" ContentTemplate="{TemplateBinding ContentTemplate}" TextElement.Foreground="{TemplateBinding Foreground}" />
           </Border>
           <ControlTemplate.Triggers>
             <Trigger Property="IsMouseOver" Value="True">
               <Setter TargetName="ContentBorder" Property="Background" Value="{DynamicResource ButtonBackgroundPointerOver}" />
-              <Setter TargetName="ContentBorder" Property="BorderBrush" Value="{DynamicResource ControlElevationBorderBrush}" />
+              <Setter TargetName="ContentBorder" Property="BorderBrush" Value="{DynamicResource ButtonBorderBrushPointerOver}" />
               <Setter TargetName="ContentPresenter" Property="TextElement.Foreground" Value="{DynamicResource ButtonForegroundPointerOver}" />
             </Trigger>
             <Trigger Property="IsEnabled" Value="False">
@@ -770,7 +822,7 @@
     <Setter Property="FocusVisualStyle" Value="{DynamicResource DefaultControlFocusVisualStyle}" />
     <Setter Property="Background" Value="{DynamicResource AccentButtonBackground}" />
     <Setter Property="Foreground" Value="{DynamicResource AccentButtonForeground}" />
-    <Setter Property="BorderBrush" Value="{DynamicResource AccentControlElevationBorderBrush}" />
+    <Setter Property="BorderBrush" Value="{DynamicResource AccentButtonBorderBrush}" />
     <Setter Property="BorderThickness" Value="{StaticResource ButtonBorderThemeThickness}" />
     <Setter Property="Padding" Value="{StaticResource ButtonPadding}" />
     <Setter Property="HorizontalAlignment" Value="Left" />
@@ -790,17 +842,18 @@
           <ControlTemplate.Triggers>
             <Trigger Property="IsMouseOver" Value="True">
               <Setter TargetName="ContentBorder" Property="Background" Value="{DynamicResource AccentButtonBackgroundPointerOver}" />
-              <Setter TargetName="ContentBorder" Property="BorderBrush" Value="{DynamicResource ControlElevationBorderBrush}" />
+              <Setter TargetName="ContentBorder" Property="BorderBrush" Value="{DynamicResource AccentButtonBorderBrushPointerOver}" />
+              <Setter TargetName="ContentPresenter" Property="TextElement.Foreground" Value="{DynamicResource AccentButtonForegroundPointerOver}" />
             </Trigger>
             <Trigger Property="IsPressed" Value="True">
               <Setter TargetName="ContentBorder" Property="Background" Value="{DynamicResource AccentButtonBackgroundPressed}" />
-              <Setter TargetName="ContentBorder" Property="BorderBrush" Value="{DynamicResource AccentControlElevationBorderBrush}" />
+              <Setter TargetName="ContentBorder" Property="BorderBrush" Value="{DynamicResource AccentButtonBorderBrushPressed}" />
               <Setter TargetName="ContentPresenter" Property="TextElement.Foreground" Value="{DynamicResource AccentButtonForegroundPressed}" />
             </Trigger>
             <Trigger Property="IsEnabled" Value="False">
-              <Setter TargetName="ContentBorder" Property="Background" Value="{DynamicResource ButtonBackgroundDisabled}" />
-              <Setter TargetName="ContentBorder" Property="BorderBrush" Value="{DynamicResource ButtonBorderBrushDisabled}" />
-              <Setter TargetName="ContentPresenter" Property="TextElement.Foreground" Value="{DynamicResource ButtonForegroundDisabled}" />
+              <Setter TargetName="ContentBorder" Property="Background" Value="{DynamicResource AccentButtonBackgroundDisabled}" />
+              <Setter TargetName="ContentBorder" Property="BorderBrush" Value="{DynamicResource AccentButtonBorderBrushDisabled}" />
+              <Setter TargetName="ContentPresenter" Property="TextElement.Foreground" Value="{DynamicResource AccentButtonForegroundDisabled}" />
             </Trigger>
           </ControlTemplate.Triggers>
         </ControlTemplate>
@@ -1392,8 +1445,8 @@
     <Setter Property="BorderBrush" Value="{DynamicResource ControlElevationBorderBrush}" />
     <Setter Property="BorderThickness" Value="{StaticResource ComboBoxBorderThemeThickness}" />
     <Setter Property="ScrollViewer.CanContentScroll" Value="False" />
-    <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Hidden" />
-    <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Hidden" />
+    <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Auto" />
+    <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Auto" />
     <Setter Property="ScrollViewer.IsDeferredScrollingEnabled" Value="False" />
     <Setter Property="HorizontalAlignment" Value="Stretch" />
     <Setter Property="VerticalAlignment" Value="Center" />
@@ -1776,7 +1829,7 @@
           <Grid>
             <Border x:Name="rowHeaderBorder" Width="10" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="0,0,1,0">
               <StackPanel Orientation="Horizontal">
-                <ContentPresenter VerticalAlignment="Center" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                <ContentPresenter VerticalAlignment="Center" RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
                 <Control SnapsToDevicePixels="False" Template="{Binding ValidationErrorTemplate, RelativeSource={RelativeSource AncestorType={x:Type DataGridRow}}}" Visibility="{Binding (Validation.HasError), Converter={StaticResource BooleanToVisibilityConverter}, RelativeSource={RelativeSource AncestorType={x:Type DataGridRow}}}" />
               </StackPanel>
             </Border>
@@ -1852,7 +1905,7 @@
         <ControlTemplate TargetType="{x:Type DataGridColumnHeader}">
           <Grid>
             <Border x:Name="columnHeaderBorder" Padding="3,0,3,0" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="0,0,1,1">
-              <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+              <ContentPresenter RecognizesAccessKey="True" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
             </Border>
             <Thumb x:Name="PART_LeftHeaderGripper" HorizontalAlignment="Left" Style="{StaticResource ColumnHeaderGripperStyle}" />
             <Thumb x:Name="PART_RightHeaderGripper" HorizontalAlignment="Right" Style="{StaticResource ColumnHeaderGripperStyle}" />
@@ -2274,6 +2327,111 @@
   </Style>
   <Style BasedOn="{StaticResource DefaultDatePickerTextBoxStyle}" TargetType="{x:Type DatePickerTextBox}" />
   <Style BasedOn="{StaticResource DefaultDatePickerStyle}" TargetType="{x:Type DatePicker}" />
+  <Style x:Key="{x:Type FlowDocument}" TargetType="{x:Type FlowDocument}">
+    <Setter Property="TextAlignment" Value="Justify" />
+    <Setter Property="FontFamily" Value="Georgia" />
+    <Setter Property="FontSize" Value="16.0" />
+  </Style>
+  <Style x:Key="{x:Type TextBlock}" TargetType="{x:Type TextBlock}">
+    <Setter Property="TextWrapping" Value="NoWrap" />
+    <Setter Property="TextTrimming" Value="None" />
+  </Style>
+  <Style x:Key="{x:Type Bold}" TargetType="{x:Type Bold}">
+    <Setter Property="FontWeight" Value="Bold" />
+  </Style>
+  <Style x:Key="{x:Type Italic}" TargetType="{x:Type Italic}">
+    <Setter Property="FontStyle" Value="Italic" />
+  </Style>
+  <Style x:Key="{x:Type Underline}" TargetType="{x:Type Underline}">
+    <Setter Property="TextDecorations" Value="Underline" />
+  </Style>
+  <Style x:Key="{x:Type Paragraph}" TargetType="{x:Type Paragraph}">
+    <Setter Property="Margin" Value="Auto" />
+  </Style>
+  <Style x:Key="{x:Type List}" TargetType="{x:Type List}">
+    <Setter Property="Margin" Value="Auto" />
+    <Setter Property="Padding" Value="Auto" />
+  </Style>
+  <Style x:Key="{x:Type Floater}" TargetType="{x:Type Floater}">
+    <Setter Property="HorizontalAlignment" Value="Right" />
+  </Style>
+  <DataTemplate DataType="{x:Type FlowDocument}">
+    <FlowDocumentReader Document="{Binding}" />
+  </DataTemplate>
+  <DataTemplate DataType="{x:Type FixedDocument}">
+    <DocumentViewer Document="{Binding}" />
+  </DataTemplate>
+  <DataTemplate DataType="{x:Type FixedDocumentSequence}">
+    <DocumentViewer Document="{Binding}" />
+  </DataTemplate>
+  <Style x:Key="{x:Type DocumentViewer}" BasedOn="{x:Null}" TargetType="{x:Type DocumentViewer}">
+    <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.WindowTextBrushKey}}" />
+    <Setter Property="Background" Value="{DynamicResource {x:Static SystemColors.ControlBrushKey}}" />
+    <Setter Property="FocusVisualStyle" Value="{x:Null}" />
+    <Setter Property="ContextMenu" Value="{DynamicResource {ComponentResourceKey TypeInTargetAssembly={x:Type ui:PresentationUIStyleResources}, ResourceId=PUIDocumentViewerContextMenu}}" />
+    <Setter Property="Template">
+      <Setter.Value>
+        <ControlTemplate TargetType="{x:Type DocumentViewer}">
+          <Border BorderThickness="{TemplateBinding BorderThickness}" BorderBrush="{TemplateBinding BorderBrush}" Focusable="False">
+            <Grid Background="{TemplateBinding Background}" KeyboardNavigation.TabNavigation="Local">
+              <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+              </Grid.ColumnDefinitions>
+              <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="Auto" />
+              </Grid.RowDefinitions>
+              <ContentControl Style="{DynamicResource {ComponentResourceKey TypeInTargetAssembly={x:Type ui:PresentationUIStyleResources}, ResourceId=PUIDocumentViewerToolBarStyleKey}}" Grid.Row="0" Grid.Column="0" Focusable="{TemplateBinding Focusable}" TabIndex="0" />
+              <ScrollViewer Grid.Row="1" Grid.Column="0" CanContentScroll="True" HorizontalScrollBarVisibility="Auto" x:Name="PART_ContentHost" Focusable="{TemplateBinding Focusable}" IsTabStop="True" TabIndex="1" />
+              <DockPanel Grid.Row="1">
+                <FrameworkElement DockPanel.Dock="Right" Width="{DynamicResource {x:Static SystemParameters.VerticalScrollBarWidthKey}}" />
+                <Rectangle Visibility="Visible" VerticalAlignment="top" Height="10">
+                  <Rectangle.Fill>
+                    <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                      <GradientBrush.GradientStops>
+                        <GradientStopCollection>
+                          <GradientStop Color="#66000000" Offset="0" />
+                          <GradientStop Color="Transparent" Offset="1" />
+                        </GradientStopCollection>
+                      </GradientBrush.GradientStops>
+                    </LinearGradientBrush>
+                  </Rectangle.Fill>
+                </Rectangle>
+              </DockPanel>
+              <ContentControl Grid.Row="2" Grid.Column="0" TabIndex="2" Focusable="{TemplateBinding Focusable}" x:Name="PART_FindToolBarHost" />
+            </Grid>
+          </Border>
+        </ControlTemplate>
+      </Setter.Value>
+    </Setter>
+  </Style>
+  <Style x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type FrameworkElement}, ResourceId=DocumentGridPageContainerWithBorder}" TargetType="ContentControl" BasedOn="{x:Null}">
+    <Setter Property="FocusVisualStyle" Value="{x:Null}" />
+    <Setter Property="Template">
+      <Setter.Value>
+        <ControlTemplate TargetType="{x:Type ContentControl}">
+          <Grid>
+            <Grid.RowDefinitions>
+              <RowDefinition Height="5" />
+              <RowDefinition Height="*" />
+              <RowDefinition Height="5" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+              <ColumnDefinition Width="5" />
+              <ColumnDefinition Width="*" />
+              <ColumnDefinition Width="5" />
+            </Grid.ColumnDefinitions>
+            <Border Background="White" BorderBrush="Black" BorderThickness="1" Grid.RowSpan="2" Grid.ColumnSpan="2">
+              <ContentPresenter />
+            </Border>
+            <Rectangle Fill="Black" Opacity="0.35" Grid.Column="2" Grid.Row="1" />
+            <Rectangle Fill="Black" Opacity="0.35" Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="2" />
+          </Grid>
+        </ControlTemplate>
+      </Setter.Value>
+    </Setter>
+  </Style>
   <Thickness x:Key="ExpanderPadding">11,11,11,11</Thickness>
   <Thickness x:Key="ExpanderBorderThemeThickness">1</Thickness>
   <system:Double x:Key="ExpanderChevronSize">12.0</system:Double>
@@ -2441,7 +2599,7 @@
               <!-- Dummy border to store Animation factor for expander -->
               <Border x:Name="AnimationFactorBorder" Width="0" Visibility="Collapsed" />
               <Border x:Name="ContentPresenterBorder" Background="{DynamicResource ExpanderContentBackground}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="1,0,1,1" CornerRadius="0,0,4,4" Visibility="Collapsed">
-                <ContentPresenter x:Name="ContentPresenter" Margin="{TemplateBinding Padding}" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}" Content="{TemplateBinding Content}" />
+                <ContentPresenter x:Name="ContentPresenter" RecognizesAccessKey="True" Margin="{TemplateBinding Padding}" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}" Content="{TemplateBinding Content}" />
                 <Border.Resources>
                   <TranslateTransform x:Key="HeightAnimationNegative">
                     <TranslateTransform.Y>
@@ -2664,14 +2822,149 @@
     </Setter>
   </Style>
   <Style BasedOn="{StaticResource DefaultExpanderStyle}" TargetType="{x:Type Expander}" />
-  <Style TargetType="{x:Type Frame}">
-    <Setter Property="Background" Value="Transparent" />
-    <Setter Property="NavigationUIVisibility" Value="Hidden" />
-    <Setter Property="Padding" Value="0" />
-    <Setter Property="Margin" Value="0" />
+  <JournalEntryUnifiedViewConverter x:Key="JournalEntryUnifiedViewConverter" />
+  <Thickness x:Key="FrameMenuItemBorderThickness">1</Thickness>
+  <Thickness x:Key="FramePadding">0</Thickness>
+  <system:String x:Key="FrameMenuItemChevronDownGlyph"></system:String>
+  <system:String x:Key="FrameMenuItemArrowLeftGlyph"></system:String>
+  <system:String x:Key="FrameMenuItemArrowRightGlyph"></system:String>
+  <system:String x:Key="FrameMenuiItemCurrentGlyph"></system:String>
+  <Style x:Key="FrameNavigationButtonJournalEntryStyle" TargetType="{x:Type MenuItem}">
+    <Setter Property="HorizontalContentAlignment" Value="{Binding HorizontalContentAlignment, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}" />
+    <Setter Property="VerticalContentAlignment" Value="{Binding VerticalContentAlignment, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}" />
+    <Setter Property="FocusVisualStyle" Value="{DynamicResource DefaultCollectionFocusVisualStyle}" />
+    <Setter Property="KeyboardNavigation.IsTabStop" Value="True" />
+    <Setter Property="Background" Value="{DynamicResource FrameMenuItemBackground}" />
+    <Setter Property="BorderBrush" Value="{DynamicResource FrameMenuItemBorderBrush}" />
+    <Setter Property="BorderThickness" Value="{StaticResource FrameMenuItemBorderThickness}" />
+    <Setter Property="Focusable" Value="True" />
+    <Setter Property="OverridesDefaultStyle" Value="True" />
+    <Setter Property="Header" Value="{Binding Path=(JournalEntry.Name)}" />
+    <Setter Property="Command" Value="NavigationCommands.NavigateJournal" />
+    <Setter Property="CommandTarget" Value="{Binding RelativeSource={RelativeSource AncestorType={x:Type Menu}}, Path=TemplatedParent}" />
+    <Setter Property="CommandParameter" Value="{Binding RelativeSource={RelativeSource Self}}" />
+    <Setter Property="JournalEntryUnifiedViewConverter.JournalEntryPosition" Value="{Binding (JournalEntryUnifiedViewConverter.JournalEntryPosition)}" />
+    <Setter Property="Template">
+      <Setter.Value>
+        <ControlTemplate TargetType="{x:Type MenuItem}">
+          <Border x:Name="Border" Margin="4" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}">
+            <Grid Margin="8">
+              <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" />
+              </Grid.ColumnDefinitions>
+              <ContentPresenter x:Name="Icon" Grid.Column="0" Margin="0,0,8,0" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="Center" Content="{TemplateBinding Icon}" />
+              <ContentPresenter x:Name="HeaderPresenter" Grid.Column="1" VerticalAlignment="Center" ContentSource="Header" Margin="{TemplateBinding Padding}" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" RecognizesAccessKey="True" TextElement.Foreground="{TemplateBinding Foreground}" />
+            </Grid>
+          </Border>
+          <ControlTemplate.Triggers>
+            <Trigger Property="IsHighlighted" Value="True">
+              <Setter TargetName="Border" Property="Background" Value="{DynamicResource FrameMenuItemBackgroundSelected}" />
+            </Trigger>
+            <Trigger Property="Header" Value="{x:Null}">
+              <Setter TargetName="Icon" Property="Margin" Value="0" />
+              <Setter TargetName="HeaderPresenter" Property="Visibility" Value="Collapsed" />
+            </Trigger>
+            <Trigger Property="JournalEntryUnifiedViewConverter.JournalEntryPosition" Value="Current">
+              <Setter TargetName="Icon" Property="Content">
+                <Setter.Value>
+                  <TextBlock Text="{StaticResource FrameMenuiItemCurrentGlyph}" FontFamily="{DynamicResource SymbolThemeFontFamily}" />
+                </Setter.Value>
+              </Setter>
+            </Trigger>
+            <MultiTrigger>
+              <MultiTrigger.Conditions>
+                <Condition Property="MenuItem.IsHighlighted" Value="True" />
+                <Condition Property="JournalEntryUnifiedViewConverter.JournalEntryPosition" Value="Forward" />
+              </MultiTrigger.Conditions>
+              <Setter TargetName="Icon" Property="Content">
+                <Setter.Value>
+                  <TextBlock Text="{StaticResource FrameMenuItemArrowRightGlyph}" FontFamily="{DynamicResource SymbolThemeFontFamily}" />
+                </Setter.Value>
+              </Setter>
+            </MultiTrigger>
+            <MultiTrigger>
+              <MultiTrigger.Conditions>
+                <Condition Property="MenuItem.IsHighlighted" Value="True" />
+                <Condition Property="JournalEntryUnifiedViewConverter.JournalEntryPosition" Value="Back" />
+              </MultiTrigger.Conditions>
+              <Setter TargetName="Icon" Property="Content">
+                <Setter.Value>
+                  <TextBlock Text="{StaticResource FrameMenuItemArrowLeftGlyph}" FontFamily="{DynamicResource SymbolThemeFontFamily}" />
+                </Setter.Value>
+              </Setter>
+            </MultiTrigger>
+            <Trigger Property="IsEnabled" Value="False">
+              <Setter TargetName="Icon" Property="TextElement.Foreground" Value="{DynamicResource FrameMenuItemForegroundDisabled}" />
+            </Trigger>
+          </ControlTemplate.Triggers>
+        </ControlTemplate>
+      </Setter.Value>
+    </Setter>
+  </Style>
+  <ControlTemplate x:Key="FrameTemplateKey" TargetType="{x:Type Frame}">
+    <Border Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}">
+      <DockPanel>
+        <Menu Name="NavMenu" VerticalAlignment="Center" DockPanel.Dock="Top">
+          <MenuItem Background="Transparent" BorderBrush="Transparent" Command="NavigationCommands.BrowseBack" FontFamily="{DynamicResource SymbolThemeFontFamily}" Header="{StaticResource FrameMenuItemArrowLeftGlyph}" />
+          <MenuItem Background="Transparent" BorderBrush="Transparent" Command="NavigationCommands.BrowseForward" FontFamily="{DynamicResource SymbolThemeFontFamily}" Header="{StaticResource FrameMenuItemArrowRightGlyph}" />
+          <Separator />
+          <MenuItem x:Name="Arrow" SnapsToDevicePixels="False" HorizontalAlignment="Right" VerticalAlignment="Center" ItemContainerStyle="{StaticResource FrameNavigationButtonJournalEntryStyle}" IsSubmenuOpen="{Binding Path=(MenuItem.IsSubmenuOpen),Mode=TwoWay,RelativeSource={RelativeSource TemplatedParent}}">
+            <MenuItem.Icon>
+              <TextBlock FontFamily="{DynamicResource SymbolThemeFontFamily}" Text="{StaticResource FrameMenuItemChevronDownGlyph}" />
+            </MenuItem.Icon>
+            <MenuItem.ItemsSource>
+              <MultiBinding Converter="{StaticResource JournalEntryUnifiedViewConverter}">
+                <MultiBinding.Bindings>
+                  <Binding RelativeSource="{RelativeSource TemplatedParent}" Path="BackStack" />
+                  <Binding RelativeSource="{RelativeSource TemplatedParent}" Path="ForwardStack" />
+                </MultiBinding.Bindings>
+              </MultiBinding>
+            </MenuItem.ItemsSource>
+          </MenuItem>
+        </Menu>
+        <ContentPresenter Name="PART_FrameCP" ClipToBounds="True" />
+      </DockPanel>
+    </Border>
+    <ControlTemplate.Triggers>
+      <MultiTrigger>
+        <MultiTrigger.Conditions>
+          <Condition Property="CanGoForward" Value="False" />
+          <Condition Property="CanGoBack" Value="False" />
+        </MultiTrigger.Conditions>
+        <Setter TargetName="NavMenu" Property="IsEnabled" Value="False" />
+      </MultiTrigger>
+    </ControlTemplate.Triggers>
+  </ControlTemplate>
+  <Style x:Key="DefaultFrameStyle" TargetType="{x:Type Frame}">
+    <Setter Property="Foreground" Value="{DynamicResource FrameForeground}" />
+    <Setter Property="Background" Value="{DynamicResource FrameBackground}" />
+    <Setter Property="Padding" Value="{DynamicResource FramePadding}" />
     <Setter Property="Focusable" Value="False" />
     <Setter Property="SnapsToDevicePixels" Value="True" />
+    <Setter Property="Template">
+      <Setter.Value>
+        <ControlTemplate TargetType="{x:Type Frame}">
+          <Border Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Padding="{TemplateBinding Padding}">
+            <ContentPresenter x:Name="PART_FrameCP" />
+          </Border>
+        </ControlTemplate>
+      </Setter.Value>
+    </Setter>
+    <Style.Triggers>
+      <Trigger Property="NavigationUIVisibility" Value="Visible">
+        <Setter Property="Template" Value="{StaticResource FrameTemplateKey}" />
+      </Trigger>
+      <MultiTrigger>
+        <MultiTrigger.Conditions>
+          <Condition Property="JournalOwnership" Value="OwnsJournal" />
+          <Condition Property="NavigationUIVisibility" Value="Automatic" />
+        </MultiTrigger.Conditions>
+        <Setter Property="Template" Value="{StaticResource FrameTemplateKey}" />
+      </MultiTrigger>
+    </Style.Triggers>
   </Style>
+  <Style BasedOn="{StaticResource DefaultFrameStyle}" TargetType="{x:Type Frame}" />
   <system:Double x:Key="GridsplitterThumbHeight">24</system:Double>
   <system:Double x:Key="GridsplitterThumbWidth">4</system:Double>
   <system:Double x:Key="GridsplitterThumbRadius">2</system:Double>
@@ -2706,7 +2999,7 @@
               <Setter TargetName="RootGrid" Property="Background" Value="{DynamicResource GridsplitterBackgroundDisabled}" />
               <Setter TargetName="PART_Thumb" Property="Opacity" Value="0.45" />
             </Trigger>
-            <Trigger Property="ResizeDirection" Value="Rows">
+            <Trigger Property="Cursor" Value="SizeNS">
               <Setter TargetName="PART_Thumb" Property="Width" Value="{DynamicResource GridsplitterThumbHeight}" />
               <Setter TargetName="PART_Thumb" Property="Height" Value="{DynamicResource GridsplitterThumbWidth}" />
             </Trigger>
@@ -3260,6 +3553,65 @@
     </Style.Triggers>
   </Style>
   <Style BasedOn="{StaticResource DefaultMenuItemStyle}" TargetType="{x:Type MenuItem}" />
+  <system:String x:Key="NavigationWindowMenuItemChevronDownGlyph"></system:String>
+  <system:String x:Key="NavigationWindowMenuItemArrowLeftGlyph"></system:String>
+  <system:String x:Key="NavigationWindowMenuItemArrowRightGlyph"></system:String>
+  <ControlTemplate x:Key="NavigationWindowTemplateKey" TargetType="{x:Type NavigationWindow}">
+    <Border Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}">
+      <DockPanel>
+        <Menu Name="NavMenu" VerticalAlignment="Center" DockPanel.Dock="Top">
+          <MenuItem Background="Transparent" BorderBrush="Transparent" Command="NavigationCommands.BrowseBack" FontFamily="{DynamicResource SymbolThemeFontFamily}" Header="{StaticResource NavigationWindowMenuItemArrowLeftGlyph}" />
+          <MenuItem Background="Transparent" BorderBrush="Transparent" Command="NavigationCommands.BrowseForward" FontFamily="{DynamicResource SymbolThemeFontFamily}" Header="{StaticResource NavigationWindowMenuItemArrowRightGlyph}" />
+          <Separator />
+          <MenuItem x:Name="Arrow" SnapsToDevicePixels="False" HorizontalAlignment="Right" VerticalAlignment="Center" ItemContainerStyle="{StaticResource FrameNavigationButtonJournalEntryStyle}" IsSubmenuOpen="{Binding Path=(MenuItem.IsSubmenuOpen),Mode=TwoWay,RelativeSource={RelativeSource TemplatedParent}}">
+            <MenuItem.Icon>
+              <TextBlock FontFamily="{DynamicResource SymbolThemeFontFamily}" Text="{StaticResource NavigationWindowMenuItemChevronDownGlyph}" />
+            </MenuItem.Icon>
+            <MenuItem.ItemsSource>
+              <MultiBinding Converter="{StaticResource JournalEntryUnifiedViewConverter}">
+                <MultiBinding.Bindings>
+                  <Binding RelativeSource="{RelativeSource TemplatedParent}" Path="(NavigationWindow.BackStack)" />
+                  <Binding RelativeSource="{RelativeSource TemplatedParent}" Path="(NavigationWindow.ForwardStack)" />
+                </MultiBinding.Bindings>
+              </MultiBinding>
+            </MenuItem.ItemsSource>
+          </MenuItem>
+        </Menu>
+        <Grid>
+          <AdornerDecorator>
+            <ContentPresenter Name="PART_NavWinCP" ClipToBounds="True" />
+          </AdornerDecorator>
+          <ResizeGrip x:Name="WindowResizeGrip" HorizontalAlignment="Right" VerticalAlignment="Bottom" Visibility="Collapsed" IsTabStop="False" />
+        </Grid>
+      </DockPanel>
+    </Border>
+    <ControlTemplate.Triggers>
+      <Trigger Property="ShowsNavigationUI" Value="False">
+        <Setter TargetName="NavMenu" Property="Visibility" Value="Collapsed" />
+      </Trigger>
+      <MultiTrigger>
+        <MultiTrigger.Conditions>
+          <Condition Property="Window.ResizeMode" Value="CanResizeWithGrip" />
+          <Condition Property="Window.WindowState" Value="Normal" />
+        </MultiTrigger.Conditions>
+        <Setter TargetName="WindowResizeGrip" Property="Visibility" Value="Visible" />
+      </MultiTrigger>
+      <MultiTrigger>
+        <MultiTrigger.Conditions>
+          <Condition Property="NavigationWindow.CanGoForward" Value="False" />
+          <Condition Property="NavigationWindow.CanGoBack" Value="False" />
+        </MultiTrigger.Conditions>
+        <Setter TargetName="NavMenu" Property="IsEnabled" Value="False" />
+      </MultiTrigger>
+    </ControlTemplate.Triggers>
+  </ControlTemplate>
+  <Style x:Key="DefaultNavigationWindowStyle" TargetType="{x:Type NavigationWindow}">
+    <Setter Property="Foreground" Value="{DynamicResource NavigationWindowForeground}" />
+    <Setter Property="Background" Value="{DynamicResource NavigationWindowBackground}" />
+    <Setter Property="OverridesDefaultStyle" Value="True" />
+    <Setter Property="Template" Value="{StaticResource NavigationWindowTemplateKey}" />
+  </Style>
+  <Style BasedOn="{StaticResource DefaultNavigationWindowStyle}" TargetType="{x:Type NavigationWindow}" />
   <Style x:Key="DefaultPageStyle" TargetType="{x:Type Page}">
     <Setter Property="Foreground" Value="{DynamicResource PageForeground}" />
     <Setter Property="Background" Value="{DynamicResource PageBackground}" />
@@ -3492,7 +3844,7 @@
                 <!--  A seperate element is added since the two orthogonal state groups that cannot touch the same property  -->
                 <Border x:Name="PressedCheckGlyph" Width="4" Height="4" Background="{DynamicResource RadioButtonCheckGlyphFill}" BorderBrush="{DynamicResource CircleElevationBorderBrush}" CornerRadius="6" Opacity="0" UseLayoutRounding="False" />
               </Grid>
-              <ContentPresenter x:Name="ContentPresenter" Grid.Column="1" Margin="{TemplateBinding Padding}" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}" Content="{TemplateBinding Content}" ContentTemplate="{TemplateBinding ContentTemplate}" TextElement.Foreground="{TemplateBinding Foreground}" />
+              <ContentPresenter x:Name="ContentPresenter" Grid.Column="1" RecognizesAccessKey="True" Margin="{TemplateBinding Padding}" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}" Content="{TemplateBinding Content}" ContentTemplate="{TemplateBinding ContentTemplate}" TextElement.Foreground="{TemplateBinding Foreground}" />
             </Grid>
           </Border>
           <ControlTemplate.Triggers>
@@ -3914,7 +4266,7 @@
     </Setter>
   </Style>
   <Style BasedOn="{StaticResource DefaultScrollViewerStyle}" TargetType="{x:Type ScrollViewer}" />
-  <Style TargetType="{x:Type Separator}">
+  <Style x:Key="DefaultSeparatorStyle" TargetType="{x:Type Separator}">
     <Setter Property="BorderBrush" Value="{DynamicResource SeparatorBorderBrush}" />
     <Setter Property="Background" Value="Transparent" />
     <Setter Property="Margin" Value="0" />
@@ -3930,6 +4282,7 @@
       </Setter.Value>
     </Setter>
   </Style>
+  <Style BasedOn="{StaticResource DefaultSeparatorStyle}" TargetType="{x:Type Separator}" />
   <Style x:Key="SliderButtonStyle" TargetType="{x:Type RepeatButton}">
     <Setter Property="IsTabStop" Value="False" />
     <Setter Property="Focusable" Value="False" />
@@ -4672,9 +5025,12 @@
     </Setter>
   </Style>
   <Style x:Key="{x:Static ToolBar.ButtonStyleKey}" BasedOn="{StaticResource ToolBarButtonBaseStyle}" TargetType="{x:Type Button}" />
-  <Style x:Key="{x:Static ToolBar.ToggleButtonStyleKey}" BasedOn="{StaticResource ToolBarButtonBaseStyle}" TargetType="{x:Type ToggleButton}" />
-  <Style x:Key="{x:Static ToolBar.CheckBoxStyleKey}" BasedOn="{StaticResource ToolBarButtonBaseStyle}" TargetType="{x:Type CheckBox}" />
-  <Style x:Key="{x:Static ToolBar.RadioButtonStyleKey}" BasedOn="{StaticResource ToolBarButtonBaseStyle}" TargetType="{x:Type RadioButton}" />
+  <Style x:Key="{x:Static ToolBar.ToggleButtonStyleKey}" BasedOn="{StaticResource DefaultToggleButtonStyle}" TargetType="{x:Type ToggleButton}" />
+  <Style x:Key="{x:Static ToolBar.CheckBoxStyleKey}" BasedOn="{StaticResource DefaultCheckBoxStyle}" TargetType="{x:Type CheckBox}" />
+  <Style x:Key="{x:Static ToolBar.RadioButtonStyleKey}" BasedOn="{StaticResource DefaultRadioButtonStyle}" TargetType="{x:Type RadioButton}" />
+  <Style x:Key="{x:Static ToolBar.ComboBoxStyleKey}" BasedOn="{StaticResource DefaultComboBoxStyle}" TargetType="{x:Type ComboBox}" />
+  <Style x:Key="{x:Static ToolBar.MenuStyleKey}" BasedOn="{StaticResource DefaultMenuStyle}" TargetType="{x:Type Menu}" />
+  <Style x:Key="{x:Static ToolBar.SeparatorStyleKey}" BasedOn="{StaticResource DefaultSeparatorStyle}" TargetType="{x:Type Separator}" />
   <Style x:Key="{x:Static ToolBar.TextBoxStyleKey}" TargetType="{x:Type TextBox}">
     <Setter Property="KeyboardNavigation.TabNavigation" Value="None" />
     <Setter Property="FocusVisualStyle" Value="{x:Null}" />
@@ -4798,6 +5154,9 @@
     <Setter Property="TextBlock.TextAlignment" Value="Justify" />
     <Setter Property="TextElement.Foreground" Value="{DynamicResource ToolTipForeground}" />
     <Setter Property="Foreground" Value="{DynamicResource ToolTipForeground}" />
+    <Setter Property="FontFamily" Value="{DynamicResource {x:Static SystemFonts.StatusFontFamilyKey}}" />
+    <Setter Property="FontSize" Value="{DynamicResource {x:Static SystemFonts.StatusFontSizeKey}}" />
+    <Setter Property="FontStyle" Value="{DynamicResource {x:Static SystemFonts.StatusFontStyleKey}}" />
     <Setter Property="Background" Value="{DynamicResource ToolTipBackground}" />
     <Setter Property="BorderBrush" Value="{DynamicResource ToolTipBorderBrush}" />
     <Setter Property="BorderThickness" Value="{DynamicResource ToolTipBorderThemeThickness}" />

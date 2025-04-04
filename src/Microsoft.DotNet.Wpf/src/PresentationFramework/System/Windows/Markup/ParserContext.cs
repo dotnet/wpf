@@ -1,6 +1,5 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 //
 // Description:
@@ -830,9 +829,8 @@ namespace System.Windows.Markup
         private Stack                   _nameScopeStack;
         private List<object[]>          _staticResourcesStack;
 
-        object                                      _rootElement;  // RootElement for the Page scoping [temporary, should be
-                                                                   // something like page name or baseUri]
-
+        // RootElement for the Page scoping [temporary, should be something like page name or baseUri]
+        private object                  _rootElement;
 #endif
 
         /// <summary>
@@ -937,10 +935,10 @@ namespace System.Windows.Markup
             // state changes.  That information is tracked by _repeatCount.
             private int _repeatCount;
         }
-            
+
         // First frame is maintained off of the _freezeStack to avoid allocating
         // a Stack<FreezeStackFlag> for the common case where Freeze isn't specified.
-        FreezeStackFrame _currentFreezeStackFrame;
+        private FreezeStackFrame _currentFreezeStackFrame;
 
 #if !PBTCOMPILER
         // When cloning, it isn't necessary to copy this cache of freezables.

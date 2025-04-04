@@ -1,6 +1,5 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 using System.Collections;
 using System.ComponentModel;
@@ -858,20 +857,20 @@ namespace System.Windows.Media
         /// </summary>
         private struct LineEnumerator : IEnumerator, IDisposable
         {
-            int             _textStorePosition;
-            int             _lineCount;
-            double          _totalHeight;
-            TextLine        _currentLine;
-            TextLine        _nextLine;
-            TextFormatter   _formatter;
-            FormattedText   _that;
+            private int             _textStorePosition;
+            private int             _lineCount;
+            private double          _totalHeight;
+            private TextLine        _currentLine;
+            private TextLine        _nextLine;
+            private TextFormatter   _formatter;
+            private FormattedText   _that;
 
             // these are needed because _currentLine can be disposed before the next MoveNext() call
-            double          _previousHeight;
-            int             _previousLength;
+            private double          _previousHeight;
+            private int             _previousLength;
 
             // line break before _currentLine, needed in case we have to reformat it with collapsing symbol
-            TextLineBreak       _previousLineBreak;
+            private TextLineBreak       _previousLineBreak;
 
             internal LineEnumerator(FormattedText text)
             {
@@ -2006,7 +2005,7 @@ namespace System.Windows.Media
 
         #region Constants
 
-        const double MaxFontEmSize = Constants.RealInfiniteWidth / Constants.GreatestMutiplierOfEm;
+        private const double MaxFontEmSize = Constants.RealInfiniteWidth / Constants.GreatestMutiplierOfEm;
 
         #endregion
     }

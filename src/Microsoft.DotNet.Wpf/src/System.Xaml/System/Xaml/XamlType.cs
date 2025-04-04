@@ -1,6 +1,5 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 #nullable disable
 
@@ -19,12 +18,12 @@ namespace System.Xaml
     public class XamlType : IEquatable<XamlType>
     {
         // Initialized in constructor
-        readonly string _name;
-        XamlSchemaContext _schemaContext;
-        readonly IList<XamlType> _typeArguments;
+        private readonly string _name;
+        private XamlSchemaContext _schemaContext;
+        private readonly IList<XamlType> _typeArguments;
 
         // Thread safety: if setting outside ctor, do an interlocked compare against null
-        TypeReflector _reflector;
+        private TypeReflector _reflector;
 
         /// <summary>
         /// Lazy init: NullableReference.IsSet is null when not initialized
@@ -33,8 +32,8 @@ namespace System.Xaml
 
         // Lazy init: null until initialized
         // Thread safety: idempotent, assignment races are okay; do not assign incomplete values
-        ReadOnlyCollection<string> _namespaces;
-        ThreeValuedBool _isNameValid;
+        private ReadOnlyCollection<string> _namespaces;
+        private ThreeValuedBool _isNameValid;
 
         protected XamlType(string typeName, IList<XamlType> typeArguments, XamlSchemaContext schemaContext)
         {
@@ -1623,9 +1622,8 @@ namespace System.Xaml
             if (index >= 0)
             {
                 // save the subscript
-                string subscript;
-                typeName = GenericTypeNameScanner.StripSubscript(typeName, out subscript);
-                typeName = string.Concat(typeName.AsSpan(0, index), subscript);
+                ReadOnlySpan<char> typeNameSpan = GenericTypeNameScanner.StripSubscript(typeName, out ReadOnlySpan<char> subscript);
+                typeName = string.Concat(typeNameSpan.Slice(0, index), subscript);
             }
 
             // if nested, add the containing name

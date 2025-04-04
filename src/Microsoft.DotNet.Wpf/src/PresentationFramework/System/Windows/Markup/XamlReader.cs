@@ -1,6 +1,5 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 //
 // Description:
@@ -564,7 +563,7 @@ namespace System.Windows.Markup
             xamlReader.HandleAsyncQueueItem();
         }
 
-        const int AsyncLoopTimeout = (int)200;
+        private const int AsyncLoopTimeout = (int)200;
         /// <summary>
         /// called when in async mode when get a time slice to read and load the Tree
         /// </summary>
@@ -1131,7 +1130,7 @@ namespace System.Windows.Markup
             return (root);
         }
 
-        static Uri GetBaseUri(Uri uri)
+        private static Uri GetBaseUri(Uri uri)
         {
             if (uri == null)
             {

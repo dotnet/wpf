@@ -1,6 +1,5 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 using System.Collections.Specialized;
 
@@ -384,7 +383,7 @@ namespace System.Windows
         private static readonly object Synchronized = new object();
 
         // Conditions
-        TriggerCondition[] _triggerConditions;
+        private TriggerCondition[] _triggerConditions;
 
         // Fields to implement DO's inheritance context
         private DependencyObject _inheritanceContext = null;

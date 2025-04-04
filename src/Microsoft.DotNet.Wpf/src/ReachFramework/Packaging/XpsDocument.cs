@@ -1,6 +1,5 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 /*++
 
@@ -931,9 +930,9 @@ namespace System.Windows.Xps.Packaging
 
         private XpsThumbnail   _thumbnail;
 
-        private Package        _opcPackage; 
+        private Package        _opcPackage;
 
-        bool _disposed = false;
+        private bool _disposed = false;
 
         #endregion Private data
 

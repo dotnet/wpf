@@ -1,6 +1,5 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 
 using System.Collections;              // for ArrayList
@@ -407,7 +406,7 @@ namespace Microsoft.Internal.AlphaFlattener
     /// </summary>
     internal class MetroToGdiConverter : IMetroDrawingContext
     {
-        static protected object         s_TestingHook;
+        protected static object         s_TestingHook;
 
         protected  MetroDevice0         m_Flattener;
         protected  ILegacyDevice        m_GDIExporter;
@@ -752,7 +751,7 @@ namespace Microsoft.Internal.AlphaFlattener
         /// Called before StartDocument to by-pass GDIExporter and send result to DrawingContext
         /// </summary>
         /// <param name="obj"></param>
-        static public void TestingHook(Object obj)
+        public static void TestingHook(Object obj)
         {
             if (obj != null)
             {
@@ -839,7 +838,7 @@ namespace Microsoft.Internal.AlphaFlattener
             return packet;
         }
 
-        class CachePacket
+        private class CachePacket
         {
             // "null" for any field means it hasn't been set yet.
             // This implies that the fields cannot have real values of "null".

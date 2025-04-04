@@ -1,6 +1,5 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 // Description: Responsible for the lifecycle of the RightsDocument and the actions that can
 //              be performed on it.
@@ -23,7 +22,7 @@ namespace MS.Internal.Documents.Application
     /// interface are expected to use the IChainOfResponsibiltyNode method before
     /// calling into the IDocumentController methods to avoid runtime errors.
     /// </remarks>
-    class RightsController : IDocumentController, IDisposable
+    internal class RightsController : IDocumentController, IDisposable
 {
     #region IDocumentController Members
     //--------------------------------------------------------------------------

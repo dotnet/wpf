@@ -1,6 +1,5 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 //
 // Description: Provide default conversion between source values and
@@ -365,8 +364,7 @@ namespace MS.Internal.Data
         private bool _shouldConvertFrom;
         private bool _shouldConvertTo;
         private DataBindEngine _engine;
-
-        static Type StringType = typeof(String);
+        private static Type StringType = typeof(String);
     }
 
     #endregion DefaultValueConverter
@@ -520,10 +518,10 @@ namespace MS.Internal.Data
             return false;
         }
 
-        Type _sourceType, _targetType;
+        private Type _sourceType, _targetType;
 
         // list of types supported by System.Convert (from the SDK)
-        static readonly Type[] SupportedTypes = {
+        private static readonly Type[] SupportedTypes = {
             typeof(String),                             // put common types up front
             typeof(Int32),  typeof(Int64),  typeof(Single), typeof(Double),
             typeof(Decimal),typeof(Boolean),
@@ -532,7 +530,7 @@ namespace MS.Internal.Data
         };
 
         // list of types supported by System.Convert for Char Type(from the SDK)
-        static readonly Type[] CharSupportedTypes = {
+        private static readonly Type[] CharSupportedTypes = {
             typeof(String),                             // put common types up front
             typeof(Int32),  typeof(Int64),  typeof(Byte),   typeof(Int16),
             typeof(UInt32), typeof(UInt64), typeof(UInt16), typeof(SByte),  // non-CLS compliant types
@@ -714,8 +712,8 @@ namespace MS.Internal.Data
             return type.IsInstanceOfType(o) ? o : null;
         }
 
-        Type _sourceType;
-        Type _targetType;
+        private Type _sourceType;
+        private Type _targetType;
     }
 
     #endregion InterfaceConverter
@@ -725,7 +723,7 @@ namespace MS.Internal.Data
     internal class ValueConverterContext : ITypeDescriptorContext, IUriContext
     {
         // redirect to IUriContext service
-        virtual public object GetService(Type serviceType)
+        public virtual object GetService(Type serviceType)
         {
             if (serviceType == typeof(IUriContext))
             {

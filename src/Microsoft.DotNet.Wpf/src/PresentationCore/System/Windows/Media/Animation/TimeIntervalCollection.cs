@@ -1,6 +1,5 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 //                                             
 
@@ -314,7 +313,7 @@ namespace System.Windows.Media.Animation
         /// <summary>
         /// Creates a collection containing a single time point
         /// </summary>
-        static internal TimeIntervalCollection CreatePoint(TimeSpan time)
+        internal static TimeIntervalCollection CreatePoint(TimeSpan time)
         {
             return new TimeIntervalCollection(time);
         }
@@ -322,7 +321,7 @@ namespace System.Windows.Media.Animation
         /// <summary>
         /// Creates a collection containing a closed-open time interval [from, to)
         /// </summary>
-        static internal TimeIntervalCollection CreateClosedOpenInterval(TimeSpan from, TimeSpan to)
+        internal static TimeIntervalCollection CreateClosedOpenInterval(TimeSpan from, TimeSpan to)
         {
             return new TimeIntervalCollection(from, true, to, false);
         }
@@ -330,7 +329,7 @@ namespace System.Windows.Media.Animation
         /// <summary>
         /// Creates a collection containing an open-closed time interval (from, to]
         /// </summary>
-        static internal TimeIntervalCollection CreateOpenClosedInterval(TimeSpan from, TimeSpan to)
+        internal static TimeIntervalCollection CreateOpenClosedInterval(TimeSpan from, TimeSpan to)
         {
             return new TimeIntervalCollection(from, false, to, true);
         }
@@ -338,7 +337,7 @@ namespace System.Windows.Media.Animation
         /// <summary>
         /// Creates a collection containing a closed time interval [from, infinity)
         /// </summary>
-        static internal TimeIntervalCollection CreateInfiniteClosedInterval(TimeSpan from)
+        internal static TimeIntervalCollection CreateInfiniteClosedInterval(TimeSpan from)
         {
             return new TimeIntervalCollection(from, true);
         }
@@ -346,7 +345,7 @@ namespace System.Windows.Media.Animation
         /// <summary>
         /// Creates an empty collection
         /// </summary>
-        static internal TimeIntervalCollection Empty
+        internal static TimeIntervalCollection Empty
         {
             get
             {
@@ -357,7 +356,7 @@ namespace System.Windows.Media.Animation
         /// <summary>
         /// Creates a collection with the null point
         /// </summary>
-        static internal TimeIntervalCollection CreateNullPoint()
+        internal static TimeIntervalCollection CreateNullPoint()
         {
             return new TimeIntervalCollection(true);
         }
@@ -677,7 +676,7 @@ namespace System.Windows.Media.Animation
         }
 
         // Make sure the indexers are starting next to each other
-        static private void IntersectsHelperPrepareIndexers(ref TimeIntervalCollection tic1, ref TimeIntervalCollection tic2)
+        private static void IntersectsHelperPrepareIndexers(ref TimeIntervalCollection tic1, ref TimeIntervalCollection tic2)
         {
             Debug.Assert(!tic1.IsEmptyOfRealPoints);  // We shouldn't reach here if either TIC is empty
             Debug.Assert(!tic2.IsEmptyOfRealPoints);
@@ -706,7 +705,7 @@ namespace System.Windows.Media.Animation
 
         // Returns true if we know at this point whether an intersection is possible between tic1 and tic2
         // The fact of whether an intersection was found is stored in the ref parameter intersectionFound
-        static private bool IntersectsHelperUnequalCase(ref TimeIntervalCollection tic1, ref TimeIntervalCollection tic2, ref bool intersectionFound)
+        private static bool IntersectsHelperUnequalCase(ref TimeIntervalCollection tic1, ref TimeIntervalCollection tic2, ref bool intersectionFound)
         {
             Debug.Assert(!intersectionFound);  // If an intersection was already found, we should not reach this far
 
@@ -755,7 +754,7 @@ namespace System.Windows.Media.Animation
 
         // Returns true if we know at this point whether an intersection is possible between tic1 and tic2
         // The fact of whether an intersection was found is stored in the ref parameter intersectionFound
-        static private bool IntersectsHelperEqualCase(ref TimeIntervalCollection tic1, ref TimeIntervalCollection tic2, ref bool intersectionFound)
+        private static bool IntersectsHelperEqualCase(ref TimeIntervalCollection tic1, ref TimeIntervalCollection tic2, ref bool intersectionFound)
         {
             // If the nodes match exactly, check if the points are both included, or if the intervals are both included
             if ((tic1.CurrentNodeIsPoint && tic2.CurrentNodeIsPoint) ||

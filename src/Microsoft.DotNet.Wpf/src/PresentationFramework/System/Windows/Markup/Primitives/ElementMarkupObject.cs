@@ -1,6 +1,5 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 //
 //  Contents:  MarkupObject and MarkupProperty implementation for 
@@ -183,7 +182,7 @@ namespace System.Windows.Markup.Primitives
 
         private sealed class ElementObjectContext : ValueSerializerContextWrapper, IValueSerializerContext
         {
-            ElementMarkupObject _object;
+            private ElementMarkupObject _object;
 
             public ElementObjectContext(ElementMarkupObject obj, IValueSerializerContext baseContext): base(baseContext)
             {
@@ -614,7 +613,7 @@ namespace System.Windows.Markup.Primitives
             get { return _manager; }
         }
 
-        static readonly List<Type> EmptyTypes = new List<Type>();
+        private static readonly List<Type> EmptyTypes = new List<Type>();
 
         public override IEnumerable<Type> TypeReferences
         {
@@ -646,7 +645,7 @@ namespace System.Windows.Markup.Primitives
 
         private sealed class ElementPropertyContext : ValueSerializerContextWrapper, IValueSerializerContext
         {
-            ElementPropertyBase _property;
+            private ElementPropertyBase _property;
 
             public ElementPropertyContext(ElementPropertyBase property, IValueSerializerContext baseContext)
                 : base(baseContext)
@@ -1130,7 +1129,7 @@ namespace System.Windows.Markup.Primitives
             }
         }
 
-        IEnumerable _value;
+        private IEnumerable _value;
     }
 
     /// <summary>
@@ -1171,12 +1170,12 @@ namespace System.Windows.Markup.Primitives
             }
         }
 
-        IDictionary _value;
+        private IDictionary _value;
     }
 
     internal class ValueSerializerContextWrapper : IValueSerializerContext
     {
-        IValueSerializerContext _baseContext;
+        private IValueSerializerContext _baseContext;
 
         public ValueSerializerContextWrapper(IValueSerializerContext baseContext)
         {

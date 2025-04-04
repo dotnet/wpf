@@ -1,6 +1,5 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 
 using System.Collections;
@@ -338,7 +337,7 @@ namespace System.Windows.Controls
 
         private static readonly UncommonField<int> BringColumnIntoViewRetryCountField
             = new UncommonField<int>(0);
-        const int MaxBringColumnIntoViewRetries = 4;
+        private const int MaxBringColumnIntoViewRetries = 4;
 
         /// <summary>
         ///     Called from DataGridCellsPanel.BringIndexIntoView to request a
@@ -8290,7 +8289,7 @@ namespace System.Windows.Controls
 
             try
             {
-                Clipboard.CriticalSetDataObject(dataObject, true /* Copy */);
+                Clipboard.SetDataObject(dataObject, copy: true);
             }
             catch (ExternalException)
             {

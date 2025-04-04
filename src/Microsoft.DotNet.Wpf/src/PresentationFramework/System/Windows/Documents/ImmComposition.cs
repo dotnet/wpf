@@ -1,6 +1,5 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 using System.Runtime.InteropServices;
 using System.Collections;
@@ -1368,7 +1367,7 @@ namespace System.Windows.Documents
             return lret;
         }
 
-        private unsafe static void StoreSurroundingText(IntPtr reconv, string surrounding)
+        private static unsafe void StoreSurroundingText(IntPtr reconv, string surrounding)
         {
             // Copy the string to the pointer right after the structure.
             byte* p = (byte*)reconv.ToPointer();

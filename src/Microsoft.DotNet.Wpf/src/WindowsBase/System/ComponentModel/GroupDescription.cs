@@ -1,6 +1,5 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 using System.Collections;
 using System.Collections.ObjectModel;
@@ -190,7 +189,7 @@ namespace System.ComponentModel
         //
         //------------------------------------------------------
 
-        void OnGroupNamesChanged(object sender, NotifyCollectionChangedEventArgs e)
+        private void OnGroupNamesChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
             OnPropertyChanged(new PropertyChangedEventArgs(nameof(GroupNames)));
         }
@@ -246,9 +245,9 @@ namespace System.ComponentModel
         //
         //------------------------------------------------------
 
-        ObservableCollection<object> _explicitGroupNames;
-        SortDescriptionCollection _sort;
-        IComparer _customSort;
+        private ObservableCollection<object> _explicitGroupNames;
+        private SortDescriptionCollection _sort;
+        private IComparer _customSort;
 
         #endregion Private fields
     }

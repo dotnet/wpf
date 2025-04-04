@@ -1,6 +1,5 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 
 using System.Collections;
@@ -106,7 +105,7 @@ namespace System.Windows.Xps.Serialization
             return v;
         }
 
-        void ReportLimitViolation()
+        private void ReportLimitViolation()
         {
             if (_exceedFloatLimit)
             {
@@ -413,7 +412,7 @@ namespace System.Windows.Xps.Serialization
             WriteAttr("Opacity", brush.Opacity, 1.0);
         }
 
-        static Rect UnitRect = new Rect(0, 0, 1, 1);
+        private static Rect UnitRect = new Rect(0, 0, 1, 1);
 
         private void WriteTileBrush(string element, TileBrush brush, Rect bounds)
         {
@@ -560,7 +559,7 @@ namespace System.Windows.Xps.Serialization
             WriteAttr("Viewport", vp.ToString(CultureInfo.InvariantCulture));
         }
 
-        void SaveResetState()
+        private void SaveResetState()
         {
             // Save critical state info
             _tcoStack.Push(_opacity);
@@ -575,7 +574,7 @@ namespace System.Windows.Xps.Serialization
             _clip        = null;
         }
 
-        void RestoreState()
+        private void RestoreState()
         {
             // Restore critical state info
             _clip        = _tcoStack.Pop() as Geometry;
@@ -961,7 +960,7 @@ namespace System.Windows.Xps.Serialization
             }
         }
 
-        static private bool IsUniformScale(Matrix mat)
+        private static bool IsUniformScale(Matrix mat)
         {
             if (mat.IsIdentity)
             {
@@ -1143,7 +1142,7 @@ namespace System.Windows.Xps.Serialization
         }
 
         // Check if brush and/or pen actually paint anything visible
-        static private bool Visible(Brush brush, Pen pen)
+        private static bool Visible(Brush brush, Pen pen)
         {
             if (brush != null)
             {
@@ -1164,7 +1163,7 @@ namespace System.Windows.Xps.Serialization
             return false;
         }
 
-        static private char Ord(bool b)
+        private static char Ord(bool b)
         {
             if (b)
             {
@@ -1176,7 +1175,7 @@ namespace System.Windows.Xps.Serialization
             }
         }
 
-        static private char Ord(SweepDirection d)
+        private static char Ord(SweepDirection d)
         {
             if (d == SweepDirection.Clockwise)
             {
@@ -1715,7 +1714,7 @@ namespace System.Windows.Xps.Serialization
         #region IMetroDrawingContext virtual methods override
 
         // Check for relative brush
-        static public bool NeedBounds(Brush b)
+        public static bool NeedBounds(Brush b)
         {
             if (b == null)
             {
@@ -1950,7 +1949,7 @@ namespace System.Windows.Xps.Serialization
         /// <summary>
         /// For translation only transform, extract out translation
         /// </summary>
-        static private Transform ExtractTranslation(Transform trans, out double dx, out double dy)
+        private static Transform ExtractTranslation(Transform trans, out double dx, out double dy)
         {
             dx = 0;
             dy = 0;
@@ -2240,7 +2239,7 @@ namespace System.Windows.Xps.Serialization
             _writer.WriteComment(str);
         }
 
-        bool WriteTCO(string element, Transform transform, Geometry clip, Matrix clipMat, double opacity, Brush opacityMask, Rect bounds)
+        private bool WriteTCO(string element, Transform transform, Geometry clip, Matrix clipMat, double opacity, Brush opacityMask, Rect bounds)
         {
             // Extract opacity from SolidColorBrush OpacityMask
             if (opacityMask != null)
@@ -2276,7 +2275,7 @@ namespace System.Windows.Xps.Serialization
             return asElement;
         }
 
-        void SetCoordinateFormat(double scale)
+        private void SetCoordinateFormat(double scale)
         {
             scale = scale * PrecisionDPI / 9600;
 
@@ -2306,7 +2305,7 @@ namespace System.Windows.Xps.Serialization
             }
         }
 
-        void PushCoordinateScope(Transform transform)
+        private void PushCoordinateScope(Transform transform)
         {
             _tcoStack.Push(_worldTransform);
             _tcoStack.Push(_coordFormat);
@@ -2323,7 +2322,7 @@ namespace System.Windows.Xps.Serialization
             }
         }
 
-        void PopCoordinateScope()
+        private void PopCoordinateScope()
         {
             _coordFormat    = _tcoStack.Pop() as string;
             _worldTransform = (Matrix)_tcoStack.Pop();

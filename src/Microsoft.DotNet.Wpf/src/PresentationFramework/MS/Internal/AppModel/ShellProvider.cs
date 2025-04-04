@@ -1,6 +1,5 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 using System.Runtime.InteropServices;
 using System.Runtime.InteropServices.ComTypes;
@@ -121,7 +120,7 @@ namespace MS.Internal.AppModel
         InterfaceType(ComInterfaceType.InterfaceIsIUnknown),
         Guid(IID.ObjectArray),
     ]
-    interface IObjectCollection : IObjectArray
+    internal interface IObjectCollection : IObjectArray
     {
         #region IObjectArray redeclarations
         new uint GetCount();
@@ -274,7 +273,7 @@ namespace MS.Internal.AppModel
         InterfaceType(ComInterfaceType.InterfaceIsIUnknown),
         Guid(IID.ShellItem2),
     ]
-    interface IShellItem2 : IShellItem
+    internal interface IShellItem2 : IShellItem
     {
         #region IShellItem redeclarations
         [return: MarshalAs(UnmanagedType.Interface)]

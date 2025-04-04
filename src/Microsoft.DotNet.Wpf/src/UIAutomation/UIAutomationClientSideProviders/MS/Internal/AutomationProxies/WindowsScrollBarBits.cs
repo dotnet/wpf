@@ -1,6 +1,5 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 // Description: ScrollBarBits Proxy
 //
@@ -18,7 +17,7 @@ using MS.Win32;
 namespace MS.Internal.AutomationProxies
 {
     // Proxy for the up, down, large increment, large decrement and thumb piece of a scrollbar
-    class WindowsScrollBarBits: ProxySimple, IInvokeProvider
+    internal class WindowsScrollBarBits: ProxySimple, IInvokeProvider
     {
         // ------------------------------------------------------
         //
@@ -200,7 +199,7 @@ namespace MS.Internal.AutomationProxies
         // boundary check
         // param "item", ID for the scrollbar bit
         // param "sbFlag", SBS_ WindowLong equivallent flag
-        static internal Rect GetBoundingRectangle(IntPtr hwnd, ProxyFragment parent, WindowsScrollBar.ScrollBarItem item, int sbFlag)
+        internal static Rect GetBoundingRectangle(IntPtr hwnd, ProxyFragment parent, WindowsScrollBar.ScrollBarItem item, int sbFlag)
         {
             NativeMethods.ScrollInfo si = new NativeMethods.ScrollInfo ();
             si.cbSize = Marshal.SizeOf (si.GetType ());
@@ -292,7 +291,7 @@ namespace MS.Internal.AutomationProxies
         // boundary check
         // param "item", ID for the scrollbar bit
         // param "sbFlag", SBS_ WindowLong equivallent flag
-        static internal Rect GetVerticalScrollbarBitBoundingRectangle(IntPtr hwnd, WindowsScrollBar.ScrollBarItem item, NativeMethods.ScrollBarInfo sbi)
+        internal static Rect GetVerticalScrollbarBitBoundingRectangle(IntPtr hwnd, WindowsScrollBar.ScrollBarItem item, NativeMethods.ScrollBarInfo sbi)
         {
             NativeMethods.Win32Rect rc = new NativeMethods.Win32Rect(sbi.rcScrollBar.left, sbi.xyThumbTop, sbi.rcScrollBar.right, sbi.xyThumbBottom);
             if (!Misc.MapWindowPoints(hwnd, IntPtr.Zero, ref rc, 2))
@@ -383,7 +382,7 @@ namespace MS.Internal.AutomationProxies
         // boundary check
         // param "item", ID for the scrollbar bit
         // param "sbFlag", SBS_ WindowLong equivallent flag
-        static internal Rect GetHorizontalScrollbarBitBoundingRectangle(IntPtr hwnd, WindowsScrollBar.ScrollBarItem item, NativeMethods.ScrollBarInfo sbi)
+        internal static Rect GetHorizontalScrollbarBitBoundingRectangle(IntPtr hwnd, WindowsScrollBar.ScrollBarItem item, NativeMethods.ScrollBarInfo sbi)
         {
             // Horizontal Scrollbar
             NativeMethods.Win32Rect rc = new NativeMethods.Win32Rect(sbi.xyThumbTop, sbi.rcScrollBar.top, sbi.xyThumbBottom, sbi.rcScrollBar.bottom);

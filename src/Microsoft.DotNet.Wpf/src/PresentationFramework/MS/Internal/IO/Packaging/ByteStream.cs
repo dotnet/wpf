@@ -1,6 +1,5 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 //
 // Description:
@@ -369,7 +368,7 @@ namespace MS.Internal.IO.Packaging
         }
 
         #endregion Internal Properties
-        
+
 
         //------------------------------------------------------
         //
@@ -381,12 +380,11 @@ namespace MS.Internal.IO.Packaging
         // This class does not control the life cycle of _securitySupressedIStream
         //  thus it should not dispose it when this class gets disposed
         //  the client code of this class should be the one that dispose _securitySupressedIStream
-        SecuritySuppressedIStream _securitySuppressedIStream;
-
-        FileAccess                 _access;
-        long                       _length = 0;
-        bool                       _isLengthInitialized = false;
-        bool                       _disposed = false;
+        private SecuritySuppressedIStream _securitySuppressedIStream;
+        private FileAccess                 _access;
+        private long                       _length = 0;
+        private bool                       _isLengthInitialized = false;
+        private bool                       _disposed = false;
 
         #endregion Private Fields
         

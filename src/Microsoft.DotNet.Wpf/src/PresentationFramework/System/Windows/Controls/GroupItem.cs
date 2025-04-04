@@ -1,6 +1,5 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 //
 // Description: GroupItem object - root of the UI subtree generated for a CollectionViewGroup
@@ -456,10 +455,10 @@ namespace System.Windows.Controls
         //
         //------------------------------------------------------
 
-        ItemContainerGenerator _generator;
+        private ItemContainerGenerator _generator;
         private Panel _itemsHost;
-        FrameworkElement _header;
-        Expander _expander;
+        private FrameworkElement _header;
+        private Expander _expander;
 
         internal static readonly UncommonField<bool> MustDisableVirtualizationField = new UncommonField<bool>();
         internal static readonly UncommonField<bool> InBackgroundLayoutField = new UncommonField<bool>();

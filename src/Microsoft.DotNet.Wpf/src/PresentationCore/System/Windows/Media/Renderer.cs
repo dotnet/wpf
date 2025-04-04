@@ -1,6 +1,5 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 //
 //
@@ -13,9 +12,9 @@ using System.Windows.Media.Composition;
 
 namespace System.Windows.Media
 {
-    static internal class Renderer
+    internal static class Renderer
     {
-        static public void Render(
+        public static void Render(
             IntPtr pRenderTarget,
             DUCE.Channel channel,
             Visual visual,
@@ -32,7 +31,7 @@ namespace System.Windows.Media
         /// to render it specifically for an effect to be applied to it. It excludes
         /// properties such as transform, clip, offset and guidelines.
         /// </summary>
-        static internal void Render(
+        internal static void Render(
             IntPtr pRenderTarget,
             DUCE.Channel channel,
             Visual visual,

@@ -1,6 +1,5 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 // Description: ScrollBar Proxy
 
@@ -17,7 +16,7 @@ namespace MS.Internal.AutomationProxies
     // This code works for vertical and horizontal scroll bars
     // both as part of the none client area or as a stand alone
     // scroll bar control.
-    class WindowsScrollBar: ProxyHwnd, IRangeValueProvider
+    internal class WindowsScrollBar: ProxyHwnd, IRangeValueProvider
     {
         // ------------------------------------------------------
         //
@@ -407,12 +406,12 @@ namespace MS.Internal.AutomationProxies
 
         #region Internal Methods
 
-        static internal bool HasVerticalScrollBar (IntPtr hwnd)
+        internal static bool HasVerticalScrollBar (IntPtr hwnd)
         {
             return Misc.IsBitSet(Misc.GetWindowStyle(hwnd), NativeMethods.WS_VSCROLL);
         }
 
-        static internal bool HasHorizontalScrollBar (IntPtr hwnd)
+        internal static bool HasHorizontalScrollBar (IntPtr hwnd)
         {
             return Misc.IsBitSet(Misc.GetWindowStyle(hwnd), NativeMethods.WS_HSCROLL);
         }

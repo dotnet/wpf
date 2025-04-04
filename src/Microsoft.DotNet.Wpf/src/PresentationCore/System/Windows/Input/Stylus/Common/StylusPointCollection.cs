@@ -1,6 +1,5 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 using System.ComponentModel;
 using MS.Internal.Ink.InkSerializedFormat;
@@ -241,7 +240,7 @@ namespace System.Windows.Input
         /// called by base class Collection&lt;T&gt; when the list is being cleared;
         /// raises a CollectionChanged event to any listeners
         /// </summary>
-        protected override sealed void ClearItems()
+        protected sealed override void ClearItems()
         {
             if (CanGoToZero())
             {
@@ -258,7 +257,7 @@ namespace System.Windows.Input
         /// called by base class Collection&lt;T&gt; when an item is removed from list;
         /// raises a CollectionChanged event to any listeners
         /// </summary>
-        protected override sealed void RemoveItem(int index)
+        protected sealed override void RemoveItem(int index)
         {
             if (this.Count > 1 || CanGoToZero())
             {
@@ -275,7 +274,7 @@ namespace System.Windows.Input
         /// called by base class Collection&lt;T&gt; when an item is added to list;
         /// raises a CollectionChanged event to any listeners
         /// </summary>
-        protected override sealed void InsertItem(int index, StylusPoint stylusPoint)
+        protected sealed override void InsertItem(int index, StylusPoint stylusPoint)
         {
             if (!StylusPointDescription.AreCompatible(stylusPoint.Description,
                                                     _stylusPointDescription))
@@ -293,7 +292,7 @@ namespace System.Windows.Input
         /// called by base class Collection&lt;T&gt; when an item is set in list;
         /// raises a CollectionChanged event to any listeners
         /// </summary>
-        protected override sealed void SetItem(int index, StylusPoint stylusPoint)
+        protected sealed override void SetItem(int index, StylusPoint stylusPoint)
         {
             if (!StylusPointDescription.AreCompatible(stylusPoint.Description,
                                                     _stylusPointDescription))

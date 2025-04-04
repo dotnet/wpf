@@ -1,6 +1,5 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 
 
@@ -26,7 +25,7 @@ namespace Microsoft.Internal.AlphaFlattener
         #region Public Methods
 
 #if DEBUG
-        static int overlapcount;
+        private static int overlapcount;
 
         internal static string LeftPad(object obj, int len)
         {
@@ -69,7 +68,7 @@ namespace Microsoft.Internal.AlphaFlattener
             return s.PadLeft(len, ' ');
         }
 
-        static internal void PrintPrimitive(PrimitiveInfo info, int index, bool verbose)
+        internal static void PrintPrimitive(PrimitiveInfo info, int index, bool verbose)
         {
             if (index < 0)
             {
@@ -304,7 +303,7 @@ namespace Microsoft.Internal.AlphaFlattener
             }
         }
 
-        static bool OrderedInsert(List<int> list, int n)
+        private static bool OrderedInsert(List<int> list, int n)
         {
             int pos = list.Count;
 

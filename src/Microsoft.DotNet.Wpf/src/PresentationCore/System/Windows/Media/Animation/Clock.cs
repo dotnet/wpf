@@ -1,6 +1,5 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 #if DEBUG
 #define TRACE
@@ -4474,7 +4473,7 @@ namespace System.Windows.Media.Animation
         internal int                _childIndex;
         internal int                _depth;
 
-        static Int64                 s_TimeSpanTicksPerSecond = TimeSpan.FromSeconds(1).Ticks;
+        private static Int64        s_TimeSpanTicksPerSecond = TimeSpan.FromSeconds(1).Ticks;
 
         #endregion // Linking data
 

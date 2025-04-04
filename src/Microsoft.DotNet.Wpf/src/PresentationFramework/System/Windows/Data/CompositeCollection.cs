@@ -1,6 +1,5 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 //
 // Description: CompositeCollection holds the list of items that constitute the content of a ItemsControl.
@@ -493,7 +492,7 @@ namespace System.Windows.Data
         }
 
         // raise CollectionChanged event to any listeners
-        void OnCollectionChanged(NotifyCollectionChangedAction action)
+        private void OnCollectionChanged(NotifyCollectionChangedAction action)
         {
 #if DEBUG
             _hasRepeatedCollectionIsValid = false;
@@ -506,7 +505,7 @@ namespace System.Windows.Data
         }
 
         // raise CollectionChanged event to any listeners
-        void OnCollectionChanged(NotifyCollectionChangedAction action, object item, int index)
+        private void OnCollectionChanged(NotifyCollectionChangedAction action, object item, int index)
         {
             if (CollectionChanged != null)
             {
@@ -515,7 +514,7 @@ namespace System.Windows.Data
         }
 
         /// raise CollectionChanged event to any listeners
-        void OnCollectionChanged(NotifyCollectionChangedAction action, object oldItem, object newItem, int index)
+        private void OnCollectionChanged(NotifyCollectionChangedAction action, object oldItem, object newItem, int index)
         {
             if (CollectionChanged != null)
             {

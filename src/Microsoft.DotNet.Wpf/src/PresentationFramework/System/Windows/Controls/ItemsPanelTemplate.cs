@@ -1,6 +1,5 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 //
 // Description: ItemsPanelTemplate describes how ItemsPresenter creates the panel
@@ -75,7 +74,7 @@ namespace System.Windows.Controls
         }
 
         // Target type of ItemsPanelTemplate is ItemsPresenter
-        static internal Type DefaultTargetType
+        internal static Type DefaultTargetType
         {
             get { return typeof(ItemsPresenter); }
         }

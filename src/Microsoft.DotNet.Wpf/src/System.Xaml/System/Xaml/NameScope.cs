@@ -1,6 +1,5 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 #nullable disable
 
@@ -98,7 +97,7 @@ namespace System.Xaml
         // This is a HybridDictionary of Name-Object maps
         private HybridDictionary _nameMap;
 
-        IEnumerator<KeyValuePair<string, object>> GetEnumerator() => new Enumerator(_nameMap);
+        private IEnumerator<KeyValuePair<string, object>> GetEnumerator() => new Enumerator(_nameMap);
 
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 

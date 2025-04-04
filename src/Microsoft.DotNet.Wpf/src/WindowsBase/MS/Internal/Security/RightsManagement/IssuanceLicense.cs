@@ -1,6 +1,5 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 // Description:
 //   This class wraps the issuance license publishing services
@@ -194,7 +193,7 @@ namespace MS.Internal.Security.RightsManagement
             }
         }
 
-        override public string ToString()
+        public override string ToString()
         {
             uint issuanceLicenseTemplateLength = 0;
             StringBuilder issuanceLicenseTemplate = null;
@@ -494,7 +493,7 @@ namespace MS.Internal.Security.RightsManagement
             return userHandle;
         }
 
-        static private Nullable<ContentRight> GetRightFromHandle(SafeRightsManagementPubHandle rightHandle,
+        private static Nullable<ContentRight> GetRightFromHandle(SafeRightsManagementPubHandle rightHandle,
                                                         out DateTime validFrom,
                                                         out DateTime validUntil)
         {
@@ -525,7 +524,7 @@ namespace MS.Internal.Security.RightsManagement
             return ClientSession.GetRightFromString(rightName.ToString());
         }
 
-        static private ContentUser GetUserFromHandle(SafeRightsManagementPubHandle userHandle)
+        private static ContentUser GetUserFromHandle(SafeRightsManagementPubHandle userHandle)
         {
             uint userNameLength = 0;
             StringBuilder userName = null;

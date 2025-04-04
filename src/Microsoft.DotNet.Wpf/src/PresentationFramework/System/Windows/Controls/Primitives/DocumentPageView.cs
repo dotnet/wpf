@@ -1,6 +1,5 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 //
 // Description: Provides a view port for a page of content for a DocumentPage.
@@ -212,7 +211,7 @@ namespace System.Windows.Controls.Primitives
         /// </summary>
         /// <param name="availableSize">Available size that parent can give to the child. This is soft constraint.</param>
         /// <returns>The DocumentPageView's desired size.</returns>
-        protected override sealed Size MeasureOverride(Size availableSize)
+        protected sealed override Size MeasureOverride(Size availableSize)
         {
             Size newPageSize, pageZoom;
             Size pageSize;
@@ -340,7 +339,7 @@ namespace System.Windows.Controls.Primitives
         /// Content arrangement.
         /// </summary>
         /// <param name="finalSize">The final size that element should use to arrange itself and its children.</param>
-        protected override sealed Size ArrangeOverride(Size finalSize)
+        protected sealed override Size ArrangeOverride(Size finalSize)
         {
             Transform pageTransform;
             ScaleTransform pageScaleTransform;

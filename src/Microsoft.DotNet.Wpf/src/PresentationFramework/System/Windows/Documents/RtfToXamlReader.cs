@@ -1,6 +1,5 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 //
 // Description: Rtf reader to convert the rtf content into Xaml content.
@@ -933,7 +932,7 @@ namespace System.Windows.Documents
                 && UnicodeSkip == formatState.UnicodeSkip;
         }
 
-        static internal FormatState EmptyFormatState
+        internal static FormatState EmptyFormatState
         {
             get
             {
@@ -1961,7 +1960,7 @@ namespace System.Windows.Documents
             CF < 0 ? string.Create(CultureInfo.InvariantCulture, stackalloc char[128], $"\\brdrs\\brdrw{EffectiveWidth}") :
             string.Create(CultureInfo.InvariantCulture, stackalloc char[128], $"\\brdrs\\brdrw{EffectiveWidth}\\brdrcf{CF}");
 
-        static internal BorderFormat EmptyBorderFormat
+        internal static BorderFormat EmptyBorderFormat
         {
             get
             {
@@ -1995,7 +1994,7 @@ namespace System.Windows.Documents
         private long _cf;
         private long _width;
         private BorderType _type;
-        static private BorderFormat _emptyBorderFormat = null;
+        private static BorderFormat _emptyBorderFormat = null;
     }
 
     internal class ParaBorder
@@ -3795,7 +3794,7 @@ namespace System.Windows.Documents
 
         #region Private Fields
 
-        Hashtable _fontMappings;
+        private Hashtable _fontMappings;
 
         #endregion Private Fields
     }

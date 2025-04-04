@@ -1,6 +1,5 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 using System.Windows.Controls;
 
@@ -19,7 +18,7 @@ namespace System.Windows.Automation.Peers
         }
 
         ///
-        override protected AutomationControlType GetAutomationControlTypeCore()
+        protected override AutomationControlType GetAutomationControlTypeCore()
         {
             if (_viewAutomationPeer != null)
             {
@@ -32,13 +31,13 @@ namespace System.Windows.Automation.Peers
         }
 
         ///
-        override protected string GetClassNameCore()
+        protected override string GetClassNameCore()
         {
             return "ListView";
         }
 
         /// 
-        override public object GetPattern(PatternInterface patternInterface)
+        public override object GetPattern(PatternInterface patternInterface)
         {
             object ret = null;
             if (_viewAutomationPeer != null)

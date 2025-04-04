@@ -1,6 +1,5 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 #nullable disable
 
@@ -125,13 +124,13 @@ namespace System.Xaml
 
         internal INameScope UnderlyingNameScope { get { return _underlyingNameScope; } }
 
-        class Enumerator : IEnumerator<KeyValuePair<string, object>>
+        private class Enumerator : IEnumerator<KeyValuePair<string, object>>
         {
-            int index;
-            IDictionaryEnumerator dictionaryEnumerator;
-            HybridDictionary _nameMap;
-            INameScope _underlyingNameScope;
-            FrugalObjectList<string> _names;
+            private int index;
+            private IDictionaryEnumerator dictionaryEnumerator;
+            private HybridDictionary _nameMap;
+            private INameScope _underlyingNameScope;
+            private FrugalObjectList<string> _names;
 
             public Enumerator(NameScopeDictionary nameScopeDictionary)
             {
@@ -222,7 +221,7 @@ namespace System.Xaml
             }
         }
 
-        IEnumerator<KeyValuePair<string, object>> GetEnumerator()
+        private IEnumerator<KeyValuePair<string, object>> GetEnumerator()
         {
             return new Enumerator(this);
         }

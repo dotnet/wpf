@@ -1,6 +1,5 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 // Description: Windows ListView Group helper classes
 //
@@ -14,7 +13,7 @@ using MS.Win32;
 namespace MS.Internal.AutomationProxies
 {
     // Class representing collection of ListView GroupManagers
-    class GroupManagerCollection
+    internal class GroupManagerCollection
     {
         //------------------------------------------------------
         //
@@ -89,13 +88,13 @@ namespace MS.Internal.AutomationProxies
 
         #region Private Fields
 
-        static private Hashtable _groupManagers = new Hashtable(10);
+        private static Hashtable _groupManagers = new Hashtable(10);
 
         #endregion Private Fields
     }
 
     // Class responsible for managing listview groups
-    class GroupManager
+    internal class GroupManager
     {
         // ------------------------------------------------------
         //
@@ -273,15 +272,15 @@ namespace MS.Internal.AutomationProxies
             //------------------------------------------------------
 
             #region Public Methods
-            static public bool operator true(GroupInfo info)
+            public static bool operator true(GroupInfo info)
             {
                 return info._items != null;
             }
-            static public bool operator false(GroupInfo info)
+            public static bool operator false(GroupInfo info)
             {
                 return info._items == null;
             }
-            static public bool operator !(GroupInfo info)
+            public static bool operator !(GroupInfo info)
             {
                 if (info)
                 {
@@ -327,7 +326,7 @@ namespace MS.Internal.AutomationProxies
 
             internal int[] _items;
             internal int _count;
-            static readonly internal GroupInfo Null = new GroupInfo(null, -1);
+            internal static readonly GroupInfo Null = new GroupInfo(null, -1);
 
             #endregion Internal Fields
         }

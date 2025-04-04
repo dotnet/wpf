@@ -1,6 +1,5 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 //  
 //
@@ -225,8 +224,8 @@ namespace MS.Internal.IO.Packaging
         // ListDictionary is the best fit for this scenarios; otherwise we should be using
         // Hashtable. HybridDictionary already has functionality of switching between
         //  ListDictionary and Hashtable depending on the size of the collection
-        static private HybridDictionary _packagePairs;
-        static private readonly Object  _globalLock;
+        private static HybridDictionary _packagePairs;
+        private static readonly Object  _globalLock;
 
         #endregion Private Fields
     }

@@ -1,6 +1,5 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 #nullable disable
 
@@ -19,10 +18,10 @@ namespace System.Xaml
 {
     public class XamlObjectWriter : XamlWriter, IXamlLineInfoConsumer, IAddLineInfo, ICheckIfInitialized
     {
-        object _lastInstance;
-        bool _inDispose;
-        ObjectWriterContext _context;
-        DeferringWriter _deferringWriter;
+        private object _lastInstance;
+        private bool _inDispose;
+        private ObjectWriterContext _context;
+        private DeferringWriter _deferringWriter;
         private EventHandler<XamlObjectEventArgs> _afterBeginInitHandler;
         private EventHandler<XamlObjectEventArgs> _beforePropertiesHandler;
         private EventHandler<XamlObjectEventArgs> _afterPropertiesHandler;
@@ -31,12 +30,12 @@ namespace System.Xaml
 
         private object _rootObjectInstance;
         private bool _skipDuplicatePropertyCheck;
-        NameFixupGraph _nameFixupGraph;
+        private NameFixupGraph _nameFixupGraph;
         private Dictionary<object, List<PendingCollectionAdd>> _pendingCollectionAdds;
-        XAML3.INameScope _rootNamescope;
-        bool _skipProvideValueOnRoot;
-        bool _nextNodeMustBeEndMember;
-        bool _preferUnconvertedDictionaryKeys;
+        private XAML3.INameScope _rootNamescope;
+        private bool _skipProvideValueOnRoot;
+        private bool _nextNodeMustBeEndMember;
+        private bool _preferUnconvertedDictionaryKeys;
         private Dictionary<object, ObjectWriterContext> _pendingKeyConversionContexts;
 
 #if DEBUG
@@ -66,7 +65,7 @@ namespace System.Xaml
             Initialize(savedContext.SchemaContext, savedContext, settings);
         }
 
-        void Initialize(XamlSchemaContext schemaContext, XamlSavedContext savedContext, XamlObjectWriterSettings settings)
+        private void Initialize(XamlSchemaContext schemaContext, XamlSavedContext savedContext, XamlObjectWriterSettings settings)
         {
             _inDispose = false;
             // ObjectWriter must be passed in a non-null SchemaContext.  We check that here, since the CreateContext method
@@ -894,12 +893,12 @@ namespace System.Xaml
         {
             ThrowIfDisposed();
             ArgumentNullException.ThrowIfNull(namespaceDeclaration);
-            if(namespaceDeclaration.Prefix is null)
+            if (namespaceDeclaration.Prefix is null)
             {
                 throw new ArgumentException(SR.NamespaceDeclarationPrefixCannotBeNull);
             }
 
-            if(namespaceDeclaration.Namespace is null)
+            if (namespaceDeclaration.Namespace is null)
             {
                 throw new ArgumentException(SR.NamespaceDeclarationNamespaceCannotBeNull);
             }
@@ -1093,7 +1092,7 @@ namespace System.Xaml
         }
 
         // These are the all the directives that affect Construction of object.
-        bool IsConstructionDirective(XamlMember xamlMember)
+        private bool IsConstructionDirective(XamlMember xamlMember)
         {
             return xamlMember == XamlLanguage.Arguments
                 || xamlMember == XamlLanguage.Base
@@ -1105,7 +1104,7 @@ namespace System.Xaml
 
         // BAML sometimes sends the x:base directive later than it should
         // so these are the Ctor Directives we worry about 'Users' messing up.
-        bool IsTextConstructionDirective(XamlMember xamlMember)
+        private bool IsTextConstructionDirective(XamlMember xamlMember)
         {
             return xamlMember == XamlLanguage.Arguments
                 || xamlMember == XamlLanguage.FactoryMethod
@@ -1116,7 +1115,7 @@ namespace System.Xaml
         // Non Ctor directives that are also allowed before object creation.
         // These are compat issues with BAML recording x:Key x:Uid earlier than
         // it current XAML standards.
-        bool IsDirectiveAllowedOnNullInstance(XamlMember xamlMember, XamlType xamlType)
+        private bool IsDirectiveAllowedOnNullInstance(XamlMember xamlMember, XamlType xamlType)
         {
             if (xamlMember == XamlLanguage.Key)
             {
@@ -2564,7 +2563,7 @@ namespace System.Xaml
             }
 
 #if DEBUG
-            if(token.Target.Property != token.TargetContext.ParentProperty)
+            if (token.Target.Property != token.TargetContext.ParentProperty)
             {
                 throw new XamlInternalException("Token's Target Property '{0}' != '{1}' the Token's Context parent Property");
             }

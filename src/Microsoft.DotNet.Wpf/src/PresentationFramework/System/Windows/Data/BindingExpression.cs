@@ -1,6 +1,5 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 //
 // Description: Defines BindingExpression object, the run-time instance of data binding.
@@ -594,7 +593,7 @@ namespace System.Windows.Data
         // just return (with status == Unattached).  The binding engine will try
         // again later. For hard failures, set an error status;  no more chances.
         // During the "last chance" attempt, treat all failures as "hard".
-        void AttachToContext(AttachAttempt attempt)
+        private void AttachToContext(AttachAttempt attempt)
         {
             // if the target has been GC'd, just give up
             DependencyObject target = TargetElement;
@@ -1041,7 +1040,7 @@ namespace System.Windows.Data
         //      In the two-way subcase, instead of a source-to-target transfer, we set the
         //      the target property to the (saved) raw proposed value, as if the user
         //      had edited this property.
-        object GetInitialValue(DependencyObject target, out ValidationError error)
+        private object GetInitialValue(DependencyObject target, out ValidationError error)
         {
             object proposedValue;
 
@@ -1236,12 +1235,12 @@ namespace System.Windows.Data
             ChangeSources(newSources);
         }
 
-#endregion Worker
+        #endregion Worker
 
-#region Value
+        #region Value
 
         // transfer a value from the source to the target
-        void TransferValue()
+        private void TransferValue()
         {
             TransferValue(DependencyProperty.UnsetValue, false);
         }
@@ -1590,7 +1589,7 @@ namespace System.Windows.Data
             UpdateValidationError(validationError);
         }
 
-        ValidationError RunValidationRule(ValidationRule validationRule, object value, CultureInfo culture)
+        private ValidationError RunValidationRule(ValidationRule validationRule, object value, CultureInfo culture)
         {
             ValidationError error;
 
@@ -1739,8 +1738,7 @@ namespace System.Windows.Data
             TransferValue(DependencyProperty.UnsetValue, isASubPropertyChange);
         }
 
-
-        void OnTargetUpdated()
+        private void OnTargetUpdated()
         {
             if (NotifyOnTargetUpdated)
             {
@@ -1771,7 +1769,7 @@ namespace System.Windows.Data
             }
         }
 
-        void OnSourceUpdated()
+        private void OnSourceUpdated()
         {
             if (NotifyOnSourceUpdated)
             {
@@ -2314,7 +2312,7 @@ namespace System.Windows.Data
             }
         }
 
-        void UpdateNotifyDataErrors(object value)
+        private void UpdateNotifyDataErrors(object value)
         {
             if (!ValidatesOnNotifyDataErrors)
                 return;
@@ -2363,7 +2361,7 @@ namespace System.Windows.Data
             return result;
         }
 
-        List<object> MergeErrors(List<object> list1, List<object> list2)
+        private List<object> MergeErrors(List<object> list1, List<object> list2)
         {
             if (list1 == null)
                 return list2;
@@ -2429,7 +2427,7 @@ namespace System.Windows.Data
             // Consider Cancel if anything goes wrong.
         }
 
-        void OnDataChanged(object sender, EventArgs e)
+        private void OnDataChanged(object sender, EventArgs e)
         {
             if (TraceData.IsExtendedTraceEnabled(this, TraceDataLevel.Events))
             {
@@ -2443,7 +2441,7 @@ namespace System.Windows.Data
             Activate(sender);
         }
 
-        void OnInheritanceContextChanged(object sender, EventArgs e)
+        private void OnInheritanceContextChanged(object sender, EventArgs e)
         {
             if (TraceData.IsExtendedTraceEnabled(this, TraceDataLevel.Events))
             {
@@ -2491,7 +2489,7 @@ namespace System.Windows.Data
             Update();
         }
 
-        void OnErrorsChanged(object sender, DataErrorsChangedEventArgs e)
+        private void OnErrorsChanged(object sender, DataErrorsChangedEventArgs e)
         {
             // if notification was on the right thread, just do the work (normal case)
             if (Dispatcher.Thread == Thread.CurrentThread)
@@ -2563,7 +2561,7 @@ namespace System.Windows.Data
         }
 
         // replace this BindingExpression with a new one
-        void Replace()
+        private void Replace()
         {
             DependencyObject target = TargetElement;
             if (target != null)
@@ -2666,17 +2664,17 @@ namespace System.Windows.Data
                 GC.SuppressFinalize(this);
             }
 
-            BindingExpression _bindingExpression;
+            private BindingExpression _bindingExpression;
         }
 
-        void SetDataItem(object newItem)
+        private void SetDataItem(object newItem)
         {
             _dataItem = CreateReference(newItem);
         }
 
         // find the DataSource object (if any) that produced the DataContext
         // for element d
-        object GetDataSourceForDataContext(DependencyObject d)
+        private object GetDataSourceForDataContext(DependencyObject d)
         {
             // look for ancestor that contributed the inherited value
             DependencyObject ancestor;
@@ -2699,7 +2697,7 @@ namespace System.Windows.Data
             return null;
         }
 
-#endregion Helper functions
+        #endregion Helper functions
 
         //------------------------------------------------------
         //
@@ -2707,10 +2705,10 @@ namespace System.Windows.Data
         //
         //------------------------------------------------------
 
-        WeakReference           _ctxElement;
-        object                  _dataItem;
-        BindingWorker           _worker;
-        Type                    _sourceType;
+        private WeakReference           _ctxElement;
+        private object                  _dataItem;
+        private BindingWorker           _worker;
+        private Type                    _sourceType;
 
         internal static readonly object NullDataItem = new NamedObject("NullDataItem");
         internal static readonly object IgnoreDefaultValue = new NamedObject("IgnoreDefaultValue");

@@ -1,6 +1,5 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 // Description: Unsafe P/Invokes used by UIAutomation
 
@@ -252,7 +251,7 @@ namespace MS.Win32
         // Windows Functions
         //
         [DllImport(ExternDll.User32, ExactSpelling = true, SetLastError = true)]
-        internal unsafe static extern bool EnumChildWindows(IntPtr hwndParent, NativeMethods.EnumChildrenCallbackVoid lpEnumFunc, void* lParam);
+        internal static extern unsafe bool EnumChildWindows(IntPtr hwndParent, NativeMethods.EnumChildrenCallbackVoid lpEnumFunc, void* lParam);
         [DllImport(ExternDll.User32, ExactSpelling = true)]
         internal static extern bool EnumThreadWindows(uint threadId, EnumThreadWndProc lpEnumFunc, [In, Out] ref ENUMTOOLTIPWINDOWINFO lParam);
         [DllImport(ExternDll.User32, ExactSpelling = true)]

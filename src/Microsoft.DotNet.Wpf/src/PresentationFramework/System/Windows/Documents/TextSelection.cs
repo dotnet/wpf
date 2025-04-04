@@ -1,6 +1,5 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 using MS.Internal;
 using System.Globalization;
@@ -2781,7 +2780,7 @@ namespace System.Windows.Documents
         // Flag set true after scheduling a callback to UpdateCaretStateWorker.
         // Used to prevent unbounded callback allocations on the Dispatcher queue --
         // we fold redundant update requests into a single queue item.
-        bool _pendingUpdateCaretStateCallback;
+        private bool _pendingUpdateCaretStateCallback;
 
         #endregion Private Fields
     }

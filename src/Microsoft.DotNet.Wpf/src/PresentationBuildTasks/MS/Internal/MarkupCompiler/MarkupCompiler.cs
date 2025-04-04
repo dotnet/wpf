@@ -1,6 +1,5 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 //---------------------------------------------------------------------------
 //
@@ -709,11 +708,11 @@ namespace MS.Internal
             return sourceFileInfo;
         }
 
-#endregion CompileUnit
+        #endregion CompileUnit
 
-#region ErrorHandling
+        #region ErrorHandling
 
-        static void ThrowCompilerException(string id)
+        private static void ThrowCompilerException(string id)
         {
             string message = SR.GetResourceString(id);
             ThrowCompilerExceptionImpl(message);
@@ -737,13 +736,13 @@ namespace MS.Internal
             ThrowCompilerExceptionImpl(message);
         }
 
-        static void ThrowCompilerException(string id, string value1, string value2, string value3, string value4)
+        private static void ThrowCompilerException(string id, string value1, string value2, string value3, string value4)
         {
             string message = SR.Format(SR.GetResourceString(id), value1, value2, value3, value4);
             ThrowCompilerExceptionImpl(message);
         }
 
-        static void ThrowCompilerExceptionImpl(string message)
+        private static void ThrowCompilerExceptionImpl(string message)
         {
             Exception compilerException = new Exception(message);
             throw compilerException;

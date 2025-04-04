@@ -1,6 +1,5 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 // Description: Win32 IP Common Control proxy
 //
@@ -16,7 +15,7 @@ using MS.Win32;
 
 namespace MS.Internal.AutomationProxies
 {
-    class WindowsIPAddress: ProxyHwnd, IRawElementProviderHwndOverride, IValueProvider, IGridProvider
+    internal class WindowsIPAddress: ProxyHwnd, IRawElementProviderHwndOverride, IValueProvider, IGridProvider
     {
         // ------------------------------------------------------
         //
@@ -26,7 +25,7 @@ namespace MS.Internal.AutomationProxies
 
         #region Constructors
 
-        WindowsIPAddress (IntPtr hwnd, ProxyFragment parent, int item)
+        private WindowsIPAddress (IntPtr hwnd, ProxyFragment parent, int item)
             : base( hwnd, parent, item )
         {
             // IP Address control itself is custom so need to also return LocalizedControlType property
@@ -291,7 +290,7 @@ namespace MS.Internal.AutomationProxies
     #region ByteEditBoxOverride
 
     // Placeholder/Extra Pattern provider for OctetEditBox
-    class ByteEditBoxOverride : ProxyHwnd, IGridItemProvider, IRangeValueProvider
+    internal class ByteEditBoxOverride : ProxyHwnd, IGridItemProvider, IRangeValueProvider
     {
         // ------------------------------------------------------
         //

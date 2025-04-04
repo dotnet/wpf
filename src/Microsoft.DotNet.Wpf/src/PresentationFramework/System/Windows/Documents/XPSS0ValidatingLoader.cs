@@ -1,6 +1,5 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 #region Using directives
 
@@ -154,7 +153,7 @@ namespace System.Windows.Documents
         }
 
 
-        static internal bool DocumentMode
+        internal static bool DocumentMode
         {
             get
             {
@@ -163,7 +162,7 @@ namespace System.Windows.Documents
         }
 
 
-        static internal void AssertDocumentMode()
+        internal static void AssertDocumentMode()
         {   // Once switched to document mode, we stay there
             _documentMode = true;
         }
@@ -215,21 +214,21 @@ namespace System.Windows.Documents
             }
         }
 
-        static private Stack<Hashtable> _validResources = new Stack<Hashtable>();
+        private static Stack<Hashtable> _validResources = new Stack<Hashtable>();
 
         private Hashtable _uniqueUriRef;
 
-        static
-        private 
+        private
+        static 
         bool _documentMode          = false;
 
-        static 
         private 
+        static 
         string _requiredResourceRel = "http://schemas.microsoft.com/xps/2005/06/required-resource";
 
-        static private XpsS0FixedPageSchema xpsS0FixedPageSchema = new XpsS0FixedPageSchema();
-        static private XpsS0ResourceDictionarySchema xpsS0ResourceDictionarySchema = new XpsS0ResourceDictionarySchema();
-        static private XpsDocStructSchema xpsDocStructSchema = new XpsDocStructSchema();
+        private static XpsS0FixedPageSchema xpsS0FixedPageSchema = new XpsS0FixedPageSchema();
+        private static XpsS0ResourceDictionarySchema xpsS0ResourceDictionarySchema = new XpsS0ResourceDictionarySchema();
+        private static XpsDocStructSchema xpsDocStructSchema = new XpsDocStructSchema();
     }
 }
 

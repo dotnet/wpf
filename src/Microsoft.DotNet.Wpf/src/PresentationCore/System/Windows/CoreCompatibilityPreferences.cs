@@ -1,6 +1,5 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 using System.Collections.Specialized;   // NameValueCollection
 using System.Configuration;             // ConfigurationManager
@@ -120,7 +119,7 @@ namespace System.Windows
             return IncludeAllInkInBoundingBox;
         }
 
-        static void SetIncludeAllInkInBoundingBoxFromAppSettings(NameValueCollection appSettings)
+        private static void SetIncludeAllInkInBoundingBoxFromAppSettings(NameValueCollection appSettings)
         {
             // user can use config file to opt out of GlyphRun.ComputeInkBoundingBox fixes
             string s = appSettings["IncludeAllInkInBoundingBox"];
@@ -161,7 +160,7 @@ namespace System.Windows
             return _enableMultiMonitorDisplayClipping;
         }
 
-        static void SetEnableMultiMonitorDisplayClippingFromAppSettings(NameValueCollection appSettings)
+        private static void SetEnableMultiMonitorDisplayClippingFromAppSettings(NameValueCollection appSettings)
         {
             string s = appSettings["EnableMultiMonitorDisplayClipping"];
             bool value; 

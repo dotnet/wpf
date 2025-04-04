@@ -1,6 +1,5 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 //
 // Description: Implementation of XmlDataProvider object.
@@ -838,8 +837,8 @@ namespace System.Windows.Data
         private bool    _tryInlineDoc = true;
         private bool    _isListening = false;
         private XmlIslandSerializer _xmlSerializer;
-        bool            _isAsynchronous = true;
-        bool            _inEndInit;
+        private bool _isAsynchronous = true;
+        private bool _inEndInit;
         private DispatcherOperationCallback _onCompletedCallback;
         private XmlNodeChangedEventHandler _nodeChangedHandler;
     }

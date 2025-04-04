@@ -1,6 +1,5 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 //
 // Description: Mapping of (item, property accessor) to value
@@ -175,7 +174,7 @@ namespace MS.Internal.Data
             }
         }
 
-        void OnPropertyChanged(object sender, PropertyChangedEventArgs e)
+        private void OnPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
             string propertyName = e.PropertyName;
             if (propertyName == null)   // normalize - null and empty mean the same
@@ -185,7 +184,7 @@ namespace MS.Internal.Data
             InvalidateCache(sender, propertyName);
         }
 
-        void OnValueChanged(object sender, ValueChangedEventArgs e)
+        private void OnValueChanged(object sender, ValueChangedEventArgs e)
         {
             InvalidateCache(sender, e.PropertyDescriptor);
         }
@@ -199,7 +198,7 @@ namespace MS.Internal.Data
         }
 
         // invalidate (remove) a cache entry.  Called when the source raises a change event.
-        void InvalidateCache(object item, string name)
+        private void InvalidateCache(object item, string name)
         {
             // when name is empty, invalidate all properties for the given item
             if (name == String.Empty)
@@ -228,7 +227,7 @@ namespace MS.Internal.Data
 
 
         // invalidate (remove) a cache entry.  Called when the source raises a change event.
-        void InvalidateCache(object item, PropertyDescriptor pd)
+        private void InvalidateCache(object item, PropertyDescriptor pd)
         {
             // ignore changes to special XLinq PD's - leave our interposed object in the cache
             if (SystemXmlLinqHelper.IsXLinqCollectionProperty(pd))
@@ -239,7 +238,7 @@ namespace MS.Internal.Data
         }
 
         // return all the properties registered for the given item
-        IEnumerable<PropertyDescriptor> GetPropertiesForItem(object item)
+        private IEnumerable<PropertyDescriptor> GetPropertiesForItem(object item)
         {
             List<PropertyDescriptor> result = new List<PropertyDescriptor>();
 
@@ -351,9 +350,9 @@ namespace MS.Internal.Data
                 return _hashCode;
             }
 
-            WeakReference _item;
-            WeakReference _descriptor;
-            int _hashCode;
+            private WeakReference _item;
+            private WeakReference _descriptor;
+            private int _hashCode;
         }
     }
 }

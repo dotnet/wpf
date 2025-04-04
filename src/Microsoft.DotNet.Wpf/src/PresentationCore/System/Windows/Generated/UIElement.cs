@@ -1,6 +1,5 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 //
 //
@@ -18,7 +17,7 @@ using System.Windows.Media.Animation;
 
 namespace System.Windows
 {
-    partial class UIElement : IAnimatable
+    public partial class UIElement : IAnimatable
     {
         static private readonly Type _typeofThis = typeof(UIElement);
 

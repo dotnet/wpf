@@ -1,6 +1,6 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
+
 using System.Diagnostics.CodeAnalysis;
 namespace System.Xaml
 {
@@ -24,7 +24,7 @@ namespace System.Xaml
 
         public virtual void Skip()
         {
-            switch(NodeType)
+            switch (NodeType)
             {
             case XamlNodeType.NamespaceDeclaration:
             case XamlNodeType.Value:
@@ -79,7 +79,7 @@ namespace System.Xaml
         private void SkipFromTo(XamlNodeType startNodeType, XamlNodeType endNodeType)
         {
 #if DEBUG
-            if(NodeType != startNodeType)
+            if (NodeType != startNodeType)
             {
                 throw new XamlInternalException("SkipFromTo() called incorrectly");
             }

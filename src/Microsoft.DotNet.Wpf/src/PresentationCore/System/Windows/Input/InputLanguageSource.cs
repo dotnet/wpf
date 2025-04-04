@@ -1,6 +1,5 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 //
 //
@@ -245,10 +244,10 @@ namespace System.Windows.Input
         private int _dispatcherThreadId;
 
         // the connected input language manager.
-        InputLanguageManager _inputlanguagemanager;
+        private InputLanguageManager _inputlanguagemanager;
 
         // the reference to ITfInputProcessorProfile.
-        InputProcessorProfiles _ipp;
+        private InputProcessorProfiles _ipp;
 
         #endregion Private Fields
     }

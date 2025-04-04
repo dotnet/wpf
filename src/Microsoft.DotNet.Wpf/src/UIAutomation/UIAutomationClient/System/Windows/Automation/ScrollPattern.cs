@@ -1,6 +1,5 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 // Description: Client-side wrapper for Scroll Pattern
 
@@ -191,7 +190,7 @@ namespace System.Windows.Automation
  
         #region Internal Methods
 
-        static internal object Wrap(AutomationElement el, SafePatternHandle hPattern, bool cached)
+        internal static object Wrap(AutomationElement el, SafePatternHandle hPattern, bool cached)
         {
             return new ScrollPattern(el, hPattern, cached);
         }
@@ -204,11 +203,11 @@ namespace System.Windows.Automation
         //  Private Fields
         //
         //------------------------------------------------------
- 
+
         #region Private Fields
 
-        SafePatternHandle _hPattern;
-        bool _cached;
+        private SafePatternHandle _hPattern;
+        private bool _cached;
 
         #endregion Private Fields
 

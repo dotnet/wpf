@@ -1,6 +1,5 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 //
 // Description: TextBlock element displays text. It is meant for UI scenarios.
@@ -30,7 +29,7 @@ namespace System.Windows.Controls
     /// reused during Measure, Arrange and Render phase.
     /// </summary>
     ///
-    class TextBlockCache
+    internal class TextBlockCache
     {
         public LineProperties _lineProperties;
         public TextRunCache _textRunCache;

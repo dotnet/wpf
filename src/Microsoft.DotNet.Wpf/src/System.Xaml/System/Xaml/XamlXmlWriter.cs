@@ -1,6 +1,5 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 #nullable disable
 
@@ -18,30 +17,29 @@ namespace System.Xaml
         // Each state of the writer is represented by a singleton that
         // implements an abstract class.
         //
-        WriterState currentState;
+        private WriterState currentState;
 
-        XmlWriter output;
-        XamlXmlWriterSettings settings;
+        private XmlWriter output;
+        private XamlXmlWriterSettings settings;
 
-        Stack<Frame> namespaceScopes;
+        private Stack<Frame> namespaceScopes;
 
         // A stack of lists that stores nodes we have tried to write in curly form so far.
         // Each list keeps track of the nodes in a markup extension
-        Stack<List<XamlNode>> meNodesStack;
-        XamlMarkupExtensionWriter meWriter;
+        private Stack<List<XamlNode>> meNodesStack;
+        private XamlMarkupExtensionWriter meWriter;
+        private PositionalParameterStateInfo ppStateInfo;
 
-        PositionalParameterStateInfo ppStateInfo;
+        private string deferredValue;
+        private bool deferredValueIsME;
+        private bool isFirstElementOfWhitespaceSignificantCollection;
 
-        string deferredValue;
-        bool deferredValueIsME;
-        bool isFirstElementOfWhitespaceSignificantCollection;
-
-        XamlSchemaContext schemaContext;
+        private XamlSchemaContext schemaContext;
 
         // a dictionary that keeps track of all the mappings from prefixes to namespaces
         // in the entire writing history.  If a prefix is used for two different namespaces
         // (in different scopes), then the entry for the prefix in the dictionary is null
-        Dictionary<string, string> prefixAssignmentHistory;
+        private Dictionary<string, string> prefixAssignmentHistory;
 
         public XamlXmlWriter(Stream stream, XamlSchemaContext schemaContext)
             : this(stream, schemaContext, null)
@@ -93,7 +91,7 @@ namespace System.Xaml
             InitializeXamlXmlWriter(xmlWriter, schemaContext, settings);
         }
 
-        void InitializeXamlXmlWriter(XmlWriter xmlWriter, XamlSchemaContext schemaContext, XamlXmlWriterSettings settings)
+        private void InitializeXamlXmlWriter(XmlWriter xmlWriter, XamlSchemaContext schemaContext, XamlXmlWriterSettings settings)
         {
             this.schemaContext = schemaContext ?? throw new ArgumentNullException(nameof(schemaContext));
 
@@ -258,12 +256,12 @@ namespace System.Xaml
             }
         }
 
-        void CheckIsDisposed()
+        private void CheckIsDisposed()
         {
             ObjectDisposedException.ThrowIf(IsDisposed, typeof(XamlXmlWriter));
         }
 
-        static bool StringStartsWithCurly(string s)
+        private static bool StringStartsWithCurly(string s)
         {
             if (string.IsNullOrEmpty(s))
             {
@@ -337,12 +335,12 @@ namespace System.Xaml
             return false;
         }
 
-        static void WriteXmlSpace(XamlXmlWriter writer)
+        private static void WriteXmlSpace(XamlXmlWriter writer)
         {
             writer.output.WriteAttributeString("xml", "space", "http://www.w3.org/XML/1998/namespace", "preserve");
         }
 
-        static XamlType GetContainingXamlType(XamlXmlWriter writer)
+        private static XamlType GetContainingXamlType(XamlXmlWriter writer)
         {
             Debug.Assert(writer.namespaceScopes.Peek().AllocatingNodeType == XamlNodeType.StartMember);
             Stack<Frame>.Enumerator enumerator = writer.namespaceScopes.GetEnumerator();
@@ -365,7 +363,7 @@ namespace System.Xaml
             return containingXamlType;
         }
 
-        void AssignNamespacePrefix(string ns, string prefix)
+        private void AssignNamespacePrefix(string ns, string prefix)
         {
             namespaceScopes.Peek().AssignNamespacePrefix(ns, prefix);
 
@@ -383,7 +381,7 @@ namespace System.Xaml
             }
         }
 
-        bool IsShadowed(string ns, string prefix)
+        private bool IsShadowed(string ns, string prefix)
         {
             Debug.Assert(ns is not null);
             Debug.Assert(prefix is not null);
@@ -406,7 +404,7 @@ namespace System.Xaml
         // Caveat: if the prefix found is shadowed (by a re-definition), FindPrefix will
         // redefine it.
         //
-        string FindPrefix(IList<string> namespaces, out string chosenNamespace)
+        private string FindPrefix(IList<string> namespaces, out string chosenNamespace)
         {
             string prefix = LookupPrefix(namespaces, out chosenNamespace);
 
@@ -451,7 +449,7 @@ namespace System.Xaml
             return null;
         }
 
-        bool IsPrefixEverUsedForAnotherNamespace(string prefix, string ns)
+        private bool IsPrefixEverUsedForAnotherNamespace(string prefix, string ns)
         {
             string registeredNamespace;
             return (prefixAssignmentHistory.TryGetValue(prefix, out registeredNamespace) && (ns != registeredNamespace));
@@ -462,7 +460,7 @@ namespace System.Xaml
         // Caveat: if the default prefix has never been used in the xaml document, DefinePrefix
         // chooses it.
         //
-        string DefinePrefix(string ns)
+        private string DefinePrefix(string ns)
         {
             // default namespace takes precedance if it has not been used, or has been used for the same namespace
             if (!IsPrefixEverUsedForAnotherNamespace(string.Empty, ns))
@@ -490,7 +488,7 @@ namespace System.Xaml
             return prefix;
         }
 
-        void CheckMemberForUniqueness(XamlMember property)
+        private void CheckMemberForUniqueness(XamlMember property)
         {
             // If we're not assuming the input is valid, then we need to do the checking...
             if (!settings.AssumeValidInput)
@@ -521,7 +519,7 @@ namespace System.Xaml
             }
         }
 
-        void WriteDeferredNamespaces(XamlNodeType nodeType)
+        private void WriteDeferredNamespaces(XamlNodeType nodeType)
         {
             Frame frame = namespaceScopes.Peek();
             if (frame.AllocatingNodeType != nodeType)
@@ -540,7 +538,7 @@ namespace System.Xaml
             }
         }
 
-        void WriteTypeArguments(XamlType type)
+        private void WriteTypeArguments(XamlType type)
         {
             if (TypeArgumentsContainNamespaceThatNeedsDefinition(type))
             {
@@ -552,7 +550,7 @@ namespace System.Xaml
             WriteEndMember();
         }
 
-        void WriteUndefinedNamespaces(XamlType type)
+        private void WriteUndefinedNamespaces(XamlType type)
         {
             string chosenNamespace;
             var namespaces = type.GetXamlNamespaces();
@@ -579,7 +577,7 @@ namespace System.Xaml
             }
         }
 
-        bool TypeArgumentsContainNamespaceThatNeedsDefinition(XamlType type)
+        private bool TypeArgumentsContainNamespaceThatNeedsDefinition(XamlType type)
         {
             string chosenNamespace;
             string prefix = LookupPrefix(type.GetXamlNamespaces(), out chosenNamespace);
@@ -606,7 +604,7 @@ namespace System.Xaml
             return false;
         }
 
-        string BuildTypeArgumentsString(IList<XamlType> typeArguments)
+        private string BuildTypeArgumentsString(IList<XamlType> typeArguments)
         {
             var builder = new StringBuilder();
             foreach (XamlType type in typeArguments)
@@ -622,22 +620,21 @@ namespace System.Xaml
             return builder.ToString();
         }
 
-        string ConvertXamlTypeToString(XamlType typeArgument)
+        private string ConvertXamlTypeToString(XamlType typeArgument)
         {
             var builder = new StringBuilder();
             ConvertXamlTypeToStringHelper(typeArgument, builder);
             return builder.ToString();
         }
 
-        void ConvertXamlTypeToStringHelper(XamlType type, StringBuilder builder)
+        private void ConvertXamlTypeToStringHelper(XamlType type, StringBuilder builder)
         {
             string prefix = LookupPrefix(type.GetXamlNamespaces(), out _);
             string typeName = GetTypeName(type);
-            string typeNamePrefixed = string.IsNullOrEmpty(prefix) ? typeName : $"{prefix}:{typeName}";
+            ReadOnlySpan<char> typeNamePrefixed = string.IsNullOrEmpty(prefix) ? typeName : $"{prefix}:{typeName}";
 
             // save the subscript
-            string subscript;
-            typeNamePrefixed = GenericTypeNameScanner.StripSubscript(typeNamePrefixed, out subscript);
+            typeNamePrefixed = GenericTypeNameScanner.StripSubscript(typeNamePrefixed, out ReadOnlySpan<char> subscript);
 
             builder.Append(typeNamePrefixed);
             if (type.TypeArguments is not null)
@@ -659,7 +656,7 @@ namespace System.Xaml
             }
 
             // re-attach the subscript
-            if (subscript is not null)
+            if (!subscript.IsEmpty)
             {
                 builder.Append(subscript);
             }
@@ -676,10 +673,10 @@ namespace System.Xaml
             return typeName;
         }
 
-        class Frame
+        private class Frame
         {
-            Dictionary<string, string> namespaceMap = new Dictionary<string, string>(); // namespace to prefix map
-            Dictionary<string, string> prefixMap = new Dictionary<string, string>(); // prefix to namespace map
+            private Dictionary<string, string> namespaceMap = new Dictionary<string, string>(); // namespace to prefix map
+            private Dictionary<string, string> prefixMap = new Dictionary<string, string>(); // prefix to namespace map
 
             public XamlType Type
             {
@@ -773,13 +770,13 @@ namespace System.Xaml
                 return prefixMapList;
             }
 
-            static int CompareByKey(KeyValuePair<string, string> x, KeyValuePair<string, string> y)
+            private static int CompareByKey(KeyValuePair<string, string> x, KeyValuePair<string, string> y)
             {
                 return string.Compare(x.Key, y.Key, false, TypeConverterHelper.InvariantEnglishUS);
             }
         }
 
-        abstract class WriterState
+        private abstract class WriterState
         {
             public virtual void WriteObject(XamlXmlWriter writer, XamlType type, bool isObjectFromMember)
             {
@@ -880,7 +877,7 @@ namespace System.Xaml
                 writer.output.WriteStartElement(prefix, local, ns);
             }
 
-            static void WriteStartAttribute(XamlXmlWriter writer, string prefix, string local, string ns)
+            private static void WriteStartAttribute(XamlXmlWriter writer, string prefix, string local, string ns)
             {
                 if (string.IsNullOrEmpty(prefix))
                 {
@@ -941,12 +938,11 @@ namespace System.Xaml
             }
         }
 
-        class Start : WriterState
+        private class Start : WriterState
         {
-            static WriterState state = new Start();
-            Start()
-            {
-            }
+            private static WriterState state = new Start();
+
+            private Start() { }
 
             public static WriterState State
             {
@@ -977,12 +973,10 @@ namespace System.Xaml
             }
         }
 
-        class End : WriterState
+        private class End : WriterState
         {
-            static WriterState state = new End();
-            End()
-            {
-            }
+            private static WriterState state = new End();
+            private End() { }
 
             public static WriterState State
             {
@@ -990,12 +984,11 @@ namespace System.Xaml
             }
         }
 
-        class InRecord : WriterState
+        private class InRecord : WriterState
         {
-            static WriterState state = new InRecord();
-            InRecord()
-            {
-            }
+            private static WriterState state = new InRecord();
+
+            private InRecord() { }
 
             public static WriterState State
             {
@@ -1116,12 +1109,11 @@ namespace System.Xaml
             }
         }
 
-        class InRecordTryAttributes : WriterState
+        private class InRecordTryAttributes : WriterState
         {
-            static WriterState state = new InRecordTryAttributes();
-            InRecordTryAttributes()
-            {
-            }
+            private static WriterState state = new InRecordTryAttributes();
+
+            private InRecordTryAttributes() { }
 
             public static WriterState State
             {
@@ -1228,12 +1220,11 @@ namespace System.Xaml
 
         // Follows InObject after Start Member
         //
-        class InMember : WriterState
+        private class InMember : WriterState
         {
-            static WriterState state = new InMember();
-            InMember()
-            {
-            }
+            private static WriterState state = new InMember();
+
+            private InMember() { }
 
             public static WriterState State
             {
@@ -1331,7 +1322,7 @@ namespace System.Xaml
                 }
             }
 
-            void WriteXmlSpaceOrThrow(XamlXmlWriter writer, string value)
+            private void WriteXmlSpaceOrThrow(XamlXmlWriter writer, string value)
             {
                 var frameWithXmlSpacePreserve = FindFrameWithXmlSpacePreserve(writer);
                 if (frameWithXmlSpacePreserve.AllocatingNodeType == XamlNodeType.StartMember)
@@ -1343,7 +1334,7 @@ namespace System.Xaml
             }
 
             // this method finds the SO or SM where "xml:space = preserve" will actually be attached to
-            Frame FindFrameWithXmlSpacePreserve(XamlXmlWriter writer)
+            private Frame FindFrameWithXmlSpacePreserve(XamlXmlWriter writer)
             {
                 var frameEnumerator = writer.namespaceScopes.GetEnumerator();
 
@@ -1422,12 +1413,11 @@ namespace System.Xaml
         // Follows InMember after an Atom and prevents writing two atoms
         // in a row
         //
-        class InMemberAfterValue : WriterState
+        private class InMemberAfterValue : WriterState
         {
-            static WriterState state = new InMemberAfterValue();
-            InMemberAfterValue()
-            {
-            }
+            private static WriterState state = new InMemberAfterValue();
+
+            private InMemberAfterValue() { }
 
             public static WriterState State
             {
@@ -1467,12 +1457,11 @@ namespace System.Xaml
         // or throw depending on whether the next element is another collection element of
         // end member
         //
-        class InMemberAfterValueWithSignificantWhitespace : WriterState
+        private class InMemberAfterValueWithSignificantWhitespace : WriterState
         {
-            static WriterState state = new InMemberAfterValueWithSignificantWhitespace();
-            InMemberAfterValueWithSignificantWhitespace()
-            {
-            }
+            private static WriterState state = new InMemberAfterValueWithSignificantWhitespace();
+
+            private InMemberAfterValueWithSignificantWhitespace() { }
 
             public static WriterState State
             {
@@ -1516,12 +1505,11 @@ namespace System.Xaml
         // Follows InObject after an End Object.
         // Like InMember but also allows End Member.
         //
-        class InMemberAfterEndObject : WriterState
+        private class InMemberAfterEndObject : WriterState
         {
-            static WriterState state = new InMemberAfterEndObject();
-            InMemberAfterEndObject()
-            {
-            }
+            private static WriterState state = new InMemberAfterEndObject();
+
+            private InMemberAfterEndObject() { }
 
             public static WriterState State
             {
@@ -1554,12 +1542,11 @@ namespace System.Xaml
         }
 
         // From InMemberTryAttributesAfterAtom, we are sure that this is an attributable member.
-        class InMemberAttributedMember : WriterState
+        private class InMemberAttributedMember : WriterState
         {
-            static WriterState state = new InMemberAttributedMember();
-            InMemberAttributedMember()
-            {
-            }
+            private static WriterState state = new InMemberAttributedMember();
+
+            private InMemberAttributedMember() { }
 
             public static WriterState State
             {
@@ -1588,12 +1575,11 @@ namespace System.Xaml
             }
         }
 
-        class InMemberTryAttributes : WriterState
+        private class InMemberTryAttributes : WriterState
         {
-            static WriterState state = new InMemberTryAttributes();
-            InMemberTryAttributes()
-            {
-            }
+            private static WriterState state = new InMemberTryAttributes();
+
+            private InMemberTryAttributes() { }
 
             public static WriterState State
             {
@@ -1622,7 +1608,7 @@ namespace System.Xaml
             public override void WriteObject(XamlXmlWriter writer, XamlType type, bool isObjectFromMember)
             {
                 // We should remove the !type.IsGeneric check once
-                //  XamlReader is fixed to handle Generic MEs.
+                // XamlReader is fixed to handle Generic MEs.
                 if (type is not null && type.IsMarkupExtension && !type.IsGeneric)
                 {
                     writer.meWriter.Reset();
@@ -1648,12 +1634,11 @@ namespace System.Xaml
         // record -- for mixed content -- which would force us out of
         // attribute form.
         //
-        class InMemberTryAttributesAfterValue : WriterState
+        private class InMemberTryAttributesAfterValue : WriterState
         {
-            static WriterState state = new InMemberTryAttributesAfterValue();
-            InMemberTryAttributesAfterValue()
-            {
-            }
+            private static WriterState state = new InMemberTryAttributesAfterValue();
+
+            private InMemberTryAttributesAfterValue() { }
 
             public static WriterState State
             {
@@ -1694,12 +1679,11 @@ namespace System.Xaml
             }
         }
 
-        class TryContentProperty : WriterState
+        private class TryContentProperty : WriterState
         {
-            static WriterState state = new TryContentProperty();
-            TryContentProperty()
-            {
-            }
+            private static WriterState state = new TryContentProperty();
+
+            private TryContentProperty() { }
 
             public static WriterState State
             {
@@ -1738,12 +1722,11 @@ namespace System.Xaml
             }
         }
 
-        class TryContentPropertyInTryAttributesState : WriterState
+        private class TryContentPropertyInTryAttributesState : WriterState
         {
-            static WriterState state = new TryContentPropertyInTryAttributesState();
-            TryContentPropertyInTryAttributesState()
-            {
-            }
+            private static WriterState state = new TryContentPropertyInTryAttributesState();
+
+            private TryContentPropertyInTryAttributesState() { }
 
             public static WriterState State
             {
@@ -1789,19 +1772,18 @@ namespace System.Xaml
             }
         }
 
-        class TryCurlyForm : WriterState
+        private class TryCurlyForm : WriterState
         {
-            static WriterState state = new TryCurlyForm();
-            TryCurlyForm()
-            {
-            }
+            private static WriterState state = new TryCurlyForm();
+
+            private TryCurlyForm() { }
 
             public static WriterState State
             {
                 get { return state; }
             }
 
-            void WriteNodesInXmlForm(XamlXmlWriter writer)
+            private void WriteNodesInXmlForm(XamlXmlWriter writer)
             {
                 writer.WriteDeferredNamespaces(XamlNodeType.StartObject);
                 WriteMemberAsElement(writer);
@@ -1904,19 +1886,18 @@ namespace System.Xaml
             }
         }
 
-        class ExpandPositionalParameters : WriterState
+        private class ExpandPositionalParameters : WriterState
         {
-            static WriterState state = new ExpandPositionalParameters();
-            ExpandPositionalParameters()
-            {
-            }
+            private static WriterState state = new ExpandPositionalParameters();
+
+            private ExpandPositionalParameters() { }
 
             public static WriterState State
             {
                 get { return state; }
             }
 
-            void ExpandPositionalParametersIntoProperties(XamlXmlWriter writer)
+            private void ExpandPositionalParametersIntoProperties(XamlXmlWriter writer)
             {
                 Frame frame = writer.namespaceScopes.Peek();
                 Debug.Assert(frame.AllocatingNodeType == XamlNodeType.StartObject);
@@ -1975,7 +1956,7 @@ namespace System.Xaml
                 }
             }
 
-            ParameterInfo[] GetParametersInfo(XamlType objectXamlType, int numOfParameters)
+            private ParameterInfo[] GetParametersInfo(XamlType objectXamlType, int numOfParameters)
             {
                 IList<XamlType> paramXamlTypes = objectXamlType.GetPositionalParameters(numOfParameters);
 
@@ -2010,7 +1991,7 @@ namespace System.Xaml
                 return constructor.GetParameters();
             }
 
-            List<XamlMember> GetAllPropertiesWithCAA(XamlType objectXamlType)
+            private List<XamlMember> GetAllPropertiesWithCAA(XamlType objectXamlType)
             {
                 // Pull out all the properties that are attributed with ConstructorArgumentAttribute
                 //
@@ -2037,7 +2018,7 @@ namespace System.Xaml
                 return ctorArgProps;
             }
 
-            void WriteNodes(XamlXmlWriter writer)
+            private void WriteNodes(XamlXmlWriter writer)
             {
                 var ppNodesList = writer.ppStateInfo.NodesList;
                 writer.ppStateInfo.Reset();
@@ -2052,7 +2033,7 @@ namespace System.Xaml
                 }
             }
 
-            void ThrowIfFailed(bool fail, string operation)
+            private void ThrowIfFailed(bool fail, string operation)
             {
                 if (fail)
                 {
@@ -2145,7 +2126,7 @@ namespace System.Xaml
             }
         }
 
-        class PositionalParameterStateInfo
+        private class PositionalParameterStateInfo
         {
             public PositionalParameterStateInfo(XamlXmlWriter xamlXmlWriter)
             {
@@ -2205,7 +2186,7 @@ namespace System.Xaml
     // HashSet<T> lives in System.Core.dll
     internal class XamlPropertySet
     {
-        Dictionary<XamlMember, bool> dictionary = new Dictionary<XamlMember, bool>();
+        private Dictionary<XamlMember, bool> dictionary = new Dictionary<XamlMember, bool>();
 
         public bool Contains(XamlMember member)
         {

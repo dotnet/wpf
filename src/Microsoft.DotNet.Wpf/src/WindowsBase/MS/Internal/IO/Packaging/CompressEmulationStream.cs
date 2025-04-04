@@ -1,6 +1,5 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 // Description:
 //  Abstract base class that provides a fully functional Stream on top of different
@@ -18,7 +17,7 @@ namespace MS.Internal.IO.Packaging
     /// <summary>
     /// Interface for Deflate transform object that we use to decompress and compress the actual bytes
     /// </summary>
-    interface IDeflateTransform
+    internal interface IDeflateTransform
     {
         void Decompress(Stream source, Stream sink);
         void Compress(Stream source, Stream sink);
@@ -332,7 +331,7 @@ namespace MS.Internal.IO.Packaging
         private bool    _dirty;             // do we need to recompress?
         protected Stream  _baseStream;      // stream we ultimately decompress from and to in the container
         protected Stream _tempStream;       // temporary storage for the uncompressed stream
-        IDeflateTransform _transformer;   // does the actual compress/decompress for us
+        private IDeflateTransform _transformer;   // does the actual compress/decompress for us
         #endregion
     }
 }

@@ -1,6 +1,5 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 // Description: Win32 SysHeader32 proxy
 //
@@ -20,7 +19,7 @@ namespace MS.Internal.AutomationProxies
     // NOTE: Since this proxy has its own HWND, it will be always discovered by UIAutomation
     // and placed where it should be
     // we MUST NEVER create a hard connection between us and header (via _parent) ourselves
-    class WindowsSysHeader: ProxyHwnd
+    internal class WindowsSysHeader: ProxyHwnd
     {
         //------------------------------------------------------
         //
@@ -294,12 +293,12 @@ namespace MS.Internal.AutomationProxies
         }
 
         // Map a header item
-        static private int OrderToIndex (IntPtr hwnd, int order)
+        private static int OrderToIndex (IntPtr hwnd, int order)
         {
             return Misc.ProxySendMessageInt(hwnd, NativeMethods.HDM_ORDERTOINDEX, new IntPtr(order), IntPtr.Zero);
         }
         // retrieve count of header items
-        static private int HeaderItemCount (IntPtr hwnd)
+        private static int HeaderItemCount (IntPtr hwnd)
         {
             return Misc.ProxySendMessageInt(hwnd, NativeMethods.HDM_GETITEMCOUNT, IntPtr.Zero, IntPtr.Zero);
         }

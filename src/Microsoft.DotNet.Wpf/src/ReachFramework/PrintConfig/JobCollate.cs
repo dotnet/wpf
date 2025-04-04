@@ -1,6 +1,5 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 /*++
 
@@ -71,7 +70,7 @@ namespace MS.Internal.Printing.Configuration
     /// <summary>
     /// Represents collate capability.
     /// </summary>
-    abstract internal class CollateCapability : PrintCapabilityFeature
+    internal abstract class CollateCapability : PrintCapabilityFeature
     {
         #region Constructors
 
@@ -99,7 +98,7 @@ namespace MS.Internal.Printing.Configuration
 
         #region Internal Methods
 
-        internal override sealed bool AddOptionCallback(PrintCapabilityOption baseOption)
+        internal sealed override bool AddOptionCallback(PrintCapabilityOption baseOption)
         {
             bool added = false;
 
@@ -124,32 +123,32 @@ namespace MS.Internal.Printing.Configuration
             return added;
         }
 
-        internal override sealed void AddSubFeatureCallback(PrintCapabilityFeature subFeature)
+        internal sealed override void AddSubFeatureCallback(PrintCapabilityFeature subFeature)
         {
             // no sub-feature
             return;
         }
 
-        internal override sealed bool FeaturePropCallback(PrintCapabilityFeature feature, XmlPrintCapReader reader)
+        internal sealed override bool FeaturePropCallback(PrintCapabilityFeature feature, XmlPrintCapReader reader)
         {
             // no feature property to handle
             return false;
         }
 
-        internal override sealed PrintCapabilityOption NewOptionCallback(PrintCapabilityFeature baseFeature)
+        internal sealed override PrintCapabilityOption NewOptionCallback(PrintCapabilityFeature baseFeature)
         {
             CollateOption option = new CollateOption(baseFeature);
 
             return option;
         }
 
-        internal override sealed void OptionAttrCallback(PrintCapabilityOption baseOption, XmlPrintCapReader reader)
+        internal sealed override void OptionAttrCallback(PrintCapabilityOption baseOption, XmlPrintCapReader reader)
         {
             // no option attribute to handle
             return;
         }
 
-        internal override sealed bool OptionPropCallback(PrintCapabilityOption option, XmlPrintCapReader reader)
+        internal sealed override bool OptionPropCallback(PrintCapabilityOption option, XmlPrintCapReader reader)
         {
             // no option property to handle
             return false;
@@ -159,7 +158,7 @@ namespace MS.Internal.Printing.Configuration
 
         #region Internal Properties
 
-        internal override sealed bool IsValid
+        internal sealed override bool IsValid
         {
             get
             {
@@ -172,7 +171,7 @@ namespace MS.Internal.Printing.Configuration
             get;
         }
 
-        internal override sealed bool HasSubFeature
+        internal sealed override bool HasSubFeature
         {
             get
             {
@@ -219,7 +218,7 @@ namespace MS.Internal.Printing.Configuration
 
         #region Internal Properties
 
-        internal override sealed string FeatureName
+        internal sealed override string FeatureName
         {
             get
             {
@@ -233,7 +232,7 @@ namespace MS.Internal.Printing.Configuration
     /// <summary>
     /// Represents collate setting.
     /// </summary>
-    abstract internal class CollateSetting : PrintTicketFeature
+    internal abstract class CollateSetting : PrintTicketFeature
     {
         #region Constructors
 

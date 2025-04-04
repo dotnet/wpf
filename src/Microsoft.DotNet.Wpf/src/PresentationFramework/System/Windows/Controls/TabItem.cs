@@ -1,6 +1,5 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 
 using MS.Internal;
@@ -543,7 +542,7 @@ namespace System.Windows.Controls
             DefaultValue = 0,
         }
 
-        BoolField _tabItemBoolFieldStore = BoolField.DefaultValue;
+        private BoolField _tabItemBoolFieldStore = BoolField.DefaultValue;
 
         #endregion Private Fields
 

@@ -1,6 +1,5 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 
 using System.ComponentModel;
@@ -197,7 +196,7 @@ namespace System.Windows.Controls
         }
 
         // convert text the user has typed into the appropriate string to enter into the editable TextBox
-        string ConvertTextForEdit(string s)
+        private string ConvertTextForEdit(string s)
         {
             // Backspace becomes the empty string
             if (s == "\b")

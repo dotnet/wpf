@@ -1,6 +1,5 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 //
 //
@@ -84,7 +83,7 @@ namespace System.Windows.Media
         /// <summary>
         /// SetClosed - Sets the current closed state of the figure. 
         /// </summary>
-        override internal void SetClosedState(bool isClosed)
+        internal override void SetClosedState(bool isClosed)
         {
             Debug.Assert(_currentFigure != null);
 

@@ -1,6 +1,5 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 //
 //
@@ -16,7 +15,7 @@ namespace System.Windows
         {
         }
         
-        static internal SystemResourceHost Instance
+        internal static SystemResourceHost Instance
         {
             get
             {
@@ -28,7 +27,7 @@ namespace System.Windows
             }
         }
 
-        static private SystemResourceHost _instance;
+        private static SystemResourceHost _instance;
     }
 }
 

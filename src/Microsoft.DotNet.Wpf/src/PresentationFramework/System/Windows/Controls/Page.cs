@@ -1,6 +1,5 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 //
 // Description: Implements the Avalon Page class
@@ -344,7 +343,7 @@ namespace System.Windows.Controls
         }
 
         // If the Title has changed we want to set the flag.
-        static private void OnTitleChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        private static void OnTitleChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             ((Page)d).PropertyIsSet(SetPropertyFlags.Title);
         }
@@ -947,7 +946,7 @@ namespace System.Windows.Controls
         #endregion Page Class
     }
 
-    class PageHelperObject
+    internal class PageHelperObject
     {
         //----------------------------------------------
         //

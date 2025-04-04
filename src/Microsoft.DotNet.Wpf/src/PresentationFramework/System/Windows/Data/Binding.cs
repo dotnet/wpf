@@ -1,6 +1,5 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 //
 // Description: Defines Binding object, which describes an instance of data Binding.
@@ -78,7 +77,7 @@ namespace System.Windows.Data
         //------------------------------------------------------
 
         // Which source property is in use
-        enum SourceProperties : byte { None, RelativeSource, ElementName, Source, StaticSource, InternalSource }
+        private enum SourceProperties : byte { None, RelativeSource, ElementName, Source, StaticSource, InternalSource }
 
 
         //------------------------------------------------------
@@ -793,7 +792,7 @@ namespace System.Windows.Data
         //------------------------------------------------------
 
         // determine the source property currently in use
-        void DetermineSource()
+        private void DetermineSource()
         {
             _sourceInUse =
                 (_source == UnsetSource)                ? SourceProperties.None :
@@ -810,19 +809,19 @@ namespace System.Windows.Data
         //
         //------------------------------------------------------
 
-        SourceProperties    _sourceInUse;
+        private SourceProperties _sourceInUse;
 
-        PropertyPath        _ppath;
-        ObjectRef           _source = UnsetSource;
+        private PropertyPath        _ppath;
+        private ObjectRef           _source = UnsetSource;
 
-        bool                _isAsync;
-        bool                _bindsDirectlyToSource;
-        bool                _doesNotTransferDefaultValue;   // initially = false
+        private bool                _isAsync;
+        private bool                _bindsDirectlyToSource;
+        private bool                _doesNotTransferDefaultValue;   // initially = false
 
-        int                 _attachedPropertiesInPath;
+        private int                 _attachedPropertiesInPath;
 
-        static readonly ObjectRef UnsetSource = new ExplicitObjectRef(null);
-        static readonly ObjectRef StaticSourceRef = new ExplicitObjectRef(BindingExpression.StaticSource);
+        private static readonly ObjectRef UnsetSource = new ExplicitObjectRef(null);
+        private static readonly ObjectRef StaticSourceRef = new ExplicitObjectRef(BindingExpression.StaticSource);
     }
 }
 

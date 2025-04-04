@@ -1,6 +1,5 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 //
 //
@@ -1616,7 +1615,7 @@ namespace System.Windows
 
 #if DEBUG
         // Debug counter for intelligent breakpoints.
-        static private int _globalDebugInstanceCounter = 0;
+        private static int _globalDebugInstanceCounter = 0;
         private int        _debugInstanceCounter;
 #endif
 

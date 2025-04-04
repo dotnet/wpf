@@ -1,6 +1,5 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 // Description: Implements the Service class for perf diagnostics
 
@@ -10,7 +9,7 @@ using System.Reflection;
 
 namespace MS.Utility
 {
-    static internal class PerfService
+    internal static class PerfService
     {
         // Map of elements to IDs.  A couple of notes:
         // 1) Use a ConditionalWeakTable because it holds weak references to

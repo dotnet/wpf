@@ -1,6 +1,5 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 
 //
@@ -291,7 +290,7 @@ namespace MS.Internal.Data
         //
         //------------------------------------------------------
 
-        string _name;
+        private string _name;
     }
 
     #endregion ElementObjectRef
@@ -609,7 +608,7 @@ namespace MS.Internal.Data
         //
         //------------------------------------------------------
 
-        RelativeSource _relativeSource;
+        private RelativeSource _relativeSource;
     }
 
     #endregion RelativeObjectRef
@@ -667,8 +666,8 @@ namespace MS.Internal.Data
         //
         //------------------------------------------------------
 
-        object _object;
-        WeakReference _element; // to DependencyObject (bug 986435)
+        private object _object;
+        private WeakReference _element; // to DependencyObject (bug 986435)
     }
 
     #endregion ExplicitObjectRef

@@ -1,6 +1,5 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 #nullable disable
 
@@ -18,13 +17,13 @@ namespace System.Xaml
 
     internal class DeferringWriter : XamlWriter, IXamlLineInfoConsumer
     {
-        DeferringMode _mode;
-        bool _handled;
-        ObjectWriterContext _context;
-        XamlNodeList _deferredList;
-        XamlWriter _deferredWriter;
-        IXamlLineInfoConsumer _deferredLineInfoConsumer;
-        int _deferredTreeDepth;
+        private DeferringMode _mode;
+        private bool _handled;
+        private ObjectWriterContext _context;
+        private XamlNodeList _deferredList;
+        private XamlWriter _deferredWriter;
+        private IXamlLineInfoConsumer _deferredLineInfoConsumer;
+        private int _deferredTreeDepth;
 
         public DeferringWriter(ObjectWriterContext context)
         {
@@ -70,7 +69,7 @@ namespace System.Xaml
             WriteObject(xamlType, false, "WriteStartObject");
         }
 
-        void WriteObject(XamlType xamlType, bool fromMember, string methodName)
+        private void WriteObject(XamlType xamlType, bool fromMember, string methodName)
         {
             _handled = false;
             switch (_mode)

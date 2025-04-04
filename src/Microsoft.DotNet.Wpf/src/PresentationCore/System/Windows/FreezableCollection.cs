@@ -1,6 +1,5 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 // Description: This file contains the implementation of FreezableCollection<T>.
 //     FreezableCollection<T> is an IList<T> implementation which implements
@@ -780,7 +779,7 @@ namespace System.Windows
             return new FreezableCollection<T>();
         }
 
-        enum CloneCommonType
+        private enum CloneCommonType
         {
             Clone,
             CloneCurrentValue,
@@ -1107,7 +1106,7 @@ namespace System.Windows
 
             public bool Busy { get { return _busyCount > 0; } }
 
-            int _busyCount;
+            private int _busyCount;
         }
 
         #endregion

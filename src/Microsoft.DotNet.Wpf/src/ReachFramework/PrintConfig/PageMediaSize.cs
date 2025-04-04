@@ -1,6 +1,5 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 /*++
 
@@ -137,7 +136,7 @@ namespace MS.Internal.Printing.Configuration
             return cap;
         }
 
-        internal override sealed bool AddOptionCallback(PrintCapabilityOption baseOption)
+        internal sealed override bool AddOptionCallback(PrintCapabilityOption baseOption)
         {
             FixedMediaSizeOption option = baseOption as FixedMediaSizeOption;
             bool complete = false;
@@ -166,33 +165,33 @@ namespace MS.Internal.Printing.Configuration
             return complete;
         }
 
-        internal override sealed void AddSubFeatureCallback(PrintCapabilityFeature subFeature)
+        internal sealed override void AddSubFeatureCallback(PrintCapabilityFeature subFeature)
         {
             // PageMediaSize has no sub features.
             return;
         }
 
-        internal override sealed bool FeaturePropCallback(PrintCapabilityFeature feature, XmlPrintCapReader reader)
+        internal sealed override bool FeaturePropCallback(PrintCapabilityFeature feature, XmlPrintCapReader reader)
         {
             // no feature property to handle
             return false;
         }
 
-        internal override sealed PrintCapabilityOption NewOptionCallback(PrintCapabilityFeature baseFeature)
+        internal sealed override PrintCapabilityOption NewOptionCallback(PrintCapabilityFeature baseFeature)
         {
             FixedMediaSizeOption option = new FixedMediaSizeOption(baseFeature);
 
             return option;
         }
 
-        internal override sealed void OptionAttrCallback(PrintCapabilityOption baseOption, XmlPrintCapReader reader)
+        internal sealed override void OptionAttrCallback(PrintCapabilityOption baseOption, XmlPrintCapReader reader)
         {
             // no option attribute to handle
             return;
         }
 
         /// <exception cref="XmlException">XML is not well-formed.</exception>
-        internal override sealed bool OptionPropCallback(PrintCapabilityOption baseOption, XmlPrintCapReader reader)
+        internal sealed override bool OptionPropCallback(PrintCapabilityOption baseOption, XmlPrintCapReader reader)
         {
             FixedMediaSizeOption option = baseOption as FixedMediaSizeOption;
             bool handled = false;
@@ -278,7 +277,7 @@ namespace MS.Internal.Printing.Configuration
 
         #region Internal Properties
 
-        internal override sealed bool IsValid
+        internal sealed override bool IsValid
         {
             get
             {
@@ -286,7 +285,7 @@ namespace MS.Internal.Printing.Configuration
             }
         }
 
-        internal override sealed string FeatureName
+        internal sealed override string FeatureName
         {
             get
             {
@@ -294,7 +293,7 @@ namespace MS.Internal.Printing.Configuration
             }
         }
 
-        internal override sealed bool HasSubFeature
+        internal sealed override bool HasSubFeature
         {
             get
             {

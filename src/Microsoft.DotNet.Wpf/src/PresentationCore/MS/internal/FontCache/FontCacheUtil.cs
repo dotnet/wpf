@@ -1,6 +1,5 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 //
 //
@@ -236,7 +235,7 @@ namespace MS.Internal.FontCache
         /// <param name="numBytes">Size of the memory block in bytes</param>
         /// <param name="hash">Previous hash code to combine with</param>
         /// <returns>Hash code</returns>
-        internal unsafe static int HashMemory(void * pv, int numBytes, int hash)
+        internal static unsafe int HashMemory(void * pv, int numBytes, int hash)
         {
             byte * pb = (byte*)pv;
 

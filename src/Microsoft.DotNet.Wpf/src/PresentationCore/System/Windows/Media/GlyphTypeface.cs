@@ -1,6 +1,5 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 //
 //
@@ -1607,7 +1606,7 @@ namespace System.Windows.Media
         // Need ability to add ref and get pointer to the DWrite font face for the rendering
         // thread to access
         //
-        unsafe internal IntPtr GetDWriteFontAddRef
+        internal unsafe IntPtr GetDWriteFontAddRef
         {
             get
             {

@@ -1,6 +1,5 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 using System.Windows.Automation.Provider;
 using System.Windows.Controls;
@@ -16,19 +15,19 @@ namespace System.Windows.Automation.Peers
         }
 
         ///
-        override protected string GetClassNameCore()
+        protected override string GetClassNameCore()
         {
             return "MenuItem";
         }
 
         ///
-        override protected AutomationControlType GetAutomationControlTypeCore()
+        protected override AutomationControlType GetAutomationControlTypeCore()
         {
             return AutomationControlType.MenuItem;
         }
 
         ///
-        override public object GetPattern(PatternInterface patternInterface)
+        public override object GetPattern(PatternInterface patternInterface)
         {
             object result = null;
             MenuItem owner = (MenuItem)Owner;
@@ -78,7 +77,7 @@ namespace System.Windows.Automation.Peers
         /// <returns>
         /// The value of <see cref="AutomationProperties.PositionInSetProperty"/> if it has been set, or it's position relative to the parent ItemsControl or GroupItem.
         /// </returns>
-        override protected int GetSizeOfSetCore()
+        protected override int GetSizeOfSetCore()
         {
             int sizeOfSet = base.GetSizeOfSetCore();
             
@@ -110,7 +109,7 @@ namespace System.Windows.Automation.Peers
         /// <returns>
         /// The position of a MenuItem that is contained in a set.
         /// </returns>
-        override protected int GetPositionInSetCore()
+        protected override int GetPositionInSetCore()
         {
             int positionInSet = base.GetPositionInSetCore();
             
@@ -138,7 +137,7 @@ namespace System.Windows.Automation.Peers
         }
 
         ///
-        override protected string GetAccessKeyCore()
+        protected override string GetAccessKeyCore()
         {
             string accessKey = base.GetAccessKeyCore();
             if (!string.IsNullOrEmpty(accessKey))
@@ -315,7 +314,7 @@ namespace System.Windows.Automation.Peers
 
         // Return the base without the AccessKey character
         ///
-        override protected string GetNameCore()
+        protected override string GetNameCore()
         {
             string result = base.GetNameCore();
             if (!string.IsNullOrEmpty(result))

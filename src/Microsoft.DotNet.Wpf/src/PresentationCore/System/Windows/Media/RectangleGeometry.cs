@@ -1,6 +1,5 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 //                                             
 
@@ -455,7 +454,7 @@ namespace System.Windows.Media
             return points;
         }
 
-        private unsafe static void GetPointList(Point * points, uint pointsCount, Rect rect, double radiusX, double radiusY)
+        private static unsafe void GetPointList(Point * points, uint pointsCount, Rect rect, double radiusX, double radiusY)
         {
             if (IsRounded(radiusX, radiusY))
             {
@@ -588,14 +587,14 @@ namespace System.Windows.Media
         #region InstanceData
 
         // Rouneded
-        static private UInt32 c_roundedSegmentCount = 8;
-        static private UInt32 c_roundedPointCount = 17;
+        private static UInt32 c_roundedSegmentCount = 8;
+        private static UInt32 c_roundedPointCount = 17;
 
-        static private byte smoothBezier = (byte)MILCoreSegFlags.SegTypeBezier |
+        private static byte smoothBezier = (byte)MILCoreSegFlags.SegTypeBezier |
                                             (byte)MILCoreSegFlags.SegIsCurved   |
                                             (byte)MILCoreSegFlags.SegSmoothJoin;
 
-        static private byte smoothLine = (byte)MILCoreSegFlags.SegTypeLine | (byte)MILCoreSegFlags.SegSmoothJoin;
+        private static byte smoothLine = (byte)MILCoreSegFlags.SegTypeLine | (byte)MILCoreSegFlags.SegSmoothJoin;
 
         private static ReadOnlySpan<byte> RoundedPathTypes => new byte[] {
             (byte)MILCoreSegFlags.SegTypeBezier |

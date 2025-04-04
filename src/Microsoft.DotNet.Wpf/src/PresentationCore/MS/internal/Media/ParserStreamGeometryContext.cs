@@ -1,6 +1,5 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 //
 // This class is used to compress a Path to BAML.
@@ -37,8 +36,8 @@ namespace MS.Internal.Media
     ///     ParserStreamGeometryContext
     /// </summary>
     internal class ParserStreamGeometryContext : StreamGeometryContext
-     {
-        enum ParserGeometryContextOpCodes : byte
+    {
+        private enum ParserGeometryContextOpCodes : byte
         {
             BeginFigure = 0,
             LineTo = 1,
@@ -743,11 +742,11 @@ namespace MS.Internal.Media
 
         private BinaryWriter _bw;
 
-        Point _startPoint;
-        bool _isClosed;
-        bool _isFilled;
+        private Point _startPoint;
+        private bool _isClosed;
+        private bool _isFilled;
 
-        int _figureStreamPosition = -1;
+        private int _figureStreamPosition = -1;
     }
 }
 

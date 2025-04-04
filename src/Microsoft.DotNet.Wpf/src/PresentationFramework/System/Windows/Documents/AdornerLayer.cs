@@ -1,6 +1,5 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 //
 // Description: 
@@ -305,7 +304,7 @@ namespace System.Windows.Documents
         /// </summary>
         /// <param name="visual">Visual from which the treewalk begins</param>
         /// <returns>First AdornerLayer above given element, or null</returns>
-        static public AdornerLayer GetAdornerLayer(Visual visual)
+        public static AdornerLayer GetAdornerLayer(Visual visual)
         {
             ArgumentNullException.ThrowIfNull(visual);
 
@@ -964,7 +963,7 @@ namespace System.Windows.Documents
             get { return 4; }
         }
 
-        GeneralTransform GetProposedTransform(Adorner adorner, GeneralTransform sourceTransform)
+        private GeneralTransform GetProposedTransform(Adorner adorner, GeneralTransform sourceTransform)
         {
             // Flip horizontally if Right to Left.
             if (adorner.FlowDirection != this.FlowDirection)

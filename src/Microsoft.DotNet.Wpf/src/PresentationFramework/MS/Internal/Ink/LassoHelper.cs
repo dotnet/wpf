@@ -1,6 +1,5 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 
 using System.Windows;
@@ -20,31 +19,32 @@ namespace MS.Internal.Ink
         #region Fields
 
         // Visuals, geometry builders and drawing stuff
-        DrawingVisual       _containerVisual = null;
-        Brush               _brush = null;
-        Pen                 _pen = null;
+        private DrawingVisual       _containerVisual = null;
+        private Brush               _brush = null;
+        private Pen                 _pen = null;
+
         //Pen                 _linePen = null;
 
         //
-        bool                _isActivated = false;
-        Point               _firstLassoPoint;
-        Point               _lastLassoPoint;
-        int                 _count = 0;
+        private bool                _isActivated = false;
+        private Point               _firstLassoPoint;
+        private Point               _lastLassoPoint;
+        private int                 _count = 0;
 
         // Entire lasso. Collected to hit test InkCanvas' subelements after stylus up.
-        List<Point>         _lasso = null;
-        Rect                _boundingBox;
+        private List<Point>         _lasso = null;
+        private Rect                _boundingBox;
 
         // some of these are probably not in sync
         // with the spec (which is not available at this moment), and also might
         // need to be different for the high contrast mode.
         public const double  MinDistanceSquared     = 49.0;
-        const double  DotRadius                     = 2.5;
-        const double  DotCircumferenceThickness     = 0.5;
-        const double  ConnectLineThickness          = 0.75;
-        const double  ConnectLineOpacity            = 0.75;
-        static readonly Color DotColor              = Colors.Orange;     //FromArgb(1, 0.89f, 0.3607f, 0.1843f);
-        static readonly Color DotCircumferenceColor = Colors.White;
+        private const double  DotRadius                     = 2.5;
+        private const double  DotCircumferenceThickness     = 0.5;
+        private const double  ConnectLineThickness          = 0.75;
+        private const double  ConnectLineOpacity            = 0.75;
+        private static readonly Color DotColor              = Colors.Orange;     //FromArgb(1, 0.89f, 0.3607f, 0.1843f);
+        private static readonly Color DotCircumferenceColor = Colors.White;
 
         #endregion
 

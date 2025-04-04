@@ -1,6 +1,5 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 
 using System.ComponentModel;
@@ -772,7 +771,7 @@ namespace System.Windows.Controls
             }
         }
 
-        object UpdateTextBoxCallback(object arg)
+        private object UpdateTextBoxCallback(object arg)
         {
             _updateTextBoxOperation = null;
 
@@ -793,7 +792,7 @@ namespace System.Windows.Controls
             return null;
         }
 
-        void UpdateTextBox(string matchedText, MatchedTextInfo matchedTextInfo)
+        private void UpdateTextBox(string matchedText, MatchedTextInfo matchedTextInfo)
         {
             // Replace the TextBox's text with the matched text and
             // select the text beyond what the user typed

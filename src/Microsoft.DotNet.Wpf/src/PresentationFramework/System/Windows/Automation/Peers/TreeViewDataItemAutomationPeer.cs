@@ -1,6 +1,5 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 //
 // Description: Data Item Automation peer for TreeViewItem, it may be associated with the 
@@ -27,7 +26,7 @@ namespace System.Windows.Automation.Peers
         }
 
         /// 
-        override public object GetPattern(PatternInterface patternInterface)
+        public override object GetPattern(PatternInterface patternInterface)
         {
             if (patternInterface == PatternInterface.ExpandCollapse)
             {
@@ -61,7 +60,7 @@ namespace System.Windows.Automation.Peers
         }
 
         /// 
-        override internal AutomationPeer GetWrapperPeer()
+        internal override AutomationPeer GetWrapperPeer()
         {
             AutomationPeer wrapperPeer = base.GetWrapperPeer();
             TreeViewItemAutomationPeer treeViewItemWrapperPeer = wrapperPeer as TreeViewItemAutomationPeer;
@@ -71,13 +70,13 @@ namespace System.Windows.Automation.Peers
         }
 
         ///
-        override protected string GetClassNameCore()
+        protected override string GetClassNameCore()
         {
             return "TreeViewItem";
         }
 
         ///
-        override protected AutomationControlType GetAutomationControlTypeCore()
+        protected override AutomationControlType GetAutomationControlTypeCore()
         {
             return AutomationControlType.TreeItem;
         }
@@ -93,7 +92,7 @@ namespace System.Windows.Automation.Peers
         // Return the ItemsControlAP (wrapper peer) corresponding to parent data item, as that will have most up-to-date reference. Sometime along with items even the parent could 
         // be virtualized as well, for eg in case of muti-level TreeView, intermediate TreeView item nodes could be virtualized and realized at any point in time,  in that wrapper peer will be 
         // recreated as well. 
-        override internal ItemsControlAutomationPeer GetItemsControlAutomationPeer()
+        internal override ItemsControlAutomationPeer GetItemsControlAutomationPeer()
         {
                 if(_parentDataItemAutomationPeer == null)
                     return base.GetItemsControlAutomationPeer();
@@ -104,7 +103,7 @@ namespace System.Windows.Automation.Peers
         }
 
         /// 
-        override internal void RealizeCore()
+        internal override void RealizeCore()
         {
             RecursiveScrollIntoView();
         }

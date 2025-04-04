@@ -1,6 +1,5 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 //
 // Description: Node in a red-black tree.
@@ -37,10 +36,10 @@ namespace MS.Internal.Data
         public bool IsRed { get; set; }
         public virtual bool HasData { get { return true; } }
 
-        int _size;
+        private int _size;
         public int Size { get { return _size; } set { _size = value; OnPropertyChanged("Size"); } }
 
-        int _leftSize;
+        private int _leftSize;
         public int LeftSize { get { return _leftSize; } set { _leftSize = value; OnPropertyChanged("LeftSize"); } }
 
         public T GetItemAt(int offset) { return _data[offset]; }
@@ -221,7 +220,7 @@ namespace MS.Internal.Data
             return result;
         }
 
-        int BinarySearch(T x, int low, int high, Comparison<T> comparison, int compHigh, out bool found)
+        private int BinarySearch(T x, int low, int high, Comparison<T> comparison, int compHigh, out bool found)
         {
             while (high - low > BinarySearchThreshold)
             {
@@ -541,7 +540,7 @@ namespace MS.Internal.Data
             }
         }
 
-        RBNode<T> Substitute(RBNode<T> node, RBNode<T> sub, RBNode<T> parent)
+        private RBNode<T> Substitute(RBNode<T> node, RBNode<T> sub, RBNode<T> parent)
         {
             sub.LeftChild = node.LeftChild;
             sub.RightChild = node.RightChild;
@@ -597,7 +596,7 @@ namespace MS.Internal.Data
             return Fixup(node);
         }
 
-        RBNode<T> DeleteLeftmost(RBNode<T> node, out RBNode<T> leftmost)
+        private RBNode<T> DeleteLeftmost(RBNode<T> node, out RBNode<T> leftmost)
         {
             if (node.LeftChild == null)
             {
@@ -613,12 +612,12 @@ namespace MS.Internal.Data
             return Fixup(node);
         }
 
-        bool IsNodeRed(RBNode<T> node)
+        private bool IsNodeRed(RBNode<T> node)
         {
             return node != null && node.IsRed;
         }
 
-        RBNode<T> RotateLeft()
+        private RBNode<T> RotateLeft()
         {
             RBNode<T> node = this.RightChild;
             node.LeftSize += this.LeftSize + this.Size;
@@ -632,7 +631,7 @@ namespace MS.Internal.Data
             return node;
         }
 
-        RBNode<T> RotateRight()
+        private RBNode<T> RotateRight()
         {
             RBNode<T> node = this.LeftChild;
             this.LeftSize -= node.LeftSize + node.Size;
@@ -646,14 +645,14 @@ namespace MS.Internal.Data
             return node;
         }
 
-        void ColorFlip()
+        private void ColorFlip()
         {
             this.IsRed = !this.IsRed;
             LeftChild.IsRed = !LeftChild.IsRed;
             RightChild.IsRed = !RightChild.IsRed;
         }
 
-        RBNode<T> Fixup(RBNode<T> node)
+        private RBNode<T> Fixup(RBNode<T> node)
         {
             if (!IsNodeRed(node.LeftChild) && IsNodeRed(node.RightChild))
                 node = node.RotateLeft();
@@ -664,7 +663,7 @@ namespace MS.Internal.Data
             return node;
         }
 
-        RBNode<T> MoveRedRight(RBNode<T> node)
+        private RBNode<T> MoveRedRight(RBNode<T> node)
         {
             node.ColorFlip();
             if (IsNodeRed(node.LeftChild.LeftChild))
@@ -675,7 +674,7 @@ namespace MS.Internal.Data
             return node;
         }
 
-        RBNode<T> MoveRedLeft(RBNode<T> node)
+        private RBNode<T> MoveRedLeft(RBNode<T> node)
         {
             node.ColorFlip();
             if (IsNodeRed(node.RightChild.LeftChild))
@@ -694,7 +693,7 @@ namespace MS.Internal.Data
                 PropertyChanged(this, new PropertyChangedEventArgs(name));
         }
 
-        T[] _data;
+        private T[] _data;
 
         #region Debugging
 #if DEBUG
@@ -791,12 +790,12 @@ namespace MS.Internal.Data
             }
         }
 
-        int AsInt(object x)
+        private int AsInt(object x)
         {
             return (x is int) ? (int)x : 0;
         }
 
-        T AsT(object x)
+        private T AsT(object x)
         {
             return (x is T) ? (T)x : default(T);
         }
@@ -845,7 +844,7 @@ namespace MS.Internal.Data
             return node;
         }
 
-        static protected int BlackHeight { get; set; }
+        protected static int BlackHeight { get; set; }
 
 #endif // DEBUG
         #endregion Debugging

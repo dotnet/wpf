@@ -1,6 +1,5 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 //
 //
@@ -492,7 +491,7 @@ namespace MS.Internal.Annotations.Component
             return null;
         }
 
-        void GetSpannedSegments(ITextPointer start, ITextPointer end, out int startSeg, out int endSeg)
+        private void GetSpannedSegments(ITextPointer start, ITextPointer end, out int startSeg, out int endSeg)
         {
             startSeg = -1;
             endSeg = -1;
@@ -1215,8 +1214,8 @@ namespace MS.Internal.Annotations.Component
         /// <summary>
         /// A list of all HiglightSegments ordered by position
         /// </summary>
-        List<HighlightSegment> _segments;
-        bool _isFixedContainer = false;
+        private List<HighlightSegment> _segments;
+        private bool _isFixedContainer = false;
 
         #endregion Private Fields
     }

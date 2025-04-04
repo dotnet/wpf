@@ -1,6 +1,5 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 #if !SILVERLIGHTXAML
 
@@ -61,7 +60,7 @@ namespace MS.Win32
                 );
 
         [StructLayout(LayoutKind.Sequential)]
-        unsafe internal struct EVENT_FILTER_DESCRIPTOR
+        internal unsafe struct EVENT_FILTER_DESCRIPTOR
         {
             public long Ptr;
             public int Size;
@@ -113,7 +112,6 @@ namespace MS.Win32
             public UInt32 Flags;
         };
 
-
         internal enum WMIDPREQUESTCODE
         {
             GetAllData = 0,
@@ -142,9 +140,6 @@ namespace MS.Win32
 
         [DllImport("Advapi32.dll")]
         internal static extern byte GetTraceEnableLevel(ulong traceHandle);
-
-        [DllImport("Advapi32.dll")]
-        internal static extern long GetTraceLoggerHandle(WNODE_HEADER* data);
 
         #region TraceEvent()
         // Structures for TraceEvent API.

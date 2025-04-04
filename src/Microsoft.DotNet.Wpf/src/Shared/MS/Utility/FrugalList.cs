@@ -1,6 +1,5 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 #nullable disable
 
@@ -67,7 +66,7 @@ namespace MS.Utility
         Array
     }
 
-    abstract class FrugalListBase<T>
+    internal abstract class FrugalListBase<T>
     {
         /// <summary>
         /// Number of entries in this store
@@ -1613,9 +1612,9 @@ namespace MS.Utility
                 return _targetStore;
             }
 
-            ArrayItemList<T> _targetStore;
-            T[] _sourceArray;
-            T[] _targetArray;
+            private ArrayItemList<T> _targetStore;
+            private T[] _sourceArray;
+            private T[] _targetArray;
         }
 
         #endregion Compacter
@@ -1952,8 +1951,8 @@ namespace MS.Utility
                 }
             }
 
-            FrugalObjectList<T> _list;
-            FrugalListBase<T>.Compacter _storeCompacter;
+            private FrugalObjectList<T> _list;
+            private FrugalListBase<T>.Compacter _storeCompacter;
         }
         #endregion Compacter
     }

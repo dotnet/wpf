@@ -1,6 +1,5 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 
 #region Using declarations
@@ -64,14 +63,14 @@ namespace Microsoft.Windows.Controls.Ribbon
         private Dictionary<int, int> _tabDisplayIndexToIndexMap = new Dictionary<int, int>(); // A map from display index to collection index of tab items.
         private double _mouseWheelCumulativeDelta = 0; // The aggregate of mouse wheel delta since the last mouse wheel tab selection change.
         private const double MouseWheelSelectionChangeThreshold = 100; // The threshold of mouse wheel delta to change tab selection.
-        UIElement _qatTopHost = null;   // ContentPresenter hosting QuickAccessToolBar
-        UIElement _titleHost = null;    // ContentPresenter hosting the Title
-        UIElement _helpPaneHost = null; // ContentPresenter hosting the HelpPaneContent
-        ItemsPresenter _itemsPresenter = null;
+        private UIElement _qatTopHost = null;   // ContentPresenter hosting QuickAccessToolBar
+        private UIElement _titleHost = null;    // ContentPresenter hosting the Title
+        private UIElement _helpPaneHost = null; // ContentPresenter hosting the HelpPaneContent
+        private ItemsPresenter _itemsPresenter = null;
         private bool _inContextMenu = false;
         private bool _retainFocusOnEscape = false;
-        KeyTipService.KeyTipFocusEventHandler _keyTipEnterFocusHandler = null;
-        KeyTipService.KeyTipFocusEventHandler _keyTipExitRestoreFocusHandler = null;
+        private KeyTipService.KeyTipFocusEventHandler _keyTipEnterFocusHandler = null;
+        private KeyTipService.KeyTipFocusEventHandler _keyTipExitRestoreFocusHandler = null;
 
         private const string ContextualTabGroupItemsControlTemplateName = "PART_ContextualTabGroupItemsControl";
         private const string TitlePanelTemplateName = "PART_TitlePanel";

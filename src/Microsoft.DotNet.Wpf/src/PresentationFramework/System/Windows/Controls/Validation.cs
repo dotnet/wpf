@@ -1,6 +1,5 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 //
 // Description:
@@ -572,7 +571,7 @@ namespace System.Windows.Controls
             }
         }
 
-        static void OnValidationError(DependencyObject source, ValidationError validationError, ValidationErrorEventAction action)
+        private static void OnValidationError(DependencyObject source, ValidationError validationError, ValidationErrorEventAction action)
         {
             ValidationErrorEventArgs args = new ValidationErrorEventArgs(validationError, action);
 

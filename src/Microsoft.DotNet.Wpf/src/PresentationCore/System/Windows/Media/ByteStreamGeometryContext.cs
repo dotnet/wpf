@@ -1,6 +1,5 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 // This class is used by the StreamGeometry class to generate an inlined,
 // flattened geometry stream.
@@ -258,7 +257,7 @@ namespace System.Windows.Media
             return _chunkList[0];
         }
 
-        override internal void SetClosedState(bool isClosed)
+        internal override void SetClosedState(bool isClosed)
         {
             if (_currentPathFigureDataOffset == -1)
             {
@@ -656,7 +655,7 @@ namespace System.Windows.Media
             }
         }
 
-        unsafe private void GenericPolyTo(Point* points,
+        private unsafe void GenericPolyTo(Point* points,
                                    int count,
                                    bool isStroked,
                                    bool isSmoothJoin,
@@ -756,7 +755,7 @@ namespace System.Windows.Media
 
         private bool _disposed;
         private int _currChunkOffset;
-        FrugalStructList<byte []> _chunkList;
+        private FrugalStructList<byte []> _chunkList;
         private int _currOffset;
         private MIL_PATHGEOMETRY _currentPathGeometryData;
         private MIL_PATHFIGURE _currentPathFigureData;
@@ -770,7 +769,7 @@ namespace System.Windows.Media
         private const int c_maxChunkSize = 1024*1024;
 
         [ThreadStatic]
-        static byte[] _pooledChunk;
+        private static byte[] _pooledChunk;
 
         #endregion Fields
     }

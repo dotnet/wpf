@@ -1,6 +1,5 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 //
 // Description: ContentPresenter class
@@ -96,7 +95,7 @@ namespace System.Windows.Controls
             Initialize();
         }
 
-        void Initialize()
+        private void Initialize()
         {
             // Initialize the _templateCache to the default value for TemplateProperty.
             // If the default value is non-null then wire it to the current instance.
@@ -674,27 +673,27 @@ namespace System.Windows.Controls
         //
         //------------------------------------------------------
 
-        static DataTemplate XmlNodeContentTemplate
+        private static DataTemplate XmlNodeContentTemplate
         {
             get { return s_XmlNodeTemplate; }
         }
 
-        static DataTemplate UIElementContentTemplate
+        private static DataTemplate UIElementContentTemplate
         {
             get { return s_UIElementTemplate; }
         }
 
-        static DataTemplate DefaultContentTemplate
+        private static DataTemplate DefaultContentTemplate
         {
             get { return s_DefaultTemplate; }
         }
 
-        static DefaultSelector DefaultTemplateSelector
+        private static DefaultSelector DefaultTemplateSelector
         {
             get { return s_DefaultTemplateSelector; }
         }
 
-        DataTemplate FormattingAccessTextContentTemplate
+        private DataTemplate FormattingAccessTextContentTemplate
         {
             get
             {
@@ -721,7 +720,7 @@ namespace System.Windows.Controls
             }
         }
 
-        DataTemplate FormattingStringContentTemplate
+        private DataTemplate FormattingStringContentTemplate
         {
             get
             {
@@ -748,7 +747,7 @@ namespace System.Windows.Controls
             }
         }
 
-        DataTemplate FormattingXmlNodeContentTemplate
+        private DataTemplate FormattingXmlNodeContentTemplate
         {
             get
             {
@@ -888,7 +887,7 @@ namespace System.Windows.Controls
         }
 
         // Select a template for string content
-        DataTemplate SelectTemplateForString(string s)
+        private DataTemplate SelectTemplateForString(string s)
         {
             DataTemplate template;
             string format = ContentStringFormat;
@@ -906,7 +905,7 @@ namespace System.Windows.Controls
         }
 
         // return true if the template was chosen by SelectTemplateForString
-        bool IsUsingDefaultStringTemplate
+        private bool IsUsingDefaultStringTemplate
         {
             get
             {
@@ -936,7 +935,7 @@ namespace System.Windows.Controls
 
 
         // Select a template for XML content
-        DataTemplate SelectTemplateForXML()
+        private DataTemplate SelectTemplateForXML()
         {
             return (String.IsNullOrEmpty(ContentStringFormat)) ? XmlNodeContentTemplate : FormattingXmlNodeContentTemplate;
         }
@@ -965,7 +964,7 @@ namespace System.Windows.Controls
         }
 
         // Create a TextBlock, to be used in a default "template" (via BuildVisualTree)
-        static TextBlock CreateTextBlock(ContentPresenter container)
+        private static TextBlock CreateTextBlock(ContentPresenter container)
         {
             TextBlock text = new TextBlock();
 
@@ -1138,7 +1137,7 @@ namespace System.Windows.Controls
             // via ITypeDescriptorContext.Instance.
             private class TypeContext : ITypeDescriptorContext
             {
-                object _instance;
+                private object _instance;
                 public TypeContext(object instance)
                 {
                     _instance = instance;

@@ -1,6 +1,5 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 // Description: Win32 Up/Down proxy
 
@@ -13,7 +12,7 @@ using NativeMethodsSetLastError = MS.Internal.UIAutomationClientSideProviders.Na
 
 namespace MS.Internal.AutomationProxies
 {
-    class WindowsUpDown : ProxyHwnd, IRangeValueProvider
+    internal class WindowsUpDown : ProxyHwnd, IRangeValueProvider
     {
         // ------------------------------------------------------
         //
@@ -407,7 +406,7 @@ namespace MS.Internal.AutomationProxies
 
         #region SpinButtonItem
 
-        class SpinButtonItem: ProxySimple, IInvokeProvider
+        private class SpinButtonItem: ProxySimple, IInvokeProvider
         {
             //------------------------------------------------------
             //
@@ -554,7 +553,7 @@ namespace MS.Internal.AutomationProxies
 
             #region Internal Methods
 
-            static internal Rect GetBoundingRectangle(IntPtr hwnd, WindowsUpDown.SpinItem item)
+            internal static Rect GetBoundingRectangle(IntPtr hwnd, WindowsUpDown.SpinItem item)
             {
                 NativeMethods.Win32Rect updownRect = new NativeMethods.Win32Rect();
 

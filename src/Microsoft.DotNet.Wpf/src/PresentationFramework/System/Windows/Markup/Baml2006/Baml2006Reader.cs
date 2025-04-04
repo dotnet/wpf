@@ -1,6 +1,5 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 using System.Buffers;
 using System.IO;
@@ -140,7 +139,7 @@ namespace System.Windows.Baml2006
 
         #region XamlReader Members
 
-        override public bool Read()
+        public override bool Read()
         {
             ObjectDisposedException.ThrowIf(IsDisposed, typeof(Baml2006Reader));
             if (IsEof)
@@ -167,37 +166,37 @@ namespace System.Windows.Baml2006
             return true;
         }
 
-        override public XamlNodeType NodeType
+        public override XamlNodeType NodeType
         {
             get { return _xamlNodesReader.NodeType; }
         }
 
-        override public bool IsEof
+        public override bool IsEof
         {
             get { return _isEof; }
         }
 
-        override public NamespaceDeclaration Namespace
+        public override NamespaceDeclaration Namespace
         {
             get { return _xamlNodesReader.Namespace; }
         }
 
-        override public XamlSchemaContext SchemaContext
+        public override XamlSchemaContext SchemaContext
         {
             get { return _xamlNodesReader.SchemaContext; }
         }
 
-        override public XamlType Type
+        public override XamlType Type
         {
             get { return _xamlNodesReader.Type; }
         }
 
-        override public object Value
+        public override object Value
         {
             get { return _xamlNodesReader.Value; }
         }
 
-        override public XamlMember Member
+        public override XamlMember Member
         {
             get { return _xamlNodesReader.Member; }
         }

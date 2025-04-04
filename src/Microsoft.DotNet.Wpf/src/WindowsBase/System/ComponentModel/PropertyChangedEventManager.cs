@@ -1,6 +1,5 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 // Description: Manager for the PropertyChanged event in the "weak event listener"
 //              pattern.  See WeakEventTable.cs for an overview.
@@ -612,9 +611,9 @@ namespace System.ComponentModel
 
         #endregion Private Methods
 
-        ListenerList _proposedAllListenersList;
-        List<String> _toRemove = new List<String>();
-        static readonly string AllListenersKey = "<All Listeners>"; // not a legal property name
+        private ListenerList _proposedAllListenersList;
+        private List<String> _toRemove = new List<String>();
+        private static readonly string AllListenersKey = "<All Listeners>"; // not a legal property name
     }
 }
 

@@ -1,6 +1,5 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 //
 // Description:
@@ -453,13 +452,13 @@ namespace MS.Internal.Navigation
 
         #region Private Data
 
-        long                    _bytesRead;
-        long                    _maxBytes;
-        long                    _lastProgressEventByte;
-        Stream                  _stream;
-        Uri                     _uri;
-        IContentContainer        _cc;
-        Dispatcher              _callbackDispatcher;
+        private long                    _bytesRead;
+        private long                    _maxBytes;
+        private long                    _lastProgressEventByte;
+        private Stream                  _stream;
+        private Uri                     _uri;
+        private IContentContainer        _cc;
+        private Dispatcher              _callbackDispatcher;
         private const long      _bytesInterval = 1024;
 
         #endregion Private Data

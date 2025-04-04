@@ -1,6 +1,5 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 //#define DEBUG_RENDERING_FEEDBACK
 
@@ -24,18 +23,18 @@ namespace System.Windows.Input.StylusPlugIns
 
         private class StrokeInfo
         {
-            int _stylusId;
-            int _startTime;
-            int _lastTime;
-            ContainerVisual _strokeCV;  // App thread rendering CV
-            ContainerVisual _strokeRTICV; // real time input CV
-            bool _seenUp; // Have we seen the stylusUp event yet?
-            bool _isReset; // Was reset used to create this StrokeInfo?
-            SolidColorBrush _fillBrush; // app thread based brushed
-            DrawingAttributes _drawingAttributes;
-            StrokeNodeIterator _strokeNodeIterator;
-            double _opacity;
-            DynamicRendererHostVisual   _strokeHV;  // App thread rendering HostVisual
+            private int _stylusId;
+            private int _startTime;
+            private int _lastTime;
+            private ContainerVisual _strokeCV;  // App thread rendering CV
+            private ContainerVisual _strokeRTICV; // real time input CV
+            private bool _seenUp; // Have we seen the stylusUp event yet?
+            private bool _isReset; // Was reset used to create this StrokeInfo?
+            private SolidColorBrush _fillBrush; // app thread based brushed
+            private DrawingAttributes _drawingAttributes;
+            private StrokeNodeIterator _strokeNodeIterator;
+            private double _opacity;
+            private DynamicRendererHostVisual _strokeHV;  // App thread rendering HostVisual
 
             public StrokeInfo(DrawingAttributes drawingAttributes, int stylusDeviceId, int startTimestamp, DynamicRendererHostVisual hostVisual)
             {
@@ -204,8 +203,8 @@ namespace System.Windows.Input.StylusPlugIns
                 }
             }
             
-            VisualTarget       _visualTarget;
-            List<StrokeInfo>   _strokeInfoList = new List<StrokeInfo>();
+            private VisualTarget       _visualTarget;
+            private List<StrokeInfo>   _strokeInfoList = new List<StrokeInfo>();
         }
         
         /////////////////////////////////////////////////////////////////////
@@ -516,7 +515,7 @@ namespace System.Windows.Input.StylusPlugIns
             }
         }
 
-        void RemoveDynamicRendererVisualAndNotifyWhenDone(StrokeInfo si)
+        private void RemoveDynamicRendererVisualAndNotifyWhenDone(StrokeInfo si)
         {
             if (si != null)
             {
@@ -749,8 +748,8 @@ namespace System.Windows.Input.StylusPlugIns
         }
 
         /////////////////////////////////////////////////////////////////////
-        
-        void RenderPackets(StylusPointCollection stylusPoints,  StrokeInfo si)
+
+        private void RenderPackets(StylusPointCollection stylusPoints,  StrokeInfo si)
         {
             // If no points or not hooked up to element then do nothing.
             if (stylusPoints.Count == 0 || _applicationDispatcher == null)
@@ -869,7 +868,7 @@ namespace System.Windows.Input.StylusPlugIns
 
         /////////////////////////////////////////////////////////////////////
 
-        void AbortAllStrokes()
+        private void AbortAllStrokes()
         {
             lock(__siLock)
             {
@@ -902,7 +901,7 @@ namespace System.Windows.Input.StylusPlugIns
         // then basically instead of starting with step 1 we jump to step 2 and when then on step 5
         // we mark the HostVisual free and we are done.
         //
-        void TransitionStrokeVisuals(StrokeInfo si, bool abortStroke)
+        private void TransitionStrokeVisuals(StrokeInfo si, bool abortStroke)
         {
             // Make sure we don't get any more input for this stroke.
             RemoveStrokeInfo(si);
@@ -989,7 +988,7 @@ namespace System.Windows.Input.StylusPlugIns
 
 
         // Removes ref from DynamicRendererHostVisual.
-        void TransitionComplete(StrokeInfo si, Dispatcher applicationDispatcher)
+        private void TransitionComplete(StrokeInfo si, Dispatcher applicationDispatcher)
         {
             // make sure lock does not cause reentrancy on application thread!
             using(applicationDispatcher.DisableProcessing())
@@ -1001,7 +1000,7 @@ namespace System.Windows.Input.StylusPlugIns
             }
         }
 
-        void RemoveStrokeInfo(StrokeInfo si)
+        private void RemoveStrokeInfo(StrokeInfo si)
         {
             lock(__siLock)
             {
@@ -1009,7 +1008,7 @@ namespace System.Windows.Input.StylusPlugIns
             }
         }
 
-        StrokeInfo FindStrokeInfo(int timestamp)
+        private StrokeInfo FindStrokeInfo(int timestamp)
         {
             lock(__siLock)
             {
@@ -1170,7 +1169,7 @@ namespace System.Windows.Input.StylusPlugIns
         private Dispatcher          _applicationDispatcher;
         private Geometry            _zeroSizedFrozenRect;
         private DrawingAttributes   _drawAttrsSource = new DrawingAttributes();
-        List<StrokeInfo>            _strokeInfoList = new List<StrokeInfo>();
+        private List<StrokeInfo>            _strokeInfoList = new List<StrokeInfo>();
 
         // Visuals layout:
         // 
@@ -1191,20 +1190,20 @@ namespace System.Windows.Input.StylusPlugIns
         private DynamicRendererHostVisual    _rawInkHostVisual1;
         private DynamicRendererHostVisual    _rawInkHostVisual2;
 
-        DynamicRendererHostVisual            _currentHostVisual; // Current HV.
+        private DynamicRendererHostVisual _currentHostVisual; // Current HV.
 
         // For OnRenderComplete support (for UI Thread)
-        EventHandler  _onRenderComplete;
-        bool          _waitingForRenderComplete;
-        readonly object        __siLock = new object();
+        private EventHandler  _onRenderComplete;
+        private bool          _waitingForRenderComplete;
+        private readonly object        __siLock = new object();
         private StrokeInfo  _renderCompleteStrokeInfo;
 
         // On internal real time ink rendering thread.
         private DynamicRendererThreadManager _renderingThread;
         
         // For OnRenderComplete support (for DynamicRenderer Thread)
-        EventHandler  _onDRThreadRenderComplete;
-        bool          _waitingForDRThreadRenderComplete;
-        Queue<StrokeInfo>    _renderCompleteDRThreadStrokeInfoList = new Queue<StrokeInfo>();
+        private EventHandler  _onDRThreadRenderComplete;
+        private bool _waitingForDRThreadRenderComplete;
+        private Queue<StrokeInfo>    _renderCompleteDRThreadStrokeInfoList = new Queue<StrokeInfo>();
 }
 }

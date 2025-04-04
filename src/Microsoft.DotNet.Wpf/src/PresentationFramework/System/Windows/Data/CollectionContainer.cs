@@ -1,6 +1,5 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 //
 // Description: Holds an existing collection structure
@@ -376,7 +375,7 @@ namespace System.Windows.Data
 
         // this method is here just to avoid the compiler error
         // error CS0649: Warning as Error: Field '..._traceLog' is never assigned to, and will always have its default value null
-        void InitializeTraceLog()
+        private void InitializeTraceLog()
         {
             _traceLog = new TraceLog(20);
         }

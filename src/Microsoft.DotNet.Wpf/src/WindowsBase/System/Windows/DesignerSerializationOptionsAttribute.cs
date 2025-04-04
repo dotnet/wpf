@@ -1,6 +1,5 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 using System.ComponentModel;
 
@@ -40,12 +39,12 @@ namespace System.Windows.Markup
         {
             get { return _designerSerializationOptions; }
         }
-        
+
         #endregion Properties
 
         #region Data
 
-        DesignerSerializationOptions _designerSerializationOptions;
+        private DesignerSerializationOptions _designerSerializationOptions;
 
         #endregion Data
     }

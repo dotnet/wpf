@@ -1,6 +1,5 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 // Description: Base proxy for HWNDs. Provides HWND-based children, HWND properties such as Enabled, Visible etc.
 
@@ -964,7 +963,7 @@ namespace MS.Internal.Automation
         #region Private Methods
 
         // wrapper for GetMenuBarInfo
-        unsafe private static bool GetMenuBarInfo(NativeMethods.HWND hwnd, int idObject, uint idItem, out UnsafeNativeMethods.MENUBARINFO mbi)
+        private static unsafe bool GetMenuBarInfo(NativeMethods.HWND hwnd, int idObject, uint idItem, out UnsafeNativeMethods.MENUBARINFO mbi)
         {
             mbi = new UnsafeNativeMethods.MENUBARINFO
             {
@@ -1602,7 +1601,7 @@ namespace MS.Internal.Automation
 
         // Checks to see if the process owning the hwnd is currently in menu mode
         // and takes steps to exit menu mode if it is
-        static private void ClearMenuMode()
+        private static void ClearMenuMode()
         {
             // Check if we're in menu mode with helper method.
             if (InMenuMode())

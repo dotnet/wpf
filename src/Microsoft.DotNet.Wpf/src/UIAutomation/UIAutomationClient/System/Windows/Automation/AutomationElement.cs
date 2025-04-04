@@ -1,6 +1,5 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 // Description: Main class used by Automation clients, represents a UI element
 
@@ -1194,11 +1193,11 @@ namespace System.Windows.Automation
         //  Private Methods
         //
         //------------------------------------------------------
- 
+
         #region Private Methods
 
         // Lookup a cached AutomationPattern or AutomationProperty
-        object LookupCachedValue(AutomationIdentifier id, bool throwIfNotRequested, bool wrap)
+        private object LookupCachedValue(AutomationIdentifier id, bool throwIfNotRequested, bool wrap)
         {
             if (_cachedValues == null)
             {

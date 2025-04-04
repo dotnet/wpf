@@ -1,6 +1,5 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 #region Using declarations
 
@@ -676,7 +675,7 @@ namespace Microsoft.Windows.Controls.Ribbon
             IsVisibleChanged += new DependencyPropertyChangedEventHandler(HandleIsVisibleChanged);
         }
 
-        void HandleIsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
+        private void HandleIsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
             RibbonHelper.DelayCoerceProperty(this, IsDropDownOpenProperty);
             IsVisibleChanged -= new DependencyPropertyChangedEventHandler(HandleIsVisibleChanged);
@@ -1546,7 +1545,7 @@ namespace Microsoft.Windows.Controls.Ribbon
                 RibbonGroup = group;
             }
 
-            RibbonGroup RibbonGroup
+            private RibbonGroup RibbonGroup
             {
                 get;
                 set;

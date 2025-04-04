@@ -1,6 +1,6 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
+
 using System.Reflection;
 using System.Runtime.InteropServices;
 using WinRT.Interop;
@@ -147,7 +147,8 @@ namespace WinRT
     internal class ObjectReference<T> : IObjectReference
     {
         protected override IUnknownVftbl VftblIUnknownUnsafe => _vftblIUnknown;
-        readonly IUnknownVftbl _vftblIUnknown;
+
+        private readonly IUnknownVftbl _vftblIUnknown;
         public readonly T Vftbl;
 
         public static ObjectReference<T> Attach(ref IntPtr thisPtr)
@@ -161,7 +162,7 @@ namespace WinRT
             return obj;
         }
 
-        ObjectReference(IntPtr thisPtr, IUnknownVftbl vftblIUnknown, T vftblT) :
+        private ObjectReference(IntPtr thisPtr, IUnknownVftbl vftblIUnknown, T vftblT) :
             base(thisPtr)
         {
             _vftblIUnknown = vftblIUnknown;
@@ -173,7 +174,7 @@ namespace WinRT
         {
         }
 
-        ObjectReference(IntPtr thisPtr, (IUnknownVftbl vftblIUnknown, T vftblT) vtables) :
+        private ObjectReference(IntPtr thisPtr, (IUnknownVftbl vftblIUnknown, T vftblT) vtables) :
             this(thisPtr, vtables.vftblIUnknown, vtables.vftblT)
         {
         }

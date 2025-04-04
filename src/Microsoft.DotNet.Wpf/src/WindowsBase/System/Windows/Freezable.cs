@@ -1,6 +1,5 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 // Description: The Freezable class (plus the FreezableHelper class)
 //              encompasses all of the Freezable pattern.
@@ -475,21 +474,16 @@ namespace System.Windows
         // FireChanged occurs.
         //
         [ThreadStatic]
-        static private EventStorage _eventStorage = null;
+        private static EventStorage _eventStorage;
 
         /// <summary>
         /// Property to access and intialize the thread static _eventStorage variable.
         /// </summary>
-        private EventStorage CachedEventStorage
+        private static EventStorage CachedEventStorage
         {
             get
             {
-                // make sure _eventStorage is not null - with ThreadStatic it appears that the second
-                // thread to access the variable will set this to null
-                if (_eventStorage == null)
-                {
-                    _eventStorage = new EventStorage(INITIAL_EVENTSTORAGE_SIZE);
-                }
+                _eventStorage ??= new EventStorage(INITIAL_EVENTSTORAGE_SIZE);
 
                 return _eventStorage;
             }
@@ -707,7 +701,7 @@ namespace System.Windows
         /// Freezable can't be frozen.</exception>
         //  Future Note: Consider removing if we move Freezables to DO's, and moving it into
         // SetFreezableContextCore directly.  What situations would remain for subclasses to need to call it?
-        static protected internal bool Freeze(Freezable freezable, bool isChecking)
+        protected internal static bool Freeze(Freezable freezable, bool isChecking)
         {
             if (freezable != null)
             {
@@ -1893,10 +1887,10 @@ namespace System.Windows
                 }
             }
 
-            EventHandler[] _events;         // list of events
-            int _logSize;                   // the logical size of the list
-            int _physSize;                  // the allocated buffer size
-            bool _inUse;
+            private EventHandler[] _events;         // list of events
+            private int _logSize;                   // the logical size of the list
+            private int _physSize;                  // the allocated buffer size
+            private bool _inUse;
         }
 
         //------------------------------------------------------

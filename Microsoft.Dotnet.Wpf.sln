@@ -270,6 +270,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "eng", "eng", "{92968783-200
 		eng\restore-toolset.ps1 = eng\restore-toolset.ps1
 		Restore.cmd = Restore.cmd
 		start-vs.cmd = start-vs.cmd
+		eng\Version.Details.xml = eng\Version.Details.xml
 		eng\Versions.props = eng\Versions.props
 	EndProjectSection
 EndProject

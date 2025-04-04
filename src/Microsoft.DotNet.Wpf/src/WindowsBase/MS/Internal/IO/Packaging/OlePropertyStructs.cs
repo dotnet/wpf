@@ -1,6 +1,5 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 using System.Runtime.InteropServices;
 
@@ -10,21 +9,21 @@ namespace MS.Internal.IO.Packaging
     internal struct STATPROPSTG
     {
         [MarshalAs(UnmanagedType.LPWStr)]
-        string lpwstrName; 
-        UInt32 propid;
-        VARTYPE vt;
+        private string lpwstrName;
+        private UInt32 propid;
+        private VARTYPE vt;
     }
 
     [StructLayout(LayoutKind.Sequential, Pack = 0)]
     internal struct STATPROPSETSTG
     {
-        Guid fmtid;
-        Guid clsid;
-        UInt32 grfFlags;
-        System.Runtime.InteropServices.ComTypes.FILETIME mtime;
-        System.Runtime.InteropServices.ComTypes.FILETIME ctime;
-        System.Runtime.InteropServices.ComTypes.FILETIME atime;
-        UInt32 dwOSVersion;
+        private Guid fmtid;
+        private Guid clsid;
+        private UInt32 grfFlags;
+        private System.Runtime.InteropServices.ComTypes.FILETIME mtime;
+        private System.Runtime.InteropServices.ComTypes.FILETIME ctime;
+        private System.Runtime.InteropServices.ComTypes.FILETIME atime;
+        private UInt32 dwOSVersion;
     }
 
     #region PROPVARIANT

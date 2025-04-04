@@ -1,6 +1,5 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 // Description: Some applications implement menus with toolbars.  This proxy
 //              will used the IAccessible to expose these toolbars as
@@ -15,7 +14,7 @@ using System.Windows.Automation;
 
 namespace MS.Internal.AutomationProxies
 {
-    class WindowsToolbarAsMenu : WindowsToolbar
+    internal class WindowsToolbarAsMenu : WindowsToolbar
     {
         // ------------------------------------------------------
         //
@@ -59,7 +58,7 @@ namespace MS.Internal.AutomationProxies
 
         #region Private Fields
 
-        Accessible _acc;
+        private Accessible _acc;
 
         #endregion
     }

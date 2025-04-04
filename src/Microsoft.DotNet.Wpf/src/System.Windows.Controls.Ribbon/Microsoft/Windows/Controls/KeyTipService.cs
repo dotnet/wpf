@@ -1,6 +1,5 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 #region Using declarations
 
@@ -677,7 +676,7 @@ namespace Microsoft.Windows.Controls
             return false;
         }
 
-        void PreProcessInput(object sender, PreProcessInputEventArgs e)
+        private void PreProcessInput(object sender, PreProcessInputEventArgs e)
         {
             if (State != KeyTipState.None)
             {
@@ -711,7 +710,7 @@ namespace Microsoft.Windows.Controls
             }
         }
 
-        void PostProcessInput(object sender, ProcessInputEventArgs e)
+        private void PostProcessInput(object sender, ProcessInputEventArgs e)
         {
             if (e.StagingItem.Input.RoutedEvent == Keyboard.KeyDownEvent)
             {
@@ -1297,7 +1296,7 @@ namespace Microsoft.Windows.Controls
         ///     AdornerLayer of ScrollContentPresenter if its
         ///     ScrollViewer has CanClipKeyTip set to false.
         /// </summary>
-        static private AdornerLayer GetAdornerLayer(Visual visual, out bool isScrollAdornerLayer)
+        private static AdornerLayer GetAdornerLayer(Visual visual, out bool isScrollAdornerLayer)
         {
             ArgumentNullException.ThrowIfNull(visual);
 
@@ -1722,9 +1721,9 @@ namespace Microsoft.Windows.Controls
         #region Private Data
 
         // Data members which exist across multiple keytip life times.
-        WeakHashSet<DependencyObject> _toBeScopedElements = new WeakHashSet<DependencyObject>(); // List of one-off elements to be scoped.
-        WeakDictionary<DependencyObject, bool> _unprocessedScopes = new WeakDictionary<DependencyObject, bool>(); // List of scopes which are to processed
-        WeakDictionary<DependencyObject, WeakHashSet<DependencyObject>> _scopeToElementMap = new WeakDictionary<DependencyObject, WeakHashSet<DependencyObject>>();
+        private WeakHashSet<DependencyObject> _toBeScopedElements = new WeakHashSet<DependencyObject>(); // List of one-off elements to be scoped.
+        private WeakDictionary<DependencyObject, bool> _unprocessedScopes = new WeakDictionary<DependencyObject, bool>(); // List of scopes which are to processed
+        private WeakDictionary<DependencyObject, WeakHashSet<DependencyObject>> _scopeToElementMap = new WeakDictionary<DependencyObject, WeakHashSet<DependencyObject>>();
         private List<WeakReference> _keyTipEnterFocusHandlers = null;
         private List<WeakReference> _keyTipExitRestoreFocusHandlers = null;
         private bool _adornerLayerPlacementProcessingQueued = false;

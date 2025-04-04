@@ -1,6 +1,5 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 using System;
 using System.Xaml;
@@ -229,7 +228,7 @@ namespace Microsoft.Windows.Themes
             return bamlType;
         }
 
-        class ThemesKnownType : WpfKnownType
+        private class ThemesKnownType : WpfKnownType
         {
             public ThemesKnownType(XamlSchemaContext xsc, int bamlNumber, string name, Type type) :
                 base(xsc, bamlNumber, name, type)

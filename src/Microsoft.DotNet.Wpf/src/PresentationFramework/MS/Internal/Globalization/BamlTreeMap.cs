@@ -1,6 +1,5 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 // Class that implements BamlTreeMap.
 
@@ -275,13 +274,13 @@ namespace MS.Internal.Globalization
 
     internal class InternalBamlLocalizabilityResolver : BamlLocalizabilityResolver
     {
-        BamlLocalizabilityResolver _externalResolver;
+        private BamlLocalizabilityResolver _externalResolver;
 
         // a list of assemblies encounter in the baml
-        FrugalObjectList<string> _assemblyNames;
+        private FrugalObjectList<string> _assemblyNames;
 
         // class name mapped to assembly index in the Frugal list
-        Hashtable _classNameToAssemblyIndex;
+        private Hashtable _classNameToAssemblyIndex;
 
         // cached localizablity values
         private Dictionary<string, ElementLocalizability> _classAttributeTable;

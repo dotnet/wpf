@@ -1,6 +1,5 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 using System.Reflection;
 using System.Xaml;
@@ -695,7 +694,7 @@ namespace System.Windows.Baml2006
 
         #region Private Types and Enums
 
-        sealed class BamlAssembly
+        private sealed class BamlAssembly
         {
             /// <summary>
             /// </summary>
@@ -723,7 +722,7 @@ namespace System.Windows.Baml2006
             internal Assembly Assembly;
         }
 
-        sealed class BamlType
+        private sealed class BamlType
         {
             public BamlType(Int16 assemblyId, string name)
             {
@@ -742,7 +741,7 @@ namespace System.Windows.Baml2006
             public string ClrNamespace;
         }
 
-        sealed class BamlProperty
+        private sealed class BamlProperty
         {
             public BamlProperty(Int16 declaringTypeId, string name)
             {

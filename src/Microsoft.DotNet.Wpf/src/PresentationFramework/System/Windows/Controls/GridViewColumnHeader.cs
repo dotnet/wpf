@@ -1,6 +1,5 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 
 using System.ComponentModel;
@@ -905,7 +904,7 @@ namespace System.Windows.Controls
             }
         }
 
-        static private Cursor _splitCursorCache = null;
+        private static Cursor _splitCursorCache = null;
 
         #endregion SplitCursor
 
@@ -923,7 +922,7 @@ namespace System.Windows.Controls
             }
         }
 
-        static private Cursor _splitOpenCursorCache = null;
+        private static Cursor _splitOpenCursorCache = null;
 
         #endregion SplitOpenCursor
 

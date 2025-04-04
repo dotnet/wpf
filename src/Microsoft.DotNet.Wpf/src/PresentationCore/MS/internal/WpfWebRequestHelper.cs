@@ -1,6 +1,5 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 //+-----------------------------------------------------------------------
 //
@@ -39,8 +38,8 @@ namespace MS.Internal
     ///   - PackWebRequestFactory
     ///   - MimeObjectFactory
     /// </summary>
-    static class WpfWebRequestHelper
-{
+    internal static class WpfWebRequestHelper
+    {
     internal static WebRequest CreateRequest(Uri uri)
     {
         // Ideally we would want to use RegisterPrefix and WebRequest.Create.
@@ -105,7 +104,7 @@ namespace MS.Internal
     /// change behavior in SP1/v3.5, ConfigCachePolicy() is called separately by the code that previously
     /// relied on ConfigHttpWebRequest().
     /// </remarks>
-    static internal void ConfigCachePolicy(WebRequest request, bool isRefresh)
+    internal static void ConfigCachePolicy(WebRequest request, bool isRefresh)
     {
         HttpWebRequest httpRequest = request as HttpWebRequest;
         if (httpRequest != null)

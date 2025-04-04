@@ -1,13 +1,12 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 using System.Reflection;
 using MS.Internal.WindowsBase;
 
 namespace System.Windows.Baml2006
 {
-    class Baml6Assembly
+    internal class Baml6Assembly
     {
         // Information needed to resolve a BamlAssembly to a CLR Assembly
         public readonly string Name;

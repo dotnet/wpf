@@ -1,6 +1,5 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 // Description: Win32 Spinner Proxy
 
@@ -13,7 +12,7 @@ using MS.Win32;
 namespace MS.Internal.AutomationProxies
 {
     // Proxy for a Windows NumericUpDown control with Windows Edit control, called a Spinner
-    class WindowsSpinner : ProxyHwnd, IRangeValueProvider
+    internal class WindowsSpinner : ProxyHwnd, IRangeValueProvider
     {
         // ------------------------------------------------------
         //

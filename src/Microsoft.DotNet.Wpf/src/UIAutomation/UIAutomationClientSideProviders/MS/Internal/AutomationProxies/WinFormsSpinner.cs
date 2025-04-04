@@ -1,6 +1,5 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 // Description: Spinner Proxy
 
@@ -15,7 +14,7 @@ using MS.Win32;
 namespace MS.Internal.AutomationProxies
 {
     // WinForms NumericUpDown proxy
-    class WinformsSpinner : ProxyHwnd, IRawElementProviderHwndOverride, IRangeValueProvider, IValueProvider
+    internal class WinformsSpinner : ProxyHwnd, IRawElementProviderHwndOverride, IRangeValueProvider, IValueProvider
     {
         // ------------------------------------------------------
         //
@@ -471,7 +470,7 @@ namespace MS.Internal.AutomationProxies
         // Proxy for ComboBox Edit portion
         // The Edit proxy does not exist, it the the whole spinner. This class is needed
         // though to override ProviderOptions
-        class WinformsSpinnerEdit : WinformsSpinner
+        private class WinformsSpinnerEdit : WinformsSpinner
         {
             //------------------------------------------------------
             //

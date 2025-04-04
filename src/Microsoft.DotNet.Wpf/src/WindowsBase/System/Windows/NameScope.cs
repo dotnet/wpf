@@ -1,6 +1,5 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 /***************************************************************************\
 *
@@ -182,7 +181,7 @@ namespace System.Windows
 
         #endregion Data
 
-        IEnumerator<KeyValuePair<string, object>> GetEnumerator()
+        private IEnumerator<KeyValuePair<string, object>> GetEnumerator()
         {
             return new Enumerator(this._nameMap);
         }
@@ -370,9 +369,9 @@ namespace System.Windows
         #endregion
 
         #region class Enumerator
-        class Enumerator : IEnumerator<KeyValuePair<string, object>>
+        private class Enumerator : IEnumerator<KeyValuePair<string, object>>
         {
-            IDictionaryEnumerator _enumerator;
+            private IDictionaryEnumerator _enumerator;
             
             public Enumerator(HybridDictionary nameMap)
             {

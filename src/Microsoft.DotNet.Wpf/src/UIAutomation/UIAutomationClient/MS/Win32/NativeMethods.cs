@@ -1,6 +1,5 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 //***************************************************************************
 // HOW TO USE THIS FILE
@@ -69,7 +68,7 @@ namespace MS.Win32
                 return hl.h != hr.h;
             }
 
-            override public bool Equals(object oCompare)
+            public override bool Equals(object oCompare)
             {
                 HWND hr = Cast((HWND)oCompare);
                 return h == hr.h;

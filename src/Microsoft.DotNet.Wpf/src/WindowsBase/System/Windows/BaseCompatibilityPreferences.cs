@@ -1,6 +1,5 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 using Microsoft.Win32;
 using System.Collections.Specialized;
@@ -226,7 +225,7 @@ namespace System.Windows
             }
         }
 
-        static void SetMatchPackageSignatureMethodToPackagePartDigestMethod(NameValueCollection appSettings)
+        private static void SetMatchPackageSignatureMethodToPackagePartDigestMethod(NameValueCollection appSettings)
         {
             if (appSettings == null || !SetMatchPackageSignatureMethodToPackagePartDigestMethodFromAppSettings(appSettings))
             {
@@ -234,7 +233,7 @@ namespace System.Windows
             }
         }
 
-        static bool SetMatchPackageSignatureMethodToPackagePartDigestMethodFromAppSettings(NameValueCollection appSettings)
+        private static bool SetMatchPackageSignatureMethodToPackagePartDigestMethodFromAppSettings(NameValueCollection appSettings)
         {
             // user can use config file to opt out of signature method fixes
             string s = appSettings[nameof(MatchPackageSignatureMethodToPackagePartDigestMethod)];
@@ -352,7 +351,7 @@ namespace System.Windows
             Reset = 2,
         }
 
-        static void SetHandleDispatcherRequestProcessingFailureFromAppSettings(NameValueCollection appSettings)
+        private static void SetHandleDispatcherRequestProcessingFailureFromAppSettings(NameValueCollection appSettings)
         {
             // user can use config file to set the property
             string s = appSettings["HandleDispatcherRequestProcessingFailure"];

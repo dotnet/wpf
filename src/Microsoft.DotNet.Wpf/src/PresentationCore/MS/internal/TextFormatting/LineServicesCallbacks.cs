@@ -1315,7 +1315,7 @@ namespace MS.Internal.TextFormatting
                             );
 
                         // adjust the pen's thickness as it will be scaled back by the scale transform
-                        drawingPenThickness = drawingPenThickness / Math.Abs(unitValue);
+                        drawingPenThickness /= Math.Abs(unitValue);
                                                     
                         // applied transforms
                         drawingContext.PushTransform(scaleTransform);

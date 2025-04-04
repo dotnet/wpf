@@ -55,7 +55,7 @@ namespace System.Windows.Media.Media3D
                 
                     // in this case we have a non-indexed mesh
                     int count = positions.Count;
-                    count = count - (count % 3);
+                    count -= count % 3;
 
                     for (int i = 0; i < count; i+=3)
                     {

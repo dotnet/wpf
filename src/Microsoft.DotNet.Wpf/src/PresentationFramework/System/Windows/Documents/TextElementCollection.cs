@@ -837,7 +837,7 @@ namespace System.Windows.Documents
                 else if (_indexCache.Index < index)
                 {
                     element = _indexCache.Element;
-                    index = index - _indexCache.Index;
+                    index -= _indexCache.Index;
                 }
                 else // _indexCache.Index > index
                 {

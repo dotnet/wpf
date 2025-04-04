@@ -241,7 +241,7 @@ namespace System.Windows.Media
                     {
                         do
                         {
-                            firstNum = firstNum * 16;
+                            firstNum *= 16;
                             lastNum = lastNum * 16 + 0x0F;
                             index++;
                         } while (

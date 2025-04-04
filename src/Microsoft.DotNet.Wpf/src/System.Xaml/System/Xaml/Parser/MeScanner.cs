@@ -295,7 +295,7 @@ namespace MS.Internal.Xaml.Parser
 
             // In curly form, we search for TypeName + 'Extension' before TypeName
             string bareTypeName = typeName.Name;
-            typeName.Name = typeName.Name + KnownStrings.Extension;
+            typeName.Name += KnownStrings.Extension;
             XamlType xamlType = _context.GetXamlType(typeName, false);
             // This would be cleaner if we moved the Extension fallback logic out of XSC
             if (xamlType is null ||

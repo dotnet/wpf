@@ -114,13 +114,13 @@ namespace MS.Internal.ReachFramework
                 {
                     encoder = new WmpBitmapEncoder();
 
-                    bitmapName = bitmapName + ".wmp";
+                    bitmapName += ".wmp";
                 }
                 else
                 {
                     encoder = new PngBitmapEncoder();
 
-                    bitmapName = bitmapName + ".png";
+                    bitmapName += ".png";
                 }
             }
 

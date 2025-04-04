@@ -430,7 +430,7 @@ namespace System.Windows.Media.Imaging
             {
                 if (ca.pElems != IntPtr.Zero)
                 {
-                    vt = vt & ~VarEnum.VT_VECTOR;
+                    vt &= ~VarEnum.VT_VECTOR;
 
                     if (vt == VarEnum.VT_UNKNOWN)
                     {

@@ -2818,9 +2818,9 @@ namespace System.Windows.Controls.Primitives
                                 // byteWidth = bytes per row AND bytes per vertical pixel
                                 int byteWidth = bm.bmWidth / 8;
                                 int right /*px*/ = (bottom /*bytes*/ % byteWidth) * 8 /*px/byte*/;
-                                bottom /*px*/ = bottom /*bytes*/ / byteWidth /*bytes/px*/;
+                                bottom /*px*/ /= /*bytes*/ byteWidth /*bytes/px*/;
                                 int left /*px*/ = top /*bytes*/ % byteWidth * 8 /*px/byte*/;
-                                top /*px*/ = top /*bytes*/ / byteWidth /*bytes/px*/;
+                                top /*px*/ /= /*bytes*/ byteWidth /*bytes/px*/;
 
                                 // (Final value) Convert LRTB to Width and Height
                                 width = right - left + 1;

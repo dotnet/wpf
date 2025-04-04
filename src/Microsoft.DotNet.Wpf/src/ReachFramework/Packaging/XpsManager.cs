@@ -1272,7 +1272,7 @@ namespace System.Windows.Xps.Packaging
         {
             lock (_globalLock)
             {
-                _packageCache[uri] = _packageCache[uri]+1;
+                _packageCache[uri] += 1;
             }
         }
 

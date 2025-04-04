@@ -382,7 +382,7 @@ namespace Microsoft.Internal.AlphaFlattener
 
             if (_brush != null)
             {
-                str = str + _brush.GetType();
+                str += _brush.GetType();
             }
             else if (_brushList != null)
             {
@@ -3813,7 +3813,7 @@ namespace Microsoft.Internal.AlphaFlattener
                         i = -i;
                     }
 
-                    i = i % (steps * 2);
+                    i %= steps * 2;
 
                     if (i >= steps)
                     {
@@ -3828,7 +3828,7 @@ namespace Microsoft.Internal.AlphaFlattener
                         i += steps;
                     }
 
-                    i = i % steps;
+                    i %= steps;
                     break;
             }
 

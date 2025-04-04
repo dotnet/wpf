@@ -88,7 +88,7 @@ namespace MS.Internal
             if ((_flags & PrivateFlags.Listening) == 0)
                 return;
 
-            _flags = _flags & ~PrivateFlags.Listening;
+            _flags &= ~PrivateFlags.Listening;
 
             if ((_flags & PrivateFlags.DomainUnload) != 0)
             {

@@ -168,7 +168,7 @@ namespace System.Windows.Media.Animation
                 }
                 else
                 {
-                    offset = offset + duration.TimeSpan;
+                    offset += duration.TimeSpan;
                 }
             }
 
@@ -210,7 +210,7 @@ namespace System.Windows.Media.Animation
                 }
                 else
                 {
-                    offset = offset + duration.TimeSpan;
+                    offset += duration.TimeSpan;
                 }
             }
 

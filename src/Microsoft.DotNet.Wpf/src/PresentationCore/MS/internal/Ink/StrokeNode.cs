@@ -1058,7 +1058,7 @@ namespace MS.Internal.Ink
             // eg turn 2.75 into .75
             //
             double floor = Math.Floor(findex);
-            findex = findex - floor;
+            findex -= floor;
 
             double xDiff = (_thisNode.Position.X - _lastNode.Position.X) * findex;
             double yDiff = (_thisNode.Position.Y - _lastNode.Position.Y) * findex;

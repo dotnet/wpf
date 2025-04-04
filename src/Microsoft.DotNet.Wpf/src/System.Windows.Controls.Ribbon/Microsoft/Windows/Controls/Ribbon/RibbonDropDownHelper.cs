@@ -142,7 +142,7 @@ namespace Microsoft.Windows.Controls.Ribbon
                     && DoubleUtil.LessThanOrClose(minDropDownSize.Height, newHeight))
                 {
                     itemsPresenter.Height = newHeight;
-                    result = result & true;
+                    result &= true;
                 }
             }
 

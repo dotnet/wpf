@@ -660,7 +660,7 @@ namespace System.Windows.Xps.Serialization
                             bitmapUri = bitmapUri + " " + destinationProfile;
                         }
 
-                        bitmapUri = bitmapUri + "}";
+                        bitmapUri += "}";
                     }
                 }
 

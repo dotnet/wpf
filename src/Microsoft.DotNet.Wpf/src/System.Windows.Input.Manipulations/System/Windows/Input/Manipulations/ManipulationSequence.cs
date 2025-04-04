@@ -1053,7 +1053,7 @@ namespace System.Windows.Input.Manipulations
             float result = CalculateWeightedMovingAverage(queue, accessor);
 
             // convert to milliseconds
-            result = result * ManipulationProcessor2D.TimestampTicksPerMillisecond;
+            result *= ManipulationProcessor2D.TimestampTicksPerMillisecond;
             return result;
         }
 

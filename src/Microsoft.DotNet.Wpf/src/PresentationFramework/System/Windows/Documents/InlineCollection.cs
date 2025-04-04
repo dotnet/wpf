@@ -192,7 +192,7 @@ namespace System.Windows.Documents
             {
                 if (!textBlock.HasComplexContent)
                 {
-                    textBlock.Text = textBlock.Text + text;
+                    textBlock.Text += text;
                     return 0; // There's always one implicit Run with simple content, at index 0.
                 }
             }

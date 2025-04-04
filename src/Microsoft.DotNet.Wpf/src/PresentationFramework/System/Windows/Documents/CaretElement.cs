@@ -705,7 +705,7 @@ namespace System.Windows.Documents
                     if (flowDirection == FlowDirection.RightToLeft)
                     {
                         // BiDi caret indicator should always direct by the right to left
-                        bidiCaretIndicatorWidth = bidiCaretIndicatorWidth * (-1);
+                        bidiCaretIndicatorWidth *= -1;
                     }
 
                     // Draw BIDI caret to indicate the coming input is BIDI characters.

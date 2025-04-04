@@ -86,7 +86,7 @@ namespace MS.Internal.Documents.Application
                 Path.GetExtension(filePath), 
                 StringComparison.OrdinalIgnoreCase))
             {
-                filePath = filePath + extension;
+                filePath += extension;
             }
 
             Uri file = new Uri(filePath);

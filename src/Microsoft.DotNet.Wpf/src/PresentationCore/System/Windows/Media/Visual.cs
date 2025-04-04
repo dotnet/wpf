@@ -904,8 +904,7 @@ namespace System.Windows.Media
             else
             {
                 // Decrease the number os times this ICyclicBrush uses this Visual across all channels
-                cyclicBrushToChannelsMap[cyclicBrush] =
-                    cyclicBrushToChannelsMap[cyclicBrush] - 1;
+                cyclicBrushToChannelsMap[cyclicBrush] -= 1;
             }
 
             // Decrease the number of ICyclicBrush using the visual as root on this channel
@@ -915,8 +914,7 @@ namespace System.Windows.Media
             Debug.Assert(channelsToCyclicBrushMap.ContainsKey(channel));
             Debug.Assert(channelsToCyclicBrushMap[channel] > 0);
 
-            channelsToCyclicBrushMap[channel] =
-                    channelsToCyclicBrushMap[channel] - 1;
+            channelsToCyclicBrushMap[channel] -= 1;
 
             //
             // If on this channel, there are no more ICyclicBrushes using this visual as
@@ -2101,7 +2099,7 @@ namespace System.Windows.Media
                             Point newHitPoint = hitPoint;
 
                             // Apply the offset.
-                            newHitPoint = newHitPoint - child._offset;
+                            newHitPoint -= child._offset;
 
                             // If we have a transform, apply the transform.
                             Transform childTransform = TransformField.GetValue(child);
@@ -2119,7 +2117,7 @@ namespace System.Windows.Media
 
                                 inv.Invert();
 
-                                newHitPoint = newHitPoint * inv;
+                                newHitPoint *= inv;
                             }
 
                             // Set the new hittesting point into the hittest params.

@@ -4829,7 +4829,7 @@ namespace System.Windows.Documents
                     }
 
                     string name = t.ToString();
-                    isWPFControl = name.StartsWith("System.Windows.Controls.");
+                    isWPFControl = name.StartsWith("System.Windows.Controls.", StringComparison.Ordinal);
                     if (isWPFControl)
                     {
                         name = name.Substring(24);  // 24 == length of "s.w.c."

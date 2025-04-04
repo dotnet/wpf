@@ -19,15 +19,13 @@
 //
 //------------------------------------------------------------------------------
 
+using System.CodeDom.Compiler;
+using System.Collections;
+using System.Diagnostics;
+using System.Text;
+
 namespace MS.Internal.Csp
 {
-    using System;
-    using System.Collections;
-    using System.Diagnostics;
-    using System.IO;
-    using System.Text;
-    using System.CodeDom.Compiler;
-
     internal sealed class MainClass
     {
         // Parameters affecting csp.exe as a whole.

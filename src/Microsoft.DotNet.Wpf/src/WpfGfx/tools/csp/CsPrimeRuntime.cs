@@ -14,11 +14,10 @@
 //        provided to the project that Csp.exe will execute.
 //
 
+using System.Text;
+
 namespace MS.Internal.Csp
 {
-    using System;
-    using System.Text;
-
     public sealed class CsPrimeRuntime
     {
         //------------------------------------------------------

@@ -13,9 +13,6 @@
 
 namespace MS.Internal.Csp
 {
-    using System;
-    using System.IO;
-
     internal class TempDirectory : IDisposable
     {
         //------------------------------------------------------

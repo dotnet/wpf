@@ -28,7 +28,7 @@ public class BitmapSizeOptions
     /// specified width and the specified height are used, and
     /// the bitmap will be stretched to fit both those values.
     /// </summary>
-    public bool PreservesAspectRatio { get; internal init; }
+    public bool PreservesAspectRatio { get; private init; }
 
     /// <summary>
     /// PixelWidth of the resulting bitmap.  See description of
@@ -36,7 +36,7 @@ public class BitmapSizeOptions
     ///
     /// PixelWidth must be set to a value greater than zero to be valid.
     /// </summary>
-    public int PixelWidth { get; internal init; }
+    public int PixelWidth { get; private init; }
 
     /// <summary>
     /// PixelHeight of the resulting bitmap.  See description of
@@ -44,13 +44,13 @@ public class BitmapSizeOptions
     ///
     /// PixelHeight must be set to a value greater than zero to be valid.
     /// </summary>
-    public int PixelHeight { get; internal init; }
+    public int PixelHeight { get; private init; }
 
     /// <summary>
     /// Gets a value that represents the rotation angle that is applied to a bitmap.
     /// </summary>
     /// <remarks>Only increments of 90 degrees are supported.</remarks>
-    public Rotation Rotation { get; internal init; }
+    public Rotation Rotation { get; private init; }
 
     /// <summary>
     /// Constructs an identity <see cref="BitmapSizeOptions"/>.

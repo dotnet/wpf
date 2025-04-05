@@ -19,10 +19,14 @@ public sealed class BitmapSizeOptionsTests
         Assert.True(options.PreservesAspectRatio);
     }
 
-    [Fact]
-    public void Init_FromWidth_Zero_ThrowsArgumentOutOfRangeException()
+    [Theory]
+    [InlineData(0)]
+    [InlineData(-1)]
+    [InlineData(-666)]
+    [InlineData(int.MinValue)]
+    public void Init_FromWidth_NegativeOrZero_ThrowsArgumentOutOfRangeException(int width)
     {
-        Assert.Throws<ArgumentOutOfRangeException>(() => BitmapSizeOptions.FromWidth(0));
+        Assert.Throws<ArgumentOutOfRangeException>(() => BitmapSizeOptions.FromWidth(width));
     }
 
     [Theory]
@@ -59,10 +63,14 @@ public sealed class BitmapSizeOptionsTests
         Assert.True(options.PreservesAspectRatio);
     }
 
-    [Fact]
-    public void Init_FromHeight_Zero_ThrowsArgumentOutOfRangeException()
+    [Theory]
+    [InlineData(0)]
+    [InlineData(-1)]
+    [InlineData(-666)]
+    [InlineData(int.MinValue)]
+    public void Init_FromHeight_NegativeOrZero_ThrowsArgumentOutOfRangeException(int height)
     {
-        Assert.Throws<ArgumentOutOfRangeException>(() => BitmapSizeOptions.FromHeight(0));
+        Assert.Throws<ArgumentOutOfRangeException>(() => BitmapSizeOptions.FromHeight(height));
     }
 
     [Theory]
@@ -100,10 +108,21 @@ public sealed class BitmapSizeOptionsTests
     }
 
     [Theory]
+    // Both are zero
     [InlineData(0, 0)]
+    // One parameter is zero, other is valid
     [InlineData(666, 0)]
     [InlineData(0, 666)]
-    public void Init_FromWidthAndHeight_ThrowsArgumentOutOfRangeException(int width, int height)
+    // Both are negative
+    [InlineData(-1, -1)]
+    [InlineData(-666, -666)]
+    [InlineData(int.MinValue, int.MinValue)]
+    // One parameter is negative, other is valid
+    [InlineData(-1, 666)]
+    [InlineData(666, -666)]
+    [InlineData(int.MinValue, 666)]
+    [InlineData(666, int.MinValue)]
+    public void Init_FromWidthAndHeight_NegativeOrZero_ThrowsArgumentOutOfRangeException(int width, int height)
     {
         Assert.Throws<ArgumentOutOfRangeException>(() => BitmapSizeOptions.FromWidthAndHeight(width, height));
     }

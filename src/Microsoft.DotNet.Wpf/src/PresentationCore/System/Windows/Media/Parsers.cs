@@ -14,7 +14,7 @@ internal static partial class Parsers
     /// <summary>
     /// The prefix for any <see cref="ColorKind.ContextColor"/> format.
     /// </summary>
-    private const string ContextColor = "ContextColor ";
+    internal const string ContextColor = "ContextColor ";
 
     /// <summary>
     /// Map from an ASCII char to its hex value, e.g. arr['b'] == 11. 0xFF means it's not a hex digit.

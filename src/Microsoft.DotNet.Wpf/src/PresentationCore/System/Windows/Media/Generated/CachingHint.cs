@@ -26,5 +26,5 @@ namespace System.Windows.Media
         ///     Cache - Cache rendered content when possible.
         /// </summary>
         Cache = 1,
-    }   
+    }
 }

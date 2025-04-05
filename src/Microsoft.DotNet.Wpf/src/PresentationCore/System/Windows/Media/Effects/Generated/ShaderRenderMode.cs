@@ -30,5 +30,5 @@ namespace System.Windows.Media.Effects
         ///     HardwareOnly - Require hardware rendering, ignore otherwise
         /// </summary>
         HardwareOnly = 2,
-    }   
+    }
 }

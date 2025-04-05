@@ -152,6 +152,6 @@ namespace System.Windows.Media.Animation
             double keyFrameProgress);
 
         #endregion
-    }                 
+    }
 
 }

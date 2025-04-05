@@ -84,7 +84,7 @@ namespace System.Windows.Media.Media3D
             if (IsSealed)
             {
                 throw new InvalidOperationException(SR.Format(SR.IAnimatable_CantAnimateSealedDO, dp, this.GetType()));
-            }                    
+            }
 
             AnimationStorage.ApplyAnimationClock(this, dp, clock, handoffBehavior);
         }
@@ -135,7 +135,7 @@ namespace System.Windows.Media.Media3D
                 throw new ArgumentException(SR.Format(SR.Animation_DependencyPropertyIsNotAnimatable, dp.Name, this.GetType()), nameof(dp));
             }
 
-            if (   animation != null
+            if (animation != null
                 && !AnimationStorage.IsAnimationValid(dp, animation))
             {
                 throw new ArgumentException(SR.Format(SR.Animation_AnimationTimelineTypeMismatch, animation.GetType(), dp.Name, dp.PropertyType), nameof(animation));
@@ -149,7 +149,7 @@ namespace System.Windows.Media.Media3D
             if (IsSealed)
             {
                 throw new InvalidOperationException(SR.Format(SR.IAnimatable_CantAnimateSealedDO, dp, this.GetType()));
-            }                    
+            }
 
             AnimationStorage.BeginAnimation(this, dp, animation, handoffBehavior);
         }

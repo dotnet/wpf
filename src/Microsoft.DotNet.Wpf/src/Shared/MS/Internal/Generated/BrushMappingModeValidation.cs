@@ -28,6 +28,6 @@ namespace System.Windows.Media
 
             return (value == BrushMappingMode.Absolute) || 
                    (value == BrushMappingMode.RelativeToBoundingBox);
-        }                                
+        }
     }
 }

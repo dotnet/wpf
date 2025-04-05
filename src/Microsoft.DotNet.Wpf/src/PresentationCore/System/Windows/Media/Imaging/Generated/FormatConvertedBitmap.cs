@@ -119,7 +119,7 @@ namespace System.Windows.Media.Imaging
         {
             get
             {
-                return (BitmapSource) GetValue(SourceProperty);
+                return (BitmapSource)GetValue(SourceProperty);
             }
             set
             {
@@ -134,7 +134,7 @@ namespace System.Windows.Media.Imaging
         {
             get
             {
-                return (PixelFormat) GetValue(DestinationFormatProperty);
+                return (PixelFormat)GetValue(DestinationFormatProperty);
             }
             set
             {
@@ -149,7 +149,7 @@ namespace System.Windows.Media.Imaging
         {
             get
             {
-                return (BitmapPalette) GetValue(DestinationPaletteProperty);
+                return (BitmapPalette)GetValue(DestinationPaletteProperty);
             }
             set
             {
@@ -164,7 +164,7 @@ namespace System.Windows.Media.Imaging
         {
             get
             {
-                return (double) GetValue(AlphaThresholdProperty);
+                return (double)GetValue(AlphaThresholdProperty);
             }
             set
             {
@@ -195,7 +195,7 @@ namespace System.Windows.Media.Imaging
         /// </summary>
         protected override void CloneCore(Freezable source)
         {
-            FormatConvertedBitmap sourceFormatConvertedBitmap = (FormatConvertedBitmap) source;
+            FormatConvertedBitmap sourceFormatConvertedBitmap = (FormatConvertedBitmap)source;
 
             // Set any state required before actual clone happens
             ClonePrequel(sourceFormatConvertedBitmap);
@@ -212,7 +212,7 @@ namespace System.Windows.Media.Imaging
         /// </summary>
         protected override void CloneCurrentValueCore(Freezable source)
         {
-            FormatConvertedBitmap sourceFormatConvertedBitmap = (FormatConvertedBitmap) source;
+            FormatConvertedBitmap sourceFormatConvertedBitmap = (FormatConvertedBitmap)source;
 
             // Set any state required before actual clone happens
             ClonePrequel(sourceFormatConvertedBitmap);
@@ -229,7 +229,7 @@ namespace System.Windows.Media.Imaging
         /// </summary>
         protected override void GetAsFrozenCore(Freezable source)
         {
-            FormatConvertedBitmap sourceFormatConvertedBitmap = (FormatConvertedBitmap) source;
+            FormatConvertedBitmap sourceFormatConvertedBitmap = (FormatConvertedBitmap)source;
 
             // Set any state required before actual clone happens
             ClonePrequel(sourceFormatConvertedBitmap);
@@ -246,7 +246,7 @@ namespace System.Windows.Media.Imaging
         /// </summary>
         protected override void GetCurrentValueAsFrozenCore(Freezable source)
         {
-            FormatConvertedBitmap sourceFormatConvertedBitmap = (FormatConvertedBitmap) source;
+            FormatConvertedBitmap sourceFormatConvertedBitmap = (FormatConvertedBitmap)source;
 
             // Set any state required before actual clone happens
             ClonePrequel(sourceFormatConvertedBitmap);

@@ -177,7 +177,7 @@ namespace System.Windows.Media
         {
             get
             {
-                return (GeometryCombineMode) GetValue(GeometryCombineModeProperty);
+                return (GeometryCombineMode)GetValue(GeometryCombineModeProperty);
             }
             set
             {
@@ -192,7 +192,7 @@ namespace System.Windows.Media
         {
             get
             {
-                return (Geometry) GetValue(Geometry1Property);
+                return (Geometry)GetValue(Geometry1Property);
             }
             set
             {
@@ -207,7 +207,7 @@ namespace System.Windows.Media
         {
             get
             {
-                return (Geometry) GetValue(Geometry2Property);
+                return (Geometry)GetValue(Geometry2Property);
             }
             set
             {

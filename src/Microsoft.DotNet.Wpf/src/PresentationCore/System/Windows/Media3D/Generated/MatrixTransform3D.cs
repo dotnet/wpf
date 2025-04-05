@@ -79,7 +79,7 @@ namespace System.Windows.Media.Media3D
         {
             get
             {
-                return (Matrix3D) GetValue(MatrixProperty);
+                return (Matrix3D)GetValue(MatrixProperty);
             }
             set
             {

@@ -79,7 +79,7 @@ namespace System.Windows.Media.Media3D
         {
             get
             {
-                return (Color) GetValue(ColorProperty);
+                return (Color)GetValue(ColorProperty);
             }
             set
             {

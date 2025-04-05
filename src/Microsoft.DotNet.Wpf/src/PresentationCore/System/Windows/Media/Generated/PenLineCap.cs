@@ -35,5 +35,5 @@ namespace System.Windows.Media
         ///     Triangle - Triangle line cap.
         /// </summary>
         Triangle = 3,
-    }   
+    }
 }

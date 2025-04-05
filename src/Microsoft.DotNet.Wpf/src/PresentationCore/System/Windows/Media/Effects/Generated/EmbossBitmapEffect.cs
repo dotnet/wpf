@@ -81,7 +81,7 @@ namespace System.Windows.Media.Effects
         {
             get
             {
-                return (double) GetValue(LightAngleProperty);
+                return (double)GetValue(LightAngleProperty);
             }
             set
             {
@@ -96,7 +96,7 @@ namespace System.Windows.Media.Effects
         {
             get
             {
-                return (double) GetValue(ReliefProperty);
+                return (double)GetValue(ReliefProperty);
             }
             set
             {

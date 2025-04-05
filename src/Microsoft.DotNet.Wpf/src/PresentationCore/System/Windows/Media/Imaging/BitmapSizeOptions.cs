@@ -5,30 +5,24 @@ using MS.Internal;
 
 namespace System.Windows.Media.Imaging
 {
-    #region BitmapSizeOptions
-
     /// <summary>
-    /// Sizing options for an bitmap.  The resulting bitmap
-    /// will be scaled based on these options.
+    /// Sizing options for an bitmap. The resulting bitmap will be scaled based on these options.
     /// </summary>
     public class BitmapSizeOptions
     {
         /// <summary>
-        /// Construct an BitmapSizeOptions object.  Still need to set the Width and Height Properties.
+        /// Avoid construction of a plain object, use the factory methods instead.
         /// </summary>
-        private BitmapSizeOptions()
-        {
-        }
+        private BitmapSizeOptions() { }
 
         /// <summary>
-        /// Whether or not to preserve the aspect ratio of the original
-        /// bitmap.  If so, then the PixelWidth and PixelHeight are
-        /// maximum values for the bitmap size.  The resulting bitmap
-        /// is only guaranteed to have either its width or its height
-        /// match the specified values.  For example, if you want to
-        /// specify the height, while preserving the aspect ratio for
-        /// the width, then set the height to the desired value, and
-        /// set the width to Int32.MaxValue.
+        /// Whether or not to preserve the aspect ratio of the original bitmap.
+        /// If so, then the <see cref="PixelWidth"/> and <see cref="PixelHeight"/>
+        /// are both zero or at least one of them must be zero. The resulting bitmap
+        /// is only guaranteed to have either its width or its height match the
+        /// specified values. For example, if you want to specify the height,
+        /// while preserving the aspect ratio for the width, then set the height
+        /// to the desired value, and set the width to zero.
         ///
         /// If we are not to preserve aspect ratio, then both the
         /// specified width and the specified height are used, and
@@ -71,8 +65,9 @@ namespace System.Windows.Media.Imaging
         }
 
         /// <summary>
-        /// Rotation to rotate the bitmap.  Only multiples of 90 are supported.
+        /// Gets a value that represents the rotation angle that is applied to a bitmap.
         /// </summary>
+        /// <remarks>Only increments of 90 degrees are supported.</remarks>
         public Rotation Rotation
         {
             get
@@ -82,9 +77,10 @@ namespace System.Windows.Media.Imaging
         }
 
         /// <summary>
-        /// Constructs an identity BitmapSizeOptions (when passed to a TransformedBitmap, the
-        /// input is the same as the output).
+        /// Constructs an identity <see cref="BitmapSizeOptions"/>.
+        /// When passed to a TransformedBitmap, the input is the same as the output.
         /// </summary>
+        /// <returns>An instance of <see cref="BitmapSizeOptions"/>.</returns>
         public static BitmapSizeOptions FromEmptyOptions()
         {
             BitmapSizeOptions sizeOptions = new BitmapSizeOptions
@@ -99,9 +95,11 @@ namespace System.Windows.Media.Imaging
         }
 
         /// <summary>
-        /// Constructs an BitmapSizeOptions that preserves the aspect ratio and enforces a height of pixelHeight.
+        /// Constructs an instance of <see cref="BitmapSizeOptions"/> that preserves the aspect ratio
+        /// of the source bitmap and enforces a height provided via <paramref name="pixelHeight"/>.
         /// </summary>
-        /// <param name="pixelHeight">Height of the resulting Bitmap</param>
+        /// <param name="pixelHeight">The height, in pixels, of the resulting bitmap.</param>
+        /// <returns>An instance of <see cref="BitmapSizeOptions"/>.</returns>
         public static BitmapSizeOptions FromHeight(int pixelHeight)
         {
             ArgumentOutOfRangeException.ThrowIfNegativeOrZero(pixelHeight);
@@ -118,9 +116,10 @@ namespace System.Windows.Media.Imaging
         }
 
         /// <summary>
-        /// Constructs an BitmapSizeOptions that preserves the aspect ratio and enforces a width of pixelWidth.
+        /// Constructs an instance of <see cref="BitmapSizeOptions"/> that preserves the aspect ratio
+        /// of the source bitmap and enforces a width provided via <paramref name="pixelWidth"/>.
         /// </summary>
-        /// <param name="pixelWidth">Width of the resulting Bitmap</param>
+        /// <param name="pixelWidth">The width, in pixels, of the resulting bitmap.</param>
         public static BitmapSizeOptions FromWidth(int pixelWidth)
         {
             ArgumentOutOfRangeException.ThrowIfNegativeOrZero(pixelWidth);
@@ -137,11 +136,12 @@ namespace System.Windows.Media.Imaging
         }
 
         /// <summary>
-        /// Constructs an BitmapSizeOptions that does not preserve the aspect ratio and
-        /// instead uses dimensions pixelWidth x pixelHeight.
+        /// Constructs an instance of <see cref="BitmapSizeOptions"/> that does not preserve the aspect ratio and
+        /// instead uses the specified dimensions <paramref name="pixelWidth"/> x <paramref name="pixelHeight"/>.
         /// </summary>
         /// <param name="pixelWidth">Width of the resulting Bitmap</param>
         /// <param name="pixelHeight">Height of the resulting Bitmap</param>
+        /// <returns>An instance of <see cref="BitmapSizeOptions"/>.</returns>
         public static BitmapSizeOptions FromWidthAndHeight(int pixelWidth, int pixelHeight)
         {
             ArgumentOutOfRangeException.ThrowIfNegativeOrZero(pixelWidth);
@@ -159,10 +159,11 @@ namespace System.Windows.Media.Imaging
         }
 
         /// <summary>
-        /// Constructs an BitmapSizeOptions that does not preserve the aspect ratio and
-        /// instead uses dimensions pixelWidth x pixelHeight.
+        /// Initializes an instance of <see cref="BitmapSizeOptions"/> that preserves the aspect ratio of the
+        /// source bitmap and specifies an initial <see cref="Imaging.Rotation"/> to apply.
         /// </summary>
-        /// <param name="rotation">Angle to rotate</param>
+        /// <param name="rotation">The initial rotation value to apply. Only 90 degree increments are supported.</param>
+        /// <returns>An instance of <see cref="BitmapSizeOptions"/>.</returns>
         public static BitmapSizeOptions FromRotation(Rotation rotation)
         {
             switch(rotation)
@@ -187,31 +188,28 @@ namespace System.Windows.Media.Imaging
             return sizeOptions;
         }
 
-        // Note: In this method, newWidth, newHeight are not affected by the
-        // rotation angle.
-        internal void GetScaledWidthAndHeight(
-            uint width,
-            uint height,
-            out uint newWidth,
-            out uint newHeight)
+        /// <summary>
+        /// Note: In this method, newWidth, newHeight are not affected by the rotation angle.
+        /// </summary>
+        internal void GetScaledWidthAndHeight(uint width, uint height, out uint newWidth, out uint newHeight)
         {
             if (_pixelWidth == 0 && _pixelHeight != 0)
             {
-                Debug.Assert(_preservesAspectRatio == true);
+                Debug.Assert(_preservesAspectRatio);
 
-                newWidth = (uint)((_pixelHeight * width)/height);
+                newWidth = (uint)((_pixelHeight * width) / height);
                 newHeight = (uint)_pixelHeight;
             }
             else if (_pixelWidth != 0 && _pixelHeight == 0)
             {
-                Debug.Assert(_preservesAspectRatio == true);
+                Debug.Assert(_preservesAspectRatio);
 
                 newWidth = (uint)_pixelWidth;
-                newHeight = (uint)((_pixelWidth * height)/width);
+                newHeight = (uint)((_pixelWidth * height) / width);
             }
             else if (_pixelWidth != 0 && _pixelHeight != 0)
             {
-                Debug.Assert(_preservesAspectRatio == false);
+                Debug.Assert(!_preservesAspectRatio);
 
                 newWidth = (uint)_pixelWidth;
                 newHeight = (uint)_pixelHeight;
@@ -223,14 +221,17 @@ namespace System.Windows.Media.Imaging
             }
         }
 
+        /// <summary>
+        /// Determines whether <see cref="PixelWidth"/> or <see cref="PixelHeight"/> are set to non-zero value.
+        /// </summary>
         internal bool DoesScale
         {
-            get
-            {
-                return (_pixelWidth != 0 || _pixelHeight != 0);
-            }
+            get => _pixelWidth != 0 || _pixelHeight != 0;
         }
 
+        /// <summary>
+        /// Converts the <see cref="Rotation"/> value to corresponding <see cref="WICBitmapTransformOptions"/>.
+        /// </summary>
         internal WICBitmapTransformOptions WICTransformOptions
         {
             get
@@ -265,7 +266,5 @@ namespace System.Windows.Media.Imaging
         private int         _pixelHeight;
         private Rotation    _rotationAngle;
     }
-
-    #endregion // BitmapSizeOptions
 }
 

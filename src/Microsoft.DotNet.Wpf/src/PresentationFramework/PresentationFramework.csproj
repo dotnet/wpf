@@ -624,6 +624,7 @@
     <Compile Include="System\Windows\Controls\FlowDocumentScrollViewer.cs" />
     <Compile Include="System\Windows\Controls\Frame.cs" />
     <Compile Include="System\Windows\Controls\Grid.cs" />
+    <Compile Include="System\Windows\Controls\GridSpanKey.cs" />
     <Compile Include="System\Windows\Controls\GridSplitter.cs" />
     <Compile Include="System\Windows\Controls\GridView.cs" />
     <Compile Include="System\Windows\Controls\GridViewColumn.cs" />

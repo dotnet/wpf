@@ -19,14 +19,7 @@ namespace System.Windows.Media
         /// </summary>
         public override bool CanConvertFrom(ITypeDescriptorContext td, Type t)
         {
-            if (t == typeof(string))
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
+            return t == typeof(string);
         }
 
         /// <summary>
@@ -35,14 +28,9 @@ namespace System.Windows.Media
         /// <param name="context">ITypeDescriptorContext</param>
         /// <param name="destinationType">Type to convert to</param>
         /// <returns>true if conversion is possible</returns>
-        public override bool CanConvertTo(ITypeDescriptorContext context, Type destinationType) 
+        public override bool CanConvertTo(ITypeDescriptorContext context, Type destinationType)
         {
-            if (destinationType == typeof(InstanceDescriptor)) 
-            {
-                return true;
-            }
-
-            return base.CanConvertTo(context, destinationType);
+            return destinationType == typeof(InstanceDescriptor) || base.CanConvertTo(context, destinationType);
         }
         
         ///<summary>
@@ -50,12 +38,7 @@ namespace System.Windows.Media
         ///</summary>
         public static new object ConvertFromString(string value)
         {
-            if ( null == value)
-            {
-                return null;
-            }
-            
-            return Parsers.ParseColor(value, null);
+            return value is not null ? Parsers.ParseColor(value, null) : null;
         }
 
         /// <summary>
@@ -65,21 +48,15 @@ namespace System.Windows.Media
         /// A NotSupportedException is thrown if the example object is null or is not a valid type
         /// which can be converted to a Color.
         /// </exception>
-        public override object ConvertFrom(ITypeDescriptorContext td, System.Globalization.CultureInfo ci, object value)
+        public override object ConvertFrom(ITypeDescriptorContext td, CultureInfo ci, object value)
         {
-            if (null == value)
-            {
+            if (value is null)
                 throw GetConvertFromException(value);
-            }
 
-            String s = value as string;
+            if (value is not string valueString)
+                throw new ArgumentException(SR.Format(SR.General_BadType, nameof(ConvertFrom), nameof(value)));
 
-            if (null == s)
-            {
-                throw new ArgumentException(SR.Format(SR.General_BadType, "ConvertFrom"), nameof(value));
-            }
-            
-            return Parsers.ParseColor(value as string, ci, td);        
+            return Parsers.ParseColor(valueString, ci, td);
         }
 
         /// <summary>
@@ -96,18 +73,17 @@ namespace System.Windows.Media
         /// <returns>converted value</returns>
         public override object ConvertTo(ITypeDescriptorContext context, CultureInfo culture, object value, Type destinationType)
         {
-            if (destinationType != null && value is Color)
+            if (destinationType != null && value is Color color)
             {
                 if (destinationType == typeof(InstanceDescriptor))
                 {
-                    MethodInfo mi = typeof(Color).GetMethod("FromArgb", new Type[]{typeof(byte), typeof(byte), typeof(byte), typeof(byte)});
-                    Color c = (Color)value;
-                    return new InstanceDescriptor(mi, new object[]{c.A, c.R, c.G, c.B});
+                    MethodInfo mi = typeof(Color).GetMethod("FromArgb", new Type[] { typeof(byte), typeof(byte), typeof(byte), typeof(byte) });
+
+                    return new InstanceDescriptor(mi, new object[] { color.A, color.R, color.G, color.B });
                 }
                 else if (destinationType == typeof(string))
                 {
-                    Color c = (Color)value;
-                    return c.ToString(culture);
+                    return color.ToString(culture);
                 }
             }
 

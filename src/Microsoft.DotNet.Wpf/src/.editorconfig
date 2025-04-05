@@ -53,9 +53,6 @@ dotnet_diagnostic.CA1510.severity = suggestion
 # CA2211: Non-constant fields should not be visible
 dotnet_diagnostic.CA2211.severity = suggestion
 
-# CA1512: Use ArgumentOutOfRangeException throw helper
-dotnet_diagnostic.CA1512.severity = suggestion
-
 # CA1513: Use ObjectDisposedException throw helper
 dotnet_diagnostic.CA1513.severity = suggestion
 

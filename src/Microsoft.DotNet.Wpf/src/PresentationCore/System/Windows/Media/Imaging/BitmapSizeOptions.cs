@@ -142,16 +142,8 @@ namespace System.Windows.Media.Imaging
         /// <returns>An instance of <see cref="BitmapSizeOptions"/>.</returns>
         public static BitmapSizeOptions FromRotation(Rotation rotation)
         {
-            switch(rotation)
-            {
-                case Rotation.Rotate0:
-                case Rotation.Rotate90:
-                case Rotation.Rotate180:
-                case Rotation.Rotate270:
-                    break;
-                default:
-                    throw new ArgumentException(SR.Image_SizeOptionsAngle, nameof(rotation));
-            }
+            if (rotation is not (Rotation.Rotate0 or Rotation.Rotate90 or Rotation.Rotate180 or Rotation.Rotate270))
+                throw new ArgumentException(SR.Image_SizeOptionsAngle, nameof(rotation));
 
             BitmapSizeOptions sizeOptions = new BitmapSizeOptions
             {
@@ -212,28 +204,22 @@ namespace System.Windows.Media.Imaging
         {
             get
             {
-                WICBitmapTransformOptions options = 0;
-
                 switch (Rotation)
                 {
                     case Rotation.Rotate0:
-                        options = WICBitmapTransformOptions.WICBitmapTransformRotate0;
-                        break;
+                        return WICBitmapTransformOptions.WICBitmapTransformRotate0;
                     case Rotation.Rotate90:
-                        options = WICBitmapTransformOptions.WICBitmapTransformRotate90;
-                        break;
+                        return WICBitmapTransformOptions.WICBitmapTransformRotate90;
                     case Rotation.Rotate180:
-                        options = WICBitmapTransformOptions.WICBitmapTransformRotate180;
-                        break;
+                        return WICBitmapTransformOptions.WICBitmapTransformRotate180;
                     case Rotation.Rotate270:
-                        options = WICBitmapTransformOptions.WICBitmapTransformRotate270;
-                        break;
+                        return WICBitmapTransformOptions.WICBitmapTransformRotate270;
                     default:
                         Debug.Assert(false);
-                        break;
-                }
 
-                return options;
+                        // Fallback to default
+                        return WICBitmapTransformOptions.WICBitmapTransformRotate0;
+                }
             }
         }
     }

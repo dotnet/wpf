@@ -8,7 +8,6 @@
 // Please see MilCodeGen.html for more information.
 //
 
-using MS.Internal.KnownBoxes;
 using System.Collections;
 using System.ComponentModel;
 using System.Windows.Markup;

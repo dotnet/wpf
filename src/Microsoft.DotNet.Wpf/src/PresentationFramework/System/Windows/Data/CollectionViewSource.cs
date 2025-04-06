@@ -15,7 +15,7 @@ using System.Globalization;         // CultureInfo
 using System.ComponentModel;        // ICollectionView
 using System.Windows.Markup;        // XmlLanguage
 using MS.Internal;                  // Invariant.Assert
-using MS.Internal.Data;             // DataBindEngine            
+using MS.Internal.Data;             // DataBindEngine
 
 namespace System.Windows.Data
 {

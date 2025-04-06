@@ -1,16 +1,16 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
-using System.Collections; // IEnumerator
+using MS.Internal;
+using MS.Internal.Documents;
+using System.Windows.Input; // KeyboardNavigation
 using System.ComponentModel; // DefaultValue
 using System.Windows.Automation.Peers; // AutomationPattern
 using System.Windows.Controls.Primitives; // TextBoxBase
 using System.Windows.Documents; // TextEditor
-using System.Windows.Input; // KeyboardNavigation
 using System.Windows.Markup; // IAddChild
-using MS.Internal;
+using System.Collections; // IEnumerator
 using MS.Internal.Controls; // EmptyEnumerator
-using MS.Internal.Documents;
 using MS.Internal.Telemetry.PresentationFramework;
 
 //

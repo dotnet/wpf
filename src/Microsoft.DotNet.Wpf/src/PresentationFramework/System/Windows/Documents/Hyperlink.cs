@@ -13,8 +13,9 @@ using System.Windows.Input;
 using System.Windows.Markup;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using System.Windows.Threading;
 using MS.Internal.AppModel;
+using System.Windows.Threading;
+
 using CommonDependencyProperty = MS.Internal.PresentationFramework.CommonDependencyPropertyAttribute;
 
 namespace System.Windows.Documents

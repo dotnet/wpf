@@ -117,7 +117,6 @@ namespace MS.Internal.MilCodeGen.ResourceModel
                         [[inline]]
                             [[Helpers.ManagedStyle.WriteFileHeader(fileName)]]
 
-                            using MS.Internal.KnownBoxes;
                             using System.Globalization;
                             using System.Windows.Media.Media3D;
 

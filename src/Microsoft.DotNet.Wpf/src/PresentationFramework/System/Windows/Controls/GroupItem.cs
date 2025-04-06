@@ -7,10 +7,10 @@
 // Specs:       Data Styling.mht
 //
 
-using System.Windows.Automation;
-using System.Windows.Controls.Primitives;
 using System.Windows.Media;
+using System.Windows.Controls.Primitives;
 using MS.Internal;
+using System.Windows.Automation;
 
 namespace System.Windows.Controls
 {

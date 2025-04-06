@@ -10,7 +10,6 @@ using System.Windows.Automation.Peers;
 using System.Windows.Media;
 using System.Windows.Markup;
 using MS.Internal.Telemetry.PresentationFramework;
-using MS.Internal.KnownBoxes;
 
 namespace System.Windows.Controls
 {

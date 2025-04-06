@@ -17,7 +17,6 @@ using System.Windows.Media;
 using System.Windows.Threading;
 using MS.Internal;
 using MS.Internal.Data;
-using MS.Internal.KnownBoxes;
 using MS.Internal.Telemetry.PresentationFramework;
 
 namespace System.Windows.Controls

@@ -1,15 +1,14 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
-
-using System.Globalization;
+using System.Windows.Threading;
 using System.Windows.Data;
 using System.Windows.Input;
+using MS.Win32;
+using System.Globalization;
 using System.Windows.Markup;    // for XmlLanguage
-using System.Windows.Threading;
 using MS.Internal;
 using MS.Internal.Data;
-using MS.Win32;
 
 namespace System.Windows.Controls
 {

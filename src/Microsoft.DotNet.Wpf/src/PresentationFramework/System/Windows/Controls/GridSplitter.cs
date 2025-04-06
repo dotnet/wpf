@@ -85,9 +85,9 @@ namespace System.Windows.Controls
             DefaultStyleKeyProperty.OverrideMetadata(typeof(GridSplitter), new FrameworkPropertyMetadata(typeof(GridSplitter)));
             _dType = DependencyObjectType.FromSystemTypeInternal(typeof(GridSplitter));
 
-            FocusableProperty.OverrideMetadata(typeof(GridSplitter), new FrameworkPropertyMetadata(MS.Internal.KnownBoxes.BooleanBoxes.TrueBox));
+            FocusableProperty.OverrideMetadata(typeof(GridSplitter), new FrameworkPropertyMetadata(BooleanBoxes.TrueBox));
             FrameworkElement.HorizontalAlignmentProperty.OverrideMetadata(typeof(GridSplitter), new FrameworkPropertyMetadata(HorizontalAlignment.Right));
-            
+
             // Cursor depends on ResizeDirection, ActualWidth, and ActualHeight 
             CursorProperty.OverrideMetadata(typeof(GridSplitter), new FrameworkPropertyMetadata(null, new CoerceValueCallback(CoerceCursor)));
 

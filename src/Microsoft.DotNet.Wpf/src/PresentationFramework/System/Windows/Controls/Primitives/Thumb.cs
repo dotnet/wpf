@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
 using System.ComponentModel;
@@ -38,7 +38,7 @@ namespace System.Windows.Controls.Primitives
             // Register metadata for dependency properties
             DefaultStyleKeyProperty.OverrideMetadata(typeof(Thumb), new FrameworkPropertyMetadata(typeof(Thumb)));
             _dType = DependencyObjectType.FromSystemTypeInternal(typeof(Thumb));
-            FocusableProperty.OverrideMetadata(typeof(Thumb), new FrameworkPropertyMetadata(MS.Internal.KnownBoxes.BooleanBoxes.FalseBox));
+            FocusableProperty.OverrideMetadata(typeof(Thumb), new FrameworkPropertyMetadata(BooleanBoxes.FalseBox));
 
             EventManager.RegisterClassHandler(typeof(Thumb), Mouse.LostMouseCaptureEvent, new MouseEventHandler(OnLostMouseCapture));
 
@@ -90,7 +90,7 @@ namespace System.Windows.Controls.Primitives
                         typeof(bool), 
                         typeof(Thumb),
                         new FrameworkPropertyMetadata(
-                                MS.Internal.KnownBoxes.BooleanBoxes.FalseBox,
+                                BooleanBoxes.FalseBox,
                                 new PropertyChangedCallback(OnIsDraggingPropertyChanged)));
 
         /// <summary>
@@ -107,7 +107,7 @@ namespace System.Windows.Controls.Primitives
         public bool IsDragging
         {
             get { return (bool) GetValue(IsDraggingProperty); }
-            protected set { SetValue(IsDraggingPropertyKey, MS.Internal.KnownBoxes.BooleanBoxes.Box(value)); }
+            protected set { SetValue(IsDraggingPropertyKey, BooleanBoxes.Box(value)); }
         }
 
         #endregion Properties and Events

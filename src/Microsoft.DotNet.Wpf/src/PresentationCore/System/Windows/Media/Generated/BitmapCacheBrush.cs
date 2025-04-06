@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
 //
@@ -549,7 +549,7 @@ namespace System.Windows.Media
                   RegisterProperty("AutoLayoutContent",
                                    typeof(bool),
                                    typeofThis,
-                                   true,
+                                   BooleanBoxes.TrueBox,
                                    new PropertyChangedCallback(AutoLayoutContentPropertyChanged),
                                    null,
                                    /* isIndependentlyAnimated  = */ false,
@@ -567,7 +567,7 @@ namespace System.Windows.Media
                   RegisterProperty("AutoWrapTarget",
                                    typeof(bool),
                                    typeofThis,
-                                   false,
+                                   BooleanBoxes.FalseBox,
                                    new PropertyChangedCallback(AutoWrapTargetPropertyChanged),
                                    null,
                                    /* isIndependentlyAnimated  = */ false,

@@ -2,14 +2,14 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 
 
-using System.Windows.Threading;
+using System.Globalization;
 using System.Windows.Data;
 using System.Windows.Input;
-using MS.Win32;
-using System.Globalization;
 using System.Windows.Markup;    // for XmlLanguage
+using System.Windows.Threading;
 using MS.Internal;
 using MS.Internal.Data;
+using MS.Win32;
 
 namespace System.Windows.Controls
 {
@@ -142,7 +142,7 @@ namespace System.Windows.Controls
         /// </summary>
         private static readonly DependencyProperty IsActiveProperty =
             DependencyProperty.RegisterAttached("IsActive", typeof(bool), typeof(TextSearch),
-                                                new FrameworkPropertyMetadata(false));
+                                                new FrameworkPropertyMetadata(BooleanBoxes.FalseBox));
 
         #endregion
 

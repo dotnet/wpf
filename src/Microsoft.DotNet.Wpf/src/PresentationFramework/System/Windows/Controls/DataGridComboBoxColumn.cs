@@ -5,6 +5,7 @@
 using System.Collections;
 using System.Windows.Data;
 using System.Windows.Input;
+using MS.Internal.KnownBoxes;
 
 namespace System.Windows.Controls
 {
@@ -29,7 +30,7 @@ namespace System.Windows.Controls
             static TextBlockComboBox()
             {
                 DefaultStyleKeyProperty.OverrideMetadata(typeof(TextBlockComboBox), new FrameworkPropertyMetadata(DataGridComboBoxColumn.TextBlockComboBoxStyleKey));
-                KeyboardNavigation.IsTabStopProperty.OverrideMetadata(typeof(TextBlockComboBox), new FrameworkPropertyMetadata(false));
+                KeyboardNavigation.IsTabStopProperty.OverrideMetadata(typeof(TextBlockComboBox), new FrameworkPropertyMetadata(BooleanBoxes.FalseBox));
             }
         }
 

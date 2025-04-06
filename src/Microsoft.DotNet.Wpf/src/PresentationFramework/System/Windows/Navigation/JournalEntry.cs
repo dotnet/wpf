@@ -228,7 +228,7 @@ namespace System.Windows.Navigation
         /// DependencyProperty for KeepAlive property.
         /// </summary>
         public static readonly DependencyProperty KeepAliveProperty =
-            DependencyProperty.RegisterAttached("KeepAlive", typeof(bool), typeof(JournalEntry), new PropertyMetadata(false));
+            DependencyProperty.RegisterAttached("KeepAlive", typeof(bool), typeof(JournalEntry), new PropertyMetadata(BooleanBoxes.FalseBox));
 
         #endregion
 

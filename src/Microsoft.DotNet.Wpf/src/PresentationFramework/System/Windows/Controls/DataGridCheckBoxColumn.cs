@@ -1,8 +1,9 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
 
 using System.Windows.Input;
+using MS.Internal.KnownBoxes;
 
 namespace System.Windows.Controls
 {
@@ -143,7 +144,7 @@ namespace System.Windows.Controls
         public static readonly DependencyProperty IsThreeStateProperty =
                 CheckBox.IsThreeStateProperty.AddOwner(
                         typeof(DataGridCheckBoxColumn),
-                        new FrameworkPropertyMetadata(false, DataGridColumn.NotifyPropertyChangeForRefreshContent));
+                        new FrameworkPropertyMetadata(BooleanBoxes.FalseBox, DataGridColumn.NotifyPropertyChangeForRefreshContent));
 
         /// <summary>
         ///     The IsThreeState property determines whether the control supports two or three states.

@@ -17,6 +17,7 @@ using System.Windows.Media;
 using System.Windows.Threading;
 using MS.Internal;
 using MS.Internal.Data;
+using MS.Internal.KnownBoxes;
 using MS.Internal.Telemetry.PresentationFramework;
 
 namespace System.Windows.Controls
@@ -40,7 +41,7 @@ namespace System.Windows.Controls
             FrameworkElementFactory dataGridRowPresenterFactory = new FrameworkElementFactory(typeof(DataGridRowsPresenter));
             dataGridRowPresenterFactory.SetValue(FrameworkElement.NameProperty, ItemsPanelPartName);
             ItemsPanelProperty.OverrideMetadata(ownerType, new FrameworkPropertyMetadata(new ItemsPanelTemplate(dataGridRowPresenterFactory)));
-            VirtualizingPanel.IsVirtualizingProperty.OverrideMetadata(ownerType, new FrameworkPropertyMetadata(true, null, new CoerceValueCallback(OnCoerceIsVirtualizingProperty)));
+            VirtualizingPanel.IsVirtualizingProperty.OverrideMetadata(ownerType, new FrameworkPropertyMetadata(BooleanBoxes.TrueBox, null, new CoerceValueCallback(OnCoerceIsVirtualizingProperty)));
             VirtualizingPanel.VirtualizationModeProperty.OverrideMetadata(ownerType, new FrameworkPropertyMetadata(VirtualizationMode.Recycling));
             ItemContainerStyleProperty.OverrideMetadata(ownerType, new FrameworkPropertyMetadata(null, new CoerceValueCallback(OnCoerceItemContainerStyle)));
             ItemContainerStyleSelectorProperty.OverrideMetadata(ownerType, new FrameworkPropertyMetadata(null, new CoerceValueCallback(OnCoerceItemContainerStyleSelector)));
@@ -49,7 +50,7 @@ namespace System.Windows.Controls
             IsEnabledProperty.OverrideMetadata(ownerType, new FrameworkPropertyMetadata(new PropertyChangedCallback(OnIsEnabledChanged)));
             IsKeyboardFocusWithinPropertyKey.OverrideMetadata(ownerType, new FrameworkPropertyMetadata(new PropertyChangedCallback(OnIsKeyboardFocusWithinChanged)));
             IsSynchronizedWithCurrentItemProperty.OverrideMetadata(ownerType, new FrameworkPropertyMetadata(null, new CoerceValueCallback(OnCoerceIsSynchronizedWithCurrentItem)));
-            IsTabStopProperty.OverrideMetadata(ownerType, new FrameworkPropertyMetadata(false));
+            IsTabStopProperty.OverrideMetadata(ownerType, new FrameworkPropertyMetadata(BooleanBoxes.FalseBox));
             KeyboardNavigation.DirectionalNavigationProperty.OverrideMetadata(ownerType, new FrameworkPropertyMetadata(KeyboardNavigationMode.Contained));
             KeyboardNavigation.ControlTabNavigationProperty.OverrideMetadata(ownerType, new FrameworkPropertyMetadata(KeyboardNavigationMode.Once));
 
@@ -134,7 +135,8 @@ namespace System.Windows.Controls
         ///     The DependencyProperty that represents the CanUserResizeColumns property.
         /// </summary>
         public static readonly DependencyProperty CanUserResizeColumnsProperty =
-            DependencyProperty.Register("CanUserResizeColumns", typeof(bool), typeof(DataGrid), new FrameworkPropertyMetadata(true, new PropertyChangedCallback(OnNotifyColumnAndColumnHeaderPropertyChanged)));
+            DependencyProperty.Register("CanUserResizeColumns", typeof(bool), typeof(DataGrid),
+                new FrameworkPropertyMetadata(BooleanBoxes.TrueBox, new PropertyChangedCallback(OnNotifyColumnAndColumnHeaderPropertyChanged)));
 
         /// <summary>
         ///     Specifies the width of the header and cells within all the columns.
@@ -2753,7 +2755,8 @@ namespace System.Windows.Controls
         ///     The DependencyProperty for IsReadOnly.
         /// </summary>
         public static readonly DependencyProperty IsReadOnlyProperty =
-            DependencyProperty.Register("IsReadOnly", typeof(bool), typeof(DataGrid), new FrameworkPropertyMetadata(false, new PropertyChangedCallback(OnIsReadOnlyChanged)));
+            DependencyProperty.Register("IsReadOnly", typeof(bool), typeof(DataGrid),
+                new FrameworkPropertyMetadata(BooleanBoxes.FalseBox, new PropertyChangedCallback(OnIsReadOnlyChanged)));
 
         private static void OnIsReadOnlyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
@@ -3430,7 +3433,8 @@ namespace System.Windows.Controls
         ///     DependencyProperty for CanUserAddRows.
         /// </summary>
         public static readonly DependencyProperty CanUserAddRowsProperty =
-            DependencyProperty.Register("CanUserAddRows", typeof(bool), typeof(DataGrid), new FrameworkPropertyMetadata(true, new PropertyChangedCallback(OnCanUserAddRowsChanged), new CoerceValueCallback(OnCoerceCanUserAddRows)));
+            DependencyProperty.Register("CanUserAddRows", typeof(bool), typeof(DataGrid),
+                new FrameworkPropertyMetadata(BooleanBoxes.TrueBox, new PropertyChangedCallback(OnCanUserAddRowsChanged), new CoerceValueCallback(OnCoerceCanUserAddRows)));
 
         private static void OnCanUserAddRowsChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
@@ -3480,7 +3484,8 @@ namespace System.Windows.Controls
         ///     DependencyProperty for CanUserDeleteRows.
         /// </summary>
         public static readonly DependencyProperty CanUserDeleteRowsProperty =
-            DependencyProperty.Register("CanUserDeleteRows", typeof(bool), typeof(DataGrid), new FrameworkPropertyMetadata(true, new PropertyChangedCallback(OnCanUserDeleteRowsChanged), new CoerceValueCallback(OnCoerceCanUserDeleteRows)));
+            DependencyProperty.Register("CanUserDeleteRows", typeof(bool), typeof(DataGrid),
+                new FrameworkPropertyMetadata(BooleanBoxes.TrueBox, new PropertyChangedCallback(OnCanUserDeleteRowsChanged), new CoerceValueCallback(OnCoerceCanUserDeleteRows)));
 
         private static void OnCanUserDeleteRowsChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
@@ -3882,7 +3887,7 @@ namespace System.Windows.Controls
         ///     DependencyProperty for AreRowDetailsFrozen.
         /// </summary>
         public static readonly DependencyProperty AreRowDetailsFrozenProperty =
-            DependencyProperty.Register("AreRowDetailsFrozen", typeof(bool), typeof(DataGrid), new FrameworkPropertyMetadata(false));
+            DependencyProperty.Register("AreRowDetailsFrozen", typeof(bool), typeof(DataGrid), new FrameworkPropertyMetadata(BooleanBoxes.FalseBox));
 
         /// <summary>
         ///     Template used for the Row details.
@@ -4014,7 +4019,8 @@ namespace System.Windows.Controls
         ///     The DependencyProperty that represents the CanUserResizeColumns property.
         /// </summary>
         public static readonly DependencyProperty CanUserResizeRowsProperty =
-            DependencyProperty.Register("CanUserResizeRows", typeof(bool), typeof(DataGrid), new FrameworkPropertyMetadata(true, new PropertyChangedCallback(OnNotifyRowHeaderPropertyChanged)));
+            DependencyProperty.Register("CanUserResizeRows", typeof(bool), typeof(DataGrid),
+                new FrameworkPropertyMetadata(BooleanBoxes.TrueBox, new PropertyChangedCallback(OnNotifyRowHeaderPropertyChanged)));
 
         #endregion
 
@@ -7029,7 +7035,7 @@ namespace System.Windows.Controls
                 "CanUserSortColumns",
                 typeof(bool),
                 typeof(DataGrid),
-                new FrameworkPropertyMetadata(true, new PropertyChangedCallback(OnCanUserSortColumnsPropertyChanged), new CoerceValueCallback(OnCoerceCanUserSortColumns)));
+                new FrameworkPropertyMetadata(BooleanBoxes.TrueBox, new PropertyChangedCallback(OnCanUserSortColumnsPropertyChanged), new CoerceValueCallback(OnCoerceCanUserSortColumns)));
 
         /// <summary>
         /// The property which determines whether the datagrid can be sorted by
@@ -7443,7 +7449,8 @@ namespace System.Windows.Controls
         ///     The DependencyProperty that represents the AutoGenerateColumns property.
         /// </summary>
         public static readonly DependencyProperty AutoGenerateColumnsProperty =
-            DependencyProperty.Register("AutoGenerateColumns", typeof(bool), typeof(DataGrid), new FrameworkPropertyMetadata(true, new PropertyChangedCallback(OnAutoGenerateColumnsPropertyChanged)));
+            DependencyProperty.Register("AutoGenerateColumns", typeof(bool), typeof(DataGrid),
+                new FrameworkPropertyMetadata(BooleanBoxes.TrueBox, new PropertyChangedCallback(OnAutoGenerateColumnsPropertyChanged)));
 
         /// <summary>
         /// The property which determines whether the columns are to be auto generated or not.
@@ -8013,7 +8020,7 @@ namespace System.Windows.Controls
             "EnableRowVirtualization",
             typeof(bool),
             typeof(DataGrid),
-            new FrameworkPropertyMetadata(true, new PropertyChangedCallback(OnEnableRowVirtualizationChanged)));
+            new FrameworkPropertyMetadata(BooleanBoxes.TrueBox, new PropertyChangedCallback(OnEnableRowVirtualizationChanged)));
 
         /// <summary>
         ///     Property changed callback for EnableRowVirtualization.
@@ -8061,7 +8068,7 @@ namespace System.Windows.Controls
             "EnableColumnVirtualization",
             typeof(bool),
             typeof(DataGrid),
-            new FrameworkPropertyMetadata(false, new PropertyChangedCallback(OnEnableColumnVirtualizationChanged)));
+            new FrameworkPropertyMetadata(BooleanBoxes.FalseBox, new PropertyChangedCallback(OnEnableColumnVirtualizationChanged)));
 
         /// <summary>
         ///     Property changed callback for EnableColumnVirtualization.
@@ -8081,7 +8088,9 @@ namespace System.Windows.Controls
         /// Dependency Property for CanUserReorderColumns Property
         /// </summary>
         public static readonly DependencyProperty CanUserReorderColumnsProperty =
-            DependencyProperty.Register("CanUserReorderColumns", typeof(bool), typeof(DataGrid), new FrameworkPropertyMetadata(true, new PropertyChangedCallback(OnNotifyColumnPropertyChanged)));
+            DependencyProperty.Register("CanUserReorderColumns", typeof(bool), typeof(DataGrid),
+                new FrameworkPropertyMetadata(BooleanBoxes.TrueBox,
+                new PropertyChangedCallback(OnNotifyColumnPropertyChanged)));
 
         /// <summary>
         /// The property which determines if an end user can re-order columns or not.

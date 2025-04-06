@@ -7,10 +7,10 @@
 // Specs:       Data Styling.mht
 //
 
-using System.Windows.Media;
-using System.Windows.Controls.Primitives;
-using MS.Internal;
 using System.Windows.Automation;
+using System.Windows.Controls.Primitives;
+using System.Windows.Media;
+using MS.Internal;
 
 namespace System.Windows.Controls
 {
@@ -25,7 +25,7 @@ namespace System.Windows.Controls
             _dType = DependencyObjectType.FromSystemTypeInternal(typeof(GroupItem));
 
             // GroupItems should not be focusable by default
-            FocusableProperty.OverrideMetadata(typeof(GroupItem), new FrameworkPropertyMetadata(false));
+            FocusableProperty.OverrideMetadata(typeof(GroupItem), new FrameworkPropertyMetadata(BooleanBoxes.FalseBox));
             AutomationProperties.IsOffscreenBehaviorProperty.OverrideMetadata(typeof(GroupItem), new FrameworkPropertyMetadata(IsOffscreenBehavior.FromClip));
         }
 

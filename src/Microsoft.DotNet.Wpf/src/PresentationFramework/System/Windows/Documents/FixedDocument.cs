@@ -49,7 +49,7 @@ namespace System.Windows.Documents
 
         static FixedDocument()
         {
-            FocusableProperty.OverrideMetadata(typeof(FixedDocument), new FrameworkPropertyMetadata(true));
+            FocusableProperty.OverrideMetadata(typeof(FixedDocument), new FrameworkPropertyMetadata(BooleanBoxes.TrueBox));
             NavigationService.NavigationServiceProperty.OverrideMetadata(
                         typeof(FixedDocument),
                         new FrameworkPropertyMetadata(new PropertyChangedCallback(FixedHyperLink.OnNavigationServiceChanged)));

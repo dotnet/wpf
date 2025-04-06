@@ -10,6 +10,7 @@ using System.Windows.Automation.Peers;
 using System.Windows.Media;
 using System.Windows.Markup;
 using MS.Internal.Telemetry.PresentationFramework;
+using MS.Internal.KnownBoxes;
 
 namespace System.Windows.Controls
 {
@@ -170,7 +171,7 @@ namespace System.Windows.Controls
                         typeof(bool),
                         typeof(MediaElement),
                         new FrameworkPropertyMetadata(
-                            false,
+                            BooleanBoxes.FalseBox,
                             FrameworkPropertyMetadataOptions.None,
                             new PropertyChangedCallback(ScrubbingEnabledPropertyChanged)));
 

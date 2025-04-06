@@ -11,6 +11,7 @@ using System.Windows.Controls.Primitives;
 using System.Windows.Data;
 using System.Windows.Threading;
 using MS.Internal;
+using MS.Internal.KnownBoxes;
 
 namespace System.Windows.Controls
 {
@@ -96,12 +97,12 @@ namespace System.Windows.Controls
             VisibilityProperty.OverrideMetadata(typeof(DataGridRow), new FrameworkPropertyMetadata(null, OnCoerceVisibility));
             DefaultStyleKeyProperty.OverrideMetadata(typeof(DataGridRow), new FrameworkPropertyMetadata(typeof(DataGridRow)));
             ItemsPanelProperty.OverrideMetadata(typeof(DataGridRow), new FrameworkPropertyMetadata(new ItemsPanelTemplate(new FrameworkElementFactory(typeof(DataGridCellsPanel)))));
-            FocusableProperty.OverrideMetadata(typeof(DataGridRow), new FrameworkPropertyMetadata(false));
+            FocusableProperty.OverrideMetadata(typeof(DataGridRow), new FrameworkPropertyMetadata(BooleanBoxes.FalseBox));
             BackgroundProperty.OverrideMetadata(typeof(DataGridRow), new FrameworkPropertyMetadata(null, OnNotifyRowPropertyChanged, OnCoerceBackground));
             BindingGroupProperty.OverrideMetadata(typeof(DataGridRow), new FrameworkPropertyMetadata(OnNotifyRowPropertyChanged));
 
             // Set SnapsToDevicePixels to true so that this element can draw grid lines.  The metadata options are so that the property value doesn't inherit down the tree from here.
-            SnapsToDevicePixelsProperty.OverrideMetadata(typeof(DataGridRow), new FrameworkPropertyMetadata(true, FrameworkPropertyMetadataOptions.AffectsArrange));
+            SnapsToDevicePixelsProperty.OverrideMetadata(typeof(DataGridRow), new FrameworkPropertyMetadata(BooleanBoxes.TrueBox, FrameworkPropertyMetadataOptions.AffectsArrange));
             IsMouseOverPropertyKey.OverrideMetadata(typeof(DataGridRow), new UIPropertyMetadata(new PropertyChangedCallback(OnNotifyRowAndRowHeaderPropertyChanged)));
             VirtualizingPanel.ShouldCacheContainerSizeProperty.OverrideMetadata(typeof(DataGridRow), new FrameworkPropertyMetadata(null, new CoerceValueCallback(OnCoerceShouldCacheContainerSize)));
             AutomationProperties.IsOffscreenBehaviorProperty.OverrideMetadata(typeof(DataGridRow), new FrameworkPropertyMetadata(IsOffscreenBehavior.FromClip));
@@ -1048,7 +1049,7 @@ namespace System.Windows.Controls
         /// </summary>
         public static readonly DependencyProperty IsSelectedProperty = Selector.IsSelectedProperty.AddOwner(
             typeof(DataGridRow),
-            new FrameworkPropertyMetadata(false, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault | FrameworkPropertyMetadataOptions.Journal, new PropertyChangedCallback(OnIsSelectedChanged)));
+            new FrameworkPropertyMetadata(BooleanBoxes.FalseBox, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault | FrameworkPropertyMetadataOptions.Journal, new PropertyChangedCallback(OnIsSelectedChanged)));
 
         private static void OnIsSelectedChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
@@ -1193,7 +1194,8 @@ namespace System.Windows.Controls
         }
 
         private static readonly DependencyPropertyKey IsEditingPropertyKey =
-            DependencyProperty.RegisterReadOnly("IsEditing", typeof(bool), typeof(DataGridRow), new FrameworkPropertyMetadata(false, OnNotifyRowAndRowHeaderPropertyChanged));
+            DependencyProperty.RegisterReadOnly("IsEditing", typeof(bool), typeof(DataGridRow),
+                new FrameworkPropertyMetadata(BooleanBoxes.FalseBox, OnNotifyRowAndRowHeaderPropertyChanged));
 
         /// <summary>
         ///     The DependencyProperty for IsEditing.
@@ -1256,7 +1258,7 @@ namespace System.Windows.Controls
         ///     Using a DependencyProperty as the backing store for IsNewItem.  This enables animation, styling, binding, etc...
         /// </summary>
         internal static readonly DependencyPropertyKey IsNewItemPropertyKey =
-            DependencyProperty.RegisterReadOnly("IsNewItem", typeof(bool), typeof(DataGridRow), new FrameworkPropertyMetadata(false));
+            DependencyProperty.RegisterReadOnly("IsNewItem", typeof(bool), typeof(DataGridRow), new FrameworkPropertyMetadata(BooleanBoxes.FalseBox));
 
         /// <summary>
         ///     DependencyProperty for IsNewItem property.

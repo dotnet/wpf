@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
 namespace System.Windows.Automation
@@ -536,7 +536,7 @@ namespace System.Windows.Automation
                 "IsDialog",
                 typeof(bool),
                 typeof(AutomationProperties),
-                new UIPropertyMetadata(false));
+                new UIPropertyMetadata(BooleanBoxes.FalseBox));
 
         /// <summary>
         /// Helper for setting IsDialog property on a DependencyObject. 

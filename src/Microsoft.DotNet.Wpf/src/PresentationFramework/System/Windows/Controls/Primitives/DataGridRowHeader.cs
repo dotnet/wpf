@@ -1,7 +1,6 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
-
 using System.ComponentModel;
 using System.Windows.Input;
 using System.Windows.Media;
@@ -123,7 +122,7 @@ namespace System.Windows.Controls.Primitives
             WidthProperty.OverrideMetadata(typeof(DataGridRowHeader), new FrameworkPropertyMetadata(OnNotifyPropertyChanged, OnCoerceWidth));
 
             ClickModeProperty.OverrideMetadata(typeof(DataGridRowHeader), new FrameworkPropertyMetadata(ClickMode.Press));
-            FocusableProperty.OverrideMetadata(typeof(DataGridRowHeader), new FrameworkPropertyMetadata(false));
+            FocusableProperty.OverrideMetadata(typeof(DataGridRowHeader), new FrameworkPropertyMetadata(BooleanBoxes.FalseBox));
             AutomationProperties.IsOffscreenBehaviorProperty.OverrideMetadata(typeof(DataGridRowHeader), new FrameworkPropertyMetadata(IsOffscreenBehavior.FromClip));
         }
 
@@ -523,7 +522,7 @@ namespace System.Windows.Controls.Primitives
                 "IsRowSelected",
                 typeof(bool),
                 typeof(DataGridRowHeader),
-                new FrameworkPropertyMetadata(false, OnVisualStatePropertyChanged, new CoerceValueCallback(OnCoerceIsRowSelected)));
+                new FrameworkPropertyMetadata(BooleanBoxes.FalseBox, OnVisualStatePropertyChanged, new CoerceValueCallback(OnCoerceIsRowSelected)));
 
         /// <summary>
         ///     The DependencyProperty for the IsRowSelected property.

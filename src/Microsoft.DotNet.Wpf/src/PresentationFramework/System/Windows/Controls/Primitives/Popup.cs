@@ -81,8 +81,7 @@ namespace System.Windows.Controls.Primitives
                                 "TreatMousePlacementAsBottom",
                                 typeof(bool),
                                 typeof(Popup),
-                                new FrameworkPropertyMetadata(
-                                            false));
+                                new FrameworkPropertyMetadata(BooleanBoxes.FalseBox));
 
         /// <summary>
         ///     Tooltips should show on Keyboard focus.

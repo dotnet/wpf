@@ -1,16 +1,16 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
-using MS.Internal;
-using MS.Internal.Documents;
-using System.Windows.Input; // KeyboardNavigation
+using System.Collections; // IEnumerator
 using System.ComponentModel; // DefaultValue
+using System.Windows.Automation.Peers; // AutomationPattern
 using System.Windows.Controls.Primitives; // TextBoxBase
 using System.Windows.Documents; // TextEditor
-using System.Windows.Automation.Peers; // AutomationPattern
+using System.Windows.Input; // KeyboardNavigation
 using System.Windows.Markup; // IAddChild
-using System.Collections; // IEnumerator
+using MS.Internal;
 using MS.Internal.Controls; // EmptyEnumerator
+using MS.Internal.Documents;
 using MS.Internal.Telemetry.PresentationFramework;
 
 //
@@ -43,10 +43,10 @@ namespace System.Windows.Controls
             _dType = DependencyObjectType.FromSystemTypeInternal(typeof(RichTextBox));
 
             // Default value for AcceptsReturn is true
-            KeyboardNavigation.AcceptsReturnProperty.OverrideMetadata(typeof(RichTextBox), new FrameworkPropertyMetadata(true));
+            KeyboardNavigation.AcceptsReturnProperty.OverrideMetadata(typeof(RichTextBox), new FrameworkPropertyMetadata(BooleanBoxes.TrueBox));
 
             // Default value for AutoWordSelection is false.  We want true.
-            TextBoxBase.AutoWordSelectionProperty.OverrideMetadata(typeof(RichTextBox), new FrameworkPropertyMetadata(true));
+            TextBoxBase.AutoWordSelectionProperty.OverrideMetadata(typeof(RichTextBox), new FrameworkPropertyMetadata(BooleanBoxes.TrueBox));
 
             if (!FrameworkAppContextSwitches.UseAdornerForTextboxSelectionRendering)
             {
@@ -497,7 +497,7 @@ namespace System.Windows.Controls
         /// </remarks>
         public static readonly DependencyProperty IsDocumentEnabledProperty =
             DependencyProperty.Register("IsDocumentEnabled", typeof(bool), typeof(RichTextBox),
-            new FrameworkPropertyMetadata(false, new PropertyChangedCallback(OnIsDocumentEnabledChanged)));
+            new FrameworkPropertyMetadata(BooleanBoxes.FalseBox, new PropertyChangedCallback(OnIsDocumentEnabledChanged)));
 
         /// <summary>
         /// Enables or disables TextElements and UIElements contained in this RichTextBox's FlowDocument.

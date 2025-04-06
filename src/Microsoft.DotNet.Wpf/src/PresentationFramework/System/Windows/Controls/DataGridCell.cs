@@ -2,11 +2,12 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 
 
+using System.Windows.Automation;
 using System.Windows.Controls.Primitives;
 using System.Windows.Data;
 using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Automation;
+using MS.Internal.KnownBoxes;
 
 namespace System.Windows.Controls
 {
@@ -32,7 +33,7 @@ namespace System.Windows.Controls
             AutomationProperties.IsOffscreenBehaviorProperty.OverrideMetadata(typeof(DataGridCell), new FrameworkPropertyMetadata(IsOffscreenBehavior.FromClip));
 
             // Set SnapsToDevicePixels to true so that this element can draw grid lines.  The metadata options are so that the property value doesn't inherit down the tree from here.
-            SnapsToDevicePixelsProperty.OverrideMetadata(typeof(DataGridCell), new FrameworkPropertyMetadata(true, FrameworkPropertyMetadataOptions.AffectsArrange));
+            SnapsToDevicePixelsProperty.OverrideMetadata(typeof(DataGridCell), new FrameworkPropertyMetadata(BooleanBoxes.TrueBox, FrameworkPropertyMetadataOptions.AffectsArrange));
 
             EventManager.RegisterClassHandler(typeof(DataGridCell), MouseLeftButtonDownEvent, new MouseButtonEventHandler(OnAnyMouseLeftButtonDownThunk), true);
 
@@ -452,7 +453,8 @@ namespace System.Windows.Controls
         /// <summary>
         ///     Represents the IsEditing property.
         /// </summary>
-        public static readonly DependencyProperty IsEditingProperty = DependencyProperty.Register("IsEditing", typeof(bool), typeof(DataGridCell), new FrameworkPropertyMetadata(false, new PropertyChangedCallback(OnIsEditingChanged)));
+        public static readonly DependencyProperty IsEditingProperty = DependencyProperty.Register("IsEditing", typeof(bool), typeof(DataGridCell),
+            new FrameworkPropertyMetadata(BooleanBoxes.FalseBox, new PropertyChangedCallback(OnIsEditingChanged)));
 
         private static void OnIsEditingChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
@@ -515,7 +517,8 @@ namespace System.Windows.Controls
         }
 
         private static readonly DependencyPropertyKey IsReadOnlyPropertyKey =
-            DependencyProperty.RegisterReadOnly("IsReadOnly", typeof(bool), typeof(DataGridCell), new FrameworkPropertyMetadata(false, OnNotifyIsReadOnlyChanged, OnCoerceIsReadOnly));
+            DependencyProperty.RegisterReadOnly("IsReadOnly", typeof(bool), typeof(DataGridCell),
+                new FrameworkPropertyMetadata(BooleanBoxes.FalseBox, OnNotifyIsReadOnlyChanged, OnCoerceIsReadOnly));
 
         /// <summary>
         ///     The DependencyProperty for IsReadOnly.
@@ -649,7 +652,8 @@ namespace System.Windows.Controls
         /// <summary>
         ///     Represents the IsSelected property.
         /// </summary>
-        public static readonly DependencyProperty IsSelectedProperty = DependencyProperty.Register("IsSelected", typeof(bool), typeof(DataGridCell), new FrameworkPropertyMetadata(false, new PropertyChangedCallback(OnIsSelectedChanged)));
+        public static readonly DependencyProperty IsSelectedProperty = DependencyProperty.Register("IsSelected", typeof(bool), typeof(DataGridCell),
+            new FrameworkPropertyMetadata(BooleanBoxes.FalseBox, new PropertyChangedCallback(OnIsSelectedChanged)));
 
         private static void OnIsSelectedChanged(object sender, DependencyPropertyChangedEventArgs e)
         {

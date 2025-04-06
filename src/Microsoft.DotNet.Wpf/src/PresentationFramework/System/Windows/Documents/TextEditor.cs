@@ -765,7 +765,7 @@ namespace System.Windows.Documents
         #region Dependency Properties
 
         /// <summary>
-        /// IsReadOnly attached property speficies if the content within a scope
+        /// IsReadOnly attached property specifies if the content within a scope
         /// of some FrameworkElement is editable.
         /// </summary>
         internal static readonly DependencyProperty IsReadOnlyProperty =
@@ -774,7 +774,7 @@ namespace System.Windows.Documents
                         typeof(bool),
                         typeof(TextEditor),
                         new FrameworkPropertyMetadata(
-                                false,
+                                BooleanBoxes.FalseBox,
                                 FrameworkPropertyMetadataOptions.Inherits,
                                 new PropertyChangedCallback(OnIsReadOnlyChanged)));
 
@@ -793,7 +793,7 @@ namespace System.Windows.Documents
                         "AllowOvertype",
                         typeof(bool),
                         typeof(TextEditor),
-                        new FrameworkPropertyMetadata(true));
+                        new FrameworkPropertyMetadata(BooleanBoxes.TrueBox));
 
         /// <summary>
         /// TextEditor.PageHeight attached property for pageup/down

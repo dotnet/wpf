@@ -45,6 +45,11 @@
     <SystemSecurityPermissionsPackageVersion>10.0.0-preview.4.25205.3</SystemSecurityPermissionsPackageVersion>
     <SystemWindowsExtensionsPackageVersion>10.0.0-preview.4.25205.3</SystemWindowsExtensionsPackageVersion>
   </PropertyGroup>
+  <!-- These are minimum versions used for netfx-targeted components that run in Visual Studio because in those cases,
+       Visual Studio is providing those assemblies, and we should work with whichever version it ships. -->
+  <PropertyGroup>
+    <SystemReflectionMetadataLoadContextToolsetVersion>8.0.0</SystemReflectionMetadataLoadContextToolsetVersion>
+  </PropertyGorup>
   <!-- Docs / Intellisense -->
   <PropertyGroup>
     <MicrosoftPrivateIntellisenseVersion>9.0.0-preview-20241010.1</MicrosoftPrivateIntellisenseVersion>

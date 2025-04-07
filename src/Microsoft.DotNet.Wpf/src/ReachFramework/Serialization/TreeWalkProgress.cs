@@ -12,21 +12,15 @@ using System.Windows.Media;
 namespace System.Windows.Xps.Serialization
 {
     /// <summary>
-    /// This class  is used by the Xps Serialization APIs for tracking cycles in a visual tree.
+    /// This class is used by the Xps Serialization APIs for tracking cycles in a visual tree.
     /// </summary>
-    internal class TreeWalkProgress
+    internal sealed class TreeWalkProgress
     {
         private readonly HashSet<ICyclicBrush> _cyclicBrushes = new();
 
         public bool EnterTreeWalk(ICyclicBrush brush)
         {
-            if (_cyclicBrushes.Contains(brush))
-            {
-                return false;
-            }
-
-            _cyclicBrushes.Add(brush);
-            return true;
+            return _cyclicBrushes.Add(brush);
         }
 
         public void ExitTreeWalk(ICyclicBrush brush)

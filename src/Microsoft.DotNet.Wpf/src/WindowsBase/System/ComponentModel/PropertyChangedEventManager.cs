@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
 // Description: Manager for the PropertyChanged event in the "weak event listener"
@@ -613,7 +613,7 @@ namespace System.ComponentModel
 
         private ListenerList _proposedAllListenersList;
         private List<String> _toRemove = new List<String>();
-        private static readonly string AllListenersKey = "<All Listeners>"; // not a legal property name
+        private const string AllListenersKey = "<All Listeners>"; // not a legal property name
     }
 }
 

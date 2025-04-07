@@ -71,9 +71,6 @@ dotnet_diagnostic.CA5394.severity = suggestion
 # CA1725: Parameter names should match base declaration
 dotnet_diagnostic.CA1725.severity = suggestion
 
-# CA1802: Use literals where appropriate
-dotnet_diagnostic.CA1802.severity = suggestion
-
 # CA1805: Do not initialize unnecessarily
 dotnet_diagnostic.CA1805.severity = suggestion
 

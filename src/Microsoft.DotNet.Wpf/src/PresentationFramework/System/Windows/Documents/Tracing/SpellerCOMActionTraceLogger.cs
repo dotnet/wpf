@@ -46,7 +46,7 @@ namespace System.Windows.Documents.Tracing
         /// <summary>
         /// The name of the event that will be logged by this class
         /// </summary>
-        private static readonly string SpellerCOMLatencyMeasurement = nameof(SpellerCOMLatencyMeasurement);
+        private const string SpellerCOMLatencyMeasurement = nameof(SpellerCOMLatencyMeasurement);
 
         /// <summary>
         /// Various actions that we track in this logger

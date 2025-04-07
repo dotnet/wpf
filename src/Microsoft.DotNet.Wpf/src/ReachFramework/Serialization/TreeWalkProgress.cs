@@ -20,23 +20,23 @@ namespace System.Windows.Xps.Serialization
 
         public bool EnterTreeWalk(ICyclicBrush brush)
         {
-            if(this._cyclicBrushes.Contains(brush))
+            if (_cyclicBrushes.Contains(brush))
             {
                 return false;
             }
-            
-            this._cyclicBrushes.Add(brush);
+
+            _cyclicBrushes.Add(brush);
             return true;
         }
-            
+
         public void ExitTreeWalk(ICyclicBrush brush)
         {
-            this._cyclicBrushes.Remove(brush);
+            _cyclicBrushes.Remove(brush);
         }
-            
+
         public bool IsTreeWalkInProgress(ICyclicBrush brush)
         {
-            return this._cyclicBrushes.Contains(brush);
+            return _cyclicBrushes.Contains(brush);
         }
     }
 }

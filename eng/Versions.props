@@ -58,10 +58,10 @@
     <MicrosoftSourceLinkGitHubVersion>8.0.0-beta.23409.2</MicrosoftSourceLinkGitHubVersion>
     <MicrosoftSourceLinkAzureReposGitVersion>8.0.0-beta.23409.2</MicrosoftSourceLinkAzureReposGitVersion>
   </PropertyGroup>
-  <!-- Maintain System.CodeDom PackageVersion at 4.4.0. See https://github.com/Microsoft/msbuild/issues/3627 -->
-  <!-- Pin specific versions of S.Memory so that it would supply AssemblyVersion=4.0.1.0. See https://github.com/dotnet/runtime/issues/31672 -->
+  <!-- These are minimum versions used for netfx-targeted components that run in Visual Studio because in those cases,
+       Visual Studio is providing those assemblies, and we should work with whichever version it ships. -->
   <PropertyGroup>
-    <SystemCodeDomPackageVersionForPresentationBuildTasks>4.5.0</SystemCodeDomPackageVersionForPresentationBuildTasks>
+    <SystemCodeDomToolsetPackageVersion>8.0.0</SystemCodeDomToolsetPackageVersion>
   </PropertyGroup>
   <!-- Other Packages that require manual updating-->
   <PropertyGroup>

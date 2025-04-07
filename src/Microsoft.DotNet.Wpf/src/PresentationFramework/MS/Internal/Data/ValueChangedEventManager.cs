@@ -267,13 +267,13 @@ namespace MS.Internal.Data
         {
             get
             {
-                ValueChangedEventManager manager = (ValueChangedEventManager)GetCurrentManager(typeof(StaticPropertyChangedEventManager));
+                ValueChangedEventManager manager = (ValueChangedEventManager)GetCurrentManager(typeof(ValueChangedEventManager));
 
                 // at first use, create and register a new manager
                 if (manager == null)
                 {
                     manager = new ValueChangedEventManager();
-                    SetCurrentManager(typeof(StaticPropertyChangedEventManager), manager);
+                    SetCurrentManager(typeof(ValueChangedEventManager), manager);
                 }
 
                 return manager;

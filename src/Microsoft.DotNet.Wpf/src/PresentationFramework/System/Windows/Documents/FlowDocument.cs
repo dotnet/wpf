@@ -1609,7 +1609,7 @@ namespace System.Windows.Documents
         {
             ArgumentNullException.ThrowIfNull(value);
 
-            if (!TextSchema.IsValidChildOfContainer(typeof(FlowDocument), childType: value.GetType()))
+            if (!TextSchema.IsValidChildOfContainer(parentType: typeof(FlowDocument), childType: value.GetType()))
             {
                 throw new ArgumentException(SR.Format(SR.TextSchema_ChildTypeIsInvalid, nameof(FlowDocument), value.GetType().Name));
             }

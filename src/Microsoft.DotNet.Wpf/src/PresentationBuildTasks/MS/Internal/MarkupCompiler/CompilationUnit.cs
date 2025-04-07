@@ -8,9 +8,16 @@ namespace MS.Internal
     ///<summary>
     /// The CompilationUnit class
     ///</summary> 
-    internal class CompilationUnit 
+    internal class CompilationUnit
     {
-#region Constructors
+        private readonly string _defaultNamespace;
+        private readonly string _assemblyName;
+        private readonly string _language;
+        private readonly FileUnit[] _fileList;
+
+        private FileUnit _applicationFile = FileUnit.Empty;
+        private string _sourcePath = string.Empty;
+        private bool _pass2;
 
         ///<summary>constructor</summary> 
         public CompilationUnit(string assemblyName, string language, string defaultNamespace, FileUnit[] fileList)
@@ -20,8 +27,6 @@ namespace MS.Internal
             _fileList = fileList;
             _defaultNamespace = defaultNamespace;
         }
-
-#endregion Constructors
 
 #region Properties
 
@@ -71,19 +76,6 @@ namespace MS.Internal
 
 #endregion Properties
 
-#region Private Data
-
-        private readonly string _defaultNamespace = string.Empty;
-        private readonly string _assemblyName = string.Empty;
-        private readonly string _language = string.Empty;
-        private readonly FileUnit[] _fileList;
-
-        private bool                    _pass2 = false;
-        private string                  _sourcePath = string.Empty;
-        private FileUnit                _applicationFile = FileUnit.Empty;
-
-
-#endregion Private Data
     }
 
 #region ErrorEvent

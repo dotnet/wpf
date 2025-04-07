@@ -3430,9 +3430,9 @@ namespace MS.Internal
 
             private readonly Type _elementType;
             private readonly string[] _typeArgsList;
-            private readonly string _localElementFullName = string.Empty;
+            private readonly string _localElementFullName;
 
-            protected CodeTypeReference _ctrElemTypeRef = null;
+            protected CodeTypeReference _ctrElemTypeRef;
         }
 
         private class CodeContextRoot : CodeContext

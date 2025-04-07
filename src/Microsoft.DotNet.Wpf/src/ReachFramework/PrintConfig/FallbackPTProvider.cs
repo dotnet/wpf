@@ -228,7 +228,6 @@ namespace MS.Internal.Printing.Configuration
                 capabilities = null;
             }
 
-            // calls Security Critical Dispose on a private resource
             capabilitiesStream.Position = 0;
 
             return capabilitiesStream;

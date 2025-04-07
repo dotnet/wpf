@@ -37,19 +37,6 @@ namespace System.Windows.Input
         }
 
         ///<summary>
-        ///     Internal implementation of InputManager.Current.
-        ///     Critical but not TAS - for internal's to use.
-        ///     Only exists for perf. The link demand check was causing perf in some XAF scenarios.
-        ///</summary>
-        internal static InputManager UnsecureCurrent
-        {
-            get
-            {
-                return GetCurrentInputManagerImpl();
-            }
-        }
-
-        ///<summary>
         /// When true indicates input processing is synchronized.   
         ///</summary> 
         internal static bool IsSynchronizedInput
@@ -210,10 +197,7 @@ namespace System.Windows.Input
         /// </summary>
         internal void RaiseTranslateAccelerator(KeyEventArgs e)
         {
-            if (_translateAccelerator != null)
-            {
-                _translateAccelerator(this, e);
-            }
+            _translateAccelerator?.Invoke(this, e);
         }
 
         /// <summary>
@@ -224,11 +208,10 @@ namespace System.Windows.Input
         /// </param>
         internal InputProviderSite RegisterInputProvider(IInputProvider inputProvider)
         {
-//             VerifyAccess();
-
+            // VerifyAccess();
 
             // Create a site for this provider, and keep track of it.
-            InputProviderSite site = new InputProviderSite(this, inputProvider);
+            InputProviderSite site = new(this, inputProvider);
             _inputProviders[inputProvider] = site;
 
             return site;
@@ -244,30 +227,15 @@ namespace System.Windows.Input
         /// </summary>
         public ICollection InputProviders
         {
-            get
-            {
-                return UnsecureInputProviders;
-            }
+            get => _inputProviders.Keys;
         }
 
-
-        /// <summary>
-        ///     Returns a collection of input providers registered with the input manager.
-        /// </summary>
-        internal ICollection UnsecureInputProviders
-        {
-            get
-            {
-                return _inputProviders.Keys;
-            }
-        }
         /// <summary>
         ///     Read-only access to the primary keyboard device.
         /// </summary>
         public KeyboardDevice PrimaryKeyboardDevice
         {
-            // 
-            get {return _primaryKeyboardDevice;}
+            get => _primaryKeyboardDevice;
         }
 
         /// <summary>
@@ -275,8 +243,7 @@ namespace System.Windows.Input
         /// </summary>
         public MouseDevice PrimaryMouseDevice
         {
-            // 
-            get {return _primaryMouseDevice;}
+            get => _primaryMouseDevice;
         }
 
         /// <summary>
@@ -433,7 +400,7 @@ namespace System.Windows.Input
 
         internal static void SafeCurrentNotifyHitTestInvalidated()
         {
-            UnsecureCurrent.NotifyHitTestInvalidated();
+            Current.NotifyHitTestInvalidated();
         }
 
         private object HitTestInvalidatedAsyncCallback(object arg)
@@ -934,7 +901,7 @@ namespace System.Windows.Input
 
         private event KeyEventHandler _translateAccelerator;
 
-        private Hashtable _inputProviders = new Hashtable();
+        private readonly Dictionary<IInputProvider, InputProviderSite> _inputProviders = new();
 
         private KeyboardDevice _primaryKeyboardDevice;
         private MouseDevice    _primaryMouseDevice;

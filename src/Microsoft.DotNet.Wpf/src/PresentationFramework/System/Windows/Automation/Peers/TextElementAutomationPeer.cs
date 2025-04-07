@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
 //
@@ -56,7 +56,7 @@ namespace System.Windows.Automation.Peers
 
             if (geometry != null)
             {
-                PresentationSource presentationSource = PresentationSource.CriticalFromVisual(textView.RenderScope);
+                PresentationSource presentationSource = PresentationSource.FromVisual(textView.RenderScope);
 
                 if (presentationSource == null)
                 {
@@ -98,7 +98,7 @@ namespace System.Windows.Automation.Peers
                 return pt;
             }
 
-            PresentationSource presentationSource = PresentationSource.CriticalFromVisual(textView.RenderScope);
+            PresentationSource presentationSource = PresentationSource.FromVisual(textView.RenderScope);
 
             if (presentationSource == null)
             {

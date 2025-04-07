@@ -102,42 +102,12 @@ namespace System.Windows
         ///
         ///     Also, window style is set to WS_CHILD inside CreateSourceWindow
         ///     for browser hosted case
-        ///
-        ///     Callers must have UIPermission(UIPermissionWindow.AllWindows) to call this API.
         /// </remarks>
         public Window()
         {
-            _inTrustedSubWindow = false;
             Initialize();
         }
 
-        /// <summary>
-        ///     Constructs a window object
-        /// </summary>
-        /// <remarks>
-        ///     Automatic determination of current Dispatcher. Use alternative constructor
-        ///     that accepts a Dispatcher for best performance.
-        ///
-        ///     Initializes the Width/Height, Top/Left properties to use windows
-        ///     default. Updates Application object properties if inside app.
-        ///
-        ///     Also, window style is set to WS_CHILD inside CreateSourceWindow
-        ///     for browser hosted case
-        ///
-        ///     This method currently requires full trust to run.
-        /// </remarks>
-        internal Window(bool inRbw):base()
-        {
-            if (inRbw)
-            {
-                _inTrustedSubWindow = true;
-            }
-            else
-            {
-                _inTrustedSubWindow = false;
-            }
-            Initialize();
-}
         #endregion Constructors
 
         //---------------------------------------------------
@@ -205,13 +175,10 @@ namespace System.Windows
         ///     user cancels the closing event, the window is not closed.
         ///     Otherwise, the window is closed and the Closed event is
         ///     fired.
-        ///
-        ///     Callers must have UIPermission(UIPermissionWindow.AllWindows) to call this API.
         /// </remarks>
         public void Close()
         {
-            // this call ends up throwing an exception if Close
-            // is not allowed
+            // this call ends up throwing an exception if Close is not allowed
             VerifyApiSupported();
             VerifyContextAndObjectState();
             InternalClose(false, false);
@@ -223,7 +190,6 @@ namespace System.Windows
         /// <remarks>
         ///     To enable custom chrome on Windows. First check if this is the Left MouseButton.
         ///     Will throw exception if it's not, otherwise, will kick off the Windows's MoveWindow loop.
-        ///     Callers must have UIPermission(UIPermissionWindow.AllWindows) to call this API.
         /// </remarks>
         public void DragMove()
         {
@@ -262,9 +228,6 @@ namespace System.Windows
         ///     Shows the window as a modal window
         /// </summary>
         /// <returns>bool?</returns>
-        /// <remarks>
-        ///     Callers must have UIPermission(UIPermissionWindow.AllWindows) to call this API.
-        /// </remarks>
         public Nullable<bool> ShowDialog()
         {
             // this call ends up throwing an exception if ShowDialog
@@ -477,7 +440,6 @@ namespace System.Windows
         /// <remarks>
         ///     This method calls SetForegroundWindow on the hWnd, thus the rules for SetForegroundWindow
         ///     apply to this method.
-        ///     Callers must have UIPermission(UIPermissionWindow.AllWindows) to call this API.
         /// </remarks>
         /// <returns>bool -- indicating whether the window was activated or not</returns>
         public bool Activate()
@@ -866,7 +828,6 @@ namespace System.Windows
         ///
         ///     If Icon property is set, Window does not dispose that object when it
         ///     is closed.
-        ///     Callers must have UIPermission(UIPermissionWindow.AllWindows) to call this API.
         /// </remarks>
         public ImageSource Icon
         {
@@ -1054,9 +1015,6 @@ namespace System.Windows
         ///     If RestoreBounds is queried before the Window has been shown or after it has
         ///     been closed, it will return Rect.Empty.
         /// </summary>
-        /// <remarks>
-        ///     Callers must have UIPermission(UIPermissionWindow.AllWindows) to call this API.
-        /// </remarks>
 
         public Rect RestoreBounds
         {
@@ -1209,9 +1167,6 @@ namespace System.Windows
         ///     still interact with owner window. This property can not be
         ///     set of the top level window.
         /// </summary>
-        ///<remarks>
-        ///     Callers must have UIPermission(UIPermissionWindow.AllWindows) to call this API.
-        ///</remarks>
         [DefaultValue(null)]
         public Window Owner
         {
@@ -2240,14 +2195,8 @@ namespace System.Windows
             {
                 // close window synchronously
 
-                // We demand for UIPermission AllWindows at the public API, Window.Close(), level.
-                // It can be called when shutting down the app.
-                // The public entry to that code path Application.Shutdown is
-                // also protected with a demand for UIPermission with AllWindow access
-
-                // SendMessage's return value is dependent on the message send.  WM_CLOSE
-                // return value just signify whether the WndProc handled the
-                // message or not, so it is not interesting
+                // SendMessage's return value is dependent on the message send.
+                // WM_CLOSE return value just signify whether the WndProc handled the message or not, so it is not interesting
                 UnsafeNativeMethods.UnsafeSendMessage(Handle, WindowMessage.WM_CLOSE, new IntPtr(), new IntPtr());
             }
         }
@@ -3013,9 +2962,6 @@ namespace System.Windows
         // called as a result of Height/MinHeight/MaxHeight and Width/MinWidth/MaxWidth property changing to update the hwnd size
         private void UpdateHwndSizeOnWidthHeightChange(double widthLogicalUnits, double heightLogicalUnits)
         {
-            if (!_inTrustedSubWindow)
-            {
-            }
             Debug.Assert( IsSourceWindowNull == false , "IsSourceWindowNull cannot be true when calling this function");
 
             Point ptDeviceUnits = LogicalToDeviceUnits(new Point(widthLogicalUnits, heightLogicalUnits));
@@ -4531,7 +4477,7 @@ namespace System.Windows
                         if (((App.Windows.Count == 0) && (App.ShutdownMode == ShutdownMode.OnLastWindowClose))
                          || ((App.MainWindow == this) && (App.ShutdownMode == ShutdownMode.OnMainWindowClose)))
                         {
-                            App.CriticalShutdown(0);
+                            App.Shutdown(0);
                         }
                     }
 
@@ -6950,11 +6896,8 @@ namespace System.Windows
 
         private void VerifyConsistencyWithShowActivated()
         {
-            //
             // We don't support to show a maximized non-activated window.
-            // Don't check this consistency in a RBW (would break because Visibility is set when launching the RBW).
-            //
-            if (!_inTrustedSubWindow && WindowState == WindowState.Maximized && !ShowActivated)
+            if (WindowState == WindowState.Maximized && !ShowActivated)
                 throw new InvalidOperationException(SR.ShowNonActivatedAndMaximized);
         }
 
@@ -7275,9 +7218,6 @@ namespace System.Windows
         private ThemeMode           _themeMode = ThemeMode.None;
         internal bool               _deferThemeLoading = false;
         private bool                _useDarkMode = false;
-
-        //Never expose this at any cost
-        private bool                        _inTrustedSubWindow;
 
         private ImageSource _icon;
 

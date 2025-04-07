@@ -361,10 +361,6 @@ namespace System.Windows
         /// <param name="allowedEffects">
         /// The allowed effects that is one of the DragDropEffects values.
         /// </param>
-        /// <remarks>
-        /// Requires UnmanagedCode permission.  
-        /// If caller does not have this permission, the dragdrop will not occur.
-        /// </remarks>
         public static DragDropEffects DoDragDrop(DependencyObject dragSource, object data, DragDropEffects allowedEffects)
         {
             DataObject dataObject;

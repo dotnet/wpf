@@ -609,13 +609,7 @@ namespace System.Windows.Input
         /// </summary>
         public static MouseDevice PrimaryDevice
         {
-            get
-            {
-                MouseDevice mouseDevice;
-                //there is a link demand on the Current property
-                mouseDevice =  InputManager.UnsecureCurrent.PrimaryMouseDevice;
-                return mouseDevice;
-            }
+            get => InputManager.Current.PrimaryMouseDevice;         
         }
     }
 }

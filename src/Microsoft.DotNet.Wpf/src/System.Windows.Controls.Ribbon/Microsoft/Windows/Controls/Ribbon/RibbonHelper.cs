@@ -2497,22 +2497,6 @@ namespace Microsoft.Windows.Controls.Ribbon
 
         #region KeyTips
 
-#if RIBBON_IN_FRAMEWORK
-#endif
-        public static PresentationSource GetPresentationSourceFromVisual(Visual visual)
-        {
-            if (visual == null)
-            {
-                return null;
-            }
-
-#if RIBBON_IN_FRAMEWORK
-            return PresentationSource.CriticalFromVisual(visual);
-#else
-            return PresentationSource.FromVisual(visual);
-#endif
-        }
-
         /// <summary>
         ///  Produces default system beep.
         /// </summary>

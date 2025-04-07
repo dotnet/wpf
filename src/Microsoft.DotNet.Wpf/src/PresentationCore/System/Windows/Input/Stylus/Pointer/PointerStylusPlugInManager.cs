@@ -520,7 +520,7 @@ namespace System.Windows.Input.StylusPointer
                     if ((mouseInputReport.Actions & RawMouseActions.Deactivate) != RawMouseActions.Deactivate)
                         return;
 
-                    mouseDevice = InputManager.UnsecureCurrent.PrimaryMouseDevice;
+                    mouseDevice = InputManager.Current.PrimaryMouseDevice;
 
                     // Mouse set directly over to null when truly deactivating.
                     if (mouseDevice == null || mouseDevice.DirectlyOver != null)
@@ -530,8 +530,8 @@ namespace System.Windows.Input.StylusPointer
                     rightButtonDown = mouseDevice.RightButton == MouseButtonState.Pressed;
                     timestamp = mouseInputReport.Timestamp;
 
-                    // Get presentationsource from element.
-                    source = PresentationSource.CriticalFromVisual(_activeMousePlugInCollection.Element as Visual);
+                    // Get PresentationSource from element.
+                    source = PresentationSource.FromVisual(_activeMousePlugInCollection.Element);
                 }
                 else
                 {
@@ -576,7 +576,7 @@ namespace System.Windows.Input.StylusPointer
 
                     // 
                     // Take the presentation source which is associated to the directly over element.
-                    source = PresentationSource.CriticalFromVisual(directlyOverVisual);
+                    source = PresentationSource.FromVisual(directlyOverVisual);
                 }
 
                 if ((source != null) &&

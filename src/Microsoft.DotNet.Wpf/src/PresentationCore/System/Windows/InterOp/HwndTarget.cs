@@ -213,14 +213,8 @@ namespace System.Windows.Interop
 
         /// <summary>
         /// Attaches a hwndTarget to the hWnd
-        /// <remarks>
-        ///     This API link demands for UIWindowPermission.AllWindows
-        /// </remarks>
         /// </summary>
         /// <param name="hwnd">The HWND to which the HwndTarget will draw.</param>
-        /// <remarks>
-        ///     Callers must have UIPermission(UIPermissionWindow.AllWindows) to call this API.
-        /// </remarks>
         public HwndTarget(IntPtr hwnd)
         {
             bool exceptionThrown = true;
@@ -297,7 +291,7 @@ namespace System.Windows.Interop
         }
 
         /// <summary>
-        /// Disables hyphen ligatures if user has exlicitly wants it
+        /// Disables hyphen ligatures if user has explicitly wants it
         /// </summary>
         private void CheckAndDisableSpecialCharacterLigature()
         {
@@ -637,8 +631,6 @@ namespace System.Windows.Interop
         /// <remarks>
         ///     This property specifies a preference, it does not necessarily change the actual
         ///     rendering mode.  Among other things, this can be trumped by the registry settings.
-        ///     <para/>
-        ///     Callers must have UIPermission(UIPermissionWindow.AllWindows) to set this property.
         /// </remarks>
         public RenderMode RenderMode
         {
@@ -1105,7 +1097,7 @@ namespace System.Windows.Interop
                     break;
 
                 case WindowMessage.WM_GETOBJECT:
-                    result = CriticalHandleWMGetobject( wparam, lparam, RootVisual, _hWnd );
+                    result = HandleWM_GETOBJECT(wparam, lparam, RootVisual, _hWnd);
                     break;
 
                 case WindowMessage.WM_WINDOWPOSCHANGING:
@@ -1429,7 +1421,7 @@ namespace System.Windows.Interop
             return peer;
         }
 
-        private static IntPtr CriticalHandleWMGetobject(IntPtr wparam, IntPtr lparam, Visual root, IntPtr handle)
+        private static IntPtr HandleWM_GETOBJECT(IntPtr wParam, IntPtr lParam, Visual root, IntPtr handle)
         {
             try
             {
@@ -1451,7 +1443,7 @@ namespace System.Windows.Interop
                 // it's guaranteed to be a connected one (it's initialized as root already)
                 IRawElementProviderSimple el = ElementProxy.StaticWrap(peer, peer);
 
-                return AutomationInteropProvider.ReturnRawElementProvider(handle, wparam, lparam, el);
+                return AutomationInteropProvider.ReturnRawElementProvider(handle, wParam, lParam, el);
             }
             catch (Exception e)
             {
@@ -2284,9 +2276,6 @@ namespace System.Windows.Interop
         /// <summary>
         /// Gets and sets the root Visual of this HwndTarget.
         /// </summary>
-        /// <remarks>
-        ///     Callers must have UIPermission(UIPermissionWindow.AllWindows) to call this API.
-        /// </remarks>
         public override Visual RootVisual
         {
             set

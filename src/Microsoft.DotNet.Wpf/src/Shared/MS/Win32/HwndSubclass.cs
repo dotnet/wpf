@@ -113,13 +113,21 @@ namespace MS.Win32
         ///     An identifier that can be used to reference this instance of
         ///     the HwndSubclass class in the static RequestDetach method.
         /// </returns>
-        internal IntPtr Attach(IntPtr hwnd)
+        internal IntPtr AttachWndProcHook(IntPtr hwnd)
         {
+            if (hwnd == IntPtr.Zero)
+                throw new ArgumentNullException(nameof(hwnd));
 
             if (_bond != Bond.Unattached)
                 throw new InvalidOperationException(SR.HwndSubclassMultipleAttach);
 
-            return CriticalAttach( hwnd ) ;
+            NativeMethods.WndProc newWndProc = new NativeMethods.WndProc(SubclassWndProc);
+            IntPtr oldWndProc = UnsafeNativeMethods.GetWindowLongPtr(new HandleRef(this, hwnd), NativeMethods.GWL_WNDPROC);
+
+            HookWindowProc(hwnd, newWndProc, oldWndProc);
+
+            // Return the GC handle as a unique identifier of this
+            return (IntPtr)_gcHandle;
         }
 
 
@@ -140,18 +148,12 @@ namespace MS.Win32
         ///     Whether or not this HwndSubclass object was actually removed from
         ///     the WNDPROC chain.
         /// </returns>
-        internal bool Detach(bool force)
-        {
-
-            return CriticalDetach(force);
-        }
-
-        internal bool CriticalDetach(bool force)
+        internal bool DetachWndProcHook(bool force)
         {
             bool detached;
 
             // If we have already detached, return immediately.
-            if(_bond == Bond.Detached || _bond == Bond.Unattached)
+            if (_bond is Bond.Detached or Bond.Unattached)
             {
                 detached = true;
             }
@@ -287,7 +289,7 @@ namespace MS.Win32
                     int param = (int)lParam;    // 0 - normal, 1 - force, 2 - force and forward
                     bool force = (param > 0);
 
-                    retval = CriticalDetach(force) ? new IntPtr(1) : IntPtr.Zero ;
+                    retval = DetachWndProcHook(force) ? new IntPtr(1) : IntPtr.Zero ;
                     handled = (param < 2);
                 }
             }
@@ -337,7 +339,7 @@ namespace MS.Win32
                     // still in the call chain.  This is our last chance to clean
                     // up, and no other message should be received by this window
                     // proc again. It is OK to force a cleanup now.
-                    CriticalDetach(true);
+                    DetachWndProcHook(force: true);
 
                     // Always pass the WM_NCDESTROY message down the chain!
                     handled = false;
@@ -370,25 +372,6 @@ namespace MS.Win32
         }
 
         private DispatcherOperationCallback _dispatcherOperationCallback = null;
-
-        internal IntPtr CriticalAttach( IntPtr hwnd )
-        {
-            if(hwnd == IntPtr.Zero)
-            {
-                throw new ArgumentNullException(nameof(hwnd));
-            }
-            if(_bond != Bond.Unattached)
-            {
-                throw new InvalidOperationException();
-            }
-
-            NativeMethods.WndProc newWndProc = new NativeMethods.WndProc(SubclassWndProc);
-            IntPtr oldWndProc = UnsafeNativeMethods.GetWindowLongPtr(new HandleRef(this,hwnd), NativeMethods.GWL_WNDPROC);
-            HookWindowProc(hwnd, newWndProc, oldWndProc);
-
-            // Return the GC handle as a unique identifier of this
-            return (IntPtr) _gcHandle;
-        }
 
         private object DispatcherCallbackOperation(object o)
         {

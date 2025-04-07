@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
 /*++
@@ -391,7 +391,7 @@ namespace System.Windows.Xps.Serialization
 
             for (int i = 0; i < height; i += 1)
             {
-                bitmapSource.CriticalCopyPixels(rect, pixels, stride, 0);
+                bitmapSource.CopyPixelsEx(rect, pixels, stride, 0);
                 rect.Y++;
 
                 crc32.AddData(pixels);

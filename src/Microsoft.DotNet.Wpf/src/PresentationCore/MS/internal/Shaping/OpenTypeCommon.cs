@@ -660,9 +660,6 @@ namespace MS.Internal.Shaping
             }
         }
 
-        /// <SecurityNotes>
-        /// Critical - This method reads into unsafe cluster map. 
-        /// </SecurityNotes>
         private static void GetNextEnabledGlyphRange(
             Feature[]               FeatureSet,     // In: List of features to apply
             int                     featureCount,   // In: Actual nubmer of features in FeatureSet

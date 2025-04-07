@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
 
@@ -141,7 +141,7 @@ namespace Microsoft.Internal.AlphaFlattener
             converter.DestinationFormat = PixelFormats.Pbgra32;
             converter.EndInit();
 
-            converter.CriticalCopyPixels(bounds, pixels, stride, 0);
+            converter.CopyPixelsEx(bounds, pixels, stride, 0);
 
             return pixels;
         }

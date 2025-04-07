@@ -20,16 +20,8 @@ namespace System.Windows.Input
         /// </summary>
         public InputManager InputManager
         {
-            get
-            {
-                return CriticalInputManager;
-            }
+            get => _inputManager;
         }
-
-        /// <summary>
-        ///     Returns the input manager that this site is attached to.
-        /// </summary>
-        internal InputManager CriticalInputManager => _inputManager;
 
         /// <summary>
         ///     Unregisters this input provider.

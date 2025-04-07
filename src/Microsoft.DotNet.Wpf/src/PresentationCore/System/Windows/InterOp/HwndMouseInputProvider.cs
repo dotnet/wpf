@@ -1182,7 +1182,7 @@ namespace System.Windows.Interop
 
             if(hwnd != IntPtr.Zero)
             {
-                hwndSource = HwndSource.CriticalFromHwnd(hwnd);
+                hwndSource = HwndSource.FromHwnd(hwnd);
 
                 if(hwndSource != null)
                 {
@@ -1262,10 +1262,10 @@ namespace System.Windows.Interop
                 // report mouse wheel events as if they came from the window that
                 // is under the mouse (even though they are reported to the window
                 // with keyboard focus)
-                MouseDevice mouse = _site.CriticalInputManager.PrimaryMouseDevice;
-                if (mouse != null && mouse.CriticalActiveSource != null)
+                MouseDevice mouse = _site.InputManager.PrimaryMouseDevice;
+                if (mouse != null && mouse.ActiveSource != null)
                 {
-                    source = mouse.CriticalActiveSource;
+                    source = mouse.ActiveSource;
                 }
             }
             else

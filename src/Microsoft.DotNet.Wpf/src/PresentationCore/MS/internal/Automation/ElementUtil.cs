@@ -147,7 +147,7 @@ namespace MS.Internal.Automation
         // Get element at given point (screen coords)
         internal static Visual GetElementFromPoint( IntPtr hwnd, Visual root, Point pointScreen )
         {
-            HwndSource hwndSource = HwndSource.CriticalFromHwnd(hwnd);
+            HwndSource hwndSource = HwndSource.FromHwnd(hwnd);
 
             if(hwndSource == null)
                 return null;

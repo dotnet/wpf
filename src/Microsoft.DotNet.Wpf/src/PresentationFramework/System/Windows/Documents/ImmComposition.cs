@@ -61,11 +61,9 @@ namespace System.Windows.Documents
         //
         internal static ImmComposition GetImmComposition(FrameworkElement scope)
         {
-            HwndSource source = PresentationSource.CriticalFromVisual(scope) as HwndSource;
-
             ImmComposition immComposition = null;
 
-            if (source != null)
+            if (PresentationSource.FromVisual(scope) is HwndSource source)
             {
                 lock (_list)
                 {

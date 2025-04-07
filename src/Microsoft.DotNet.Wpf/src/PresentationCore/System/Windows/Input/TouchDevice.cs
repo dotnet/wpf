@@ -28,7 +28,7 @@ namespace System.Windows.Input
             : base()
         {
             _deviceId = deviceId;
-            _inputManager = InputManager.UnsecureCurrent;
+            _inputManager = InputManager.Current;
 
             
             // If this is instantiated and the derived type is not a StylusTouchDevice then it is a 3rd party
@@ -101,8 +101,6 @@ namespace System.Windows.Input
         ///     Returns the PresentationSource that is reporting input for this device.
         /// </summary>
         /// <remarks>
-        ///     Callers must have UIPermission(UIPermissionWindow.AllWindows) to call this API.
-        ///     
         ///     Subclasses should use SetActiveSource to set this property.
         /// </remarks>
         public sealed override PresentationSource ActiveSource
@@ -144,7 +142,7 @@ namespace System.Windows.Input
         /// <returns>A list of points in the coordinate space of relativeTo.</returns>
         public abstract TouchPointCollection GetIntermediateTouchPoints(IInputElement relativeTo);
 
-        private IInputElement CriticalHitTest(Point point, bool isSynchronize)
+        private IInputElement HitTest(Point point, bool isSynchronize)
         {
             IInputElement over = null;
 
@@ -565,7 +563,7 @@ namespace System.Windows.Input
             if (visual == null)
                 return false;
 
-            PresentationSource presentationSource = PresentationSource.CriticalFromVisual(visual);
+            PresentationSource presentationSource = PresentationSource.FromVisual(visual);
 
             return ((presentationSource != null) && (presentationSource == _activeSource));
         }
@@ -782,7 +780,7 @@ namespace System.Windows.Input
             if (touchPoint != null)
             {
                 Point position = touchPoint.Position;
-                newDirectlyOver = CriticalHitTest(position, isSynchronize);
+                newDirectlyOver = HitTest(position, isSynchronize);
             }
 
             if (newDirectlyOver != _directlyOver)

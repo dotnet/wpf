@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
 using System.IO;
@@ -37,8 +37,6 @@ namespace MS.Internal.Interop
         [FieldOffset(8)]
         private short boolVal;
 
-        /// Critical: This class is tagged Critical
-        /// TreatAsSafe - This class is only available in full trust.
         public VarEnum VarType
         {
             get { return (VarEnum)vt; }

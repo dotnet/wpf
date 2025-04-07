@@ -17,7 +17,6 @@ namespace System.Windows.Interop
     /// <summary>
     ///     The HwndHost class hosts an HWND inside of an Avalon tree.
     /// </summary>
-    ///<remarks> Subclassing requires unmanaged code permission</remarks>
 
     public abstract class HwndHost : FrameworkElement, IDisposable, IWin32Window, IKeyboardInputSink
     {
@@ -192,13 +191,6 @@ namespace System.Windows.Interop
         // contract, which limits IntelliSense on derived types like WebBrowser) while sticking protected
         // virtuals next to them. Those virtuals contain our base implementation, while the explicit
         // interface implementation methods do call trivially into the virtuals.
-        //
-        // This comment outlines the security rationale applied to those methods.
-        //
-        // <SecurityNote Name="IKeyboardInputSink_Implementation">
-        //     The security attributes on the virtual methods within this region mirror the corresponding
-        //     IKeyboardInputSink methods; customers can override those methods, so we insert a LinkDemand
-        //     to encourage them to have a LinkDemand too (via FxCop).
 
         /// <summary>
         ///     Registers a IKeyboardInputSink with the HwndSource in order
@@ -337,8 +329,8 @@ namespace System.Windows.Interop
             CompositionTarget vt = null;
             if (( Handle != IntPtr.Zero) && IsVisible)
             {
-                source = PresentationSource.CriticalFromVisual(this, false /* enable2DTo3DTransition */);
-                if(source != null)
+                source = PresentationSource.FromVisual(this, enable2DTo3DTransition: false);
+                if (source != null)
                 {
                     vt = source.CompositionTarget;
                 }
@@ -467,21 +459,18 @@ namespace System.Windows.Interop
                 return;
             }
 
-
-            if(disposing)
+            if (disposing)
             {
                 // Verify the thread has access to the context.
-                 VerifyAccess();
+                VerifyAccess();
 
-
-                // Remove our subclass.  Even if this fails, it will be forcably removed
-                // when the window is destroyed.
+                // Remove our subclass.  Even if this fails, it will be forcibly removed when the window is destroyed.
                 if (_hwndSubclass != null)
                 {
-                    // Check if it is trusted (WebOC and AddInHost), call CriticalDetach to avoid the Demand.
+                    // Check if it is trusted (WebOC and AddInHost), otherwise call DetachWndProcHook.
                     if (_fTrusted == true)
                     {
-                        _hwndSubclass.CriticalDetach(false);
+                        _hwndSubclass.DetachWndProcHook(force: false);
                     }
                     else
                     {
@@ -546,8 +535,6 @@ namespace System.Windows.Interop
         ///<remarks> Not available in Internet zone</remarks>
         protected virtual IntPtr WndProc(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
         {
-            DemandIfUntrusted();
-
             switch ((WindowMessage)msg)
             {
                 case WindowMessage.WM_NCDESTROY:
@@ -558,7 +545,7 @@ namespace System.Windows.Interop
                 // We only allow the changes that are coming from Avalon layout. The hwnd is not allowed to change by itself.
                 // So the size of the hwnd should always be RenderSize and the position be where layout puts it.
                 case WindowMessage.WM_WINDOWPOSCHANGING:
-                    PresentationSource source = PresentationSource.CriticalFromVisual(this, false /* enable2DTo3DTransition */);
+                    PresentationSource source = PresentationSource.FromVisual(this, enable2DTo3DTransition: false);
 
                     if (source != null)
                     {
@@ -685,9 +672,7 @@ namespace System.Windows.Interop
         ///<remarks> Not available in Internet zone</remarks>
         protected override Size MeasureOverride(Size constraint)
         {
-            DemandIfUntrusted();
-
-            Size desiredSize = new Size(0,0);
+            Size desiredSize = new Size(0, 0);
 
             // Measure to our desired size.  If we have a 0-length dimension,
             // the system will assume we don't care about that dimension.
@@ -780,9 +765,9 @@ namespace System.Windows.Interop
 
                                     // Create a DrawingGroup that only contains an ImageDrawing that wraps the bitmap.
                                     drawingGroup = new DrawingGroup();
-                                    System.Windows.Media.Imaging.BitmapSource bitmapSource = Imaging.CriticalCreateBitmapSourceFromHBitmap(hBitmap.Handle, IntPtr.Zero, Int32Rect.Empty, null, WICBitmapAlphaChannelOption.WICBitmapIgnoreAlpha);
-                                    Rect rectElement    = new Rect(RenderSize);
-                                    drawingGroup.Children.Add(new ImageDrawing(bitmapSource, rectElement));
+                                    Media.Imaging.BitmapSource bitmapSource = Imaging.CreateBitmapSourceFromHBitmap(hBitmap.Handle, IntPtr.Zero, Int32Rect.Empty, null, WICBitmapAlphaChannelOption.WICBitmapIgnoreAlpha);
+
+                                    drawingGroup.Children.Add(new ImageDrawing(bitmapSource, new Rect(RenderSize)));
                                     drawingGroup.Freeze();
                                 }
                                 finally
@@ -829,16 +814,6 @@ namespace System.Windows.Interop
             _weakEventDispatcherShutdown = new WeakEventDispatcherShutdown(this, this.Dispatcher);
         }
 
-        ///<summary>
-        ///     Use this method as a defense-in-depth measure only.
-        ///</summary>
-        private void DemandIfUntrusted()
-        {
-            if ( ! _fTrusted )
-            {
-            }
-        }
-
         private void OnSourceChanged(object sender, SourceChangedEventArgs e)
         {
             // Remove ourselves as an IKeyboardInputSinks child of our previous
@@ -853,8 +828,7 @@ namespace System.Windows.Interop
             }
 
             // Add ourselves as an IKeyboardInputSinks child of our containing window.
-            IKeyboardInputSink source = PresentationSource.CriticalFromVisual(this, false /* enable2DTo3DTransition */) as IKeyboardInputSink;
-            if(source != null)
+            if (PresentationSource.FromVisual(this, enable2DTo3DTransition: false) is IKeyboardInputSink source)
             {
                 ((IKeyboardInputSink)this).KeyboardInputSite = source.RegisterKeyboardInputSink(this);
             }
@@ -905,8 +879,6 @@ namespace System.Windows.Interop
         // 3) a parent window is not present, hide the child window by parenting it to SystemResources.Hwnd window.
         private void BuildOrReparentWindow()
         {
-            DemandIfUntrusted();
-
             // Verify the thread has access to the context.
             // VerifyAccess();
 
@@ -922,20 +894,15 @@ namespace System.Windows.Interop
             // Find the source window, this must be the parent window of
             // the child window.
             IntPtr hwndParent = IntPtr.Zero;
-            PresentationSource source = PresentationSource.CriticalFromVisual(this, false /* enable2DTo3DTransition */);
-            if(source != null)
+            if (PresentationSource.FromVisual(this, enable2DTo3DTransition: false) is HwndSource hwndSource)
             {
-                HwndSource hwndSource = source as HwndSource ;
-                if(hwndSource != null)
-                {
-                    hwndParent = hwndSource.Handle;
-                }
+                hwndParent = hwndSource.Handle;
             }
             else
             {
                 // attempt to also walk through 3D - if we get a non-null result then we know we are inside of
                 // a 3D scene which is not supported
-                PresentationSource goingThrough3DSource = PresentationSource.CriticalFromVisual(this, true /* enable2DTo3DTransition */);
+                PresentationSource goingThrough3DSource = PresentationSource.FromVisual(this, enable2DTo3DTransition: true);
                 if (goingThrough3DSource != null)
                 {
                     if (TraceHwndHost.IsEnabled)
@@ -1002,9 +969,6 @@ namespace System.Windows.Interop
 
         private void BuildWindow(HandleRef hwndParent)
         {
-            // Demand unmanaged code to the caller. IT'S RISKY TO REMOVE THIS
-            DemandIfUntrusted();
-
             // Allow the derived class to build our HWND.
             _hwnd = BuildWindowCore(hwndParent);
 
@@ -1046,7 +1010,7 @@ namespace System.Windows.Interop
 #endif
             {
                 _hwndSubclass = new HwndSubclass(_hwndSubclassHook);
-                _hwndSubclass.CriticalAttach(_hwnd.Handle);
+                _hwndSubclass.AttachWndProcHook(_hwnd.Handle);
             }
 
             // Initially make sure the window is hidden.  We will show it later during rendering.
@@ -1060,7 +1024,7 @@ namespace System.Windows.Interop
 
             // Convert from pixels to measure units.
             // PresentationSource can't be null if we get here.
-            PresentationSource source = PresentationSource.CriticalFromVisual(this, false /* enable2DTo3DTransition */);
+            PresentationSource source = PresentationSource.FromVisual(this, enable2DTo3DTransition: false);
             Point ptUpperLeft = new Point(rc.left, rc.top);
             Point ptLowerRight = new Point(rc.right, rc.bottom);
             ptUpperLeft = source.CompositionTarget.TransformFromDevice.Transform(ptUpperLeft);

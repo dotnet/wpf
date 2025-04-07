@@ -134,22 +134,16 @@ namespace System.Windows.Input
             }
         }
 
-        /////////////////////////////////////////////////////////////////////
         /// <summary>
-        ///     Returns the PresentationSource that is reporting input for this device.
+        /// Returns the PresentationSource that is reporting input for this device.
         /// </summary>
-        /// <remarks>
-        ///     Callers must have UIPermission(UIPermissionWindow.AllWindows) to call this API.
-        /// </remarks>
         internal override PresentationSource ActiveSource
         {
             get
             {
                 VerifyAccess();
-                StylusDevice stylusDevice = Stylus.CurrentStylusDevice;
-                if (stylusDevice == null)
-                    return null;
-                return stylusDevice.ActiveSource;  // This also does a security demand.
+
+                return Stylus.CurrentStylusDevice?.ActiveSource;
             }
         }
 

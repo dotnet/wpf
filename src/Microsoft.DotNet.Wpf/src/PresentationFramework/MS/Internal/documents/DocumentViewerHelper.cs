@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
 //
@@ -279,7 +279,7 @@ namespace MS.Internal.Documents
                         SR.DocumentViewerSearchDownCompleteLabel;
             messageString = String.Format(System.Globalization.CultureInfo.CurrentCulture, messageString, findToolBar.SearchText);
 
-            HwndSource hwndSource = PresentationSource.CriticalFromVisual(findToolBar) as HwndSource;
+            HwndSource hwndSource = PresentationSource.FromVisual(findToolBar) as HwndSource;
             IntPtr hwnd = (hwndSource != null) ? hwndSource.Handle : IntPtr.Zero;
 
             PresentationFramework.SecurityHelper.ShowMessageBoxHelper(

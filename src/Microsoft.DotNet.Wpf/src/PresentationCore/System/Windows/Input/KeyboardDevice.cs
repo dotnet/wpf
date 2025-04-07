@@ -156,7 +156,7 @@ namespace System.Windows.Input
                 DependencyObject containingVisual = InputElement.GetContainingVisual(focus);
                 if(containingVisual != null)
                 {
-                    PresentationSource source = PresentationSource.CriticalFromVisual(containingVisual);
+                    PresentationSource source = PresentationSource.FromVisual(containingVisual);
                     if (source != null)
                     {
                         keyboardInputProvider = (IKeyboardInputProvider)source.GetInputProvider(typeof(KeyboardDevice));
@@ -600,7 +600,7 @@ namespace System.Windows.Input
             DependencyObject visualContainer = InputElement.GetContainingVisual(element);
             if(visualContainer != null)
             {
-                presentationSource = PresentationSource.CriticalFromVisual(visualContainer);
+                presentationSource = PresentationSource.FromVisual(visualContainer);
             }
             
             // The default action is to reset focus to the root element

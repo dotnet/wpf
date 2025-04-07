@@ -213,10 +213,6 @@ namespace System.Windows.Media
         /// </summary>
         /// <param name="glyphs">Collection of glyph indices to be included into the subset.</param>
         /// <returns>Binary image of font subset.</returns>
-        /// <remarks>
-        ///     Callers must have UnmanagedCode permission to call this API.
-        ///     Callers must have FileIOPermission or WebPermission to font location to call this API.
-        /// </remarks>
         [CLSCompliant(false)]
         public byte[] ComputeSubset(ICollection<ushort> glyphs)
         {
@@ -273,9 +269,6 @@ namespace System.Windows.Media
         /// Returns the original Uri of this glyph typeface object.
         /// </summary>
         /// <value>The Uri glyph typeface was constructed with.</value>
-        /// <remarks>
-        ///     Callers must have FileIOPermission(FileIOPermissionAccess.PathDiscovery) for the given Uri to call this API.
-        /// </remarks>
         public Uri FontUri
         {
             get
@@ -715,8 +708,7 @@ namespace System.Windows.Media
         }
 
         /// <summary>
-        /// EmbeddingRights property describes font embedding permissions
-        /// specified in this glyph typeface.
+        /// EmbeddingRights property describes font embedding permissions specified in this glyph typeface.
         /// </summary>
         public FontEmbeddingRight EmbeddingRights
         {

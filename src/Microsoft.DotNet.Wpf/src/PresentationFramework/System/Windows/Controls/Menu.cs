@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
 
@@ -237,8 +237,7 @@ namespace System.Windows.Controls
                 // We need to exit menu mode because it holds capture and prevents
                 // the system menu from showing.
                 IsMenuMode = false;
-                System.Windows.Interop.HwndSource source = PresentationSource.CriticalFromVisual(this) as System.Windows.Interop.HwndSource;
-                if (source != null)
+                if (PresentationSource.FromVisual(this) is Interop.HwndSource source)
                 {
                     source.ShowSystemMenu();
                     e.Handled = true;
@@ -332,9 +331,8 @@ namespace System.Windows.Controls
 
             // Need to check that ALT/F10 happened in our source.
             PresentationSource source = sender as PresentationSource;
-            PresentationSource mySource = null;
+            PresentationSource mySource = PresentationSource.FromVisual(this);
 
-            mySource = PresentationSource.CriticalFromVisual(this);
             if (source == mySource)
             {
                 // Give focus to the first possible element in the ItemsControl

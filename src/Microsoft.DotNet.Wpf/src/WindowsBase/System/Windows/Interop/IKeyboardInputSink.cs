@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
 using System.Windows.Input;
@@ -19,12 +19,6 @@ namespace System.Windows.Interop
         ///     Registers a child KeyboardInputSink with this sink.  A site
         ///     is returned.
         /// </summary>
-        /// <remarks>
-        ///     This API requires unrestricted UI Window permission.  There is a link demand here
-        ///     so that we are protected via direct calls to this interface.  It can't be a full 
-        ///     demand since those don't work declaratively on interface methods.  The implementors
-        ///     of this interface method all do a full demand since that's really the protection we want.
-        /// </remarks>
         IKeyboardInputSite RegisterKeyboardInputSink(IKeyboardInputSink sink);
 
         /// <summary>
@@ -36,9 +30,6 @@ namespace System.Windows.Interop
         ///     modify the MSG structure, it's passed by reference only
         ///     as a performance optimization.
         /// </summary>
-        /// <remarks>
-        ///     This API requires unrestricted UI Window permission.
-        /// </remarks>
         bool TranslateAccelerator(ref MSG msg, ModifierKeys modifiers);
 
         /// <summary>
@@ -54,15 +45,7 @@ namespace System.Windows.Interop
         ///     any other methods are called.  It may be set multiple times,
         ///     and should be set to null before disposal.
         /// </summary>
-        /// <remarks>
-        ///     The setter for this property requires unrestricted UI Window permission.
-        /// </remarks>
-        IKeyboardInputSite KeyboardInputSite 
-        {
-            get;
-            
-            set;
-        }
+        IKeyboardInputSite KeyboardInputSite { get; set; }
 
         /// <summary>
         ///     Gives the component a chance to process Mnemonics
@@ -72,9 +55,6 @@ namespace System.Windows.Interop
         ///     If this component contains child components, the container must call
         ///     OnMnemonic on each of it's children.
         /// </summary>
-        /// <remarks>
-        ///     This API requires unrestricted UI Window permission.
-        /// </remarks>
         bool OnMnemonic(ref MSG msg, ModifierKeys modifiers);
 
         /// <summary>
@@ -85,9 +65,6 @@ namespace System.Windows.Interop
         ///     It is illegal to modify the MSG structure, it's passed by reference
         ///     only as a performance optimization.
         /// </summary>
-        /// <remarks>
-        ///     This API requires unrestricted UI Window permission.
-        /// </remarks>
         bool TranslateChar(ref MSG msg, ModifierKeys modifiers);
 
         /// <summary>

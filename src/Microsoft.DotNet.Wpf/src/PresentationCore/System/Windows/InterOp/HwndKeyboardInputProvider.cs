@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
 using System.Windows.Input;
@@ -214,7 +214,7 @@ namespace System.Windows.Interop
                     // pending operations, so that the operation we just posted
                     // is guaranteed to get dispatched after any pending WM_CHAR
                     // messages are dispatched.
-                    Dispatcher.CriticalRequestProcessing(true);
+                    Dispatcher.RequestProcessing(force: true);
 
                     MSG msg = new MSG(hwnd, (int)message, wParam, lParam, _msgTime, 0, 0);
                     ProcessKeyAction(ref msg, ref handled);
@@ -346,7 +346,7 @@ namespace System.Windows.Interop
                                 DependencyObject focusedDO = Keyboard.FocusedElement as DependencyObject;
                                 if (focusedDO != null)
                                 {
-                                    HwndSource hwndSource = PresentationSource.CriticalFromVisual(focusedDO) as HwndSource;
+                                    HwndSource hwndSource = PresentationSource.FromVisual(focusedDO) as HwndSource;
                                     if (hwndSource == _source)
                                     {
                                         _restoreFocus = focusedDO as IInputElement;
@@ -472,7 +472,7 @@ namespace System.Windows.Interop
                         {
                             // Only restore focus to an element if that
                             // element still belongs to this HWND.
-                            HwndSource hwndSource = PresentationSource.CriticalFromVisual(restoreFocusDO) as HwndSource;
+                            HwndSource hwndSource = PresentationSource.FromVisual(restoreFocusDO) as HwndSource;
                             if (hwndSource != thisSource)
                             {
                                 restoreFocusDO = null;
@@ -495,7 +495,7 @@ namespace System.Windows.Interop
                             restoreFocusDO = (DependencyObject)Keyboard.FocusedElement;
                             if (restoreFocusDO != null)
                             {
-                                HwndSource hwndSource = PresentationSource.CriticalFromVisual(restoreFocusDO) as HwndSource;
+                                HwndSource hwndSource = PresentationSource.FromVisual(restoreFocusDO) as HwndSource;
                                 if (hwndSource != thisSource)
                                 {
                                     Keyboard.ClearFocus();
@@ -733,7 +733,7 @@ namespace System.Windows.Interop
 
             if(hwnd != IntPtr.Zero)
             {
-                HwndSource hwndSource = HwndSource.CriticalFromHwnd(hwnd);
+                HwndSource hwndSource = HwndSource.FromHwnd(hwnd);
                 if(hwndSource != null)
                 {
                     if(hwndSource.Dispatcher == _source.Dispatcher)

@@ -530,7 +530,7 @@ namespace System.Windows.Input.StylusWisp
                                             {
                                                 MouseDevice mouseDevice = _inputManager.PrimaryMouseDevice;
 
-                                                if (mouseDevice.CriticalActiveSource == mouseInputReport.InputSource)
+                                                if (mouseDevice.ActiveSource == mouseInputReport.InputSource)
                                                 {
 #if !MULTICAPTURE
                                                     // Update over to be null when deactivating.
@@ -600,7 +600,7 @@ namespace System.Windows.Input.StylusWisp
                                         {
                                             // Check to se if we have already Activated the mouse from a stylus event.
                                             // If not then we need to let this one go through marked from us if we are in range!
-                                            if (mouseInputReport.InputSource != _inputManager.PrimaryMouseDevice.CriticalActiveSource)
+                                            if (mouseInputReport.InputSource != _inputManager.PrimaryMouseDevice.ActiveSource)
                                             {
                                                 Point pt;
 
@@ -1023,8 +1023,8 @@ namespace System.Windows.Input.StylusWisp
                         if (!_inDragDrop && !rawStylusInputReport.PenContext.Contexts.IsWindowDisabled && !stylusDevice.IgnoreStroke)
                         {
                             Point position = stylusDevice.GetRawPosition(null);
-                            position = DeviceUnitsFromMeasureUnits(stylusDevice.CriticalActiveSource, position); // change back to device coords.
-                            IInputElement target = stylusDevice.FindTarget(stylusDevice.CriticalActiveSource, position);
+                            position = DeviceUnitsFromMeasureUnits(stylusDevice.ActiveSource, position); // change back to device coords.
+                            IInputElement target = stylusDevice.FindTarget(stylusDevice.ActiveSource, position);
                             SelectStylusDevice(stylusDevice, target, true);
                         }
                         else
@@ -1075,8 +1075,8 @@ namespace System.Windows.Input.StylusWisp
                         bBarrelPressed = true;
                     }
 
-                    Point pPixelPoint = DeviceUnitsFromMeasureUnits(stylusDevice.CriticalActiveSource, ptClient);
-                    Point pLastPixelPoint = DeviceUnitsFromMeasureUnits(stylusDevice.CriticalActiveSource, stylusDevice.LastTapPoint);
+                    Point pPixelPoint = DeviceUnitsFromMeasureUnits(stylusDevice.ActiveSource, ptClient);
+                    Point pLastPixelPoint = DeviceUnitsFromMeasureUnits(stylusDevice.ActiveSource, stylusDevice.LastTapPoint);
 
                     // How long since the last click? (deals with tickcount wrapping too)
                     //  Here's some info on how this works...
@@ -1262,7 +1262,7 @@ namespace System.Windows.Input.StylusWisp
                 StylusEventArgs eventArgsOutOfRange = (StylusEventArgs)e.StagingItem.Input;
 
                 // See if we need to set the Mouse Activate flag.
-                PresentationSource mouseSource = _inputManager.PrimaryMouseDevice.CriticalActiveSource;
+                PresentationSource mouseSource = _inputManager.PrimaryMouseDevice.ActiveSource;
 
                 // See if we need to change the stylus over state state and send a mouse deactivate.
                 // We send the cached Deactivate through if we saw mouse deactivate before out of range event
@@ -1758,7 +1758,7 @@ namespace System.Windows.Input.StylusWisp
                                 // of straight touch events.
 
                                 // See if we need to set the Mouse Activate flag.
-                                if (_inputManager.PrimaryMouseDevice.CriticalActiveSource != mouseInputSource)
+                                if (_inputManager.PrimaryMouseDevice.ActiveSource != mouseInputSource)
                                 {
                                     actions |= RawMouseActions.Activate;
                                 }
@@ -1847,8 +1847,8 @@ namespace System.Windows.Input.StylusWisp
                     rightButtonDown = mouseDevice.RightButton == MouseButtonState.Pressed;
                     timestamp = mouseInputReport.Timestamp;
 
-                    // Get presentationsource from element.
-                    source = PresentationSource.CriticalFromVisual(_activeMousePlugInCollection.Element as Visual);
+                    // Get PresentationSource from element.
+                    source = PresentationSource.FromVisual(_activeMousePlugInCollection.Element);
                 }
                 else
                 {
@@ -1892,7 +1892,7 @@ namespace System.Windows.Input.StylusWisp
                     }
 
                     // Take the presentation source which is associated to the directly over element.
-                    source = PresentationSource.CriticalFromVisual(directlyOverVisual);
+                    source = PresentationSource.FromVisual(directlyOverVisual);
 }
 
                 PenContexts penContexts = GetPenContextsFromHwnd(source);
@@ -2841,7 +2841,7 @@ namespace System.Windows.Input.StylusWisp
                 // Don't set Activate flag if a synchronize is requested!
                 if (!isSynchronize)
                 {
-                    if (_inputManager.PrimaryMouseDevice.CriticalActiveSource != mouseInputSource)
+                    if (_inputManager.PrimaryMouseDevice.ActiveSource != mouseInputSource)
                     {
                         actions |= RawMouseActions.Activate;
                     }
@@ -2953,7 +2953,7 @@ namespace System.Windows.Input.StylusWisp
                 if (hwndHit != IntPtr.Zero)
                 {
                     // See if this is one of our windows.
-                    sourceHit = HwndSource.CriticalFromHwnd(hwndHit);
+                    sourceHit = HwndSource.FromHwnd(hwndHit);
 
                     // We need to check if the point is over the client or
                     // non-client area.  We only care about being over the
@@ -3530,7 +3530,7 @@ namespace System.Windows.Input.StylusWisp
         internal void OnWindowEnableChanged(IntPtr hwnd, bool disabled)
         {
             // See if this is one of our windows.
-            HwndSource sourceHit = HwndSource.CriticalFromHwnd(hwnd);
+            HwndSource sourceHit = HwndSource.FromHwnd(hwnd);
 
             // We need to check if the point is over the client or
             // non-client area.  We only care about being over the

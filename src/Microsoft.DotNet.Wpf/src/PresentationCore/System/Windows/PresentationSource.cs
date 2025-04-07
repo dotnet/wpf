@@ -2,6 +2,7 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 
 using System.Collections;
+using System.Runtime.CompilerServices;
 using System.Windows.Threading;
 using System.Windows.Media;
 using System.Windows.Input;
@@ -73,13 +74,9 @@ namespace System.Windows
         /// </summary>
         /// <param name="visual">The visual to find the source for.</param>
         /// <returns>The source in which the visual is being presented.</returns>
-        ///<remarks>
-        ///     Callers must have UIPermission(UIPermissionWindow.AllWindows) to call this API.
-        ///</remarks> 
         public static PresentationSource FromVisual(Visual visual)
         {
-
-            return CriticalFromVisual(visual);
+            return FromVisual(visual, enable2DTo3DTransition: true);
         }
 
         /// <summary>
@@ -87,13 +84,9 @@ namespace System.Windows
         /// </summary>
         /// <param name="dependencyObject">The dependency object to find the source for.</param>
         /// <returns>The source in which the dependency object is being presented.</returns>
-        ///<remarks>
-        ///     Callers must have UIPermission(UIPermissionWindow.AllWindows) to call this API.
-        ///</remarks> 
         public static PresentationSource FromDependencyObject(DependencyObject dependencyObject)
         {
-
-            return CriticalFromVisual(dependencyObject);
+            return FromVisual(dependencyObject, enable2DTo3DTransition: true);
         }
 
         /// <summary>
@@ -107,7 +100,6 @@ namespace System.Windows
         ///     1) You cannot use the UIElement or ContentElement AddHandler() method.
         ///     2) Class handlers are not allowed.
         ///     3) The handlers will receive the SourceChanged event even if it was handled.
-        ///     Callers must have UIPermission(UIPermissionWindow.AllWindows) to call this API.
         /// </remarks>
         public static void AddSourceChangedHandler(IInputElement element, SourceChangedEventHandler handler)
         {
@@ -287,14 +279,7 @@ namespace System.Windows
         /// <summary>
         ///     The root visual being presented in the source.
         /// </summary>
-        /// <remarks>
-        ///     Callers must have UIPermission(UIPermissionWindow.AllWindows) to call this API.
-        /// </remarks>
-        public abstract Visual RootVisual
-        {
-            get;
-            set;
-        }
+        public abstract Visual RootVisual { get; set; }
 
         /// <summary>
         ///     Causes this PresentationSource to enter "menu mode".
@@ -363,9 +348,6 @@ namespace System.Windows
         ///   over a ReadOnly SnapShot of the List of sources.  The Enumerator
         ///   skips over the any dead weak references in the list.
         /// </summary>
-        /// <remarks>
-        ///     Callers must have UIPermission(UIPermissionWindow.AllWindows) to call this API.
-        /// </remarks>
         public static IEnumerable CurrentSources
         {
             get
@@ -525,21 +507,32 @@ namespace System.Windows
             }
         }
 
-        internal static PresentationSource CriticalFromVisual(DependencyObject v)
+#nullable enable
+        /// <summary>
+        /// Returns the source in which the visual is being presented.
+        /// </summary>
+        /// <param name="visual">The visual to find the source for.</param>
+        /// <returns>
+        /// The source in which the visual is being presented or <see langword="null"/> in case <paramref name="visual"/> was <see langword="null"/>.
+        /// </returns>
+        /// <remarks>Unlike <see cref="FromVisual"/>, this allows <see langword="null"/> passed to <paramref name="visual"/>.</remarks>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        internal static PresentationSource? FromNullableVisual(DependencyObject? visual, bool enable2DTo3DTransition = true)
         {
-            return CriticalFromVisual(v, enable2DTo3DTransition: true);
+            return visual is not null ? FromVisual(visual, enable2DTo3DTransition) : null;
         }
+#nullable disable
 
-        /// <param name="v">The dependency object to find the source for</param>
+        /// <param name="visual">The dependency object to find the source for</param>
         /// <param name="enable2DTo3DTransition">
         ///     Determines whether when walking the tree to enable transitioning from a 2D child
         ///     to a 3D parent or to stop once a 3D parent is encountered.
         /// </param>
-        internal static PresentationSource CriticalFromVisual(DependencyObject v, bool enable2DTo3DTransition)
+        internal static PresentationSource FromVisual(DependencyObject visual, bool enable2DTo3DTransition = true)
         {
-            ArgumentNullException.ThrowIfNull(v);
+            ArgumentNullException.ThrowIfNull(visual);
 
-            PresentationSource source = FindSource(v, enable2DTo3DTransition);
+            PresentationSource source = FindSource(visual, enable2DTo3DTransition);
 
             // Don't hand out a disposed source.
             if (null != source && source.IsDisposed)
@@ -573,10 +566,10 @@ namespace System.Windows
             if (visuals.IsEmpty)
                 return true;
 
-            PresentationSource baseSource = CriticalFromVisual(visuals[0]);
+            PresentationSource baseSource = FromVisual(visuals[0]);
             for (int i = 1; i < visuals.Length; i++)
             {
-                if (baseSource != CriticalFromVisual(visuals[i]))
+                if (baseSource != FromVisual(visuals[i]))
                 {
                     return false;
                 }

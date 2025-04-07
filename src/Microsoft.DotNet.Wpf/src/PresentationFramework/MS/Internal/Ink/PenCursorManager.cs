@@ -231,7 +231,7 @@ namespace MS.Internal.Ink
                 return Cursors.Arrow;
             }
 
-            cursor = CursorInteropHelper.CriticalCreate(finalCursor);
+            cursor = CursorInteropHelper.Create(finalCursor);
             return cursor;
         }
 
@@ -307,8 +307,7 @@ namespace MS.Internal.Ink
 
             byte[] pixels = new byte[strideColorBitmap * height];
 
-            // Call the internal method which skips the MediaPermission Demand
-            converter.CriticalCopyPixels(Int32Rect.Empty, pixels, strideColorBitmap, 0);
+            converter.CopyPixelsEx(Int32Rect.Empty, pixels, strideColorBitmap, 0);
 
             return pixels;
         }

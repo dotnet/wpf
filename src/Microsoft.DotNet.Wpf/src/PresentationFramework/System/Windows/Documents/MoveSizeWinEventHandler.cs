@@ -67,7 +67,7 @@ namespace System.Windows.Documents
                     bool notified = false;
                     TextStore textstore = (TextStore)_arTextStore[i];
 
-                    IntPtr hwndTemp = textstore.CriticalSourceWnd;
+                    IntPtr hwndTemp = textstore.GetSourceWindowHandle();
                     while (hwndTemp != IntPtr.Zero)
                     {
                         if (hwnd == hwndTemp)

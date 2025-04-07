@@ -1165,8 +1165,7 @@ namespace System.Windows.Documents
         // See msdn's ITextStoreACP documentation for a full description.
         void UnsafeNativeMethods.ITextStoreACP.GetWnd(int viewCookie, out IntPtr hwnd)
         {
-            hwnd = IntPtr.Zero;
-            hwnd = CriticalSourceWnd;
+            hwnd = GetSourceWindowHandle();
         }
 
         #endregion ITextStoreACP
@@ -1704,10 +1703,6 @@ namespace System.Windows.Documents
 
         // Called when the selection changes position.
         // Called explicitly by the TextEditor.
-        /// <summary>
-        /// Critical - calls unmanaged code (_sink)
-        /// TreatAsSafe - notifies of selection change, no potential data leak, this is safe
-        /// </summary>
         internal void OnSelectionChanged()
         {
             if (_compositionEventState == CompositionEventState.RaisingEvents)
@@ -2043,7 +2038,7 @@ namespace System.Windows.Documents
             // FrameworkTextComposition should be used for non-RichContent and TextRange is not exposed.
             if (editor.AcceptsRichContent)
             {
-                composition = new FrameworkRichTextComposition(InputManager.UnsecureCurrent, editor.UiScope, owner);
+                composition = new FrameworkRichTextComposition(InputManager.Current, editor.UiScope, owner);
             }
             else
             {
@@ -2143,15 +2138,6 @@ namespace System.Windows.Documents
         {
             get { return _transitoryExtensionSinkCookie; }
             set { _transitoryExtensionSinkCookie = value; }
-        }
-
-        internal IntPtr CriticalSourceWnd
-        {
-            get
-            {
-                bool callerIsTrusted = true;
-                return( GetSourceWnd(callerIsTrusted) );
-            }
         }
 
         #endregion Internal Properties
@@ -2598,7 +2584,7 @@ namespace System.Windows.Documents
         // Throws TS_E_NOLAYOUT if they are not available.
         private void GetVisualInfo(out PresentationSource source, out IWin32Window win32Window, out ITextView view)
         {
-            source = PresentationSource.CriticalFromVisual(RenderScope);
+            source = PresentationSource.FromVisual((DependencyObject)RenderScope);
             win32Window = source as IWin32Window;
 
             if (win32Window == null)
@@ -2832,9 +2818,7 @@ namespace System.Windows.Documents
                         attrval.val.data1 = (IntPtr)0;
 
                         // Get the transformation that is relative from source.
-                        PresentationSource source = null;
-
-                        source = PresentationSource.CriticalFromVisual((Visual)RenderScope);
+                        PresentationSource source = PresentationSource.FromVisual(RenderScope);
                         if (source != null)
                         {
                             Visual root = source.RootVisual;
@@ -3286,28 +3270,9 @@ namespace System.Windows.Documents
             return null;
         }
 
-        private IntPtr GetSourceWnd(bool callerIsTrusted)
+        internal nint GetSourceWindowHandle()
         {
-            IntPtr hwnd = IntPtr.Zero;
-            if (RenderScope != null)
-            {
-                IWin32Window win32Window;
-
-                if (callerIsTrusted)
-                {
-                    win32Window = PresentationSource.CriticalFromVisual(RenderScope) as IWin32Window;
-                }
-                else
-                {
-                    win32Window = PresentationSource.FromVisual(RenderScope) as IWin32Window;
-                }
-
-                if (win32Window != null)
-                {
-                    hwnd = win32Window.Handle;
-                }
-            }
-            return hwnd;
+            return PresentationSource.FromNullableVisual(RenderScope) is IWin32Window win32Window ? win32Window.Handle : nint.Zero;
         }
 
         // Detects errors in the change notifications we send TSF.

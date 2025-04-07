@@ -187,7 +187,7 @@ namespace MS.Internal.Interop
         /// <returns>The HwndSource associated with the Visual</returns>
         private static HwndSource GetHwndSource(DependencyObject focusedObject)
         {
-            return PresentationSource.CriticalFromVisual(focusedObject) as HwndSource;
+            return PresentationSource.FromVisual(focusedObject) as HwndSource;
         }
     }
 }

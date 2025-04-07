@@ -406,7 +406,7 @@ namespace Microsoft.Win32
             }
 
             dialog.SetTitle(Title);
-            dialog.SetFileName(CriticalItemName);
+            dialog.SetFileName(ItemName);
 
             FOS options = _dialogOptions;
             dialog.SetOptions(options);
@@ -459,19 +459,9 @@ namespace Microsoft.Win32
         ///  Gets a string containing the full path of the file or folder selected in
         ///  the dialog box.
         /// </summary>
-        private protected string CriticalItemName
+        private protected string ItemName
         {
-            get
-            {
-                if (_itemNames?.Length > 0)
-                {
-                    return _itemNames[0];
-                }
-                else
-                {
-                    return string.Empty;
-                }
-            }
+            get => _itemNames?.Length > 0 ? _itemNames[0] : string.Empty;
         }
 
         private protected string[] MutableItemNames

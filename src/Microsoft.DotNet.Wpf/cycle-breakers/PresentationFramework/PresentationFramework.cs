@@ -183,7 +183,7 @@ namespace System.Windows
         bool System.Windows.Markup.IQueryAmbient.IsAmbientPropertyAvailable(string propertyName) { throw null; }
         public object TryFindResource(object resourceKey) { throw null; }
     }
-    [System.AttributeUsageAttribute(System.AttributeTargets.Method, AllowMultiple = false)]
+    [System.AttributeUsageAttribute(System.AttributeTargets.Method, AllowMultiple=false)]
     public sealed partial class AttachedPropertyBrowsableForChildrenAttribute : System.Windows.AttachedPropertyBrowsableAttribute
     {
         public AttachedPropertyBrowsableForChildrenAttribute() { }
@@ -305,19 +305,19 @@ namespace System.Windows
     }
     public partial class DataTemplateKey : System.Windows.TemplateKey
     {
-        public DataTemplateKey() : base(default(System.Windows.TemplateKey.TemplateType)) { }
-        public DataTemplateKey(object dataType) : base(default(System.Windows.TemplateKey.TemplateType)) { }
+        public DataTemplateKey() : base(default (System.Windows.TemplateKey.TemplateType)) { }
+        public DataTemplateKey(object dataType) : base (default(System.Windows.TemplateKey.TemplateType)) { }
     }
     [System.Windows.Markup.ContentPropertyAttribute("Setters")]
     [System.Windows.Markup.XamlSetMarkupExtensionAttribute("ReceiveMarkupExtension")]
     public partial class DataTrigger : System.Windows.TriggerBase, System.Windows.Markup.IAddChild
     {
         public DataTrigger() { }
-        [System.Windows.LocalizabilityAttribute(System.Windows.LocalizationCategory.None, Readability = System.Windows.Readability.Unreadable)]
+        [System.Windows.LocalizabilityAttribute(System.Windows.LocalizationCategory.None, Readability=System.Windows.Readability.Unreadable)]
         public System.Windows.Data.BindingBase Binding { get { throw null; } set { } }
         [System.ComponentModel.DesignerSerializationVisibilityAttribute(System.ComponentModel.DesignerSerializationVisibility.Content)]
         public System.Windows.SetterBaseCollection Setters { get { throw null; } }
-        [System.Windows.LocalizabilityAttribute(System.Windows.LocalizationCategory.None, Readability = System.Windows.Readability.Unreadable)]
+        [System.Windows.LocalizabilityAttribute(System.Windows.LocalizationCategory.None, Readability=System.Windows.Readability.Unreadable)]
         [System.Windows.Markup.DependsOnAttribute("Binding")]
         public object Value { get { throw null; } set { } }
         public static void ReceiveMarkupExtension(object targetObject, System.Windows.Markup.XamlSetMarkupExtensionEventArgs eventArgs) { }
@@ -477,7 +477,7 @@ namespace System.Windows
     [System.Windows.Markup.RuntimeNamePropertyAttribute("Name")]
     [System.Windows.Markup.UsableDuringInitializationAttribute(true)]
     [System.Windows.Markup.XmlLangPropertyAttribute("Language")]
-    [System.Windows.StyleTypedPropertyAttribute(Property = "FocusVisualStyle", StyleTargetType = typeof(System.Windows.Controls.Control))]
+    [System.Windows.StyleTypedPropertyAttribute(Property="FocusVisualStyle", StyleTargetType=typeof(System.Windows.Controls.Control))]
     public partial class FrameworkContentElement : System.Windows.ContentElement, System.ComponentModel.ISupportInitialize, System.Windows.IFrameworkInputElement, System.Windows.IInputElement, System.Windows.Markup.IQueryAmbient
     {
         public static readonly System.Windows.DependencyProperty BindingGroupProperty;
@@ -580,7 +580,7 @@ namespace System.Windows
     [System.Windows.Markup.RuntimeNamePropertyAttribute("Name")]
     [System.Windows.Markup.UsableDuringInitializationAttribute(true)]
     [System.Windows.Markup.XmlLangPropertyAttribute("Language")]
-    [System.Windows.StyleTypedPropertyAttribute(Property = "FocusVisualStyle", StyleTargetType = typeof(System.Windows.Controls.Control))]
+    [System.Windows.StyleTypedPropertyAttribute(Property="FocusVisualStyle", StyleTargetType=typeof(System.Windows.Controls.Control))]
     public partial class FrameworkElement : System.Windows.UIElement, System.ComponentModel.ISupportInitialize, System.Windows.IFrameworkInputElement, System.Windows.IInputElement, System.Windows.Markup.IQueryAmbient
     {
         public static readonly System.Windows.DependencyProperty ActualHeightProperty;
@@ -636,7 +636,7 @@ namespace System.Windows
         public System.Windows.Style FocusVisualStyle { get { throw null; } set { } }
         public bool ForceCursor { get { throw null; } set { } }
         [System.ComponentModel.TypeConverterAttribute(typeof(System.Windows.LengthConverter))]
-        [System.Windows.LocalizabilityAttribute(System.Windows.LocalizationCategory.None, Readability = System.Windows.Readability.Unreadable)]
+        [System.Windows.LocalizabilityAttribute(System.Windows.LocalizationCategory.None, Readability=System.Windows.Readability.Unreadable)]
         public double Height { get { throw null; } set { } }
         public System.Windows.HorizontalAlignment HorizontalAlignment { get { throw null; } set { } }
         protected internal System.Windows.InheritanceBehavior InheritanceBehavior { get { throw null; } set { } }
@@ -649,16 +649,16 @@ namespace System.Windows
         protected internal virtual System.Collections.IEnumerator LogicalChildren { get { throw null; } }
         public System.Windows.Thickness Margin { get { throw null; } set { } }
         [System.ComponentModel.TypeConverterAttribute(typeof(System.Windows.LengthConverter))]
-        [System.Windows.LocalizabilityAttribute(System.Windows.LocalizationCategory.None, Readability = System.Windows.Readability.Unreadable)]
+        [System.Windows.LocalizabilityAttribute(System.Windows.LocalizationCategory.None, Readability=System.Windows.Readability.Unreadable)]
         public double MaxHeight { get { throw null; } set { } }
         [System.ComponentModel.TypeConverterAttribute(typeof(System.Windows.LengthConverter))]
-        [System.Windows.LocalizabilityAttribute(System.Windows.LocalizationCategory.None, Readability = System.Windows.Readability.Unreadable)]
+        [System.Windows.LocalizabilityAttribute(System.Windows.LocalizationCategory.None, Readability=System.Windows.Readability.Unreadable)]
         public double MaxWidth { get { throw null; } set { } }
         [System.ComponentModel.TypeConverterAttribute(typeof(System.Windows.LengthConverter))]
-        [System.Windows.LocalizabilityAttribute(System.Windows.LocalizationCategory.None, Readability = System.Windows.Readability.Unreadable)]
+        [System.Windows.LocalizabilityAttribute(System.Windows.LocalizationCategory.None, Readability=System.Windows.Readability.Unreadable)]
         public double MinHeight { get { throw null; } set { } }
         [System.ComponentModel.TypeConverterAttribute(typeof(System.Windows.LengthConverter))]
-        [System.Windows.LocalizabilityAttribute(System.Windows.LocalizationCategory.None, Readability = System.Windows.Readability.Unreadable)]
+        [System.Windows.LocalizabilityAttribute(System.Windows.LocalizationCategory.None, Readability=System.Windows.Readability.Unreadable)]
         public double MinWidth { get { throw null; } set { } }
         [System.ComponentModel.MergablePropertyAttribute(false)]
         [System.Windows.LocalizabilityAttribute(System.Windows.LocalizationCategory.NeverLocalize)]
@@ -682,7 +682,7 @@ namespace System.Windows
         public System.Windows.VerticalAlignment VerticalAlignment { get { throw null; } set { } }
         protected override int VisualChildrenCount { get { throw null; } }
         [System.ComponentModel.TypeConverterAttribute(typeof(System.Windows.LengthConverter))]
-        [System.Windows.LocalizabilityAttribute(System.Windows.LocalizationCategory.None, Readability = System.Windows.Readability.Unreadable)]
+        [System.Windows.LocalizabilityAttribute(System.Windows.LocalizationCategory.None, Readability=System.Windows.Readability.Unreadable)]
         public double Width { get { throw null; } set { } }
         public event System.Windows.Controls.ContextMenuEventHandler ContextMenuClosing { add { } remove { } }
         public event System.Windows.Controls.ContextMenuEventHandler ContextMenuOpening { add { } remove { } }
@@ -889,7 +889,7 @@ namespace System.Windows
         public System.Windows.DataTemplate ItemTemplate { get { throw null; } set { } }
         public System.Windows.Controls.DataTemplateSelector ItemTemplateSelector { get { throw null; } set { } }
     }
-    [System.Windows.LocalizabilityAttribute(System.Windows.LocalizationCategory.None, Readability = System.Windows.Readability.Unreadable)]
+    [System.Windows.LocalizabilityAttribute(System.Windows.LocalizationCategory.None, Readability=System.Windows.Readability.Unreadable)]
     public enum HorizontalAlignment
     {
         Center = 1,
@@ -1045,7 +1045,7 @@ namespace System.Windows
     }
     public partial class NullableBoolConverter : System.ComponentModel.NullableConverter
     {
-        public NullableBoolConverter() : base(default(System.Type)) { }
+        public NullableBoolConverter() : base (default(System.Type)) { }
         public override System.ComponentModel.TypeConverter.StandardValuesCollection GetStandardValues(System.ComponentModel.ITypeDescriptorContext context) { throw null; }
         public override bool GetStandardValuesExclusive(System.ComponentModel.ITypeDescriptorContext context) { throw null; }
         public override bool GetStandardValuesSupported(System.ComponentModel.ITypeDescriptorContext context) { throw null; }
@@ -1085,7 +1085,7 @@ namespace System.Windows
         protected override void InvokeEventHandler(System.Delegate genericHandler, object genericTarget) { }
     }
     public delegate void RequestBringIntoViewEventHandler(object sender, System.Windows.RequestBringIntoViewEventArgs e);
-    [System.Windows.LocalizabilityAttribute(System.Windows.LocalizationCategory.None, Readability = System.Windows.Readability.Unreadable)]
+    [System.Windows.LocalizabilityAttribute(System.Windows.LocalizationCategory.None, Readability=System.Windows.Readability.Unreadable)]
     public enum ResizeMode
     {
         CanMinimize = 1,
@@ -1176,14 +1176,14 @@ namespace System.Windows
         public Setter(System.Windows.DependencyProperty property, object value) { }
         public Setter(System.Windows.DependencyProperty property, object value, string targetName) { }
         [System.ComponentModel.DefaultValueAttribute(null)]
-        [System.Windows.LocalizabilityAttribute(System.Windows.LocalizationCategory.None, Modifiability = System.Windows.Modifiability.Unmodifiable, Readability = System.Windows.Readability.Unreadable)]
+        [System.Windows.LocalizabilityAttribute(System.Windows.LocalizationCategory.None, Modifiability=System.Windows.Modifiability.Unmodifiable, Readability=System.Windows.Readability.Unreadable)]
         [System.Windows.Markup.AmbientAttribute]
         public System.Windows.DependencyProperty Property { get { throw null; } set { } }
         [System.ComponentModel.DefaultValueAttribute(null)]
         [System.Windows.Markup.AmbientAttribute]
         public string TargetName { get { throw null; } set { } }
         [System.ComponentModel.TypeConverterAttribute(typeof(System.Windows.Markup.SetterTriggerConditionValueConverter))]
-        [System.Windows.LocalizabilityAttribute(System.Windows.LocalizationCategory.None, Readability = System.Windows.Readability.Unreadable)]
+        [System.Windows.LocalizabilityAttribute(System.Windows.LocalizationCategory.None, Readability=System.Windows.Readability.Unreadable)]
         [System.Windows.Markup.DependsOnAttribute("Property")]
         [System.Windows.Markup.DependsOnAttribute("TargetName")]
         public object Value { get { throw null; } set { } }
@@ -1270,7 +1270,7 @@ namespace System.Windows
         bool System.Windows.Markup.IQueryAmbient.IsAmbientPropertyAvailable(string propertyName) { throw null; }
         public void UnregisterName(string name) { }
     }
-    [System.AttributeUsageAttribute(System.AttributeTargets.Class, AllowMultiple = true)]
+    [System.AttributeUsageAttribute(System.AttributeTargets.Class, AllowMultiple=true)]
     public sealed partial class StyleTypedPropertyAttribute : System.Attribute
     {
         public StyleTypedPropertyAttribute() { }
@@ -1796,14 +1796,14 @@ namespace System.Windows
             TableTemplate = 1,
         }
     }
-    [System.AttributeUsageAttribute(System.AttributeTargets.Class, AllowMultiple = true)]
+    [System.AttributeUsageAttribute(System.AttributeTargets.Class, AllowMultiple=true)]
     public sealed partial class TemplatePartAttribute : System.Attribute
     {
         public TemplatePartAttribute() { }
         public string Name { get { throw null; } set { } }
         public System.Type Type { get { throw null; } set { } }
     }
-    [System.AttributeUsageAttribute(System.AttributeTargets.Class, AllowMultiple = true)]
+    [System.AttributeUsageAttribute(System.AttributeTargets.Class, AllowMultiple=true)]
     public sealed partial class TemplateVisualStateAttribute : System.Attribute
     {
         public TemplateVisualStateAttribute() { }
@@ -1851,7 +1851,7 @@ namespace System.Windows
         public override object ConvertTo(System.ComponentModel.ITypeDescriptorContext typeDescriptorContext, System.Globalization.CultureInfo cultureInfo, object value, System.Type destinationType) { throw null; }
     }
     [System.ComponentModel.TypeConverterAttribute(typeof(System.Windows.ThicknessConverter))]
-    [System.Windows.LocalizabilityAttribute(System.Windows.LocalizationCategory.None, Readability = System.Windows.Readability.Unreadable)]
+    [System.Windows.LocalizabilityAttribute(System.Windows.LocalizationCategory.None, Readability=System.Windows.Readability.Unreadable)]
     public partial struct Thickness : System.IEquatable<System.Windows.Thickness>
     {
         private int _dummyPrimitive;
@@ -1881,7 +1881,7 @@ namespace System.Windows
     public partial class Trigger : System.Windows.TriggerBase, System.ComponentModel.ISupportInitialize, System.Windows.Markup.IAddChild
     {
         public Trigger() { }
-        [System.Windows.LocalizabilityAttribute(System.Windows.LocalizationCategory.None, Modifiability = System.Windows.Modifiability.Unmodifiable, Readability = System.Windows.Readability.Unreadable)]
+        [System.Windows.LocalizabilityAttribute(System.Windows.LocalizationCategory.None, Modifiability=System.Windows.Modifiability.Unmodifiable, Readability=System.Windows.Readability.Unreadable)]
         [System.Windows.Markup.AmbientAttribute]
         public System.Windows.DependencyProperty Property { get { throw null; } set { } }
         [System.ComponentModel.DesignerSerializationVisibilityAttribute(System.ComponentModel.DesignerSerializationVisibility.Content)]
@@ -1890,7 +1890,7 @@ namespace System.Windows
         [System.Windows.Markup.AmbientAttribute]
         public string SourceName { get { throw null; } set { } }
         [System.ComponentModel.TypeConverterAttribute(typeof(System.Windows.Markup.SetterTriggerConditionValueConverter))]
-        [System.Windows.LocalizabilityAttribute(System.Windows.LocalizationCategory.None, Readability = System.Windows.Readability.Unreadable)]
+        [System.Windows.LocalizabilityAttribute(System.Windows.LocalizationCategory.None, Readability=System.Windows.Readability.Unreadable)]
         [System.Windows.Markup.DependsOnAttribute("Property")]
         [System.Windows.Markup.DependsOnAttribute("SourceName")]
         public object Value { get { throw null; } set { } }
@@ -1933,7 +1933,7 @@ namespace System.Windows
         void System.Collections.IList.Insert(int index, object value) { }
         void System.Collections.IList.Remove(object value) { }
     }
-    [System.Windows.LocalizabilityAttribute(System.Windows.LocalizationCategory.None, Readability = System.Windows.Readability.Unreadable)]
+    [System.Windows.LocalizabilityAttribute(System.Windows.LocalizationCategory.None, Readability=System.Windows.Readability.Unreadable)]
     public abstract partial class TriggerBase : System.Windows.DependencyObject
     {
         internal TriggerBase() { }
@@ -1942,7 +1942,7 @@ namespace System.Windows
         [System.ComponentModel.DesignerSerializationVisibilityAttribute(System.ComponentModel.DesignerSerializationVisibility.Content)]
         public System.Windows.TriggerActionCollection ExitActions { get { throw null; } }
     }
-    [System.Windows.LocalizabilityAttribute(System.Windows.LocalizationCategory.None, Readability = System.Windows.Readability.Unreadable)]
+    [System.Windows.LocalizabilityAttribute(System.Windows.LocalizationCategory.None, Readability=System.Windows.Readability.Unreadable)]
     public sealed partial class TriggerCollection : System.Collections.ObjectModel.Collection<System.Windows.TriggerBase>
     {
         internal TriggerCollection() { }
@@ -1965,7 +1965,7 @@ namespace System.Windows
         public static bool operator ==(System.Windows.ValueSource vs1, System.Windows.ValueSource vs2) { throw null; }
         public static bool operator !=(System.Windows.ValueSource vs1, System.Windows.ValueSource vs2) { throw null; }
     }
-    [System.Windows.LocalizabilityAttribute(System.Windows.LocalizationCategory.None, Readability = System.Windows.Readability.Unreadable)]
+    [System.Windows.LocalizabilityAttribute(System.Windows.LocalizationCategory.None, Readability=System.Windows.Readability.Unreadable)]
     public enum VerticalAlignment
     {
         Bottom = 2,
@@ -2121,7 +2121,7 @@ namespace System.Windows
         public System.Collections.IEnumerator GetEnumerator() { throw null; }
         void System.Collections.ICollection.CopyTo(System.Array array, int index) { }
     }
-    [System.Windows.LocalizabilityAttribute(System.Windows.LocalizationCategory.None, Readability = System.Windows.Readability.Unreadable)]
+    [System.Windows.LocalizabilityAttribute(System.Windows.LocalizationCategory.None, Readability=System.Windows.Readability.Unreadable)]
     public enum WindowStartupLocation
     {
         CenterOwner = 2,
@@ -3330,7 +3330,7 @@ namespace System.Windows.Controls
         public char AccessKey { get { throw null; } }
         public System.Windows.Media.Brush Background { get { throw null; } set { } }
         public double BaselineOffset { get { throw null; } set { } }
-        [System.Windows.LocalizabilityAttribute(System.Windows.LocalizationCategory.Font, Modifiability = System.Windows.Modifiability.Unmodifiable)]
+        [System.Windows.LocalizabilityAttribute(System.Windows.LocalizationCategory.Font, Modifiability=System.Windows.Modifiability.Unmodifiable)]
         public System.Windows.Media.FontFamily FontFamily { get { throw null; } set { } }
         [System.ComponentModel.TypeConverterAttribute(typeof(System.Windows.FontSizeConverter))]
         [System.Windows.LocalizabilityAttribute(System.Windows.LocalizationCategory.None)]
@@ -3428,8 +3428,8 @@ namespace System.Windows.Controls
         protected override void OnClick() { }
         protected override System.Windows.Automation.Peers.AutomationPeer OnCreateAutomationPeer() { throw null; }
     }
-    [System.Windows.TemplatePartAttribute(Name = "PART_CalendarItem", Type = typeof(System.Windows.Controls.Primitives.CalendarItem))]
-    [System.Windows.TemplatePartAttribute(Name = "PART_Root", Type = typeof(System.Windows.Controls.Panel))]
+    [System.Windows.TemplatePartAttribute(Name="PART_CalendarItem", Type=typeof(System.Windows.Controls.Primitives.CalendarItem))]
+    [System.Windows.TemplatePartAttribute(Name="PART_Root", Type=typeof(System.Windows.Controls.Panel))]
     public partial class Calendar : System.Windows.Controls.Control
     {
         public static readonly System.Windows.DependencyProperty CalendarButtonStyleProperty;
@@ -3619,9 +3619,9 @@ namespace System.Windows.Controls
         void System.Collections.IList.Remove(object value) { }
     }
     [System.Windows.LocalizabilityAttribute(System.Windows.LocalizationCategory.ComboBox)]
-    [System.Windows.StyleTypedPropertyAttribute(Property = "ItemContainerStyle", StyleTargetType = typeof(System.Windows.Controls.ComboBoxItem))]
-    [System.Windows.TemplatePartAttribute(Name = "PART_EditableTextBox", Type = typeof(System.Windows.Controls.TextBox))]
-    [System.Windows.TemplatePartAttribute(Name = "PART_Popup", Type = typeof(System.Windows.Controls.Primitives.Popup))]
+    [System.Windows.StyleTypedPropertyAttribute(Property="ItemContainerStyle", StyleTargetType=typeof(System.Windows.Controls.ComboBoxItem))]
+    [System.Windows.TemplatePartAttribute(Name="PART_EditableTextBox", Type=typeof(System.Windows.Controls.TextBox))]
+    [System.Windows.TemplatePartAttribute(Name="PART_Popup", Type=typeof(System.Windows.Controls.Primitives.Popup))]
     public partial class ComboBox : System.Windows.Controls.Primitives.Selector
     {
         public static readonly System.Windows.DependencyProperty IsDropDownOpenProperty;
@@ -3683,7 +3683,7 @@ namespace System.Windows.Controls
         protected override void OnMouseLeftButtonUp(System.Windows.Input.MouseButtonEventArgs e) { }
     }
     [System.ComponentModel.DefaultPropertyAttribute("Content")]
-    [System.Windows.LocalizabilityAttribute(System.Windows.LocalizationCategory.None, Readability = System.Windows.Readability.Unreadable)]
+    [System.Windows.LocalizabilityAttribute(System.Windows.LocalizationCategory.None, Readability=System.Windows.Readability.Unreadable)]
     [System.Windows.Markup.ContentPropertyAttribute("Content")]
     public partial class ContentControl : System.Windows.Controls.Control, System.Windows.Markup.IAddChild
     {
@@ -3717,7 +3717,7 @@ namespace System.Windows.Controls
         void System.Windows.Markup.IAddChild.AddChild(object value) { }
         void System.Windows.Markup.IAddChild.AddText(string text) { }
     }
-    [System.Windows.LocalizabilityAttribute(System.Windows.LocalizationCategory.None, Readability = System.Windows.Readability.Unreadable)]
+    [System.Windows.LocalizabilityAttribute(System.Windows.LocalizationCategory.None, Readability=System.Windows.Readability.Unreadable)]
     public partial class ContentPresenter : System.Windows.FrameworkElement
     {
         public static readonly System.Windows.DependencyProperty ContentProperty;
@@ -3932,7 +3932,7 @@ namespace System.Windows.Controls
         protected virtual void OnTemplateChanged(System.Windows.Controls.ControlTemplate oldTemplate, System.Windows.Controls.ControlTemplate newTemplate) { }
         public override string ToString() { throw null; }
     }
-    [System.Windows.LocalizabilityAttribute(System.Windows.LocalizationCategory.None, Readability = System.Windows.Readability.Unreadable)]
+    [System.Windows.LocalizabilityAttribute(System.Windows.LocalizationCategory.None, Readability=System.Windows.Readability.Unreadable)]
     [System.Windows.Markup.DictionaryKeyPropertyAttribute("TargetType")]
     public partial class ControlTemplate : System.Windows.FrameworkTemplate
     {
@@ -4622,10 +4622,10 @@ namespace System.Windows.Controls
         public DataTemplateSelector() { }
         public virtual System.Windows.DataTemplate SelectTemplate(object item, System.Windows.DependencyObject container) { throw null; }
     }
-    [System.Windows.TemplatePartAttribute(Name = "PART_Button", Type = typeof(System.Windows.Controls.Button))]
-    [System.Windows.TemplatePartAttribute(Name = "PART_Popup", Type = typeof(System.Windows.Controls.Primitives.Popup))]
-    [System.Windows.TemplatePartAttribute(Name = "PART_Root", Type = typeof(System.Windows.Controls.Grid))]
-    [System.Windows.TemplatePartAttribute(Name = "PART_TextBox", Type = typeof(System.Windows.Controls.Primitives.DatePickerTextBox))]
+    [System.Windows.TemplatePartAttribute(Name="PART_Button", Type=typeof(System.Windows.Controls.Button))]
+    [System.Windows.TemplatePartAttribute(Name="PART_Popup", Type=typeof(System.Windows.Controls.Primitives.Popup))]
+    [System.Windows.TemplatePartAttribute(Name="PART_Root", Type=typeof(System.Windows.Controls.Grid))]
+    [System.Windows.TemplatePartAttribute(Name="PART_TextBox", Type=typeof(System.Windows.Controls.Primitives.DatePickerTextBox))]
     public partial class DatePicker : System.Windows.Controls.Control
     {
         public static readonly System.Windows.DependencyProperty CalendarStyleProperty;
@@ -4676,7 +4676,7 @@ namespace System.Windows.Controls
         Long = 0,
         Short = 1,
     }
-    [System.Windows.LocalizabilityAttribute(System.Windows.LocalizationCategory.Ignore, Readability = System.Windows.Readability.Unreadable)]
+    [System.Windows.LocalizabilityAttribute(System.Windows.LocalizationCategory.Ignore, Readability=System.Windows.Readability.Unreadable)]
     [System.Windows.Markup.ContentPropertyAttribute("Child")]
     public partial class Decorator : System.Windows.FrameworkElement, System.Windows.Markup.IAddChild
     {
@@ -4717,8 +4717,8 @@ namespace System.Windows.Controls
         protected override System.Windows.Size MeasureOverride(System.Windows.Size constraint) { throw null; }
         public static void SetDock(System.Windows.UIElement element, System.Windows.Controls.Dock dock) { }
     }
-    [System.Windows.TemplatePartAttribute(Name = "PART_ContentHost", Type = typeof(System.Windows.Controls.ScrollViewer))]
-    [System.Windows.TemplatePartAttribute(Name = "PART_FindToolBarHost", Type = typeof(System.Windows.Controls.ContentControl))]
+    [System.Windows.TemplatePartAttribute(Name="PART_ContentHost", Type=typeof(System.Windows.Controls.ScrollViewer))]
+    [System.Windows.TemplatePartAttribute(Name="PART_FindToolBarHost", Type=typeof(System.Windows.Controls.ContentControl))]
     public partial class DocumentViewer : System.Windows.Controls.Primitives.DocumentViewerBase
     {
         public static readonly System.Windows.DependencyProperty CanDecreaseZoomProperty;
@@ -4818,7 +4818,7 @@ namespace System.Windows.Controls
         Right = 3,
         Up = 1,
     }
-    [System.Windows.LocalizabilityAttribute(System.Windows.LocalizationCategory.None, Readability = System.Windows.Readability.Unreadable)]
+    [System.Windows.LocalizabilityAttribute(System.Windows.LocalizationCategory.None, Readability=System.Windows.Readability.Unreadable)]
     public partial class Expander : System.Windows.Controls.HeaderedContentControl
     {
         public static readonly System.Windows.RoutedEvent CollapsedEvent;
@@ -4839,7 +4839,7 @@ namespace System.Windows.Controls
         protected override System.Windows.Automation.Peers.AutomationPeer OnCreateAutomationPeer() { throw null; }
         protected virtual void OnExpanded() { }
     }
-    [System.Windows.TemplatePartAttribute(Name = "PART_FindToolBarHost", Type = typeof(System.Windows.Controls.Decorator))]
+    [System.Windows.TemplatePartAttribute(Name="PART_FindToolBarHost", Type=typeof(System.Windows.Controls.Decorator))]
     public partial class FlowDocumentPageViewer : System.Windows.Controls.Primitives.DocumentViewerBase
     {
         public static readonly System.Windows.DependencyProperty CanDecreaseZoomProperty;
@@ -4889,8 +4889,8 @@ namespace System.Windows.Controls
         protected virtual void OnPrintCompleted() { }
     }
     [System.Windows.Markup.ContentPropertyAttribute("Document")]
-    [System.Windows.TemplatePartAttribute(Name = "PART_ContentHost", Type = typeof(System.Windows.Controls.Decorator))]
-    [System.Windows.TemplatePartAttribute(Name = "PART_FindToolBarHost", Type = typeof(System.Windows.Controls.Decorator))]
+    [System.Windows.TemplatePartAttribute(Name="PART_ContentHost", Type=typeof(System.Windows.Controls.Decorator))]
+    [System.Windows.TemplatePartAttribute(Name="PART_FindToolBarHost", Type=typeof(System.Windows.Controls.Decorator))]
     public partial class FlowDocumentReader : System.Windows.Controls.Control, System.Windows.Markup.IAddChild
     {
         public static readonly System.Windows.DependencyProperty CanDecreaseZoomProperty;
@@ -4970,9 +4970,9 @@ namespace System.Windows.Controls
         TwoPage = 1,
     }
     [System.Windows.Markup.ContentPropertyAttribute("Document")]
-    [System.Windows.TemplatePartAttribute(Name = "PART_ContentHost", Type = typeof(System.Windows.Controls.ScrollViewer))]
-    [System.Windows.TemplatePartAttribute(Name = "PART_FindToolBarHost", Type = typeof(System.Windows.Controls.Decorator))]
-    [System.Windows.TemplatePartAttribute(Name = "PART_ToolBarHost", Type = typeof(System.Windows.Controls.Decorator))]
+    [System.Windows.TemplatePartAttribute(Name="PART_ContentHost", Type=typeof(System.Windows.Controls.ScrollViewer))]
+    [System.Windows.TemplatePartAttribute(Name="PART_FindToolBarHost", Type=typeof(System.Windows.Controls.Decorator))]
+    [System.Windows.TemplatePartAttribute(Name="PART_ToolBarHost", Type=typeof(System.Windows.Controls.Decorator))]
     public partial class FlowDocumentScrollViewer : System.Windows.Controls.Control, System.IServiceProvider, System.Windows.Markup.IAddChild
     {
         public static readonly System.Windows.DependencyProperty CanDecreaseZoomProperty;
@@ -5032,7 +5032,7 @@ namespace System.Windows.Controls
     [System.ComponentModel.DefaultPropertyAttribute("Source")]
     [System.Windows.LocalizabilityAttribute(System.Windows.LocalizationCategory.Ignore)]
     [System.Windows.Markup.ContentPropertyAttribute]
-    [System.Windows.TemplatePartAttribute(Name = "PART_FrameCP", Type = typeof(System.Windows.Controls.ContentPresenter))]
+    [System.Windows.TemplatePartAttribute(Name="PART_FrameCP", Type=typeof(System.Windows.Controls.ContentPresenter))]
     public partial class Frame : System.Windows.Controls.ContentControl, System.Windows.Markup.IAddChild, System.Windows.Markup.IUriContext
     {
         public static readonly System.Windows.DependencyProperty BackStackProperty;
@@ -5137,7 +5137,7 @@ namespace System.Windows.Controls
         Columns = 1,
         Rows = 2,
     }
-    [System.Windows.StyleTypedPropertyAttribute(Property = "PreviewStyle", StyleTargetType = typeof(System.Windows.Controls.Control))]
+    [System.Windows.StyleTypedPropertyAttribute(Property="PreviewStyle", StyleTargetType=typeof(System.Windows.Controls.Control))]
     public partial class GridSplitter : System.Windows.Controls.Primitives.Thumb
     {
         public static readonly System.Windows.DependencyProperty DragIncrementProperty;
@@ -5159,7 +5159,7 @@ namespace System.Windows.Controls
         protected internal override void OnRenderSizeChanged(System.Windows.SizeChangedInfo sizeInfo) { }
     }
     [System.Windows.Markup.ContentPropertyAttribute("Columns")]
-    [System.Windows.StyleTypedPropertyAttribute(Property = "ColumnHeaderContainerStyle", StyleTargetType = typeof(System.Windows.Controls.GridViewColumnHeader))]
+    [System.Windows.StyleTypedPropertyAttribute(Property="ColumnHeaderContainerStyle", StyleTargetType=typeof(System.Windows.Controls.GridViewColumnHeader))]
     public partial class GridView : System.Windows.Controls.ViewBase, System.Windows.Markup.IAddChild
     {
         public static readonly System.Windows.DependencyProperty AllowsColumnReorderProperty;
@@ -5199,9 +5199,9 @@ namespace System.Windows.Controls
         void System.Windows.Markup.IAddChild.AddText(string text) { }
         public override string ToString() { throw null; }
     }
-    [System.Windows.LocalizabilityAttribute(System.Windows.LocalizationCategory.None, Readability = System.Windows.Readability.Unreadable)]
+    [System.Windows.LocalizabilityAttribute(System.Windows.LocalizationCategory.None, Readability=System.Windows.Readability.Unreadable)]
     [System.Windows.Markup.ContentPropertyAttribute("Header")]
-    [System.Windows.StyleTypedPropertyAttribute(Property = "HeaderContainerStyle", StyleTargetType = typeof(System.Windows.Controls.GridViewColumnHeader))]
+    [System.Windows.StyleTypedPropertyAttribute(Property="HeaderContainerStyle", StyleTargetType=typeof(System.Windows.Controls.GridViewColumnHeader))]
     public partial class GridViewColumn : System.Windows.DependencyObject, System.ComponentModel.INotifyPropertyChanged
     {
         public static readonly System.Windows.DependencyProperty CellTemplateProperty;
@@ -5241,8 +5241,8 @@ namespace System.Windows.Controls
         protected override void RemoveItem(int index) { }
         protected override void SetItem(int index, System.Windows.Controls.GridViewColumn column) { }
     }
-    [System.Windows.TemplatePartAttribute(Name = "PART_FloatingHeaderCanvas", Type = typeof(System.Windows.Controls.Canvas))]
-    [System.Windows.TemplatePartAttribute(Name = "PART_HeaderGripper", Type = typeof(System.Windows.Controls.Primitives.Thumb))]
+    [System.Windows.TemplatePartAttribute(Name="PART_FloatingHeaderCanvas", Type=typeof(System.Windows.Controls.Canvas))]
+    [System.Windows.TemplatePartAttribute(Name="PART_HeaderGripper", Type=typeof(System.Windows.Controls.Primitives.Thumb))]
     public partial class GridViewColumnHeader : System.Windows.Controls.Primitives.ButtonBase
     {
         public static readonly System.Windows.DependencyProperty ColumnProperty;
@@ -5270,7 +5270,7 @@ namespace System.Windows.Controls
         Normal = 0,
         Padding = 2,
     }
-    [System.Windows.StyleTypedPropertyAttribute(Property = "ColumnHeaderContainerStyle", StyleTargetType = typeof(System.Windows.Controls.GridViewColumnHeader))]
+    [System.Windows.StyleTypedPropertyAttribute(Property="ColumnHeaderContainerStyle", StyleTargetType=typeof(System.Windows.Controls.GridViewColumnHeader))]
     public partial class GridViewHeaderRowPresenter : System.Windows.Controls.Primitives.GridViewRowPresenterBase
     {
         public static readonly System.Windows.DependencyProperty AllowsColumnReorderProperty;
@@ -5307,7 +5307,7 @@ namespace System.Windows.Controls
         protected override System.Windows.Size MeasureOverride(System.Windows.Size constraint) { throw null; }
         public override string ToString() { throw null; }
     }
-    [System.Windows.LocalizabilityAttribute(System.Windows.LocalizationCategory.None, Readability = System.Windows.Readability.Unreadable)]
+    [System.Windows.LocalizabilityAttribute(System.Windows.LocalizationCategory.None, Readability=System.Windows.Readability.Unreadable)]
     public partial class GroupBox : System.Windows.Controls.HeaderedContentControl
     {
         public GroupBox() { }
@@ -5332,7 +5332,7 @@ namespace System.Windows.Controls
         object System.Windows.Controls.Primitives.IContainItemStorage.ReadItemValue(object item, System.Windows.DependencyProperty dp) { throw null; }
         void System.Windows.Controls.Primitives.IContainItemStorage.StoreItemValue(object item, System.Windows.DependencyProperty dp, object value) { }
     }
-    [System.Windows.LocalizabilityAttribute(System.Windows.LocalizationCategory.None, Readability = System.Windows.Readability.Unreadable)]
+    [System.Windows.LocalizabilityAttribute(System.Windows.LocalizationCategory.None, Readability=System.Windows.Readability.Unreadable)]
     public partial class GroupStyle : System.ComponentModel.INotifyPropertyChanged
     {
         public static readonly System.Windows.Controls.ItemsPanelTemplate DefaultGroupPanel;
@@ -5460,7 +5460,7 @@ namespace System.Windows.Controls
         public static bool operator ==(System.Windows.Controls.HierarchicalVirtualizationItemDesiredSizes itemDesiredSizes1, System.Windows.Controls.HierarchicalVirtualizationItemDesiredSizes itemDesiredSizes2) { throw null; }
         public static bool operator !=(System.Windows.Controls.HierarchicalVirtualizationItemDesiredSizes itemDesiredSizes1, System.Windows.Controls.HierarchicalVirtualizationItemDesiredSizes itemDesiredSizes2) { throw null; }
     }
-    [System.Windows.LocalizabilityAttribute(System.Windows.LocalizationCategory.None, Readability = System.Windows.Readability.Unreadable)]
+    [System.Windows.LocalizabilityAttribute(System.Windows.LocalizationCategory.None, Readability=System.Windows.Readability.Unreadable)]
     public partial class Image : System.Windows.FrameworkElement, System.Windows.Markup.IUriContext
     {
         public static readonly System.Windows.RoutedEvent DpiChangedEvent;
@@ -5814,9 +5814,9 @@ namespace System.Windows.Controls
     }
     [System.ComponentModel.DefaultEventAttribute("OnItemsChanged")]
     [System.ComponentModel.DefaultPropertyAttribute("Items")]
-    [System.Windows.LocalizabilityAttribute(System.Windows.LocalizationCategory.None, Readability = System.Windows.Readability.Unreadable)]
+    [System.Windows.LocalizabilityAttribute(System.Windows.LocalizationCategory.None, Readability=System.Windows.Readability.Unreadable)]
     [System.Windows.Markup.ContentPropertyAttribute("Items")]
-    [System.Windows.StyleTypedPropertyAttribute(Property = "ItemContainerStyle", StyleTargetType = typeof(System.Windows.FrameworkElement))]
+    [System.Windows.StyleTypedPropertyAttribute(Property="ItemContainerStyle", StyleTargetType=typeof(System.Windows.FrameworkElement))]
     public partial class ItemsControl : System.Windows.Controls.Control, System.Windows.Controls.Primitives.IContainItemStorage, System.Windows.Markup.IAddChild
     {
         public static readonly System.Windows.DependencyProperty AlternationCountProperty;
@@ -5949,7 +5949,7 @@ namespace System.Windows.Controls
         protected override System.Windows.Automation.Peers.AutomationPeer OnCreateAutomationPeer() { throw null; }
     }
     [System.Windows.LocalizabilityAttribute(System.Windows.LocalizationCategory.ListBox)]
-    [System.Windows.StyleTypedPropertyAttribute(Property = "ItemContainerStyle", StyleTargetType = typeof(System.Windows.Controls.ListBoxItem))]
+    [System.Windows.StyleTypedPropertyAttribute(Property="ItemContainerStyle", StyleTargetType=typeof(System.Windows.Controls.ListBoxItem))]
     public partial class ListBox : System.Windows.Controls.Primitives.Selector
     {
         public static readonly System.Windows.DependencyProperty SelectedItemsProperty;
@@ -5996,7 +5996,7 @@ namespace System.Windows.Controls
         protected virtual void OnUnselected(System.Windows.RoutedEventArgs e) { }
         protected internal override void OnVisualParentChanged(System.Windows.DependencyObject oldParent) { }
     }
-    [System.Windows.StyleTypedPropertyAttribute(Property = "ItemContainerStyle", StyleTargetType = typeof(System.Windows.Controls.ListViewItem))]
+    [System.Windows.StyleTypedPropertyAttribute(Property="ItemContainerStyle", StyleTargetType=typeof(System.Windows.Controls.ListViewItem))]
     public partial class ListView : System.Windows.Controls.ListBox
     {
         public static readonly System.Windows.DependencyProperty ViewProperty;
@@ -6092,8 +6092,8 @@ namespace System.Windows.Controls
     }
     [System.ComponentModel.DefaultEventAttribute("Click")]
     [System.Windows.LocalizabilityAttribute(System.Windows.LocalizationCategory.Menu)]
-    [System.Windows.StyleTypedPropertyAttribute(Property = "ItemContainerStyle", StyleTargetType = typeof(System.Windows.Controls.MenuItem))]
-    [System.Windows.TemplatePartAttribute(Name = "PART_Popup", Type = typeof(System.Windows.Controls.Primitives.Popup))]
+    [System.Windows.StyleTypedPropertyAttribute(Property="ItemContainerStyle", StyleTargetType=typeof(System.Windows.Controls.MenuItem))]
+    [System.Windows.TemplatePartAttribute(Name="PART_Popup", Type=typeof(System.Windows.Controls.Primitives.Popup))]
     public partial class MenuItem : System.Windows.Controls.HeaderedItemsControl, System.Windows.Input.ICommandSource
     {
         public static readonly System.Windows.RoutedEvent CheckedEvent;
@@ -6219,7 +6219,7 @@ namespace System.Windows.Controls
         public NotifyDataErrorValidationRule() { }
         public override System.Windows.Controls.ValidationResult Validate(object value, System.Globalization.CultureInfo cultureInfo) { throw null; }
     }
-    [System.Windows.LocalizabilityAttribute(System.Windows.LocalizationCategory.None, Readability = System.Windows.Readability.Unreadable)]
+    [System.Windows.LocalizabilityAttribute(System.Windows.LocalizationCategory.None, Readability=System.Windows.Readability.Unreadable)]
     public enum Orientation
     {
         Horizontal = 0,
@@ -6248,7 +6248,7 @@ namespace System.Windows.Controls
         public object Content { get { throw null; } set { } }
         [System.ComponentModel.BindableAttribute(true)]
         [System.ComponentModel.CategoryAttribute("Appearance")]
-        [System.Windows.LocalizabilityAttribute(System.Windows.LocalizationCategory.Font, Modifiability = System.Windows.Modifiability.Unmodifiable)]
+        [System.Windows.LocalizabilityAttribute(System.Windows.LocalizationCategory.Font, Modifiability=System.Windows.Modifiability.Unmodifiable)]
         public System.Windows.Media.FontFamily FontFamily { get { throw null; } set { } }
         [System.ComponentModel.BindableAttribute(true)]
         [System.ComponentModel.CategoryAttribute("Appearance")]
@@ -6348,7 +6348,7 @@ namespace System.Windows.Controls
         VerticalFirst = 5,
         VerticalOnly = 2,
     }
-    [System.Windows.TemplatePartAttribute(Name = "PART_ContentHost", Type = typeof(System.Windows.FrameworkElement))]
+    [System.Windows.TemplatePartAttribute(Name="PART_ContentHost", Type=typeof(System.Windows.FrameworkElement))]
     public sealed partial class PasswordBox : System.Windows.Controls.Control
     {
         public static readonly System.Windows.DependencyProperty CaretBrushProperty;
@@ -6428,9 +6428,9 @@ namespace System.Windows.Controls
         public PrintDialogException(string message) { }
         public PrintDialogException(string message, System.Exception innerException) { }
     }
-    [System.Windows.TemplatePartAttribute(Name = "PART_GlowRect", Type = typeof(System.Windows.FrameworkElement))]
-    [System.Windows.TemplatePartAttribute(Name = "PART_Indicator", Type = typeof(System.Windows.FrameworkElement))]
-    [System.Windows.TemplatePartAttribute(Name = "PART_Track", Type = typeof(System.Windows.FrameworkElement))]
+    [System.Windows.TemplatePartAttribute(Name="PART_GlowRect", Type=typeof(System.Windows.FrameworkElement))]
+    [System.Windows.TemplatePartAttribute(Name="PART_Indicator", Type=typeof(System.Windows.FrameworkElement))]
+    [System.Windows.TemplatePartAttribute(Name="PART_Track", Type=typeof(System.Windows.FrameworkElement))]
     public partial class ProgressBar : System.Windows.Controls.Primitives.RangeBase
     {
         public static readonly System.Windows.DependencyProperty IsIndeterminateProperty;
@@ -6598,9 +6598,9 @@ namespace System.Windows.Controls
     }
     [System.ComponentModel.DefaultEventAttribute("ScrollChangedEvent")]
     [System.Windows.LocalizabilityAttribute(System.Windows.LocalizationCategory.Ignore)]
-    [System.Windows.TemplatePartAttribute(Name = "PART_HorizontalScrollBar", Type = typeof(System.Windows.Controls.Primitives.ScrollBar))]
-    [System.Windows.TemplatePartAttribute(Name = "PART_ScrollContentPresenter", Type = typeof(System.Windows.Controls.ScrollContentPresenter))]
-    [System.Windows.TemplatePartAttribute(Name = "PART_VerticalScrollBar", Type = typeof(System.Windows.Controls.Primitives.ScrollBar))]
+    [System.Windows.TemplatePartAttribute(Name="PART_HorizontalScrollBar", Type=typeof(System.Windows.Controls.Primitives.ScrollBar))]
+    [System.Windows.TemplatePartAttribute(Name="PART_ScrollContentPresenter", Type=typeof(System.Windows.Controls.ScrollContentPresenter))]
+    [System.Windows.TemplatePartAttribute(Name="PART_VerticalScrollBar", Type=typeof(System.Windows.Controls.Primitives.ScrollBar))]
     public partial class ScrollViewer : System.Windows.Controls.ContentControl
     {
         public static readonly System.Windows.DependencyProperty CanContentScrollProperty;
@@ -6739,7 +6739,7 @@ namespace System.Windows.Controls
         None = 0,
         Vertical = 2,
     }
-    [System.Windows.LocalizabilityAttribute(System.Windows.LocalizationCategory.None, Readability = System.Windows.Readability.Unreadable)]
+    [System.Windows.LocalizabilityAttribute(System.Windows.LocalizationCategory.None, Readability=System.Windows.Readability.Unreadable)]
     public partial class Separator : System.Windows.Controls.Control
     {
         public Separator() { }
@@ -6748,8 +6748,8 @@ namespace System.Windows.Controls
     [System.ComponentModel.DefaultEventAttribute("ValueChanged")]
     [System.ComponentModel.DefaultPropertyAttribute("Value")]
     [System.Windows.LocalizabilityAttribute(System.Windows.LocalizationCategory.Ignore)]
-    [System.Windows.TemplatePartAttribute(Name = "PART_SelectionRange", Type = typeof(System.Windows.FrameworkElement))]
-    [System.Windows.TemplatePartAttribute(Name = "PART_Track", Type = typeof(System.Windows.Controls.Primitives.Track))]
+    [System.Windows.TemplatePartAttribute(Name="PART_SelectionRange", Type=typeof(System.Windows.FrameworkElement))]
+    [System.Windows.TemplatePartAttribute(Name="PART_Track", Type=typeof(System.Windows.Controls.Primitives.Track))]
     public partial class Slider : System.Windows.Controls.Primitives.RangeBase
     {
         public static readonly System.Windows.DependencyProperty AutoToolTipPlacementProperty;
@@ -6903,16 +6903,16 @@ namespace System.Windows.Controls
         public void SetHorizontalOffset(double offset) { }
         public void SetVerticalOffset(double offset) { }
     }
-    [System.Windows.TemplatePartAttribute(Name = "PART_CloseButton", Type = typeof(System.Windows.Controls.Button))]
-    [System.Windows.TemplatePartAttribute(Name = "PART_ContentControl", Type = typeof(System.Windows.Controls.ContentControl))]
-    [System.Windows.TemplatePartAttribute(Name = "PART_CopyMenuItem", Type = typeof(System.Windows.Controls.MenuItem))]
-    [System.Windows.TemplatePartAttribute(Name = "PART_EraseMenuItem", Type = typeof(System.Windows.Controls.MenuItem))]
-    [System.Windows.TemplatePartAttribute(Name = "PART_IconButton", Type = typeof(System.Windows.Controls.Button))]
-    [System.Windows.TemplatePartAttribute(Name = "PART_InkMenuItem", Type = typeof(System.Windows.Controls.MenuItem))]
-    [System.Windows.TemplatePartAttribute(Name = "PART_PasteMenuItem", Type = typeof(System.Windows.Controls.MenuItem))]
-    [System.Windows.TemplatePartAttribute(Name = "PART_ResizeBottomRightThumb", Type = typeof(System.Windows.Controls.Primitives.Thumb))]
-    [System.Windows.TemplatePartAttribute(Name = "PART_SelectMenuItem", Type = typeof(System.Windows.Controls.MenuItem))]
-    [System.Windows.TemplatePartAttribute(Name = "PART_TitleThumb", Type = typeof(System.Windows.Controls.Primitives.Thumb))]
+    [System.Windows.TemplatePartAttribute(Name="PART_CloseButton", Type=typeof(System.Windows.Controls.Button))]
+    [System.Windows.TemplatePartAttribute(Name="PART_ContentControl", Type=typeof(System.Windows.Controls.ContentControl))]
+    [System.Windows.TemplatePartAttribute(Name="PART_CopyMenuItem", Type=typeof(System.Windows.Controls.MenuItem))]
+    [System.Windows.TemplatePartAttribute(Name="PART_EraseMenuItem", Type=typeof(System.Windows.Controls.MenuItem))]
+    [System.Windows.TemplatePartAttribute(Name="PART_IconButton", Type=typeof(System.Windows.Controls.Button))]
+    [System.Windows.TemplatePartAttribute(Name="PART_InkMenuItem", Type=typeof(System.Windows.Controls.MenuItem))]
+    [System.Windows.TemplatePartAttribute(Name="PART_PasteMenuItem", Type=typeof(System.Windows.Controls.MenuItem))]
+    [System.Windows.TemplatePartAttribute(Name="PART_ResizeBottomRightThumb", Type=typeof(System.Windows.Controls.Primitives.Thumb))]
+    [System.Windows.TemplatePartAttribute(Name="PART_SelectMenuItem", Type=typeof(System.Windows.Controls.MenuItem))]
+    [System.Windows.TemplatePartAttribute(Name="PART_TitleThumb", Type=typeof(System.Windows.Controls.Primitives.Thumb))]
     public sealed partial class StickyNoteControl : System.Windows.Controls.Control
     {
         internal StickyNoteControl() { }
@@ -6964,8 +6964,8 @@ namespace System.Windows.Controls
         public StyleSelector() { }
         public virtual System.Windows.Style SelectStyle(object item, System.Windows.DependencyObject container) { throw null; }
     }
-    [System.Windows.StyleTypedPropertyAttribute(Property = "ItemContainerStyle", StyleTargetType = typeof(System.Windows.Controls.TabItem))]
-    [System.Windows.TemplatePartAttribute(Name = "PART_SelectedContentHost", Type = typeof(System.Windows.Controls.ContentPresenter))]
+    [System.Windows.StyleTypedPropertyAttribute(Property="ItemContainerStyle", StyleTargetType=typeof(System.Windows.Controls.TabItem))]
+    [System.Windows.TemplatePartAttribute(Name="PART_SelectedContentHost", Type=typeof(System.Windows.Controls.ContentPresenter))]
     public partial class TabControl : System.Windows.Controls.Primitives.Selector
     {
         public static readonly System.Windows.DependencyProperty ContentStringFormatProperty;
@@ -7143,7 +7143,7 @@ namespace System.Windows.Controls
         public int LineCount { get { throw null; } }
         protected internal override System.Collections.IEnumerator LogicalChildren { get { throw null; } }
         [System.ComponentModel.DefaultValueAttribute(0)]
-        [System.Windows.LocalizabilityAttribute(System.Windows.LocalizationCategory.None, Modifiability = System.Windows.Modifiability.Unmodifiable)]
+        [System.Windows.LocalizabilityAttribute(System.Windows.LocalizationCategory.None, Modifiability=System.Windows.Modifiability.Unmodifiable)]
         public int MaxLength { get { throw null; } set { } }
         [System.ComponentModel.DefaultValueAttribute(2147483647)]
         public int MaxLines { get { throw null; } set { } }
@@ -7216,8 +7216,8 @@ namespace System.Windows.Controls
         public static void SetText(System.Windows.DependencyObject element, string text) { }
         public static void SetTextPath(System.Windows.DependencyObject element, string path) { }
     }
-    [System.Windows.TemplatePartAttribute(Name = "PART_ToolBarOverflowPanel", Type = typeof(System.Windows.Controls.Primitives.ToolBarOverflowPanel))]
-    [System.Windows.TemplatePartAttribute(Name = "PART_ToolBarPanel", Type = typeof(System.Windows.Controls.Primitives.ToolBarPanel))]
+    [System.Windows.TemplatePartAttribute(Name="PART_ToolBarOverflowPanel", Type=typeof(System.Windows.Controls.Primitives.ToolBarOverflowPanel))]
+    [System.Windows.TemplatePartAttribute(Name="PART_ToolBarPanel", Type=typeof(System.Windows.Controls.Primitives.ToolBarPanel))]
     public partial class ToolBar : System.Windows.Controls.HeaderedItemsControl
     {
         public static readonly System.Windows.DependencyProperty BandIndexProperty;
@@ -7246,7 +7246,7 @@ namespace System.Windows.Controls
         public static System.Windows.ResourceKey TextBoxStyleKey { get { throw null; } }
         public static System.Windows.ResourceKey ToggleButtonStyleKey { get { throw null; } }
         public static bool GetIsOverflowItem(System.Windows.DependencyObject element) { throw null; }
-        [System.Windows.AttachedPropertyBrowsableForChildrenAttribute(IncludeDescendants = true)]
+        [System.Windows.AttachedPropertyBrowsableForChildrenAttribute(IncludeDescendants=true)]
         public static System.Windows.Controls.OverflowMode GetOverflowMode(System.Windows.DependencyObject element) { throw null; }
         protected override System.Windows.Size MeasureOverride(System.Windows.Size constraint) { throw null; }
         protected override System.Windows.Automation.Peers.AutomationPeer OnCreateAutomationPeer() { throw null; }
@@ -7401,7 +7401,7 @@ namespace System.Windows.Controls
         public static void SetToolTip(System.Windows.DependencyObject element, object value) { }
         public static void SetVerticalOffset(System.Windows.DependencyObject element, double value) { }
     }
-    [System.Windows.StyleTypedPropertyAttribute(Property = "ItemContainerStyle", StyleTargetType = typeof(System.Windows.Controls.TreeViewItem))]
+    [System.Windows.StyleTypedPropertyAttribute(Property="ItemContainerStyle", StyleTargetType=typeof(System.Windows.Controls.TreeViewItem))]
     public partial class TreeView : System.Windows.Controls.ItemsControl
     {
         public static readonly System.Windows.RoutedEvent SelectedItemChangedEvent;
@@ -7435,9 +7435,9 @@ namespace System.Windows.Controls
         protected override void OnKeyDown(System.Windows.Input.KeyEventArgs e) { }
         protected virtual void OnSelectedItemChanged(System.Windows.RoutedPropertyChangedEventArgs<object> e) { }
     }
-    [System.Windows.StyleTypedPropertyAttribute(Property = "ItemContainerStyle", StyleTargetType = typeof(System.Windows.Controls.TreeViewItem))]
-    [System.Windows.TemplatePartAttribute(Name = "ItemsHost", Type = typeof(System.Windows.Controls.ItemsPresenter))]
-    [System.Windows.TemplatePartAttribute(Name = "PART_Header", Type = typeof(System.Windows.FrameworkElement))]
+    [System.Windows.StyleTypedPropertyAttribute(Property="ItemContainerStyle", StyleTargetType=typeof(System.Windows.Controls.TreeViewItem))]
+    [System.Windows.TemplatePartAttribute(Name="ItemsHost", Type=typeof(System.Windows.Controls.ItemsPresenter))]
+    [System.Windows.TemplatePartAttribute(Name="PART_Header", Type=typeof(System.Windows.FrameworkElement))]
     public partial class TreeViewItem : System.Windows.Controls.HeaderedItemsControl, System.Windows.Controls.Primitives.IHierarchicalVirtualizationAndScrollInfo
     {
         public static readonly System.Windows.RoutedEvent CollapsedEvent;
@@ -7898,14 +7898,14 @@ namespace System.Windows.Controls.Primitives
         public bool IsToday { get { throw null; } }
         protected override System.Windows.Automation.Peers.AutomationPeer OnCreateAutomationPeer() { throw null; }
     }
-    [System.Windows.TemplatePartAttribute(Name = "DayTitleTemplate", Type = typeof(System.Windows.DataTemplate))]
-    [System.Windows.TemplatePartAttribute(Name = "PART_DisabledVisual", Type = typeof(System.Windows.FrameworkElement))]
-    [System.Windows.TemplatePartAttribute(Name = "PART_HeaderButton", Type = typeof(System.Windows.Controls.Button))]
-    [System.Windows.TemplatePartAttribute(Name = "PART_MonthView", Type = typeof(System.Windows.Controls.Grid))]
-    [System.Windows.TemplatePartAttribute(Name = "PART_NextButton", Type = typeof(System.Windows.Controls.Button))]
-    [System.Windows.TemplatePartAttribute(Name = "PART_PreviousButton", Type = typeof(System.Windows.Controls.Button))]
-    [System.Windows.TemplatePartAttribute(Name = "PART_Root", Type = typeof(System.Windows.FrameworkElement))]
-    [System.Windows.TemplatePartAttribute(Name = "PART_YearView", Type = typeof(System.Windows.Controls.Grid))]
+    [System.Windows.TemplatePartAttribute(Name="DayTitleTemplate", Type=typeof(System.Windows.DataTemplate))]
+    [System.Windows.TemplatePartAttribute(Name="PART_DisabledVisual", Type=typeof(System.Windows.FrameworkElement))]
+    [System.Windows.TemplatePartAttribute(Name="PART_HeaderButton", Type=typeof(System.Windows.Controls.Button))]
+    [System.Windows.TemplatePartAttribute(Name="PART_MonthView", Type=typeof(System.Windows.Controls.Grid))]
+    [System.Windows.TemplatePartAttribute(Name="PART_NextButton", Type=typeof(System.Windows.Controls.Button))]
+    [System.Windows.TemplatePartAttribute(Name="PART_PreviousButton", Type=typeof(System.Windows.Controls.Button))]
+    [System.Windows.TemplatePartAttribute(Name="PART_Root", Type=typeof(System.Windows.FrameworkElement))]
+    [System.Windows.TemplatePartAttribute(Name="PART_YearView", Type=typeof(System.Windows.Controls.Grid))]
     public sealed partial class CalendarItem : System.Windows.Controls.Control
     {
         public CalendarItem() { }
@@ -7941,8 +7941,8 @@ namespace System.Windows.Controls.Primitives
         protected override void OnRender(System.Windows.Media.DrawingContext drawingContext) { }
         protected override void PrepareContainerForItemOverride(System.Windows.DependencyObject element, object item) { }
     }
-    [System.Windows.TemplatePartAttribute(Name = "PART_LeftHeaderGripper", Type = typeof(System.Windows.Controls.Primitives.Thumb))]
-    [System.Windows.TemplatePartAttribute(Name = "PART_RightHeaderGripper", Type = typeof(System.Windows.Controls.Primitives.Thumb))]
+    [System.Windows.TemplatePartAttribute(Name="PART_LeftHeaderGripper", Type=typeof(System.Windows.Controls.Primitives.Thumb))]
+    [System.Windows.TemplatePartAttribute(Name="PART_RightHeaderGripper", Type=typeof(System.Windows.Controls.Primitives.Thumb))]
     public partial class DataGridColumnHeader : System.Windows.Controls.Primitives.ButtonBase
     {
         public static readonly System.Windows.DependencyProperty CanUserSortProperty;
@@ -7969,7 +7969,7 @@ namespace System.Windows.Controls.Primitives
         protected override void OnMouseLeftButtonUp(System.Windows.Input.MouseButtonEventArgs e) { }
         protected override void OnMouseMove(System.Windows.Input.MouseEventArgs e) { }
     }
-    [System.Windows.TemplatePartAttribute(Name = "PART_FillerColumnHeader", Type = typeof(System.Windows.Controls.Primitives.DataGridColumnHeader))]
+    [System.Windows.TemplatePartAttribute(Name="PART_FillerColumnHeader", Type=typeof(System.Windows.Controls.Primitives.DataGridColumnHeader))]
     public partial class DataGridColumnHeadersPresenter : System.Windows.Controls.ItemsControl
     {
         public DataGridColumnHeadersPresenter() { }
@@ -7994,8 +7994,8 @@ namespace System.Windows.Controls.Primitives
         protected override void OnRender(System.Windows.Media.DrawingContext drawingContext) { }
         protected internal override void OnVisualParentChanged(System.Windows.DependencyObject oldParent) { }
     }
-    [System.Windows.TemplatePartAttribute(Name = "PART_BottomHeaderGripper", Type = typeof(System.Windows.Controls.Primitives.Thumb))]
-    [System.Windows.TemplatePartAttribute(Name = "PART_TopHeaderGripper", Type = typeof(System.Windows.Controls.Primitives.Thumb))]
+    [System.Windows.TemplatePartAttribute(Name="PART_BottomHeaderGripper", Type=typeof(System.Windows.Controls.Primitives.Thumb))]
+    [System.Windows.TemplatePartAttribute(Name="PART_TopHeaderGripper", Type=typeof(System.Windows.Controls.Primitives.Thumb))]
     public partial class DataGridRowHeader : System.Windows.Controls.Primitives.ButtonBase
     {
         public static readonly System.Windows.DependencyProperty IsRowSelectedProperty;
@@ -8020,7 +8020,7 @@ namespace System.Windows.Controls.Primitives
         protected override void OnIsItemsHostChanged(bool oldIsItemsHost, bool newIsItemsHost) { }
         protected override void OnViewportSizeChanged(System.Windows.Size oldViewportSize, System.Windows.Size newViewportSize) { }
     }
-    [System.Windows.TemplatePartAttribute(Name = "PART_Watermark", Type = typeof(System.Windows.Controls.ContentControl))]
+    [System.Windows.TemplatePartAttribute(Name="PART_Watermark", Type=typeof(System.Windows.Controls.ContentControl))]
     public sealed partial class DatePickerTextBox : System.Windows.Controls.TextBox
     {
         public DatePickerTextBox() { }
@@ -8244,7 +8244,7 @@ namespace System.Windows.Controls.Primitives
         public static System.Windows.Rect GetLayoutSlot(System.Windows.FrameworkElement element) { throw null; }
     }
     [System.Windows.LocalizabilityAttribute(System.Windows.LocalizationCategory.Menu)]
-    [System.Windows.StyleTypedPropertyAttribute(Property = "ItemContainerStyle", StyleTargetType = typeof(System.Windows.Controls.MenuItem))]
+    [System.Windows.StyleTypedPropertyAttribute(Property="ItemContainerStyle", StyleTargetType=typeof(System.Windows.Controls.MenuItem))]
     public abstract partial class MenuBase : System.Windows.Controls.ItemsControl
     {
         public static readonly System.Windows.DependencyProperty ItemContainerTemplateSelectorProperty;
@@ -8273,7 +8273,7 @@ namespace System.Windows.Controls.Primitives
         public void SelectAll() { }
         public void UnselectAll() { }
     }
-    [System.Windows.LocalizabilityAttribute(System.Windows.LocalizationCategory.None, Readability = System.Windows.Readability.Unreadable)]
+    [System.Windows.LocalizabilityAttribute(System.Windows.LocalizationCategory.None, Readability=System.Windows.Readability.Unreadable)]
     public enum PlacementMode
     {
         Absolute = 0,
@@ -8429,7 +8429,7 @@ namespace System.Windows.Controls.Primitives
         public ResizeGrip() { }
     }
     [System.Windows.LocalizabilityAttribute(System.Windows.LocalizationCategory.NeverLocalize)]
-    [System.Windows.TemplatePartAttribute(Name = "PART_Track", Type = typeof(System.Windows.Controls.Primitives.Track))]
+    [System.Windows.TemplatePartAttribute(Name="PART_Track", Type=typeof(System.Windows.Controls.Primitives.Track))]
     public partial class ScrollBar : System.Windows.Controls.Primitives.RangeBase
     {
         public static readonly System.Windows.Input.RoutedCommand DeferScrollToHorizontalOffsetCommand;
@@ -8498,7 +8498,7 @@ namespace System.Windows.Controls.Primitives
     }
     [System.ComponentModel.DefaultEventAttribute("SelectionChanged")]
     [System.ComponentModel.DefaultPropertyAttribute("SelectedIndex")]
-    [System.Windows.LocalizabilityAttribute(System.Windows.LocalizationCategory.None, Readability = System.Windows.Readability.Unreadable)]
+    [System.Windows.LocalizabilityAttribute(System.Windows.LocalizationCategory.None, Readability=System.Windows.Readability.Unreadable)]
     public abstract partial class Selector : System.Windows.Controls.ItemsControl
     {
         public static readonly System.Windows.DependencyProperty IsSelectedProperty;
@@ -8553,7 +8553,7 @@ namespace System.Windows.Controls.Primitives
         public static void RemoveUnselectedHandler(System.Windows.DependencyObject element, System.Windows.RoutedEventHandler handler) { }
         public static void SetIsSelected(System.Windows.DependencyObject element, bool isSelected) { }
     }
-    [System.Windows.StyleTypedPropertyAttribute(Property = "ItemContainerStyle", StyleTargetType = typeof(System.Windows.Controls.Primitives.StatusBarItem))]
+    [System.Windows.StyleTypedPropertyAttribute(Property="ItemContainerStyle", StyleTargetType=typeof(System.Windows.Controls.Primitives.StatusBarItem))]
     public partial class StatusBar : System.Windows.Controls.ItemsControl
     {
         public static readonly System.Windows.DependencyProperty ItemContainerTemplateSelectorProperty;
@@ -8582,7 +8582,7 @@ namespace System.Windows.Controls.Primitives
         protected override System.Windows.Size MeasureOverride(System.Windows.Size constraint) { throw null; }
     }
     [System.Windows.LocalizabilityAttribute(System.Windows.LocalizationCategory.Text)]
-    [System.Windows.TemplatePartAttribute(Name = "PART_ContentHost", Type = typeof(System.Windows.FrameworkElement))]
+    [System.Windows.TemplatePartAttribute(Name="PART_ContentHost", Type=typeof(System.Windows.FrameworkElement))]
     public abstract partial class TextBoxBase : System.Windows.Controls.Control
     {
         internal TextBoxBase() { }
@@ -8702,7 +8702,7 @@ namespace System.Windows.Controls.Primitives
         protected override void OnMouseLeftButtonUp(System.Windows.Input.MouseButtonEventArgs e) { }
         protected override void OnMouseMove(System.Windows.Input.MouseEventArgs e) { }
     }
-    [System.Windows.LocalizabilityAttribute(System.Windows.LocalizationCategory.None, Readability = System.Windows.Readability.Unreadable)]
+    [System.Windows.LocalizabilityAttribute(System.Windows.LocalizationCategory.None, Readability=System.Windows.Readability.Unreadable)]
     public partial class TickBar : System.Windows.FrameworkElement
     {
         public static readonly System.Windows.DependencyProperty FillProperty;
@@ -8775,7 +8775,7 @@ namespace System.Windows.Controls.Primitives
         public ToggleButton() { }
         [System.ComponentModel.CategoryAttribute("Appearance")]
         [System.ComponentModel.TypeConverterAttribute(typeof(System.Windows.NullableBoolConverter))]
-        [System.Windows.LocalizabilityAttribute(System.Windows.LocalizationCategory.None, Readability = System.Windows.Readability.Unreadable)]
+        [System.Windows.LocalizabilityAttribute(System.Windows.LocalizationCategory.None, Readability=System.Windows.Readability.Unreadable)]
         public System.Nullable<bool> IsChecked { get { throw null; } set { } }
         [System.ComponentModel.BindableAttribute(true)]
         [System.ComponentModel.CategoryAttribute("Behavior")]
@@ -8809,7 +8809,7 @@ namespace System.Windows.Controls.Primitives
         protected override System.Windows.Size ArrangeOverride(System.Windows.Size arrangeSize) { throw null; }
         protected override System.Windows.Size MeasureOverride(System.Windows.Size constraint) { throw null; }
     }
-    [System.Windows.LocalizabilityAttribute(System.Windows.LocalizationCategory.None, Readability = System.Windows.Readability.Unreadable)]
+    [System.Windows.LocalizabilityAttribute(System.Windows.LocalizationCategory.None, Readability=System.Windows.Readability.Unreadable)]
     public partial class Track : System.Windows.FrameworkElement
     {
         public static readonly System.Windows.DependencyProperty IsDirectionReversedProperty;
@@ -8912,7 +8912,7 @@ namespace System.Windows.Data
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public bool ShouldSerializeValidationRules() { throw null; }
     }
-    [System.Windows.LocalizabilityAttribute(System.Windows.LocalizationCategory.None, Modifiability = System.Windows.Modifiability.Unmodifiable, Readability = System.Windows.Readability.Unreadable)]
+    [System.Windows.LocalizabilityAttribute(System.Windows.LocalizationCategory.None, Modifiability=System.Windows.Modifiability.Unmodifiable, Readability=System.Windows.Readability.Unreadable)]
     [System.Windows.Markup.MarkupExtensionReturnTypeAttribute(typeof(object))]
     public abstract partial class BindingBase : System.Windows.Markup.MarkupExtension
     {
@@ -9517,7 +9517,7 @@ namespace System.Windows.Data
         LostFocus = 2,
         PropertyChanged = 1,
     }
-    [System.AttributeUsageAttribute(System.AttributeTargets.Class, AllowMultiple = true)]
+    [System.AttributeUsageAttribute(System.AttributeTargets.Class, AllowMultiple=true)]
     public sealed partial class ValueConversionAttribute : System.Attribute
     {
         public ValueConversionAttribute(System.Type sourceType, System.Type targetType) { }
@@ -9534,7 +9534,7 @@ namespace System.Windows.Data
         public ValueUnavailableException(string message) { }
         public ValueUnavailableException(string message, System.Exception innerException) { }
     }
-    [System.Windows.LocalizabilityAttribute(System.Windows.LocalizationCategory.None, Readability = System.Windows.Readability.Unreadable)]
+    [System.Windows.LocalizabilityAttribute(System.Windows.LocalizationCategory.None, Readability=System.Windows.Readability.Unreadable)]
     [System.Windows.Markup.ContentPropertyAttribute("XmlSerializer")]
     public partial class XmlDataProvider : System.Windows.Data.DataSourceProvider, System.Windows.Markup.IUriContext
     {
@@ -9957,7 +9957,7 @@ namespace System.Windows.Documents
         [System.ComponentModel.TypeConverterAttribute(typeof(System.Windows.LengthConverter))]
         public double Width { get { throw null; } set { } }
     }
-    [System.Windows.LocalizabilityAttribute(System.Windows.LocalizationCategory.Inherit, Readability = System.Windows.Readability.Unreadable)]
+    [System.Windows.LocalizabilityAttribute(System.Windows.LocalizationCategory.Inherit, Readability=System.Windows.Readability.Unreadable)]
     [System.Windows.Markup.ContentPropertyAttribute("Blocks")]
     public partial class FlowDocument : System.Windows.FrameworkContentElement, System.IServiceProvider, System.Windows.Documents.IDocumentPaginatorSource, System.Windows.Markup.IAddChild
     {
@@ -9993,19 +9993,19 @@ namespace System.Windows.Documents
         [System.ComponentModel.DesignerSerializationVisibilityAttribute(System.ComponentModel.DesignerSerializationVisibility.Content)]
         public System.Windows.Documents.BlockCollection Blocks { get { throw null; } }
         [System.ComponentModel.TypeConverterAttribute(typeof(System.Windows.LengthConverter))]
-        [System.Windows.LocalizabilityAttribute(System.Windows.LocalizationCategory.None, Readability = System.Windows.Readability.Unreadable)]
+        [System.Windows.LocalizabilityAttribute(System.Windows.LocalizationCategory.None, Readability=System.Windows.Readability.Unreadable)]
         public double ColumnGap { get { throw null; } set { } }
         public System.Windows.Media.Brush ColumnRuleBrush { get { throw null; } set { } }
         [System.ComponentModel.TypeConverterAttribute(typeof(System.Windows.LengthConverter))]
-        [System.Windows.LocalizabilityAttribute(System.Windows.LocalizationCategory.None, Readability = System.Windows.Readability.Unreadable)]
+        [System.Windows.LocalizabilityAttribute(System.Windows.LocalizationCategory.None, Readability=System.Windows.Readability.Unreadable)]
         public double ColumnRuleWidth { get { throw null; } set { } }
         [System.ComponentModel.TypeConverterAttribute(typeof(System.Windows.LengthConverter))]
-        [System.Windows.LocalizabilityAttribute(System.Windows.LocalizationCategory.None, Readability = System.Windows.Readability.Unreadable)]
+        [System.Windows.LocalizabilityAttribute(System.Windows.LocalizationCategory.None, Readability=System.Windows.Readability.Unreadable)]
         public double ColumnWidth { get { throw null; } set { } }
         public System.Windows.Documents.TextPointer ContentEnd { get { throw null; } }
         public System.Windows.Documents.TextPointer ContentStart { get { throw null; } }
         public System.Windows.FlowDirection FlowDirection { get { throw null; } set { } }
-        [System.Windows.LocalizabilityAttribute(System.Windows.LocalizationCategory.Font, Modifiability = System.Windows.Modifiability.Unmodifiable)]
+        [System.Windows.LocalizabilityAttribute(System.Windows.LocalizationCategory.Font, Modifiability=System.Windows.Modifiability.Unmodifiable)]
         public System.Windows.Media.FontFamily FontFamily { get { throw null; } set { } }
         [System.ComponentModel.TypeConverterAttribute(typeof(System.Windows.FontSizeConverter))]
         [System.Windows.LocalizabilityAttribute(System.Windows.LocalizationCategory.None)]
@@ -10105,7 +10105,7 @@ namespace System.Windows.Documents
         protected override void OnRender(System.Windows.Media.DrawingContext context) { }
         public System.Windows.Media.GlyphRun ToGlyphRun() { throw null; }
     }
-    [System.Windows.Documents.TextElementEditingBehaviorAttribute(IsMergeable = false, IsTypographicOnly = false)]
+    [System.Windows.Documents.TextElementEditingBehaviorAttribute(IsMergeable=false, IsTypographicOnly=false)]
     public partial class Hyperlink : System.Windows.Documents.Span, System.Windows.Input.ICommandSource, System.Windows.Markup.IUriContext
     {
         public static readonly System.Windows.RoutedEvent ClickEvent;
@@ -10137,7 +10137,7 @@ namespace System.Windows.Documents
         public System.Uri NavigateUri { get { throw null; } set { } }
         System.Uri System.Windows.Markup.IUriContext.BaseUri { get { throw null; } set { } }
         [System.ComponentModel.BindableAttribute(true)]
-        [System.Windows.LocalizabilityAttribute(System.Windows.LocalizationCategory.None, Modifiability = System.Windows.Modifiability.Unmodifiable)]
+        [System.Windows.LocalizabilityAttribute(System.Windows.LocalizationCategory.None, Modifiability=System.Windows.Modifiability.Unmodifiable)]
         public string TargetName { get { throw null; } set { } }
         [System.ComponentModel.CategoryAttribute("Behavior")]
         public event System.Windows.RoutedEventHandler Click { add { } remove { } }
@@ -10149,7 +10149,7 @@ namespace System.Windows.Documents
         protected internal override void OnMouseLeftButtonDown(System.Windows.Input.MouseButtonEventArgs e) { }
         protected internal override void OnMouseLeftButtonUp(System.Windows.Input.MouseButtonEventArgs e) { }
     }
-    [System.Windows.Documents.TextElementEditingBehaviorAttribute(IsMergeable = true, IsTypographicOnly = true)]
+    [System.Windows.Documents.TextElementEditingBehaviorAttribute(IsMergeable=true, IsTypographicOnly=true)]
     public abstract partial class Inline : System.Windows.Documents.TextElement
     {
         public static readonly System.Windows.DependencyProperty BaselineAlignmentProperty;
@@ -10174,7 +10174,7 @@ namespace System.Windows.Documents
         public void Add(string text) { }
         public void Add(System.Windows.UIElement uiElement) { }
     }
-    [System.Windows.Documents.TextElementEditingBehaviorAttribute(IsMergeable = false)]
+    [System.Windows.Documents.TextElementEditingBehaviorAttribute(IsMergeable=false)]
     [System.Windows.Markup.ContentPropertyAttribute("Child")]
     public partial class InlineUIContainer : System.Windows.Documents.Inline
     {
@@ -10597,7 +10597,7 @@ namespace System.Windows.Documents
         public System.Windows.Documents.TextPointer ContentStart { get { throw null; } }
         public System.Windows.Documents.TextPointer ElementEnd { get { throw null; } }
         public System.Windows.Documents.TextPointer ElementStart { get { throw null; } }
-        [System.Windows.LocalizabilityAttribute(System.Windows.LocalizationCategory.Font, Modifiability = System.Windows.Modifiability.Unmodifiable)]
+        [System.Windows.LocalizabilityAttribute(System.Windows.LocalizationCategory.Font, Modifiability=System.Windows.Modifiability.Unmodifiable)]
         public System.Windows.Media.FontFamily FontFamily { get { throw null; } set { } }
         [System.ComponentModel.TypeConverterAttribute(typeof(System.Windows.FontSizeConverter))]
         [System.Windows.LocalizabilityAttribute(System.Windows.LocalizationCategory.None)]
@@ -12150,7 +12150,7 @@ namespace System.Windows.Navigation
         Visible = 1,
     }
     [System.Windows.Markup.ContentPropertyAttribute]
-    [System.Windows.TemplatePartAttribute(Name = "PART_NavWinCP", Type = typeof(System.Windows.Controls.ContentPresenter))]
+    [System.Windows.TemplatePartAttribute(Name="PART_NavWinCP", Type=typeof(System.Windows.Controls.ContentPresenter))]
     public partial class NavigationWindow : System.Windows.Window, System.Windows.Markup.IUriContext
     {
         public static readonly System.Windows.DependencyProperty BackStackProperty;
@@ -12311,7 +12311,7 @@ namespace System.Windows.Shapes
         protected override System.Windows.Size MeasureOverride(System.Windows.Size constraint) { throw null; }
         protected override void OnRender(System.Windows.Media.DrawingContext drawingContext) { }
     }
-    [System.Windows.LocalizabilityAttribute(System.Windows.LocalizationCategory.None, Readability = System.Windows.Readability.Unreadable)]
+    [System.Windows.LocalizabilityAttribute(System.Windows.LocalizationCategory.None, Readability=System.Windows.Readability.Unreadable)]
     public abstract partial class Shape : System.Windows.FrameworkElement
     {
         public static readonly System.Windows.DependencyProperty FillProperty;

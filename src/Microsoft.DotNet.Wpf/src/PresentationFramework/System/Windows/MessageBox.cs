@@ -369,15 +369,15 @@ namespace System.Windows
         {
             if (!IsValidMessageBoxButton(button))
             {
-                throw new InvalidEnumArgumentException("button", (int)button, typeof(MessageBoxButton));
+                throw new InvalidEnumArgumentException ("button", (int)button, typeof(MessageBoxButton));
             }
             if (!IsValidMessageBoxImage(icon))
             {
-                throw new InvalidEnumArgumentException("icon", (int)icon, typeof(MessageBoxImage));
+                throw new InvalidEnumArgumentException ("icon", (int)icon, typeof(MessageBoxImage));
             }
             if (!IsValidMessageBoxResult(defaultResult))
             {
-                throw new InvalidEnumArgumentException("defaultResult", (int)defaultResult, typeof(MessageBoxResult));
+                throw new InvalidEnumArgumentException ("defaultResult", (int)defaultResult, typeof(MessageBoxResult));
             }
             if (!IsValidMessageBoxOptions(options))
             {
@@ -405,7 +405,7 @@ namespace System.Windows
                 }
             }
 
-            int style = (int)button | (int)icon | (int)DefaultResultToButtonNumber(defaultResult, button) | (int)options;
+            int style = (int) button | (int) icon | (int) DefaultResultToButtonNumber(defaultResult, button) | (int) options;
 
             // modal dialog notification?
             //

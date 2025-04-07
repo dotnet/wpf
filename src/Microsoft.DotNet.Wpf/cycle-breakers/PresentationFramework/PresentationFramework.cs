@@ -305,7 +305,7 @@ namespace System.Windows
     }
     public partial class DataTemplateKey : System.Windows.TemplateKey
     {
-        public DataTemplateKey() : base(default (System.Windows.TemplateKey.TemplateType)) { }
+        public DataTemplateKey() : base (default (System.Windows.TemplateKey.TemplateType)) { }
         public DataTemplateKey(object dataType) : base (default(System.Windows.TemplateKey.TemplateType)) { }
     }
     [System.Windows.Markup.ContentPropertyAttribute("Setters")]
@@ -2361,7 +2361,7 @@ namespace System.Windows.Automation.Peers
 {
     public partial class ButtonAutomationPeer : System.Windows.Automation.Peers.ButtonBaseAutomationPeer, System.Windows.Automation.Provider.IInvokeProvider
     {
-        public ButtonAutomationPeer(System.Windows.Controls.Button owner) : base(default(System.Windows.Controls.Primitives.ButtonBase)) { }
+        public ButtonAutomationPeer(System.Windows.Controls.Button owner) : base (default(System.Windows.Controls.Primitives.ButtonBase)) { }
         protected override System.Windows.Automation.Peers.AutomationControlType GetAutomationControlTypeCore() { throw null; }
         protected override string GetClassNameCore() { throw null; }
         public override object GetPattern(System.Windows.Automation.Peers.PatternInterface patternInterface) { throw null; }
@@ -2369,14 +2369,14 @@ namespace System.Windows.Automation.Peers
     }
     public abstract partial class ButtonBaseAutomationPeer : System.Windows.Automation.Peers.FrameworkElementAutomationPeer
     {
-        protected ButtonBaseAutomationPeer(System.Windows.Controls.Primitives.ButtonBase owner) : base(default(System.Windows.FrameworkElement)) { }
+        protected ButtonBaseAutomationPeer(System.Windows.Controls.Primitives.ButtonBase owner) : base (default(System.Windows.FrameworkElement)) { }
         protected override string GetAcceleratorKeyCore() { throw null; }
         protected override string GetAutomationIdCore() { throw null; }
         protected override string GetNameCore() { throw null; }
     }
     public sealed partial class CalendarAutomationPeer : System.Windows.Automation.Peers.FrameworkElementAutomationPeer, System.Windows.Automation.Provider.IGridProvider, System.Windows.Automation.Provider.IItemContainerProvider, System.Windows.Automation.Provider.IMultipleViewProvider, System.Windows.Automation.Provider.ISelectionProvider, System.Windows.Automation.Provider.ITableProvider
     {
-        public CalendarAutomationPeer(System.Windows.Controls.Calendar owner) : base(default(System.Windows.FrameworkElement)) { }
+        public CalendarAutomationPeer(System.Windows.Controls.Calendar owner) : base (default(System.Windows.FrameworkElement)) { }
         int System.Windows.Automation.Provider.IGridProvider.ColumnCount { get { throw null; } }
         int System.Windows.Automation.Provider.IGridProvider.RowCount { get { throw null; } }
         int System.Windows.Automation.Provider.IMultipleViewProvider.CurrentView { get { throw null; } }
@@ -2399,20 +2399,20 @@ namespace System.Windows.Automation.Peers
     }
     public sealed partial class CalendarButtonAutomationPeer : System.Windows.Automation.Peers.FrameworkElementAutomationPeer
     {
-        public CalendarButtonAutomationPeer(System.Windows.Controls.Button owner) : base(default(System.Windows.FrameworkElement)) { }
+        public CalendarButtonAutomationPeer(System.Windows.Controls.Button owner) : base (default(System.Windows.FrameworkElement)) { }
         protected override System.Windows.Automation.Peers.AutomationControlType GetAutomationControlTypeCore() { throw null; }
         protected override string GetClassNameCore() { throw null; }
         protected override string GetLocalizedControlTypeCore() { throw null; }
     }
     public partial class CheckBoxAutomationPeer : System.Windows.Automation.Peers.ToggleButtonAutomationPeer
     {
-        public CheckBoxAutomationPeer(System.Windows.Controls.CheckBox owner) : base(default(System.Windows.Controls.Primitives.ToggleButton)) { }
+        public CheckBoxAutomationPeer(System.Windows.Controls.CheckBox owner) : base (default(System.Windows.Controls.Primitives.ToggleButton)) { }
         protected override System.Windows.Automation.Peers.AutomationControlType GetAutomationControlTypeCore() { throw null; }
         protected override string GetClassNameCore() { throw null; }
     }
     public partial class ComboBoxAutomationPeer : System.Windows.Automation.Peers.SelectorAutomationPeer, System.Windows.Automation.Provider.IExpandCollapseProvider, System.Windows.Automation.Provider.IValueProvider
     {
-        public ComboBoxAutomationPeer(System.Windows.Controls.ComboBox owner) : base(default(System.Windows.Controls.Primitives.Selector)) { }
+        public ComboBoxAutomationPeer(System.Windows.Controls.ComboBox owner) : base (default(System.Windows.Controls.Primitives.Selector)) { }
         System.Windows.Automation.ExpandCollapseState System.Windows.Automation.Provider.IExpandCollapseProvider.ExpandCollapseState { get { throw null; } }
         bool System.Windows.Automation.Provider.IValueProvider.IsReadOnly { get { throw null; } }
         string System.Windows.Automation.Provider.IValueProvider.Value { get { throw null; } }
@@ -2428,18 +2428,18 @@ namespace System.Windows.Automation.Peers
     }
     public abstract partial class ContentTextAutomationPeer : System.Windows.Automation.Peers.FrameworkContentElementAutomationPeer
     {
-        protected ContentTextAutomationPeer(System.Windows.FrameworkContentElement owner) : base(default(System.Windows.FrameworkContentElement)) { }
+        protected ContentTextAutomationPeer(System.Windows.FrameworkContentElement owner) : base (default(System.Windows.FrameworkContentElement)) { }
     }
     public partial class ContextMenuAutomationPeer : System.Windows.Automation.Peers.FrameworkElementAutomationPeer
     {
-        public ContextMenuAutomationPeer(System.Windows.Controls.ContextMenu owner) : base(default(System.Windows.FrameworkElement)) { }
+        public ContextMenuAutomationPeer(System.Windows.Controls.ContextMenu owner) : base (default(System.Windows.FrameworkElement)) { }
         protected override System.Windows.Automation.Peers.AutomationControlType GetAutomationControlTypeCore() { throw null; }
         protected override string GetClassNameCore() { throw null; }
         protected override bool IsContentElementCore() { throw null; }
     }
     public sealed partial class DataGridAutomationPeer : System.Windows.Automation.Peers.ItemsControlAutomationPeer, System.Windows.Automation.Provider.IGridProvider, System.Windows.Automation.Provider.ISelectionProvider, System.Windows.Automation.Provider.ITableProvider
     {
-        public DataGridAutomationPeer(System.Windows.Controls.DataGrid owner) : base(default(System.Windows.Controls.ItemsControl)) { }
+        public DataGridAutomationPeer(System.Windows.Controls.DataGrid owner) : base (default(System.Windows.Controls.ItemsControl)) { }
         int System.Windows.Automation.Provider.IGridProvider.ColumnCount { get { throw null; } }
         int System.Windows.Automation.Provider.IGridProvider.RowCount { get { throw null; } }
         bool System.Windows.Automation.Provider.ISelectionProvider.CanSelectMultiple { get { throw null; } }
@@ -2457,7 +2457,7 @@ namespace System.Windows.Automation.Peers
     }
     public sealed partial class DataGridCellAutomationPeer : System.Windows.Automation.Peers.FrameworkElementAutomationPeer
     {
-        public DataGridCellAutomationPeer(System.Windows.Controls.DataGridCell owner) : base(default(System.Windows.FrameworkElement)) { }
+        public DataGridCellAutomationPeer(System.Windows.Controls.DataGridCell owner) : base (default(System.Windows.FrameworkElement)) { }
         protected override System.Windows.Automation.Peers.AutomationControlType GetAutomationControlTypeCore() { throw null; }
         protected override string GetClassNameCore() { throw null; }
     }
@@ -2511,14 +2511,14 @@ namespace System.Windows.Automation.Peers
     }
     public sealed partial class DataGridColumnHeaderAutomationPeer : System.Windows.Automation.Peers.ButtonBaseAutomationPeer
     {
-        public DataGridColumnHeaderAutomationPeer(System.Windows.Controls.Primitives.DataGridColumnHeader owner) : base(default(System.Windows.Controls.Primitives.ButtonBase)) { }
+        public DataGridColumnHeaderAutomationPeer(System.Windows.Controls.Primitives.DataGridColumnHeader owner) : base (default(System.Windows.Controls.Primitives.ButtonBase)) { }
         protected override System.Windows.Automation.Peers.AutomationControlType GetAutomationControlTypeCore() { throw null; }
         protected override string GetClassNameCore() { throw null; }
         protected override bool IsContentElementCore() { throw null; }
     }
     public partial class DataGridColumnHeaderItemAutomationPeer : System.Windows.Automation.Peers.ItemAutomationPeer, System.Windows.Automation.Provider.IInvokeProvider, System.Windows.Automation.Provider.IScrollItemProvider, System.Windows.Automation.Provider.ITransformProvider, System.Windows.Automation.Provider.IVirtualizedItemProvider
     {
-        public DataGridColumnHeaderItemAutomationPeer(object item, System.Windows.Controls.DataGridColumn column, System.Windows.Automation.Peers.DataGridColumnHeadersPresenterAutomationPeer peer) : base(default(object), default(System.Windows.Automation.Peers.ItemsControlAutomationPeer)) { }
+        public DataGridColumnHeaderItemAutomationPeer(object item, System.Windows.Controls.DataGridColumn column, System.Windows.Automation.Peers.DataGridColumnHeadersPresenterAutomationPeer peer) : base (default(object), default(System.Windows.Automation.Peers.ItemsControlAutomationPeer)) { }
         bool System.Windows.Automation.Provider.ITransformProvider.CanMove { get { throw null; } }
         bool System.Windows.Automation.Provider.ITransformProvider.CanResize { get { throw null; } }
         bool System.Windows.Automation.Provider.ITransformProvider.CanRotate { get { throw null; } }
@@ -2535,7 +2535,7 @@ namespace System.Windows.Automation.Peers
     }
     public sealed partial class DataGridColumnHeadersPresenterAutomationPeer : System.Windows.Automation.Peers.ItemsControlAutomationPeer, System.Windows.Automation.Provider.IItemContainerProvider
     {
-        public DataGridColumnHeadersPresenterAutomationPeer(System.Windows.Controls.Primitives.DataGridColumnHeadersPresenter owner) : base(default(System.Windows.Controls.ItemsControl)) { }
+        public DataGridColumnHeadersPresenterAutomationPeer(System.Windows.Controls.Primitives.DataGridColumnHeadersPresenter owner) : base (default(System.Windows.Controls.ItemsControl)) { }
         protected override System.Windows.Automation.Peers.ItemAutomationPeer CreateItemAutomationPeer(object column) { throw null; }
         protected override System.Windows.Automation.Peers.AutomationControlType GetAutomationControlTypeCore() { throw null; }
         protected override System.Collections.Generic.List<System.Windows.Automation.Peers.AutomationPeer> GetChildrenCore() { throw null; }
@@ -2545,12 +2545,12 @@ namespace System.Windows.Automation.Peers
     }
     public sealed partial class DataGridDetailsPresenterAutomationPeer : System.Windows.Automation.Peers.FrameworkElementAutomationPeer
     {
-        public DataGridDetailsPresenterAutomationPeer(System.Windows.Controls.Primitives.DataGridDetailsPresenter owner) : base(default(System.Windows.FrameworkElement)) { }
+        public DataGridDetailsPresenterAutomationPeer(System.Windows.Controls.Primitives.DataGridDetailsPresenter owner) : base (default(System.Windows.FrameworkElement)) { }
         protected override string GetClassNameCore() { throw null; }
     }
     public sealed partial class DataGridItemAutomationPeer : System.Windows.Automation.Peers.ItemAutomationPeer, System.Windows.Automation.Provider.IInvokeProvider, System.Windows.Automation.Provider.IItemContainerProvider, System.Windows.Automation.Provider.IScrollItemProvider, System.Windows.Automation.Provider.ISelectionItemProvider, System.Windows.Automation.Provider.ISelectionProvider
     {
-        public DataGridItemAutomationPeer(object item, System.Windows.Automation.Peers.DataGridAutomationPeer dataGridPeer) : base(default(object), default(System.Windows.Automation.Peers.ItemsControlAutomationPeer)) { }
+        public DataGridItemAutomationPeer(object item, System.Windows.Automation.Peers.DataGridAutomationPeer dataGridPeer) : base (default(object), default(System.Windows.Automation.Peers.ItemsControlAutomationPeer)) { }
         bool System.Windows.Automation.Provider.ISelectionItemProvider.IsSelected { get { throw null; } }
         System.Windows.Automation.Provider.IRawElementProviderSimple System.Windows.Automation.Provider.ISelectionItemProvider.SelectionContainer { get { throw null; } }
         bool System.Windows.Automation.Provider.ISelectionProvider.CanSelectMultiple { get { throw null; } }
@@ -2570,21 +2570,21 @@ namespace System.Windows.Automation.Peers
     }
     public sealed partial class DataGridRowAutomationPeer : System.Windows.Automation.Peers.FrameworkElementAutomationPeer
     {
-        public DataGridRowAutomationPeer(System.Windows.Controls.DataGridRow owner) : base(default(System.Windows.FrameworkElement)) { }
+        public DataGridRowAutomationPeer(System.Windows.Controls.DataGridRow owner) : base (default(System.Windows.FrameworkElement)) { }
         protected override System.Windows.Automation.Peers.AutomationControlType GetAutomationControlTypeCore() { throw null; }
         protected override System.Collections.Generic.List<System.Windows.Automation.Peers.AutomationPeer> GetChildrenCore() { throw null; }
         protected override string GetClassNameCore() { throw null; }
     }
     public sealed partial class DataGridRowHeaderAutomationPeer : System.Windows.Automation.Peers.ButtonBaseAutomationPeer
     {
-        public DataGridRowHeaderAutomationPeer(System.Windows.Controls.Primitives.DataGridRowHeader owner) : base(default(System.Windows.Controls.Primitives.ButtonBase)) { }
+        public DataGridRowHeaderAutomationPeer(System.Windows.Controls.Primitives.DataGridRowHeader owner) : base (default(System.Windows.Controls.Primitives.ButtonBase)) { }
         protected override System.Windows.Automation.Peers.AutomationControlType GetAutomationControlTypeCore() { throw null; }
         protected override string GetClassNameCore() { throw null; }
         protected override bool IsContentElementCore() { throw null; }
     }
     public sealed partial class DatePickerAutomationPeer : System.Windows.Automation.Peers.FrameworkElementAutomationPeer, System.Windows.Automation.Provider.IExpandCollapseProvider, System.Windows.Automation.Provider.IValueProvider
     {
-        public DatePickerAutomationPeer(System.Windows.Controls.DatePicker owner) : base(default(System.Windows.FrameworkElement)) { }
+        public DatePickerAutomationPeer(System.Windows.Controls.DatePicker owner) : base (default(System.Windows.FrameworkElement)) { }
         System.Windows.Automation.ExpandCollapseState System.Windows.Automation.Provider.IExpandCollapseProvider.ExpandCollapseState { get { throw null; } }
         bool System.Windows.Automation.Provider.IValueProvider.IsReadOnly { get { throw null; } }
         string System.Windows.Automation.Provider.IValueProvider.Value { get { throw null; } }
@@ -2644,7 +2644,7 @@ namespace System.Windows.Automation.Peers
     }
     public partial class DocumentAutomationPeer : System.Windows.Automation.Peers.ContentTextAutomationPeer
     {
-        public DocumentAutomationPeer(System.Windows.FrameworkContentElement owner) : base(default(System.Windows.FrameworkContentElement)) { }
+        public DocumentAutomationPeer(System.Windows.FrameworkContentElement owner) : base (default(System.Windows.FrameworkContentElement)) { }
         protected override System.Windows.Automation.Peers.AutomationControlType GetAutomationControlTypeCore() { throw null; }
         protected override System.Windows.Rect GetBoundingRectangleCore() { throw null; }
         protected override System.Collections.Generic.List<System.Windows.Automation.Peers.AutomationPeer> GetChildrenCore() { throw null; }
@@ -2656,19 +2656,19 @@ namespace System.Windows.Automation.Peers
     }
     public partial class DocumentPageViewAutomationPeer : System.Windows.Automation.Peers.FrameworkElementAutomationPeer
     {
-        public DocumentPageViewAutomationPeer(System.Windows.Controls.Primitives.DocumentPageView owner) : base(default(System.Windows.FrameworkElement)) { }
+        public DocumentPageViewAutomationPeer(System.Windows.Controls.Primitives.DocumentPageView owner) : base (default(System.Windows.FrameworkElement)) { }
         protected override string GetAutomationIdCore() { throw null; }
         protected override System.Collections.Generic.List<System.Windows.Automation.Peers.AutomationPeer> GetChildrenCore() { throw null; }
     }
     public partial class DocumentViewerAutomationPeer : System.Windows.Automation.Peers.DocumentViewerBaseAutomationPeer
     {
-        public DocumentViewerAutomationPeer(System.Windows.Controls.DocumentViewer owner) : base(default(System.Windows.Controls.Primitives.DocumentViewerBase)) { }
+        public DocumentViewerAutomationPeer(System.Windows.Controls.DocumentViewer owner) : base (default(System.Windows.Controls.Primitives.DocumentViewerBase)) { }
         protected override string GetClassNameCore() { throw null; }
         public override object GetPattern(System.Windows.Automation.Peers.PatternInterface patternInterface) { throw null; }
     }
     public partial class DocumentViewerBaseAutomationPeer : System.Windows.Automation.Peers.FrameworkElementAutomationPeer
     {
-        public DocumentViewerBaseAutomationPeer(System.Windows.Controls.Primitives.DocumentViewerBase owner) : base(default(System.Windows.FrameworkElement)) { }
+        public DocumentViewerBaseAutomationPeer(System.Windows.Controls.Primitives.DocumentViewerBase owner) : base (default(System.Windows.FrameworkElement)) { }
         protected override System.Windows.Automation.Peers.AutomationControlType GetAutomationControlTypeCore() { throw null; }
         protected override System.Collections.Generic.List<System.Windows.Automation.Peers.AutomationPeer> GetChildrenCore() { throw null; }
         protected override string GetClassNameCore() { throw null; }
@@ -2676,7 +2676,7 @@ namespace System.Windows.Automation.Peers
     }
     public partial class ExpanderAutomationPeer : System.Windows.Automation.Peers.FrameworkElementAutomationPeer, System.Windows.Automation.Provider.IExpandCollapseProvider
     {
-        public ExpanderAutomationPeer(System.Windows.Controls.Expander owner) : base(default(System.Windows.FrameworkElement)) { }
+        public ExpanderAutomationPeer(System.Windows.Controls.Expander owner) : base (default(System.Windows.FrameworkElement)) { }
         System.Windows.Automation.ExpandCollapseState System.Windows.Automation.Provider.IExpandCollapseProvider.ExpandCollapseState { get { throw null; } }
         protected override System.Windows.Automation.Peers.AutomationControlType GetAutomationControlTypeCore() { throw null; }
         protected override System.Collections.Generic.List<System.Windows.Automation.Peers.AutomationPeer> GetChildrenCore() { throw null; }
@@ -2688,19 +2688,19 @@ namespace System.Windows.Automation.Peers
     }
     public partial class FixedPageAutomationPeer : System.Windows.Automation.Peers.FrameworkElementAutomationPeer
     {
-        public FixedPageAutomationPeer(System.Windows.Documents.FixedPage owner) : base(default(System.Windows.FrameworkElement)) { }
+        public FixedPageAutomationPeer(System.Windows.Documents.FixedPage owner) : base (default(System.Windows.FrameworkElement)) { }
         protected override System.Windows.Automation.Peers.AutomationControlType GetAutomationControlTypeCore() { throw null; }
         protected override string GetClassNameCore() { throw null; }
     }
     public partial class FlowDocumentPageViewerAutomationPeer : System.Windows.Automation.Peers.DocumentViewerBaseAutomationPeer
     {
-        public FlowDocumentPageViewerAutomationPeer(System.Windows.Controls.FlowDocumentPageViewer owner) : base(default(System.Windows.Controls.Primitives.DocumentViewerBase)) { }
+        public FlowDocumentPageViewerAutomationPeer(System.Windows.Controls.FlowDocumentPageViewer owner) : base (default(System.Windows.Controls.Primitives.DocumentViewerBase)) { }
         protected override System.Collections.Generic.List<System.Windows.Automation.Peers.AutomationPeer> GetChildrenCore() { throw null; }
         protected override string GetClassNameCore() { throw null; }
     }
     public partial class FlowDocumentReaderAutomationPeer : System.Windows.Automation.Peers.FrameworkElementAutomationPeer, System.Windows.Automation.Provider.IMultipleViewProvider
     {
-        public FlowDocumentReaderAutomationPeer(System.Windows.Controls.FlowDocumentReader owner) : base(default(System.Windows.FrameworkElement)) { }
+        public FlowDocumentReaderAutomationPeer(System.Windows.Controls.FlowDocumentReader owner) : base (default(System.Windows.FrameworkElement)) { }
         int System.Windows.Automation.Provider.IMultipleViewProvider.CurrentView { get { throw null; } }
         protected override System.Collections.Generic.List<System.Windows.Automation.Peers.AutomationPeer> GetChildrenCore() { throw null; }
         protected override string GetClassNameCore() { throw null; }
@@ -2711,7 +2711,7 @@ namespace System.Windows.Automation.Peers
     }
     public partial class FlowDocumentScrollViewerAutomationPeer : System.Windows.Automation.Peers.FrameworkElementAutomationPeer
     {
-        public FlowDocumentScrollViewerAutomationPeer(System.Windows.Controls.FlowDocumentScrollViewer owner) : base(default(System.Windows.FrameworkElement)) { }
+        public FlowDocumentScrollViewerAutomationPeer(System.Windows.Controls.FlowDocumentScrollViewer owner) : base (default(System.Windows.FrameworkElement)) { }
         protected override System.Windows.Automation.Peers.AutomationControlType GetAutomationControlTypeCore() { throw null; }
         protected override System.Collections.Generic.List<System.Windows.Automation.Peers.AutomationPeer> GetChildrenCore() { throw null; }
         protected override string GetClassNameCore() { throw null; }
@@ -2719,27 +2719,27 @@ namespace System.Windows.Automation.Peers
     }
     public partial class FrameAutomationPeer : System.Windows.Automation.Peers.FrameworkElementAutomationPeer
     {
-        public FrameAutomationPeer(System.Windows.Controls.Frame owner) : base(default(System.Windows.FrameworkElement)) { }
+        public FrameAutomationPeer(System.Windows.Controls.Frame owner) : base (default(System.Windows.FrameworkElement)) { }
         protected override System.Windows.Automation.Peers.AutomationControlType GetAutomationControlTypeCore() { throw null; }
         protected override string GetClassNameCore() { throw null; }
     }
     public partial class FrameworkContentElementAutomationPeer : System.Windows.Automation.Peers.ContentElementAutomationPeer
     {
-        public FrameworkContentElementAutomationPeer(System.Windows.FrameworkContentElement owner) : base(default(System.Windows.ContentElement)) { }
+        public FrameworkContentElementAutomationPeer(System.Windows.FrameworkContentElement owner) : base (default(System.Windows.ContentElement)) { }
         protected override string GetAutomationIdCore() { throw null; }
         protected override string GetHelpTextCore() { throw null; }
         protected override System.Windows.Automation.Peers.AutomationPeer GetLabeledByCore() { throw null; }
     }
     public partial class FrameworkElementAutomationPeer : System.Windows.Automation.Peers.UIElementAutomationPeer
     {
-        public FrameworkElementAutomationPeer(System.Windows.FrameworkElement owner) : base(default(System.Windows.UIElement)) { }
+        public FrameworkElementAutomationPeer(System.Windows.FrameworkElement owner) : base (default(System.Windows.UIElement)) { }
         protected override string GetAutomationIdCore() { throw null; }
         protected override string GetHelpTextCore() { throw null; }
         protected override string GetNameCore() { throw null; }
     }
     public partial class GridSplitterAutomationPeer : System.Windows.Automation.Peers.ThumbAutomationPeer, System.Windows.Automation.Provider.ITransformProvider
     {
-        public GridSplitterAutomationPeer(System.Windows.Controls.GridSplitter owner) : base(default(System.Windows.Controls.Primitives.Thumb)) { }
+        public GridSplitterAutomationPeer(System.Windows.Controls.GridSplitter owner) : base (default(System.Windows.Controls.Primitives.Thumb)) { }
         bool System.Windows.Automation.Provider.ITransformProvider.CanMove { get { throw null; } }
         bool System.Windows.Automation.Provider.ITransformProvider.CanResize { get { throw null; } }
         bool System.Windows.Automation.Provider.ITransformProvider.CanRotate { get { throw null; } }
@@ -2767,7 +2767,7 @@ namespace System.Windows.Automation.Peers
     }
     public partial class GridViewCellAutomationPeer : System.Windows.Automation.Peers.FrameworkElementAutomationPeer, System.Windows.Automation.Provider.IGridItemProvider, System.Windows.Automation.Provider.ITableItemProvider
     {
-        internal GridViewCellAutomationPeer() : base(default(System.Windows.FrameworkElement)) { }
+        internal GridViewCellAutomationPeer() : base (default(System.Windows.FrameworkElement)) { }
         int System.Windows.Automation.Provider.IGridItemProvider.Column { get { throw null; } }
         int System.Windows.Automation.Provider.IGridItemProvider.ColumnSpan { get { throw null; } }
         System.Windows.Automation.Provider.IRawElementProviderSimple System.Windows.Automation.Provider.IGridItemProvider.ContainingGrid { get { throw null; } }
@@ -2782,7 +2782,7 @@ namespace System.Windows.Automation.Peers
     }
     public partial class GridViewColumnHeaderAutomationPeer : System.Windows.Automation.Peers.FrameworkElementAutomationPeer, System.Windows.Automation.Provider.IInvokeProvider, System.Windows.Automation.Provider.ITransformProvider
     {
-        public GridViewColumnHeaderAutomationPeer(System.Windows.Controls.GridViewColumnHeader owner) : base(default(System.Windows.FrameworkElement)) { }
+        public GridViewColumnHeaderAutomationPeer(System.Windows.Controls.GridViewColumnHeader owner) : base (default(System.Windows.FrameworkElement)) { }
         bool System.Windows.Automation.Provider.ITransformProvider.CanMove { get { throw null; } }
         bool System.Windows.Automation.Provider.ITransformProvider.CanResize { get { throw null; } }
         bool System.Windows.Automation.Provider.ITransformProvider.CanRotate { get { throw null; } }
@@ -2797,7 +2797,7 @@ namespace System.Windows.Automation.Peers
     }
     public partial class GridViewHeaderRowPresenterAutomationPeer : System.Windows.Automation.Peers.FrameworkElementAutomationPeer
     {
-        public GridViewHeaderRowPresenterAutomationPeer(System.Windows.Controls.GridViewHeaderRowPresenter owner) : base(default(System.Windows.FrameworkElement)) { }
+        public GridViewHeaderRowPresenterAutomationPeer(System.Windows.Controls.GridViewHeaderRowPresenter owner) : base (default(System.Windows.FrameworkElement)) { }
         protected override System.Windows.Automation.Peers.AutomationControlType GetAutomationControlTypeCore() { throw null; }
         protected override System.Collections.Generic.List<System.Windows.Automation.Peers.AutomationPeer> GetChildrenCore() { throw null; }
         protected override string GetClassNameCore() { throw null; }
@@ -2805,21 +2805,21 @@ namespace System.Windows.Automation.Peers
     }
     public partial class GridViewItemAutomationPeer : System.Windows.Automation.Peers.ListBoxItemAutomationPeer
     {
-        public GridViewItemAutomationPeer(object owner, System.Windows.Automation.Peers.ListViewAutomationPeer listviewAP) : base(default(object), default(System.Windows.Automation.Peers.SelectorAutomationPeer)) { }
+        public GridViewItemAutomationPeer(object owner, System.Windows.Automation.Peers.ListViewAutomationPeer listviewAP) : base (default(object), default(System.Windows.Automation.Peers.SelectorAutomationPeer)) { }
         protected override System.Windows.Automation.Peers.AutomationControlType GetAutomationControlTypeCore() { throw null; }
         protected override System.Collections.Generic.List<System.Windows.Automation.Peers.AutomationPeer> GetChildrenCore() { throw null; }
         protected override string GetClassNameCore() { throw null; }
     }
     public partial class GroupBoxAutomationPeer : System.Windows.Automation.Peers.FrameworkElementAutomationPeer
     {
-        public GroupBoxAutomationPeer(System.Windows.Controls.GroupBox owner) : base(default(System.Windows.FrameworkElement)) { }
+        public GroupBoxAutomationPeer(System.Windows.Controls.GroupBox owner) : base (default(System.Windows.FrameworkElement)) { }
         protected override System.Windows.Automation.Peers.AutomationControlType GetAutomationControlTypeCore() { throw null; }
         protected override string GetClassNameCore() { throw null; }
         protected override string GetNameCore() { throw null; }
     }
     public partial class GroupItemAutomationPeer : System.Windows.Automation.Peers.FrameworkElementAutomationPeer
     {
-        public GroupItemAutomationPeer(System.Windows.Controls.GroupItem owner) : base(default(System.Windows.FrameworkElement)) { }
+        public GroupItemAutomationPeer(System.Windows.Controls.GroupItem owner) : base (default(System.Windows.FrameworkElement)) { }
         protected override System.Windows.Automation.Peers.AutomationControlType GetAutomationControlTypeCore() { throw null; }
         protected override System.Collections.Generic.List<System.Windows.Automation.Peers.AutomationPeer> GetChildrenCore() { throw null; }
         protected override string GetClassNameCore() { throw null; }
@@ -2830,7 +2830,7 @@ namespace System.Windows.Automation.Peers
     }
     public partial class HyperlinkAutomationPeer : System.Windows.Automation.Peers.TextElementAutomationPeer, System.Windows.Automation.Provider.IInvokeProvider
     {
-        public HyperlinkAutomationPeer(System.Windows.Documents.Hyperlink owner) : base(default(System.Windows.Documents.TextElement)) { }
+        public HyperlinkAutomationPeer(System.Windows.Documents.Hyperlink owner) : base (default(System.Windows.Documents.TextElement)) { }
         protected override System.Windows.Automation.Peers.AutomationControlType GetAutomationControlTypeCore() { throw null; }
         protected override string GetClassNameCore() { throw null; }
         protected override string GetNameCore() { throw null; }
@@ -2840,19 +2840,19 @@ namespace System.Windows.Automation.Peers
     }
     public partial class ImageAutomationPeer : System.Windows.Automation.Peers.FrameworkElementAutomationPeer
     {
-        public ImageAutomationPeer(System.Windows.Controls.Image owner) : base(default(System.Windows.FrameworkElement)) { }
+        public ImageAutomationPeer(System.Windows.Controls.Image owner) : base (default(System.Windows.FrameworkElement)) { }
         protected override System.Windows.Automation.Peers.AutomationControlType GetAutomationControlTypeCore() { throw null; }
         protected override string GetClassNameCore() { throw null; }
     }
     public partial class InkCanvasAutomationPeer : System.Windows.Automation.Peers.FrameworkElementAutomationPeer
     {
-        public InkCanvasAutomationPeer(System.Windows.Controls.InkCanvas owner) : base(default(System.Windows.FrameworkElement)) { }
+        public InkCanvasAutomationPeer(System.Windows.Controls.InkCanvas owner) : base (default(System.Windows.FrameworkElement)) { }
         protected override System.Windows.Automation.Peers.AutomationControlType GetAutomationControlTypeCore() { throw null; }
         protected override string GetClassNameCore() { throw null; }
     }
     public partial class InkPresenterAutomationPeer : System.Windows.Automation.Peers.FrameworkElementAutomationPeer
     {
-        public InkPresenterAutomationPeer(System.Windows.Controls.InkPresenter owner) : base(default(System.Windows.FrameworkElement)) { }
+        public InkPresenterAutomationPeer(System.Windows.Controls.InkPresenter owner) : base (default(System.Windows.FrameworkElement)) { }
         protected override System.Windows.Automation.Peers.AutomationControlType GetAutomationControlTypeCore() { throw null; }
         protected override string GetClassNameCore() { throw null; }
     }
@@ -2888,7 +2888,7 @@ namespace System.Windows.Automation.Peers
     }
     public abstract partial class ItemsControlAutomationPeer : System.Windows.Automation.Peers.FrameworkElementAutomationPeer, System.Windows.Automation.Provider.IItemContainerProvider
     {
-        protected ItemsControlAutomationPeer(System.Windows.Controls.ItemsControl owner) : base(default(System.Windows.FrameworkElement)) { }
+        protected ItemsControlAutomationPeer(System.Windows.Controls.ItemsControl owner) : base (default(System.Windows.FrameworkElement)) { }
         protected virtual bool IsVirtualized { get { throw null; } }
         protected abstract System.Windows.Automation.Peers.ItemAutomationPeer CreateItemAutomationPeer(object item);
         protected internal virtual System.Windows.Automation.Peers.ItemAutomationPeer FindOrCreateItemAutomationPeer(object item) { throw null; }
@@ -2907,20 +2907,20 @@ namespace System.Windows.Automation.Peers
     }
     public partial class LabelAutomationPeer : System.Windows.Automation.Peers.FrameworkElementAutomationPeer
     {
-        public LabelAutomationPeer(System.Windows.Controls.Label owner) : base(default(System.Windows.FrameworkElement)) { }
+        public LabelAutomationPeer(System.Windows.Controls.Label owner) : base (default(System.Windows.FrameworkElement)) { }
         protected override System.Windows.Automation.Peers.AutomationControlType GetAutomationControlTypeCore() { throw null; }
         protected override string GetClassNameCore() { throw null; }
         protected override string GetNameCore() { throw null; }
     }
     public partial class ListBoxAutomationPeer : System.Windows.Automation.Peers.SelectorAutomationPeer
     {
-        public ListBoxAutomationPeer(System.Windows.Controls.ListBox owner) : base(default(System.Windows.Controls.Primitives.Selector)) { }
+        public ListBoxAutomationPeer(System.Windows.Controls.ListBox owner) : base (default(System.Windows.Controls.Primitives.Selector)) { }
         protected override System.Windows.Automation.Peers.ItemAutomationPeer CreateItemAutomationPeer(object item) { throw null; }
         protected override string GetClassNameCore() { throw null; }
     }
     public partial class ListBoxItemAutomationPeer : System.Windows.Automation.Peers.SelectorItemAutomationPeer, System.Windows.Automation.Provider.IScrollItemProvider
     {
-        public ListBoxItemAutomationPeer(object owner, System.Windows.Automation.Peers.SelectorAutomationPeer selectorAutomationPeer) : base(default(object), default(System.Windows.Automation.Peers.SelectorAutomationPeer)) { }
+        public ListBoxItemAutomationPeer(object owner, System.Windows.Automation.Peers.SelectorAutomationPeer selectorAutomationPeer) : base (default(object), default(System.Windows.Automation.Peers.SelectorAutomationPeer)) { }
         protected override System.Windows.Automation.Peers.AutomationControlType GetAutomationControlTypeCore() { throw null; }
         protected override string GetClassNameCore() { throw null; }
         public override object GetPattern(System.Windows.Automation.Peers.PatternInterface patternInterface) { throw null; }
@@ -2928,13 +2928,13 @@ namespace System.Windows.Automation.Peers
     }
     public partial class ListBoxItemWrapperAutomationPeer : System.Windows.Automation.Peers.FrameworkElementAutomationPeer
     {
-        public ListBoxItemWrapperAutomationPeer(System.Windows.Controls.ListBoxItem owner) : base(default(System.Windows.FrameworkElement)) { }
+        public ListBoxItemWrapperAutomationPeer(System.Windows.Controls.ListBoxItem owner) : base (default(System.Windows.FrameworkElement)) { }
         protected override System.Windows.Automation.Peers.AutomationControlType GetAutomationControlTypeCore() { throw null; }
         protected override string GetClassNameCore() { throw null; }
     }
     public partial class ListViewAutomationPeer : System.Windows.Automation.Peers.ListBoxAutomationPeer
     {
-        public ListViewAutomationPeer(System.Windows.Controls.ListView owner) : base(default(System.Windows.Controls.ListBox)) { }
+        public ListViewAutomationPeer(System.Windows.Controls.ListView owner) : base (default(System.Windows.Controls.ListBox)) { }
         protected internal System.Windows.Automation.Peers.IViewAutomationPeer ViewAutomationPeer { get { throw null; } set { } }
         protected override System.Windows.Automation.Peers.ItemAutomationPeer CreateItemAutomationPeer(object item) { throw null; }
         protected override System.Windows.Automation.Peers.AutomationControlType GetAutomationControlTypeCore() { throw null; }
@@ -2944,20 +2944,20 @@ namespace System.Windows.Automation.Peers
     }
     public partial class MediaElementAutomationPeer : System.Windows.Automation.Peers.FrameworkElementAutomationPeer
     {
-        public MediaElementAutomationPeer(System.Windows.Controls.MediaElement owner) : base(default(System.Windows.FrameworkElement)) { }
+        public MediaElementAutomationPeer(System.Windows.Controls.MediaElement owner) : base (default(System.Windows.FrameworkElement)) { }
         protected override System.Windows.Automation.Peers.AutomationControlType GetAutomationControlTypeCore() { throw null; }
         protected override string GetClassNameCore() { throw null; }
     }
     public partial class MenuAutomationPeer : System.Windows.Automation.Peers.FrameworkElementAutomationPeer
     {
-        public MenuAutomationPeer(System.Windows.Controls.Menu owner) : base(default(System.Windows.FrameworkElement)) { }
+        public MenuAutomationPeer(System.Windows.Controls.Menu owner) : base (default(System.Windows.FrameworkElement)) { }
         protected override System.Windows.Automation.Peers.AutomationControlType GetAutomationControlTypeCore() { throw null; }
         protected override string GetClassNameCore() { throw null; }
         protected override bool IsContentElementCore() { throw null; }
     }
     public partial class MenuItemAutomationPeer : System.Windows.Automation.Peers.FrameworkElementAutomationPeer, System.Windows.Automation.Provider.IExpandCollapseProvider, System.Windows.Automation.Provider.IInvokeProvider, System.Windows.Automation.Provider.IToggleProvider
     {
-        public MenuItemAutomationPeer(System.Windows.Controls.MenuItem owner) : base(default(System.Windows.FrameworkElement)) { }
+        public MenuItemAutomationPeer(System.Windows.Controls.MenuItem owner) : base (default(System.Windows.FrameworkElement)) { }
         System.Windows.Automation.ExpandCollapseState System.Windows.Automation.Provider.IExpandCollapseProvider.ExpandCollapseState { get { throw null; } }
         System.Windows.Automation.ToggleState System.Windows.Automation.Provider.IToggleProvider.ToggleState { get { throw null; } }
         protected override string GetAccessKeyCore() { throw null; }
@@ -2973,12 +2973,12 @@ namespace System.Windows.Automation.Peers
     }
     public partial class NavigationWindowAutomationPeer : System.Windows.Automation.Peers.WindowAutomationPeer
     {
-        public NavigationWindowAutomationPeer(System.Windows.Navigation.NavigationWindow owner) : base(default(System.Windows.Window)) { }
+        public NavigationWindowAutomationPeer(System.Windows.Navigation.NavigationWindow owner) : base (default(System.Windows.Window)) { }
         protected override string GetClassNameCore() { throw null; }
     }
     public partial class PasswordBoxAutomationPeer : System.Windows.Automation.Peers.TextAutomationPeer, System.Windows.Automation.Provider.IValueProvider
     {
-        public PasswordBoxAutomationPeer(System.Windows.Controls.PasswordBox owner) : base(default(System.Windows.FrameworkElement)) { }
+        public PasswordBoxAutomationPeer(System.Windows.Controls.PasswordBox owner) : base (default(System.Windows.FrameworkElement)) { }
         bool System.Windows.Automation.Provider.IValueProvider.IsReadOnly { get { throw null; } }
         string System.Windows.Automation.Provider.IValueProvider.Value { get { throw null; } }
         protected override System.Windows.Automation.Peers.AutomationControlType GetAutomationControlTypeCore() { throw null; }
@@ -2989,7 +2989,7 @@ namespace System.Windows.Automation.Peers
     }
     public partial class ProgressBarAutomationPeer : System.Windows.Automation.Peers.RangeBaseAutomationPeer, System.Windows.Automation.Provider.IRangeValueProvider
     {
-        public ProgressBarAutomationPeer(System.Windows.Controls.ProgressBar owner) : base(default(System.Windows.Controls.Primitives.RangeBase)) { }
+        public ProgressBarAutomationPeer(System.Windows.Controls.ProgressBar owner) : base (default(System.Windows.Controls.Primitives.RangeBase)) { }
         bool System.Windows.Automation.Provider.IRangeValueProvider.IsReadOnly { get { throw null; } }
         double System.Windows.Automation.Provider.IRangeValueProvider.LargeChange { get { throw null; } }
         double System.Windows.Automation.Provider.IRangeValueProvider.SmallChange { get { throw null; } }
@@ -3000,7 +3000,7 @@ namespace System.Windows.Automation.Peers
     }
     public partial class RadioButtonAutomationPeer : System.Windows.Automation.Peers.ToggleButtonAutomationPeer, System.Windows.Automation.Provider.ISelectionItemProvider
     {
-        public RadioButtonAutomationPeer(System.Windows.Controls.RadioButton owner) : base(default(System.Windows.Controls.Primitives.ToggleButton)) { }
+        public RadioButtonAutomationPeer(System.Windows.Controls.RadioButton owner) : base (default(System.Windows.Controls.Primitives.ToggleButton)) { }
         bool System.Windows.Automation.Provider.ISelectionItemProvider.IsSelected { get { throw null; } }
         System.Windows.Automation.Provider.IRawElementProviderSimple System.Windows.Automation.Provider.ISelectionItemProvider.SelectionContainer { get { throw null; } }
         protected override System.Windows.Automation.Peers.AutomationControlType GetAutomationControlTypeCore() { throw null; }
@@ -3012,7 +3012,7 @@ namespace System.Windows.Automation.Peers
     }
     public partial class RangeBaseAutomationPeer : System.Windows.Automation.Peers.FrameworkElementAutomationPeer, System.Windows.Automation.Provider.IRangeValueProvider
     {
-        public RangeBaseAutomationPeer(System.Windows.Controls.Primitives.RangeBase owner) : base(default(System.Windows.FrameworkElement)) { }
+        public RangeBaseAutomationPeer(System.Windows.Controls.Primitives.RangeBase owner) : base (default(System.Windows.FrameworkElement)) { }
         bool System.Windows.Automation.Provider.IRangeValueProvider.IsReadOnly { get { throw null; } }
         double System.Windows.Automation.Provider.IRangeValueProvider.LargeChange { get { throw null; } }
         double System.Windows.Automation.Provider.IRangeValueProvider.Maximum { get { throw null; } }
@@ -3024,7 +3024,7 @@ namespace System.Windows.Automation.Peers
     }
     public partial class RepeatButtonAutomationPeer : System.Windows.Automation.Peers.ButtonBaseAutomationPeer, System.Windows.Automation.Provider.IInvokeProvider
     {
-        public RepeatButtonAutomationPeer(System.Windows.Controls.Primitives.RepeatButton owner) : base(default(System.Windows.Controls.Primitives.ButtonBase)) { }
+        public RepeatButtonAutomationPeer(System.Windows.Controls.Primitives.RepeatButton owner) : base (default(System.Windows.Controls.Primitives.ButtonBase)) { }
         protected override System.Windows.Automation.Peers.AutomationControlType GetAutomationControlTypeCore() { throw null; }
         protected override string GetClassNameCore() { throw null; }
         public override object GetPattern(System.Windows.Automation.Peers.PatternInterface patternInterface) { throw null; }
@@ -3032,7 +3032,7 @@ namespace System.Windows.Automation.Peers
     }
     public partial class RichTextBoxAutomationPeer : System.Windows.Automation.Peers.TextAutomationPeer
     {
-        public RichTextBoxAutomationPeer(System.Windows.Controls.RichTextBox owner) : base(default(System.Windows.FrameworkElement)) { }
+        public RichTextBoxAutomationPeer(System.Windows.Controls.RichTextBox owner) : base (default(System.Windows.FrameworkElement)) { }
         protected override System.Windows.Automation.Peers.AutomationControlType GetAutomationControlTypeCore() { throw null; }
         protected override System.Collections.Generic.List<System.Windows.Automation.Peers.AutomationPeer> GetChildrenCore() { throw null; }
         protected override string GetClassNameCore() { throw null; }
@@ -3040,7 +3040,7 @@ namespace System.Windows.Automation.Peers
     }
     public partial class ScrollBarAutomationPeer : System.Windows.Automation.Peers.RangeBaseAutomationPeer
     {
-        public ScrollBarAutomationPeer(System.Windows.Controls.Primitives.ScrollBar owner) : base(default(System.Windows.Controls.Primitives.RangeBase)) { }
+        public ScrollBarAutomationPeer(System.Windows.Controls.Primitives.ScrollBar owner) : base (default(System.Windows.Controls.Primitives.RangeBase)) { }
         protected override System.Windows.Automation.Peers.AutomationControlType GetAutomationControlTypeCore() { throw null; }
         protected override string GetClassNameCore() { throw null; }
         protected override System.Windows.Point GetClickablePointCore() { throw null; }
@@ -3049,7 +3049,7 @@ namespace System.Windows.Automation.Peers
     }
     public partial class ScrollViewerAutomationPeer : System.Windows.Automation.Peers.FrameworkElementAutomationPeer, System.Windows.Automation.Provider.IScrollProvider
     {
-        public ScrollViewerAutomationPeer(System.Windows.Controls.ScrollViewer owner) : base(default(System.Windows.FrameworkElement)) { }
+        public ScrollViewerAutomationPeer(System.Windows.Controls.ScrollViewer owner) : base (default(System.Windows.FrameworkElement)) { }
         bool System.Windows.Automation.Provider.IScrollProvider.HorizontallyScrollable { get { throw null; } }
         double System.Windows.Automation.Provider.IScrollProvider.HorizontalScrollPercent { get { throw null; } }
         double System.Windows.Automation.Provider.IScrollProvider.HorizontalViewSize { get { throw null; } }
@@ -3065,7 +3065,7 @@ namespace System.Windows.Automation.Peers
     }
     public abstract partial class SelectorAutomationPeer : System.Windows.Automation.Peers.ItemsControlAutomationPeer, System.Windows.Automation.Provider.ISelectionProvider
     {
-        protected SelectorAutomationPeer(System.Windows.Controls.Primitives.Selector owner) : base(default(System.Windows.Controls.ItemsControl)) { }
+        protected SelectorAutomationPeer(System.Windows.Controls.Primitives.Selector owner) : base (default(System.Windows.Controls.ItemsControl)) { }
         bool System.Windows.Automation.Provider.ISelectionProvider.CanSelectMultiple { get { throw null; } }
         bool System.Windows.Automation.Provider.ISelectionProvider.IsSelectionRequired { get { throw null; } }
         protected override System.Windows.Automation.Peers.AutomationControlType GetAutomationControlTypeCore() { throw null; }
@@ -3074,7 +3074,7 @@ namespace System.Windows.Automation.Peers
     }
     public abstract partial class SelectorItemAutomationPeer : System.Windows.Automation.Peers.ItemAutomationPeer, System.Windows.Automation.Provider.ISelectionItemProvider
     {
-        protected SelectorItemAutomationPeer(object owner, System.Windows.Automation.Peers.SelectorAutomationPeer selectorAutomationPeer) : base(default(object), default(System.Windows.Automation.Peers.ItemsControlAutomationPeer)) { }
+        protected SelectorItemAutomationPeer(object owner, System.Windows.Automation.Peers.SelectorAutomationPeer selectorAutomationPeer) : base (default(object), default(System.Windows.Automation.Peers.ItemsControlAutomationPeer)) { }
         bool System.Windows.Automation.Provider.ISelectionItemProvider.IsSelected { get { throw null; } }
         System.Windows.Automation.Provider.IRawElementProviderSimple System.Windows.Automation.Provider.ISelectionItemProvider.SelectionContainer { get { throw null; } }
         public override object GetPattern(System.Windows.Automation.Peers.PatternInterface patternInterface) { throw null; }
@@ -3084,34 +3084,34 @@ namespace System.Windows.Automation.Peers
     }
     public partial class SeparatorAutomationPeer : System.Windows.Automation.Peers.FrameworkElementAutomationPeer
     {
-        public SeparatorAutomationPeer(System.Windows.Controls.Separator owner) : base(default(System.Windows.FrameworkElement)) { }
+        public SeparatorAutomationPeer(System.Windows.Controls.Separator owner) : base (default(System.Windows.FrameworkElement)) { }
         protected override System.Windows.Automation.Peers.AutomationControlType GetAutomationControlTypeCore() { throw null; }
         protected override string GetClassNameCore() { throw null; }
         protected override bool IsContentElementCore() { throw null; }
     }
     public partial class SliderAutomationPeer : System.Windows.Automation.Peers.RangeBaseAutomationPeer
     {
-        public SliderAutomationPeer(System.Windows.Controls.Slider owner) : base(default(System.Windows.Controls.Primitives.RangeBase)) { }
+        public SliderAutomationPeer(System.Windows.Controls.Slider owner) : base (default(System.Windows.Controls.Primitives.RangeBase)) { }
         protected override System.Windows.Automation.Peers.AutomationControlType GetAutomationControlTypeCore() { throw null; }
         protected override string GetClassNameCore() { throw null; }
         protected override System.Windows.Point GetClickablePointCore() { throw null; }
     }
     public partial class StatusBarAutomationPeer : System.Windows.Automation.Peers.FrameworkElementAutomationPeer
     {
-        public StatusBarAutomationPeer(System.Windows.Controls.Primitives.StatusBar owner) : base(default(System.Windows.FrameworkElement)) { }
+        public StatusBarAutomationPeer(System.Windows.Controls.Primitives.StatusBar owner) : base (default(System.Windows.FrameworkElement)) { }
         protected override System.Windows.Automation.Peers.AutomationControlType GetAutomationControlTypeCore() { throw null; }
         protected override System.Collections.Generic.List<System.Windows.Automation.Peers.AutomationPeer> GetChildrenCore() { throw null; }
         protected override string GetClassNameCore() { throw null; }
     }
     public partial class StatusBarItemAutomationPeer : System.Windows.Automation.Peers.FrameworkElementAutomationPeer
     {
-        public StatusBarItemAutomationPeer(System.Windows.Controls.Primitives.StatusBarItem owner) : base(default(System.Windows.FrameworkElement)) { }
+        public StatusBarItemAutomationPeer(System.Windows.Controls.Primitives.StatusBarItem owner) : base (default(System.Windows.FrameworkElement)) { }
         protected override System.Windows.Automation.Peers.AutomationControlType GetAutomationControlTypeCore() { throw null; }
         protected override string GetClassNameCore() { throw null; }
     }
     public partial class TabControlAutomationPeer : System.Windows.Automation.Peers.SelectorAutomationPeer, System.Windows.Automation.Provider.ISelectionProvider
     {
-        public TabControlAutomationPeer(System.Windows.Controls.TabControl owner) : base(default(System.Windows.Controls.Primitives.Selector)) { }
+        public TabControlAutomationPeer(System.Windows.Controls.TabControl owner) : base (default(System.Windows.Controls.Primitives.Selector)) { }
         bool System.Windows.Automation.Provider.ISelectionProvider.IsSelectionRequired { get { throw null; } }
         protected override System.Windows.Automation.Peers.ItemAutomationPeer CreateItemAutomationPeer(object item) { throw null; }
         protected override System.Windows.Automation.Peers.AutomationControlType GetAutomationControlTypeCore() { throw null; }
@@ -3120,7 +3120,7 @@ namespace System.Windows.Automation.Peers
     }
     public partial class TabItemAutomationPeer : System.Windows.Automation.Peers.SelectorItemAutomationPeer, System.Windows.Automation.Provider.ISelectionItemProvider
     {
-        public TabItemAutomationPeer(object owner, System.Windows.Automation.Peers.TabControlAutomationPeer tabControlAutomationPeer) : base(default(object), default(System.Windows.Automation.Peers.SelectorAutomationPeer)) { }
+        public TabItemAutomationPeer(object owner, System.Windows.Automation.Peers.TabControlAutomationPeer tabControlAutomationPeer) : base (default(object), default(System.Windows.Automation.Peers.SelectorAutomationPeer)) { }
         protected override System.Windows.Automation.Peers.AutomationControlType GetAutomationControlTypeCore() { throw null; }
         protected override System.Collections.Generic.List<System.Windows.Automation.Peers.AutomationPeer> GetChildrenCore() { throw null; }
         protected override string GetClassNameCore() { throw null; }
@@ -3129,11 +3129,11 @@ namespace System.Windows.Automation.Peers
     }
     public partial class TabItemWrapperAutomationPeer : System.Windows.Automation.Peers.FrameworkElementAutomationPeer
     {
-        public TabItemWrapperAutomationPeer(System.Windows.Controls.TabItem owner) : base(default(System.Windows.FrameworkElement)) { }
+        public TabItemWrapperAutomationPeer(System.Windows.Controls.TabItem owner) : base (default(System.Windows.FrameworkElement)) { }
     }
     public partial class TableAutomationPeer : System.Windows.Automation.Peers.TextElementAutomationPeer, System.Windows.Automation.Provider.IGridProvider
     {
-        public TableAutomationPeer(System.Windows.Documents.Table owner) : base(default(System.Windows.Documents.TextElement)) { }
+        public TableAutomationPeer(System.Windows.Documents.Table owner) : base (default(System.Windows.Documents.TextElement)) { }
         int System.Windows.Automation.Provider.IGridProvider.ColumnCount { get { throw null; } }
         int System.Windows.Automation.Provider.IGridProvider.RowCount { get { throw null; } }
         protected override System.Windows.Automation.Peers.AutomationControlType GetAutomationControlTypeCore() { throw null; }
@@ -3144,7 +3144,7 @@ namespace System.Windows.Automation.Peers
     }
     public partial class TableCellAutomationPeer : System.Windows.Automation.Peers.TextElementAutomationPeer, System.Windows.Automation.Provider.IGridItemProvider
     {
-        public TableCellAutomationPeer(System.Windows.Documents.TableCell owner) : base(default(System.Windows.Documents.TextElement)) { }
+        public TableCellAutomationPeer(System.Windows.Documents.TableCell owner) : base (default(System.Windows.Documents.TextElement)) { }
         int System.Windows.Automation.Provider.IGridItemProvider.Column { get { throw null; } }
         int System.Windows.Automation.Provider.IGridItemProvider.ColumnSpan { get { throw null; } }
         System.Windows.Automation.Provider.IRawElementProviderSimple System.Windows.Automation.Provider.IGridItemProvider.ContainingGrid { get { throw null; } }
@@ -3158,12 +3158,12 @@ namespace System.Windows.Automation.Peers
     }
     public abstract partial class TextAutomationPeer : System.Windows.Automation.Peers.FrameworkElementAutomationPeer
     {
-        protected TextAutomationPeer(System.Windows.FrameworkElement owner) : base(default(System.Windows.FrameworkElement)) { }
+        protected TextAutomationPeer(System.Windows.FrameworkElement owner) : base (default(System.Windows.FrameworkElement)) { }
         protected override string GetNameCore() { throw null; }
     }
     public partial class TextBlockAutomationPeer : System.Windows.Automation.Peers.FrameworkElementAutomationPeer
     {
-        public TextBlockAutomationPeer(System.Windows.Controls.TextBlock owner) : base(default(System.Windows.FrameworkElement)) { }
+        public TextBlockAutomationPeer(System.Windows.Controls.TextBlock owner) : base (default(System.Windows.FrameworkElement)) { }
         protected override System.Windows.Automation.Peers.AutomationControlType GetAutomationControlTypeCore() { throw null; }
         protected override System.Collections.Generic.List<System.Windows.Automation.Peers.AutomationPeer> GetChildrenCore() { throw null; }
         protected override string GetClassNameCore() { throw null; }
@@ -3171,7 +3171,7 @@ namespace System.Windows.Automation.Peers
     }
     public partial class TextBoxAutomationPeer : System.Windows.Automation.Peers.TextAutomationPeer, System.Windows.Automation.Provider.IValueProvider
     {
-        public TextBoxAutomationPeer(System.Windows.Controls.TextBox owner) : base(default(System.Windows.FrameworkElement)) { }
+        public TextBoxAutomationPeer(System.Windows.Controls.TextBox owner) : base (default(System.Windows.FrameworkElement)) { }
         bool System.Windows.Automation.Provider.IValueProvider.IsReadOnly { get { throw null; } }
         string System.Windows.Automation.Provider.IValueProvider.Value { get { throw null; } }
         protected override System.Windows.Automation.Peers.AutomationControlType GetAutomationControlTypeCore() { throw null; }
@@ -3181,7 +3181,7 @@ namespace System.Windows.Automation.Peers
     }
     public partial class TextElementAutomationPeer : System.Windows.Automation.Peers.ContentTextAutomationPeer
     {
-        public TextElementAutomationPeer(System.Windows.Documents.TextElement owner) : base(default(System.Windows.FrameworkContentElement)) { }
+        public TextElementAutomationPeer(System.Windows.Documents.TextElement owner) : base (default(System.Windows.FrameworkContentElement)) { }
         protected override System.Windows.Rect GetBoundingRectangleCore() { throw null; }
         protected override System.Collections.Generic.List<System.Windows.Automation.Peers.AutomationPeer> GetChildrenCore() { throw null; }
         protected override System.Windows.Point GetClickablePointCore() { throw null; }
@@ -3189,14 +3189,14 @@ namespace System.Windows.Automation.Peers
     }
     public partial class ThumbAutomationPeer : System.Windows.Automation.Peers.FrameworkElementAutomationPeer
     {
-        public ThumbAutomationPeer(System.Windows.Controls.Primitives.Thumb owner) : base(default(System.Windows.FrameworkElement)) { }
+        public ThumbAutomationPeer(System.Windows.Controls.Primitives.Thumb owner) : base (default(System.Windows.FrameworkElement)) { }
         protected override System.Windows.Automation.Peers.AutomationControlType GetAutomationControlTypeCore() { throw null; }
         protected override string GetClassNameCore() { throw null; }
         protected override bool IsContentElementCore() { throw null; }
     }
     public partial class ToggleButtonAutomationPeer : System.Windows.Automation.Peers.ButtonBaseAutomationPeer, System.Windows.Automation.Provider.IToggleProvider
     {
-        public ToggleButtonAutomationPeer(System.Windows.Controls.Primitives.ToggleButton owner) : base(default(System.Windows.Controls.Primitives.ButtonBase)) { }
+        public ToggleButtonAutomationPeer(System.Windows.Controls.Primitives.ToggleButton owner) : base (default(System.Windows.Controls.Primitives.ButtonBase)) { }
         System.Windows.Automation.ToggleState System.Windows.Automation.Provider.IToggleProvider.ToggleState { get { throw null; } }
         protected override System.Windows.Automation.Peers.AutomationControlType GetAutomationControlTypeCore() { throw null; }
         protected override string GetClassNameCore() { throw null; }
@@ -3205,19 +3205,19 @@ namespace System.Windows.Automation.Peers
     }
     public partial class ToolBarAutomationPeer : System.Windows.Automation.Peers.FrameworkElementAutomationPeer
     {
-        public ToolBarAutomationPeer(System.Windows.Controls.ToolBar owner) : base(default(System.Windows.FrameworkElement)) { }
+        public ToolBarAutomationPeer(System.Windows.Controls.ToolBar owner) : base (default(System.Windows.FrameworkElement)) { }
         protected override System.Windows.Automation.Peers.AutomationControlType GetAutomationControlTypeCore() { throw null; }
         protected override string GetClassNameCore() { throw null; }
     }
     public partial class ToolTipAutomationPeer : System.Windows.Automation.Peers.FrameworkElementAutomationPeer
     {
-        public ToolTipAutomationPeer(System.Windows.Controls.ToolTip owner) : base(default(System.Windows.FrameworkElement)) { }
+        public ToolTipAutomationPeer(System.Windows.Controls.ToolTip owner) : base (default(System.Windows.FrameworkElement)) { }
         protected override System.Windows.Automation.Peers.AutomationControlType GetAutomationControlTypeCore() { throw null; }
         protected override string GetClassNameCore() { throw null; }
     }
     public partial class TreeViewAutomationPeer : System.Windows.Automation.Peers.ItemsControlAutomationPeer, System.Windows.Automation.Provider.ISelectionProvider
     {
-        public TreeViewAutomationPeer(System.Windows.Controls.TreeView owner) : base(default(System.Windows.Controls.ItemsControl)) { }
+        public TreeViewAutomationPeer(System.Windows.Controls.TreeView owner) : base (default(System.Windows.Controls.ItemsControl)) { }
         bool System.Windows.Automation.Provider.ISelectionProvider.CanSelectMultiple { get { throw null; } }
         bool System.Windows.Automation.Provider.ISelectionProvider.IsSelectionRequired { get { throw null; } }
         protected override System.Windows.Automation.Peers.ItemAutomationPeer CreateItemAutomationPeer(object item) { throw null; }
@@ -3229,7 +3229,7 @@ namespace System.Windows.Automation.Peers
     }
     public partial class TreeViewDataItemAutomationPeer : System.Windows.Automation.Peers.ItemAutomationPeer, System.Windows.Automation.Provider.IExpandCollapseProvider, System.Windows.Automation.Provider.IScrollItemProvider, System.Windows.Automation.Provider.ISelectionItemProvider
     {
-        public TreeViewDataItemAutomationPeer(object item, System.Windows.Automation.Peers.ItemsControlAutomationPeer itemsControlAutomationPeer, System.Windows.Automation.Peers.TreeViewDataItemAutomationPeer parentDataItemAutomationPeer) : base(default(object), default(System.Windows.Automation.Peers.ItemsControlAutomationPeer)) { }
+        public TreeViewDataItemAutomationPeer(object item, System.Windows.Automation.Peers.ItemsControlAutomationPeer itemsControlAutomationPeer, System.Windows.Automation.Peers.TreeViewDataItemAutomationPeer parentDataItemAutomationPeer) : base (default(object), default(System.Windows.Automation.Peers.ItemsControlAutomationPeer)) { }
         public System.Windows.Automation.Peers.TreeViewDataItemAutomationPeer ParentDataItemAutomationPeer { get { throw null; } }
         System.Windows.Automation.ExpandCollapseState System.Windows.Automation.Provider.IExpandCollapseProvider.ExpandCollapseState { get { throw null; } }
         bool System.Windows.Automation.Provider.ISelectionItemProvider.IsSelected { get { throw null; } }
@@ -3246,7 +3246,7 @@ namespace System.Windows.Automation.Peers
     }
     public partial class TreeViewItemAutomationPeer : System.Windows.Automation.Peers.ItemsControlAutomationPeer, System.Windows.Automation.Provider.IExpandCollapseProvider, System.Windows.Automation.Provider.IScrollItemProvider, System.Windows.Automation.Provider.ISelectionItemProvider
     {
-        public TreeViewItemAutomationPeer(System.Windows.Controls.TreeViewItem owner) : base(default(System.Windows.Controls.ItemsControl)) { }
+        public TreeViewItemAutomationPeer(System.Windows.Controls.TreeViewItem owner) : base (default(System.Windows.Controls.ItemsControl)) { }
         System.Windows.Automation.ExpandCollapseState System.Windows.Automation.Provider.IExpandCollapseProvider.ExpandCollapseState { get { throw null; } }
         bool System.Windows.Automation.Provider.ISelectionItemProvider.IsSelected { get { throw null; } }
         System.Windows.Automation.Provider.IRawElementProviderSimple System.Windows.Automation.Provider.ISelectionItemProvider.SelectionContainer { get { throw null; } }
@@ -3265,19 +3265,19 @@ namespace System.Windows.Automation.Peers
     }
     public partial class UserControlAutomationPeer : System.Windows.Automation.Peers.FrameworkElementAutomationPeer
     {
-        public UserControlAutomationPeer(System.Windows.Controls.UserControl owner) : base(default(System.Windows.FrameworkElement)) { }
+        public UserControlAutomationPeer(System.Windows.Controls.UserControl owner) : base (default(System.Windows.FrameworkElement)) { }
         protected override System.Windows.Automation.Peers.AutomationControlType GetAutomationControlTypeCore() { throw null; }
         protected override string GetClassNameCore() { throw null; }
     }
     public partial class Viewport3DAutomationPeer : System.Windows.Automation.Peers.FrameworkElementAutomationPeer
     {
-        public Viewport3DAutomationPeer(System.Windows.Controls.Viewport3D owner) : base(default(System.Windows.FrameworkElement)) { }
+        public Viewport3DAutomationPeer(System.Windows.Controls.Viewport3D owner) : base (default(System.Windows.FrameworkElement)) { }
         protected override System.Windows.Automation.Peers.AutomationControlType GetAutomationControlTypeCore() { throw null; }
         protected override string GetClassNameCore() { throw null; }
     }
     public partial class WindowAutomationPeer : System.Windows.Automation.Peers.FrameworkElementAutomationPeer
     {
-        public WindowAutomationPeer(System.Windows.Window owner) : base(default(System.Windows.FrameworkElement)) { }
+        public WindowAutomationPeer(System.Windows.Window owner) : base (default(System.Windows.FrameworkElement)) { }
         protected override System.Windows.Automation.Peers.AutomationControlType GetAutomationControlTypeCore() { throw null; }
         protected override System.Windows.Rect GetBoundingRectangleCore() { throw null; }
         protected override string GetClassNameCore() { throw null; }
@@ -4350,7 +4350,7 @@ namespace System.Windows.Controls
     }
     public partial class DataGridColumnReorderingEventArgs : System.Windows.Controls.DataGridColumnEventArgs
     {
-        public DataGridColumnReorderingEventArgs(System.Windows.Controls.DataGridColumn dataGridColumn) : base(default(System.Windows.Controls.DataGridColumn)) { }
+        public DataGridColumnReorderingEventArgs(System.Windows.Controls.DataGridColumn dataGridColumn) : base (default(System.Windows.Controls.DataGridColumn)) { }
         public bool Cancel { get { throw null; } set { } }
         public System.Windows.Controls.Control DragIndicator { get { throw null; } set { } }
         public System.Windows.Controls.Control DropLocationIndicator { get { throw null; } set { } }
@@ -4574,7 +4574,7 @@ namespace System.Windows.Controls
     }
     public partial class DataGridSortingEventArgs : System.Windows.Controls.DataGridColumnEventArgs
     {
-        public DataGridSortingEventArgs(System.Windows.Controls.DataGridColumn column) : base(default(System.Windows.Controls.DataGridColumn)) { }
+        public DataGridSortingEventArgs(System.Windows.Controls.DataGridColumn column) : base (default(System.Windows.Controls.DataGridColumn)) { }
         public bool Handled { get { throw null; } set { } }
     }
     public delegate void DataGridSortingEventHandler(object sender, System.Windows.Controls.DataGridSortingEventArgs e);
@@ -5700,7 +5700,7 @@ namespace System.Windows.Controls
     [System.Windows.LocalizabilityAttribute(System.Windows.LocalizationCategory.Ignore)]
     public sealed partial class ItemCollection : System.Windows.Data.CollectionView, System.Collections.ICollection, System.Collections.IEnumerable, System.Collections.IList, System.ComponentModel.ICollectionViewLiveShaping, System.ComponentModel.IEditableCollectionView, System.ComponentModel.IEditableCollectionViewAddNewItem, System.ComponentModel.IItemProperties, System.Windows.IWeakEventListener
     {
-        internal ItemCollection() : base(default(System.Collections.IEnumerable)) { }
+        internal ItemCollection() : base (default(System.Collections.IEnumerable)) { }
         public bool CanChangeLiveFiltering { get { throw null; } }
         public bool CanChangeLiveGrouping { get { throw null; } }
         public bool CanChangeLiveSorting { get { throw null; } }
@@ -5804,8 +5804,8 @@ namespace System.Windows.Controls
     }
     public partial class ItemContainerTemplateKey : System.Windows.TemplateKey
     {
-        public ItemContainerTemplateKey() : base(default(System.Windows.TemplateKey.TemplateType)) { }
-        public ItemContainerTemplateKey(object dataType) : base(default(System.Windows.TemplateKey.TemplateType)) { }
+        public ItemContainerTemplateKey() : base (default(System.Windows.TemplateKey.TemplateType)) { }
+        public ItemContainerTemplateKey(object dataType) : base (default(System.Windows.TemplateKey.TemplateType)) { }
     }
     public abstract partial class ItemContainerTemplateSelector
     {
@@ -8985,7 +8985,7 @@ namespace System.Windows.Data
     }
     public sealed partial class BindingListCollectionView : System.Windows.Data.CollectionView, System.Collections.IComparer, System.ComponentModel.ICollectionViewLiveShaping, System.ComponentModel.IEditableCollectionView, System.ComponentModel.IItemProperties
     {
-        public BindingListCollectionView(System.ComponentModel.IBindingList list) : base(default(System.Collections.IEnumerable)) { }
+        public BindingListCollectionView(System.ComponentModel.IBindingList list) : base (default(System.Collections.IEnumerable)) { }
         public bool CanAddNew { get { throw null; } }
         public bool CanCancelEdit { get { throw null; } }
         public bool CanChangeLiveFiltering { get { throw null; } }
@@ -9305,7 +9305,7 @@ namespace System.Windows.Data
     }
     public partial class ListCollectionView : System.Windows.Data.CollectionView, System.Collections.IComparer, System.ComponentModel.ICollectionViewLiveShaping, System.ComponentModel.IEditableCollectionView, System.ComponentModel.IEditableCollectionViewAddNewItem, System.ComponentModel.IItemProperties
     {
-        public ListCollectionView(System.Collections.IList list) : base(default(System.Collections.IEnumerable)) { }
+        public ListCollectionView(System.Collections.IList list) : base (default(System.Collections.IEnumerable)) { }
         protected System.Collections.IComparer ActiveComparer { get { throw null; } set { } }
         protected System.Predicate<object> ActiveFilter { get { throw null; } set { } }
         public bool CanAddNew { get { throw null; } }
@@ -9578,7 +9578,7 @@ namespace System.Windows.Data
     [System.Windows.LocalizabilityAttribute(System.Windows.LocalizationCategory.NeverLocalize)]
     public partial class XmlNamespaceMappingCollection : System.Xml.XmlNamespaceManager, System.Collections.Generic.ICollection<System.Windows.Data.XmlNamespaceMapping>, System.Collections.Generic.IEnumerable<System.Windows.Data.XmlNamespaceMapping>, System.Collections.IEnumerable, System.Windows.Markup.IAddChild
     {
-        public XmlNamespaceMappingCollection() : base(default(System.Xml.XmlNameTable)) { }
+        public XmlNamespaceMappingCollection() : base (default(System.Xml.XmlNameTable)) { }
         public int Count { get { throw null; } }
         public bool IsReadOnly { get { throw null; } }
         public void Add(System.Windows.Data.XmlNamespaceMapping mapping) { }
@@ -9848,9 +9848,9 @@ namespace System.Windows.Documents
         public static readonly System.Windows.DependencyProperty VerticalOffsetProperty;
         public static readonly System.Windows.DependencyProperty WidthProperty;
         public static readonly System.Windows.DependencyProperty WrapDirectionProperty;
-        public Figure() : base(default(System.Windows.Documents.Block), default(System.Windows.Documents.TextPointer)) { }
-        public Figure(System.Windows.Documents.Block childBlock) : base(default(System.Windows.Documents.Block), default(System.Windows.Documents.TextPointer)) { }
-        public Figure(System.Windows.Documents.Block childBlock, System.Windows.Documents.TextPointer insertionPosition) : base(default(System.Windows.Documents.Block), default(System.Windows.Documents.TextPointer)) { }
+        public Figure() : base (default(System.Windows.Documents.Block), default(System.Windows.Documents.TextPointer)) { }
+        public Figure(System.Windows.Documents.Block childBlock) : base (default(System.Windows.Documents.Block), default(System.Windows.Documents.TextPointer)) { }
+        public Figure(System.Windows.Documents.Block childBlock, System.Windows.Documents.TextPointer insertionPosition) : base (default(System.Windows.Documents.Block), default(System.Windows.Documents.TextPointer)) { }
         public bool CanDelayPlacement { get { throw null; } set { } }
         public System.Windows.FigureLength Height { get { throw null; } set { } }
         public System.Windows.FigureHorizontalAnchor HorizontalAnchor { get { throw null; } set { } }
@@ -9950,9 +9950,9 @@ namespace System.Windows.Documents
     {
         public static readonly System.Windows.DependencyProperty HorizontalAlignmentProperty;
         public static readonly System.Windows.DependencyProperty WidthProperty;
-        public Floater() : base(default(System.Windows.Documents.Block), default(System.Windows.Documents.TextPointer)) { }
-        public Floater(System.Windows.Documents.Block childBlock) : base(default(System.Windows.Documents.Block), default(System.Windows.Documents.TextPointer)) { }
-        public Floater(System.Windows.Documents.Block childBlock, System.Windows.Documents.TextPointer insertionPosition) : base(default(System.Windows.Documents.Block), default(System.Windows.Documents.TextPointer)) { }
+        public Floater() : base (default(System.Windows.Documents.Block), default(System.Windows.Documents.TextPointer)) { }
+        public Floater(System.Windows.Documents.Block childBlock) : base (default(System.Windows.Documents.Block), default(System.Windows.Documents.TextPointer)) { }
+        public Floater(System.Windows.Documents.Block childBlock, System.Windows.Documents.TextPointer insertionPosition) : base (default(System.Windows.Documents.Block), default(System.Windows.Documents.TextPointer)) { }
         public System.Windows.HorizontalAlignment HorizontalAlignment { get { throw null; } set { } }
         [System.ComponentModel.TypeConverterAttribute(typeof(System.Windows.LengthConverter))]
         public double Width { get { throw null; } set { } }
@@ -10056,7 +10056,7 @@ namespace System.Windows.Documents
     }
     public partial class FrameworkTextComposition : System.Windows.Input.TextComposition
     {
-        internal FrameworkTextComposition() : base(default(System.Windows.Input.InputManager), default(System.Windows.IInputElement), default(string)) { }
+        internal FrameworkTextComposition() : base (default(System.Windows.Input.InputManager), default(System.Windows.IInputElement), default(string)) { }
         public int CompositionLength { get { throw null; } }
         public int CompositionOffset { get { throw null; } }
         public int ResultLength { get { throw null; } }
@@ -10065,7 +10065,7 @@ namespace System.Windows.Documents
     }
     public sealed partial class GetPageRootCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs
     {
-        internal GetPageRootCompletedEventArgs() : base(default(System.Exception), default(bool), default(object)) { }
+        internal GetPageRootCompletedEventArgs() : base (default(System.Exception), default(bool), default(object)) { }
         public System.Windows.Documents.FixedPage Result { get { throw null; } }
     }
     public delegate void GetPageRootCompletedEventHandler(object sender, System.Windows.Documents.GetPageRootCompletedEventArgs e);
@@ -10725,7 +10725,7 @@ namespace System.Windows.Documents
     }
     public sealed partial class TextSelection : System.Windows.Documents.TextRange
     {
-        internal TextSelection() : base(default(System.Windows.Documents.TextPointer), default(System.Windows.Documents.TextPointer)) { }
+        internal TextSelection() : base (default(System.Windows.Documents.TextPointer), default(System.Windows.Documents.TextPointer)) { }
     }
     public sealed partial class Typography
     {
@@ -11185,7 +11185,7 @@ namespace System.Windows.Documents.Serialization
     public delegate void WritingCancelledEventHandler(object sender, System.Windows.Documents.Serialization.WritingCancelledEventArgs e);
     public partial class WritingCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs
     {
-        public WritingCompletedEventArgs(bool cancelled, object state, System.Exception exception) : base(default(System.Exception), default(bool), default(object)) { }
+        public WritingCompletedEventArgs(bool cancelled, object state, System.Exception exception) : base (default(System.Exception), default(bool), default(object)) { }
     }
     public delegate void WritingCompletedEventHandler(object sender, System.Windows.Documents.Serialization.WritingCompletedEventArgs e);
     public partial class WritingPrintTicketRequiredEventArgs : System.EventArgs
@@ -11198,7 +11198,7 @@ namespace System.Windows.Documents.Serialization
     public delegate void WritingPrintTicketRequiredEventHandler(object sender, System.Windows.Documents.Serialization.WritingPrintTicketRequiredEventArgs e);
     public partial class WritingProgressChangedEventArgs : System.ComponentModel.ProgressChangedEventArgs
     {
-        public WritingProgressChangedEventArgs(System.Windows.Documents.Serialization.WritingProgressChangeLevel writingLevel, int number, int progressPercentage, object state) : base(default(int), default(object)) { }
+        public WritingProgressChangedEventArgs(System.Windows.Documents.Serialization.WritingProgressChangeLevel writingLevel, int number, int progressPercentage, object state) : base (default(int), default(object)) { }
         public int Number { get { throw null; } }
         public System.Windows.Documents.Serialization.WritingProgressChangeLevel WritingLevel { get { throw null; } }
     }
@@ -11710,7 +11710,7 @@ namespace System.Windows.Media
 {
     public partial class AdornerHitTestResult : System.Windows.Media.PointHitTestResult
     {
-        internal AdornerHitTestResult() : base(default(System.Windows.Media.Visual), default(System.Windows.Point)) { }
+        internal AdornerHitTestResult() : base (default(System.Windows.Media.Visual), default(System.Windows.Point)) { }
         public System.Windows.Documents.Adorner Adorner { get { throw null; } }
     }
     public static partial class TextOptions

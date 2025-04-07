@@ -305,7 +305,7 @@ namespace System.Windows
     }
     public partial class DataTemplateKey : System.Windows.TemplateKey
     {
-        public DataTemplateKey() : base (default (System.Windows.TemplateKey.TemplateType)) { }
+        public DataTemplateKey() : base (default(System.Windows.TemplateKey.TemplateType)) { }
         public DataTemplateKey(object dataType) : base (default (System.Windows.TemplateKey.TemplateType)) { }
     }
     [System.Windows.Markup.ContentPropertyAttribute("Setters")]
@@ -4450,7 +4450,7 @@ namespace System.Windows.Controls
         public bool Equals(System.Windows.Controls.DataGridLength other) { throw null; }
         public override int GetHashCode() { throw null; }
         public static bool operator ==(System.Windows.Controls.DataGridLength gl1, System.Windows.Controls.DataGridLength gl2) { throw null; }
-        public static implicit operator System.Windows.Controls.DataGridLength(double value) { throw null; }
+        public static implicit operator System.Windows.Controls.DataGridLength (double value) { throw null; }
         public static bool operator !=(System.Windows.Controls.DataGridLength gl1, System.Windows.Controls.DataGridLength gl2) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -11404,7 +11404,7 @@ namespace System.Windows.Markup
         public string XmlLang { get { throw null; } set { } }
         public System.Windows.Markup.XmlnsDictionary XmlnsDictionary { get { throw null; } }
         public string XmlSpace { get { throw null; } set { } }
-        public static implicit operator System.Xml.XmlParserContext(System.Windows.Markup.ParserContext parserContext) { throw null; }
+        public static implicit operator System.Xml.XmlParserContext (System.Windows.Markup.ParserContext parserContext) { throw null; }
         public static System.Xml.XmlParserContext ToXmlParserContext(System.Windows.Markup.ParserContext parserContext) { throw null; }
     }
     public partial class ResourceReferenceExpressionConverter : System.Windows.ExpressionConverter

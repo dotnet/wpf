@@ -1307,55 +1307,6 @@ namespace System.Windows
             }
         }
 
-#if false
-        // need to call this (and do similar for Template) to cache RDs.
-
-        private void SetStaticResources(object[] staticResourceValues, ParserContext context)
-        {
-            if (staticResourceValues != null && staticResourceValues.Length > 0)
-            {
-                bool inDeferredSection = context.InDeferredSection;
-
-                for (int i=0; i<staticResourceValues.Length; i++)
-                {
-                    // If this dictionary is a top level deferred section then we lookup the parser stack
-                    // and then look in the app and theme dictionaries to resolve the current static resource.
-
-                    if (!inDeferredSection)
-                    {
-                        staticResourceValues[i] = context.BamlReader.FindResourceInParentChain(
-                            ((StaticResourceExtension)staticResourceValues[i]).ResourceKey,
-                            true /*allowDeferredResourceReference*/,
-                            true /*mustReturnDeferredResourceReference*/);
-                    }
-                    else
-                    {
-                        // If this dictionary is nested within another deferred section then we try to
-                        // resolve the current staticresource against the parser stack and if not
-                        // able to resolve then we fallback to the pre-fetched value from the outer
-                        // deferred section.
-
-                        StaticResourceHolder srHolder = (StaticResourceHolder)staticResourceValues[i];
-
-                        object value = context.BamlReader.FindResourceInParserStack(
-                            srHolder.ResourceKey,
-                            true /*allowDeferredResourceReference*/,
-                            true /*mustReturnDeferredResourceReference*/);
-
-                        if (value == DependencyProperty.UnsetValue)
-                        {
-                            // If value wan't found the fallback
-                            // to the prefetched value
-
-                            value = srHolder.PrefetchedValue;
-                        }
-
-                        staticResourceValues[i] = value;
-                    }
-                }
-            }
-        }
-#endif
         private Type GetTypeOfFirstObject(KeyRecord keyRecord)
         {
             Type rootType = _reader.GetTypeOfFirstStartObject(keyRecord);

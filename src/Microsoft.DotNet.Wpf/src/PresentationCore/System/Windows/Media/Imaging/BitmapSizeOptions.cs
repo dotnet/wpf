@@ -3,269 +3,224 @@
 
 using MS.Internal;
 
-namespace System.Windows.Media.Imaging
+namespace System.Windows.Media.Imaging;
+
+/// <summary>
+/// Sizing options for an bitmap. The resulting bitmap will be scaled based on these options.
+/// </summary>
+public class BitmapSizeOptions
 {
-    #region BitmapSizeOptions
+    /// <summary>
+    /// Avoid construction of a plain object, use the factory methods instead.
+    /// </summary>
+    private BitmapSizeOptions() { }
 
     /// <summary>
-    /// Sizing options for an bitmap.  The resulting bitmap
-    /// will be scaled based on these options.
+    /// Whether or not to preserve the aspect ratio of the original bitmap.
+    /// If so, then the <see cref="PixelWidth"/> and <see cref="PixelHeight"/>
+    /// are both zero or at least one of them must be zero. The resulting bitmap
+    /// is only guaranteed to have either its width or its height match the
+    /// specified values. For example, if you want to specify the height,
+    /// while preserving the aspect ratio for the width, then set the height
+    /// to the desired value, and set the width to zero.
+    ///
+    /// If we are not to preserve aspect ratio, then both the
+    /// specified width and the specified height are used, and
+    /// the bitmap will be stretched to fit both those values.
     /// </summary>
-    public class BitmapSizeOptions
+    public bool PreservesAspectRatio { get; private init; }
+
+    /// <summary>
+    /// PixelWidth of the resulting bitmap.  See description of
+    /// PreserveAspectRatio for how this value is used.
+    ///
+    /// PixelWidth must be set to a value greater than zero to be valid.
+    /// </summary>
+    public int PixelWidth { get; private init; }
+
+    /// <summary>
+    /// PixelHeight of the resulting bitmap.  See description of
+    /// PreserveAspectRatio for how this value is used.
+    ///
+    /// PixelHeight must be set to a value greater than zero to be valid.
+    /// </summary>
+    public int PixelHeight { get; private init; }
+
+    /// <summary>
+    /// Gets a value that represents the rotation angle that is applied to a bitmap.
+    /// </summary>
+    /// <remarks>Only increments of 90 degrees are supported.</remarks>
+    public Rotation Rotation { get; private init; }
+
+    /// <summary>
+    /// Constructs an identity <see cref="BitmapSizeOptions"/>.
+    /// When passed to a TransformedBitmap, the input is the same as the output.
+    /// </summary>
+    /// <returns>An instance of <see cref="BitmapSizeOptions"/>.</returns>
+    public static BitmapSizeOptions FromEmptyOptions()
     {
-        /// <summary>
-        /// Construct an BitmapSizeOptions object.  Still need to set the Width and Height Properties.
-        /// </summary>
-        private BitmapSizeOptions()
+        BitmapSizeOptions sizeOptions = new BitmapSizeOptions
         {
-        }
+            Rotation = Rotation.Rotate0,
+            PreservesAspectRatio = true,
+            PixelHeight = 0,
+            PixelWidth = 0
+        };
 
-        /// <summary>
-        /// Whether or not to preserve the aspect ratio of the original
-        /// bitmap.  If so, then the PixelWidth and PixelHeight are
-        /// maximum values for the bitmap size.  The resulting bitmap
-        /// is only guaranteed to have either its width or its height
-        /// match the specified values.  For example, if you want to
-        /// specify the height, while preserving the aspect ratio for
-        /// the width, then set the height to the desired value, and
-        /// set the width to Int32.MaxValue.
-        ///
-        /// If we are not to preserve aspect ratio, then both the
-        /// specified width and the specified height are used, and
-        /// the bitmap will be stretched to fit both those values.
-        /// </summary>
-        public bool PreservesAspectRatio
-        {
-            get
-            {
-                return _preservesAspectRatio;
-            }
-        }
-
-        /// <summary>
-        /// PixelWidth of the resulting bitmap.  See description of
-        /// PreserveAspectRatio for how this value is used.
-        ///
-        /// PixelWidth must be set to a value greater than zero to be valid.
-        /// </summary>
-        public int PixelWidth
-        {
-            get
-            {
-                return _pixelWidth;
-            }
-        }
-
-        /// <summary>
-        /// PixelHeight of the resulting bitmap.  See description of
-        /// PreserveAspectRatio for how this value is used.
-        ///
-        /// PixelHeight must be set to a value greater than zero to be valid.
-        /// </summary>
-        public int PixelHeight
-        {
-            get
-            {
-                return _pixelHeight;
-            }
-        }
-
-        /// <summary>
-        /// Rotation to rotate the bitmap.  Only multiples of 90 are supported.
-        /// </summary>
-        public Rotation Rotation
-        {
-            get
-            {
-                return _rotationAngle;
-            }
-        }
-
-        /// <summary>
-        /// Constructs an identity BitmapSizeOptions (when passed to a TransformedBitmap, the
-        /// input is the same as the output).
-        /// </summary>
-        public static BitmapSizeOptions FromEmptyOptions()
-        {
-            BitmapSizeOptions sizeOptions = new BitmapSizeOptions
-            {
-                _rotationAngle = Rotation.Rotate0,
-                _preservesAspectRatio = true,
-                _pixelHeight = 0,
-                _pixelWidth = 0
-            };
-
-            return sizeOptions;
-        }
-
-        /// <summary>
-        /// Constructs an BitmapSizeOptions that preserves the aspect ratio and enforces a height of pixelHeight.
-        /// </summary>
-        /// <param name="pixelHeight">Height of the resulting Bitmap</param>
-        public static BitmapSizeOptions FromHeight(int pixelHeight)
-        {
-            ArgumentOutOfRangeException.ThrowIfNegativeOrZero(pixelHeight);
-
-            BitmapSizeOptions sizeOptions = new BitmapSizeOptions
-            {
-                _rotationAngle = Rotation.Rotate0,
-                _preservesAspectRatio = true,
-                _pixelHeight = pixelHeight,
-                _pixelWidth = 0
-            };
-
-            return sizeOptions;
-        }
-
-        /// <summary>
-        /// Constructs an BitmapSizeOptions that preserves the aspect ratio and enforces a width of pixelWidth.
-        /// </summary>
-        /// <param name="pixelWidth">Width of the resulting Bitmap</param>
-        public static BitmapSizeOptions FromWidth(int pixelWidth)
-        {
-            ArgumentOutOfRangeException.ThrowIfNegativeOrZero(pixelWidth);
-
-            BitmapSizeOptions sizeOptions = new BitmapSizeOptions
-            {
-                _rotationAngle = Rotation.Rotate0,
-                _preservesAspectRatio = true,
-                _pixelWidth = pixelWidth,
-                _pixelHeight = 0
-            };
-
-            return sizeOptions;
-        }
-
-        /// <summary>
-        /// Constructs an BitmapSizeOptions that does not preserve the aspect ratio and
-        /// instead uses dimensions pixelWidth x pixelHeight.
-        /// </summary>
-        /// <param name="pixelWidth">Width of the resulting Bitmap</param>
-        /// <param name="pixelHeight">Height of the resulting Bitmap</param>
-        public static BitmapSizeOptions FromWidthAndHeight(int pixelWidth, int pixelHeight)
-        {
-            ArgumentOutOfRangeException.ThrowIfNegativeOrZero(pixelWidth);
-            ArgumentOutOfRangeException.ThrowIfNegativeOrZero(pixelHeight);
-
-            BitmapSizeOptions sizeOptions = new BitmapSizeOptions
-            {
-                _rotationAngle = Rotation.Rotate0,
-                _preservesAspectRatio = false,
-                _pixelWidth = pixelWidth,
-                _pixelHeight = pixelHeight
-            };
-
-            return sizeOptions;
-        }
-
-        /// <summary>
-        /// Constructs an BitmapSizeOptions that does not preserve the aspect ratio and
-        /// instead uses dimensions pixelWidth x pixelHeight.
-        /// </summary>
-        /// <param name="rotation">Angle to rotate</param>
-        public static BitmapSizeOptions FromRotation(Rotation rotation)
-        {
-            switch(rotation)
-            {
-                case Rotation.Rotate0:
-                case Rotation.Rotate90:
-                case Rotation.Rotate180:
-                case Rotation.Rotate270:
-                    break;
-                default:
-                    throw new ArgumentException(SR.Image_SizeOptionsAngle, nameof(rotation));
-            }
-
-            BitmapSizeOptions sizeOptions = new BitmapSizeOptions
-            {
-                _rotationAngle = rotation,
-                _preservesAspectRatio = true,
-                _pixelWidth = 0,
-                _pixelHeight = 0
-            };
-
-            return sizeOptions;
-        }
-
-        // Note: In this method, newWidth, newHeight are not affected by the
-        // rotation angle.
-        internal void GetScaledWidthAndHeight(
-            uint width,
-            uint height,
-            out uint newWidth,
-            out uint newHeight)
-        {
-            if (_pixelWidth == 0 && _pixelHeight != 0)
-            {
-                Debug.Assert(_preservesAspectRatio == true);
-
-                newWidth = (uint)((_pixelHeight * width)/height);
-                newHeight = (uint)_pixelHeight;
-            }
-            else if (_pixelWidth != 0 && _pixelHeight == 0)
-            {
-                Debug.Assert(_preservesAspectRatio == true);
-
-                newWidth = (uint)_pixelWidth;
-                newHeight = (uint)((_pixelWidth * height)/width);
-            }
-            else if (_pixelWidth != 0 && _pixelHeight != 0)
-            {
-                Debug.Assert(_preservesAspectRatio == false);
-
-                newWidth = (uint)_pixelWidth;
-                newHeight = (uint)_pixelHeight;
-            }
-            else
-            {
-                newWidth = width;
-                newHeight = height;
-            }
-        }
-
-        internal bool DoesScale
-        {
-            get
-            {
-                return (_pixelWidth != 0 || _pixelHeight != 0);
-            }
-        }
-
-        internal WICBitmapTransformOptions WICTransformOptions
-        {
-            get
-            {
-                WICBitmapTransformOptions options = 0;
-
-                switch (_rotationAngle)
-                {
-                    case Rotation.Rotate0:
-                        options = WICBitmapTransformOptions.WICBitmapTransformRotate0;
-                        break;
-                    case Rotation.Rotate90:
-                        options = WICBitmapTransformOptions.WICBitmapTransformRotate90;
-                        break;
-                    case Rotation.Rotate180:
-                        options = WICBitmapTransformOptions.WICBitmapTransformRotate180;
-                        break;
-                    case Rotation.Rotate270:
-                        options = WICBitmapTransformOptions.WICBitmapTransformRotate270;
-                        break;
-                    default:
-                        Debug.Assert(false);
-                        break;
-                }
-
-                return options;
-            }
-        }
-
-        private bool        _preservesAspectRatio;
-        private int         _pixelWidth;
-        private int         _pixelHeight;
-        private Rotation    _rotationAngle;
+        return sizeOptions;
     }
 
-    #endregion // BitmapSizeOptions
+    /// <summary>
+    /// Constructs an instance of <see cref="BitmapSizeOptions"/> that preserves the aspect ratio
+    /// of the source bitmap and enforces a height provided via <paramref name="pixelHeight"/>.
+    /// </summary>
+    /// <param name="pixelHeight">The height, in pixels, of the resulting bitmap.</param>
+    /// <returns>An instance of <see cref="BitmapSizeOptions"/>.</returns>
+    public static BitmapSizeOptions FromHeight(int pixelHeight)
+    {
+        ArgumentOutOfRangeException.ThrowIfNegativeOrZero(pixelHeight);
+
+        BitmapSizeOptions sizeOptions = new BitmapSizeOptions
+        {
+            Rotation = Rotation.Rotate0,
+            PreservesAspectRatio = true,
+            PixelHeight = pixelHeight,
+            PixelWidth = 0
+        };
+
+        return sizeOptions;
+    }
+
+    /// <summary>
+    /// Constructs an instance of <see cref="BitmapSizeOptions"/> that preserves the aspect ratio
+    /// of the source bitmap and enforces a width provided via <paramref name="pixelWidth"/>.
+    /// </summary>
+    /// <param name="pixelWidth">The width, in pixels, of the resulting bitmap.</param>
+    public static BitmapSizeOptions FromWidth(int pixelWidth)
+    {
+        ArgumentOutOfRangeException.ThrowIfNegativeOrZero(pixelWidth);
+
+        BitmapSizeOptions sizeOptions = new BitmapSizeOptions
+        {
+            Rotation = Rotation.Rotate0,
+            PreservesAspectRatio = true,
+            PixelWidth = pixelWidth,
+            PixelHeight = 0
+        };
+
+        return sizeOptions;
+    }
+
+    /// <summary>
+    /// Constructs an instance of <see cref="BitmapSizeOptions"/> that does not preserve the aspect ratio and
+    /// instead uses the specified dimensions <paramref name="pixelWidth"/> x <paramref name="pixelHeight"/>.
+    /// </summary>
+    /// <param name="pixelWidth">Width of the resulting Bitmap</param>
+    /// <param name="pixelHeight">Height of the resulting Bitmap</param>
+    /// <returns>An instance of <see cref="BitmapSizeOptions"/>.</returns>
+    public static BitmapSizeOptions FromWidthAndHeight(int pixelWidth, int pixelHeight)
+    {
+        ArgumentOutOfRangeException.ThrowIfNegativeOrZero(pixelWidth);
+        ArgumentOutOfRangeException.ThrowIfNegativeOrZero(pixelHeight);
+
+        BitmapSizeOptions sizeOptions = new BitmapSizeOptions
+        {
+            Rotation = Rotation.Rotate0,
+            PreservesAspectRatio = false,
+            PixelWidth = pixelWidth,
+            PixelHeight = pixelHeight
+        };
+
+        return sizeOptions;
+    }
+
+    /// <summary>
+    /// Initializes an instance of <see cref="BitmapSizeOptions"/> that preserves the aspect ratio of the
+    /// source bitmap and specifies an initial <see cref="Imaging.Rotation"/> to apply.
+    /// </summary>
+    /// <param name="rotation">The initial rotation value to apply. Only 90 degree increments are supported.</param>
+    /// <returns>An instance of <see cref="BitmapSizeOptions"/>.</returns>
+    public static BitmapSizeOptions FromRotation(Rotation rotation)
+    {
+        if (rotation is not (Rotation.Rotate0 or Rotation.Rotate90 or Rotation.Rotate180 or Rotation.Rotate270))
+            throw new ArgumentException(SR.Image_SizeOptionsAngle, nameof(rotation));
+
+        BitmapSizeOptions sizeOptions = new BitmapSizeOptions
+        {
+            Rotation = rotation,
+            PreservesAspectRatio = true,
+            PixelWidth = 0,
+            PixelHeight = 0
+        };
+
+        return sizeOptions;
+    }
+
+    /// <summary>
+    /// Note: In this method, newWidth, newHeight are not affected by the rotation angle.
+    /// </summary>
+    internal void GetScaledWidthAndHeight(uint width, uint height, out uint newWidth, out uint newHeight)
+    {
+        if (PixelWidth == 0 && PixelHeight != 0)
+        {
+            Debug.Assert(PreservesAspectRatio);
+
+            newWidth = (uint)((PixelHeight * width) / height);
+            newHeight = (uint)PixelHeight;
+        }
+        else if (PixelWidth != 0 && PixelHeight == 0)
+        {
+            Debug.Assert(PreservesAspectRatio);
+
+            newWidth = (uint)PixelWidth;
+            newHeight = (uint)((PixelWidth * height) / width);
+        }
+        else if (PixelWidth != 0 && PixelHeight != 0)
+        {
+            Debug.Assert(!PreservesAspectRatio);
+
+            newWidth = (uint)PixelWidth;
+            newHeight = (uint)PixelHeight;
+        }
+        else
+        {
+            newWidth = width;
+            newHeight = height;
+        }
+    }
+
+    /// <summary>
+    /// Determines whether <see cref="PixelWidth"/> or <see cref="PixelHeight"/> are set to non-zero value.
+    /// </summary>
+    internal bool DoesScale
+    {
+        get => PixelWidth != 0 || PixelHeight != 0;
+    }
+
+    /// <summary>
+    /// Converts the <see cref="Rotation"/> value to corresponding <see cref="WICBitmapTransformOptions"/>.
+    /// </summary>
+    internal WICBitmapTransformOptions WICTransformOptions
+    {
+        get
+        {
+            switch (Rotation)
+            {
+                case Rotation.Rotate0:
+                    return WICBitmapTransformOptions.WICBitmapTransformRotate0;
+                case Rotation.Rotate90:
+                    return WICBitmapTransformOptions.WICBitmapTransformRotate90;
+                case Rotation.Rotate180:
+                    return WICBitmapTransformOptions.WICBitmapTransformRotate180;
+                case Rotation.Rotate270:
+                    return WICBitmapTransformOptions.WICBitmapTransformRotate270;
+                default:
+                    Debug.Assert(false);
+
+                    // Fallback to default
+                    return WICBitmapTransformOptions.WICBitmapTransformRotate0;
+            }
+        }
+    }
 }
 

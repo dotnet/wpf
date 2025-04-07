@@ -6,7 +6,6 @@ using System;
 #if PBTCOMPILER
 namespace MS.Internal.Markup
 #else
-using System.Collections.Generic;
 using MS.Internal;
 
 namespace System.Windows.Media
@@ -179,11 +178,11 @@ namespace System.Windows.Media
         }
 
         /// Return the solid color brush from a color string.  If there's no match, null
-        public static SolidColorBrush ColorStringToKnownBrush(string s)
+        public static SolidColorBrush ColorStringToKnownBrush(ReadOnlySpan<char> colorString)
         {
-            if (null != s)
+            if (!colorString.IsEmpty)
             {
-                KnownColor result = ColorStringToKnownColor(s);
+                KnownColor result = ColorStringToKnownColor(colorString);
 
                 // If the result is UnknownColor, that means this string wasn't found
                 if (result != KnownColor.UnknownColor)
@@ -192,6 +191,7 @@ namespace System.Windows.Media
                     return SolidColorBrushFromUint((uint)result);
                 }
             }
+
             return null;
         }
 
@@ -226,53 +226,6 @@ namespace System.Windows.Media
 
             return scp;
         }
-
-        internal static string MatchColor(string colorString, out bool isKnownColor, out bool isNumericColor, out bool isContextColor, out bool isScRgbColor)
-        {
-            string trimmedString = colorString.Trim();
-
-            if (((trimmedString.Length == 4) ||
-                (trimmedString.Length == 5) ||
-                (trimmedString.Length == 7) ||
-                (trimmedString.Length == 9)) &&
-                (trimmedString[0] == '#'))
-            {
-                isNumericColor = true;
-                isScRgbColor = false;
-                isKnownColor = false;
-                isContextColor = false;
-                return trimmedString;
-            }
-            else
-                isNumericColor = false;
-
-            if ((trimmedString.StartsWith("sc#", StringComparison.Ordinal) == true))
-            {
-                isNumericColor = false;
-                isScRgbColor = true;
-                isKnownColor = false;
-                isContextColor = false;
-            }
-            else
-            {
-                isScRgbColor = false;
-            }
-
-            if ((trimmedString.StartsWith(Parsers.s_ContextColor, StringComparison.OrdinalIgnoreCase) == true))
-            {
-                isContextColor = true;
-                isScRgbColor = false;
-                isKnownColor = false;
-                return trimmedString;
-            }
-            else
-            {
-                isContextColor = false;
-                isKnownColor = true;
-            }
-
-            return trimmedString;
-        }
 #endif
 
         /// <summary>
@@ -280,9 +233,15 @@ namespace System.Windows.Media
         /// </summary>
         /// <param name="colorString">The color name to parse from.</param>
         /// <returns>The parsed <see cref="KnownColor"/> value or <see cref="KnownColor.UnknownColor"/> if no match.</returns>
+#if !PBTCOMPILER
+        internal static KnownColor ColorStringToKnownColor(ReadOnlySpan<char> colorString)
+        {
+            if (!colorString.IsEmpty)
+#else
         internal static KnownColor ColorStringToKnownColor(string colorString)
         {
             if (!string.IsNullOrEmpty(colorString))
+#endif
             {
                 // In case we're dealing with a lowercase character, we uppercase it
                 char firstChar = colorString[0];

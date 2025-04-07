@@ -55,6 +55,7 @@
     <Compile Include="$(WpfSharedDir)\MS\Internal\LegacyPriorityQueue.cs" />
     <Compile Include="$(WpfSharedDir)\MS\Internal\SequentialUshortCollection.cs" />
     <Compile Include="$(WpfSharedDir)\MS\Internal\SizeLimitedCache.cs" />
+	<Compile Include="$(WpfSharedDir)\MS\Internal\ValueTokenizerHelper.cs" />
     <Compile Include="$(WpfSharedDir)\MS\Internal\Commands\CommandLibraryHelper.cs" />
     <Compile Include="$(WpfSharedDir)\MS\Internal\Generated\AlignmentXValidation.cs" />
     <Compile Include="$(WpfSharedDir)\MS\Internal\Generated\AlignmentYValidation.cs" />
@@ -706,6 +707,7 @@
     <Compile Include="System\Windows\Media\ColorContext.cs" />
     <Compile Include="System\Windows\Media\ColorContextHelper.cs" />
     <Compile Include="System\Windows\Media\ColorConverter.cs" />
+    <Compile Include="System\Windows\Media\ColorKind.cs" />
     <Compile Include="System\Windows\Media\ColorTransform.cs" />
     <Compile Include="System\Windows\Media\ColorTransformHelper.cs" />
     <Compile Include="System\Windows\Media\CombinedGeometry.cs" />

@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
 using System.IO.Packaging;
@@ -16,7 +16,7 @@ namespace MS.Internal.IO.Packaging.Extensions
         }
     }
     
-    internal class PackageRelationship
+    internal static class PackageRelationship
     {
         public static Uri ContainerRelationshipPartName => System.IO.Packaging.PackUriHelper.CreatePartUri(new Uri("/_rels/.rels", UriKind.Relative));
     }

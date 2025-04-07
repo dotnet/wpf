@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
 //---------------------------------------------------------------------------
@@ -149,13 +149,14 @@ namespace MS.Internal
 
     #region Private Data
 
-        private string _filePath;
-        private string _fileLinkAlias;
-        private string _fileLogicalName;
+        private readonly string _filePath;
+        private readonly string _fileLinkAlias;
+        private readonly string _fileLogicalName;
+        private readonly bool _isXamlFile;
+
         private string _sourcePath;
         private string _relativeSourceFilePath;
         private Stream _stream;
-        private bool   _isXamlFile;
 
         private const string XAML = ".XAML";
 

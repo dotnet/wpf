@@ -908,11 +908,12 @@ namespace Microsoft.Build.Tasks.Windows
             return Guid.NewGuid().ToString();
         }
 
-        private List<Uid>             _uids;
-        private Hashtable             _uidTable;
-        private string                _fileName;
-        private Hashtable             _sequenceMaxIds;
-        private List<string>          _namespacePrefixes;
+        private readonly string _fileName;
+        private readonly List<Uid> _uids;
+        private readonly Hashtable _uidTable;
+        private readonly Hashtable _sequenceMaxIds;
+        private readonly List<string> _namespacePrefixes;
+
         private int                   _rootElementLineNumber        = -1;
         private int                   _rootElementLinePosition      = -1;
         private string                _namespacePrefixForMissingUid = null;
@@ -1236,11 +1237,14 @@ namespace Microsoft.Build.Tasks.Windows
 
         private int             _currentLineNumber   = 1;   // current line number in the source stream
         private int             _currentLinePosition = 1;   // current line position in the source stream
-        private LineBuffer      _lineBuffer;                // buffer for one line's content
+        /// <summary>
+        /// Buffer for one line's content.
+        /// </summary>
+        private readonly LineBuffer _lineBuffer;
 
-        private UidCollector    _collector;
-        private StreamReader    _sourceReader;
-        private StreamWriter    _targetWriter;
+        private readonly UidCollector _collector;
+        private readonly StreamReader _sourceReader;
+        private readonly StreamWriter _targetWriter;
 
         //
         // buffer for the content of a line

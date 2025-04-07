@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
 using System;
@@ -73,13 +73,15 @@ namespace MS.Internal
 
 #region Private Data
 
+        private readonly string _defaultNamespace = string.Empty;
+        private readonly string _assemblyName = string.Empty;
+        private readonly string _language = string.Empty;
+        private readonly FileUnit[] _fileList;
+
         private bool                    _pass2 = false;
-        private string                  _assemblyName = string.Empty;
-        private string                  _language = string.Empty;
         private string                  _sourcePath = string.Empty;
-        private string                  _defaultNamespace = string.Empty;
         private FileUnit                _applicationFile = FileUnit.Empty;
-        private FileUnit[]              _fileList = null;
+
 
 #endregion Private Data
     }
@@ -149,10 +151,10 @@ namespace MS.Internal
 
 #region Private Data
 
-        private int _lineNum;
-        private int _linePos;
-        private Exception _e;
-        private string _fileName;
+        private readonly int _lineNum;
+        private readonly int _linePos;
+        private readonly Exception _e;
+        private readonly string _fileName;
 
 #endregion Private Data
 
@@ -199,7 +201,7 @@ namespace MS.Internal
 
 #region Private Data
 
-        private SourceFileInfo _sourceFileInfo;
+        private readonly SourceFileInfo _sourceFileInfo;
 
 #endregion Private Data
 

@@ -32,7 +32,7 @@ namespace System.Xaml
         {
             this.xamlXmlWriter = xamlXmlWriter;
             settings = xamlXmlWriter.Settings; // This will clone, only want to do this once
-            meSettings = meSettings ?? new XamlMarkupExtensionWriterSettings();
+            meSettings ??= new XamlMarkupExtensionWriterSettings();
             currentState = Start.State;
             sb = new StringBuilder();
             nodes = new Stack<Node>();

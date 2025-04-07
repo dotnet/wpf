@@ -1867,11 +1867,11 @@ namespace System.Windows.Data
         {
             if (value)
             {
-                _flags = _flags | flags;
+                _flags |= flags;
             }
             else
             {
-                _flags = _flags & ~flags;
+                _flags &= ~flags;
             }
         }
 

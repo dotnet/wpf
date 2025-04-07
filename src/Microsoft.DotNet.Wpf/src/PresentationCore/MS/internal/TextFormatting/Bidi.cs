@@ -2081,7 +2081,7 @@ namespace MS.Internal.TextFormatting
                     lastStrongClass = tempClass;
                 }
 
-                counter = counter + wordCount;
+                counter += wordCount;
             }
 
             if (counter < cchText)  // couldn't optimize.

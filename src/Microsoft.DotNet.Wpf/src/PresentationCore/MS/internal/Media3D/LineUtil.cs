@@ -458,9 +458,9 @@ namespace MS.Internal.Media3D
             double t = Vector3D.DotProduct(ref e2, ref q);
             double f = 1 / a;
             
-            t = t * f;
-            u = u * f;
-            v = v * f;
+            t *= f;
+            u *= f;
+            v *= f;
   
             hitCoord = new Point(u, v);
             dist = t;

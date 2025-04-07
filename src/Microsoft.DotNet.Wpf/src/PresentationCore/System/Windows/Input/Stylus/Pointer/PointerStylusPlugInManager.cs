@@ -159,7 +159,7 @@ namespace System.Windows.Input.StylusPointer
                 System.Diagnostics.Debug.Assert(data.Length % pointLength == 0);
                 Point ptTablet = new Point(data[data.Length - pointLength], data[data.Length - pointLength + 1]);
                 // Note: the StylusLogic data inside DeviceUnitsFromMeasurUnits is protected by __rtiLock.
-                ptTablet = ptTablet * stylusDevice.TabletDevice.TabletDeviceImpl.TabletToScreen;
+                ptTablet *= stylusDevice.TabletDevice.TabletDeviceImpl.TabletToScreen;
                 ptTablet.X = (int)Math.Round(ptTablet.X); // Make sure we snap to whole window pixels.
                 ptTablet.Y = (int)Math.Round(ptTablet.Y);
                 ptTablet *= inputReport.InputSource.CompositionTarget.TransformFromDevice; // change to measured units now.

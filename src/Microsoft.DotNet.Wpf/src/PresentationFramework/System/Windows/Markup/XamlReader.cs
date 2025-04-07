@@ -502,7 +502,7 @@ namespace System.Windows.Markup
             if (baseException is System.Windows.Markup.XamlParseException)
             {
                 var xe = ((System.Windows.Markup.XamlParseException)baseException);
-                xe.BaseUri = xe.BaseUri ?? baseUri;
+                xe.BaseUri ??= baseUri;
                 if (lineInfo != null && xe.LinePosition == 0 && xe.LineNumber == 0)
                 {
                     xe.LinePosition = lineInfo.LinePosition;

@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
 //
@@ -273,13 +273,13 @@ namespace System.Windows.Media.Animation
             {
                 if (IsOffsetCumulative)
                 {
-                    pathPoint = pathPoint + (_accumulatingOffset * currentRepeat);
+                    pathPoint += _accumulatingOffset * currentRepeat;
                 }
 
                 if (   DoesRotateWithTangent
                     && IsAngleCumulative)
                 {
-                    angle = angle + (_accumulatingAngle * currentRepeat);
+                    angle += _accumulatingAngle * currentRepeat;
                 }
             }
 

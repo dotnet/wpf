@@ -111,7 +111,7 @@ namespace System.Windows.Media.Media3D
 
         internal override void Append(ref Matrix3D matrix)
         {
-            matrix = matrix * Value;
+            matrix *= Value;
         }
 }
 }

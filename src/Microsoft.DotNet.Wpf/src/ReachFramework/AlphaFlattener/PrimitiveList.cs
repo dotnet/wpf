@@ -41,10 +41,10 @@ namespace Microsoft.Internal.AlphaFlattener
                 {
                     if (s.Length > 1)
                     {
-                        s = s + ' ';
+                        s += ' ';
                     }
                     
-                    s = s + i;
+                    s += i;
                 }
 
                 return s + ">";

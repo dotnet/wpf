@@ -2072,7 +2072,7 @@ namespace System.Xaml
                 };
 
                 // we want to treat all null values returned by TCs as String.Empty
-                value = value ?? string.Empty;
+                value ??= string.Empty;
 
                 objectInfo.Properties.Add(new MemberMarkupInfo()
                 {

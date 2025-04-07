@@ -916,13 +916,13 @@ namespace System.Windows.Controls
                 if (newRectangle.X < 0)
                 {
                     //newRect.X is negative, simply add it to width to subtract it
-                    newRectangle.Width = newRectangle.Width + newRectangle.X;
+                    newRectangle.Width += newRectangle.X;
                     newRectangle.X = 0d;
                 }
                 if (newRectangle.Y < 0)
                 {
                     //newRect.Y is negative, simply add it to height to subtract it
-                    newRectangle.Height = newRectangle.Height + newRectangle.Y;
+                    newRectangle.Height += newRectangle.Y;
                     newRectangle.Y = 0d;
                 }
                 e.NewRectangle = newRectangle;

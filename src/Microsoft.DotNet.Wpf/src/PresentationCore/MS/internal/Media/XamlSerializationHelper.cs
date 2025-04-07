@@ -349,7 +349,7 @@ namespace MS.Internal.Media
         internal static double ReadScaledInteger(BinaryReader reader )
         {
             double value = (double) reader.ReadInt32(); 
-            value = value * inverseScaleFactor ; 
+            value *= inverseScaleFactor ; 
 
             return value ; 
         }

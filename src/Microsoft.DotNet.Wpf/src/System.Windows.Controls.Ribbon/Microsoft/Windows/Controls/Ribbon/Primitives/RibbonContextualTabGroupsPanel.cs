@@ -80,7 +80,7 @@ namespace Microsoft.Windows.Controls.Ribbon.Primitives
                         // If label is truncated - show the tooltip
                         tabGroupHeader.ShowLabelToolTip = DoubleUtil.GreaterThan(tabGroupHeader.IdealDesiredWidth, width);
 
-                        remainingSpace = remainingSpace - width;
+                        remainingSpace -= width;
                     }
 
                     desiredSize.Width += width;

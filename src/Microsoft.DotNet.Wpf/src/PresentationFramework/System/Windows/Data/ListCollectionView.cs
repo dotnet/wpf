@@ -3070,11 +3070,11 @@ namespace System.Windows.Data
             LiveShapingFlags result = 0;
 
             if (IsLiveSorting == true)
-                result = result | LiveShapingFlags.Sorting;
+                result |= LiveShapingFlags.Sorting;
             if (IsLiveFiltering == true)
-                result = result | LiveShapingFlags.Filtering;
+                result |= LiveShapingFlags.Filtering;
             if (IsLiveGrouping == true)
-                result = result | LiveShapingFlags.Grouping;
+                result |= LiveShapingFlags.Grouping;
 
             return result;
         }

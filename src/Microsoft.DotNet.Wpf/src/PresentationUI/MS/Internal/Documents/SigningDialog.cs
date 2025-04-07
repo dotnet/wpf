@@ -211,7 +211,7 @@ namespace MS.Internal.Documents
             // then we should disable the checkbox option that says additional signatures 
             // will break this signature.   This covers ad hoc signing when signatures requests
             // also exist.
-            _addDigSigCheckBox.Enabled = _addDigSigCheckBox.Enabled & !_docSigManager.HasRequests;
+            _addDigSigCheckBox.Enabled &= !_docSigManager.HasRequests;
         }
 
         #endregion Private Methods

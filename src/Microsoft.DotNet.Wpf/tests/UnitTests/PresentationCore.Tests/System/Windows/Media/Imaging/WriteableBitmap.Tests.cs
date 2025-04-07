@@ -14,12 +14,12 @@ public sealed class WriteableBitmapTests
     [InlineData(256, 512, 96.0, 96.0)]
     [InlineData(256, 256, 120.0, 120.0)]
     [InlineData(512, 256, 120.0, 120.0)]
-    [InlineData(10_000, 10_000, 96.0, 96.0)]
-    [InlineData(20_000, 20_000, 96.0, 96.0)]
+    [InlineData(10_000, 10_000, 96.0, 96.0, Skip = "Disabled to reduce working set")]
+    [InlineData(20_000, 20_000, 96.0, 96.0, Skip = "Disabled to reduce working set")]
     // Over 2GB back-buffer (4 channels) -- NOTE: These tests shall not be run on x86 without PAE
-    [InlineData(25_000, 25_000, 96.0, 96.0)]
-    [InlineData(30_000, 30_000, 96.0, 96.0)]
-    [InlineData(32_000, 32_000, 96.0, 96.0)]
+    [InlineData(25_000, 25_000, 96.0, 96.0, Skip = "Disabled to reduce working set")]
+    [InlineData(30_000, 30_000, 96.0, 96.0, Skip = "Disabled to reduce working set")]
+    [InlineData(32_000, 32_000, 96.0, 96.0, Skip = "Disabled to reduce working set")]
     [Theory]
     public void Constructor_CreationSucceeds_HasCorrectParameters(int width, int height, double dpiX, double dpiY)
     {
@@ -36,16 +36,17 @@ public sealed class WriteableBitmapTests
     }
 
     // Under 2GB back-buffer (4 channels)
+    [InlineData(2_000, 2_000, 96.0, 96.0)]
     [InlineData(4_000, 4_000, 120, 120)]
-    [InlineData(10_000, 10_000, 96.0, 96.0)]
-    [InlineData(20_000, 20_000, 96.0, 96.0)]
+    [InlineData(10_000, 10_000, 96.0, 96.0, Skip = "Disabled to reduce working set")]
+    [InlineData(20_000, 20_000, 96.0, 96.0, Skip = "Disabled to reduce working set")]
     // Over 2GB back-buffer (4 channels) -- NOTE: These tests shall not be run on x86 without PAE
-    [InlineData(25_000, 25_000, 96.0, 96.0)]
-    [InlineData(32_000, 32_000, 96.0, 96.0)]
+    [InlineData(25_000, 25_000, 96.0, 96.0, Skip = "Disabled to reduce working set")]
+    [InlineData(32_000, 32_000, 96.0, 96.0, Skip = "Disabled to reduce working set")]
     [Theory]
     public void WritePixels_SmallRect_Safe_Succeeds(int width, int height, double dpiX, double dpiY)
     {
-        const int tileSize = 1000;
+        const int tileSize = 500;
         const int channels = 4;
 
         // Create 1000x1000 rectangle with 4 channels, fill the rectangle with teal color
@@ -76,16 +77,17 @@ public sealed class WriteableBitmapTests
     }
 
     // Under 2GB back-buffer (4 channels)
+    [InlineData(2_000, 2_000, 96.0, 96.0)]
     [InlineData(4_000, 4_000, 120, 120)]
-    [InlineData(10_000, 10_000, 96.0, 96.0)]
-    [InlineData(20_000, 20_000, 96.0, 96.0)]
+    [InlineData(10_000, 10_000, 96.0, 96.0, Skip = "Disabled to reduce working set")]
+    [InlineData(20_000, 20_000, 96.0, 96.0, Skip = "Disabled to reduce working set")]
     // Over 2GB back-buffer (4 channels) -- NOTE: These tests shall not be run on x86 without PAE
-    [InlineData(25_000, 25_000, 96.0, 96.0)]
-    [InlineData(32_000, 32_000, 96.0, 96.0)]
+    [InlineData(25_000, 25_000, 96.0, 96.0, Skip = "Disabled to reduce working set")]
+    [InlineData(32_000, 32_000, 96.0, 96.0, Skip = "Disabled to reduce working set")]
     [Theory]
     public unsafe void WritePixels_SmallRect_Unsafe_Succeeds(int width, int height, double dpiX, double dpiY)
     {
-        const int tileSize = 1000;
+        const int tileSize = 500;
         const int channels = 4;
 
         // Create 1000x1000 rectangle with 4 channels, fill the rectangle with teal color
@@ -116,12 +118,13 @@ public sealed class WriteableBitmapTests
     }
 
     // Under 2GB back-buffer (4 channels)
+    [InlineData(512, 512, 96.0, 96.0)]
     [InlineData(4_000, 4_000, 120, 120)]
-    [InlineData(10_000, 10_000, 96.0, 96.0)]
-    [InlineData(20_000, 20_000, 96.0, 96.0)]
+    [InlineData(10_000, 10_000, 96.0, 96.0, Skip = "Disabled to reduce working set")]
+    [InlineData(20_000, 20_000, 96.0, 96.0, Skip = "Disabled to reduce working set")]
     // Over 2GB back-buffer (4 channels) -- NOTE: These tests shall not be run on x86 without PAE
-    [InlineData(25_000, 25_000, 96.0, 96.0)]
-    [InlineData(32_000, 32_000, 96.0, 96.0)]
+    [InlineData(25_000, 25_000, 96.0, 96.0, Skip = "Disabled to reduce working set")]
+    [InlineData(32_000, 32_000, 96.0, 96.0, Skip = "Disabled to reduce working set")]
     [Theory]
     public void WritePixels_FullRect_Safe_Succeeds(int width, int height, double dpiX, double dpiY)
     {
@@ -139,12 +142,13 @@ public sealed class WriteableBitmapTests
     }
 
     // Under 2GB back-buffer (4 channels)
+    [InlineData(512, 512, 96.0, 96.0)]
     [InlineData(4_000, 4_000, 120, 120)]
-    [InlineData(10_000, 10_000, 96.0, 96.0)]
-    [InlineData(20_000, 20_000, 96.0, 96.0)]
+    [InlineData(10_000, 10_000, 96.0, 96.0, Skip = "Disabled to reduce working set")]
+    [InlineData(20_000, 20_000, 96.0, 96.0, Skip = "Disabled to reduce working set")]
     // Over 2GB back-buffer (4 channels) -- NOTE: These tests shall not be run on x86 without PAE
-    [InlineData(25_000, 25_000, 96.0, 96.0)]
-    [InlineData(32_000, 32_000, 96.0, 96.0)]
+    [InlineData(25_000, 25_000, 96.0, 96.0, Skip = "Disabled to reduce working set")]
+    [InlineData(32_000, 32_000, 96.0, 96.0, Skip = "Disabled to reduce working set")]
     [Theory]
     public unsafe void WritePixels_FullRect_Unsafe_Succeeds(int width, int height, double dpiX, double dpiY)
     {
@@ -167,11 +171,11 @@ public sealed class WriteableBitmapTests
     [InlineData(256, 512, 96.0, 96.0)]
     [InlineData(256, 256, 120.0, 120.0)]
     [InlineData(512, 256, 120.0, 120.0)]
-    [InlineData(10_000, 10_000, 96.0, 96.0)]
-    [InlineData(20_000, 20_000, 96.0, 96.0)]
+    [InlineData(10_000, 10_000, 96.0, 96.0, Skip = "Disabled to reduce working set")]
+    [InlineData(20_000, 20_000, 96.0, 96.0, Skip = "Disabled to reduce working set")]
     // Over 2GB back-buffer (4 channels) -- NOTE: These tests shall not be run on x86 without PAE
-    [InlineData(25_000, 25_000, 96.0, 96.0)]
-    [InlineData(32_000, 32_000, 96.0, 96.0)]
+    [InlineData(25_000, 25_000, 96.0, 96.0, Skip = "Disabled to reduce working set")]
+    [InlineData(32_000, 32_000, 96.0, 96.0, Skip = "Disabled to reduce working set")]
     [Theory]
     public void Clone_CopyPixels_Succeeds(int width, int height, double dpiX, double dpiY)
     {

@@ -406,7 +406,7 @@ namespace System.Windows.Automation
             {
                 if(_defaultUiaCacheRequest == null)
                 {
-                    _defaultUiaCacheRequest = new UiaCoreApi.UiaCacheRequest(Automation.ControlViewCondition, TreeScope.Element, new AutomationProperty[] { AutomationElement.RuntimeIdProperty }, new AutomationPattern[] { }, AutomationElementMode.Full);
+                    _defaultUiaCacheRequest = new UiaCoreApi.UiaCacheRequest(Automation.ControlViewCondition, TreeScope.Element, new AutomationProperty[] { AutomationElement.RuntimeIdProperty }, Array.Empty<AutomationPattern>(), AutomationElementMode.Full);
                 }
                 return _defaultUiaCacheRequest;
             }

@@ -978,11 +978,10 @@ namespace MS.Internal
 
                 // eventSetter = new EventSetter();
                 //
-                CodeExpression[] esParams = {};
                 CodeVariableReferenceExpression cvreES = new CodeVariableReferenceExpression(EVENTSETTER);
                 CodeAssignStatement casES = new CodeAssignStatement(cvreES,
                                                                     new CodeObjectCreateExpression(KnownTypes.Types[(int)KnownElements.EventSetter],
-                                                                                                   esParams));
+                                                                                                   Array.Empty<CodeExpression>()));
 
                 // eventSetter.Event = Button.ClickEvent;
                 //
@@ -3156,9 +3155,8 @@ namespace MS.Internal
             //
             CodeObjectCreateExpression coce;
             CodeVariableReferenceExpression cvre = new CodeVariableReferenceExpression(APPVAR);
-            CodeExpression[] ctorParams = {};
 
-            coce = new CodeObjectCreateExpression(appClassName, ctorParams);
+            coce = new CodeObjectCreateExpression(appClassName, Array.Empty<CodeExpression>());
 
             CodeVariableDeclarationStatement cvds = new CodeVariableDeclarationStatement(appClassName, APPVAR, coce);
 

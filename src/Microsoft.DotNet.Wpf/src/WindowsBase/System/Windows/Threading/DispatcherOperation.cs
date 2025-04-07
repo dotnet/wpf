@@ -1,8 +1,8 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
-using System.Threading;
 using System.ComponentModel;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Runtime.CompilerServices;
 using MS.Internal;
@@ -39,7 +39,7 @@ namespace System.Windows.Threading
 
             _taskSource = taskSource;
             _taskSource.Initialize(this);
-            
+
             _useAsyncSemantics = useAsyncSemantics;
         }
 
@@ -71,7 +71,7 @@ namespace System.Windows.Threading
                 new DispatcherOperationTaskSource<object>(),
                 true)
         {
-        }        
+        }
 
         internal DispatcherOperation(
             Dispatcher dispatcher,
@@ -86,18 +86,12 @@ namespace System.Windows.Threading
                 new DispatcherOperationTaskSource<object>(),
                 true)
         {
-        }        
+        }
 
         /// <summary>
         ///     Returns the Dispatcher that this operation was posted to.
         /// </summary>
-        public Dispatcher Dispatcher
-        {
-            get
-            {
-                return _dispatcher;
-            }
-        }
+        public Dispatcher Dispatcher => _dispatcher;
 
         /// <summary>
         ///     Gets or sets the priority of this operation within the
@@ -105,16 +99,13 @@ namespace System.Windows.Threading
         /// </summary>
         public DispatcherPriority Priority // NOTE: should be Priority
         {
-            get 
-            {
-                return _priority;
-            }
-            
+            get => _priority;
+
             set
             {
                 Dispatcher.ValidatePriority(value, "value");
-                
-                if(value != _priority && _dispatcher.SetPriority(this, value))
+
+                if (value != _priority && _dispatcher.SetPriority(this, value))
                 {
                     _priority = value;
                 }
@@ -124,24 +115,12 @@ namespace System.Windows.Threading
         /// <summary>
         ///     The status of this operation.
         /// </summary>
-        public DispatcherOperationStatus Status
-        {
-            get
-            {
-                return _status;
-            }
-        }
+        public DispatcherOperationStatus Status => _status;
 
         /// <summary>
         ///     Returns a Task representing the operation.
         /// </summary>
-        public Task Task
-        {
-            get
-            {
-                return _taskSource.GetTask();
-            }
-        }
+        public Task Task => _taskSource.GetTask();
 
         /// <summary>
         ///     Returns an awaiter for awaiting the completion of the operation.
@@ -179,12 +158,12 @@ namespace System.Windows.Threading
         /// </returns>
         public DispatcherOperationStatus Wait(TimeSpan timeout)
         {
-            if((_status == DispatcherOperationStatus.Pending || _status == DispatcherOperationStatus.Executing) &&
+            if ((_status == DispatcherOperationStatus.Pending || _status == DispatcherOperationStatus.Executing) &&
                 timeout.TotalMilliseconds != 0)
             {
-                if(_dispatcher.Thread == Thread.CurrentThread)
+                if (_dispatcher.Thread == Thread.CurrentThread)
                 {
-                    if(_status == DispatcherOperationStatus.Executing)
+                    if (_status == DispatcherOperationStatus.Executing)
                     {
                         // We are the dispatching thread, and the current operation state is
                         // executing, which means that the operation is in the middle of
@@ -193,10 +172,10 @@ namespace System.Windows.Threading
                         // we throw an exception instead.
                         throw new InvalidOperationException(SR.ThreadMayNotWaitOnOperationsAlreadyExecutingOnTheSameThread);
                     }
-                    
+
                     // We are the dispatching thread for this operation, so
                     // we can't block.  We will push a frame instead.
-                    DispatcherOperationFrame frame = new DispatcherOperationFrame(this, timeout);
+                    DispatcherOperationFrame frame = new(this, timeout);
                     Dispatcher.PushFrame(frame);
                 }
                 else
@@ -210,14 +189,14 @@ namespace System.Windows.Threading
                     // the UI thread for a context to call
                     // Invoke(Priority.Max, ...) without going through the
                     // blocked queue.
-                    DispatcherOperationEvent wait = new DispatcherOperationEvent(this, timeout);
+                    DispatcherOperationEvent wait = new(this, timeout);
                     wait.WaitOne();
                 }
             }
 
-            if(_useAsyncSemantics)
+            if (_useAsyncSemantics)
             {
-                if(_status == DispatcherOperationStatus.Completed ||
+                if (_status == DispatcherOperationStatus.Completed ||
                    _status == DispatcherOperationStatus.Aborted)
                 {
                     // We know the operation has completed, so it safe to ask
@@ -227,10 +206,10 @@ namespace System.Windows.Threading
                     Task.GetAwaiter().GetResult();
                 }
             }
-            
+
             return _status;
         }
-        
+
         /// <summary>
         ///     Aborts this operation.
         /// </summary>
@@ -245,24 +224,20 @@ namespace System.Windows.Threading
         /// </remarks>
         public bool Abort()
         {
-            bool removed = false;
-
-            if (_dispatcher != null)
+            if (_dispatcher is null)
             {
-                removed = _dispatcher.Abort(this);
+                return false;
+            }
 
-                if (removed)
-                {
-                    // Mark the task as canceled so that continuations will be invoked.
-                    _taskSource.SetCanceled();
+            bool removed = _dispatcher.Abort(this);
 
-                    // Raise the aborted event.
-                    EventHandler aborted = _aborted;
-                    if (aborted != null)
-                    {
-                        aborted(this, EventArgs.Empty);
-                    }
-                }
+            if (removed)
+            {
+                // Mark the task as canceled so that continuations will be invoked.
+                _taskSource.SetCanceled();
+
+                // Raise the aborted event.
+                _aborted?.Invoke(this, EventArgs.Empty);
             }
 
             return removed;
@@ -274,13 +249,7 @@ namespace System.Windows.Threading
         /// <returns>
         ///     Returns a string representation of the operation to be invoked.
         /// </returns>
-        internal String Name
-        {
-            get
-            {
-                return _method.Method.DeclaringType + "." + _method.Method.Name;
-            }
-        }
+        internal String Name => _method.Method.DeclaringType + "." + _method.Method.Name;
 
         /// <summary>
         ///     ID of this operation.
@@ -301,21 +270,21 @@ namespace System.Windows.Threading
                     // we need a non-readonly field of a pointer-compatible type (using _priority)
                     fixed (DispatcherPriority* pb = &this._priority)
                     {
-                        addr = (long) pb;
+                        addr = (long)pb;
                     }
                 }
                 return addr;
             }
         }
-        
+
         /// <summary>
         ///     Returns the result of the operation if it has completed.
         /// </summary>
-        public object Result 
+        public object Result
         {
-            get 
+            get
             {
-                if(_useAsyncSemantics)
+                if (_useAsyncSemantics)
                 {
                     // New semantics require waiting for the operation to
                     // complete.
@@ -324,7 +293,7 @@ namespace System.Windows.Threading
                     // waiting on the same thread.
                     Wait();
 
-                    if(_status == DispatcherOperationStatus.Completed ||
+                    if (_status == DispatcherOperationStatus.Completed ||
                        _status == DispatcherOperationStatus.Aborted)
                     {
                         // We know the operation has completed, and the
@@ -335,7 +304,7 @@ namespace System.Windows.Threading
                         Task.GetAwaiter().GetResult();
                     }
                 }
-                
+
                 return _result;
             }
         }
@@ -349,15 +318,15 @@ namespace System.Windows.Threading
             {
                 lock (DispatcherLock)
                 {
-                    _aborted = (EventHandler) Delegate.Combine(_aborted, value);
+                    _aborted = (EventHandler)Delegate.Combine(_aborted, value);
                 }
             }
 
             remove
             {
-                lock(DispatcherLock)
+                lock (DispatcherLock)
                 {
-                    _aborted = (EventHandler) Delegate.Remove(_aborted, value);
+                    _aborted = (EventHandler)Delegate.Remove(_aborted, value);
                 }
             }
         }
@@ -376,19 +345,19 @@ namespace System.Windows.Threading
             {
                 lock (DispatcherLock)
                 {
-                    _completed = (EventHandler) Delegate.Combine(_completed, value);
+                    _completed = (EventHandler)Delegate.Combine(_completed, value);
                 }
             }
-        
+
             remove
             {
-                lock(DispatcherLock)
+                lock (DispatcherLock)
                 {
-                    _completed = (EventHandler) Delegate.Remove(_completed, value);
+                    _completed = (EventHandler)Delegate.Remove(_completed, value);
                 }
             }
         }
-        
+
         // Note: this is called by the Dispatcher to actually invoke the operation.
         // Invoke --> InvokeInSecurityContext --> InvokeImpl
         internal void Invoke()
@@ -398,7 +367,7 @@ namespace System.Windows.Threading
 
             // Invoke the operation under the execution context that was
             // current when the operation was created.
-            if(_executionContext != null)
+            if (_executionContext is not null)
             {
                 CulturePreservingExecutionContext.Run(_executionContext, _invokeInSecurityContext, this);
 
@@ -417,9 +386,9 @@ namespace System.Windows.Threading
             }
 
             EventHandler handler; // either completed or aborted
-            lock(DispatcherLock)
+            lock (DispatcherLock)
             {
-                if(_exception is OperationCanceledException)
+                if (_exception is OperationCanceledException)
                 {
                     // A new way to abort/cancel an operation is to raise an
                     // OperationCanceledException exception.  This only works
@@ -441,24 +410,21 @@ namespace System.Windows.Threading
                     _status = DispatcherOperationStatus.Completed;
                 }
             }
-                
-            if(handler != null)
-            {
-                handler(this, EventArgs.Empty);
-            }
+
+            handler?.Invoke(this, EventArgs.Empty);
         }
 
         // Note: this is called by the Dispatcher to actually invoke the completions for the operation.
         internal void InvokeCompletions()
         {
-            switch(_status)
+            switch (_status)
             {
                 case DispatcherOperationStatus.Aborted:
                     _taskSource.SetCanceled();
                     break;
 
                 case DispatcherOperationStatus.Completed:
-                    if(_exception != null)
+                    if (_exception is not null)
                     {
                         _taskSource.SetException(_exception);
                     }
@@ -473,12 +439,12 @@ namespace System.Windows.Threading
                     break;
             }
         }
-        
+
 
         // Invoke --> InvokeInSecurityContext --> InvokeImpl
         private static void InvokeInSecurityContext(Object state)
         {
-            DispatcherOperation operation = (DispatcherOperation) state;
+            DispatcherOperation operation = (DispatcherOperation)state;
             operation.InvokeImpl();
         }
 
@@ -493,13 +459,13 @@ namespace System.Windows.Threading
                 // SynchronizationContext must be for the correct dispatcher and
                 // priority.
                 DispatcherSynchronizationContext newSynchronizationContext;
-                if(BaseCompatibilityPreferences.GetReuseDispatcherSynchronizationContextInstance())
+                if (BaseCompatibilityPreferences.GetReuseDispatcherSynchronizationContextInstance())
                 {
                     newSynchronizationContext = Dispatcher._defaultDispatcherSynchronizationContext;
                 }
                 else
                 {
-                    if(BaseCompatibilityPreferences.GetFlowDispatcherSynchronizationContextPriority())
+                    if (BaseCompatibilityPreferences.GetFlowDispatcherSynchronizationContextPriority())
                     {
                         newSynchronizationContext = new DispatcherSynchronizationContext(_dispatcher, _priority);
                     }
@@ -515,14 +481,14 @@ namespace System.Windows.Threading
                 // are associated with different priorities.  So we promote the timers before we
                 // invoke any work items.
                 _dispatcher.PromoteTimers(Environment.TickCount);
-                
-                if(_useAsyncSemantics)
+
+                if (_useAsyncSemantics)
                 {
                     try
                     {
                         _result = InvokeDelegateCore();
                     }
-                    catch(Exception e)
+                    catch (Exception e)
                     {
                         // Remember this for the later call to InvokeCompletions.
                         _exception = e;
@@ -544,7 +510,7 @@ namespace System.Windows.Threading
 
         protected virtual object InvokeDelegateCore()
         {
-            Action action = (Action) _method;
+            Action action = (Action)_method;
             action();
             return null;
         }
@@ -558,14 +524,14 @@ namespace System.Windows.Threading
             public DispatcherOperationFrame(DispatcherOperation op, TimeSpan timeout) : base(false)
             {
                 _operation = op;
-                
+
                 // We will exit this frame once the operation is completed or aborted.
                 _operation.Aborted += new EventHandler(OnCompletedOrAborted);
                 _operation.Completed += new EventHandler(OnCompletedOrAborted);
 
                 // We will exit the frame if the operation is not completed within
                 // the requested timeout.
-                if(timeout.TotalMilliseconds > 0)
+                if (timeout.TotalMilliseconds > 0)
                 {
                     _waitTimer = new Timer(new TimerCallback(OnTimeout),
                                            null,
@@ -576,17 +542,17 @@ namespace System.Windows.Threading
                 // Some other thread could have aborted the operation while we were
                 // setting up the handlers.  We check the state again and mark the
                 // frame as "should not continue" if this happened.
-                if(_operation._status != DispatcherOperationStatus.Pending)
+                if (_operation._status != DispatcherOperationStatus.Pending)
                 {
                     Exit();
                 }
-}
-            
+            }
+
             private void OnCompletedOrAborted(object sender, EventArgs e)
             {
                 Exit();
             }
-            
+
             private void OnTimeout(object arg)
             {
                 Exit();
@@ -602,10 +568,10 @@ namespace System.Windows.Threading
                 _operation.Completed -= new EventHandler(OnCompletedOrAborted);
             }
 
-            private DispatcherOperation _operation;
+            private readonly DispatcherOperation _operation;
             private Timer _waitTimer;
         }
-        
+
         private class DispatcherOperationEvent
         {
             public DispatcherOperationEvent(DispatcherOperation op, TimeSpan timeout)
@@ -614,8 +580,8 @@ namespace System.Windows.Threading
                 _timeout = timeout;
                 _event = new ManualResetEvent(false);
                 _eventClosed = false;
-                
-                lock(DispatcherLock)
+
+                lock (DispatcherLock)
                 {
                     // We will set our event once the operation is completed or aborted.
                     _operation.Aborted += new EventHandler(OnCompletedOrAborted);
@@ -625,21 +591,22 @@ namespace System.Windows.Threading
                     // have been dispatched while we were setting up the handlers.
                     // We check the state again and set the event ourselves if this
                     // happened.
-                    if(_operation._status != DispatcherOperationStatus.Pending && _operation._status != DispatcherOperationStatus.Executing)
+                    if (_operation._status != DispatcherOperationStatus.Pending && _operation._status != DispatcherOperationStatus.Executing)
                     {
                         _event.Set();
                     }
                 }
             }
-            
+
             private void OnCompletedOrAborted(object sender, EventArgs e)
             {
-                lock(DispatcherLock)
+                lock (DispatcherLock)
                 {
-                    if(!_eventClosed)
+                    if (_eventClosed)
                     {
-                        _event.Set();
+                        return;
                     }
+                    _event.Set();
                 }
             }
 
@@ -647,49 +614,45 @@ namespace System.Windows.Threading
             {
                 _event.WaitOne(_timeout, false);
 
-                lock(DispatcherLock)
+                lock (DispatcherLock)
                 {
-                    if(!_eventClosed)
+                    if (_eventClosed)
                     {
-                        // Cleanup the events.
-                        _operation.Aborted -= new EventHandler(OnCompletedOrAborted);
-                        _operation.Completed -= new EventHandler(OnCompletedOrAborted);
-
-                        // Close the event immediately instead of waiting for a GC
-                        // because the Dispatcher is a a high-activity component and
-                        // we could run out of events.
-                        _event.Close();
-
-                        _eventClosed = true;
+                        return;
                     }
+
+                    // Cleanup the events.
+                    _operation.Aborted -= new EventHandler(OnCompletedOrAborted);
+                    _operation.Completed -= new EventHandler(OnCompletedOrAborted);
+
+                    // Close the event immediately instead of waiting for a GC
+                    // because the Dispatcher is a a high-activity component and
+                    // we could run out of events.
+                    _event.Close();
+
+                    _eventClosed = true;
                 }
             }
 
-            private object DispatcherLock
-            {
-                get { return _operation.DispatcherLock; }
-            }
-            
-            private DispatcherOperation _operation;
-            private TimeSpan _timeout;            
+            private object DispatcherLock => _operation.DispatcherLock;
+
+            private readonly DispatcherOperation _operation;
+            private TimeSpan _timeout;
             private ManualResetEvent _event;
             private bool _eventClosed;
         }
 
-        private object DispatcherLock
-        {
-            get { return _dispatcher._instanceLock; }
-        }
-        
+        private object DispatcherLock => _dispatcher._instanceLock;
+
         private CulturePreservingExecutionContext _executionContext;
         private static readonly ContextCallback _invokeInSecurityContext;
-        
+
         private readonly Dispatcher _dispatcher;
         private DispatcherPriority _priority;
         internal readonly Delegate _method;
         private readonly object _args;
         private readonly int _numArgs;
-        
+
         internal DispatcherOperationStatus _status; // set from Dispatcher
         private object _result;
         private Exception _exception;
@@ -721,20 +684,15 @@ namespace System.Windows.Threading
                 new DispatcherOperationTaskSource<TResult>(),
                 true)
         {
-        }       
+        }
 
         /// <summary>
         ///     Returns a Task representing the operation.
         /// </summary>
-        public new Task<TResult> Task
-        {
-            get
-            {
+        public new Task<TResult> Task =>
                 // Just upcast the base Task to what it really is.
-                return (Task<TResult>)((DispatcherOperation)this).Task;
-            }
-        }
-        
+                (Task<TResult>)((DispatcherOperation)this).Task;
+
         /// <summary>
         ///     Returns an awaiter for awaiting the completion of the operation.
         /// </summary>
@@ -750,20 +708,14 @@ namespace System.Windows.Threading
         /// <summary>
         ///     Returns the result of the operation if it has completed.
         /// </summary>
-        public new TResult Result
-        {
-            get
-            {
-                return (TResult) ((DispatcherOperation)this).Result;
-            }
-        }
+        public new TResult Result => (TResult)((DispatcherOperation)this).Result;
 
         protected override object InvokeDelegateCore()
         {
-            Func<TResult> func = (Func<TResult>) _method;
+            Func<TResult> func = (Func<TResult>)_method;
             return func();
         }
-}
+    }
 
     /// <summary>
     ///     A convenient delegate to use for dispatcher operations.

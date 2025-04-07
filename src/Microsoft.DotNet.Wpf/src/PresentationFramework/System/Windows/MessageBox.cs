@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
 
@@ -41,15 +41,15 @@ namespace System.Windows
             }
         }
 #endif
-        private const int IDOK = 1;
-        private const int IDCANCEL = 2;
-        private const int IDABORT = 3;
-        private const int IDRETRY = 4;
-        private const int IDIGNORE = 5;
-        private const int IDYES = 6;
-        private const int IDNO = 7;
-        private const int IDTRYAGAIN = 10;
-        private const int IDCONTINUE = 11;
+        private const int IDOK            = 1;
+        private const int IDCANCEL        = 2;
+        private const int IDABORT         = 3;
+        private const int IDRETRY         = 4;
+        private const int IDIGNORE        = 5;
+        private const int IDYES           = 6;
+        private const int IDNO            = 7;
+        private const int IDTRYAGAIN      = 10;
+        private const int IDCONTINUE      = 11;
         private const int DEFAULT_BUTTON1 = 0x00000000;
         private const int DEFAULT_BUTTON2 = 0x00000100;
         private const int DEFAULT_BUTTON3 = 0x00000200;
@@ -411,7 +411,7 @@ namespace System.Windows
             //
             //Application.BeginModalMessageLoop();
             //MessageBoxResult result = Win32ToMessageBoxResult(SafeNativeMethods.MessageBox(new HandleRef(owner, handle), messageBoxText, caption, style));
-            MessageBoxResult result = Win32ToMessageBoxResult(UnsafeNativeMethods.MessageBox(new HandleRef(null, owner), messageBoxText, caption, style));
+            MessageBoxResult result = Win32ToMessageBoxResult (UnsafeNativeMethods.MessageBox (new HandleRef (null, owner), messageBoxText, caption, style));
             // modal dialog notification?
             //
             //Application.EndModalMessageLoop();
@@ -459,7 +459,7 @@ namespace System.Windows
 
         private static bool IsValidMessageBoxOptions(MessageBoxOptions value)
         {
-            int mask = ~((int)MessageBoxOptions.ServiceNotification |
+            int  mask = ~((int)MessageBoxOptions.ServiceNotification |
                          (int)MessageBoxOptions.DefaultDesktopOnly |
                          (int)MessageBoxOptions.RightAlign |
                          (int)MessageBoxOptions.RtlReading);
@@ -625,7 +625,7 @@ namespace System.Windows
         ///    </para>
         /// </devdoc>
         /// <ExternalAPI/>
-        RightAlign = 0x00080000,
+        RightAlign         = 0x00080000,
 
         /// <devdoc>
         ///    <para>
@@ -633,7 +633,7 @@ namespace System.Windows
         ///    </para>
         /// </devdoc>
         /// <ExternalAPI/>
-        RtlReading = 0x00100000,
+        RtlReading         = 0x00100000,
     }
     /// <devdoc>
     ///    <para>[To be supplied.]</para>
@@ -647,7 +647,7 @@ namespace System.Windows
         ///    </para>
         /// </devdoc>
         /// <ExternalAPI/>
-        None = 0,
+        None         = 0,
 
         /// <devdoc>
         ///    <para>
@@ -657,7 +657,7 @@ namespace System.Windows
         ///    </para>
         /// </devdoc>
         /// <ExternalAPI/>
-        Hand = 0x00000010,
+        Hand         = 0x00000010,
 
         /// <devdoc>
         ///    <para>
@@ -668,7 +668,7 @@ namespace System.Windows
         ///    </para>
         /// </devdoc>
         /// <ExternalAPI/>
-        Question = 0x00000020,
+        Question     = 0x00000020,
 
         /// <devdoc>
         ///    <para>
@@ -678,7 +678,7 @@ namespace System.Windows
         ///    </para>
         /// </devdoc>
         /// <ExternalAPI/>
-        Exclamation = 0x00000030,
+        Exclamation  = 0x00000030,
 
         /// <devdoc>
         ///    <para>
@@ -688,7 +688,7 @@ namespace System.Windows
         ///    </para>
         /// </devdoc>
         /// <ExternalAPI/>
-        Asterisk = 0x00000040,
+        Asterisk     = 0x00000040,
 
         /// <devdoc>
         ///    <para>
@@ -697,7 +697,7 @@ namespace System.Windows
         ///    </para>
         /// </devdoc>
         /// <ExternalAPI/>
-        Stop = Hand,
+        Stop         = Hand,
 
         /// <devdoc>
         ///    <para>
@@ -707,7 +707,7 @@ namespace System.Windows
         ///    </para>
         /// </devdoc>
         /// <ExternalAPI/>
-        Error = Hand,
+        Error        = Hand,
 
         /// <devdoc>
         ///    <para>
@@ -715,7 +715,7 @@ namespace System.Windows
         ///    </para>
         /// </devdoc>
         /// <ExternalAPI/>
-        Warning = Exclamation,
+        Warning      = Exclamation,
 
         /// <devdoc>
         ///    <para>
@@ -725,7 +725,7 @@ namespace System.Windows
         ///    </para>
         /// </devdoc>
         /// <ExternalAPI/>
-        Information = Asterisk,
+        Information  = Asterisk,
 
         // NOTE: if you add or remove any values in this enum, be sure to update MessageBox.IsValidMessageBoxIcon()
     }
@@ -741,7 +741,7 @@ namespace System.Windows
         ///       constant.
         ///    </para>
         /// </devdoc>
-        OK = 0x00000000,
+        OK               = 0x00000000,
 
         /// <devdoc>
         ///    <para>
@@ -751,7 +751,7 @@ namespace System.Windows
         ///       constant.
         ///    </para>
         /// </devdoc>
-        OKCancel = 0x00000001,
+        OKCancel         = 0x00000001,
 
         /// <devdoc>
         ///    <para>
@@ -771,7 +771,7 @@ namespace System.Windows
         ///       constant.
         ///    </para>
         /// </devdoc>
-        YesNoCancel = 0x00000003,
+        YesNoCancel      = 0x00000003,
 
         /// <devdoc>
         ///    <para>
@@ -780,7 +780,7 @@ namespace System.Windows
         ///       constant.
         ///    </para>
         /// </devdoc>
-        YesNo = 0x00000004,
+        YesNo            = 0x00000004,
 
         /// <devdoc>
         ///    <para>
@@ -790,7 +790,7 @@ namespace System.Windows
         ///       constant.
         ///    </para>
         /// </devdoc>
-        RetryCancel = 0x00000005,
+        RetryCancel      = 0x00000005,
 
         /// <devdoc>
         ///    <para>

@@ -459,7 +459,7 @@ namespace System.Windows
 
         private static bool IsValidMessageBoxOptions(MessageBoxOptions value)
         {
-            int  mask = ~((int)MessageBoxOptions.ServiceNotification |
+            int mask = ~((int)MessageBoxOptions.ServiceNotification |
                          (int)MessageBoxOptions.DefaultDesktopOnly |
                          (int)MessageBoxOptions.RightAlign |
                          (int)MessageBoxOptions.RtlReading);

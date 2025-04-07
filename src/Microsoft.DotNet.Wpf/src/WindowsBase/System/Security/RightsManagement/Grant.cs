@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
 namespace System.Security.RightsManagement
@@ -101,9 +101,9 @@ namespace System.Security.RightsManagement
             }
         }
         
-        private ContentUser _user;
-        private ContentRight _right;
-        private DateTime _validFrom;
-        private DateTime _validUntil;
+        private readonly ContentUser _user;
+        private readonly ContentRight _right;
+        private readonly DateTime _validFrom;
+        private readonly DateTime _validUntil;
     }
 }

@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
 using System.Collections;
@@ -54,7 +54,7 @@ namespace System.IO.Packaging
     /// There is only one data space manager per container instance.  This
     /// points back to "our" reference.
     /// </summary>
-    private StorageRoot _associatedStorage;
+    private readonly StorageRoot _associatedStorage;
 
     /// <summary>
     /// Maps container references to data spaces
@@ -107,7 +107,7 @@ namespace System.IO.Packaging
     /// data in a state where it could not be written out because parts of the
     /// transform stack has already been disposed.
     /// </summary>
-    private ArrayList _transformedStreams;
+    private readonly ArrayList _transformedStreams;
 
     /// <summary>
     /// Table of "well-known" -- that is, "built-in" -- transforms. The keys are
@@ -208,7 +208,7 @@ namespace System.IO.Packaging
         /// </summary>
         internal StorageInfo transformStorage;
 
-        private int _classType;
+        private readonly int _classType;
         private byte[] _extraData;
     }
 
@@ -1705,10 +1705,10 @@ internal interface IDataTransform
 /// </summary>
 internal class TransformInitializationEventArgs : EventArgs
 {
-    private IDataTransform  dataInstance;
-    private string          dataSpaceLabel;
-    private string          streamPath;
-    private string          transformLabel;
+    private readonly IDataTransform  dataInstance;
+    private readonly string          dataSpaceLabel;
+    private readonly string          streamPath;
+    private readonly string          transformLabel;
 
     internal TransformInitializationEventArgs(
         IDataTransform instance,
@@ -1776,8 +1776,8 @@ internal class TransformInitializationEventArgs : EventArgs
 /// </summary>
 internal  class TransformEnvironment
 {
-    private DataSpaceManager transformHost;
-    private string  transformLabel;
+    private readonly DataSpaceManager transformHost;
+    private readonly string  transformLabel;
 
     /// <summary>
     /// This object is only created internally by the data space manager.

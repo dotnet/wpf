@@ -78,14 +78,14 @@ namespace MS.Internal.Security.RightsManagement
             }
         }
        
-       private ushort Year =0; 
-       private ushort Month =0; 
-       private ushort DayOfWeek =0; 
-       private ushort Day =0; 
-       private ushort Hour =0; 
-       private ushort Minute =0; 
-       private ushort Second =0; 
-       private ushort Milliseconds =0; 
+       private readonly ushort Year;
+       private readonly ushort Month;
+       private readonly ushort DayOfWeek;
+       private readonly ushort Day;
+       private readonly ushort Hour;
+       private readonly ushort Minute;
+       private readonly ushort Second;
+       private readonly ushort Milliseconds;
     }
 
     [StructLayout(LayoutKind.Sequential)]

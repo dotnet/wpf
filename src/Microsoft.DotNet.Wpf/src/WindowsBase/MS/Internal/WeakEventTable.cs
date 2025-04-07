@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
 using System.Collections;
@@ -436,16 +436,16 @@ namespace MS.Internal
         //  Private Fields
         //
 
-        private Hashtable _managerTable = new Hashtable();  // maps manager type -> instance
-        private Hashtable _dataTable = new Hashtable();     // maps EventKey -> data
-        private Hashtable _eventNameTable = new Hashtable(); // maps <Type,name> -> manager
+        private readonly Hashtable _managerTable = new Hashtable();  // maps manager type -> instance
+        private readonly Hashtable _dataTable = new Hashtable();     // maps EventKey -> data
+        private readonly Hashtable _eventNameTable = new Hashtable(); // maps <Type,name> -> manager
 
-        private ReaderWriterLockWrapper     _lock = new ReaderWriterLockWrapper();
+        private readonly ReaderWriterLockWrapper _lock = new ReaderWriterLockWrapper();
         private int                 _cleanupRequests;
         private bool                _cleanupEnabled = true;
-        private CleanupHelper       _cleanupHelper;
+        private readonly CleanupHelper _cleanupHelper;
         private bool                _inPurge;
-        private List<EventKey>      _toRemove = new List<EventKey>();
+        private readonly List<EventKey> _toRemove = new List<EventKey>();
 
 #if WeakEventTelemetry
         const int LOH_Threshold = 85000;    // per LOH docs

@@ -213,7 +213,7 @@ namespace MS.Utility
             protected FrugalListBase<T> _store;
             protected int _validItemCount;
             protected int _previousEnd;
-            private int _newCount;
+            private readonly int _newCount;
         }
 
         #endregion Compacter
@@ -1612,9 +1612,9 @@ namespace MS.Utility
                 return _targetStore;
             }
 
-            private ArrayItemList<T> _targetStore;
-            private T[] _sourceArray;
-            private T[] _targetArray;
+            private readonly ArrayItemList<T> _targetStore;
+            private readonly T[] _sourceArray;
+            private readonly T[] _targetArray;
         }
 
         #endregion Compacter
@@ -1951,8 +1951,8 @@ namespace MS.Utility
                 }
             }
 
-            private FrugalObjectList<T> _list;
-            private FrugalListBase<T>.Compacter _storeCompacter;
+            private readonly FrugalObjectList<T> _list;
+            private readonly FrugalListBase<T>.Compacter _storeCompacter;
         }
         #endregion Compacter
     }

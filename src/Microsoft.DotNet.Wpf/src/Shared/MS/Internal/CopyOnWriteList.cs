@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
 using System.Collections;
@@ -184,7 +184,7 @@ namespace MS.Internal
             }
         }
 
-        private object _syncRoot;
+        private readonly object _syncRoot;
         private ArrayList _LiveList = new ArrayList();
         private ArrayList _readonlyWrapper;
     }

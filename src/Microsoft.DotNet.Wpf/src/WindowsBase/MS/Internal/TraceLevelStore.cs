@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
 namespace MS.Internal
@@ -80,7 +80,7 @@ namespace MS.Internal
         //  Private Fields
         //
 
-        private static Dictionary<Key,PresentationTraceLevel> _dictionary = new Dictionary<Key,PresentationTraceLevel>();
+        private static readonly Dictionary<Key, PresentationTraceLevel> _dictionary = new();
 
         #endregion Private Fields
 

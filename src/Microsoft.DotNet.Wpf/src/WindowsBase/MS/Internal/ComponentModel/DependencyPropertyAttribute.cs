@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
 using System.Windows;
@@ -135,8 +135,8 @@ namespace MS.Internal.ComponentModel
 
         #region Private Fields
         
-        private DependencyProperty _dp;
-        private bool _isAttached;
+        private readonly DependencyProperty _dp;
+        private readonly bool _isAttached;
 
         #endregion Private Fields
     }

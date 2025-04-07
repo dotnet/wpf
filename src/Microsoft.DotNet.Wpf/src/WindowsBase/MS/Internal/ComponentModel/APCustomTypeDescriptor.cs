@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
 using System.ComponentModel;
@@ -284,10 +284,10 @@ namespace MS.Internal.ComponentModel
         #region Private Fields
         
 
-        private ICustomTypeDescriptor _parent;
-        private DependencyObject _instance;
+        private readonly ICustomTypeDescriptor _parent;
+        private readonly DependencyObject _instance;
 
-        private static object _syncLock = new object();
+        private static readonly object _syncLock = new object();
 
         // Synchronized by "_syncLock"
         private static int _dpCacheCount = 0;

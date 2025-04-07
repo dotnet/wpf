@@ -424,7 +424,7 @@ namespace MS.Internal.IO.Packaging.CompoundFile
         //------------------------------------------------------
 
         // for reading each block header
-        private byte[] _headerBuf = new byte[_blockHeaderSize];         // 3 ulongs
+        private readonly byte[] _headerBuf = new byte[_blockHeaderSize];         // 3 ulongs
 
         // static
         private const int _defaultBlockSize = 0x1000;         // 4k default

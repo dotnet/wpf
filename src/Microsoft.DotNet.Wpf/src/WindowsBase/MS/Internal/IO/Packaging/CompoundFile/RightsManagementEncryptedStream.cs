@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
 using System.IO;
@@ -881,7 +881,7 @@ namespace MS.Internal.IO.Packaging.CompoundFile
         private long _streamPosition;           // always start at 0 
         
 
-        private CryptoProvider _cryptoProvider;
+        private readonly CryptoProvider _cryptoProvider;
             
         private const int _prefixLengthSize = 8; // 8 byte original stream size prefix  
 
@@ -901,7 +901,7 @@ namespace MS.Internal.IO.Packaging.CompoundFile
 
         // MaxValues below are used in order to ensure that we do not trigger any form of Isolated Storage Backup 
         // This is not a goal here. We are definitely would like to keep  SparseMemoryStream in the cached(in - memory) mode.
-        // In the context of our auto flush logic set at 16K we are pretty safe with those values�
+        // In the context of our auto flush logic set at 16K we are pretty safe with those values…
         private SparseMemoryStream _readCache =  new SparseMemoryStream(Int32.MaxValue, Int64.MaxValue, false); 
         private SparseMemoryStream _writeCache =  new SparseMemoryStream(Int32.MaxValue, Int64.MaxValue, false);
 

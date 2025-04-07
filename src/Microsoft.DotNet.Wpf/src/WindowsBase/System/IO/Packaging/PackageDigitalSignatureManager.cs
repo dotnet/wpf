@@ -95,8 +95,8 @@ namespace System.IO.Packaging
         //  Private Members
         //
         //------------------------------------------------------
-        private PackageDigitalSignature                 _signature;
-        private VerifyResult                            _result;
+        private readonly PackageDigitalSignature _signature;
+        private readonly VerifyResult _result;
     }
     
     /// <summary>
@@ -897,7 +897,7 @@ namespace System.IO.Packaging
                 return (string.Equals(_id, id, StringComparison.Ordinal));
             }
 
-            private string _id;
+            private readonly string _id;
         }
 
         /// <summary>
@@ -1342,18 +1342,19 @@ namespace System.IO.Packaging
         //
         //------------------------------------------------------
         private CertificateEmbeddingOption      _certificateEmbeddingOption;
-        private Package                         _container;
+        private readonly Package _container;
         private IntPtr                          _parentWindow;
-        private static Uri _defaultOriginPartName = PackUriHelper.CreatePartUri(new Uri("/package/services/digital-signature/origin.psdsor", UriKind.Relative));
         private Uri                             _originPartName = _defaultOriginPartName;
         private PackagePart                     _originPart;
         private String                          _hashAlgorithmString = DefaultHashAlgorithm;
         private String                          _signatureTimeFormat = XmlSignatureProperties.DefaultDateTimeFormat;
         private List<PackageDigitalSignature>   _signatures;
-        private Dictionary<String, String>      _transformDictionary;
+        private readonly Dictionary<String, String> _transformDictionary;
         private bool                            _originSearchConducted;             // don't look more than once for Origin part
         private bool                            _originPartExists;                  // was the part found?
         private ReadOnlyCollection<PackageDigitalSignature> _signatureList;         // lazy-init cached return value for Signatures property
+
+        private static readonly Uri _defaultOriginPartName = PackUriHelper.CreatePartUri(new Uri("/package/services/digital-signature/origin.psdsor", UriKind.Relative));
 
         private static readonly ContentType _originPartContentType = new ContentType("application/vnd.openxmlformats-package.digital-signature-origin");
 

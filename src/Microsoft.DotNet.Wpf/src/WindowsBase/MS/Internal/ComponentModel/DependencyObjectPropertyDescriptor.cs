@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
 using System.Collections;
@@ -810,29 +810,29 @@ namespace MS.Internal.ComponentModel
 
         #region Private Fields
         
-        private static Binder _dpBinder = new AttachedPropertyMethodSelector();
+        private static readonly Binder _dpBinder = new AttachedPropertyMethodSelector();
 
-        private static object _nullMethodSentinel = new object();
+        private static readonly object _nullMethodSentinel = new object();
 
         // Synchronized by "_getMethodCache".  Note these are "reflection"
         // member infos and should only be passed types returned from
         // GetReflectionType.
-        private static Hashtable _getMethodCache = new Hashtable();
+        private static readonly Hashtable _getMethodCache = new Hashtable();
 
         // Synchronized by "_setMethodCache".  Note these are "reflection"
         // member infos and should only be passed types returned from
         // GetReflectionType.
-        private static Hashtable _setMethodCache = new Hashtable();
+        private static readonly Hashtable _setMethodCache = new Hashtable();
 
         // Synchronization object for Attributes property.  This would be better to be a
         // member than a static value, but the need for a lock on Attributes is very
         // rare and isn't worth the additional space this would take up as a member
-        private static object _attributeSyncLock = new object();
+        private static readonly object _attributeSyncLock = new object();
 
-        private PropertyDescriptor _property;
-        private DependencyProperty _dp;
-        private Type _componentType;
-        private PropertyMetadata _metadata;
+        private readonly PropertyDescriptor _property;
+        private readonly DependencyProperty _dp;
+        private readonly Type _componentType;
+        private readonly PropertyMetadata _metadata;
         private bool _queriedShouldSerializeMethod;
         private bool _queriedResetMethod;
         private Dictionary<DependencyObject, PropertyChangeTracker> _trackers;

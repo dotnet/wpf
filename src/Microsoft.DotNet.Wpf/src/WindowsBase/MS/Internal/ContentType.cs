@@ -644,9 +644,9 @@ namespace MS.Internal
         private string _contentType = null;
         private string _type    = String.Empty;
         private string _subType = String.Empty;
-        private string _originalString;
+        private readonly string _originalString;
         private Dictionary<string, string> _parameterDictionary = null;
-        private bool   _isInitialized = false;
+        private readonly bool _isInitialized;
 
         private const string     _quote              = "\"";
         private const char       _semicolonSeparator = ';';

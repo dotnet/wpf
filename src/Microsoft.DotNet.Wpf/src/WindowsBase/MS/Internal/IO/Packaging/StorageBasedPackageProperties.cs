@@ -874,13 +874,13 @@ namespace MS.Internal.IO.Packaging
 
         private bool _disposed;
 
-        private int _grfMode;  // Mode in which the compound file was opened.
+        private readonly int _grfMode;  // Mode in which the compound file was opened.
 
         //
         // Interface to the OLE property sets in the compound file representing
         // the RM-protected OPC package.
         //
-        private IPropertySetStorage _pss;
+        private readonly IPropertySetStorage _pss;
         private IPropertyStorage _psSummInfo;
         private IPropertyStorage _psDocSummInfo;
 

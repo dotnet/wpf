@@ -156,7 +156,7 @@ namespace MS.Internal.IO.Packaging
         //  Private Fields
         //
         //------------------------------------------------------
-        private PackagePart             _part;          // part that houses the certificate
+        private readonly PackagePart _part;          // part that houses the certificate
         private X509Certificate2       _certificate;   // certificate itself
 
         // certificate part constants
@@ -165,7 +165,7 @@ namespace MS.Internal.IO.Packaging
         private static readonly string _certificatePartNamePrefix = "/package/services/digital-signature/certificate/";
         private static readonly string _certificatePartNameExtension = ".cer";
         private static readonly string _certificatePartRelationshipType = "http://schemas.openxmlformats.org/package/2006/relationships/digital-signature/certificate";
-        private static long             _maximumCertificateStreamLength = 0x40000;   // 4MB
+        private static readonly long _maximumCertificateStreamLength = 0x40000;   // 4MB
         #endregion Private Members
     }
 }

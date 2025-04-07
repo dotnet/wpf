@@ -479,8 +479,8 @@ namespace MS.Internal
         private static bool _hasBeenRefreshed = false;
 
         // Delegates to create and remove the TraceSource instance
-        private GetTraceSourceDelegate _getTraceSourceDelegate;
-        private ClearTraceSourceDelegate _clearTraceSourceDelegate;
+        private readonly GetTraceSourceDelegate _getTraceSourceDelegate;
+        private readonly ClearTraceSourceDelegate _clearTraceSourceDelegate;
 
         // Cache of TraceSource instance; real value resides in PresentationTraceSources.
         private TraceSource _traceSource;

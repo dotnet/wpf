@@ -49,7 +49,7 @@
        Visual Studio is providing those assemblies, and we should work with whichever version it ships. -->
   <PropertyGroup>
     <SystemReflectionMetadataLoadContextToolsetVersion>8.0.0</SystemReflectionMetadataLoadContextToolsetVersion>
-  </PropertyGorup>
+  </PropertyGroup>
   <!-- Docs / Intellisense -->
   <PropertyGroup>
     <MicrosoftPrivateIntellisenseVersion>9.0.0-preview-20241010.1</MicrosoftPrivateIntellisenseVersion>

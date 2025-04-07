@@ -543,6 +543,9 @@ namespace System.Windows.Documents
             }
         }
 
+        [GeneratedRegex(@"\s*\#LID\s+(\d+)\s*", RegexOptions.Singleline | RegexOptions.CultureInvariant)]
+        private static partial Regex LexiconCultureRegex { get; }
+
         /// <summary>
         ///     Detect whether the <paramref name="line"/> is of the form #LID nnnn,
         ///     and if it is, try to instantiate a CultureInfo object with LCID nnnn.
@@ -553,9 +556,6 @@ namespace System.Windows.Documents
         /// </returns>
         private static CultureInfo TryParseLexiconCulture(string line)
         {
-            const string regexPattern = @"\s*\#LID\s+(\d+)\s*";
-            RegexOptions regexOptions = RegexOptions.Singleline | RegexOptions.CultureInvariant | RegexOptions.Compiled;
-
             CultureInfo result = CultureInfo.InvariantCulture;
 
             if (line == null)
@@ -563,7 +563,7 @@ namespace System.Windows.Documents
                 return result;
             }
 
-            string[] matches = Regex.Split(line.Trim(), regexPattern, regexOptions);
+            string[] matches = LexiconCultureRegex.Split(line.Trim());
 
             // We expect 1 exact match, which implies matches.Length == 3 (before, match, after)
             if (matches.Length != 3)

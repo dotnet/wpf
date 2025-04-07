@@ -224,9 +224,6 @@ dotnet_diagnostic.IDE0300.severity = suggestion
 # IDE1006: Naming Styles
 dotnet_diagnostic.IDE1006.severity = suggestion
 
-# SYSLIB1045: Convert to 'GeneratedRegexAttribute'.
-dotnet_diagnostic.SYSLIB1045.severity = suggestion
-
 # ---------------------
 # Ref specific C# files
 # ---------------------

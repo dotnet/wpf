@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
 //#define OLD_ISF
@@ -608,7 +608,7 @@ namespace MS.Internal.Ink.InkSerializedFormat
                 using (MemoryStream localStream = new MemoryStream(6)) //reasonable default
                 {
                     Int32 stylusTip = Convert.ToInt32(da.StylusTip, System.Globalization.CultureInfo.InvariantCulture);
-                    System.Runtime.InteropServices.VarEnum type = SerializationHelper.ConvertToVarEnum(PersistenceTypes.StylusTip, true);
+                    System.Runtime.InteropServices.VarEnum type = SerializationHelper.ConvertToVarEnum(typeof(Int32), true);
                     ExtendedPropertySerializer.EncodeAttribute(KnownIds.StylusTip, stylusTip, type, localStream);
 
                     cbData += ExtendedPropertySerializer.EncodeAsISF(KnownIds.StylusTip, localStream.ToArray(), stream, guidList, 0, true);
@@ -680,12 +680,5 @@ namespace MS.Internal.Ink.InkSerializedFormat
 
 
         #endregion // Encoding
-
-        internal static class PersistenceTypes
-        {
-            public static readonly Type StylusTip = typeof(Int32);
-            public static readonly Type IsHollow = typeof(bool);
-            public static readonly Type StylusTipTransform = typeof(string);
-        }
     }
 }

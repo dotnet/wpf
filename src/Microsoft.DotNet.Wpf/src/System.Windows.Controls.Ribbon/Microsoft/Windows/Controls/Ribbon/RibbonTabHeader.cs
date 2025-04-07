@@ -31,21 +31,20 @@ namespace Microsoft.Windows.Controls.Ribbon
 
         static RibbonTabHeader()
         {
-            Type ownerType = typeof(RibbonTabHeader);
-            IsEnabledProperty.OverrideMetadata(ownerType, new FrameworkPropertyMetadata(null, new CoerceValueCallback(OnCoerceIsEnabled)));
-            DefaultStyleKeyProperty.OverrideMetadata(ownerType, new FrameworkPropertyMetadata(ownerType));
-            VisibilityProperty.OverrideMetadata(ownerType, new FrameworkPropertyMetadata(null, new CoerceValueCallback(CoerceVisibility)));
-            ToolTipService.ShowOnDisabledProperty.OverrideMetadata(ownerType, new FrameworkPropertyMetadata(true));
-            StyleProperty.OverrideMetadata(ownerType, new FrameworkPropertyMetadata(OnNotifyPropertyChanged, CoerceStyle));
-            ContentProperty.OverrideMetadata(ownerType, new FrameworkPropertyMetadata(OnNotifyPropertyChanged, CoerceContent));
-            ContentTemplateProperty.OverrideMetadata(ownerType, new FrameworkPropertyMetadata(OnNotifyPropertyChanged, CoerceContentTemplate));
-            ContentTemplateSelectorProperty.OverrideMetadata(ownerType, new FrameworkPropertyMetadata(OnNotifyPropertyChanged, CoerceContentTemplateSelector));
-            ContentStringFormatProperty.OverrideMetadata(ownerType, new FrameworkPropertyMetadata(OnNotifyPropertyChanged, CoerceStringFormat));
-            KeyTipService.KeyTipProperty.OverrideMetadata(ownerType, new FrameworkPropertyMetadata(null, new CoerceValueCallback(CoerceKeyTip)));
-            EventManager.RegisterClassHandler(ownerType, KeyTipService.ActivatingKeyTipEvent, new ActivatingKeyTipEventHandler(OnActivatingKeyTipThunk));
-            EventManager.RegisterClassHandler(ownerType, KeyTipService.KeyTipAccessedEvent, new KeyTipAccessedEventHandler(OnKeyTipAccessedThunk));
+            IsEnabledProperty.OverrideMetadata(typeof(RibbonTabHeader), new FrameworkPropertyMetadata(null, new CoerceValueCallback(OnCoerceIsEnabled)));
+            DefaultStyleKeyProperty.OverrideMetadata(typeof(RibbonTabHeader), new FrameworkPropertyMetadata(typeof(RibbonTabHeader)));
+            VisibilityProperty.OverrideMetadata(typeof(RibbonTabHeader), new FrameworkPropertyMetadata(null, new CoerceValueCallback(CoerceVisibility)));
+            ToolTipService.ShowOnDisabledProperty.OverrideMetadata(typeof(RibbonTabHeader), new FrameworkPropertyMetadata(true));
+            StyleProperty.OverrideMetadata(typeof(RibbonTabHeader), new FrameworkPropertyMetadata(OnNotifyPropertyChanged, CoerceStyle));
+            ContentProperty.OverrideMetadata(typeof(RibbonTabHeader), new FrameworkPropertyMetadata(OnNotifyPropertyChanged, CoerceContent));
+            ContentTemplateProperty.OverrideMetadata(typeof(RibbonTabHeader), new FrameworkPropertyMetadata(OnNotifyPropertyChanged, CoerceContentTemplate));
+            ContentTemplateSelectorProperty.OverrideMetadata(typeof(RibbonTabHeader), new FrameworkPropertyMetadata(OnNotifyPropertyChanged, CoerceContentTemplateSelector));
+            ContentStringFormatProperty.OverrideMetadata(typeof(RibbonTabHeader), new FrameworkPropertyMetadata(OnNotifyPropertyChanged, CoerceStringFormat));
+            KeyTipService.KeyTipProperty.OverrideMetadata(typeof(RibbonTabHeader), new FrameworkPropertyMetadata(null, new CoerceValueCallback(CoerceKeyTip)));
+            EventManager.RegisterClassHandler(typeof(RibbonTabHeader), KeyTipService.ActivatingKeyTipEvent, new ActivatingKeyTipEventHandler(OnActivatingKeyTipThunk));
+            EventManager.RegisterClassHandler(typeof(RibbonTabHeader), KeyTipService.KeyTipAccessedEvent, new KeyTipAccessedEventHandler(OnKeyTipAccessedThunk));
 #if RIBBON_IN_FRAMEWORK
-            AutomationProperties.IsOffscreenBehaviorProperty.OverrideMetadata(ownerType, new FrameworkPropertyMetadata(IsOffscreenBehavior.FromClip));
+            AutomationProperties.IsOffscreenBehaviorProperty.OverrideMetadata(typeof(RibbonTabHeader), new FrameworkPropertyMetadata(IsOffscreenBehavior.FromClip));
 #endif
         }
 

@@ -1202,8 +1202,7 @@ namespace MS.Internal.Documents
             int error = 0;
 
             // Get the protected "HResult" field from the CryptographicException
-            Type t = typeof(CryptographicException);
-            PropertyInfo p = t.GetProperty("HResult", BindingFlags.NonPublic | BindingFlags.Instance);
+            PropertyInfo p = typeof(CryptographicException).GetProperty("HResult", BindingFlags.NonPublic | BindingFlags.Instance);
             error = (int)p.GetValue(ce, null);
 
             return error;

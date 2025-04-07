@@ -58,11 +58,6 @@
     <MicrosoftSourceLinkGitHubVersion>8.0.0-beta.23409.2</MicrosoftSourceLinkGitHubVersion>
     <MicrosoftSourceLinkAzureReposGitVersion>8.0.0-beta.23409.2</MicrosoftSourceLinkAzureReposGitVersion>
   </PropertyGroup>
-  <!-- These are minimum versions used for netfx-targeted components that run in Visual Studio because in those cases,
-       Visual Studio is providing those assemblies, and we should work with whichever version it ships. -->
-  <PropertyGroup>
-    <SystemCodeDomToolsetPackageVersion>8.0.0</SystemCodeDomToolsetPackageVersion>
-  </PropertyGroup>
   <!-- Other Packages that require manual updating-->
   <PropertyGroup>
     <MicrosoftBuildFrameworkPackageVersion>15.9.20</MicrosoftBuildFrameworkPackageVersion>

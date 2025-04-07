@@ -301,8 +301,8 @@
     <PackageReference Include="Microsoft.Build.Framework" Version="$(MicrosoftBuildFrameworkPackageVersion)" IncludeAssets="compile" />
     <PackageReference Include="Microsoft.Build.Utilities.Core" Version="$(MicrosoftBuildUtilitiesCorePackageVersion)" IncludeAssets="compile" />
     <PackageReference Include="System.Reflection.MetadataLoadContext" Version="$(SystemReflectionMetadataLoadContextVersion)" IncludeAssets="compile" />
-    <!-- Use minimum supported version as this component runs inside MSBuild.  -->
-    <PackageReference Include="System.CodeDom" Version="$(SystemCodeDomToolsetPackageVersion)" />
+    <!-- System.CodeDom live version is provided by the SDK. Don't redistribute it. -->
+    <PackageReference Include="System.CodeDom" Version="$(SystemCodeDomToolsetPackageVersion)" Condition="'$(TargetFrameworkIdentifier)' == '.NETCoreApp'" IncludeAssets="compile" />
   </ItemGroup>
 
 </Project>

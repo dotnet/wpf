@@ -288,11 +288,10 @@ namespace System.Windows.Media
 
 
             // Initializations
-            Type typeofThis = typeof(PathGeometry);
             FillRuleProperty =
                   RegisterProperty("FillRule",
                                    typeof(FillRule),
-                                   typeofThis,
+                                   typeof(PathGeometry),
                                    FillRule.EvenOdd,
                                    new PropertyChangedCallback(FillRulePropertyChanged),
                                    new ValidateValueCallback(System.Windows.Media.ValidateEnums.IsFillRuleValid),
@@ -301,7 +300,7 @@ namespace System.Windows.Media
             FiguresProperty =
                   RegisterProperty("Figures",
                                    typeof(PathFigureCollection),
-                                   typeofThis,
+                                   typeof(PathGeometry),
                                    new FreezableDefaultValueFactory(PathFigureCollection.Empty),
                                    new PropertyChangedCallback(FiguresPropertyChanged),
                                    null,

@@ -208,11 +208,10 @@ namespace System.Windows.Media
 
 
             // Initializations
-            Type typeofThis = typeof(QuadraticBezierSegment);
             Point1Property =
                   RegisterProperty("Point1",
                                    typeof(Point),
-                                   typeofThis,
+                                   typeof(QuadraticBezierSegment),
                                    new Point(),
                                    null,
                                    null,
@@ -221,7 +220,7 @@ namespace System.Windows.Media
             Point2Property =
                   RegisterProperty("Point2",
                                    typeof(Point),
-                                   typeofThis,
+                                   typeof(QuadraticBezierSegment),
                                    new Point(),
                                    null,
                                    null,

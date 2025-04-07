@@ -198,11 +198,10 @@ namespace System.Windows.Media.Media3D
 
 
             // Initializations
-            Type typeofThis = typeof(Light);
             ColorProperty =
                   RegisterProperty("Color",
                                    typeof(Color),
-                                   typeofThis,
+                                   typeof(Light),
                                    Colors.White,
                                    new PropertyChangedCallback(ColorPropertyChanged),
                                    null,

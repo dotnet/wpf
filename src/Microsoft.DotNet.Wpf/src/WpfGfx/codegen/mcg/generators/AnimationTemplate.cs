@@ -153,36 +153,34 @@ namespace MS.Internal.MilCodeGen.ResourceModel
                                     /// </summary>
                                     static [[instance.TypeName]]Animation()
                                     {
-                                        Type typeofProp = typeof([[propertyTypeName]]);
-                                        Type typeofThis = typeof([[instance.TypeName]]Animation);
                                         PropertyChangedCallback propCallback = new PropertyChangedCallback(AnimationFunction_Changed);
                                         ValidateValueCallback validateCallback = new ValidateValueCallback(ValidateFromToOrByValue);
                                         
                                         FromProperty = DependencyProperty.Register(
                                             "From",
-                                            typeofProp,
-                                            typeofThis,
+                                            typeof([[propertyTypeName]]),
+                                            typeof([[instance.TypeName]]Animation),
                                             new PropertyMetadata(([[propertyTypeName]])null, propCallback),
                                             validateCallback);
                                         
                                         ToProperty = DependencyProperty.Register(
                                             "To",
-                                            typeofProp,
-                                            typeofThis,
+                                            typeof([[propertyTypeName]]),
+                                            typeof([[instance.TypeName]]Animation),
                                             new PropertyMetadata(([[propertyTypeName]])null, propCallback),
                                             validateCallback);
                                         
                                         ByProperty = DependencyProperty.Register(
                                             "By",
-                                            typeofProp,
-                                            typeofThis,
+                                            typeof([[propertyTypeName]]),
+                                            typeof([[instance.TypeName]]Animation),
                                             new PropertyMetadata(([[propertyTypeName]])null, propCallback),
                                             validateCallback);
 
                                         EasingFunctionProperty = DependencyProperty.Register(
                                             "EasingFunction",
                                             typeof(IEasingFunction),
-                                            typeofThis);
+                                            typeof([[instance.TypeName]]Animation));
                                     }
                                     
 

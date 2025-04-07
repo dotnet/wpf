@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
 using System.Windows.Documents;
@@ -466,7 +466,7 @@ namespace System.Windows.Controls
 
             if (offset < 0 || offset > this.Container.SymbolCount)
             {
-                Debug.Assert(false, "Bad distance!");
+                Debug.Fail("Bad distance!");
             }
 
             this.Container.RemovePosition(this);
@@ -505,7 +505,7 @@ namespace System.Windows.Controls
         void ITextPointer.MoveToElementEdge(ElementEdge edge)
         {
             Debug.Assert(!_isFrozen, "Can't reposition a frozen pointer!");
-            Debug.Assert(false, "No scoping element!");
+            Debug.Fail("No scoping element!");
         }
 
         // <see cref="TextPointer.MoveToLineBoundary"/>

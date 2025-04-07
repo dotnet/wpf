@@ -572,7 +572,7 @@ namespace System.Windows.Media.Animation
 
                 default:
 
-                    Debug.Assert(false, "Unrecognized TimeState enumeration value");
+                    Debug.Fail("Unrecognized TimeState enumeration value");
                     return TimeSpan.Zero;
             }
         }

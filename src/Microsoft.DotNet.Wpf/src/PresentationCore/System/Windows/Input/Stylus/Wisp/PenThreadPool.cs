@@ -140,7 +140,7 @@ namespace System.Windows.Input
             {
                 StylusTraceLogger.LogReentrancyRetryLimitReached();
 
-                Debug.Assert(false, "Retry limit reached when acquiring PenThread");
+                Debug.Fail("Retry limit reached when acquiring PenThread");
             }
 
             return selectedPenThread;

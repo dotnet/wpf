@@ -137,7 +137,7 @@ namespace MS.Internal.Ink
                         break;
                     }
                 default:
-                    Debug.Assert(false, "Unknown InkCanvasEditingMode!");
+                    Debug.Fail("Unknown InkCanvasEditingMode!");
                     break;
             }
         }

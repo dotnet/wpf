@@ -423,7 +423,7 @@ namespace System.Windows.Media.Animation
         /// </summary>
         private ClockCollection()
         {
-            Debug.Assert(false, "Parameterless constructor is illegal for ClockCollection.");
+            Debug.Fail("Parameterless constructor is illegal for ClockCollection.");
         }
 
         #endregion

@@ -512,7 +512,7 @@ namespace MS.Internal.Globalization
                     }
                 default:
                     {
-                        Debug.Assert(false, "Can't process localizability attribute on nodes other than Element, Property and LiteralContent.");
+                        Debug.Fail("Can't process localizability attribute on nodes other than Element, Property and LiteralContent.");
                         break;
                     }
             }

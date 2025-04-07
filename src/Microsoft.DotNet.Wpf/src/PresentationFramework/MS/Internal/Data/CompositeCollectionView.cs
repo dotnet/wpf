@@ -1649,12 +1649,12 @@ namespace MS.Internal.Data
             {
                 int x, y;
                 if (!ItemsControl.EqualsEx(CurrentItem, GetItem(CurrentPosition, out x, out y)) && !_collection.HasRepeatedCollection())
-                    Debug.Assert(false, "CurrentItem is not consistent with CurrentPosition");
+                    Debug.Fail("CurrentItem is not consistent with CurrentPosition");
             }
             else
             {
                 if ((CurrentItem != null) && !_collection.HasRepeatedCollection())
-                    Debug.Assert(false, "CurrentItem is not consistent with CurrentPosition");
+                    Debug.Fail("CurrentItem is not consistent with CurrentPosition");
             }
         }
 

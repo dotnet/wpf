@@ -957,7 +957,7 @@ namespace Microsoft.Internal.AlphaFlattener
             }
             else
             {
-                Debug.Assert(false, "Unsupported PathSegment");
+                Debug.Fail("Unsupported PathSegment");
                 size = 0;
             }
 
@@ -1594,7 +1594,7 @@ namespace Microsoft.Internal.AlphaFlattener
                 return bounds;
             }
 
-            Debug.Assert(false, "Unhandled TileBrush type");
+            Debug.Fail("Unhandled TileBrush type");
 
             return bounds;
         }

@@ -1287,7 +1287,7 @@ namespace System.Windows
                     }
                     else
                     {
-                        Debug.Assert(false, "StaticResources[] entry is not a StaticResource not OptimizedStaticResource");
+                        Debug.Fail("StaticResources[] entry is not a StaticResource not OptimizedStaticResource");
                         continue;  // other types of entries are not processed.
                     }
                 }

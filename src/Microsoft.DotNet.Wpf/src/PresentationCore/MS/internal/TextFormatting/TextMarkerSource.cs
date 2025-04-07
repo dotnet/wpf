@@ -124,7 +124,7 @@ namespace MS.Internal.TextFormatting
             }
             else
             {
-                Debug.Assert(false, "Invalid marker style");
+                Debug.Fail("Invalid marker style");
             }
 
             if(symbolString != null)

@@ -30,7 +30,7 @@ namespace System.Windows
         {
             if (!DragDrop.IsValidDragDropKeyStates(dragDropKeyStates))
             {
-                Debug.Assert(false, "Invalid dragDropKeyStates");
+                Debug.Fail("Invalid dragDropKeyStates");
             }
 
             this._escapePressed = escapePressed;

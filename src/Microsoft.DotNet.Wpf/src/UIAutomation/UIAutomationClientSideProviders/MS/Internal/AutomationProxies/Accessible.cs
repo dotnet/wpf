@@ -913,7 +913,7 @@ namespace MS.Internal.AutomationProxies
                     // Get the raw children because accNavigate doesn't work
                     if (UnsafeNativeMethods.AccessibleChildren(accessibleObject, 0, childCount, aChildren, out childrenReturned) == NativeMethods.E_INVALIDARG)
                     {
-                        System.Diagnostics.Debug.Assert(false, "Call to AccessibleChildren() returned E_INVALIDARG.");
+                        System.Diagnostics.Debug.Fail("Call to AccessibleChildren() returned E_INVALIDARG.");
                         throw new ElementNotAvailableException();
                     }
                 }
@@ -1370,7 +1370,7 @@ namespace MS.Internal.AutomationProxies
 
                     default:
                         // we want to know when we get an exception we haven't seen before
-                        Debug.Assert(false, string.Format(CultureInfo.CurrentCulture, "MsaaNativeProvider: IAccessible threw a COMException: {0}", e.Message));
+                        Debug.Fail(string.Format(CultureInfo.CurrentCulture, "MsaaNativeProvider: IAccessible threw a COMException: {0}", e.Message));
                         break;
                 }
             }
@@ -1387,7 +1387,7 @@ namespace MS.Internal.AutomationProxies
             else
             {
                 // we want to know when we get an exception we haven't seen before
-                Debug.Assert(false, string.Format(CultureInfo.CurrentCulture, "Unexpected IAccessible exception: {0}", e));
+                Debug.Fail(string.Format(CultureInfo.CurrentCulture, "Unexpected IAccessible exception: {0}", e));
             }
 
             // rethrow the exception

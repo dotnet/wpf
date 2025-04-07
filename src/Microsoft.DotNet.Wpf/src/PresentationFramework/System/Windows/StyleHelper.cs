@@ -5799,7 +5799,7 @@ namespace System.Windows
         // GetHashCode, ==, and != are required when Equals is overridden, even though we don't expect to need them.
         public override int GetHashCode()
         {
-            Debug.Assert(false, "GetHashCode for value types will use reflection to generate the hashcode.  Write a better hash code generation algorithm if this struct is to be used in a hashtable, or remove this assert if it's decided that reflection is OK.");
+            Debug.Fail("GetHashCode for value types will use reflection to generate the hashcode.  Write a better hash code generation algorithm if this struct is to be used in a hashtable, or remove this assert if it's decided that reflection is OK.");
 
             return base.GetHashCode();
         }

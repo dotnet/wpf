@@ -1079,7 +1079,7 @@ namespace System.Windows.Documents
                         break;
 
                     default:
-                        Debug.Assert(false, "invalid TextPointerContext");
+                        Debug.Fail("invalid TextPointerContext");
                         break;
                 }
             }

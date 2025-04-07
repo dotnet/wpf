@@ -934,7 +934,7 @@ namespace System.Windows.Controls
                                 }
                                 else
                                 {
-                                    Debug.Assert(false, "Head is container for itself, but parent is neither GridViewHeaderRowPresenter nor null.");
+                                    Debug.Fail("Head is container for itself, but parent is neither GridViewHeaderRowPresenter nor null.");
                                 }
                             }
                             else

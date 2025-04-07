@@ -124,7 +124,7 @@ namespace MS.Internal.AutomationProxies
                     int result = Misc.MsgWaitForMultipleObjects(handle, false, NativeMethods.INFINITE, NativeMethods.QS_ALLINPUT);
                     if (result == NativeMethods.WAIT_FAILED || result == NativeMethods.WAIT_TIMEOUT)
                     {
-                        Debug.Assert(false, "MsgWaitForMultipleObjects failed while WaitForWork");
+                        Debug.Fail("MsgWaitForMultipleObjects failed while WaitForWork");
                         break;
                     }
                 }

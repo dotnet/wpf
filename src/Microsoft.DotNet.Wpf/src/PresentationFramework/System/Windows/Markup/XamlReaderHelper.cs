@@ -5309,7 +5309,7 @@ namespace System.Windows.Markup
                 }
                 else
                 {
-                    Debug.Assert(false, "XmlReader doesn't support LineNumber");
+                    Debug.Fail("XmlReader doesn't support LineNumber");
                     return 0;
                 }
             }
@@ -5340,7 +5340,7 @@ namespace System.Windows.Markup
                 }
                 else
                 {
-                    Debug.Assert(false, "XmlReader doesn't support LinePosition");
+                    Debug.Fail("XmlReader doesn't support LinePosition");
                     return 0;
                 }
             }

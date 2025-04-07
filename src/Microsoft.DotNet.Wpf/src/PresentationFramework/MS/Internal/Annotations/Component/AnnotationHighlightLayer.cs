@@ -509,7 +509,7 @@ namespace MS.Internal.Annotations.Component
             }
 
             if ((startSeg < 0) || (endSeg < 0) || (startSeg > endSeg))
-                Debug.Assert(false, "Mismatched segment data");
+                Debug.Fail("Mismatched segment data");
         }
 
         #endregion Private Methods

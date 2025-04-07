@@ -678,7 +678,7 @@ namespace MS.Internal.Automation
                             break;
 
                         default:
-                            Debug.Assert(false, "unexpected switch() case:");
+                            Debug.Fail("unexpected switch() case:");
                             break;
                     }
                 }

@@ -47,7 +47,7 @@ namespace System.Xaml
                 break;
 
             default:
-                Debug.Assert(false, "XamlNode Ctor missing data argument");
+                Debug.Fail("XamlNode Ctor missing data argument");
                 break;
             }
 #endif
@@ -84,7 +84,7 @@ namespace System.Xaml
                 break;
 
             default:
-                Debug.Assert(false, "XamlNode ctor, incorrect ctor called.");
+                Debug.Fail("XamlNode ctor, incorrect ctor called.");
                 break;
             }
 #endif

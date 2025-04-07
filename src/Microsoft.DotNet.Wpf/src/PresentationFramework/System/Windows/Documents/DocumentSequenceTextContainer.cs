@@ -431,7 +431,7 @@ namespace System.Windows.Documents
                 cdb = cdb.PreviousBlock;
             }
 
-            Debug.Assert(false, "should never be here");
+            Debug.Fail("should never be here");
             return 0;
         }
         #endregion Internal Methods

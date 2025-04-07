@@ -862,7 +862,7 @@ namespace MS.Internal.Security.RightsManagement
             }
             else
             {
-                Debug.Assert(false,"Invalid Authentication type");
+                Debug.Fail("Invalid Authentication type");
                 return null;            // retail build might be ale to recover from SDK defaults                  
             }
         }

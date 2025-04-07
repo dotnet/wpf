@@ -189,7 +189,7 @@ namespace System.Windows.Documents
 
         internal override void SetClosedState(bool closed)
         {
-            Debug.Assert(false, "It should not be called");
+            Debug.Fail("It should not be called");
         }
 
         internal override void SetFigureCount(int figureCount)

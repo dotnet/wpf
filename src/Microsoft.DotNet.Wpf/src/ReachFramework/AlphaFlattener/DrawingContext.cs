@@ -679,12 +679,12 @@ namespace Microsoft.Internal.AlphaFlattener
         {
             // BrushProxyDecomposer sends output directly to GDI, so opacity
             // is invalid by this point.
-            Debug.Assert(false, "Opacity invalid at BrushProxyDecomposer");
+            Debug.Fail("Opacity invalid at BrushProxyDecomposer");
         }
 
         void IProxyDrawingContext.Pop()
         {
-            Debug.Assert(false, "Opacity invalid at BrushProxyDecomposer");
+            Debug.Fail("Opacity invalid at BrushProxyDecomposer");
         }
 
         void IProxyDrawingContext.DrawGeometry(BrushProxy brush, PenProxy pen, Geometry geometry, Geometry clip, Matrix brushTrans, ProxyDrawingFlags flags)

@@ -65,7 +65,7 @@ namespace MS.Internal.Automation
 
             if (!Schema.GetPropertyInfo(property, out pi))
             {
-                Debug.Assert(false, "GetDefaultValue was passed an unknown property");
+                Debug.Fail("GetDefaultValue was passed an unknown property");
                 return null;
             }
 

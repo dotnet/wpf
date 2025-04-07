@@ -264,7 +264,7 @@ namespace System.Windows.Input.StylusWisp
             // There was an error acquiring a PenThread, do no work here.
             if (penThread == null)
             {
-                Debug.Assert(false, "Error acquiring PenThread in UpdateTabletsImpl()");
+                Debug.Fail("Error acquiring PenThread in UpdateTabletsImpl()");
                 return;
             }
 
@@ -412,7 +412,7 @@ namespace System.Windows.Input.StylusWisp
             // There was an error acquiring a PenThread, return true to force a complete tablet refresh
             if (penThread == null)
             {
-                Debug.Assert(false, "Error acquiring PenThread in HandleTabletAdded()");
+                Debug.Fail("Error acquiring PenThread in HandleTabletAdded()");
                 return true;
             }
 

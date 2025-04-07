@@ -809,7 +809,7 @@ namespace MS.Internal.PtsHost
                 }
                 else
                 {
-                    Debug.Assert(false, "Unknown type of anchor.");
+                    Debug.Fail("Unknown type of anchor.");
                     return HorizontalAlignment.Center;
                 }
             }

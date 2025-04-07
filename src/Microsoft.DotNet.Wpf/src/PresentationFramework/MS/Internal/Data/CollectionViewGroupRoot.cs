@@ -633,7 +633,7 @@ namespace MS.Internal.Data
             // properties that the name depends on) without notification.
             // We don't support this - the Move is just a no-op.  But assert (in
             // debug builds) to help diagnose the problem if it arises.
-            Debug.Assert(false, "Failed to find item in expected subgroup after Move");
+            Debug.Fail("Failed to find item in expected subgroup after Move");
         }
 
         // move the item within its group

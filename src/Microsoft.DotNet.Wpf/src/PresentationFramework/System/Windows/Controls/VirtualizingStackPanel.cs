@@ -6457,7 +6457,7 @@ namespace System.Windows.Controls
             object item = GetItemFromContainer(child);
             if (item == DependencyProperty.UnsetValue)
             {
-                Debug.Assert(false, "SetInset should only be called for a container");
+                Debug.Fail("SetInset should only be called for a container");
                 return;
             }
 
@@ -9253,7 +9253,7 @@ namespace System.Windows.Controls
                         }
                     }
 
-                    Debug.Assert(false, "We should have found a child");
+                    Debug.Fail("We should have found a child");
                 }
             }
 

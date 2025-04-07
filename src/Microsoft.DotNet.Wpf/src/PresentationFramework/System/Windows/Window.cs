@@ -4049,7 +4049,7 @@ namespace System.Windows
                     _Style |= NativeMethods.WS_THICKFRAME | NativeMethods.WS_MAXIMIZEBOX | NativeMethods.WS_MINIMIZEBOX;
                     break;
                 default:
-                    Debug.Assert(false, "Invalid value for ResizeMode");
+                    Debug.Fail("Invalid value for ResizeMode");
                     break;
             }
         }
@@ -5963,7 +5963,7 @@ namespace System.Windows
                     wp.rcNormalPosition_right = wp.rcNormalPosition_left + currentWidth;
                     break;
                 default:
-                    Debug.Assert(false, $"specifiedRestoreBounds can't be {specifiedRestoreBounds}");
+                    Debug.Fail($"specifiedRestoreBounds can't be {specifiedRestoreBounds}");
                     break;
             }
 

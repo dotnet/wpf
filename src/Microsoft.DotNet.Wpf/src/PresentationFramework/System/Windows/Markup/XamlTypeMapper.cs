@@ -3147,7 +3147,7 @@ namespace System.Windows.Markup
                 if (_xmlnsCache == null)
                 {
 #if PBTCOMPILER
-                    Debug.Assert(false, "Should initialize cache prior to compiling");
+                    Debug.Fail("Should initialize cache prior to compiling");
 #else
                     _xmlnsCache = new XmlnsCache();
 #endif
@@ -3418,7 +3418,7 @@ namespace System.Windows.Markup
             if (_xmlnsCache == null)
             {
 #if PBTCOMPILER
-                Debug.Assert(false, "Should initialize cache prior to compiling");
+                Debug.Fail("Should initialize cache prior to compiling");
 #else
                 _xmlnsCache = new XmlnsCache();
 #endif

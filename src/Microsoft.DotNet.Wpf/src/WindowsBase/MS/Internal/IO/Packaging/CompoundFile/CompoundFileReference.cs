@@ -60,7 +60,7 @@ namespace MS.Internal.IO.Packaging.CompoundFile
         int IComparable.CompareTo(object ob)
         {
             // this must be implemented by our inheritors
-            Debug.Assert(false, "subclasses must override this method");
+            Debug.Fail("subclasses must override this method");
             return 0;
         }
         #endregion
@@ -71,7 +71,7 @@ namespace MS.Internal.IO.Packaging.CompoundFile
         public override bool Equals(object o)
         {
             // this must be implemented by our inheritors
-            Debug.Assert(false, "subclasses must override this method");
+            Debug.Fail("subclasses must override this method");
             return false;
         }
 
@@ -79,7 +79,7 @@ namespace MS.Internal.IO.Packaging.CompoundFile
         public override int GetHashCode()
         {
             // this must be implemented by our inheritors
-            Debug.Assert(false, "subclasses must override this method");
+            Debug.Fail("subclasses must override this method");
             return 0;
         }
         #endregion

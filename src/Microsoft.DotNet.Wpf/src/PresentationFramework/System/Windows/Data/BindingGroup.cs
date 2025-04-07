@@ -1321,7 +1321,7 @@ namespace System.Windows.Data
                     RemoveAllBindingExpressions();
                     break;  // nothing to do - order within the collection doesn't matter
                 default:
-                    Debug.Assert(false, "Unexpected change event");
+                    Debug.Fail("Unexpected change event");
                     break;
             }
 

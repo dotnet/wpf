@@ -41,17 +41,17 @@ namespace System.Windows
         {
             if (!DragDrop.IsValidDragDropKeyStates(dragDropKeyStates))
             {
-                Debug.Assert(false, "Invalid dragDropKeyStates");
+                Debug.Fail("Invalid dragDropKeyStates");
             }
 
             if (!DragDrop.IsValidDragDropEffects(allowedEffects))
             {
-                Debug.Assert(false, "Invalid allowedEffects");
+                Debug.Fail("Invalid allowedEffects");
             }
 
             if (target == null)
             {
-                Debug.Assert(false, "Invalid target");
+                Debug.Fail("Invalid target");
             }
 
             this._data = data;

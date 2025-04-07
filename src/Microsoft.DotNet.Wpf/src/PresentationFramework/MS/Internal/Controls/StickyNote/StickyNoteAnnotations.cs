@@ -718,7 +718,7 @@ namespace MS.Internal.Controls.StickyNote
             if ((token == XmlToken.Ink && contentControl.Type != StickyNoteType.Ink)
                 || (token == XmlToken.Text && contentControl.Type != StickyNoteType.Text))
             {
-                Debug.Assert(false, "The annotation data does match with the current content control in StickyNote");
+                Debug.Fail("The annotation data does match with the current content control in StickyNote");
                 return;
             }
 

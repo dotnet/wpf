@@ -279,7 +279,7 @@ namespace MS.Internal.Ink.InkSerializedFormat
                     }
                     catch (InvalidOperationException) // Matrix.Parse failed.
                     {
-                        System.Diagnostics.Debug.Assert(false, "Corrupt Matrix in the ExtendedPropertyCollection!");
+                        System.Diagnostics.Debug.Fail("Corrupt Matrix in the ExtendedPropertyCollection!");
                     }
                     finally
                     {

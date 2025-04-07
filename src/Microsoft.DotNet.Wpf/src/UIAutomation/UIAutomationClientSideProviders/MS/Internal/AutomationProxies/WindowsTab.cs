@@ -1174,7 +1174,7 @@ namespace MS.Internal.AutomationProxies
 
                     if (!XSendMessage.GetItem(_hwnd, _item, ref TCItem))
                     {
-                        System.Diagnostics.Debug.Assert(false, "XSendMessage.GetItem() failed!");
+                        System.Diagnostics.Debug.Fail("XSendMessage.GetItem() failed!");
                         return false;
                     }
 

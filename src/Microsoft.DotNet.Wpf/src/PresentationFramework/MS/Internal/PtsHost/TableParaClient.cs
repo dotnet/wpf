@@ -1969,7 +1969,7 @@ namespace MS.Internal.PtsHost
                         break;
 
                     default:
-                        Debug.Assert(false, "Unsupported unit type");
+                        Debug.Fail("Unsupported unit type");
                         break;
                 }
                 _durMinWidth += _calculatedColumns[i].DurMinWidth;

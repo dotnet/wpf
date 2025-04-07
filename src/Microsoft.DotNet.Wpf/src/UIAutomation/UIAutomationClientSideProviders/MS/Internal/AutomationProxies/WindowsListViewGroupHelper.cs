@@ -408,7 +408,7 @@ namespace MS.Internal.AutomationProxies
                     {
                         // we had problem adding item to the needed group at this point it makes no
                         // sense to continue
-                        System.Diagnostics.Debug.Assert(false, "Cannot add item to the needed group");
+                        System.Diagnostics.Debug.Fail("Cannot add item to the needed group");
                         return null;
                     }
                 }
@@ -433,7 +433,7 @@ namespace MS.Internal.AutomationProxies
                     {
                         // we had problem adding item to the needed group at this point it makes no
                         // sense to continue
-                        System.Diagnostics.Debug.Assert(false, "Cannot add item to the needed group");
+                        System.Diagnostics.Debug.Fail("Cannot add item to the needed group");
                         return null;
                     }
                 }

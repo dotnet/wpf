@@ -237,7 +237,7 @@ namespace MS.Internal.Automation
                         }
                         else
                         {
-                            Debug.Assert(false, "unsupported property should not have made it this far");
+                            Debug.Fail("unsupported property should not have made it this far");
                         }
                     }
 
@@ -640,7 +640,7 @@ namespace MS.Internal.Automation
             AutomationEvent eventId = AutomationEvent.LookupById(args._eventId);
             if (eventId == null)
             {
-                Debug.Assert(false, "Got unknown eventId from core: " + args._eventId);
+                Debug.Fail("Got unknown eventId from core: " + args._eventId);
                 return null;
             }
 
@@ -658,7 +658,7 @@ namespace MS.Internal.Automation
                         AutomationProperty propertyId = AutomationProperty.LookupById(pcargs._propertyId);
                         if (propertyId == null)
                         {
-                            Debug.Assert(false, "Got unknown propertyId from core: " + pcargs._propertyId);
+                            Debug.Fail("Got unknown propertyId from core: " + pcargs._propertyId);
                             return null;
                         }
 
@@ -699,7 +699,7 @@ namespace MS.Internal.Automation
                     }
             }
 
-            Debug.Assert(false, "Unknown event type from core:" + args._type);
+            Debug.Fail("Unknown event type from core:" + args._type);
             return null;
         }
         #endregion EventArgs translation

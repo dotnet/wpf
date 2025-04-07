@@ -477,7 +477,7 @@ namespace MS.Internal.Ink
             }
             else
             {
-                Debug.Assert(false, "The updatedElement has to be the same type as the originalElement.");
+                Debug.Fail("The updatedElement has to be the same type as the originalElement.");
             }
         }
 
@@ -597,7 +597,7 @@ namespace MS.Internal.Ink
                 }
                 else
                 {
-                    Debug.Assert(false, "An unexpected single selected Element");
+                    Debug.Fail("An unexpected single selected Element");
                 }
             }
 

@@ -866,7 +866,7 @@ namespace System.Windows.Forms.Integration
                     tabStopOnly = true;
                     break;
                 default:
-                    Debug.Assert(false, "Unknown FocusNavigationDirection");
+                    Debug.Fail("Unknown FocusNavigationDirection");
                     break;
             }
             _focusTarget.Enabled = false;

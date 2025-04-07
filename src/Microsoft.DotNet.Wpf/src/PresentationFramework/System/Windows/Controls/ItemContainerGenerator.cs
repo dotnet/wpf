@@ -276,7 +276,7 @@ namespace System.Windows.Controls
             if (_itemMap == null)
             {
                 // ignore reentrant call (during RemoveAllInternal)
-                Debug.Assert(false, "Unexpected reentrant call to ICG.Remove");
+                Debug.Fail("Unexpected reentrant call to ICG.Remove");
                 return;
             }
 
@@ -2441,7 +2441,7 @@ namespace System.Windows.Controls
             {
                 // reentrant call (from RemoveAllInternal) shouldn't happen,
                 // but if it does, don't crash
-                Debug.Assert(false, "unexpected reentrant call to OnItemAdded");
+                Debug.Fail("unexpected reentrant call to OnItemAdded");
                 return;
             }
 
@@ -2631,7 +2631,7 @@ namespace System.Windows.Controls
             {
                 // reentrant call (from RemoveAllInternal) shouldn't happen,
                 // but if it does, don't crash
-                Debug.Assert(false, "unexpected reentrant call to OnItemMoved");
+                Debug.Fail("unexpected reentrant call to OnItemMoved");
                 return;
             }
 

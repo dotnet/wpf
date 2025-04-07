@@ -684,7 +684,7 @@ namespace System.Windows.Markup
                 case BamlRecordType.TypeSerializerInfo:
                 case BamlRecordType.AttributeInfo:
                 case BamlRecordType.StringInfo:
-                    Debug.Assert(false,"Assembly, Type and Attribute records are not cached, so don't ask for one.");
+                    Debug.Fail("Assembly, Type and Attribute records are not cached, so don't ask for one.");
                     record = null;
                     break;
                 case BamlRecordType.StaticResourceStart:
@@ -709,7 +709,7 @@ namespace System.Windows.Markup
                     record = new BamlPropertyWithStaticResourceIdRecord();
                     break;
                 default:
-                    Debug.Assert(false,"Unknown RecordType");
+                    Debug.Fail("Unknown RecordType");
                     record = null;
                     break;
             }
@@ -861,7 +861,7 @@ namespace System.Windows.Markup
         {
             get
             {
-                Debug.Assert(false, "Must override RecordType");
+                Debug.Fail("Must override RecordType");
                 return BamlRecordType.Unknown;
             }
         }

@@ -772,7 +772,7 @@ namespace System.Windows.Controls
                         }
                     }
 
-                    Debug.Assert(false, "We should have found a child");
+                    Debug.Fail("We should have found a child");
                 }
             }
 

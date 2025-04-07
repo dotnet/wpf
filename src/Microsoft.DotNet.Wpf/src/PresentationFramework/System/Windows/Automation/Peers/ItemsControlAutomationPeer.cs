@@ -616,7 +616,7 @@ namespace System.Windows.Automation.Peers
                     if(!_hashtable.ContainsKey(item) && value is not null)
                         _hashtable[item] = value;
                     else
-                        Debug.Assert(false,"it must not add already present Item");
+                        Debug.Fail("it must not add already present Item");
                 }
                 else
                 {

@@ -201,7 +201,7 @@ namespace System.Windows.Ink
             //validate our cache
             if (_strokes.Count != _strokeInfos.Count)
             {
-                Debug.Assert(false, "Benign assert.  IncrementalHitTester's _strokeInfos cache is out of sync, rebuilding.");
+                Debug.Fail("Benign assert.  IncrementalHitTester's _strokeInfos cache is out of sync, rebuilding.");
                 RebuildStrokeInfoCache();
                 return;
             }
@@ -209,7 +209,7 @@ namespace System.Windows.Ink
             {
                 if (_strokeInfos[i].Stroke != _strokes[i])
                 {
-                    Debug.Assert(false, "Benign assert.  IncrementalHitTester's _strokeInfos cache is out of sync, rebuilding.");
+                    Debug.Fail("Benign assert.  IncrementalHitTester's _strokeInfos cache is out of sync, rebuilding.");
                     RebuildStrokeInfoCache();
                     return;
                 }

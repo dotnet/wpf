@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
 // Description: Some applications implement menus with toolbars.  This proxy
@@ -44,7 +44,7 @@ namespace MS.Internal.AutomationProxies
             }
             else
             {
-                System.Diagnostics.Debug.Assert(false, "Unexpected role " + role);
+                System.Diagnostics.Debug.Fail("Unexpected role " + role);
             }
         }
 

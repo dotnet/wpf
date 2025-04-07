@@ -205,7 +205,7 @@ namespace MS.Internal.PtsHost.UnsafeNativeMethods
                     fskclear = FSKCLEAR.fskclearBoth;
                     break;
                 default:
-                    Debug.Assert(false, "Unknown WrapDirection value.");
+                    Debug.Fail("Unknown WrapDirection value.");
                     fskclear = FSKCLEAR.fskclearNone;
                     break;
             }

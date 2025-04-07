@@ -665,7 +665,7 @@ namespace MS.Internal.Xaml
                     }
                     else
                     {
-                        Debug.Assert(false, "Missing End Object in node sorter");
+                        Debug.Fail("Missing End Object in node sorter");
                     }
                 }
 

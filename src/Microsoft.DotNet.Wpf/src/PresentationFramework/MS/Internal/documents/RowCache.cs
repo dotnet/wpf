@@ -1059,7 +1059,7 @@ namespace MS.Internal.Documents
             //Check for invalid indices.  If it's out of range then we just return.
             if (index > _rowCache.Count)
             {
-                Debug.Assert(false, "Requested to update a non-existent row.");
+                Debug.Fail("Requested to update a non-existent row.");
                 return;
             }
 

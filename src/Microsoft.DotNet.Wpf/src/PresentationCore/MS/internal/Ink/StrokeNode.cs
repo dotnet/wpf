@@ -256,7 +256,7 @@ namespace MS.Internal.Ink
 
                     if (i == maxCount)
                     {
-                        Debug.Assert(false, "StrokeNodeOperations.GetPointsAtStartOfSegment failed to find the D position");
+                        Debug.Fail("StrokeNodeOperations.GetPointsAtStartOfSegment failed to find the D position");
                         //we didn't find the d point, return
                         return;
                     }
@@ -369,7 +369,7 @@ namespace MS.Internal.Ink
 
                     if (i == maxCount)
                     {
-                        Debug.Assert(false, "StrokeNodeOperations.GetPointsAtEndOfSegment failed to find the B position");
+                        Debug.Fail("StrokeNodeOperations.GetPointsAtEndOfSegment failed to find the B position");
                         //we didn't find the d point, return
                         return;
                     }
@@ -636,7 +636,7 @@ namespace MS.Internal.Ink
 
                             if (indexA == -1 || indexB == -1 || indexC == -1 || indexD == -1)
                             {
-                                Debug.Assert(false, "Couldn't find all 4 indexes in StrokeNodeOperations.GetPointsAtMiddleSegment");
+                                Debug.Fail("Couldn't find all 4 indexes in StrokeNodeOperations.GetPointsAtMiddleSegment");
                                 return;
                             }
 

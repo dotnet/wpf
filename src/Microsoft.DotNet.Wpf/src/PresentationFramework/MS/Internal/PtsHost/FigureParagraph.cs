@@ -302,7 +302,7 @@ namespace MS.Internal.PtsHost
             out int cfspt,                      // OUT: actual total number of vertices in all polygons
             out int fWrapThrough)               // OUT: fill text in empty areas within obstacles?
         {
-            Debug.Assert(false, "Tight wrap is not currently supported.");
+            Debug.Fail("Tight wrap is not currently supported.");
             ccVertices = cfspt = fWrapThrough = 0;
         }
 

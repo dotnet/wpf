@@ -153,7 +153,7 @@ namespace System.Windows.Media
                 break;
 
             default:
-                Debug.Assert(false, "TYPE_VISUAL or TYPE_VIEWPORT3DVISUAL expected.");
+                Debug.Fail("TYPE_VISUAL or TYPE_VIEWPORT3DVISUAL expected.");
                 break;
             }
         }

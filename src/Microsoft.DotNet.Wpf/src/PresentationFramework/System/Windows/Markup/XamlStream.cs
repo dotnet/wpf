@@ -375,7 +375,7 @@ namespace System.Windows.Markup
             if (bufferArray.Count <= bufferIndex)
             {
                 Debug.Assert(bufferArray.Count == bufferIndex,"Need to allocate more than one buffer");
-                Debug.Assert(false == reader,"Allocating a buffer on Read");
+                Debug.Assert(!reader, "Allocating a buffer on Read");
 
                 buffer = new byte[BufferSize];
 

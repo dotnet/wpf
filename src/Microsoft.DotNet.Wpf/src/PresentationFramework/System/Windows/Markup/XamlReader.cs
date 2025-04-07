@@ -416,14 +416,14 @@ namespace System.Windows.Markup
                     }
                     else if (xamlReader.NodeType == System.Xaml.XamlNodeType.Value)
                     {
-                        if (lastPropWasSyncMode == true)
+                        if (lastPropWasSyncMode)
                         {
                             if (xamlReader.Value as String == "Async")
                             {
                                 async = true;
                             }
                         }
-                        else if (lastPropWasSyncRecords == true)
+                        else if (lastPropWasSyncRecords)
                         {
                             if (xamlReader.Value is int)
                             {
@@ -656,7 +656,7 @@ namespace System.Windows.Markup
                 else
                 {
                     // if not at the EndOfDocument then post another work item
-                    if (false == _textReader.IsEof)
+                    if (!_textReader.IsEof)
                     {
                         Post();
                     }
@@ -1136,7 +1136,7 @@ namespace System.Windows.Markup
             {
                 return MS.Internal.Utility.BindUriHelper.BaseUri;
             }
-            else if (uri.IsAbsoluteUri == false)
+            else if (!uri.IsAbsoluteUri)
             {
                 return new Uri(MS.Internal.Utility.BindUriHelper.BaseUri, uri);
             }

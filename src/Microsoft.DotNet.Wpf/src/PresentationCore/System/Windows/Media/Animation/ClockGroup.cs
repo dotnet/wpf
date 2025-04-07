@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
 namespace System.Windows.Media.Animation
@@ -120,7 +120,7 @@ namespace System.Windows.Media.Animation
                     // Verify that we only use SlipBehavior in supported scenarios
                     if (!IsRoot ||
                        (_timeline.RepeatBehavior.HasDuration) ||
-                       (_timeline.AutoReverse == true) ||
+                       (_timeline.AutoReverse) ||
                        (_timeline.AccelerationRatio > 0) ||
                        (_timeline.DecelerationRatio > 0))
                     {

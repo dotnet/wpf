@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
 //
@@ -130,7 +130,7 @@ namespace MS.Internal.PtsHost
             PtsContext ptsContext = null;
 
             // Do actual dispose only once.
-            if (Interlocked.CompareExchange(ref _disposed, true, false) == false)
+            if (!Interlocked.CompareExchange(ref _disposed, true, false))
             {
                 // Dispose PTS break record.
                 // According to following article the entire reachable graph from 

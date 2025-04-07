@@ -210,7 +210,7 @@ namespace System.Windows.Ink
                                         topLeft + new Vector(m_width, 0),
                                         topLeft + new Vector(m_width, m_height),
                                         topLeft + new Vector(0, m_height)};
-            if (false == DoubleUtil.IsZero(m_rotation))
+            if (!DoubleUtil.IsZero(m_rotation))
             {
                 Matrix rotationTransform = Matrix.Identity;
                 rotationTransform.Rotate(m_rotation);
@@ -298,12 +298,12 @@ namespace System.Windows.Ink
                 transform.Rotate(m_rotation);
             }
 
-            if (_transform.IsIdentity == false)
+            if (!_transform.IsIdentity)
             {
                 transform *= _transform;
             }
 
-            if (transform.IsIdentity == false)
+            if (!transform.IsIdentity)
             {
                 for (int i = 0; i < controlPoints.Length; i++)
                 {

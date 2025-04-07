@@ -178,7 +178,7 @@ namespace MS.Internal.AppModel
         public void GoForward()
         {
             // CanGoForward checks the calling thread and InAppShutdown as well
-            if (CanGoForward == false)
+            if (!CanGoForward)
                 throw new InvalidOperationException(SR.NoForwardEntry);
 
             if (!_host.GoForwardOverride())
@@ -200,7 +200,7 @@ namespace MS.Internal.AppModel
         public void GoBack()
         {
             // CanGoBack checks the calling thread and InAppShutdown as well
-            if (CanGoBack == false)
+            if (!CanGoBack)
                 throw new InvalidOperationException(SR.NoBackEntry);
 
             if (!_host.GoBackOverride())

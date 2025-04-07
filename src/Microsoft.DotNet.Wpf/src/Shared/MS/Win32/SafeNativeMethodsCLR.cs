@@ -44,7 +44,7 @@ namespace MS.Win32
 
         internal static void GetMonitorInfo(HandleRef hmonitor, [In, Out] NativeMethods.MONITORINFOEX info)
         {
-            if (SafeNativeMethodsPrivate.IntGetMonitorInfo(hmonitor, info) == false)
+            if (!SafeNativeMethodsPrivate.IntGetMonitorInfo(hmonitor, info))
             {
                 throw new Win32Exception();
             }
@@ -96,7 +96,7 @@ namespace MS.Win32
         internal static bool AdjustWindowRectEx(ref NativeMethods.RECT lpRect, int dwStyle, bool bMenu, int dwExStyle)
         {
             bool returnValue = SafeNativeMethodsPrivate.IntAdjustWindowRectEx(ref lpRect, dwStyle, bMenu, dwExStyle);
-            if (returnValue == false)
+            if (!returnValue)
             {
                 throw new Win32Exception();
             }
@@ -149,7 +149,7 @@ namespace MS.Win32
         {
             bool returnValue = SafeNativeMethodsPrivate.IntReleaseCapture();
 
-            if (returnValue == false)
+            if (!returnValue)
             {
                 throw new Win32Exception();
             }

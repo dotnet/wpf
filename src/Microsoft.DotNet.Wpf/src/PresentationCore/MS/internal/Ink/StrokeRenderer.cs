@@ -67,7 +67,7 @@ namespace MS.Internal.Ink
                 for (int index = 0; index < iterator.Count; index++)
                 {
                     StrokeNode strokeNode = iterator[index];
-                    System.Diagnostics.Debug.Assert(true == strokeNode.IsValid);
+                    System.Diagnostics.Debug.Assert(strokeNode.IsValid);
 
                     //the only code that calls this with !calculateBounds
                     //is dynamic rendering, which already draws enough strokeNodes

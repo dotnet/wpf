@@ -8719,7 +8719,7 @@ namespace System.Windows.Documents
                 imageStringBuilder.Append('"');
 
                 // Add the xaml image baseline offset property
-                if (formatState.IncludeImageBaselineOffset == true)
+                if (formatState.IncludeImageBaselineOffset)
                 {
                     double baselineOffset = height - formatState.ImageBaselineOffset;
                     imageStringBuilder.Append(" TextBlock.BaselineOffset=\"");

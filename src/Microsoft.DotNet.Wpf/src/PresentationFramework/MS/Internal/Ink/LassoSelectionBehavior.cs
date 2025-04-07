@@ -357,7 +357,7 @@ namespace MS.Internal.Ink
         private void HitTestElement(InkCanvasInnerCanvas parent, UIElement uiElement, List<UIElement> elementsToSelect)
         {
             ElementCornerPoints elementPoints = GetTransformedElementCornerPoints(parent, uiElement);
-            if (elementPoints.Set != false)
+            if (elementPoints.Set)
             {
                 ReadOnlySpan<Point> points = GeneratePointGrid(elementPoints);
 

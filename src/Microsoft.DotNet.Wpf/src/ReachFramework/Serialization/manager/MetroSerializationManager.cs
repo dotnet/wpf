@@ -880,7 +880,7 @@ namespace System.Windows.Xps.Serialization
                                                       out serializerTypeForProperty,
                                                       out typeConverterForProperty,
                                                       out defaultValueAttr,
-                                                      out designerSerializationFlagsAttr) == true)
+                                                      out designerSerializationFlagsAttr))
                               {
                                   TypeCacheItem typeCacheItem = GetTypeCacheItem(propertyType);
                                   serializerTypeForProperty ??= typeCacheItem.SerializerType;

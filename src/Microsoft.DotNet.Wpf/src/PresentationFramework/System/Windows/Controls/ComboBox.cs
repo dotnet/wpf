@@ -1846,7 +1846,7 @@ namespace System.Windows.Controls
 
             SetCurrentValueInternal(IsDropDownOpenProperty, BooleanBoxes.Box(openDropDown));
 
-            if (openDropDown == false && commitSelection && (infoToSelect != null))
+            if (!openDropDown && commitSelection && (infoToSelect != null))
             {
                 SelectionChange.SelectJustThisItem(infoToSelect, true /* assumeInItemsCollection */);
             }

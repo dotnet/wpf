@@ -258,7 +258,7 @@ namespace System.Windows
             ArgumentNullException.ThrowIfNull(ce);
 
 
-            if (true == (bool)ce.GetValue(GetsSourceChangedEventProperty))
+            if ((bool)ce.GetValue(GetsSourceChangedEventProperty))
             {
                 UpdateSourceOfElement(ce, null, null);
             }
@@ -519,7 +519,7 @@ namespace System.Windows
         {
             Debug.Assert(uie is UIElement3D or UIElement);
             
-            if (true == (bool)uie.GetValue(GetsSourceChangedEventProperty))
+            if ((bool)uie.GetValue(GetsSourceChangedEventProperty))
             {
                 UpdateSourceOfElement(uie, e.Ancestor, e.OldParent);
             }

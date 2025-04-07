@@ -180,7 +180,7 @@ namespace System.Windows
         {
             VerifyContextAndObjectState();
 
-            if (_disposed == true)
+            if (_disposed)
             {
                 return;
             }
@@ -275,11 +275,11 @@ namespace System.Windows
             VerifyNotClosing();
             VerifyConsistencyWithAllowsTransparency();
 
-            if ( _isVisible == true )
+            if (_isVisible)
             {
                 throw new InvalidOperationException(SR.ShowDialogOnVisible);
             }
-            else if ( _showingAsDialog == true )
+            else if (_showingAsDialog)
             {
                 throw new InvalidOperationException(SR.ShowDialogOnModal);
             }
@@ -287,7 +287,7 @@ namespace System.Windows
             _dialogOwnerHandle = _ownerHandle;
 
             // verify owner handle is window
-            if (UnsafeNativeMethods.IsWindow( new HandleRef( null, _dialogOwnerHandle ) ) != true)
+            if (!UnsafeNativeMethods.IsWindow( new HandleRef( null, _dialogOwnerHandle ) ))
             {
                 _dialogOwnerHandle = IntPtr.Zero;
             }
@@ -424,7 +424,7 @@ namespace System.Windows
                 // Activate the previously active window.
                 // This code/logic came from User.
                 if ( (_dialogPreviousActiveHandle != IntPtr.Zero) &&
-                    (UnsafeNativeMethods.IsWindow(new HandleRef(null, _dialogPreviousActiveHandle)) == true))
+                    (UnsafeNativeMethods.IsWindow(new HandleRef(null, _dialogPreviousActiveHandle))))
                 {
                     // SetFocus fails if the input hwnd is not a Window or if the Window is not on the
                     // calling thread.
@@ -1234,12 +1234,12 @@ namespace System.Windows
                     throw new ArgumentException(SR.CannotSetOwnerToItself);
                 }
 
-                if ( _showingAsDialog == true )
+                if (_showingAsDialog)
                 {
                     throw new InvalidOperationException(SR.CantSetOwnerAfterDialogIsShown);
                 }
 
-                if (value != null && value.IsSourceWindowNull == true)
+                if (value != null && value.IsSourceWindowNull)
                 {
                     // Try to be specific in the error message.
                     if (value._disposed)
@@ -1357,12 +1357,12 @@ namespace System.Windows
                 // DialogResult is not allowed
                 VerifyApiSupported();
 
-                if (_showingAsDialog == true)
+                if (_showingAsDialog)
                 {
                     // This value should be set only after the window is created and shown as dialog.
 
                     // When _showingAsDialog is set, _sourceWindow must be set too.
-                    Debug.Assert( IsSourceWindowNull == false , "IsSourceWindowNull cannot be true when _showingAsDialog is true");
+                    Debug.Assert(!IsSourceWindowNull, "IsSourceWindowNull cannot be true when _showingAsDialog is true");
 
 
                     // According to the new design, setting DialogResult to its current value will not have any effect.
@@ -1377,7 +1377,7 @@ namespace System.Windows
                         // Note: Windows OS bug # 934500 Setting DialogResult
                         // on the Closing EventHandler of a Dialog causes StackOverFlowException
 
-                        if(_isClosing == false)
+                        if(!_isClosing)
                         {
                             Close();
                         }
@@ -1921,7 +1921,7 @@ namespace System.Windows
             // post it from the LoadedHandler.  This guarantees that
             // we don't fire ContentRendered on a subtree that is not
             // connected to a PresentationSource
-            if (IsLoaded == true)
+            if (IsLoaded)
             {
                 PostContentRendered();
             }
@@ -1931,7 +1931,7 @@ namespace System.Windows
                 // that we deferred to the Loaded event to PostConetentRendered
                 // for the previous content change and Loaded has not fired yet.
                 // Thus we don't want to hook up another event handler
-                if (_postContentRenderedFromLoadedHandler == false)
+                if (!_postContentRenderedFromLoadedHandler)
                 {
                     this.Loaded += new RoutedEventHandler(LoadedHandler);
                     _postContentRenderedFromLoadedHandler = true;
@@ -2117,14 +2117,14 @@ namespace System.Windows
         #region Internal Methods
         internal Point DeviceToLogicalUnits(Point ptDeviceUnits)
         {
-            Invariant.Assert(IsCompositionTargetInvalid == false, "IsCompositionTargetInvalid is supposed to be false here");
+            Invariant.Assert(!IsCompositionTargetInvalid, "IsCompositionTargetInvalid is supposed to be false here");
             Point ptLogicalUnits = _swh.CompositionTarget.TransformFromDevice.Transform(ptDeviceUnits);
             return ptLogicalUnits;
         }
 
         internal Point LogicalToDeviceUnits(Point ptLogicalUnits)
         {
-            Invariant.Assert(IsCompositionTargetInvalid == false, "IsCompositionTargetInvalid is supposed to be false here");
+            Invariant.Assert(!IsCompositionTargetInvalid, "IsCompositionTargetInvalid is supposed to be false here");
             Point ptDeviceUnits = _swh.CompositionTarget.TransformToDevice.Transform(ptLogicalUnits);
             return ptDeviceUnits;
         }
@@ -2198,7 +2198,7 @@ namespace System.Windows
         {
             VerifyNotClosing();
 
-            if (_disposed == true)
+            if (_disposed)
             {
                 return;
             }
@@ -2478,7 +2478,7 @@ namespace System.Windows
             VerifyConsistencyWithAllowsTransparency();
 
             // We do not support create hwnd before shown for RBW.
-            if (duringShow == false)
+            if (!duringShow)
             {
                 VerifyApiSupported();
             }
@@ -2831,7 +2831,7 @@ namespace System.Windows
             // has happened.
             //
 
-            if (updateHwndPlacement == true)
+            if (updateHwndPlacement)
             {
                 if (WindowState == WindowState.Normal)
                 {
@@ -2884,7 +2884,7 @@ namespace System.Windows
             SetIWindowService();
 
             // set root visual  synchronously, shell request
-            if ( IsSourceWindowNull == false )
+            if (!IsSourceWindowNull)
             {
                 _swh.RootVisual = this;
             }
@@ -2906,7 +2906,7 @@ namespace System.Windows
                 // And if the hwnd is created but is not shown yet, we need to re-calculate the location again because
                 // the value of the WindowStartupLocation can change after EnsureHandle is called.
                 // We only update location if there is any change needed.
-                if ((SizeToContent != SizeToContent.Manual) || (HwndCreatedButNotShown == true))
+                if ((SizeToContent != SizeToContent.Manual) || (HwndCreatedButNotShown))
                 {
                     NativeMethods.RECT rc = WindowBounds;
                     double xDeviceUnits = rc.left;
@@ -3004,7 +3004,7 @@ namespace System.Windows
         internal virtual void UpdateTitle(string title)
         {
             // Adding check for IsCompositionTargetInvalid
-            if ( IsSourceWindowNull == false && IsCompositionTargetInvalid == false)
+            if (!IsSourceWindowNull && !IsCompositionTargetInvalid)
             {
                 UnsafeNativeMethods.SetWindowText(new HandleRef(this, Handle), title);
             }
@@ -3016,7 +3016,7 @@ namespace System.Windows
             if (!_inTrustedSubWindow)
             {
             }
-            Debug.Assert( IsSourceWindowNull == false , "IsSourceWindowNull cannot be true when calling this function");
+            Debug.Assert(!IsSourceWindowNull, "IsSourceWindowNull cannot be true when calling this function");
 
             Point ptDeviceUnits = LogicalToDeviceUnits(new Point(widthLogicalUnits, heightLogicalUnits));
             UnsafeNativeMethods.SetWindowPos(new HandleRef(this, Handle),
@@ -3047,12 +3047,12 @@ namespace System.Windows
             // Event handler exception continuality: if exception occurs in Activated/Deactivated event handlers, our state will not be
             // corrupted because the state related to Activated/Deactivated, IsActive is set before the event is fired.
             // Please check Event handler exception continuality if the logic changes.
-            if ((windowActivated == true) && (IsActive == false))
+            if ((windowActivated) && (!IsActive))
             {
                 SetValue(IsActivePropertyKey, BooleanBoxes.TrueBox);
                 OnActivated(EventArgs.Empty);
             }
-            else if ((windowActivated == false) && (IsActive == true))
+            else if ((!windowActivated) && (IsActive))
             {
                 SetValue(IsActivePropertyKey, BooleanBoxes.FalseBox);
                 OnDeactivated(EventArgs.Empty);
@@ -3218,7 +3218,7 @@ namespace System.Windows
 
                 VerifyContextAndObjectState();
 
-                if ( _showingAsDialog == true )
+                if (_showingAsDialog)
                 {
                     throw new InvalidOperationException(SR.CantSetOwnerAfterDialogIsShown);
                 }
@@ -3280,7 +3280,7 @@ namespace System.Windows
                 {
                     return _styleExDoNotUse;
 }
-                else if (IsSourceWindowNull == true  )
+                else if (IsSourceWindowNull)
                 {
                     return _styleExDoNotUse;
 }
@@ -3449,7 +3449,7 @@ namespace System.Windows
         {
             WindowMinMax mm = new WindowMinMax( );
 
-            Invariant.Assert(IsCompositionTargetInvalid == false, "IsCompositionTargetInvalid is supposed to be false here");
+            Invariant.Assert(!IsCompositionTargetInvalid, "IsCompositionTargetInvalid is supposed to be false here");
 
             // convert the max/min size (taken in to account the hwnd size restrictions by win32) into logical units
             double maxWidthDeviceUnits = _trackMaxWidthDeviceUnits;
@@ -3514,7 +3514,7 @@ namespace System.Windows
 
         private void LoadedHandler(object sender, RoutedEventArgs e)
         {
-            if (_postContentRenderedFromLoadedHandler == true)
+            if (_postContentRenderedFromLoadedHandler)
             {
                 PostContentRendered();
                 _postContentRenderedFromLoadedHandler = false;
@@ -3639,7 +3639,7 @@ namespace System.Windows
             // EnableThreadWindows is called with true only when dialog is going away.  Now
             // we've enabled the windows that we had earlier disabled; thus, disposing
             // _threadWindowHandles.
-            if (state == true)
+            if (state)
             {
                 _threadWindowHandles = null;
             }
@@ -3661,7 +3661,7 @@ namespace System.Windows
             BypassLayoutPolicies = true;
 
             // check if within an app && on the same thread
-            if (IsInsideApp == true)
+            if (IsInsideApp)
             {
                 if (Application.Current.Dispatcher.Thread == Dispatcher.CurrentDispatcher.Thread)
                 {
@@ -3697,7 +3697,7 @@ namespace System.Windows
 
         private void VerifyCanShow()
         {
-            if (_disposed == true)
+            if (_disposed)
             {
                 throw new InvalidOperationException(SR.ReshowNotAllowed);
             }
@@ -3705,12 +3705,12 @@ namespace System.Windows
 
         private void VerifyNotClosing()
         {
-            if (_isClosing == true)
+            if (_isClosing)
             {
                 throw new InvalidOperationException(SR.InvalidOperationDuringClosing);
             }
 
-            if (IsSourceWindowNull == false && IsCompositionTargetInvalid == true)
+            if (!IsSourceWindowNull && IsCompositionTargetInvalid)
             {
                 throw new InvalidOperationException(SR.InvalidCompositionTarget);
             }
@@ -3759,7 +3759,7 @@ namespace System.Windows
         // <param name="currentSize"></param>
         private bool CalculateWindowLocation(ref double leftDeviceUnits, ref double topDeviceUnits, Size currentSizeDeviceUnits)
         {
-            Debug.Assert(IsSourceWindowNull == false, "_swh should not be null here");
+            Debug.Assert(!IsSourceWindowNull, "_swh should not be null here");
             double inLeft = leftDeviceUnits;
             double inTop = topDeviceUnits;
 
@@ -3805,7 +3805,7 @@ namespace System.Windows
 
                     // If the owner is WPF window.
                     // The owner can be non-WPF window. It can be set via WindowInteropHelper.Owner.
-                    if (CanCenterOverWPFOwner == true)
+                    if (CanCenterOverWPFOwner)
                     {
                         // If the owner is in a non-normal state use the screen bounds for centering the window.
                         // Top/Left/Width/Height reflect the restore bounds, so they can't be used in this scenario.
@@ -3920,7 +3920,7 @@ namespace System.Windows
         {
             get
             {
-                Debug.Assert(IsSourceWindowNull == false, "_swh should not be null here");
+                Debug.Assert(!IsSourceWindowNull, "_swh should not be null here");
 
                 // if Owner is null, we cannot CenterOwner
                 if (Owner == null)
@@ -4177,7 +4177,7 @@ namespace System.Windows
                 ? EnsureHiddenWindow().Handle
                 : ownerHandle;
 
-            if (IsSourceWindowNull == false)
+            if (!IsSourceWindowNull)
             {
                 UnsafeNativeMethods.SetWindowLong(new HandleRef(null, Handle),
                     NativeMethods.GWL_HWNDPARENT,
@@ -4211,7 +4211,7 @@ namespace System.Windows
         /// <returns></returns>
         private void OnSourceWindowDisposed(object sender, EventArgs e)
         {
-            if ( _disposed == false)
+            if (!_disposed)
             {
                 InternalDispose();
             }
@@ -4424,7 +4424,7 @@ namespace System.Windows
         private void DoDialogHide()
         {
 
-            Debug.Assert(_showingAsDialog == true, "_showingAsDialog must be true when DoDialogHide is called");
+            Debug.Assert(_showingAsDialog, "_showingAsDialog must be true when DoDialogHide is called");
 
             bool wasActive = false;
 
@@ -4475,9 +4475,9 @@ namespace System.Windows
             // could have been destroyed by now by some other thread/codepath etc.
             // (BVT BLOCKER: System.ComponentModel.Win32Exception thrown when
             // trying to shutdown app inside a Dialog Window)
-            if ((wasActive == true) &&
+            if ((wasActive) &&
                 (_dialogPreviousActiveHandle != IntPtr.Zero) &&
-                (UnsafeNativeMethods.IsWindow(new HandleRef(this, _dialogPreviousActiveHandle)) == true))
+                (UnsafeNativeMethods.IsWindow(new HandleRef(this, _dialogPreviousActiveHandle))))
             {
                 UnsafeNativeMethods.SetActiveWindow(new HandleRef(this, _dialogPreviousActiveHandle));
             }
@@ -4509,7 +4509,7 @@ namespace System.Windows
             Debug.Assert(ownedWindows.Count == 0, "All owned windows should now be gone");
 
             // Update OwnerWindows of our Owner
-            if (IsOwnerNull == false)
+            if (!IsOwnerNull)
             {
                 // use internal version since we want to update the underlying collection
                 Owner.OwnedWindowsInternal.Remove(this);
@@ -4523,7 +4523,7 @@ namespace System.Windows
                     App.WindowsInternal.Remove(this);
 
                     // Check to see if app should shut down--this behavior really belongs in Application
-                    if (_appShuttingDown == false)
+                    if (!_appShuttingDown)
                     {
                         // If this is the last window that's closing and shutdownmode is onlastwindowclose, or
                         // if this is the main window closing and shutdownmode is onmainwindowclose, shutdown
@@ -4555,7 +4555,7 @@ namespace System.Windows
                 return false;
             }
 
-            if (_disposed == false)
+            if (!_disposed)
             {
                 InternalDispose();
             }
@@ -4894,7 +4894,7 @@ namespace System.Windows
 
             // if IsCompositionTargetInvalid is true, then it means that the CompositionTarget is not available.
             // This can happen at hwnd creation or destruction time.
-            if (IsSourceWindowNull == false && IsCompositionTargetInvalid == false)
+            if (!IsSourceWindowNull && !IsCompositionTargetInvalid)
             {
                 //
                 // Get the final MinMax size for this HWND based on Win32 track value and Min/Max setting
@@ -4984,7 +4984,7 @@ namespace System.Windows
 
             GeneralTransform transfromFromWindow = this.TransformToDescendant(_resizeGripControl);
             Point mousePositionWRTResizeGripControl = ptLogicalUnits;
-            if (transfromFromWindow == null || transfromFromWindow.TryTransform(ptLogicalUnits, out mousePositionWRTResizeGripControl) == false)
+            if (transfromFromWindow == null || !transfromFromWindow.TryTransform(ptLogicalUnits, out mousePositionWRTResizeGripControl))
             {
                 return false;
             }
@@ -5081,7 +5081,7 @@ namespace System.Windows
             _icon = newIcon;
 
             // Adding check for IsCompositionTargetInvalid
-            if (IsSourceWindowNull == false && IsCompositionTargetInvalid == false)
+            if (!IsSourceWindowNull && !IsCompositionTargetInvalid)
             {
                 UpdateIcon();
             }
@@ -5125,7 +5125,7 @@ namespace System.Windows
             // Case 3 : bet set when CompositionTarget is invalid meaning we're in a bad state
 
             // Adding check for IsCompositionTargetInvalid
-            if ( IsSourceWindowNull == false && IsCompositionTargetInvalid == false)
+            if (!IsSourceWindowNull && !IsCompositionTargetInvalid)
             {
                 bool fHideWindow = false;
                 // Win32 bug. For ShowInTaskbar to change dynamically, we need to hide then show the window.
@@ -5186,9 +5186,9 @@ namespace System.Windows
             // window is shown again.
             //
             // Adding check for IsCompositionTargetInvalid
-            if (IsSourceWindowNull == false && IsCompositionTargetInvalid == false)
+            if (!IsSourceWindowNull && !IsCompositionTargetInvalid)
             {
-                if (_isVisible == true)
+                if (_isVisible)
                 {
                     HandleRef hr = new HandleRef(this,  Handle);
 
@@ -5303,7 +5303,7 @@ namespace System.Windows
         private void OnWindowStyleChanged(WindowStyle windowStyle)
         {
             // Adding check for IsCompositionTargetInvalid
-            if (IsSourceWindowNull == false && IsCompositionTargetInvalid == false)
+            if (!IsSourceWindowNull && !IsCompositionTargetInvalid)
             {
                 using (HwndStyleManager sm = HwndStyleManager.StartManaging(this, StyleFromHwnd, StyleExFromHwnd ))
                 {
@@ -5328,7 +5328,7 @@ namespace System.Windows
             VerifyApiSupported();
 
             // Adding check for IsCompositionTargetInvalid
-            if (IsSourceWindowNull == false  && IsCompositionTargetInvalid == false)
+            if (!IsSourceWindowNull && !IsCompositionTargetInvalid)
             {
                 HandleRef hWnd = topmost ? NativeMethods.HWND_TOPMOST : NativeMethods.HWND_NOTOPMOST;
                 UnsafeNativeMethods.SetWindowPos(new HandleRef(null, Handle),
@@ -5376,7 +5376,7 @@ namespace System.Windows
             // _OnVisibilityInvalidated callback.  If a call originates in Show/Hide,
             // we DO NOT want to do anything in the _OnVisibilityCallback since, we
             // synchronously call ShowHelper from Show/Hide
-            if (w._visibilitySetInternally == true)
+            if (w._visibilitySetInternally)
             {
                 return;
             }
@@ -5392,7 +5392,7 @@ namespace System.Windows
         private void SafeCreateWindowDuringShow()
         {
             //this is true the first time the window is created
-            if (IsSourceWindowNull == true)
+            if (IsSourceWindowNull)
             {
                 // _isVisible is false at this moment.  Thus CreateAllStyle
                 // called by CreateSourceWindow does not set WS_VISIBLE style
@@ -5428,7 +5428,7 @@ namespace System.Windows
         {
             // if we set KeyboradNavigation.ShowKeyboardCuesProperty in ShowDialog,
             // set it to false here.
-            if (_resetKeyboardCuesProperty == true)
+            if (_resetKeyboardCuesProperty)
             {
                 _resetKeyboardCuesProperty = false;
                 SetValue(KeyboardNavigation.ShowKeyboardCuesProperty, BooleanBoxes.Box(_previousKeyboardCuesProperty));
@@ -5463,7 +5463,7 @@ namespace System.Windows
             //      ...
             //      window.Close();
             // We should not do anything if the window is already closed.
-            if (_disposed == true)
+            if (_disposed)
             {
                 return null;
             }
@@ -5485,7 +5485,7 @@ namespace System.Windows
             // _isVisible should always be set after calling SafeCreateWindow, because
             // if exception occurs in Loading event (fired as a result of setting Visibility to visible) handler,
             // we set Visibility back to Collapsed. Otherwise we could get into a loop.
-            if (value == true)
+            if (value)
             {
                 if (Application.IsShuttingDown)
                     return null;
@@ -5500,7 +5500,7 @@ namespace System.Windows
 
                 ClearShowKeyboardCueState();
 
-                if (_showingAsDialog == true)
+                if (_showingAsDialog)
                 {
                     DoDialogHide();
                 }
@@ -5510,7 +5510,7 @@ namespace System.Windows
             // we need this check here again, b/c creating the window fires the
             // Activted event and if user closes the window from it, then by
             // the time we get to this point _sourceWindow is already disposed.
-            if ( IsSourceWindowNull == false )
+            if (!IsSourceWindowNull)
             {
 
                 // Specifying an Avalon app to start
@@ -5524,7 +5524,7 @@ namespace System.Windows
                 // If anything else is passed, it does not use nCmd of STARTUPINFO.
 
                 int nCmd = 0;
-                if (value == true)
+                if (value)
                 {
                     // nCmdForShow access WindowState which is inaccessible for RBW.
                     // Thus doing so in a virtual that RBW overrides
@@ -5570,7 +5570,7 @@ namespace System.Windows
 
 
             // dialog functionality; start dispatcher loop to block the call
-            if ((_showingAsDialog == true) && (_isVisible == true))
+            if ((_showingAsDialog) && (_isVisible))
             {
                 //
                 // Since we exited the Context, we need to make sure
@@ -5661,7 +5661,7 @@ namespace System.Windows
             // HwndSource will only update layout if the value has changed.
             //
             // Adding check for IsCompositionTargetInvalid
-            if (IsSourceWindowNull == false && IsCompositionTargetInvalid == false)
+            if (!IsSourceWindowNull && !IsCompositionTargetInvalid)
             {
                 HwndSourceSizeToContent = sizeToContent;
             }
@@ -5721,7 +5721,7 @@ namespace System.Windows
             ValidateLengthForHeightWidth(height);
 
             // Adding check for IsCompositionTargetInvalid
-            if (IsSourceWindowNull == false && IsCompositionTargetInvalid == false && !double.IsNaN(height))
+            if (!IsSourceWindowNull && !IsCompositionTargetInvalid && !double.IsNaN(height))
             {
                 UpdateHeight(height);
             }
@@ -5747,7 +5747,7 @@ namespace System.Windows
             // If MinHeight is Auto or ActualHeight is greater than MinHeight, there is no need update size of the window.
             //
             // Adding check for IsCompositionTargetInvalid
-            if ((IsSourceWindowNull == false ) && (IsCompositionTargetInvalid == false))
+            if ((!IsSourceWindowNull) && (!IsCompositionTargetInvalid))
             {
                 NativeMethods.RECT rcHwnd = WindowBounds;
                 Point logicalSize = DeviceToLogicalUnits(new Point(rcHwnd.Width, rcHwnd.Height));
@@ -5785,7 +5785,7 @@ namespace System.Windows
             // the HWND's height > MaxHeight
             //
             // Adding check for IsCompositionTargetInvalid
-            if ((IsSourceWindowNull == false) && (IsCompositionTargetInvalid == false))
+            if ((!IsSourceWindowNull) && (!IsCompositionTargetInvalid))
             {
                 NativeMethods.RECT rcHwnd = WindowBounds;
                 Point logicalSize = DeviceToLogicalUnits(new Point(rcHwnd.Width, rcHwnd.Height));
@@ -5819,7 +5819,7 @@ namespace System.Windows
             ValidateLengthForHeightWidth(width);
 
             // Adding check for IsCompositionTargetInvalid
-            if (IsSourceWindowNull == false && IsCompositionTargetInvalid == false && !double.IsNaN(width))
+            if (!IsSourceWindowNull && !IsCompositionTargetInvalid && !double.IsNaN(width))
             {
                 UpdateWidth(width);
             }
@@ -5847,7 +5847,7 @@ namespace System.Windows
             // If MinWidth is Auto or ActualWidth is greater than MinWidth, there is no need update size of the window.
             //
             // Adding check for IsCompositionTargetInvalid
-            if ((IsSourceWindowNull == false) && (IsCompositionTargetInvalid == false))
+            if ((!IsSourceWindowNull) && (!IsCompositionTargetInvalid))
             {
                 NativeMethods.RECT rcHwnd = WindowBounds;
                 Point logicalSize = DeviceToLogicalUnits(new Point(rcHwnd.Width, rcHwnd.Height));
@@ -5884,7 +5884,7 @@ namespace System.Windows
             // ActualWidth > MaxWidth
             //
             // Adding check for IsCompositionTargetInvalid
-            if ((IsSourceWindowNull == false ) && (IsCompositionTargetInvalid == false))
+            if ((!IsSourceWindowNull) && (!IsCompositionTargetInvalid))
             {
                 NativeMethods.RECT rcHwnd = WindowBounds;
                 Point logicalSize = DeviceToLogicalUnits(new Point(rcHwnd.Width, rcHwnd.Height));
@@ -6110,11 +6110,11 @@ namespace System.Windows
         private void OnTopChanged(double newTop)
         {
             // Adding check for IsCompositionTargetInvalid
-            if (IsSourceWindowNull == false && IsCompositionTargetInvalid == false)
+            if (!IsSourceWindowNull && !IsCompositionTargetInvalid)
             {
                 // NaN is special and indicates using Win32 default,
                 // so we exclude that.
-                if (double.IsNaN(newTop) == false)
+                if (!double.IsNaN(newTop))
                 {
                     if (WindowState == WindowState.Normal)
                     {
@@ -6205,11 +6205,11 @@ namespace System.Windows
         private void OnLeftChanged(double newLeft)
         {
             // Adding check for IsCompositionTargetInvalid
-            if (IsSourceWindowNull == false && IsCompositionTargetInvalid == false)
+            if (!IsSourceWindowNull && !IsCompositionTargetInvalid)
             {
                 // NaN is special and indicates using Win32 default,
                 // so we exclude that here.
-                if (double.IsNaN(newLeft) == false)
+                if (!double.IsNaN(newLeft))
                 {
                     if (WindowState == WindowState.Normal)
                     {
@@ -6231,7 +6231,7 @@ namespace System.Windows
 
         private void UpdateHwndPositionOnTopLeftChange(double leftLogicalUnits, double topLogicalUnits)
         {
-            Debug.Assert( IsSourceWindowNull == false , "IsSourceWindowNull cannot be true when calling this function");
+            Debug.Assert(!IsSourceWindowNull, "IsSourceWindowNull cannot be true when calling this function");
 
             Point ptDeviceUnits = LogicalToDeviceUnits(new Point(leftLogicalUnits, topLogicalUnits));
 
@@ -6265,7 +6265,7 @@ namespace System.Windows
             VerifyApiSupported();
 
             // Adding check for IsCompositionTargetInvalid
-            if ( IsSourceWindowNull == false && IsCompositionTargetInvalid == false)
+            if (!IsSourceWindowNull && !IsCompositionTargetInvalid)
             {
                 using (HwndStyleManager sm = HwndStyleManager.StartManaging(this, StyleFromHwnd, StyleExFromHwnd  ))
                 {
@@ -6296,7 +6296,7 @@ namespace System.Windows
         private void OnFlowDirectionChanged()
         {
             // Adding check for IsCompositionTargetInvalid
-            if (IsSourceWindowNull == false && IsCompositionTargetInvalid == false)
+            if (!IsSourceWindowNull && !IsCompositionTargetInvalid)
             {
                 using (HwndStyleManager sm = HwndStyleManager.StartManaging(this, StyleFromHwnd, StyleExFromHwnd ))
                 {
@@ -6310,7 +6310,7 @@ namespace System.Windows
             Transform renderTransformValue = (Transform)value;
 
             if ((value == null) ||
-                (renderTransformValue != null && renderTransformValue.Value.IsIdentity == true))
+                (renderTransformValue != null && renderTransformValue.Value.IsIdentity))
             {
                 // setting this value is allowed.
             }
@@ -6328,7 +6328,7 @@ namespace System.Windows
 
         private static object CoerceClipToBounds(DependencyObject d, object value)
         {
-            if ((bool)value != false)
+            if ((bool)value)
             {
                 throw new InvalidOperationException(SR.ClipToBoundsNotSupported);
             }
@@ -6369,7 +6369,7 @@ namespace System.Windows
         /// </summary>
         private void SetTaskbarStatus()
         {
-            if (ShowInTaskbar == false) // don't show in taskbar
+            if (!ShowInTaskbar) // don't show in taskbar
             {
                 // To remove the taskbar button for this window it needs to have a non-null parent
                 // (we'll create a hidden window for this purpose) and not have WS_EX_APPWINDOW
@@ -7442,7 +7442,7 @@ namespace System.Windows
 
                 private NativeMethods.POINT GetWindowScreenLocation(FlowDirection flowDirection)
                 {
-                    Debug.Assert(IsSourceWindowNull != true, "IsSourceWindowNull cannot be true here");
+                    Debug.Assert(!IsSourceWindowNull, "IsSourceWindowNull cannot be true here");
                     NativeMethods.POINT pt = default;
                     if (flowDirection == FlowDirection.RightToLeft)
                     {
@@ -7503,7 +7503,7 @@ namespace System.Windows
                         if (_sourceWindow != null)
                         {
                             HwndTarget compositionTarget = _sourceWindow.CompositionTarget;
-                            if (compositionTarget != null && compositionTarget.IsDisposed == false)
+                            if (compositionTarget != null && !compositionTarget.IsDisposed)
                             {
                                 return compositionTarget;
                             }
@@ -7533,7 +7533,7 @@ namespace System.Windows
                     get
                     {
                         // Should never be called when Handle is non-null
-                        Debug.Assert( IsSourceWindowNull == false , "Should only be invoked when we know Handle is non-null" );
+                        Debug.Assert(!IsSourceWindowNull, "Should only be invoked when we know Handle is non-null" );
                         return UnsafeNativeMethods.GetWindowLong(new HandleRef(this,Handle), NativeMethods.GWL_EXSTYLE);
                     }
                 }
@@ -7543,7 +7543,7 @@ namespace System.Windows
                     get
                     {
                         // Should never be called when Handle is non-null
-                        Debug.Assert( IsSourceWindowNull == false , "Should only be invoked when we know Handle is non-null" );
+                        Debug.Assert(!IsSourceWindowNull, "Should only be invoked when we know Handle is non-null" );
                         return UnsafeNativeMethods.GetWindowLong(new HandleRef(this,Handle), NativeMethods.GWL_STYLE);
                     }
                 }
@@ -7568,7 +7568,7 @@ namespace System.Windows
                 /// </summary>
                 internal Size GetSizeFromHwndInMeasureUnits()
                 {
-                    Debug.Assert( IsSourceWindowNull == false , "IsSourceWindowNull can't be true here");
+                    Debug.Assert(!IsSourceWindowNull, "IsSourceWindowNull can't be true here");
 
                     Point pt = new Point(0,0);
                     NativeMethods.RECT rect = WindowBounds;
@@ -7587,7 +7587,7 @@ namespace System.Windows
                 /// </summary>
                 internal Size GetHwndNonClientAreaSizeInMeasureUnits()
                 {
-                    Debug.Assert( IsSourceWindowNull == false , "IsSourceWindowNull can't be true here");
+                    Debug.Assert(!IsSourceWindowNull, "IsSourceWindowNull can't be true here");
 
                     // Diff the Client and Window sizes to get the dimensions of the frame.
                     NativeMethods.RECT clientRect = ClientBounds;
@@ -7685,7 +7685,7 @@ namespace System.Windows
                 _window = w;
                 _window.Manager = this;
 
-                if ( w.IsSourceWindowNull == false )
+                if (!w.IsSourceWindowNull)
                 {
                     _window._Style    =  Style;
                     _window._StyleEx  = StyleEx;

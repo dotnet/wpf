@@ -40,7 +40,7 @@ namespace System.Windows
 
             // Check if we need to create a new node in the linked list
             RoutedEventHandlerInfoList handlers =  _eventHandlersList.List[index].Handlers;
-            if (handlers == null || _eventHandlersList.List[index].HasSelfHandlers == false)
+            if (handlers == null || !_eventHandlersList.List[index].HasSelfHandlers)
             {
                 // Create a new node in the linked list of class 
                 // handlers for this type and routed event.

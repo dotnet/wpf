@@ -1690,7 +1690,7 @@ namespace System.Xaml
             object parentInstance = ctx.ParentInstance;
             XamlMember parentProperty = ctx.ParentProperty;
 
-            if (parentProperty is not null && parentProperty.IsUnknown == false)
+            if (parentProperty is not null && !parentProperty.IsUnknown)
             {
                 XamlType declaringType = null;
 

@@ -211,7 +211,7 @@ namespace MS.Internal.AutomationProxies
                 bGetItemResult = XSendMessage.XSend(_hwnd, NativeMethods.LM_HITTEST, IntPtr.Zero, new IntPtr(&HitTestInfo), Marshal.SizeOf(HitTestInfo.GetType()));
             }
 
-            if (bGetItemResult == true && HitTestInfo.item.iLink >= 0 && GetLinkItem (HitTestInfo.item.iLink))
+            if (bGetItemResult && HitTestInfo.item.iLink >= 0 && GetLinkItem (HitTestInfo.item.iLink))
             {
                 return CreateHyperlinkItem (_linkItem, HitTestInfo.item.iLink);
             }
@@ -492,7 +492,7 @@ namespace MS.Internal.AutomationProxies
                             bGetItemResult = XSendMessage.XSend(_hwnd, NativeMethods.LM_HITTEST, IntPtr.Zero, new IntPtr(&HitTestInfo), Marshal.SizeOf(HitTestInfo.GetType()));
                         }
 
-                        if (bGetItemResult == true && HitTestInfo.item.iLink == _item)
+                        if (bGetItemResult && HitTestInfo.item.iLink == _item)
                         {
                             //
                             // N.B. [SEdmison]:

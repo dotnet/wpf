@@ -1995,7 +1995,7 @@ namespace System.Windows.Markup
                 if (!endTagHasBeenRead)
                 {
                     CompileBamlTag(XmlNodeType.EndElement, ref endTagHasBeenRead);
-                    Debug.Assert(false == endTagHasBeenRead, "Read past end tag on end tag");
+                    Debug.Assert(!endTagHasBeenRead, "Read past end tag on end tag");
                 }
 
                 // Empty Complex Properties of type Dictionary should be popped now as
@@ -2066,7 +2066,7 @@ namespace System.Windows.Markup
             {
 
                 CompileBamlTag(XmlReader.NodeType, ref endTagHasBeenRead);
-                Debug.Assert(false == endTagHasBeenRead);
+                Debug.Assert(!endTagHasBeenRead);
 
                 // If we're in the context of an IDictionary or complex property, we
                 // have to keep reading until we get to an element in case there is an

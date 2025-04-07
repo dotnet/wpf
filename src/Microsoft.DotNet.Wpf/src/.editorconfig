@@ -206,9 +206,6 @@ dotnet_diagnostic.IDE0077.severity = suggestion
 # IDE0078: Use pattern matching
 dotnet_diagnostic.IDE0078.severity = suggestion
 
-# IDE0100: Remove redundant equality
-dotnet_diagnostic.IDE0100.severity = suggestion
-
 # IDE0180: Use tuple to swap values
 dotnet_diagnostic.IDE0180.severity = suggestion
 

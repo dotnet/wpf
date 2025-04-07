@@ -539,7 +539,7 @@ namespace System.Windows.Input
             // Second, if we still haven't thought of a reason to kill capture, validate
             // it on a Visual basis for things like still being in the right tree.
             //
-            if (killCapture == false)
+            if (!killCapture)
             {
                 DependencyObject containingVisual = InputElement.GetContainingVisual(_captured as DependencyObject);
                 killCapture = !ValidateVisualForCapture(containingVisual);

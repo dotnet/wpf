@@ -69,7 +69,7 @@ namespace MS.Internal.Utility
         {
             Uri uriToNavigate = inputUri;
 
-            if ((inputUri == null) || (inputUri.IsAbsoluteUri == true))
+            if ((inputUri == null) || (inputUri.IsAbsoluteUri))
             {
                 return uriToNavigate;
             }
@@ -84,7 +84,7 @@ namespace MS.Internal.Utility
 
             if (baseUri != null)
             {
-                if (baseUri.IsAbsoluteUri == false)
+                if (!baseUri.IsAbsoluteUri)
                 {
                     uriToNavigate = GetResolvedUri(BindUriHelper.GetResolvedUri(null, baseUri), inputUri);
                 }
@@ -147,7 +147,7 @@ namespace MS.Internal.Utility
             string fragment = String.Empty;
             string frag;
 
-            if (uri.IsAbsoluteUri == false)
+            if (!uri.IsAbsoluteUri)
             {
                 // this is a relative uri, and Fragement() doesn't work with relative uris.  The base uri is completley irrelevant 
                 // here and will never affect the returned fragment, but the method requires something to be there.  Therefore, 

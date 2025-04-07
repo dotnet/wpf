@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
 using System.Linq;
@@ -182,7 +182,7 @@ namespace System.Windows
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         internal static void VerifySwitches(Dispatcher dispatcher)
         {
-            if (Interlocked.CompareExchange(ref s_switchesVerified, true, false) == false)
+            if (!Interlocked.CompareExchange(ref s_switchesVerified, true, false))
             {
                 bool netFx47 = UseNetFx47CompatibleAccessibilityFeatures;
                 bool netFx471 = UseNetFx471CompatibleAccessibilityFeatures;
@@ -190,10 +190,10 @@ namespace System.Windows
 
                 // If a flag is set to false, we also must ensure the prior accessibility switches are also false.
                 // Otherwise we should inform the developer, via an exception, to enable all the flags.
-                if (!((netFx47 == false && netFx471 == false && netFx472 == false) ||
-                      (netFx47 == false && netFx471 == false && netFx472 == true) ||
-                      (netFx47 == false && netFx471 == true && netFx472 == true) ||
-                      (netFx47 == true && netFx471 == true && netFx472 == true)))
+                if (!((!netFx47 && !netFx471 && !netFx472) ||
+                      (!netFx47 && !netFx471 && netFx472) ||
+                      (!netFx47 && netFx471 && netFx472) ||
+                      (netFx47 && netFx471 && netFx472)))
                 { 
                     // Dispatch an EventLog and error throw so we get loaded UI, then the crash.
                     // This ensures the WER dialog shows.

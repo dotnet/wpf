@@ -391,7 +391,7 @@ namespace System.Windows.Controls
                 case Key.Space:
                 case Key.Enter:
                     {
-                        if (e.Key == Key.Enter && (bool)GetValue(KeyboardNavigation.AcceptsReturnProperty) == false)
+                        if (e.Key == Key.Enter && !(bool)GetValue(KeyboardNavigation.AcceptsReturnProperty))
                         {
                             handled = false;
                             break;

@@ -44,7 +44,7 @@ namespace MS.Internal
             // If the sourceUri is not relative to baseUri, Emtpy string is returned
             // as resource id.
             //
-            if (baseUri.IsAbsoluteUri == false || sourceUri.IsAbsoluteUri == false)
+            if (!baseUri.IsAbsoluteUri || !sourceUri.IsAbsoluteUri)
             {
                  // 
                  // if any passed Uri is not absolute uri, return empty string here.

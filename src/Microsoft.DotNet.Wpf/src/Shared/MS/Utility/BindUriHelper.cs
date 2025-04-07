@@ -89,7 +89,7 @@ namespace MS.Internal.Utility
             {
                 newUri = null;
             }
-            else if (orgUri.IsAbsoluteUri == false)
+            else if (!orgUri.IsAbsoluteUri)
             {
                 // if the orgUri is an absolute Uri, don't need to resolve it again.
                 

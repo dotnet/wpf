@@ -1947,7 +1947,7 @@ namespace System.Windows
             // Inheritance
             //
 
-            if (!TreeWalkHelper.SkipNext(InheritanceBehavior) || fmetadata.OverridesInheritanceBehavior == true)
+            if (!TreeWalkHelper.SkipNext(InheritanceBehavior) || fmetadata.OverridesInheritanceBehavior)
             {
                 // Used to terminate tree walk if a tree boundary is hit
                 InheritanceBehavior inheritanceBehavior = InheritanceBehavior.Default;
@@ -2459,7 +2459,7 @@ namespace System.Windows
             // Fire Loaded and Unloaded Events
             BroadcastEventHelper.BroadcastLoadedOrUnloadedEvent(this, oldParent, newParent);
 
-            if (newParent != null && (newParent is FrameworkElement) == false)
+            if (newParent != null && newParent is not FrameworkElement)
             {
                 // If you are being connected to a non-FE parent then start listening for VisualAncestor
                 // changes because otherwise you won't know about changes happening above you
@@ -2473,7 +2473,7 @@ namespace System.Windows
                     ((Visual3D)newParent).VisualAncestorChanged += new Visual.AncestorChangedEventHandler(OnVisualAncestorChanged);
                 }
             }
-            else if (oldParent != null && (oldParent is FrameworkElement) == false)
+            else if (oldParent != null && oldParent is not FrameworkElement)
             {
                 // If you are being disconnected from a non-FE parent then stop listening for
                 // VisualAncestor changes

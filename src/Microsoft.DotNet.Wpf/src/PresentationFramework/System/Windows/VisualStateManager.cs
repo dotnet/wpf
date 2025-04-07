@@ -251,7 +251,7 @@ namespace System.Windows
                     transition.DynamicStoryboardCompleted = true;
                 };
 
-                if (transition.Storyboard != null && transition.ExplicitStoryboardCompleted == true)
+                if (transition.Storyboard != null && transition.ExplicitStoryboardCompleted)
                 {
                     EventHandler transitionCompleted = null;
                     transitionCompleted = new EventHandler(delegate(object sender, EventArgs e)

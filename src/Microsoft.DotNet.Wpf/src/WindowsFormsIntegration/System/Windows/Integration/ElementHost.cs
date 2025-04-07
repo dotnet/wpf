@@ -426,7 +426,7 @@ namespace System.Windows.Forms.Integration
         /// </summary>
         protected override void Select(bool directed, bool forward)
         {
-            if (directed == true)
+            if (directed)
             {
                 SWI.TraversalRequest request = new SWI.TraversalRequest(forward
                                                         ? SWI.FocusNavigationDirection.First

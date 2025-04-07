@@ -118,7 +118,7 @@ namespace MS.Internal.Ink
         {
             System.Diagnostics.Debug.Assert(_points != null);
 
-            if (false == _bounds.Contains(point))
+            if (!_bounds.Contains(point))
             {
                 return false;
             }
@@ -224,7 +224,7 @@ namespace MS.Internal.Ink
                 currentStrokeSegmentBounds.Union(nodeBounds);
 
                 // Skip the node if it's outside of the lasso's bounds
-                if (currentStrokeSegmentBounds.IntersectsWith(_bounds) == true)
+                if (currentStrokeSegmentBounds.IntersectsWith(_bounds))
                 {
                     // currentStrokeSegmentBounds, made up of the bounding box of
                     // this StrokeNode unioned with the last StrokeNode,
@@ -689,7 +689,7 @@ namespace MS.Internal.Ink
 
             // Don't add this point if the lasso already has a loop; or
             // if it's filtered by base class's filter.
-            if (true == _hasLoop || true == base.Filter(point))
+            if (_hasLoop || base.Filter(point))
             {
                 // Don't add this point to the lasso.
                 return true;
@@ -700,7 +700,7 @@ namespace MS.Internal.Ink
             // Now check whether the line lastPoint->point intersect with the
             // existing lasso.
 
-            if (true == GetIntersectionWithExistingLasso(point, ref intersection))
+            if (GetIntersectionWithExistingLasso(point, ref intersection))
             {
                 System.Diagnostics.Debug.Assert(intersection >= 0 && intersection <= points.Count - 2);
 
@@ -732,7 +732,7 @@ namespace MS.Internal.Ink
                     IsIncrementalLassoDirty = true;
                 }
 
-                if (true == IsIncrementalLassoDirty)
+                if (IsIncrementalLassoDirty)
                 {
                     // Update the bounds
                     Rect bounds = Rect.Empty;
@@ -771,7 +771,7 @@ namespace MS.Internal.Ink
 
             Rect newRect = new Rect(points[count - 1], point);
 
-            if (false == _prevBounds.IntersectsWith(newRect))
+            if (!_prevBounds.IntersectsWith(newRect))
             {
                 // The point is not contained in the bound of the existing lasso, no intersection.
                 return false;

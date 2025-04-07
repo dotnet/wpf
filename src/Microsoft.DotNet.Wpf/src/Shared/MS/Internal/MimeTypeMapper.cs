@@ -23,7 +23,7 @@ namespace MS.Internal
             if (uriSource != null)
             {
                 Uri uri = uriSource;
-                if (uri.IsAbsoluteUri == false)
+                if (!uri.IsAbsoluteUri)
                 {
                       uri = new Uri("http://foo/bar/");
                       uri = new Uri(uri, uriSource);
@@ -135,7 +135,7 @@ namespace MS.Internal
             string extensionWithDot = Path.GetExtension(docString);
             string extension = String.Empty;
 
-            if (String.IsNullOrEmpty(extensionWithDot) == false)
+            if (!String.IsNullOrEmpty(extensionWithDot))
             {
                 extension = extensionWithDot.Substring(1).ToLower(CultureInfo.InvariantCulture);
             }

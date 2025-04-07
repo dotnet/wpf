@@ -86,7 +86,7 @@ namespace System.Windows.Navigation
             }
             else
             {
-                if (baseUri.IsAbsoluteUri == false)
+                if (!baseUri.IsAbsoluteUri)
                 {
                     // Most likely the BaseUriDP in element or IUriContext.BaseUri
                     // is set to a relative Uri programmatically in user's code.
@@ -226,7 +226,7 @@ namespace System.Windows.Navigation
         //
         internal static void GetAssemblyNameAndPart(Uri uri, out string partName, out string assemblyName, out string assemblyVersion, out string assemblyKey)
         {
-            Invariant.Assert(uri != null && uri.IsAbsoluteUri == false, "This method accepts relative uri only.");
+            Invariant.Assert(uri != null && !uri.IsAbsoluteUri, "This method accepts relative uri only.");
 
             string original = uri.ToString(); // only relative Uri here (enforced by Package)
 

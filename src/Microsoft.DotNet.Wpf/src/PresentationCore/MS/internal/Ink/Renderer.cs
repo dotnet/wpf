@@ -68,7 +68,7 @@ namespace System.Windows.Ink
                 {
                     bool highContrast = _renderer.IsHighContrast();
 
-                    if (highContrast == true && _stroke.DrawingAttributes.IsHighlighter)
+                    if (highContrast && _stroke.DrawingAttributes.IsHighlighter)
                     {
                         // we don't render highlighters in high contrast
                         return;
@@ -80,7 +80,7 @@ namespace System.Windows.Ink
                         da = _stroke.DrawingAttributes.Clone();
                         da.Color = _renderer.GetHighContrastColor();
                     }
-                    else if (_stroke.DrawingAttributes.IsHighlighter == true)
+                    else if (_stroke.DrawingAttributes.IsHighlighter)
                     {
                         // Get the drawing attributes to use for a highlighter stroke. This can be a copied DA with color.A
                         // overridden if color.A != 255.
@@ -320,7 +320,7 @@ namespace System.Windows.Ink
             ArgumentNullException.ThrowIfNull(visual);
 
             // Remove the visual in the list of attached via AttachIncrementalRendering
-            if ((_attachedVisuals == null) || (_attachedVisuals.Remove(visual) == false))
+            if ((_attachedVisuals == null) || (!_attachedVisuals.Remove(visual)))
             {
                 throw new System.InvalidOperationException(SR.VisualCannotBeDetached);
             }
@@ -476,7 +476,7 @@ namespace System.Windows.Ink
             // Find the visual associated with the changed stroke.
             StrokeVisual visual;
             Stroke stroke = (Stroke)sender;
-            if (_visuals.TryGetValue(stroke, out visual) == false)
+            if (!_visuals.TryGetValue(stroke, out visual))
             {
                 throw new System.ArgumentException(SR.UnknownStroke1);
             }
@@ -572,8 +572,8 @@ namespace System.Windows.Ink
                 while (--i >= 0)
                 {
                     Stroke stroke = _strokes[i];
-                    if ((stroke.DrawingAttributes.IsHighlighter == false)
-                        && (_visuals.TryGetValue(stroke, out precedingVisual) == true)
+                    if ((!stroke.DrawingAttributes.IsHighlighter)
+                        && (_visuals.TryGetValue(stroke, out precedingVisual))
                         && (VisualTreeHelper.GetParent(precedingVisual) != null))
                     {
                         VisualCollection children = ((ContainerVisual)(VisualTreeHelper.GetParent(precedingVisual))).Children;
@@ -650,7 +650,7 @@ namespace System.Windows.Ink
             {
                 // For a highlighter stroke, the color.A is neglected.
                 Color color = StrokeRenderer.GetHighlighterColor(drawingAttributes.Color);
-                if ((_highlighters == null) || (_highlighters.TryGetValue(color, out hcVisual) == false))
+                if ((_highlighters == null) || (!_highlighters.TryGetValue(color, out hcVisual)))
                 {
                     if (_highlighters == null)
                     {

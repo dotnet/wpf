@@ -225,7 +225,7 @@ namespace System.Windows.Ink
 
                 for (int i = 0; i < stylusPoints.Count; i++)
                 {
-                    if (true == bounds.Contains((Point)stylusPoints[i]))
+                    if (bounds.Contains((Point)stylusPoints[i]))
                     {
                         target -= strokeInfo.GetPointWeight(i);
                         if (DoubleUtil.LessThanOrClose(target, 0d))
@@ -278,7 +278,7 @@ namespace System.Windows.Ink
 
                 for (int i = 0; i < stylusPoints.Count; i++)
                 {
-                    if (true == lasso.Contains((Point)stylusPoints[i]))
+                    if (lasso.Contains((Point)stylusPoints[i]))
                     {
                         target -= strokeInfo.GetPointWeight(i);
                         if (DoubleUtil.LessThan(target, 0f))
@@ -366,7 +366,7 @@ namespace System.Windows.Ink
 
             ArgumentNullException.ThrowIfNull(drawingAttributes);
 
-            if (_drawAsHollow == true)
+            if (_drawAsHollow)
             {
                 // Draw as hollow. Our profiler result shows that the two-pass-rendering approach is about 5 times
                 // faster that using GetOutlinePathGeometry.
@@ -450,7 +450,7 @@ namespace System.Windows.Ink
 
             // need to recalculate the PathGeometry if the DA passed in is "geometrically" different from
             // this DA, or if the cached PathGeometry is dirty.
-            if (false == geometricallyEqual || (true == geometricallyEqual && null == _cachedGeometry))
+            if (!geometricallyEqual || (geometricallyEqual && null == _cachedGeometry))
             {
                 //Recalculate _pathGeometry;
                 StrokeNodeIterator iterator = StrokeNodeIterator.GetIterator(this, drawingAttributes);
@@ -467,7 +467,7 @@ namespace System.Windows.Ink
 
                 // return the calculated value directly. We cannot cache the result since the DA passed in
                 // is "geometrically" different from this.DrawingAttributes.
-                if (false == geometricallyEqual)
+                if (!geometricallyEqual)
                 {
                     return geometry;
                 }
@@ -495,7 +495,7 @@ namespace System.Windows.Ink
         /// </summary>
         internal void DrawInternal(DrawingContext dc, DrawingAttributes DrawingAttributes, bool drawAsHollow)
         {
-            if (drawAsHollow == true)
+            if (drawAsHollow)
             {
                 // The Stroke.DrawCore may be overriden in the 3rd party code.
                 // The out-side code could throw exception. We use try/finally block to protect our status.
@@ -512,7 +512,7 @@ namespace System.Windows.Ink
             else
             {
                 // IsSelected can be true or false, but _drawAsHollow must be false
-                System.Diagnostics.Debug.Assert(false == _drawAsHollow);
+                System.Diagnostics.Debug.Assert(!_drawAsHollow);
                 this.DrawCore(dc, DrawingAttributes);
             }
         }
@@ -550,7 +550,7 @@ namespace System.Windows.Ink
         /// </summary>
         internal void SetBounds(Rect newBounds)
         {
-            System.Diagnostics.Debug.Assert(newBounds.IsEmpty == false);
+            System.Diagnostics.Debug.Assert(!newBounds.IsEmpty);
             _cachedBounds = newBounds;
         }
 

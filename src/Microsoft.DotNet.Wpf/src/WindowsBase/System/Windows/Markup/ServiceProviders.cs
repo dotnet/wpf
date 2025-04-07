@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
 namespace System.Windows.Markup
@@ -38,7 +38,7 @@ namespace System.Windows.Markup
             ArgumentNullException.ThrowIfNull(serviceType);
             ArgumentNullException.ThrowIfNull(service);
 
-            if (_objDict.ContainsKey(serviceType) == false)
+            if (!_objDict.ContainsKey(serviceType))
             {
                 _objDict.Add(serviceType, service);
             }

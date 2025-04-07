@@ -146,7 +146,7 @@ namespace Microsoft.Build.Tasks.Windows
             // Validate the property settings
             //
 
-            if (ValidResourceFiles(ResourceFiles) == false)
+            if (!ValidResourceFiles(ResourceFiles))
             {
                // ValidResourceFiles has already showed up error message.
                // Just stop here.

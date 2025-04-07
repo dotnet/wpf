@@ -232,7 +232,7 @@ namespace System.Windows.Markup
                 throw new ArgumentNullException( nameof(dependencyObject));
             }
 
-            if (dependencyObject.IsSealed == false)
+            if (!dependencyObject.IsSealed)
             {
                 dependencyObject.SetValue(XmlnsDictionaryProperty, value);
             }

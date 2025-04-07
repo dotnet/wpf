@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
 using System.Diagnostics;
@@ -22,7 +22,7 @@ namespace Microsoft.Windows.Controls.Ribbon.Primitives
             {
                 UIElement child = Children[i];
                 Debug.Assert(child != null, "child not expected to be null");
-                Debug.Assert(RibbonQuickAccessToolBar.GetIsOverflowItem(child) == true, "child expected to have IsOverflowItem == true");
+                Debug.Assert(RibbonQuickAccessToolBar.GetIsOverflowItem(child), "child expected to have IsOverflowItem == true");
 
                 Size infinity = new Size(Double.PositiveInfinity, availableSize.Height);
                 child.Measure(infinity);

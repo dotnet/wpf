@@ -218,7 +218,7 @@ namespace System.Windows.Controls
                 thisScope = e.Scope;
 
                 // Step 3: Compare scopes
-                if (thisScope == focusScope && (focusDO == null || (bool)focusDO.GetValue(KeyboardNavigation.AcceptsReturnProperty) == false))
+                if (thisScope == focusScope && (focusDO == null || !(bool)focusDO.GetValue(KeyboardNavigation.AcceptsReturnProperty)))
                 {
                     isDefaulted = BooleanBoxes.TrueBox;
                 }

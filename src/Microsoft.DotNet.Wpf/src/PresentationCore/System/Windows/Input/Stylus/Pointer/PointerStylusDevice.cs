@@ -618,7 +618,7 @@ namespace System.Windows.Input.StylusPointer
                 if (_stylusOver == stylusOver)
                 {
                     Point ptOffset = GetPosition(stylusOver);
-                    fOffsetChanged = MS.Internal.DoubleUtil.AreClose(ptOffset.X, _rawElementRelativePosition.X) == false || MS.Internal.DoubleUtil.AreClose(ptOffset.Y, _rawElementRelativePosition.Y) == false;
+                    fOffsetChanged = !MS.Internal.DoubleUtil.AreClose(ptOffset.X, _rawElementRelativePosition.X) || !MS.Internal.DoubleUtil.AreClose(ptOffset.Y, _rawElementRelativePosition.Y);
                 }
 
                 if (fOffsetChanged || _stylusOver != stylusOver)

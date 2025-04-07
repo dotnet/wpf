@@ -540,7 +540,7 @@ namespace System.Windows
                     // Inheritance
                     //
 
-                    if (!TreeWalkHelper.SkipNext(InheritanceBehavior) || fmetadata.OverridesInheritanceBehavior == true)
+                    if (!TreeWalkHelper.SkipNext(InheritanceBehavior) || fmetadata.OverridesInheritanceBehavior)
                     {
                         // Used to terminate tree walk if a tree boundary is hit
                         InheritanceBehavior inheritanceBehavior;

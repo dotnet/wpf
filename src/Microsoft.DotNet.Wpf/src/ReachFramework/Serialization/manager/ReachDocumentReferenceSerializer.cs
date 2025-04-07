@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
 
@@ -48,7 +48,7 @@ namespace System.Windows.Xps.Serialization
                 // Loads the document
                 FixedDocument document = ((DocumentReference)serializableObjectContext.TargetObject).GetDocument(false);
 
-                if (document.IsInitialized == false)
+                if (!document.IsInitialized)
                 {
                     // Give a parser item a kick
                     document.Dispatcher.Invoke(DispatcherPriority.ApplicationIdle,

@@ -240,8 +240,8 @@ namespace System.Windows.Controls
         {
             get
             {
-                if( ((_isPrintableAreaWidthUpdated == false) && (_isPrintableAreaHeightUpdated == false)) ||
-                    ((_isPrintableAreaWidthUpdated == true)  && (_isPrintableAreaHeightUpdated == false)))
+                if( ((!_isPrintableAreaWidthUpdated) && (!_isPrintableAreaHeightUpdated)) ||
+                    ((_isPrintableAreaWidthUpdated)  && (!_isPrintableAreaHeightUpdated)))
                 {
                     _isPrintableAreaWidthUpdated  = true;
                     _isPrintableAreaHeightUpdated = false;
@@ -262,8 +262,8 @@ namespace System.Windows.Controls
         {
             get
             {
-                if( ((_isPrintableAreaWidthUpdated == false) && (_isPrintableAreaHeightUpdated == false)) ||
-                    ((_isPrintableAreaWidthUpdated == false)  && (_isPrintableAreaHeightUpdated == true)))
+                if( ((!_isPrintableAreaWidthUpdated) && (!_isPrintableAreaHeightUpdated)) ||
+                    ((!_isPrintableAreaWidthUpdated)  && (_isPrintableAreaHeightUpdated)))
                 {
                     _isPrintableAreaWidthUpdated  = false;
                     _isPrintableAreaHeightUpdated = true;

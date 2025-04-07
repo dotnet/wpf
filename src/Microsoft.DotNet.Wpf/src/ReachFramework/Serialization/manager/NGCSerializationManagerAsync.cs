@@ -722,7 +722,7 @@ namespace System.Windows.Xps.Serialization
                 bManulStartDoc = true;
             }
 
-            if (_isPrintTicketMerged == false)
+            if (!_isPrintTicketMerged)
             {
                 XpsSerializationPrintTicketRequiredEventArgs e =
                 new XpsSerializationPrintTicketRequiredEventArgs(PrintTicketLevel.FixedPagePrintTicket,

@@ -1545,7 +1545,7 @@ namespace System.Windows.Controls
 
         internal void BeginInit()
         {
-            Debug.Assert(_isInitializing == false);
+            Debug.Assert(!_isInitializing);
             _isInitializing = true;
             if (_collectionView != null)            // disconnect from collectionView to cut extraneous events
                 UnhookCollectionView(_collectionView);
@@ -1553,7 +1553,7 @@ namespace System.Windows.Controls
 
         internal void EndInit()
         {
-            Debug.Assert(_isInitializing == true);
+            Debug.Assert(_isInitializing);
             EnsureCollectionView();
             _isInitializing = false;                // now we allow collectionView to be hooked up again
             if (_collectionView != null)

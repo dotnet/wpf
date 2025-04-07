@@ -1500,7 +1500,7 @@ namespace System.Windows.Controls
 
                     if (role == MenuItemRole.TopLevelItem || role == MenuItemRole.SubmenuItem)
                     {
-                        if (_userInitiatedPress == true)
+                        if (_userInitiatedPress)
                         {
                             ClickItem(e.UserInitiated);
                         }

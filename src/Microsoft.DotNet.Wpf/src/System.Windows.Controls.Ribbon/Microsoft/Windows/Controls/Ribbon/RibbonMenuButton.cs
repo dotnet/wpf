@@ -1480,7 +1480,7 @@ namespace Microsoft.Windows.Controls.Ribbon
                 // If HasPushedMenuMode=true...
                 PropertyInfo property = type.GetProperty("HasPushedMenuMode", BindingFlags.NonPublic | BindingFlags.Instance);
                 Debug.Assert(property != null);
-                if (property != null && (bool)property.GetValue(this, null) == true)
+                if (property != null && (bool)property.GetValue(this, null))
                 {
                     // ...call PopMenuMode.
                     MethodInfo method = type.GetMethod("PopMenuMode", BindingFlags.NonPublic | BindingFlags.Instance);

@@ -60,7 +60,7 @@ namespace Microsoft.Build.Tasks.Windows
             bool successful = true;
             TaskHelper.DisplayLogo(Log, nameof(UpdateManifestForBrowserApplication));
 
-            if (HostInBrowser != true)
+            if (!HostInBrowser)
             {
                 // HostInBrowser is not true, don't modify the manifest.
                 // Stop here.

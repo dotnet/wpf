@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
 
@@ -491,7 +491,7 @@ namespace System.Windows.Xps.Serialization
 
             if(!_isStartPage)
             {
-                if (_isPrintTicketMerged == false)
+                if (!_isPrintTicketMerged)
                 {
                     XpsSerializationPrintTicketRequiredEventArgs e =
                     new XpsSerializationPrintTicketRequiredEventArgs(PrintTicketLevel.FixedPagePrintTicket,

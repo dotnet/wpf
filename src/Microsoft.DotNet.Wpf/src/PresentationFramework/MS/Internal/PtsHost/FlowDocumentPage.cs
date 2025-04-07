@@ -797,7 +797,7 @@ namespace MS.Internal.PtsHost
         private void Dispose(bool disposing)
         {
             // Do actual dispose only once.
-            if (Interlocked.CompareExchange(ref _disposed, true, false) == false)
+            if (!Interlocked.CompareExchange(ref _disposed, true, false))
             {
                 if (disposing)
                 {

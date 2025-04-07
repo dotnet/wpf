@@ -443,7 +443,7 @@ namespace System.Windows.Interop
 
                 // New world transform has been set-up by HwndTarget
                 // set the layouts size again to account for this
-                if (IsLayoutActive() == true)
+                if (IsLayoutActive())
                 {
                     // Call the helper method SetLayoutSize to set Layout's size
                     // We may already be inside a call to SetLayoutSize - schedule another call
@@ -497,7 +497,7 @@ namespace System.Windows.Interop
                 // whichever code handles the DPI changes set up updated
                 // window sizes etc. in screen/client coordinates, and now
                 // we must adapt and update the corresponding layout sizes as well.
-                if (IsLayoutActive() == true)
+                if (IsLayoutActive())
                 {
                     // Call the helper method SetLayoutSize to set Layout's size
                     // We may already be inside a call to SetLayoutSize - schedule another call
@@ -576,7 +576,7 @@ namespace System.Windows.Interop
                             ((UIElement)(_rootVisual)).LayoutUpdated += new EventHandler(OnLayoutUpdated);
                         }
 
-                        if (_hwndTarget != null && _hwndTarget.IsDisposed == false)
+                        if (_hwndTarget != null && !_hwndTarget.IsDisposed)
                         {
                             _hwndTarget.RootVisual = _rootVisual;
                         }
@@ -604,7 +604,7 @@ namespace System.Windows.Interop
 
                     RootChanged(oldRoot, _rootVisual);
 
-                    if (IsLayoutActive() == true)
+                    if (IsLayoutActive())
                     {
                         // Call the helper method SetLayoutSize to set Layout's size
                         SetLayoutSize();
@@ -701,7 +701,7 @@ namespace System.Windows.Interop
 
                 // Even though we created the HwndTarget, it can get disposed out from
                 // underneath us.
-                if (_hwndTarget!= null && _hwndTarget.IsDisposed == true)
+                if (_hwndTarget!= null && _hwndTarget.IsDisposed)
                 {
                     return null;
                 }
@@ -886,7 +886,7 @@ namespace System.Windows.Interop
             // For windows with UsesPerPixelOpacity, we force the client to
             // fill the window, so we don't need to add in any frame space.
             //
-            if (_adjustSizingForNonClientArea == false && !UsesPerPixelOpacity)
+            if (!_adjustSizingForNonClientArea && !UsesPerPixelOpacity)
             {
                 int style = NativeMethods.IntPtrToInt32((IntPtr)SafeNativeMethods.GetWindowStyle(new HandleRef(this, _hwndWrapper.Handle), false));
                 int styleEx = NativeMethods.IntPtrToInt32((IntPtr)SafeNativeMethods.GetWindowStyle(new HandleRef(this, _hwndWrapper.Handle), true));
@@ -975,7 +975,7 @@ namespace System.Windows.Interop
             {
                 CheckDisposed(true);
 
-                if (IsValidSizeToContent(value) != true)
+                if (!IsValidSizeToContent(value))
                 {
                     throw new InvalidEnumArgumentException("value", (int)value, typeof(SizeToContent));
                 }
@@ -991,7 +991,7 @@ namespace System.Windows.Interop
                 // if a developer goes directly to HwndSource and sets SizeToContent, we will
                 // not notify the wrapping Window
 
-                if (IsLayoutActive() == true)
+                if (IsLayoutActive())
                 {
                     // Call the helper method SetLayoutSize to set Layout's size
                     SetLayoutSize();
@@ -1001,7 +1001,7 @@ namespace System.Windows.Interop
 
         private bool IsLayoutActive()
         {
-            if ((_rootVisual is UIElement) && _hwndTarget!= null && _hwndTarget.IsDisposed == false)
+            if ((_rootVisual is UIElement) && _hwndTarget!= null && !_hwndTarget.IsDisposed)
             {
                 return true;
             }
@@ -1016,7 +1016,7 @@ namespace System.Windows.Interop
         private void SetLayoutSize()
         {
             Debug.Assert(_hwndTarget!= null, "HwndTarget is null");
-            Debug.Assert(_hwndTarget.IsDisposed == false, "HwndTarget is disposed");
+            Debug.Assert(!_hwndTarget.IsDisposed, "HwndTarget is disposed");
 
             UIElement rootUIElement = null;
             rootUIElement = _rootVisual as UIElement;
@@ -1139,7 +1139,7 @@ namespace System.Windows.Interop
             // Compute View's size and set
             NativeMethods.RECT rc = new NativeMethods.RECT(0, 0, 0, 0);
 
-            if (_adjustSizingForNonClientArea == true)
+            if (_adjustSizingForNonClientArea)
             {
                 GetNonClientRect(ref rc);
             }
@@ -1329,7 +1329,7 @@ namespace System.Windows.Interop
             // Only if SizeToContent overrides Win32 sizing change calls.
             // If it's coming from OnResize (_myOwnUpdate != true), it means we are adjusting
             // to the right size; don't need to do anything here.
-            if ((_myOwnUpdate != true) && (SizeToContent != SizeToContent.Manual))
+            if ((!_myOwnUpdate) && (SizeToContent != SizeToContent.Manual))
             {
                 // Get the current style and calculate the size to be with the new style.
                 // If WM_WINDOWPOSCHANGING is sent because of style changes, WM_STYLECHANGED is sent
@@ -1424,7 +1424,7 @@ namespace System.Windows.Interop
 
                 // WM_SIZE has the client size of the window.
                 // for appmodel window case, get the outside size of the hwnd.
-                if (_adjustSizingForNonClientArea == true)
+                if (_adjustSizingForNonClientArea)
                 {
                     NativeMethods.RECT rect = new NativeMethods.RECT(0, 0, (int)pt.X, (int)pt.Y);
                     GetNonClientRect(ref rect);
@@ -1451,7 +1451,7 @@ namespace System.Windows.Interop
                 // call to Measure is optimized out and no layout happens.  Invalidating
                 // layout here ensures that we do layout.
                 // This can happen only in the Window case
-                if (_adjustSizingForNonClientArea == true)
+                if (_adjustSizingForNonClientArea)
                 {
                     rootUIElement.InvalidateMeasure();
                 }
@@ -1520,7 +1520,7 @@ namespace System.Windows.Interop
         // HwndSourceParameters.TreatAncestorsAsNonClientArea setting.
         private void GetNonClientRect(ref NativeMethods.RECT rc)
         {
-            Debug.Assert(_adjustSizingForNonClientArea == true);
+            Debug.Assert(_adjustSizingForNonClientArea);
 
             IntPtr hwndRoot = IntPtr.Zero;
 
@@ -2639,9 +2639,7 @@ namespace System.Windows.Interop
         {
             get
             {
-                return _isDisposed == false &&
-                       _hwndTarget != null &&
-                       _hwndTarget.IsDisposed == false;
+                return !_isDisposed && _hwndTarget is not null && !_hwndTarget.IsDisposed;
             }
         }
 

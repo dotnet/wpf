@@ -498,7 +498,7 @@ namespace MS.Internal.Ink
             rR -= rL;
             rB -= rT;
             _dist = Math.Abs(rR) + Math.Abs(rB);
-            if (false == DoubleUtil.IsZero(rSpan))
+            if (!DoubleUtil.IsZero(rSpan))
                 _span = rSpan;
             else if (0 < _dist)
             {

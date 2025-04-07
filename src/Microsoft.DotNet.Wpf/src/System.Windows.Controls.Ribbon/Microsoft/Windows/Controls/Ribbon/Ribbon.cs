@@ -822,7 +822,7 @@ namespace Microsoft.Windows.Controls.Ribbon
                 // 1. If clicking a tab that is being clicked in its 'selected' state for
                 //    the second time, toggle its 'IsMinimized' behavior.
                 // 2. Otherwise do nothing.
-                if (_selectedTabClicked == true || this.IsMinimized)
+                if (_selectedTabClicked || this.IsMinimized)
                 {
                     IsMinimized = !IsMinimized;
                     IsDropDownOpen = false;
@@ -843,7 +843,7 @@ namespace Microsoft.Windows.Controls.Ribbon
                 //    * Minimize and display the pop-up.
                 // 3. If maximized and the tab was NOT initially selected.
                 //    * Minimize do not display any pop-ups.
-                if (_selectedTabClicked == true)
+                if (_selectedTabClicked)
                 {
                     IsMinimized = !IsMinimized;
                     IsDropDownOpen = false;

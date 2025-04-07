@@ -349,7 +349,7 @@ namespace System.Windows.Data
         {
             // convert the Source into an absolute URI
             Uri sourceUri = this.Source;
-            if (sourceUri.IsAbsoluteUri == false)
+            if (!sourceUri.IsAbsoluteUri)
             {
                 Uri baseUri = _baseUri ?? BindUriHelper.BaseUri;
                 sourceUri = BindUriHelper.GetResolvedUri(baseUri, sourceUri);

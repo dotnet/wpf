@@ -390,7 +390,7 @@ namespace System.Windows
                 throw new InvalidOperationException("UNDONE: SR.GetString(SR.CantShowModalOnNonInteractive)");
             }*/
 
-            if ((options & (MessageBoxOptions.ServiceNotification | MessageBoxOptions.DefaultDesktopOnly)) != 0)
+            if ( (options & (MessageBoxOptions.ServiceNotification | MessageBoxOptions.DefaultDesktopOnly)) != 0)
             {
                 if (owner != IntPtr.Zero)
                 {

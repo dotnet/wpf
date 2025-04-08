@@ -2,6 +2,7 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 
 using System.ComponentModel;
+using System.Windows.Interop;
 
 namespace System.Windows;
 
@@ -142,39 +143,23 @@ public sealed class MessageBoxTests
     }
 
     /*
-     * Tried to add this test also to test that an ArgumentException is thrown when passing in either
-     * MessageBoxOptions.ServiceNotification or MessageBoxOptions.DefaultDesktopOnly when also passing in
-     * a Window as the owner.
-     *
-     * However, this is not possible as the MessageBox.Show method passes the Handle property to the ShowCore
-     * method, and the Handle property is null here - which in the ShowCore method results in owner being IntPtr.Zero,
-     * and the intended test for not allowing the above MessageBoxOptions fail in the test.
-     *
-     * It is likely in a real world scenario that it will work because the owner window would be an already created
-     * Window having a proper Handle set.
+     * For either of these two MessageBoxOptions values, MessageBox.ShowCore throws an ArgumentException if the
+     * owner window handle is non-zero (!= IntPtr.Zero).
      */
-    //[Theory]
-    //[InlineData(MessageBoxOptions.ServiceNotification)]
-    //[InlineData(MessageBoxOptions.DefaultDesktopOnly)]
-    //public void Show_WithOwner_WithSpecificMessageBoxOptions_ThrowsArgumentException(MessageBoxOptions messageBoxOptions)
-    //{
-    //    // Avoid annoying "The calling thread must be STA, because many UI components require this." exception
-    //    Thread thread = new Thread(() =>
-    //    {
-    //        // Arrange
-    //        var owner = new Window();
-    //        string messageBoxText = "Test Message";
-    //        string caption = "Test Caption";
-    //        MessageBoxButton button = MessageBoxButton.OK;
-    //        MessageBoxResult defaultResult = MessageBoxResult.None;
-    //        MessageBoxImage image = MessageBoxImage.None;
+    [WpfTheory]
+    [InlineData(MessageBoxOptions.ServiceNotification)]
+    [InlineData(MessageBoxOptions.DefaultDesktopOnly)]
+    [InlineData(MessageBoxOptions.DefaultDesktopOnly | MessageBoxOptions.RightAlign)]
+    [InlineData(MessageBoxOptions.ServiceNotification | MessageBoxOptions.RightAlign)]
+    public void Show_WithOwner_WithSpecificMessageBoxOptions_ThrowsArgumentException(MessageBoxOptions messageBoxOptions)
+    {
+        // Arrange
+        Window owner = new Window();
+        WindowInteropHelper windowInteropHelper = new WindowInteropHelper(owner);
+        windowInteropHelper.EnsureHandle();
 
-    //        // Act & Assert
-    //        Assert.Throws<ArgumentException>(() =>
-    //            MessageBox.Show(owner, messageBoxText, caption, button, image, defaultResult, messageBoxOptions));
-    //    });
-    //    thread.SetApartmentState(ApartmentState.STA);
-    //    thread.Start();
-    //    thread.Join();
-    //}
+        // Act & Assert
+        Assert.Throws<ArgumentException>(() =>
+            MessageBox.Show(owner, "Test Message", "Test Caption", MessageBoxButton.OK, MessageBoxImage.None, MessageBoxResult.None, messageBoxOptions));
+    }
 }

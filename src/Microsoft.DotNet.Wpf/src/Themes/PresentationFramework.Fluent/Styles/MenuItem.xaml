@@ -58,8 +58,7 @@
 
                 <Grid Margin="10">
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="Auto" 
-                                          SharedSizeGroup="MenuItemIconColumnGroup"/>
+                        <ColumnDefinition Width="Auto" />
                         <ColumnDefinition Width="*" />
                     </Grid.ColumnDefinitions>
                     <ContentPresenter
@@ -68,7 +67,7 @@
                         Margin="0,0,6,0"
                         VerticalAlignment="Center"
                         SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
-                        ContentSource="Icon"/>
+                        Content="{TemplateBinding Icon}"/>
                     <ContentPresenter
                         x:Name="HeaderPresenter"
                         Grid.Column="1"
@@ -176,8 +175,7 @@
             CornerRadius="6">
             <Grid Margin="10">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto" 
-                                      SharedSizeGroup="MenuItemIconColumnGroup"/>
+                    <ColumnDefinition Width="Auto"/>
                     <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
                 <ContentPresenter
@@ -186,7 +184,7 @@
                     Margin="0,0,6,0"
                     SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
                     VerticalAlignment="Center"
-                    ContentSource="Icon" />
+                    Content="{TemplateBinding Icon}" />
                 <ContentPresenter
                     x:Name="HeaderPresenter"
                     Grid.Column="1"
@@ -233,7 +231,7 @@
                     <ColumnDefinition Width="Auto" SharedSizeGroup="MenuItemIconColumnGroup"/>
                     <ColumnDefinition Width="Auto" />
                     <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="Auto" SharedSizeGroup="MenuItemIGTColumnGroup" />
+                    <ColumnDefinition Width="Auto" SharedSizeGroup="Shortcut" />
                 </Grid.ColumnDefinitions>
 
                 <Border
@@ -264,7 +262,7 @@
                     Margin="0,0,6,0"
                     VerticalAlignment="Center"
                     SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
-                    ContentSource="Icon" />
+                    Content="{TemplateBinding Icon}" />
 
                 <ContentPresenter
                     Grid.Column="2"
@@ -339,7 +337,7 @@
                         Margin="0,0,6,0"
                         VerticalAlignment="Center"
                         SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
-                        ContentSource="Icon" />
+                        Content="{TemplateBinding Icon}" />
 
                     <ContentPresenter
                         x:Name="HeaderHost"

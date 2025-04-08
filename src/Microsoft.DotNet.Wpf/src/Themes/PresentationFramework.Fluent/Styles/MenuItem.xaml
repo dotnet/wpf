@@ -58,7 +58,8 @@
 
                 <Grid Margin="10">
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="Auto" 
+                                          SharedSizeGroup="MenuItemIconColumnGroup"/>
                         <ColumnDefinition Width="*" />
                     </Grid.ColumnDefinitions>
                     <ContentPresenter
@@ -67,7 +68,7 @@
                         Margin="0,0,6,0"
                         VerticalAlignment="Center"
                         SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
-                        Content="{TemplateBinding Icon}" />
+                        ContentSource="Icon"/>
                     <ContentPresenter
                         x:Name="HeaderPresenter"
                         Grid.Column="1"
@@ -105,7 +106,13 @@
                                 <TranslateTransform />
                             </Border.RenderTransform>
                             <ScrollViewer CanContentScroll="True" Style="{StaticResource MenuItemScrollViewerStyle}">
-                                <StackPanel IsItemsHost="True" KeyboardNavigation.DirectionalNavigation="Cycle" />
+                                <Grid>
+                                    <ItemsPresenter x:Name="ItemsPresenter"
+                                    KeyboardNavigation.DirectionalNavigation="Cycle"
+                                    KeyboardNavigation.TabNavigation="Cycle"
+                                    Grid.IsSharedSizeScope="True"
+                                    SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                                </Grid>
                             </ScrollViewer>
                             <Border.Effect>
                                 <DropShadowEffect
@@ -169,7 +176,8 @@
             CornerRadius="6">
             <Grid Margin="10">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto" 
+                                      SharedSizeGroup="MenuItemIconColumnGroup"/>
                     <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
                 <ContentPresenter
@@ -178,7 +186,7 @@
                     Margin="0,0,6,0"
                     SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
                     VerticalAlignment="Center"
-                    Content="{TemplateBinding Icon}" />
+                    ContentSource="Icon" />
                 <ContentPresenter
                     x:Name="HeaderPresenter"
                     Grid.Column="1"
@@ -222,15 +230,15 @@
             CornerRadius="4">
             <Grid Margin="8,6,8,6">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto" SharedSizeGroup="MenuItemIconColumnGroup"/>
                     <ColumnDefinition Width="Auto" />
                     <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="Auto" SharedSizeGroup="Shortcut" />
+                    <ColumnDefinition Width="Auto" SharedSizeGroup="MenuItemIGTColumnGroup" />
                 </Grid.ColumnDefinitions>
 
                 <Border
                     x:Name="CheckBoxIconBorder"
-                    Grid.Column="0"
+                    Grid.Column="1"
                     Width="20"
                     Height="20"
                     Margin="0,0,6,0"
@@ -252,11 +260,11 @@
 
                 <ContentPresenter
                     x:Name="Icon"
-                    Grid.Column="1"
+                    Grid.Column="0"
                     Margin="0,0,6,0"
                     VerticalAlignment="Center"
                     SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
-                    Content="{TemplateBinding Icon}" />
+                    ContentSource="Icon" />
 
                 <ContentPresenter
                     Grid.Column="2"
@@ -321,7 +329,7 @@
                 CornerRadius="4">
                 <Grid x:Name="MenuItemContent" Margin="8,6,8,6">
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="Auto" SharedSizeGroup="MenuItemIconColumnGroup"/>
                         <ColumnDefinition Width="*" />
                         <ColumnDefinition Width="Auto" />
                     </Grid.ColumnDefinitions>
@@ -331,7 +339,7 @@
                         Margin="0,0,6,0"
                         VerticalAlignment="Center"
                         SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
-                        Content="{TemplateBinding Icon}" />
+                        ContentSource="Icon" />
 
                     <ContentPresenter
                         x:Name="HeaderHost"
@@ -377,7 +385,11 @@
                             <TranslateTransform />
                         </Border.RenderTransform>
                         <ScrollViewer CanContentScroll="True" Style="{StaticResource MenuItemScrollViewerStyle}">
-                            <StackPanel IsItemsHost="True" KeyboardNavigation.DirectionalNavigation="Cycle" />
+                            <ItemsPresenter x:Name="ItemsPresenter"
+                                    KeyboardNavigation.DirectionalNavigation="Cycle"
+                                    KeyboardNavigation.TabNavigation="Cycle"
+                                    Grid.IsSharedSizeScope="True"
+                                    SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
                         </ScrollViewer>
                         <Border.Effect>
                             <DropShadowEffect

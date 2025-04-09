@@ -5170,6 +5170,7 @@
   <system:Double x:Key="TreeViewItemChevronSize">10</system:Double>
   <system:Double x:Key="TreeViewItemFontSize">14</system:Double>
   <system:String x:Key="TreeViewChevronRightGlyph"></system:String>
+  <system:String x:Key="TreeViewChevronLeftGlyph"></system:String>
   <Style x:Key="ExpandCollapseToggleButtonStyle" TargetType="{x:Type ToggleButton}">
     <!--  Universal WPF UI focus  -->
     <Setter Property="FocusVisualStyle" Value="{DynamicResource DefaultCollectionFocusVisualStyle}" />
@@ -5187,6 +5188,9 @@
             <TextBlock x:Name="ChevronIcon" VerticalAlignment="Center" FontSize="{StaticResource TreeViewItemChevronSize}" FontFamily="{DynamicResource SymbolThemeFontFamily}" HorizontalAlignment="Center" Text="{StaticResource TreeViewChevronRightGlyph}" />
           </Grid>
           <ControlTemplate.Triggers>
+            <Trigger Property="FlowDirection" Value="RightToLeft">
+              <Setter TargetName="ChevronIcon" Property="Text" Value="{StaticResource TreeViewChevronLeftGlyph}" />
+            </Trigger>
             <Trigger Property="IsChecked" Value="True">
               <Trigger.EnterActions>
                 <BeginStoryboard>

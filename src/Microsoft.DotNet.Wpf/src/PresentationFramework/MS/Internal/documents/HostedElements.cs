@@ -182,7 +182,7 @@ namespace System.Windows.Documents
                     default:
                         // Throw exception because this function should only be called after MoveNext, and not 
                         // if MoveNext returns false
-                        Debug.Assert(false, "Invalid state in HostedElements.cs");
+                        Debug.Fail("Invalid state in HostedElements.cs");
                         break;
                 }
                 return currentElement;

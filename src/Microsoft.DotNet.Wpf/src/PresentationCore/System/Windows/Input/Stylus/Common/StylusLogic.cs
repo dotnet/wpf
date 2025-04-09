@@ -764,7 +764,7 @@ namespace System.Windows.Input
                     break;
                 default:
                     {
-                        Debug.Assert(false, "Unknown Flick Action encountered");
+                        Debug.Fail("Unknown Flick Action encountered");
                     }
                     break;
             }

@@ -608,7 +608,7 @@ namespace System.IO.Packaging
                         // full container request?
                         if (_parent._partName == null)
                         {
-                            Debug.Assert(false, "Cannot return full-container stream from cached container object");
+                            Debug.Fail("Cannot return full-container stream from cached container object");
                         }
                         else
                         {

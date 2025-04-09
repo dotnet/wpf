@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
 
@@ -421,7 +421,7 @@ namespace System.Windows.Controls
             {
                 if (Double.IsNaN(value) || Double.IsInfinity(value) || value < 0.0)
                 {
-                    Debug.Assert(false, "Invalid value for ActualWidth.");
+                    Debug.Fail("Invalid value for ActualWidth.");
                 }
                 else if (_actualWidth != value)
                 {

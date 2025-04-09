@@ -458,7 +458,7 @@ namespace MS.Internal.Automation
                 return new FocusTracker();
             }
 
-            Debug.Assert(false, "GetNewRootTracker internal error: Unexpected Tracker value!");
+            Debug.Fail("GetNewRootTracker internal error: Unexpected Tracker value!");
             return null;
         }
 

@@ -372,7 +372,7 @@ namespace MS.Internal.Automation
 
                 default:
                 {
-                    Debug.Assert(false,"unexpected switch() case:");
+                    Debug.Fail("unexpected switch() case:");
                     throw new ArgumentException(SR.UnexpectedWindowState,nameof(state));
                 }
 
@@ -1415,7 +1415,7 @@ namespace MS.Internal.Automation
             if (SanityLoopCount == 0)
             {
                 // Should we come up with something better here?
-                Debug.Assert(false, "too many children or inf loop?");
+                Debug.Fail("too many children or inf loop?");
             }
         }
 
@@ -1873,7 +1873,7 @@ namespace MS.Internal.Automation
 
             if( SanityLoopCount == 0 )
             {
-                Debug.Assert(false, "too many children or inf loop?");
+                Debug.Fail("too many children or inf loop?");
                 return NativeMethods.HWND.NULL;
             }
 

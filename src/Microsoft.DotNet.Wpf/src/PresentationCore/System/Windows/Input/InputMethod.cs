@@ -711,7 +711,7 @@ namespace System.Windows.Input
                     }
                     else
                     {
-                        Debug.Assert(false, "Unknown Speech Mode");
+                        Debug.Fail("Unknown Speech Mode");
                     }
                 }
             }

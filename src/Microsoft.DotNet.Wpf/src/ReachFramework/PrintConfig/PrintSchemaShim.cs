@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
 
@@ -655,7 +655,7 @@ namespace MS.Internal.Printing.Configuration
 
                 default:
                 {
-                    Debug.Assert(false, "PrintTicketScope enum is out of range");
+                    Debug.Fail("PrintTicketScope enum is out of range");
                     break;
                 }
             }

@@ -80,7 +80,7 @@ namespace MS.Internal
                 return nullProperty.GetValue(null, null);
             }
 
-            Debug.Assert(false, "Could not find Null field or property for SqlNullable type");
+            Debug.Fail("Could not find Null field or property for SqlNullable type");
             return null;
         }
     }

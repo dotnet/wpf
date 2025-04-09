@@ -265,7 +265,7 @@ namespace System.Windows.Documents
         {
             Debug.Assert(!_isFrozen, "Can't reposition a frozen pointer!");
 
-            Debug.Assert(false, "No scoping element!");
+            Debug.Fail("No scoping element!");
         }
 
         /// <summary>
@@ -273,7 +273,7 @@ namespace System.Windows.Documents
         /// </summary>
         int ITextPointer.MoveToLineBoundary(int count)
         {
-            Debug.Assert(false, "NullTextPointer does not expect layout dependent method calls!");
+            Debug.Fail("NullTextPointer does not expect layout dependent method calls!");
             return 0;
         }
 
@@ -282,7 +282,7 @@ namespace System.Windows.Documents
         /// </summary>
         Rect ITextPointer.GetCharacterRect(LogicalDirection direction)
         {
-            Debug.Assert(false, "NullTextPointer does not expect layout dependent method calls!");
+            Debug.Fail("NullTextPointer does not expect layout dependent method calls!");
             return new Rect();
         }
 

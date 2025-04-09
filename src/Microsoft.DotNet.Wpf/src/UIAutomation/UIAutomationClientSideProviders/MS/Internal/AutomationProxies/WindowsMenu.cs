@@ -1347,7 +1347,7 @@ namespace MS.Internal.AutomationProxies
                         else
                         {
                             // Wrong logic, we should be able to find the Fxx combination we just built
-                            System.Diagnostics.Debug.Assert(false, "Cannot find back the accelerator in the menu!");
+                            System.Diagnostics.Debug.Fail("Cannot find back the accelerator in the menu!");
                             return menuRawText;
                         }
                     }

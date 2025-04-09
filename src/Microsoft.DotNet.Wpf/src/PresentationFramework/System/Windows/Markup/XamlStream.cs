@@ -780,7 +780,7 @@ namespace System.Windows.Markup
         /// </summary>
         public override void Close()
         {
-            Debug.Assert(false,"Close called on ReaderStream");
+            Debug.Fail("Close called on ReaderStream");
         }
 
         /// <summary>
@@ -788,7 +788,7 @@ namespace System.Windows.Markup
         /// </summary>
         public override void Flush()
         {
-            Debug.Assert(false,"Flush called on ReaderStream");
+            Debug.Fail("Flush called on ReaderStream");
         }
 
         /// <summary>

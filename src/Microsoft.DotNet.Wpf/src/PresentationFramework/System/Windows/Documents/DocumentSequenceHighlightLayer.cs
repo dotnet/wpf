@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
 using MS.Internal.Documents;
@@ -48,7 +48,7 @@ namespace System.Windows.Documents
         // Method is not implemented.  Should not need to be called for constructing the event args.
         internal override object GetHighlightValue(StaticTextPointer staticTextPointer, LogicalDirection direction)
         {
-            Debug.Assert(false, "This method is not implemented and not expected to be called.");
+            Debug.Fail("This method is not implemented and not expected to be called.");
             return null;
         }
 

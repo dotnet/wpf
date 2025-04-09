@@ -127,7 +127,7 @@ namespace System.Windows.Markup
                     return false;
 
                 default:
-                    Debug.Assert(false, "Unhandled case in DoesRecordTypeHaveDebugExtension");
+                    Debug.Fail("Unhandled case in DoesRecordTypeHaveDebugExtension");
                     return false;
             }
         }

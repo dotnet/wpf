@@ -88,7 +88,7 @@ namespace System.Windows.Input
                      return im._inputmethodstatetype;
              }
 
-             Debug.Assert(false, "The guid does not match.");
+             Debug.Fail("The guid does not match.");
              return InputMethodStateType.Invalid;
         }
 

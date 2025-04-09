@@ -146,7 +146,7 @@ namespace MS.Internal.Automation
 
             if (pi.ClientSideWrapper == null)
             {
-                Debug.Assert(false, "missing client-side pattern wrapper");
+                Debug.Fail("missing client-side pattern wrapper");
                 return null;
             }
             else

@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
 
@@ -128,7 +128,7 @@ namespace MS.Internal.PtsHost
             {
                 // (c) cached - when using ParaChache
                 Debug.Assert(textDetails.fsktd == PTS.FSKTEXTDETAILS.fsktdCached);
-                Debug.Assert(false, "Should not get here. ParaCache is not currently used.");
+                Debug.Fail("Should not get here. ParaCache is not currently used.");
             }
 
             // Mirror lines around the page.
@@ -226,7 +226,7 @@ namespace MS.Internal.PtsHost
             {
                 // (c) cached - when using ParaChache
                 Debug.Assert(textDetails.fsktd == PTS.FSKTEXTDETAILS.fsktdCached);
-                Debug.Assert(false, "Should not get here. ParaCache is not currently used.");
+                Debug.Fail("Should not get here. ParaCache is not currently used.");
             }
 
             // If nothing is hit, return the owner of the paragraph.
@@ -315,7 +315,7 @@ namespace MS.Internal.PtsHost
             {
                 // (c) cached - when using ParaChache
                 Debug.Assert(textDetails.fsktd == PTS.FSKTEXTDETAILS.fsktdCached);
-                Debug.Assert(false, "Should not get here. ParaCache is not currently used.");
+                Debug.Fail("Should not get here. ParaCache is not currently used.");
             }
 
             Invariant.Assert(rectangles != null);
@@ -368,7 +368,7 @@ namespace MS.Internal.PtsHost
             {
                 // (c) cached - when using ParaChache
                 Debug.Assert(textDetails.fsktd == PTS.FSKTEXTDETAILS.fsktdCached);
-                Debug.Assert(false, "Should not get here. ParaCache is not currently used.");
+                Debug.Fail("Should not get here. ParaCache is not currently used.");
             }
 
             return lines;
@@ -710,7 +710,7 @@ namespace MS.Internal.PtsHost
             {
                 // (c) cached - when using ParaChache
                 Debug.Assert(textDetails.fsktd == PTS.FSKTEXTDETAILS.fsktdCached);
-                Debug.Assert(false, "Should not get here. ParaCache is not currently used.");
+                Debug.Fail("Should not get here. ParaCache is not currently used.");
             }
 
             // Mirror back to page flow direction
@@ -791,7 +791,7 @@ namespace MS.Internal.PtsHost
             {
                 // (c) cached - when using ParaCache
                 Debug.Assert(textDetails.fsktd == PTS.FSKTEXTDETAILS.fsktdCached);
-                Debug.Assert(false, "Should not get here. ParaCache is not currently used.");
+                Debug.Fail("Should not get here. ParaCache is not currently used.");
             }
 
             //  at this point geometry contains only the text content related geometry
@@ -854,7 +854,7 @@ namespace MS.Internal.PtsHost
             {
                 // (c) cached - when using ParaChache
                 Debug.Assert(textDetails.fsktd == PTS.FSKTEXTDETAILS.fsktdCached);
-                Debug.Assert(false, "Should not get here. ParaCache is not currently used.");
+                Debug.Fail("Should not get here. ParaCache is not currently used.");
             }
 
             return isAtCaretUnitBoundary;
@@ -904,7 +904,7 @@ namespace MS.Internal.PtsHost
             {
                 // (c) cached - when using ParaChache
                 Debug.Assert(textDetails.fsktd == PTS.FSKTEXTDETAILS.fsktdCached);
-                Debug.Assert(false, "Should not get here. ParaCache is not currently used.");
+                Debug.Fail("Should not get here. ParaCache is not currently used.");
             }
 
             return nextCaretPosition;
@@ -1061,7 +1061,7 @@ namespace MS.Internal.PtsHost
             {
                 // (c) cached - when using ParaChache
                 Debug.Assert(textDetails.fsktd == PTS.FSKTEXTDETAILS.fsktdCached);
-                Debug.Assert(false, "Should not get here. ParaCache is not currently used.");
+                Debug.Fail("Should not get here. ParaCache is not currently used.");
             }
 
             // Recreate text line
@@ -1363,7 +1363,7 @@ namespace MS.Internal.PtsHost
             {
                 // (c) cached - when using ParaChache
                 Debug.Assert(textDetails.fsktd == PTS.FSKTEXTDETAILS.fsktdCached);
-                Debug.Assert(false, "Should not get here. ParaCache is not currently used.");
+                Debug.Fail("Should not get here. ParaCache is not currently used.");
             }
         }
 

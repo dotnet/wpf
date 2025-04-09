@@ -80,7 +80,7 @@ namespace MS.Internal.Data
         /// </summary>
         protected override void StartListening(object source)
         {
-            Debug.Assert(false, "Should never get here");
+            Debug.Fail("Should never get here");
         }
 
         /// <summary>
@@ -88,7 +88,7 @@ namespace MS.Internal.Data
         /// </summary>
         protected override void StopListening(object source)
         {
-            Debug.Assert(false, "Should never get here");
+            Debug.Fail("Should never get here");
         }
 
         /// <summary>

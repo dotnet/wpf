@@ -288,7 +288,7 @@ namespace MS.Internal.Ink.InkSerializedFormat
 
                                 byte[] out_buffer = Compressor.DecompressPropertyData(in_buffer);
 
-                                System.Diagnostics.Debug.Assert(false, "ExtendedProperties for points are not supported");
+                                System.Diagnostics.Debug.Fail("ExtendedProperties for points are not supported");
 
                                 // skip the bytes in both success & failure cases
                                 // Note: Point ExtendedProperties are discarded

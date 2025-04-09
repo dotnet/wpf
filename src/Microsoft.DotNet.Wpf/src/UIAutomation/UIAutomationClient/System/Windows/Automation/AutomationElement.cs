@@ -383,7 +383,7 @@ namespace System.Windows.Automation
 
             //Not true - some AE's from properties and event args (eg. SelectionItem.SelectionContainer,
             //and FocuEventArgs's previousFocus) don't currently come through CacheReqest
-            //Debug.Assert(false, "Should always have runtimeID from cache at ctor.");
+            //Debug.Fail("Should always have runtimeID from cache at ctor.");
 
             // false -> return null (instead of throwing) if not available; true->wrap
             int [] val = LookupCachedValue(AutomationElement.RuntimeIdProperty, false, true) as int[];

@@ -286,7 +286,7 @@ namespace System.Windows.Controls
             if (IsInternalGenerated)
             {
                 // we should never reach here since this header is instantiated by HeaderRowPresenter.
-                Debug.Assert(false, "Method ShouldSerializeProperty is called on an internally generated GridViewColumnHeader.");
+                Debug.Fail("Method ShouldSerializeProperty is called on an internally generated GridViewColumnHeader.");
 
                 // nothing should be serialized from this object.
                 return false;

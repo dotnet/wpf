@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
 // Description: Class to manage UIAutomation events and how they relate to winevents
@@ -100,7 +100,7 @@ namespace MS.Internal.AutomationProxies
                 default:
                     // Commented out to remove annoying asserts temporarily.
                     // (See work item PS1254940.)
-                    //System.Diagnostics.Debug.Assert(false, "Unexpected idObject " + idObject);
+                    //System.Diagnostics.Debug.Fail("Unexpected idObject " + idObject);
                     return;
             }
             

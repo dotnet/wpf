@@ -1602,7 +1602,7 @@ namespace System.Windows.Forms.Integration
                     case System.Windows.Input.FocusNavigationDirection.Last:
                         break;
                     default:
-                        Debug.Assert(false, "Unknown FocusNavigationDirection");
+                        Debug.Fail("Unknown FocusNavigationDirection");
                         break;
                 }
             }

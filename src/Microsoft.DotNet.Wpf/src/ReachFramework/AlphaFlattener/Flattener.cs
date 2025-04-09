@@ -1171,7 +1171,7 @@ namespace Microsoft.Internal.AlphaFlattener
             }
             else
             {
-                Debug.Assert(false, "Wrong Primitive type");
+                Debug.Fail("Wrong Primitive type");
             }
         }
 

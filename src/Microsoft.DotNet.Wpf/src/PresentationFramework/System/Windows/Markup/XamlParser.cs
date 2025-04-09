@@ -520,7 +520,7 @@ namespace System.Windows.Markup
                     WriteConstructorParameterType(xamlConstructorParameterTypeNode);
                     break;
                 default:
-                    Debug.Assert(false,"Unknown Xaml Token.");
+                    Debug.Fail("Unknown Xaml Token.");
                     break;
             }
 

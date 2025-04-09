@@ -825,7 +825,7 @@ namespace System.Windows
                 }
                 else
                 {
-                    Debug.Assert(false, "We do not have support for DynamicResource within unshared template content");
+                    Debug.Fail("We do not have support for DynamicResource within unshared template content");
                 }
             }
 
@@ -1047,7 +1047,7 @@ namespace System.Windows
                             break;
 
                         default:
-                            Debug.Assert(false, "Unknown enum value");
+                            Debug.Fail("Unknown enum value");
                             break;
                     }
                 }

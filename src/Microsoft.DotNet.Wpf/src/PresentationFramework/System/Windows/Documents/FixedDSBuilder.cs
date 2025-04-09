@@ -104,7 +104,7 @@ namespace System.Windows.Documents
             if (_visitedArray[index])
             {
                 // this has already been added to the document structure
-                // Debug.Assert(false, "An element is referenced in the document structure multiple times");
+                // Debug.Fail("An element is referenced in the document structure multiple times");
                 return; // ignore this reference
             }
             FixedNode fn = (FixedNode)_fixedNodes[index];

@@ -1175,7 +1175,7 @@ namespace MS.Internal.Ink
             }
             else
             {
-                Debug.Assert(false, "Unknown behavior");
+                Debug.Fail("Unknown behavior");
             }
 
             return flag;
@@ -1212,7 +1212,7 @@ namespace MS.Internal.Ink
             }
             else
             {
-                Debug.Assert(false, "Unknown behavior");
+                Debug.Fail("Unknown behavior");
             }
 
             return flag;

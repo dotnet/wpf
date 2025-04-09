@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
 // Description: Static class that manages prefetching and normalization
@@ -96,13 +96,13 @@ namespace MS.Internal.Automation
 
             if (index != response.TreeStructure.Length)
             {
-                Debug.Assert(false, "Internal error: got malformed tree description string (extra chars at end)");
+                Debug.Fail("Internal error: got malformed tree description string (extra chars at end)");
                 return null;
             }
 
             if (response.RequestedData != null && propIndex != response.RequestedData.GetLength(0))
             {
-                Debug.Assert(false, "Internal error: mismatch between count of property buckets and nodes claiming them");
+                Debug.Fail("Internal error: mismatch between count of property buckets and nodes claiming them");
                 return null;
             }
 
@@ -222,7 +222,7 @@ namespace MS.Internal.Automation
             // Ensure that end node tag is present...
             if (treeDescription[index] != ')')
             {
-                Debug.Assert(false, "Internal error: Got malformed tree description string, missing closing paren");
+                Debug.Fail("Internal error: Got malformed tree description string, missing closing paren");
                 return null;
             }
 

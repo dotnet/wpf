@@ -1234,7 +1234,7 @@ namespace MS.Internal.TextFormatting
                     break;
 
                 default:
-                    Debug.Assert(false, "Not supported TextDecorationUnit");
+                    Debug.Fail("Not supported TextDecorationUnit");
                     break;
             }
 
@@ -1261,7 +1261,7 @@ namespace MS.Internal.TextFormatting
                     break;
 
                 default:
-                    Debug.Assert(false, "Not supported TextDecorationUnit");
+                    Debug.Fail("Not supported TextDecorationUnit");
                     break;
             }
 
@@ -2312,7 +2312,7 @@ namespace MS.Internal.TextFormatting
                         break;
 
                     default:
-                        Debug.Assert(false, "Unsupported installed object!");
+                        Debug.Fail("Unsupported installed object!");
                         break;
                 }
             }

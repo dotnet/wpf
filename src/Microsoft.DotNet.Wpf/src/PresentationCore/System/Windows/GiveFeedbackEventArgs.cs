@@ -37,7 +37,7 @@ namespace System.Windows
         {
             if (!DragDrop.IsValidDragDropEffects(effects))
             {
-                Debug.Assert(false, "Invalid effects");
+                Debug.Fail("Invalid effects");
             }
 
             this._effects = effects;

@@ -261,7 +261,7 @@ namespace MS.Internal.AutomationProxies
                                 catch (Exception e)
                                 {
                                     // If we get here there is a problem in a proxy that needs fixing.
-                                    Debug.Assert(false, "Exception raising event " + eventId + " for prop " + ecp._idProp + " on hwnd " + hwnd + "\n" + e.Message);
+                                    Debug.Fail("Exception raising event " + eventId + " for prop " + ecp._idProp + " on hwnd " + hwnd + "\n" + e.Message);
 
                                     if (Misc.IsCriticalException(e))
                                     {
@@ -306,7 +306,7 @@ namespace MS.Internal.AutomationProxies
                                 catch (Exception e)
                                 {
                                     // If we get here there is a problem in a proxy that needs fixing.
-                                    Debug.Assert(false, "Exception raising event " + eventId + " for prop " + ecp._idProp + " on hwnd " + hwnd + "\n" + e.Message);
+                                    Debug.Fail("Exception raising event " + eventId + " for prop " + ecp._idProp + " on hwnd " + hwnd + "\n" + e.Message);
 
                                     if (Misc.IsCriticalException(e))
                                     {

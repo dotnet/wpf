@@ -4983,7 +4983,7 @@ namespace System.Windows.Markup
                         }
                         else
                         {
-                            Debug.Assert(false, "The only remaining option is attached property, which is not allowed in xaml for content properties");
+                            Debug.Fail("The only remaining option is attached property, which is not allowed in xaml for content properties");
                         }
                     }
                 }

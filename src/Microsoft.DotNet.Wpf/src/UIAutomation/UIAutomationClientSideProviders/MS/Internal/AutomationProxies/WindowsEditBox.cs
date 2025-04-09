@@ -553,7 +553,7 @@ namespace MS.Internal.AutomationProxies
             int cb = Marshal.SizeOf(typeof(NativeMethods.LOGFONT));
             if (Misc.GetObjectW(hfont, cb, ref logfont) != cb)
             {
-                Debug.Assert(false, "WindowsEditBox.GetObject unexpected return value");
+                Debug.Fail("WindowsEditBox.GetObject unexpected return value");
             }
             return logfont;
         }

@@ -672,7 +672,7 @@ namespace Microsoft.Internal.AlphaFlattener
 
             if (_brush != null)
             {
-                Debug.Assert(false, "IsOpaque(" + _brush.GetType() + ") not handled");
+                Debug.Fail("IsOpaque(" + _brush.GetType() + ") not handled");
             }
 
             if ((_brushList != null) && (_brushList.Count != 0))
@@ -768,7 +768,7 @@ namespace Microsoft.Internal.AlphaFlattener
 
             if (_brush != null)
             {
-                Debug.Assert(false, "IsTransparent not handled " + _brush.GetType());
+                Debug.Fail("IsTransparent not handled " + _brush.GetType());
             }
 
             return false;
@@ -1072,7 +1072,7 @@ namespace Microsoft.Internal.AlphaFlattener
             }
             else
             {
-                Debug.Assert(false, "Unexpected brush type");
+                Debug.Fail("Unexpected brush type");
                 depth = 2;
             }
 
@@ -1930,7 +1930,7 @@ namespace Microsoft.Internal.AlphaFlattener
 
             if (!brushHandled)
             {
-                Debug.Assert(false, "Unhandled GradientBrush type");
+                Debug.Fail("Unhandled GradientBrush type");
             }
 
             //
@@ -2886,7 +2886,7 @@ namespace Microsoft.Internal.AlphaFlattener
                     return false;
                 }
 
-                Debug.Assert(false, "Unhandled GradientBrush type");
+                Debug.Fail("Unhandled GradientBrush type");
                 return false;
             }
 
@@ -2911,7 +2911,7 @@ namespace Microsoft.Internal.AlphaFlattener
                 return false;
             }
 
-            Debug.Assert(false, "Unandled Brush type");
+            Debug.Fail("Unandled Brush type");
 
             return false;
         }
@@ -3200,7 +3200,7 @@ namespace Microsoft.Internal.AlphaFlattener
                     return db;
                 }
 
-                Debug.Assert(false, "Unhandled ImageBrush.ImageSource type");
+                Debug.Fail("Unhandled ImageBrush.ImageSource type");
             }
 
             return brush;
@@ -3342,7 +3342,7 @@ namespace Microsoft.Internal.AlphaFlattener
                 return brushB.BlendDrawingBrush(colorA, reverse);
             }
 
-            Debug.Assert(false, "Brush type not expected");
+            Debug.Fail("Brush type not expected");
 
             return brushB;
         }
@@ -3495,7 +3495,7 @@ namespace Microsoft.Internal.AlphaFlattener
                     }
                     else
                     {
-                        Debug.Assert(false, "Unexpected brush type");
+                        Debug.Fail("Unexpected brush type");
                     }
                 }
 
@@ -3615,7 +3615,7 @@ namespace Microsoft.Internal.AlphaFlattener
                 }
                 else
                 {
-                    Debug.Assert(false, "Single brush expected");
+                    Debug.Fail("Single brush expected");
                 }
             }
         }

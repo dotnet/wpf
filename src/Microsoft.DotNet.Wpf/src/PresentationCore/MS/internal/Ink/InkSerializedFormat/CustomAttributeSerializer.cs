@@ -938,7 +938,7 @@ namespace MS.Internal.Ink.InkSerializedFormat
                                             }
                                             default:
                                             {
-                                                Debug.Assert(false, "Missing case statement!");
+                                                Debug.Fail("Missing case statement!");
                                                 break;
                                             }
                                         }

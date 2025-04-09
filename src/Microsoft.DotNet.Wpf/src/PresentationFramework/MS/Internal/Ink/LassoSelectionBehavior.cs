@@ -93,7 +93,7 @@ namespace MS.Internal.Ink
                     }
                 case InkCanvasEditingMode.Select:
                     {
-                        Debug.Assert(false, "Cannot switch from Select to Select in mid-stroke");
+                        Debug.Fail("Cannot switch from Select to Select in mid-stroke");
                         break;
                     }
                 case InkCanvasEditingMode.None:
@@ -106,7 +106,7 @@ namespace MS.Internal.Ink
                         break;
                     }
                 default:
-                    Debug.Assert(false, "Unknown InkCanvasEditingMode!");
+                    Debug.Fail("Unknown InkCanvasEditingMode!");
                     break;
             }
         }

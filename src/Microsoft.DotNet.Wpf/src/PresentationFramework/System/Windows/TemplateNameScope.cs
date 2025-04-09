@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
 /***************************************************************************\
@@ -195,7 +195,7 @@ namespace System.Windows
         /// <param name="name">Name of the element</param>
         void INameScope.UnregisterName(string name)
         {
-            Debug.Assert(false, "Should never be trying to unregister via this interface for templates");
+            Debug.Fail("Should never be trying to unregister via this interface for templates");
         }
 
         /// <summary>

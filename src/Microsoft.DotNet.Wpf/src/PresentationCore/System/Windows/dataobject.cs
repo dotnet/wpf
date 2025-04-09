@@ -227,7 +227,8 @@ public sealed unsafe partial class DataObject :
     /// </summary>
     public void SetData(string format, object? data)
     {
-        ArgumentNullException.ThrowIfNull(data, nameof(data));
+        ArgumentNullException.ThrowIfNull(data);
+
         _innerData.SetData(format, data);
     }
 
@@ -236,7 +237,8 @@ public sealed unsafe partial class DataObject :
     /// </summary>
     public void SetData(Type format, object? data)
     {
-        ArgumentNullException.ThrowIfNull(data, nameof(data));
+        ArgumentNullException.ThrowIfNull(data);
+
         _innerData.SetData(format, data);
     }
 
@@ -246,7 +248,8 @@ public sealed unsafe partial class DataObject :
     /// </summary>
     public void SetData(string format, object? data, bool autoConvert)
     {
-        ArgumentNullException.ThrowIfNull(data, nameof(data));
+        ArgumentNullException.ThrowIfNull(data);
+        
         _innerData.SetData(format, autoConvert, data);
     }
 

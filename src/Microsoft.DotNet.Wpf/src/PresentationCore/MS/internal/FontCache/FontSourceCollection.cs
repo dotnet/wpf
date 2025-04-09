@@ -1,15 +1,7 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
-//
-// 
-// Description: The FontSourceCollection class represents a collection of font files.
-//
-//
-
 using System.IO;
-using System.Collections.Generic;
-
 using MS.Internal.Text.TextInterface;
 
 namespace MS.Internal.FontCache
@@ -29,17 +21,22 @@ namespace MS.Internal.FontCache
     /// </summary>
     internal class FontSourceCollection : IFontSourceCollection
     {
-        public FontSourceCollection(Uri folderUri)
-        {
-            Initialize(folderUri, false);
-        }
+        // _isFileSystemFolder flag makes sense only when _uri.IsFile is set to true.
+        private bool _isFileSystemFolder;
+        private volatile IList<IFontSource> _fontSources;
+
+        /// <summary>
+        /// The location of the source collection, usually we expect a folder URI location.
+        /// </summary>
+        private readonly Uri _uri;
+        /// <summary>
+        /// Flag to indicate that only composite fonts in the provided URI location should be retrieved. 
+        /// </summary>
+        private readonly bool _tryGetCompositeFontsOnly;
+
+        public FontSourceCollection(Uri folderUri) : this(folderUri, false) { }
 
         public FontSourceCollection(Uri folderUri, bool tryGetCompositeFontsOnly)
-        {
-            Initialize(folderUri, tryGetCompositeFontsOnly);
-        }
-
-        private void Initialize(Uri folderUri, bool tryGetCompositeFontsOnly)
         {
             _uri = folderUri;
             _tryGetCompositeFontsOnly = tryGetCompositeFontsOnly;
@@ -68,7 +65,7 @@ namespace MS.Internal.FontCache
                 string localPath = _uri.LocalPath;
 
                 // Decide if it's a file or folder based on syntax, not contents of file system
-                _isFileSystemFolder = localPath[localPath.Length - 1] == Path.DirectorySeparatorChar;
+                _isFileSystemFolder = localPath[^1] == Path.DirectorySeparatorChar;
             }
         }
 
@@ -145,34 +142,16 @@ namespace MS.Internal.FontCache
             }
         }
 
-
-        #region IEnumerable<FontSource> Members
-
         IEnumerator<IFontSource> IEnumerable<IFontSource>.GetEnumerator()
         {
             SetFontSources();
             return _fontSources.GetEnumerator();
         }
 
-        #endregion
-
-        #region IEnumerable Members
-
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
         {
             SetFontSources();
             return _fontSources.GetEnumerator();
         }
-
-        #endregion  
-
-        private Uri                          _uri;
-
-        // _isFileSystemFolder flag makes sense only when _uri.IsFile is set to true.
-        private bool                         _isFileSystemFolder;
-        private volatile IList<IFontSource>  _fontSources;
-
-        // Flag to indicate that only composite fonts in the provided URI location should be retrieved.        
-        private bool                         _tryGetCompositeFontsOnly;
     }
 }

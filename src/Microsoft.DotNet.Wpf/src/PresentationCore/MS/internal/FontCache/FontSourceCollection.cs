@@ -11,8 +11,9 @@ namespace MS.Internal.FontCache;
 /// </summary>
 internal class FontSourceCollection : IFontSourceCollection
 {
-    // _isFileSystemFolder flag makes sense only when _uri.IsFile is set to true.
-    private bool _isFileSystemFolder;
+    /// <summary>
+    /// Lazily-initialized font source collection.
+    /// </summary>
     private volatile IList<IFontSource> _fontSources;
 
     /// <summary>
@@ -23,6 +24,10 @@ internal class FontSourceCollection : IFontSourceCollection
     /// Flag to indicate that only composite fonts in the provided URI location should be retrieved. 
     /// </summary>
     private readonly bool _tryGetCompositeFontsOnly;
+    /// <summary>
+    /// Flag set to <see langword="true"/> when <see cref="_uri"/> represents a file URI and points to a folder.
+    /// </summary>
+    private readonly bool _isFileSystemFolder;
 
     public FontSourceCollection(Uri folderUri) : this(folderUri, false) { }
 
@@ -39,17 +44,7 @@ internal class FontSourceCollection : IFontSourceCollection
         {
             _fontSources = new List<IFontSource>(1) { new FontSource(_uri, isComposite) };
         }
-        else
-        {
-            InitializeDirectoryProperties();
-        }
-    }
-
-    private void InitializeDirectoryProperties()
-    {
-        _isFileSystemFolder = false;
-
-        if (_uri.IsFile)
+        else if (_uri.IsFile)
         {
             // Get the local path
             string localPath = _uri.LocalPath;
@@ -61,7 +56,7 @@ internal class FontSourceCollection : IFontSourceCollection
 
     private void SetFontSources()
     {
-        if (_fontSources != null)
+        if (_fontSources is not null)
             return;
 
         lock (this)
@@ -135,12 +130,14 @@ internal class FontSourceCollection : IFontSourceCollection
     IEnumerator<IFontSource> IEnumerable<IFontSource>.GetEnumerator()
     {
         SetFontSources();
+
         return _fontSources.GetEnumerator();
     }
 
     System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
     {
         SetFontSources();
+
         return _fontSources.GetEnumerator();
     }
 }

@@ -69,22 +69,6 @@ namespace MS.Internal
         }
 
         /// <summary>
-        /// Sibling to <see cref="GetCurrentToken"/> with a minor difference; if there's no token, it will return <see cref="ReadOnlySpan{char}.Empty"/>
-        /// instead of <see langword="null"/>. However, if used with <see cref="NextToken()"/>, this edge-case is never hit.
-        /// </summary>
-        /// <returns></returns>
-        internal ReadOnlySpan<char> GetCurrentTokenAsSpan()
-        {
-            // If there's no current token, return empty span
-            if (_currentTokenIndex < 0)
-            {
-                return ReadOnlySpan<char>.Empty;
-            }
-
-            return _str.AsSpan().Slice(_currentTokenIndex, _currentTokenLength);
-        }
-
-        /// <summary>
         /// Throws an exception if there is any non-whitespace left un-parsed.
         /// </summary>
         internal void LastTokenRequired()
@@ -116,20 +100,6 @@ namespace MS.Internal
             }
 
             return GetCurrentToken();
-        }
-
-        /// <summary>
-        /// Sibling to <see cref="NextTokenRequired"/>; advances to the next token, throws an <see cref="InvalidOperationException"/> if not present.
-        /// </summary>
-        /// <returns>The next token found</returns>
-        internal ReadOnlySpan<char> NextTokenRequiredAsSpan()
-        {
-            if (!NextToken(false))
-            {
-                throw new InvalidOperationException(SR.Format(SR.TokenizerHelperPrematureStringTermination, _str));
-            }
-
-            return GetCurrentTokenAsSpan();
         }
 
         /// <summary>
@@ -207,7 +177,7 @@ namespace MS.Internal
 
                         // if at zero which it always should for now
                         // break out of the loop
-                        if (0 == quoteCount)
+                        if (quoteCount == 0)
                         {
                             ++_charIndex; // move past the quote
                             break;

@@ -169,7 +169,7 @@ internal ref struct ValueTokenizerHelper
 
                     // if at zero which it always should for now
                     // break out of the loop
-                    if (0 == quoteCount)
+                    if (quoteCount == 0)
                     {
                         ++_charIndex; // move past the quote
                         break;

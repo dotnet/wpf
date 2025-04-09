@@ -58,10 +58,11 @@ namespace System.Windows
 
             ValueTokenizerHelper tokenizer = new(stringValue, cultureInfo);
 
-            return new KeySpline(double.Parse(tokenizer.NextTokenRequired(), cultureInfo),
-                                 double.Parse(tokenizer.NextTokenRequired(), cultureInfo),
-                                 double.Parse(tokenizer.NextTokenRequired(), cultureInfo),
-                                 double.Parse(tokenizer.NextTokenRequired(), cultureInfo));
+            return new KeySpline(
+                double.Parse(tokenizer.NextTokenRequired(), cultureInfo),
+                double.Parse(tokenizer.NextTokenRequired(), cultureInfo),
+                double.Parse(tokenizer.NextTokenRequired(), cultureInfo),
+                double.Parse(tokenizer.NextTokenRequired(), cultureInfo));
         }
 
         /// <summary>

@@ -185,7 +185,7 @@
     <SolidColorBrush x:Key="TextControlButtonBackgroundPressed" Color="{StaticResource SystemColorHighlightColor}" />
     <SolidColorBrush x:Key="TextControlButtonBorderBrush" Color="Transparent" />
     <SolidColorBrush x:Key="TextControlButtonBorderBrushPointerOver" Color="Transparent" />
-    <SolidColorBrush x:Key="TextControlButtonBorderBrushPressed" Color="{StaticResource SystemColorHighlightColor}" />
+    <SolidColorBrush x:Key="TextControlButtonBorderBrushPressed" Color="Transparent" />
     <SolidColorBrush x:Key="TextControlButtonForeground" Color="{StaticResource SystemColorButtonTextColor}" />
     <SolidColorBrush x:Key="TextControlButtonForegroundPointerOver" Color="{StaticResource SystemColorHighlightColor}" />
     <SolidColorBrush x:Key="TextControlButtonForegroundPressed" Color="{StaticResource SystemColorHighlightTextColor}" />

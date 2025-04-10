@@ -12,28 +12,27 @@ public sealed class MessageBoxTests
      * MessageBoxButton range is from 0x00000000 to 0x00000006
      * Values outside are illegal.
      */
-    public static TheoryData<MessageBoxButton> InvalidMessageBoxButtonData =>
-        new TheoryData<MessageBoxButton>
-        {
-            unchecked((MessageBoxButton)((0xFFFFFFFF))),
-            (MessageBoxButton)(0x00000007)
-        };
-
     [WpfTheory]
-    [MemberData(nameof(InvalidMessageBoxButtonData))]
-    public void Show_InvalidMessageBoxButton_ThrowsInvalidEnumArgumentException(MessageBoxButton invalidButton)
+    [InlineData(0xFFFFFFFF)]
+    [InlineData(0x00000007)]
+    public void Show_InvalidMessageBoxButton_ThrowsInvalidEnumArgumentException(uint invalidButton)
     {
         InvalidEnumArgumentException exception = Assert.Throws<InvalidEnumArgumentException>(() =>
-            MessageBox.Show("Test Message", "Test Caption", invalidButton));
+            MessageBox.Show("Test Message", "Test Caption", (MessageBoxButton) invalidButton));
         Assert.Contains("button", exception.Message);
     }
 
+    /*
+     * MessageBoxButton range is from 0x00000000 to 0x00000006
+     * Values outside are illegal.
+     */
     [WpfTheory]
-    [MemberData(nameof(InvalidMessageBoxButtonData))]
-    public void Show_WithOwner_InvalidMessageBoxButton_ThrowsInvalidEnumArgumentException(MessageBoxButton invalidButton)
+    [InlineData(0xFFFFFFFF)]
+    [InlineData(0x00000007)]
+    public void Show_WithOwner_InvalidMessageBoxButton_ThrowsInvalidEnumArgumentException(uint invalidButton)
     {
         InvalidEnumArgumentException exception = Assert.Throws<InvalidEnumArgumentException>(() =>
-            MessageBox.Show(new Window(), "Test Message", "Test Caption", invalidButton));
+            MessageBox.Show(new Window(), "Test Message", "Test Caption", (MessageBoxButton) invalidButton));
         Assert.Contains("button", exception.Message);
     }
 
@@ -41,30 +40,31 @@ public sealed class MessageBoxTests
      * MessageBoxResult range is from 0 to 11 with 8 and 9 not used.
      * Values outside are illegal as well as values 8 and 9.
      */
-    public static TheoryData<MessageBoxResult> InvalidMessageBoxResultData =>
-        new TheoryData<MessageBoxResult>
-        {
-            (MessageBoxResult)(-1), // Just outside enum range
-            (MessageBoxResult)8, // Not defined - hole in enum range
-            (MessageBoxResult)9, // Not defined - hole in enum range
-            (MessageBoxResult)12 // Just outside enum range
-        };
-
     [WpfTheory]
-    [MemberData(nameof(InvalidMessageBoxResultData))]
-    public void Show_InvalidMessageBoxResult_ThrowsInvalidEnumArgumentException(MessageBoxResult invalidResult)
+    [InlineData(-1)]    // Just outside enum range
+    [InlineData(8)]     // Not defined - hole in enum range
+    [InlineData(9)]     // Not defined - hole in enum range
+    [InlineData(12)]    // Just outside enum range
+    public void Show_InvalidMessageBoxResult_ThrowsInvalidEnumArgumentException(int invalidResult)
     {
         InvalidEnumArgumentException exception = Assert.Throws<InvalidEnumArgumentException>(() =>
-            MessageBox.Show("Test Message", "Test Caption", MessageBoxButton.OK, MessageBoxImage.None, invalidResult));
+            MessageBox.Show("Test Message", "Test Caption", MessageBoxButton.OK, MessageBoxImage.None, (MessageBoxResult) invalidResult));
         Assert.Contains("defaultResult", exception.Message);
     }
 
+    /*
+     * MessageBoxResult range is from 0 to 11 with 8 and 9 not used.
+     * Values outside are illegal as well as values 8 and 9.
+     */
     [WpfTheory]
-    [MemberData(nameof(InvalidMessageBoxResultData))]
-    public void Show_WithOwner_InvalidMessageBoxResult_ThrowsInvalidEnumArgumentException(MessageBoxResult invalidResult)
+    [InlineData(-1)]    // Just outside enum range
+    [InlineData(8)]     // Not defined - hole in enum range
+    [InlineData(9)]     // Not defined - hole in enum range
+    [InlineData(12)]    // Just outside enum range
+    public void Show_WithOwner_InvalidMessageBoxResult_ThrowsInvalidEnumArgumentException(int invalidResult)
     {
         InvalidEnumArgumentException exception = Assert.Throws<InvalidEnumArgumentException>(() =>
-            MessageBox.Show(new Window(), "Test Message", "Test Caption", MessageBoxButton.OK, MessageBoxImage.None, invalidResult));
+            MessageBox.Show(new Window(), "Test Message", "Test Caption", MessageBoxButton.OK, MessageBoxImage.None, (MessageBoxResult) invalidResult));
         Assert.Contains("defaultResult", exception.Message);
     }
 
@@ -72,73 +72,87 @@ public sealed class MessageBoxTests
      * MessageBoxImage values are 0x00000000, 0x00000010, 0x00000020, 0x00000030, 0x00000040
      * Any other value is illegal.
      */
-    public static TheoryData<MessageBoxImage> InvalidMessageBoxImageData =>
-        new TheoryData<MessageBoxImage>
-        {
-            unchecked((MessageBoxImage)(0xFFFFFFFF)),
-            unchecked((MessageBoxImage)(0x00000001)),
-            unchecked((MessageBoxImage)(0x0000000F)),
-            unchecked((MessageBoxImage)(0x00000011)),
-            unchecked((MessageBoxImage)(0x0000001F)),
-            unchecked((MessageBoxImage)(0x00000021)),
-            unchecked((MessageBoxImage)(0x0000002F)),
-            unchecked((MessageBoxImage)(0x00000031)),
-            unchecked((MessageBoxImage)(0x0000003F)),
-            unchecked((MessageBoxImage)(0x00000041)),
-            unchecked((MessageBoxImage)(0x0000004F)),
-        };
-
     [WpfTheory]
-    [MemberData(nameof(InvalidMessageBoxImageData))]
-    public void Show_InvalidMessageBoxImage_ThrowsInvalidEnumArgumentException(MessageBoxImage invalidImage)
+    [InlineData(0xFFFFFFFF)]
+    [InlineData(0x00000001)]
+    [InlineData(0x0000000F)]
+    [InlineData(0x00000011)]
+    [InlineData(0x0000001F)]
+    [InlineData(0x00000021)]
+    [InlineData(0x0000002F)]
+    [InlineData(0x00000031)]
+    [InlineData(0x0000003F)]
+    [InlineData(0x00000041)]
+    [InlineData(0x0000004F)]
+    public void Show_InvalidMessageBoxImage_ThrowsInvalidEnumArgumentException(uint invalidImage)
     {
         InvalidEnumArgumentException exception = Assert.Throws<InvalidEnumArgumentException>(() =>
-            MessageBox.Show("Test Message", "Test Caption", MessageBoxButton.OK, invalidImage, MessageBoxResult.None));
+            MessageBox.Show("Test Message", "Test Caption", MessageBoxButton.OK, (MessageBoxImage) invalidImage, MessageBoxResult.None));
         Assert.Contains("icon", exception.Message);
     }
 
+    /*
+     * MessageBoxImage values are 0x00000000, 0x00000010, 0x00000020, 0x00000030, 0x00000040
+     * Any other value is illegal.
+     */
     [WpfTheory]
-    [MemberData(nameof(InvalidMessageBoxImageData))]
-    public void Show_WithOwner_InvalidMessageBoxImage_ThrowsInvalidEnumArgumentException(MessageBoxImage invalidImage)
+    [InlineData(0xFFFFFFFF)]
+    [InlineData(0x00000001)]
+    [InlineData(0x0000000F)]
+    [InlineData(0x00000011)]
+    [InlineData(0x0000001F)]
+    [InlineData(0x00000021)]
+    [InlineData(0x0000002F)]
+    [InlineData(0x00000031)]
+    [InlineData(0x0000003F)]
+    [InlineData(0x00000041)]
+    [InlineData(0x0000004F)]
+    public void Show_WithOwner_InvalidMessageBoxImage_ThrowsInvalidEnumArgumentException(uint invalidImage)
     {
         InvalidEnumArgumentException exception = Assert.Throws<InvalidEnumArgumentException>(() =>
-            MessageBox.Show(new Window(), "Test Message", "Test Caption", MessageBoxButton.OK, invalidImage, MessageBoxResult.None));
+            MessageBox.Show(new Window(), "Test Message", "Test Caption", MessageBoxButton.OK, (MessageBoxImage) invalidImage, MessageBoxResult.None));
         Assert.Contains("icon", exception.Message);
     }
 
     /*
      * MessageBoxOptions values are 0x00000000, 0x00020000, 0x00080000, 0x00100000, 0x00200000
      */
-    public static TheoryData<MessageBoxOptions> InvalidMessageBoxOptionsData =>
-        new TheoryData<MessageBoxOptions>
-        {
-            unchecked((MessageBoxOptions)(0xFFFFFFFF)),
-            unchecked((MessageBoxOptions)(0x00000001)),
-            unchecked((MessageBoxOptions)(0x0001FFFF)),
-            unchecked((MessageBoxOptions)(0x00020001)),
-            unchecked((MessageBoxOptions)(0x0007FFFF)),
-            unchecked((MessageBoxOptions)(0x00080001)),
-            unchecked((MessageBoxOptions)(0x000FFFFF)),
-            unchecked((MessageBoxOptions)(0x00100001)),
-            unchecked((MessageBoxOptions)(0x001FFFFF)),
-            unchecked((MessageBoxOptions)(0x00200001))
-        };
-
     [WpfTheory]
-    [MemberData(nameof(InvalidMessageBoxOptionsData))]
-    public void Show_InvalidMessageBoxOptions_ThrowsInvalidEnumArgumentException(MessageBoxOptions invalidOptions)
+    [InlineData(0xFFFFFFFF)]
+    [InlineData(0x00000001)]
+    [InlineData(0x0001FFFF)]
+    [InlineData(0x00020001)]
+    [InlineData(0x0007FFFF)]
+    [InlineData(0x00080001)]
+    [InlineData(0x000FFFFF)]
+    [InlineData(0x00100001)]
+    [InlineData(0x001FFFFF)]
+    [InlineData(0x00200001)]
+    public void Show_InvalidMessageBoxOptions_ThrowsInvalidEnumArgumentException(uint invalidOptions)
     {
         InvalidEnumArgumentException exception = Assert.Throws<InvalidEnumArgumentException>(() =>
-            MessageBox.Show("Test Message", "Test Caption", MessageBoxButton.OK, MessageBoxImage.None, MessageBoxResult.None, invalidOptions));
+            MessageBox.Show("Test Message", "Test Caption", MessageBoxButton.OK, MessageBoxImage.None, MessageBoxResult.None, (MessageBoxOptions) invalidOptions));
         Assert.Contains("options", exception.Message);
     }
 
+    /*
+     * MessageBoxOptions values are 0x00000000, 0x00020000, 0x00080000, 0x00100000, 0x00200000
+     */
     [WpfTheory]
-    [MemberData(nameof(InvalidMessageBoxOptionsData))]
-    public void Show_WithOwner_InvalidMessageBoxOptions_ThrowsInvalidEnumArgumentException(MessageBoxOptions invalidOptions)
+    [InlineData(0xFFFFFFFF)]
+    [InlineData(0x00000001)]
+    [InlineData(0x0001FFFF)]
+    [InlineData(0x00020001)]
+    [InlineData(0x0007FFFF)]
+    [InlineData(0x00080001)]
+    [InlineData(0x000FFFFF)]
+    [InlineData(0x00100001)]
+    [InlineData(0x001FFFFF)]
+    [InlineData(0x00200001)]
+    public void Show_WithOwner_InvalidMessageBoxOptions_ThrowsInvalidEnumArgumentException(uint invalidOptions)
     {
         var exception = Assert.Throws<InvalidEnumArgumentException>(() =>
-            MessageBox.Show(new Window(), "Test Message", "Test Caption", MessageBoxButton.OK, MessageBoxImage.None, MessageBoxResult.None, invalidOptions));
+            MessageBox.Show(new Window(), "Test Message", "Test Caption", MessageBoxButton.OK, MessageBoxImage.None, MessageBoxResult.None, (MessageBoxOptions) invalidOptions));
         Assert.Contains("options", exception.Message);
     }
 

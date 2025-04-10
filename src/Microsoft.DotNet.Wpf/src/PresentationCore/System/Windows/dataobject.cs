@@ -225,19 +225,33 @@ public sealed unsafe partial class DataObject :
     /// <summary>
     ///  Stores the specified data and its associated format in this instance.
     /// </summary>
-    public void SetData(string format, object? data) => _innerData.SetData(format, data);
+    public void SetData(string format, object? data)
+    {
+        ArgumentNullException.ThrowIfNull(data);
+
+        _innerData.SetData(format, data);
+    }
 
     /// <summary>
     ///  Stores the specified data and its associated class type in this instance.
     /// </summary>
-    public void SetData(Type format, object? data) => _innerData.SetData(format, data);
+    public void SetData(Type format, object? data)
+    {
+        ArgumentNullException.ThrowIfNull(data);
+
+        _innerData.SetData(format, data);
+    }
 
     /// <summary>
     ///  Stores the specified data and its associated format in this instance, using the automatic conversion parameter
     ///  to specify whether the data can be converted to another format.
     /// </summary>
-    public void SetData(string format, object? data, bool autoConvert) =>
+    public void SetData(string format, object? data, bool autoConvert)
+    {
+        ArgumentNullException.ThrowIfNull(data);
+        
         _innerData.SetData(format, autoConvert, data);
+    }
 
     // WinForms and WPF have these defined in a different order.
     void IDataObjectInternal.SetData(string format, bool autoConvert, object? data) => SetData(format, data, autoConvert);

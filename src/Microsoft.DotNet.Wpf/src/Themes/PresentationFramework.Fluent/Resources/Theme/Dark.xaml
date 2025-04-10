@@ -22,6 +22,9 @@
     <Color x:Key="KeyboardFocusBorderColor">#87FFFFFF</Color>
     <SolidColorBrush x:Key="KeyboardFocusBorderColorBrush" Color="{StaticResource KeyboardFocusBorderColor}" />
 
+    <!-- Common Variables -->
+    <Thickness x:Key="TextControlBorderThemeThicknessFocused">1,1,1,2</Thickness>
+
     <!--  Colors  -->
 
     <Color x:Key="TextFillColorPrimary">#FFFFFF</Color>
@@ -317,6 +320,17 @@
 
     <!--  Control brushes  -->
     
+    <!-- Common control brushes -->
+    <SolidColorBrush x:Key="TextControlButtonBackground" Color="{StaticResource ControlFillColorTransparent}" />
+    <SolidColorBrush x:Key="TextControlButtonBackgroundPointerOver" Color="{StaticResource SubtleFillColorSecondary}" />
+    <SolidColorBrush x:Key="TextControlButtonBackgroundPressed" Color="{StaticResource SubtleFillColorTertiary}" />
+    <SolidColorBrush x:Key="TextControlButtonBorderBrush" Color="{StaticResource ControlFillColorTransparent}" />
+    <SolidColorBrush x:Key="TextControlButtonBorderBrushPointerOver" Color="{StaticResource ControlFillColorTransparent}" />
+    <SolidColorBrush x:Key="TextControlButtonBorderBrushPressed" Color="{StaticResource ControlFillColorTransparent}" />
+    <SolidColorBrush x:Key="TextControlButtonForeground" Color="{StaticResource TextFillColorSecondary}" />
+    <SolidColorBrush x:Key="TextControlButtonForegroundPointerOver" Color="{StaticResource TextFillColorSecondary}" />
+    <SolidColorBrush x:Key="TextControlButtonForegroundPressed" Color="{StaticResource TextFillColorTertiary}" />
+
     <!--  BreadcrumbBar  -->
     <SolidColorBrush x:Key="BreadcrumbBarNormalForegroundBrush" Color="{StaticResource TextFillColorPrimary}" />
     <SolidColorBrush x:Key="BreadcrumbBarHoverForegroundBrush" Color="{StaticResource TextFillColorSecondary}" />
@@ -740,7 +754,7 @@
     <SolidColorBrush x:Key="TextControlFocusedBorderBrush" Color="{StaticResource SystemAccentColorLight2}" />
     <SolidColorBrush x:Key="TextControlBorderBrushDisabled" Color="{StaticResource ControlStrokeColorDefault}" />
     <SolidColorBrush x:Key="TextControlPlaceholderForeground" Color="{StaticResource TextFillColorSecondary}" />
-    <SolidColorBrush x:Key="TextControlButtonForeground" Color="{StaticResource TextFillColorSecondary}" />
+    <!-- <SolidColorBrush x:Key="TextControlButtonForeground" Color="{StaticResource TextFillColorSecondary}" /> -->
 
     <!--  Thumb  -->
     <SolidColorBrush x:Key="ThumbBackground" Color="{StaticResource ControlStrongFillColorDefault}" />

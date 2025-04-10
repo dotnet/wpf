@@ -65,7 +65,8 @@
     <Duration x:Key="ControlFasterAnimationDuration">00:00:00.083</Duration>
     -->
   <Thickness x:Key="TextControlBorderThemeThickness">1</Thickness>
-  <Thickness x:Key="TextControlBorderThemeThicknessFocused">2</Thickness>
+  <!-- Moved to Light, Dark and HC resource files -->
+  <!-- <Thickness x:Key="TextControlBorderThemeThicknessFocused">2</Thickness> -->
   <Thickness x:Key="TextControlThemePadding">10,5,10,6</Thickness>
   <system:Double x:Key="ContentControlFontSize">14</system:Double>
   <system:Double x:Key="TextControlThemeMinHeight">24</system:Double>
@@ -101,6 +102,8 @@
   <Color x:Key="KeyboardFocusBorderColor">#FFFFFF</Color>
   <!--  Same as SystemColorWindowTextColor  -->
   <SolidColorBrush x:Key="KeyboardFocusBorderColorBrush" Color="{StaticResource SystemColorWindowTextColor}" />
+  <!-- Common Variables -->
+  <Thickness x:Key="TextControlBorderThemeThicknessFocused">2</Thickness>
   <!-- Accent Colors and Brushes -->
   <DynamicResource x:Key="SystemAccentColor" ResourceKey="{x:Static SystemColors.AccentColorKey}" />
   <DynamicResource x:Key="SystemAccentColorLight1" ResourceKey="{x:Static SystemColors.AccentColorLight1Key}" />
@@ -211,6 +214,16 @@
   <SolidColorBrush x:Key="SystemColorHotlightColorBrush" Color="{StaticResource SystemColorHotlightColor}" />
   <SolidColorBrush x:Key="SystemColorGrayTextColorBrush" Color="{StaticResource SystemColorGrayTextColor}" />
   <!--  Control brushes  -->
+  <!-- Common control brushes -->
+  <SolidColorBrush x:Key="TextControlButtonBackground" Color="Transparent" />
+  <SolidColorBrush x:Key="TextControlButtonBackgroundPointerOver" Color="Transparent" />
+  <SolidColorBrush x:Key="TextControlButtonBackgroundPressed" Color="{StaticResource SystemColorHighlightColor}" />
+  <SolidColorBrush x:Key="TextControlButtonBorderBrush" Color="Transparent" />
+  <SolidColorBrush x:Key="TextControlButtonBorderBrushPointerOver" Color="Transparent" />
+  <SolidColorBrush x:Key="TextControlButtonBorderBrushPressed" Color="{StaticResource SystemColorHighlightColor}" />
+  <SolidColorBrush x:Key="TextControlButtonForeground" Color="{StaticResource SystemColorButtonTextColor}" />
+  <SolidColorBrush x:Key="TextControlButtonForegroundPointerOver" Color="{StaticResource SystemColorHighlightColor}" />
+  <SolidColorBrush x:Key="TextControlButtonForegroundPressed" Color="{StaticResource SystemColorHighlightTextColor}" />
   <!--  BreadcrumbBar  -->
   <SolidColorBrush x:Key="BreadcrumbBarNormalForegroundBrush" Color="{StaticResource SystemColorButtonTextColor}" />
   <SolidColorBrush x:Key="BreadcrumbBarHoverForegroundBrush" Color="{StaticResource SystemColorHighlightColor}" />
@@ -556,7 +569,7 @@
   <SolidColorBrush x:Key="TextControlFocusedBorderBrush" Color="{StaticResource SystemColorHighlightColor}" />
   <SolidColorBrush x:Key="TextControlBorderBrushDisabled" Color="{StaticResource SystemColorGrayTextColor}" />
   <SolidColorBrush x:Key="TextControlPlaceholderForeground" Color="{StaticResource SystemColorGrayTextColor}" />
-  <SolidColorBrush x:Key="TextControlButtonForeground" Color="{StaticResource SystemColorWindowTextColor}" />
+  <!-- <SolidColorBrush x:Key="TextControlButtonForeground" Color="{StaticResource SystemColorWindowTextColor}" /> -->
   <!--  Thumb  -->
   <SolidColorBrush x:Key="ThumbBackground" Color="{StaticResource SystemColorButtonTextColor}" />
   <!--  ThumbRate  -->

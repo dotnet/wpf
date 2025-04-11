@@ -974,8 +974,11 @@ namespace System.Windows
     {
         OK = 0,
         OKCancel = 1,
+        AbortRetryIgnore = 2,
         YesNoCancel = 3,
         YesNo = 4,
+        RetryCancel = 5,
+        CancelTryContinue = 6,
     }
     public enum MessageBoxImage
     {
@@ -1003,8 +1006,13 @@ namespace System.Windows
         None = 0,
         OK = 1,
         Cancel = 2,
+        Abort = 3,
+        Retry = 4,
+        Ignore = 5,
         Yes = 6,
         No = 7,
+        TryAgain = 10,
+        Continue = 11,
     }
     [System.Windows.Markup.ContentPropertyAttribute("Setters")]
     public sealed partial class MultiDataTrigger : System.Windows.TriggerBase, System.Windows.Markup.IAddChild

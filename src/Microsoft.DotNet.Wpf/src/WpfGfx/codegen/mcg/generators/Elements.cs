@@ -55,7 +55,6 @@ namespace MS.Internal.MilCodeGen.Generators
                     cs.WriteBlock(
                         [[inline]]
                             using MS.Internal;
-                            using MS.Internal.KnownBoxes;
                             using MS.Utility;
                             using System.ComponentModel;
                             using System.Windows.Input;

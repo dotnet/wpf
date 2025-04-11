@@ -287,11 +287,10 @@ namespace System.Windows.Media
 
 
             // Initializations
-            Type typeofThis = typeof(GradientBrush);
             ColorInterpolationModeProperty =
                   RegisterProperty("ColorInterpolationMode",
                                    typeof(ColorInterpolationMode),
-                                   typeofThis,
+                                   typeof(GradientBrush),
                                    ColorInterpolationMode.SRgbLinearInterpolation,
                                    new PropertyChangedCallback(ColorInterpolationModePropertyChanged),
                                    new ValidateValueCallback(System.Windows.Media.ValidateEnums.IsColorInterpolationModeValid),
@@ -300,7 +299,7 @@ namespace System.Windows.Media
             MappingModeProperty =
                   RegisterProperty("MappingMode",
                                    typeof(BrushMappingMode),
-                                   typeofThis,
+                                   typeof(GradientBrush),
                                    BrushMappingMode.RelativeToBoundingBox,
                                    new PropertyChangedCallback(MappingModePropertyChanged),
                                    new ValidateValueCallback(System.Windows.Media.ValidateEnums.IsBrushMappingModeValid),
@@ -309,7 +308,7 @@ namespace System.Windows.Media
             SpreadMethodProperty =
                   RegisterProperty("SpreadMethod",
                                    typeof(GradientSpreadMethod),
-                                   typeofThis,
+                                   typeof(GradientBrush),
                                    GradientSpreadMethod.Pad,
                                    new PropertyChangedCallback(SpreadMethodPropertyChanged),
                                    new ValidateValueCallback(System.Windows.Media.ValidateEnums.IsGradientSpreadMethodValid),
@@ -318,7 +317,7 @@ namespace System.Windows.Media
             GradientStopsProperty =
                   RegisterProperty("GradientStops",
                                    typeof(GradientStopCollection),
-                                   typeofThis,
+                                   typeof(GradientBrush),
                                    new FreezableDefaultValueFactory(GradientStopCollection.Empty),
                                    new PropertyChangedCallback(GradientStopsPropertyChanged),
                                    null,

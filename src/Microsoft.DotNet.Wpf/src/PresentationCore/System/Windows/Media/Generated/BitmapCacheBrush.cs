@@ -525,12 +525,12 @@ namespace System.Windows.Media
 
 
             // Initializations
-            Type typeofThis = typeof(BitmapCacheBrush);
-            StaticInitialize(typeofThis);
+            StaticInitialize();
+
             TargetProperty =
                   RegisterProperty("Target",
                                    typeof(Visual),
-                                   typeofThis,
+                                   typeof(BitmapCacheBrush),
                                    null,
                                    new PropertyChangedCallback(TargetPropertyChanged),
                                    null,
@@ -539,7 +539,7 @@ namespace System.Windows.Media
             BitmapCacheProperty =
                   RegisterProperty("BitmapCache",
                                    typeof(BitmapCache),
-                                   typeofThis,
+                                   typeof(BitmapCacheBrush),
                                    null,
                                    new PropertyChangedCallback(BitmapCachePropertyChanged),
                                    null,
@@ -548,7 +548,7 @@ namespace System.Windows.Media
             AutoLayoutContentProperty =
                   RegisterProperty("AutoLayoutContent",
                                    typeof(bool),
-                                   typeofThis,
+                                   typeof(BitmapCacheBrush),
                                    true,
                                    new PropertyChangedCallback(AutoLayoutContentPropertyChanged),
                                    null,
@@ -557,7 +557,7 @@ namespace System.Windows.Media
             InternalTargetProperty =
                   RegisterProperty("InternalTarget",
                                    typeof(Visual),
-                                   typeofThis,
+                                   typeof(BitmapCacheBrush),
                                    null,
                                    new PropertyChangedCallback(InternalTargetPropertyChanged),
                                    null,
@@ -566,7 +566,7 @@ namespace System.Windows.Media
             AutoWrapTargetProperty =
                   RegisterProperty("AutoWrapTarget",
                                    typeof(bool),
-                                   typeofThis,
+                                   typeof(BitmapCacheBrush),
                                    false,
                                    new PropertyChangedCallback(AutoWrapTargetPropertyChanged),
                                    null,

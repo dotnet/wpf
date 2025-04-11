@@ -44,36 +44,34 @@ namespace System.Windows.Media.Animation
         /// </summary>
         static RectAnimation()
         {
-            Type typeofProp = typeof(Rect?);
-            Type typeofThis = typeof(RectAnimation);
             PropertyChangedCallback propCallback = new PropertyChangedCallback(AnimationFunction_Changed);
             ValidateValueCallback validateCallback = new ValidateValueCallback(ValidateFromToOrByValue);
 
             FromProperty = DependencyProperty.Register(
                 "From",
-                typeofProp,
-                typeofThis,
+                typeof(Rect?),
+                typeof(RectAnimation),
                 new PropertyMetadata((Rect?)null, propCallback),
                 validateCallback);
 
             ToProperty = DependencyProperty.Register(
                 "To",
-                typeofProp,
-                typeofThis,
+                typeof(Rect?),
+                typeof(RectAnimation),
                 new PropertyMetadata((Rect?)null, propCallback),
                 validateCallback);
 
             ByProperty = DependencyProperty.Register(
                 "By",
-                typeofProp,
-                typeofThis,
+                typeof(Rect?),
+                typeof(RectAnimation),
                 new PropertyMetadata((Rect?)null, propCallback),
                 validateCallback);
 
             EasingFunctionProperty = DependencyProperty.Register(
                 "EasingFunction",
                 typeof(IEasingFunction),
-                typeofThis);
+                typeof(RectAnimation));
         }
 
 

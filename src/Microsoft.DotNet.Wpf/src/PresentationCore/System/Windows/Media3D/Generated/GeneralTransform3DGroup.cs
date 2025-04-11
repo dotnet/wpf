@@ -188,11 +188,10 @@ namespace System.Windows.Media.Media3D
 
 
             // Initializations
-            Type typeofThis = typeof(GeneralTransform3DGroup);
             ChildrenProperty =
                   RegisterProperty("Children",
                                    typeof(GeneralTransform3DCollection),
-                                   typeofThis,
+                                   typeof(GeneralTransform3DGroup),
                                    new FreezableDefaultValueFactory(GeneralTransform3DCollection.Empty),
                                    null,
                                    null,

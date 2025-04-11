@@ -173,11 +173,10 @@ namespace System.Windows.Media.Animation
 
 
             // Initializations
-            Type typeofThis = typeof(TimelineGroup);
             ChildrenProperty =
                   RegisterProperty("Children",
                                    typeof(TimelineCollection),
-                                   typeofThis,
+                                   typeof(TimelineGroup),
                                    new FreezableDefaultValueFactory(TimelineCollection.Empty),
                                    null,
                                    null,

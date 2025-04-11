@@ -265,11 +265,10 @@ namespace System.Windows.Media
 
 
             // Initializations
-            Type typeofThis = typeof(PathFigure);
             StartPointProperty =
                   RegisterProperty("StartPoint",
                                    typeof(Point),
-                                   typeofThis,
+                                   typeof(PathFigure),
                                    new Point(),
                                    null,
                                    null,
@@ -278,7 +277,7 @@ namespace System.Windows.Media
             IsFilledProperty =
                   RegisterProperty("IsFilled",
                                    typeof(bool),
-                                   typeofThis,
+                                   typeof(PathFigure),
                                    true,
                                    null,
                                    null,
@@ -287,7 +286,7 @@ namespace System.Windows.Media
             SegmentsProperty =
                   RegisterProperty("Segments",
                                    typeof(PathSegmentCollection),
-                                   typeofThis,
+                                   typeof(PathFigure),
                                    new FreezableDefaultValueFactory(PathSegmentCollection.Empty),
                                    null,
                                    null,
@@ -296,7 +295,7 @@ namespace System.Windows.Media
             IsClosedProperty =
                   RegisterProperty("IsClosed",
                                    typeof(bool),
-                                   typeofThis,
+                                   typeof(PathFigure),
                                    false,
                                    null,
                                    null,

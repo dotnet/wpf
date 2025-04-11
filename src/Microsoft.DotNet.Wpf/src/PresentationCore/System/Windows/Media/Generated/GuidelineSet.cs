@@ -367,11 +367,10 @@ namespace System.Windows.Media
 
 
             // Initializations
-            Type typeofThis = typeof(GuidelineSet);
             GuidelinesXProperty =
                   RegisterProperty("GuidelinesX",
                                    typeof(DoubleCollection),
-                                   typeofThis,
+                                   typeof(GuidelineSet),
                                    new FreezableDefaultValueFactory(DoubleCollection.Empty),
                                    new PropertyChangedCallback(GuidelinesXPropertyChanged),
                                    null,
@@ -380,7 +379,7 @@ namespace System.Windows.Media
             GuidelinesYProperty =
                   RegisterProperty("GuidelinesY",
                                    typeof(DoubleCollection),
-                                   typeofThis,
+                                   typeof(GuidelineSet),
                                    new FreezableDefaultValueFactory(DoubleCollection.Empty),
                                    new PropertyChangedCallback(GuidelinesYPropertyChanged),
                                    null,
@@ -389,7 +388,7 @@ namespace System.Windows.Media
             IsDynamicProperty =
                   RegisterProperty("IsDynamic",
                                    typeof(bool),
-                                   typeofThis,
+                                   typeof(GuidelineSet),
                                    false,
                                    new PropertyChangedCallback(IsDynamicPropertyChanged),
                                    null,

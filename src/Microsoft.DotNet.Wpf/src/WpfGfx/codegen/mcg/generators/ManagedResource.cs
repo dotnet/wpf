@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -1002,7 +1002,7 @@ namespace MS.Internal.MilCodeGen.Generators
                         [[field.DPPropertyName]] =
                               RegisterProperty("[[field.PropertyName]]",
                                                typeof([[field.Type.ManagedName]]),
-                                               typeofThis,
+                                               typeof([[resource.Name]]),
                                                [[GetDefaultValue(field)]],
                                                [[propertyChangedCallback]],
                     [[/inline]]
@@ -1225,7 +1225,7 @@ namespace MS.Internal.MilCodeGen.Generators
             string staticCtorText = _staticCtorText.ToString();
             if (resource.UseStaticInitialize)
             {
-                staticCtorText = "StaticInitialize(typeofThis);\n" + staticCtorText;
+                staticCtorText = "StaticInitialize();\n\n" + staticCtorText;
             }
             
             if (!cs.IsEmpty || !_staticCtorText.IsEmpty)
@@ -1241,7 +1241,6 @@ namespace MS.Internal.MilCodeGen.Generators
                             [[cs]]
 
                             // Initializations
-                            Type typeofThis = typeof([[resource.Name]]);
                             [[staticCtorText]]
                         }
 

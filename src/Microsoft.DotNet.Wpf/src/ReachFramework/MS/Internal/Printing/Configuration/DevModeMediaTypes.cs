@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
 /*++
@@ -33,6 +33,6 @@ namespace MS.Internal.Printing.Configuration
         /// </summary>
         public const uint DMMEDIA_GLOSSY = 0x0003;
 
-        private static readonly uint DMMEDIA_USER = 0x100;
+        private const uint DMMEDIA_USER = 0x100;
     }
 }

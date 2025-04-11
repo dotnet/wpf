@@ -35,5 +35,5 @@ namespace System.Windows.Media.Imaging
         ///     Rotate270 - Rotate 270 degrees
         /// </summary>
         Rotate270 = 3,
-    }   
+    }
 }

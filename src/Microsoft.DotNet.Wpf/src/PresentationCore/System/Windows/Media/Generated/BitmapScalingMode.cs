@@ -47,5 +47,5 @@ namespace System.Windows.Media
         ///     NearestNeighbor - Rendering engine will use nearest-neighbor interpolation.
         /// </summary>
         NearestNeighbor = 3,
-    }   
+    }
 }

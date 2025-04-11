@@ -39,5 +39,5 @@ namespace System.Windows.Media
         ///     possible
         /// </summary>
         ClearType = 3,
-    }   
+    }
 }

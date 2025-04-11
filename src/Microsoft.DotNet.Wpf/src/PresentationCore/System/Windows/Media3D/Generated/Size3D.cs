@@ -50,7 +50,7 @@ namespace System.Windows.Media.Media3D
         /// </returns>
         /// <param name='size1'>The first Size3D to compare</param>
         /// <param name='size2'>The second Size3D to compare</param>
-        public static bool operator == (Size3D size1, Size3D size2)
+        public static bool operator ==(Size3D size1, Size3D size2)
         {
             return size1.X == size2.X &&
                    size1.Y == size2.Y &&
@@ -68,7 +68,7 @@ namespace System.Windows.Media.Media3D
         /// </returns>
         /// <param name='size1'>The first Size3D to compare</param>
         /// <param name='size2'>The second Size3D to compare</param>
-        public static bool operator != (Size3D size1, Size3D size2)
+        public static bool operator !=(Size3D size1, Size3D size2)
         {
             return !(size1 == size2);
         }
@@ -84,7 +84,7 @@ namespace System.Windows.Media.Media3D
         /// </returns>
         /// <param name='size1'>The first Size3D to compare</param>
         /// <param name='size2'>The second Size3D to compare</param>
-        public static bool Equals (Size3D size1, Size3D size2)
+        public static bool Equals(Size3D size1, Size3D size2)
         {
             if (size1.IsEmpty)
             {

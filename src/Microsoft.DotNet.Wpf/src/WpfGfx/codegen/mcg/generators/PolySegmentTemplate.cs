@@ -144,7 +144,7 @@ namespace MS.Internal.MilCodeGen.ResourceModel
                                                 Point pt = new Point();
                                                 int count = points.Count;             
                                                 
-                                                for (int i=0; i<count; i++)
+                                                for (int i = 0; i < count; i++)
                                                 {
                                                     pt = points.Internal_GetItem(i);
                                                     pt *= matrix;
@@ -175,7 +175,7 @@ namespace MS.Internal.MilCodeGen.ResourceModel
                                     internal override void SerializeData(StreamGeometryContext ctx)
                                     {
                                         ctx.[[instance.TypeName]]To(Points, IsStroked, IsSmoothJoin);
-                                    }                                    
+                                    }
                                     #endregion
                                 }
                                 #endregion

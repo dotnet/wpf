@@ -45,5 +45,5 @@ namespace System.Windows.Media
         ///     FlipXY - The combination of FlipX and FlipY.  The base tile is drawn untransformed.
         /// </summary>
         FlipXY = 3,
-    }   
+    }
 }

@@ -107,7 +107,7 @@ namespace MS.Internal.MilCodeGen.Generators
 
             processMessageFile.WriteBlock(
                 [[inline]]
-                    switch(nCmdType)
+                    switch (nCmdType)
                     {
                         [[m_processMessage.ToString()]]
     

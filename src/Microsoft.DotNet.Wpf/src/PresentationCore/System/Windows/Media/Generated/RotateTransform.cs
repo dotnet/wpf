@@ -95,7 +95,7 @@ namespace System.Windows.Media
         {
             get
             {
-                return (double) GetValue(AngleProperty);
+                return (double)GetValue(AngleProperty);
             }
             set
             {
@@ -110,7 +110,7 @@ namespace System.Windows.Media
         {
             get
             {
-                return (double) GetValue(CenterXProperty);
+                return (double)GetValue(CenterXProperty);
             }
             set
             {
@@ -125,7 +125,7 @@ namespace System.Windows.Media
         {
             get
             {
-                return (double) GetValue(CenterYProperty);
+                return (double)GetValue(CenterYProperty);
             }
             set
             {

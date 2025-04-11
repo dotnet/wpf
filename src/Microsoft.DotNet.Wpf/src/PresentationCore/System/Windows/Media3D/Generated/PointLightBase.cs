@@ -107,7 +107,7 @@ namespace System.Windows.Media.Media3D
         {
             get
             {
-                return (Point3D) GetValue(PositionProperty);
+                return (Point3D)GetValue(PositionProperty);
             }
             set
             {
@@ -122,7 +122,7 @@ namespace System.Windows.Media.Media3D
         {
             get
             {
-                return (double) GetValue(RangeProperty);
+                return (double)GetValue(RangeProperty);
             }
             set
             {
@@ -137,7 +137,7 @@ namespace System.Windows.Media.Media3D
         {
             get
             {
-                return (double) GetValue(ConstantAttenuationProperty);
+                return (double)GetValue(ConstantAttenuationProperty);
             }
             set
             {
@@ -152,7 +152,7 @@ namespace System.Windows.Media.Media3D
         {
             get
             {
-                return (double) GetValue(LinearAttenuationProperty);
+                return (double)GetValue(LinearAttenuationProperty);
             }
             set
             {
@@ -167,7 +167,7 @@ namespace System.Windows.Media.Media3D
         {
             get
             {
-                return (double) GetValue(QuadraticAttenuationProperty);
+                return (double)GetValue(QuadraticAttenuationProperty);
             }
             set
             {

@@ -122,7 +122,7 @@ namespace System.Windows.Media
         {
             get
             {
-                return (Drawing) GetValue(DrawingProperty);
+                return (Drawing)GetValue(DrawingProperty);
             }
             set
             {

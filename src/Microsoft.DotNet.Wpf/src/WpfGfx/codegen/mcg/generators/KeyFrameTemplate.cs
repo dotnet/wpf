@@ -222,7 +222,7 @@ namespace MS.Internal.MilCodeGen.ResourceModel
                                     double keyFrameProgress);
                                 
                                 #endregion
-                            }                 
+                            }
                     [[/inline]]
                     );
                 

@@ -476,10 +476,10 @@ namespace System.Windows.Media.Effects
         {
             base.OnInheritanceContextChangedCore(args);
 
-            for (int i=0; i<this.Count; i++)
+            for (int i = 0; i < this.Count; i++)
             {
                 DependencyObject inheritanceChild = _collection[i];
-                if (inheritanceChild!= null && inheritanceChild.InheritanceContext == this)
+                if (inheritanceChild != null && inheritanceChild.InheritanceContext == this)
                 {
                     inheritanceChild.OnInheritanceContextChanged(args);
                 }
@@ -572,7 +572,7 @@ namespace System.Windows.Media.Effects
         /// </summary>
         protected override void CloneCore(Freezable source)
         {
-            BitmapEffectCollection sourceBitmapEffectCollection = (BitmapEffectCollection) source;
+            BitmapEffectCollection sourceBitmapEffectCollection = (BitmapEffectCollection)source;
 
             base.CloneCore(source);
 
@@ -582,7 +582,7 @@ namespace System.Windows.Media.Effects
 
             for (int i = 0; i < count; i++)
             {
-                BitmapEffect newValue = (BitmapEffect) sourceBitmapEffectCollection._collection[i].Clone();
+                BitmapEffect newValue = (BitmapEffect)sourceBitmapEffectCollection._collection[i].Clone();
                 OnFreezablePropertyChanged(/* oldValue = */ null, newValue);
                 _collection.Add(newValue);
 
@@ -594,7 +594,7 @@ namespace System.Windows.Media.Effects
         /// </summary>
         protected override void CloneCurrentValueCore(Freezable source)
         {
-            BitmapEffectCollection sourceBitmapEffectCollection = (BitmapEffectCollection) source;
+            BitmapEffectCollection sourceBitmapEffectCollection = (BitmapEffectCollection)source;
 
             base.CloneCurrentValueCore(source);
 
@@ -604,7 +604,7 @@ namespace System.Windows.Media.Effects
 
             for (int i = 0; i < count; i++)
             {
-                BitmapEffect newValue = (BitmapEffect) sourceBitmapEffectCollection._collection[i].CloneCurrentValue();
+                BitmapEffect newValue = (BitmapEffect)sourceBitmapEffectCollection._collection[i].CloneCurrentValue();
                 OnFreezablePropertyChanged(/* oldValue = */ null, newValue);
                 _collection.Add(newValue);
 
@@ -616,7 +616,7 @@ namespace System.Windows.Media.Effects
         /// </summary>
         protected override void GetAsFrozenCore(Freezable source)
         {
-            BitmapEffectCollection sourceBitmapEffectCollection = (BitmapEffectCollection) source;
+            BitmapEffectCollection sourceBitmapEffectCollection = (BitmapEffectCollection)source;
 
             base.GetAsFrozenCore(source);
 
@@ -626,7 +626,7 @@ namespace System.Windows.Media.Effects
 
             for (int i = 0; i < count; i++)
             {
-                BitmapEffect newValue = (BitmapEffect) sourceBitmapEffectCollection._collection[i].GetAsFrozen();
+                BitmapEffect newValue = (BitmapEffect)sourceBitmapEffectCollection._collection[i].GetAsFrozen();
                 OnFreezablePropertyChanged(/* oldValue = */ null, newValue);
                 _collection.Add(newValue);
 
@@ -638,7 +638,7 @@ namespace System.Windows.Media.Effects
         /// </summary>
         protected override void GetCurrentValueAsFrozenCore(Freezable source)
         {
-            BitmapEffectCollection sourceBitmapEffectCollection = (BitmapEffectCollection) source;
+            BitmapEffectCollection sourceBitmapEffectCollection = (BitmapEffectCollection)source;
 
             base.GetCurrentValueAsFrozenCore(source);
 
@@ -648,7 +648,7 @@ namespace System.Windows.Media.Effects
 
             for (int i = 0; i < count; i++)
             {
-                BitmapEffect newValue = (BitmapEffect) sourceBitmapEffectCollection._collection[i].GetCurrentValueAsFrozen();
+                BitmapEffect newValue = (BitmapEffect)sourceBitmapEffectCollection._collection[i].GetCurrentValueAsFrozen();
                 OnFreezablePropertyChanged(/* oldValue = */ null, newValue);
                 _collection.Add(newValue);
 

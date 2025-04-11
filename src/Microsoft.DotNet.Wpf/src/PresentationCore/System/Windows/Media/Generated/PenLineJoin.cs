@@ -30,5 +30,5 @@ namespace System.Windows.Media
         ///     Round - Round join.
         /// </summary>
         Round = 2,
-    }   
+    }
 }

@@ -30,6 +30,6 @@ namespace System.Windows.Media.Imaging
                    (value == Rotation.Rotate90) || 
                    (value == Rotation.Rotate180) || 
                    (value == Rotation.Rotate270);
-        }                                
+        }
     }
 }

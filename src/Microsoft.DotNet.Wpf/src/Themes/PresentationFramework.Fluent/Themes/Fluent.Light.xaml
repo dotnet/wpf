@@ -3424,14 +3424,14 @@
       <Grid Margin="8,6,8,6">
         <Grid.ColumnDefinitions>
           <ColumnDefinition Width="Auto" SharedSizeGroup="MenuItemIconColumnGroup" />
-          <ColumnDefinition Width="Auto" />
+          <ColumnDefinition Width="Auto" SharedSizeGroup="MenuItemCheckBoxIconColumnGroup" />
           <ColumnDefinition Width="*" />
           <ColumnDefinition Width="Auto" SharedSizeGroup="Shortcut" />
         </Grid.ColumnDefinitions>
-        <Border x:Name="CheckBoxIconBorder" Grid.Column="1" Width="20" Height="20" Margin="0,0,6,0" VerticalAlignment="Center" Background="{DynamicResource CheckBoxBackground}" BorderBrush="{DynamicResource CheckBoxBorderBrush}" BorderThickness="1" CornerRadius="4" Visibility="Collapsed">
+        <Border x:Name="CheckBoxIconBorder" Grid.Column="0" Width="20" Height="20" Margin="0,0,6,0" VerticalAlignment="Center" Background="{DynamicResource CheckBoxBackground}" BorderBrush="{DynamicResource CheckBoxBorderBrush}" BorderThickness="1" CornerRadius="4" Visibility="Collapsed">
           <TextBlock x:Name="CheckBoxIcon" HorizontalAlignment="Center" VerticalAlignment="Center" FontFamily="{DynamicResource SymbolThemeFontFamily}" FontSize="16" Text="" TextAlignment="Center" />
         </Border>
-        <ContentPresenter x:Name="Icon" Grid.Column="0" Margin="0,0,6,0" VerticalAlignment="Center" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" Content="{TemplateBinding Icon}" />
+        <ContentPresenter x:Name="Icon" Grid.Column="1" Margin="0,0,6,0" VerticalAlignment="Center" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" Content="{TemplateBinding Icon}" />
         <ContentPresenter Grid.Column="2" ContentSource="Header" RecognizesAccessKey="True" Margin="{TemplateBinding Padding}" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" TextElement.Foreground="{TemplateBinding Foreground}" />
         <TextBlock x:Name="InputGestureText" Grid.Column="3" Margin="25,0,0,0" VerticalAlignment="Bottom" DockPanel.Dock="Right" FontSize="11" Foreground="{DynamicResource TextFillColorDisabledBrush}" Text="{TemplateBinding InputGestureText}" />
       </Grid>

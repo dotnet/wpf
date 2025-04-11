@@ -229,14 +229,14 @@
             <Grid Margin="8,6,8,6">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto" SharedSizeGroup="MenuItemIconColumnGroup"/>
-                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto" SharedSizeGroup="MenuItemCheckBoxIconColumnGroup"/>
                     <ColumnDefinition Width="*" />
                     <ColumnDefinition Width="Auto" SharedSizeGroup="Shortcut" />
                 </Grid.ColumnDefinitions>
 
                 <Border
                     x:Name="CheckBoxIconBorder"
-                    Grid.Column="1"
+                    Grid.Column="0"
                     Width="20"
                     Height="20"
                     Margin="0,0,6,0"
@@ -258,7 +258,7 @@
 
                 <ContentPresenter
                     x:Name="Icon"
-                    Grid.Column="0"
+                    Grid.Column="1"
                     Margin="0,0,6,0"
                     VerticalAlignment="Center"
                     SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"

@@ -1,4 +1,4 @@
-﻿// Licensed to the .NET Foundation under one or more agreements.
+// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
 //
@@ -1696,6 +1696,7 @@ namespace System.Windows
         #endregion
     }
 
+    [DebuggerDisplay("{Key}")]
     internal class DeferredResourceReference : DeferredReference
     {
         #region Constructor
@@ -1703,7 +1704,8 @@ namespace System.Windows
         internal DeferredResourceReference(ResourceDictionary dictionary, object key)
         {
             _dictionary = dictionary;
-            _keyOrValue = key;
+            _key = key;
+            _value = key;
         }
 
         #endregion Constructor
@@ -1716,22 +1718,11 @@ namespace System.Windows
             // the dictionary else just retun the cached value
             if (_dictionary != null)
             {
-                object value  = _dictionary.GetValue(_keyOrValue, out bool canCache);
+                object value  = _dictionary.GetValue(_key, out bool canCache);
                 if (canCache)
                 {
-                    // Note that we are replacing the _keyorValue field
-                    // with the value and deleting the _dictionary field.
-                    if (FrameworkAppContextSwitches.DisableDynamicResourceOptimization)
-                    {
-                        _keyOrValue = value;
-                        RemoveFromDictionary();
-                    }
-                    else
-                    {
-                        RemoveFromDictionary();
-                        // Update after removal from dictionary as we need the key for proper removal
-                        _keyOrValue = value;
-                    }
+                    _value = value;
+                    RemoveFromDictionary();
                 }
 
                 // Freeze if this value originated from a style or template
@@ -1758,7 +1749,7 @@ namespace System.Windows
                 return value;
             }
 
-            return _keyOrValue;
+            return _value;
         }
 
         // Tell the listeners that we're inflated.
@@ -1780,11 +1771,11 @@ namespace System.Windows
             {
                 // Take a peek at the element type of the ElementStartRecord
                 // within the ResourceDictionary's deferred content.
-                return _dictionary.GetValueType(_keyOrValue, out bool _);
+                return _dictionary.GetValueType(_value, out bool _);
             }
             else
             {
-                return _keyOrValue?.GetType();
+                return _value?.GetType();
             }
         }
 
@@ -1793,19 +1784,12 @@ namespace System.Windows
         {
             if (_dictionary != null)
             {
-                if (FrameworkAppContextSwitches.DisableDynamicResourceOptimization)
-                {
-                    _dictionary.WeakDeferredResourceReferences.Remove(this);
-                }
-                else
-                {
-                    _dictionary.DeferredResourceReferencesList.Remove(this);
-                }
+                _dictionary.RemoveDeferredResourceReference(this);
                 _dictionary = null;
             }
         }
 
-        internal virtual void AddInflatedListener(ResourceReferenceExpression listener)
+        internal void AddInflatedListener(ResourceReferenceExpression listener)
         {
             if (_inflatedList == null)
             {
@@ -1814,7 +1798,7 @@ namespace System.Windows
             _inflatedList.Add(listener);
         }
 
-        internal virtual void RemoveInflatedListener(ResourceReferenceExpression listener)
+        internal void RemoveInflatedListener(ResourceReferenceExpression listener)
         {
             Debug.Assert(_inflatedList != null);
 
@@ -1825,9 +1809,9 @@ namespace System.Windows
 
         #region Properties
 
-        internal virtual object Key
+        internal object Key
         {
-            get { return _keyOrValue; }
+            get { return _key; }
         }
 
         internal ResourceDictionary Dictionary
@@ -1836,15 +1820,9 @@ namespace System.Windows
             set { _dictionary = value; }
         }
 
-        internal virtual object Value
+        internal object Value
         {
-            get { return _keyOrValue; }
-            set { _keyOrValue = value; }
-        }
-
-        internal virtual bool IsUnset
-        {
-            get { return false; }
+            get { return _value; }
         }
 
         internal bool IsInflated
@@ -1857,13 +1835,14 @@ namespace System.Windows
         #region Data
 
         private ResourceDictionary _dictionary;
-        protected object _keyOrValue;
+        protected object _key;
+        protected object _value;
         private WeakReferenceList _inflatedList;
 
         #endregion Data
     }
 
-    internal class DeferredAppResourceReference : DeferredResourceReference
+    internal sealed class DeferredAppResourceReference : DeferredResourceReference
     {
         #region Constructor
 
@@ -1896,7 +1875,7 @@ namespace System.Windows
         #endregion Methods
     }
 
-    internal class DeferredThemeResourceReference : DeferredResourceReference
+    internal sealed class DeferredThemeResourceReference : DeferredResourceReference
     {
         #region Constructor
 
@@ -1931,7 +1910,7 @@ namespace System.Windows
                         {
                             // Note that we are replacing the _keyorValue field
                             // with the value and deleting the _dictionary field.
-                            Value = value;
+                            _value = value;
                             Dictionary = null;
                         }
                     }
@@ -1978,14 +1957,15 @@ namespace System.Windows
     /// This signifies a DeferredResourceReference that is used as a place holder
     /// for the front loaded StaticResource within a deferred content section.
     /// </summary>
-    internal class DeferredResourceReferenceHolder : DeferredResourceReference
+    internal sealed class DeferredResourceReferenceHolder : DeferredResourceReference
     {
         #region Constructor
 
         internal DeferredResourceReferenceHolder(object resourceKey, object value)
             :base(null, null)
         {
-            _keyOrValue = new object[]{resourceKey, value};
+            _key = resourceKey;
+            _value = value;
         }
 
         #endregion Constructor
@@ -1997,153 +1977,6 @@ namespace System.Windows
             return Value;
         }
 
-        // Gets the type of the value it represents
-        internal override Type GetValueType()
-        {
-            object value = Value;
-            return value?.GetType();
-        }
-
         #endregion Methods
-
-        #region Properties
-
-        internal override object Key
-        {
-            get { return ((object[])_keyOrValue)[0]; }
-        }
-
-        internal override object Value
-        {
-            get { return ((object[])_keyOrValue)[1]; }
-            set { ((object[])_keyOrValue)[1] = value; }
-        }
-
-        internal override bool IsUnset
-        {
-            get { return Value == DependencyProperty.UnsetValue; }
-        }
-
-        #endregion Properties
-    }
-
-    internal class DeferredResourceReferenceList : IEnumerable<DeferredResourceReference>
-    {
-        private readonly object _syncRoot = new();
-        private readonly Dictionary<object, WeakReference<DeferredResourceReference>> _entries = new();
-        private int _potentiallyDeadEntryCount;
-
-        public void AddOrSet(DeferredResourceReference deferredResourceReference)
-        {
-            lock (_syncRoot)
-            {
-                _entries[deferredResourceReference.Key] = new WeakReference<DeferredResourceReference>(deferredResourceReference);
-            }
-        }
-
-        public void Remove(DeferredResourceReference deferredResourceReference)
-        {
-            lock (_syncRoot)
-            {
-                _entries.Remove(deferredResourceReference.Key);
-            }
-        }
-
-        internal DeferredResourceReference Get(object resourceKey)
-        {
-            lock (_syncRoot)
-            {
-                _entries.TryGetValue(resourceKey, out var weakReference);
-
-                if (weakReference is null)
-                {
-                    return null;
-                }
-
-                if (weakReference.TryGetTarget(out var deferredResourceReference))
-                {
-                    return deferredResourceReference;
-                }
-                else
-                {
-                    ++_potentiallyDeadEntryCount;
-                }
-            }
-
-            PurgeIfRequired();
-
-            return null;
-        }
-
-        internal void ChangeDictionary(ResourceDictionary resourceDictionary)
-        {
-            lock (_syncRoot)
-            {
-                foreach (WeakReference<DeferredResourceReference> weakReference in _entries.Values)
-                {
-                    if (weakReference.TryGetTarget(out var deferredResourceReference))
-                    {
-                        deferredResourceReference.Dictionary = resourceDictionary;
-                    }
-                    else
-                    {
-                        ++_potentiallyDeadEntryCount;
-                    }
-                }
-            }
-
-            PurgeIfRequired();
-        }
-
-        private void PurgeIfRequired()
-        {
-            if (_potentiallyDeadEntryCount > 25)
-            {
-                Purge();
-            }
-        }
-
-        private void Purge()
-        {
-            Purge(null);
-        }
-
-        private void Purge(List<DeferredResourceReference> aliveItems)
-        {
-            lock (_syncRoot)
-            {
-                List<object> deadKeys = new(Math.Min(_potentiallyDeadEntryCount, _entries.Count));
-                _potentiallyDeadEntryCount = 0;
-
-                foreach (KeyValuePair<object, WeakReference<DeferredResourceReference>> entry in _entries)
-                {
-                    if (!entry.Value.TryGetTarget(out var item))
-                    {
-                        deadKeys.Add(entry.Key);
-                    }
-                    else
-                    {
-                        aliveItems?.Add(item);
-                    }
-                }
-
-                foreach (object deadKey in deadKeys)
-                {
-                    _entries.Remove(deadKey);
-                }
-            }
-        }
-
-        public IEnumerator<DeferredResourceReference> GetEnumerator()
-        {
-            var aliveItems = new List<DeferredResourceReference>(_entries.Count);
-            Purge(aliveItems);
-            return aliveItems.GetEnumerator();
-        }
-
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            return GetEnumerator();
-        }
     }
 }

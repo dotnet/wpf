@@ -3414,8 +3414,8 @@
     <Border x:Name="Border" Margin="4,1,4,1" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" CornerRadius="4">
       <Grid Margin="8,6,8,6">
         <Grid.ColumnDefinitions>
-          <ColumnDefinition Width="Auto" SharedSizeGroup="MenuItemIconColumnGroup" />
           <ColumnDefinition Width="Auto" SharedSizeGroup="MenuItemCheckBoxIconColumnGroup" />
+          <ColumnDefinition Width="Auto" SharedSizeGroup="MenuItemIconColumnGroup" />
           <ColumnDefinition Width="*" />
           <ColumnDefinition Width="Auto" SharedSizeGroup="Shortcut" />
         </Grid.ColumnDefinitions>

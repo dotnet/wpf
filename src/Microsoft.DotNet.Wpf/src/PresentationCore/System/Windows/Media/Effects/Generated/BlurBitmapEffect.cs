@@ -17,6 +17,8 @@ using System.Windows.Media.Imaging;
 
 namespace System.Windows.Media.Effects
 {
+
+
     public sealed partial class BlurBitmapEffect : BitmapEffect
     {
         //------------------------------------------------------

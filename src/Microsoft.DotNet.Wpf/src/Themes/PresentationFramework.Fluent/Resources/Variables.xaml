@@ -28,9 +28,10 @@
     -->
 
     <Thickness x:Key="TextControlBorderThemeThickness">1</Thickness>
+    <Thickness x:Key="TextControlThemePadding">10,5,6,6</Thickness>
+
     <!-- Moved to Light, Dark and HC resource files -->
     <!-- <Thickness x:Key="TextControlBorderThemeThicknessFocused">2</Thickness> -->
-    <Thickness x:Key="TextControlThemePadding">10,5,10,6</Thickness>
 
     <system:Double x:Key="ContentControlFontSize">14</system:Double>
     <system:Double x:Key="TextControlThemeMinHeight">24</system:Double>

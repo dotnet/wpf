@@ -802,7 +802,7 @@ namespace MS.Internal.IO.Packaging
         //
         //------------------------------------------------------
         //we use this class to track total memory consumed by the Memory streams that we are using
-        private TrackingMemoryStreamFactory _trackingMemoryStreamFactory = new TrackingMemoryStreamFactory();
+        private readonly TrackingMemoryStreamFactory _trackingMemoryStreamFactory = new TrackingMemoryStreamFactory();
 
         private string _isolatedStorageStreamFileName;
         private Stream _isolatedStorageStream;
@@ -824,10 +824,10 @@ namespace MS.Internal.IO.Packaging
                                                         // This list is also maintained in offset order
         private MemoryStreamBlock _searchBlock;
 
-        private long _lowWaterMark;
-        private long _highWaterMark;
+        private readonly long _lowWaterMark;
+        private readonly long _highWaterMark;
 
-        private bool _autoCloseSmallBlockGaps;
+        private readonly bool _autoCloseSmallBlockGaps;
     }
 
     internal class MemoryStreamBlock : IComparable<MemoryStreamBlock>
@@ -896,7 +896,7 @@ namespace MS.Internal.IO.Packaging
             }
         }
 
-        private MemoryStream _stream;
+        private readonly MemoryStream _stream;
         private long _offset;
     }
 }

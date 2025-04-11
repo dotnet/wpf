@@ -595,17 +595,17 @@ namespace System.ComponentModel
         #region Private Fields
         
         private PropertyDescriptor _property;
-        private Type _componentType;
-        private DependencyProperty _dp;
-        private bool _isAttached;
-        private PropertyMetadata _metadata;
+        private readonly Type _componentType;
+        private readonly DependencyProperty _dp;
+        private readonly bool _isAttached;
+        private readonly PropertyMetadata _metadata;
 
         // Synchronized by "_cache"
-        private static Dictionary<object, DependencyPropertyDescriptor> _cache = 
+        private static readonly Dictionary<object, DependencyPropertyDescriptor> _cache = 
             new Dictionary<object, DependencyPropertyDescriptor>(
                 ReferenceEqualityComparer.Instance
             );
-        private static Dictionary<object, DependencyPropertyDescriptor> _ignorePropertyTypeCache =
+        private static readonly Dictionary<object, DependencyPropertyDescriptor> _ignorePropertyTypeCache =
             new Dictionary<object, DependencyPropertyDescriptor>(
                 ReferenceEqualityComparer.Instance
             );

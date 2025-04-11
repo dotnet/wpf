@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
 using MS.Internal;
@@ -513,7 +513,7 @@ namespace System.Windows
             return true;
         }
 
-        private static FreezeValueCallback _defaultFreezeValueCallback = DefaultFreezeValueCallback;
+        private static readonly FreezeValueCallback _defaultFreezeValueCallback = DefaultFreezeValueCallback;
 
         /// <summary>
         ///     Creates a new instance of this property metadata.  This method is used
@@ -744,8 +744,8 @@ namespace System.Windows
         // We use this uncommon field to stash values created by our default value factory
         // in the owner's _localStore.
         private static readonly UncommonField<FrugalMapBase> _defaultValueFactoryCache = new UncommonField<FrugalMapBase>();
-        private static FrugalMapIterationCallback _removalCallback = new FrugalMapIterationCallback(DefaultValueCacheRemovalCallback);
-        private static FrugalMapIterationCallback _promotionCallback = new FrugalMapIterationCallback(DefaultValueCachePromotionCallback);
+        private static readonly FrugalMapIterationCallback _removalCallback = new FrugalMapIterationCallback(DefaultValueCacheRemovalCallback);
+        private static readonly FrugalMapIterationCallback _promotionCallback = new FrugalMapIterationCallback(DefaultValueCachePromotionCallback);
     }
 
     /// <summary>

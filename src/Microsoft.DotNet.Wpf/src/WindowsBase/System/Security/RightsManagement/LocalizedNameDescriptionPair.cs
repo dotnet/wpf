@@ -73,7 +73,7 @@ namespace System.Security.RightsManagement
             return Name.GetHashCode()  ^  Description.GetHashCode();
         }
 
-        private string _name;
-        private string _description; 
+        private readonly string _name;
+        private readonly string _description;
     }
 }

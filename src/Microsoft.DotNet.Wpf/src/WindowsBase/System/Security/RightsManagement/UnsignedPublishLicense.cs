@@ -314,10 +314,11 @@ namespace System.Security.RightsManagement
                 _revocationPoint  = value;
             }
         }
-        
+
+        private readonly ICollection<ContentGrant> _grantCollection;
+
         private Guid _contentId;
         private ContentUser _owner;
-        private ICollection<ContentGrant> _grantCollection;
         private string _referralInfoName;
         private Uri _referralInfoUri;
         private IDictionary <int, LocalizedNameDescriptionPair> _localizedNameDescriptionDictionary = null;

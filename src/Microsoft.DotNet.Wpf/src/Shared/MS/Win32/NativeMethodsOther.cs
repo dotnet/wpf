@@ -206,7 +206,7 @@ namespace MS.Win32
 
         internal abstract class WpfSafeHandle : SafeHandleZeroOrMinusOneIsInvalid
         {
-            private int _collectorId;
+            private readonly int _collectorId;
 
             protected WpfSafeHandle(bool ownsHandle, int collectorId) : base(ownsHandle)
             {

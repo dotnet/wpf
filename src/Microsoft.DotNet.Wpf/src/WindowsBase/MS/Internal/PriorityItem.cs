@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
 namespace System.Windows.Threading
@@ -23,8 +23,8 @@ namespace System.Windows.Threading
         internal PriorityItem<T> PriorityPrev {get{return _priorityPrev;} set{_priorityPrev=value;}}
         internal PriorityItem<T> PriorityNext {get{return _priorityNext;} set{_priorityNext=value;}}
 
-        private T _data;
-        
+        private readonly T _data;
+
         private PriorityItem<T> _sequentialPrev;
         private PriorityItem<T> _sequentialNext;
 

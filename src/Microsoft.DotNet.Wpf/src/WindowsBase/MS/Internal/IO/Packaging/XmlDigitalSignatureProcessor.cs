@@ -1209,10 +1209,10 @@ namespace MS.Internal.IO.Packaging
         //  Private Members
         //
         //------------------------------------------------------
-        private PackagePart _signaturePart;
+        private readonly PackagePart _signaturePart;
         private X509Certificate2                    _certificate;       // non-null if it's embedded
         private bool                                _lookForEmbeddedCert;
-        private PackageDigitalSignatureManager      _manager;
+        private readonly PackageDigitalSignatureManager _manager;
         private PackageDigitalSignature             _signature;         // parsed from part or newly created
         private SignedXml                           _signedXml;         // our format friend
         private String                              _hashAlgorithmName;     // first hash algorithm obtained - considered to be the setting for the entire signature

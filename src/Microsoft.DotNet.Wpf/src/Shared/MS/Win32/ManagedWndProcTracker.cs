@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
 //#define LOGGING
@@ -238,7 +238,7 @@ namespace MS.Win32
         private static IntPtr _cachedDefWindowProcA = IntPtr.Zero;
         private static IntPtr _cachedDefWindowProcW = IntPtr.Zero;
 
-        private static Hashtable _hwndList = new Hashtable(10);
+        private static readonly Hashtable _hwndList = new Hashtable(10);
         private static bool _exiting = false;
     }
 }

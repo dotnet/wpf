@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
 namespace MS.Internal.Utility
@@ -45,7 +45,7 @@ namespace MS.Internal.Utility
             return _hashCode;
         }
 
-        private WeakReference _item;
-        private int _hashCode;
+        private readonly WeakReference _item;
+        private readonly int _hashCode;
     }
 }

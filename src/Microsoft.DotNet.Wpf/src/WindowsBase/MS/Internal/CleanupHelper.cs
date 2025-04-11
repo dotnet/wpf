@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
 // Description: Helper for classes that need to clean up data structures
@@ -116,16 +116,16 @@ namespace MS.Internal
         }
 
         private DispatcherTimer _cleanupTimer;
-        private DispatcherTimer _starvationTimer;
-        private DispatcherTimer _defaultCleanupTimer;
+        private readonly DispatcherTimer _starvationTimer;
+        private readonly DispatcherTimer _defaultCleanupTimer;
         private DispatcherPriority _cleanupTimerPriority;
 
         private int             _cleanupRequests;
         private bool            _waitingForGC;
 
-        private Func<bool,bool> _cleanupCallback;
-        private TimeSpan        _basePollingInterval;
-        private TimeSpan        _maxPollingInterval;
+        private readonly Func<bool, bool> _cleanupCallback;
+        private readonly TimeSpan _basePollingInterval;
+        private readonly TimeSpan _maxPollingInterval;
 
         // When an instance of this class is GC'd and finalized, it
         // tells the CleanupHelper that a GC has occurred.
@@ -141,7 +141,7 @@ namespace MS.Internal
                 _parent._waitingForGC = false;
             }
 
-            private CleanupHelper _parent;
+            private readonly CleanupHelper _parent;
         }
     }
 }

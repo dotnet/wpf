@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
 
@@ -23,7 +23,7 @@ namespace System.Collections.ObjectModel
     internal class WeakReadOnlyCollection<T>: IList<T>, IList
     {
         //IList<T> list;
-        private IList<WeakReference> list;
+        private readonly IList<WeakReference> list;
         [NonSerialized]
         private Object _syncRoot;
 
@@ -307,7 +307,7 @@ namespace System.Collections.ObjectModel
                 ie.Reset();
             }
 
-            private IEnumerator ie;
+            private readonly IEnumerator ie;
         }
     }
 }

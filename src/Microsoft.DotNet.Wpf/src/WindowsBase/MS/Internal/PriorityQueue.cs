@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
 namespace System.Windows.Threading
@@ -385,8 +385,8 @@ namespace System.Windows.Threading
         }
 
         // Priority chains...
-        private SortedList<int, PriorityChain<T>> _priorityChains; // NOTE: should be Priority
-        private Stack<PriorityChain<T>> _cacheReusableChains;
+        private readonly SortedList<int, PriorityChain<T>> _priorityChains; // NOTE: should be Priority
+        private readonly Stack<PriorityChain<T>> _cacheReusableChains;
         
         // Sequential chain...
         private PriorityItem<T> _head;

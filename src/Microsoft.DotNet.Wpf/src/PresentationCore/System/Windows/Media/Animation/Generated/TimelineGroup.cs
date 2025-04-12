@@ -14,8 +14,6 @@ using System.Collections;
 
 namespace System.Windows.Media.Animation
 {
-
-
     public abstract partial class TimelineGroup : Timeline
     {
         //------------------------------------------------------

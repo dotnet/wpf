@@ -22,8 +22,6 @@ using System.Windows.Media.Composition;
 
 namespace System.Windows.Media.Media3D
 {
-
-
     public sealed partial class ScaleTransform3D : AffineTransform3D
     {
         //------------------------------------------------------

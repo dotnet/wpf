@@ -17,8 +17,6 @@ using System.Windows.Media.Imaging;
 
 namespace System.Windows.Media.Effects
 {
-
-
     internal sealed partial class ImplicitInputBrush : Brush
     {
         //------------------------------------------------------

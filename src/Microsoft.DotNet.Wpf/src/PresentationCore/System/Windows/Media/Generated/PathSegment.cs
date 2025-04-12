@@ -24,8 +24,6 @@ using System.Windows.Media.Converters;
 
 namespace System.Windows.Media
 {
-
-
     public abstract partial class PathSegment : Animatable
     {
         //------------------------------------------------------

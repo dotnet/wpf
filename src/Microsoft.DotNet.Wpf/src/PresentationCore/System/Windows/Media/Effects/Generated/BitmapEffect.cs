@@ -17,8 +17,6 @@ using System.Windows.Media.Imaging;
 
 namespace System.Windows.Media.Effects
 {
-
-
     public abstract partial class BitmapEffect : Animatable
     {
         //------------------------------------------------------

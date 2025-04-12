@@ -22,8 +22,6 @@ using System.Windows.Media.Composition;
 
 namespace System.Windows.Media.Media3D
 {
-
-
     public sealed partial class GeometryModel3D : Model3D
     {
         //------------------------------------------------------

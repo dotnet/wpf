@@ -27,7 +27,6 @@ namespace System.Windows.Media
     /// <summary>
     /// A collection of Geometry objects.
     /// </summary>
-
     public sealed partial class GeometryCollection : Animatable, IList, IList<Geometry>
     {
         //------------------------------------------------------

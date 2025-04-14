@@ -32,7 +32,28 @@ using MS.Internal.AppModel;
 using MS.Internal.Utility;
 #endif
 
-internal static class SecurityHelper
+// The SecurityHelper class differs between assemblies and could not actually be
+//  shared, so it is duplicated across namespaces to prevent name collision.
+// This duplication seems hardly necessary now. We should continue
+// trying to reduce it by pushing things from Framework to Core (whenever it makes sense).
+#if WINDOWS_BASE
+namespace MS.Internal.WindowsBase
+#elif PRESENTATION_CORE
+using MS.Internal.PresentationCore;
+namespace MS.Internal // Promote the one from PresentationCore as the default to use.
+#elif PRESENTATIONFRAMEWORK
+namespace MS.Internal.PresentationFramework
+#elif PBTCOMPILER
+namespace MS.Internal.PresentationBuildTasks
+#elif REACHFRAMEWORK
+namespace MS.Internal.ReachFramework
+#elif DRT
+namespace MS.Internal.Drt
+#else
+#error Class is being used from an unknown assembly.
+#endif
+{
+    internal static class SecurityHelper
     {
 
 #if PRESENTATION_CORE
@@ -149,14 +170,14 @@ internal static class SecurityHelper
 #if WINDOWS_BASE
         ///
         /// Read and return a registry value.
-       internal static object ReadRegistryValue( RegistryKey baseRegistryKey, string keyName, string valueName )
-       {
+        internal static object ReadRegistryValue(RegistryKey baseRegistryKey, string keyName, string valueName)
+        {
             object value = null;
 
             RegistryKey key = baseRegistryKey.OpenSubKey(keyName);
             if (key != null)
             {
-                using( key )
+                using (key)
                 {
                     value = key.GetValue(valueName);
                 }
@@ -165,6 +186,5 @@ internal static class SecurityHelper
             return value;
         }
 #endif // WINDOWS_BASE
+    }
 }
-}
-

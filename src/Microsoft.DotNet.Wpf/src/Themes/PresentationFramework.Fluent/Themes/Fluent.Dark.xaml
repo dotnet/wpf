@@ -3677,7 +3677,7 @@
     </Setter>
   </Style>
   <Style BasedOn="{StaticResource DefaultPageStyle}" TargetType="{x:Type Page}" />
-  <Thickness x:Key="PasswordBoxBorderThemeThickness">1,1,1,1</Thickness>
+  <!-- Deprecated PasswordBox Resources ( Used in .NET 9 ) -->
   <Thickness x:Key="PasswordBoxAccentBorderThemeThickness">0,0,0,1</Thickness>
   <Thickness x:Key="PasswordBoxLeftIconMargin">10,8,0,0</Thickness>
   <Thickness x:Key="PasswordBoxRightIconMargin">0,8,10,0</Thickness>
@@ -3685,7 +3685,11 @@
   <Thickness x:Key="PasswordBoxButtonPadding">0,0,0,0</Thickness>
   <sys:Double x:Key="PasswordBoxButtonHeight">24</sys:Double>
   <sys:Double x:Key="PasswordBoxButtonIconSize">14</sys:Double>
+  <!-- These rsources are redefined in .NET 10 -->
+  <!-- <Thickness x:Key="PasswordBoxBorderThemeThickness">1,1,1,1</Thickness> -->
   <Thickness x:Key="PasswordBoxBorderThemeThickness">1</Thickness>
+  <!-- Instead of PasswordBoxThemeMinHeight, we need to use TextControlThemeMinHeight, but modifying that right now
+            will affect the other styles as well. Once the remaining styles using it are fixed, will remove this resource -->
   <sys:Double x:Key="PasswordBoxThemeMinHeight">32</sys:Double>
   <ContextMenu x:Key="DefaultPasswordBoxContextMenu">
     <MenuItem Command="ApplicationCommands.Paste" />
@@ -3696,7 +3700,7 @@
     <Setter Property="Foreground" Value="{DynamicResource TextControlForeground}" />
     <Setter Property="CaretBrush" Value="{DynamicResource TextControlForeground}" />
     <Setter Property="Background" Value="{DynamicResource TextControlBackground}" />
-    <Setter Property="BorderBrush" Value="{DynamicResource TextControlElevationBorderBrush}" />
+    <Setter Property="BorderBrush" Value="{DynamicResource TextControlBorderBrush}" />
     <Setter Property="BorderThickness" Value="{StaticResource PasswordBoxBorderThemeThickness}" />
     <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Hidden" />
     <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Hidden" />
@@ -3714,7 +3718,7 @@
     <Setter Property="OverridesDefaultStyle" Value="True" />
     <Setter Property="Template">
       <Setter.Value>
-        <ControlTemplate TargetType="{x:Type TextBoxBase}">
+        <ControlTemplate TargetType="{x:Type PasswordBox}">
           <Grid>
             <Border x:Name="ContentBorder" MinWidth="{TemplateBinding MinWidth}" MinHeight="{TemplateBinding MinHeight}" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="{TemplateBinding Border.CornerRadius}" />
             <ScrollViewer x:Name="PART_ContentHost" Margin="{TemplateBinding BorderThickness}" CanContentScroll="{TemplateBinding ScrollViewer.CanContentScroll}" HorizontalScrollBarVisibility="{TemplateBinding ScrollViewer.HorizontalScrollBarVisibility}" IsDeferredScrollingEnabled="{TemplateBinding ScrollViewer.IsDeferredScrollingEnabled}" IsTabStop="{TemplateBinding ScrollViewer.IsTabStop}" Padding="{TemplateBinding Padding}" TextElement.Foreground="{TemplateBinding Foreground}" VerticalScrollBarVisibility="{TemplateBinding ScrollViewer.VerticalScrollBarVisibility}" />

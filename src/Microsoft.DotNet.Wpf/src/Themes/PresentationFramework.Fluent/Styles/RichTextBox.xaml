@@ -7,11 +7,85 @@
 
 <ResourceDictionary
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" >
-
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:system="clr-namespace:System;assembly=System.Runtime" >
+    
+    <!-- Deprecated RichTextBox Resources ( Used in .NET 9 ) -->
     <Thickness x:Key="RichTextBoxAccentBorderThemeThickness">0,0,0,1</Thickness>
+    
+    <!-- Instead of RichTextBoxThemeMinHeight, we need to use TextControlThemeMinHeight, but modifying that right now
+            will affect the other styles as well. Once the remaining styles using it are fixed, will remove this resource -->
+    <system:Double x:Key="RichTextBoxThemeMinHeight">32</system:Double>
 
     <Style x:Key="DefaultRichTextBoxStyle" TargetType="{x:Type RichTextBox}">
+        <Setter Property="FocusVisualStyle" Value="{x:Null}" />
+        <Setter Property="ContextMenu" Value="{DynamicResource DefaultControlContextMenu}" />
+        <Setter Property="Foreground" Value="{DynamicResource TextControlForeground}" />
+        <Setter Property="CaretBrush" Value="{DynamicResource TextControlForeground}" />
+        <Setter Property="Background" Value="{DynamicResource TextControlBackground}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource TextControlBorderBrush}" />
+        <Setter Property="BorderThickness" Value="{StaticResource TextControlBorderThemeThickness}" />
+        <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Auto" />
+        <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Auto" />
+        <Setter Property="HorizontalContentAlignment" Value="Left" />
+        <Setter Property="VerticalContentAlignment" Value="Top" />
+        <Setter Property="Cursor" Value="IBeam" />
+        <Setter Property="MinHeight" Value="{DynamicResource RichTextBoxThemeMinHeight}" />
+        <Setter Property="MinWidth" Value="{DynamicResource TextControlThemeMinWidth}" />
+        <Setter Property="Padding" Value="{DynamicResource TextControlThemePadding}" />
+        <Setter Property="Border.CornerRadius" Value="{DynamicResource ControlCornerRadius}" />
+        <Setter Property="AllowDrop" Value="True"/>
+        <Setter Property="ScrollViewer.PanningMode" Value="VerticalFirst"/>
+        <Setter Property="Stylus.IsFlicksEnabled" Value="False"/>
+        <Setter Property="OverridesDefaultStyle" Value="True" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type RichTextBox}">
+                    <Grid>
+                        <Border
+                            x:Name="ContentBorder"
+                            MinWidth="{TemplateBinding MinWidth}"
+                            MinHeight="{TemplateBinding MinHeight}"
+                            Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            CornerRadius="{TemplateBinding Border.CornerRadius}" />
+
+                        <ScrollViewer
+                            x:Name="PART_ContentHost"
+                            Margin="{TemplateBinding BorderThickness}"
+                            CanContentScroll="{TemplateBinding ScrollViewer.CanContentScroll}"
+                            HorizontalScrollBarVisibility="{TemplateBinding ScrollViewer.HorizontalScrollBarVisibility}"
+                            IsDeferredScrollingEnabled="{TemplateBinding ScrollViewer.IsDeferredScrollingEnabled}"
+                            IsTabStop="{TemplateBinding ScrollViewer.IsTabStop}"
+                            Padding="{TemplateBinding Padding}"                                
+                            TextElement.Foreground="{TemplateBinding Foreground}"
+                            VerticalScrollBarVisibility="{TemplateBinding ScrollViewer.VerticalScrollBarVisibility}" />
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="ContentBorder" Property="Background" Value="{DynamicResource TextControlBackgroundPointerOver}" />
+                            <Setter TargetName="ContentBorder" Property="BorderBrush" Value="{DynamicResource TextControlBorderBrushPointerOver}" />
+                            <Setter TargetName="PART_ContentHost" Property="Foreground" Value="{DynamicResource TextControlForegroundPointerOver}" />
+                        </Trigger>
+                        <Trigger Property="IsFocused" Value="True">
+                            <Setter TargetName="ContentBorder" Property="BorderThickness" Value="{StaticResource TextControlBorderThemeThicknessFocused}" />
+                            <Setter TargetName="ContentBorder" Property="Background" Value="{DynamicResource TextControlBackgroundFocused}" />
+                            <Setter TargetName="ContentBorder" Property="BorderBrush" Value="{DynamicResource TextControlBorderBrushFocused}" />
+                            <Setter TargetName="PART_ContentHost" Property="Foreground" Value="{DynamicResource TextControlForegroundFocused}" />
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter TargetName="ContentBorder" Property="Background" Value="{DynamicResource TextControlBackgroundDisabled}" />
+                            <Setter TargetName="ContentBorder" Property="BorderBrush" Value="{DynamicResource TextControlBorderBrushDisabled}" />
+                            <Setter TargetName="PART_ContentHost" Property="Foreground" Value="{DynamicResource TextControlForegroundDisabled}" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!-- <Style x:Key="DefaultRichTextBoxStyle" TargetType="{x:Type RichTextBox}">
         <Setter Property="Foreground" Value="{DynamicResource TextControlForeground}" />
         <Setter Property="CaretBrush" Value="{DynamicResource TextControlForeground}" />
         <Setter Property="Background" Value="{DynamicResource TextControlBackground}" />
@@ -74,7 +148,7 @@
                </ControlTemplate>
             </Setter.Value>
         </Setter>
-    </Style>
+    </Style> -->
 
     <Style BasedOn="{StaticResource DefaultRichTextBoxStyle}" TargetType="{x:Type RichTextBox}" />
 

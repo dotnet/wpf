@@ -5,7 +5,7 @@ using System.Xaml;
 
 namespace System.Windows.Baml2006
 {
-    [DebuggerDisplay("{DebuggerString}")]
+    [DebuggerDisplay("{_data}")]
     internal class KeyRecord
     {
         public KeyRecord(bool shared, bool sharedSet, int valuePosition, Type keyType) :
@@ -85,8 +85,6 @@ namespace System.Windows.Baml2006
                 return _data as XamlNodeList;
             }
         }
-
-        public object DebuggerString => _data?.ToString();
 
         private List<Object> _resources;
         private object _data;

@@ -1831,7 +1831,7 @@ namespace System.Windows
         {
             this._weakDeferredResourceReferencesMap ??= new();
 
-            if (this._weakDeferredResourceReferencesMap.TryGetValue(resourceKey, out var weakDeferredResourceReferences) is false)
+            if (!this._weakDeferredResourceReferencesMap.TryGetValue(resourceKey, out var weakDeferredResourceReferences))
             {
                 weakDeferredResourceReferences = new WeakReferenceList();
                 this._weakDeferredResourceReferencesMap[resourceKey] = weakDeferredResourceReferences;

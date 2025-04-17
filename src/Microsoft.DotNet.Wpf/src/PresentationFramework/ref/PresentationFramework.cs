@@ -5127,10 +5127,10 @@ namespace System.Windows.Controls
         public static readonly System.Windows.DependencyProperty ShowGridLinesProperty;
         public Grid() { }
         [System.ComponentModel.DesignerSerializationVisibilityAttribute(System.ComponentModel.DesignerSerializationVisibility.Content)]
-        public System.Windows.Controls.ColumnDefinitionCollection ColumnDefinitions { get { throw null; } }
+        public System.Windows.Controls.ColumnDefinitionCollection ColumnDefinitions { get { throw null; } set { } }
         protected internal override System.Collections.IEnumerator LogicalChildren { get { throw null; } }
         [System.ComponentModel.DesignerSerializationVisibilityAttribute(System.ComponentModel.DesignerSerializationVisibility.Content)]
-        public System.Windows.Controls.RowDefinitionCollection RowDefinitions { get { throw null; } }
+        public System.Windows.Controls.RowDefinitionCollection RowDefinitions { get { throw null; } set { } }
         public bool ShowGridLines { get { throw null; } set { } }
         protected override int VisualChildrenCount { get { throw null; } }
         protected override System.Windows.Size ArrangeOverride(System.Windows.Size arrangeSize) { throw null; }

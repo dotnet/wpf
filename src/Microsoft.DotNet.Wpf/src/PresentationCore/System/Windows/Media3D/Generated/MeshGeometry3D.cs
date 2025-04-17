@@ -444,11 +444,10 @@ namespace System.Windows.Media.Media3D
 
 
             // Initializations
-            Type typeofThis = typeof(MeshGeometry3D);
             PositionsProperty =
                   RegisterProperty("Positions",
                                    typeof(Point3DCollection),
-                                   typeofThis,
+                                   typeof(MeshGeometry3D),
                                    new FreezableDefaultValueFactory(Point3DCollection.Empty),
                                    new PropertyChangedCallback(PositionsPropertyChanged),
                                    null,
@@ -457,7 +456,7 @@ namespace System.Windows.Media.Media3D
             NormalsProperty =
                   RegisterProperty("Normals",
                                    typeof(Vector3DCollection),
-                                   typeofThis,
+                                   typeof(MeshGeometry3D),
                                    new FreezableDefaultValueFactory(Vector3DCollection.Empty),
                                    new PropertyChangedCallback(NormalsPropertyChanged),
                                    null,
@@ -466,7 +465,7 @@ namespace System.Windows.Media.Media3D
             TextureCoordinatesProperty =
                   RegisterProperty("TextureCoordinates",
                                    typeof(PointCollection),
-                                   typeofThis,
+                                   typeof(MeshGeometry3D),
                                    new FreezableDefaultValueFactory(PointCollection.Empty),
                                    new PropertyChangedCallback(TextureCoordinatesPropertyChanged),
                                    null,
@@ -475,7 +474,7 @@ namespace System.Windows.Media.Media3D
             TriangleIndicesProperty =
                   RegisterProperty("TriangleIndices",
                                    typeof(Int32Collection),
-                                   typeofThis,
+                                   typeof(MeshGeometry3D),
                                    new FreezableDefaultValueFactory(Int32Collection.Empty),
                                    new PropertyChangedCallback(TriangleIndicesPropertyChanged),
                                    null,

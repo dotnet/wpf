@@ -190,11 +190,10 @@ namespace System.Windows.Media
 
 
             // Initializations
-            Type typeofThis = typeof(GeneralTransformGroup);
             ChildrenProperty =
                   RegisterProperty("Children",
                                    typeof(GeneralTransformCollection),
-                                   typeofThis,
+                                   typeof(GeneralTransformGroup),
                                    new FreezableDefaultValueFactory(GeneralTransformCollection.Empty),
                                    null,
                                    null,

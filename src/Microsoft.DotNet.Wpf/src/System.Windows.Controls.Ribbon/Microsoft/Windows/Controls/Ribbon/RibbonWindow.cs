@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
 #region Using declarations
@@ -44,18 +44,16 @@ namespace Microsoft.Windows.Controls.Ribbon
         /// </summary>
         static RibbonWindow()
         {
-            Type ownerType = typeof(RibbonWindow);
-
-            DefaultStyleKeyProperty.OverrideMetadata(ownerType, new FrameworkPropertyMetadata(new ComponentResourceKey(typeof(Ribbon), "RibbonWindowStyle")));
+            DefaultStyleKeyProperty.OverrideMetadata(typeof(RibbonWindow), new FrameworkPropertyMetadata(new ComponentResourceKey(typeof(Ribbon), "RibbonWindowStyle")));
 
             // We override Window.Title metadata so that we can receive change notifications and then coerce Ribbon.Title.
-            Window.TitleProperty.OverrideMetadata(ownerType, new FrameworkPropertyMetadata(String.Empty, new PropertyChangedCallback(OnTitleChangedCallback)));
+            Window.TitleProperty.OverrideMetadata(typeof(RibbonWindow), new FrameworkPropertyMetadata(String.Empty, new PropertyChangedCallback(OnTitleChangedCallback)));
 
-            CommandManager.RegisterClassCommandBinding(ownerType, new CommandBinding(_minimizeWindowCommand, MinimizeWindowExecuted, MinimizeWindowCanExecute));
-            CommandManager.RegisterClassCommandBinding(ownerType, new CommandBinding(_maximizeWindowCommand, MaximizeWindowExecuted, MaximizeWindowCanExecute));
-            CommandManager.RegisterClassCommandBinding(ownerType, new CommandBinding(_restoreWindowCommand, RestoreWindowExecuted, RestoreWindowCanExecute));
-            CommandManager.RegisterClassCommandBinding(ownerType, new CommandBinding(_closeWindowCommand, CloseWindowExecuted, CloseWindowCanExecute));
-            CommandManager.RegisterClassCommandBinding(ownerType, new CommandBinding(_showSystemMenuCommand, SystemMenuExecuted, SystemMenuCanExecute));
+            CommandManager.RegisterClassCommandBinding(typeof(RibbonWindow), new CommandBinding(_minimizeWindowCommand, MinimizeWindowExecuted, MinimizeWindowCanExecute));
+            CommandManager.RegisterClassCommandBinding(typeof(RibbonWindow), new CommandBinding(_maximizeWindowCommand, MaximizeWindowExecuted, MaximizeWindowCanExecute));
+            CommandManager.RegisterClassCommandBinding(typeof(RibbonWindow), new CommandBinding(_restoreWindowCommand, RestoreWindowExecuted, RestoreWindowCanExecute));
+            CommandManager.RegisterClassCommandBinding(typeof(RibbonWindow), new CommandBinding(_closeWindowCommand, CloseWindowExecuted, CloseWindowCanExecute));
+            CommandManager.RegisterClassCommandBinding(typeof(RibbonWindow), new CommandBinding(_showSystemMenuCommand, SystemMenuExecuted, SystemMenuCanExecute));
         }
 
         #endregion

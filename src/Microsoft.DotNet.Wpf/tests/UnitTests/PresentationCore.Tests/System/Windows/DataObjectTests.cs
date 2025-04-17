@@ -397,7 +397,7 @@ public class DataObjectTests
     public void ContainsAudio_WithWaveFormat_ShouldReturnTrue()
     {
         var dataObject = new DataObject();
-        var audioStream = new MemoryStream([0x52, 0x49, 0x46, 0x46]); // RIFF header 
+        using MemoryStream audioStream = new([0x52, 0x49, 0x46, 0x46]); // RIFF header 
         dataObject.SetData(DataFormats.WaveAudio, audioStream);
 
         dataObject.ContainsAudio().Should().BeTrue();
@@ -416,7 +416,7 @@ public class DataObjectTests
     public void ContainsAudio_WithMultipleFormatsMixedWithAudio_ShouldReturnTrue()
     {
         var dataObject = new DataObject();
-        var audioStream = new MemoryStream([0x52, 0x49, 0x46, 0x46]); // RIFF header
+        using MemoryStream audioStream = new([0x52, 0x49, 0x46, 0x46]); // RIFF header
 
         dataObject.SetText("Sample text");
         dataObject.SetData(DataFormats.WaveAudio, audioStream);

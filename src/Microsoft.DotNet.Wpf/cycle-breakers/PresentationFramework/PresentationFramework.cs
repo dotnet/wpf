@@ -979,8 +979,11 @@ namespace System.Windows
     }
     public enum MessageBoxButton
     {
+        AbortRetryIgnore = 2,
+        CancelTryContinue = 6,
         OK = 0,
         OKCancel = 1,
+        RetryCancel = 5,
         YesNo = 4,
         YesNoCancel = 3,
     }
@@ -1007,10 +1010,15 @@ namespace System.Windows
     }
     public enum MessageBoxResult
     {
+        Abort = 3,
         Cancel = 2,
+        Continue = 11,
+        Ignore = 5,
         No = 7,
         None = 0,
         OK = 1,
+        Retry = 4,
+        TryAgain = 10,
         Yes = 6,
     }
     [System.Windows.Markup.ContentPropertyAttribute("Setters")]
@@ -2059,7 +2067,7 @@ namespace System.Windows
         [System.ComponentModel.TypeConverterAttribute(typeof(System.Windows.ThemeModeConverter))]
         [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("WPF0001")]
         public System.Windows.ThemeMode ThemeMode { get { throw null; } set { } }
-        
+
         [System.Windows.LocalizabilityAttribute(System.Windows.LocalizationCategory.Title)]
         public string Title { get { throw null; } set { } }
         [System.ComponentModel.TypeConverterAttribute("System.Windows.LengthConverter, PresentationFramework, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, Custom=null")]

@@ -12,7 +12,7 @@ using System.Windows.Data;
 
 namespace System.Windows.Markup
 {
-    internal class WpfXamlLoader
+    internal static class WpfXamlLoader
     {
         private static Lazy<XamlMember> XmlSpace = new Lazy<XamlMember>(() => new WpfXamlMember(XmlAttributeProperties.XmlSpaceProperty, true));
 

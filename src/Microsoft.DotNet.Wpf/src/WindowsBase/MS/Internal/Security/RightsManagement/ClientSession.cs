@@ -1963,13 +1963,13 @@ namespace MS.Internal.Security.RightsManagement
         private const string _passportActivationRegistryFullKeyName = @"HKEY_LOCAL_MACHINE\Software\Microsoft\MSDRM\ServiceLocation\PassportActivation";
         private const string _passportActivationRegistryKeyName = @"Software\Microsoft\MSDRM\ServiceLocation\PassportActivation";
 
-        private ContentUser _user = null;
+        private readonly ContentUser _user;
         private CallbackHandler _callbackHandler;
 
         private SafeRightsManagementSessionHandle _hSession = null; // if this is zero, we are disposed
 
         // we preserve this so ve can remove certificates in case of temp activation             
-        private UserActivationMode _userActivationMode = UserActivationMode.Permanent;
+        private readonly UserActivationMode _userActivationMode = UserActivationMode.Permanent;
 
         private SafeRightsManagementEnvironmentHandle _envHandle = null;  // if this is null, we are disposed
 
@@ -1979,7 +1979,7 @@ namespace MS.Internal.Security.RightsManagement
 
         // the following 2 arrays are used for parsing and converting between String and Enum; 
         // therefore, the entries in the _rightEnums and the _rightNames must be in the same order. 
-        private static ContentRight[] _rightEnums = {
+        private static readonly ContentRight[] _rightEnums = {
                                         ContentRight.View,
                                         ContentRight.Edit,
                                         ContentRight.Print,
@@ -1995,7 +1995,7 @@ namespace MS.Internal.Security.RightsManagement
                                         ContentRight.Export};
 
         // entries in this array must be in UPPERCASE, as we make such assumption during parsing                                         
-        private static string[] _rightNames = {
+        private static readonly string[] _rightNames = {
                                         "VIEW",
                                         "EDIT",
                                         "PRINT",

@@ -349,8 +349,8 @@ namespace MS.Internal.IO.Packaging.CompoundFile
 
         #region Member Variables
 
-        private Int16 _major;             // Major number
-        private Int16 _minor;             // Minor number
+        private readonly Int16 _major; // Major number
+        private readonly Int16 _minor; // Minor number
 
         #endregion Member Variables
     }

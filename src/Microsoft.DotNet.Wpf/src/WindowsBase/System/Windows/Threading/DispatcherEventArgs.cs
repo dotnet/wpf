@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
 namespace System.Windows.Threading
@@ -26,7 +26,7 @@ namespace System.Windows.Threading
             _dispatcher = dispatcher;
         }
         
-        private Dispatcher _dispatcher;
+        private readonly Dispatcher _dispatcher;
     }
 }
 

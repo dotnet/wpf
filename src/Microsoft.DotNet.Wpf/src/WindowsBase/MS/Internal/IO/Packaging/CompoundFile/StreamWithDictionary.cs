@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
 // Description:
@@ -12,8 +12,8 @@ namespace MS.Internal.IO.Packaging.CompoundFile
 {
     internal class StreamWithDictionary : Stream, IDictionary
     {
-        private Stream baseStream;
-        private IDictionary baseDictionary;
+        private readonly Stream baseStream;
+        private readonly IDictionary baseDictionary;
         private bool _disposed;         // keep track of if we are disposed
 
         internal StreamWithDictionary( Stream wrappedStream, IDictionary wrappedDictionary )

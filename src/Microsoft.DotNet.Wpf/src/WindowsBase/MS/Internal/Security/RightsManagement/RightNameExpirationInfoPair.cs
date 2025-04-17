@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
 // Description:
@@ -53,9 +53,9 @@ namespace MS.Internal.Security.RightsManagement
             }
         }
 
-        private string _rightName;
-        private DateTime _validFrom;
-        private DateTime _validUntil;
+        private readonly string _rightName;
+        private readonly DateTime _validFrom;
+        private readonly DateTime _validUntil;
     }
 }
 

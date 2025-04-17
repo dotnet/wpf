@@ -123,8 +123,8 @@ namespace System.Windows
         }
 
         private int                     _index;
-        private LocalValueEntry[]       _snapshot;
-        private int                     _count;
+        private readonly LocalValueEntry[] _snapshot;
+        private readonly int _count;
     }
 
 

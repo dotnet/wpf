@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
 using System;
@@ -11,7 +11,7 @@ namespace MS.Win32
         private static HandleType[]             handleTypes;
         private static int                      handleTypeCount = 0;
 
-        private static Object handleMutex = new Object();
+        private static readonly Object handleMutex = new Object();
 
         /// <devdoc>
         ///     Adds the given handle to the handle collector.  This keeps the
@@ -78,7 +78,7 @@ namespace MS.Win32
         {
             internal readonly string name;
 
-            private int initialThreshHold;
+            private readonly int initialThreshHold;
             private int threshHold;
             private int handleCount;
             private readonly int deltaPercent;

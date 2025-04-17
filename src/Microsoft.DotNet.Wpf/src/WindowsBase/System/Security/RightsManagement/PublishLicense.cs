@@ -162,10 +162,10 @@ namespace System.Security.RightsManagement
             return secureEnvironment.ClientSession.AcquireUseLicense(_serializedPublishLicense, true);
         }        
 
-        private string _serializedPublishLicense;
-        private string _referralInfoName;
-        private Uri _referralInfoUri;
-        private Guid _contentId;
-        private Uri _useLicenseAcquisitionUriFromPublishLicense = null;
+        private readonly string _serializedPublishLicense;
+        private readonly string _referralInfoName;
+        private readonly Uri _referralInfoUri;
+        private readonly Guid _contentId;
+        private readonly Uri _useLicenseAcquisitionUriFromPublishLicense;
     }
 }

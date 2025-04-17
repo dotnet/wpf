@@ -942,7 +942,7 @@ namespace MS.Internal.IO.Packaging.CompoundFile
                 set { _useLicense = value; }
             }
 
-            private ContentUser _user;
+            private readonly ContentUser _user;
             private UseLicense _useLicense;
         }
 
@@ -1291,7 +1291,7 @@ namespace MS.Internal.IO.Packaging.CompoundFile
         //
         // The stream in which the FormatVersion and publish license is stored.
         //
-        private VersionedStreamOwner _publishLicenseStream;
+        private readonly VersionedStreamOwner _publishLicenseStream;
 
         //
         // Uninterpreted bytes from the publish license stream header.
@@ -1301,7 +1301,7 @@ namespace MS.Internal.IO.Packaging.CompoundFile
         //
         // The storage under which use licenses are stored.
         //
-        private StorageInfo _useLicenseStorage;
+        private readonly StorageInfo _useLicenseStorage;
 
         //
         // All use licenses reside in streams whose names begin with this prefix:

@@ -1132,11 +1132,11 @@ namespace System.Windows
         /// <summary> Standard unset value </summary>
         public static readonly object UnsetValue = new NamedObject("DependencyProperty.UnsetValue");
 
-        private string _name;
-        private Type _propertyType;
-        private Type _ownerType;
-        private PropertyMetadata _defaultMetadata;
-        private ValidateValueCallback _validateValueCallback;
+        private readonly string _name;
+        private readonly Type _propertyType;
+        private readonly Type _ownerType;
+        private readonly PropertyMetadata _defaultMetadata;
+        private readonly ValidateValueCallback _validateValueCallback;
         private DependencyPropertyKey _readOnlyKey;
 
 

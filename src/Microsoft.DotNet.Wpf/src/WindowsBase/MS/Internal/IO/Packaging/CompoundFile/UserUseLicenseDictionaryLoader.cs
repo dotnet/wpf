@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
 // Description:
@@ -136,12 +136,12 @@ namespace MS.Internal.IO.Packaging.CompoundFile
         //
         // The object that provides the implementation of the IDictionary methods.
         //
-        private Dictionary<ContentUser, UseLicense> _dict;
+        private readonly Dictionary<ContentUser, UseLicense> _dict;
 
         //
         // Text encoding object used to read or write publish licenses and use licenses.
         //
-        private UTF8Encoding _utf8Encoding = new UTF8Encoding();
+        private readonly UTF8Encoding _utf8Encoding = new UTF8Encoding();
 
         #endregion Private Fields
     }

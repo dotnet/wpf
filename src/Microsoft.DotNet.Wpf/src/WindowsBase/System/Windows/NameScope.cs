@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
 /***************************************************************************\
@@ -371,7 +371,7 @@ namespace System.Windows
         #region class Enumerator
         private class Enumerator : IEnumerator<KeyValuePair<string, object>>
         {
-            private IDictionaryEnumerator _enumerator;
+            private readonly IDictionaryEnumerator _enumerator;
             
             public Enumerator(HybridDictionary nameMap)
             {

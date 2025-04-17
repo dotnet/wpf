@@ -662,17 +662,18 @@ namespace System.Windows
                 Type valueType = deferredReference.GetValueType();
                 if (valueType != null)
                 {
-                    if (typeof(MarkupExtension).IsAssignableFrom(valueType))
+                    // Check for Freezable first, as that's way more common than MarkupExtension
+                    if (typeof(Freezable).IsAssignableFrom(valueType))
+                    {
+                        freezable = (Freezable)deferredReference.GetValue(BaseValueSourceInternal.Style);
+                    }
+                    else if (typeof(MarkupExtension).IsAssignableFrom(valueType))
                     {
                         value = deferredReference.GetValue(BaseValueSourceInternal.Style);
                         if ((markupExtension = value as MarkupExtension) == null)
                         {
                             freezable = value as Freezable;
                         }
-                    }
-                    else if (typeof(Freezable).IsAssignableFrom(valueType))
-                    {
-                        freezable = (Freezable)deferredReference.GetValue(BaseValueSourceInternal.Style);
                     }
                 }
 

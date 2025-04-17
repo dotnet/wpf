@@ -22,7 +22,7 @@
   </PropertyGroup>
   <!-- Packages that come from https://github.com/dotnet/winforms -->
   <PropertyGroup>
-    <MicrosoftPrivateWinformsVersion>8.0.16-servicing.25216.4</MicrosoftPrivateWinformsVersion>
+    <MicrosoftPrivateWinformsVersion>8.0.16-servicing.25217.2</MicrosoftPrivateWinformsVersion>
   </PropertyGroup>
   <!-- Packages that come from https://github.com/dotnet/runtime -->
   <PropertyGroup>

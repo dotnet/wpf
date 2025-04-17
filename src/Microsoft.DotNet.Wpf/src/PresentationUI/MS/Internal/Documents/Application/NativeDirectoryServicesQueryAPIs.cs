@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
 // Description: NativeDirectoryServicesQueryAPIs contains managed wrappers 
@@ -166,20 +166,20 @@ namespace MS.Internal.Documents
 
             // CommonQuery parameters (from cmnquery.h) used in OpenQueryWindowParams to define the
             // state of the People Picker when invoked.
-            internal static readonly uint OQWF_OKCANCEL = 0x00000001; // = 1 => Provide OK/Cancel buttons
-            internal static readonly uint OQWF_DEFAULTFORM = 0x00000002; // = 1 => clsidDefaultQueryForm is valid        
-            internal static readonly uint OQWF_SINGLESELECT = 0x00000004; // = 1 => allow single selection only
-            internal static readonly uint OQWF_REMOVEFORMS = 0x00000020; // = 1 => remove form picker from dialog
-            internal static readonly uint OQWF_SHOWOPTIONAL = 0x00000080; // = 1 => list optional forms by default
-            internal static readonly uint OQWF_HIDEMENUS = 0x00000400; // = 1 => no menu bar displayed
+            internal const uint OQWF_OKCANCEL = 0x00000001; // = 1 => Provide OK/Cancel buttons
+            internal const uint OQWF_DEFAULTFORM = 0x00000002; // = 1 => clsidDefaultQueryForm is valid        
+            internal const uint OQWF_SINGLESELECT = 0x00000004; // = 1 => allow single selection only
+            internal const uint OQWF_REMOVEFORMS = 0x00000020; // = 1 => remove form picker from dialog
+            internal const uint OQWF_SHOWOPTIONAL = 0x00000080; // = 1 => list optional forms by default
+            internal const uint OQWF_HIDEMENUS = 0x00000400; // = 1 => no menu bar displayed
 
             // Clipboard formats (from winuser.h)
-            internal static readonly String CFSTR_DSOBJECTNAMES = "DsObjectNames";
+            internal const String CFSTR_DSOBJECTNAMES = "DsObjectNames";
 
             // Success/Failure codes
-            internal static readonly uint S_OK = 0x00000000;
-            internal static readonly uint S_FALSE = 0x00000001;
-            internal static readonly uint E_FAIL = 0x80000008;
+            internal const uint S_OK = 0x00000000;
+            internal const uint S_FALSE = 0x00000001;
+            internal const uint E_FAIL = 0x80000008;
 
         }
     }

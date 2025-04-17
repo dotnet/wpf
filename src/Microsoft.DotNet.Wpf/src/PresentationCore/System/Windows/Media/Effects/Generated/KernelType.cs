@@ -25,5 +25,5 @@ namespace System.Windows.Media.Effects
         ///     Box - Use a Box filter
         /// </summary>
         Box = 1,
-    }   
+    }
 }

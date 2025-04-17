@@ -75,7 +75,7 @@ namespace System.Windows.Media
         {
             get
             {
-                return (Point) GetValue(PointProperty);
+                return (Point)GetValue(PointProperty);
             }
             set
             {
@@ -90,7 +90,7 @@ namespace System.Windows.Media
         {
             get
             {
-                return (Size) GetValue(SizeProperty);
+                return (Size)GetValue(SizeProperty);
             }
             set
             {
@@ -105,7 +105,7 @@ namespace System.Windows.Media
         {
             get
             {
-                return (double) GetValue(RotationAngleProperty);
+                return (double)GetValue(RotationAngleProperty);
             }
             set
             {
@@ -120,7 +120,7 @@ namespace System.Windows.Media
         {
             get
             {
-                return (bool) GetValue(IsLargeArcProperty);
+                return (bool)GetValue(IsLargeArcProperty);
             }
             set
             {
@@ -135,7 +135,7 @@ namespace System.Windows.Media
         {
             get
             {
-                return (SweepDirection) GetValue(SweepDirectionProperty);
+                return (SweepDirection)GetValue(SweepDirectionProperty);
             }
             set
             {

@@ -212,7 +212,7 @@ namespace System.Windows.Media
         {
             get
             {
-                return (Brush) GetValue(BrushProperty);
+                return (Brush)GetValue(BrushProperty);
             }
             set
             {
@@ -227,7 +227,7 @@ namespace System.Windows.Media
         {
             get
             {
-                return (double) GetValue(ThicknessProperty);
+                return (double)GetValue(ThicknessProperty);
             }
             set
             {
@@ -242,7 +242,7 @@ namespace System.Windows.Media
         {
             get
             {
-                return (PenLineCap) GetValue(StartLineCapProperty);
+                return (PenLineCap)GetValue(StartLineCapProperty);
             }
             set
             {
@@ -257,7 +257,7 @@ namespace System.Windows.Media
         {
             get
             {
-                return (PenLineCap) GetValue(EndLineCapProperty);
+                return (PenLineCap)GetValue(EndLineCapProperty);
             }
             set
             {
@@ -272,7 +272,7 @@ namespace System.Windows.Media
         {
             get
             {
-                return (PenLineCap) GetValue(DashCapProperty);
+                return (PenLineCap)GetValue(DashCapProperty);
             }
             set
             {
@@ -287,7 +287,7 @@ namespace System.Windows.Media
         {
             get
             {
-                return (PenLineJoin) GetValue(LineJoinProperty);
+                return (PenLineJoin)GetValue(LineJoinProperty);
             }
             set
             {
@@ -302,7 +302,7 @@ namespace System.Windows.Media
         {
             get
             {
-                return (double) GetValue(MiterLimitProperty);
+                return (double)GetValue(MiterLimitProperty);
             }
             set
             {
@@ -317,7 +317,7 @@ namespace System.Windows.Media
         {
             get
             {
-                return (DashStyle) GetValue(DashStyleProperty);
+                return (DashStyle)GetValue(DashStyleProperty);
             }
             set
             {

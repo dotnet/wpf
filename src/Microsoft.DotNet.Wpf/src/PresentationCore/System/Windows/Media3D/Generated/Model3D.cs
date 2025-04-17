@@ -120,7 +120,7 @@ namespace System.Windows.Media.Media3D
         {
             get
             {
-                return (Transform3D) GetValue(TransformProperty);
+                return (Transform3D)GetValue(TransformProperty);
             }
             set
             {

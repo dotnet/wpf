@@ -163,7 +163,7 @@ namespace System.Windows.Media.Media3D
         {
             get
             {
-                return (MaterialCollection) GetValue(ChildrenProperty);
+                return (MaterialCollection)GetValue(ChildrenProperty);
             }
             set
             {
@@ -233,7 +233,7 @@ namespace System.Windows.Media.Media3D
 
 
                     // Copy this collection's elements (or their handles) to reserved data
-                    for(int i = 0; i < ChildrenCount; i++)
+                    for (int i = 0; i < ChildrenCount; i++)
                     {
                         DUCE.ResourceHandle resource = ((DUCE.IResource)vChildren.Internal_GetItem(i)).GetHandle(channel);;
                         channel.AppendCommandData(

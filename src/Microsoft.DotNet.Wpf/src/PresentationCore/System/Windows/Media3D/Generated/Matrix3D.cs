@@ -50,7 +50,7 @@ namespace System.Windows.Media.Media3D
         /// </returns>
         /// <param name='matrix1'>The first Matrix3D to compare</param>
         /// <param name='matrix2'>The second Matrix3D to compare</param>
-        public static bool operator == (Matrix3D matrix1, Matrix3D matrix2)
+        public static bool operator ==(Matrix3D matrix1, Matrix3D matrix2)
         {
             if (matrix1.IsDistinguishedIdentity || matrix2.IsDistinguishedIdentity)
             {
@@ -88,7 +88,7 @@ namespace System.Windows.Media.Media3D
         /// </returns>
         /// <param name='matrix1'>The first Matrix3D to compare</param>
         /// <param name='matrix2'>The second Matrix3D to compare</param>
-        public static bool operator != (Matrix3D matrix1, Matrix3D matrix2)
+        public static bool operator !=(Matrix3D matrix1, Matrix3D matrix2)
         {
             return !(matrix1 == matrix2);
         }
@@ -104,7 +104,7 @@ namespace System.Windows.Media.Media3D
         /// </returns>
         /// <param name='matrix1'>The first Matrix3D to compare</param>
         /// <param name='matrix2'>The second Matrix3D to compare</param>
-        public static bool Equals (Matrix3D matrix1, Matrix3D matrix2)
+        public static bool Equals(Matrix3D matrix1, Matrix3D matrix2)
         {
             if (matrix1.IsDistinguishedIdentity || matrix2.IsDistinguishedIdentity)
             {

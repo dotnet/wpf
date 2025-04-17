@@ -28,6 +28,6 @@ namespace System.Windows.Media.Effects
 
             return (value == RenderingBias.Performance) || 
                    (value == RenderingBias.Quality);
-        }                                
+        }
     }
 }

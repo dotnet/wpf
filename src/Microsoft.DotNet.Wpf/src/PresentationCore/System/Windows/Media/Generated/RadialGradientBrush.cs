@@ -102,7 +102,7 @@ namespace System.Windows.Media
         {
             get
             {
-                return (Point) GetValue(CenterProperty);
+                return (Point)GetValue(CenterProperty);
             }
             set
             {
@@ -117,7 +117,7 @@ namespace System.Windows.Media
         {
             get
             {
-                return (double) GetValue(RadiusXProperty);
+                return (double)GetValue(RadiusXProperty);
             }
             set
             {
@@ -132,7 +132,7 @@ namespace System.Windows.Media
         {
             get
             {
-                return (double) GetValue(RadiusYProperty);
+                return (double)GetValue(RadiusYProperty);
             }
             set
             {
@@ -147,7 +147,7 @@ namespace System.Windows.Media
         {
             get
             {
-                return (Point) GetValue(GradientOriginProperty);
+                return (Point)GetValue(GradientOriginProperty);
             }
             set
             {

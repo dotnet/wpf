@@ -26,5 +26,5 @@ namespace System.Windows.Media
         ///     SRgbLinearInterpolation - Colors are interpolated in the sRGB color space
         /// </summary>
         SRgbLinearInterpolation = 1,
-    }   
+    }
 }

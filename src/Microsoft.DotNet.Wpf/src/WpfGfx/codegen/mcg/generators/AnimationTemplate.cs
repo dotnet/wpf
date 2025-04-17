@@ -337,7 +337,7 @@ namespace MS.Internal.MilCodeGen.ResourceModel
                                         bool validateOrigin = false;
                                         bool validateDestination = false;
 
-                                        switch(_animationType)
+                                        switch (_animationType)
                                         {
                                             case AnimationType.Automatic:
                                             

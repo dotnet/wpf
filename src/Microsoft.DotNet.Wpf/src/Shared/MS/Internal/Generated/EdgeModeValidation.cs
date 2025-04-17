@@ -28,6 +28,6 @@ namespace System.Windows.Media
 
             return (value == EdgeMode.Unspecified) || 
                    (value == EdgeMode.Aliased);
-        }                                
+        }
     }
 }

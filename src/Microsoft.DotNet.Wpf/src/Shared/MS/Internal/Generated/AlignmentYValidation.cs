@@ -29,6 +29,6 @@ namespace System.Windows.Media
             return (value == AlignmentY.Top) || 
                    (value == AlignmentY.Center) || 
                    (value == AlignmentY.Bottom);
-        }                                
+        }
     }
 }

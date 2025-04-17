@@ -10,7 +10,7 @@
 // File name: generated_process_message.inl
 //---------------------------------------------------------------------------
 
-switch(nCmdType)
+switch (nCmdType)
 {
     case MilCmdTransportSyncFlush:
     {

@@ -51,7 +51,7 @@ namespace MS.Internal.MilCodeGen.Runtime
             XmlLoader loader = new XmlLoader(xmlFile, schemaFile);
             XmlReader reader = new XmlTextReader(File.OpenText(xmlFile));
 
-            if(schemaFile != null && schemaFile.Length > 0)
+            if (schemaFile != null && schemaFile.Length > 0)
             {
                 XmlValidatingReader validatingReader = new XmlValidatingReader(reader);
 

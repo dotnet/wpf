@@ -396,7 +396,7 @@ CMilSlaveRenderData::GetHandles(CMilSlaveHandleTable *pHandleTable)
                     }
 
                     *(reinterpret_cast<UINT*>(&pData->coordinate)) = m_rgpGuidelineKits.GetCount() - 1;
-                }              
+                }
 
                 stackDepth++;
                 break;

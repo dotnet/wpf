@@ -151,7 +151,7 @@ namespace System.Windows.Media
         {
             get
             {
-                return (BrushMappingMode) GetValue(ViewportUnitsProperty);
+                return (BrushMappingMode)GetValue(ViewportUnitsProperty);
             }
             set
             {
@@ -166,7 +166,7 @@ namespace System.Windows.Media
         {
             get
             {
-                return (BrushMappingMode) GetValue(ViewboxUnitsProperty);
+                return (BrushMappingMode)GetValue(ViewboxUnitsProperty);
             }
             set
             {
@@ -181,7 +181,7 @@ namespace System.Windows.Media
         {
             get
             {
-                return (Rect) GetValue(ViewportProperty);
+                return (Rect)GetValue(ViewportProperty);
             }
             set
             {
@@ -196,7 +196,7 @@ namespace System.Windows.Media
         {
             get
             {
-                return (Rect) GetValue(ViewboxProperty);
+                return (Rect)GetValue(ViewboxProperty);
             }
             set
             {
@@ -211,7 +211,7 @@ namespace System.Windows.Media
         {
             get
             {
-                return (Stretch) GetValue(StretchProperty);
+                return (Stretch)GetValue(StretchProperty);
             }
             set
             {
@@ -226,7 +226,7 @@ namespace System.Windows.Media
         {
             get
             {
-                return (TileMode) GetValue(TileModeProperty);
+                return (TileMode)GetValue(TileModeProperty);
             }
             set
             {
@@ -241,7 +241,7 @@ namespace System.Windows.Media
         {
             get
             {
-                return (AlignmentX) GetValue(AlignmentXProperty);
+                return (AlignmentX)GetValue(AlignmentXProperty);
             }
             set
             {
@@ -256,7 +256,7 @@ namespace System.Windows.Media
         {
             get
             {
-                return (AlignmentY) GetValue(AlignmentYProperty);
+                return (AlignmentY)GetValue(AlignmentYProperty);
             }
             set
             {

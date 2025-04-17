@@ -50,7 +50,7 @@ namespace System.Windows.Media.Media3D
         /// </returns>
         /// <param name='rect1'>The first Rect3D to compare</param>
         /// <param name='rect2'>The second Rect3D to compare</param>
-        public static bool operator == (Rect3D rect1, Rect3D rect2)
+        public static bool operator ==(Rect3D rect1, Rect3D rect2)
         {
             return rect1.X == rect2.X &&
                    rect1.Y == rect2.Y &&
@@ -71,7 +71,7 @@ namespace System.Windows.Media.Media3D
         /// </returns>
         /// <param name='rect1'>The first Rect3D to compare</param>
         /// <param name='rect2'>The second Rect3D to compare</param>
-        public static bool operator != (Rect3D rect1, Rect3D rect2)
+        public static bool operator !=(Rect3D rect1, Rect3D rect2)
         {
             return !(rect1 == rect2);
         }
@@ -87,7 +87,7 @@ namespace System.Windows.Media.Media3D
         /// </returns>
         /// <param name='rect1'>The first Rect3D to compare</param>
         /// <param name='rect2'>The second Rect3D to compare</param>
-        public static bool Equals (Rect3D rect1, Rect3D rect2)
+        public static bool Equals(Rect3D rect1, Rect3D rect2)
         {
             if (rect1.IsEmpty)
             {

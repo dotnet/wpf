@@ -473,10 +473,10 @@ namespace System.Windows.Media.Animation
         {
             base.OnInheritanceContextChangedCore(args);
 
-            for (int i=0; i<this.Count; i++)
+            for (int i = 0; i < this.Count; i++)
             {
                 DependencyObject inheritanceChild = _collection[i];
-                if (inheritanceChild!= null && inheritanceChild.InheritanceContext == this)
+                if (inheritanceChild != null && inheritanceChild.InheritanceContext == this)
                 {
                     inheritanceChild.OnInheritanceContextChanged(args);
                 }
@@ -569,7 +569,7 @@ namespace System.Windows.Media.Animation
         /// </summary>
         protected override void CloneCore(Freezable source)
         {
-            TimelineCollection sourceTimelineCollection = (TimelineCollection) source;
+            TimelineCollection sourceTimelineCollection = (TimelineCollection)source;
 
             base.CloneCore(source);
 
@@ -579,7 +579,7 @@ namespace System.Windows.Media.Animation
 
             for (int i = 0; i < count; i++)
             {
-                Timeline newValue = (Timeline) sourceTimelineCollection._collection[i].Clone();
+                Timeline newValue = (Timeline)sourceTimelineCollection._collection[i].Clone();
                 OnFreezablePropertyChanged(/* oldValue = */ null, newValue);
                 _collection.Add(newValue);
 
@@ -591,7 +591,7 @@ namespace System.Windows.Media.Animation
         /// </summary>
         protected override void CloneCurrentValueCore(Freezable source)
         {
-            TimelineCollection sourceTimelineCollection = (TimelineCollection) source;
+            TimelineCollection sourceTimelineCollection = (TimelineCollection)source;
 
             base.CloneCurrentValueCore(source);
 
@@ -601,7 +601,7 @@ namespace System.Windows.Media.Animation
 
             for (int i = 0; i < count; i++)
             {
-                Timeline newValue = (Timeline) sourceTimelineCollection._collection[i].CloneCurrentValue();
+                Timeline newValue = (Timeline)sourceTimelineCollection._collection[i].CloneCurrentValue();
                 OnFreezablePropertyChanged(/* oldValue = */ null, newValue);
                 _collection.Add(newValue);
 
@@ -613,7 +613,7 @@ namespace System.Windows.Media.Animation
         /// </summary>
         protected override void GetAsFrozenCore(Freezable source)
         {
-            TimelineCollection sourceTimelineCollection = (TimelineCollection) source;
+            TimelineCollection sourceTimelineCollection = (TimelineCollection)source;
 
             base.GetAsFrozenCore(source);
 
@@ -623,7 +623,7 @@ namespace System.Windows.Media.Animation
 
             for (int i = 0; i < count; i++)
             {
-                Timeline newValue = (Timeline) sourceTimelineCollection._collection[i].GetAsFrozen();
+                Timeline newValue = (Timeline)sourceTimelineCollection._collection[i].GetAsFrozen();
                 OnFreezablePropertyChanged(/* oldValue = */ null, newValue);
                 _collection.Add(newValue);
 
@@ -635,7 +635,7 @@ namespace System.Windows.Media.Animation
         /// </summary>
         protected override void GetCurrentValueAsFrozenCore(Freezable source)
         {
-            TimelineCollection sourceTimelineCollection = (TimelineCollection) source;
+            TimelineCollection sourceTimelineCollection = (TimelineCollection)source;
 
             base.GetCurrentValueAsFrozenCore(source);
 
@@ -645,7 +645,7 @@ namespace System.Windows.Media.Animation
 
             for (int i = 0; i < count; i++)
             {
-                Timeline newValue = (Timeline) sourceTimelineCollection._collection[i].GetCurrentValueAsFrozen();
+                Timeline newValue = (Timeline)sourceTimelineCollection._collection[i].GetCurrentValueAsFrozen();
                 OnFreezablePropertyChanged(/* oldValue = */ null, newValue);
                 _collection.Add(newValue);
 

@@ -50,7 +50,7 @@ namespace System.Windows.Media.Media3D
         /// </returns>
         /// <param name='quaternion1'>The first Quaternion to compare</param>
         /// <param name='quaternion2'>The second Quaternion to compare</param>
-        public static bool operator == (Quaternion quaternion1, Quaternion quaternion2)
+        public static bool operator ==(Quaternion quaternion1, Quaternion quaternion2)
         {
             if (quaternion1.IsDistinguishedIdentity || quaternion2.IsDistinguishedIdentity)
             {
@@ -76,7 +76,7 @@ namespace System.Windows.Media.Media3D
         /// </returns>
         /// <param name='quaternion1'>The first Quaternion to compare</param>
         /// <param name='quaternion2'>The second Quaternion to compare</param>
-        public static bool operator != (Quaternion quaternion1, Quaternion quaternion2)
+        public static bool operator !=(Quaternion quaternion1, Quaternion quaternion2)
         {
             return !(quaternion1 == quaternion2);
         }
@@ -92,7 +92,7 @@ namespace System.Windows.Media.Media3D
         /// </returns>
         /// <param name='quaternion1'>The first Quaternion to compare</param>
         /// <param name='quaternion2'>The second Quaternion to compare</param>
-        public static bool Equals (Quaternion quaternion1, Quaternion quaternion2)
+        public static bool Equals(Quaternion quaternion1, Quaternion quaternion2)
         {
             if (quaternion1.IsDistinguishedIdentity || quaternion2.IsDistinguishedIdentity)
             {

@@ -90,7 +90,7 @@ namespace System.Windows.Media.Animation
         /// </summary>
         protected override void CloneCore(Freezable sourceFreezable)
         {
-            SizeKeyFrameCollection sourceCollection = (SizeKeyFrameCollection) sourceFreezable;
+            SizeKeyFrameCollection sourceCollection = (SizeKeyFrameCollection)sourceFreezable;
             base.CloneCore(sourceFreezable);
 
             int count = sourceCollection._keyFrames.Count;
@@ -111,7 +111,7 @@ namespace System.Windows.Media.Animation
         /// </summary>
         protected override void CloneCurrentValueCore(Freezable sourceFreezable)
         {
-            SizeKeyFrameCollection sourceCollection = (SizeKeyFrameCollection) sourceFreezable;
+            SizeKeyFrameCollection sourceCollection = (SizeKeyFrameCollection)sourceFreezable;
             base.CloneCurrentValueCore(sourceFreezable);
 
             int count = sourceCollection._keyFrames.Count;
@@ -132,7 +132,7 @@ namespace System.Windows.Media.Animation
         /// </summary>
         protected override void GetAsFrozenCore(Freezable sourceFreezable)
         {
-            SizeKeyFrameCollection sourceCollection = (SizeKeyFrameCollection) sourceFreezable;
+            SizeKeyFrameCollection sourceCollection = (SizeKeyFrameCollection)sourceFreezable;
             base.GetAsFrozenCore(sourceFreezable);
 
             int count = sourceCollection._keyFrames.Count;
@@ -153,7 +153,7 @@ namespace System.Windows.Media.Animation
         /// </summary>
         protected override void GetCurrentValueAsFrozenCore(Freezable sourceFreezable)
         {
-            SizeKeyFrameCollection sourceCollection = (SizeKeyFrameCollection) sourceFreezable;
+            SizeKeyFrameCollection sourceCollection = (SizeKeyFrameCollection)sourceFreezable;
             base.GetCurrentValueAsFrozenCore(sourceFreezable);
 
             int count = sourceCollection._keyFrames.Count;

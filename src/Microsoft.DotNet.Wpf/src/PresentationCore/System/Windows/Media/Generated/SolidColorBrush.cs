@@ -81,7 +81,7 @@ namespace System.Windows.Media
         {
             get
             {
-                return (Color) GetValue(ColorProperty);
+                return (Color)GetValue(ColorProperty);
             }
             set
             {

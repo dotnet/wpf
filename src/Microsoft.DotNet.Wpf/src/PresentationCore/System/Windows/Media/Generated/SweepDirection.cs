@@ -25,5 +25,5 @@ namespace System.Windows.Media
         ///     Clockwise -
         /// </summary>
         Clockwise = 1,
-    }   
+    }
 }

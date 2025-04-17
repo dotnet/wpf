@@ -809,7 +809,7 @@ namespace MS.Internal.MilCodeGen.Generators
                                     
                                     [[/inline]]
                                 );
-                            }            
+                            }
                         }
                         else
                         {

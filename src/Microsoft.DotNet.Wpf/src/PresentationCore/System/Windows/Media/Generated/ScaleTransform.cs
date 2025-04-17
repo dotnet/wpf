@@ -102,7 +102,7 @@ namespace System.Windows.Media
         {
             get
             {
-                return (double) GetValue(ScaleXProperty);
+                return (double)GetValue(ScaleXProperty);
             }
             set
             {
@@ -117,7 +117,7 @@ namespace System.Windows.Media
         {
             get
             {
-                return (double) GetValue(ScaleYProperty);
+                return (double)GetValue(ScaleYProperty);
             }
             set
             {
@@ -132,7 +132,7 @@ namespace System.Windows.Media
         {
             get
             {
-                return (double) GetValue(CenterXProperty);
+                return (double)GetValue(CenterXProperty);
             }
             set
             {
@@ -147,7 +147,7 @@ namespace System.Windows.Media
         {
             get
             {
-                return (double) GetValue(CenterYProperty);
+                return (double)GetValue(CenterYProperty);
             }
             set
             {

@@ -70,6 +70,9 @@ namespace System.Windows
         Subscript = 6,
         Superscript = 7,
     }
+
+    #nullable enable
+    #pragma warning disable CS8597
     public static partial class Clipboard
     {
         public static void Clear() { }
@@ -81,8 +84,8 @@ namespace System.Windows
         public static bool ContainsText(System.Windows.TextDataFormat format) { throw null; }
         public static void Flush() { }
         public static System.IO.Stream? GetAudioStream() { throw null; }
-        public static object GetData(string format) { throw null; }
-        public static System.Windows.IDataObject GetDataObject() { throw null; }
+        public static object? GetData(string format) { throw null; }
+        public static System.Windows.IDataObject? GetDataObject() { throw null; }
         public static System.Collections.Specialized.StringCollection GetFileDropList() { throw null; }
         public static System.Windows.Media.Imaging.BitmapSource? GetImage() { throw null; }
         public static string GetText() { throw null; }
@@ -99,9 +102,11 @@ namespace System.Windows
         public static void SetText(string text) { }
         public static void SetText(string text, System.Windows.TextDataFormat format) { }
         [CLSCompliant(false)]
-        public static bool TryGetData<T>(string format, Func<Reflection.Metadata.TypeName, Type> resolver, [NotNullWhen(true), MaybeNullWhen(false)] out T data) { throw null; }
+        public static bool TryGetData<T>(string format, Func<Reflection.Metadata.TypeName, Type?> resolver, [NotNullWhen(true), MaybeNullWhen(false)] out T data) { throw null; }
         public static bool TryGetData<T>(string format, [NotNullWhen(true), MaybeNullWhen(false)] out T data) { throw null; }
     }
+    #pragma warning restore CS8597
+    #nullable disable
     public partial class ContentElement : System.Windows.DependencyObject, System.Windows.IInputElement, System.Windows.Media.Animation.IAnimatable
     {
         public static readonly System.Windows.DependencyProperty AllowDropProperty;
@@ -480,11 +485,15 @@ namespace System.Windows
         public static System.Windows.DataFormat GetDataFormat(int id) { throw null; }
         public static System.Windows.DataFormat GetDataFormat(string format) { throw null; }
     }
+    #nullable enable
+    #pragma warning disable CS8597
     public sealed partial class DataObject : System.Runtime.InteropServices.ComTypes.IDataObject, System.Windows.IDataObject, System.Windows.ITypedDataObject
     {
+        #pragma warning disable CS8618
         public static readonly System.Windows.RoutedEvent CopyingEvent;
         public static readonly System.Windows.RoutedEvent PastingEvent;
         public static readonly System.Windows.RoutedEvent SettingDataEvent;
+        #pragma warning restore CS8618
         public DataObject() { }
         public DataObject(object data) { }
         public DataObject(string format, object data) { }
@@ -541,6 +550,8 @@ namespace System.Windows
         public void SetDataAsJson<T>(T data) { }
         public void SetDataAsJson<T>(string format, T data) { }
     }
+    #pragma warning restore CS8597
+    #nullable disable
     public sealed partial class DataObjectCopyingEventArgs : System.Windows.DataObjectEventArgs
     {
         public DataObjectCopyingEventArgs(System.Windows.IDataObject dataObject, bool isDragDrop) { }

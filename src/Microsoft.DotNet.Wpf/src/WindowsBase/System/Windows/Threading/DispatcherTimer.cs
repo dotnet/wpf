@@ -273,10 +273,7 @@ namespace System.Windows.Threading
             lock(_instanceLock)
             {
                 // Simply promote the operation to it's desired priority.
-                if(_operation != null)
-                {
-                    _operation.Priority = _priority;
-                }
+                _operation?.Priority = _priority;
             }
         }
 

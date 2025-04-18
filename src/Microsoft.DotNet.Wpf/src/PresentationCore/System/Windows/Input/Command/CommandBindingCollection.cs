@@ -144,10 +144,7 @@ namespace System.Windows.Input
             }
             set
             {
-                if (_innerCBList != null)
-                {
-                    _innerCBList[index] = value;
-                }
+                _innerCBList?[index] = value;
             }
         }
         

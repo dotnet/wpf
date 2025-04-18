@@ -966,10 +966,7 @@ namespace MS.Internal.AutomationProxies
                 index = children.Length - 1; 
 
             Accessible nav = AccessibleFromObject(children[index], parent);
-            if (nav != null)
-            {
-                nav._accessibleChildrenIndex = index;
-            }
+            nav?._accessibleChildrenIndex = index;
 
             return nav;
         }

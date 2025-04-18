@@ -718,10 +718,7 @@ namespace Microsoft.Internal.AlphaFlattener
                         if (proceedBlending)
                         {
                             gp.Brush = blendedBrush;
-                            if (gp.Pen != null)
-                            {
-                                gp.Pen.StrokeBrush = blendedPenBrush;
-                            }
+                            gp.Pen?.StrokeBrush = blendedPenBrush;
                         }
 
                         if (proceedBlending && pi.primitive.IsOpaque)

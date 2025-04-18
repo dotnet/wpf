@@ -860,7 +860,7 @@ namespace System.Windows
                 if(r != null)
                 {
                     r.Next = _head;
-                    if(_head != null) _head.Prev = r;
+                    _head?.Prev = r;
                     _head = r;
 
                     setRequest(e, r);
@@ -975,7 +975,7 @@ namespace System.Windows
                 if(entry.Prev == null) _head = entry.Next;
                 else entry.Prev.Next = entry.Next;
 
-                if(entry.Next != null) entry.Next.Prev = entry.Prev;
+                entry.Next?.Prev = entry.Prev;
 
                 ReuseRequest(entry);
             }
@@ -1058,7 +1058,7 @@ namespace System.Windows
             ListItem t = getNewListItem(target);
 
             t.Next = _head;
-            if(_head != null) _head.Prev = t;
+            _head?.Prev = t;
             _head = t;
 
            _count++;
@@ -1074,7 +1074,7 @@ namespace System.Windows
             if(t.Prev == null) _head = t.Next;
             else t.Prev.Next = t.Next;
 
-            if(t.Next != null) t.Next.Prev = t.Prev;
+            t.Next?.Prev = t.Prev;
 
             reuseListItem(t);
             _count--;

@@ -589,10 +589,7 @@ namespace System.ComponentModel
                     if (_proposedAllListenersList == list)
                     {
                         HybridDictionary dict = (HybridDictionary)this[sender];
-                        if (dict != null)
-                        {
-                            dict[AllListenersKey] = list;
-                        }
+                        dict?[AllListenersKey] = list;
 
                         _proposedAllListenersList = null;
                     }

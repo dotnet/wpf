@@ -83,10 +83,7 @@ namespace System.Windows.Automation.Peers
                         return (true);
                     });
 
-            if (root != null)
-            {
-                root.Hwnd = hwnd;
-            }
+            root?.Hwnd = hwnd;
 
             return root;
         }

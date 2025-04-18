@@ -1691,9 +1691,9 @@ namespace System.Windows.Input
                                 {
                                     _rawMouseOver = new WeakReference(rawMouseOver);
                                 }
-                                else if (_rawMouseOver != null)
+                                else
                                 {
-                                    _rawMouseOver.Target = rawMouseOver;
+                                    _rawMouseOver?.Target = rawMouseOver;
                                 }
 
                                 // Console.WriteLine("RawMouseActions.AbsoluteMove: ptRoot=" + ptRoot);

@@ -443,10 +443,7 @@ namespace System.Windows.Input
             set
             {
                 _mode = value;
-                if (_manipulationProcessor != null)
-                {
-                    _manipulationProcessor.SupportedManipulations = ConvertMode(_mode);
-                }
+                _manipulationProcessor?.SupportedManipulations = ConvertMode(_mode);
             }
         }
 
@@ -483,10 +480,7 @@ namespace System.Windows.Input
             set
             {
                 _pivot = value;
-                if (_manipulationProcessor != null)
-                {
-                    _manipulationProcessor.Pivot = ConvertPivot(value);
-                }
+                _manipulationProcessor?.Pivot = ConvertPivot(value);
             }
         }
 

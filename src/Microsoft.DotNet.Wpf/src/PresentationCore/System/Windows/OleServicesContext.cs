@@ -92,20 +92,15 @@ internal class OleServicesContext
         }
 
         InputManager inputManager = (InputManager)Dispatcher.CurrentDispatcher.InputManager;
-        if (inputManager is not null)
-        {
-            inputManager.InDragDrop = true;
-        }
+        inputManager?.InDragDrop = true;
+
         try
         {
             UnsafeNativeMethods.DoDragDrop(dataObject, dropSource, allowedEffects, finalEffect);
         }
         finally
         {
-            if (inputManager is not null)
-            {
-                inputManager.InDragDrop = false;
-            }
+            inputManager?.InDragDrop = false;
         }
     }
 

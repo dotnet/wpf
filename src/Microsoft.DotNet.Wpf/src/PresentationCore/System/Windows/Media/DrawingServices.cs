@@ -99,10 +99,7 @@ namespace System.Windows.Media
 
             DrawingDrawingContext ddc = dc as DrawingDrawingContext;
 
-            if (ddc != null)
-            {
-                ddc.CanBeInheritanceContext = false;
-            }
+            ddc?.CanBeInheritanceContext = false;
 
             DrawingContextDrawingContextWalker walker =
                 new DrawingContextDrawingContextWalker(dc);

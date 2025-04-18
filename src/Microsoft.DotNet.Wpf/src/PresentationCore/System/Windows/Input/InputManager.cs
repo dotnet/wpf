@@ -482,12 +482,9 @@ namespace System.Windows.Input
         {
             // It turns out that somehow we get here after the DispatcherOperation has been dispatched and we 
             // need to no-op on that.
-            if (_hitTestInvalidatedAsyncOperation != null)
-            {
-                // Promote the pending DispatcherOperation to Input Priority
 
-                _hitTestInvalidatedAsyncOperation.Priority = DispatcherPriority.Input;
-}
+            // Promote the pending DispatcherOperation to Input Priority
+            _hitTestInvalidatedAsyncOperation?.Priority = DispatcherPriority.Input;
 
             // Stop the input timer
 

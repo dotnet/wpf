@@ -727,8 +727,7 @@ namespace System.Windows.Input
                     e.StagingItem.SetData(_tagScanCode, new ScanCode(keyboardInput.ScanCode, keyboardInput.IsExtendedKey));
 
                     // Tell the InputManager that the MostRecentDevice is us.
-                    if(_inputManager is not null)
-                        _inputManager.MostRecentInputDevice = this;
+                    _inputManager?.MostRecentInputDevice = this;
                 }
 
                 // We are missing detection for redundant ups
@@ -744,8 +743,7 @@ namespace System.Windows.Input
                     e.StagingItem.SetData(_tagScanCode, new ScanCode(keyboardInput.ScanCode, keyboardInput.IsExtendedKey));
 
                     // Tell the InputManager that the MostRecentDevice is us.
-                    if(_inputManager is not null)
-                        _inputManager.MostRecentInputDevice = this;
+                    _inputManager?.MostRecentInputDevice = this;
                 }
             }
 

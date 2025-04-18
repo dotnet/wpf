@@ -3539,10 +3539,7 @@ namespace System.Windows.Input.StylusWisp
             {
                 // Find the pencontexts for this window and update it's disabled window state
                 PenContexts penContexts = GetPenContextsFromHwnd(sourceHit);
-                if (penContexts != null)
-                {
-                    penContexts.IsWindowDisabled = disabled;
-                }
+                penContexts?.IsWindowDisabled = disabled;
             }
 
             // See if we need to update the mouse state when going enabled.

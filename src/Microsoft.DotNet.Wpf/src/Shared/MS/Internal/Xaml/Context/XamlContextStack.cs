@@ -47,10 +47,7 @@ namespace MS.Internal.Xaml.Context
                         _currentFrame = newFrame;
                     }
 
-                    if (lastFrameInNewStack is not null)
-                    {
-                        lastFrameInNewStack.Previous = newFrame;
-                    }
+                    lastFrameInNewStack?.Previous = newFrame;
 
                     lastFrameInNewStack = newFrame;
                     iteratorFrame = (T)iteratorFrame.Previous;

@@ -1413,8 +1413,7 @@ namespace System.Windows.Interop
                 if(peer == null)
                     peer = uiroot.CreateGenericRootAutomationPeer();
 
-                if(peer != null)
-                    peer.Hwnd = handle;
+                peer?.Hwnd = handle;
             }
 
             // This can happen if the root visual is not UIElement. In this case,

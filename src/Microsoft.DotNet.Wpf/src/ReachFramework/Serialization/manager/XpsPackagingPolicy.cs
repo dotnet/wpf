@@ -1264,9 +1264,9 @@ namespace System.Windows.Xps.Serialization
             {
                 _currentFixedDocumentWriter.PrintTicket = printTicket;
             }
-            else if(_currentFixedDocumentSequenceWriter != null)
+            else
             {
-                _currentFixedDocumentSequenceWriter.PrintTicket = printTicket;
+                _currentFixedDocumentSequenceWriter?.PrintTicket = printTicket;
             }
         }
 

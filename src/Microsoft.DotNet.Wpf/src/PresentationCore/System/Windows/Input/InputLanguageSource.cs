@@ -221,11 +221,7 @@ namespace System.Windows.Input
             set
             {
                 EnsureInputProcessorProfile();
-
-                if (_ipp != null)
-                {
-                    _ipp.CurrentInputLanguage = value;
-                }
+                _ipp?.CurrentInputLanguage = value;
             }
         }
 

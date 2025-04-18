@@ -1171,10 +1171,7 @@ namespace System.Windows.Media.Animation
         // We do this whenever a discontinuous interactive action (seek/begin/stop) is performed.
         internal virtual void ResetNodesWithSlip()
         {
-            if (_syncData != null)
-            {
-                _syncData.IsInSyncPeriod = false;  // Reset sync tracking
-            }
+            _syncData?.IsInSyncPeriod = false;  // Reset sync tracking
         }
 
 
@@ -2855,10 +2852,7 @@ namespace System.Windows.Media.Animation
                 relativeBeginTime, _currentDuration, _appliedSpeedRatio))
             {
                 HasDiscontinuousTimeMovementOccured = true;
-                if (_syncData != null)
-                {
-                    _syncData.SyncClockDiscontinuousEvent = true;  // Notify the syncing node of discontinuity
-                }
+                _syncData?.SyncClockDiscontinuousEvent = true;  // Notify the syncing node of discontinuity
             }
 
             // Compute our output intervals

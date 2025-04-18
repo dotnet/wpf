@@ -2754,11 +2754,7 @@ namespace Microsoft.Internal.AlphaFlattener
             else
             {
                 BrushProxy result = CreateBrushCore(brush, bounds);
-
-                if (result != null)
-                {
-                    result.OpacityOnly = true;
-                }
+                result?.OpacityOnly = true;
 
                 return result;
             }

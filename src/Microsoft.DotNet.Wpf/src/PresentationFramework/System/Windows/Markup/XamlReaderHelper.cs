@@ -4413,8 +4413,7 @@ namespace System.Windows.Markup
                 }
             }
 
-            if (ParentContext != null)
-                ParentContext.FirstChildRead = true;  // may already be true
+            ParentContext?.FirstChildRead = true;  // may already be true
 
             WriteElementStart(assemblyName, typeFullName, depth,
                           currentObjectType, serializerType, false /*isInjected*/);

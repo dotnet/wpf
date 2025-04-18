@@ -176,10 +176,7 @@ namespace System.Windows.Media
                     _mediaPlayer = newPlayer;
 
                     // Disassociate the old player
-                    if (oldPlayer != null)
-                    {
-                        oldPlayer.Clock = null;
-                    }
+                    oldPlayer?.Clock = null;
 
                     // Associate the new player
                     if (newPlayer != null)

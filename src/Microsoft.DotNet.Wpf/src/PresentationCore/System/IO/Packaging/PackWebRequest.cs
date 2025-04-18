@@ -493,10 +493,7 @@ namespace System.IO.Packaging
 
                         // special optimization for ftp - Passive mode won't return lengths on ISA servers
                         FtpWebRequest ftpWebRequest = _webRequest as FtpWebRequest;
-                        if (ftpWebRequest != null)
-                        {
-                            ftpWebRequest.UsePassive = false;  // default but allow override
-                        }
+                        ftpWebRequest?.UsePassive = false;  // default but allow override
 }
                     catch (NotSupportedException)
                     {

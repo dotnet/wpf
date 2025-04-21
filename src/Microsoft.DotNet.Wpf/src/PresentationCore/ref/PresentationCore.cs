@@ -70,6 +70,9 @@ namespace System.Windows
         Subscript = 6,
         Superscript = 7,
     }
+
+    #nullable enable
+    #pragma warning disable CS8597
     public static partial class Clipboard
     {
         public static void Clear() { }
@@ -80,11 +83,11 @@ namespace System.Windows
         public static bool ContainsText() { throw null; }
         public static bool ContainsText(System.Windows.TextDataFormat format) { throw null; }
         public static void Flush() { }
-        public static System.IO.Stream GetAudioStream() { throw null; }
-        public static object GetData(string format) { throw null; }
-        public static System.Windows.IDataObject GetDataObject() { throw null; }
+        public static System.IO.Stream? GetAudioStream() { throw null; }
+        public static object? GetData(string format) { throw null; }
+        public static System.Windows.IDataObject? GetDataObject() { throw null; }
         public static System.Collections.Specialized.StringCollection GetFileDropList() { throw null; }
-        public static System.Windows.Media.Imaging.BitmapSource GetImage() { throw null; }
+        public static System.Windows.Media.Imaging.BitmapSource? GetImage() { throw null; }
         public static string GetText() { throw null; }
         public static string GetText(System.Windows.TextDataFormat format) { throw null; }
         public static bool IsCurrent(System.Windows.IDataObject data) { throw null; }
@@ -99,9 +102,11 @@ namespace System.Windows
         public static void SetText(string text) { }
         public static void SetText(string text, System.Windows.TextDataFormat format) { }
         [CLSCompliant(false)]
-        public static bool TryGetData<T>(string format, Func<Reflection.Metadata.TypeName, Type> resolver, [NotNullWhen(true), MaybeNullWhen(false)] out T data) { throw null; }
+        public static bool TryGetData<T>(string format, Func<Reflection.Metadata.TypeName, Type?> resolver, [NotNullWhen(true), MaybeNullWhen(false)] out T data) { throw null; }
         public static bool TryGetData<T>(string format, [NotNullWhen(true), MaybeNullWhen(false)] out T data) { throw null; }
     }
+    #pragma warning restore CS8597
+    #nullable disable
     public partial class ContentElement : System.Windows.DependencyObject, System.Windows.IInputElement, System.Windows.Media.Animation.IAnimatable
     {
         public static readonly System.Windows.DependencyProperty AllowDropProperty;
@@ -480,11 +485,15 @@ namespace System.Windows
         public static System.Windows.DataFormat GetDataFormat(int id) { throw null; }
         public static System.Windows.DataFormat GetDataFormat(string format) { throw null; }
     }
+    #nullable enable
+    #pragma warning disable CS8597
     public sealed partial class DataObject : System.Runtime.InteropServices.ComTypes.IDataObject, System.Windows.IDataObject, System.Windows.ITypedDataObject
     {
+        #pragma warning disable CS8618
         public static readonly System.Windows.RoutedEvent CopyingEvent;
         public static readonly System.Windows.RoutedEvent PastingEvent;
         public static readonly System.Windows.RoutedEvent SettingDataEvent;
+        #pragma warning restore CS8618
         public DataObject() { }
         public DataObject(object data) { }
         public DataObject(string format, object data) { }
@@ -499,9 +508,9 @@ namespace System.Windows
         public bool ContainsText() { throw null; }
         public bool ContainsText(System.Windows.TextDataFormat format) { throw null; }
         public System.IO.Stream GetAudioStream() { throw null; }
-        public object GetData(string format) { throw null; }
-        public object GetData(string format, bool autoConvert) { throw null; }
-        public object GetData(System.Type format) { throw null; }
+        public object? GetData(string format) { throw null; }
+        public object? GetData(string format, bool autoConvert) { throw null; }
+        public object? GetData(System.Type format) { throw null; }
         public bool GetDataPresent(string format) { throw null; }
         public bool GetDataPresent(string format, bool autoConvert) { throw null; }
         public bool GetDataPresent(System.Type format) { throw null; }
@@ -516,17 +525,17 @@ namespace System.Windows
         public static void RemoveSettingDataHandler(System.Windows.DependencyObject element, System.Windows.DataObjectSettingDataEventHandler handler) { }
         public void SetAudio(byte[] audioBytes) { }
         public void SetAudio(System.IO.Stream audioStream) { }
-        public void SetData(object data) { }
-        public void SetData(string format, object data) { }
-        public void SetData(string format, object data, bool autoConvert) { }
-        public void SetData(System.Type format, object data) { }
+        public void SetData(object? data) { }
+        public void SetData(string format, object? data) { }
+        public void SetData(string format, object? data, bool autoConvert) { }
+        public void SetData(System.Type format, object? data) { }
         public void SetFileDropList(System.Collections.Specialized.StringCollection fileDropList) { }
         public void SetImage(System.Windows.Media.Imaging.BitmapSource image) { }
         public void SetText(string textData) { }
         public void SetText(string textData, System.Windows.TextDataFormat format) { }
         int System.Runtime.InteropServices.ComTypes.IDataObject.DAdvise(ref System.Runtime.InteropServices.ComTypes.FORMATETC pFormatetc, System.Runtime.InteropServices.ComTypes.ADVF advf, System.Runtime.InteropServices.ComTypes.IAdviseSink pAdvSink, out int pdwConnection) { throw null; }
         void System.Runtime.InteropServices.ComTypes.IDataObject.DUnadvise(int dwConnection) { }
-        int System.Runtime.InteropServices.ComTypes.IDataObject.EnumDAdvise(out System.Runtime.InteropServices.ComTypes.IEnumSTATDATA enumAdvise) { throw null; }
+        int System.Runtime.InteropServices.ComTypes.IDataObject.EnumDAdvise(out System.Runtime.InteropServices.ComTypes.IEnumSTATDATA? enumAdvise) { throw null; }
         System.Runtime.InteropServices.ComTypes.IEnumFORMATETC System.Runtime.InteropServices.ComTypes.IDataObject.EnumFormatEtc(System.Runtime.InteropServices.ComTypes.DATADIR dwDirection) { throw null; }
         int System.Runtime.InteropServices.ComTypes.IDataObject.GetCanonicalFormatEtc(ref System.Runtime.InteropServices.ComTypes.FORMATETC pformatetcIn, out System.Runtime.InteropServices.ComTypes.FORMATETC pformatetcOut) { throw null; }
         void System.Runtime.InteropServices.ComTypes.IDataObject.GetData(ref System.Runtime.InteropServices.ComTypes.FORMATETC formatetc, out System.Runtime.InteropServices.ComTypes.STGMEDIUM medium) { throw null; }
@@ -537,10 +546,12 @@ namespace System.Windows
         public bool TryGetData<T>(string format, [NotNullWhen(true), MaybeNullWhen(false)] out T data) { throw null; }
         public bool TryGetData<T>(string format, bool autoConvert, [NotNullWhen(true), MaybeNullWhen(false)] out T data) { throw null; }
         [System.CLSCompliant(false)]
-        public bool TryGetData<T>(string format, Func<Reflection.Metadata.TypeName, Type> resolver, bool autoConvert, [NotNullWhen(true), MaybeNullWhen(false)] out T data) { throw null; }
+        public bool TryGetData<T>(string format, Func<Reflection.Metadata.TypeName, Type?> resolver, bool autoConvert, [NotNullWhen(true), MaybeNullWhen(false)] out T data) { throw null; }
         public void SetDataAsJson<T>(T data) { }
         public void SetDataAsJson<T>(string format, T data) { }
     }
+    #pragma warning restore CS8597
+    #nullable disable
     public sealed partial class DataObjectCopyingEventArgs : System.Windows.DataObjectEventArgs
     {
         public DataObjectCopyingEventArgs(System.Windows.IDataObject dataObject, bool isDragDrop) { }

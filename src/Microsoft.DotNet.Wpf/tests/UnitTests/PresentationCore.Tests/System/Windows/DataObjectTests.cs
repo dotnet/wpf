@@ -1,6 +1,8 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
+using System.Windows.Media.Imaging;
+
 namespace System.Windows;
 
 // Note: the OS Clipboard is a system wide resource and all access should be done sequentially to avoid
@@ -9,6 +11,34 @@ namespace System.Windows;
 [UISettings(MaxAttempts = 3)]
 public class DataObjectTests
 {
+    [WpfFact]
+    public void GetData_NonExistentFormat_ReturnsNull()
+    {
+        DataObject data = new();
+        data.GetData("non-existent format").Should().BeNull();
+    }
+
+    [WpfFact]
+    public void GetData_NonExistentKey_ReturnsNull()
+    {
+        Type key = typeof(string);
+
+        DataObject data = new();
+
+        data.GetData(key.FullName!).Should().BeNull();
+    }
+
+    [WpfFact]
+    public void ContainsData_ContainsText_ReturnsFalse()
+    {
+        string testData = "test data";
+        DataObject data = new();
+        data.SetData(testData);
+        data.ContainsText().Should().BeFalse();
+    }
+
+    #region SetData Tests
+
     [WpfFact]
     public void SetData_Invoke_GetReturnsExpected()
     {
@@ -24,22 +54,6 @@ public class DataObjectTests
         DataObject data = new();
         Action action = () => data.SetData(null!);
         action.Should().Throw<ArgumentNullException>().WithParameterName("data");
-    }
-
-    [WpfFact]
-    public void GetData_NonExistentFormat_ReturnsNull()
-    {
-        DataObject data = new();
-        data.GetData("non-existent format").Should().BeNull();
-    }
-
-    [WpfFact]
-    public void ContainsData_ContainsText_ReturnsFalse()
-    {
-        string testData = "test data";
-        DataObject data = new();
-        data.SetData(testData);
-        data.ContainsText().Should().BeFalse();
     }
 
     [WpfFact]
@@ -206,16 +220,6 @@ public class DataObjectTests
     }
 
     [WpfFact]
-    public void GetData_NonExistentKey_ReturnsNull()
-    {
-        Type key = typeof(string);
-
-        DataObject data = new();
-
-        data.GetData(key.FullName!).Should().BeNull();
-    }
-
-    [WpfFact]
     public void SetData_TypeObject_SameKeyTwice_OverwritesData()
     {
         Type key = typeof(string);
@@ -290,4 +294,179 @@ public class DataObjectTests
         Action act = () => data.SetData(string.Empty, testData, true);
         act.Should().Throw<ArgumentException>();
     }
+    #endregion
+
+    #region ContainsText Tests
+
+    [WpfFact]
+    public void ContainsText_WithEmptyDataObject_ShouldReturnFalse()
+    {
+        var dataObject = new DataObject();
+
+        dataObject.ContainsText().Should().BeFalse();
+    }
+
+    [WpfFact]
+    public void ContainsText_WithTextData_ShouldReturnTrue()
+    {
+        var dataObject = new DataObject();
+        dataObject.SetText("Sample text");
+
+        dataObject.ContainsText().Should().BeTrue();
+    }
+
+    [WpfFact]
+    public void ContainsText_WithEmptyTextData_ShouldReturnTrue()
+    {
+        var dataObject = new DataObject();
+        dataObject.SetText(string.Empty);
+
+        dataObject.ContainsText().Should().BeTrue();
+    }
+
+    [WpfFact]
+    public void ContainsText_WithNonTextData_ShouldReturnFalse()
+    {
+        var dataObject = new DataObject();
+        dataObject.SetData("CustomFormat", new byte[] { 1, 2, 3 });
+
+        dataObject.ContainsText().Should().BeFalse();
+    }
+
+    [WpfFact]
+    public void ContainsText_WithTextAndNonTextData_ShouldReturnTrue()
+    {
+        var dataObject = new DataObject();
+        dataObject.SetText("Sample text");
+        dataObject.SetData("CustomFormat", new byte[] { 1, 2, 3 });
+
+        dataObject.ContainsText().Should().BeTrue();
+    }
+
+    [WpfFact]
+    public void ContainsText_WithTextFormat_WhenUsingTextFormatParam_ShouldReturnTrue()
+    {
+        var dataObject = new DataObject();
+        dataObject.SetText("Sample text", TextDataFormat.Text);
+
+        dataObject.ContainsText(TextDataFormat.Text).Should().BeTrue();
+
+        // Additional case verifying any other data format should return false
+        dataObject.ContainsText(TextDataFormat.UnicodeText).Should().BeFalse();
+    }
+
+    [WpfFact]
+    public void ContainsText_WithUnicodeTextFormat_WhenUsingTextFormatParam_ShouldReturnTrue()
+    {
+        var dataObject = new DataObject();
+        dataObject.SetText("Sample text", TextDataFormat.UnicodeText);
+
+        dataObject.ContainsText(TextDataFormat.UnicodeText).Should().BeTrue();
+        dataObject.ContainsText(TextDataFormat.Text).Should().BeFalse();
+    }
+
+    [WpfFact]
+    public void ContainsText_WithMultipleTextFormats_WhenUsingTextFormatParam_ShouldReturnTrueForEach()
+    {
+        var dataObject = new DataObject();
+        var sampleText = "Sample text";
+        dataObject.SetText(sampleText, TextDataFormat.Text);
+        dataObject.SetText(sampleText, TextDataFormat.UnicodeText);
+        dataObject.SetText(sampleText, TextDataFormat.Rtf);
+
+        dataObject.ContainsText(TextDataFormat.Text).Should().BeTrue();
+        dataObject.ContainsText(TextDataFormat.UnicodeText).Should().BeTrue();
+        dataObject.ContainsText(TextDataFormat.Rtf).Should().BeTrue();
+
+        // Additional check
+        dataObject.ContainsText(TextDataFormat.Html).Should().BeFalse();
+    }
+    #endregion
+
+    #region ContainsAudio Tests
+
+    [WpfFact]
+    public void ContainsAudio_WithEmptyDataObject_ShouldReturnFalse()
+    {
+        var dataObject = new DataObject();
+
+        dataObject.ContainsAudio().Should().BeFalse();
+    }
+
+    [WpfFact]
+    public void ContainsAudio_WithWaveFormat_ShouldReturnTrue()
+    {
+        var dataObject = new DataObject();
+        using MemoryStream audioStream = new([0x52, 0x49, 0x46, 0x46]); // RIFF header 
+        dataObject.SetData(DataFormats.WaveAudio, audioStream);
+
+        dataObject.ContainsAudio().Should().BeTrue();
+    }
+
+    [WpfFact]
+    public void ContainsAudio_WithTextData_ShouldReturnFalse()
+    {
+        var dataObject = new DataObject();
+        dataObject.SetText("Sample Text Data");
+
+        dataObject.ContainsAudio().Should().BeFalse();
+    }
+
+    [WpfFact]
+    public void ContainsAudio_WithMultipleFormatsMixedWithAudio_ShouldReturnTrue()
+    {
+        var dataObject = new DataObject();
+        using MemoryStream audioStream = new([0x52, 0x49, 0x46, 0x46]); // RIFF header
+
+        dataObject.SetText("Sample text");
+        dataObject.SetData(DataFormats.WaveAudio, audioStream);
+        dataObject.SetData("CustomFormat", new byte[] { 1, 2, 3 });
+
+        dataObject.ContainsAudio().Should().BeTrue();
+    }
+    #endregion
+
+    #region ContainsImage Tests
+
+    [WpfFact]
+    public void ContainsImage_WithEmptyDataObject_ShouldReturnFalse()
+    {
+        var dataObject = new DataObject();
+
+        dataObject.ContainsImage().Should().BeFalse();
+    }
+
+    [WpfFact]
+    public void ContainsImage_WithBitmapData_ShouldReturnTrue()
+    {
+        var dataObject = new DataObject();
+        var bitmap = new BitmapImage();
+
+        dataObject.SetData(DataFormats.Bitmap, bitmap);
+
+        dataObject.ContainsImage().Should().BeTrue();
+    }
+
+    [WpfFact]
+    public void ContainsImage_WithTextData_ShouldReturnFalse()
+    {
+        var dataObject = new DataObject();
+        dataObject.SetText("Sample Text Data");
+
+        dataObject.ContainsImage().Should().BeFalse();
+    }
+
+    [WpfFact]
+    public void ContainsImage_WithMultipleFormatsMixedWithImage_ShouldReturnTrue()
+    {
+        var dataObject = new DataObject();
+        var bitmap = new BitmapImage();
+
+        dataObject.SetText("Sample text");
+        dataObject.SetData(DataFormats.Bitmap, bitmap);
+        dataObject.SetData("CustomFormat", new byte[] { 1, 2, 3 });
+
+        dataObject.ContainsImage().Should().BeTrue();
+    }
+    #endregion
 }

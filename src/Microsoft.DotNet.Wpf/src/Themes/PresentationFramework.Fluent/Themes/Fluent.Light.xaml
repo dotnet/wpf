@@ -750,6 +750,7 @@
     </LinearGradientBrush.GradientStops>
   </LinearGradientBrush>
   <SolidColorBrush x:Key="TextControlBorderBrushDisabled" Color="{StaticResource ControlStrokeColorDefault}" />
+  <SolidColorBrush x:Key="TextControlSelectionHighlightColor" Color="{StaticResource SystemAccentColor}" />
   <!-- Deprecated TextControl Brushes -->
   <SolidColorBrush x:Key="TextControlFocusedBorderBrush" Color="{StaticResource SystemAccentColorDark1}" />
   <SolidColorBrush x:Key="TextControlPlaceholderForeground" Color="{StaticResource TextFillColorSecondary}" />
@@ -3757,6 +3758,7 @@
     <Setter Property="PasswordChar" Value="●" />
     <Setter Property="Stylus.IsFlicksEnabled" Value="False" />
     <Setter Property="OverridesDefaultStyle" Value="True" />
+    <Setter Property="SelectionBrush" Value="{DynamicResource TextControlSelectionHighlightColor}" />
     <Setter Property="Template">
       <Setter.Value>
         <ControlTemplate TargetType="{x:Type PasswordBox}">
@@ -4102,6 +4104,7 @@
     <Setter Property="ScrollViewer.PanningMode" Value="VerticalFirst" />
     <Setter Property="Stylus.IsFlicksEnabled" Value="False" />
     <Setter Property="OverridesDefaultStyle" Value="True" />
+    <Setter Property="SelectionBrush" Value="{DynamicResource TextControlSelectionHighlightColor}" />
     <Setter Property="Template">
       <Setter.Value>
         <ControlTemplate TargetType="{x:Type RichTextBox}">
@@ -4835,6 +4838,7 @@
     <Setter Property="ScrollViewer.PanningMode" Value="VerticalFirst" />
     <Setter Property="Stylus.IsFlicksEnabled" Value="False" />
     <Setter Property="OverridesDefaultStyle" Value="True" />
+    <Setter Property="SelectionBrush" Value="{DynamicResource TextControlSelectionHighlightColor}" />
     <Setter Property="Template">
       <Setter.Value>
         <ControlTemplate TargetType="{x:Type TextBoxBase}">
@@ -4975,6 +4979,7 @@
     <Setter Property="AllowDrop" Value="True" />
     <Setter Property="ScrollViewer.PanningMode" Value="VerticalFirst" />
     <Setter Property="Stylus.IsFlicksEnabled" Value="False" />
+    <Setter Property="SelectionBrush" Value="{DynamicResource TextControlSelectionHighlightColor}" />
     <Setter Property="Template" Value="{StaticResource DefaultTextBoxControlTemplate}" />
   </Style>
   <Style BasedOn="{StaticResource DefaultTextBoxBaseStyle}" TargetType="{x:Type TextBoxBase}" />

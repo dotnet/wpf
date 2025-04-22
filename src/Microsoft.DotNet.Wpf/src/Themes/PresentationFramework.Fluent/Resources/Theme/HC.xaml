@@ -596,6 +596,7 @@
     
     <!--  Thumb  -->
     <SolidColorBrush x:Key="ThumbBackground" Color="{StaticResource SystemColorButtonTextColor}" />
+    <SolidColorBrush x:Key="ThumbBackgroundDisabled" Color="{StaticResource SystemColorButtonFaceColor}" />
 
     <!--  ThumbRate  -->
     <SolidColorBrush x:Key="ThumbRateForeground" Color="{StaticResource SystemColorHighlightColor}" />

@@ -1785,33 +1785,11 @@ namespace System.Windows
                     DeferredResourceReference deferredResourceReference;
                     if (!IsThemeDictionary)
                     {
-                        if (FrameworkAppContextSwitches.DisableDynamicResourceOptimization)
-                        {
-                            if (_ownerApps is not null)
-                            {
-                                deferredResourceReference = new DeferredAppResourceReference(this, resourceKey);
-                            }
-                            else
-                            {
-                                deferredResourceReference = new DeferredResourceReference(this, resourceKey);
-                            }
-
-                            // Cache the deferredResourceReference so that it can be validated
-                            // in case of a dictionary change prior to its inflation
-                            if (_weakDeferredResourceReferences is null)
-                            {
-                                _weakDeferredResourceReferences = new WeakReferenceList();
-                            }
-
-                            _weakDeferredResourceReferences.Add(deferredResourceReference, true /*SkipFind*/);
-                        }
-                        else
-                        {
-                            // Cache the deferredResourceReference so that it can be validated
-                            // in case of a dictionary change prior to its inflation
-                            deferredResourceReference = _ownerApps is not null ? new DeferredAppResourceReference(this, resourceKey) : new DeferredResourceReference(this, resourceKey);
-                            GetOrCreateWeakReferenceList(resourceKey).Add(deferredResourceReference, true /*SkipFind*/);
-                        }
+                        
+                        // Cache the deferredResourceReference so that it can be validated
+                        // in case of a dictionary change prior to its inflation
+                        deferredResourceReference = _ownerApps is not null ? new DeferredAppResourceReference(this, resourceKey) : new DeferredResourceReference(this, resourceKey);
+                        GetOrCreateWeakReferenceList(resourceKey).Add(deferredResourceReference, true /*SkipFind*/);
                     }
                     else
                     {
@@ -1842,17 +1820,10 @@ namespace System.Windows
 
         internal void RemoveDeferredResourceReference(DeferredResourceReference deferredResourceReference)
         {
-            if (FrameworkAppContextSwitches.DisableDynamicResourceOptimization)
+            
+            if (this._weakDeferredResourceReferencesMap?.TryGetValue(deferredResourceReference.Key, out var weakDeferredResourceReferences) is true)
             {
-                _weakDeferredResourceReferences?.Remove(deferredResourceReference);
-            }
-            else
-            {
-                //GetWeakReferenceList(deferredResourceReference.Key)?.Remove(deferredResourceReference);
-                if (this._weakDeferredResourceReferencesMap?.TryGetValue(deferredResourceReference.Key, out var weakDeferredResourceReferences) is true)
-                {
-                    weakDeferredResourceReferences.Remove(deferredResourceReference);
-                }
+                weakDeferredResourceReferences.Remove(deferredResourceReference);
             }
         }
 
@@ -1862,52 +1833,33 @@ namespace System.Windows
         /// </summary>
         private void ValidateDeferredResourceReferences(object resourceKey)
         {
-            if (FrameworkAppContextSwitches.DisableDynamicResourceOptimization)
+            
+            if (_weakDeferredResourceReferencesMap is null)
             {
-                if (_weakDeferredResourceReferences != null)
+                return;
+            }
+
+            if (resourceKey is null)
+            {
+                foreach (var weakDeferredResourceReferences in _weakDeferredResourceReferencesMap.Values)
                 {
-                    foreach (Object o in _weakDeferredResourceReferences)
+                    foreach (var weakResourceReference in weakDeferredResourceReferences)
                     {
-                        DeferredResourceReference deferredResourceReference = o as DeferredResourceReference;
-                        if (deferredResourceReference != null && (resourceKey == null || Object.Equals(resourceKey, deferredResourceReference.Key)))
-                        {
-                            // This will inflate the deferred reference, causing it
-                            // to be removed from the list.  The list may also be
-                            // purged of dead references.
-                            deferredResourceReference.GetValue(BaseValueSourceInternal.Unknown);
-                        }
+                        DeferredResourceReference deferredResourceReference = weakResourceReference as DeferredResourceReference;
+
+                        Inflate(deferredResourceReference);
                     }
                 }
             }
             else
             {
-                if (_weakDeferredResourceReferencesMap is null)
+                if (_weakDeferredResourceReferencesMap.TryGetValue(resourceKey, out var weakDeferredResourceReferences))
                 {
-                    return;
-                }
-
-                if (resourceKey is null)
-                {
-                    foreach (var weakDeferredResourceReferences in _weakDeferredResourceReferencesMap.Values)
+                    foreach (var weakResourceReference in weakDeferredResourceReferences)
                     {
-                        foreach (var weakResourceReference in weakDeferredResourceReferences)
-                        {
-                            DeferredResourceReference deferredResourceReference = weakResourceReference as DeferredResourceReference;
+                        DeferredResourceReference deferredResourceReference = weakResourceReference as DeferredResourceReference;
 
-                            Inflate(deferredResourceReference);
-                        }
-                    }
-                }
-                else
-                {
-                    if (_weakDeferredResourceReferencesMap.TryGetValue(resourceKey, out var weakDeferredResourceReferences))
-                    {
-                        foreach (var weakResourceReference in weakDeferredResourceReferences)
-                        {
-                            DeferredResourceReference deferredResourceReference = weakResourceReference as DeferredResourceReference;
-
-                            Inflate(deferredResourceReference);
-                        }
+                        Inflate(deferredResourceReference);
                     }
                 }
             }
@@ -2595,34 +2547,17 @@ namespace System.Windows
 
         private void MoveDeferredResourceReferencesFrom(ResourceDictionary loadedRD)
         {
-            if (FrameworkAppContextSwitches.DisableDynamicResourceOptimization)
-            {
-                // move the list
-                _weakDeferredResourceReferences = loadedRD._weakDeferredResourceReferences;
+            // move the map and thus the lists
+            _weakDeferredResourceReferencesMap = loadedRD._weakDeferredResourceReferencesMap;
 
+            if (_weakDeferredResourceReferencesMap is not null)
+            {
                 // redirect each entry toward its new owner
-                if (_weakDeferredResourceReferences != null)
+                foreach (var weakDeferredResourceReferences in _weakDeferredResourceReferencesMap.Values)
                 {
-                    foreach (DeferredResourceReference drr in _weakDeferredResourceReferences)
+                    foreach (DeferredResourceReference drr in weakDeferredResourceReferences)
                     {
                         drr.Dictionary = this;
-                    }
-                }
-            }
-            else
-            {
-                // move the map and thus the lists
-                _weakDeferredResourceReferencesMap = loadedRD._weakDeferredResourceReferencesMap;
-
-                if (_weakDeferredResourceReferencesMap is not null)
-                {
-                    // redirect each entry toward its new owner
-                    foreach (var weakDeferredResourceReferences in _weakDeferredResourceReferencesMap.Values)
-                    {
-                        foreach (DeferredResourceReference drr in weakDeferredResourceReferences)
-                        {
-                            drr.Dictionary = this;
-                        }
                     }
                 }
             }
@@ -2691,7 +2626,6 @@ namespace System.Windows
         private WeakReferenceList                         _ownerFEs = null;
         private WeakReferenceList                         _ownerFCEs = null;
         private WeakReferenceList                         _ownerApps = null;
-        private WeakReferenceList                         _weakDeferredResourceReferences = null;
         private Dictionary<object, WeakReferenceList>     _weakDeferredResourceReferencesMap = null;
         private ObservableCollection<ResourceDictionary>  _mergedDictionaries = null;
         private Uri                                       _source = null;

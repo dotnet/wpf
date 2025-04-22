@@ -755,6 +755,7 @@
   <SolidColorBrush x:Key="TextControlPlaceholderForeground" Color="{StaticResource TextFillColorSecondary}" />
   <!--  Thumb  -->
   <SolidColorBrush x:Key="ThumbBackground" Color="{StaticResource ControlStrongFillColorDefault}" />
+  <SolidColorBrush x:Key="ThumbBackgroundDisabled" Color="{StaticResource ControlStrongFillColorDisabled}" />
   <!--  ThumbRate  -->
   <SolidColorBrush x:Key="ThumbRateForeground" Color="{StaticResource SystemAccentColorDark1}" />
   <!--  TimePicker  -->
@@ -4989,7 +4990,12 @@
     <Setter Property="Template">
       <Setter.Value>
         <ControlTemplate TargetType="{x:Type Thumb}">
-          <Border Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="{TemplateBinding Border.CornerRadius}" />
+          <Border x:Name="Border" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="{TemplateBinding Border.CornerRadius}" />
+          <ControlTemplate.Triggers>
+            <Trigger Property="IsEnabled" Value="False">
+              <Setter TargetName="Border" Property="Background" Value="{DynamicResource ThumbBackgroundDisabled}" />
+            </Trigger>
+          </ControlTemplate.Triggers>
         </ControlTemplate>
       </Setter.Value>
     </Setter>

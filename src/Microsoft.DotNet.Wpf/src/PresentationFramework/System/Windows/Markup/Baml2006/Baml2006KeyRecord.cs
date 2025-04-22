@@ -5,7 +5,7 @@ using System.Xaml;
 
 namespace System.Windows.Baml2006
 {
-    [DebuggerDisplay("{DebuggerString}")]
+    [DebuggerDisplay("{_data}")]
     internal class KeyRecord
     {
         public KeyRecord(bool shared, bool sharedSet, int valuePosition, Type keyType) :
@@ -70,7 +70,7 @@ namespace System.Windows.Baml2006
 
         public string KeyString
         {
-            get { return _data as String; }
+            get { return _data as string; }
         }
 
         public Type KeyType

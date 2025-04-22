@@ -783,6 +783,7 @@
         </LinearGradientBrush.GradientStops>
     </LinearGradientBrush>
     <SolidColorBrush x:Key="TextControlBorderBrushDisabled" Color="{StaticResource ControlStrokeColorDefault}" />
+    <SolidColorBrush x:Key="TextControlSelectionHighlightColor" Color="{StaticResource SystemAccentColor}" />
 
     <!-- Deprecated TextControl Brushes -->
         <SolidColorBrush x:Key="TextControlFocusedBorderBrush" Color="{StaticResource SystemAccentColorLight2}" />

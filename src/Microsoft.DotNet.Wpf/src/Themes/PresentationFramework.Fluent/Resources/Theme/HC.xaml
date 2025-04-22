@@ -589,6 +589,7 @@
     <SolidColorBrush x:Key="TextControlBorderBrushPointerOver" Color="{StaticResource SystemColorHighlightColor}" />
     <SolidColorBrush x:Key="TextControlBorderBrushFocused" Color="{StaticResource SystemColorHighlightColor}" />
     <SolidColorBrush x:Key="TextControlBorderBrushDisabled" Color="{StaticResource SystemColorGrayTextColor}" />
+    <SolidColorBrush x:Key="TextControlSelectionHighlightColor" Color="{StaticResource SystemColorWindowColor}" />
     
     <!-- Deprecated TextControl Brushes -->
         <SolidColorBrush x:Key="TextControlFocusedBorderBrush" Color="{StaticResource SystemColorHighlightColor}" />

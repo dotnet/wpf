@@ -177,6 +177,9 @@
             </Grid>
         </Grid>
         <ControlTemplate.Triggers>
+            <Trigger Property="FlowDirection" Value="RightToLeft">
+                <Setter TargetName="ControlChevronIcon" Property="Text" Value="{StaticResource ExpanderChevronRightGlyph}" />
+            </Trigger>
             <Trigger Property="IsChecked" Value="True">
                 <Trigger.EnterActions>
                     <BeginStoryboard>
@@ -237,6 +240,9 @@
             </Grid>
         </Grid>
         <ControlTemplate.Triggers>
+            <Trigger Property="FlowDirection" Value="RightToLeft">
+                <Setter TargetName="ControlChevronIcon" Property="Text" Value="{StaticResource ExpanderChevronLeftGlyph}" />
+            </Trigger>
             <Trigger Property="IsChecked" Value="True">
                 <Trigger.EnterActions>
                     <BeginStoryboard>

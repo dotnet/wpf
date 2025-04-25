@@ -407,13 +407,10 @@ namespace MS.Internal.Annotations.Component
             topTailTransform.Children.Add(tailScale);
             topTailTransform.Children.Add(topOffset);
 
-            if (geometry.Children[0] != null)
-                geometry.Children[0].Transform = topTailTransform;
+            geometry.Children[0]?.Transform = topTailTransform;
 
-            if (geometry.Children[1] != null)
-                geometry.Children[1].Transform = bodyTransform;
-            if (geometry.Children[2] != null)
-                geometry.Children[2].Transform = bottomTailTransform;
+            geometry.Children[1]?.Transform = bodyTransform;
+            geometry.Children[2]?.Transform = bottomTailTransform;
 
             //add transform to base anchor if needed
             if (baseAnchor != null)

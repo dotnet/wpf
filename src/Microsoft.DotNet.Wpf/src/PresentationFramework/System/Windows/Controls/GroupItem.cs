@@ -146,10 +146,7 @@ namespace System.Windows.Controls
                 return;     // user-declared GroupItem - ignore (bug 108423)
 
             // If a GroupItem is being recycled set back IsItemsHost
-            if (_itemsHost != null)
-            {
-                _itemsHost.IsItemsHost = true;
-            }
+            _itemsHost?.IsItemsHost = true;
 
             bool isVirtualizingWhenGrouping = (parentItemsControl != null && VirtualizingPanel.GetIsVirtualizingWhenGrouping(parentItemsControl));
 

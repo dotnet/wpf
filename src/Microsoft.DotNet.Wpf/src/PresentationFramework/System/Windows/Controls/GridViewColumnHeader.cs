@@ -394,10 +394,7 @@ namespace System.Windows.Controls
         // frame, causing high CPU consumption when a large realization tree is present.
         internal void ResetFloatingHeaderCanvasBackground()
         {
-            if (_floatingHeaderCanvas != null)
-            {
-                _floatingHeaderCanvas.Background = null;
-            }
+            _floatingHeaderCanvas?.Background = null;
         }
 
         /// <summary>
@@ -627,10 +624,7 @@ namespace System.Windows.Controls
             {
                 // hide gripper's right half by setting Parent.ClipToBounds=true
                 FrameworkElement gripperContainer = _headerGripper.Parent as FrameworkElement;
-                if (gripperContainer != null)
-                {
-                    gripperContainer.ClipToBounds = hide;
-                }
+                gripperContainer?.ClipToBounds = hide;
             }
         }
 

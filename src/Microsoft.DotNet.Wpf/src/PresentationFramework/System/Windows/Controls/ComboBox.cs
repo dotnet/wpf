@@ -758,9 +758,9 @@ namespace System.Windows.Controls
                     {
                         SetCurrentValueInternal(TextProperty, newText);
                     }
-                    else if (EditableTextBoxSite != null)
+                    else
                     {
-                        EditableTextBoxSite.Text = newText;
+                        EditableTextBoxSite?.Text = newText;
                     }
                 }
                 finally

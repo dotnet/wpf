@@ -1021,10 +1021,7 @@ namespace System.Windows.Controls
             _textEditor.TextView = textview;
             this.TextContainer.TextView = textview;
 
-            if (this.ScrollViewer != null)
-            {
-                this.ScrollViewer.CanContentScroll = true;
-            }
+            this.ScrollViewer?.CanContentScroll = true;
         }
 
         // Uninitializes a render scope and clears this control's reference.
@@ -1150,10 +1147,7 @@ namespace System.Windows.Controls
             }
 
             // Set border properties
-            if (_border != null)
-            {
-                _border.Style = null;
-            }
+            _border?.Style = null;
         }
 
         /// <summary>

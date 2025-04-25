@@ -62,10 +62,7 @@ namespace MS.Internal.Text
             }
             Debug.Assert(run != null, "TextRun has not been created.");
             Debug.Assert(run.Length > 0, "TextRun has to have positive length.");
-            if (run.Properties != null)
-            {
-                run.Properties.PixelsPerDip = this.PixelsPerDip;
-            }
+            run.Properties?.PixelsPerDip = this.PixelsPerDip;
 
             return run;
         }

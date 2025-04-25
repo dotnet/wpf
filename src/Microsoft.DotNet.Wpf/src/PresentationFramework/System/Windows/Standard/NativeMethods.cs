@@ -1424,10 +1424,7 @@ namespace Standard
             }
             finally
             {
-                if (dc != null)
-                {
-                    dc._created = true;
-                }
+                dc?._created = true;
             }
 
             if (dc.IsInvalid)
@@ -1458,10 +1455,7 @@ namespace Standard
             }
             finally
             {
-                if (dc != null)
-                {
-                    dc._created = true;
-                }
+                dc?._created = true;
             }
 
             if (dc.IsInvalid)
@@ -1482,10 +1476,7 @@ namespace Standard
             }
             finally
             {
-                if (dc != null)
-                {
-                    dc.Hwnd = hwnd;
-                }
+                dc?.Hwnd = hwnd;
             }
 
             if (dc.IsInvalid)

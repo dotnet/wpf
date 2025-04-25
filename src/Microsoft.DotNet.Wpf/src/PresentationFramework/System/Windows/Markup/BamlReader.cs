@@ -1514,13 +1514,10 @@ namespace System.Windows.Markup
                     case BamlRecordType.TextWithId:
 
                         BamlTextWithIdRecord textWithIdRecord = _currentBamlRecord as BamlTextWithIdRecord;
-                        if (textWithIdRecord != null)
-                        {
-                            // Get the value string from the string table, and cache it in the
-                            // record.
-                            textWithIdRecord.Value = MapTable.GetStringFromStringId(
-                                                            textWithIdRecord.ValueId);
-                        }
+                        // Get the value string from the string table, and cache it in the
+                        // record.
+                        textWithIdRecord?.Value = MapTable.GetStringFromStringId(
+                                                        textWithIdRecord.ValueId);
 
                         // If the text contains '{' or '}' then we have to escape these
                         // so that it won't be interpreted as a MarkupExtension
@@ -2186,13 +2183,10 @@ namespace System.Windows.Markup
             ClearProperties();
 
             BamlTextWithIdRecord textWithIdRecord = _currentBamlRecord as BamlTextWithIdRecord;
-            if (textWithIdRecord != null)
-            {
-                // Get the value string from the string table, and cache it in the
-                // record.
-                textWithIdRecord.Value = MapTable.GetStringFromStringId(
-                                                textWithIdRecord.ValueId);
-            }
+            // Get the value string from the string table, and cache it in the
+            // record.
+            textWithIdRecord?.Value = MapTable.GetStringFromStringId(
+                                            textWithIdRecord.ValueId);
 
             BamlTextWithConverterRecord textWithConverter = _currentBamlRecord as BamlTextWithConverterRecord;
             if (textWithConverter != null)

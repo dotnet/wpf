@@ -82,10 +82,7 @@ namespace System.Windows.Automation.Peers
             GridViewColumnHeader header = Owner as GridViewColumnHeader;
             if (header != null)
             {
-                if (header.Column != null)
-                {
-                    header.Column.Width = width;
-                }
+                header.Column?.Width = width;
 
                 header.Height = height;
             }

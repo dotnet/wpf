@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
 //
@@ -46,8 +46,7 @@ namespace MS.Internal.Controls
         //
         int UnsafeNativeMethods.IOleContainer.ParseDisplayName(Object pbc, string pszDisplayName, int[] pchEaten, Object[] ppmkOut)
         {
-            if (ppmkOut != null)
-                ppmkOut[0] = null;
+            ppmkOut?[0] = null;
 
             return NativeMethods.E_NOTIMPL;
         }

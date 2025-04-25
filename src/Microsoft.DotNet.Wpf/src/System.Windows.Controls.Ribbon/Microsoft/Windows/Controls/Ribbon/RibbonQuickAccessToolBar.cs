@@ -295,10 +295,7 @@ namespace Microsoft.Windows.Controls.Ribbon
             _overflowPanel = GetTemplateChild(OverflowPanelTemplatePartName) as RibbonQuickAccessToolBarOverflowPanel;
             _overflowPopup = GetTemplateChild(OverflowPopupTemplatePartName) as Popup;
             _overflowButton = GetTemplateChild(OverflowButtonTemplatePartName) as RibbonToggleButton;
-            if (_overflowButton != null)
-            {
-                _overflowButton.ToolTipTitle = _overflowButtonToolTipText;
-            }
+            _overflowButton?.ToolTipTitle = _overflowButtonToolTipText;
 
             // Set KeyTipAutoGenerationElements property on self.
             IEnumerable<DependencyObject> keyTipAutoGenerationElements = new KeyTipAutoGenerationElements(this);

@@ -2371,10 +2371,7 @@ namespace System.Windows
                 // This makes sure the resource always gets inheritance-related information
                 // from its point of definition, not from its point of use.
                 DependencyObject doValue = value as DependencyObject;
-                if (doValue != null)
-                {
-                    doValue.IsInheritanceContextSealed = true;
-                }
+                doValue?.IsInheritanceContextSealed = true;
             }
         }
 

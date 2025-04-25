@@ -6,8 +6,6 @@
     <TargetFramework>net10.0</TargetFramework>
     <TargetFrameworkVersion>10.0</TargetFrameworkVersion>
     <BuildWithNetFrameworkHostedCompiler>true</BuildWithNetFrameworkHostedCompiler>
-    <!-- Temporarily disable IDE0031: Null check can be simplified warnings. -->
-    <NoWarn>$(NoWarn);IDE0031</NoWarn>
   </PropertyGroup>
   <!-- Normalize $(TestWpfArcadeSdkPath) by appending a '\' to it if one is missing -->
   <PropertyGroup Condition="'$(TestWpfArcadeSdkPath)'!=''">

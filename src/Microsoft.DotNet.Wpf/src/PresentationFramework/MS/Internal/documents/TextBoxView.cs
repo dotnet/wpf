@@ -207,10 +207,7 @@ namespace System.Windows.Controls
             }
             set
             {
-                if (_scrollData != null)
-                {
-                    _scrollData.CanVerticallyScroll = value;
-                }
+                _scrollData?.CanVerticallyScroll = value;
             }
         }
 
@@ -225,10 +222,7 @@ namespace System.Windows.Controls
             }
             set
             {
-                if (_scrollData != null)
-                {
-                    _scrollData.CanHorizontallyScroll = value;
-                }
+                _scrollData?.CanHorizontallyScroll = value;
             }
         }
 
@@ -2680,18 +2674,12 @@ namespace System.Windows.Controls
 
                 for (int i = 0; i < lineIndex - oldLineVisualsIndex; i++)
                 {
-                    if (oldLineVisuals[i] != null)
-                    {
-                        oldLineVisuals[i].DiscardOnArrange = true;
-                    }
+                    oldLineVisuals[i]?.DiscardOnArrange = true;
                 }
 
                 for (int i = lineIndex - oldLineVisualsIndex + lineCount; i < oldLineVisuals.Count; i++)
                 {
-                    if (oldLineVisuals[i] != null)
-                    {
-                        oldLineVisuals[i].DiscardOnArrange = true;
-                    }
+                    oldLineVisuals[i]?.DiscardOnArrange = true;
                 }
             }
             else
@@ -2717,10 +2705,7 @@ namespace System.Windows.Controls
         // Adds a Visual to the line Visuals cache.
         private void SetLineVisual(int lineIndex, TextBoxLineDrawingVisual lineVisual)
         {
-            if (_viewportLineVisuals != null)
-            {
-                _viewportLineVisuals[lineIndex - _viewportLineVisualsIndex] = lineVisual;
-            }
+            _viewportLineVisuals?[lineIndex - _viewportLineVisualsIndex] = lineVisual;
         }
 
         // Adds an empty entry to the line Visuals cache.
@@ -2775,10 +2760,7 @@ namespace System.Windows.Controls
 
                     for (int i = 0; i < count; i++)
                     {
-                        if (_viewportLineVisuals[start + i] != null)
-                        {
-                            _viewportLineVisuals[start + i].DiscardOnArrange = true;
-                        }
+                        _viewportLineVisuals[start + i]?.DiscardOnArrange = true;
                     }
 
                     _viewportLineVisuals.RemoveRange(start, count);

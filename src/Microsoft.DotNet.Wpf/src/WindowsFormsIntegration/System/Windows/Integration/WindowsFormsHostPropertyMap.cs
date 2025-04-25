@@ -222,10 +222,7 @@ namespace System.Windows.Forms.Integration
                 if (defined)
                 {
                     WinFormsAdapter adapter = GetAdapter(host);
-                    if (adapter != null)
-                    {
-                        adapter.ForeColor = wfColor;
-                    }
+                    adapter?.ForeColor = wfColor;
                 }
             }
         }

@@ -256,15 +256,9 @@ namespace MS.Internal.Documents
         /// </summary>
         private void UpdateButtonState()
         {
-            if (FindNextButton != null)
-            {
-                FindNextButton.IsEnabled = FindEnabled;
-            }
+            FindNextButton?.IsEnabled = FindEnabled;
 
-            if (FindPreviousButton != null)
-            {
-                FindPreviousButton.IsEnabled = FindEnabled;
-            }
+            FindPreviousButton?.IsEnabled = FindEnabled;
         }
 
         /// <summary>

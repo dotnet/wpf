@@ -243,10 +243,7 @@ namespace System.Windows.Automation.Peers
             }
             // Set EventsSource if visual exists
             AutomationPeer wrapperPeer = peer.WrapperPeer;
-            if (wrapperPeer != null)
-            {
-                wrapperPeer.EventsSource = peer;
-            }
+            wrapperPeer?.EventsSource = peer;
 
             return peer;
         }

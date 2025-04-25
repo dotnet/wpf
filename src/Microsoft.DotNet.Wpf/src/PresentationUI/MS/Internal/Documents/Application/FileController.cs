@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
 // Description:
@@ -40,10 +40,7 @@ namespace MS.Internal.Documents.Application
             DocumentManager documentManager = DocumentManager.CreateDefault();
             
             // We can save to the source file if we could reopen it for write
-            if (documentManager != null)
-            { 
-                documentManager.CanSave = canWriteToSource;
-            }
+            documentManager?.CanSave = canWriteToSource;
 
             doc.WorkspaceProxy = doc.SourceProxy.CreateTemporary(false);
 

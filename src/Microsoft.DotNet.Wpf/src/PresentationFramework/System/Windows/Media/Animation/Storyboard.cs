@@ -1816,10 +1816,7 @@ namespace System.Windows.Media.Animation
     {
         Clock clock = GetStoryboardClock(containingObject, false, InteractiveOperation.SetSpeedRatio);
 
-        if (clock != null)
-        {
-            clock.Controller.SpeedRatio = speedRatio;
-        }
+        clock?.Controller.SpeedRatio = speedRatio;
     }
 
     /// <summary>

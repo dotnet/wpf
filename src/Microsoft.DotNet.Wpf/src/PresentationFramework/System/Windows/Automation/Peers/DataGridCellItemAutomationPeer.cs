@@ -921,10 +921,7 @@ namespace System.Windows.Automation.Peers
                 if (value)
                     return;
                 AutomationPeer wrapperPeer = OwningCellPeer;
-                if (wrapperPeer != null)
-                {
-                    wrapperPeer.AncestorsInvalid = false;
-                }
+                wrapperPeer?.AncestorsInvalid = false;
             }
         }
 

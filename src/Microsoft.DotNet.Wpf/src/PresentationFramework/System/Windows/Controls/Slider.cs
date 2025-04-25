@@ -894,10 +894,7 @@ namespace System.Windows.Controls
                 return;
             }
 
-            if (_autoToolTip != null)
-            {
-                _autoToolTip.IsOpen = false;
-            }
+            _autoToolTip?.IsOpen = false;
 
             thumb.ToolTip = _thumbOriginalToolTip;
         }
@@ -1332,10 +1329,7 @@ namespace System.Windows.Controls
             SelectedRangeElement = GetTemplateChild(SelectedRangeElementName) as FrameworkElement;
             Track = GetTemplateChild(TrackName) as Track;
 
-            if (_autoToolTip != null)
-            {
-                _autoToolTip.PlacementTarget = Track?.Thumb;
-            }
+            _autoToolTip?.PlacementTarget = Track?.Thumb;
         }
 
         #endregion Override Functions

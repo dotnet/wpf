@@ -743,19 +743,13 @@ namespace System.Windows.Controls
         /// </summary>
         public override void OnApplyTemplate()
         {
-            if (_monthControl != null)
-            {
-                _monthControl.Owner = null;
-            }
+            _monthControl?.Owner = null;
 
             base.OnApplyTemplate();
 
             _monthControl = GetTemplateChild(ElementMonth) as CalendarItem;
 
-            if (_monthControl != null)
-            {
-                _monthControl.Owner = this;
-            }
+            _monthControl?.Owner = this;
 
             this.CurrentDate = this.DisplayDate;
             UpdateCellItems();

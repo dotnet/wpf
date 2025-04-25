@@ -1137,8 +1137,7 @@ namespace System.Windows.Controls
             }
             set
             {
-                if (_anchor != null)
-                    _anchor.IsDirty = value;
+                _anchor?.IsDirty = value;
                 if (value)
                     InvalidateVisual();
             }

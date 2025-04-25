@@ -634,8 +634,7 @@ namespace System.Windows.Controls
             set
             {
                 MyFilter = value;
-                if (_collectionView != null)
-                    _collectionView.Filter = value;
+                _collectionView?.Filter = value;
             }
         }
 

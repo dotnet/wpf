@@ -2920,10 +2920,7 @@ namespace System.Windows.Markup
         private void DoRegisterName( string name, object element )
         {
             // Store this name in the context (used by XamlParseException).
-            if( CurrentContext != null )
-            {
-                CurrentContext.ElementNameOrPropertyName = name;
-            }
+            CurrentContext?.ElementNameOrPropertyName = name;
 
 
             if (ParserContext != null && ParserContext.NameScopeStack != null)
@@ -3396,13 +3393,10 @@ namespace System.Windows.Markup
         protected virtual void ReadTextRecord(BamlTextRecord bamlTextRecord)
         {
             BamlTextWithIdRecord bamlTextWithId = bamlTextRecord as BamlTextWithIdRecord;
-            if (bamlTextWithId != null)
-            {
-                // Get the value string from the string table, and cache it in the
-                // record.
-                bamlTextWithId.Value = MapTable.GetStringFromStringId(
-                                                bamlTextWithId.ValueId);
-            }
+            // Get the value string from the string table, and cache it in the
+            // record.
+            bamlTextWithId?.Value = MapTable.GetStringFromStringId(
+                                            bamlTextWithId.ValueId);
 
             if (null == CurrentContext)
             {

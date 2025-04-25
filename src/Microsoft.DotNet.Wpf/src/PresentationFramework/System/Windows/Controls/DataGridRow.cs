@@ -143,10 +143,7 @@ namespace System.Windows.Controls
         protected virtual void OnItemChanged(object oldItem, object newItem)
         {
             DataGridCellsPresenter cellsPresenter = CellsPresenter;
-            if (cellsPresenter != null)
-            {
-                cellsPresenter.Item = newItem;
-            }
+            cellsPresenter?.Item = newItem;
         }
 
         #endregion
@@ -488,10 +485,7 @@ namespace System.Windows.Controls
 
             Item = BindingExpressionBase.DisconnectedItem;
             DataGridDetailsPresenter detailsPresenter = DetailsPresenter;
-            if (detailsPresenter != null)
-            {
-                detailsPresenter.Content = BindingExpressionBase.DisconnectedItem;
-            }
+            detailsPresenter?.Content = BindingExpressionBase.DisconnectedItem;
 
             _owner = null;
         }

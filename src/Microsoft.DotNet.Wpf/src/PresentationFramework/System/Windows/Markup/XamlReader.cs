@@ -477,10 +477,7 @@ namespace System.Windows.Markup
             }
 
             Application app = rootObject as Application;
-            if (app != null)
-            {
-                app.ApplicationMarkupBaseUri = GetBaseUri(settings.BaseUri);
-            }
+            app?.ApplicationMarkupBaseUri = GetBaseUri(settings.BaseUri);
 
             return rootObject;
         }
@@ -953,10 +950,7 @@ namespace System.Windows.Markup
             }
 
             Application app = root as Application;
-            if (app != null)
-            {
-                app.ApplicationMarkupBaseUri = GetBaseUri(parserContext.BaseUri);
-            }
+            app?.ApplicationMarkupBaseUri = GetBaseUri(parserContext.BaseUri);
 
             EventTrace.EasyTraceEvent(EventTrace.Keyword.KeywordXamlBaml | EventTrace.Keyword.KeywordPerf, EventTrace.Event.WClientParseXamlEnd, parserContext.BaseUri);
 
@@ -1097,10 +1091,7 @@ namespace System.Windows.Markup
                 dObject?.SetValue(BaseUriHelper.BaseUriProperty, readerSettings.BaseUri);
 
                 Application app = root as Application;
-                if (app != null)
-                {
-                    app.ApplicationMarkupBaseUri = GetBaseUri(readerSettings.BaseUri);
-                }
+                app?.ApplicationMarkupBaseUri = GetBaseUri(readerSettings.BaseUri);
 
                 Debug.Assert(parent == null || root == parent);
             }

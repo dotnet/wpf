@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
 // Description: Used to control an (RM or DigSig) InfoBar and ToolBar item in MongooseUI
@@ -160,23 +160,14 @@ namespace MS.Internal.Documents.Application
         /// <param name="resources"></param>
         private void UpdateUI(DocumentStatusResources resources)
         {
-            if (_infoBarIcon != null)
-            {
-                // Set the InfoBar Image
-                _infoBarIcon.Fill = resources.Image;
-            }            
- 
-            if (_infoBarText != null)
-            {
-                // Set the InfoBar Text
-                _infoBarText.Text = resources.Text;
-            }
+            // Set the InfoBar Image
+            _infoBarIcon?.Fill = resources.Image;
 
-            if (_infoBarButton != null)
-            {
-                // Set the InfoBar ToolTip
-                _infoBarButton.ToolTip = resources.ToolTip;
-            }
+            // Set the InfoBar Text
+            _infoBarText?.Text = resources.Text;
+
+            // Set the InfoBar ToolTip
+            _infoBarButton?.ToolTip = resources.ToolTip;
 
             if (_toolBarControl != null)
             {

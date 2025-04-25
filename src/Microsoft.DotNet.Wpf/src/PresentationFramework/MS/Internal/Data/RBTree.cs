@@ -424,8 +424,7 @@ namespace MS.Internal.Data
         internal void RemoveNode(int index)
         {
             LeftChild = DeleteNode(this, LeftChild, index);
-            if (LeftChild != null)
-                LeftChild.IsRed = false;
+            LeftChild?.IsRed = false;
         }
 
         internal virtual RBNode<T> NewNode()
@@ -500,8 +499,7 @@ namespace MS.Internal.Data
 
             RBFinger<T> finger = FindIndex(index, true);
             RemoveAt(ref finger);
-            if (LeftChild != null)
-                LeftChild.IsRed = false;
+            LeftChild?.IsRed = false;
 
             Verify(size - 1);
         }
@@ -593,8 +591,7 @@ namespace MS.Internal.Data
             RBFinger<T> finger = Find(item, Comparison);
             if (finger.Found)
                 RemoveAt(ref finger);
-            if (LeftChild != null)
-                LeftChild.IsRed = false;
+            LeftChild?.IsRed = false;
             return finger.Found;
         }
 

@@ -374,10 +374,7 @@ namespace System.Windows
             triggers?.Seal();
 
             // Seal Resource Dictionary
-            if (resources != null)
-            {
-                resources.IsReadOnly = true;
-            }
+            resources?.IsReadOnly = true;
 
             //  Build shared tables
 

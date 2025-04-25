@@ -82,11 +82,8 @@ namespace System.Windows.Navigation
         internal JournalEntry(JournalEntryGroupState jeGroupState, Uri uri)
         {
             _jeGroupState = jeGroupState;
-            if (jeGroupState != null)
-            {
-                // Seems convenient to always do this here.
-                jeGroupState.GroupExitEntry = this;
-            }
+            // Seems convenient to always do this here.
+            jeGroupState?.GroupExitEntry = this;
             Source = uri;
         }
 

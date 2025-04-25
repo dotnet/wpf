@@ -762,10 +762,7 @@ namespace System.Windows.Controls
             }
 
             // Make sure that the TextWrapping property is set correctly
-            if (this.Document != null)
-            {
-                this.Document.TextWrapping = TextWrapping.Wrap;
-            }
+            this.Document?.TextWrapping = TextWrapping.Wrap;
 
             // The Document does not have explicit PageWidth set OR Wrap/WrapWithOverflow is requested.
             // The RenderScope must occupy as much space as its content required (no wrapping)

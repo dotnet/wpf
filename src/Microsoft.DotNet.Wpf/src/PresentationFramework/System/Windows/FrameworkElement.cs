@@ -4451,10 +4451,7 @@ namespace System.Windows
                 }
 
                 // Set transformed, unrounded size on layout transform, if any.
-                if (ltd != null)
-                {
-                    ltd.TransformedUnroundedDS = new Size(Math.Max(0, clippedDesiredWidth), Math.Max(0, clippedDesiredHeight));
-                }
+                ltd?.TransformedUnroundedDS = new Size(Math.Max(0, clippedDesiredWidth), Math.Max(0, clippedDesiredHeight));
 
                 // If using layout rounding, round desired size.
                 if (useLayoutRounding)

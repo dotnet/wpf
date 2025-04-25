@@ -333,10 +333,7 @@ namespace Microsoft.Windows.Controls.Ribbon
         {
             base.OnGotKeyboardFocus(e);
             RibbonTab ribbonTab = RibbonTab;
-            if (ribbonTab != null)
-            {
-                ribbonTab.IsSelected = true;
-            }
+            ribbonTab?.IsSelected = true;
         }
 
         protected override void OnKeyDown(KeyEventArgs e)

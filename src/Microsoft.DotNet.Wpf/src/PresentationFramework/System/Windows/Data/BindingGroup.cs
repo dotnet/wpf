@@ -1670,10 +1670,7 @@ namespace System.Windows.Data
             public void SetValue(BindingExpressionBase bindingExpressionBase, object value)
             {
                 GetValueTableEntry entry = this[bindingExpressionBase];
-                if (entry != null)
-                {
-                    entry.Value = value;
-                }
+                entry?.Value = value;
             }
 
             // reset values to "raw"

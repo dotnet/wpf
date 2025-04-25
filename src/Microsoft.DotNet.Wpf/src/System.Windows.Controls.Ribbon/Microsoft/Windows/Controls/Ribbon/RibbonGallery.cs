@@ -1710,10 +1710,7 @@ namespace Microsoft.Windows.Controls.Ribbon
             {
                 IsHighlightChangeActive = true;
 
-                if (_highlightedContainer != null)
-                {
-                    _highlightedContainer.IsHighlighted = false;
-                }
+                _highlightedContainer?.IsHighlighted = false;
 
                 if (!isHighlighted)
                 {
@@ -1725,10 +1722,7 @@ namespace Microsoft.Windows.Controls.Ribbon
                     _highlightedContainer = container;
                     HighlightedItem = item;
 
-                    if (container != null)
-                    {
-                        container.IsHighlighted = true;
-                    }
+                    container?.IsHighlighted = true;
                 }
             }
             finally

@@ -415,10 +415,7 @@ namespace System.Windows.Controls
             if (IsSelected)
             {
                 TabControl tabControl = TabControlParent;
-                if (tabControl != null)
-                {
-                    tabControl.SelectedContentTemplate = newContentTemplate;
-                }
+                tabControl?.SelectedContentTemplate = newContentTemplate;
             }
         }
 
@@ -435,10 +432,7 @@ namespace System.Windows.Controls
             if (IsSelected)
             {
                 TabControl tabControl = TabControlParent;
-                if (tabControl != null)
-                {
-                    tabControl.SelectedContentTemplateSelector = newContentTemplateSelector;
-                }
+                tabControl?.SelectedContentTemplateSelector = newContentTemplateSelector;
             }
         }
 

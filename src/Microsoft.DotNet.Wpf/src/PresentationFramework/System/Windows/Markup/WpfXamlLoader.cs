@@ -372,10 +372,7 @@ namespace System.Windows.Markup
                 bool freeze = Convert.ToBoolean(xamlReader.Value, TypeConverterHelper.InvariantEnglishUS);
                 stack.CurrentFrame.FreezeFreezable = freeze;
                 var bamlReader = xamlReader as System.Windows.Baml2006.Baml2006Reader;
-                if (bamlReader != null)
-                {
-                    bamlReader.FreezeFreezables = freeze;
-                }
+                bamlReader?.FreezeFreezables = freeze;
             }
             // The space directive node stream should not be written because it induces object instantiation,
             // and the Baml2006Reader can produce space directives prematurely.

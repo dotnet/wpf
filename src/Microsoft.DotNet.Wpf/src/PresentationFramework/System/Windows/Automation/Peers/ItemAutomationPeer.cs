@@ -35,10 +35,7 @@ namespace System.Windows.Automation.Peers
                 if (value)
                     return;
                 AutomationPeer wrapperPeer = GetWrapperPeer();
-                if (wrapperPeer != null)
-                {
-                    wrapperPeer.AncestorsInvalid = false;
-                }
+                wrapperPeer?.AncestorsInvalid = false;
             }
         }
 

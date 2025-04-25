@@ -226,10 +226,7 @@ namespace System.Windows.Shell
                 // Associate the jumplist with the application so we can retrieve it later.
                 s_applicationMap[application] = value;
 
-                if (value != null)
-                {
-                    value._application = application;
-                }
+                value?._application = application;
             }
 
             // Changes will only get applied if the list isn't in an ISupportInitialize block.

@@ -873,10 +873,7 @@ namespace System.Windows.Controls
             }
 
             // link padding header to last header
-            if (_paddingHeader != null)
-            {
-                _paddingHeader.PreviousVisualHeader = lastHeader;
-            }
+            _paddingHeader?.PreviousVisualHeader = lastHeader;
         }
 
         //

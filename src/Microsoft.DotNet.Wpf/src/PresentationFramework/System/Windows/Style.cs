@@ -306,11 +306,8 @@ namespace System.Windows
 
                 _resources = value;
 
-                if (_resources != null)
-                {
-                    // A Style ResourceDictionary can be accessed across threads
-                    _resources.CanBeAccessedAcrossThreads = true;
-                }
+                // A Style ResourceDictionary can be accessed across threads
+                _resources?.CanBeAccessedAcrossThreads = true;
             }
         }
 
@@ -519,10 +516,7 @@ namespace System.Windows
             _basedOn?.Seal();
 
             // Seal the ResourceDictionary
-            if (_resources != null)
-            {
-                _resources.IsReadOnly = true;
-            }
+            _resources?.IsReadOnly = true;
 
             //
             // Build shared tables

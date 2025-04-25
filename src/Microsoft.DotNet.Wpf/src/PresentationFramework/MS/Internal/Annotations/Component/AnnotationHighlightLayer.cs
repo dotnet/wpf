@@ -1114,8 +1114,7 @@ namespace MS.Internal.Annotations.Component
 
                     //reset render transformation of the TopOwner
                     UIElement uie = TopOwner as UIElement;
-                    if (uie != null)
-                        uie.RenderTransform = Transform.Identity;
+                    uie?.RenderTransform = Transform.Identity;
 
                     return geometry;
                 }

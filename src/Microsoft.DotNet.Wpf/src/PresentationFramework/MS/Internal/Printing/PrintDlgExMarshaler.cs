@@ -334,10 +334,7 @@ namespace MS.Internal.Printing
                         }
                     }
                 }
-                if (printQueue != null)
-                {
-                    printQueue.InPartialTrust = true;
-                }
+                printQueue?.InPartialTrust = true;
 
                 return printQueue;
             }

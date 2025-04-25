@@ -80,10 +80,7 @@ namespace System.Windows.Automation.Peers
                             if (peer != null)
                             {
                                 AutomationPeer wrapperPeer = peer.GetWrapperPeer();
-                                if(wrapperPeer != null)
-                                {
-                                    wrapperPeer.EventsSource = peer;
-                                }
+                                wrapperPeer?.EventsSource = peer;
                             }
 
                             // Not to add same Item again

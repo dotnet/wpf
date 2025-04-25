@@ -818,10 +818,7 @@ namespace System.Windows.Navigation
             //
             // Detach the Finish handler so we don't hold a reference to the PageFunction.
             PageFunctionBase currentPF = oldTree as PageFunctionBase;
-            if (currentPF != null)
-            {
-                currentPF.FinishHandler = null;
-            }
+            currentPF?.FinishHandler = null;
             //
             // Dispose the old tree here. TEMP until Bug 864908 is fixed
             // if the root is a PageFunction whose KeepAlive is set to TRUE, or a page

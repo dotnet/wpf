@@ -367,10 +367,7 @@ namespace Microsoft.Windows.Controls.Ribbon
 
             set
             {
-                if (_firstGallery != null)
-                {
-                    _firstGallery.HighlightedItem = value;
-                }
+                _firstGallery?.HighlightedItem = value;
             }
         }
 
@@ -778,9 +775,9 @@ namespace Microsoft.Windows.Controls.Ribbon
                     {
                         SetValue(TextProperty, newText);
                     }
-                    else if (EditableTextBoxSite != null)
+                    else
                     {
-                        EditableTextBoxSite.Text = newText;
+                        EditableTextBoxSite?.Text = newText;
                     }
                 }
                 finally

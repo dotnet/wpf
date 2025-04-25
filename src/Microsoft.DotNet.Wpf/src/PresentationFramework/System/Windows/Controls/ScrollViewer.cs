@@ -1365,13 +1365,11 @@ namespace System.Windows.Controls
 
             ScrollBar scrollBar = GetTemplateChild(HorizontalScrollBarTemplateName) as ScrollBar;
 
-            if (scrollBar != null)
-                scrollBar.IsStandalone = false;
+            scrollBar?.IsStandalone = false;
 
             scrollBar = GetTemplateChild(VerticalScrollBarTemplateName) as ScrollBar;
 
-            if (scrollBar != null)
-                scrollBar.IsStandalone = false;
+            scrollBar?.IsStandalone = false;
 
             OnPanningModeChanged();
         }
@@ -2563,13 +2561,10 @@ namespace System.Windows.Controls
             }
 
             ScrollViewer sv = target as ScrollViewer;
-            if (sv != null)
-            {
-                // If any of the ScrollBar scroll commands are raised while
-                // scroll manipulation is in its inertia, then the manipualtion
-                // should be completed.
-                sv.CompleteScrollManipulation = true;
-            }
+            // If any of the ScrollBar scroll commands are raised while
+            // scroll manipulation is in its inertia, then the manipualtion
+            // should be completed.
+            sv?.CompleteScrollManipulation = true;
         }
 
         private static void OnQueryScrollCommand(object target, CanExecuteRoutedEventArgs args)

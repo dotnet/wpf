@@ -457,9 +457,7 @@ namespace System.Windows.Forms.Integration
             SWI.ModifierKeys modifiers = Convert.ToSystemWindowsInputModifierKeys(keyData);
 
             // Let the AvalonAdapter know that ElementHost is currently processing a TabKey
-            if (_hostContainerInternal != null) {
-                _hostContainerInternal.ProcessingTabKeyFromElementHost = (keyData & SWF.Keys.Tab) == SWF.Keys.Tab;
-            }
+            _hostContainerInternal?.ProcessingTabKeyFromElementHost = (keyData & SWF.Keys.Tab) == SWF.Keys.Tab;
 
             bool result = (_hwndSource as IKeyboardInputSink).TranslateAccelerator(ref msg2, modifiers);
 

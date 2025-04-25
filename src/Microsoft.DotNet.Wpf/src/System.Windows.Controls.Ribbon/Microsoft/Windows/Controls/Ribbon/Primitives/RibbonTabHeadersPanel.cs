@@ -636,10 +636,7 @@ namespace Microsoft.Windows.Controls.Ribbon.Primitives
             for (int i = 0; i < countAllTabs; i++)
             {
                 RibbonTabHeader tabHeader = children[i] as RibbonTabHeader;
-                if (tabHeader != null)
-                {
-                    tabHeader.ShowLabelToolTip = tabHeader.IsContextualTab ? showContextualTabHeaderToolTips : showRegularTabHeaderToolTips;
-                }
+                tabHeader?.ShowLabelToolTip = tabHeader.IsContextualTab ? showContextualTabHeaderToolTips : showRegularTabHeaderToolTips;
             }
         }
 
@@ -745,19 +742,13 @@ namespace Microsoft.Windows.Controls.Ribbon.Primitives
                         }
 
                         RibbonContextualTabGroupsPanel contextualTabGroupsPanel = groupHeaderItemsControl.InternalItemsHost as RibbonContextualTabGroupsPanel;
-                        if (contextualTabGroupsPanel != null)
-                        {
-                            contextualTabGroupsPanel.WaitingForMeasure = false;
-                        }
+                        contextualTabGroupsPanel?.WaitingForMeasure = false;
                     }
                     else
                     {
                         // Tell the ContextualTabGroupsPanel that we are waiting on its Measure.
                         RibbonContextualTabGroupsPanel contextualTabGroupsPanel = groupHeaderItemsControl.InternalItemsHost as RibbonContextualTabGroupsPanel;
-                        if (contextualTabGroupsPanel != null)
-                        {
-                            contextualTabGroupsPanel.WaitingForMeasure = true;
-                        }
+                        contextualTabGroupsPanel?.WaitingForMeasure = true;
                     }
                 }
             }

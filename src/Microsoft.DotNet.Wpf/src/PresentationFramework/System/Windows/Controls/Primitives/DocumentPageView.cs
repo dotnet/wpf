@@ -827,10 +827,7 @@ namespace System.Windows.Controls.Primitives
             if (_documentPage != null)
             {
                 // Remove visual for currently used page.
-                if (_pageHost != null)
-                {
-                    _pageHost.PageVisual = null;
-                }
+                _pageHost?.PageVisual = null;
 
                 // Clear TextView & DocumentPage
                 if (_documentPage != DocumentPage.Missing)

@@ -1406,10 +1406,7 @@ namespace System.Windows.Documents
 
                 // Composition event is completed, so new composition undo unit will be opened.
                 CompositionParentUndoUnit unit = PeekCompositionParentUndoUnit();
-                if (unit != null)
-                {
-                    unit.IsLastCompositionUnit = true;
-                }
+                unit?.IsLastCompositionUnit = true;
             }
 
             _nextUndoUnitIsFirstCompositionUnit = true;
@@ -1974,10 +1971,7 @@ namespace System.Windows.Documents
             //
             _nextUndoUnitIsFirstCompositionUnit = false;
             CompositionParentUndoUnit topUndoUnit = PeekCompositionParentUndoUnit();
-            if (null != topUndoUnit)
-            {
-                topUndoUnit.IsLastCompositionUnit = false;
-            }
+            topUndoUnit?.IsLastCompositionUnit = false;
 
             CompositionParentUndoUnit compositionUndoUnit = OpenCompositionUndoUnit(range.Start, range.End);
             UndoCloseAction undoCloseAction = UndoCloseAction.Rollback;
@@ -2388,10 +2382,7 @@ namespace System.Windows.Documents
                 }
                 finally
                 {
-                    if (undoManager != null)
-                    {
-                        undoManager.IsImeSupportModeEnabled = wasImeSupportModeEnabled;
-                    }
+                    undoManager?.IsImeSupportModeEnabled = wasImeSupportModeEnabled;
 
                     // The TextContainer will have changed when playing back the recorded events and thus we need to refresh the TextPointers.
                     _previousCompositionStart = (_previousCompositionStartOffset == -1) ? null : textEditor.TextContainer.CreatePointerAtOffset(_previousCompositionStartOffset, LogicalDirection.Backward);

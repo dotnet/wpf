@@ -548,8 +548,8 @@ namespace MS.Internal.Data
             sub.Parent = node.Parent;
             sub.IsRed = node.IsRed;
 
-            if (sub.LeftChild != null) sub.LeftChild.Parent = sub;
-            if (sub.RightChild != null) sub.RightChild.Parent = sub;
+            sub.LeftChild?.Parent = sub;
+            sub.RightChild?.Parent = sub;
             return sub;
         }
 
@@ -624,7 +624,7 @@ namespace MS.Internal.Data
             node.IsRed = this.IsRed;
             node.Parent = this.Parent;
             this.RightChild = node.LeftChild;
-            if (this.RightChild != null) this.RightChild.Parent = this;
+            this.RightChild?.Parent = this;
             node.LeftChild = this;
             this.IsRed = true;
             this.Parent = node;
@@ -638,7 +638,7 @@ namespace MS.Internal.Data
             node.IsRed = this.IsRed;
             node.Parent = this.Parent;
             this.LeftChild = node.RightChild;
-            if (this.LeftChild != null) this.LeftChild.Parent = this;
+            this.LeftChild?.Parent = this;
             node.RightChild = this;
             this.IsRed = true;
             this.Parent = node;
@@ -836,8 +836,8 @@ namespace MS.Internal.Data
 
             node.LeftChild = LoadTree(ref s);   // read subtrees
             node.RightChild = LoadTree(ref s);
-            if (node.LeftChild != null) node.LeftChild.Parent = node;
-            if (node.RightChild != null) node.RightChild.Parent = node;
+            node.LeftChild?.Parent = node;
+            node.RightChild?.Parent = node;
 
             s = s.Substring(1);             // skip ')'
 

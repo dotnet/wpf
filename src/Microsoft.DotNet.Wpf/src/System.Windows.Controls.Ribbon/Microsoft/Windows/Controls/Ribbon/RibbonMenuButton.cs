@@ -940,10 +940,7 @@ namespace Microsoft.Windows.Controls.Ribbon
                     else
                     {
                         RibbonGallery selectedGallery = _ribbonCurrentSelection as RibbonGallery;
-                        if (selectedGallery != null)
-                        {
-                            selectedGallery.RibbonIsSelected = false;
-                        }
+                        selectedGallery?.RibbonIsSelected = false;
                     }
 
                     _ribbonCurrentSelection = value;
@@ -956,10 +953,7 @@ namespace Microsoft.Windows.Controls.Ribbon
                     else
                     {
                         RibbonGallery selectedGallery = _ribbonCurrentSelection as RibbonGallery;
-                        if (selectedGallery != null)
-                        {
-                            selectedGallery.RibbonIsSelected = true;
-                        }
+                        selectedGallery?.RibbonIsSelected = true;
                     }
                 }
             }
@@ -987,10 +981,7 @@ namespace Microsoft.Windows.Controls.Ribbon
             {
                 RibbonMenuItem selectedMenuItem = RibbonCurrentSelection as RibbonMenuItem;
                 RibbonCurrentSelection = null;
-                if (selectedMenuItem != null)
-                {
-                    selectedMenuItem.IsSubmenuOpen = false;
-                }
+                selectedMenuItem?.IsSubmenuOpen = false;
             }
             e.Handled = true;
         }

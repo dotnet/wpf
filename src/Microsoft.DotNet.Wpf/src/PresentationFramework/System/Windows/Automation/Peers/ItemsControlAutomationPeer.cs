@@ -175,10 +175,7 @@ namespace System.Windows.Automation.Peers
                     if (peer != null)
                     {
                         AutomationPeer wrapperPeer = peer.GetWrapperPeer();
-                        if (wrapperPeer != null)
-                        {
-                            wrapperPeer.EventsSource = peer;
-                        }
+                        wrapperPeer?.EventsSource = peer;
                     }
 
                     // protection from indistinguishable items - for example, 2 strings with same value
@@ -380,10 +377,7 @@ namespace System.Windows.Automation.Peers
             {
                 //perform hookup so the events sourced from wrapper peer are fired as if from the data item
                 AutomationPeer wrapperPeer = peer.GetWrapperPeer();
-                if (wrapperPeer != null)
-                {
-                    wrapperPeer.EventsSource = peer;
-                }
+                wrapperPeer?.EventsSource = peer;
             }
 
             return peer;

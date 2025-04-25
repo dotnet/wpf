@@ -873,10 +873,7 @@ namespace System.Windows.Controls
             AttachContent();
 
             // Update the toolbar with our current document state.
-            if (_findToolbar != null)
-            {
-                _findToolbar.DocumentLoaded = (Document != null) ? true : false;
-            }
+            _findToolbar?.DocumentLoaded = (Document != null) ? true : false;
 
             // We do not automatically go to the first page on the _first_ content
             // assignment, for two reasons:
@@ -2410,10 +2407,7 @@ namespace System.Windows.Controls
             DocumentViewer dv = (DocumentViewer) d;
 
             // If the ShowPageBorders has changed, then set the new value on the IDocumentScrollInfo.
-            if (dv._documentScrollInfo != null)
-            {
-                dv._documentScrollInfo.ShowPageBorders = (bool) e.NewValue;
-            }
+            dv._documentScrollInfo?.ShowPageBorders = (bool) e.NewValue;
         }
         #endregion ShowPageBorders
 
@@ -2519,10 +2513,7 @@ namespace System.Windows.Controls
             DocumentViewer dv = (DocumentViewer)d;
 
             // If the VerticalPageSpacing has changed, then set the new value on IDocumentScrollInfo.
-            if (dv._documentScrollInfo != null)
-            {
-                dv._documentScrollInfo.VerticalPageSpacing = (double) e.NewValue;
-            }
+            dv._documentScrollInfo?.VerticalPageSpacing = (double) e.NewValue;
         }
         #endregion VerticalPageSpacing
 
@@ -2535,10 +2526,7 @@ namespace System.Windows.Controls
             DocumentViewer dv = (DocumentViewer)d;
 
             // If the HorizontalPageSpacing has changed, then set the new value on IDocumentScrollInfo.
-            if (dv._documentScrollInfo != null)
-            {
-                dv._documentScrollInfo.HorizontalPageSpacing = (double) e.NewValue;
-            }
+            dv._documentScrollInfo?.HorizontalPageSpacing = (double) e.NewValue;
         }
         #endregion HorizontalPageSpacing
 

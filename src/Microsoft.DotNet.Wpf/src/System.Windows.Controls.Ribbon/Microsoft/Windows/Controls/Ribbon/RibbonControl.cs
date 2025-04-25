@@ -150,10 +150,7 @@ namespace Microsoft.Windows.Controls.Ribbon
             if (e.OldValue != null)
             {
                 UIElement element = e.OldValue as UIElement;
-                if (element != null)
-                {
-                    element.PositionAndSizeOfSetController = null;
-                }
+                element?.PositionAndSizeOfSetController = null;
             }
             if (e.NewValue != null)
             {

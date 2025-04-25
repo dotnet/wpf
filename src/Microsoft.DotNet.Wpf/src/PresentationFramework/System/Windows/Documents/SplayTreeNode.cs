@@ -418,10 +418,7 @@ namespace System.Windows.Documents
 
             // Hook up the new tree to the containing node.
             this.ParentNode = containingNode;
-            if (containingNode != null)
-            {
-                containingNode.ContainedNode = this;
-            }
+            containingNode?.ContainedNode = this;
         }
 
         // Removes this node from its tree.
@@ -439,24 +436,12 @@ namespace System.Windows.Documents
             leftSubTree = this.LeftChildNode;
             rightSubTree = this.RightChildNode;
 
-            if (leftSubTree != null)
-            {
-                leftSubTree.ParentNode = null;
-            }
-            if (rightSubTree != null)
-            {
-                rightSubTree.ParentNode = null;
-            }
+            leftSubTree?.ParentNode = null;
+            rightSubTree?.ParentNode = null;
 
             root = Join(leftSubTree, rightSubTree);
-            if (containerNode != null)
-            {
-                containerNode.ContainedNode = root;
-            }
-            if (root != null)
-            {
-                root.ParentNode = containerNode;
-            }
+            containerNode?.ContainedNode = root;
+            root?.ParentNode = containerNode;
 
             this.ParentNode = null;
             this.LeftChildNode = null;
@@ -484,10 +469,7 @@ namespace System.Windows.Documents
                 root.LeftCharCount = 0;
             }
 
-            if (rightSubTree != null)
-            {
-                rightSubTree.ParentNode = root;
-            }
+            rightSubTree?.ParentNode = root;
         }
 
         // Combines two trees.  Every node in leftSubTree will precede every node
@@ -513,10 +495,7 @@ namespace System.Windows.Documents
                 // Then merge the two trees.
                 // No change to any LeftSymbolCounts.
                 maxNode.RightChildNode = rightSubTree;
-                if (rightSubTree != null)
-                {
-                    rightSubTree.ParentNode = maxNode;
-                }
+                rightSubTree?.ParentNode = maxNode;
             }
             else if (rightSubTree != null)
             {
@@ -838,10 +817,7 @@ namespace System.Windows.Documents
 
             rightChildNode = this.RightChildNode;
             this.RightChildNode = rightChildNode.LeftChildNode;
-            if (rightChildNode.LeftChildNode != null)
-            {
-                rightChildNode.LeftChildNode.ParentNode = this;
-            }
+            rightChildNode.LeftChildNode?.ParentNode = this;
 
             parentNode = this.ParentNode;
             rightChildNode.ParentNode = parentNode;
@@ -903,10 +879,7 @@ namespace System.Windows.Documents
 
             leftChildNode = this.LeftChildNode;
             this.LeftChildNode = leftChildNode.RightChildNode;
-            if (leftChildNode.RightChildNode != null)
-            {
-                leftChildNode.RightChildNode.ParentNode = this;
-            }
+            leftChildNode.RightChildNode?.ParentNode = this;
 
             parentNode = this.ParentNode;
             leftChildNode.ParentNode = parentNode;

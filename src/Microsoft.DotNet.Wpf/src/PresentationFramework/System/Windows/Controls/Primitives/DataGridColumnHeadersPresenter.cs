@@ -543,15 +543,9 @@ namespace System.Windows.Controls.Primitives
                         bool shouldDisplayDragIndicator = IsMousePositionValidForColumnDrag(2.0);
                         Visibility dragIndicatorVisibility = shouldDisplayDragIndicator ? Visibility.Visible : Visibility.Collapsed;
 
-                        if (_columnHeaderDragIndicator != null)
-                        {
-                            _columnHeaderDragIndicator.Visibility = dragIndicatorVisibility;
-                        }
+                        _columnHeaderDragIndicator?.Visibility = dragIndicatorVisibility;
 
-                        if (_columnHeaderDropLocationIndicator != null)
-                        {
-                            _columnHeaderDropLocationIndicator.Visibility = dragIndicatorVisibility;
-                        }
+                        _columnHeaderDropLocationIndicator?.Visibility = dragIndicatorVisibility;
 
                         InvalidateArrange();
 
@@ -826,10 +820,7 @@ namespace System.Windows.Controls.Primitives
             {
                 _columnHeaderDropLocationIndicator.Visibility = Visibility.Collapsed;
                 DataGridColumnDropSeparator separator = _columnHeaderDropLocationIndicator as DataGridColumnDropSeparator;
-                if (separator != null)
-                {
-                    separator.ReferenceHeader = null;
-                }
+                separator?.ReferenceHeader = null;
 
                 RemoveVisualChild(_columnHeaderDropLocationIndicator);
             }

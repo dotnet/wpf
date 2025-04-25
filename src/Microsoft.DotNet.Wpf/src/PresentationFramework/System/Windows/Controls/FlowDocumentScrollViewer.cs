@@ -103,10 +103,7 @@ namespace System.Windows.Controls
 
             // Initialize TooBar host.
             _toolBarHost = GetTemplateChild(_toolBarHostTemplateName) as Decorator;
-            if (_toolBarHost != null)
-            {
-                _toolBarHost.Visibility = IsToolBarVisible ? Visibility.Visible : Visibility.Collapsed;
-            }
+            _toolBarHost?.Visibility = IsToolBarVisible ? Visibility.Visible : Visibility.Collapsed;
 
             // Initialize ContentHost.
             // If old ContentHost is enabled, disable it first to ensure appropriate cleanup.
@@ -937,10 +934,7 @@ namespace System.Windows.Controls
         /// </summary>
         private void ApplyZoom()
         {
-            if (RenderScope != null)
-            {
-                RenderScope.LayoutTransform = new ScaleTransform(Zoom / 100, Zoom / 100);
-            }
+            RenderScope?.LayoutTransform = new ScaleTransform(Zoom / 100, Zoom / 100);
         }
 
         /// <summary>
@@ -1199,10 +1193,7 @@ namespace System.Windows.Controls
                     RemoveLogicalChild(oldDocument);
                 }
                 // Remove the document from the ContentHost.
-                if (RenderScope != null)
-                {
-                    RenderScope.Document = null;
-                }
+                RenderScope?.Document = null;
 
                 oldDocument.ClearValue(PathNode.HiddenParentProperty);
                 oldDocument.StructuralCache.ClearUpdateInfo(true);
@@ -1225,10 +1216,7 @@ namespace System.Windows.Controls
             if (newDocument != null)
             {
                 // Set the document on the ContentHost.
-                if (RenderScope != null)
-                {
-                    RenderScope.Document = newDocument;
-                }
+                RenderScope?.Document = newDocument;
                 // If Document should be part of FlowDocumentScrollViewer's logical tree, add it.
                 if (_documentAsLogicalChild)
                 {
@@ -1715,10 +1703,7 @@ namespace System.Windows.Controls
             Invariant.Assert(d != null && d is FlowDocumentScrollViewer);
             FlowDocumentScrollViewer viewer = (FlowDocumentScrollViewer)d;
 
-            if (viewer._toolBarHost != null)
-            {
-                viewer._toolBarHost.Visibility = (bool)e.NewValue ? Visibility.Visible : Visibility.Collapsed;
-            }
+            viewer._toolBarHost?.Visibility = (bool)e.NewValue ? Visibility.Visible : Visibility.Collapsed;
         }
 
         /// <summary>

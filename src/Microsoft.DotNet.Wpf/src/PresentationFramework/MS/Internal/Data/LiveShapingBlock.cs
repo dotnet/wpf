@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
 //
@@ -26,8 +26,7 @@ namespace MS.Internal.Data
         public override LiveShapingItem SetItemAt(int offset, LiveShapingItem lsi)
         {
             base.SetItemAt(offset, lsi);
-            if (lsi != null)
-                lsi.Block = this;
+            lsi?.Block = this;
             return lsi;
         }
 

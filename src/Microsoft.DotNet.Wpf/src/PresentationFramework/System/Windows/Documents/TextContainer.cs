@@ -2353,10 +2353,7 @@ namespace System.Windows.Documents
             // Put left/right sub trees back into the TextContainer.
             rootNode = TextTreeNode.Join(leftSubTree, rightSubTree);
             containingNode.ContainedNode = rootNode;
-            if (rootNode != null)
-            {
-                rootNode.ParentNode = containingNode;
-            }
+            rootNode?.ParentNode = containingNode;
 
             if (symbolCount > 0)
             {
@@ -3054,10 +3051,7 @@ namespace System.Windows.Documents
                     }
 
                     containingNode.ContainedNode = localRootNode;
-                    if (localRootNode != null)
-                    {
-                        localRootNode.ParentNode = containingNode;
-                    }
+                    localRootNode?.ParentNode = containingNode;
                 }
             }
         }

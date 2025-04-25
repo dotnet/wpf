@@ -774,7 +774,7 @@ namespace System.Windows.Controls
             // back into a totally unlinked state.
             else if (_scrollInfo != null)
             {
-                if (_scrollInfo.ScrollOwner != null) { _scrollInfo.ScrollOwner.ScrollInfo = null; }
+                _scrollInfo.ScrollOwner?.ScrollInfo = null;
                 _scrollInfo.ScrollOwner = null;
                 _scrollInfo = null;
                 _scrollData = null;

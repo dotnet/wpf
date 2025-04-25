@@ -1149,10 +1149,7 @@ namespace Microsoft.Windows.Controls.Ribbon
                 }
             }
 
-            if (_templateContentControl != null)
-            {
-                _templateContentControl.Visibility = (itemsPresenterVisibility == Visibility.Visible ? Visibility.Collapsed : Visibility.Visible);
-            }
+            _templateContentControl?.Visibility = (itemsPresenterVisibility == Visibility.Visible ? Visibility.Collapsed : Visibility.Visible);
             return remeasure;
         }
 

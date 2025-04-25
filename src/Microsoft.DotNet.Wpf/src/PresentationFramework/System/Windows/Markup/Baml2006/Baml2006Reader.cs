@@ -320,10 +320,7 @@ namespace System.Windows.Baml2006
             foreach (KeyRecord keyRecord in _context.KeyList)
             {
                 keyRecord.ValuePosition += endOfKeysStartOfObjects;
-                if (previousKeyRecord != null)
-                {
-                    previousKeyRecord.ValueSize = (int)(keyRecord.ValuePosition - previousKeyRecord.ValuePosition);
-                }
+                previousKeyRecord?.ValueSize = (int)(keyRecord.ValuePosition - previousKeyRecord.ValuePosition);
                 previousKeyRecord = keyRecord;
             }
             previousKeyRecord.ValueSize = (int)(_binaryReader.BaseStream.Length - previousKeyRecord.ValuePosition);

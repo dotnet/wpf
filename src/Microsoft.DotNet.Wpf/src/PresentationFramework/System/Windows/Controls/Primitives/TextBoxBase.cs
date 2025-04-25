@@ -1440,10 +1440,7 @@ namespace System.Windows.Controls.Primitives
 
             // Init a default undo limit.
             UndoManager undoManager = UndoManager.GetUndoManager(this);
-            if (undoManager != null)
-            {
-                undoManager.UndoLimit = this.UndoLimit;
-            }
+            undoManager?.UndoLimit = this.UndoLimit;
 
             // Delay raising automation events until the automation subsystem is activated by a client.
             // ISSUE-2005/01/23-vsmirnov - Adding an event listener to AutomationProvider apparently
@@ -1816,10 +1813,7 @@ namespace System.Windows.Controls.Primitives
             this.TextContainer.TextView = textView;
             _textEditor.TextView = textView; // REVIEW:benwest: this is redundant!  TextEditor already has a ref to TextContainer!
 
-            if (this.ScrollViewer != null)
-            {
-                this.ScrollViewer.CanContentScroll = true;
-            }
+            this.ScrollViewer?.CanContentScroll = true;
         }
 
         // Uninitializes a render scope and clears this control's reference.

@@ -197,10 +197,7 @@ namespace Microsoft.Windows.Controls.Ribbon
             RibbonSplitMenuItem splitMenuItem = (RibbonSplitMenuItem)d;
 
             RibbonToggleButton toggleButton = splitMenuItem._headerButton as RibbonToggleButton;
-            if (toggleButton != null)
-            {
-                toggleButton.IsChecked = splitMenuItem.IsChecked;
-            }
+            toggleButton?.IsChecked = splitMenuItem.IsChecked;
         }
 
         // UIElement.IsEnabledCore's getter simply returns true (e.g. RibbonSplitButton follows this path), but MenuItem
@@ -288,16 +285,10 @@ namespace Microsoft.Windows.Controls.Ribbon
 
         private void SetBorderThickness()
         {
-            if (_highlightLeftBorder != null)
-            {
-                // Right = 0.0
-                _highlightLeftBorder.BorderThickness = new Thickness(BorderThickness.Left, BorderThickness.Top, 0.0, BorderThickness.Bottom);
-            }
-            if (_highlightRightBorder != null)
-            {
-                // Left = 0.0
-                _highlightRightBorder.BorderThickness = new Thickness(0.0, BorderThickness.Top, BorderThickness.Right, BorderThickness.Bottom);
-            }
+            // Right = 0.0
+            _highlightLeftBorder?.BorderThickness = new Thickness(BorderThickness.Left, BorderThickness.Top, 0.0, BorderThickness.Bottom);
+            // Left = 0.0
+            _highlightRightBorder?.BorderThickness = new Thickness(0.0, BorderThickness.Top, BorderThickness.Right, BorderThickness.Bottom);
         }
 
         #endregion

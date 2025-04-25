@@ -674,10 +674,7 @@ namespace Microsoft.Windows.Controls.Ribbon
         private void OnPopupOpened(object sender, EventArgs e)
         {
             RibbonToolTip toolTip = ToolTip as RibbonToolTip;
-            if (toolTip != null)
-            {
-                toolTip.IsOpen = false;
-            }
+            toolTip?.IsOpen = false;
         }
 
         /// <summary>
@@ -1047,10 +1044,7 @@ namespace Microsoft.Windows.Controls.Ribbon
             {
                 RibbonMenuItem selectedMenuItem = RibbonCurrentSelection as RibbonMenuItem;
                 RibbonCurrentSelection = null;
-                if (selectedMenuItem != null)
-                {
-                    selectedMenuItem.IsSubmenuOpen = false;
-                }
+                selectedMenuItem?.IsSubmenuOpen = false;
             }
 
             e.Handled = true;
@@ -1538,10 +1532,7 @@ namespace Microsoft.Windows.Controls.Ribbon
                     else
                     {
                         RibbonGallery selectedGallery = _ribbonCurrentSelection as RibbonGallery;
-                        if (selectedGallery != null)
-                        {
-                            selectedGallery.RibbonIsSelected = false;
-                        }
+                        selectedGallery?.RibbonIsSelected = false;
                     }
 
                     _ribbonCurrentSelection = value;
@@ -1554,10 +1545,7 @@ namespace Microsoft.Windows.Controls.Ribbon
                     else
                     {
                         RibbonGallery selectedGallery = _ribbonCurrentSelection as RibbonGallery;
-                        if (selectedGallery != null)
-                        {
-                            selectedGallery.RibbonIsSelected = true;
-                        }
+                        selectedGallery?.RibbonIsSelected = true;
                     }
                 }
             }

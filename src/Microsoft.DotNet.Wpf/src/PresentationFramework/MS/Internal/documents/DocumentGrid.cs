@@ -853,10 +853,7 @@ namespace MS.Internal.Documents
                     {
                         DocumentGridPage dp = _childrenCollection[i] as DocumentGridPage;
 
-                        if (dp != null)
-                        {
-                            dp.ShowPageBorders = _showPageBorders;
-                        }
+                        dp?.ShowPageBorders = _showPageBorders;
                     }
                 }
             }

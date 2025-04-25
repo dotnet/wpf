@@ -496,10 +496,7 @@ namespace System.Windows.Automation.Peers
 
             //perform hookup so the events sourced from wrapper peer are fired as if from the data item
             AutomationPeer wrapperPeer = peer.OwningCellPeer;
-            if (wrapperPeer != null)
-            {
-                wrapperPeer.EventsSource = peer;
-            }
+            wrapperPeer?.EventsSource = peer;
 
             return peer;
         }

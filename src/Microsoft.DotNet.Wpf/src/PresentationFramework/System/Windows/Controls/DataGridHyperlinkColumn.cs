@@ -117,10 +117,7 @@ namespace System.Windows.Controls
                     if (outerBlock != null && outerBlock.Inlines.Count > 0)
                     {
                         Hyperlink link = outerBlock.Inlines.FirstInline as Hyperlink;
-                        if (link != null)
-                        {
-                            link.TargetName = TargetName;
-                        }
+                        link?.TargetName = TargetName;
                     }
                 }
             }

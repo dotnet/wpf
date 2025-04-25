@@ -913,11 +913,8 @@ namespace Microsoft.Windows.Controls.Ribbon
 
         private void OnTabHeadersScrollChanged(object d, ScrollChangedEventArgs e)
         {
-            if (ContextualTabGroupItemsControl != null)
-            {
-                // When scrollbars appear for the TabHeaders, collapse the ContextualTabGroups. 
-                ContextualTabGroupItemsControl.ForceCollapse = !(DoubleUtil.GreaterThanOrClose(e.ViewportWidth, e.ExtentWidth));
-            }
+            // When scrollbars appear for the TabHeaders, collapse the ContextualTabGroups. 
+            ContextualTabGroupItemsControl?.ForceCollapse = !(DoubleUtil.GreaterThanOrClose(e.ViewportWidth, e.ExtentWidth));
         }
         
         #endregion
@@ -1464,10 +1461,7 @@ namespace Microsoft.Windows.Controls.Ribbon
                 throw new InvalidOperationException(Microsoft.Windows.Controls.SR.Ribbon_ContextualTabHeadersSourceInvalid);
             }
 
-            if (ribbon.ContextualTabGroupItemsControl != null)
-            {
-                ribbon.ContextualTabGroupItemsControl.ItemsSource = (IEnumerable)args.NewValue;
-            }
+            ribbon.ContextualTabGroupItemsControl?.ItemsSource = (IEnumerable)args.NewValue;
         }
 
         private static void OnNotifyContextualTabGroupPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)

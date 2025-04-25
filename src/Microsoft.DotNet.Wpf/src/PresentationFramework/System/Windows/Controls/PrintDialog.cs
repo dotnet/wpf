@@ -521,10 +521,7 @@ namespace System.Windows.Controls
 
             PickCorrectPrintingEnvironment(ref printQueue, ref printTicket);
 
-            if(printQueue != null)
-            {
-                printQueue.CurrentJobSettings.Description = description;
-            }
+            printQueue?.CurrentJobSettings.Description = description;
 
             writer = PrintQueue.CreateXpsDocumentWriter(printQueue);
 

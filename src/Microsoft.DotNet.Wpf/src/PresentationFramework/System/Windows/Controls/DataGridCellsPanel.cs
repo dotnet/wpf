@@ -1301,10 +1301,7 @@ namespace System.Windows.Controls
             DataGrid parentDataGrid = ParentDataGrid;
 
             // Update the NonFrozenColumnsViewportHorizontalOffset property of datagrid
-            if (parentDataGrid != null)
-            {
-                parentDataGrid.NonFrozenColumnsViewportHorizontalOffset = arrangeState.DataGridHorizontalScrollStartX;
-            }
+            parentDataGrid?.NonFrozenColumnsViewportHorizontalOffset = arrangeState.DataGridHorizontalScrollStartX;
 
             // Remove the clip on previous clipped child
             arrangeState.OldClippedChild?.CoerceValue(ClipProperty);
@@ -1789,10 +1786,7 @@ namespace System.Windows.Controls
                         else
                         {
                             DataGridColumnHeadersPresenter headersPresenter = parentPresenter as DataGridColumnHeadersPresenter;
-                            if (headersPresenter != null)
-                            {
-                                headersPresenter.InternalItemsHost = this;
-                            }
+                            headersPresenter?.InternalItemsHost = this;
                         }
                     }
                 }

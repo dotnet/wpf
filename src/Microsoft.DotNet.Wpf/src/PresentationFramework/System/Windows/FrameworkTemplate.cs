@@ -242,11 +242,8 @@ namespace System.Windows
 
                 _resources = value;
 
-                if (_resources != null)
-                {
-                    // A Template ResourceDictionary can be accessed across threads
-                    _resources.CanBeAccessedAcrossThreads = true;
-                }
+                // A Template ResourceDictionary can be accessed across threads
+                _resources?.CanBeAccessedAcrossThreads = true;
             }
         }
 

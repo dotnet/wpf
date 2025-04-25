@@ -70,17 +70,11 @@ namespace MS.Internal.Documents
                 }
 
                 _openedUnit = newUnit;
-                if (newUnit != null)
-                {
-                    newUnit.Container = this;
-                }
+                newUnit?.Container = this;
             }
             else
             {
-                if (newUnit != null)
-                {
-                    newUnit.Container = deepestOpen;
-                }
+                newUnit?.Container = deepestOpen;
 
                 deepestOpen.Open(newUnit);
             }
@@ -153,10 +147,7 @@ namespace MS.Internal.Documents
             if (closeAction != UndoCloseAction.Commit)
             {
                 // discard unit
-                if (undoManager != null)
-                {
-                    undoManager.IsEnabled = false;
-                }
+                undoManager?.IsEnabled = false;
 
                 if (OpenedUnit.OpenedUnit != null)
                 {
@@ -180,10 +171,7 @@ namespace MS.Internal.Documents
                     ((IParentUndoUnit)TopContainer).OnNextDiscard();
                 }
 
-                if (undoManager != null)
-                {
-                    undoManager.IsEnabled = true;
-                }
+                undoManager?.IsEnabled = true;
             }
             else
             {

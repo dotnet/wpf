@@ -1189,14 +1189,8 @@ namespace MS.Internal.PtsHost
                 }
                 while (paraInvalid != ur.SyncPara)
                 {
-                    if (paraInvalid.Next != null)
-                    {
-                        paraInvalid.Next.Previous = null;
-                    }
-                    if (paraInvalid.Previous != null)
-                    {
-                        paraInvalid.Previous.Next = null;
-                    }
+                    paraInvalid.Next?.Previous = null;
+                    paraInvalid.Previous?.Next = null;
                     paraInvalid.Dispose();
                     paraInvalid = paraInvalid.Next;
                 }

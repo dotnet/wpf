@@ -151,10 +151,7 @@ namespace System.Windows.Controls
         internal void ClearHeader()
         {
             _referenceHeader = null;
-            if (_visualBrushCanvas != null)
-            {
-                _visualBrushCanvas.Background = null;
-            }
+            _visualBrushCanvas?.Background = null;
         }
 
         private double GetVisualCanvasMarginX()

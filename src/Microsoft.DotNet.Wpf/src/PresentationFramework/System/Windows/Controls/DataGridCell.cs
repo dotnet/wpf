@@ -561,10 +561,7 @@ namespace System.Windows.Controls
             if (cell != null && cell == sender)
             {
                 DataGrid owner = cell.DataGridOwner;
-                if (owner != null)
-                {
-                    owner.FocusedCell = cell;
-                }
+                owner?.FocusedCell = cell;
             }
         }
 

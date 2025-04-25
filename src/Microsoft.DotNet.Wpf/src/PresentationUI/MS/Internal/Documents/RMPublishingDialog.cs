@@ -798,10 +798,7 @@ namespace MS.Internal.Documents
         {
             Button button = sender as Button;
 
-            if (button != null)
-            {
-                button.FlatStyle = FlatStyle.Standard;
-            }
+            button?.FlatStyle = FlatStyle.Standard;
         }
 
         /// <summary>
@@ -814,10 +811,7 @@ namespace MS.Internal.Documents
         {
             Button button = sender as Button;
 
-            if (button != null)
-            {
-                button.FlatStyle = FlatStyle.Flat;
-            }
+            button?.FlatStyle = FlatStyle.Flat;
         }
 
         /// <summary>

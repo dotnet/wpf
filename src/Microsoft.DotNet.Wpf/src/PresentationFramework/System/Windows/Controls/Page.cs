@@ -806,10 +806,7 @@ namespace System.Windows.Controls
         private void SetShowsNavigationUI(bool showsNavigationUI)
         {
             NavigationWindow navWin = _currentIws as NavigationWindow;
-            if (navWin != null)
-            {
-                navWin.ShowsNavigationUI = showsNavigationUI;
-            }
+            navWin?.ShowsNavigationUI = showsNavigationUI;
         }
 
         private bool IsPropertySet(SetPropertyFlags property)

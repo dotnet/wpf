@@ -261,10 +261,7 @@ namespace MS.Internal.Documents
         internal void SuspendLayout()
         {
             _suspendLayout = true;
-            if (_pageVisual != null)
-            {
-                _pageVisual.Opacity = 0.5;
-            }
+            _pageVisual?.Opacity = 0.5;
         }
 
         /// <summary>
@@ -273,10 +270,7 @@ namespace MS.Internal.Documents
         internal void ResumeLayout()
         {
             _suspendLayout = false;
-            if (_pageVisual != null)
-            {
-                _pageVisual.Opacity = 1.0;
-            }
+            _pageVisual?.Opacity = 1.0;
             InvalidateMeasure();
         }
 
@@ -552,10 +546,7 @@ namespace MS.Internal.Documents
             }
             set
             {
-                if (_scrollData != null)
-                {
-                    _scrollData.CanVerticallyScroll = value;
-                }
+                _scrollData?.CanVerticallyScroll = value;
             }
         }
 
@@ -570,10 +561,7 @@ namespace MS.Internal.Documents
             }
             set
             {
-                if (_scrollData != null)
-                {
-                    _scrollData.CanHorizontallyScroll = value;
-                }
+                _scrollData?.CanHorizontallyScroll = value;
             }
         }
 

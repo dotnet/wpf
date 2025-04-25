@@ -2762,7 +2762,7 @@ Debug.Assert(lineCount == LineCount);
         private ArrayList InlineObjects
         {
             get { return _complexContent?.InlineObjects; }
-            set { if (_complexContent != null) _complexContent.InlineObjects = value; }
+            set { _complexContent?.InlineObjects = value; }
         }
 
         //-------------------------------------------------------------------

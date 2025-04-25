@@ -1641,16 +1641,10 @@ namespace System.Windows.Controls
 
             // Set the target for the Copy/Paste commands to our inner control
             MenuItem copyMenuItem = GetCopyMenuItem();
-            if (copyMenuItem != null)
-            {
-                copyMenuItem.CommandTarget = Content.InnerControl;
-            }
+            copyMenuItem?.CommandTarget = Content.InnerControl;
 
             MenuItem pasteMenuItem = GetPasteMenuItem();
-            if (pasteMenuItem != null)
-            {
-                pasteMenuItem.CommandTarget = Content.InnerControl;
-            }
+            pasteMenuItem?.CommandTarget = Content.InnerControl;
         }
 
 

@@ -584,10 +584,7 @@ namespace Microsoft.Windows.Controls.Ribbon
                     break;
 
                 case NotifyCollectionChangedAction.Add:
-                    if (RibbonGallery != null)
-                    {
-                        RibbonGallery.IsMaxColumnWidthValid = false;
-                    }
+                    RibbonGallery?.IsMaxColumnWidthValid = false;
                     break;
                 case NotifyCollectionChangedAction.Move:
                     break;

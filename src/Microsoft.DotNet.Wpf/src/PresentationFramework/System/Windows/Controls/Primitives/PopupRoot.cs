@@ -156,10 +156,7 @@ namespace System.Windows.Controls.Primitives
                 // To help developers and users identify the real problem, store the
                 // exception, so that it can be reported when the crashing null-ref
                 // occurs.
-                if (popup != null)
-                {
-                    popup.SavedException = e;
-                }
+                popup?.SavedException = e;
 
                 throw;
             }

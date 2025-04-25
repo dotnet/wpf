@@ -121,10 +121,7 @@ namespace System.Windows.Controls
                 lvPeer.InvalidatePeer();
             }
 
-            if (oldView != null)
-            {
-                oldView.IsUsed = false;
-            }
+            oldView?.IsUsed = false;
         }
 
         #endregion

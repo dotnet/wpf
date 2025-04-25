@@ -112,10 +112,7 @@ namespace System.Windows.Automation.Peers
                             if (peer != null)
                             {
                                 AutomationPeer wrapperPeer = (peer as ItemAutomationPeer).GetWrapperPeer();
-                                if (wrapperPeer != null)
-                                {
-                                    wrapperPeer.EventsSource = peer;
-                                }
+                                wrapperPeer?.EventsSource = peer;
 
                                 if (dataChildren[dataItem] == null && peer is ItemAutomationPeer)
                                 {
@@ -174,10 +171,7 @@ namespace System.Windows.Automation.Peers
             if(peer != null)
             {
                 AutomationPeer wrapperPeer = (peer as ItemAutomationPeer).GetWrapperPeer();
-                if (wrapperPeer != null)
-                {
-                    wrapperPeer.EventsSource = peer;
-                }
+                wrapperPeer?.EventsSource = peer;
             }
 
             return peer;

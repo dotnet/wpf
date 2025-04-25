@@ -1294,10 +1294,7 @@ namespace System.Windows.Controls
             _itemAttachedStorage.SetValue(item, DataGridRow.DetailsVisibilityProperty, detailsVisibility);
 
             var row = (DataGridRow)ItemContainerGenerator.ContainerFromItem(item);
-            if (row != null)
-            {
-                row.DetailsVisibility = detailsVisibility;
-            }
+            row?.DetailsVisibility = detailsVisibility;
         }
 
         /// <summary>
@@ -1882,10 +1879,7 @@ namespace System.Windows.Controls
         private void DetermineItemsHostStarBehavior()
         {
             VirtualizingStackPanel panel = _internalItemsHost as VirtualizingStackPanel;
-            if (panel != null)
-            {
-                panel.IgnoreMaxDesiredSize = InternalColumns.HasVisibleStarColumns;
-            }
+            panel?.IgnoreMaxDesiredSize = InternalColumns.HasVisibleStarColumns;
         }
 
         /// <summary>

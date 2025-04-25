@@ -622,16 +622,10 @@ namespace System.Windows.Media
                 _mediaClock = newClock;
 
                 // Disassociate the old clock
-                if (oldClock != null)
-                {
-                    oldClock.Player = null;
-                }
+                oldClock?.Player = null;
 
                 // Associate the new clock;
-                if (newClock != null)
-                {
-                    newClock.Player = player;
-                }
+                newClock?.Player = player;
 
                 // According to the spec, setting the Clock to null
                 // should set the Source to null

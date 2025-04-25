@@ -165,10 +165,7 @@ namespace MS.Internal.TextFormatting
 
             // If the TextRun was obtained from the cache, make sure it has the right PixelsPerDip set on its properties.
 
-            if (textRun.Properties != null)
-            {
-                textRun.Properties.PixelsPerDip = settings.TextSource.PixelsPerDip;
-            }
+            textRun.Properties?.PixelsPerDip = settings.TextSource.PixelsPerDip;
 
             offsetToFirstCp = textRunSpanRider.CurrentPosition - textRunSpanRider.CurrentSpanStart;
             runLength = textRunSpanRider.Length;

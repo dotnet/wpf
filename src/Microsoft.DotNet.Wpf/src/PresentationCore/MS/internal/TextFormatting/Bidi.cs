@@ -2093,11 +2093,7 @@ namespace MS.Internal.TextFormatting
             else
             {
                 cchResolved = cchText;
-
-                if (state != null)
-                {
-                    state.LastStrongClass = lastStrongClass;
-                }
+                state?.LastStrongClass = lastStrongClass;
 
                 if (neutralIndex != -1) // resolve the neutral
                 {

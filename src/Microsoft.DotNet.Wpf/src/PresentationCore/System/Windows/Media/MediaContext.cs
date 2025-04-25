@@ -2490,21 +2490,13 @@ namespace System.Windows.Media
 
         private void PromoteRenderOpToInput(object sender, EventArgs e)
         {
-            if(_currentRenderOp != null)
-            {
-                _currentRenderOp.Priority = DispatcherPriority.Input;
-            }
-
+            _currentRenderOp?.Priority = DispatcherPriority.Input;
             ((DispatcherTimer)sender).Stop();
         }
 
         private void PromoteRenderOpToRender(object sender, EventArgs e)
         {
-            if(_currentRenderOp != null)
-            {
-                _currentRenderOp.Priority = DispatcherPriority.Render;
-            }
-
+            _currentRenderOp?.Priority = DispatcherPriority.Render;
             ((DispatcherTimer)sender).Stop();
         }
 

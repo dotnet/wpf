@@ -1625,10 +1625,8 @@ namespace MS.Internal.AutomationProxies
             if (InStartMenu() && AccessibleObject != null)
             {
                 ProxyFragment proxyFragment = new ListViewItemStartMenu(_hwnd, parent, item, AccessibleObject);
-                if (proxyFragment != null)
-                {
-                    proxyFragment.AccessibleObject = AccessibleObject;
-                }
+                proxyFragment?.AccessibleObject = AccessibleObject;
+
                 return proxyFragment;
             }
             else

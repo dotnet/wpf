@@ -174,11 +174,7 @@ namespace System.Windows.Input
                      throw new NotSupportedException(SR.ReadOnlyInputGesturesCollection);
 
                  EnsureList();
-
-                 if (_innerGestureList != null)
-                 {
-                     _innerGestureList[index] = value;
-                 }
+                _innerGestureList?[index] = value;
              }
          }                
 

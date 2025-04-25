@@ -5,6 +5,7 @@
     <WindowsDesktopARM64Support>true</WindowsDesktopARM64Support>
     <TargetFramework>net10.0</TargetFramework>
     <TargetFrameworkVersion>10.0</TargetFrameworkVersion>
+    <BuildWithNetFrameworkHostedCompiler>true</BuildWithNetFrameworkHostedCompiler>
   </PropertyGroup>
   <!-- Normalize $(TestWpfArcadeSdkPath) by appending a '\' to it if one is missing -->
   <PropertyGroup Condition="'$(TestWpfArcadeSdkPath)'!=''">

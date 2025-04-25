@@ -46,20 +46,7 @@
       <Uri>https://github.com/dotnet/dotnet</Uri>
       <Sha>58950550c5c2c7a2431595699b38fd0360fd63e9</Sha>
     </Dependency>
-    <!-- These dependencies are required by windowsdesktop for coherency. -->
-    <Dependency Name="Microsoft.Win32.Registry.AccessControl" Version="10.0.0-preview.4.25224.104">
-      <Uri>https://github.com/dotnet/dotnet</Uri>
-      <Sha>58950550c5c2c7a2431595699b38fd0360fd63e9</Sha>
-    </Dependency>
-    <Dependency Name="Microsoft.Win32.SystemEvents" Version="10.0.0-preview.4.25224.104">
-      <Uri>https://github.com/dotnet/dotnet</Uri>
-      <Sha>58950550c5c2c7a2431595699b38fd0360fd63e9</Sha>
-    </Dependency>
     <Dependency Name="System.CodeDom" Version="10.0.0-preview.4.25224.104">
-      <Uri>https://github.com/dotnet/dotnet</Uri>
-      <Sha>58950550c5c2c7a2431595699b38fd0360fd63e9</Sha>
-    </Dependency>
-    <Dependency Name="System.ComponentModel.Composition" Version="10.0.0-preview.4.25224.104">
       <Uri>https://github.com/dotnet/dotnet</Uri>
       <Sha>58950550c5c2c7a2431595699b38fd0360fd63e9</Sha>
     </Dependency>
@@ -67,27 +54,7 @@
       <Uri>https://github.com/dotnet/dotnet</Uri>
       <Sha>58950550c5c2c7a2431595699b38fd0360fd63e9</Sha>
     </Dependency>
-    <Dependency Name="System.Data.Odbc" Version="10.0.0-preview.4.25224.104">
-      <Uri>https://github.com/dotnet/dotnet</Uri>
-      <Sha>58950550c5c2c7a2431595699b38fd0360fd63e9</Sha>
-    </Dependency>
-    <Dependency Name="System.Data.OleDb" Version="10.0.0-preview.4.25224.104">
-      <Uri>https://github.com/dotnet/dotnet</Uri>
-      <Sha>58950550c5c2c7a2431595699b38fd0360fd63e9</Sha>
-    </Dependency>
     <Dependency Name="System.Diagnostics.EventLog" Version="10.0.0-preview.4.25224.104">
-      <Uri>https://github.com/dotnet/dotnet</Uri>
-      <Sha>58950550c5c2c7a2431595699b38fd0360fd63e9</Sha>
-    </Dependency>
-    <Dependency Name="System.Diagnostics.PerformanceCounter" Version="10.0.0-preview.4.25224.104">
-      <Uri>https://github.com/dotnet/dotnet</Uri>
-      <Sha>58950550c5c2c7a2431595699b38fd0360fd63e9</Sha>
-    </Dependency>
-    <Dependency Name="System.DirectoryServices.AccountManagement" Version="10.0.0-preview.4.25224.104">
-      <Uri>https://github.com/dotnet/dotnet</Uri>
-      <Sha>58950550c5c2c7a2431595699b38fd0360fd63e9</Sha>
-    </Dependency>
-    <Dependency Name="System.DirectoryServices.Protocols" Version="10.0.0-preview.4.25224.104">
       <Uri>https://github.com/dotnet/dotnet</Uri>
       <Sha>58950550c5c2c7a2431595699b38fd0360fd63e9</Sha>
     </Dependency>
@@ -103,59 +70,11 @@
       <Uri>https://github.com/dotnet/dotnet</Uri>
       <Sha>58950550c5c2c7a2431595699b38fd0360fd63e9</Sha>
     </Dependency>
-    <Dependency Name="System.IO.Ports" Version="10.0.0-preview.4.25224.104">
-      <Uri>https://github.com/dotnet/dotnet</Uri>
-      <Sha>58950550c5c2c7a2431595699b38fd0360fd63e9</Sha>
-    </Dependency>
-    <Dependency Name="System.Management" Version="10.0.0-preview.4.25224.104">
-      <Uri>https://github.com/dotnet/dotnet</Uri>
-      <Sha>58950550c5c2c7a2431595699b38fd0360fd63e9</Sha>
-    </Dependency>
-    <Dependency Name="System.Reflection.Context" Version="10.0.0-preview.4.25224.104">
-      <Uri>https://github.com/dotnet/dotnet</Uri>
-      <Sha>58950550c5c2c7a2431595699b38fd0360fd63e9</Sha>
-    </Dependency>
-    <Dependency Name="System.Runtime.Caching" Version="10.0.0-preview.4.25224.104">
-      <Uri>https://github.com/dotnet/dotnet</Uri>
-      <Sha>58950550c5c2c7a2431595699b38fd0360fd63e9</Sha>
-    </Dependency>
-    <Dependency Name="System.Security.Cryptography.Pkcs" Version="10.0.0-preview.4.25224.104">
-      <Uri>https://github.com/dotnet/dotnet</Uri>
-      <Sha>58950550c5c2c7a2431595699b38fd0360fd63e9</Sha>
-    </Dependency>
-    <Dependency Name="System.Security.Cryptography.ProtectedData" Version="10.0.0-preview.4.25224.104">
-      <Uri>https://github.com/dotnet/dotnet</Uri>
-      <Sha>58950550c5c2c7a2431595699b38fd0360fd63e9</Sha>
-    </Dependency>
     <Dependency Name="System.Security.Cryptography.Xml" Version="10.0.0-preview.4.25224.104">
       <Uri>https://github.com/dotnet/dotnet</Uri>
       <Sha>58950550c5c2c7a2431595699b38fd0360fd63e9</Sha>
     </Dependency>
     <Dependency Name="System.Security.Permissions" Version="10.0.0-preview.4.25224.104">
-      <Uri>https://github.com/dotnet/dotnet</Uri>
-      <Sha>58950550c5c2c7a2431595699b38fd0360fd63e9</Sha>
-    </Dependency>
-    <Dependency Name="System.ServiceModel.Syndication" Version="10.0.0-preview.4.25224.104">
-      <Uri>https://github.com/dotnet/dotnet</Uri>
-      <Sha>58950550c5c2c7a2431595699b38fd0360fd63e9</Sha>
-    </Dependency>
-    <Dependency Name="System.ServiceProcess.ServiceController" Version="10.0.0-preview.4.25224.104">
-      <Uri>https://github.com/dotnet/dotnet</Uri>
-      <Sha>58950550c5c2c7a2431595699b38fd0360fd63e9</Sha>
-    </Dependency>
-    <Dependency Name="System.Speech" Version="10.0.0-preview.4.25224.104">
-      <Uri>https://github.com/dotnet/dotnet</Uri>
-      <Sha>58950550c5c2c7a2431595699b38fd0360fd63e9</Sha>
-    </Dependency>
-    <Dependency Name="System.Text.Encoding.CodePages" Version="10.0.0-preview.4.25224.104">
-      <Uri>https://github.com/dotnet/dotnet</Uri>
-      <Sha>58950550c5c2c7a2431595699b38fd0360fd63e9</Sha>
-    </Dependency>
-    <Dependency Name="System.Threading.AccessControl" Version="10.0.0-preview.4.25224.104">
-      <Uri>https://github.com/dotnet/dotnet</Uri>
-      <Sha>58950550c5c2c7a2431595699b38fd0360fd63e9</Sha>
-    </Dependency>
-    <Dependency Name="System.ComponentModel.Composition.Registration" Version="10.0.0-preview.4.25224.104">
       <Uri>https://github.com/dotnet/dotnet</Uri>
       <Sha>58950550c5c2c7a2431595699b38fd0360fd63e9</Sha>
     </Dependency>

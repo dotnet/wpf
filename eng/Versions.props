@@ -26,26 +26,6 @@
     <MicrosoftDotNetGenAPIVersion>10.0.0-beta.25224.104</MicrosoftDotNetGenAPIVersion>
     <MicrosoftSourceLinkAzureReposGitVersion>10.0.0-beta.25224.104</MicrosoftSourceLinkAzureReposGitVersion>
     <MicrosoftSourceLinkGitHubVersion>10.0.0-beta.25224.104</MicrosoftSourceLinkGitHubVersion>
-    <MicrosoftWin32RegistryAccessControlVersion>10.0.0-preview.4.25224.104</MicrosoftWin32RegistryAccessControlVersion>
-    <MicrosoftWin32SystemEventsVersion>10.0.0-preview.4.25224.104</MicrosoftWin32SystemEventsVersion>
-    <SystemComponentModelCompositionVersion>10.0.0-preview.4.25224.104</SystemComponentModelCompositionVersion>
-    <SystemDataOdbcVersion>10.0.0-preview.4.25224.104</SystemDataOdbcVersion>
-    <SystemDataOleDbVersion>10.0.0-preview.4.25224.104</SystemDataOleDbVersion>
-    <SystemDiagnosticsPerformanceCounterVersion>10.0.0-preview.4.25224.104</SystemDiagnosticsPerformanceCounterVersion>
-    <SystemDirectoryServicesAccountManagementVersion>10.0.0-preview.4.25224.104</SystemDirectoryServicesAccountManagementVersion>
-    <SystemDirectoryServicesProtocolsVersion>10.0.0-preview.4.25224.104</SystemDirectoryServicesProtocolsVersion>
-    <SystemIOPortsVersion>10.0.0-preview.4.25224.104</SystemIOPortsVersion>
-    <SystemManagementVersion>10.0.0-preview.4.25224.104</SystemManagementVersion>
-    <SystemReflectionContextVersion>10.0.0-preview.4.25224.104</SystemReflectionContextVersion>
-    <SystemRuntimeCachingVersion>10.0.0-preview.4.25224.104</SystemRuntimeCachingVersion>
-    <SystemSecurityCryptographyPkcsVersion>10.0.0-preview.4.25224.104</SystemSecurityCryptographyPkcsVersion>
-    <SystemSecurityCryptographyProtectedDataVersion>10.0.0-preview.4.25224.104</SystemSecurityCryptographyProtectedDataVersion>
-    <SystemServiceModelSyndicationVersion>10.0.0-preview.4.25224.104</SystemServiceModelSyndicationVersion>
-    <SystemServiceProcessServiceControllerVersion>10.0.0-preview.4.25224.104</SystemServiceProcessServiceControllerVersion>
-    <SystemSpeechVersion>10.0.0-preview.4.25224.104</SystemSpeechVersion>
-    <SystemTextEncodingCodePagesVersion>10.0.0-preview.4.25224.104</SystemTextEncodingCodePagesVersion>
-    <SystemThreadingAccessControlVersion>10.0.0-preview.4.25224.104</SystemThreadingAccessControlVersion>
-    <SystemComponentModelCompositionRegistrationVersion>10.0.0-preview.4.25224.104</SystemComponentModelCompositionRegistrationVersion>
   </PropertyGroup>
   <!-- Packages that come from https://github.com/dotnet/winforms -->
   <PropertyGroup>

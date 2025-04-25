@@ -19,17 +19,15 @@
             dotnet/winforms is handling versions for the analyzers.
       -->
     <AssemblyVersion>$(MajorVersion).$(MinorVersion).0.0</AssemblyVersion>
-    <MicrosoftPrivateWinformsVersion>10.0.0-preview.5.25224.104</MicrosoftPrivateWinformsVersion>
-    <MicrosoftDotnetWinFormsProjectTemplatesVersion>10.0.0-preview.5.25224.104</MicrosoftDotnetWinFormsProjectTemplatesVersion>
-    <SystemDrawingCommonVersion>10.0.0-preview.5.25224.104</SystemDrawingCommonVersion>
     <MicrosoftDotNetCodeAnalysisVersion>10.0.0-beta.25224.104</MicrosoftDotNetCodeAnalysisVersion>
-    <MicrosoftDotNetGenAPIVersion>10.0.0-beta.25224.104</MicrosoftDotNetGenAPIVersion>
     <MicrosoftSourceLinkAzureReposGitVersion>10.0.0-beta.25224.104</MicrosoftSourceLinkAzureReposGitVersion>
     <MicrosoftSourceLinkGitHubVersion>10.0.0-beta.25224.104</MicrosoftSourceLinkGitHubVersion>
   </PropertyGroup>
   <!-- Packages that come from https://github.com/dotnet/winforms -->
   <PropertyGroup>
-    <MicrosoftPrivateWinformsVersion>10.0.0-preview.5.25222.5</MicrosoftPrivateWinformsVersion>
+    <MicrosoftDotnetWinFormsProjectTemplatesVersion>10.0.0-preview.5.25224.104</MicrosoftDotnetWinFormsProjectTemplatesVersion>
+    <MicrosoftPrivateWinformsVersion>10.0.0-preview.5.25224.104</MicrosoftPrivateWinformsVersion>
+    <SystemDrawingCommonVersion>10.0.0-preview.5.25224.104</SystemDrawingCommonVersion>
   </PropertyGroup>
   <!-- Packages that come from https://github.com/dotnet/runtime -->
   <PropertyGroup>
@@ -64,6 +62,7 @@
   <!-- Packages that come from https://github.com/dotnet/arcade -->
   <PropertyGroup>
     <MicrosoftDotNetApiCompatVersion>9.0.0-beta.24053.1</MicrosoftDotNetApiCompatVersion>
+    <MicrosoftDotNetGenAPIVersion>10.0.0-beta.25224.104</MicrosoftDotNetGenAPIVersion>
   </PropertyGroup>
   <!-- Sourcelink -->
   <PropertyGroup>

@@ -79,7 +79,6 @@
   <Thickness x:Key="DatePickerHostMonthPadding">9,0,0,1</Thickness>
   <!-- <Thickness x:Key="ComboBoxEditableTextPadding">10,0,30,0</Thickness> -->
   <system:Double x:Key="ComboBoxMinHeight">24</system:Double>
-  <!-- <Thickness x:Key="ComboBoxPadding">12,1,0,3</Thickness> -->
   <system:Double x:Key="NavigationViewItemOnLeftMinHeight">32</system:Double>
   <!--
         Microsoft UI XAML
@@ -1372,7 +1371,7 @@
           </Grid>
           <ControlTemplate.Triggers>
             <Trigger Property="IsMouseOver" Value="True">
-              <!-- Disabling this trigger as this will be handled by the ComboBox style. -->
+              <!-- Disabling this setter as this will be handled by the ComboBox style. -->
               <!--<Setter TargetName="ContentBorder" Property="Background" Value="{DynamicResource TextControlBackgroundPointerOver}" />-->
               <Setter TargetName="ContentBorder" Property="BorderBrush" Value="{DynamicResource TextControlBorderBrushPointerOver}" />
               <Setter TargetName="PART_ContentHost" Property="Foreground" Value="{DynamicResource TextControlForegroundPointerOver}" />

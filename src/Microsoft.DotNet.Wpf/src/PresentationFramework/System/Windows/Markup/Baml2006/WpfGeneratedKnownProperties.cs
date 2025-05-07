@@ -6871,7 +6871,9 @@ namespace System.Windows.Baml2006
                                      )
             {
                 GetDelegate = delegate (object target) { return ((System.Windows.Controls.Grid)target).ColumnDefinitions; },
-                IsWritePrivate = true
+                SetDelegate = delegate(object target, object value) { ((System.Windows.Controls.Grid)target).ColumnDefinitions = (System.Windows.Controls.ColumnDefinitionCollection)value; },
+                IsWritePrivate = true,
+                TypeConverterType = typeof(System.Windows.Controls.ColumnDefinitionCollectionConverter)
             };
             bamlMember.Freeze();
             return bamlMember;
@@ -6890,7 +6892,9 @@ namespace System.Windows.Baml2006
                                      )
             {
                 GetDelegate = delegate (object target) { return ((System.Windows.Controls.Grid)target).RowDefinitions; },
-                IsWritePrivate = true
+                SetDelegate = delegate(object target, object value) { ((System.Windows.Controls.Grid)target).RowDefinitions = (System.Windows.Controls.RowDefinitionCollection)value; },
+                IsWritePrivate = true,
+                TypeConverterType = typeof(System.Windows.Controls.RowDefinitionCollectionConverter)
             };
             bamlMember.Freeze();
             return bamlMember;

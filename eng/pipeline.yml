@@ -139,8 +139,6 @@ jobs:
             _BuildConfig: Release
             _Platform: arm64
       steps:
-      - checkout: self
-        clean: true
       - powershell: eng\pre-build.ps1
         displayName: Pre-Build - Set VSO Variables
       

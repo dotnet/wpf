@@ -421,7 +421,7 @@ namespace MS.Internal.MilCodeGen.ResourceModel
 
                                         [[conditional(instance.ClassName == "FrameworkContentElement")]]
                                         // Synchronize ForceInherit properties
-                                        if(_parent != null)
+                                        if (_parent != null)
                                         {
                                             UIElement.SynchronizeForceInheritProperties(null, this, null, _parent);
                                         }
@@ -432,11 +432,11 @@ namespace MS.Internal.MilCodeGen.ResourceModel
                                         [[/conditional]]
                                         [[conditional(instance.ClassName == "FrameworkElement")]]
                                         // Synchronize ForceInherit properties
-                                        if(_parent != null && _parent is ContentElement)
+                                        if (_parent != null && _parent is ContentElement)
                                         {
                                             UIElement.SynchronizeForceInheritProperties(this, null, null, _parent);
                                         }
-                                        else if(oldParent is ContentElement)
+                                        else if (oldParent is ContentElement)
                                         {
                                             UIElement.SynchronizeForceInheritProperties(this, null, null, oldParent);
                                         }
@@ -637,21 +637,21 @@ namespace MS.Internal.MilCodeGen.ResourceModel
                                                         return true;
                                                     }
                                                 }
-                                                if(null != Style && Style.HasLoadedChangeHandler)
+                                                if (null != Style && Style.HasLoadedChangeHandler)
                                                 {
                                                     return true;
                                                 }
-                                                if(null != ThemeStyle && ThemeStyle.HasLoadedChangeHandler)
+                                                if (null != ThemeStyle && ThemeStyle.HasLoadedChangeHandler)
                                                 {
                                                     return true;
                                                 }
                                                 [[conditional(instance.ClassName == "FrameworkElement")]]
-                                                if(null != TemplateInternal && TemplateInternal.HasLoadedChangeHandler)
+                                                if (null != TemplateInternal && TemplateInternal.HasLoadedChangeHandler)
                                                 {
                                                     return true;
                                                 }
                                                 [[/conditional]]
-                                                if(HasFefLoadedChangeHandler)
+                                                if (HasFefLoadedChangeHandler)
                                                 {
                                                     return true;
                                                 }
@@ -663,17 +663,17 @@ namespace MS.Internal.MilCodeGen.ResourceModel
                                     {
                                         get
                                         {
-                                            if(null == TemplatedParent)
+                                            if (null == TemplatedParent)
                                             {
                                                 return false;
                                             }
                                             FrameworkElementFactory fefRoot = BroadcastEventHelper.GetFEFTreeRoot(TemplatedParent);
-                                            if(null == fefRoot)
+                                            if (null == fefRoot)
                                             {
                                                 return false;
                                             }
                                             FrameworkElementFactory fef = StyleHelper.FindFEF(fefRoot, TemplateChildIndex);
-                                            if(null == fef)
+                                            if (null == fef)
                                             {
                                                 return false;
                                             }
@@ -1254,13 +1254,13 @@ namespace MS.Internal.MilCodeGen.ResourceModel
                                     // Says if there is a loaded event pending
                                     internal object[] LoadedPending
                                     {
-                                        get { return (object[]) GetValue(LoadedPendingProperty); }
+                                        get { return (object[])GetValue(LoadedPendingProperty); }
                                     }
 
                                     // Says if there is an unloaded event pending
                                     internal object[] UnloadedPending
                                     {
-                                        get { return (object[]) GetValue(UnloadedPendingProperty); }
+                                        get { return (object[])GetValue(UnloadedPendingProperty); }
                                     }
 
                                     // Indicates if this instance has multiple inheritance contexts

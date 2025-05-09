@@ -88,7 +88,7 @@ namespace System.Windows.Media
         {
             get
             {
-                return (Point) GetValue(StartPointProperty);
+                return (Point)GetValue(StartPointProperty);
             }
             set
             {
@@ -103,7 +103,7 @@ namespace System.Windows.Media
         {
             get
             {
-                return (Point) GetValue(EndPointProperty);
+                return (Point)GetValue(EndPointProperty);
             }
             set
             {

@@ -522,7 +522,7 @@ namespace System.Windows.Media
         /// </summary>
         protected override void CloneCore(Freezable source)
         {
-            Int32Collection sourceInt32Collection = (Int32Collection) source;
+            Int32Collection sourceInt32Collection = (Int32Collection)source;
 
             base.CloneCore(source);
 
@@ -541,7 +541,7 @@ namespace System.Windows.Media
         /// </summary>
         protected override void CloneCurrentValueCore(Freezable source)
         {
-            Int32Collection sourceInt32Collection = (Int32Collection) source;
+            Int32Collection sourceInt32Collection = (Int32Collection)source;
 
             base.CloneCurrentValueCore(source);
 
@@ -560,7 +560,7 @@ namespace System.Windows.Media
         /// </summary>
         protected override void GetAsFrozenCore(Freezable source)
         {
-            Int32Collection sourceInt32Collection = (Int32Collection) source;
+            Int32Collection sourceInt32Collection = (Int32Collection)source;
 
             base.GetAsFrozenCore(source);
 
@@ -579,7 +579,7 @@ namespace System.Windows.Media
         /// </summary>
         protected override void GetCurrentValueAsFrozenCore(Freezable source)
         {
-            Int32Collection sourceInt32Collection = (Int32Collection) source;
+            Int32Collection sourceInt32Collection = (Int32Collection)source;
 
             base.GetCurrentValueAsFrozenCore(source);
 
@@ -689,7 +689,7 @@ namespace System.Windows.Media
             // Helper to get the numeric list separator for a given culture.
             // char separator = MS.Internal.TokenizerHelper.GetNumericListSeparator(provider);
 
-            for (int i=0; i<_collection.Count; i++)
+            for (int i = 0; i < _collection.Count; i++)
             {
                 str.AppendFormat(
                     provider,

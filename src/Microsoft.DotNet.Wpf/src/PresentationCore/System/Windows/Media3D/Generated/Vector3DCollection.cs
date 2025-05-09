@@ -520,7 +520,7 @@ namespace System.Windows.Media.Media3D
         /// </summary>
         protected override void CloneCore(Freezable source)
         {
-            Vector3DCollection sourceVector3DCollection = (Vector3DCollection) source;
+            Vector3DCollection sourceVector3DCollection = (Vector3DCollection)source;
 
             base.CloneCore(source);
 
@@ -539,7 +539,7 @@ namespace System.Windows.Media.Media3D
         /// </summary>
         protected override void CloneCurrentValueCore(Freezable source)
         {
-            Vector3DCollection sourceVector3DCollection = (Vector3DCollection) source;
+            Vector3DCollection sourceVector3DCollection = (Vector3DCollection)source;
 
             base.CloneCurrentValueCore(source);
 
@@ -558,7 +558,7 @@ namespace System.Windows.Media.Media3D
         /// </summary>
         protected override void GetAsFrozenCore(Freezable source)
         {
-            Vector3DCollection sourceVector3DCollection = (Vector3DCollection) source;
+            Vector3DCollection sourceVector3DCollection = (Vector3DCollection)source;
 
             base.GetAsFrozenCore(source);
 
@@ -577,7 +577,7 @@ namespace System.Windows.Media.Media3D
         /// </summary>
         protected override void GetCurrentValueAsFrozenCore(Freezable source)
         {
-            Vector3DCollection sourceVector3DCollection = (Vector3DCollection) source;
+            Vector3DCollection sourceVector3DCollection = (Vector3DCollection)source;
 
             base.GetCurrentValueAsFrozenCore(source);
 
@@ -687,7 +687,7 @@ namespace System.Windows.Media.Media3D
             // Helper to get the numeric list separator for a given culture.
             // char separator = MS.Internal.TokenizerHelper.GetNumericListSeparator(provider);
 
-            for (int i=0; i<_collection.Count; i++)
+            for (int i = 0; i < _collection.Count; i++)
             {
                 str.AppendFormat(
                     provider,

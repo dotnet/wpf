@@ -151,7 +151,7 @@ namespace System.Windows.Media
         {
             get
             {
-                return (GlyphRun) GetValue(GlyphRunProperty);
+                return (GlyphRun)GetValue(GlyphRunProperty);
             }
             set
             {
@@ -166,7 +166,7 @@ namespace System.Windows.Media
         {
             get
             {
-                return (Brush) GetValue(ForegroundBrushProperty);
+                return (Brush)GetValue(ForegroundBrushProperty);
             }
             set
             {

@@ -81,7 +81,7 @@ namespace System.Windows.Media
         {
             get
             {
-                return (Matrix) GetValue(MatrixProperty);
+                return (Matrix)GetValue(MatrixProperty);
             }
             set
             {

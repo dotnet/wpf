@@ -190,7 +190,7 @@ namespace MS.Internal.MilCodeGen.ResourceModel
                                     /// </summary>
                                     protected override void CloneCore(Freezable sourceFreezable)
                                     {
-                                        [[instance.TypeName]]AnimationUsingKeyFrames sourceAnimation = ([[instance.TypeName]]AnimationUsingKeyFrames) sourceFreezable;
+                                        [[instance.TypeName]]AnimationUsingKeyFrames sourceAnimation = ([[instance.TypeName]]AnimationUsingKeyFrames)sourceFreezable;
                                         base.CloneCore(sourceFreezable);
 
                                         CopyCommon(sourceAnimation, /* isCurrentValueClone = */ false);
@@ -201,7 +201,7 @@ namespace MS.Internal.MilCodeGen.ResourceModel
                                     /// </summary>
                                     protected override void CloneCurrentValueCore(Freezable sourceFreezable)
                                     {
-                                        [[instance.TypeName]]AnimationUsingKeyFrames sourceAnimation = ([[instance.TypeName]]AnimationUsingKeyFrames) sourceFreezable;
+                                        [[instance.TypeName]]AnimationUsingKeyFrames sourceAnimation = ([[instance.TypeName]]AnimationUsingKeyFrames)sourceFreezable;
                                         base.CloneCurrentValueCore(sourceFreezable);
 
                                         CopyCommon(sourceAnimation, /* isCurrentValueClone = */ true);
@@ -212,7 +212,7 @@ namespace MS.Internal.MilCodeGen.ResourceModel
                                     /// </summary>
                                     protected override void GetAsFrozenCore(Freezable source)
                                     {
-                                        [[instance.TypeName]]AnimationUsingKeyFrames sourceAnimation = ([[instance.TypeName]]AnimationUsingKeyFrames) source;
+                                        [[instance.TypeName]]AnimationUsingKeyFrames sourceAnimation = ([[instance.TypeName]]AnimationUsingKeyFrames)source;
                                         base.GetAsFrozenCore(source);
 
                                         CopyCommon(sourceAnimation, /* isCurrentValueClone = */ false);
@@ -223,7 +223,7 @@ namespace MS.Internal.MilCodeGen.ResourceModel
                                     /// </summary>
                                     protected override void GetCurrentValueAsFrozenCore(Freezable source)
                                     {
-                                        [[instance.TypeName]]AnimationUsingKeyFrames sourceAnimation = ([[instance.TypeName]]AnimationUsingKeyFrames) source;
+                                        [[instance.TypeName]]AnimationUsingKeyFrames sourceAnimation = ([[instance.TypeName]]AnimationUsingKeyFrames)source;
                                         base.GetCurrentValueAsFrozenCore(source);
 
                                         CopyCommon(sourceAnimation, /* isCurrentValueClone = */ true);
@@ -881,11 +881,11 @@ namespace MS.Internal.MilCodeGen.ResourceModel
                                                                 || type == KeyTimeType.TimeSpan)
                                                             {
                                                                 break;
-                                                            }   
+                                                            }
                                                             else if (type == KeyTimeType.Paced)
                                                             {
                                                                 hasPacedKeyTimes = true;
-                                                            }                                
+                                                            }
                                                         }
 
                                                         Debug.Assert(index < keyFrameCount, 
@@ -1051,7 +1051,7 @@ namespace MS.Internal.MilCodeGen.ResourceModel
                                             {
                                                 index++;
                                             }
-                                        } 
+                                        }
                                         while (index < maxKeyFrameIndex);
                                     }
                                     
@@ -1087,7 +1087,7 @@ namespace MS.Internal.MilCodeGen.ResourceModel
             else
             {
                 return "fromValue = defaultOriginValue;";
-            }                 
+            }
         }
 
         private List<AnimationUsingKeyFramesTemplateInstance> Instances = new List<AnimationUsingKeyFramesTemplateInstance>();

@@ -152,7 +152,7 @@ namespace System.Windows.Media.Animation
             double keyFrameProgress);
 
         #endregion
-    }                 
+    }
 
 
     /// <summary>
@@ -293,7 +293,7 @@ namespace System.Windows.Media.Animation
             double keyFrameProgress);
 
         #endregion
-    }                 
+    }
 
 
     /// <summary>
@@ -434,7 +434,7 @@ namespace System.Windows.Media.Animation
             double keyFrameProgress);
 
         #endregion
-    }                 
+    }
 
 
     /// <summary>
@@ -575,7 +575,7 @@ namespace System.Windows.Media.Animation
             double keyFrameProgress);
 
         #endregion
-    }                 
+    }
 
 
     /// <summary>
@@ -716,7 +716,7 @@ namespace System.Windows.Media.Animation
             double keyFrameProgress);
 
         #endregion
-    }                 
+    }
 
 
     /// <summary>
@@ -857,7 +857,7 @@ namespace System.Windows.Media.Animation
             double keyFrameProgress);
 
         #endregion
-    }                 
+    }
 
 
     /// <summary>
@@ -998,7 +998,7 @@ namespace System.Windows.Media.Animation
             double keyFrameProgress);
 
         #endregion
-    }                 
+    }
 
 
     /// <summary>
@@ -1139,7 +1139,7 @@ namespace System.Windows.Media.Animation
             double keyFrameProgress);
 
         #endregion
-    }                 
+    }
 
 
     /// <summary>
@@ -1280,7 +1280,7 @@ namespace System.Windows.Media.Animation
             double keyFrameProgress);
 
         #endregion
-    }                 
+    }
 
 
     /// <summary>
@@ -1421,7 +1421,7 @@ namespace System.Windows.Media.Animation
             double keyFrameProgress);
 
         #endregion
-    }                 
+    }
 
 
     /// <summary>
@@ -1562,7 +1562,7 @@ namespace System.Windows.Media.Animation
             double keyFrameProgress);
 
         #endregion
-    }                 
+    }
 
 
     /// <summary>
@@ -1703,7 +1703,7 @@ namespace System.Windows.Media.Animation
             double keyFrameProgress);
 
         #endregion
-    }                 
+    }
 
 
     /// <summary>
@@ -1844,7 +1844,7 @@ namespace System.Windows.Media.Animation
             double keyFrameProgress);
 
         #endregion
-    }                 
+    }
 
 
     /// <summary>
@@ -1985,7 +1985,7 @@ namespace System.Windows.Media.Animation
             double keyFrameProgress);
 
         #endregion
-    }                 
+    }
 
 
     /// <summary>
@@ -2126,7 +2126,7 @@ namespace System.Windows.Media.Animation
             double keyFrameProgress);
 
         #endregion
-    }                 
+    }
 
 
     /// <summary>
@@ -2267,7 +2267,7 @@ namespace System.Windows.Media.Animation
             double keyFrameProgress);
 
         #endregion
-    }                 
+    }
 
 
     /// <summary>
@@ -2408,7 +2408,7 @@ namespace System.Windows.Media.Animation
             double keyFrameProgress);
 
         #endregion
-    }                 
+    }
 
 
     /// <summary>
@@ -2549,7 +2549,7 @@ namespace System.Windows.Media.Animation
             double keyFrameProgress);
 
         #endregion
-    }                 
+    }
 
 
     /// <summary>
@@ -2690,7 +2690,7 @@ namespace System.Windows.Media.Animation
             double keyFrameProgress);
 
         #endregion
-    }                 
+    }
 
 
     /// <summary>
@@ -2831,7 +2831,7 @@ namespace System.Windows.Media.Animation
             double keyFrameProgress);
 
         #endregion
-    }                 
+    }
 
 
     /// <summary>
@@ -2972,6 +2972,6 @@ namespace System.Windows.Media.Animation
             double keyFrameProgress);
 
         #endregion
-    }                 
+    }
 
 }

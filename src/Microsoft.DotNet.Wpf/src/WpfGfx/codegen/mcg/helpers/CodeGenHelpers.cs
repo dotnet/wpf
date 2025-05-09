@@ -247,7 +247,7 @@ namespace MS.Internal.MilCodeGen.Helpers
                     McgResource resourceType = type as McgResource;
 
                     // If it's an McgResource, we have to handle reference types and collections
-                    if(resourceType != null)
+                    if (resourceType != null)
                     {
                         // Currently, collections are accounted for by storing just their size inline
                         if (resourceType.IsCollection) 
@@ -391,7 +391,7 @@ namespace MS.Internal.MilCodeGen.Helpers
             else if ((parameterType & ParameterType.RenderDataCallParamList) != 0)
             {            
                 // Field is a resource that can not be passed by value.
-                if(resourceType != null && !resourceType.IsValueType)
+                if (resourceType != null && !resourceType.IsValueType)
                 {                   
                     paramString = "_renderData.AddDependentResource(" + fieldName + ")";
                 }
@@ -434,9 +434,9 @@ namespace MS.Internal.MilCodeGen.Helpers
                     if (isAnimated)
                     {
                         animateParamString = DuceHandle.ManagedTypeName + " h" + GeneratorMethods.FirstCap(name) + "Animations";
-                    }                    
+                    }
                 }
-            }            
+            }
             else if ((parameterType & ParameterType.UnmanagedParamList) != 0)
             {
                 if ((resourceType != null) && !resourceType.IsValueType)
@@ -451,7 +451,7 @@ namespace MS.Internal.MilCodeGen.Helpers
                     if (isAnimated)
                     {
                         animateParamString = DuceHandle.UnmanagedTypeName + " h" + GeneratorMethods.FirstCap(name) + "Animations";
-                    }                    
+                    }
                 }
             }
             else
@@ -470,7 +470,7 @@ namespace MS.Internal.MilCodeGen.Helpers
                     if (isAnimated)
                     {
                         animateParamString = "h" + GeneratorMethods.FirstCap(name) + "Animations";
-                    }                    
+                    }
                 }
             }
 
@@ -1101,7 +1101,7 @@ namespace MS.Internal.MilCodeGen.Helpers
             Array flags = Enum.GetValues(typeof(T));
             List<T> values = new List<T>();
 
-            for(int i = 0; i < flags.Length; i++)
+            for (int i = 0; i < flags.Length; i++)
             {
                 T flag = (T) flags.GetValue(i);
 
@@ -1172,7 +1172,7 @@ namespace MS.Internal.MilCodeGen.Helpers
                     if (this.packPadding > 0)
                     {
                         yield return "[FieldOffset(" + (this.packedStructSize - 1) + ")] private byte " + GetNextName("BYTEPacking");
-                    }                
+                    }
                 }
             }
             

@@ -265,7 +265,7 @@ namespace MS.Internal.MilCodeGen.ResourceModel
                         [[inline]]
                             return GetCurrentValue(([[instance.TypeName]])defaultOriginValue, ([[instance.TypeName]])defaultDestinationValue, animationClock);
                         [[/inline]];
-            } 
+            }
         }
 
         //

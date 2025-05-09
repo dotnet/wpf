@@ -30,6 +30,6 @@ namespace System.Windows
                    (value == TextDecorationLocation.OverLine) || 
                    (value == TextDecorationLocation.Strikethrough) || 
                    (value == TextDecorationLocation.Baseline);
-        }                                
+        }
     }
 }

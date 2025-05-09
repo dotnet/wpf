@@ -29,6 +29,6 @@ namespace System.Windows.Media
             return (value == PenLineJoin.Miter) || 
                    (value == PenLineJoin.Bevel) || 
                    (value == PenLineJoin.Round);
-        }                                
+        }
     }
 }

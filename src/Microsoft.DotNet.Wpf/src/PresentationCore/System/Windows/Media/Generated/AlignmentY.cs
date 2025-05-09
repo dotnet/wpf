@@ -31,5 +31,5 @@ namespace System.Windows.Media
         ///     Bottom - Align contents towards the bottom of a space.
         /// </summary>
         Bottom = 2,
-    }   
+    }
 }

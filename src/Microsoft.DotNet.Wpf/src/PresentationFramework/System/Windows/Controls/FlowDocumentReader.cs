@@ -1,7 +1,6 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
-
 using System.Collections;                   // IEnumerator
 using System.Windows.Automation.Peers;      // AutomationPeer
 using System.Windows.Data;                  // BindingOperations
@@ -14,7 +13,6 @@ using MS.Internal;                          // Invariant, DoubleUtil
 using MS.Internal.Commands;                 // CommandHelpers
 using MS.Internal.Controls;                 // EmptyEnumerator
 using MS.Internal.Documents;                // FindToolBar
-using MS.Internal.KnownBoxes;               // BooleanBoxes
 using MS.Internal.AppModel;                 // IJournalState
 
 namespace System.Windows.Controls

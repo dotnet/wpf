@@ -1,7 +1,7 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
-using System.Collections; // ArrayList
+using System.Collections.Generic; // List<T>
 using System.Windows.Media; // Brush, Transform
 using System.Windows.Controls.Primitives; // TextBoxBase
 using System.Windows.Input; // InputLanguageManager
@@ -29,14 +29,14 @@ namespace System.Windows.Documents
             // Provide a new default value for the composition adorner so that it is not hit-testable.
             IsEnabledProperty.OverrideMetadata(typeof(CompositionAdorner), new FrameworkPropertyMetadata(false));
         }
-        
+
         /// <summary>
         /// Creates new instance of CompositionAdorner.
         /// </summary>
         /// <param name="textView">
         /// TextView to which this CompositionAdorner is attached as adorner.
         /// </param>
-        internal CompositionAdorner(ITextView textView) : this(textView, new ArrayList())
+        internal CompositionAdorner(ITextView textView) : this(textView, new List<AttributeRange>())
         {
         }
 
@@ -49,7 +49,7 @@ namespace System.Windows.Documents
         /// <param name="attributeRanges">
         /// Attribute ranges
         /// </param>
-        internal CompositionAdorner(ITextView textView, ArrayList attributeRanges)
+        internal CompositionAdorner(ITextView textView, List<AttributeRange> attributeRanges)
             : base(textView.RenderScope)
         {
             Debug.Assert(textView != null && textView.RenderScope != null);
@@ -58,7 +58,7 @@ namespace System.Windows.Documents
             // als be used for GetRectangleFromTextPosition/GetLineRange
             _textView = textView;
 
-            // Create ArrayList for the composition attribute ranges and composition lines
+            // Store composition attribute ranges using a strongly-typed List
             _attributeRanges = attributeRanges;
         }
 
@@ -82,15 +82,15 @@ namespace System.Windows.Documents
         /// Transform to apply to the adorner
         /// </returns>
         public override GeneralTransform GetDesiredTransform(GeneralTransform transform)
-        {            
+        {
             TranslateTransform translation;
             GeneralTransformGroup group = new GeneralTransformGroup();
 
             // Get the matrix transform out, skip all non affine transforms
             Transform t = transform.AffineTransform;
             if (t == null)
-            {                
-                t = Transform.Identity;                
+            {
+                t = Transform.Identity;
             }
 
             // Translate the adorner to (0, 0) point
@@ -113,7 +113,7 @@ namespace System.Windows.Documents
         //  Protected Methods
         //
         //------------------------------------------------------
- 
+
         #region Protected Methods
 
         /// <summary>
@@ -240,7 +240,7 @@ namespace System.Windows.Documents
                     // to the closest area of the bottom text.
                     Point startPoint = new Point(compositionLine.StartPoint.X + clauseGap, compositionLine.StartPoint.Y - halfLineHeight);
                     Point endPoint = new Point(compositionLine.EndPoint.X - clauseGap, compositionLine.EndPoint.Y - halfLineHeight);
-                    
+
                     // Apply composition line color which is actually the foreground of text as well
                     pen.Brush = new SolidColorBrush(compositionLine.LineColor);
 
@@ -253,14 +253,14 @@ namespace System.Windows.Documents
                     {
                         Rect rect = Rect.Union(compositionLine.StartRect, compositionLine.EndRect);
                         rect = transform.TransformBounds(rect);
-                        
+
                         drawingContext.PushOpacity(selectionOpacity);
-                    
+
                         drawingContext.DrawRectangle(selectionBrush, selectionPen, rect);
-                    
+
                         drawingContext.Pop();
                     }
-                    
+
                     if (squiggle)
                     {
                         // Draw the squiggle line with using of the PathFigure and DrawGemetry.
@@ -397,7 +397,7 @@ namespace System.Windows.Documents
         private ITextView _textView;
 
         // ArrayList for the composition attribute ranges
-        private readonly ArrayList _attributeRanges;
+        private readonly List<AttributeRange> _attributeRanges;
 
         // Composition line's dot length
         private const double DotLength = 1.2;
@@ -458,7 +458,7 @@ namespace System.Windows.Documents
 
                 _textServicesDisplayAttribute = textServicesDisplayAttribute;
 
-                _compositionLines = new ArrayList(1);
+                _compositionLines = new List<CompositionLine>(1);
             }
 
             #endregion Constructors
@@ -533,7 +533,7 @@ namespace System.Windows.Documents
             /// <summary>
             /// CompositionLines of the composition attribute range.
             /// </summary>
-            internal ArrayList CompositionLines
+            internal List<CompositionLine> CompositionLines
             {
                 get
                 {
@@ -656,8 +656,8 @@ namespace System.Windows.Documents
             // Composition display attribute that is specified from IME
             private readonly TextServicesDisplayAttribute _textServicesDisplayAttribute;
 
-            // ArrayList for the composition lines
-            private readonly ArrayList _compositionLines;
+            // List of composition lines to be rendered
+            private readonly List<CompositionLine> _compositionLines;
 
             #endregion Private Fields
         }
@@ -716,23 +716,23 @@ namespace System.Windows.Documents
             /// </summary>
             internal Rect StartRect
             {
-                get 
-                { 
-                    return _startRect; 
+                get
+                {
+                    return _startRect;
                 }
             }
-            
+
             /// <summary>
             /// End rect of the composition line draw
             /// </summary>
             internal Rect EndRect
             {
-                get 
-                { 
-                    return _endRect; 
+                get
+                {
+                    return _endRect;
                 }
             }
-            
+
             /// <summary>
             /// Color of the composition line draw
             /// </summary>
@@ -767,5 +767,3 @@ namespace System.Windows.Documents
         }
     }
 }
-
-

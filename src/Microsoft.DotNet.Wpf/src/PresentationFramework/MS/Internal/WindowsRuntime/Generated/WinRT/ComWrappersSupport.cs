@@ -153,7 +153,7 @@ namespace WinRT
 
             Type type = obj.GetType();
 
-            if (type.FullName.StartsWith("ABI."))
+            if (type.FullName.StartsWith("ABI.", StringComparison.Ordinal))
             {
                 type = Projections.FindCustomPublicTypeForAbiType(type) ?? type.Assembly.GetType(type.FullName.Substring("ABI.".Length)) ?? type;
             }

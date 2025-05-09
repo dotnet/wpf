@@ -440,7 +440,7 @@ namespace System.Windows.Documents
         //
         //------------------------------------------------------
 
-        private class AttributeRange
+        internal class AttributeRange
         {
             //------------------------------------------------------
             //

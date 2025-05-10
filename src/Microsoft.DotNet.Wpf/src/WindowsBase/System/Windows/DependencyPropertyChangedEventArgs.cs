@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
 namespace System.Windows
@@ -330,15 +330,15 @@ namespace System.Windows
 
         #region Data
 
-        private DependencyProperty  _property;
-        private PropertyMetadata    _metadata;
+        private readonly DependencyProperty _property;
+        private readonly PropertyMetadata _metadata;
 
         private PrivateFlags        _flags;
 
         private EffectiveValueEntry _oldEntry;
         private EffectiveValueEntry _newEntry;
-        
-        private OperationType       _operationType;
+
+        private readonly OperationType _operationType;
 
         #endregion Data
     }

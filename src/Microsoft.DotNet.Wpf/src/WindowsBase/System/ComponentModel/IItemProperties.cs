@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
 // Description: Editing functionality for collection views.
@@ -51,8 +51,8 @@ public class ItemPropertyInfo
     /// </summary>
     public object  Descriptor { get { return _descriptor; } }
 
-    private string _name;
-    private Type _type;
-    private object _descriptor;
+    private readonly string _name;
+    private readonly Type _type;
+    private readonly object _descriptor;
 }
 }

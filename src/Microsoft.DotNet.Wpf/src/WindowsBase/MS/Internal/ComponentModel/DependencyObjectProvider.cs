@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
 using System.Collections;
@@ -256,13 +256,13 @@ namespace MS.Internal.ComponentModel
         private static readonly UncommonField<IDictionary> _cacheSlot = new UncommonField<IDictionary>(null);
 
         // Synchronized by "_propertyMap"
-        private static Dictionary<PropertyKey, DependencyObjectPropertyDescriptor> _propertyMap = new Dictionary<PropertyKey, DependencyObjectPropertyDescriptor>();
+        private static readonly Dictionary<PropertyKey, DependencyObjectPropertyDescriptor> _propertyMap = new Dictionary<PropertyKey, DependencyObjectPropertyDescriptor>();
 
         // Synchronized by "_propertyKindMap"
-        private static Dictionary<PropertyKey, DependencyPropertyKind> _propertyKindMap = new Dictionary<PropertyKey, DependencyPropertyKind>();
+        private static readonly Dictionary<PropertyKey, DependencyPropertyKind> _propertyKindMap = new Dictionary<PropertyKey, DependencyPropertyKind>();
 
         // Synchronized by "_attachInfoMap"
-        private static Hashtable _attachInfoMap = new Hashtable();
+        private static readonly Hashtable _attachInfoMap = new Hashtable();
 
         #endregion Private Fields
     }

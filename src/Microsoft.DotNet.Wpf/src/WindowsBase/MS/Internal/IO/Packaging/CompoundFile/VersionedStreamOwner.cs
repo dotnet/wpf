@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
 // Description:
@@ -417,7 +417,7 @@ namespace MS.Internal.IO.Packaging.CompoundFile
         //------------------------------------------------------
         private bool            _writeOccurred;     // did one of our streams get written to?
         private bool            _readOccurred;      // did one of our streams get read from?
-        private FormatVersion   _codeVersion;       // code version
+        private readonly FormatVersion _codeVersion;       // code version
         private FormatVersion   _fileVersion;       // current file version (null if not read or created yet)
         private long            _dataOffset = 0;    // where FormatVersion ends and data begins
     }

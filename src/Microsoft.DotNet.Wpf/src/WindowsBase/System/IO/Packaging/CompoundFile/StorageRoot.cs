@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
 using System.Runtime.InteropServices;
@@ -38,7 +38,7 @@ namespace System.IO.Packaging
     /// <summary>
     /// If we know we are in a read-only mode, we know not to do certain things.
     /// </summary>
-    private bool containerIsReadOnly;
+    private readonly bool containerIsReadOnly;
 
     /// <summary>
     /// When data space manager is being initialized, sometimes it trips

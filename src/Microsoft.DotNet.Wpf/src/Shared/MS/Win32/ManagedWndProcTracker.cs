@@ -239,7 +239,7 @@ namespace MS.Win32
         private static IntPtr _cachedDefWindowProcA = IntPtr.Zero;
         private static IntPtr _cachedDefWindowProcW = IntPtr.Zero;
 
-        private static Hashtable _hwndList = new Hashtable(10);
+        private static readonly Hashtable _hwndList = new Hashtable(10);
         private static bool _exiting = false;
     }
 }

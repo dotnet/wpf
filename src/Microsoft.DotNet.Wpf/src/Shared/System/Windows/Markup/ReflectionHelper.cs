@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
 #nullable disable
@@ -476,7 +476,7 @@ namespace System.Xaml
             return retassem;
         }
 
-        private static Hashtable _loadedAssembliesHash = new Hashtable(8);
+        private static readonly Hashtable _loadedAssembliesHash = new Hashtable(8);
 #else
         // returns true is sourceAssembly declares LocalAssemblyName as a friend
         internal static bool IsFriendAssembly(Assembly sourceAssembly)

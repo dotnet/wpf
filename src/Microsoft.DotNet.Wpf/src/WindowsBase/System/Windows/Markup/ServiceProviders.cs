@@ -48,6 +48,6 @@ namespace System.Windows.Markup
             }
         }
 
-        private Dictionary<Type,Object> _objDict = new Dictionary<Type,Object>();
+        private readonly Dictionary<Type, object> _objDict = new();
     }
 }

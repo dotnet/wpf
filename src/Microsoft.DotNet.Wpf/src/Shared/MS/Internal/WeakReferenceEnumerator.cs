@@ -61,7 +61,7 @@ namespace MS.Internal
         }
 
         private int _i;
-        private ArrayList _List;
+        private readonly ArrayList _List;
         private object _StrongReference;
     }
 }

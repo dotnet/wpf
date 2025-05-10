@@ -212,7 +212,7 @@ namespace System.Windows
         private DependencyObjectType _baseDType;
 
         // Synchronized: Covered by DispatcherLock
-        private static Dictionary<Type, DependencyObjectType> DTypeFromCLRType = new Dictionary<Type, DependencyObjectType>();
+        private static readonly Dictionary<Type, DependencyObjectType> DTypeFromCLRType = new();
 
         // Synchronized: Covered by DispatcherLock
         private static int DTypeCount = 0;

@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
 using System.Runtime.InteropServices;
@@ -590,9 +590,9 @@ namespace MS.Win32
         /// By instantiating this delegate as a static variable we ensure that
         /// it will remain alive long enough to process messages.
         /// </summary>
-        private static NativeMethods.WndProc DefWndProcStub = new NativeMethods.WndProc(DefWndProcWrapper);
+        private static readonly NativeMethods.WndProc DefWndProcStub = new NativeMethods.WndProc(DefWndProcWrapper);
 
-        private static IntPtr DefWndProc;
+        private static readonly IntPtr DefWndProc;
 
         private IntPtr _hwndAttached;
         private HandleRef _hwndHandleRef;

@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
 //
@@ -257,11 +257,11 @@ namespace MS.Internal
 
         #region Private Fields
 
-        private ExecutionContext _context;
+        private readonly ExecutionContext _context;
         private CultureAndContextManager _cultureAndContext;
 
         // static delegate to prevent repeated implicit allocations during Run
-        private static ContextCallback CallbackWrapperDelegate;
+        private static readonly ContextCallback CallbackWrapperDelegate;
 
         #endregion
 

@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
 using System.Threading;
@@ -602,8 +602,8 @@ namespace System.Windows.Threading
                 _operation.Completed -= new EventHandler(OnCompletedOrAborted);
             }
 
-            private DispatcherOperation _operation;
-            private Timer _waitTimer;
+            private readonly DispatcherOperation _operation;
+            private readonly Timer _waitTimer;
         }
         
         private class DispatcherOperationEvent
@@ -670,9 +670,9 @@ namespace System.Windows.Threading
                 get { return _operation.DispatcherLock; }
             }
             
-            private DispatcherOperation _operation;
-            private TimeSpan _timeout;            
-            private ManualResetEvent _event;
+            private readonly DispatcherOperation _operation;
+            private readonly TimeSpan _timeout;            
+            private readonly ManualResetEvent _event;
             private bool _eventClosed;
         }
 

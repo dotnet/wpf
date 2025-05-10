@@ -495,10 +495,10 @@ namespace System.Windows.Media
         {
             base.OnInheritanceContextChangedCore(args);
 
-            for (int i=0; i<this.Count; i++)
+            for (int i = 0; i < this.Count; i++)
             {
                 DependencyObject inheritanceChild = _collection[i];
-                if (inheritanceChild!= null && inheritanceChild.InheritanceContext == this)
+                if (inheritanceChild != null && inheritanceChild.InheritanceContext == this)
                 {
                     inheritanceChild.OnInheritanceContextChanged(args);
                 }
@@ -614,7 +614,7 @@ namespace System.Windows.Media
         /// </summary>
         protected override void CloneCore(Freezable source)
         {
-            DrawingCollection sourceDrawingCollection = (DrawingCollection) source;
+            DrawingCollection sourceDrawingCollection = (DrawingCollection)source;
 
             base.CloneCore(source);
 
@@ -624,7 +624,7 @@ namespace System.Windows.Media
 
             for (int i = 0; i < count; i++)
             {
-                Drawing newValue = (Drawing) sourceDrawingCollection._collection[i].Clone();
+                Drawing newValue = (Drawing)sourceDrawingCollection._collection[i].Clone();
                 OnFreezablePropertyChanged(/* oldValue = */ null, newValue);
                 _collection.Add(newValue);
                 OnInsert(newValue);
@@ -636,7 +636,7 @@ namespace System.Windows.Media
         /// </summary>
         protected override void CloneCurrentValueCore(Freezable source)
         {
-            DrawingCollection sourceDrawingCollection = (DrawingCollection) source;
+            DrawingCollection sourceDrawingCollection = (DrawingCollection)source;
 
             base.CloneCurrentValueCore(source);
 
@@ -646,7 +646,7 @@ namespace System.Windows.Media
 
             for (int i = 0; i < count; i++)
             {
-                Drawing newValue = (Drawing) sourceDrawingCollection._collection[i].CloneCurrentValue();
+                Drawing newValue = (Drawing)sourceDrawingCollection._collection[i].CloneCurrentValue();
                 OnFreezablePropertyChanged(/* oldValue = */ null, newValue);
                 _collection.Add(newValue);
                 OnInsert(newValue);
@@ -658,7 +658,7 @@ namespace System.Windows.Media
         /// </summary>
         protected override void GetAsFrozenCore(Freezable source)
         {
-            DrawingCollection sourceDrawingCollection = (DrawingCollection) source;
+            DrawingCollection sourceDrawingCollection = (DrawingCollection)source;
 
             base.GetAsFrozenCore(source);
 
@@ -668,7 +668,7 @@ namespace System.Windows.Media
 
             for (int i = 0; i < count; i++)
             {
-                Drawing newValue = (Drawing) sourceDrawingCollection._collection[i].GetAsFrozen();
+                Drawing newValue = (Drawing)sourceDrawingCollection._collection[i].GetAsFrozen();
                 OnFreezablePropertyChanged(/* oldValue = */ null, newValue);
                 _collection.Add(newValue);
                 OnInsert(newValue);
@@ -680,7 +680,7 @@ namespace System.Windows.Media
         /// </summary>
         protected override void GetCurrentValueAsFrozenCore(Freezable source)
         {
-            DrawingCollection sourceDrawingCollection = (DrawingCollection) source;
+            DrawingCollection sourceDrawingCollection = (DrawingCollection)source;
 
             base.GetCurrentValueAsFrozenCore(source);
 
@@ -690,7 +690,7 @@ namespace System.Windows.Media
 
             for (int i = 0; i < count; i++)
             {
-                Drawing newValue = (Drawing) sourceDrawingCollection._collection[i].GetCurrentValueAsFrozen();
+                Drawing newValue = (Drawing)sourceDrawingCollection._collection[i].GetCurrentValueAsFrozen();
                 OnFreezablePropertyChanged(/* oldValue = */ null, newValue);
                 _collection.Add(newValue);
                 OnInsert(newValue);

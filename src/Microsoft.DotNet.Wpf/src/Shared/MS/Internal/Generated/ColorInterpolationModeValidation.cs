@@ -28,6 +28,6 @@ namespace System.Windows.Media
 
             return (value == ColorInterpolationMode.ScRgbLinearInterpolation) || 
                    (value == ColorInterpolationMode.SRgbLinearInterpolation);
-        }                                
+        }
     }
 }

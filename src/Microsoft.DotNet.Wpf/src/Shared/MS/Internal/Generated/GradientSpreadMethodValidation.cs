@@ -29,6 +29,6 @@ namespace System.Windows.Media
             return (value == GradientSpreadMethod.Pad) || 
                    (value == GradientSpreadMethod.Reflect) || 
                    (value == GradientSpreadMethod.Repeat);
-        }                                
+        }
     }
 }

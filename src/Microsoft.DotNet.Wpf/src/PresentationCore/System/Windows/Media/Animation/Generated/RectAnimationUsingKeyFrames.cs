@@ -112,7 +112,7 @@ namespace System.Windows.Media.Animation
         /// </summary>
         protected override void CloneCore(Freezable sourceFreezable)
         {
-            RectAnimationUsingKeyFrames sourceAnimation = (RectAnimationUsingKeyFrames) sourceFreezable;
+            RectAnimationUsingKeyFrames sourceAnimation = (RectAnimationUsingKeyFrames)sourceFreezable;
             base.CloneCore(sourceFreezable);
 
             CopyCommon(sourceAnimation, /* isCurrentValueClone = */ false);
@@ -123,7 +123,7 @@ namespace System.Windows.Media.Animation
         /// </summary>
         protected override void CloneCurrentValueCore(Freezable sourceFreezable)
         {
-            RectAnimationUsingKeyFrames sourceAnimation = (RectAnimationUsingKeyFrames) sourceFreezable;
+            RectAnimationUsingKeyFrames sourceAnimation = (RectAnimationUsingKeyFrames)sourceFreezable;
             base.CloneCurrentValueCore(sourceFreezable);
 
             CopyCommon(sourceAnimation, /* isCurrentValueClone = */ true);
@@ -134,7 +134,7 @@ namespace System.Windows.Media.Animation
         /// </summary>
         protected override void GetAsFrozenCore(Freezable source)
         {
-            RectAnimationUsingKeyFrames sourceAnimation = (RectAnimationUsingKeyFrames) source;
+            RectAnimationUsingKeyFrames sourceAnimation = (RectAnimationUsingKeyFrames)source;
             base.GetAsFrozenCore(source);
 
             CopyCommon(sourceAnimation, /* isCurrentValueClone = */ false);
@@ -145,7 +145,7 @@ namespace System.Windows.Media.Animation
         /// </summary>
         protected override void GetCurrentValueAsFrozenCore(Freezable source)
         {
-            RectAnimationUsingKeyFrames sourceAnimation = (RectAnimationUsingKeyFrames) source;
+            RectAnimationUsingKeyFrames sourceAnimation = (RectAnimationUsingKeyFrames)source;
             base.GetCurrentValueAsFrozenCore(source);
 
             CopyCommon(sourceAnimation, /* isCurrentValueClone = */ true);
@@ -814,11 +814,11 @@ namespace System.Windows.Media.Animation
                                     || type == KeyTimeType.TimeSpan)
                                 {
                                     break;
-                                }   
+                                }
                                 else if (type == KeyTimeType.Paced)
                                 {
                                     hasPacedKeyTimes = true;
-                                }                                
+                                }
                             }
 
                             Debug.Assert(index < keyFrameCount, 
@@ -984,7 +984,7 @@ namespace System.Windows.Media.Animation
                 {
                     index++;
                 }
-            } 
+            }
             while (index < maxKeyFrameIndex);
         }
 

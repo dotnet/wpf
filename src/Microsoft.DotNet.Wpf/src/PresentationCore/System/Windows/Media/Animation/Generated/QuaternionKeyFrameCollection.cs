@@ -90,7 +90,7 @@ namespace System.Windows.Media.Animation
         /// </summary>
         protected override void CloneCore(Freezable sourceFreezable)
         {
-            QuaternionKeyFrameCollection sourceCollection = (QuaternionKeyFrameCollection) sourceFreezable;
+            QuaternionKeyFrameCollection sourceCollection = (QuaternionKeyFrameCollection)sourceFreezable;
             base.CloneCore(sourceFreezable);
 
             int count = sourceCollection._keyFrames.Count;
@@ -111,7 +111,7 @@ namespace System.Windows.Media.Animation
         /// </summary>
         protected override void CloneCurrentValueCore(Freezable sourceFreezable)
         {
-            QuaternionKeyFrameCollection sourceCollection = (QuaternionKeyFrameCollection) sourceFreezable;
+            QuaternionKeyFrameCollection sourceCollection = (QuaternionKeyFrameCollection)sourceFreezable;
             base.CloneCurrentValueCore(sourceFreezable);
 
             int count = sourceCollection._keyFrames.Count;
@@ -132,7 +132,7 @@ namespace System.Windows.Media.Animation
         /// </summary>
         protected override void GetAsFrozenCore(Freezable sourceFreezable)
         {
-            QuaternionKeyFrameCollection sourceCollection = (QuaternionKeyFrameCollection) sourceFreezable;
+            QuaternionKeyFrameCollection sourceCollection = (QuaternionKeyFrameCollection)sourceFreezable;
             base.GetAsFrozenCore(sourceFreezable);
 
             int count = sourceCollection._keyFrames.Count;
@@ -153,7 +153,7 @@ namespace System.Windows.Media.Animation
         /// </summary>
         protected override void GetCurrentValueAsFrozenCore(Freezable sourceFreezable)
         {
-            QuaternionKeyFrameCollection sourceCollection = (QuaternionKeyFrameCollection) sourceFreezable;
+            QuaternionKeyFrameCollection sourceCollection = (QuaternionKeyFrameCollection)sourceFreezable;
             base.GetCurrentValueAsFrozenCore(sourceFreezable);
 
             int count = sourceCollection._keyFrames.Count;

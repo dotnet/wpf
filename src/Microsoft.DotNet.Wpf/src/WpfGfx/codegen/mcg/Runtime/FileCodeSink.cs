@@ -136,7 +136,7 @@ namespace MS.Internal.MilCodeGen.Runtime
 
             string[] lines = output.Split('\n');
 
-            for (int i=0; i<lines.Length; i++)
+            for (int i = 0; i < lines.Length; i++)
             {
                 _currentLine += lines[i];
                 if (i < lines.Length - 1)

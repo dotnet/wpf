@@ -134,7 +134,7 @@ namespace System.Windows.Media.Media3D
         {
             get
             {
-                return (Color) GetValue(ColorProperty);
+                return (Color)GetValue(ColorProperty);
             }
             set
             {
@@ -149,7 +149,7 @@ namespace System.Windows.Media.Media3D
         {
             get
             {
-                return (Color) GetValue(AmbientColorProperty);
+                return (Color)GetValue(AmbientColorProperty);
             }
             set
             {
@@ -164,7 +164,7 @@ namespace System.Windows.Media.Media3D
         {
             get
             {
-                return (Brush) GetValue(BrushProperty);
+                return (Brush)GetValue(BrushProperty);
             }
             set
             {

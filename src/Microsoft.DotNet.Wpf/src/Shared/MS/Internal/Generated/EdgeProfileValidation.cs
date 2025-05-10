@@ -30,6 +30,6 @@ namespace System.Windows.Media.Effects
                    (value == EdgeProfile.CurvedIn) || 
                    (value == EdgeProfile.CurvedOut) || 
                    (value == EdgeProfile.BulgedUp);
-        }                                
+        }
     }
 }

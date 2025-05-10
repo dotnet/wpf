@@ -357,7 +357,7 @@ namespace System.Windows
 
 
             // Synchronize ForceInherit properties
-            if(_parent != null)
+            if (_parent != null)
             {
                 UIElement.SynchronizeForceInheritProperties(null, this, null, _parent);
             }
@@ -540,16 +540,16 @@ namespace System.Windows
                             return true;
                         }
                     }
-                    if(null != Style && Style.HasLoadedChangeHandler)
+                    if (null != Style && Style.HasLoadedChangeHandler)
                     {
                         return true;
                     }
-                    if(null != ThemeStyle && ThemeStyle.HasLoadedChangeHandler)
+                    if (null != ThemeStyle && ThemeStyle.HasLoadedChangeHandler)
                     {
                         return true;
                     }
 
-                    if(HasFefLoadedChangeHandler)
+                    if (HasFefLoadedChangeHandler)
                     {
                         return true;
                     }
@@ -561,17 +561,17 @@ namespace System.Windows
         {
             get
             {
-                if(null == TemplatedParent)
+                if (null == TemplatedParent)
                 {
                     return false;
                 }
                 FrameworkElementFactory fefRoot = BroadcastEventHelper.GetFEFTreeRoot(TemplatedParent);
-                if(null == fefRoot)
+                if (null == fefRoot)
                 {
                     return false;
                 }
                 FrameworkElementFactory fef = StyleHelper.FindFEF(fefRoot, TemplateChildIndex);
-                if(null == fef)
+                if (null == fef)
                 {
                     return false;
                 }
@@ -1135,13 +1135,13 @@ namespace System.Windows
         // Says if there is a loaded event pending
         internal object[] LoadedPending
         {
-            get { return (object[]) GetValue(LoadedPendingProperty); }
+            get { return (object[])GetValue(LoadedPendingProperty); }
         }
 
         // Says if there is an unloaded event pending
         internal object[] UnloadedPending
         {
-            get { return (object[]) GetValue(UnloadedPendingProperty); }
+            get { return (object[])GetValue(UnloadedPendingProperty); }
         }
 
         // Indicates if this instance has multiple inheritance contexts

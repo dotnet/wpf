@@ -83,7 +83,7 @@ namespace System.Windows.Media
                     Point pt = new Point();
                     int count = points.Count;             
 
-                    for (int i=0; i<count; i++)
+                    for (int i = 0; i < count; i++)
                     {
                         pt = points.Internal_GetItem(i);
                         pt *= matrix;
@@ -114,7 +114,7 @@ namespace System.Windows.Media
         internal override void SerializeData(StreamGeometryContext ctx)
         {
             ctx.PolyLineTo(Points, IsStroked, IsSmoothJoin);
-        }                                    
+        }
         #endregion
     }
     #endregion

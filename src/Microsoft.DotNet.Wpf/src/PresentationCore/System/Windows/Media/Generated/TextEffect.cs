@@ -95,7 +95,7 @@ namespace System.Windows.Media
         {
             get
             {
-                return (Transform) GetValue(TransformProperty);
+                return (Transform)GetValue(TransformProperty);
             }
             set
             {
@@ -111,7 +111,7 @@ namespace System.Windows.Media
         {
             get
             {
-                return (Geometry) GetValue(ClipProperty);
+                return (Geometry)GetValue(ClipProperty);
             }
             set
             {
@@ -127,7 +127,7 @@ namespace System.Windows.Media
         {
             get
             {
-                return (Brush) GetValue(ForegroundProperty);
+                return (Brush)GetValue(ForegroundProperty);
             }
             set
             {
@@ -143,7 +143,7 @@ namespace System.Windows.Media
         {
             get
             {
-                return (int) GetValue(PositionStartProperty);
+                return (int)GetValue(PositionStartProperty);
             }
             set
             {
@@ -159,7 +159,7 @@ namespace System.Windows.Media
         {
             get
             {
-                return (int) GetValue(PositionCountProperty);
+                return (int)GetValue(PositionCountProperty);
             }
             set
             {

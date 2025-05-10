@@ -44,7 +44,7 @@ namespace System.Windows
         /// </returns>
         /// <param name='point1'>The first Point to compare</param>
         /// <param name='point2'>The second Point to compare</param>
-        public static bool operator == (Point point1, Point point2)
+        public static bool operator ==(Point point1, Point point2)
         {
             return point1.X == point2.X &&
                    point1.Y == point2.Y;
@@ -61,7 +61,7 @@ namespace System.Windows
         /// </returns>
         /// <param name='point1'>The first Point to compare</param>
         /// <param name='point2'>The second Point to compare</param>
-        public static bool operator != (Point point1, Point point2)
+        public static bool operator !=(Point point1, Point point2)
         {
             return !(point1 == point2);
         }
@@ -77,7 +77,7 @@ namespace System.Windows
         /// </returns>
         /// <param name='point1'>The first Point to compare</param>
         /// <param name='point2'>The second Point to compare</param>
-        public static bool Equals (Point point1, Point point2)
+        public static bool Equals(Point point1, Point point2)
         {
             return point1.X.Equals(point2.X) &&
                    point1.Y.Equals(point2.Y);

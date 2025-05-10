@@ -25,5 +25,5 @@ namespace System.Windows.Media
         ///     Nonzero -
         /// </summary>
         Nonzero = 1,
-    }   
+    }
 }

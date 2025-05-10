@@ -27,5 +27,5 @@ namespace System.Windows.Media
         ///     Aliased - Render edges of non-text primitives as aliased edges.
         /// </summary>
         Aliased = 1,
-    }   
+    }
 }

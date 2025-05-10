@@ -150,7 +150,7 @@ namespace MS.Internal.MilCodeGen.ResourceModel
                                     /// </summary>
                                     protected override void CloneCore(Freezable sourceFreezable)
                                     {
-                                        [[instance.TypeName]]KeyFrameCollection sourceCollection = ([[instance.TypeName]]KeyFrameCollection) sourceFreezable;
+                                        [[instance.TypeName]]KeyFrameCollection sourceCollection = ([[instance.TypeName]]KeyFrameCollection)sourceFreezable;
                                         base.CloneCore(sourceFreezable);
                                         
                                         int count = sourceCollection._keyFrames.Count;
@@ -171,7 +171,7 @@ namespace MS.Internal.MilCodeGen.ResourceModel
                                     /// </summary>
                                     protected override void CloneCurrentValueCore(Freezable sourceFreezable)
                                     {
-                                        [[instance.TypeName]]KeyFrameCollection sourceCollection = ([[instance.TypeName]]KeyFrameCollection) sourceFreezable;
+                                        [[instance.TypeName]]KeyFrameCollection sourceCollection = ([[instance.TypeName]]KeyFrameCollection)sourceFreezable;
                                         base.CloneCurrentValueCore(sourceFreezable);
                                         
                                         int count = sourceCollection._keyFrames.Count;
@@ -192,7 +192,7 @@ namespace MS.Internal.MilCodeGen.ResourceModel
                                     /// </summary>
                                     protected override void GetAsFrozenCore(Freezable sourceFreezable)
                                     {
-                                        [[instance.TypeName]]KeyFrameCollection sourceCollection = ([[instance.TypeName]]KeyFrameCollection) sourceFreezable;
+                                        [[instance.TypeName]]KeyFrameCollection sourceCollection = ([[instance.TypeName]]KeyFrameCollection)sourceFreezable;
                                         base.GetAsFrozenCore(sourceFreezable);
                                         
                                         int count = sourceCollection._keyFrames.Count;
@@ -213,7 +213,7 @@ namespace MS.Internal.MilCodeGen.ResourceModel
                                     /// </summary>
                                     protected override void GetCurrentValueAsFrozenCore(Freezable sourceFreezable)
                                     {
-                                        [[instance.TypeName]]KeyFrameCollection sourceCollection = ([[instance.TypeName]]KeyFrameCollection) sourceFreezable;
+                                        [[instance.TypeName]]KeyFrameCollection sourceCollection = ([[instance.TypeName]]KeyFrameCollection)sourceFreezable;
                                         base.GetCurrentValueAsFrozenCore(sourceFreezable);
                                         
                                         int count = sourceCollection._keyFrames.Count;

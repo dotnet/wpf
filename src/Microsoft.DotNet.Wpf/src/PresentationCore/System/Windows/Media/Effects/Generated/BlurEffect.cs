@@ -88,7 +88,7 @@ namespace System.Windows.Media.Effects
         {
             get
             {
-                return (double) GetValue(RadiusProperty);
+                return (double)GetValue(RadiusProperty);
             }
             set
             {
@@ -103,7 +103,7 @@ namespace System.Windows.Media.Effects
         {
             get
             {
-                return (KernelType) GetValue(KernelTypeProperty);
+                return (KernelType)GetValue(KernelTypeProperty);
             }
             set
             {
@@ -118,7 +118,7 @@ namespace System.Windows.Media.Effects
         {
             get
             {
-                return (RenderingBias) GetValue(RenderingBiasProperty);
+                return (RenderingBias)GetValue(RenderingBiasProperty);
             }
             set
             {

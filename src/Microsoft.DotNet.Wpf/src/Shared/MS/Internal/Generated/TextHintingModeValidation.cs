@@ -29,6 +29,6 @@ namespace System.Windows.Media
             return (value == TextHintingMode.Auto) || 
                    (value == TextHintingMode.Fixed) || 
                    (value == TextHintingMode.Animated);
-        }                                
+        }
     }
 }

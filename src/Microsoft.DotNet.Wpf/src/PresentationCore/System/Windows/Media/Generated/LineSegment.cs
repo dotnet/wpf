@@ -75,7 +75,7 @@ namespace System.Windows.Media
         {
             get
             {
-                return (Point) GetValue(PointProperty);
+                return (Point)GetValue(PointProperty);
             }
             set
             {

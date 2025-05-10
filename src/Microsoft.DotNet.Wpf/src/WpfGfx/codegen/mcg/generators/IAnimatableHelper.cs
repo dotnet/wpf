@@ -92,7 +92,7 @@ namespace MS.Internal.MilCodeGen.Helpers
                         if (IsSealed)
                         {
                             throw new InvalidOperationException(SR.Format(SR.IAnimatable_CantAnimateSealedDO, dp, this.GetType()));
-                        }                    
+                        }
                         
                         AnimationStorage.ApplyAnimationClock(this, dp, clock, handoffBehavior);
                     }
@@ -143,7 +143,7 @@ namespace MS.Internal.MilCodeGen.Helpers
                             throw new ArgumentException(SR.Format(SR.Animation_DependencyPropertyIsNotAnimatable, dp.Name, this.GetType()), nameof(dp));
                         }
 
-                        if (   animation != null
+                        if (animation != null
                             && !AnimationStorage.IsAnimationValid(dp, animation))
                         {
                             throw new ArgumentException(SR.Format(SR.Animation_AnimationTimelineTypeMismatch, animation.GetType(), dp.Name, dp.PropertyType), nameof(animation));
@@ -157,7 +157,7 @@ namespace MS.Internal.MilCodeGen.Helpers
                         if (IsSealed)
                         {
                             throw new InvalidOperationException(SR.Format(SR.IAnimatable_CantAnimateSealedDO, dp, this.GetType()));
-                        }                    
+                        }
                         
                         AnimationStorage.BeginAnimation(this, dp, animation, handoffBehavior);
                     }

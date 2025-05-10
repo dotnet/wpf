@@ -481,10 +481,10 @@ namespace System.Windows.Media.Media3D
         {
             base.OnInheritanceContextChangedCore(args);
 
-            for (int i=0; i<this.Count; i++)
+            for (int i = 0; i < this.Count; i++)
             {
                 DependencyObject inheritanceChild = _collection[i];
-                if (inheritanceChild!= null && inheritanceChild.InheritanceContext == this)
+                if (inheritanceChild != null && inheritanceChild.InheritanceContext == this)
                 {
                     inheritanceChild.OnInheritanceContextChanged(args);
                 }
@@ -577,7 +577,7 @@ namespace System.Windows.Media.Media3D
         /// </summary>
         protected override void CloneCore(Freezable source)
         {
-            GeneralTransform3DCollection sourceGeneralTransform3DCollection = (GeneralTransform3DCollection) source;
+            GeneralTransform3DCollection sourceGeneralTransform3DCollection = (GeneralTransform3DCollection)source;
 
             base.CloneCore(source);
 
@@ -587,7 +587,7 @@ namespace System.Windows.Media.Media3D
 
             for (int i = 0; i < count; i++)
             {
-                GeneralTransform3D newValue = (GeneralTransform3D) sourceGeneralTransform3DCollection._collection[i].Clone();
+                GeneralTransform3D newValue = (GeneralTransform3D)sourceGeneralTransform3DCollection._collection[i].Clone();
                 OnFreezablePropertyChanged(/* oldValue = */ null, newValue);
                 _collection.Add(newValue);
 
@@ -599,7 +599,7 @@ namespace System.Windows.Media.Media3D
         /// </summary>
         protected override void CloneCurrentValueCore(Freezable source)
         {
-            GeneralTransform3DCollection sourceGeneralTransform3DCollection = (GeneralTransform3DCollection) source;
+            GeneralTransform3DCollection sourceGeneralTransform3DCollection = (GeneralTransform3DCollection)source;
 
             base.CloneCurrentValueCore(source);
 
@@ -609,7 +609,7 @@ namespace System.Windows.Media.Media3D
 
             for (int i = 0; i < count; i++)
             {
-                GeneralTransform3D newValue = (GeneralTransform3D) sourceGeneralTransform3DCollection._collection[i].CloneCurrentValue();
+                GeneralTransform3D newValue = (GeneralTransform3D)sourceGeneralTransform3DCollection._collection[i].CloneCurrentValue();
                 OnFreezablePropertyChanged(/* oldValue = */ null, newValue);
                 _collection.Add(newValue);
 
@@ -621,7 +621,7 @@ namespace System.Windows.Media.Media3D
         /// </summary>
         protected override void GetAsFrozenCore(Freezable source)
         {
-            GeneralTransform3DCollection sourceGeneralTransform3DCollection = (GeneralTransform3DCollection) source;
+            GeneralTransform3DCollection sourceGeneralTransform3DCollection = (GeneralTransform3DCollection)source;
 
             base.GetAsFrozenCore(source);
 
@@ -631,7 +631,7 @@ namespace System.Windows.Media.Media3D
 
             for (int i = 0; i < count; i++)
             {
-                GeneralTransform3D newValue = (GeneralTransform3D) sourceGeneralTransform3DCollection._collection[i].GetAsFrozen();
+                GeneralTransform3D newValue = (GeneralTransform3D)sourceGeneralTransform3DCollection._collection[i].GetAsFrozen();
                 OnFreezablePropertyChanged(/* oldValue = */ null, newValue);
                 _collection.Add(newValue);
 
@@ -643,7 +643,7 @@ namespace System.Windows.Media.Media3D
         /// </summary>
         protected override void GetCurrentValueAsFrozenCore(Freezable source)
         {
-            GeneralTransform3DCollection sourceGeneralTransform3DCollection = (GeneralTransform3DCollection) source;
+            GeneralTransform3DCollection sourceGeneralTransform3DCollection = (GeneralTransform3DCollection)source;
 
             base.GetCurrentValueAsFrozenCore(source);
 
@@ -653,7 +653,7 @@ namespace System.Windows.Media.Media3D
 
             for (int i = 0; i < count; i++)
             {
-                GeneralTransform3D newValue = (GeneralTransform3D) sourceGeneralTransform3DCollection._collection[i].GetCurrentValueAsFrozen();
+                GeneralTransform3D newValue = (GeneralTransform3D)sourceGeneralTransform3DCollection._collection[i].GetCurrentValueAsFrozen();
                 OnFreezablePropertyChanged(/* oldValue = */ null, newValue);
                 _collection.Add(newValue);
 

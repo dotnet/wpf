@@ -28,6 +28,6 @@ namespace System.Windows.Media
 
             return (value == ClearTypeHint.Auto) || 
                    (value == ClearTypeHint.Enabled);
-        }                                
+        }
     }
 }

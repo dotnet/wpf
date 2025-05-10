@@ -483,10 +483,10 @@ namespace System.Windows.Media
         {
             base.OnInheritanceContextChangedCore(args);
 
-            for (int i=0; i<this.Count; i++)
+            for (int i = 0; i < this.Count; i++)
             {
                 DependencyObject inheritanceChild = _collection[i];
-                if (inheritanceChild!= null && inheritanceChild.InheritanceContext == this)
+                if (inheritanceChild != null && inheritanceChild.InheritanceContext == this)
                 {
                     inheritanceChild.OnInheritanceContextChanged(args);
                 }
@@ -579,7 +579,7 @@ namespace System.Windows.Media
         /// </summary>
         protected override void CloneCore(Freezable source)
         {
-            GradientStopCollection sourceGradientStopCollection = (GradientStopCollection) source;
+            GradientStopCollection sourceGradientStopCollection = (GradientStopCollection)source;
 
             base.CloneCore(source);
 
@@ -589,7 +589,7 @@ namespace System.Windows.Media
 
             for (int i = 0; i < count; i++)
             {
-                GradientStop newValue = (GradientStop) sourceGradientStopCollection._collection[i].Clone();
+                GradientStop newValue = (GradientStop)sourceGradientStopCollection._collection[i].Clone();
                 OnFreezablePropertyChanged(/* oldValue = */ null, newValue);
                 _collection.Add(newValue);
 
@@ -601,7 +601,7 @@ namespace System.Windows.Media
         /// </summary>
         protected override void CloneCurrentValueCore(Freezable source)
         {
-            GradientStopCollection sourceGradientStopCollection = (GradientStopCollection) source;
+            GradientStopCollection sourceGradientStopCollection = (GradientStopCollection)source;
 
             base.CloneCurrentValueCore(source);
 
@@ -611,7 +611,7 @@ namespace System.Windows.Media
 
             for (int i = 0; i < count; i++)
             {
-                GradientStop newValue = (GradientStop) sourceGradientStopCollection._collection[i].CloneCurrentValue();
+                GradientStop newValue = (GradientStop)sourceGradientStopCollection._collection[i].CloneCurrentValue();
                 OnFreezablePropertyChanged(/* oldValue = */ null, newValue);
                 _collection.Add(newValue);
 
@@ -623,7 +623,7 @@ namespace System.Windows.Media
         /// </summary>
         protected override void GetAsFrozenCore(Freezable source)
         {
-            GradientStopCollection sourceGradientStopCollection = (GradientStopCollection) source;
+            GradientStopCollection sourceGradientStopCollection = (GradientStopCollection)source;
 
             base.GetAsFrozenCore(source);
 
@@ -633,7 +633,7 @@ namespace System.Windows.Media
 
             for (int i = 0; i < count; i++)
             {
-                GradientStop newValue = (GradientStop) sourceGradientStopCollection._collection[i].GetAsFrozen();
+                GradientStop newValue = (GradientStop)sourceGradientStopCollection._collection[i].GetAsFrozen();
                 OnFreezablePropertyChanged(/* oldValue = */ null, newValue);
                 _collection.Add(newValue);
 
@@ -645,7 +645,7 @@ namespace System.Windows.Media
         /// </summary>
         protected override void GetCurrentValueAsFrozenCore(Freezable source)
         {
-            GradientStopCollection sourceGradientStopCollection = (GradientStopCollection) source;
+            GradientStopCollection sourceGradientStopCollection = (GradientStopCollection)source;
 
             base.GetCurrentValueAsFrozenCore(source);
 
@@ -655,7 +655,7 @@ namespace System.Windows.Media
 
             for (int i = 0; i < count; i++)
             {
-                GradientStop newValue = (GradientStop) sourceGradientStopCollection._collection[i].GetCurrentValueAsFrozen();
+                GradientStop newValue = (GradientStop)sourceGradientStopCollection._collection[i].GetCurrentValueAsFrozen();
                 OnFreezablePropertyChanged(/* oldValue = */ null, newValue);
                 _collection.Add(newValue);
 
@@ -772,7 +772,7 @@ namespace System.Windows.Media
             // Helper to get the numeric list separator for a given culture.
             // char separator = MS.Internal.TokenizerHelper.GetNumericListSeparator(provider);
 
-            for (int i=0; i<_collection.Count; i++)
+            for (int i = 0; i < _collection.Count; i++)
             {
                 str.AppendFormat(
                     provider,

@@ -41,5 +41,5 @@ namespace System.Windows.Media
         ///     clipping, if the aspect ratio of source and destination are different.
         /// </summary>
         UniformToFill = 3,
-    }   
+    }
 }

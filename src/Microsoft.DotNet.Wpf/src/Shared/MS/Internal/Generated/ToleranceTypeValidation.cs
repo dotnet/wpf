@@ -28,6 +28,6 @@ namespace System.Windows.Media
 
             return (value == ToleranceType.Absolute) || 
                    (value == ToleranceType.Relative);
-        }                                
+        }
     }
 }

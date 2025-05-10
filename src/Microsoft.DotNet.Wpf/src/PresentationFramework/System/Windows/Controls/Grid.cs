@@ -21,13 +21,14 @@ using System.ComponentModel;
 using System.Threading;
 using System.Windows.Media;
 using System.Windows.Markup;
+using System.Runtime.InteropServices;
 
 namespace System.Windows.Controls
 {
     /// <summary>
     /// Grid
     /// </summary>
-    public class Grid : Panel, IAddChild
+    public partial class Grid : Panel, IAddChild
     {
         //------------------------------------------------------
         //
@@ -1194,7 +1195,7 @@ namespace System.Windows.Controls
             }
 
             UIElementCollection children = InternalChildren;
-            Hashtable spanStore = null;
+            Dictionary<GridSpanKey, double> spanStore = null;
             bool ignoreDesiredSizeV = forceInfinityV;
 
             int i = cellsHead;
@@ -1214,12 +1215,7 @@ namespace System.Windows.Controls
                     }
                     else
                     {
-                        RegisterSpan(
-                            ref spanStore,
-                            PrivateCells[i].ColumnIndex,
-                            PrivateCells[i].ColumnSpan,
-                            true,
-                            children[i].DesiredSize.Width);
+                        RegisterSpan(ref spanStore, PrivateCells[i].ColumnIndex, PrivateCells[i].ColumnSpan, true, children[i].DesiredSize.Width);
                     }
                 }
 
@@ -1231,31 +1227,23 @@ namespace System.Windows.Controls
                     }
                     else
                     {
-                        RegisterSpan(
-                            ref spanStore,
-                            PrivateCells[i].RowIndex,
-                            PrivateCells[i].RowSpan,
-                            false,
-                            children[i].DesiredSize.Height);
+                        RegisterSpan(ref spanStore, PrivateCells[i].RowIndex, PrivateCells[i].RowSpan, false, children[i].DesiredSize.Height);
                     }
                 }
 
                 i = PrivateCells[i].Next;
             } while (i < PrivateCells.Length);
 
-            if (spanStore != null)
+            if (spanStore is not null)
             {
-                foreach (DictionaryEntry e in spanStore)
+                foreach (KeyValuePair<GridSpanKey, double> item in spanStore)
                 {
-                    SpanKey key = (SpanKey)e.Key;
-                    double requestedSize = (double)e.Value;
-
                     EnsureMinSizeInDefinitionRange(
-                        key.U ? DefinitionsU : DefinitionsV,
-                        key.Start,
-                        key.Count,
-                        requestedSize,
-                        key.U ? referenceSize.Width : referenceSize.Height);
+                        definitions: item.Key.U ? DefinitionsU : DefinitionsV,
+                        start: item.Key.Start,
+                        count: item.Key.Count,
+                        requestedSize: item.Value,
+                        percentReferenceSize: item.Key.U ? referenceSize.Width : referenceSize.Height);
                 }
             }
         }
@@ -1263,30 +1251,25 @@ namespace System.Windows.Controls
         /// <summary>
         /// Helper method to register a span information for delayed processing.
         /// </summary>
-        /// <param name="store">Reference to a hashtable object used as storage.</param>
+        /// <param name="store">Reference to a <see cref="Dictionary{TKey, TValue}"/> object used as storage.</param>
         /// <param name="start">Span starting index.</param>
         /// <param name="count">Span count.</param>
-        /// <param name="u"><c>true</c> if this is a column span. <c>false</c> if this is a row span.</param>
+        /// <param name="isColumnSpan"><c>true</c> if this is a column span. <c>false</c> if this is a row span.</param>
         /// <param name="value">Value to store. If an entry already exists the biggest value is stored.</param>
-        private static void RegisterSpan(
-            ref Hashtable store,
-            int start,
-            int count,
-            bool u,
-            double value)
+        private static void RegisterSpan(ref Dictionary<GridSpanKey, double> store, int start, int count, bool isColumnSpan, double value)
         {
-            if (store == null)
+            GridSpanKey key = new(start, count, isColumnSpan);
+
+            if (store is null)
             {
-                store = new Hashtable();
+                store = new Dictionary<GridSpanKey, double> { { key, value } };
             }
-
-            SpanKey key = new SpanKey(start, count, u);
-            object o = store[key];
-
-            if (    o == null
-                ||  value > (double)o   )
+            else
             {
-                store[key] = value;
+                ref double savedValue = ref CollectionsMarshal.GetValueRefOrAddDefault(store, key, out bool exists);
+
+                if (!exists || value > savedValue)
+                    savedValue = value;
             }
         }
 
@@ -3522,70 +3505,6 @@ namespace System.Windows.Controls
             internal bool IsAutoU { get { return ((SizeTypeU & LayoutTimeSizeType.Auto) != 0); } }
             internal bool IsStarV { get { return ((SizeTypeV & LayoutTimeSizeType.Star) != 0); } }
             internal bool IsAutoV { get { return ((SizeTypeV & LayoutTimeSizeType.Auto) != 0); } }
-        }
-
-        /// <summary>
-        /// Helper class for representing a key for a span in hashtable.
-        /// </summary>
-        private class SpanKey
-        {
-            /// <summary>
-            /// Constructor.
-            /// </summary>
-            /// <param name="start">Starting index of the span.</param>
-            /// <param name="count">Span count.</param>
-            /// <param name="u"><c>true</c> for columns; <c>false</c> for rows.</param>
-            internal SpanKey(int start, int count, bool u)
-            {
-                _start = start;
-                _count = count;
-                _u = u;
-            }
-
-            /// <summary>
-            /// <see cref="object.GetHashCode"/>
-            /// </summary>
-            public override int GetHashCode()
-            {
-                int hash = (_start ^ (_count << 2));
-
-                if (_u) hash &= 0x7ffffff;
-                else    hash |= 0x8000000;
-
-                return (hash);
-            }
-
-            /// <summary>
-            /// <see cref="object.Equals(object)"/>
-            /// </summary>
-            public override bool Equals(object obj)
-            {
-                SpanKey sk = obj as SpanKey;
-                return (    sk != null
-                        &&  sk._start == _start
-                        &&  sk._count == _count
-                        &&  sk._u == _u );
-            }
-
-            /// <summary>
-            /// Returns start index of the span.
-            /// </summary>
-            internal int Start { get { return (_start); } }
-
-            /// <summary>
-            /// Returns span count.
-            /// </summary>
-            internal int Count { get { return (_count); } }
-
-            /// <summary>
-            /// Returns <c>true</c> if this is a column span.
-            /// <c>false</c> if this is a row span.
-            /// </summary>
-            internal bool U { get { return (_u); } }
-
-            private int _start;
-            private int _count;
-            private bool _u;
         }
 
         private static int SpanPreferredDistributionOrderComparer(DefinitionBase x, DefinitionBase y)

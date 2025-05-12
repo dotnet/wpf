@@ -22,23 +22,23 @@
   <!-- The below logic intentionally doesn't consider multiple .NETCoreApp TFMs as that isn't necessary at this point. -->
   <PropertyGroup>
     <UseOOBNETCoreAppTargetingPack Condition="'$(UseOOBNETCoreAppTargetingPack)' == '' and '$(MicrosoftNETCoreAppRefVersion)' != ''">true</UseOOBNETCoreAppTargetingPack>
-    <UseOOBNETCoreAppRuntimePack Condition="'$(UseOOBNETCoreAppRuntimePack)' == '' and '$(MicrosoftNETCoreAppRuntimewinx64Version)' != ''">true</UseOOBNETCoreAppRuntimePack>
-    <UseOOBNETCoreAppAppHostPack Condition="'$(UseOOBNETCoreAppAppHostPack)' == '' and '$(MicrosoftNETCoreAppRuntimewinx64Version)' != ''">true</UseOOBNETCoreAppAppHostPack>
+    <UseOOBNETCoreAppRuntimePack Condition="'$(UseOOBNETCoreAppRuntimePack)' == '' and '$(MicrosoftNETCoreAppRefVersion)' != ''">true</UseOOBNETCoreAppRuntimePack>
+    <UseOOBNETCoreAppAppHostPack Condition="'$(UseOOBNETCoreAppAppHostPack)' == '' and '$(MicrosoftNETCoreAppRefVersion)' != ''">true</UseOOBNETCoreAppAppHostPack>
   </PropertyGroup>
 
   <ItemGroup>
     <KnownFrameworkReference Update="Microsoft.NETCore.App">
       <TargetingPackVersion Condition="'$(UseOOBNETCoreAppTargetingPack)' == 'true'">$(MicrosoftNETCoreAppRefVersion)</TargetingPackVersion>
-      <DefaultRuntimeFrameworkVersion Condition="'$(UseOOBNETCoreAppRuntimePack)' == 'true'">$(MicrosoftNETCoreAppRuntimewinx64Version)</DefaultRuntimeFrameworkVersion>
-      <LatestRuntimeFrameworkVersion Condition="'$(UseOOBNETCoreAppRuntimePack)' == 'true'">$(MicrosoftNETCoreAppRuntimewinx64Version)</LatestRuntimeFrameworkVersion>
+      <DefaultRuntimeFrameworkVersion Condition="'$(UseOOBNETCoreAppRuntimePack)' == 'true'">$(MicrosoftNETCoreAppRefVersion)</DefaultRuntimeFrameworkVersion>
+      <LatestRuntimeFrameworkVersion Condition="'$(UseOOBNETCoreAppRuntimePack)' == 'true'">$(MicrosoftNETCoreAppRefVersion)</LatestRuntimeFrameworkVersion>
     </KnownFrameworkReference>
 
     <KnownRuntimePack Update="Microsoft.NETCore.App"
-                      LatestRuntimeFrameworkVersion="$(MicrosoftNETCoreAppRuntimewinx64Version)"
+                      LatestRuntimeFrameworkVersion="$(MicrosoftNETCoreAppRefVersion)"
                       Condition="'$(UseOOBNETCoreAppRuntimePack)' == 'true'" />
 
     <KnownAppHostPack Update="Microsoft.NETCore.App"
-                      AppHostPackVersion="$(MicrosoftNETCoreAppRuntimewinx64Version)"
+                      AppHostPackVersion="$(MicrosoftNETCoreAppRefVersion)"
                       Condition="'$(UseOOBNETCoreAppAppHostPack)' == 'true'" />
   </ItemGroup>
 
@@ -59,15 +59,15 @@
           AfterTargets="ResolveFrameworkReferences">
     <ItemGroup>
       <Error Text="'MicrosoftNETCoreAppRefVersion' is not set. Please set it to the version of the targeting pack you want to use." Condition="'$(UseOOBNETCoreAppTargetingPack)' == 'true' and '$(MicrosoftNETCoreAppRefVersion)' == ''" />
-      <Error Text="'MicrosoftNETCoreAppRuntimewinx64Version' is not set. Please set it to the version of the runtime pack you want to use." Condition="('$(UseOOBNETCoreAppRuntimePack)' == 'true' or '$(UseOOBNETCoreAppAppHostPack)' == 'true') and '$(MicrosoftNETCoreAppRuntimewinx64Version)' == ''" />
+      <Error Text="'MicrosoftNETCoreAppRefVersion' is not set. Please set it to the version of the runtime pack you want to use." Condition="('$(UseOOBNETCoreAppRuntimePack)' == 'true' or '$(UseOOBNETCoreAppAppHostPack)' == 'true') and '$(MicrosoftNETCoreAppRefVersion)' == ''" />
 
       <ResolvedTargetingPack Path="$(NuGetPackageRoot)microsoft.netcore.app.ref\$(MicrosoftNETCoreAppRefVersion)"
                              NuGetPackageVersion="$(MicrosoftNETCoreAppRefVersion)"
                              PackageDirectory="$(NuGetPackageRoot)microsoft.netcore.app.ref\$(MicrosoftNETCoreAppRefVersion)"
                              Condition="'$(UseOOBNETCoreAppTargetingPack)' == 'true' and '$(EnableTargetingPackDownload)' == 'false' and '%(ResolvedTargetingPack.RuntimeFrameworkName)' == 'Microsoft.NETCore.App'" />
 
-      <ResolvedRuntimePack PackageDirectory="$(NuGetPackageRoot)microsoft.netcore.app.runtime.%(RuntimeIdentifier)\$(MicrosoftNETCoreAppRuntimewinx64Version)"
-                           NuGetPackageVersion="$(MicrosoftNETCoreAppRuntimewinx64Version)"
+      <ResolvedRuntimePack PackageDirectory="$(NuGetPackageRoot)microsoft.netcore.app.runtime.%(RuntimeIdentifier)\$(MicrosoftNETCoreAppRefVersion)"
+                           NuGetPackageVersion="$(MicrosoftNETCoreAppRefVersion)"
                            Condition="'$(UseOOBNETCoreAppRuntimePack)' == 'true' and '$(EnableRuntimePackDownload)' == 'false' and '%(ResolvedRuntimePack.FrameworkName)' == 'Microsoft.NETCore.App'" />
     </ItemGroup>
 
@@ -80,15 +80,15 @@
         <TargetingPackPath Condition="'$(UseOOBNETCoreAppTargetingPack)' == 'true' and '$(EnableTargetingPackDownload)' == 'false'">$(NuGetPackageRoot)microsoft.netcore.app.ref\$(MicrosoftNETCoreAppRefVersion)</TargetingPackPath>
         <TargetingPackVersion Condition="'$(UseOOBNETCoreAppTargetingPack)' == 'true' and '$(EnableTargetingPackDownload)' == 'false'">$(MicrosoftNETCoreAppRefVersion)</TargetingPackVersion>
         <RuntimePackPath Condition="'$(UseOOBNETCoreAppRuntimePack)' == 'true' and '$(EnableRuntimePackDownload)' == 'false'">$(_ResolvedRuntimePackPath)</RuntimePackPath>
-        <RuntimePackVersion Condition="'$(UseOOBNETCoreAppRuntimePack)' == 'true' and '$(EnableRuntimePackDownload)' == 'false'">$(MicrosoftNETCoreAppRuntimewinx64Version)</RuntimePackVersion>
+        <RuntimePackVersion Condition="'$(UseOOBNETCoreAppRuntimePack)' == 'true' and '$(EnableRuntimePackDownload)' == 'false'">$(MicrosoftNETCoreAppRefVersion)</RuntimePackVersion>
       </ResolvedFrameworkReference>
 
-      <ResolvedAppHostPack Path="$(NuGetPackageRoot)microsoft.netcore.app.host.%(RuntimeIdentifier)\$(MicrosoftNETCoreAppRuntimewinx64Version)\%(ResolvedAppHostPack.PathInPackage)"
-                           PackageDirectory="$(NuGetPackageRoot)microsoft.netcore.app.host.%(RuntimeIdentifier)\$(MicrosoftNETCoreAppRuntimewinx64Version)"
+      <ResolvedAppHostPack Path="$(NuGetPackageRoot)microsoft.netcore.app.host.%(RuntimeIdentifier)\$(MicrosoftNETCoreAppRefVersion)\%(ResolvedAppHostPack.PathInPackage)"
+                           PackageDirectory="$(NuGetPackageRoot)microsoft.netcore.app.host.%(RuntimeIdentifier)\$(MicrosoftNETCoreAppRefVersion)"
                            Condition="'$(UseOOBNETCoreAppAppHostPack)' == 'true' and '$(EnableAppHostPackDownload)' == 'false'" />
 
-      <ResolvedIjwHostPack Path="$(NuGetPackageRoot)microsoft.netcore.app.host.%(RuntimeIdentifier)\$(MicrosoftNETCoreAppRuntimewinx64Version)\%(ResolvedIjwHostPack.PathInPackage)"
-                           PackageDirectory="$(NuGetPackageRoot)microsoft.netcore.app.host.%(RuntimeIdentifier)\$(MicrosoftNETCoreAppRuntimewinx64Version)"
+      <ResolvedIjwHostPack Path="$(NuGetPackageRoot)microsoft.netcore.app.host.%(RuntimeIdentifier)\$(MicrosoftNETCoreAppRefVersion)\%(ResolvedIjwHostPack.PathInPackage)"
+                           PackageDirectory="$(NuGetPackageRoot)microsoft.netcore.app.host.%(RuntimeIdentifier)\$(MicrosoftNETCoreAppRefVersion)"
                            Condition="'$(UseOOBNETCoreAppAppHostPack)' == 'true' and '$(EnableAppHostPackDownload)' == 'false'" />
     </ItemGroup>
 

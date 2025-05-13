@@ -3,7 +3,9 @@
 
 //#define LOGGING
 
+using System.ComponentModel;
 using System.Runtime.InteropServices;
+using System.Threading;
 using MS.Internal;
 using MS.Internal.Interop;
 
@@ -15,7 +17,8 @@ namespace MS.Win32
         {
             // Listen for ProcessExit so we can detach ourselves when the CLR shuts down
             // and avoid unmanaged code from calling back in to managed code during shutdown.
-            ManagedWndProcTrackerShutDownListener listener = new ManagedWndProcTrackerShutDownListener();
+            // Note: This subscribes to AppDomain events in base class, hence the ref is kept around
+            _ = new ManagedWndProcTrackerShutDownListener();
         }
 
         internal static void TrackHwndSubclass(HwndSubclass subclass, IntPtr hwnd)
@@ -37,9 +40,10 @@ namespace MS.Win32
 
         internal static void UnhookHwndSubclass(HwndSubclass subclass)
         {
-            // if exiting the AppDomain, ignore this call.  This avoids changing
-            // the list during the loop in OnAppDomainProcessExit
-            if (s_exiting)
+            // If we're exiting the AppDomain, ignore this call.
+            // Since this can be called from multiple threads,
+            // we want to be sure to get the freshest value possible.
+            if (Volatile.Read(ref s_exiting))
                 return;
 
             lock (s_hwndList)
@@ -57,7 +61,7 @@ namespace MS.Win32
             // the DefaultWindowProc.
             //DbgUserBreakPoint();
 
-            s_exiting = true;
+            Volatile.Write(ref s_exiting, true);
 
             lock (s_hwndList)
             {
@@ -125,7 +129,7 @@ namespace MS.Win32
                         UnsafeNativeMethods.PostMessage(new HandleRef(null, hwnd), WindowMessage.WM_CLOSE, IntPtr.Zero, IntPtr.Zero);
                     }
                 }
-                catch (System.ComponentModel.Win32Exception e)
+                catch (Win32Exception e)
                 {
                     // We failed to change the window proc.  Now what?
 
@@ -184,7 +188,7 @@ namespace MS.Win32
 
             internal override void OnShutDown(object target, object sender, EventArgs e)
             {
-                ManagedWndProcTracker.OnAppDomainProcessExit();
+                OnAppDomainProcessExit();
             }
         }
 
@@ -236,6 +240,6 @@ namespace MS.Win32
         private static IntPtr s_cachedDefWindowProcW = IntPtr.Zero;
 
         private static readonly Dictionary<HwndSubclass, IntPtr> s_hwndList = new(10);
-        private static bool s_exiting = false;
+        private static bool s_exiting;
     }
 }

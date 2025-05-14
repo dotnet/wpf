@@ -1,10 +1,8 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 // Description: Automation Identifiers for Window Pattern
 
-using System;
 using MS.Internal.Automation;
 using System.Runtime.InteropServices;
 
@@ -12,7 +10,7 @@ namespace System.Windows.Automation
 {
     // Disable warning for obsolete types.  These are scheduled to be removed in M8.2 so 
     // only need the warning to come out for components outside of APT.
-    #pragma warning disable 0618
+#pragma warning disable 0618
 
     /// <summary>
     /// following the Office and HTML definition of WindowState.

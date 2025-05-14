@@ -1,23 +1,8 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
-
-//
-// Description: Text line formatter.
-//
-
-#pragma warning disable 1634, 1691  // avoid generating warnings about unknown
-                                    // message numbers and unknown pragmas for PRESharp contol
-
-using System;
-using System.Diagnostics;
-using System.Collections;
-using System.Collections.Generic;
 using System.Globalization;
-using System.Security;                  // SecurityCritical
 using System.Windows;
-using System.Windows.Controls;
 using System.Windows.Documents;
 using System.Windows.Media;
 using System.Windows.Media.TextFormatting;
@@ -73,10 +58,7 @@ namespace MS.Internal.PtsHost
             Debug.Assert(_line != null, "Line has been already disposed.");
             try
             {
-                if (_line != null)
-                {
-                    _line.Dispose();
-                }
+                _line?.Dispose();
             }
             finally
             {
@@ -218,7 +200,7 @@ namespace MS.Internal.PtsHost
                 precedingText = new CharacterBufferRange(precedingTextString, 0, precedingTextString.Length);                
 
                 StaticTextPointer pointer = position.CreateStaticPointer();
-                DependencyObject element = (pointer.Parent != null) ? pointer.Parent : _paraClient.Paragraph.Element;
+                DependencyObject element = pointer.Parent ?? _paraClient.Paragraph.Element;
                 culture = DynamicPropertyReader.GetCultureInfo(element);
             }
 
@@ -414,9 +396,8 @@ namespace MS.Internal.PtsHost
                     foreach (TextSpan<TextRun> textSpan in runs)
                     {
                         TextRun run = (TextRun)textSpan.Value;
-                        if (run is InlineObjectRun)
+                        if (run is InlineObjectRun inlineObject)
                         {
-                            InlineObjectRun inlineObject = (InlineObjectRun)run;
                             FlowDirection flowDirection;
                             Rect rect = GetBoundsFromPosition(dcpRun, run.Length, out flowDirection);
                             Debug.Assert(DoubleUtil.GreaterThanOrClose(rect.Width, 0), "Negative inline object's width.");
@@ -428,7 +409,7 @@ namespace MS.Internal.PtsHost
                                 ContainerVisual parent = currentParent as ContainerVisual;
                                 Invariant.Assert(parent != null, "Parent should always derives from ContainerVisual.");
                                 parent.Children.Remove(inlineObject.UIElementIsland);
-                            }                                                        
+                            }
 
                             if (!line.HasCollapsed || ((rect.Left + inlineObject.UIElementIsland.Root.DesiredSize.Width) < line.Width))
                             {
@@ -668,7 +649,7 @@ namespace MS.Internal.PtsHost
         /// <param name="dcpEnd">
         /// End dcp of range.
         /// </param>
-        internal void GetGlyphRuns(System.Collections.Generic.List<GlyphRun> glyphRuns, int dcpStart, int dcpEnd)
+        internal void GetGlyphRuns(List<GlyphRun> glyphRuns, int dcpStart, int dcpEnd)
         {
             // NOTE: Following logic is only temporary workaround for lack
             //       of appropriate API that should be exposed by TextLine.
@@ -691,7 +672,7 @@ namespace MS.Internal.PtsHost
             // Copy glyph runs into separate array (for backward navigation).
             // And count number of chracters in the glyph runs collection.
             int cchGlyphRuns = 0;
-            ArrayList glyphRunsCollection = new ArrayList(4);
+            List<GlyphRun> glyphRunsCollection = new(4);
 
             AddGlyphRunRecursive(drawing, glyphRunsCollection, ref cchGlyphRuns);
 
@@ -712,7 +693,7 @@ namespace MS.Internal.PtsHost
             // Remove those glyph runs from our colleciton.
             while (cchGlyphRuns > cchTextSpans)
             {
-                GlyphRun glyphRun = (GlyphRun)glyphRunsCollection[0];
+                GlyphRun glyphRun = glyphRunsCollection[0];
                 cchGlyphRuns -= (glyphRun.Characters == null ? 0 : glyphRun.Characters.Count);
                 glyphRunsCollection.RemoveAt(0);
             }
@@ -727,7 +708,7 @@ namespace MS.Internal.PtsHost
                     while (cchRunsInSpan < span.Length)
                     {
                         Invariant.Assert(runIndex < glyphRunsCollection.Count);
-                        GlyphRun run = (GlyphRun)glyphRunsCollection[runIndex];
+                        GlyphRun run = glyphRunsCollection[runIndex];
                         int characterCount = (run.Characters == null ? 0 : run.Characters.Count);
                         if ((dcp < curDcp + characterCount) && (dcp + cch > curDcp))
                         {
@@ -1030,7 +1011,7 @@ namespace MS.Internal.PtsHost
             }
 
             flowDirection = textBounds[0].FlowDirection;           
-            rect.X = rect.X + delta;
+            rect.X += delta;
             return rect;
         }
 
@@ -1072,13 +1053,9 @@ namespace MS.Internal.PtsHost
         /// <param name="cchGlyphRuns">
         /// Character length of glyph run collection
         /// </param>
-        private void AddGlyphRunRecursive(
-            Drawing drawing,
-            IList   glyphRunsCollection,
-            ref int cchGlyphRuns)
+        private static void AddGlyphRunRecursive(Drawing drawing, List<GlyphRun> glyphRunsCollection, ref int cchGlyphRuns)
         {
-            DrawingGroup group = drawing as DrawingGroup;
-            if (group != null)
+            if (drawing is DrawingGroup group)
             {
                 foreach (Drawing child in group.Children)
                 {
@@ -1087,8 +1064,7 @@ namespace MS.Internal.PtsHost
             }
             else
             {
-                GlyphRunDrawing glyphRunDrawing = drawing as GlyphRunDrawing;
-                if (glyphRunDrawing != null)
+                if (drawing is GlyphRunDrawing glyphRunDrawing)
                 {
                     // Add a glyph run
                     GlyphRun glyphRun = glyphRunDrawing.GlyphRun;
@@ -1337,6 +1313,3 @@ namespace MS.Internal.PtsHost
         #endregion FormattingContext Class
     }
 }
-
-#pragma warning enable 1634, 1691
-

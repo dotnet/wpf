@@ -1,6 +1,5 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 //
 // 
@@ -9,18 +8,12 @@
 //
 //
 
-using System;
 using System.ComponentModel;
-
 using System.ComponentModel.Design.Serialization;
-using System.Diagnostics;
+using System.Runtime.CompilerServices;
 using System.Globalization;
 using System.Reflection;
-using System.Windows;
-using System.Windows.Markup;
-using System.Security;
 using MS.Internal;
-using MS.Utility;
 
 namespace System.Windows
 {
@@ -162,7 +155,7 @@ namespace System.Windows
             }
             throw GetConvertToException(value, destinationType);
         }
-        #endregion 
+        #endregion
 
         //-------------------------------------------------------------------
         //
@@ -172,6 +165,18 @@ namespace System.Windows
 
         #region Internal Methods
 
+        /// <summary> Format <see cref="double"/> into <see cref="string"/> using specified <see cref="CultureInfo"/>
+        /// in <paramref name="handler"/>. <br /> <br />
+        /// Special representation applies for <see cref="double.NaN"/> values, emitted as "Auto" string instead. </summary>
+        /// <param name="value">The value to format as string.</param>
+        /// <param name="handler">The handler specifying culture used for conversion.</param>
+        internal static void FormatLengthAsString(double value, ref DefaultInterpolatedStringHandler handler)
+        {
+            if (double.IsNaN(value))
+                handler.AppendLiteral("Auto");
+            else
+                handler.AppendFormatted(value);
+        }
 
         // Parse a Length from a string given the CultureInfo.
         // Formats: 
@@ -179,67 +184,48 @@ namespace System.Windows
         //   [value] is a double
         //   [unit] is a string specifying the unit, like 'in' or 'px', or nothing (means pixels)
         // NOTE - This code is called from FontSizeConverter, so changes will affect both.
-        static internal double FromString(string s, CultureInfo cultureInfo)
+        internal static double FromString(string s, CultureInfo cultureInfo)
         {
-            string valueString = s.Trim();
-            string goodString = valueString.ToLowerInvariant();
-            int strLen = goodString.Length;
-            int strLenUnit = 0;
+            ReadOnlySpan<char> valueSpan = s.AsSpan().Trim();
             double unitFactor = 1.0;
 
             //Auto is represented and Double.NaN
             //properties that do not want Auto and NaN to be in their ligit values,
             //should disallow NaN in validation callbacks (same goes for negative values)
-            if (goodString == "auto") return Double.NaN;
+            if (valueSpan.Equals("auto", StringComparison.OrdinalIgnoreCase))
+                return Double.NaN;
 
-            for (int i = 0; i < PixelUnitStrings.Length; i++)
+            PixelUnit pixelUnit;
+            if (PixelUnit.TryParsePixel(valueSpan, out pixelUnit)
+                || PixelUnit.TryParsePixelPerInch(valueSpan, out pixelUnit)
+                || PixelUnit.TryParsePixelPerCentimeter(valueSpan, out pixelUnit)
+                || PixelUnit.TryParsePixelPerPoint(valueSpan, out pixelUnit))
             {
-                // NOTE: This is NOT a culture specific comparison.
-                // This is by design: we want the same unit string table to work across all cultures.
-                if (goodString.EndsWith(PixelUnitStrings[i], StringComparison.Ordinal))
-                {
-                    strLenUnit = PixelUnitStrings[i].Length;
-                    unitFactor = PixelUnitFactors[i];
-                    break;
-                }
+                valueSpan = valueSpan.Slice(0, valueSpan.Length - pixelUnit.Name.Length);
+                unitFactor = pixelUnit.Factor;
             }
 
-            //  important to substring original non-lowered string 
-            //  this allows case sensitive ToDouble below handle "NaN" and "Infinity" correctly. 
-            //  this addresses windows bug 1177408
-            valueString = valueString.Substring(0, strLen - strLenUnit);
+            if (valueSpan.IsEmpty)
+                return 0;
 
-            // FormatException errors thrown by Convert.ToDouble are pretty uninformative.
+            return ParseDouble(valueSpan, cultureInfo) * unitFactor;
+        }
+
+        private static double ParseDouble(ReadOnlySpan<char> span, CultureInfo cultureInfo)
+        {
+            // FormatException errors thrown by double.Parse are pretty uninformative.
             // Throw a more meaningful error in this case that tells that we were attempting
             // to create a Length instance from a string.  This addresses windows bug 968884
             try
             {
-                double result = Convert.ToDouble(valueString, cultureInfo) * unitFactor;
-                return result;
+                return double.Parse(span, cultureInfo);
             }
             catch (FormatException)
             {
-                throw new FormatException(SR.Format(SR.LengthFormatError, valueString));
+                throw new FormatException(SR.Format(SR.LengthFormatError, span.ToString()));
             }
         }
 
-        // This array contains strings for unit types 
-        // These are effectively "TypeConverter only" units.
-        // They are all expressable in terms of the Pixel unit type and a conversion factor.
-        static private string[] PixelUnitStrings = { "px", "in", "cm", "pt" };
-        static private double[] PixelUnitFactors = 
-        { 
-            1.0,              // Pixel itself
-            96.0,             // Pixels per Inch
-            96.0 / 2.54,      // Pixels per Centimeter
-            96.0 / 72.0,      // Pixels per Point
-        };
-
-        static internal string ToString(double l, CultureInfo cultureInfo)
-        {
-            if(double.IsNaN(l)) return "Auto";
-            return Convert.ToString(l, cultureInfo);
-        }
 
         #endregion
 

@@ -1,13 +1,8 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 
-using System;
-using System.Diagnostics;
 using System.Collections;              // for ArrayList
-using System.Collections.Generic;      // for Dictionary
-using System.IO;
 using System.Windows;                  // for Rect                        WindowsBase.dll
 using System.Windows.Media;            // for Geometry, Brush, ImageData. PresentationCore.dll
 using System.Windows.Media.Imaging;
@@ -15,8 +10,6 @@ using System.Windows.Media.Imaging;
 using System.Windows.Xps.Serialization;
 using System.Printing;
 using System.Printing.Interop;
-using System.Security;
-using System.Text;
 using MS.Utility;
 
 namespace Microsoft.Internal.AlphaFlattener
@@ -171,12 +164,13 @@ namespace Microsoft.Internal.AlphaFlattener
 
             AssertState(DeviceState.PageStarted, DeviceState.NoChange);
 
-            GeometryPrimitive g = new GeometryPrimitive();
-
-            g.Geometry    = geometry;
-            g.Clip        = _clip;
-            g.Opacity     = _opacity;
-            g.OpacityMask = _opacityMask;
+            GeometryPrimitive g = new GeometryPrimitive
+            {
+                Geometry = geometry,
+                Clip = _clip,
+                Opacity = _opacity,
+                OpacityMask = _opacityMask
+            };
 
             int needBounds = 0; // 1 for fill, 2 for stroke
 
@@ -254,14 +248,15 @@ namespace Microsoft.Internal.AlphaFlattener
 
             AssertState(DeviceState.PageStarted, DeviceState.NoChange);
 
-            ImagePrimitive g = new ImagePrimitive();
+            ImagePrimitive g = new ImagePrimitive
+            {
+                Image = new ImageProxy((BitmapSource)image),
 
-            g.Image   = new ImageProxy((BitmapSource)image);
-
-            g.DstRect     = rectangle;
-            g.Clip        = _clip;
-            g.Opacity     = _opacity;
-            g.OpacityMask = _opacityMask;
+                DstRect = rectangle,
+                Clip = _clip,
+                Opacity = _opacity,
+                OpacityMask = _opacityMask
+            };
 
             _root.Children.Add(g);
         }
@@ -411,7 +406,7 @@ namespace Microsoft.Internal.AlphaFlattener
     /// </summary>
     internal class MetroToGdiConverter : IMetroDrawingContext
     {
-        static protected object         s_TestingHook;
+        protected static object         s_TestingHook;
 
         protected  MetroDevice0         m_Flattener;
         protected  ILegacyDevice        m_GDIExporter;
@@ -639,7 +634,7 @@ namespace Microsoft.Internal.AlphaFlattener
         {
             Toolbox.EmitEvent(EventTrace.Event.WClientDRXStartPageBegin);
 
-            String printTicketXMLStr = (ticket == null) ? null : ticket.ToXmlString();
+            String printTicketXMLStr = ticket?.ToXmlString();
 
             CaptureTicketSettings(ticket, printTicketXMLStr);
 
@@ -756,7 +751,7 @@ namespace Microsoft.Internal.AlphaFlattener
         /// Called before StartDocument to by-pass GDIExporter and send result to DrawingContext
         /// </summary>
         /// <param name="obj"></param>
-        static public void TestingHook(Object obj)
+        public static void TestingHook(Object obj)
         {
             if (obj != null)
             {
@@ -772,7 +767,7 @@ namespace Microsoft.Internal.AlphaFlattener
         {
             if(maxEntries < 1)
             {
-                throw new ArgumentOutOfRangeException("maxEntries", maxEntries, string.Empty);
+                throw new ArgumentOutOfRangeException(nameof(maxEntries), maxEntries, string.Empty);
             }
 
             this.m_innerCache = new MS.Internal.Printing.MostFrequentlyUsedCache<string, CachePacket>(maxEntries);
@@ -843,7 +838,7 @@ namespace Microsoft.Internal.AlphaFlattener
             return packet;
         }
 
-        class CachePacket
+        private class CachePacket
         {
             // "null" for any field means it hasn't been set yet.
             // This implies that the fields cannot have real values of "null".

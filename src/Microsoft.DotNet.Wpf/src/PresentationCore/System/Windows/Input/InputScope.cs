@@ -1,24 +1,13 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
-//
-//
 // Description: class for input scope definition
 //
 // Please refer to the design specfication http://avalon/Cicero/Specifications/Stylable%20InputScope.mht
-// 
-//
 
-using System;
-using System.Collections.Generic;
-using System.Windows.Input;
 using System.Windows.Markup;
 using System.ComponentModel;
-using System.ComponentModel.Design.Serialization;
 using MS.Internal.PresentationCore;
-
-using SR=MS.Internal.PresentationCore.SR;
 
 namespace System.Windows.Input
 {

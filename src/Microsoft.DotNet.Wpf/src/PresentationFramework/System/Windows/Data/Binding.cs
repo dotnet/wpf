@@ -1,6 +1,5 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 //
 // Description: Defines Binding object, which describes an instance of data Binding.
@@ -8,22 +7,14 @@
 // See spec at Data Binding.mht
 //
 
-using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Globalization;
-using System.Diagnostics;
 using System.ComponentModel;
 using System.Xml;
-
-using System.Windows;
 using System.Windows.Controls;  // Validation
-using System.Windows.Markup;
-using MS.Utility;
 using MS.Internal; // Invariant.Assert
 using MS.Internal.Controls; // Validation
 using MS.Internal.Data;
-using MS.Internal.KnownBoxes;
 
 namespace System.Windows.Data
 {
@@ -86,7 +77,7 @@ namespace System.Windows.Data
         //------------------------------------------------------
 
         // Which source property is in use
-        enum SourceProperties : byte { None, RelativeSource, ElementName, Source, StaticSource, InternalSource }
+        private enum SourceProperties : byte { None, RelativeSource, ElementName, Source, StaticSource, InternalSource }
 
 
         //------------------------------------------------------
@@ -155,19 +146,6 @@ namespace System.Windows.Data
             FrameworkElement.RemoveHandler(element, TargetUpdatedEvent, handler);
         }
 
-
-        // PreSharp uses message numbers that the C# compiler doesn't know about.
-        // Disable the C# complaints, per the PreSharp documentation.
-        #pragma warning disable 1634, 1691
-
-        // PreSharp checks that the type of the DP agrees with the type of the static
-        // accessors.  But setting the type of the DP to XmlNamespaceManager would
-        // load System.Xml during the static cctor, which is considered a perf bug.
-        // So instead we set the type of the DP to 'object' and use the
-        // ValidateValueCallback to ensure that only values of the right type are allowed.
-        // Meanwhile, disable the PreSharp warning
-        #pragma warning disable 7008
-
         /// <summary>
         /// The XmlNamespaceManager to use to perform Namespace aware XPath queries in XmlData bindings
         /// </summary>
@@ -198,10 +176,6 @@ namespace System.Windows.Data
         {
             return (value == null) || SystemXmlHelper.IsXmlNamespaceManager(value);
         }
-
-        #pragma warning restore 7008
-        #pragma warning restore 1634, 1691
-
 
         //------------------------------------------------------
         //
@@ -818,7 +792,7 @@ namespace System.Windows.Data
         //------------------------------------------------------
 
         // determine the source property currently in use
-        void DetermineSource()
+        private void DetermineSource()
         {
             _sourceInUse =
                 (_source == UnsetSource)                ? SourceProperties.None :
@@ -835,19 +809,19 @@ namespace System.Windows.Data
         //
         //------------------------------------------------------
 
-        SourceProperties    _sourceInUse;
+        private SourceProperties _sourceInUse;
 
-        PropertyPath        _ppath;
-        ObjectRef           _source = UnsetSource;
+        private PropertyPath        _ppath;
+        private ObjectRef           _source = UnsetSource;
 
-        bool                _isAsync;
-        bool                _bindsDirectlyToSource;
-        bool                _doesNotTransferDefaultValue;   // initially = false
+        private bool                _isAsync;
+        private bool                _bindsDirectlyToSource;
+        private bool                _doesNotTransferDefaultValue;   // initially = false
 
-        int                 _attachedPropertiesInPath;
+        private int                 _attachedPropertiesInPath;
 
-        static readonly ObjectRef UnsetSource = new ExplicitObjectRef(null);
-        static readonly ObjectRef StaticSourceRef = new ExplicitObjectRef(BindingExpression.StaticSource);
+        private static readonly ObjectRef UnsetSource = new ExplicitObjectRef(null);
+        private static readonly ObjectRef StaticSourceRef = new ExplicitObjectRef(BindingExpression.StaticSource);
     }
 }
 

@@ -1,15 +1,11 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 //
 // Description: Break records for PTS pages.
 //
 
-using System;                                   // IntPtr, IDisposable, ...
 using System.Threading;                         // Interlocked
-using System.Security;                          // SecurityCritical
-using MS.Internal.PtsHost.UnsafeNativeMethods;  // PTS
 
 namespace MS.Internal.PtsHost
 {
@@ -33,10 +29,10 @@ namespace MS.Internal.PtsHost
         /// <param name="ptsContext">Current PTS Context.</param>
         /// <param name="br">PTS page break record.</param>
         /// <param name="pageNumber">Page number.</param>
-        internal PageBreakRecord(PtsContext ptsContext, SecurityCriticalDataForSet<IntPtr> br, int pageNumber)
+        internal PageBreakRecord(PtsContext ptsContext, IntPtr br, int pageNumber)
         {
             Invariant.Assert(ptsContext != null, "Invalid PtsContext object.");
-            Invariant.Assert(br.Value != IntPtr.Zero, "Invalid break record object.");
+            Invariant.Assert(br != IntPtr.Zero, "Invalid break record object.");
 
             _br = br;
             _pageNumber = pageNumber;
@@ -94,7 +90,7 @@ namespace MS.Internal.PtsHost
         /// </summary>
         internal IntPtr BreakRecord
         {
-            get { return _br.Value; }
+            get { return _br; }
         }
 
         /// <summary>
@@ -134,7 +130,7 @@ namespace MS.Internal.PtsHost
             PtsContext ptsContext = null;
 
             // Do actual dispose only once.
-            if (Interlocked.CompareExchange(ref _disposed, 1, 0) == 0)
+            if (!Interlocked.CompareExchange(ref _disposed, true, false))
             {
                 // Dispose PTS break record.
                 // According to following article the entire reachable graph from 
@@ -151,7 +147,7 @@ namespace MS.Internal.PtsHost
                 }
 
                 // Cleanup the state.
-                _br.Value = IntPtr.Zero;
+                _br = IntPtr.Zero;
                 _ptsContext = null;
             }
         }
@@ -169,7 +165,7 @@ namespace MS.Internal.PtsHost
         /// <summary>
         /// PTS page break record.
         /// </summary>
-        private SecurityCriticalDataForSet<IntPtr> _br;
+        private IntPtr _br;
 
         /// <summary>
         /// Page number of the page starting at the break position.
@@ -186,7 +182,7 @@ namespace MS.Internal.PtsHost
         /// <summary>
         /// Whether object is already disposed.
         /// </summary>
-        private int _disposed;
+        private bool _disposed;
 
         #endregion Private Fields
     }

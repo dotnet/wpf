@@ -1,11 +1,7 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 // Description: Miscellaneous helper routines
-
-// PRESHARP: In order to avoid generating warnings about unkown message numbers and unknown pragmas.
-#pragma warning disable 1634, 1691
 
 using Microsoft.Win32.SafeHandles;
 using MS.Win32;
@@ -13,15 +9,9 @@ using System;
 using System.Collections;
 using System.ComponentModel;
 using System.Diagnostics;
-using System.Net;
-using System.Net.Sockets;
-using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
-using System.Security;
 using System.Text;
-using System.Windows;
 using System.Windows.Automation;
-using System.Windows.Automation.Provider;
 using NativeMethodsSetLastError = MS.Internal.UIAutomationClient.NativeMethodsSetLastError;
 
 namespace MS.Internal.Automation
@@ -156,7 +146,7 @@ namespace MS.Internal.Automation
 
             if (pi.ClientSideWrapper == null)
             {
-                Debug.Assert(false, "missing client-side pattern wrapper");
+                Debug.Fail("missing client-side pattern wrapper");
                 return null;
             }
             else
@@ -695,7 +685,7 @@ namespace MS.Internal.Automation
             for (int source = 0; source < ach.Length; source++)
             {
                 // get rid of leading spaces
-                if (ach[source] == ' ' && leadingSpace == false)
+                if (ach[source] == ' ' && !leadingSpace)
                 {
                     continue;
                 }
@@ -705,7 +695,7 @@ namespace MS.Internal.Automation
                 }
 
                 // get rid of &
-                if (ach[source] == '&' && amper == false)
+                if (ach[source] == '&' && !amper)
                 {
                     amper = true;
                 }

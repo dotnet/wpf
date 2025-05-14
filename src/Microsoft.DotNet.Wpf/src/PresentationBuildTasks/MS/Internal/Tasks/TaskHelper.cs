@@ -1,6 +1,5 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 //-----------------------------------------------------------------------------
 //
@@ -12,21 +11,14 @@
 
 using System;
 using System.IO;
-using System.Collections;
-using System.Text;
-using System.Runtime.InteropServices;
 
 using System.Globalization;
 using System.Diagnostics;
 using System.Reflection;
-using System.Resources;
 
 using Microsoft.Build.Framework;
 using Microsoft.Build.Utilities;
-
-using Microsoft.Build.Tasks;
 using MS.Utility;
-using System.Collections.Generic;
 
 
 namespace MS.Internal.Tasks
@@ -203,7 +195,11 @@ namespace MS.Internal.Tasks
             while (e.InnerException != null)
             {
                 Exception eInner = e.InnerException;
+#if !NETFX
+                if (!e.Message.Contains(eInner.Message, StringComparison.Ordinal))
+#else
                 if (e.Message.IndexOf(eInner.Message, StringComparison.Ordinal) == -1)
+#endif
                 {
                     message += ", ";
                     message += eInner.Message;
@@ -211,7 +207,7 @@ namespace MS.Internal.Tasks
                 e = eInner;
             }
 
-            if (message != null && message.EndsWith(".", StringComparison.Ordinal) == false)
+            if (message != null && !message.EndsWith(".", StringComparison.Ordinal))
             {
                 message += ".";
             }

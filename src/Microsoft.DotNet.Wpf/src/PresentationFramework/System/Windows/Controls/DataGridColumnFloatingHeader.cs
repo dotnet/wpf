@@ -1,14 +1,9 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 
-using System;
-using System.Windows;
 using System.Windows.Controls.Primitives;
 using System.Windows.Media;
-
-using MS.Internal;
 
 namespace System.Windows.Controls
 {
@@ -121,9 +116,10 @@ namespace System.Windows.Controls
         {
             if (_referenceHeader != null && _visualBrushCanvas != null)
             {
-                VisualBrush visualBrush = new VisualBrush(_referenceHeader);
-
-                visualBrush.ViewboxUnits = BrushMappingMode.Absolute;
+                VisualBrush visualBrush = new VisualBrush(_referenceHeader)
+                {
+                    ViewboxUnits = BrushMappingMode.Absolute
+                };
 
                 double width = Width;
                 if (double.IsNaN(width))
@@ -132,7 +128,7 @@ namespace System.Windows.Controls
                 }
                 else
                 {
-                    width = width - GetVisualCanvasMarginX();
+                    width -= GetVisualCanvasMarginX();
                 }
 
                 double height = Height;
@@ -142,7 +138,7 @@ namespace System.Windows.Controls
                 }
                 else
                 {
-                    height = height - GetVisualCanvasMarginY();
+                    height -= GetVisualCanvasMarginY();
                 }
 
                 Vector offset = VisualTreeHelper.GetOffset(_referenceHeader);
@@ -155,10 +151,7 @@ namespace System.Windows.Controls
         internal void ClearHeader()
         {
             _referenceHeader = null;
-            if (_visualBrushCanvas != null)
-            {
-                _visualBrushCanvas.Background = null;
-            }
+            _visualBrushCanvas?.Background = null;
         }
 
         private double GetVisualCanvasMarginX()

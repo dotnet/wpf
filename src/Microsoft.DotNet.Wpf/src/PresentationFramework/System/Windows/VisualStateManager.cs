@@ -1,18 +1,12 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 
-using System;
 using System.Collections;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Windows;
-using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
 using MS.Internal;  // ObservableCollectionDefaultValueFactory
-using System.Security;
 
 namespace System.Windows
 {
@@ -257,7 +251,7 @@ namespace System.Windows
                     transition.DynamicStoryboardCompleted = true;
                 };
 
-                if (transition.Storyboard != null && transition.ExplicitStoryboardCompleted == true)
+                if (transition.Storyboard != null && transition.ExplicitStoryboardCompleted)
                 {
                     EventHandler transitionCompleted = null;
                     transitionCompleted = new EventHandler(delegate(object sender, EventArgs e)
@@ -379,7 +373,7 @@ namespace System.Windows
             }
 
             Dictionary<TimelineDataToken, Timeline> currentAnimations = FlattenTimelines(group.CurrentStoryboards);
-            Dictionary<TimelineDataToken, Timeline> transitionAnimations = FlattenTimelines(transition != null ? transition.Storyboard : null);
+            Dictionary<TimelineDataToken, Timeline> transitionAnimations = FlattenTimelines(transition?.Storyboard);
             Dictionary<TimelineDataToken, Timeline> newStateAnimations = FlattenTimelines(newState.Storyboard);
 
             // Remove any animations that the transition already animates.

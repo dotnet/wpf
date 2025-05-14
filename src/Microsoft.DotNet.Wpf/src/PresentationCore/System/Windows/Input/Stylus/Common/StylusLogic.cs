@@ -1,29 +1,18 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 
 using Microsoft.Win32; // for RegistryKey class
 using MS.Internal;
 using MS.Internal.Interop;
-using MS.Internal.PresentationCore;                        // SecurityHelper
-using MS.Utility;
 using MS.Win32; // for *NativeMethods
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
 using System.IO;
-using System.Runtime.InteropServices;
-using System.Security;
-using System.Windows;
-using System.Windows.Input.StylusPlugIns;
 using System.Windows.Input.StylusPointer;
 using System.Windows.Input.StylusWisp;
 using System.Windows.Input.Tracing;
 using System.Windows.Interop;
 using System.Windows.Media;
 using System.Windows.Threading;
-using SR = MS.Internal.PresentationCore.SR;
 
 
 namespace System.Windows.Input
@@ -187,17 +176,10 @@ namespace System.Windows.Input
         #region Construction/Initilization
 
         /// <summary>
-        ///
         /// True if the StylusLogic for the thread of the caller has been instantiated.
         /// False if otherwise.
         /// </summary>
-        internal static bool IsInstantiated
-        {
-            get
-            {
-                return _currentStylusLogic?.Value != null;
-            }
-        }
+        internal static bool IsInstantiated => _currentStylusLogic is not null;
 
         /// <summary>
         /// Wrapper around accesses to CoreAppContextSwitches so it's easier to
@@ -235,7 +217,7 @@ namespace System.Windows.Input
         /// thread as there is one per specific touch stack InputProvider.
         /// </summary>
         [ThreadStatic]
-        private static SecurityCriticalDataClass<StylusLogic> _currentStylusLogic = null;
+        private static StylusLogic _currentStylusLogic;
 
         /// <summary>
         /// This property is backed by a ThreadStatic instance.  This will be instantiated
@@ -246,12 +228,12 @@ namespace System.Windows.Input
         {
             get
             {
-                if (_currentStylusLogic?.Value == null)
+                if (_currentStylusLogic is null)
                 {
                     Initialize();
                 }
 
-                return _currentStylusLogic?.Value;
+                return _currentStylusLogic;
             }
         }
 
@@ -279,11 +261,11 @@ namespace System.Windows.Input
                 // Choose between WISP and Pointer stacks
                 if (IsPointerStackEnabled)
                 {
-                    _currentStylusLogic = new SecurityCriticalDataClass<StylusLogic>(new PointerLogic(InputManager.UnsecureCurrent));
+                    _currentStylusLogic = new PointerLogic(InputManager.UnsecureCurrent);
                 }
                 else
                 {
-                    _currentStylusLogic = new SecurityCriticalDataClass<StylusLogic>(new WispLogic(InputManager.UnsecureCurrent));
+                    _currentStylusLogic = new WispLogic(InputManager.UnsecureCurrent);
                 }
             }
         }
@@ -376,14 +358,8 @@ namespace System.Windows.Input
             }
             finally
             {
-                if (stylusKey != null)
-                {
-                    stylusKey.Close();
-                }
-                if (touchKey != null)
-                {
-                    touchKey.Close();
-                }
+                stylusKey?.Close();
+                touchKey?.Close();
             }
         }
 
@@ -788,7 +764,7 @@ namespace System.Windows.Input
                     break;
                 default:
                     {
-                        Debug.Assert(false, "Unknown Flick Action encountered");
+                        Debug.Fail("Unknown Flick Action encountered");
                     }
                     break;
             }

@@ -1,10 +1,7 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
-using System;
 using System.ComponentModel;
-using MS.Internal.WindowsBase;
 
 namespace System.Windows
 {
@@ -118,7 +115,6 @@ namespace System.Windows
         // We need this Clone method to copy a binding during Freezable.Copy.  We shouldn't be taking
         // the target object/dp parameters here, but Binding.ProvideValue requires it.  (Binding
         // could probably be re-factored so that we don't need this).
-        [FriendAccessAllowed] // Used by Freezables
         internal virtual Expression Copy( DependencyObject targetObject, DependencyProperty targetDP )
         {
             // By default, just use the same copy.
@@ -274,7 +270,6 @@ namespace System.Windows
         /// Expression.GetValue can return NoValue to indicate that
         /// the property engine should obtain the value some other way.
         /// </summary>
-        [FriendAccessAllowed]
         internal static readonly object NoValue = new object();
 
         private InternalFlags _flags;

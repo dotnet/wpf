@@ -1,20 +1,5 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
-
-using System;
-using System.Runtime.InteropServices;
-using System.Security;
-using System.Text;
-using System.Windows;
-using System.Windows.Automation.Provider;
-using System.Windows.Controls;
-using System.Windows.Interop;
-using System.Windows.Media;
-using System.Windows.Markup;
-
-using MS.Internal;
-using MS.Win32;
 
 namespace System.Windows.Automation.Peers
 {
@@ -49,7 +34,7 @@ namespace System.Windows.Automation.Peers
         }
 
         ///
-        override protected string GetNameCore()
+        protected override string GetNameCore()
         {
             string result = base.GetNameCore();
             if (string.IsNullOrEmpty(result))
@@ -87,7 +72,7 @@ namespace System.Windows.Automation.Peers
         }
 
         ///
-        override internal bool IgnoreUpdatePeer()
+        internal override bool IgnoreUpdatePeer()
         {
             // Ignore UpdatePeer if the peer's owner has been removed from the
             // visual tree.  There's no need to update such a peer, as it no longer

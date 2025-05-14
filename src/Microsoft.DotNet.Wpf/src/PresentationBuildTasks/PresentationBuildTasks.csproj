@@ -1,6 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFrameworks>net472;net9.0</TargetFrameworks>
+    <TargetFrameworks>net472;net10.0</TargetFrameworks>
     <EnableDefaultItems>false</EnableDefaultItems>
     <EnablePInvokeAnalyzer>true</EnablePInvokeAnalyzer>
 
@@ -26,7 +26,7 @@
     <BinPlaceRuntime>false</BinPlaceRuntime>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <GenerateBindingRedirectsOutputType>true</GenerateBindingRedirectsOutputType>
-    <Platforms>AnyCPU;x64;arm64</Platforms>
+    <Platforms>AnyCPU</Platforms>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
 
@@ -39,7 +39,6 @@
     <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
   </PropertyGroup>
 
-
   <!--
     Incorporate Microsoft.WinFX.targets in nuget packages under
     content\targets\
@@ -48,26 +47,13 @@
     <PackagingContent Include="$(MSBuildThisFileDirectory)Microsoft.WinFX.targets" SubFolder="root\targets" />
   </ItemGroup>
 
-  <!--
-    Limit the assemblies that are packaged into Microsoft.NET.Sdk.WindowsDesktop
-  -->
-  <ItemGroup Condition="'$(TargetFramework)'=='net472'">
+  <!-- Limit the assemblies that are packaged into Microsoft.NET.Sdk.WindowsDesktop -->
+  <ItemGroup>
     <PackagingAssemblyContent Include="PresentationBuildTasks.dll" />
-    <PackagingAssemblyContent Include="System.Collections.Immutable.dll" />
-    <PackagingAssemblyContent Include="System.Memory.dll" />
-    <PackagingAssemblyContent Include="System.Numerics.Vectors.dll" />
-    <PackagingAssemblyContent Include="System.Reflection.Metadata.dll" />
-    <PackagingAssemblyContent Include="System.Reflection.MetadataLoadContext.dll" />
-    <PackagingAssemblyContent Include="System.Runtime.CompilerServices.Unsafe.dll" />
   </ItemGroup>
-  <ItemGroup Condition="'$(TargetFramework)'=='net9.0'">
-    <PackagingAssemblyContent Include="PresentationBuildTasks.dll" />
-    <PackagingAssemblyContent Include="System.Reflection.MetadataLoadContext.dll" />
-  </ItemGroup>
-
 
   <ItemGroup>
-      <EmbeddedResource Include="Resources\Strings.resx" />
+    <EmbeddedResource Include="Resources\Strings.resx" />
   </ItemGroup>
 
   <ItemGroup>
@@ -76,7 +62,6 @@
     <Compile Include="System\AppContextDefaultValues.cs" />
     <Compile Include="MS\Internal\BuildTasksAppContextSwitches.cs" />
   </ItemGroup>
-
 
   <ItemGroup>
     <Compile Include="SR.cs" />
@@ -89,6 +74,9 @@
     </Compile>
     <Compile Include="$(WpfSharedDir)\MS\Internal\ResourceIDHelper.cs">
       <Link>Shared\MS\Internal\ResourceIDHelper.cs</Link>
+    </Compile>
+    <Compile Include="$(WpfSharedDir)\MS\Internal\ReflectionUtils.cs">
+      <Link>Shared\MS\Internal\ReflectionUtils.cs</Link>
     </Compile>
     <Compile Include="$(WpfSharedDir)\MS\Internal\SecurityHelper.cs">
       <Link>Shared\MS\Internal\SecurityHelper.cs</Link>
@@ -310,14 +298,16 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.Build.Framework" Version="$(MicrosoftBuildFrameworkPackageVersion)" />
-    <PackageReference Include="Microsoft.Build.Utilities.Core" Version="$(MicrosoftBuildUtilitiesCorePackageVersion)" />
-    <PackageReference Include="System.Reflection.MetadataLoadContext" Version="$(SystemReflectionMetadataLoadContextVersion)" />
+    <PackageReference Include="Microsoft.Build.Framework" Version="$(MicrosoftBuildFrameworkPackageVersion)" IncludeAssets="compile" />
+    <PackageReference Include="Microsoft.Build.Utilities.Core" Version="$(MicrosoftBuildUtilitiesCorePackageVersion)" IncludeAssets="compile" />
 
-    <!--
-      Provide specific/old versions for PresentationBuildTasks which needs to run inside MSBuild
-    -->
-    <PackageReference Include="System.CodeDom" Version="$(SystemCodeDomPackageVersionForPresentationBuildTasks)" />
+    <!-- Reference (don't redistribute) the live version of SRM on .NETCoreApp and fallback to the toolset version for .NET Framework. -->
+    <PackageReference Include="System.Reflection.MetadataLoadContext" IncludeAssets="compile">
+      <Version Condition="'$(TargetFrameworkIdentifier)' != '.NETFramework'">$(SystemReflectionMetadataLoadContextVersion)</Version>
+      <Version Condition="'$(TargetFrameworkIdentifier)' == '.NETFramework'">$(SystemReflectionMetadataLoadContextToolsetVersion)</Version>
+    </PackageReference>
+    <!-- System.CodeDom live version is provided by the SDK. Use latest and don't redistribute it. -->
+    <PackageReference Include="System.CodeDom" Version="$(SystemCodeDomPackageVersion)" Condition="'$(TargetFrameworkIdentifier)' == '.NETCoreApp'" IncludeAssets="compile" />
   </ItemGroup>
 
 </Project>

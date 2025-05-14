@@ -1,6 +1,7 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
+
+using System.Windows.Input; // Command
 
 //
 // Description: Command definitions for Rich Text Editing.
@@ -8,9 +9,6 @@
 
 namespace System.Windows.Documents
 {
-    using System.Windows.Input; // Command
-    using System.ComponentModel; // TypeConverter
-
     /// <summary>
     /// Command definitions for Rich Text Editing.
     /// </summary>

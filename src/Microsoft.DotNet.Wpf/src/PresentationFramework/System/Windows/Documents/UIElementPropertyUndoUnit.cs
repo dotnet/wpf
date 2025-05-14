@@ -1,6 +1,5 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 //
 // Description: Undo unit for property sets on UIElement. 
@@ -9,8 +8,6 @@
 //  2. HorizontalAlignmentProperty sets on UIElement child of BlockUIContainer.
 //
 
-using System;
-using System.Windows;
 using MS.Internal;
 using MS.Internal.Documents;
 

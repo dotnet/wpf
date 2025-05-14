@@ -1,22 +1,8 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
-//  Microsoft Windows Presentation Foundation
-//
-
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Windows;
-using System.Windows.Media;
-using System.IO;
-using System.Windows.Markup;
 using System.Windows.Media.Composition;
 using System.Windows.Media.Media3D;
-using System.Security;
-using System.Runtime.InteropServices;
-using SR = MS.Internal.PresentationCore.SR;
 
 namespace System.Windows.Media.Effects
 {
@@ -55,7 +41,7 @@ namespace System.Windows.Media.Effects
                 WritePreamble();
                 if (value < 0.0)
                 {
-                    throw new ArgumentOutOfRangeException("value", value, SR.Effect_ShaderEffectPadding);
+                    throw new ArgumentOutOfRangeException(nameof(value), value, SR.Effect_ShaderEffectPadding);
                 }
                 else
                 {
@@ -82,7 +68,7 @@ namespace System.Windows.Media.Effects
                 WritePreamble();
                 if (value < 0.0)
                 {
-                    throw new ArgumentOutOfRangeException("value", value, SR.Effect_ShaderEffectPadding);
+                    throw new ArgumentOutOfRangeException(nameof(value), value, SR.Effect_ShaderEffectPadding);
                 }
                 else
                 {
@@ -109,7 +95,7 @@ namespace System.Windows.Media.Effects
                 WritePreamble();
                 if (value < 0.0)
                 {
-                    throw new ArgumentOutOfRangeException("value", value, SR.Effect_ShaderEffectPadding);
+                    throw new ArgumentOutOfRangeException(nameof(value), value, SR.Effect_ShaderEffectPadding);
                 }
                 else
                 {
@@ -136,7 +122,7 @@ namespace System.Windows.Media.Effects
                 WritePreamble();
                 if (value < 0.0)
                 {
-                    throw new ArgumentOutOfRangeException("value", value, SR.Effect_ShaderEffectPadding);
+                    throw new ArgumentOutOfRangeException(nameof(value), value, SR.Effect_ShaderEffectPadding);
                 }
                 else
                 {
@@ -278,10 +264,7 @@ namespace System.Windows.Media.Effects
                 (obj, args) =>
                 {
                     ShaderEffect eff = obj as ShaderEffect;
-                    if (eff != null)
-                    {
-                        eff.UpdateShaderConstant(args.Property, args.NewValue, floatRegisterIndex);
-                    }
+                    eff?.UpdateShaderConstant(args.Property, args.NewValue, floatRegisterIndex);
                 };
         }
 
@@ -392,7 +375,7 @@ namespace System.Windows.Media.Effects
 
                 if (registerIndex >= registerMax || registerIndex < 0)
                 {
-                    throw new ArgumentException(SR.GetResourceString(srid), "dp");
+                    throw new ArgumentException(SR.GetResourceString(srid), nameof(dp));
                 }
 
                 if (t == typeof(float))
@@ -443,7 +426,7 @@ namespace System.Windows.Media.Effects
                     // Note that if the type of the brush is ImplicitInputBrush and the value is non null, the value is actually
                     // Effect.ImplicitInput. This is because ImplicitInputBrush is internal and the user can only get to the singleton
                     // Effect.ImplicitInput.
-                    throw new ArgumentException(SR.Effect_ShaderSamplerType, "dp");
+                    throw new ArgumentException(SR.Effect_ShaderSamplerType, nameof(dp));
                 }
             }
 
@@ -780,10 +763,7 @@ namespace System.Windows.Media.Effects
                             SamplerData ss = ssn.Value;
 
                             DUCE.IResource brush = ss._brush as DUCE.IResource;
-                            if (brush != null)
-                            {
-                                brush.AddRefOnChannel(channel);
-                            }
+                            brush?.AddRefOnChannel(channel);
                         }
                     }
                 }
@@ -794,7 +774,7 @@ namespace System.Windows.Media.Effects
                 AddRefOnChannelAnimations(channel);
 
 
-                UpdateResource(channel, true /* skip "on channel" check - we already know that we're on channel */ );
+                UpdateResource(channel, skipOnChannelCheck: true /* We already know that we're on channel */ );
             }
 
             return _duceResource.GetHandle(channel);
@@ -820,10 +800,7 @@ namespace System.Windows.Media.Effects
                             SamplerData ss = ssn.Value;
 
                             DUCE.IResource brush = ss._brush as DUCE.IResource;
-                            if (brush != null)
-                            {
-                                brush.ReleaseOnChannel(channel);
-                            }
+                            brush?.ReleaseOnChannel(channel);
                         }
                     }
                 }

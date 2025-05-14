@@ -1,15 +1,12 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 //
 //
 
-using System;
 using System.Reflection;
 using System.Windows.Resources;
 using System.Windows.Navigation;
-using System.Collections.Generic;
 
 namespace MS.Internal.Resources
 {
@@ -40,7 +37,7 @@ namespace MS.Internal.Resources
         //
         // Get a list of Content Files for a given Assembly.
         //
-        static internal HashSet<string> GetContentFiles(Assembly asm)
+        internal static HashSet<string> GetContentFiles(Assembly asm)
         {
             HashSet<string> contentFiles = null;
 

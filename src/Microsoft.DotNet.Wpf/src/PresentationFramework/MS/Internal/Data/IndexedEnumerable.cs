@@ -1,6 +1,5 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 //
 // Description: offers optimistic indexer, i.e. this[int index] { get; }
@@ -8,16 +7,11 @@
 //      to read item[N], the following indices will be a sequence for index N+1, N+2 etc.
 //
 
-using System;
 using System.Collections;
 using System.Collections.Specialized;
-using System.ComponentModel;
 using System.Reflection;
-
-using System.Diagnostics;
 using System.Windows;
 using System.Windows.Data;
-using MS.Utility;
 
 namespace MS.Internal.Data
 {
@@ -96,7 +90,7 @@ namespace MS.Internal.Data
                     return _cachedIndex;
             }
 
-            // If item != cached item, that doesn�t mean that the enumerator
+            // If item != cached item, that doesn’t mean that the enumerator
             // is `blown, it just means we have to go find the item represented by item.
             index = -1;
             // only ask for fresh enumerator if current enumerator already was moved before
@@ -188,10 +182,7 @@ namespace MS.Internal.Data
                 _cachedIsEmpty = !ie.MoveNext();
 
                 IDisposable d = ie as IDisposable;
-                if (d != null)
-                {
-                    d.Dispose();
-                }
+                d?.Dispose();
 
                 if (_cachedIsEmpty.Value)
                     _cachedCount = 0;
@@ -210,7 +201,6 @@ namespace MS.Internal.Data
         {
             get
             {
-#pragma warning disable 1634 // about to use PreSharp message numbers - unknown to C#
                 // try if source collection has a indexer
                 object value;
                 if (GetNativeItemAt(index, out value))
@@ -250,13 +240,11 @@ namespace MS.Internal.Data
                 // moved beyond the end of the enumerator?
                 if (moveBy != 0)
                 {
-#pragma warning suppress 6503   // "Property get methods should not throw exceptions."
-                    throw new ArgumentOutOfRangeException("index"); // validating the index argument
+                    throw new ArgumentOutOfRangeException(nameof(index)); // validating the index argument
                 }
 
                 CacheCurrentItem(index, _enumerator.Current);
                 return _cachedItem;
-#pragma warning restore 1634
             }
         }
 
@@ -329,7 +317,7 @@ namespace MS.Internal.Data
                     {
                         // The number of elements in the source ICollection is greater than
                         // the available space from index to the end of the destination array.
-                        throw new ArgumentException(SR.CopyToNotEnoughSpace, "index");
+                        throw new ArgumentException(SR.CopyToNotEnoughSpace, nameof(index));
                     }
                 }
             }
@@ -402,7 +390,7 @@ namespace MS.Internal.Data
                 }
                 catch (InvalidOperationException)
                 {
-                    Debug.Assert(false, "EnsureCacheCurrent: _enumerator.Current failed with InvalidOperationException");
+                    Debug.Fail("EnsureCacheCurrent: _enumerator.Current failed with InvalidOperationException");
                 }
                 Debug.Assert(System.Windows.Controls.ItemsControl.EqualsEx(_cachedItem, current), "EnsureCacheCurrent: _cachedItem out of sync with _enumerator.Current");
             }
@@ -462,10 +450,7 @@ namespace MS.Internal.Data
         private void DisposeEnumerator(ref IEnumerator ie)
         {
             IDisposable d = ie as IDisposable;
-            if (d != null)
-            {
-                d.Dispose();
-            }
+            d?.Dispose();
 
             ie = null;
         }
@@ -684,7 +669,7 @@ namespace MS.Internal.Data
             return false;   // this method is no longer used (but must remain, for compat)
         }
 
-        void OnCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+        private void OnCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
             InvalidateEnumerator();
         }
@@ -770,17 +755,14 @@ namespace MS.Internal.Data
             public void Dispose()
             {
                 IDisposable d = _enumerator as IDisposable;
-                if (d != null)
-                {
-                    d.Dispose();
-                }
+                d?.Dispose();
                 _enumerator = null;
             }
 
-            IEnumerable _enumerable;
-            IEnumerator _enumerator;
-            IndexedEnumerable _indexedEnumerable;
-            Predicate<object> _filterCallback;
+            private IEnumerable _enumerable;
+            private IEnumerator _enumerator;
+            private IndexedEnumerable _indexedEnumerable;
+            private Predicate<object> _filterCallback;
         }
     }
 }

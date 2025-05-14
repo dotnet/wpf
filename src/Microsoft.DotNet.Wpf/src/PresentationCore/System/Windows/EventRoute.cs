@@ -1,14 +1,7 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Diagnostics;
 using MS.Utility;
-
-using SR=MS.Internal.PresentationCore.SR;
 using MS.Internal;
 using MS.Internal.KnownBoxes;
 
@@ -175,31 +168,26 @@ namespace System.Windows
                                 args.Source=newSource;
                         }
                     }
-                    
+
                     // Invoke listeners
 
-                    var traceRoutedEventIsEnabled = TraceRoutedEvent.IsEnabled;
-                    if ( traceRoutedEventIsEnabled )
+                    bool traceRoutedEventIsEnabled = TraceRoutedEvent.IsEnabled;
+                    if (traceRoutedEventIsEnabled)
                     {
-                        _traceArguments ??= new object[3];
-                        _traceArguments[0] = _routeItemList[i].Target;
-                        _traceArguments[1] = args;
-                        _traceArguments[2] = BooleanBoxes.Box(args.Handled);
                         TraceRoutedEvent.Trace(
                             TraceEventType.Start,
                             TraceRoutedEvent.InvokeHandlers,
-                            _traceArguments);
+                            _routeItemList[i].Target, args, BooleanBoxes.Box(args.Handled));
                     }
-                    
+
                     _routeItemList[i].InvokeHandler(args);
 
-                    if( traceRoutedEventIsEnabled )
+                    if (traceRoutedEventIsEnabled)
                     {
-                        _traceArguments[2] = BooleanBoxes.Box(args.Handled);
                         TraceRoutedEvent.Trace(
                             TraceEventType.Stop,
                             TraceRoutedEvent.InvokeHandlers,
-                            _traceArguments);
+                            _routeItemList[i].Target, args, BooleanBoxes.Box(args.Handled));
                     }
 
 
@@ -250,17 +238,13 @@ namespace System.Windows
                         }
                         
                         
-                        var traceRoutedEventIsEnabled = TraceRoutedEvent.IsEnabled;
-                        if ( traceRoutedEventIsEnabled )
+                        bool traceRoutedEventIsEnabled = TraceRoutedEvent.IsEnabled;
+                        if (traceRoutedEventIsEnabled)
                         {
-                            _traceArguments ??= new object[3];
-                            _traceArguments[0] = _routeItemList[i].Target;
-                            _traceArguments[1] = args;
-                            _traceArguments[2] = BooleanBoxes.Box(args.Handled);
                             TraceRoutedEvent.Trace(
                                 TraceEventType.Start,
                                 TraceRoutedEvent.InvokeHandlers,
-                                _traceArguments);
+                                _routeItemList[i].Target, args, BooleanBoxes.Box(args.Handled));
                         }
 
                         // Invoke listeners
@@ -268,11 +252,10 @@ namespace System.Windows
 
                         if (traceRoutedEventIsEnabled)
                         {
-                            _traceArguments[2] = BooleanBoxes.Box(args.Handled);
                             TraceRoutedEvent.Trace(
                                 TraceEventType.Stop,
                                 TraceRoutedEvent.InvokeHandlers,
-                                _traceArguments);
+                                _routeItemList[i].Target, args, BooleanBoxes.Box(args.Handled));
                         }
 
                     }
@@ -305,10 +288,12 @@ namespace System.Windows
         [System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Advanced)]
         public void PushBranchNode(object node, object source)
         {
-            BranchNode branchNode = new BranchNode();
-            branchNode.Node = node;
-            branchNode.Source = source;
-            
+            BranchNode branchNode = new BranchNode
+            {
+                Node = node,
+                Source = source
+            };
+
             (_branchNodeStack ??= new Stack<BranchNode>(1)).Push(branchNode);
         }
 
@@ -514,10 +499,7 @@ namespace System.Windows
             
             _routeItemList.Clear();
 
-            if (_branchNodeStack != null)
-            {
-                _branchNodeStack.Clear();
-            }
+            _branchNodeStack?.Clear();
 
             _sourceItemList.Clear();
         }
@@ -539,9 +521,6 @@ namespace System.Windows
 
         // Stores Source Items for separated trees
         private FrugalStructList<SourceItem> _sourceItemList;
-
-        // Stores arguments that are passed to TraceRoutedEvent.Trace (to reduce allocations)
-        private object[] _traceArguments;
 
         #endregion Data
     }

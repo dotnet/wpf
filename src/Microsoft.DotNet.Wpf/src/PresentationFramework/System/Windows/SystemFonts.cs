@@ -1,17 +1,7 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
-using System;
-using System.Collections;
-using System.ComponentModel;
-using System.Runtime.InteropServices;
 using System.Windows.Media;
-using System.Security;
-using System.Windows.Controls.Primitives;
-using Microsoft.Win32;
-using MS.Win32;
-using MS.Internal;
 
 namespace System.Windows
 {
@@ -425,12 +415,22 @@ namespace System.Windows
         {
             get
             {
-                // TODO : Find a better solution to this. Difference in default size of font in Fluent and other themes.
-                if(ThemeManager.IsFluentThemeEnabled)
-                {
-                    return ThemeManager.DefaultFluentThemeFontSize;
-                }
                 return ConvertFontHeight(SystemParameters.NonClientMetrics.lfMessageFont.lfHeight);
+            }
+        }
+
+        internal static double ThemeMessageFontSize
+        {
+            get
+            {
+                // TODO : Find a better solution to this. Difference in default size of font in Fluent and other themes.
+                if(ThemeManager.IsFluentThemeEnabled 
+                    || ThemeManager.IsFluentThemeDictionaryIncluded())
+                {
+                    return MessageFontSize * ThemeManager.DefaultFluentFontSizeFactor ;
+                }
+
+                return MessageFontSize;
             }
         }
 

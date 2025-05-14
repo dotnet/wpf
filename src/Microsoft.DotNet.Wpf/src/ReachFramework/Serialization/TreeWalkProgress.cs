@@ -1,6 +1,5 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 /*++
 
@@ -8,16 +7,7 @@
         This file implements the TreeWalkProgress
         used by the Xps Serialization APIs for tracking cycles in a visual tree.
 --*/
-using System;
-using System.Collections;
-using System.Collections.Specialized;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.IO;
-using System.Text;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Xps.Packaging;
 
 namespace System.Windows.Xps.Serialization
 {

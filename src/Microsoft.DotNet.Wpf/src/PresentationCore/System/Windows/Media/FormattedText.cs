@@ -1,32 +1,12 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
-//
-//
-// Description: Implementation of FormattedText class. The FormattedText class is targeted at programmers
-// needing to add some simple text to a MIL visual.
-//
-//
-
-using System;
 using System.Collections;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Diagnostics;
 using System.Globalization;
-using System.Windows;
-using System.Windows.Media;
 using System.Windows.Media.TextFormatting;
-using System.Runtime.InteropServices;
 using MS.Internal;
 using MS.Internal.TextFormatting;
-using MS.Internal.FontFace;
-
-using SR=MS.Internal.PresentationCore.SR;
-
-#pragma warning disable 1634, 1691
-//Allow suppression of Presharp warnings
 
 namespace System.Windows.Media
 {
@@ -309,7 +289,7 @@ namespace System.Windows.Media
             int limit = startIndex + count;
 
             if (count < 0 || limit < startIndex || limit > _text.Length)
-                throw new ArgumentOutOfRangeException("count");
+                throw new ArgumentOutOfRangeException(nameof(count));
 
             return limit;
         }
@@ -343,7 +323,6 @@ namespace System.Windows.Media
                 SpanRider formatRider = new SpanRider(_formatRuns, _latestPosition, i);
                 i = Math.Min(limit, i + formatRider.Length);
 
-#pragma warning disable 6506
                 // Presharp warns that runProps is not validated, but it can never be null 
                 // because the rider is already checked to be in range
                 GenericTextRunProperties runProps = formatRider.CurrentElement as GenericTextRunProperties;
@@ -365,7 +344,7 @@ namespace System.Windows.Media
                     runProps.CultureInfo,
                     runProps.NumberSubstitution
                     );
-#pragma warning restore 6506
+
                 _latestPosition = _formatRuns.SetValue(formatRider.CurrentPosition, i - formatRider.CurrentPosition, newProps, formatRider.SpanPosition);
             }
         }
@@ -417,7 +396,6 @@ namespace System.Windows.Media
                 SpanRider formatRider = new SpanRider(_formatRuns, _latestPosition, i);
                 i = Math.Min(limit, i + formatRider.Length);
 
-#pragma warning disable 6506
                 // Presharp warns that runProps is not validated, but it can never be null 
                 // because the rider is already checked to be in range
                 GenericTextRunProperties runProps = formatRider.CurrentElement as GenericTextRunProperties;
@@ -440,7 +418,7 @@ namespace System.Windows.Media
                     runProps.CultureInfo,
                     runProps.NumberSubstitution
                     );
-#pragma warning restore 6506
+
                 _latestPosition = _formatRuns.SetValue(formatRider.CurrentPosition, i - formatRider.CurrentPosition, newProps, formatRider.SpanPosition);
                 InvalidateMetrics();
             }
@@ -472,7 +450,6 @@ namespace System.Windows.Media
                 SpanRider formatRider = new SpanRider(_formatRuns, _latestPosition, i);
                 i = Math.Min(limit, i + formatRider.Length);
 
-#pragma warning disable 6506
                 // Presharp warns that runProps is not validated, but it can never be null 
                 // because the rider is already checked to be in range
                 GenericTextRunProperties runProps = formatRider.CurrentElement as GenericTextRunProperties;
@@ -495,7 +472,7 @@ namespace System.Windows.Media
                     runProps.NumberSubstitution
                     );
                 _latestPosition = _formatRuns.SetValue(formatRider.CurrentPosition, i - formatRider.CurrentPosition, newProps, formatRider.SpanPosition);
-#pragma warning restore 6506
+
                 InvalidateMetrics();
             }
         }
@@ -525,7 +502,6 @@ namespace System.Windows.Media
                 SpanRider formatRider = new SpanRider(_formatRuns, _latestPosition, i);
                 i = Math.Min(limit, i + formatRider.Length);
 
-#pragma warning disable 6506 
                 // Presharp warns that runProps is not validated, but it can never be null 
                 // because the rider is already checked to be in range
                 GenericTextRunProperties runProps = formatRider.CurrentElement as GenericTextRunProperties;
@@ -547,7 +523,7 @@ namespace System.Windows.Media
                     culture,
                     runProps.NumberSubstitution
                     );
-#pragma warning restore 6506
+
                 _latestPosition = _formatRuns.SetValue(formatRider.CurrentPosition, i - formatRider.CurrentPosition, newProps, formatRider.SpanPosition);
                 InvalidateMetrics();
             }
@@ -584,7 +560,6 @@ namespace System.Windows.Media
                 SpanRider formatRider = new SpanRider(_formatRuns, _latestPosition, i);
                 i = Math.Min(limit, i + formatRider.Length);
 
-#pragma warning disable 6506
                 // Presharp warns that runProps is not validated, but it can never be null 
                 // because the rider is already checked to be in range
                 GenericTextRunProperties runProps = formatRider.CurrentElement as GenericTextRunProperties;
@@ -614,7 +589,7 @@ namespace System.Windows.Media
                     runProps.CultureInfo,
                     numberSubstitution
                     );
-#pragma warning restore 6506
+
                 _latestPosition = _formatRuns.SetValue(formatRider.CurrentPosition, i - formatRider.CurrentPosition, newProps, formatRider.SpanPosition);
                 InvalidateMetrics();
             }
@@ -643,7 +618,6 @@ namespace System.Windows.Media
                 SpanRider formatRider = new SpanRider(_formatRuns, _latestPosition, i);
                 i = Math.Min(limit, i + formatRider.Length);
 
-#pragma warning disable 6506 
                 // Presharp warns that runProps is not validated, but it can never be null 
                 // because the rider is already checked to be in range
                 GenericTextRunProperties runProps = formatRider.CurrentElement as GenericTextRunProperties;
@@ -666,7 +640,6 @@ namespace System.Windows.Media
                     runProps.CultureInfo,
                     runProps.NumberSubstitution
                     );
-#pragma warning restore 6506 
                 _latestPosition = _formatRuns.SetValue(formatRider.CurrentPosition, i - formatRider.CurrentPosition, newProps, formatRider.SpanPosition);
                 InvalidateMetrics();
             }
@@ -695,7 +668,6 @@ namespace System.Windows.Media
                 SpanRider formatRider = new SpanRider(_formatRuns, _latestPosition, i);
                 i = Math.Min(limit, i + formatRider.Length);
 
-#pragma warning disable 6506 
                 // Presharp warns that runProps is not validated, but it can never be null 
                 // because the rider is already checked to be in range
                 GenericTextRunProperties runProps = formatRider.CurrentElement as GenericTextRunProperties;
@@ -718,7 +690,6 @@ namespace System.Windows.Media
                     runProps.CultureInfo,
                     runProps.NumberSubstitution
                     );
-#pragma warning restore 6506 
                 
                 _latestPosition = _formatRuns.SetValue(formatRider.CurrentPosition, i - formatRider.CurrentPosition, newProps, formatRider.SpanPosition);
                 InvalidateMetrics(); // invalidate cached metrics
@@ -748,7 +719,6 @@ namespace System.Windows.Media
                 SpanRider formatRider = new SpanRider(_formatRuns, _latestPosition, i);
                 i = Math.Min(limit, i + formatRider.Length);
 
-#pragma warning disable 6506 
                 // Presharp warns that runProps is not validated, but it can never be null 
                 // because the rider is already checked to be in range
                 GenericTextRunProperties runProps = formatRider.CurrentElement as GenericTextRunProperties;
@@ -772,7 +742,6 @@ namespace System.Windows.Media
                     runProps.NumberSubstitution
                     );
                 _latestPosition = _formatRuns.SetValue(formatRider.CurrentPosition, i - formatRider.CurrentPosition, newProps, formatRider.SpanPosition);
-#pragma warning restore 6506 
                 
                 InvalidateMetrics();
             }
@@ -801,7 +770,6 @@ namespace System.Windows.Media
                 SpanRider formatRider = new SpanRider(_formatRuns, _latestPosition, i);
                 i = Math.Min(limit, i + formatRider.Length);
 
-#pragma warning disable 6506 
                 // Presharp warns that runProps is not validated, but it can never be null 
                 // because the rider is already checked to be in range
                 GenericTextRunProperties runProps = formatRider.CurrentElement as GenericTextRunProperties;
@@ -823,7 +791,6 @@ namespace System.Windows.Media
                     runProps.CultureInfo,
                     runProps.NumberSubstitution
                     );
-#pragma warning restore 6506 
                 
                 _latestPosition = _formatRuns.SetValue(formatRider.CurrentPosition, i - formatRider.CurrentPosition, newProps, formatRider.SpanPosition);
                 InvalidateMetrics();
@@ -853,7 +820,6 @@ namespace System.Windows.Media
                 SpanRider formatRider = new SpanRider(_formatRuns, _latestPosition, i);
                 i = Math.Min(limit, i + formatRider.Length);
 
-#pragma warning disable 6506 
                 // Presharp warns that runProps is not validated, but it can never be null 
                 // because the rider is already checked to be in range
                 GenericTextRunProperties runProps = formatRider.CurrentElement as GenericTextRunProperties;
@@ -875,7 +841,6 @@ namespace System.Windows.Media
                     runProps.CultureInfo,
                     runProps.NumberSubstitution
                     );
-#pragma warning restore 6506 
                 
                 _latestPosition = _formatRuns.SetValue(formatRider.CurrentPosition, i - formatRider.CurrentPosition, newProps, formatRider.SpanPosition);
             }
@@ -892,20 +857,20 @@ namespace System.Windows.Media
         /// </summary>
         private struct LineEnumerator : IEnumerator, IDisposable
         {
-            int             _textStorePosition;
-            int             _lineCount;
-            double          _totalHeight;
-            TextLine        _currentLine;
-            TextLine        _nextLine;
-            TextFormatter   _formatter;
-            FormattedText   _that;
+            private int             _textStorePosition;
+            private int             _lineCount;
+            private double          _totalHeight;
+            private TextLine        _currentLine;
+            private TextLine        _nextLine;
+            private TextFormatter   _formatter;
+            private FormattedText   _that;
 
             // these are needed because _currentLine can be disposed before the next MoveNext() call
-            double          _previousHeight;
-            int             _previousLength;
+            private double          _previousHeight;
+            private int             _previousLength;
 
             // line break before _currentLine, needed in case we have to reformat it with collapsing symbol
-            TextLineBreak       _previousLineBreak;
+            private TextLineBreak       _previousLineBreak;
 
             internal LineEnumerator(FormattedText text)
             {
@@ -1084,8 +1049,7 @@ namespace System.Windows.Media
                             TextWrapping currentWrap = _that._defaultParaProps.TextWrapping;
                             _that._defaultParaProps.SetTextWrapping(TextWrapping.NoWrap);
 
-                            if (currentLineBreak != null)
-                                currentLineBreak.Dispose();
+                            currentLineBreak?.Dispose();
 
                             _currentLine.Dispose();
                             _currentLine = FormatLine(
@@ -1104,8 +1068,7 @@ namespace System.Windows.Media
                 _previousHeight = _currentLine.Height;
                 _previousLength = _currentLine.Length;
 
-                if (_previousLineBreak != null)
-                    _previousLineBreak.Dispose();
+                _previousLineBreak?.Dispose();
 
                 _previousLineBreak = currentLineBreak;
 
@@ -1315,7 +1278,7 @@ namespace System.Windows.Media
         public void SetMaxTextWidths(double [] maxTextWidths)
         {
             if (maxTextWidths == null || maxTextWidths.Length <= 0)
-                throw new ArgumentNullException("maxTextWidths");
+                throw new ArgumentNullException(nameof(maxTextWidths));
             _maxTextWidths = maxTextWidths;
             InvalidateMetrics();
         }
@@ -1344,10 +1307,10 @@ namespace System.Windows.Media
             set
             {
                 if (value <= 0)
-                    throw new ArgumentOutOfRangeException("value", SR.Format(SR.PropertyMustBeGreaterThanZero, "MaxTextHeight"));
+                    throw new ArgumentOutOfRangeException(nameof(value), SR.Format(SR.PropertyMustBeGreaterThanZero, "MaxTextHeight"));
 
                 if (double.IsNaN(value))
-                    throw new ArgumentOutOfRangeException("value", SR.Format(SR.PropertyValueCannotBeNaN, "MaxTextHeight"));
+                    throw new ArgumentOutOfRangeException(nameof(value), SR.Format(SR.PropertyValueCannotBeNaN, "MaxTextHeight"));
 
                 _maxTextHeight = value;
                 InvalidateMetrics();
@@ -1958,8 +1921,10 @@ namespace System.Windows.Media
                         {
                             if (accumulatedGeometry == null)
                             {
-                                accumulatedGeometry = new GeometryGroup();
-                                accumulatedGeometry.FillRule = FillRule.Nonzero;
+                                accumulatedGeometry = new GeometryGroup
+                                {
+                                    FillRule = FillRule.Nonzero
+                                };
                             }
                             accumulatedGeometry.Children.Add(glyphRunGeometry);                        
                         }
@@ -1998,8 +1963,10 @@ namespace System.Windows.Media
                             }
                             if (accumulatedGeometry == null)
                             {
-                                accumulatedGeometry = new GeometryGroup();
-                                accumulatedGeometry.FillRule = FillRule.Nonzero;
+                                accumulatedGeometry = new GeometryGroup
+                                {
+                                    FillRule = FillRule.Nonzero
+                                };
                             }
                             accumulatedGeometry.Children.Add(geometry);
                         }
@@ -2038,7 +2005,7 @@ namespace System.Windows.Media
 
         #region Constants
 
-        const double MaxFontEmSize = Constants.RealInfiniteWidth / Constants.GreatestMutiplierOfEm;
+        private const double MaxFontEmSize = Constants.RealInfiniteWidth / Constants.GreatestMutiplierOfEm;
 
         #endregion
     }

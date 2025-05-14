@@ -1,27 +1,12 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 #if !DONOTREFPRINTINGASMMETA
-//
-//
-// Description: Manages plug-in document serializers
-//
-//              See spec at <Need to post existing spec>
-//
 
-using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
-using System.Reflection;
-using System.Security;
 using System.Windows.Xps.Serialization;
-using System.Diagnostics.CodeAnalysis;
 using Microsoft.Win32;
-using MS.Internal.PresentationFramework;
-
-#pragma warning disable 1634, 1691  // suppressing PreSharp warnings
 
 namespace System.Windows.Documents.Serialization
 {

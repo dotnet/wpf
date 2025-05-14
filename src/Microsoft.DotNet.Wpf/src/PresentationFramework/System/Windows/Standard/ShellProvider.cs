@@ -1,20 +1,17 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 
+
+using System.Runtime.InteropServices;
+using System.Runtime.InteropServices.ComTypes;
+using System.Text;
+using MS.Internal.Interop;
+
+using FILETIME = System.Runtime.InteropServices.ComTypes.FILETIME;
 
 namespace Standard
 {
-    using System;
-    using System.Runtime.InteropServices;
-    using System.Runtime.InteropServices.ComTypes;
-    using System.Security;
-    using System.Text;
-    using MS.Internal.Interop;
-
-    using FILETIME = System.Runtime.InteropServices.ComTypes.FILETIME;
-
     #region Enums and Static Property Classes
 
     /// <summary>ShellItem attribute flags.  SIATTRIBFLAGS_*</summary>
@@ -429,7 +426,7 @@ namespace Standard
         InterfaceType(ComInterfaceType.InterfaceIsIUnknown),
         Guid(IID.ObjectArray),
     ]
-    interface IObjectCollection : IObjectArray
+    internal interface IObjectCollection : IObjectArray
     {
         #region IObjectArray redeclarations
         new uint GetCount();
@@ -611,7 +608,7 @@ namespace Standard
         InterfaceType(ComInterfaceType.InterfaceIsIUnknown),
         Guid(IID.ShellItem2),
     ]
-    interface IShellItem2 : IShellItem
+    internal interface IShellItem2 : IShellItem
     {
         #region IShellItem redeclarations
         [return: MarshalAs(UnmanagedType.Interface)]

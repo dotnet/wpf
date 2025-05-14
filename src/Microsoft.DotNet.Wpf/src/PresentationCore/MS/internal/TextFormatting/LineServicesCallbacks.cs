@@ -1,48 +1,17 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
-/* SSS_DROP_BEGIN */
-
-/*************************************************************************
-* NOTICE: Code excluded from Developer Reference Sources.
-*         Don't remove the SSS_DROP_BEGIN directive on top of the file.
-*******************************************************************/
-
-
-using System;
-using System.Diagnostics;
-using System.Collections;
-using System.Collections.Generic;
 using System.Runtime.InteropServices;
-using System.Security;
 using System.Windows;
 using System.Globalization;
 using System.Windows.Media;
-using System.Windows.Media.Animation;
 using System.Windows.Media.TextFormatting;
-using MS.Internal;
-using MS.Internal.Shaping;
-using MS.Internal.FontCache;
-
-using SR=MS.Internal.PresentationCore.SR;
 
 using MS.Internal.Text.TextInterface;
 
-// Disabling 1634 and 1691: 
-// In order to avoid generating warnings about unknown message numbers and 
-// unknown pragmas when compiling C# source code with the C# compiler, 
-// you need to disable warnings 1634 and 1691. (Presharp Documentation)
-#pragma warning disable 1634, 1691
-
-// Disabling 6500: 
-// Suppressing PRESHARP:Warning 6500 Fatal exceptions (NULLReferenceException, SEHException) 
-// potentially ignored by this catch.
 // LineServices callbacks are designed to catch all exceptions such than an error code can be 
 // returned to Line Services engine. An exception is eventually re-thrown to the user after line
 // services engine finishes cleaning up and returns the control to line layout code.
-//
-#pragma warning disable 6500
 
 namespace MS.Internal.TextFormatting
 {
@@ -645,8 +614,10 @@ namespace MS.Internal.TextFormatting
 
                 alignment = LsKAlign.lskalRight;
 
-                lschp = new LsChp();
-                lschp.idObj = (ushort)TextStore.ObjectId.Text_chp;
+                lschp = new LsChp
+                {
+                    idObj = (ushort)TextStore.ObjectId.Text_chp
+                };
 
                 SetChpFormat(lsrun.RunProp, ref lschp);
 
@@ -1263,7 +1234,7 @@ namespace MS.Internal.TextFormatting
                     break;
 
                 default:
-                    Debug.Assert(false, "Not supported TextDecorationUnit");
+                    Debug.Fail("Not supported TextDecorationUnit");
                     break;
             }
 
@@ -1290,7 +1261,7 @@ namespace MS.Internal.TextFormatting
                     break;
 
                 default:
-                    Debug.Assert(false, "Not supported TextDecorationUnit");
+                    Debug.Fail("Not supported TextDecorationUnit");
                     break;
             }
 
@@ -1344,7 +1315,7 @@ namespace MS.Internal.TextFormatting
                             );
 
                         // adjust the pen's thickness as it will be scaled back by the scale transform
-                        drawingPenThickness = drawingPenThickness / Math.Abs(unitValue);
+                        drawingPenThickness /= Math.Abs(unitValue);
                                                     
                         // applied transforms
                         drawingContext.PushTransform(scaleTransform);
@@ -2332,14 +2303,16 @@ namespace MS.Internal.TextFormatting
                 switch (objectId)
                 {
                     case (uint)TextStore.ObjectId.InlineObject:
-                        InlineInit inlineInit = new InlineInit();
-                        inlineInit.pfnFormat = this.InlineFormatDelegate;
-                        inlineInit.pfnDraw = this.InlineDrawDelegate;
+                        InlineInit inlineInit = new InlineInit
+                        {
+                            pfnFormat = this.InlineFormatDelegate,
+                            pfnDraw = this.InlineDrawDelegate
+                        };
                         Marshal.StructureToPtr(inlineInit, (System.IntPtr)objectInfo, false);
                         break;
 
                     default:
-                        Debug.Assert(false, "Unsupported installed object!");
+                        Debug.Fail("Unsupported installed object!");
                         break;
                 }
             }
@@ -2398,8 +2371,10 @@ namespace MS.Internal.TextFormatting
                     rightMargin
                     );
 
-                pobjDim = new ObjDim();
-                pobjDim.dur = TextFormatterImp.RealToIdeal(metrics.Width);
+                pobjDim = new ObjDim
+                {
+                    dur = TextFormatterImp.RealToIdeal(metrics.Width)
+                };
                 pobjDim.heightsRef.dvMultiLineHeight = TextFormatterImp.RealToIdeal(metrics.Height);
                 pobjDim.heightsRef.dvAscent = TextFormatterImp.RealToIdeal(metrics.Baseline);
                 pobjDim.heightsRef.dvDescent = pobjDim.heightsRef.dvMultiLineHeight - pobjDim.heightsRef.dvAscent;

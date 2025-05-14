@@ -1,22 +1,18 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
-        
+
+#region Using declarations
+
+using System.Windows.Automation.Peers;
+using System.Windows.Data;
+using System.Windows.Media;
+
 #if RIBBON_IN_FRAMEWORK
 namespace System.Windows.Controls.Ribbon
 #else
 namespace Microsoft.Windows.Controls.Ribbon
 #endif
 {
-    #region Using declarations
-
-    using System;
-    using System.ComponentModel;
-    using System.Windows;
-    using System.Windows.Automation.Peers;
-    using System.Windows.Controls;
-    using System.Windows.Data;
-    using System.Windows.Media;
 #if !RIBBON_IN_FRAMEWORK
     using Microsoft.Windows.Automation.Peers;
 #endif
@@ -115,10 +111,12 @@ namespace Microsoft.Windows.Controls.Ribbon
             // DefinitionBase.PrivateSharedSizeScopeProperty
             if (newParent != null)
             {
-                Binding binding = new Binding();
-                binding.Path = new PropertyPath(PrivateSharedSizeScopeProperty);
-                binding.Mode = BindingMode.OneWay;
-                binding.Source = newParent;
+                Binding binding = new Binding
+                {
+                    Path = new PropertyPath(PrivateSharedSizeScopeProperty),
+                    Mode = BindingMode.OneWay,
+                    Source = newParent
+                };
                 BindingOperations.SetBinding(this, PrivateSharedSizeScopeProperty, binding);
             }
 

@@ -1,6 +1,5 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 //
 // Description:
@@ -9,15 +8,11 @@
 //   NaturalLanguage6.dll - the component owned by the Natural Language Team.
 //
 
-using System.Security;
-using System.Collections;
 using System.Globalization;
-using System.IO;
 using System.Runtime.InteropServices;
 using System.Windows.Media.TextFormatting;
-using MS.Win32;
 using MS.Internal;
-using DllImport=MS.Internal.PresentationFramework.DllImport;
+using DllImport = MS.Internal.PresentationFramework.DllImport;
 
 namespace System.Windows.Documents
 {

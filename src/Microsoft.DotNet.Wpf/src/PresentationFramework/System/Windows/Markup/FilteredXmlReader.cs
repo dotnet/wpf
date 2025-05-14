@@ -1,6 +1,5 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 //
 // Description: An implementation of XmlReader that filters out certain bits
@@ -37,15 +36,11 @@
 //  prefix within this chunk of XML is not allowed.
 //
 
-using System;       // InvalidOperationException
-using System.IO;    // TextReader
 using System.Xml;   // XmlTextReader
-
-using MS.Utility;   // ExceptionStringTable
 
 namespace System.Windows.Markup
 {
-internal class FilteredXmlReader : XmlTextReader
+    internal class FilteredXmlReader : XmlTextReader
 {
     //------------------------------------------------------
     //
@@ -348,30 +343,31 @@ internal class FilteredXmlReader : XmlTextReader
         }
     }
 
-    #endregion Private Methods
+        #endregion Private Methods
 
-    //------------------------------------------------------
-    //
-    //  Private Fields
-    //
-    //------------------------------------------------------
+        //------------------------------------------------------
+        //
+        //  Private Fields
+        //
+        //------------------------------------------------------
 
-    #region Private Fields
+        #region Private Fields
 
-    // These are fixed, by definition of the Uid feature.
-    const string uidLocalName = "Uid";
-    const string uidNamespace = XamlReaderHelper.DefinitionNamespaceURI;
-    const string defaultPrefix = "def";
+        // These are fixed, by definition of the Uid feature.
+        private const string uidLocalName = "Uid";
+        private const string uidNamespace = XamlReaderHelper.DefinitionNamespaceURI;
+        private const string defaultPrefix = "def";
 
-    // Best known information on the Definition prefix, updated as we know more.
-          string uidPrefix;  
-    // Best known information on the fully qualified name, updated as we know more.  
-    //  (Updated at same time as uidPrefix.)    
-          string uidQualifiedName; 
+        // Best known information on the Definition prefix, updated as we know more.
+        private string uidPrefix;
 
-    // Every time we move to another XML element, we try to see if there is
-    //  a "x:UID" on the node.
-    bool  haveUid;
+        // Best known information on the fully qualified name, updated as we know more.  
+        //  (Updated at same time as uidPrefix.)    
+        private string uidQualifiedName;
+
+        // Every time we move to another XML element, we try to see if there is
+        //  a "x:UID" on the node.
+        private bool  haveUid;
 
     #endregion Private Fields
 }

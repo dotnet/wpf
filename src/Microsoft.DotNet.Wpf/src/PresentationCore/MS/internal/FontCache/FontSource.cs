@@ -1,6 +1,5 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 //
 // 
@@ -8,27 +7,13 @@
 //
 //
 
-using System;
-using System.Collections;
-using System.ComponentModel;
-using System.Diagnostics;
-using System.Globalization;
 using System.IO;
 using System.IO.Packaging;
 using System.Net;
 using System.Reflection;
 using System.Resources;
 using System.Runtime.InteropServices;
-using System.Security;
-using System.Windows;
-using System.Windows.Media;
-using System.Windows.Threading;
-
-using MS.Win32;
-using MS.Utility;
-using MS.Internal;
 using MS.Internal.IO.Packaging;
-using MS.Internal.PresentationCore;
 using MS.Internal.Text.TextInterface;
 
 namespace MS.Internal.FontCache
@@ -39,7 +24,7 @@ namespace MS.Internal.FontCache
         
         public IFontSource Create(string uriString)
         {
-            return new FontSource(new Uri(uriString), false);
+            return new FontSource(new Uri(uriString));
         }
     }
 
@@ -57,31 +42,29 @@ namespace MS.Internal.FontCache
 
         #region Constructors
 
-        public FontSource(Uri fontUri, bool skipDemand)
+        public FontSource(Uri fontUri)
         {
-            Initialize(fontUri, skipDemand, false, isInternalCompositeFont: false);
+            Initialize(fontUri, false, isInternalCompositeFont: false);
         }
 
-        public FontSource(Uri fontUri, bool skipDemand, bool isComposite)
+        public FontSource(Uri fontUri, bool isComposite)
         {
-            Initialize(fontUri, skipDemand, isComposite, isInternalCompositeFont: false);
+            Initialize(fontUri, isComposite, isInternalCompositeFont: false);
         }
 
         /// <summary>
         /// Allows WPF to construct its internal CompositeFonts from resource URIs.
         /// </summary>
         /// <param name="fontUri"></param>
-        /// <param name="skipDemand"></param>
         /// <param name="isComposite"></param>
-        public FontSource(Uri fontUri, bool skipDemand, bool isComposite, bool isInternalCompositeFont)
+        public FontSource(Uri fontUri, bool isComposite, bool isInternalCompositeFont)
         {
-            Initialize(fontUri, skipDemand, isComposite, isInternalCompositeFont);
+            Initialize(fontUri, isComposite, isInternalCompositeFont);
         }
 
-        private void Initialize(Uri fontUri, bool skipDemand, bool isComposite, bool isInternalCompositeFont)
+        private void Initialize(Uri fontUri, bool isComposite, bool isInternalCompositeFont)
         {
             _fontUri = fontUri;
-            _skipDemand = skipDemand;
             _isComposite = isComposite;
             _isInternalCompositeFont = isInternalCompositeFont;
             Invariant.Assert(_isInternalCompositeFont || _fontUri.IsAbsoluteUri);
@@ -101,7 +84,13 @@ namespace MS.Internal.FontCache
         /// <summary>
         /// Use this to ensure we don't call Uri.IsFile on a relative URI.
         /// </summary>
-        public bool IsFile { get { return !_isInternalCompositeFont && _fontUri.IsFile; } }
+        public bool IsFile
+        {
+            get
+            {
+                return !_isInternalCompositeFont && _fontUri.IsFile;
+            }
+        }
 
         public bool IsComposite
         {
@@ -176,9 +165,9 @@ namespace MS.Internal.FontCache
             byte[] bits;
 
             // Try our cache first.
-            lock (_resourceCache)
+            lock (s_resourceCache)
             {
-                bits = _resourceCache.Get(_fontUri);
+                bits = s_resourceCache.Get(_fontUri);
             }
 
             if (bits == null)
@@ -194,7 +183,7 @@ namespace MS.Internal.FontCache
                 {
                     WebResponse response = WpfWebRequestHelper.CreateRequestAndGetResponse(_fontUri);
                     fontStream = response.GetResponseStream();
-                    if (String.Equals(response.ContentType, ObfuscatedContentType, StringComparison.Ordinal))
+                    if (string.Equals(response.ContentType, ObfuscatedContentType, StringComparison.Ordinal))
                     {
                         // The third parameter makes sure the original stream is closed
                         // when the deobfuscating stream is disposed.
@@ -202,19 +191,19 @@ namespace MS.Internal.FontCache
                     }
                 }
 
-                UnmanagedMemoryStream unmanagedStream = fontStream as UnmanagedMemoryStream;
+                // We don't want any memory leaks
+                // TODO: Remove FinalizableUnmanagedStream once FontFileStream is migrated from C++/CLI.
+                if (fontStream is UnmanagedMemoryStream unmanagedMemoryStream)
+                    return new FinalizableUnmanagedStream(unmanagedMemoryStream);
 
-                if (unmanagedStream != null)
-                    return unmanagedStream;
-
+                // Convert the DeobfuscatingStream to byte[]; add it to our cache, dispose it
                 bits = StreamToByteArray(fontStream);
+                lock (s_resourceCache)
+                {
+                    s_resourceCache.Add(_fontUri, bits, false);
+                }
 
-                fontStream?.Close();
-            }
-
-            lock (_resourceCache)
-            {
-                _resourceCache.Add(_fontUri, bits, false);
+                fontStream.Close();
             }
 
             return ByteArrayToUnmanagedStream(bits);
@@ -249,9 +238,9 @@ namespace MS.Internal.FontCache
             byte[] bits;
 
             // Try our cache first.
-            lock (_resourceCache)
+            lock (s_resourceCache)
             {
-                bits = _resourceCache.Get(_fontUri);
+                bits = s_resourceCache.Get(_fontUri);
             }
 
             if (bits != null)
@@ -365,10 +354,10 @@ namespace MS.Internal.FontCache
         {
             string fontFilename = _fontUri.OriginalString.Substring(_fontUri.OriginalString.LastIndexOf('/') + 1).ToLowerInvariant();
 
-            var fontResourceAssembly = Assembly.GetExecutingAssembly();
-            ResourceManager rm = new ResourceManager($"{fontResourceAssembly.GetName().Name}.g", fontResourceAssembly);
+            Assembly fontResourceAssembly = Assembly.GetExecutingAssembly();
+            ResourceManager rm = new($"{ReflectionUtils.GetAssemblyPartialName(fontResourceAssembly)}.g", fontResourceAssembly);
 
-            return rm?.GetStream($"fonts/{fontFilename}");
+            return rm.GetStream($"fonts/{fontFilename}");
         }
 
         #endregion Private Methods
@@ -380,6 +369,26 @@ namespace MS.Internal.FontCache
         //------------------------------------------------------
 
         #region Private Classes
+
+        /// <summary>
+        /// Calls <see cref="UnmanagedMemoryStream.Dispose"/> from the destructor.
+        /// </summary>
+        // TODO: Remove this once FontFileStream is migrated from C++/CLI.
+        private sealed class FinalizableUnmanagedStream : UnmanagedMemoryStream
+        {
+            private readonly UnmanagedMemoryStream _unmanaged;
+
+            internal unsafe FinalizableUnmanagedStream(UnmanagedMemoryStream unmanagedStream)
+            {
+                _unmanaged = unmanagedStream;
+                Initialize(_unmanaged.PositionPointer, _unmanaged.Length, _unmanaged.Length, FileAccess.Read);
+            }
+
+            ~FinalizableUnmanagedStream()
+            {
+                _unmanaged.Dispose();
+            }
+        }
 
         private class PinnedByteArrayStream : UnmanagedMemoryStream
         {
@@ -433,9 +442,7 @@ namespace MS.Internal.FontCache
 
         private Uri     _fontUri;
 
-        private bool    _skipDemand;
-
-        private static SizeLimitedCache<Uri, byte[]> _resourceCache = new SizeLimitedCache<Uri, byte[]>(MaximumCacheItems);
+        private static readonly SizeLimitedCache<Uri, byte[]> s_resourceCache = new(MaximumCacheItems);
 
         /// <summary>
         /// The maximum number of fonts downloaded from pack:// Uris.

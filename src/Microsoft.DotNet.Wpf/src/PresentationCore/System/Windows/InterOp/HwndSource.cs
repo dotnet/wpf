@@ -1,32 +1,16 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
-//
-
-using System.Collections;
-using System.Collections.Generic;
 using System.Threading;
 using System.Windows.Threading;
 using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Interop;
 using System.Runtime.InteropServices;
 using MS.Win32;
 using MS.Utility;
 using MS.Internal;
 using MS.Internal.Interop;
-using MS.Internal.PresentationCore;                        // SecurityHelper
-using Microsoft.Win32;
-using System.Diagnostics;
 using System.ComponentModel;
-using System;
-using System.Security;
-using System.IO;
-
-using SR = MS.Internal.PresentationCore.SR;
-
-#pragma warning disable 1634, 1691  // suppressing PreSharp warnings
 
 namespace System.Windows.Interop
 {
@@ -77,10 +61,12 @@ namespace System.Windows.Interop
             IntPtr parent)
         {
 
-            HwndSourceParameters param = new HwndSourceParameters(name);
-            param.WindowClassStyle = classStyle;
-            param.WindowStyle = style;
-            param.ExtendedWindowStyle = exStyle;
+            HwndSourceParameters param = new HwndSourceParameters(name)
+            {
+                WindowClassStyle = classStyle,
+                WindowStyle = style,
+                ExtendedWindowStyle = exStyle
+            };
             param.SetPosition(x, y);
             param.ParentWindow = parent;
             Initialize(param);
@@ -136,10 +122,12 @@ namespace System.Windows.Interop
                           bool adjustSizingForNonClientArea)
         {
 
-            HwndSourceParameters parameters = new HwndSourceParameters(name, width, height);
-            parameters.WindowClassStyle = classStyle;
-            parameters.WindowStyle = style;
-            parameters.ExtendedWindowStyle = exStyle;
+            HwndSourceParameters parameters = new HwndSourceParameters(name, width, height)
+            {
+                WindowClassStyle = classStyle,
+                WindowStyle = style,
+                ExtendedWindowStyle = exStyle
+            };
             parameters.SetPosition(x, y);
             parameters.ParentWindow = parent;
             parameters.AdjustSizingForNonClientArea = adjustSizingForNonClientArea;
@@ -192,10 +180,12 @@ namespace System.Windows.Interop
             IntPtr parent)
         {
 
-            HwndSourceParameters parameters = new HwndSourceParameters(name, width, height);
-            parameters.WindowClassStyle = classStyle;
-            parameters.WindowStyle = style;
-            parameters.ExtendedWindowStyle = exStyle;
+            HwndSourceParameters parameters = new HwndSourceParameters(name, width, height)
+            {
+                WindowClassStyle = classStyle,
+                WindowStyle = style,
+                ExtendedWindowStyle = exStyle
+            };
             parameters.SetPosition(x, y);
             parameters.ParentWindow = parent;
             Initialize(parameters);
@@ -219,8 +209,8 @@ namespace System.Windows.Interop
         /// <param name="parameters"> parameter block </param>
         private void Initialize(HwndSourceParameters parameters)
         {
-            _mouse = new SecurityCriticalDataClass<HwndMouseInputProvider>(new HwndMouseInputProvider(this));
-            _keyboard = new SecurityCriticalDataClass<HwndKeyboardInputProvider>(new HwndKeyboardInputProvider(this));
+            _mouse = new HwndMouseInputProvider(this);
+            _keyboard = new HwndKeyboardInputProvider(this);
 
             _layoutHook = new HwndWrapperHook(LayoutFilterMessage);
             _inputHook = new HwndWrapperHook(InputFilterMessage);
@@ -274,9 +264,11 @@ namespace System.Windows.Interop
                                        parameters.ParentWindow,
                                        wrapperHooks);
 
-            _hwndTarget = new HwndTarget(_hwndWrapper.Handle);
-            _hwndTarget.UsesPerPixelOpacity = parameters.EffectivePerPixelOpacity;
-            if(_hwndTarget.UsesPerPixelOpacity)
+            _hwndTarget = new HwndTarget(_hwndWrapper.Handle)
+            {
+                UsesPerPixelOpacity = parameters.EffectivePerPixelOpacity
+            };
+            if (_hwndTarget.UsesPerPixelOpacity)
             {
                 _hwndTarget.BackgroundColor = Colors.Transparent;
 
@@ -316,16 +308,16 @@ namespace System.Windows.Interop
                 // Choose between Wisp and Pointer stacks
                 if (StylusLogic.IsPointerStackEnabled)
                 {
-                    _stylus = new SecurityCriticalDataClass<IStylusInputProvider>(new HwndPointerInputProvider(this));
+                    _stylus = new HwndPointerInputProvider(this);
                 }
                 else
                 {
-                    _stylus = new SecurityCriticalDataClass<IStylusInputProvider>(new HwndStylusInputProvider(this));
+                    _stylus = new HwndStylusInputProvider(this);
                 }
             }
 
             // WM_APPCOMMAND events are handled thru this.
-            _appCommand = new SecurityCriticalDataClass<HwndAppCommandInputProvider>(new HwndAppCommandInputProvider(this));
+            _appCommand = new HwndAppCommandInputProvider(this);
 
             // Register the top level source with the ComponentDispatcher.
             if (parameters.TreatAsInputRoot)
@@ -410,13 +402,13 @@ namespace System.Windows.Interop
         internal override IInputProvider GetInputProvider(Type inputDevice)
         {
             if (inputDevice == typeof(MouseDevice))
-                return (_mouse    != null ?    _mouse.Value : null);
+                return _mouse;
 
             if (inputDevice == typeof(KeyboardDevice))
-                return (_keyboard != null ? _keyboard.Value : null);
+                return _keyboard;
 
             if (inputDevice == typeof(StylusDevice))
-                return (_stylus   != null ?   _stylus.Value : null);
+                return _stylus;
 
             return null;
         }
@@ -451,7 +443,7 @@ namespace System.Windows.Interop
 
                 // New world transform has been set-up by HwndTarget
                 // set the layouts size again to account for this
-                if (IsLayoutActive() == true)
+                if (IsLayoutActive())
                 {
                     // Call the helper method SetLayoutSize to set Layout's size
                     // We may already be inside a call to SetLayoutSize - schedule another call
@@ -505,7 +497,7 @@ namespace System.Windows.Interop
                 // whichever code handles the DPI changes set up updated
                 // window sizes etc. in screen/client coordinates, and now
                 // we must adapt and update the corresponding layout sizes as well.
-                if (IsLayoutActive() == true)
+                if (IsLayoutActive())
                 {
                     // Call the helper method SetLayoutSize to set Layout's size
                     // We may already be inside a call to SetLayoutSize - schedule another call
@@ -557,7 +549,7 @@ namespace System.Windows.Interop
             {
                 if (_isDisposed)
                     return null;
-                return (_rootVisual.Value);
+                return (_rootVisual);
             }
             set
             {
@@ -571,29 +563,29 @@ namespace System.Windows.Interop
         {
             set
             {
-                if (_rootVisual.Value != value)
+                if (_rootVisual != value)
                 {
-                    Visual oldRoot = _rootVisual.Value;
+                    Visual oldRoot = _rootVisual;
 
                     if(value != null)
                     {
-                        _rootVisual.Value = value;
+                        _rootVisual = value;
 
-                        if(_rootVisual.Value is UIElement)
+                        if(_rootVisual is UIElement)
                         {
-                            ((UIElement)(_rootVisual.Value)).LayoutUpdated += new EventHandler(OnLayoutUpdated);
+                            ((UIElement)(_rootVisual)).LayoutUpdated += new EventHandler(OnLayoutUpdated);
                         }
 
-                        if (_hwndTarget != null && _hwndTarget.IsDisposed == false)
+                        if (_hwndTarget != null && !_hwndTarget.IsDisposed)
                         {
-                            _hwndTarget.RootVisual = _rootVisual.Value;
+                            _hwndTarget.RootVisual = _rootVisual;
                         }
 
                         UIElement.PropagateResumeLayout(null, value);
                     }
                     else
                     {
-                        _rootVisual.Value = null;
+                        _rootVisual = null;
                         if (_hwndTarget != null && !_hwndTarget.IsDisposed)
                         {
                             _hwndTarget.RootVisual = null;
@@ -610,9 +602,9 @@ namespace System.Windows.Interop
                         UIElement.PropagateSuspendLayout(oldRoot);
                     }
 
-                    RootChanged(oldRoot, _rootVisual.Value);
+                    RootChanged(oldRoot, _rootVisual);
 
-                    if (IsLayoutActive() == true)
+                    if (IsLayoutActive())
                     {
                         // Call the helper method SetLayoutSize to set Layout's size
                         SetLayoutSize();
@@ -632,10 +624,7 @@ namespace System.Windows.Interop
                     // previous callouts - such as during RootChanged or during the layout
                     // we syncronously invoke.  In such cases, the state of this object would
                     // have been torn down.  We just need to protect against that.
-                    if(_keyboard != null)
-                    {
-                        _keyboard.Value.OnRootChanged(oldRoot, _rootVisual.Value);
-                    }
+                    _keyboard?.OnRootChanged(oldRoot, _rootVisual);
                 }
 
                 // when automation listeners are present, ensure that the top-level
@@ -687,7 +676,7 @@ namespace System.Windows.Interop
             foreach (PresentationSource source in PresentationSource.CriticalCurrentSources)
             {
                 HwndSource test = source as HwndSource;
-                if (test != null && test.CriticalHandle == hwnd)
+                if (test != null && test.Handle == hwnd)
                 {
                     // Don't hand out a disposed source.
                     if (!test.IsDisposed)
@@ -712,7 +701,7 @@ namespace System.Windows.Interop
 
                 // Even though we created the HwndTarget, it can get disposed out from
                 // underneath us.
-                if (_hwndTarget!= null && _hwndTarget.IsDisposed == true)
+                if (_hwndTarget!= null && _hwndTarget.IsDisposed)
                 {
                     return null;
                 }
@@ -795,7 +784,7 @@ namespace System.Windows.Interop
         /// </summary>
         private void OnLayoutUpdated(object obj, EventArgs args)
         {
-            UIElement root = _rootVisual.Value as UIElement;
+            UIElement root = _rootVisual as UIElement;
 
             if(root != null)
             {
@@ -864,7 +853,7 @@ namespace System.Windows.Interop
         {
             // Find the topmost window.  This will handle the case where the HwndSource
             // is a child window.
-            IntPtr hwndRoot = UnsafeNativeMethods.GetAncestor(new HandleRef(this, CriticalHandle), NativeMethods.GA_ROOT);
+            IntPtr hwndRoot = UnsafeNativeMethods.GetAncestor(new HandleRef(this, Handle), NativeMethods.GA_ROOT);
 
             // Open the system menu.
             UnsafeNativeMethods.PostMessage(new HandleRef(this, hwndRoot), MS.Internal.Interop.WindowMessage.WM_SYSCOMMAND, new IntPtr(NativeMethods.SC_KEYMENU), new IntPtr(NativeMethods.VK_SPACE));
@@ -897,7 +886,7 @@ namespace System.Windows.Interop
             // For windows with UsesPerPixelOpacity, we force the client to
             // fill the window, so we don't need to add in any frame space.
             //
-            if (_adjustSizingForNonClientArea == false && !UsesPerPixelOpacity)
+            if (!_adjustSizingForNonClientArea && !UsesPerPixelOpacity)
             {
                 int style = NativeMethods.IntPtrToInt32((IntPtr)SafeNativeMethods.GetWindowStyle(new HandleRef(this, _hwndWrapper.Handle), false));
                 int styleEx = NativeMethods.IntPtrToInt32((IntPtr)SafeNativeMethods.GetWindowStyle(new HandleRef(this, _hwndWrapper.Handle), true));
@@ -911,7 +900,7 @@ namespace System.Windows.Interop
         // nearest int.  Otherwise round the size up to the next int.
         private void RoundDeviceSize(ref Point size)
         {
-            UIElement root = _rootVisual.Value as UIElement;
+            UIElement root = _rootVisual as UIElement;
             if (root != null && root.SnapsToDevicePixels)
             {
                 size = new Point(DoubleUtil.DoubleToInt(size.X), DoubleUtil.DoubleToInt(size.Y));
@@ -925,20 +914,8 @@ namespace System.Windows.Interop
         /// <summary>
         /// Returns the hwnd handle to the window.
         /// </summary>
-        ///<remarks>
-        ///     Callers must have UIPermission(UIPermissionWindow.AllWindows) to call this API.
-        ///</remarks>
         public IntPtr Handle
         {
-            get
-            {
-                return CriticalHandle;
-            }
-        }
-
-        internal IntPtr CriticalHandle
-        {
-            [FriendAccessAllowed]
             get
             {
                 if (null != _hwndWrapper)
@@ -959,7 +936,7 @@ namespace System.Windows.Interop
             {
                 IntPtr capture = SafeNativeMethods.GetCapture();
 
-                return ( capture == CriticalHandle );
+                return ( capture == Handle );
             }
         }
 
@@ -998,7 +975,7 @@ namespace System.Windows.Interop
             {
                 CheckDisposed(true);
 
-                if (IsValidSizeToContent(value) != true)
+                if (!IsValidSizeToContent(value))
                 {
                     throw new InvalidEnumArgumentException("value", (int)value, typeof(SizeToContent));
                 }
@@ -1014,7 +991,7 @@ namespace System.Windows.Interop
                 // if a developer goes directly to HwndSource and sets SizeToContent, we will
                 // not notify the wrapping Window
 
-                if (IsLayoutActive() == true)
+                if (IsLayoutActive())
                 {
                     // Call the helper method SetLayoutSize to set Layout's size
                     SetLayoutSize();
@@ -1024,7 +1001,7 @@ namespace System.Windows.Interop
 
         private bool IsLayoutActive()
         {
-            if ((_rootVisual.Value is UIElement) && _hwndTarget!= null && _hwndTarget.IsDisposed == false)
+            if ((_rootVisual is UIElement) && _hwndTarget!= null && !_hwndTarget.IsDisposed)
             {
                 return true;
             }
@@ -1039,10 +1016,10 @@ namespace System.Windows.Interop
         private void SetLayoutSize()
         {
             Debug.Assert(_hwndTarget!= null, "HwndTarget is null");
-            Debug.Assert(_hwndTarget.IsDisposed == false, "HwndTarget is disposed");
+            Debug.Assert(!_hwndTarget.IsDisposed, "HwndTarget is disposed");
 
             UIElement rootUIElement = null;
-            rootUIElement = _rootVisual.Value as UIElement;
+            rootUIElement = _rootVisual as UIElement;
             if (rootUIElement == null) return;
 
             // InvalidateMeasure() call is necessary in the following scenario
@@ -1162,7 +1139,7 @@ namespace System.Windows.Interop
             // Compute View's size and set
             NativeMethods.RECT rc = new NativeMethods.RECT(0, 0, 0, 0);
 
-            if (_adjustSizingForNonClientArea == true)
+            if (_adjustSizingForNonClientArea)
             {
                 GetNonClientRect(ref rc);
             }
@@ -1205,7 +1182,7 @@ namespace System.Windows.Interop
             // during which almost anything could have happened that might
             // invalidate our checks.
             UIElement rootUIElement=null;
-            rootUIElement = _rootVisual.Value as UIElement;
+            rootUIElement = _rootVisual as UIElement;
             if (IsUsable && rootUIElement != null)
             {
                 switch (message)
@@ -1352,7 +1329,7 @@ namespace System.Windows.Interop
             // Only if SizeToContent overrides Win32 sizing change calls.
             // If it's coming from OnResize (_myOwnUpdate != true), it means we are adjusting
             // to the right size; don't need to do anything here.
-            if ((_myOwnUpdate != true) && (SizeToContent != SizeToContent.Manual))
+            if ((!_myOwnUpdate) && (SizeToContent != SizeToContent.Manual))
             {
                 // Get the current style and calculate the size to be with the new style.
                 // If WM_WINDOWPOSCHANGING is sent because of style changes, WM_STYLECHANGED is sent
@@ -1447,7 +1424,7 @@ namespace System.Windows.Interop
 
                 // WM_SIZE has the client size of the window.
                 // for appmodel window case, get the outside size of the hwnd.
-                if (_adjustSizingForNonClientArea == true)
+                if (_adjustSizingForNonClientArea)
                 {
                     NativeMethods.RECT rect = new NativeMethods.RECT(0, 0, (int)pt.X, (int)pt.Y);
                     GetNonClientRect(ref rect);
@@ -1474,7 +1451,7 @@ namespace System.Windows.Interop
                 // call to Measure is optimized out and no layout happens.  Invalidating
                 // layout here ensures that we do layout.
                 // This can happen only in the Window case
-                if (_adjustSizingForNonClientArea == true)
+                if (_adjustSizingForNonClientArea)
                 {
                     rootUIElement.InvalidateMeasure();
                 }
@@ -1543,17 +1520,17 @@ namespace System.Windows.Interop
         // HwndSourceParameters.TreatAncestorsAsNonClientArea setting.
         private void GetNonClientRect(ref NativeMethods.RECT rc)
         {
-            Debug.Assert(_adjustSizingForNonClientArea == true);
+            Debug.Assert(_adjustSizingForNonClientArea);
 
             IntPtr hwndRoot = IntPtr.Zero;
 
             if(_treatAncestorsAsNonClientArea)
             {
-                hwndRoot = UnsafeNativeMethods.GetAncestor(new HandleRef(this, CriticalHandle), NativeMethods.GA_ROOT);
+                hwndRoot = UnsafeNativeMethods.GetAncestor(new HandleRef(this, Handle), NativeMethods.GA_ROOT);
             }
             else
             {
-                hwndRoot = CriticalHandle;
+                hwndRoot = Handle;
             }
 
             SafeNativeMethods.GetWindowRect(new HandleRef(this, hwndRoot), ref rc);
@@ -1584,12 +1561,12 @@ namespace System.Windows.Interop
             // to give _stylus a chance to eat mouse message generated by stylus
             if (!_isDisposed && _stylus != null && !handled)
             {
-                result = _stylus.Value.FilterMessage(hwnd, message, wParam, lParam, ref handled);
+                result = _stylus.FilterMessage(hwnd, message, wParam, lParam, ref handled);
             }
 
             if (!_isDisposed && _mouse != null && !handled)
             {
-                result = _mouse.Value.FilterMessage(hwnd, message, wParam, lParam, ref handled);
+                result = _mouse.FilterMessage(hwnd, message, wParam, lParam, ref handled);
             }
 
             if (!_isDisposed && _keyboard != null && !handled)
@@ -1600,7 +1577,7 @@ namespace System.Windows.Interop
                 // _lastKeyboardMessage in the IKIS methods to avoid responding
                 // to the same message from the WndProc.
                 // This is checked inside of HwndKeyboardInputProvider.FilterMessage.
-                result = _keyboard.Value.FilterMessage(hwnd, message, wParam, lParam, ref handled);
+                result = _keyboard.FilterMessage(hwnd, message, wParam, lParam, ref handled);
 
                 // When WPF is hosted within a "foreign" HWND, the parent
                 // window may not talk to us through IKeyboardInputSink at all.
@@ -1629,7 +1606,7 @@ namespace System.Windows.Interop
 
             if (!_isDisposed && _appCommand != null && !handled)
             {
-                result = _appCommand.Value.FilterMessage(hwnd, message, wParam, lParam, ref handled);
+                result = _appCommand.FilterMessage(hwnd, message, wParam, lParam, ref handled);
             }
 
             return result;
@@ -1699,11 +1676,11 @@ namespace System.Windows.Interop
             // Dispose the HwndStylusInputProvider BEFORE we destroy the HWND.
             // This is because the stylus provider has an async channel and
             // they don't want to process data after the HWND is destroyed.
-            if (_stylus != null)
+            if (_stylus is not null)
             {
-                SecurityCriticalDataClass<IStylusInputProvider> stylus = _stylus;
+                IStylusInputProvider stylus = _stylus;
                 _stylus = null;
-                stylus.Value.Dispose();
+                stylus.Dispose();
             }
         }
 
@@ -1762,16 +1739,18 @@ namespace System.Windows.Interop
             case WindowMessage.WM_SYSCHAR:
             case WindowMessage.WM_DEADCHAR:
             case WindowMessage.WM_SYSDEADCHAR:
-                MSGDATA msgdata = new MSGDATA();
-                msgdata.msg = msg;
-                msgdata.handled = handled;
+                    MSGDATA msgdata = new MSGDATA
+                    {
+                        msg = msg,
+                        handled = handled
+                    };
 
-                // Do this under the exception filter/handlers of the
-                // dispatcher for this thread.
-                //
-                // NOTE: we lose the "perf optimization" of passing everything
-                // around by-ref since we have to call through a delegate.
-                object result = Dispatcher.CurrentDispatcher.Invoke(
+                    // Do this under the exception filter/handlers of the
+                    // dispatcher for this thread.
+                    //
+                    // NOTE: we lose the "perf optimization" of passing everything
+                    // around by-ref since we have to call through a delegate.
+                    object result = Dispatcher.CurrentDispatcher.Invoke(
                     DispatcherPriority.Send,
                     new DispatcherOperationCallback(OnPreprocessMessage),
                     msgdata);
@@ -1886,7 +1865,7 @@ namespace System.Windows.Interop
 
                     if (!msgdata.handled)
                     {
-                        _keyboard.Value.ProcessTextInputAction(msgdata.msg.hwnd, (WindowMessage)msgdata.msg.message,
+                        _keyboard.ProcessTextInputAction(msgdata.msg.hwnd, (WindowMessage)msgdata.msg.message,
                                                                msgdata.msg.wParam, msgdata.msg.lParam, ref msgdata.handled);
                     }
                 }
@@ -1983,7 +1962,7 @@ namespace System.Windows.Interop
 
             ArgumentNullException.ThrowIfNull(request);
 
-            UIElement root =_rootVisual.Value as UIElement;
+            UIElement root =_rootVisual as UIElement;
             if(root != null)
             {
                 // atanask:
@@ -2261,7 +2240,7 @@ namespace System.Windows.Interop
             }
         }
 
-        IKeyboardInputSink ChildSinkWithFocus
+        private IKeyboardInputSink ChildSinkWithFocus
         {
             get
             {
@@ -2325,7 +2304,7 @@ namespace System.Windows.Interop
                 // do the Normal Avalon Keyboard input Processing.
                 if (HasFocus || IsInExclusiveMenuMode)
                 {
-                    _keyboard.Value.ProcessKeyAction(ref msg, ref handled);
+                    _keyboard.ProcessKeyAction(ref msg, ref handled);
                 }
                 // ELSE the focus is probably in but not on this HwndSource.
                 // Beware: It is possible that someone calls IKIS.TranslateAccelerator() while the focus is
@@ -2343,7 +2322,7 @@ namespace System.Windows.Interop
                     try {
                         PerThreadData.TranslateAcceleratorCallDepth += 1;
                         Keyboard.PrimaryDevice.ForceTarget = focusElement;
-                       _keyboard.Value.ProcessKeyAction(ref msg, ref handled);
+                       _keyboard.ProcessKeyAction(ref msg, ref handled);
                     }
                     finally
                     {
@@ -2404,21 +2383,25 @@ namespace System.Windows.Interop
 
                     if (focusElement != null)
                     {
-                        KeyEventArgs tunnelArgs = new KeyEventArgs(Keyboard.PrimaryDevice, this, msg.time, key);
-                        tunnelArgs.ScanCode = scanCode;
-                        tunnelArgs.IsExtendedKey = isExtendedKey;
-                        tunnelArgs.RoutedEvent = keyPreviewEvent;
+                        KeyEventArgs tunnelArgs = new KeyEventArgs(Keyboard.PrimaryDevice, this, msg.time, key)
+                        {
+                            ScanCode = scanCode,
+                            IsExtendedKey = isExtendedKey,
+                            RoutedEvent = keyPreviewEvent
+                        };
                         focusElement.RaiseEvent(tunnelArgs);
 
                         handled = tunnelArgs.Handled;
                     }
                     if (!handled)
                     {
-                        KeyEventArgs bubbleArgs = new KeyEventArgs(Keyboard.PrimaryDevice, this, msg.time, key);
-                        bubbleArgs.ScanCode = scanCode;
-                        bubbleArgs.IsExtendedKey = isExtendedKey;
-                        bubbleArgs.RoutedEvent=keyEvent;
-                        if(focusElement != null)
+                        KeyEventArgs bubbleArgs = new KeyEventArgs(Keyboard.PrimaryDevice, this, msg.time, key)
+                        {
+                            ScanCode = scanCode,
+                            IsExtendedKey = isExtendedKey,
+                            RoutedEvent = keyEvent
+                        };
+                        if (focusElement != null)
                         {
                             focusElement.RaiseEvent(bubbleArgs);
                             handled = bubbleArgs.Handled;
@@ -2531,13 +2514,12 @@ namespace System.Windows.Interop
                         {
                             Disposed(this, EventArgs.Empty);
                         }
-#pragma warning disable 56500
                         // We can't tolerate an exception thrown by third-party code to
                         // abort our Dispose half-way through.  So we just eat it.
                         catch
                         {
                         }
-#pragma warning restore 56500
+
                         Disposed = null;
                     }
 
@@ -2613,35 +2595,20 @@ namespace System.Windows.Interop
                         }
                     }
 
-                    if(_mouse != null)
-                    {
-                        _mouse.Value.Dispose();
-                        _mouse = null;
-                    }
+                    _mouse?.Dispose();
+                    _mouse = null;
 
-                    if(_keyboard != null)
-                    {
-                        _keyboard.Value.Dispose();
-                        _keyboard = null;
-                    }
+                    _keyboard?.Dispose();
+                    _keyboard = null;
 
-                    if (_appCommand != null)
-                    {
-                        _appCommand.Value.Dispose();
-                        _appCommand = null;
-                    }
+                    _appCommand?.Dispose();
+                    _appCommand = null;
 
-                    if(null != _weakShutdownHandler)
-                    {
-                        _weakShutdownHandler.Dispose();
-                        _weakShutdownHandler = null;
-                    }
+                    _weakShutdownHandler?.Dispose();
+                    _weakShutdownHandler = null;
 
-                    if(null != _weakPreprocessMessageHandler)
-                    {
-                        _weakPreprocessMessageHandler.Dispose();
-                        _weakPreprocessMessageHandler = null;
-                    }
+                    _weakPreprocessMessageHandler?.Dispose();
+                    _weakPreprocessMessageHandler = null;
 
                     // We wait to set the "_isDisposed" flag until after the
                     // Disposed, SourceChange (RootVisual=null), etc. events
@@ -2672,9 +2639,7 @@ namespace System.Windows.Interop
         {
             get
             {
-                return _isDisposed == false &&
-                       _hwndTarget != null &&
-                       _hwndTarget.IsDisposed == false;
+                return !_isDisposed && _hwndTarget is not null && !_hwndTarget.IsDisposed;
             }
         }
 
@@ -2682,7 +2647,7 @@ namespace System.Windows.Interop
         {
             get
             {
-                return UnsafeNativeMethods.GetFocus() == CriticalHandle;
+                return UnsafeNativeMethods.GetFocus() == Handle;
             }
         }
 
@@ -2694,7 +2659,7 @@ namespace System.Windows.Interop
                    value == SizeToContent.WidthAndHeight;
         }
 
-        class ThreadDataBlob
+        private class ThreadDataBlob
         {
             public int TranslateAcceleratorCallDepth;
         }
@@ -2824,21 +2789,21 @@ namespace System.Windows.Interop
 
         private HwndTarget                  _hwndTarget;
 
-        private SecurityCriticalDataForSet<Visual>                      _rootVisual;
+        private Visual                      _rootVisual;
 
         private Tuple<HwndSourceHook, Delegate[]> _hooks;
 
-        private SecurityCriticalDataClass<HwndMouseInputProvider>      _mouse;
+        private HwndMouseInputProvider      _mouse;
 
-        private SecurityCriticalDataClass<HwndKeyboardInputProvider>   _keyboard;
+        private HwndKeyboardInputProvider   _keyboard;
 
-        private SecurityCriticalDataClass<IStylusInputProvider>        _stylus;
+        private IStylusInputProvider        _stylus;
 
-        private SecurityCriticalDataClass<HwndAppCommandInputProvider> _appCommand;
+        private HwndAppCommandInputProvider _appCommand;
 
-        WeakEventDispatcherShutdown _weakShutdownHandler;
-        WeakEventPreprocessMessage _weakPreprocessMessageHandler;
-        WeakEventPreprocessMessage _weakMenuModeMessageHandler;
+        private WeakEventDispatcherShutdown _weakShutdownHandler;
+        private WeakEventPreprocessMessage _weakPreprocessMessageHandler;
+        private WeakEventPreprocessMessage _weakMenuModeMessageHandler;
 
         private static System.LocalDataStoreSlot _threadSlot;
 

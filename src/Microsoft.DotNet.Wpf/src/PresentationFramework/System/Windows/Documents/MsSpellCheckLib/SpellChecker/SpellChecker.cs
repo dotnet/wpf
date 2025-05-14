@@ -1,6 +1,5 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 //
 // Description: Encapsulates ISpellChecker services exposed by
@@ -8,21 +7,18 @@
 //              resilience against out-of-proc COM server failures.
 //
 
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.InteropServices;
-using System.Security;
+using ISpellChecker = System.Windows.Documents.MsSpellCheckLib.RCW.ISpellChecker;
+using IEnumString = System.Windows.Documents.MsSpellCheckLib.RCW.IEnumString;
+using ISpellCheckerChangedEventHandler = System.Windows.Documents.MsSpellCheckLib.RCW.ISpellCheckerChangedEventHandler;
+using IOptionDescription = System.Windows.Documents.MsSpellCheckLib.RCW.IOptionDescription;
+using IEnumSpellingError = System.Windows.Documents.MsSpellCheckLib.RCW.IEnumSpellingError;
 
 namespace System.Windows.Documents
 {
     namespace MsSpellCheckLib
     {
-        using ISpellChecker = RCW.ISpellChecker;
-        using IEnumString = RCW.IEnumString;
-        using ISpellCheckerChangedEventHandler = RCW.ISpellCheckerChangedEventHandler;
-        using IOptionDescription = RCW.IOptionDescription;
-        using IEnumSpellingError = RCW.IEnumSpellingError;
-
         /// <summary>
         /// This type encapsulates services provided by RCW.ISpellChecker interface and provides
         /// a resilient (to out-of-proc COM server failures) interface to callers.
@@ -89,9 +85,7 @@ namespace System.Windows.Documents
                 IEnumString suggestions = _speller.Value.Suggest(word);
 
                 return
-                    suggestions != null ?
-                        suggestions.ToList(shouldSuppressCOMExceptions:false, shouldReleaseCOMObject:true) :
-                        null;
+                    suggestions?.ToList(shouldSuppressCOMExceptions:false, shouldReleaseCOMObject:true);
             }
 
             public List<string> SuggestImplWithRetries(string word, bool shouldSuppressCOMExceptions = true)
@@ -221,7 +215,7 @@ namespace System.Windows.Documents
             private List<string> GetOptionIdsImpl()
             {
                 IEnumString optionIds = _speller.Value.OptionIds;
-                return (optionIds != null) ? optionIds.ToList(false, true) : null;
+                return optionIds?.ToList(false, true);
             }
 
             private List<string> GetOptionIdsImplWithRetries(bool suppressCOMExceptions)
@@ -264,7 +258,7 @@ namespace System.Windows.Documents
                 return callSucceeded ? id : null;
             }
 
-            string GetId(bool suppressCOMExceptions = true)
+            private string GetId(bool suppressCOMExceptions = true)
             {
                 return _disposed ? null : GetIdImplWithRetries(suppressCOMExceptions);
             }
@@ -331,7 +325,7 @@ namespace System.Windows.Documents
             private List<SpellingError> CheckImpl(string text)
             {
                 IEnumSpellingError errors = _speller.Value.Check(text);
-                return (errors != null) ? errors.ToList(this, text, false, true) : null;
+                return errors?.ToList(this, text, false, true);
             }
 
             private List<SpellingError> CheckImplWithRetries(string text, bool suppressCOMExceptions)
@@ -359,7 +353,7 @@ namespace System.Windows.Documents
             public List<SpellingError> ComprehensiveCheckImpl(string text)
             {
                 IEnumSpellingError errors = _speller.Value.ComprehensiveCheck(text);
-                return (errors != null) ? errors.ToList(this, text, false, true) : null;
+                return errors?.ToList(this, text, false, true);
             }
 
             public List<SpellingError> ComprehensiveCheckImplWithRetries(string text, bool shouldSuppressCOMExceptions = true)
@@ -653,7 +647,7 @@ namespace System.Windows.Documents
             private string _languageTag;
 
             // Change notification related fields
-            SpellCheckerChangedEventHandler _spellCheckerChangedEventHandler;
+            private SpellCheckerChangedEventHandler _spellCheckerChangedEventHandler;
             private uint? _eventCookie = null;
             private event EventHandler<SpellCheckerChangedEventArgs> _changed;
 
@@ -665,7 +659,7 @@ namespace System.Windows.Documents
                 public bool HasErrors { get { return Item2; } }
             }
             private List<HasErrorsResult> _hasErrorsCache;
-            const int HasErrorsCacheCapacity = 10;      // cache the most recent 10 results
+            private const int HasErrorsCacheCapacity = 10;      // cache the most recent 10 results
 
             private bool _disposed = false;
 

@@ -1,6 +1,7 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
+
+using System.Collections;
 
 //
 // Description: Thread local state for the TextEditor.
@@ -8,10 +9,6 @@
 
 namespace System.Windows.Documents
 {
-    using System.Collections;
-    using System.Collections.Specialized;
-    using System.Diagnostics;
-
     // Thread local state for the TextEditor.
     internal class TextEditorThreadLocalStore
     {

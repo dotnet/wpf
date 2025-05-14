@@ -1,30 +1,9 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
-        
-using System;
+
 using System.Collections;
 using System.Collections.Generic;
-using System.Collections.Specialized;
-using System.ComponentModel;
-using System.Diagnostics;
 using System.Globalization;
-using System.Data;
-using System.Runtime.InteropServices;
-using System.Runtime.Serialization;
-using System.Windows.Interop;
-
-using MS.Win32;
-
-using SD = System.Drawing;
-using SWF = System.Windows.Forms;
-
-using SW = System.Windows;
-using SWC = System.Windows.Controls;
-using SWM = System.Windows.Media;
-using SWMI = System.Windows.Media.Imaging;
-using SWS = System.Windows.Markup;
-using SWI = System.Windows.Input;
 using System.Reflection;
 
 namespace System.Windows.Forms.Integration
@@ -320,12 +299,9 @@ namespace System.Windows.Forms.Integration
             RunTranslator(translator, host, propertyName, value);
         }
 
-//Disable the PreSharp error 56500 Avoid `swallowing errors by catching non-specific exceptions.
-//In this specific case, we are catching the exception and firing an event which can be handled in user code
-//The user handling the event can make the determination on whether or not the exception should be rethrown
-//(Wrapped in an InvalidOperationException).
-#pragma warning disable 1634, 1691
-#pragma warning disable 56500
+        //In this specific case, we are catching the exception and firing an event which can be handled in user code
+        //The user handling the event can make the determination on whether or not the exception should be rethrown
+        //(Wrapped in an InvalidOperationException).
         internal void RunTranslator(PropertyTranslator translator, object host, string propertyName, object value)
         {
             try
@@ -345,8 +321,6 @@ namespace System.Windows.Forms.Integration
                 }
             }
         }
-#pragma warning restore 56500 
-#pragma warning restore 1634, 1691
 
         private event EventHandler<PropertyMappingExceptionEventArgs> _propertyMappingError;
 

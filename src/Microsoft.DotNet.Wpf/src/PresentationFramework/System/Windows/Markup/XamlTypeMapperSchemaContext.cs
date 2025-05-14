@@ -1,12 +1,8 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
-using System;
 using System.Collections;
-using System.Collections.Generic;
 using System.Reflection;
-using System.Threading;
 using System.Windows.Baml2006;
 using System.Xaml;
 using MS.Internal;
@@ -19,16 +15,16 @@ namespace System.Windows.Markup
         internal class XamlTypeMapperSchemaContext : XamlSchemaContext
         {
             // Initialized in constructor
-            Dictionary<string, FrugalObjectList<string>> _nsDefinitions;
-            XamlTypeMapper _typeMapper;
-            WpfSharedXamlSchemaContext _sharedSchemaContext;
+            private Dictionary<string, FrugalObjectList<string>> _nsDefinitions;
+            private XamlTypeMapper _typeMapper;
+            private WpfSharedXamlSchemaContext _sharedSchemaContext;
 
             // Lock on syncObject
-            readonly object syncObject = new object();
-            Dictionary<string, string> _piNamespaces;
-            IEnumerable<string> _allXamlNamespaces;
-            Dictionary<Type, XamlType> _allowedInternalTypes;
-            HashSet<string> _clrNamespaces;
+            private readonly object syncObject = new object();
+            private Dictionary<string, string> _piNamespaces;
+            private IEnumerable<string> _allXamlNamespaces;
+            private Dictionary<Type, XamlType> _allowedInternalTypes;
+            private HashSet<string> _clrNamespaces;
 
             internal XamlTypeMapperSchemaContext(XamlTypeMapper typeMapper)
                 : base() 

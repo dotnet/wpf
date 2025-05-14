@@ -1,30 +1,9 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
-//
-//
-
-using System;
-using System.Collections;
 using System.Collections.ObjectModel;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.ComponentModel.Design.Serialization;
-using System.Reflection;
 using MS.Internal;
-using MS.Internal.PresentationCore;
-using System.Diagnostics;
-using System.Windows.Media;
-using System.Globalization;
-using System.Security;
-using System.Runtime.InteropServices;
-using System.Windows.Media.Animation;
-using System.Windows.Media.Composition;
-using System.Windows.Media.Imaging;
 using MS.Win32.PresentationCore;
-
-#pragma warning disable 1634, 1691 // Allow suppression of certain presharp messages
 
 namespace System.Windows.Media.Imaging
 {
@@ -295,10 +274,7 @@ namespace System.Windows.Media.Imaging
         {
             ReadPreamble();
 
-            if (_decoder != null)
-            {
-                _decoder.CheckOriginalWritable();
-            }
+            _decoder?.CheckOriginalWritable();
 
             // Demand Site Of Origin on the URI before usage of metadata.
             CheckIfSiteOfOrigin();
@@ -703,7 +679,7 @@ namespace System.Windows.Media.Imaging
                 if (_decoder.InternalDecoder == null)
                 {
                     Debug.Assert(_decoder is LateBoundBitmapDecoder);
-                    Debug.Assert(IsDownloading == false);
+                    Debug.Assert(!IsDownloading);
 
                     _decoder = ((LateBoundBitmapDecoder)_decoder).Decoder;
                     _syncObject = _decoder.SyncObject;

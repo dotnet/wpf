@@ -1,6 +1,5 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 // Description: 
 //    ProgressDialog invokes a progress notification dialog that runs on
@@ -8,17 +7,11 @@
 //    users when a long, blocking operation on XPSViewer's main thread is
 //    running (and blocking).
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Drawing;
-using System.Security;
 using System.Threading;
 using System.Windows.Forms;
-using System.Windows.TrustUI;
-using MS.Internal.Documents.Application;
 
 namespace MS.Internal.Documents
-{    
+{
     internal sealed partial class ProgressDialog : DialogBaseForm
     {
         #region Constructors

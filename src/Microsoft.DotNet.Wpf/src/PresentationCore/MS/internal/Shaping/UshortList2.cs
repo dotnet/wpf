@@ -1,18 +1,10 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 //
 //
 //
 //  Contents:  Internal growable list with sublisting
-
-using System.Windows;
-using System;
-using System.Collections;
-using System.Diagnostics;
-using MS.Internal;
-using System.Security;
 
 namespace MS.Internal.Shaping
 {
@@ -139,24 +131,24 @@ namespace MS.Internal.Shaping
 
         public virtual ushort[] ToArray()
         {
-            Debug.Assert(false, "Not supported");
+            Debug.Fail("Not supported");
             return null;
         }
 
         public virtual ushort[] GetSubsetCopy(int index, int count)
         {
-            Debug.Assert(false, "Not supported");
+            Debug.Fail("Not supported");
             return null;
         }
 
         public virtual void Insert(int index, int count, int length)
         {
-            Debug.Assert(false, "Not supported");
+            Debug.Fail("Not supported");
         }
 
         public virtual void Remove(int index, int count, int length)
         {
-            Debug.Assert(false, "Not supported");
+            Debug.Fail("Not supported");
         }
     }
 
@@ -277,13 +269,13 @@ namespace MS.Internal.Shaping
     {
         private ushort*     _array;
 
-        private SecurityCriticalDataForSet<int>         _arrayLength;
+        private int         _arrayLength;
 
 
         internal UnsafeUshortArray(CheckedUShortPointer array, int arrayLength)
         {            
             _array = array.Probe(0, arrayLength);
-            _arrayLength.Value = arrayLength;
+            _arrayLength = arrayLength;
         }
 
 
@@ -291,19 +283,19 @@ namespace MS.Internal.Shaping
         {
             get
             {
-                Invariant.Assert(index >= 0 && index < _arrayLength.Value);
+                Invariant.Assert(index >= 0 && index < _arrayLength);
                 return _array[index];
             }
             set
             {
-                Invariant.Assert(index >= 0 && index < _arrayLength.Value);
+                Invariant.Assert(index >= 0 && index < _arrayLength);
                 _array[index] = value;
             }
         }
 
         public override int Length
         {
-            get { return _arrayLength.Value; }
+            get { return _arrayLength; }
         }
     }
 }

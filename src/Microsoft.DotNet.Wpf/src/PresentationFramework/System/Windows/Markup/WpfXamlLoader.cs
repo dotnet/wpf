@@ -1,13 +1,11 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 using MS.Internal.Xaml.Context;
 using MS.Utility;
 using System.Collections;
 using System.Windows.Baml2006;
 using System.Windows.Diagnostics;
-using System.Windows.Media;
 using System.Xaml;
 using System.Xaml.Permissions;
 using System.Windows.Data;
@@ -99,10 +97,7 @@ namespace System.Windows.Markup
                 }
 
                 UIElement uiElement = args.Instance as UIElement;
-                if (uiElement != null)
-                {
-                    uiElement.SetPersistId(persistId++);
-                }
+                uiElement?.SetPersistId(persistId++);
 
                 XamlSourceInfoHelper.SetXamlSourceInfo(args.Instance, args, baseUri);
 
@@ -277,7 +272,7 @@ namespace System.Windows.Markup
                                     if (prop != null)
                                     {
                                         FrameworkPropertyMetadata metadata = prop.GetMetadata(stack.CurrentFrame.Type.UnderlyingType) as FrameworkPropertyMetadata;
-                                        if (metadata != null && metadata.Journal == true)
+                                        if (metadata != null && metadata.Journal)
                                         {
                                             // Ignore the BAML for this member, unless it declares a value that wasn't journaled - namely a binding or a dynamic resource
                                             int count = 1;
@@ -377,10 +372,7 @@ namespace System.Windows.Markup
                 bool freeze = Convert.ToBoolean(xamlReader.Value, TypeConverterHelper.InvariantEnglishUS);
                 stack.CurrentFrame.FreezeFreezable = freeze;
                 var bamlReader = xamlReader as System.Windows.Baml2006.Baml2006Reader;
-                if (bamlReader != null)
-                {
-                    bamlReader.FreezeFreezables = freeze;
-                }
+                bamlReader?.FreezeFreezables = freeze;
             }
             // The space directive node stream should not be written because it induces object instantiation,
             // and the Baml2006Reader can produce space directives prematurely.

@@ -1,23 +1,15 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 //
 // Description:
 // ContentFilePart is an implementation of the abstract PackagePart class. It contains an override for GetStreamCore.
 //
 
-using System;
 using System.IO.Packaging;
 using System.Windows;
-using System.Windows.Resources;
 using System.IO;
-using System.Resources;
-using System.Globalization;
-using System.Security;
 using System.Windows.Navigation;
-using System.Diagnostics;
-using System.Reflection;
 
 namespace MS.Internal.AppModel
 {

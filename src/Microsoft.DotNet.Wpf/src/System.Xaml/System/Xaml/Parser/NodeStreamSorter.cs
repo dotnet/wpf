@@ -1,13 +1,9 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 #nullable disable
 
-using System;
 using System.Collections;
-using System.Collections.Generic;
-using System.Diagnostics;
 using System.Xaml;
 using System.Xaml.MS.Impl;
 using MS.Internal.Xaml.Context;
@@ -17,27 +13,24 @@ namespace MS.Internal.Xaml
 {
     internal class NodeStreamSorter: IEnumerator<XamlNode>
     {
-        XamlParserContext _context;
-        XamlXmlReaderSettings _settings;
-        IEnumerator<XamlNode> _source;
-        Queue<XamlNode> _buffer;
-        XamlNode _current;
+        private XamlParserContext _context;
+        private XamlXmlReaderSettings _settings;
+        private IEnumerator<XamlNode> _source;
+        private Queue<XamlNode> _buffer;
+        private XamlNode _current;
+        private ReorderInfo[] _sortingInfoArray;
+        private XamlNode[] _originalNodesInOrder;
+        private Dictionary<string, string> _xmlnsDictionary;
 
-        ReorderInfo[] _sortingInfoArray;
-        XamlNode[] _originalNodesInOrder;
-
-        Dictionary<string, string> _xmlnsDictionary;
-
-        class SeenCtorDirectiveFlags
+        private class SeenCtorDirectiveFlags
         {
             public bool SeenInstancingProperty;
             public bool SeenOutOfOrderCtorDirective;
         }
 
-        List<SeenCtorDirectiveFlags> _seenStack = new List<SeenCtorDirectiveFlags>();
-        int _startObjectDepth;
-
-        List<int> _moveList;
+        private List<SeenCtorDirectiveFlags> _seenStack = new List<SeenCtorDirectiveFlags>();
+        private int _startObjectDepth;
+        private List<int> _moveList;
 
         private void InitializeObjectFrameStack()
         {
@@ -45,6 +38,7 @@ namespace MS.Internal.Xaml
             {
                 _seenStack.Add(new SeenCtorDirectiveFlags());
             }
+
             _seenStack[0].SeenInstancingProperty = false;
             _seenStack[0].SeenOutOfOrderCtorDirective = false;
         }
@@ -52,10 +46,11 @@ namespace MS.Internal.Xaml
         private void StartObjectFrame()
         {
             _startObjectDepth += 1;
-            if(_seenStack.Count <=_startObjectDepth)
+            if (_seenStack.Count <=_startObjectDepth)
             {
                 _seenStack.Add(new SeenCtorDirectiveFlags());
             }
+
             _seenStack[_startObjectDepth].SeenInstancingProperty = false;
             _seenStack[_startObjectDepth].SeenOutOfOrderCtorDirective = false;
         }
@@ -65,19 +60,19 @@ namespace MS.Internal.Xaml
             _startObjectDepth -= 1;
         }
 
-        bool HaveSeenInstancingProperty
+        private bool HaveSeenInstancingProperty
         {
             get { return _seenStack[_startObjectDepth].SeenInstancingProperty; }
             set { _seenStack[_startObjectDepth].SeenInstancingProperty = value; }
         }
 
-        bool HaveSeenOutOfOrderCtorDirective
+        private bool HaveSeenOutOfOrderCtorDirective
         {
             get { return _seenStack[_startObjectDepth].SeenOutOfOrderCtorDirective; }
             set { _seenStack[_startObjectDepth].SeenOutOfOrderCtorDirective = value; }
         }
 
-        struct ReorderInfo
+        private struct ReorderInfo
         {
             public int Depth { get; set; }
             public int OriginalOrderIndex { get; set; }
@@ -86,7 +81,7 @@ namespace MS.Internal.Xaml
 #if DEBUG
             public override string ToString()
             {
-                return String.Format(TypeConverterHelper.InvariantEnglishUS, "Depth[{0}] {1}", Depth, XamlNodeType);
+                return string.Create(TypeConverterHelper.InvariantEnglishUS, $"Depth[{Depth}] {XamlNodeType}");
             }
 #endif
         }
@@ -131,6 +126,7 @@ namespace MS.Internal.Xaml
                     {
                         return false;
                     }
+
                     _current = _source.Current;
                     if (_current.NodeType == XamlNodeType.StartObject)
                     {
@@ -142,8 +138,10 @@ namespace MS.Internal.Xaml
                         _current = _buffer.Dequeue();
                     }
                 }
+
                 // Skip over "End Of Attributes" nodes.
-            } while (_current.IsEndOfAttributes);
+            }
+            while (_current.IsEndOfAttributes);
             return true;
         }
 
@@ -194,6 +192,7 @@ namespace MS.Internal.Xaml
                     {
                         _buffer.Enqueue(node);
                     }
+
                     break;
                 default:
                     break;
@@ -203,13 +202,13 @@ namespace MS.Internal.Xaml
 
         private void EnqueueInitialExtraXmlNses()
         {
-            if (_xmlnsDictionary != null)
+            if (_xmlnsDictionary is not null)
             {
                 foreach (string prefix in _xmlnsDictionary.Keys)
                 {
                     // Skip any prefixes in the settings that were already defined
                     // in the XML text (on the root node)
-                    if (_context.FindNamespaceByPrefixInParseStack(prefix) == null)
+                    if (_context.FindNamespaceByPrefixInParseStack(prefix) is null)
                     {
                         string uriString = _xmlnsDictionary[prefix];
                         XamlNode node = new XamlNode(XamlNodeType.NamespaceDeclaration, new NamespaceDeclaration(uriString, prefix));
@@ -229,11 +228,13 @@ namespace MS.Internal.Xaml
             {
                 EnqueueOneXmlDirectiveProperty(XamlLanguage.Space, KnownStrings.Preserve);
             }
-            if (!String.IsNullOrEmpty(_settings.XmlLang))
+
+            if (!string.IsNullOrEmpty(_settings.XmlLang))
             {
                 EnqueueOneXmlDirectiveProperty(XamlLanguage.Lang, _settings.XmlLang);
             }
-            if (_settings.BaseUri != null)
+
+            if (_settings.BaseUri is not null)
             {
                 EnqueueOneXmlDirectiveProperty(XamlLanguage.Base, _settings.BaseUri.ToString());
             }
@@ -271,11 +272,12 @@ namespace MS.Internal.Xaml
             // If we saw TypeArguments, Arguments, or FactoryMethod properties.
             // then dig in and correct the stream.
             //
-            //if (HaveSeenOutOfOrderCtorDirective)
-            if(_moveList != null)
+            // if (HaveSeenOutOfOrderCtorDirective)
+            if (_moveList is not null)
             {
                 SortContentsOfReadAheadBuffer();
             }
+
             return;
         }
 
@@ -301,6 +303,7 @@ namespace MS.Internal.Xaml
                 {
                     throw new InvalidOperationException("premature end of stream before EoA");
                 }
+
                 node = _source.Current;
                 switch (node.NodeType)
                 {
@@ -314,6 +317,7 @@ namespace MS.Internal.Xaml
                     {
                         done = true;
                     }
+
                     break;
 
                 case XamlNodeType.None:
@@ -324,6 +328,7 @@ namespace MS.Internal.Xaml
                             done = true;
                         }
                     }
+
                     break;
 
                 case XamlNodeType.StartMember:
@@ -334,15 +339,17 @@ namespace MS.Internal.Xaml
                             CheckForOutOfOrderCtorDirectives(node);
                         }
                     }
+
                     break;
 
                 case XamlNodeType.EndMember:
                     propertyDepth -= 1;
                     break;
                 }
-                _buffer.Enqueue(node);
 
-            } while (!done);
+                _buffer.Enqueue(node);
+            }
+            while (!done);
         }
 
         // After the End of Attributes is found continue to buffer nodes
@@ -359,6 +366,7 @@ namespace MS.Internal.Xaml
                 {
                     throw new InvalidOperationException("premature end of stream after EoA");
                 }
+
                 XamlNode node = _source.Current;
                 switch (node.NodeType)
                 {
@@ -371,6 +379,7 @@ namespace MS.Internal.Xaml
                             done = true;
                         }
                     }
+
                     break;
 
                 case XamlNodeType.EndMember:
@@ -384,10 +393,13 @@ namespace MS.Internal.Xaml
                         // Exit loop normaly so we Enqueue the EndObject.
                         done = true;
                     }
+
                     break;
                 }
+
                 _buffer.Enqueue(node);
-            } while (!done);
+            }
+            while (!done);
         }
 
         // This updates the state of instancing vs. construction controling
@@ -401,19 +413,22 @@ namespace MS.Internal.Xaml
                 if (HaveSeenInstancingProperty)
                 {
                     HaveSeenOutOfOrderCtorDirective = true;
-                    if (_moveList == null)
+                    if (_moveList is null)
                     {
                         _moveList = new List<int>();
                     }
+
                     _moveList.Add(_buffer.Count);  // mark the current position as needing fixup
                 }
             }
+
             // Anything else except x:Key is an instancing member.
             else if (!(prop.IsDirective && prop == XamlLanguage.Key))
             {
                 HaveSeenInstancingProperty = true;
                 isInstancingProperty = true;
             }
+
             return isInstancingProperty;
         }
 
@@ -423,6 +438,7 @@ namespace MS.Internal.Xaml
             {
                 return false;
             }
+
             if ((member == XamlLanguage.Initialization)
                   || (member == XamlLanguage.PositionalParameters)
                   || (member == XamlLanguage.FactoryMethod)
@@ -432,6 +448,7 @@ namespace MS.Internal.Xaml
             {
                 return true;
             }
+
             return false;
         }
 
@@ -441,10 +458,12 @@ namespace MS.Internal.Xaml
             {
                 return false;
             }
+
             if (member.IsDirective && member == XamlLanguage.Key)
             {
                 return false;
             }
+
             // Actually...
             // XamlLanguage.Uid, if the type has no UidProperty is not "instancing".
             // But it might be slower to track the current type and lookup the UidProperty
@@ -471,7 +490,7 @@ namespace MS.Internal.Xaml
             // Build an array with the info we need
             _sortingInfoArray = new ReorderInfo[_originalNodesInOrder.Length];
             int depth = 0;
-            ReorderInfo rInfo = new ReorderInfo();
+            ReorderInfo rInfo = default(ReorderInfo);
 
             for (int i = 0; i < _originalNodesInOrder.Length; i++)
             {
@@ -498,6 +517,7 @@ namespace MS.Internal.Xaml
                     case XamlNodeType.StartMember:
                         break;
                 }
+
                 _sortingInfoArray[i] = rInfo;
             }
         }
@@ -509,6 +529,7 @@ namespace MS.Internal.Xaml
                 int xamlIndex = _sortingInfoArray[idx].OriginalOrderIndex;
                 _buffer.Enqueue(_originalNodesInOrder[xamlIndex]);
             }
+
             _sortingInfoArray = null;
         }
 
@@ -540,6 +561,7 @@ namespace MS.Internal.Xaml
             {
                 return false;
             }
+
             for (int i = 0; i < _moveList.Count; i++)
             {
                 int ctorIdx = _moveList[i];
@@ -550,6 +572,7 @@ namespace MS.Internal.Xaml
                     deepestIdx = i;
                 }
             }
+
             Debug.Assert(deepestIdx != -1);
             _moveList.RemoveAt(deepestIdx);
             return true;
@@ -589,16 +612,18 @@ namespace MS.Internal.Xaml
             end = current;
             int originalIdx = _sortingInfoArray[current].OriginalOrderIndex;
             XamlMember nextMember = _originalNodesInOrder[originalIdx].Member;
-            while(!IsInstancingMember(nextMember))
+            while (!IsInstancingMember(nextMember))
             {
-                if(!AdvanceTo(current, XamlNodeType.StartMember, depth, out end))
+                if (!AdvanceTo(current, XamlNodeType.StartMember, depth, out end))
                 {
                     return false;
                 }
+
                 current = end;
                 originalIdx = _sortingInfoArray[current].OriginalOrderIndex;
                 nextMember = _originalNodesInOrder[originalIdx].Member;
             }
+
             return true;
         }
 
@@ -615,10 +640,12 @@ namespace MS.Internal.Xaml
                 {
                     return false;
                 }
+
                 current = end;
                 originalIdx = _sortingInfoArray[current].OriginalOrderIndex;
                 member = _originalNodesInOrder[originalIdx].Member;
             }
+
             return true;
         }
 
@@ -638,13 +665,15 @@ namespace MS.Internal.Xaml
                     }
                     else
                     {
-                        Debug.Assert(false, "Missing End Object in node sorter");
+                        Debug.Fail("Missing End Object in node sorter");
                     }
                 }
+
                 current = end;
                 originalIdx = _sortingInfoArray[current].OriginalOrderIndex;
                 nextMember = _originalNodesInOrder[originalIdx].Member;
             }
+
             return end - start;
         }
 
@@ -675,7 +704,7 @@ namespace MS.Internal.Xaml
             {
                 XamlNodeType currentNodeType = _sortingInfoArray[idx].XamlNodeType;
                 int nodeDepth = _sortingInfoArray[idx].Depth;
-                if(nodeDepth == searchDepth)
+                if (nodeDepth == searchDepth)
                 {
                     if (currentNodeType == nodeType)
                     {
@@ -689,6 +718,7 @@ namespace MS.Internal.Xaml
                     return false;  // we have searched past the end of the current Object.
                 }
             }
+
             end =_sortingInfoArray.Length;
             return false;
         }
@@ -713,6 +743,7 @@ namespace MS.Internal.Xaml
                     }
                 }
             }
+
             end = 0;
             return false;
         }

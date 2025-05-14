@@ -1,6 +1,5 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 #if !DONOTREFPRINTINGASMMETA
 /*
@@ -9,23 +8,13 @@
         and its supporting enums.
 */
 
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Printing;
-using System.Security;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Interop;
 using System.Windows.Media;
-using System.Windows.Shapes;
 using System.Windows.Xps;
 using MS.Internal.Printing;
 using System.Windows.Xps.Serialization;
 using System.Windows.Documents;
 using System.Windows.Documents.Serialization;  // WritingCompletedEventArgs
-using MS.Internal.PresentationFramework;
 
 namespace System.Windows.Controls
 {
@@ -251,8 +240,8 @@ namespace System.Windows.Controls
         {
             get
             {
-                if( ((_isPrintableAreaWidthUpdated == false) && (_isPrintableAreaHeightUpdated == false)) ||
-                    ((_isPrintableAreaWidthUpdated == true)  && (_isPrintableAreaHeightUpdated == false)))
+                if( ((!_isPrintableAreaWidthUpdated) && (!_isPrintableAreaHeightUpdated)) ||
+                    ((_isPrintableAreaWidthUpdated)  && (!_isPrintableAreaHeightUpdated)))
                 {
                     _isPrintableAreaWidthUpdated  = true;
                     _isPrintableAreaHeightUpdated = false;
@@ -273,8 +262,8 @@ namespace System.Windows.Controls
         {
             get
             {
-                if( ((_isPrintableAreaWidthUpdated == false) && (_isPrintableAreaHeightUpdated == false)) ||
-                    ((_isPrintableAreaWidthUpdated == false)  && (_isPrintableAreaHeightUpdated == true)))
+                if( ((!_isPrintableAreaWidthUpdated) && (!_isPrintableAreaHeightUpdated)) ||
+                    ((!_isPrintableAreaWidthUpdated)  && (_isPrintableAreaHeightUpdated)))
                 {
                     _isPrintableAreaWidthUpdated  = false;
                     _isPrintableAreaHeightUpdated = true;
@@ -298,14 +287,15 @@ namespace System.Windows.Controls
         ShowDialog()
         {
 
-            Win32PrintDialog dlg = new Win32PrintDialog();
-
-            //
-            // Setup the old values if any exist.
-            //
-            dlg.PrintTicket = _printTicket;
-            dlg.PrintQueue = _printQueue;
-            dlg.MinPage = Math.Max(1, Math.Min(_minPage, _maxPage));
+            Win32PrintDialog dlg = new Win32PrintDialog
+            {
+                //
+                // Setup the old values if any exist.
+                //
+                PrintTicket = _printTicket,
+                PrintQueue = _printQueue,
+                MinPage = Math.Max(1, Math.Min(_minPage, _maxPage))
+            };
             dlg.MaxPage = Math.Max(dlg.MinPage, Math.Max(_minPage, _maxPage));
             dlg.PageRangeEnabled = _userPageRangeEnabled;
             dlg.SelectedPagesEnabled = _selectedPagesEnabled;
@@ -531,10 +521,7 @@ namespace System.Windows.Controls
 
             PickCorrectPrintingEnvironment(ref printQueue, ref printTicket);
 
-            if(printQueue != null)
-            {
-                printQueue.CurrentJobSettings.Description = description;
-            }
+            printQueue?.CurrentJobSettings.Description = description;
 
             writer = PrintQueue.CreateXpsDocumentWriter(printQueue);
 

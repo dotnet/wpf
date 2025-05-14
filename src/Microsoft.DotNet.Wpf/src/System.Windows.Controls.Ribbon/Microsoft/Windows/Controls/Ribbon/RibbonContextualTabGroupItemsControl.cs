@@ -1,7 +1,11 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
-        
+
+
+using System.Windows.Automation.Peers;
+#if RIBBON_IN_FRAMEWORK
+using System.Windows.Controls.Ribbon.Primitives;
+using Microsoft.Windows.Controls;
 
 #if RIBBON_IN_FRAMEWORK
 namespace System.Windows.Controls.Ribbon
@@ -9,18 +13,11 @@ namespace System.Windows.Controls.Ribbon
 namespace Microsoft.Windows.Controls.Ribbon
 #endif
 {
-    using System.Windows;
-    using System.Windows.Automation.Peers;
-    using System.Windows.Controls;
-    using System;
-#if RIBBON_IN_FRAMEWORK
-    using System.Windows.Controls.Ribbon.Primitives;
-    using Microsoft.Windows.Controls;
 #else
     using Microsoft.Windows.Automation.Peers;
     using Microsoft.Windows.Controls.Ribbon.Primitives;
 #endif
-    
+
     /// <summary>
     ///     The itemscontrol which host contextual tab group headers for Ribbon.
     /// </summary>
@@ -154,20 +151,14 @@ namespace Microsoft.Windows.Controls.Ribbon
         {
             base.PrepareContainerForItemOverride(element, item);
             RibbonContextualTabGroup tabGroupHeader = element as RibbonContextualTabGroup;
-            if (tabGroupHeader != null)
-            {
-                tabGroupHeader.PrepareTabGroupHeader(item, ItemTemplate, ItemTemplateSelector, ItemStringFormat);
-            }
+            tabGroupHeader?.PrepareTabGroupHeader(item, ItemTemplate, ItemTemplateSelector, ItemStringFormat);
         }
 
         protected override void ClearContainerForItemOverride(DependencyObject element, object item)
         {
             base.ClearContainerForItemOverride(element, item);
             RibbonContextualTabGroup tabGroupHeader = element as RibbonContextualTabGroup;
-            if (tabGroupHeader != null)
-            {
-                tabGroupHeader.ClearTabGroupHeader();
-            }
+            tabGroupHeader?.ClearTabGroupHeader();
 
         }
 
@@ -268,7 +259,7 @@ namespace Microsoft.Windows.Controls.Ribbon
         #region Private Data
         
         private Panel _itemsHost; // ItemsPanel instance for this ItemsControl
-        bool _forceCollapse = false;
+        private bool _forceCollapse = false;
         
         #endregion
     }

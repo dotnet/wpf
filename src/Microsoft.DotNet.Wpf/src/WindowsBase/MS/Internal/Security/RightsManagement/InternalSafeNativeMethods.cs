@@ -1,23 +1,7 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
-//
-//
-// Description:
-//   This is partial class declaration of the SafeNativeMethods
-//   specifically this file contains the internal wrappers for the private pinvoke calls 
-//   declared in UnsafeNativeMethods.cs
-//
-//
-//
-//
-
-using System;
-using System.Runtime.InteropServices;
 using System.Text;
-using System.Security;
-using SecurityHelper = MS.Internal.WindowsBase.SecurityHelper;
 
 namespace MS.Internal.Security.RightsManagement
 {

@@ -1,6 +1,5 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 
 //------------------------------------------------------------------------------
@@ -212,17 +211,6 @@ namespace MS.Internal.MilCodeGen.Generators
             // Create the file code sink for the file.
             using (FileCodeSink rdFile = BeginDrawingContextFile(rdid, fullManagedPath, renderDataDrawingContextFileName))
             {
-                StringCodeSink securityCriticalCS = new StringCodeSink();
-
-                securityCriticalCS.Write(
-                    [[inline]]
-                        /// <SecurityNote>
-                        ///    Critical:This code calls into unsafe code
-                        ///    TreatAsSafe: This code is ok to expose. Writing a record is a safe operation as long as the size and pointer are valid.
-                        /// </SecurityNote>
-                        [SecurityCritical,SecurityTreatAsSafe][[/inline]]
-                    );
-
                 rdFile.WriteBlock(
                     [[inline]]
 
@@ -233,7 +221,7 @@ namespace MS.Internal.MilCodeGen.Generators
                             /// </summary>
                             internal partial class RenderDataDrawingContext : DrawingContext
                             {
-                                [[WriteDrawingMethods(rdid, new WriteDrawingBodyDelegate(WriteRenderDataDrawingContextBody), "override", securityCriticalCS.ToString())]]
+                                [[WriteDrawingMethods(rdid, new WriteDrawingBodyDelegate(WriteRenderDataDrawingContextBody), "override", null)]]
                                 [[WriteUseAnimationMethods()]]
                             }
                         }
@@ -422,10 +410,7 @@ namespace MS.Internal.MilCodeGen.Generators
                     [[inline]]
 
                         {
-                            if (drawing != null)
-                            {
-                                drawing.WalkCurrentValue(this);
-                            }
+                            drawing?.WalkCurrentValue(this);
                         }
 
                     [[/inline]]
@@ -606,7 +591,7 @@ namespace MS.Internal.MilCodeGen.Generators
                                 _renderData.WriteDataRecord(MILCMD.Mil[[renderdataInstruction.Name]],
                                                             (byte*)&record,
                                                             [[renderdataInstruction.GetPaddedSize(false /* no animations */)]] /* sizeof([[renderdataInstruction.StructName]]) */);
-                            }                           
+                            }
                             
                             [[WriteStackOperation(renderdataInstruction, true)]]                            
                             [[WriteEffectStackOperation(renderdataInstruction)]]                                                                                  
@@ -680,7 +665,7 @@ namespace MS.Internal.MilCodeGen.Generators
                                     "h{propertyName}Animations = UseAnimations({localName}, {localName}Animations);")]]
 
                                 [[renderdataInstruction.StructName]]_ANIMATE record =
-                                    new [[renderdataInstruction.StructName]]_ANIMATE (
+                                    new [[renderdataInstruction.StructName]]_ANIMATE(
                                         [[callingListAnimate]]
                                         );
 
@@ -690,7 +675,7 @@ namespace MS.Internal.MilCodeGen.Generators
                                 _renderData.WriteDataRecord(MILCMD.Mil[[renderdataInstruction.Name]]Animate,
                                                             (byte*)&record,
                                                             [[renderdataInstruction.GetPaddedSize(true /* include animations */)]] /* sizeof([[renderdataInstruction.StructName]]_ANIMATE) */);
-                            }                            
+                            }
                             
                             [[WriteStackOperation(renderdataInstruction, true)]]
                             [[WriteEffectStackOperation(renderdataInstruction)]]                                                        
@@ -921,7 +906,7 @@ namespace MS.Internal.MilCodeGen.Generators
                     foreach(McgField field in instruction.BasicPublicFields)
                     {
                         // Field is a resource that can not be passed by value.
-                        if(!field.Type.IsValueType)
+                        if (!field.Type.IsValueType)
                         {
                             string handleName = "data.h" + field.PropertyName;
 
@@ -1006,7 +991,7 @@ namespace MS.Internal.MilCodeGen.Generators
                         foreach(McgField field in instruction.AllPublicFields)
                         {
                             // Field is a resource that can not be passed by value or an animation
-                            if(!field.Type.IsValueType || field.IsAnimated)
+                            if (!field.Type.IsValueType || field.IsAnimated)
                             {
                                 string handleName = "data.h" + field.PropertyName;
 
@@ -1103,7 +1088,7 @@ namespace MS.Internal.MilCodeGen.Generators
                 foreach(McgField field in instruction.BasicPublicFields)
                 {
                     // Field is a resource that can not be passed by value.
-                    if(!field.Type.IsValueType)
+                    if (!field.Type.IsValueType)
                     {
                         param = "(" + field.Type.Name + ")DependentLookup(data->h" + field.PropertyName + ")";
                     }
@@ -1161,7 +1146,7 @@ namespace MS.Internal.MilCodeGen.Generators
                     foreach(McgField field in instruction.AllPublicFields)
                     {
                         // Field is a resource that can not be passed by value.
-                        if(!field.Type.IsValueType)
+                        if (!field.Type.IsValueType)
                         {
                             param = "(" + field.Type.Name + ")DependentLookup(data->h" + field.PropertyName + ")";
 
@@ -1193,7 +1178,7 @@ namespace MS.Internal.MilCodeGen.Generators
                                     // of the animated properties.
                                     //
                                     bool hasAdvancedFields = ResourceModel.Filter(instruction.AllPublicFields, ResourceModel.IsAdvancedField).Length > 0;
-                                    if(field.IsAnimated && hasAdvancedFields)
+                                    if (field.IsAnimated && hasAdvancedFields)
                                     {
                                         animatedParamList.Append("null");
                                     }
@@ -1262,12 +1247,6 @@ namespace MS.Internal.MilCodeGen.Generators
                     /// <summary>
                     /// MarshalToDUCE - Marshalling code to the DUCE
                     /// </summary>
-                    /// <SecurityNote>
-                    ///    Critical:Calls into unsafe code
-                    ///    TreatAsSafe: This code is ok to expose. Channels are safe to call with bad data.
-                    ///    They do not affect windows cross process or cross app domain
-                    /// </SecurityNote>
-                    [SecurityCritical,SecurityTreatAsSafe]
                     private void MarshalToDUCE(DUCE.Channel channel)
                     {
                         Debug.Assert(_duceResource.IsOnChannel(channel));
@@ -1458,12 +1437,6 @@ namespace MS.Internal.MilCodeGen.Generators
                                 /// DrawingContextWalk - Iterates this renderdata and call out to methods on the
                                 /// provided DrawingContext, passing the current values to their parameters.
                                 /// </summary>
-                                /// <SecurityNote>
-                                ///     Critical:This code calls into unsafe code
-                                ///     TreatAsSafe: This code is ok to expose. Writing to a channel is a safe operation.
-                                ///     Channels can deal with bad pointers.
-                                /// </SecurityNote>
-                                [SecurityCritical,SecurityTreatAsSafe]
                                 public void DrawingContextWalk(DrawingContextWalker ctx)
                                 [[WriteDrawingContextWalkBody(rdid, true /* Use current value of animations */)]]
 
@@ -1471,12 +1444,6 @@ namespace MS.Internal.MilCodeGen.Generators
                                 /// BaseValueDrawingContextWalk - Iterates this renderdata and call out to methods on the
                                 /// provided DrawingContext, passing base values and animations to their parameters.
                                 /// </summary>
-                                /// <SecurityNote>
-                                ///     Critical:This code calls into unsafe code
-                                ///     TreatAsSafe: This code is ok to expose. Writing to a channel is a safe operation.
-                                ///     Channels can deal with bad pointers.
-                                /// </SecurityNote>
-                                [SecurityCritical, SecurityTreatAsSafe]
                                 public void BaseValueDrawingContextWalk(DrawingContextWalker ctx)
                                 [[WriteDrawingContextWalkBody(rdid, false /* Use the base value & animations */)]]
                             }
@@ -1703,7 +1670,7 @@ namespace MS.Internal.MilCodeGen.Generators
                                 }
 
                                 *(reinterpret_cast<UINT*>(&pData->coordinate)) = m_rgpGuidelineKits.GetCount() - 1;
-                            }              
+                            }
                     [[/inline]]
                     );
             }
@@ -1920,7 +1887,7 @@ namespace MS.Internal.MilCodeGen.Generators
                 }
                 // If in-parameters can cause the operation to become a no-op, write a check
                 // that no-ops the operation when the no-op conditions are met.
-                else if(instruction.NoOpGroups != null &&
+                else if (instruction.NoOpGroups != null &&
                         instruction.NoOpGroups.Length > 0)
                 {
                     returnString = WriteNoOpCheck(instruction, isManaged, indent);
@@ -2437,7 +2404,7 @@ namespace MS.Internal.MilCodeGen.Generators
             foreach(McgField field in fields)
             {
                 // Field is a resource that can not be passed by value or an animation
-                if(!field.Type.IsValueType || (animated && field.IsAnimated))
+                if (!field.Type.IsValueType || (animated && field.IsAnimated))
                 {
                     return true;
                 }

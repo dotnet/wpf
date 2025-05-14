@@ -1,6 +1,5 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 //
 //
@@ -9,24 +8,14 @@
 // Please see MilCodeGen.html for more information.
 //
 
-using MS.Internal;
 using MS.Internal.KnownBoxes;
-using MS.Utility;
-
-using System;
-using System.Collections;
-using System.ComponentModel;
-using System.Diagnostics;
 using System.Globalization;
-using System.Runtime.InteropServices;
-using System.Windows.Media;
 using System.Windows.Media.Media3D;
-using System.Windows.Media.Animation;                 
 
 using MS.Internal.PresentationCore;
 
 namespace System.Windows.Media.Animation
-{       
+{
     /// <summary>
     /// Animates the value of a Int64 property using linear interpolation
     /// between two values.  The values are determined by the combination of
@@ -240,7 +229,7 @@ namespace System.Windows.Media.Animation
             bool validateOrigin = false;
             bool validateDestination = false;
 
-            switch(_animationType)
+            switch (_animationType)
             {
                 case AnimationType.Automatic:
 

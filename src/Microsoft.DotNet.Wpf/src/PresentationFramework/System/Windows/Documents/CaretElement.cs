@@ -1,6 +1,15 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
+
+using System.Windows.Media; // Brush, Transform
+using System.Windows.Media.Animation; // AnimationClock
+using System.Windows.Controls; // ScrollViewer
+using MS.Win32; // SafeNativeMethods
+using MS.Internal; // DoubleUtil.AreClose(), Invariant.Assert
+using MS.Internal.Documents; // IFlowDocumentViewer
+using System.Runtime.InteropServices; // HandleRef
+using System.Windows.Interop;
+using System.Windows.Controls.Primitives;
 
 //
 // Description: Caret rendering visual.
@@ -8,22 +17,6 @@
 
 namespace System.Windows.Documents
 {
-    using System.Security; // SecurityCritical, SecurityTreatAsSafe
-    using System.Windows.Media; // Brush, Transform
-    using System.Windows.Media.Animation; // AnimationClock
-    using System.Windows.Controls; // ScrollViewer
-    using MS.Win32; // SafeNativeMethods
-    using MS.Internal; // DoubleUtil.AreClose(), Invariant.Assert
-    using MS.Internal.Documents; // IFlowDocumentViewer
-    using System.Runtime.InteropServices; // HandleRef
-    using System.Collections.Generic; // List<TextSegment>
-    using System.Windows.Interop;
-    using System.Windows.Controls.Primitives;
-
-
-// Disable pragma warnings to enable PREsharp pragmas
-#pragma warning disable 1634, 1691
-
     /// <summary>
     /// This class is sealed because it calls OnVisualChildrenChanged virtual in the
     /// constructor and it does not override it, but derived classes could.
@@ -67,8 +60,10 @@ namespace System.Windows.Documents
             // Set AllowDropProperty as "False" not to inherit the value from the ancestor.
             AllowDrop = false;
 
-            _caretElement = new CaretSubElement();
-            _caretElement.ClipToBounds = false;
+            _caretElement = new CaretSubElement
+            {
+                ClipToBounds = false
+            };
 
             AddVisualChild(_caretElement);
         }
@@ -108,7 +103,7 @@ namespace System.Windows.Documents
         {
             if (index != 0)
             {
-                throw new ArgumentOutOfRangeException("index", index, SR.Visual_ArgumentOutOfRange);
+                throw new ArgumentOutOfRangeException(nameof(index), index, SR.Visual_ArgumentOutOfRange);
             }
 
             return _caretElement;
@@ -710,7 +705,7 @@ namespace System.Windows.Documents
                     if (flowDirection == FlowDirection.RightToLeft)
                     {
                         // BiDi caret indicator should always direct by the right to left
-                        bidiCaretIndicatorWidth = bidiCaretIndicatorWidth * (-1);
+                        bidiCaretIndicatorWidth *= -1;
                     }
 
                     // Draw BIDI caret to indicate the coming input is BIDI characters.
@@ -721,8 +716,10 @@ namespace System.Windows.Documents
                     PathFigure pathFigure;
 
                     pathGeometry = new PathGeometry();
-                    pathFigure = new PathFigure();
-                    pathFigure.StartPoint = new Point(0, 0);
+                    pathFigure = new PathFigure
+                    {
+                        StartPoint = new Point(0, 0)
+                    };
                     pathFigure.Segments.Add(new LineSegment(new Point(-bidiCaretIndicatorWidth, 0), true));
                     pathFigure.Segments.Add(new LineSegment(new Point(0, _height / BidiIndicatorHeightRatio), true));
                     pathFigure.IsClosed = true;
@@ -863,11 +860,8 @@ namespace System.Windows.Documents
             if (layer == null)
             {
                 // There is no AdornerLayer available.  Clear cached value and exit.
-                if (_adornerLayer != null)
-                {
-                    // We're currently in a layer that doesn't exist.
-                    _adornerLayer.Remove(this);
-                }
+                // We're currently in a layer that doesn't exist.
+                _adornerLayer?.Remove(this);
 
                 _adornerLayer = null;
                 return;
@@ -879,11 +873,8 @@ namespace System.Windows.Documents
                 return;
             }
 
-            if (_adornerLayer != null)
-            {
-                // We're currently in the wrong layer.
-                _adornerLayer.Remove(this);
-            }
+            // We're currently in the wrong layer.
+            _adornerLayer?.Remove(this);
 
             // Add ourselves to the correct layer.
             _adornerLayer = layer;
@@ -909,9 +900,11 @@ namespace System.Windows.Documents
 
                 if (_blinkAnimationClock == null || _blinkAnimationClock.Timeline.Duration != blinkDuration)
                 {
-                    DoubleAnimationUsingKeyFrames blinkAnimation = new DoubleAnimationUsingKeyFrames();
-                    blinkAnimation.BeginTime = null;
-                    blinkAnimation.RepeatBehavior = RepeatBehavior.Forever;
+                    DoubleAnimationUsingKeyFrames blinkAnimation = new DoubleAnimationUsingKeyFrames
+                    {
+                        BeginTime = null,
+                        RepeatBehavior = RepeatBehavior.Forever
+                    };
                     blinkAnimation.KeyFrames.Add(new DiscreteDoubleKeyFrame(1, KeyTime.FromPercent(0.0)));
                     blinkAnimation.KeyFrames.Add(new DiscreteDoubleKeyFrame(0, KeyTime.FromPercent(0.5)));
                     blinkAnimation.Duration = blinkDuration;
@@ -1135,10 +1128,7 @@ namespace System.Windows.Documents
         {
             Invariant.Assert(_isSelectionActive, "Blink animation should only be required for an owner with active selection.");
 
-            // Disable PreSharp#6523 - Win32 GetCaretBlinkTime can return "0"
-            // without the error if SetCaretBlinkTime set as "0".
-#pragma warning disable 6523
-
+            // Win32 GetCaretBlinkTime can return "0" without the error if SetCaretBlinkTime set as "0".
             int caretBlinkTime = (int)SafeNativeMethods.GetCaretBlinkTime();
             if (caretBlinkTime == 0)
             {
@@ -1146,8 +1136,6 @@ namespace System.Windows.Documents
                 // exception.
                 return -1;
             }
-
-#pragma warning restore 6523
 
             return caretBlinkTime;
         }

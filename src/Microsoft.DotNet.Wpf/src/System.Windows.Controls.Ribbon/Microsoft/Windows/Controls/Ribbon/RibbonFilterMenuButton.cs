@@ -1,10 +1,7 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
-        
 
-using System;
-using System.Windows;
+
 using System.Windows.Data;
 #if !RIBBON_IN_FRAMEWORK
 using System.Windows.Controls;
@@ -94,7 +91,7 @@ namespace Microsoft.Windows.Controls.Ribbon
 
         #region DismissPopup
 
-        bool _retainFocusOnDismiss = false;
+        private bool _retainFocusOnDismiss = false;
         internal override void OnIsDropDownOpenChanged(DependencyPropertyChangedEventArgs e)
         {
             base.OnIsDropDownOpenChanged(e);

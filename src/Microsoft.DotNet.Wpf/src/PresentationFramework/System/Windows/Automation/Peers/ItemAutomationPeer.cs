@@ -1,24 +1,13 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
-using System;
-using System.Collections;
 using System.Collections.ObjectModel;
-using System.Collections.Generic;
-using System.Runtime.InteropServices;
-using System.Security;
-using System.Text;
-using System.Windows;
 using System.Windows.Automation.Provider;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
-using System.Windows.Interop;
-using System.Windows.Media;
 using System.Windows.Threading;
 using MS.Internal;
 using MS.Internal.Data;
-using MS.Win32;
 
 namespace System.Windows.Automation.Peers
 {
@@ -46,15 +35,12 @@ namespace System.Windows.Automation.Peers
                 if (value)
                     return;
                 AutomationPeer wrapperPeer = GetWrapperPeer();
-                if (wrapperPeer != null)
-                {
-                    wrapperPeer.AncestorsInvalid = false;
-                }
+                wrapperPeer?.AncestorsInvalid = false;
             }
         }
 
         ///
-        override public object GetPattern(PatternInterface patternInterface)
+        public override object GetPattern(PatternInterface patternInterface)
         {
             if (patternInterface == PatternInterface.VirtualizedItem)
             {
@@ -111,7 +97,7 @@ namespace System.Windows.Automation.Peers
             return wrapper;
         }
 
-        virtual internal AutomationPeer GetWrapperPeer()
+        internal virtual AutomationPeer GetWrapperPeer()
         {
             AutomationPeer wrapperPeer = null;
             UIElement wrapper = GetWrapper();
@@ -149,7 +135,7 @@ namespace System.Windows.Automation.Peers
 
 
         ///
-        override internal bool IgnoreUpdatePeer()
+        internal override bool IgnoreUpdatePeer()
         {
             // Ignore UpdatePeer if the we're no longer in the automation tree.
             // There's no need to update such a peer, as it no longer
@@ -164,22 +150,19 @@ namespace System.Windows.Automation.Peers
             return base.IgnoreUpdatePeer();
         }
 
-        override internal bool IsDataItemAutomationPeer()
+        internal override bool IsDataItemAutomationPeer()
         {
             return true;
         }
 
-        override internal void AddToParentProxyWeakRefCache()
+        internal override void AddToParentProxyWeakRefCache()
         {
             ItemsControlAutomationPeer itemsControlAutomationPeer = ItemsControlAutomationPeer;
-            if(itemsControlAutomationPeer != null)
-            {
-                itemsControlAutomationPeer.AddProxyToWeakRefStorage(this.ElementProxyWeakReference, this);
-            }
+            itemsControlAutomationPeer?.AddProxyToWeakRefStorage(this.ElementProxyWeakReference, this);
         }
 
         /// <summary>
-        override internal Rect GetVisibleBoundingRectCore()
+        internal override Rect GetVisibleBoundingRectCore()
         {
             AutomationPeer wrapperPeer = GetWrapperPeer();
             if (wrapperPeer != null)
@@ -190,7 +173,7 @@ namespace System.Windows.Automation.Peers
         }
 
         ///
-        override protected string GetItemTypeCore()
+        protected override string GetItemTypeCore()
         {
             return string.Empty;
         }
@@ -249,7 +232,7 @@ namespace System.Windows.Automation.Peers
         }
 
         ///
-        override protected AutomationHeadingLevel GetHeadingLevelCore()
+        protected override AutomationHeadingLevel GetHeadingLevelCore()
         {
             AutomationPeer wrapperPeer = GetWrapperPeer();
             AutomationHeadingLevel headingLevel = AutomationHeadingLevel.None;
@@ -652,7 +635,7 @@ namespace System.Windows.Automation.Peers
                 ThrowElementNotAvailableException();
         }
 
-        virtual internal ItemsControlAutomationPeer GetItemsControlAutomationPeer()
+        internal virtual ItemsControlAutomationPeer GetItemsControlAutomationPeer()
         {
             return _itemsControlAutomationPeer;
         }
@@ -687,7 +670,7 @@ namespace System.Windows.Automation.Peers
                 if (iwr != null)
                 {
                     object item = iwr.Target;
-                    return (item == null) ? DependencyProperty.UnsetValue : item;
+                    return item ?? DependencyProperty.UnsetValue;
                 }
                 else
                 {
@@ -738,7 +721,7 @@ namespace System.Windows.Automation.Peers
             RealizeCore();
         }
 
-        virtual internal void RealizeCore()
+        internal virtual void RealizeCore()
         {
             ItemsControlAutomationPeer itemsControlAutomationPeer = ItemsControlAutomationPeer;
             if (itemsControlAutomationPeer != null)

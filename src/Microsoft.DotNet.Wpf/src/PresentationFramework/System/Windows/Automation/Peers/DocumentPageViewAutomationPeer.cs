@@ -1,14 +1,11 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 //
 // Description: AutomationPeer associated with DocumentPageView.
 //
 
-using System.Collections.Generic;           // List<T>
 using System.Globalization;                 // CultureInfo
-using System.Windows.Controls;              // DocumentViewer
 using System.Windows.Controls.Primitives;   // DocumentPageView
 
 namespace System.Windows.Automation.Peers

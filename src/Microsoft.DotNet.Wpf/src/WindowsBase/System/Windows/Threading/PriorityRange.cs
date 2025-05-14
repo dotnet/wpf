@@ -1,9 +1,5 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
-
-using System;
-using MS.Internal.WindowsBase;
 
 namespace System.Windows.Threading
 {
@@ -261,7 +257,7 @@ namespace System.Windows.Threading
             }
             if(min == DispatcherPriority.Inactive)
             {
-                throw new ArgumentException(SR.InvalidPriority, "min");
+                throw new ArgumentException(SR.InvalidPriority, nameof(min));
             }
 
             /*            
@@ -282,7 +278,7 @@ namespace System.Windows.Threading
             }
             if(max == DispatcherPriority.Inactive)
             {
-                throw new ArgumentException(SR.InvalidPriority, "max");
+                throw new ArgumentException(SR.InvalidPriority, nameof(max));
             }
             
             if (max < min)

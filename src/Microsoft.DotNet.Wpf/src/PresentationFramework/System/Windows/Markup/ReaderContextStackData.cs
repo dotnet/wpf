@@ -1,17 +1,11 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 /***************************************************************************\
 *
 *
 *
 \***************************************************************************/
-using System;
-using System.Collections;
-using System.Reflection;
-using System.Diagnostics;
-
 namespace System.Windows.Markup
 {
     // Data maintained on the reader's context stack.  The root of the tree is at the bottom
@@ -21,15 +15,15 @@ namespace System.Windows.Markup
         //
         // NOTE:  If you add a field here, be sure to update ClearData
         //
-        ReaderFlags  _contextFlags;
-        object       _contextData;
-        object       _contextKey;
-        string        _uid;
-        string        _name;
-        object       _contentProperty;
-        Type         _expectedType;
-        short        _expectedTypeId;
-        bool         _createUsingTypeConverter;
+        private ReaderFlags  _contextFlags;
+        private object       _contextData;
+        private object       _contextKey;
+        private string        _uid;
+        private string        _name;
+        private object       _contentProperty;
+        private Type         _expectedType;
+        private short        _expectedTypeId;
+        private bool         _createUsingTypeConverter;
         //
         // NOTE:  If you add a field here, be sure to update ClearData
         //

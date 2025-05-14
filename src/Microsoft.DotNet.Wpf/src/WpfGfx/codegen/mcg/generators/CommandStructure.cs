@@ -1,6 +1,5 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 
 //+-----------------------------------------------------------------------------
@@ -89,7 +88,7 @@ namespace MS.Internal.MilCodeGen.Generators
             string generatedPath = 
                 Path.Combine(
                     _resourceModel.OutputDirectory,
-                    "src\\Graphics\\Include\\Generated"
+                    "src\\WpfGfx\\Include\\Generated"
                     );
 
             FileCodeSink cppFile = new FileCodeSink(generatedPath, "wgx_commands.h");;
@@ -156,11 +155,9 @@ namespace MS.Internal.MilCodeGen.Generators
                 [[inline]]
                     // This code is generated from mcg\generators\CommandStructure.cs
 
-                    using System;
                     using System.Windows.Media.Composition;
                     using System.Runtime.InteropServices;
                     using System.Windows.Media.Effects;
-                    using System.Security;
 
                     using BOOL = System.UInt32;
 
@@ -319,7 +316,7 @@ namespace MS.Internal.MilCodeGen.Generators
                         };
                     [[/inline]]
                 );                 
-            } 
+            }
         }
 
 

@@ -1,15 +1,7 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 //
-
-using System;
-using System.Diagnostics;
-using System.Windows;
-using System.Windows.Media;
-using System.Security;
-using SecurityHelper=MS.Internal.SecurityHelper; 
 
 namespace System.Windows.Media.Effects
 {
@@ -73,7 +65,7 @@ namespace System.Windows.Media.Effects
         /// where a point before the effect is applied goes after the effect is
         /// applied. 
         /// </summary>
-        internal protected virtual GeneralTransform EffectMapping
+        protected internal virtual GeneralTransform EffectMapping
         {
             get
             {

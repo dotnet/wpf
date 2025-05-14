@@ -1,6 +1,5 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 //
 //
@@ -8,15 +7,6 @@
 //              MatrixStack (2D) is optimized to avoid boxig and copying
 //              of structs.  This was written as a stop-gap to address
 //              a 
-
-
-
-
-
-
-using System;
-using System.Collections;
-using System.Collections.Generic;
 
 namespace System.Windows.Media.Media3D
 {

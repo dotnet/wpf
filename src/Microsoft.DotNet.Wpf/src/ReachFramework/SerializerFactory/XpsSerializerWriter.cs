@@ -1,6 +1,13 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
+
+using System.IO;
+using System.IO.Packaging;
+using System.Printing;
+using System.Windows.Documents;
+using System.Windows.Documents.Serialization;
+using System.Windows.Media;
+using System.Windows.Xps.Packaging;
 
 //
 //
@@ -12,16 +19,6 @@
 
 namespace System.Windows.Xps.Serialization
 {
-    using System;
-    using System.IO;
-    using System.IO.Packaging;
-    using System.Printing;
-    using System.Windows.Xps;
-    using System.Windows.Documents;
-    using System.Windows.Documents.Serialization;
-    using System.Windows.Media;
-    using System.Windows.Xps.Packaging;
-
     /// <summary>
     /// XpsSerializerWriter is a concrete implementation for a plug-in SerializerWriter. It punts everything to XpsDocumentWriter
     /// </summary>
@@ -443,18 +440,12 @@ namespace System.Windows.Xps.Serialization
 
         private void xsw_WritingPrintTicketRequired(object sender, WritingPrintTicketRequiredEventArgs e)
         {
-            if (WritingPrintTicketRequired != null)
-            {
-                WritingPrintTicketRequired.Invoke(sender, e);
-            }
+            WritingPrintTicketRequired?.Invoke(sender, e);
         }
 
         private void xsw_WritingProgressChanged(object sender, WritingProgressChangedEventArgs e)
         {
-            if ( WritingProgressChanged != null)
-            {
-                WritingProgressChanged.Invoke(sender, e);
-            }
+            WritingProgressChanged?.Invoke(sender, e);
         }
 
         private void xsw_WritingCompleted(object sender, WritingCompletedEventArgs e)

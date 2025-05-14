@@ -1,14 +1,9 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 // Description: Imports from unmanaged UiaCore DLL
 
-// PRESHARP: In order to avoid generating warnings about unkown message numbers and unknown pragmas.
-#pragma warning disable 1634, 1691
-
 using System;
-using System.Security;
 using System.Runtime.InteropServices;
 using System.Windows;
 using System.Windows.Automation;
@@ -45,7 +40,7 @@ namespace MS.Internal.Automation
         [StructLayout(LayoutKind.Sequential)]
         internal struct UiaCondition
         {
-            ConditionType _conditionType;
+            private ConditionType _conditionType;
 
             internal UiaCondition(ConditionType conditionType)
             {
@@ -56,11 +51,11 @@ namespace MS.Internal.Automation
         [StructLayout(LayoutKind.Sequential)]
         internal struct UiaPropertyCondition
         {
-            ConditionType _conditionType;
-            int _propertyId;
+            private ConditionType _conditionType;
+            private int _propertyId;
             [MarshalAs(UnmanagedType.Struct)] // UnmanagedType.Struct == use VARIANT
-            object _value;
-            PropertyConditionFlags _flags;
+            private object _value;
+            private PropertyConditionFlags _flags;
 
             internal UiaPropertyCondition(int propertyId, object value, PropertyConditionFlags flags)
             {
@@ -74,7 +69,7 @@ namespace MS.Internal.Automation
         [StructLayout(LayoutKind.Sequential)]
         internal struct UiaAndOrCondition
         {
-            ConditionType _conditionType;
+            private ConditionType _conditionType;
             public IntPtr _conditions; // ptr to array-of-ptrs to conditions
             public int _conditionCount;
 
@@ -89,7 +84,7 @@ namespace MS.Internal.Automation
         [StructLayout(LayoutKind.Sequential)]
         internal struct UiaNotCondition
         {
-            ConditionType _conditionType;
+            private ConditionType _conditionType;
             public IntPtr _condition;
 
             internal UiaNotCondition(IntPtr condition)
@@ -242,7 +237,7 @@ namespace MS.Internal.Automation
                         }
                         else
                         {
-                            Debug.Assert(false, "unsupported property should not have made it this far");
+                            Debug.Fail("unsupported property should not have made it this far");
                         }
                     }
 
@@ -454,7 +449,7 @@ namespace MS.Internal.Automation
             if (requestedData == null)
             {
                 Debug.Assert(offsets == null && treeStructures == null, "if nothin found, all out params shoud be null");
-                return new UiaCacheResponse[] {}; // Return empty cacheresponse, not null.
+                return Array.Empty<UiaCacheResponse>(); // Return empty cacheresponse, not null.
             }
 
             Debug.Assert(offsets.Length == treeStructures.Length);
@@ -645,7 +640,7 @@ namespace MS.Internal.Automation
             AutomationEvent eventId = AutomationEvent.LookupById(args._eventId);
             if (eventId == null)
             {
-                Debug.Assert(false, "Got unknown eventId from core: " + args._eventId);
+                Debug.Fail("Got unknown eventId from core: " + args._eventId);
                 return null;
             }
 
@@ -663,7 +658,7 @@ namespace MS.Internal.Automation
                         AutomationProperty propertyId = AutomationProperty.LookupById(pcargs._propertyId);
                         if (propertyId == null)
                         {
-                            Debug.Assert(false, "Got unknown propertyId from core: " + pcargs._propertyId);
+                            Debug.Fail("Got unknown propertyId from core: " + pcargs._propertyId);
                             return null;
                         }
 
@@ -704,7 +699,7 @@ namespace MS.Internal.Automation
                     }
             }
 
-            Debug.Assert(false, "Unknown event type from core:" + args._type);
+            Debug.Fail("Unknown event type from core:" + args._type);
             return null;
         }
         #endregion EventArgs translation
@@ -873,7 +868,7 @@ namespace MS.Internal.Automation
             CheckError(RawTextPattern_GetSelection(hobj, out arr));
             if (arr == null)
             {
-                return new SafeTextRangeHandle[] { };
+                return Array.Empty<SafeTextRangeHandle>();
             }
             SafeTextRangeHandle[] result = new SafeTextRangeHandle[arr.Length];
             for (int i = 0; i < arr.Length; i++)
@@ -889,7 +884,7 @@ namespace MS.Internal.Automation
             CheckError(RawTextPattern_GetVisibleRanges(hobj, out arr));
             if (arr == null)
             {
-                return new SafeTextRangeHandle[] { };
+                return Array.Empty<SafeTextRangeHandle>();
             }
             SafeTextRangeHandle[] result = new SafeTextRangeHandle[arr.Length];
             for (int i = 0; i < arr.Length; i++)
@@ -1142,7 +1137,7 @@ namespace MS.Internal.Automation
                     // explicitly set it as a the errorInfo for this thread using SetErrorInfo, it works(!)...
                     // Note that the errorInfo can be null; in which case we just don't use it.
                     IntPtr errorInfoAsIntPtr = Marshal.GetIUnknownForObject(errorInfo);
-#pragma warning suppress 6031, 6532, 56031
+
                     SetErrorInfo(0, errorInfoAsIntPtr); // ignore return value
                     Marshal.Release(errorInfoAsIntPtr);
                 }
@@ -1557,7 +1552,7 @@ namespace MS.Internal.Automation
         [DllImport(DllImport.UIAutomationCore, CharSet = CharSet.Unicode)]
         private static extern void UiaRegisterProviderCallback(UiaProviderCallback pCallback);
 
-        static GCHandle _gchandle;
+        private static GCHandle _gchandle;
 
         static UiaCoreApi()
         {
@@ -1566,7 +1561,7 @@ namespace MS.Internal.Automation
             UiaRegisterProviderCallback(onGetProviderDelegate);
         }
 
-        static private
+        private static
         IRawElementProviderSimple [] OnGetProvider(IntPtr hwnd, ProviderType providerType)
         {
             IRawElementProviderSimple provider;
@@ -1595,7 +1590,6 @@ namespace MS.Internal.Automation
                     return null;
                 return new IRawElementProviderSimple[] { provider };
             }
-#pragma warning suppress 56500
             catch (Exception)
             {
                 // Must catch *all* exceptions here, even critical ones,

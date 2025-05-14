@@ -1,23 +1,17 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 // Description: Windows Container Proxy
 
 using System;
-using System.Windows;
-using System.Collections;
-using System.ComponentModel;
-using System.Runtime.InteropServices;
 using System.Windows.Automation;
 using System.Windows.Automation.Provider;
-using System.Text;
 using MS.Win32;
 
 
 namespace MS.Internal.AutomationProxies
 {
-    class WindowsContainer : ProxyHwnd, IRawElementProviderHwndOverride
+    internal class WindowsContainer : ProxyHwnd, IRawElementProviderHwndOverride
     {
         // ------------------------------------------------------
         //
@@ -37,7 +31,7 @@ namespace MS.Internal.AutomationProxies
                 {
                     _sType = SR.LocalizedControlTypeDialog;
                 }
-                else if (className.IndexOf("AfxControlBar", StringComparison.Ordinal) != -1)
+                else if (className.Contains("AfxControlBar", StringComparison.Ordinal))
                 {
                     _sType = SR.LocalizedControlTypeContainer;
                 }

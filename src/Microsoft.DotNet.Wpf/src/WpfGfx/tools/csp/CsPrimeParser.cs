@@ -1,6 +1,5 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 
 //------------------------------------------------------------------------------
@@ -12,14 +11,12 @@
 //
 //
 
+using System.Text.RegularExpressions;
+using System.Collections;
+using System.Text;
+
 namespace MS.Internal.Csp
 {
-    using System;
-    using System.IO;
-    using System.Text;
-    using System.Text.RegularExpressions;
-    using System.Collections;
-
     internal sealed class CsPrimeParser
     {
         private struct Position
@@ -98,7 +95,7 @@ namespace MS.Internal.Csp
         //------------------------------------------------------
 
         #region Internal Properties
-        string Result
+        private string Result
         {
             get
             {
@@ -186,7 +183,7 @@ namespace MS.Internal.Csp
 
         private void ProcessLine(string line)
         {
-            line = line + "\n";
+            line += "\n";
             _current.Column = 0;
 
             if (_sourceDebuggingSupport) 
@@ -511,7 +508,7 @@ namespace MS.Internal.Csp
 
         // The output C# code
         private StringBuilder _stringBuilder;
-        bool _inMiddleOfOutputLine;
+        private bool _inMiddleOfOutputLine;
         #endregion Private Fields
     }
 }

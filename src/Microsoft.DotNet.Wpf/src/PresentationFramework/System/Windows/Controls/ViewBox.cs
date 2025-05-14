@@ -1,6 +1,5 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 //
 // Description: Contains the Viewbox Decorator class.
@@ -8,17 +7,11 @@
 //
 
 using MS.Internal;
-using MS.Utility;
 using MS.Internal.Controls;
 using MS.Internal.Telemetry.PresentationFramework;
-using System.Diagnostics;
 using System.Collections;
-using System.Windows.Threading;
 
 using System.Windows.Media;
-using System.Windows.Documents;
-
-using System;
 
 namespace System.Windows.Controls
 {
@@ -240,7 +233,7 @@ namespace System.Windows.Controls
         {
             if (index != 0)
             {
-                throw new ArgumentOutOfRangeException("index", index, SR.Visual_ArgumentOutOfRange);
+                throw new ArgumentOutOfRangeException(nameof(index), index, SR.Visual_ArgumentOutOfRange);
             }
             return InternalVisual;
         }

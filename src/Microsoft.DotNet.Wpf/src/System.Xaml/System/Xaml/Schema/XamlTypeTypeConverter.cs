@@ -1,6 +1,5 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 #nullable disable
 
@@ -18,12 +17,10 @@ namespace System.Xaml.Schema
 
         public override object ConvertFrom(ITypeDescriptorContext context, CultureInfo culture, object value)
         {
-            string typeName = value as string;
-
-            if (context != null && typeName != null)
+            if (context is not null && value is string typeName)
             {
                 XamlType result = ConvertStringToXamlType(context, typeName);
-                if (result != null)
+                if (result is not null)
                 {
                     return result;
                 }
@@ -41,10 +38,10 @@ namespace System.Xaml.Schema
         {
             XamlType xamlType = value as XamlType;
 
-            if (context != null && xamlType != null && destinationType == typeof(string))
+            if (context is not null && xamlType is not null && destinationType == typeof(string))
             {
                 string result = ConvertXamlTypeToString(context, xamlType);
-                if (result != null)
+                if (result is not null)
                 {
                     return result;
                 }
@@ -56,10 +53,11 @@ namespace System.Xaml.Schema
         internal static string ConvertXamlTypeToString(ITypeDescriptorContext context, XamlType xamlType)
         {
             var prefixLookup = GetService<INamespacePrefixLookup>(context);
-            if (prefixLookup == null)
+            if (prefixLookup is null)
             {
                 return null;
             }
+
             XamlTypeName typeName = new XamlTypeName(xamlType);
             return typeName.ToString(prefixLookup);
         }
@@ -67,20 +65,23 @@ namespace System.Xaml.Schema
         private static XamlType ConvertStringToXamlType(ITypeDescriptorContext context, string typeName)
         {
             var namespaceResolver = GetService<IXamlNamespaceResolver>(context);
-            if (namespaceResolver == null)
+            if (namespaceResolver is null)
             {
                 return null;
             }
+
             XamlTypeName xamlTypeName = XamlTypeName.Parse(typeName, namespaceResolver);
             var schemaContextProvider = GetService<IXamlSchemaContextProvider>(context);
-            if (schemaContextProvider == null)
+            if (schemaContextProvider is null)
             {
                 return null;
             }
-            if (schemaContextProvider.SchemaContext == null)
+
+            if (schemaContextProvider.SchemaContext is null)
             {
                 return null;
             }
+
             return GetXamlTypeOrUnknown(schemaContextProvider.SchemaContext, xamlTypeName);
         }
 
@@ -92,10 +93,11 @@ namespace System.Xaml.Schema
         private static XamlType GetXamlTypeOrUnknown(XamlSchemaContext schemaContext, XamlTypeName typeName)
         {
             XamlType result = schemaContext.GetXamlType(typeName);
-            if (result != null)
+            if (result is not null)
             {
                 return result;
             }
+
             XamlType[] typeArgs = null;
             if (typeName.HasTypeArgs)
             {
@@ -105,6 +107,7 @@ namespace System.Xaml.Schema
                     typeArgs[i] = GetXamlTypeOrUnknown(schemaContext, typeName.TypeArguments[i]);
                 }
             }
+
             result = new XamlType(typeName.Namespace, typeName.Name, typeArgs, schemaContext);
             return result;
         }

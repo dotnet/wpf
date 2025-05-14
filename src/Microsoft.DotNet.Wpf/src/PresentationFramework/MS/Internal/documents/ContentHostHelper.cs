@@ -1,16 +1,12 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 //
 // Description: The ContentHostHelper class contains static methods that are
 //              useful for performing common tasks with IContentHost.
 //
 
-using System;                               // Object
-using System.Collections.Generic;           // List<T>
 using System.Windows;                       // IContentHost
-using System.Windows.Controls;              // TextBlock
 using System.Windows.Controls.Primitives;   // DocumentPageView
 using System.Windows.Documents;             // FlowDocument
 using System.Windows.Media;                 // Visual

@@ -1,25 +1,13 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 //
 //
 
-using System;
-using System.Collections;
 using System.ComponentModel;
-using System.ComponentModel.Design.Serialization;
-using System.Reflection;
 using MS.Internal;
-using System.Diagnostics;
-using System.Windows.Media;
-using System.Globalization;
-using System.Security;
-using System.Runtime.InteropServices;
 using System.Windows.Media.Animation;
-using System.Windows.Media.Composition;
 using System.Windows.Markup;
-using MS.Win32;
 
 namespace System.Windows.Media
 {
@@ -48,7 +36,7 @@ namespace System.Windows.Media
         /// <summary>
         /// Get the width of the image in measure units (96ths of an inch).
         /// </summary>
-        abstract public double Width
+        public abstract double Width
         {
             get;
         }
@@ -56,7 +44,7 @@ namespace System.Windows.Media
         /// <summary>
         /// Get the height of the image in measure units (96ths of an inch).
         /// </summary>
-        abstract public double Height
+        public abstract double Height
         {
             get;
         }
@@ -64,7 +52,7 @@ namespace System.Windows.Media
         /// <summary>
         /// Get the metadata associated with this image source
         /// </summary>
-        abstract public ImageMetadata Metadata
+        public abstract ImageMetadata Metadata
         {
             get;
         }

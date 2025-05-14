@@ -1,6 +1,5 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 #nullable disable
 
@@ -80,7 +79,7 @@ namespace System.Windows.Markup
         /// <returns>The Array containing all the objects added to this extension.</returns>
         public override object ProvideValue(IServiceProvider serviceProvider)
         {
-            if (Type == null)
+            if (Type is null)
             {
                 throw new InvalidOperationException(SR.MarkupExtensionArrayType);
             }

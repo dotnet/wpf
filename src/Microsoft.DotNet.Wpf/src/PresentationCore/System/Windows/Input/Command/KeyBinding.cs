@@ -1,24 +1,15 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
-//
-// 
-//
 // Description: The KeyBinding class is used by the developer to create Keyboard Input Bindings 
 //
 //                  See spec at : http://avalon/coreui/Specs/Commanding(new).mht 
 // 
 //* KeyBinding class serves the purpose of Input Bindings for Keyboard Device.
-using System;
-using System.Windows.Input;
-using System.Windows;
 using System.ComponentModel;
 using System.Windows.Markup;
 
-using SR=MS.Internal.PresentationCore.SR;
-
-namespace System.Windows.Input 
+namespace System.Windows.Input
 {
     /// <summary>
     /// KeyBinding - Implements InputBinding (generic InputGesture-Command map)
@@ -196,7 +187,7 @@ namespace System.Windows.Input
                 _settingGesture = true;
                 try
                 {
-                    Gesture = new KeyGesture(key, modifiers, /*validateGesture = */ false);
+                    Gesture = new KeyGesture(key, modifiers, validateGesture: false);
                 }
                 finally
                 {

@@ -1,6 +1,10 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
+
+using System.Windows.Controls.Primitives;
+using System.Collections.Generic;
+using MS.Internal;
+using Microsoft.Windows.Controls;
 
 #if RIBBON_IN_FRAMEWORK
 namespace System.Windows.Controls.Ribbon.Primitives
@@ -8,15 +12,6 @@ namespace System.Windows.Controls.Ribbon.Primitives
 namespace Microsoft.Windows.Controls.Ribbon.Primitives
 #endif
 {
-    using System.Diagnostics;
-    using System.Windows;
-    using System.Windows.Controls;
-    using System.Windows.Controls.Primitives;
-    using System.Collections.Generic;
-    using System;
-    using MS.Internal;
-    using Microsoft.Windows.Controls;
-
     public class RibbonMenuItemsPanel : VirtualizingStackPanel, ISupportStarLayout
     {
         #region Constructor
@@ -79,9 +74,9 @@ namespace Microsoft.Windows.Controls.Ribbon.Primitives
                         {
                             menuButtonParent.InternalItemsHost = this;
                         }
-                        else if (menuItemParent != null)
+                        else
                         {
-                            menuItemParent.InternalItemsHost = this;
+                            menuItemParent?.InternalItemsHost = this;
                         }
                     }
                 }

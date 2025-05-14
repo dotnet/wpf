@@ -1,6 +1,5 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 //---------------------------------------------------------------------------
 //
@@ -10,13 +9,9 @@
 //---------------------------------------------------------------------------
 
 using System;
-using System.IO;
 using System.Collections.Generic;
 
 using System.Globalization;
-using System.Diagnostics;
-using System.Reflection;
-using System.Resources;
 using System.Runtime.InteropServices;
 
 
@@ -25,10 +20,6 @@ using Microsoft.Build.Utilities;
 
 using MS.Utility;
 using MS.Internal.Tasks;
-
-// Since we disable PreSharp warnings in this file, PreSharp warning is unknown to C# compiler.
-// We first need to disable warnings about unknown message numbers and unknown pragmas.
-#pragma warning disable 1634, 1691
 
 namespace Microsoft.Build.Tasks.Windows
 {
@@ -86,7 +77,7 @@ namespace Microsoft.Build.Tasks.Windows
 
                 ret = VerifyTaskInputs();
 
-                if (ret != false)
+                if (ret)
                 {
                     // Do the real work to classify input files.
                     Classify(SourceFiles, mainEmbeddedList, satelliteEmbeddedList);
@@ -106,7 +97,6 @@ namespace Microsoft.Build.Tasks.Windows
             }
             catch (Exception e)
             {
-                // PreSharp Complaint 6500 - do not handle null-ref or SEH exceptions.
                 if (e is NullReferenceException || e is SEHException)
                 {
                     throw;
@@ -129,14 +119,11 @@ namespace Microsoft.Build.Tasks.Windows
 
                 return false;
             }
-#pragma warning disable 6500
             catch // Non-CLS compliant errors
             {
                 Log.LogErrorWithCodeFromResources(nameof(SR.NonClsError));
                 return false;
             }
-#pragma warning restore 6500
-
 
             return ret;
         }
@@ -168,7 +155,7 @@ namespace Microsoft.Build.Tasks.Windows
         /// </summary>
         public string Culture
         {
-            get { return _culture != null ? _culture.ToLower(CultureInfo.InvariantCulture) : null; }
+            get { return _culture?.ToLower(CultureInfo.InvariantCulture); }
             set { _culture = value; }
         }
 
@@ -289,7 +276,7 @@ namespace Microsoft.Build.Tasks.Windows
             // MSBUILD Engine should have checked the setting for this property
             // so don't need to recheck here.
 
-            if (TaskHelper.IsValidCultureName(Culture) == false)
+            if (!TaskHelper.IsValidCultureName(Culture))
             {
                 Log.LogErrorWithCodeFromResources(nameof(SR.InvalidCulture), Culture);
                 bValidInput = false;
@@ -329,25 +316,19 @@ namespace Microsoft.Build.Tasks.Windows
         // <returns></returns>
         private bool IsItemLocalizable(ITaskItem fileItem)
         {
-            bool isLocalizable = false;
-
             // if the default culture is not set, by default all
             // the items are not localizable.
+            bool isLocalizable = false;
 
-            if (Culture != null && Culture.Equals("") == false)
+            if (!string.IsNullOrEmpty(Culture))
             {
-                string localizableString;
+                string localizableString = fileItem.GetMetadata(SharedStrings.Localizable);
 
                 // Default culture is set, by default the item is localizable
-                // unless it is set as false in the Localizable attribute.
-
-                isLocalizable = true;
-
-                localizableString = fileItem.GetMetadata(SharedStrings.Localizable);
-
-                if (localizableString != null && String.Compare(localizableString, "false", StringComparison.OrdinalIgnoreCase) ==0 )
+                // unless it is set as false in the Localizable attribute.         
+                if (!string.Equals(localizableString, "false", StringComparison.OrdinalIgnoreCase))
                 {
-                    isLocalizable = false;
+                    isLocalizable = true;
                 }
             }
 

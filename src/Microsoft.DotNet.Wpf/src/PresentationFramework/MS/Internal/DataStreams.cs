@@ -1,27 +1,19 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 //
 // Description:
 // Holds the data for Avalon BindProducts in the journal
 //
 
-
-using System;
 using System.Collections;
 using System.Collections.Specialized;
-using System.Diagnostics;
 using System.Formats.Nrbf;
 using System.IO;
-using System.Runtime.Serialization;
+using System.Private.Windows.BinaryFormat;
 using System.Runtime.Serialization.Formatters.Binary;
-using System.Security;
-using MS.Internal.AppModel;
 using System.Windows;
-using System.Windows.Navigation;
 using System.Windows.Controls;
-using System.Windows.Controls.Primitives;
 
 namespace MS.Internal.AppModel
 {
@@ -322,10 +314,7 @@ namespace MS.Internal.AppModel
                     //  B. If the loose xaml file has been changed since the journal data was created
                     //
                     //
-                    if (customJournalingObject != null)
-                    {
-                        customJournalingObject.RestoreJournalState(state);
-                    }
+                    customJournalingObject?.RestoreJournalState(state);
                 }
             }
         }
@@ -405,7 +394,7 @@ namespace MS.Internal.AppModel
         }
 
         [ThreadStatic]
-        static private BinaryFormatter _formatter;
+        private static BinaryFormatter _formatter;
 
         private HybridDictionary _subStreams = new HybridDictionary(3);
 

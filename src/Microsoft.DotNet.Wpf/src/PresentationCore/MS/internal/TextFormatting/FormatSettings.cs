@@ -1,6 +1,5 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 //
 //
@@ -10,11 +9,6 @@
 //
 
 
-using System;
-using System.Diagnostics;
-using System.Security;
-using System.Windows;
-using System.Windows.Threading;
 using System.Windows.Media;
 using System.Windows.Media.TextFormatting;
 
@@ -172,7 +166,7 @@ namespace MS.Internal.TextFormatting
             // indent is part of our text line but not of LS line
             // paragraph width == 0 means format width is unlimited
             int formatWidth = (paragraphWidth <= 0 ? Constants.IdealInfiniteWidth : paragraphWidth);
-            formatWidth = formatWidth - _pap.ParagraphIndent;
+            formatWidth -= _pap.ParagraphIndent;
             
             // sanitize the format width value before passing to LS
             formatWidth = Math.Max(formatWidth, 0);

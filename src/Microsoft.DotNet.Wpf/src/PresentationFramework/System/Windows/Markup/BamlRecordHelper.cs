@@ -1,8 +1,6 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
-using System;
 using System.Diagnostics;
 
 
@@ -16,14 +14,14 @@ namespace System.Windows.Markup
 {
     // Helper functions for baml records
 
-    static internal class BamlRecordHelper
+    internal static class BamlRecordHelper
     {
 #if !PBTCOMPILER
         // 
         // This method checks to see if the baml record type is one of the records used
         // to build up the map table, e.g. type information.
         //
-        static internal bool IsMapTableRecordType( BamlRecordType bamlRecordType )
+        internal static bool IsMapTableRecordType( BamlRecordType bamlRecordType )
         {
             switch( bamlRecordType )
             {
@@ -129,7 +127,7 @@ namespace System.Windows.Markup
                     return false;
 
                 default:
-                    Debug.Assert(false, "Unhandled case in DoesRecordTypeHaveDebugExtension");
+                    Debug.Fail("Unhandled case in DoesRecordTypeHaveDebugExtension");
                     return false;
             }
         }

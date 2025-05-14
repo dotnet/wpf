@@ -1,27 +1,10 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
-/***************************************************************************\
-*
-*
-*  Defines a top-level ContextLayoutManager - a layout dirtiness tracking/clearing system.
-*
-*
-\***************************************************************************/
-
-using System;
 using System.Windows.Threading;
-using System.Collections;
-
 using System.Windows.Media;
-using System.Windows.Media.Media3D;
 using System.Windows.Automation.Peers;
-
-using MS.Internal;
 using MS.Utility;
-
-using SR=MS.Internal.PresentationCore.SR;
 
 namespace System.Windows
 {
@@ -36,7 +19,7 @@ namespace System.Windows
             Dispatcher.ShutdownFinished += _shutdownHandler;
         }
 
-        void OnDispatcherShutdown(object sender, EventArgs e)
+        private void OnDispatcherShutdown(object sender, EventArgs e)
         {
             if(_shutdownHandler != null)
                 Dispatcher.ShutdownFinished -= _shutdownHandler;
@@ -577,8 +560,7 @@ namespace System.Windows
         private static object UpdateLayoutCallback(object arg)
         {
             ContextLayoutManager ContextLayoutManager = arg as ContextLayoutManager;
-            if(ContextLayoutManager != null)
-                ContextLayoutManager.UpdateLayout();
+            ContextLayoutManager?.UpdateLayout();
             return null;
         }
 
@@ -862,8 +844,10 @@ namespace System.Windows
                 Request r;
                 for(int i=0; i<PocketCapacity; i++)
                 {
-                    r = new Request();
-                    r.Next = _pocket;
+                    r = new Request
+                    {
+                        Next = _pocket
+                    };
                     _pocket = r;
                 }
                 _pocketSize = PocketCapacity;
@@ -876,7 +860,7 @@ namespace System.Windows
                 if(r != null)
                 {
                     r.Next = _head;
-                    if(_head != null) _head.Prev = r;
+                    _head?.Prev = r;
                     _head = r;
 
                     setRequest(e, r);
@@ -991,7 +975,7 @@ namespace System.Windows
                 if(entry.Prev == null) _head = entry.Next;
                 else entry.Prev.Next = entry.Next;
 
-                if(entry.Next != null) entry.Next.Prev = entry.Prev;
+                entry.Next?.Prev = entry.Prev;
 
                 ReuseRequest(entry);
             }
@@ -1015,8 +999,7 @@ namespace System.Windows
                     }
                     catch(System.OutOfMemoryException)
                     {
-                        if(lm != null)
-                            lm.setForceLayout(e);
+                        lm?.setForceLayout(e);
                         throw;
                     }
                 }
@@ -1061,8 +1044,10 @@ namespace System.Windows
             ListItem t;
             for(int i=0; i<PocketCapacity; i++)
             {
-                t = new ListItem();
-                t.Next = _pocket;
+                t = new ListItem
+                {
+                    Next = _pocket
+                };
                 _pocket = t;
             }
             _pocketSize = PocketCapacity;
@@ -1073,7 +1058,7 @@ namespace System.Windows
             ListItem t = getNewListItem(target);
 
             t.Next = _head;
-            if(_head != null) _head.Prev = t;
+            _head?.Prev = t;
             _head = t;
 
            _count++;
@@ -1089,7 +1074,7 @@ namespace System.Windows
             if(t.Prev == null) _head = t.Next;
             else t.Prev.Next = t.Next;
 
-            if(t.Next != null) t.Next.Prev = t.Prev;
+            t.Next?.Prev = t.Prev;
 
             reuseListItem(t);
             _count--;

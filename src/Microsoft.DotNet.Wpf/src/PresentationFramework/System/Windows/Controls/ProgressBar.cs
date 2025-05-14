@@ -1,20 +1,12 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 //
 // Description:
 // Implementation of ProgressBar control.
 //
 
-using System;
-using System.Collections.Specialized;
-using System.Threading;
-
 using System.Windows.Automation.Peers;
-using System.Windows.Automation.Provider;
-
-using System.Windows;
 using System.Windows.Controls.Primitives;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
@@ -108,10 +100,7 @@ namespace System.Windows.Controls
 
             // Invalidate automation peer
             ProgressBarAutomationPeer peer = UIElementAutomationPeer.FromElement(progressBar) as ProgressBarAutomationPeer;
-            if (peer != null)
-            {
-                peer.InvalidatePeer();
-            }
+            peer?.InvalidatePeer();
 
             progressBar.SetProgressBarGlowElementBrush();
 
@@ -197,11 +186,12 @@ namespace System.Windows.Controls
                 {
                     Color color = ((SolidColorBrush)this.Foreground).Color;
                     //Create the gradient
-                    LinearGradientBrush b = new LinearGradientBrush();
-                    
-                    b.StartPoint = new Point(0,0);
-                    b.EndPoint = new Point(1,0);
-                    
+                    LinearGradientBrush b = new LinearGradientBrush
+                    {
+                        StartPoint = new Point(0, 0),
+                        EndPoint = new Point(1, 0)
+                    };
+
                     b.GradientStops.Add(new GradientStop(Colors.Transparent, 0.0));
                     b.GradientStops.Add(new GradientStop(color, 0.4));                
                     b.GradientStops.Add(new GradientStop(color, 0.6));        
@@ -211,9 +201,11 @@ namespace System.Windows.Controls
                 else
                 {
                     // This is not a solid color brush so we will need an opacity mask.
-                    LinearGradientBrush mask= new LinearGradientBrush();
-                    mask.StartPoint = new Point(0,0);
-                    mask.EndPoint = new Point(1,0);
+                    LinearGradientBrush mask = new LinearGradientBrush
+                    {
+                        StartPoint = new Point(0, 0),
+                        EndPoint = new Point(1, 0)
+                    };
                     mask.GradientStops.Add(new GradientStop(Colors.Transparent, 0.0));
                     mask.GradientStops.Add(new GradientStop(Colors.Black, 0.4));                
                     mask.GradientStops.Add(new GradientStop(Colors.Black, 0.6));        
@@ -251,12 +243,13 @@ namespace System.Windows.Controls
                         startTime = TimeSpan.Zero;
                     }
 
-                    ThicknessAnimationUsingKeyFrames animation = new ThicknessAnimationUsingKeyFrames();
-                    
-                    animation.BeginTime = startTime;
-                    animation.Duration = new Duration(translateTime + pauseTime);
-                    animation.RepeatBehavior = RepeatBehavior.Forever;
-                    
+                    ThicknessAnimationUsingKeyFrames animation = new ThicknessAnimationUsingKeyFrames
+                    {
+                        BeginTime = startTime,
+                        Duration = new Duration(translateTime + pauseTime),
+                        RepeatBehavior = RepeatBehavior.Forever
+                    };
+
                     //Start with the glow hidden on the left.
                     animation.KeyFrames.Add(new LinearThicknessKeyFrame(new Thickness(startPos,0,0,0), TimeSpan.FromSeconds(0)));
                     //Move to the glow hidden on the right.

@@ -1,16 +1,12 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 // Description: ScrollBar Proxy
 
 using System;
-using System.Collections;
-using System.Text;
 using System.Windows.Automation;
 using System.Windows.Automation.Provider;
 using System.Runtime.InteropServices;
-using System.ComponentModel;
 using System.Windows;
 using MS.Win32;
 
@@ -20,7 +16,7 @@ namespace MS.Internal.AutomationProxies
     // This code works for vertical and horizontal scroll bars
     // both as part of the none client area or as a stand alone
     // scroll bar control.
-    class WindowsScrollBar: ProxyHwnd, IRangeValueProvider
+    internal class WindowsScrollBar: ProxyHwnd, IRangeValueProvider
     {
         // ------------------------------------------------------
         //
@@ -102,10 +98,7 @@ namespace MS.Internal.AutomationProxies
             {
                 // raise events for the children 
                 ProxySimple scrollBarBit = WindowsScrollBarBits.CreateFromChildId(hwnd, wtv, idChild, NativeMethods.SB_CTL);
-                if (scrollBarBit != null)
-                {
-                    scrollBarBit.DispatchEvents(eventId, idProp, idObject, idChild);
-                }
+                scrollBarBit?.DispatchEvents(eventId, idProp, idObject, idChild);
             }
         }
 
@@ -413,12 +406,12 @@ namespace MS.Internal.AutomationProxies
 
         #region Internal Methods
 
-        static internal bool HasVerticalScrollBar (IntPtr hwnd)
+        internal static bool HasVerticalScrollBar (IntPtr hwnd)
         {
             return Misc.IsBitSet(Misc.GetWindowStyle(hwnd), NativeMethods.WS_VSCROLL);
         }
 
-        static internal bool HasHorizontalScrollBar (IntPtr hwnd)
+        internal static bool HasHorizontalScrollBar (IntPtr hwnd)
         {
             return Misc.IsBitSet(Misc.GetWindowStyle(hwnd), NativeMethods.WS_HSCROLL);
         }
@@ -572,8 +565,10 @@ namespace MS.Internal.AutomationProxies
 
         private int GetScrollValue (ScrollBarInfo info)
         {
-            NativeMethods.ScrollInfo si = new NativeMethods.ScrollInfo ();
-            si.fMask = NativeMethods.SIF_ALL;
+            NativeMethods.ScrollInfo si = new NativeMethods.ScrollInfo
+            {
+                fMask = NativeMethods.SIF_ALL
+            };
             si.cbSize = Marshal.SizeOf (si.GetType ());
 
             if (!Misc.GetScrollInfo(_hwnd, _sbFlag, ref si))
@@ -623,8 +618,10 @@ namespace MS.Internal.AutomationProxies
                 throw new ElementNotEnabledException();
             }
 
-            NativeMethods.ScrollInfo si = new NativeMethods.ScrollInfo ();
-            si.fMask = NativeMethods.SIF_ALL;
+            NativeMethods.ScrollInfo si = new NativeMethods.ScrollInfo
+            {
+                fMask = NativeMethods.SIF_ALL
+            };
             si.cbSize = Marshal.SizeOf (si.GetType ());
 
             if (!Misc.GetScrollInfo(_hwnd, _sbFlag, ref si))

@@ -1,14 +1,9 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 
-using System;
 using System.Collections;
-using System.Collections.Generic;
 using System.Collections.Specialized;
-using System.ComponentModel;
-using System.Diagnostics;
 
 namespace System.Windows.Controls
 {
@@ -71,12 +66,12 @@ namespace System.Windows.Controls
 
             if (!IsValidPublicCell(cell))
             {
-                throw new ArgumentException(SR.SelectedCellsCollection_InvalidItem, "cell");
+                throw new ArgumentException(SR.SelectedCellsCollection_InvalidItem, nameof(cell));
             }
 
             if (Contains(cell))
             {
-                throw new ArgumentException(SR.SelectedCellsCollection_DuplicateItem, "cell");
+                throw new ArgumentException(SR.SelectedCellsCollection_DuplicateItem, nameof(cell));
             }
 
             AddValidatedCell(cell);
@@ -127,7 +122,7 @@ namespace System.Windows.Controls
         {
             if (!IsValidPublicCell(cell))
             {
-                throw new ArgumentException(SR.SelectedCellsCollection_InvalidItem, "cell");
+                throw new ArgumentException(SR.SelectedCellsCollection_InvalidItem, nameof(cell));
             }
 
             if (IsEmpty)

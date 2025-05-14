@@ -1,11 +1,11 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 #nullable disable
 
 using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.Reflection;
 using System.Xaml.MS.Impl;
@@ -36,10 +36,11 @@ namespace System.Xaml.Schema
             // For now we just ignore failures, including swalloing assembly load exceptions.
             // Any types in this namespace will be treated as unknown. But it would be useful to
             // surface errors here through tracing or an event.
-            if (_assemblyNamespaces != null)
+            if (_assemblyNamespaces is not null)
             {
                 Initialize();
             }
+
             IsClrNamespace = true;
         }
 
@@ -48,7 +49,7 @@ namespace System.Xaml.Schema
             _typeCache = XamlSchemaContext.CreateDictionary<string, XamlType>();
         }
 
-        public bool IsResolved => _assemblyNamespaces != null;
+        public bool IsResolved => _assemblyNamespaces is not null;
 
         public ICollection<XamlType> GetAllXamlTypes() => _allPublicTypes ??= LookupAllTypes();
 
@@ -59,7 +60,7 @@ namespace System.Xaml.Schema
                 return null;
             }
 
-            if (typeArgs == null || typeArgs.Length == 0)
+            if (typeArgs is null || typeArgs.Length == 0)
             {
                 return TryGetXamlType(typeName) ?? TryGetXamlType(GetTypeExtensionName(typeName));
             }
@@ -71,22 +72,21 @@ namespace System.Xaml.Schema
         private XamlType TryGetXamlType(string typeName)
         {
             // Look up the type in our cache. If it's there, we're done.
-            XamlType xamlType;
-            if (_typeCache.TryGetValue(typeName, out xamlType))
+            if (_typeCache.TryGetValue(typeName, out XamlType xamlType))
             {
                 return xamlType;
             }
 
             // Otherwise, look up the type via reflection
             Type type = TryGetType(typeName);
-            if (type == null)
+            if (type is null)
             {
                 return null;
             }
 
             // And save it in our cache
             xamlType = SchemaContext.GetXamlType(type);
-            if (xamlType == null)
+            if (xamlType is null)
             {
                 return null;
             }
@@ -100,24 +100,23 @@ namespace System.Xaml.Schema
 
             // It is not possible to get an array of open generic and then call
             // MakeGenericType on it so we need to process array subscripts.
-            string subscript;
-            typeName = GenericTypeNameScanner.StripSubscript(typeName, out subscript);
-            typeName = MangleGenericTypeName(typeName, typeArgs.Length);
+            ReadOnlySpan<char> typeNameSpan = GenericTypeNameScanner.StripSubscript(typeName, out ReadOnlySpan<char> subscript);
+            string mangledTypeName = MangleGenericTypeName(typeNameSpan, typeArgs.Length);
 
             // Get the open generic type.
-            XamlType openXamlType = TryGetXamlType(typeName);
+            XamlType openXamlType = TryGetXamlType(mangledTypeName);
             Type openType = openXamlType?.UnderlyingType;
-            if (openType == null)
+            if (openType is null)
             {
                 return null;
             }
 
             // Close the open generic type.
             Type closedType = openType.MakeGenericType(typeArgs);
-            if (!string.IsNullOrEmpty(subscript))
+            if (!subscript.IsEmpty)
             {
                 closedType = MakeArrayType(closedType, subscript);
-                if (closedType == null)
+                if (closedType is null)
                 {
                     // Invalid array subscript.
                     return null;
@@ -127,7 +126,7 @@ namespace System.Xaml.Schema
             return SchemaContext.GetXamlType(closedType);
         }
 
-        private static Type MakeArrayType(Type elementType, string subscript)
+        private static Type MakeArrayType(Type elementType, ReadOnlySpan<char> subscript)
         {
             Type type = elementType;
             int pos = 0;
@@ -146,9 +145,9 @@ namespace System.Xaml.Schema
             return type;
         }
 
-        private static string MangleGenericTypeName(string typeName, int paramNum)
+        private static string MangleGenericTypeName(ReadOnlySpan<char> typeName, int paramNum)
         {
-            return typeName + KnownStrings.GraveQuote + paramNum;
+            return $"{typeName}{KnownStrings.GraveQuote}{paramNum}";
         }
 
         private Type[] ConvertArrayOfXamlTypesToTypes(XamlType[] typeArgs)
@@ -157,11 +156,12 @@ namespace System.Xaml.Schema
             for (int n = 0; n < typeArgs.Length; n++)
             {
                 // Checking for nulls and unknowns is done in public API layer before we ever get here
-                Debug.Assert(typeArgs[n] != null);
-                Debug.Assert(typeArgs[n].UnderlyingType != null);
+                Debug.Assert(typeArgs[n] is not null);
+                Debug.Assert(typeArgs[n].UnderlyingType is not null);
 
                 clrTypeArgs[n] = typeArgs[n].UnderlyingType;
             }
+
             return clrTypeArgs;
         }
 
@@ -169,18 +169,19 @@ namespace System.Xaml.Schema
         {
             // The only external mutation we allow is adding new namespaces. So the count of
             // namespaces also serves as a revision number.
-            get => (_assemblyNamespaces != null) ? _assemblyNamespaces.Count : 0;
+            get => (_assemblyNamespaces is not null) ? _assemblyNamespaces.Count : 0;
         }
 
         private Type TryGetType(string typeName)
         {
             Type type = SearchAssembliesForShortName(typeName);
-            if (type == null && IsClrNamespace)
+            if (type is null && IsClrNamespace)
             {
                 Debug.Assert(_assemblyNamespaces.Count == 1);
                 type = XamlLanguage.LookupClrNamespaceType(_assemblyNamespaces[0], typeName);
             }
-            if (type == null)
+
+            if (type is null)
             {
                 return null;
             }
@@ -193,8 +194,10 @@ namespace System.Xaml.Schema
                 {
                     return null;
                 }
+
                 currentType = currentType.DeclaringType;
             }
+
             return type;
         }
 
@@ -206,11 +209,12 @@ namespace System.Xaml.Schema
                 foreach (AssemblyNamespacePair assemblyNamespacePair in _assemblyNamespaces)
                 {
                     Assembly asm = assemblyNamespacePair.Assembly;
-                    if (asm == null)
+                    if (asm is null)
                     {
                         // This is a dynamic assembly that got unloaded; ignore it
                         continue;
                     }
+
                     string clrPrefix = assemblyNamespacePair.ClrNamespace;
 
                     Type[] types = asm.GetTypes();
@@ -225,13 +229,14 @@ namespace System.Xaml.Schema
                     }
                 }
             }
+
             return xamlTypeList.AsReadOnly();
         }
 
         private List<AssemblyNamespacePair> GetClrNamespacePair(string clrNs, string assemblyName)
         {
             Assembly asm = SchemaContext.OnAssemblyResolve(assemblyName);
-            if (asm == null)
+            if (asm is null)
             {
                 return null;
             }
@@ -243,22 +248,24 @@ namespace System.Xaml.Schema
 
         private Type SearchAssembliesForShortName(string shortName)
         {
-            foreach(AssemblyNamespacePair assemblyNamespacePair in _assemblyNamespaces)
+            foreach (AssemblyNamespacePair assemblyNamespacePair in _assemblyNamespaces)
             {
                 Assembly asm = assemblyNamespacePair.Assembly;
-                if (asm == null)
+                if (asm is null)
                 {
                     // This is a dynamic assembly that got unloaded; ignore it
                     continue;
                 }
-                string longName = assemblyNamespacePair.ClrNamespace + "." + shortName;
+
+                string longName = $"{assemblyNamespacePair.ClrNamespace}.{shortName}";
 
                 Type type = asm.GetType(longName);
-                if (type != null)
+                if (type is not null)
                 {
                     return type;
                 }
             }
+
             return null;
         }
 
@@ -269,7 +276,7 @@ namespace System.Xaml.Schema
             // then assign it back to the original variable.  Assignments are assured to be atomic.
 
             List<AssemblyNamespacePair> assemblyNamespacesCopy;
-            if (_assemblyNamespaces == null)
+            if (_assemblyNamespaces is null)
             {
                 assemblyNamespacesCopy = new List<AssemblyNamespacePair>();
                 Initialize();

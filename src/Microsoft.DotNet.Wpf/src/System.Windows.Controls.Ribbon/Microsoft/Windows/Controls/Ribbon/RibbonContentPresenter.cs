@@ -1,7 +1,10 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
-        
+
+
+#region Using declarations
+
+using System.Windows.Media;
 
 #if RIBBON_IN_FRAMEWORK
 namespace System.Windows.Controls.Ribbon
@@ -9,15 +12,6 @@ namespace System.Windows.Controls.Ribbon
 namespace Microsoft.Windows.Controls.Ribbon
 #endif
 {
-    #region Using declarations
-
-    using System;
-    using System.Collections.Generic;
-    using System.Text;
-    using System.Windows.Controls;
-    using System.Windows;
-    using System.Windows.Media;
-
     #endregion Using declarations
 
     /// <summary>
@@ -127,11 +121,8 @@ namespace Microsoft.Windows.Controls.Ribbon
             if (oldTemplate != null)
             {
                 RibbonHelper.ClearPseudoInheritedProperties(_templateRoot);
-                if (_templateRoot != null)
-                {
-                    // Clearing the Ribbon property value which was set earlier.
-                    _templateRoot.ClearValue(RibbonControlService.RibbonPropertyKey);
-                }
+                // Clearing the Ribbon property value which was set earlier.
+                _templateRoot?.ClearValue(RibbonControlService.RibbonPropertyKey);
                 _templateRoot = null;
             }
         }

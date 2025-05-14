@@ -1,24 +1,9 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
-using System;
-using System.Collections;
 using System.ComponentModel;
-using System.Diagnostics;
-using System.Windows.Threading;
-using System.Runtime.InteropServices;
-
-using System.Windows.Controls;
-using System.Windows.Controls.Primitives;
-using System.Windows;
 using System.Windows.Automation.Peers;
 using System.Windows.Input;
-using System.Windows.Media;
-
-using MS.Utility;
-using MS.Win32;
-using MS.Internal;
 using MS.Internal.PresentationFramework;                   // SafeSecurityHelper
 
 namespace System.Windows.Controls.Primitives
@@ -255,7 +240,7 @@ namespace System.Windows.Controls.Primitives
                 // This is weird, Thumb shouldn't get MouseLeftButtonDown event while dragging.
                 // This may be the case that something ate MouseLeftButtonUp event, so Thumb never had a chance to
                 // reset IsDragging property
-                Debug.Assert(false,"Got MouseLeftButtonDown event while dragging!");
+                Debug.Fail("Got MouseLeftButtonDown event while dragging!");
             }
             base.OnMouseLeftButtonDown(e);
         }

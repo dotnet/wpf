@@ -1,15 +1,10 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 
-using System;
 using System.Collections;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
-using System.Diagnostics;
-using System.Windows;
 using System.Windows.Threading;
 using MS.Internal;
 
@@ -42,12 +37,12 @@ namespace System.Windows.Controls
         {
             if (item == null)
             {
-                throw new ArgumentNullException("item", SR.DataGrid_NullColumn);
+                throw new ArgumentNullException(nameof(item), SR.DataGrid_NullColumn);
             }
 
             if (item.DataGridOwner != null)
             {
-                throw new ArgumentException(SR.Format(SR.DataGrid_InvalidColumnReuse, item.Header), "item");
+                throw new ArgumentException(SR.Format(SR.DataGrid_InvalidColumnReuse, item.Header), nameof(item));
             }
 
             if (DisplayIndexMapInitialized)
@@ -63,17 +58,17 @@ namespace System.Windows.Controls
         {
             if (item == null)
             {
-                throw new ArgumentNullException("item", SR.DataGrid_NullColumn);
+                throw new ArgumentNullException(nameof(item), SR.DataGrid_NullColumn);
             }
 
             if (index >= Count || index < 0)
             {
-                throw new ArgumentOutOfRangeException("index", SR.Format(SR.DataGrid_ColumnIndexOutOfRange, item.Header));
+                throw new ArgumentOutOfRangeException(nameof(index), SR.Format(SR.DataGrid_ColumnIndexOutOfRange, item.Header));
             }
 
             if (item.DataGridOwner != null && this[index] != item)
             {
-                throw new ArgumentException(SR.Format(SR.DataGrid_InvalidColumnReuse, item.Header), "item");
+                throw new ArgumentException(SR.Format(SR.DataGrid_InvalidColumnReuse, item.Header), nameof(item));
             }
 
             if (DisplayIndexMapInitialized)
@@ -201,8 +196,7 @@ namespace System.Windows.Controls
                 {
                     OnCellsPanelHorizontalOffsetChanged(e);
                 }
-                else if (e.Property == DataGrid.HorizontalScrollOffsetProperty ||
-                         string.Compare(propertyName, "ViewportWidth", StringComparison.Ordinal) == 0)
+                else if (e.Property == DataGrid.HorizontalScrollOffsetProperty || string.Equals(propertyName, "ViewportWidth", StringComparison.Ordinal))
                 {
                     InvalidateColumnRealization(false);
                 }
@@ -415,7 +409,7 @@ namespace System.Windows.Controls
             Debug.Assert(
                 newColumns.Count == 1,
                 "This derives from ObservableCollection; it is impossible to add multiple columns at once");
-            Debug.Assert(IsUpdatingDisplayIndex == false, "We don't add new columns as part of a display index update operation");
+            Debug.Assert(!IsUpdatingDisplayIndex, "We don't add new columns as part of a display index update operation");
 
             try
             {
@@ -559,7 +553,7 @@ namespace System.Windows.Controls
             Debug.Assert(
                 oldColumns.Count == 1,
                 "This derives from ObservableCollection; it is impossible to remove multiple columns at once");
-            Debug.Assert(IsUpdatingDisplayIndex == false, "We don't remove columns as part of a display index update operation");
+            Debug.Assert(!IsUpdatingDisplayIndex, "We don't remove columns as part of a display index update operation");
 
             try
             {
@@ -721,7 +715,7 @@ namespace System.Windows.Controls
         {
             if (!IsDisplayIndexValid(column, displayIndex, isAdding))
             {
-                throw new ArgumentOutOfRangeException("displayIndex", displayIndex, SR.Format(SR.DataGrid_ColumnDisplayIndexOutOfRange, column.Header));
+                throw new ArgumentOutOfRangeException(nameof(displayIndex), displayIndex, SR.Format(SR.DataGrid_ColumnDisplayIndexOutOfRange, column.Header));
             }
         }
 
@@ -1057,10 +1051,7 @@ namespace System.Windows.Controls
             // size of the row presenter
             VirtualizingStackPanel vsp = (DataGridOwner == null) ? null :
                     DataGridOwner.InternalItemsHost as VirtualizingStackPanel;
-            if (vsp != null)
-            {
-                vsp.ResetMaximumDesiredSize();
-            }
+            vsp?.ResetMaximumDesiredSize();
         }
 
         /// <summary>
@@ -2412,7 +2403,7 @@ namespace System.Windows.Controls
                 DataGrid dataGrid = DataGridOwner;
                 dataGrid.NotifyPropertyChanged(
                     dataGrid,
-                    "RealizedColumnsBlockListForNonVirtualizedRows",
+                    nameof(RealizedColumnsBlockListForNonVirtualizedRows),
                     new DependencyPropertyChangedEventArgs(),
                     DataGridNotificationTarget.CellsPresenter | DataGridNotificationTarget.ColumnHeadersPresenter);
             }
@@ -2455,7 +2446,7 @@ namespace System.Windows.Controls
                 DataGrid dataGrid = DataGridOwner;
                 dataGrid.NotifyPropertyChanged(
                     dataGrid,
-                    "RealizedColumnsBlockListForVirtualizedRows",
+                    nameof(RealizedColumnsBlockListForVirtualizedRows),
                     new DependencyPropertyChangedEventArgs(),
                     DataGridNotificationTarget.CellsPresenter | DataGridNotificationTarget.ColumnHeadersPresenter);
             }

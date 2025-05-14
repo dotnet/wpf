@@ -1,17 +1,11 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 // Description: Structure containing information about a proxy
 
-// PRESHARP: In order to avoid generating warnings about unkown message numbers and unknown pragmas.
-#pragma warning disable 1634, 1691
-
-using System;
 using System.Windows.Automation.Provider;
-using MS.Internal.Automation;
 
-namespace System.Windows.Automation 
+namespace System.Windows.Automation
 {
     /// <summary>
     /// Enum used to indicate results of requesting a property
@@ -74,7 +68,6 @@ namespace System.Windows.Automation
         public ClientSideProviderDescription(ClientSideProviderFactoryCallback clientSideProviderFactoryCallback, string className)
         {
             // Null and Empty string mean different things here.
-#pragma warning suppress 6507
             if (className != null)
                 _className = className.ToLower( System.Globalization.CultureInfo.InvariantCulture );
             else
@@ -97,7 +90,6 @@ namespace System.Windows.Automation
         public ClientSideProviderDescription(ClientSideProviderFactoryCallback clientSideProviderFactoryCallback, string className, string imageName, ClientSideProviderMatchIndicator flags)
         {
             // Null and Empty string mean different things here
-#pragma warning suppress 6507
             if (className != null)
                 _className = className.ToLower( System.Globalization.CultureInfo.InvariantCulture );
             else
@@ -106,7 +98,6 @@ namespace System.Windows.Automation
             _flags = flags;
 
             // Null and Empty string mean different things here
-#pragma warning suppress 6507
             if (imageName != null)
                 _imageName = imageName.ToLower( System.Globalization.CultureInfo.InvariantCulture );
             else

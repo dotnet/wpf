@@ -1,6 +1,5 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 //
 // Description:
@@ -11,14 +10,8 @@
 //      iii. Notifies listeners when themed ResourceDictionary instances get
 //           unloaded (generic ResourceDictionary instances are never unloaded)
 
-using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Diagnostics;
 using System.Runtime.CompilerServices;
-using System.Reflection;
-using System.Security;
-using System.Windows;
 using System.Windows.Threading;
 using MS.Internal;
 using MS.Internal.Utility;

@@ -1,13 +1,10 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
+using System.Windows;
 
 namespace MS.Internal.ComponentModel
 {
-    using System;
-    using System.Windows;
-
     /// <summary>
     ///     This attribute is synthesized by our DependencyObjectProvider
     ///     to relate a property descriptor back to a dependency property.
@@ -50,11 +47,9 @@ namespace MS.Internal.ComponentModel
         /// </summary>
         public override bool Equals(object value) 
         {
-            DependencyPropertyAttribute da = value as DependencyPropertyAttribute;
-
-            if (da != null && 
-                object.ReferenceEquals(da._dp, _dp) && 
-                da._isAttached == _isAttached) 
+            if (value is DependencyPropertyAttribute da &&
+                object.ReferenceEquals(da._dp, _dp) &&
+                da._isAttached == _isAttached)
             {
                 return true;
             }

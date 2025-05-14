@@ -1,6 +1,5 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 //
 // 
@@ -9,13 +8,9 @@
 //
 //
 
-using System;
 using System.Runtime.InteropServices;
 using System.Threading;
-using System.Security;
 using MS.Win32;
-using MS.Internal;
-using System.Diagnostics;
 using System.Globalization;
 using System.Collections;
 
@@ -47,7 +42,7 @@ namespace System.Windows.Input
         internal InputProcessorProfiles()
         {
             // _ipp is a ValueType, hence no need for new.
-            _ipp.Value = null;
+            _ipp = null;
             _cookie = UnsafeNativeMethods.TF_INVALID_COOKIE;
         }
 
@@ -66,11 +61,11 @@ namespace System.Windows.Input
         {
             Debug.Assert(Thread.CurrentThread.GetApartmentState() == ApartmentState.STA, "Initialize called on MTA thread!");
 
-            Debug.Assert(_ipp.Value == null, "Initialize called twice");
+            Debug.Assert(_ipp == null, "Initialize called twice");
 
-            _ipp.Value = InputProcessorProfilesLoader.Load();
+            _ipp = InputProcessorProfilesLoader.Load();
 
-            if (_ipp.Value == null)
+            if (_ipp == null)
             {
                 return false;
             }
@@ -84,11 +79,11 @@ namespace System.Windows.Input
         /// </summary>
         internal void Uninitialize()
         {
-            Debug.Assert(_ipp.Value != null, "Uninitialize called without initializing");
+            Debug.Assert(_ipp != null, "Uninitialize called without initializing");
 
             UnadviseNotifySink();            
-            Marshal.ReleaseComObject(_ipp.Value);
-            _ipp.Value = null;
+            Marshal.ReleaseComObject(_ipp);
+            _ipp = null;
         }
 
         #endregion Internal Methods
@@ -106,9 +101,9 @@ namespace System.Windows.Input
         {
             set
             {
-                if (_ipp.Value != null)
+                if (_ipp != null)
                 {
-                    if (_ipp.Value.ChangeCurrentLanguage(value) != 0)
+                    if (_ipp.ChangeCurrentLanguage(value) != 0)
                     {
                         //
                         // Under WinXP or W2K3, ITfInputProcessorProfiles::ChangeCurrentLanguage() fails
@@ -151,16 +146,14 @@ namespace System.Windows.Input
 
                  // ITfInputProcessorProfiles::GetLanguageList returns the pointer that was allocated by
                  // CoTaskMemAlloc().
-                 _ipp.Value.GetLanguageList(out langids, out nCount);
+                 _ipp.GetLanguageList(out langids, out nCount);
 
                  ArrayList arrayLang = new ArrayList();
-
-                 int sizeOfShort = Marshal.SizeOf(typeof(short));
 
                  for (int i = 0; i < nCount; i++)
                  {
                      // Unmarshal each langid from short array.
-                     short langid = Marshal.PtrToStructure<short>((IntPtr)((Int64)langids + sizeOfShort * i));
+                     short langid = Marshal.PtrToStructure<short>((IntPtr)((Int64)langids + sizeof(short) * i));
                      arrayLang.Add(new CultureInfo(langid));
                  }
 
@@ -186,7 +179,7 @@ namespace System.Windows.Input
         {
             Debug.Assert(_cookie == UnsafeNativeMethods.TF_INVALID_COOKIE, "Cookie is already set.");
 
-            UnsafeNativeMethods.ITfSource source = _ipp.Value as UnsafeNativeMethods.ITfSource;
+            UnsafeNativeMethods.ITfSource source = _ipp as UnsafeNativeMethods.ITfSource;
 
             // workaround because I can't pass a ref to a readonly constant
             Guid guid = UnsafeNativeMethods.IID_ITfLanguageProfileNotifySink;
@@ -201,7 +194,7 @@ namespace System.Windows.Input
         {
             Debug.Assert(_cookie != UnsafeNativeMethods.TF_INVALID_COOKIE, "Cookie is not set.");
 
-            UnsafeNativeMethods.ITfSource source = _ipp.Value as UnsafeNativeMethods.ITfSource;
+            UnsafeNativeMethods.ITfSource source = _ipp as UnsafeNativeMethods.ITfSource;
 
             source.UnadviseSink(_cookie);
 
@@ -215,7 +208,7 @@ namespace System.Windows.Input
         //------------------------------------------------------
                 
         // The reference to ITfInputProcessorProfile.
-        private SecurityCriticalDataForSet<UnsafeNativeMethods.ITfInputProcessorProfiles> _ipp;
+        private UnsafeNativeMethods.ITfInputProcessorProfiles _ipp;
 
         // The cookie for the advised sink.
         private int _cookie;

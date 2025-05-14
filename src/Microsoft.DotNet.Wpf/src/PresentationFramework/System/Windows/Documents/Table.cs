@@ -1,35 +1,17 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
-//
-// Description: Table implementation
-//
-//              See spec at WPP TableOM.doc
-//
-
-using MS.Internal;
-using MS.Internal.PtsHost;
-using MS.Internal.PtsTable;
-using MS.Utility;
-using System;
 using System.Collections;
 using System.ComponentModel;
-using System.Diagnostics;
-using System.Windows.Threading;
-using System.Windows;
 using System.Windows.Automation.Peers;
-using System.Windows.Media;
 using System.Windows.Markup;
 using MS.Internal.PtsHost.UnsafeNativeMethods;
 using MS.Internal.Documents;
 
-#pragma warning disable 1634, 1691  // suppressing PreSharp warnings
-
 namespace System.Windows.Documents
 {
     /// <summary>
-    /// Table implements 
+    /// Table implementation 
     /// </summary>
     [ContentProperty("RowGroups")]
     public class Table : Block, IAddChild, IAcceptInsertion
@@ -82,7 +64,7 @@ namespace System.Windows.Documents
                 return;
             }
 
-            throw (new ArgumentException(SR.Format(SR.UnexpectedParameterType, value.GetType(), typeof(TableRowGroup)), "value"));
+            throw (new ArgumentException(SR.Format(SR.UnexpectedParameterType, value.GetType(), typeof(TableRowGroup)), nameof(value)));
         }
 
         /// <summary>
@@ -269,10 +251,7 @@ namespace System.Windows.Documents
 
                 // Table structure changes affect number of rows and colums. Need to notify peer about it.
                 TableAutomationPeer peer = ContentElementAutomationPeer.FromElement(this) as TableAutomationPeer;
-                if (peer != null)
-                {
-                    peer.OnStructureInvalidated();
-                }
+                peer?.OnStructureInvalidated();
             }
         }
 
@@ -492,12 +471,12 @@ namespace System.Windows.Documents
                 {
                     if (_currentChildType == ChildrenTypes.BeforeFirst)
                     {
-                        #pragma warning suppress 6503 // IEnumerator.Current is documented to throw this exception
+                        // IEnumerator.Current is documented to throw this exception
                         throw new InvalidOperationException(SR.EnumeratorNotStarted);
                     }
                     if (_currentChildType == ChildrenTypes.AfterLast)
                     {
-                        #pragma warning suppress 6503 // IEnumerator.Current is documented to throw this exception
+                        // IEnumerator.Current is documented to throw this exception
                         throw new InvalidOperationException(SR.EnumeratorReachedEnd);
                     }
 

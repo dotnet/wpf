@@ -1,6 +1,5 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 //
 // Information about list markers for different types of list. 
@@ -8,13 +7,10 @@
 // This file must always be kept up to date with changes in TextMarkerSource
 //
 
-using System;
-using System.Diagnostics;
 using System.Windows;
 using System.Windows.Documents;   // List
-using MS.Internal.Text;             
+using MS.Internal.Text;
 using System.Windows.Media;       // FormattedText and Brush
-using MS.Internal.TextFormatting; // TextMarkerSource
 using System.Text;                // StringBuilder
 
 namespace MS.Internal.PtsHost
@@ -249,7 +245,7 @@ namespace MS.Internal.PtsHost
             {
                 // Do quick search by looking only at size increments
                 int thousands = highestIndex / 1000;
-                highestIndex = highestIndex % 1000;            
+                highestIndex %= 1000;            
                 for (int i = 0; i < RomanNumericSizeIncrements.Length; i++)
                 {
                     Invariant.Assert(highestIndex >= RomanNumericSizeIncrements[i]);

@@ -1,24 +1,12 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
-//
-// 
-//
 // Description: TextRange provider wrapper for WCP
-//
-//
 
-using System;
-using System.Collections;
 using System.Windows.Threading;
-using System.Windows;
-using System.Windows.Media;
-using System.Windows.Automation;
 using System.Windows.Automation.Provider;
 using System.Windows.Automation.Text;
 using System.Windows.Automation.Peers;
-using SR = MS.Internal.PresentationCore.SR;
 
 namespace MS.Internal.Automation
 {
@@ -177,7 +165,7 @@ namespace MS.Internal.Automation
         #region Internal Methods
 
         // Wrap arguments that are being returned, assuming they're not null or already wrapped.
-        static internal ITextRangeProvider WrapArgument(ITextRangeProvider argument, AutomationPeer peer)
+        internal static ITextRangeProvider WrapArgument(ITextRangeProvider argument, AutomationPeer peer)
         {
             if (argument == null)
                 return null;
@@ -188,7 +176,7 @@ namespace MS.Internal.Automation
             return new TextRangeProviderWrapper(peer, argument);
         }
 
-        static internal ITextRangeProvider [] WrapArgument(ITextRangeProvider [] argument, AutomationPeer peer)
+        internal static ITextRangeProvider [] WrapArgument(ITextRangeProvider [] argument, AutomationPeer peer)
         {
             if (argument == null)
                 return null;
@@ -205,7 +193,7 @@ namespace MS.Internal.Automation
         }
 
         // Remove the wrapper from the argument if a wrapper exists
-        static internal ITextRangeProvider UnwrapArgument(ITextRangeProvider argument)
+        internal static ITextRangeProvider UnwrapArgument(ITextRangeProvider argument)
         {
             if (argument is TextRangeProviderWrapper)
             {

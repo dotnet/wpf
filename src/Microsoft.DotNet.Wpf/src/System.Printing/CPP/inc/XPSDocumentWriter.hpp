@@ -24,24 +24,6 @@ namespace Windows
 {
 namespace Xps
 {
-
-    [AttributeUsage(
-        AttributeTargets::Class |
-        AttributeTargets::Property |
-        AttributeTargets::Method |
-        AttributeTargets::Struct |
-        AttributeTargets::Enum |
-        AttributeTargets::Interface |
-        AttributeTargets::Delegate |
-        AttributeTargets::Constructor,
-        AllowMultiple = false,
-        Inherited = true)
-    ]
-
-    private ref class FriendAccessAllowedAttribute sealed : Attribute
-    {
-    };
-
     ref class VisualsToXpsDocument;
 
     public enum class XpsDocumentNotificationLevel
@@ -61,7 +43,6 @@ namespace Xps
         /// Instantiates a <c>XpsDocumentWriter</c> against an object implementing <c>XPSEmitter</c>.
         /// </summary>
         /// <param name="serializeReach"><c>XPSEmitter</c> object that will serialize and write the document objects.</param>
-        [FriendAccessAllowed]
         XpsDocumentWriter(
             PrintQueue^    printQueue
             );
@@ -70,7 +51,6 @@ namespace Xps
         /// Instantiates a <c>XpsDocumentWriter</c> against an object implementing <c>XPSEmitter</c>.
         /// </summary>
         /// <param name="serializeReach"><c>XPSEmitter</c> object that will serialize and write the document objects.</param>
-        [FriendAccessAllowed]
         XpsDocumentWriter(
             XpsDocument^    document
             );

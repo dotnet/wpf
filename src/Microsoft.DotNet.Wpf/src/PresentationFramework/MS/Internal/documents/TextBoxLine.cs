@@ -1,24 +1,16 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 //
 // Description: TextLine wrapper used by TextBoxView.
 //
 
-using System;
 using System.Globalization;
-using System.Collections;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Windows;
-using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using System.Windows.Documents;
 using System.Windows.Media;
 using System.Windows.Media.TextFormatting;
 using MS.Internal;
-using MS.Internal.PtsHost;
 using MS.Internal.Text;
 
 namespace System.Windows.Controls
@@ -97,10 +89,7 @@ namespace System.Windows.Controls
             }
             Invariant.Assert(run != null, "TextRun has not been created.");
             Invariant.Assert(run.Length > 0, "TextRun has to have positive length.");
-            if (run.Properties != null)
-            {
-                run.Properties.PixelsPerDip = this.PixelsPerDip;
-            }
+            run.Properties?.PixelsPerDip = this.PixelsPerDip;
 
             return run;
         }

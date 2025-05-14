@@ -1,16 +1,8 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
-using MS.Internal;
-using MS.Win32;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Diagnostics;
 using System.Globalization;
-using System.Security;
-using System.Windows.Input.StylusWisp;
-using System.Windows.Input.Tracing;
 using System.Windows.Media;
 using System.Windows.Threading;
 

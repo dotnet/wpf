@@ -1,6 +1,18 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
+
+using MS.Internal;
+using MS.Internal.Interop;
+using System.Collections; // ArrayList
+using System.Runtime.InteropServices;
+
+using System.Windows.Threading;
+using System.Windows.Input;
+using System.Windows.Controls; // ScrollChangedEventArgs
+using System.Windows.Interop;
+using MS.Win32;
+using MS.Internal.Documents;
+using MS.Internal.Commands; // CommandHelpers
 
 //
 // Description: Text editing service for controls.
@@ -8,28 +20,6 @@
 
 namespace System.Windows.Documents
 {
-    using MS.Internal;
-    using MS.Internal.Interop;
-    using System.Globalization;
-    using System.Threading;
-    using System.ComponentModel;
-    using System.Text;
-    using System.Collections; // ArrayList
-    using System.Runtime.InteropServices;
-
-    using System.Windows.Threading;
-    using System.Windows.Input;
-    using System.Windows.Controls; // ScrollChangedEventArgs
-    using System.Windows.Controls.Primitives;  // CharacterCasing, TextBoxBase
-    using System.Windows.Media;
-    using System.Windows.Markup;
-    using System.Security;
-    using System.Windows.Interop;
-    using MS.Utility;
-    using MS.Win32;
-    using MS.Internal.Documents;
-    using MS.Internal.Commands; // CommandHelpers
-
     /// <summary>
     /// Subcomponent of TextEditor class - Support for Typing
     /// </summary>
@@ -156,10 +146,7 @@ namespace System.Windows.Documents
         {
             TextEditorThreadLocalStore threadLocalStore;
 
-            if (This.TextView != null)
-            {
-                This.TextView.ThrottleBackgroundTasksForUserInput();
-            }
+            This.TextView?.ThrottleBackgroundTasksForUserInput();
 
             threadLocalStore = TextEditor._ThreadLocalStore;
 
@@ -385,10 +372,7 @@ namespace System.Windows.Documents
             // Consider event handled
             e.Handled = true;
 
-            if (This.TextView != null)
-            {
-                This.TextView.ThrottleBackgroundTasksForUserInput();
-            }
+            This.TextView?.ThrottleBackgroundTasksForUserInput();
 
             // If this event is our Cicero TextStore composition, we always handles through ITextStore::SetText.
             if (composition != null)
@@ -464,10 +448,7 @@ namespace System.Windows.Documents
                 return;
             }
 
-            if (This.TextStore != null)
-            {
-                This.TextStore.QueryRangeOrReconvertSelection( /*fDoReconvert:*/ true);
-            }
+            This.TextStore?.QueryRangeOrReconvertSelection( /*fDoReconvert:*/ true);
         }
 
         /// <summary>
@@ -1292,10 +1273,7 @@ namespace System.Windows.Documents
             // Consider event handled
             e.Handled = true;
 
-            if (This.TextView != null)
-            {
-                This.TextView.ThrottleBackgroundTasksForUserInput();
-            }
+            This.TextView?.ThrottleBackgroundTasksForUserInput();
 
             ScheduleInput(This, new TextInputItem(This, " ", /*isInsertKeyToggled:*/!This._OvertypeMode));
         }
@@ -1694,7 +1672,7 @@ namespace System.Windows.Documents
             internal abstract void Do();
 
             // The TextEditor instance on which this input item applies.
-            TextEditor _textEditor;
+            private TextEditor _textEditor;
 
             protected TextEditor TextEditor
             {
@@ -1759,7 +1737,7 @@ namespace System.Windows.Documents
                     case Key.RightShift:
                         // Only support RTL flow direction in case of having the installed
                         // bidi input language.
-                        if (TextSelection.IsBidiInputLanguageInstalled() == true)
+                        if (TextSelection.IsBidiInputLanguageInstalled())
                         {
                             TextEditorTyping.OnFlowDirectionCommand(TextEditor, _key);
                         }

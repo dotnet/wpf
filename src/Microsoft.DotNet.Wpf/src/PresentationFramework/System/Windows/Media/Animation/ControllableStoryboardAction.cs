@@ -1,6 +1,5 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 /***************************************************************************\
 *
@@ -12,19 +11,16 @@
 *
 \***************************************************************************/
 using System.ComponentModel;            // DefaultValueAttribute
-using System.Diagnostics;               // Debug.Assert
-
-using System.Windows.Documents;         // TableTemplate
 using System.Windows.Markup;            // INameScope
 
 namespace System.Windows.Media.Animation
 {
-/// <summary>
-///     A controllable storyboard action associates a trigger action with a 
-/// Storyboard.  The association from this object is a string that is the name
-/// of the Storyboard in a resource dictionary.
-/// </summary>
-public abstract class ControllableStoryboardAction : TriggerAction
+    /// <summary>
+    ///     A controllable storyboard action associates a trigger action with a 
+    /// Storyboard.  The association from this object is a string that is the name
+    /// of the Storyboard in a resource dictionary.
+    /// </summary>
+    public abstract class ControllableStoryboardAction : TriggerAction
 {
     /// <summary>
     ///     Internal constructor - nobody is supposed to ever create an instance

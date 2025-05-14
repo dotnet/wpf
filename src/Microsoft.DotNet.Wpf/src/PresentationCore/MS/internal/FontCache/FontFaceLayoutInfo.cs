@@ -1,6 +1,5 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 //
 //
@@ -8,21 +7,9 @@
 //
 //
 
-using System;
-using System.Diagnostics;
 using System.Globalization;
-using System.IO;
-using System.Security;
-using System.ComponentModel;
 using System.Collections;
-using System.Collections.Generic;
-using System.Windows;
 using System.Windows.Media;
-using System.Runtime.InteropServices;
-
-using MS.Win32;
-using MS.Utility;
-using MS.Internal;
 using MS.Internal.FontFace;
 using MS.Internal.Shaping;
 
@@ -30,7 +17,6 @@ using MS.Internal.PresentationCore;
 
 namespace MS.Internal.FontCache
 {
-    [FriendAccessAllowed]
     internal sealed class FontFaceLayoutInfo
     {
         private FontTechnology _fontTechnology;
@@ -51,9 +37,9 @@ namespace MS.Internal.FontCache
         private byte[] _gpos;
         private byte[] _gdef;
 
-        Text.TextInterface.Font _font;
+        private Text.TextInterface.Font _font;
 
-        ushort _blankGlyphIndex;
+        private ushort _blankGlyphIndex;
 
         
         //------------------------------------------------------

@@ -1,55 +1,53 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 // Description:
 //  Defines the common contract for all underlying documents in XpsViewer.
 
 using System;
 using System.IO;
-using System.Security;
 
 namespace MS.Internal.Documents.Application
 {
-/// <summary>
-/// Defines the common contract for all underlying documents in XpsViewer.
-/// </summary>
-/// <remarks>
-/// Responsibility:
-/// This class imposes a contract which provides for:
-/// 
-///  - chaining dependencies
-///  - expose stream which providers may manipulate at each level
-///  - disposing of resources in order of dependency
-/// 
-/// Design Comments:
-/// Packages are dependent on EncryptedPackages who are dependent on FileStreams
-/// however all these classes are very different in function.  However they
-/// share a need for understanding dependencies and all use streams (some
-/// consuming, some publshing and others both).
-/// 
-/// Providing a chain ensures dependent operations are executed in order.
-/// 
-/// The design of exsiting components also requires us to define three common
-/// types of streams (Source - the original data, Workspace - a type of change
-/// log, Destination - the place to save changes).
-/// 
-/// Examples:
-///  - FileController need to substitue streams as as we can not edit in
-///    place and may not be able to re-open files on some OSes (hence 
-///    IsRebindNeed).
-/// 
-///  - Protected documents need to decrypt the underlying FileStream before
-///    passing them up to the PackageDocument. (hence Source).
-/// 
-///  - As Package does not allow us to discard changes we need a seperate stream
-///    for working on packages (hence Workspace).
-/// 
-///  - When Protected documents have a key change (PublishLicense) they need
-///    to read from the source, and write to the destination at the same time
-///    (hence Destination & IsFileCopySafe).
-/// </remarks>
-internal abstract class Document : IChainOfDependenciesNode<Document>, IDisposable
+    /// <summary>
+    /// Defines the common contract for all underlying documents in XpsViewer.
+    /// </summary>
+    /// <remarks>
+    /// Responsibility:
+    /// This class imposes a contract which provides for:
+    /// 
+    ///  - chaining dependencies
+    ///  - expose stream which providers may manipulate at each level
+    ///  - disposing of resources in order of dependency
+    /// 
+    /// Design Comments:
+    /// Packages are dependent on EncryptedPackages who are dependent on FileStreams
+    /// however all these classes are very different in function.  However they
+    /// share a need for understanding dependencies and all use streams (some
+    /// consuming, some publshing and others both).
+    /// 
+    /// Providing a chain ensures dependent operations are executed in order.
+    /// 
+    /// The design of exsiting components also requires us to define three common
+    /// types of streams (Source - the original data, Workspace - a type of change
+    /// log, Destination - the place to save changes).
+    /// 
+    /// Examples:
+    ///  - FileController need to substitue streams as as we can not edit in
+    ///    place and may not be able to re-open files on some OSes (hence 
+    ///    IsRebindNeed).
+    /// 
+    ///  - Protected documents need to decrypt the underlying FileStream before
+    ///    passing them up to the PackageDocument. (hence Source).
+    /// 
+    ///  - As Package does not allow us to discard changes we need a seperate stream
+    ///    for working on packages (hence Workspace).
+    /// 
+    ///  - When Protected documents have a key change (PublishLicense) they need
+    ///    to read from the source, and write to the destination at the same time
+    ///    (hence Destination & IsFileCopySafe).
+    /// </remarks>
+    internal abstract class Document : IChainOfDependenciesNode<Document>, IDisposable
 {
     #region Constructors
     //--------------------------------------------------------------------------
@@ -221,7 +219,7 @@ internal abstract class Document : IChainOfDependenciesNode<Document>, IDisposab
 #if DEBUG
             ThrowIfDisposed();
 #endif
-            return ChainOfDependencies<Document>.GetLast(this)._isDestinationIdenticalToSource.Value;
+            return ChainOfDependencies<Document>.GetLast(this)._isDestinationIdenticalToSource;
         }
 
         set
@@ -229,7 +227,7 @@ internal abstract class Document : IChainOfDependenciesNode<Document>, IDisposab
 #if DEBUG
             ThrowIfDisposed();
 #endif
-            ChainOfDependencies<Document>.GetLast(this)._isDestinationIdenticalToSource.Value = value;
+            ChainOfDependencies<Document>.GetLast(this)._isDestinationIdenticalToSource = value;
         }
     }
 
@@ -285,7 +283,7 @@ internal abstract class Document : IChainOfDependenciesNode<Document>, IDisposab
 #if DEBUG
             ThrowIfDisposed();
 #endif
-            return ChainOfDependencies<Document>.GetLast(this)._uri.Value;
+            return ChainOfDependencies<Document>.GetLast(this)._uri;
         }
 
         set
@@ -293,7 +291,7 @@ internal abstract class Document : IChainOfDependenciesNode<Document>, IDisposab
 #if DEBUG
             ThrowIfDisposed();
 #endif
-            ChainOfDependencies<Document>.GetLast(this)._uri = new SecurityCriticalData<Uri>(value);
+            ChainOfDependencies<Document>.GetLast(this)._uri = value;
         }
     }
 
@@ -334,11 +332,11 @@ internal abstract class Document : IChainOfDependenciesNode<Document>, IDisposab
     // Private Fields
     //--------------------------------------------------------------------------
 
-    private SecurityCriticalData<Uri> _uri;
+    private Uri _uri;
 
     private bool _isCopySafe = true;
 
-    private SecurityCriticalDataForSet<bool> _isDestinationIdenticalToSource;
+    private bool _isDestinationIdenticalToSource;
     private bool _isRebindNeeded;
     private bool _isReloadNeeded;
 

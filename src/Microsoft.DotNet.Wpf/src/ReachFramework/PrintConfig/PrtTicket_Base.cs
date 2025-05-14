@@ -1,6 +1,5 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 /*++
 
@@ -13,18 +12,8 @@ Abstract:
 
 --*/
 
-using System;
-using System.IO;
 using System.Xml;
-using System.Collections;
-using System.Diagnostics;
 using System.Globalization;
-using System.Runtime.InteropServices;
-
-using System.Printing;
-using MS.Internal.Printing.Configuration;
-
-#pragma warning disable 1634, 1691 // Allows suppression of certain PreSharp messages
 
 namespace MS.Internal.Printing.Configuration
 {
@@ -33,7 +22,7 @@ namespace MS.Internal.Printing.Configuration
     /// Do not use.
     /// Abstract base class of <see cref="InternalPrintTicket"/> feature.
     /// </summary>
-    abstract internal class PrintTicketFeature
+    internal abstract class PrintTicketFeature
     {
         #region Constructors
 
@@ -534,18 +523,17 @@ namespace MS.Internal.Printing.Configuration
                 found = true;
             }
             // We want to catch internal FormatException to skip recoverable XML content syntax error
-            #pragma warning suppress 56502
-            #if _DEBUG
+#if _DEBUG
             catch (FormatException e)
-            #else
+#else
             catch (FormatException)
-            #endif
+#endif
             {
-                #if _DEBUG
+#if _DEBUG
                 Trace.WriteLine("-Warning- ignore invalid property value '" + valueText +
                                 "' for feature '" + this.OwnerFeature._featureName +
                                 "' property '" + propertyName + "' : " + e.Message);
-                #endif
+#endif
             }
 
             return found;
@@ -1116,10 +1104,7 @@ namespace MS.Internal.Printing.Configuration
                     PrintTicketParameterNode.CreateParameterNode(this);
                 }
 
-                if (ParameterNode != null)
-                {
-                    ParameterNode.SetIntValue(value);
-                }
+                ParameterNode?.SetIntValue(value);
             }
         }
 
@@ -1172,10 +1157,7 @@ namespace MS.Internal.Printing.Configuration
                     PrintTicketParameterNode.CreateParameterNode(this);
                 }
 
-                if (ParameterNode != null)
-                {
-                    ParameterNode.SetStringValue(value, PrintSchemaXsiTypes.String);
-                }
+                ParameterNode?.SetStringValue(value, PrintSchemaXsiTypes.String);
             }
         }
 
@@ -1265,18 +1247,17 @@ namespace MS.Internal.Printing.Configuration
                 found = true;
             }
             // We want to catch internal FormatException to skip recoverable XML content syntax error
-            #pragma warning suppress 56502
-            #if _DEBUG
+#if _DEBUG
             catch (FormatException e)
-            #else
+#else
             catch (FormatException)
-            #endif
+#endif
             {
-                #if _DEBUG
+#if _DEBUG
                 Trace.WriteLine("-Warning- ignore invalid parameter value '" + valueText +
                                 "' for parameter '" + this.OwnerParameter._parameterName +
                                 "' : " + e.Message);
-                #endif
+#endif
             }
 
             return found;

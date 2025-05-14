@@ -1,6 +1,5 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 
 //------------------------------------------------------------------------------
@@ -20,15 +19,13 @@
 //
 //------------------------------------------------------------------------------
 
+using System.CodeDom.Compiler;
+using System.Collections;
+using System.Diagnostics;
+using System.Text;
+
 namespace MS.Internal.Csp
 {
-    using System;
-    using System.Collections;
-    using System.Diagnostics;
-    using System.IO;
-    using System.Text;
-    using System.CodeDom.Compiler;
-
     internal sealed class MainClass
     {
         // Parameters affecting csp.exe as a whole.
@@ -42,13 +39,13 @@ namespace MS.Internal.Csp
 
         // Return codes that csp may return. (The project is free to return others.)
 
-        const int _rc_success = 0;
-        const int _rc_usageError = 127;
-        const int _rc_fileNotFound = 128;
-        const int _rc_exitAndReturnSuccess = 129;
-        const int _rc_cspProjectException = 130;
-        const int _rc_projectBuildFailed = 131;
-        const int _rc_projectThrewException = 132;
+        private const int _rc_success = 0;
+        private const int _rc_usageError = 127;
+        private const int _rc_fileNotFound = 128;
+        private const int _rc_exitAndReturnSuccess = 129;
+        private const int _rc_cspProjectException = 130;
+        private const int _rc_projectBuildFailed = 131;
+        private const int _rc_projectThrewException = 132;
 
         //--------------------------------------------------------------------
         //
@@ -62,7 +59,7 @@ namespace MS.Internal.Csp
         // Compile and execute the project.
         // Returns 0 if successful.
         //
-        static int Main(string[] argsIn)
+        private static int Main(string[] argsIn)
         {
             Project.Parameters projectParams = null;
             Parameters cspParams = null;
@@ -162,7 +159,7 @@ namespace MS.Internal.Csp
         //
         //------------------------------------------------------------------------------
 
-        static private int ProcessArgs(
+        private static int ProcessArgs(
             string[] argsIn, 
             out Project.Parameters projParamsOut,
             out Parameters cspParamsOut
@@ -357,7 +354,7 @@ namespace MS.Internal.Csp
         }
 
 
-        static private string GetStandardizedPrefix(string arg)
+        private static string GetStandardizedPrefix(string arg)
         {
             int prefixLength = arg.IndexOf(':');
             if (prefixLength == -1)
@@ -404,7 +401,7 @@ namespace MS.Internal.Csp
         //
         //----------------------------------------------------------------------
 
-        static private void GetArgsFromFile(string fileName, int idxInsertAt, ref ArrayList args)
+        private static void GetArgsFromFile(string fileName, int idxInsertAt, ref ArrayList args)
         {
             using (StreamReader sr = File.OpenText(fileName))
             {
@@ -422,7 +419,7 @@ namespace MS.Internal.Csp
         }
 
 
-        static private void WriteErrorLine(string s)
+        private static void WriteErrorLine(string s)
         {
             // This "csp(0) : error :" makes build.exe emit the error to the console.
             // Otherwise, it just swallows it and you have to look in build.log.
@@ -431,13 +428,13 @@ namespace MS.Internal.Csp
             Debug.WriteLine(s);
         }
 
-        static private void WriteWarning(string s)
+        private static void WriteWarning(string s)
         {
             Console.Error.WriteLine("\ncsp(0) : warning : " + s);
             Debug.WriteLine(s);
         }
 
-        static private void _DisplayLogo()
+        private static void _DisplayLogo()
         {
             string mcgPath = System.Reflection.Assembly.GetExecutingAssembly().Location;
             FileVersionInfo mcgFileVersionInfo = FileVersionInfo.GetVersionInfo(mcgPath);
@@ -456,7 +453,7 @@ namespace MS.Internal.Csp
             Console.WriteLine();
         }
 
-        static private void _Usage()
+        private static void _Usage()
         {
             _DisplayLogo();
 

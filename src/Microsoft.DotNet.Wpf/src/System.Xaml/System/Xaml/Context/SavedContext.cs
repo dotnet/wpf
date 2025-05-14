@@ -1,6 +1,5 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 #nullable disable
 
@@ -18,7 +17,7 @@ namespace System.Xaml
 
         public XamlSavedContext(SavedContextType savedContextType, ObjectWriterContext owContext, XamlContextStack<ObjectWriterFrame> stack)
         {
-            //We should harvest all information necessary from the xamlContext so that we can answer all ServiceProvider based questions.
+            // We should harvest all information necessary from the xamlContext so that we can answer all ServiceProvider based questions.
             _savedContextType = savedContextType;
             _context = owContext.SchemaContext;
             _stack = stack;
@@ -28,6 +27,7 @@ namespace System.Xaml
             {
                 stack.CurrentFrame.Instance = null;
             }
+
             BaseUri = owContext.BaseUri;
         }
 

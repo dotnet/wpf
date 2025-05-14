@@ -1,38 +1,15 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
-//
-//
-// Description:
-//      The MediaContext class controls the media layer.
-//
-
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Diagnostics;
-using System.Runtime.InteropServices;
 using System.Threading;
 using System.Windows.Threading;
-using System.Windows;
 using System.Windows.Input;
 using System.Windows.Interop;
-using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Media.Composition;
-using System.Security;
-using System.Windows.Media.Effects;
-
 using MS.Internal;
-using MS.Internal.PresentationCore;
 using MS.Utility;
 using MS.Win32;
-
-using Microsoft.Win32.SafeHandles;
-
-using SR=MS.Internal.PresentationCore.SR;
 
 namespace System.Windows.Media
 {
@@ -370,10 +347,7 @@ namespace System.Windows.Media
             {
                 HwndTarget hwndTarget = target as HwndTarget;
 
-                if (hwndTarget != null)
-                {
-                    hwndTarget.InvalidateRenderMode();
-                }
+                hwndTarget?.InvalidateRenderMode();
             }
 
             return null;
@@ -1415,7 +1389,7 @@ namespace System.Windows.Media
         /// <summary>
         /// Called by the Dispatcher to let us know that we are going away.
         /// </summary>
-        void OnDestroyContext(object sender, EventArgs e)
+        private void OnDestroyContext(object sender, EventArgs e)
         {
             Debug.Assert(CheckAccess());
             Dispose();
@@ -1612,7 +1586,6 @@ namespace System.Windows.Media
         /// <summary>
         /// Add a pending loaded or unloaded callback
         /// </summary>
-        [FriendAccessAllowed] // Built into Core, also used by Framework.
         internal LoadedOrUnloadedOperation AddLoadedOrUnloadedCallback(
             DispatcherOperationCallback callback,
             DependencyObject target)
@@ -1632,7 +1605,6 @@ namespace System.Windows.Media
         /// <summary>
         /// Remove a pending loaded or unloaded callback
         /// </summary>
-        [FriendAccessAllowed] // Built into Core, also used by Framework.
         internal void RemoveLoadedOrUnloadedCallback(LoadedOrUnloadedOperation op)
         {
             Debug.Assert(op != null);
@@ -2092,10 +2064,7 @@ namespace System.Windows.Media
                 // will wait until we have presented before committing this channel
                 //
 
-                if (Channel != null)
-                {
-                    Channel.CloseBatch();
-                }
+                Channel?.CloseBatch();
 
                 _needToCommitChannel = true;
                 _commitPendingAfterRender = true;
@@ -2433,7 +2402,7 @@ namespace System.Windows.Media
             if (_resourcesUpdatedHandlers != null)
             {
                 DUCE.ChannelSet channelSet = GetChannels();
-                _resourcesUpdatedHandlers(channelSet.Channel, false /* do not skip the "on channel" check */);
+                _resourcesUpdatedHandlers(channelSet.Channel, skipOnChannelCheck: false);
                 _resourcesUpdatedHandlers = null;
             }
         }
@@ -2521,21 +2490,13 @@ namespace System.Windows.Media
 
         private void PromoteRenderOpToInput(object sender, EventArgs e)
         {
-            if(_currentRenderOp != null)
-            {
-                _currentRenderOp.Priority = DispatcherPriority.Input;
-            }
-
+            _currentRenderOp?.Priority = DispatcherPriority.Input;
             ((DispatcherTimer)sender).Stop();
         }
 
         private void PromoteRenderOpToRender(object sender, EventArgs e)
         {
-            if(_currentRenderOp != null)
-            {
-                _currentRenderOp.Priority = DispatcherPriority.Render;
-            }
-
+            _currentRenderOp?.Priority = DispatcherPriority.Render;
             ((DispatcherTimer)sender).Stop();
         }
 
@@ -2929,7 +2890,7 @@ namespace System.Windows.Media
         /// </summary>
         private MIL_PRESENTATION_RESULTS _lastPresentationResults = MIL_PRESENTATION_RESULTS.MIL_PRESENTATION_VSYNC_UNSUPPORTED;
 
-        static private long _perfCounterFreq;
+        private static long _perfCounterFreq;
 
         private const long MaxTicksWithoutInput = TimeSpan.TicksPerSecond / 2;
 

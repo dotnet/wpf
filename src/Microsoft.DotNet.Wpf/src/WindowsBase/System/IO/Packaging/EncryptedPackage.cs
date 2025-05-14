@@ -1,30 +1,11 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
-//
-//
-// Description:
-//  This class represents an OLE compound file that contains an encrypted package.
-//
-//
-//
-//
-
-using System;
-using System.Diagnostics;
-using System.IO;
-using System.IO.Packaging;
 using System.Runtime.InteropServices;
 using System.Security.RightsManagement;
-using System.Windows;
-using System.Collections;
-using System.Collections.Generic;
-
-using MS.Internal;                  // Invariant.Assert
+using MS.Internal;
 using MS.Internal.IO.Packaging;
-using MS.Internal.IO.Packaging.CompoundFile;    // RightsManagementEncryptionTransform
-using MS.Internal.WindowsBase;
+using MS.Internal.IO.Packaging.CompoundFile;
 
 namespace System.IO.Packaging
 {
@@ -509,18 +490,14 @@ namespace System.IO.Packaging
             }
             catch (IOException ex)
             {
-                COMException comException = ex.InnerException as COMException;
-                if (comException != null && comException.ErrorCode == STG_E_FILEALREADYEXISTS)
+                if (ex.InnerException is COMException comException && comException.ErrorCode == STG_E_FILEALREADYEXISTS)
                     return false;
 
                 throw;  // Any other kind of IOException is a real error.
             }
             finally
             {
-                if (root != null)
-                {
-                    root.Close();
-                }
+                root?.Close();
             }
 
             return retval;
@@ -566,18 +543,14 @@ namespace System.IO.Packaging
             }
             catch (IOException ex)
             {
-                COMException comException = ex.InnerException as COMException;
-                if (comException != null && comException.ErrorCode == STG_E_FILEALREADYEXISTS)
+                if (ex.InnerException is COMException comException && comException.ErrorCode == STG_E_FILEALREADYEXISTS)
                     return false;
 
                 throw;  // Any other kind of IOException is a real error.
             }
             finally
             {
-                if (root != null)
-                {
-                    root.Close();
-                }
+                root?.Close();
             }
 
             return retval;
@@ -594,15 +567,9 @@ namespace System.IO.Packaging
             // Since _package is only initialized when the client calls GetPackage, it might
             // not be set when the client calls Flush, so we have to check.
             //
-            if (_package != null)
-            {
-                _package.Flush();
-            }
+            _package?.Flush();
 
-            if (_packageStream != null)
-            {
-                _packageStream.Flush();
-            }
+            _packageStream?.Flush();
 
             Invariant.Assert(_root != null, "The envelope cannot be null");
 
@@ -923,8 +890,7 @@ namespace System.IO.Packaging
 
             foreach (IDataTransform dataTransform in transforms)
             {
-                string id = dataTransform.TransformIdentifier as string;
-                if (id != null &&
+                if (dataTransform.TransformIdentifier is string id &&
                     string.Equals(id, RightsManagementEncryptionTransform.ClassTransformIdentifier, StringComparison.OrdinalIgnoreCase))
                 {
                     // Do not allow more than one RM Transform
@@ -1036,10 +1002,7 @@ namespace System.IO.Packaging
                         // might have opened the compound file just to look at the properties, and
                         // never even opened the package.
                         //
-                        if (_package != null)
-                        {
-                            _package.Close();
-                        }
+                        _package?.Close();
                     }
                     finally
                     {
@@ -1047,10 +1010,7 @@ namespace System.IO.Packaging
 
                         try
                         {
-                            if (_packageStream != null)
-                            {
-                                _packageStream.Close();
-                            }
+                            _packageStream?.Close();
                         }
                         finally
                         {
@@ -1058,10 +1018,7 @@ namespace System.IO.Packaging
 
                             try
                             {
-                                if (_packageProperties != null)
-                                {
-                                    _packageProperties.Dispose();
-                                }
+                                _packageProperties?.Dispose();
                             }
                             finally
                             {
@@ -1069,10 +1026,7 @@ namespace System.IO.Packaging
 
                                 try
                                 {
-                                    if (_root != null)
-                                    {
-                                        _root.Close();
-                                    }
+                                    _root?.Close();
                                 }
                                 finally
                                 {
@@ -1144,8 +1098,8 @@ namespace System.IO.Packaging
                 //copy the stream
 
                 PackagingUtilities.CopyStream(packageStream, _packageStream,
-                                                Int64.MaxValue, /*bytes to copy*/
-                                                4096 /*buffer size */);
+                                                bytesToCopy: Int64.MaxValue,
+                                                bufferSize: 4096);
                 _package = Package.Open(_packageStream, FileMode.Open, this.FileOpenAccess);
             }
             else

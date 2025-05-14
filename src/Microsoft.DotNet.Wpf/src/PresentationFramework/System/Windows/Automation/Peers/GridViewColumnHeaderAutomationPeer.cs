@@ -1,22 +1,8 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Runtime.InteropServices;
-using System.Security;
-using System.Text;
-using System.Windows;
 using System.Windows.Automation.Provider;
 using System.Windows.Controls;
-using System.Windows.Controls.Primitives;
-using System.Windows.Interop;
-using System.Windows.Media;
-
-using MS.Internal;
-using MS.Win32;
 
 namespace System.Windows.Automation.Peers
 {
@@ -30,26 +16,26 @@ namespace System.Windows.Automation.Peers
         }
 
         ///
-        override protected AutomationControlType GetAutomationControlTypeCore()
+        protected override AutomationControlType GetAutomationControlTypeCore()
         {
             return AutomationControlType.HeaderItem;
         }
 
         // AutomationControlType.HeaderItem must return IsContentElement false.
         // See http://msdn.microsoft.com/en-us/library/ms742202.aspx
-        override protected bool IsContentElementCore()
+        protected override bool IsContentElementCore()
         {
             return false;
         }
 
         ///
-        override protected string GetClassNameCore()
+        protected override string GetClassNameCore()
         {
             return "GridViewColumnHeader";
         }
 
         /// 
-        override public object GetPattern(PatternInterface patternInterface)
+        public override object GetPattern(PatternInterface patternInterface)
         {
             if (patternInterface == PatternInterface.Invoke || patternInterface == PatternInterface.Transform)
             {
@@ -96,10 +82,7 @@ namespace System.Windows.Automation.Peers
             GridViewColumnHeader header = Owner as GridViewColumnHeader;
             if (header != null)
             {
-                if (header.Column != null)
-                {
-                    header.Column.Width = width;
-                }
+                header.Column?.Width = width;
 
                 header.Height = height;
             }

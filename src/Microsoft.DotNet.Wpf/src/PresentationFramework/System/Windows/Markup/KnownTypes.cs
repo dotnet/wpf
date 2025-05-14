@@ -1,6 +1,5 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 //
 // Description:
@@ -52,12 +51,6 @@ using System.Diagnostics;
 using System.Globalization;  // CultureInfo KnownType
 using System.Reflection;
 using MS.Utility;
-
-// Disabling 1634 and 1691:
-// In order to avoid generating warnings about unknown message numbers and
-// unknown pragmas when compiling C# source code with the C# compiler,
-// you need to disable warnings 1634 and 1691. (Presharp Documentation)
-#pragma warning disable 1634, 1691
 
 #if PBTCOMPILER
 namespace MS.Internal.Markup
@@ -1107,8 +1100,7 @@ namespace System.Windows.Markup
         XmlDataProvider_XmlSerializer,
         MaxProperty,
         TextBox_IsReadOnly,
-        RichTextBox_IsReadOnly,
-        Setter_Value
+        RichTextBox_IsReadOnly
     }
 
 #if !BAMLDASM
@@ -2787,9 +2779,6 @@ namespace System.Windows.Markup
                 case KnownElements.ToolBarTray:
                     name = "ToolBars";
                     break;
-                case KnownElements.Setter:
-                    name = "Value";
-                    break;
                 case KnownElements.ControlTemplate:
                 case KnownElements.DataTemplate:
                 case KnownElements.FrameworkTemplate:
@@ -3679,10 +3668,6 @@ namespace System.Windows.Markup
                 case KnownElements.XmlDataProvider:
                     if (string.Equals(fieldName, "XmlSerializer", StringComparison.Ordinal))
                         return (short)KnownProperties.XmlDataProvider_XmlSerializer;
-                    break;
-                case KnownElements.Setter:
-                    if (string.Equals(fieldName, "Value", StringComparison.Ordinal))
-                        return (short)KnownProperties.Setter_Value;
                     break;
             }
             return 0;

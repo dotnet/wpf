@@ -8,6 +8,7 @@ parameters:
   # Defaults to true
   runAsPublic: true
   repoName: dotnet/wpf
+  TSAEnabled: true
 
 jobs:
 - ${{ if and(ne(variables['System.TeamProject'], 'public'), notin(variables['Build.Reason'], 'PullRequest'), eq(variables['Build.SourceBranch'], 'refs/heads/main')) }}:
@@ -53,6 +54,10 @@ jobs:
       variables:
         - name: Codeql.Enabled
           value: true
+        - name: Codeql.TSAEnabled
+          value: ${{ parameters.TSAEnabled }}
+        - name: Codeql.TSAOptionsPath
+          value: $(Build.SourcesDirectory)/eng/tsaoptions.json
         # needed for signing
         - name: _TeamName
           value: DotNetCore
@@ -81,7 +86,7 @@ jobs:
         - name: _HelixCreator
           value: ${{ parameters.repoName }}
         - name: _programfilesx86
-          value: ${Env:ProgramFiles(x86)}/dotnet          
+          value: ${Env:ProgramFiles(x86)}/dotnet
         - name: _programfiles
           value:  ${Env:ProgramFiles}/dotnet
         - ${{ if ne(variables['System.TeamProject'], 'internal') }}:
@@ -134,6 +139,7 @@ jobs:
           ${{ if eq(parameters.runAsPublic, 'true') }}:
             Build_Debug_x64:
               _BuildConfig: Debug
+              _Coverage: true
               # override some variables for debug
               # _SignType has to be real for package publishing to succeed - do not override to test.
               _Platform: x64
@@ -162,13 +168,14 @@ jobs:
 
       # Use utility script to run script command dependent on agent OS.
       - script: eng\scripts\cibuild.cmd
-          -configuration $(_BuildConfig) 
+          -configuration $(_BuildConfig)
           -prepareMachine
           $(_PublishArgs)
           $(_SignArgs)
           $(_OfficialBuildIdArgs)
           $(_PlatformArgs)
           $(_InternalRuntimeDownloadArgs)
+          /p:Coverage=$(_Coverage)
         displayName: Windows Build / Publish
         # This condition should be kept in sync with the condition for 'Run DRTs' step 
         #   When building on a regular pipeline (!_HelixPipeline), build as usual 
@@ -178,126 +185,130 @@ jobs:
         condition: or(ne(variables['_HelixPipeline'], 'true'), and(eq(variables['_HelixPipeline'], 'true') ,eq(variables['_BuildConfig'], 'Release'), eq(variables['_PublicBuildPipeline'], 'true'), eq(variables['_ContinuousIntegrationTestsEnabled'], 'true')))
 
       - script: eng\scripts\ciunittest.cmd
-          -configuration $(_BuildConfig) 
+          -configuration $(_BuildConfig)
           -prepareMachine
           $(_PublishArgs)
           $(_SignArgs)
           $(_OfficialBuildIdArgs)
           $(_PlatformArgs)
           $(_InternalRuntimeDownloadArgs)
+          /bl:$(Build.SourcesDirectory)\artifacts\log\$(_BuildConfig)\Test.binlog
+          /p:Coverage=$(_Coverage)
         displayName: Run xUnit Tests
-        condition: and(or(ne(variables['_HelixPipeline'], 'true'), and(eq(variables['_HelixPipeline'], 'true') ,eq(variables['_BuildConfig'], 'Release'), eq(variables['_PublicBuildPipeline'], 'true'), eq(variables['_ContinuousIntegrationTestsEnabled'], 'true'))), ne(variables['_Platform'], 'arm64'))
+        condition: and(or(ne(variables['_HelixPipeline'], 'true'), and(eq(variables['_HelixPipeline'], 'true'), eq(variables['_PublicBuildPipeline'], 'true'), eq(variables['_ContinuousIntegrationTestsEnabled'], 'true'))), eq(variables['_Platform'], 'x64'))
 
       - task: PublishTestResults@2
         displayName: Publish XUnit Test Results
         inputs:
-          testResultsFormat: 'xUnit'
-          testResultsFiles: '*.xml' 
-          searchFolder: '$(Build.SourcesDirectory)/artifacts/TestResults/$(_BuildConfig)'
+          testRunner: VSTest
+          testResultsFiles: '$(Build.SourcesDirectory)/artifacts/TestResults/$(_BuildConfig)/*.trx'
           mergeTestResults: true
-        continueOnError: true
-        condition: and(eq(variables['_BuildConfig'], 'Release'), ne(variables['_Platform'], 'arm64'))     
-
-      - task: PowerShell@2
-        displayName: Install .NET Core
-        inputs:
-          filePath: $(Build.SourcesDirectory)/dotnet-test-install.ps1
-          arguments: -InstallDir $(_programfiles) -Architecture $(_Platform) -Runtime dotnet  -Channel 9.0 -Quality daily
-          condition: eq(variables['_Platform'], 'x64')
+        condition: and(succeededOrFailed(), eq(variables['_BuildConfig'], 'Debug'), eq(variables['_Platform'], 'x64'))
       
-      - task: PowerShell@2
-        displayName: Install .NET Core(x86)
-        inputs:
-          filePath: $(Build.SourcesDirectory)/dotnet-test-install.ps1
-          arguments: -InstallDir $(_programfilesx86) -Architecture $(_Platform) -Runtime dotnet  -Channel 9.0 -Quality daily
-        condition: eq(variables['_Platform'], 'x86')
+        # Upload code coverage data
+      - script: dotnet msbuild -binaryLogger:artifacts\log\$(_configuration)\uploadCodeCov.binlog;ProjectImports=Embed -restore eng/CodeCoverage.proj
+        displayName: Upload coverage to codecov.io
+        condition: and(succeeded(), eq(variables['_Coverage'], True), eq(variables['_BuildConfig'], 'Debug'), eq(variables['_Platform'], 'x64'))
+      # - task: PowerShell@2
+      #   displayName: Install .NET Core
+      #   inputs:
+      #     filePath: $(Build.SourcesDirectory)/dotnet-test-install.ps1
+      #     arguments: -InstallDir $(_programfiles) -Architecture $(_Platform) -Runtime dotnet  -Channel 9.0 -Quality daily
+      #     condition: eq(variables['_Platform'], 'x64')
+      
+      # - task: PowerShell@2
+      #   displayName: Install .NET Core(x86)
+      #   inputs:
+      #     filePath: $(Build.SourcesDirectory)/dotnet-test-install.ps1
+      #     arguments: -InstallDir $(_programfilesx86) -Architecture $(_Platform) -Runtime dotnet  -Channel 9.0 -Quality daily
+      #   condition: eq(variables['_Platform'], 'x86')
   
-      - task: PowerShell@2
-        displayName: Install .NET WindowsDesktop
-        inputs:
-          filePath: $(Build.SourcesDirectory)/dotnet-test-install.ps1
-          arguments: -InstallDir $(_programfiles) -Architecture $(_Platform) -Runtime windowsdesktop  -Channel 9.0 -Quality daily
-        condition: eq(variables['_Platform'], 'x64')
+      # - task: PowerShell@2
+      #   displayName: Install .NET WindowsDesktop
+      #   inputs:
+      #     filePath: $(Build.SourcesDirectory)/dotnet-test-install.ps1
+      #     arguments: -InstallDir $(_programfiles) -Architecture $(_Platform) -Runtime windowsdesktop  -Channel 9.0 -Quality daily
+      #   condition: eq(variables['_Platform'], 'x64')
      
-      - task: PowerShell@2
-        displayName: Install .NET WindowsDesktop(x86)
-        inputs:
-          filePath: $(Build.SourcesDirectory)/dotnet-test-install.ps1
-          arguments: -InstallDir $(_programfilesx86) -Architecture $(_Platform) -Runtime windowsdesktop  -Channel 9.0 -Quality daily
-        condition: eq(variables['_Platform'], 'x86')  
+      # - task: PowerShell@2
+      #   displayName: Install .NET WindowsDesktop(x86)
+      #   inputs:
+      #     filePath: $(Build.SourcesDirectory)/dotnet-test-install.ps1
+      #     arguments: -InstallDir $(_programfilesx86) -Architecture $(_Platform) -Runtime windowsdesktop  -Channel 9.0 -Quality daily
+      #   condition: eq(variables['_Platform'], 'x86')  
 
-      - task: PowerShell@2
-        displayName: Replace WPF binaries
-        inputs:
-          targetType: 'inline'
-          script: '.\eng\copy-wpf.ps1 -testhost -destination .dotnet -$(_BuildConfig) -arch $(_Platform)'
-        condition: and(eq(variables['System.TeamProject'], 'public'), ne(variables['_Platform'], 'arm64'))
+      # - task: PowerShell@2
+      #   displayName: Replace WPF binaries
+      #   inputs:
+      #     targetType: 'inline'
+      #     script: '.\eng\copy-wpf.ps1 -testhost -destination .dotnet -$(_BuildConfig) -arch $(_Platform)'
+      #   condition: and(eq(variables['System.TeamProject'], 'public'), ne(variables['_Platform'], 'arm64'))
 
-      - task: DownloadPipelineArtifact@2
-        displayName: Fetch Test Binaries
-        inputs:
-          buildType: 'specific'
-          project: 'cbb18261-c48f-4abb-8651-8cdcb5474649'
-          pipeline: '81'
-          buildVersionToDownload: 'latestFromBranch'
-          branchName: 'refs/heads/main'
-          downloadPath: '$(System.ArtifactsDirectory)\testbinzip\'
-          checkDownloadedFiles: true
-          artifactName: Tests.$(_BuildConfig).$(_Platform).zip
-        condition: and(eq(variables['System.TeamProject'], 'public'), ne(variables['_Platform'], 'arm64'))
+      # - task: DownloadPipelineArtifact@2
+      #   displayName: Fetch Test Binaries
+      #   inputs:
+      #     buildType: 'specific'
+      #     project: 'cbb18261-c48f-4abb-8651-8cdcb5474649'
+      #     pipeline: '81'
+      #     buildVersionToDownload: 'latestFromBranch'
+      #     branchName: 'refs/heads/main'
+      #     downloadPath: '$(System.ArtifactsDirectory)\testbinzip\'
+      #     checkDownloadedFiles: true
+      #     artifactName: Tests.$(_BuildConfig).$(_Platform).zip
+      #   condition: and(eq(variables['System.TeamProject'], 'public'), ne(variables['_Platform'], 'arm64'))
 
-      - task: ExtractFiles@1
-        displayName: Extract Test Bins
-        inputs:
-          archiveFilePatterns: '$(System.ArtifactsDirectory)\testbinzip\*.zip'
-          destinationFolder: '$(System.ArtifactsDirectory)\testbins'
-          cleanDestinationFolder: true
-          overwriteExistingFiles: true
-        condition: and(eq(variables['System.TeamProject'], 'public'), ne(variables['_Platform'], 'arm64'))
+      # - task: ExtractFiles@1
+      #   displayName: Extract Test Bins
+      #   inputs:
+      #     archiveFilePatterns: '$(System.ArtifactsDirectory)\testbinzip\*.zip'
+      #     destinationFolder: '$(System.ArtifactsDirectory)\testbins'
+      #     cleanDestinationFolder: true
+      #     overwriteExistingFiles: true
+      #   condition: and(eq(variables['System.TeamProject'], 'public'), ne(variables['_Platform'], 'arm64'))
 
-      - task: PowerShell@2
-        displayName: Run Tests
-        inputs:
-          targetType: 'inline'
-          script: '.\CIRunDrts.cmd'
-          workingDirectory: '$(System.ArtifactsDirectory)\testbins'
-        condition: and(eq(variables['System.TeamProject'], 'public'), ne(variables['_Platform'], 'arm64'))
+      # - task: PowerShell@2
+      #   displayName: Run Tests
+      #   inputs:
+      #     targetType: 'inline'
+      #     script: '.\CIRunDrts.cmd'
+      #     workingDirectory: '$(System.ArtifactsDirectory)\testbins'
+      #   condition: and(eq(variables['System.TeamProject'], 'public'), ne(variables['_Platform'], 'arm64'))
       
-      - task: CopyFiles@2
-        inputs:
-          SourceFolder: 'C:\Users\cloudtest\AppData\Roaming\QualityVault\Run\Report\'
-          Contents: '**'
-          TargetFolder: '$(System.DefaultWorkingDirectory)\Results\'
-          CleanTargetFolder: true
-          OverWrite: true
-        condition: and(eq(variables['System.TeamProject'], 'public'), eq(variables['_Platform'], 'x64'), eq(variables['_BuildConfig'], 'Release'))
+      # - task: CopyFiles@2
+      #   inputs:
+      #     SourceFolder: 'C:\Users\cloudtest\AppData\Roaming\QualityVault\Run\Report\'
+      #     Contents: '**'
+      #     TargetFolder: '$(System.DefaultWorkingDirectory)\Results\'
+      #     CleanTargetFolder: true
+      #     OverWrite: true
+      #   condition: and(eq(variables['System.TeamProject'], 'public'), eq(variables['_Platform'], 'x64'), eq(variables['_BuildConfig'], 'Release'))
         
-      - task: CopyFiles@2
-        inputs:
-          SourceFolder: 'C:\Users\cloudtest\AppData\Roaming\QualityVault\Run\Report\'
-          Contents: '**'
-          TargetFolder: '$(System.DefaultWorkingDirectory)\ResultsX86\'
-          CleanTargetFolder: true
-          OverWrite: true
-        condition: and(eq(variables['System.TeamProject'], 'public'), eq(variables['_Platform'], 'x86'), eq(variables['_BuildConfig'], 'Release'))
+      # - task: CopyFiles@2
+      #   inputs:
+      #     SourceFolder: 'C:\Users\cloudtest\AppData\Roaming\QualityVault\Run\Report\'
+      #     Contents: '**'
+      #     TargetFolder: '$(System.DefaultWorkingDirectory)\ResultsX86\'
+      #     CleanTargetFolder: true
+      #     OverWrite: true
+      #   condition: and(eq(variables['System.TeamProject'], 'public'), eq(variables['_Platform'], 'x86'), eq(variables['_BuildConfig'], 'Release'))
 
-      - task: PublishPipelineArtifact@1
-        inputs:
-          artifactName: 'TestResultsX64'
-          targetPath: '$(System.DefaultWorkingDirectory)\Results\'      
-        condition: and(eq(variables['System.TeamProject'], 'public'), eq(variables['_Platform'], 'x64'), eq(variables['_BuildConfig'], 'Release'))
+      # - task: PublishPipelineArtifact@1
+      #   inputs:
+      #     artifactName: 'TestResultsX64'
+      #     targetPath: '$(System.DefaultWorkingDirectory)\Results\'      
+      #   condition: and(eq(variables['System.TeamProject'], 'public'), eq(variables['_Platform'], 'x64'), eq(variables['_BuildConfig'], 'Release'))
 
-      - task: PublishPipelineArtifact@1
-        inputs:
-          artifactName: 'TestResultsX86'
-          targetPath: '$(System.DefaultWorkingDirectory)\ResultsX86\'
-        condition: and(eq(variables['System.TeamProject'], 'public'), eq(variables['_Platform'], 'x86'), eq(variables['_BuildConfig'], 'Release'))
+      # - task: PublishPipelineArtifact@1
+      #   inputs:
+      #     artifactName: 'TestResultsX86'
+      #     targetPath: '$(System.DefaultWorkingDirectory)\ResultsX86\'
+      #   condition: and(eq(variables['System.TeamProject'], 'public'), eq(variables['_Platform'], 'x86'), eq(variables['_BuildConfig'], 'Release'))
           
-      - task: PublishTestResults@2
-        inputs:
-          testResultsFormat: 'XUnit'
-          testResultsFiles: 'testResults.xml'
-          searchFolder: '$(System.DefaultWorkingDirectory)\Results\'
-          testRunTitle: 'Test results'
-          mergeTestResults: true
-        condition: eq(variables['System.TeamProject'], 'public')
+      # - task: PublishTestResults@2
+      #   inputs:
+      #     testResultsFormat: 'XUnit'
+      #     testResultsFiles: 'testResults.xml'
+      #     searchFolder: '$(System.DefaultWorkingDirectory)\Results\'
+      #     testRunTitle: 'Test results'
+      #     mergeTestResults: true
+      #   condition: eq(variables['System.TeamProject'], 'public')

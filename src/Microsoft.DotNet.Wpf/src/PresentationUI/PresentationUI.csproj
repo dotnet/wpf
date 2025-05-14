@@ -1,9 +1,7 @@
 ﻿<Project>
   <Import Project="Sdk.props" Sdk="Microsoft.NET.Sdk" />
   <PropertyGroup>
-
-    
-    <Platforms>AnyCPU;x64;arm64</Platforms>
+    <Platforms>x86;x64;arm64</Platforms>
 
     <EnableDefaultItems>false</EnableDefaultItems>
 
@@ -74,7 +72,6 @@
       <Link>Common\System\SR.cs</Link>
     </Compile>
     <Compile Include="$(WpfSharedDir)\RefAssemblyAttrs.cs" />
-    <Compile Include="$(WpfSharedDir)\MS\Internal\FriendAccessAllowedAttribute.cs" />
     <Compile Include="OtherAssemblyAttrs.cs" />
     <Compile Include="InstallationError.xaml.cs" />
     <Compile Include="PresentationUIStyleResources.cs" />
@@ -82,64 +79,38 @@
     <Compile Include="TenFeetInstallationError.xaml.cs" />
     <Compile Include="MS\Internal\Documents\AccountType.cs" />
     <Compile Include="MS\Internal\Documents\CertificatePriorityStatus.cs" />
-    <Compile Include="MS\Internal\Documents\CredentialManagerDialog.cs">
-      <SubType>Form</SubType>
-    </Compile>
+    <Compile Include="MS\Internal\Documents\CredentialManagerDialog.cs" />
     <Compile Include="MS\Internal\Documents\CredentialManagerDialog.Designer.cs" />
     <Compile Include="MS\Internal\Documents\DocumentStatusResources.cs" />
     <Compile Include="MS\Internal\Documents\DocumentSignatureManager.cs" />
     <Compile Include="MS\Internal\Documents\DigitalSignature.cs" />
     <Compile Include="MS\Internal\Documents\DigitalSignatureProvider.cs" />
-    <Compile Include="MS\Internal\Documents\DialogBaseForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="MS\Internal\Documents\DialogDivider.cs">
-      <SubType>Component</SubType>
-    </Compile>
+    <Compile Include="MS\Internal\Documents\DialogBaseForm.cs" />
+    <Compile Include="MS\Internal\Documents\DialogDivider.cs" />
     <Compile Include="MS\Internal\Documents\FindToolBar.xaml.cs" />
     <Compile Include="MS\Internal\Documents\IDigitalSignatureProvider.cs" />
     <Compile Include="MS\Internal\Documents\PeoplePickerWrapper.cs" />
-    <Compile Include="MS\Internal\Documents\RequestedSignatureDialog.cs">
-      <SubType>Form</SubType>
-    </Compile>
+    <Compile Include="MS\Internal\Documents\RequestedSignatureDialog.cs" />
     <Compile Include="MS\Internal\Documents\RequestedSignatureDialog.Designer.cs" />
-    <Compile Include="MS\Internal\Documents\RMEnrollmentPage1.cs">
-      <SubType>Form</SubType>
-    </Compile>
+    <Compile Include="MS\Internal\Documents\RMEnrollmentPage1.cs" />
     <Compile Include="MS\Internal\Documents\RMEnrollmentPage1.Designer.cs" />
-    <Compile Include="MS\Internal\Documents\RMEnrollmentPage2.cs">
-      <SubType>Form</SubType>
-    </Compile>
+    <Compile Include="MS\Internal\Documents\RMEnrollmentPage2.cs" />
     <Compile Include="MS\Internal\Documents\RMEnrollmentPage2.Designer.cs" />
-    <Compile Include="MS\Internal\Documents\RMEnrollmentPage3.cs">
-      <SubType>Form</SubType>
-    </Compile>
+    <Compile Include="MS\Internal\Documents\RMEnrollmentPage3.cs" />
     <Compile Include="MS\Internal\Documents\RMEnrollmentPage3.Designer.cs" />
-    <Compile Include="MS\Internal\Documents\RMPermissions.cs">
-      <SubType>Form</SubType>
-    </Compile>
+    <Compile Include="MS\Internal\Documents\RMPermissions.cs" />
     <Compile Include="MS\Internal\Documents\RMPermissions.Designer.cs" />
-    <Compile Include="MS\Internal\Documents\RMPublishingDialog.cs">
-      <SubType>Form</SubType>
-    </Compile>
+    <Compile Include="MS\Internal\Documents\RMPublishingDialog.cs" />
     <Compile Include="MS\Internal\Documents\RMPublishingDialog.Designer.cs" />
-    <Compile Include="MS\Internal\Documents\RMPublishingDialog.RightsTable.cs">
-      <SubType>Form</SubType>
-    </Compile>
+    <Compile Include="MS\Internal\Documents\RMPublishingDialog.RightsTable.cs" />
     <Compile Include="MS\Internal\Documents\SignaturePolicy.cs" />
     <Compile Include="MS\Internal\Documents\SignatureResourceHelper.cs" />
     <Compile Include="MS\Internal\Documents\SignatureStatus.cs" />
-    <Compile Include="MS\Internal\Documents\SignatureSummaryDialog.cs">
-      <SubType>Form</SubType>
-    </Compile>
+    <Compile Include="MS\Internal\Documents\SignatureSummaryDialog.cs" />
     <Compile Include="MS\Internal\Documents\SignatureSummaryDialog.Designer.cs" />
-    <Compile Include="MS\Internal\Documents\SigningDialog.cs">
-      <SubType>Form</SubType>
-    </Compile>
+    <Compile Include="MS\Internal\Documents\SigningDialog.cs" />
     <Compile Include="MS\Internal\Documents\SigningDialog.Designer.cs " />
-    <Compile Include="MS\Internal\Documents\SigningProgress.cs">
-      <SubType>Form</SubType>
-    </Compile>
+    <Compile Include="MS\Internal\Documents\SigningProgress.cs" />
     <Compile Include="MS\Internal\Documents\SigningProgress.Designer.cs" />
     <Compile Include="MS\Internal\Documents\RightsManagementLicense.cs" />
     <Compile Include="MS\Internal\Documents\RightsManagementManager.cs" />
@@ -156,9 +127,7 @@
     <Compile Include="MS\Internal\Documents\Application\DocumentApplicationState.cs" />
     <Compile Include="MS\Internal\Documents\Application\DocumentApplicationJournalEntryEventArgs.cs" />
     <Compile Include="MS\Internal\Documents\Application\DocumentProperties.cs" />
-    <Compile Include="MS\Internal\Documents\Application\DocumentPropertiesDialog.cs">
-      <SubType>Form</SubType>
-    </Compile>
+    <Compile Include="MS\Internal\Documents\Application\DocumentPropertiesDialog.cs" />
     <Compile Include="MS\Internal\Documents\Application\DocumentPropertiesDialog.Designer.cs" />
     <Compile Include="MS\Internal\Documents\Application\NativeDirectoryServicesQueryAPIs.cs" />
     <Compile Include="MS\Internal\Documents\Application\NavigationHelper.cs" />
@@ -222,40 +191,7 @@
     <PackageReference Include="System.Resources.Extensions" Version="$(SystemResourcesExtensionsVersion)" />
   </ItemGroup>
 
-  <!--
-    Minimal set of references needed to build PresentationUI
-  -->
   <ItemGroup>
-    <NetCoreReference Include="netstandard" />
-    <NetCoreReference Include="Microsoft.Win32.Registry" />
-    <NetCoreReference Include="System.Collections" />
-    <NetCoreReference Include="System.Collections.Generic" />
-    <NetCoreReference Include="System.Collections.NonGeneric" />
-    <NetCoreReference Include="System.ComponentModel" />
-    <NetCoreReference Include="System.ComponentModel.Primitives" />
-    <NetCoreReference Include="System.Diagnostics.Debug" />
-    <NetCoreReference Include="System.Diagnostics.Process" />
-    <NetCoreReference Include="System.Diagnostics.Tools" />
-    <NetCoreReference Include="System.Diagnostics.TraceSource" />
-    <NetCoreReference Include="System.Drawing.Common" />
-    <NetCoreReference Include="System.Drawing.Primitives" />
-    <NetCoreReference Include="System.IO" />
-    <NetCoreReference Include="System.IO.FileSystem" />
-    <NetCoreReference Include="System.IO.FileSystem.AccessControl" />
-    <NetCoreReference Include="System.Memory" />
-    <NetCoreReference Include="System.ObjectModel" />
-    <NetCoreReference Include="System.Resources.ResourceManager" />
-    <NetCoreReference Include="System.Runtime.Extensions" />
-    <NetCoreReference Include="System.Runtime.InteropServices" />
-    <NetCoreReference Include="System.Runtime.Loader" />
-    <NetCoreReference Include="System.Security.AccessControl" />
-    <NetCoreReference Include="System.Security.Cryptography" />
-    <NetCoreReference Include="System.Security.Cryptography.Algorithms" />
-    <NetCoreReference Include="System.Security.Cryptography.X509Certificates" />
-    <NetCoreReference Include="System.Threading" />
-    <NetCoreReference Include="System.Threading.Thread" />
-    <NetCoreReference Include="System.Threading.ThreadPool" />
-
     <MicrosoftPrivateWinFormsReference Include="System.Windows.Forms" />
     <MicrosoftPrivateWinFormsReference Include="System.Windows.Forms.Primitives" />
   </ItemGroup>

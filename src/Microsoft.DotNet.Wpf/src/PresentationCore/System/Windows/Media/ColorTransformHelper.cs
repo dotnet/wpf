@@ -1,26 +1,11 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
-//
-
-using System;
-using System.IO;
 using System.Runtime.InteropServices;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
 using MS.Internal;
-using MS.Win32;
-using System.Security;
-using System.Collections;
-using System.ComponentModel;
-using System.ComponentModel.Design.Serialization;
-using System.Reflection;
-using System.Diagnostics;
-using System.Globalization;
 using Microsoft.Win32.SafeHandles;
-using SR=MS.Internal.PresentationCore.SR;
-using UnsafeNativeMethods=MS.Win32.PresentationCore.UnsafeNativeMethods;
+
+using UnsafeNativeMethods = MS.Win32.PresentationCore.UnsafeNativeMethods;
 
 namespace System.Windows.Media
 {
@@ -71,12 +56,12 @@ namespace System.Windows.Media
         {
             if (sourceProfile == null || sourceProfile.IsInvalid)
             {
-                throw new ArgumentNullException("sourceProfile");
+                throw new ArgumentNullException(nameof(sourceProfile));
             }
 
             if (destinationProfile == null || destinationProfile.IsInvalid)
             {
-                throw new ArgumentNullException("destinationProfile");
+                throw new ArgumentNullException(nameof(destinationProfile));
             }
 
             IntPtr[] handles = new IntPtr[2];

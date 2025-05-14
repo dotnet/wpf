@@ -1,6 +1,5 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 //
 // Description: Helper object implementing IEnumUnknown for enumerating controls            
@@ -8,12 +7,7 @@
 //              Source copied from AxContainer.cs
 //
 
-using System;
-using System.Collections;
-using System.Diagnostics;
 using System.Runtime.InteropServices;
-using Microsoft.Win32;
-using System.Security;
 
 using MS.Win32;
 

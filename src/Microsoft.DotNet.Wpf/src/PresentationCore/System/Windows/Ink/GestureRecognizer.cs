@@ -1,22 +1,8 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
-//
-//
-// Description:
-//      The implementation of GestureRecognizer class
-//
-
-using MS.Utility;
 using MS.Internal.Ink.GestureRecognition;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Runtime.InteropServices;
-using System;
-using System.Security;
-using SecurityHelper=MS.Internal.SecurityHelper;
-using SR=MS.Internal.PresentationCore.SR;
 
 namespace System.Windows.Ink
 {
@@ -175,7 +161,7 @@ namespace System.Windows.Ink
             ArgumentNullException.ThrowIfNull(strokes);
             if (strokes.Count > 2)
             {
-                throw new ArgumentException(SR.StrokeCollectionCountTooBig, "strokes");
+                throw new ArgumentException(SR.StrokeCollectionCountTooBig, nameof(strokes));
             }
             VerifyAccess();
             VerifyDisposed();

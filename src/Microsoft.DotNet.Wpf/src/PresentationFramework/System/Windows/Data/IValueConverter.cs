@@ -1,6 +1,5 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 //
 // Description: Interface exposed by value converters - used by bindings
@@ -9,34 +8,31 @@
 // Specs:       Transformer.mht
 //
 
-using System;
-using System.Windows;
 using System.Globalization;
-using System.Reflection;
 
 namespace System.Windows.Data
 {
-/// <summary>
-/// Interface for ValueConverter object
-/// </summary>
-/// <remarks>
-/// When implementing this interface it is a good practice to decorate your implementation
-/// with a <seealso cref="System.Windows.Data.ValueConversionAttribute"/> attribute
-/// to indicate to development tools between what data types your converter can convert.
-/// <code>
-///     [ValueConversion(typeof(Employee), typeof(Brush))]
-///     class MyConverter : IValueConverter
-///     {
-///         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
-///         {
-///             if (value is Dev)    return Brushes.Beige;
-///             if (value is Employee)  return Brushes.Salmon;
-///             return Brushes.Yellow;
-///         }
-///     }
-/// </code>
-/// </remarks>
-public interface IValueConverter
+    /// <summary>
+    /// Interface for ValueConverter object
+    /// </summary>
+    /// <remarks>
+    /// When implementing this interface it is a good practice to decorate your implementation
+    /// with a <seealso cref="System.Windows.Data.ValueConversionAttribute"/> attribute
+    /// to indicate to development tools between what data types your converter can convert.
+    /// <code>
+    ///     [ValueConversion(typeof(Employee), typeof(Brush))]
+    ///     class MyConverter : IValueConverter
+    ///     {
+    ///         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+    ///         {
+    ///             if (value is Dev)    return Brushes.Beige;
+    ///             if (value is Employee)  return Brushes.Salmon;
+    ///             return Brushes.Yellow;
+    ///         }
+    ///     }
+    /// </code>
+    /// </remarks>
+    public interface IValueConverter
 {
     /// <summary>
     /// Convert a value.  Called when moving a value from source to target.

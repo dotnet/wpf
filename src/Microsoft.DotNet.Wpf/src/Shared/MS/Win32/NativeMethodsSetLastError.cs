@@ -1,6 +1,10 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
+
+using System;
+using System.Text;
+using System.Runtime.InteropServices;
+using MS.Win32;
 
 // Description: P/Invokes for methods that need to call SetLastError(0)
 
@@ -22,15 +26,6 @@ namespace MS.Internal.Drt
 #error Class is being used from an unknown assembly.
 #endif
 {
-    using System;
-    using System.Diagnostics.CodeAnalysis;
-    using System.IO;
-    using System.Security;
-    using System.Runtime.InteropServices;
-    using System.Text;
-    using System.Windows;
-    using MS.Win32;
-
     internal static class NativeMethodsSetLastError
     {
         private const string PresentationNativeDll = "PresentationNative_cor3.dll";

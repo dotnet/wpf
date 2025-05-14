@@ -1,26 +1,11 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 //
 // Description:
 //   Static Helper methods used for building NamespaceTables
 //   and during actual Serialization.
 //
-
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.ComponentModel.Design.Serialization;
-using System.Diagnostics;
-using System.Reflection;
-using System.Security;
-using System.Windows;
-using System.Globalization;
-using System.Windows.Data;
-using MS.Utility;
-using MS.Internal;
 
 #if PBTCOMPILER
 namespace MS.Internal.Markup

@@ -1,20 +1,11 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
-using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Xaml;
-using System.Diagnostics;
 using System.ComponentModel;
 using System.Reflection;
-using System.Windows.Diagnostics;
-using System.Windows.Media.Media3D;
-using System.Windows.Media;
 using MS.Internal;
-using System.Globalization;
-using XamlReaderHelper = System.Windows.Markup.XamlReaderHelper;
 
 namespace System.Windows.Baml2006
 {
@@ -42,9 +33,9 @@ namespace System.Windows.Baml2006
         #endregion
 
         // Return the full assembly name, this includes the assembly version
-        internal override ReadOnlySpan<char> GetAssemblyNameForNamespace(Assembly asm)
+        internal override ReadOnlySpan<char> GetAssemblyNameForNamespace(Assembly assembly)
         {
-            return asm.FullName;
+            return assembly.FullName;
         }
 
         // When processing ResourceDictionary.Source we may find a Uri that references the

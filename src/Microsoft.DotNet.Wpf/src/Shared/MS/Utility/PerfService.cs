@@ -1,26 +1,15 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 // Description: Implements the Service class for perf diagnostics
 
-using System;
-using System.Text;
-using System.Windows;
-using System.Collections.Generic;
 using SRCS = System.Runtime.CompilerServices;
-
-using Microsoft.Win32;
-using MS.Internal.PresentationCore;
-using MS.Internal;
-using MS.Utility;
 using MS.Win32.PresentationCore;
 using System.Reflection;
 
 namespace MS.Utility
 {
-    [FriendAccessAllowed]
-    static internal class PerfService
+    internal static class PerfService
     {
         // Map of elements to IDs.  A couple of notes:
         // 1) Use a ConditionalWeakTable because it holds weak references to

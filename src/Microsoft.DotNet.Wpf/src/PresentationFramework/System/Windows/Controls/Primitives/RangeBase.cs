@@ -1,24 +1,11 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 
-using System;
-using System.Collections;
 using System.ComponentModel;
-using System.Globalization;
 using System.Windows.Threading;
 
 using System.Windows.Automation.Peers;
-using System.Windows.Automation.Provider;
-using System.Windows.Controls;
-using System.Windows.Controls.Primitives;
-using System.Windows;
-using System.Windows.Input;
-using System.Windows.Media;
-
-using MS.Internal;
-using MS.Utility;
 
 namespace System.Windows.Controls.Primitives
 {
@@ -103,10 +90,7 @@ namespace System.Windows.Controls.Primitives
             RangeBase ctrl = (RangeBase) d;
 
             RangeBaseAutomationPeer peer = UIElementAutomationPeer.FromElement(ctrl) as RangeBaseAutomationPeer;
-            if (peer != null)
-            {
-                peer.RaiseMinimumPropertyChangedEvent((double)e.OldValue, (double)e.NewValue);
-            }
+            peer?.RaiseMinimumPropertyChangedEvent((double)e.OldValue, (double)e.NewValue);
 
             ctrl.CoerceValue(MaximumProperty);
             ctrl.CoerceValue(ValueProperty);
@@ -167,10 +151,7 @@ namespace System.Windows.Controls.Primitives
             RangeBase ctrl = (RangeBase) d;
 
             RangeBaseAutomationPeer peer = UIElementAutomationPeer.FromElement(ctrl) as RangeBaseAutomationPeer;
-            if (peer != null)
-            {
-                peer.RaiseMaximumPropertyChangedEvent((double)e.OldValue, (double)e.NewValue);
-            }
+            peer?.RaiseMaximumPropertyChangedEvent((double)e.OldValue, (double)e.NewValue);
 
             ctrl.CoerceValue(ValueProperty);
             ctrl.OnMaximumChanged((double) e.OldValue, (double) e.NewValue);
@@ -240,10 +221,7 @@ namespace System.Windows.Controls.Primitives
             RangeBase ctrl = (RangeBase)d;
 
             RangeBaseAutomationPeer peer = UIElementAutomationPeer.FromElement(ctrl) as RangeBaseAutomationPeer;
-            if (peer != null)
-            {
-                peer.RaiseValuePropertyChangedEvent((double)e.OldValue, (double)e.NewValue);
-            }
+            peer?.RaiseValuePropertyChangedEvent((double)e.OldValue, (double)e.NewValue);
 
             ctrl.OnValueChanged((double) e.OldValue, (double) e.NewValue);
         }
@@ -255,8 +233,10 @@ namespace System.Windows.Controls.Primitives
         /// <param name="newValue">The new value of the Value property.</param>
         protected virtual void OnValueChanged(double oldValue, double newValue)
         {
-            RoutedPropertyChangedEventArgs<double> args = new RoutedPropertyChangedEventArgs<double>(oldValue, newValue);
-            args.RoutedEvent=RangeBase.ValueChangedEvent;
+            RoutedPropertyChangedEventArgs<double> args = new RoutedPropertyChangedEventArgs<double>(oldValue, newValue)
+            {
+                RoutedEvent = RangeBase.ValueChangedEvent
+            };
             RaiseEvent(args);
         }
 

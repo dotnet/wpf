@@ -1,14 +1,10 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 // Description: Windows Hyperlink Proxy
 
 using System;
 using System.Runtime.InteropServices;
-using System.ComponentModel;
-using System.Text;
-using System.Collections;
 using System.Windows.Automation;
 using System.Windows.Automation.Provider;
 using System.Windows;
@@ -17,7 +13,7 @@ using MS.Win32;
 namespace MS.Internal.AutomationProxies
 {
     // Implementation of the Hyperlink (SysLink) proxy.
-    class WindowsHyperlink: ProxyHwnd
+    internal class WindowsHyperlink: ProxyHwnd
     {
         // ------------------------------------------------------
         //
@@ -26,8 +22,8 @@ namespace MS.Internal.AutomationProxies
         // ------------------------------------------------------
 
         #region Constructors
-        
-        WindowsHyperlink (IntPtr hwnd, ProxyFragment parent, int item)
+
+        private WindowsHyperlink (IntPtr hwnd, ProxyFragment parent, int item)
             : base( hwnd, parent, item)
         {
             // Set the strings to return properly the properties.
@@ -125,18 +121,14 @@ namespace MS.Internal.AutomationProxies
         #region ProxyHwnd Interface
 
         // Builds a list of Win32 WinEvents to process a UIAutomation Event.
-        // Param name="idEvent", UIAuotmation event
-        // Param name="cEvent"out, number of winevent set in the array
-        // Returns an array of Events to Set. The number of valid entries in this array pass back in cEvent
-        protected override WinEventTracker.EvtIdProperty[] EventToWinEvent(AutomationEvent idEvent, out int cEvent)
+        protected override ReadOnlySpan<WinEventTracker.EvtIdProperty> EventToWinEvent(AutomationEvent idEvent)
         {
             if (idEvent == InvokePattern.InvokedEvent)
             {
-                cEvent = 1;
-                return new WinEventTracker.EvtIdProperty[1] { new WinEventTracker.EvtIdProperty(NativeMethods.EventSystemCaptureEnd, idEvent) };
+                return new WinEventTracker.EvtIdProperty[1] { new(NativeMethods.EventSystemCaptureEnd, idEvent) };
             }
 
-            return base.EventToWinEvent(idEvent, out cEvent);
+            return base.EventToWinEvent(idEvent);
         }
 
         #endregion ProxyHwnd Interface
@@ -219,7 +211,7 @@ namespace MS.Internal.AutomationProxies
                 bGetItemResult = XSendMessage.XSend(_hwnd, NativeMethods.LM_HITTEST, IntPtr.Zero, new IntPtr(&HitTestInfo), Marshal.SizeOf(HitTestInfo.GetType()));
             }
 
-            if (bGetItemResult == true && HitTestInfo.item.iLink >= 0 && GetLinkItem (HitTestInfo.item.iLink))
+            if (bGetItemResult && HitTestInfo.item.iLink >= 0 && GetLinkItem (HitTestInfo.item.iLink))
             {
                 return CreateHyperlinkItem (_linkItem, HitTestInfo.item.iLink);
             }
@@ -347,7 +339,7 @@ namespace MS.Internal.AutomationProxies
     //------------------------------------------------------
 
     // Implementation of the PAW WindowsHyperlinkItem (SysLink) proxy.
-    class WindowsHyperlinkItem : ProxySimple, IInvokeProvider
+    internal class WindowsHyperlinkItem : ProxySimple, IInvokeProvider
     {
         // ------------------------------------------------------
         //
@@ -388,13 +380,14 @@ namespace MS.Internal.AutomationProxies
             // Send the link an LM_SETITEM message.
             //
             // Allocate a local LITEM struct.
-            UnsafeNativeMethods.LITEM linkItem = new UnsafeNativeMethods.LITEM();
-
-            // Fill in the coordinates about which we care.
-            linkItem.mask = NativeMethods.LIF_ITEMINDEX | NativeMethods.LIF_STATE;
-            linkItem.iLink = _item;
-            linkItem.stateMask = NativeMethods.LIS_FOCUSED;
-            linkItem.state = NativeMethods.LIS_FOCUSED;
+            UnsafeNativeMethods.LITEM linkItem = new UnsafeNativeMethods.LITEM
+            {
+                // Fill in the coordinates about which we care.
+                mask = NativeMethods.LIF_ITEMINDEX | NativeMethods.LIF_STATE,
+                iLink = _item,
+                stateMask = NativeMethods.LIS_FOCUSED,
+                state = NativeMethods.LIS_FOCUSED
+            };
 
             unsafe
             {
@@ -499,7 +492,7 @@ namespace MS.Internal.AutomationProxies
                             bGetItemResult = XSendMessage.XSend(_hwnd, NativeMethods.LM_HITTEST, IntPtr.Zero, new IntPtr(&HitTestInfo), Marshal.SizeOf(HitTestInfo.GetType()));
                         }
 
-                        if (bGetItemResult == true && HitTestInfo.item.iLink == _item)
+                        if (bGetItemResult && HitTestInfo.item.iLink == _item)
                         {
                             //
                             // N.B. [SEdmison]:

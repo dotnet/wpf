@@ -1,6 +1,5 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 using System.Diagnostics;
 
@@ -26,8 +25,6 @@ namespace System.Windows.Input.Manipulations
         /// <summary>
         /// Gets a ManipulationVelocities2D with all velocities set to zero.
         /// </summary>
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Security", "CA2104:DoNotDeclareReadOnlyMutableReferenceTypes",
-            Justification="ManipulationVelocities2D is immutable.")]
         public static readonly ManipulationVelocities2D Zero = new ManipulationVelocities2D(0, 0, 0, 0);
 
         /// <summary>

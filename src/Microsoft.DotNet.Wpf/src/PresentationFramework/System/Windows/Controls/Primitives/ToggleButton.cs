@@ -1,26 +1,13 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 
-using System;
-using System.Collections;
 using System.ComponentModel;
-using System.Diagnostics;
 using System.Windows.Threading;
 
 using System.Windows.Automation.Peers;
-using System.Windows.Automation.Provider;
-using System.Windows.Controls.Primitives;
-using System.Windows;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Shapes;
 
 using MS.Internal.KnownBoxes;
-
-// Disable CS3001: Warning as Error: not CLS-compliant
-#pragma warning disable 3001
 
 namespace System.Windows.Controls.Primitives
 {
@@ -172,10 +159,7 @@ namespace System.Windows.Controls.Primitives
             //doing soft casting here because the peer can be that of RadioButton and it is not derived from
             //ToggleButtonAutomationPeer - specifically to avoid implementing TogglePattern
             ToggleButtonAutomationPeer peer = UIElementAutomationPeer.FromElement(button) as ToggleButtonAutomationPeer;
-            if (peer != null)
-            {
-                peer.RaiseToggleStatePropertyChangedEvent(oldValue, newValue);
-            }
+            peer?.RaiseToggleStatePropertyChangedEvent(oldValue, newValue);
 
             if (newValue == true)
             {

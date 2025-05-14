@@ -1,12 +1,8 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 
-using System;
 using System.ComponentModel;
-using System.Diagnostics;
-using System.Windows;
 using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
@@ -200,7 +196,7 @@ namespace System.Windows.Controls
         }
 
         // convert text the user has typed into the appropriate string to enter into the editable TextBox
-        string ConvertTextForEdit(string s)
+        private string ConvertTextForEdit(string s)
         {
             // Backspace becomes the empty string
             if (s == "\b")
@@ -320,7 +316,7 @@ namespace System.Windows.Controls
         public static readonly DependencyProperty FontSizeProperty =
                 TextElement.FontSizeProperty.AddOwner(
                         typeof(DataGridTextColumn),
-                        new FrameworkPropertyMetadata(SystemFonts.MessageFontSize, FrameworkPropertyMetadataOptions.Inherits, DataGridColumn.NotifyPropertyChangeForRefreshContent));
+                        new FrameworkPropertyMetadata(SystemFonts.ThemeMessageFontSize, FrameworkPropertyMetadataOptions.Inherits, DataGridColumn.NotifyPropertyChangeForRefreshContent));
 
         /// <summary>
         ///     The size of the desired font.

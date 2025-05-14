@@ -1,6 +1,5 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 //
 //
@@ -9,18 +8,7 @@
 //              The DrawingBrush is a TileBrush which defines its tile content
 //              by use of a Drawing.
 
-
-using MS.Internal;
-using System;
-using System.ComponentModel;
-using System.Diagnostics;
-using System.Runtime.InteropServices;
-using System.Windows;
-using System.Windows.Media;
-using System.Windows.Media.Animation;
-using System.Windows.Media.Composition;
-
-namespace System.Windows.Media 
+namespace System.Windows.Media
 {
     /// <summary>
     /// DrawingBrush - This TileBrush defines its content as a Drawing

@@ -1,10 +1,7 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
-using System;
 using System.Diagnostics.Tracing;
-using MS.Internal.Telemetry;
 
 // Use the naming convention MS.Internal.Telemetry.<assemblyname> while adding assemblies to the provider
 #if WINDOWS_BASE

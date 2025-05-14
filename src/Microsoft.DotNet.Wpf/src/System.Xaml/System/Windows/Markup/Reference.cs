@@ -1,6 +1,5 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 #nullable disable
 
@@ -26,21 +25,23 @@ namespace System.Windows.Markup
         public override object ProvideValue(IServiceProvider serviceProvider)
         {
             ArgumentNullException.ThrowIfNull(serviceProvider);
-            IXamlNameResolver nameResolver = serviceProvider.GetService(typeof(IXamlNameResolver)) as IXamlNameResolver;
-            if (nameResolver == null)
+            if (serviceProvider.GetService(typeof(IXamlNameResolver)) is not IXamlNameResolver nameResolver)
             {
                 throw new InvalidOperationException(SR.MissingNameResolver);
             }
-            if (String.IsNullOrEmpty(Name))
+
+            if (string.IsNullOrEmpty(Name))
             {
                 throw new InvalidOperationException(SR.MustHaveName);
             }
+
             object obj = nameResolver.Resolve(Name);
-            if (obj == null)
+            if (obj is null)
             {
                 string[] names = new string[] { Name };
                 obj = nameResolver.GetFixupToken(names, true);
             }
+
             return obj;
         }
     }

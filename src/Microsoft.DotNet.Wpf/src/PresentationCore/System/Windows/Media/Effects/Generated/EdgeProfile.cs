@@ -1,6 +1,5 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 //
 //
@@ -9,11 +8,6 @@
 // Please see MilCodeGen.html for more information.
 //
 
-#if PRESENTATION_CORE
-using SR=MS.Internal.PresentationCore.SR;
-#else
-using SR=System.Windows.SR;
-#endif
 
 namespace System.Windows.Media.Effects
 {
@@ -41,5 +35,5 @@ namespace System.Windows.Media.Effects
         ///     BulgedUp - Use a bulged up edge profile
         /// </summary>
         BulgedUp = 3,
-    }   
+    }
 }

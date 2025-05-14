@@ -1,7 +1,24 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
-        
+
+
+#region Using declarations
+
+using System.Collections.Specialized;
+using System.Diagnostics;
+using System.Windows.Automation.Peers;
+using System.Windows.Controls.Primitives;
+using System.Windows.Input;
+using System.Windows.Media;
+using System.Windows.Threading;
+#if RIBBON_IN_FRAMEWORK
+using System.Windows.Controls.Ribbon.Primitives;
+using Microsoft.Windows.Controls;
+#else
+    using Microsoft.Windows.Automation.Peers;
+    using Microsoft.Windows.Controls.Ribbon.Primitives;
+#endif
+using MS.Internal;
 
 #if RIBBON_IN_FRAMEWORK
 namespace System.Windows.Controls.Ribbon
@@ -9,27 +26,6 @@ namespace System.Windows.Controls.Ribbon
 namespace Microsoft.Windows.Controls.Ribbon
 #endif
 {
-    #region Using declarations
-
-    using System;
-    using System.Collections.Specialized;
-    using System.Diagnostics;
-    using System.Windows;
-    using System.Windows.Automation.Peers;
-    using System.Windows.Controls;
-    using System.Windows.Controls.Primitives;
-    using System.Windows.Input;
-    using System.Windows.Media;
-    using System.Windows.Threading;
-#if RIBBON_IN_FRAMEWORK
-    using System.Windows.Controls.Ribbon.Primitives;
-    using Microsoft.Windows.Controls;
-#else
-    using Microsoft.Windows.Automation.Peers;
-    using Microsoft.Windows.Controls.Ribbon.Primitives;
-#endif
-    using MS.Internal;
-
     #endregion
 
     /// <summary>
@@ -678,10 +674,7 @@ namespace Microsoft.Windows.Controls.Ribbon
         private void OnPopupOpened(object sender, EventArgs e)
         {
             RibbonToolTip toolTip = ToolTip as RibbonToolTip;
-            if (toolTip != null)
-            {
-                toolTip.IsOpen = false;
-            }
+            toolTip?.IsOpen = false;
         }
 
         /// <summary>
@@ -726,10 +719,7 @@ namespace Microsoft.Windows.Controls.Ribbon
                 if (IsKeyboardFocusWithin)
                 {
                     ItemsControl parent = ItemsControl.ItemsControlFromItemContainer(this);
-                    if (parent != null)
-                    {
-                        parent.Focus();
-                    }
+                    parent?.Focus();
                 }
             }
 
@@ -1045,7 +1035,7 @@ namespace Microsoft.Windows.Controls.Ribbon
 
         #region Dropdown resizing
 
-        void OnPopupResizeStarted(object sender, DragStartedEventArgs e)
+        private void OnPopupResizeStarted(object sender, DragStartedEventArgs e)
         {
             RibbonDropDownHelper.OnPopupResizeStarted(_itemsPresenter);
             
@@ -1054,16 +1044,13 @@ namespace Microsoft.Windows.Controls.Ribbon
             {
                 RibbonMenuItem selectedMenuItem = RibbonCurrentSelection as RibbonMenuItem;
                 RibbonCurrentSelection = null;
-                if (selectedMenuItem != null)
-                {
-                    selectedMenuItem.IsSubmenuOpen = false;
-                }
+                selectedMenuItem?.IsSubmenuOpen = false;
             }
 
             e.Handled = true;
         }
 
-        void OnPopupResize(object sender, DragDeltaEventArgs e)
+        private void OnPopupResize(object sender, DragDeltaEventArgs e)
         {
             RibbonDropDownHelper.ResizePopup(_itemsPresenter,
                 RibbonDropDownHelper.GetMinDropDownSize(_itemsHost, _popup, BorderThickness),
@@ -1232,10 +1219,7 @@ namespace Microsoft.Windows.Controls.Ribbon
 
         internal void BringIndexIntoView(int index)
         {
-            if (_itemsHost != null)
-            {
-                _itemsHost.BringIndexIntoViewInternal(index);
-            }
+            _itemsHost?.BringIndexIntoViewInternal(index);
         }
 
         private static bool IsContainerFocusable(FrameworkElement container)
@@ -1246,10 +1230,7 @@ namespace Microsoft.Windows.Controls.Ribbon
         private static void OnIsCheckedChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             RibbonMenuItemAutomationPeer peer = UIElementAutomationPeer.FromElement((RibbonMenuItem)d) as RibbonMenuItemAutomationPeer;
-            if (peer != null)
-            {
-                peer.RaiseToggleStatePropertyChangedEvent((bool)e.OldValue, (bool)e.NewValue);
-            }
+            peer?.RaiseToggleStatePropertyChangedEvent((bool)e.OldValue, (bool)e.NewValue);
         }
 
         private static void OnIsSubmenuOpenChanged(DependencyObject sender, DependencyPropertyChangedEventArgs e)
@@ -1303,10 +1284,7 @@ namespace Microsoft.Windows.Controls.Ribbon
             menuItem.RibbonCurrentSelection = null;
 
             RibbonMenuItemAutomationPeer peer = UIElementAutomationPeer.FromElement(menuItem) as RibbonMenuItemAutomationPeer;
-            if (peer != null)
-            {
-                peer.RaiseExpandCollapseAutomationEvent((bool)e.OldValue, (bool)e.NewValue);
-            }
+            peer?.RaiseExpandCollapseAutomationEvent((bool)e.OldValue, (bool)e.NewValue);
         }
 
         private object UpdateDropDownPosition(object arg)
@@ -1554,10 +1532,7 @@ namespace Microsoft.Windows.Controls.Ribbon
                     else
                     {
                         RibbonGallery selectedGallery = _ribbonCurrentSelection as RibbonGallery;
-                        if (selectedGallery != null)
-                        {
-                            selectedGallery.RibbonIsSelected = false;
-                        }
+                        selectedGallery?.RibbonIsSelected = false;
                     }
 
                     _ribbonCurrentSelection = value;
@@ -1570,10 +1545,7 @@ namespace Microsoft.Windows.Controls.Ribbon
                     else
                     {
                         RibbonGallery selectedGallery = _ribbonCurrentSelection as RibbonGallery;
-                        if (selectedGallery != null)
-                        {
-                            selectedGallery.RibbonIsSelected = true;
-                        }
+                        selectedGallery?.RibbonIsSelected = true;
                     }
                 }
             }
@@ -1588,19 +1560,18 @@ namespace Microsoft.Windows.Controls.Ribbon
         private const string PopupTemplatePartName = "PART_Popup";
         internal const string SideBarBorderTemplatePartName = "PART_SideBarBorder";
         private const string SubMenuScrollViewerTemplatePartName = "PART_SubMenuScrollViewer";
-
-        DispatcherTimer _closeSubmenuTimer, _openSubmenuTimer;
+        private DispatcherTimer _closeSubmenuTimer, _openSubmenuTimer;
         private Thumb _resizeThumb;
         private ItemsPresenter _itemsPresenter;
-        RibbonMenuItemsPanel _itemsHost;
+        private RibbonMenuItemsPanel _itemsHost;
         private Popup _popup;
         private FrameworkElement _ribbonCurrentSelection; // can be a RibbonMenuItem or RibbonGallery
-        Rect _screenBounds;
+        private Rect _screenBounds;
         private UIElement _popupRoot;
         private UIElement _sideBarBorder = null;
         private ScrollViewer _submenuScrollViewer;
         private int _galleryCount;
-        double _popupOffsetY;
+        private double _popupOffsetY;
         private Key _handleNextUpKey = Key.None;
         private BitVector32 _bits = new BitVector32(0);
 
@@ -1631,13 +1602,13 @@ namespace Microsoft.Windows.Controls.Ribbon
             set { _bits[(int)Bits.SyncingKeyTipAndContent] = value; }
         }
 
-        bool IgnoreNextMouseLeave
+        private bool IgnoreNextMouseLeave
         {
             get { return _bits[(int)Bits.IgnoreNextMouseLeave]; }
             set { _bits[(int)Bits.IgnoreNextMouseLeave] = value; }
         }
 
-        bool InContextMenu
+        private bool InContextMenu
         {
             get { return _bits[(int)Bits.InContextMenu]; }
             set { _bits[(int)Bits.InContextMenu] = value; }

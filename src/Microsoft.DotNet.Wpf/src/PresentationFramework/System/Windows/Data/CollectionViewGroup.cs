@@ -1,6 +1,5 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 //
 // Description: A CollectionViewGroup, as created by a CollectionView according to a GroupDescription.
@@ -16,7 +15,7 @@ namespace System.Windows.Data
     /// <summary>
     /// A CollectionViewGroup, as created by a CollectionView according to a GroupDescription.
     /// </summary>
-    abstract public class CollectionViewGroup : INotifyPropertyChanged
+    public abstract class CollectionViewGroup : INotifyPropertyChanged
     {
         #region Constructors
 
@@ -140,7 +139,7 @@ namespace System.Windows.Data
             set
             {
                 _itemCount = value;
-                OnPropertyChanged(new PropertyChangedEventArgs("ItemCount"));
+                OnPropertyChanged(new PropertyChangedEventArgs(nameof(ItemCount)));
             }
         }
 
@@ -154,10 +153,10 @@ namespace System.Windows.Data
         //
         //------------------------------------------------------
 
-        object                                  _name;
-        ObservableCollection<object>            _itemsRW;
-        ReadOnlyObservableCollection<object>    _itemsRO;
-        int                                     _itemCount;
+        private object                                  _name;
+        private ObservableCollection<object>            _itemsRW;
+        private ReadOnlyObservableCollection<object>    _itemsRO;
+        private int                                     _itemCount;
 
         #endregion Private Fields
     }

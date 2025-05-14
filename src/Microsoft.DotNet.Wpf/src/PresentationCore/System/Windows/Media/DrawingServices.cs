@@ -1,15 +1,11 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 //
 //
 // Description: Implements services for Drawings including walking, bounding,
 //              and hit-testing.
 //
-
-using System.Diagnostics;
-using System.Windows.Media.Animation;
 
 namespace System.Windows.Media
 {
@@ -103,10 +99,7 @@ namespace System.Windows.Media
 
             DrawingDrawingContext ddc = dc as DrawingDrawingContext;
 
-            if (ddc != null)
-            {
-                ddc.CanBeInheritanceContext = false;
-            }
+            ddc?.CanBeInheritanceContext = false;
 
             DrawingContextDrawingContextWalker walker =
                 new DrawingContextDrawingContextWalker(dc);

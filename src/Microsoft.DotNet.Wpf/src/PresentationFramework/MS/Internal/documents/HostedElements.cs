@@ -1,19 +1,8 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
-
-//
-// Enumerator class for returning descendants of TextBlock and FlowDocumentPage
-//
 
 using System.Collections;
-using MS.Internal.Documents;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System;
-using System.Diagnostics;
-
-#pragma warning disable 1634, 1691  // suppressing PreSharp warnings
 
 namespace System.Windows.Documents
 {
@@ -164,19 +153,18 @@ namespace System.Windows.Documents
         {
             get
             {
-                // Disable PRESharp warning 6503: "Property get methods should not throw exceptions".
                 // HostedElements must throw exception if Current property is incorrectly accessed
                 if (_textSegments == null)
                 {
                     // Collection was modified 
-#pragma warning suppress 6503 // IEnumerator.Current is documented to throw this exception
+                    // IEnumerator.Current is documented to throw this exception
                     throw new InvalidOperationException(SR.EnumeratorCollectionDisposed);
                 }
 
                 if (_currentPosition == null)
                 {
                     // Enumerator not started. Call MoveNext to see if we can move ahead
-#pragma warning suppress 6503 // IEnumerator.Current is documented to throw this exception
+                    // IEnumerator.Current is documented to throw this exception
                     throw new InvalidOperationException(SR.EnumeratorNotStarted);
                 }
 
@@ -194,7 +182,7 @@ namespace System.Windows.Documents
                     default:
                         // Throw exception because this function should only be called after MoveNext, and not 
                         // if MoveNext returns false
-                        Debug.Assert(false, "Invalid state in HostedElements.cs");
+                        Debug.Fail("Invalid state in HostedElements.cs");
                         break;
                 }
                 return currentElement;
@@ -211,9 +199,9 @@ namespace System.Windows.Documents
 
         #region Private Fields
 
-        ReadOnlyCollection<TextSegment> _textSegments;
-        TextPointer _currentPosition;
-        int _currentTextSegment;
+        private ReadOnlyCollection<TextSegment> _textSegments;
+        private TextPointer _currentPosition;
+        private int _currentTextSegment;
 
         #endregion Private Fields
     }

@@ -1,6 +1,10 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
+
+using MS.Internal.Documents;
+using System.Collections;
+using System.Globalization;
+using System.Windows.Controls;
 
 //
 // Description:
@@ -9,15 +13,6 @@
 
 namespace System.Windows.Documents
 {
-    using MS.Internal.Documents;
-    using System;
-    using System.Collections;
-    using System.Diagnostics;
-    using System.Globalization;
-    using System.Windows.Controls;
-
-
-
     //=====================================================================
     /// <summary>
     /// FlowPosition represents a navigational position in a document's content flow.
@@ -71,7 +66,7 @@ namespace System.Windows.Documents
             FlowPosition flow = o as FlowPosition;
             if (flow == null)
             {
-                throw new ArgumentException(SR.Format(SR.UnexpectedParameterType, o.GetType(), typeof(FlowPosition)), "o");
+                throw new ArgumentException(SR.Format(SR.UnexpectedParameterType, o.GetType(), typeof(FlowPosition)), nameof(o));
             }
 
             return _OverlapAwareCompare(flow);

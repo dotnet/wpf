@@ -1,32 +1,22 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
+using System.IO;
+using System.Runtime.InteropServices;
 
+// Some COM interfaces and Win32 structures are already declared in the framework.
+// Interesting ones to remember in System.Runtime.InteropServices.ComTypes are:
+using FILETIME = System.Runtime.InteropServices.ComTypes.FILETIME;
 
-//
 // A consolidated file of native structures exposed for interop.
 // These may be structs or classes, depending on the calling requirements
 //
 // The naming should generally match the native counterparts.
 // The structures may be slightly thicker wrappers to make them
 // easier to consume correctly from .Net code (e.g. hiding resource management)
-//
 
 namespace MS.Internal.Interop
 {
-    using System;
-    using System.IO;
-    using System.Runtime.InteropServices;
-    using System.Runtime.InteropServices.ComTypes;
-    using System.Security;
-
-    // Some COM interfaces and Win32 structures are already declared in the framework.
-    // Interesting ones to remember in System.Runtime.InteropServices.ComTypes are:
-    using FILETIME = System.Runtime.InteropServices.ComTypes.FILETIME;
-    using IPersistFile = System.Runtime.InteropServices.ComTypes.IPersistFile;
-    using IStream = System.Runtime.InteropServices.ComTypes.IStream;
-
     [StructLayout(LayoutKind.Explicit)]
     internal class PROPVARIANT : IDisposable
     {

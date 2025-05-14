@@ -1,6 +1,5 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 /*++
                                                                               
@@ -16,17 +15,9 @@
                                      
                                                                              
 --*/
-using System;
-using System.Diagnostics;
 using System.IO;
-using System.Collections;
-using System.Collections.Generic;
 using System.IO.Packaging;
-using System.Windows;
-using System.Windows.Markup;
 using System.Xml;
-
-using MS.Internal.IO.Packaging.Extensions;
 
 namespace System.Windows.Xps.Packaging
 {
@@ -125,10 +116,7 @@ namespace System.Windows.Xps.Packaging
         Flush(
             )
         {
-            if (null != _partDataStream)
-            {
-                _partDataStream.Flush();
-            }
+            _partDataStream?.Flush();
         }
         
         #endregion Internal methods
@@ -299,10 +287,7 @@ namespace System.Windows.Xps.Packaging
         Flush(
             )
         {
-            if (null != _xmlWriter)
-            {
-                _xmlWriter.Flush();
-            }
+            _xmlWriter?.Flush();
         }
 
         /// <summary>

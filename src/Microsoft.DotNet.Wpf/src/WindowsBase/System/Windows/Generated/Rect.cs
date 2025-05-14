@@ -1,6 +1,5 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 //
 //
@@ -10,29 +9,18 @@
 //
 
 using MS.Internal;
-using MS.Internal.WindowsBase;
-using System;
-using System.Collections;
 using System.ComponentModel;
-using System.Diagnostics;
 using System.Globalization;
-using System.Reflection;
-using System.Runtime.InteropServices;
-using System.ComponentModel.Design.Serialization;
 using System.Windows.Markup;
 using System.Windows.Converters;
-using System.Windows;
-// These types are aliased to match the unamanaged names used in interop
-using BOOL = System.UInt32;
-using WORD = System.UInt16;
-using Float = System.Single;
 
 namespace System.Windows
 {
+
     [Serializable]
     [TypeConverter(typeof(RectConverter))]
     [ValueSerializer(typeof(RectValueSerializer))] // Used by MarkupWriter
-    partial struct Rect : IFormattable
+    public partial struct Rect : IFormattable
     {
         //------------------------------------------------------
         //
@@ -56,7 +44,7 @@ namespace System.Windows
         /// </returns>
         /// <param name='rect1'>The first Rect to compare</param>
         /// <param name='rect2'>The second Rect to compare</param>
-        public static bool operator == (Rect rect1, Rect rect2)
+        public static bool operator ==(Rect rect1, Rect rect2)
         {
             return rect1.X == rect2.X &&
                    rect1.Y == rect2.Y &&
@@ -75,7 +63,7 @@ namespace System.Windows
         /// </returns>
         /// <param name='rect1'>The first Rect to compare</param>
         /// <param name='rect2'>The second Rect to compare</param>
-        public static bool operator != (Rect rect1, Rect rect2)
+        public static bool operator !=(Rect rect1, Rect rect2)
         {
             return !(rect1 == rect2);
         }
@@ -91,7 +79,7 @@ namespace System.Windows
         /// </returns>
         /// <param name='rect1'>The first Rect to compare</param>
         /// <param name='rect2'>The second Rect to compare</param>
-        public static bool Equals (Rect rect1, Rect rect2)
+        public static bool Equals(Rect rect1, Rect rect2)
         {
             if (rect1.IsEmpty)
             {
@@ -267,6 +255,7 @@ namespace System.Windows
         /// </returns>
         public override string ToString()
         {
+
             // Delegate to the internal method which implements all ToString calls.
             return ConvertToString(null /* format string */, null /* format provider */);
         }
@@ -280,6 +269,7 @@ namespace System.Windows
         /// </returns>
         public string ToString(IFormatProvider provider)
         {
+
             // Delegate to the internal method which implements all ToString calls.
             return ConvertToString(null /* format string */, provider);
         }
@@ -295,6 +285,7 @@ namespace System.Windows
         /// </returns>
         string IFormattable.ToString(string format, IFormatProvider provider)
         {
+
             // Delegate to the internal method which implements all ToString calls.
             return ConvertToString(format, provider);
         }
@@ -355,6 +346,9 @@ namespace System.Windows
         internal double _y;
         internal double _width;
         internal double _height;
+
+
+
 
         #endregion Internal Fields
 

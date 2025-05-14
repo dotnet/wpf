@@ -1,6 +1,5 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 //
 // 
@@ -8,8 +7,6 @@
 // Description: 
 //      A safe way to deal with unmanaged MIL interface pointers.
 
-using System;
-using System.Security;
 using Microsoft.Win32.SafeHandles;
 
 using UnsafeNativeMethods = MS.Win32.PresentationCore.UnsafeNativeMethods;
@@ -41,10 +38,7 @@ namespace System.Windows.Media
         /// </summary>
         internal void UpdateEstimatedSize(long estimatedSize)
         {
-            if (_gcPressure != null)
-            {
-                _gcPressure.Release();
-            }
+            _gcPressure?.Release();
 
             //
             // estimatedSize may be 0 for small images with fewer than 8 bits per pixel,
@@ -61,10 +55,7 @@ namespace System.Windows.Media
         internal void CopyMemoryPressure(SafeMILHandle original)
         {
             _gcPressure = original._gcPressure;
-            if (_gcPressure != null)
-            {
-                _gcPressure.AddRef();
-            }
+            _gcPressure?.AddRef();
         }
 
         protected override bool ReleaseHandle()

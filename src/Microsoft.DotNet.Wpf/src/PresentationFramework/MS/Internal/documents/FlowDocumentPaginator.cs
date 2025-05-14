@@ -1,20 +1,15 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 //
 // Description: DynamicDocumentPaginator associated with FlowDocument.
 //
 
-using System;                       // Object
-using System.Collections.Generic;   // List<T>
-using System.ComponentModel;        // AsyncCompletedEventArgs
 using System.Windows;               // Size
 using System.Windows.Documents;     // DocumentPaginator
 using System.Windows.Media;         // Visual
 using System.Windows.Threading;     // DispatcherOperationCallback
 using MS.Internal.PtsHost;          // BreakRecordTable, FlowDocumentPage
-using MS.Internal.Text;             // DynamicPropertyReader
 
 namespace MS.Internal.Documents
 {
@@ -75,7 +70,7 @@ namespace MS.Internal.Documents
             // Page number cannot be negative.
             if (pageNumber < 0)
             {
-                throw new ArgumentOutOfRangeException("pageNumber", SR.IDPNegativePageNumber);
+                throw new ArgumentOutOfRangeException(nameof(pageNumber), SR.IDPNegativePageNumber);
             }
 
             // Reentrancy check.
@@ -148,7 +143,7 @@ namespace MS.Internal.Documents
             // Page number cannot be negative.
             if (pageNumber < 0)
             {
-                throw new ArgumentOutOfRangeException("pageNumber", SR.IDPNegativePageNumber);
+                throw new ArgumentOutOfRangeException(nameof(pageNumber), SR.IDPNegativePageNumber);
             }
 
             // Reentrancy check.
@@ -212,7 +207,7 @@ namespace MS.Internal.Documents
         /// <param name="userState">Unique identifier for the asynchronous task.</param>
         /// <exception cref="ArgumentException">
         /// Throws ArgumentException if the ContentPosition does not exist within
-        /// this element�s tree.
+        /// this element’s tree.
         /// </exception>
         public override void GetPageNumberAsync(ContentPosition contentPosition, object userState)
         {
@@ -221,7 +216,7 @@ namespace MS.Internal.Documents
             // Content position cannot be Missing.
             if (contentPosition == ContentPosition.Missing)
             {
-                throw new ArgumentException(SR.IDPInvalidContentPosition, "contentPosition");
+                throw new ArgumentException(SR.IDPInvalidContentPosition, nameof(contentPosition));
             }
 
             // ContentPosition must be of appropriate type and must be part of
@@ -229,11 +224,11 @@ namespace MS.Internal.Documents
             TextPointer flowContentPosition = contentPosition as TextPointer;
             if (flowContentPosition == null)
             {
-                throw new ArgumentException(SR.IDPInvalidContentPosition, "contentPosition");
+                throw new ArgumentException(SR.IDPInvalidContentPosition, nameof(contentPosition));
             }
             if (flowContentPosition.TextContainer != _document.StructuralCache.TextContainer)
             {
-                throw new ArgumentException(SR.IDPInvalidContentPosition, "contentPosition");
+                throw new ArgumentException(SR.IDPInvalidContentPosition, nameof(contentPosition));
             }
 
             int pageNumber = 0;
@@ -286,11 +281,11 @@ namespace MS.Internal.Documents
             flowContentPosition = contentPosition as TextPointer;
             if (flowContentPosition == null)
             {
-                throw new ArgumentException(SR.IDPInvalidContentPosition, "contentPosition");
+                throw new ArgumentException(SR.IDPInvalidContentPosition, nameof(contentPosition));
             }
             if (flowContentPosition.TextContainer != _document.StructuralCache.TextContainer)
             {
-                throw new ArgumentException(SR.IDPInvalidContentPosition, "contentPosition");
+                throw new ArgumentException(SR.IDPInvalidContentPosition, nameof(contentPosition));
             }
 
             // We are about to perform synchronous pagination, so need to check for
@@ -921,12 +916,12 @@ namespace MS.Internal.Documents
         /// <summary>
         /// Async request list
         /// </summary>
-        List<AsyncRequest> _asyncRequests = new List<AsyncRequest>(0);
+        private List<AsyncRequest> _asyncRequests = new List<AsyncRequest>(0);
 
         /// <summary>
         /// Background pagination dispatcher operation.
         /// </summary>
-        DispatcherOperation _backgroundPaginationOperation;
+        private DispatcherOperation _backgroundPaginationOperation;
 
         #endregion Private Fields
 

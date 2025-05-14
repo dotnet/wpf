@@ -1,35 +1,11 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
-
-//
-//
-//
-// Description: This file contains the implementation of SolidColorBrush.
-//              The SolidColorBrush is the simplest of the Brushes. consisting
-//              as it does of just a color.
-//
-//
 
 using MS.Internal;
-using MS.Internal.PresentationCore;
-using System;
 using System.IO;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.ComponentModel.Design.Serialization;
-using System.Diagnostics;
-using System.Reflection;
-using System.Runtime.InteropServices;
-using System.Windows;
-using System.Windows.Media;
-using System.Windows.Markup;
-using System.Windows.Media.Animation;
-using System.Windows.Media.Composition;
 
-using SR=MS.Internal.PresentationCore.SR;
-
-namespace System.Windows.Media 
+namespace System.Windows.Media
 {
     /// <summary>
     /// SolidColorBrush
@@ -79,7 +55,6 @@ namespace System.Windows.Media
         /// <exception cref="System.ArgumentNullException">
         /// Thrown if "writer" is null.
         /// </exception>
-        [FriendAccessAllowed] // Built into Core, also used by Framework.
         internal static bool SerializeOn(BinaryWriter writer, string stringValue)
         {
             // ********* VERY IMPORTANT NOTE *****************

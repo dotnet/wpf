@@ -1,11 +1,7 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
-using System;
 using System.Text;
-using System.ComponentModel;
-using System.Security;
 using System.Runtime.InteropServices;
 using System.Runtime.InteropServices.ComTypes;
 
@@ -16,9 +12,6 @@ namespace MS.Win32.Compile
     // Keep unsafe native methods used by Compiler related classes.
     // It can be shared by PresentationBuildTasks and PresentationFramework
     //
-#if !PBTCOMPILER
-    [MS.Internal.PresentationCore.FriendAccessAllowed] // Used by both PBT and PresentationFramework
-#endif
     internal static partial class UnsafeNativeMethods {
 
         //------------------------------------------------------

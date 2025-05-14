@@ -1,6 +1,5 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 //
 //
@@ -8,9 +7,6 @@
 //
 
 using MS.Utility;
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
 using System.Windows;
 using System.Windows.Media;
 using System.Windows.Media.Media3D;
@@ -535,10 +531,7 @@ namespace MS.Internal.Media3D
                 
                 Transform3D transform = (Transform3D)visual3D.GetValue(Visual3D.TransformProperty);
 
-                if (transform != null)
-                {
-                    transform.Append(ref worldTransform);
-                }
+                transform?.Append(ref worldTransform);
 
                 dependencyObject = VisualTreeHelper.GetParent(dependencyObject);      
             }

@@ -1,17 +1,12 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 //
 // Description: Contains the UIElementCollection base class.
 //
 
-using MS.Internal;
-using System;
 using System.Collections;
 using System.Windows.Media;
-using System.Windows.Threading;
-using System.Windows.Markup;
 
 namespace System.Windows.Controls
 {
@@ -492,10 +487,7 @@ namespace System.Windows.Controls
         /// <param name="element"></param>
         protected void SetLogicalParent(UIElement element)
         {
-            if (_logicalParent != null)
-            {
-                _logicalParent.AddLogicalChild(element);
-            }
+            _logicalParent?.AddLogicalChild(element);
         }
 
         /// <summary>
@@ -504,10 +496,7 @@ namespace System.Windows.Controls
         /// <param name="element"></param>
         protected void ClearLogicalParent(UIElement element)
         {
-            if (_logicalParent != null)
-            {
-                _logicalParent.RemoveLogicalChild(element);
-            }
+            _logicalParent?.RemoveLogicalChild(element);
         }
 
         /// <summary>

@@ -1,18 +1,10 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 // Description: 
 //    DocumentPropertiesDialog - Dialog to view the current document properties.
-using MS.Internal.Documents;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Drawing;
 using System.Globalization;
-using System.IO.Packaging;                  // For Package
-using System.Security;
-using System.Text;
 using System.Windows.Forms;
 using System.Windows.TrustUI;               // For string resources
 
@@ -147,12 +139,9 @@ namespace MS.Internal.Documents.Application
         private void SetTextProperty(Control control, string text)
         {
             // Check if control exists
-            if (control != null)
-            {
-                // Check if text is a valid string, otherwise use String.Empty
-                control.Text = String.IsNullOrEmpty(text) ? 
-                    String.Empty : text;
-            }
+            // Check if text is a valid string, otherwise use String.Empty
+            control?.Text = String.IsNullOrEmpty(text) ?
+                String.Empty : text;
         }
 
         /// <summary>
@@ -164,16 +153,13 @@ namespace MS.Internal.Documents.Application
         private void SetTextProperty(Control control, DateTime? date)
         {
             // Check if control exists
-            if (control != null)
-            {
-                // Check if date is valid, and format string.
-                control.Text = (!date.HasValue) ? 
-                    SR.DocumentPropertiesDialogNotAvailable : 
-                    String.Format(
-                        CultureInfo.CurrentCulture,
-                        SR.DocumentPropertiesDialogDateFormat,
-                        date.Value);
-            }
+            // Check if date is valid, and format string.
+            control?.Text = (!date.HasValue) ?
+                SR.DocumentPropertiesDialogNotAvailable :
+                String.Format(
+                    CultureInfo.CurrentCulture,
+                    SR.DocumentPropertiesDialogDateFormat,
+                    date.Value);
         }
 
         /// <summary>

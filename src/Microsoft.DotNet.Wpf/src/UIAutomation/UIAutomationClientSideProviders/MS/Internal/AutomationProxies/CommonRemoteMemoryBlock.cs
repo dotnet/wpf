@@ -1,6 +1,5 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 // Description:
 //      Module to allocate shared memory between process.
@@ -15,18 +14,13 @@
 //
 
 using System;
-using System.ComponentModel;
-using System.Security;
-using System.Runtime.InteropServices;
-using System.Runtime.CompilerServices;
-using System.Windows.Automation;
 using Microsoft.Win32.SafeHandles;
 using MS.Win32;
 
 namespace MS.Internal.AutomationProxies
 {
     // Class to allocate shared memory between process.
-    class RemoteMemoryBlock : SafeHandleZeroOrMinusOneIsInvalid
+    internal class RemoteMemoryBlock : SafeHandleZeroOrMinusOneIsInvalid
     {
         // ------------------------------------------------------
         //

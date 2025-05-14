@@ -1,6 +1,5 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 #define TRACE
 
@@ -8,17 +7,6 @@
 // Description: Defines TraceShell class, for providing debugging information
 //              for Shell integration
 //
-
-using System;
-using System.Collections;
-using System.ComponentModel;
-using System.Diagnostics;
-using System.Reflection;
-using System.Text;
-using System.Windows;
-using System.Windows.Data;
-using MS.Internal.Data;
-using MS.Win32;
 
 namespace MS.Internal
 {

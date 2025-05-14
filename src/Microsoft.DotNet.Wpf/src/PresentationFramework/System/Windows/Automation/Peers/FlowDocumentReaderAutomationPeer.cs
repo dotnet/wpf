@@ -1,12 +1,10 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 //
 // Description: AutomationPeer associated with FlowDocumentReader.
 //
 
-using System.Collections.Generic;           // List<T>
 using System.Windows.Automation.Provider;   // IMultipleViewProvider
 using System.Windows.Controls;              // FlowDocumentReader
 using System.Windows.Documents;             // FlowDocument
@@ -64,10 +62,7 @@ namespace System.Windows.Automation.Peers
                 AutomationPeer documentPeer = ContentElementAutomationPeer.CreatePeerForElement(document);
                 if (_documentPeer != documentPeer)
                 {
-                    if (_documentPeer != null)
-                    {
-                        _documentPeer.OnDisconnected();
-                    }
+                    _documentPeer?.OnDisconnected();
                     _documentPeer = documentPeer as DocumentAutomationPeer;
                 }
                 if (documentPeer != null)

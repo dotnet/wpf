@@ -1,6 +1,5 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 // Description:
 //  Responsible for suppressing the Assert for unmanaged code permission and
@@ -8,23 +7,22 @@
 
 using System;
 using System.IO.Packaging;
-using System.Security;
 
 namespace MS.Internal.Documents.Application
 {
 
-/// <summary>
-/// Responsible for suppressing the Assert for unmanaged code permission and
-/// replacing it with SecurityCritical attribute.  
-/// </summary>
-/// <remarks>
-/// This is implemented as a decorating proxy where all calls are passed to
-/// a target PackageProperties object.  The primary mitigation for the
-/// asserts is that the class sets the target from EncryptedPackageEnvelope
-/// the known good source for the target; as well the entire class is
-/// SecurityCritical.
-/// </remarks>
-internal class SuppressedProperties : PackageProperties
+    /// <summary>
+    /// Responsible for suppressing the Assert for unmanaged code permission and
+    /// replacing it with SecurityCritical attribute.  
+    /// </summary>
+    /// <remarks>
+    /// This is implemented as a decorating proxy where all calls are passed to
+    /// a target PackageProperties object.  The primary mitigation for the
+    /// asserts is that the class sets the target from EncryptedPackageEnvelope
+    /// the known good source for the target; as well the entire class is
+    /// SecurityCritical.
+    /// </remarks>
+    internal class SuppressedProperties : PackageProperties
 {
     #region Constructors
     //--------------------------------------------------------------------------

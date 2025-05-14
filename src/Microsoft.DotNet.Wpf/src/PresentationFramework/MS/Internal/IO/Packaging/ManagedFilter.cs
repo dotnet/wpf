@@ -1,6 +1,5 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 //
 // Description:
@@ -9,21 +8,12 @@
 //
 
 
-using System.Diagnostics;
-using System;
 using System.Windows;                       // for ExceptionStringTable
-using System.IO;                            // for FileAccess
 using System.Runtime.InteropServices;
-using System.Collections;
-using System.Security;                      // for SecurityCritical
 
 using MS.Internal.Interop;                  // for CHUNK_BREAKTYPE, etc.
-using MS.Internal;                          // for Invariant
-using MS.Win32;                             // for NativeMethods
-using MS.Internal.PresentationFramework;    // SecurityHelper
 
 // Not using the whole of System.Runtime.InteropServices.ComTypes so as to avoid collisions.
-using IPersistFile = System.Runtime.InteropServices.ComTypes.IPersistFile;
 
 namespace MS.Internal.IO.Packaging
 {
@@ -132,7 +122,7 @@ namespace MS.Internal.IO.Packaging
                         break;
                     }
                 default:
-                    throw new ArgumentException(SR.FilterPropSpecUnknownUnionSelector, "propSpec");
+                    throw new ArgumentException(SR.FilterPropSpecUnknownUnionSelector, nameof(propSpec));
             }
         }
 
@@ -374,7 +364,7 @@ namespace MS.Internal.IO.Packaging
     /// Interface for managed implementations of IFilter handlers
     /// </summary>
 
-    interface IManagedFilter
+    internal interface IManagedFilter
     {
         /// <summary>
         /// Init

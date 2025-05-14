@@ -1,6 +1,5 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 //
 // 
@@ -8,9 +7,6 @@
 // Description: 
 //      Tracks the amount of native memory used by SafeMILHandle objects.
 
-using System;
-using System.Security;
-using MS.Internal;
 using System.Threading;
 
 namespace System.Windows.Media

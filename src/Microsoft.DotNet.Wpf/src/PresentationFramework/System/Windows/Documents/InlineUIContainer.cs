@@ -1,18 +1,15 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 // 
 // Description: InlineUIContainer - a wrapper for embedded UIElements in text 
 //    flow content inline collections
 //
 
-using System.ComponentModel;        // DesignerSerializationVisibility
 using System.Windows.Markup; // XamlDesignerSerializationManager
-using MS.Internal;
 using MS.Internal.Documents;
 
-namespace System.Windows.Documents 
+namespace System.Windows.Documents
 {
     /// <summary>
     /// InlineUIContainer - a wrapper for embedded UIElements in text 
@@ -64,26 +61,17 @@ namespace System.Windows.Documents
         /// </param>
         public InlineUIContainer(UIElement childUIElement, TextPointer insertionPosition)
         {
-            if (insertionPosition != null)
-            {
-                insertionPosition.TextContainer.BeginChange();
-            }
+            insertionPosition?.TextContainer.BeginChange();
             try
             {
-                if (insertionPosition != null)
-                {
-                    // This will throw InvalidOperationException if schema validity is violated.
-                    insertionPosition.InsertInline(this);
-                }
+                // This will throw InvalidOperationException if schema validity is violated.
+                insertionPosition?.InsertInline(this);
 
                 this.Child = childUIElement;
             }
             finally
             {
-                if (insertionPosition != null)
-                {
-                    insertionPosition.TextContainer.EndChange();
-                }
+                insertionPosition?.TextContainer.EndChange();
             }
         }
 

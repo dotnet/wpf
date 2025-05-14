@@ -1,12 +1,9 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 //
 // Description: The arguments sent when a Change event is fired in a TextContainer.
 //
-
-using System;
 
 namespace System.Windows.Documents
 {

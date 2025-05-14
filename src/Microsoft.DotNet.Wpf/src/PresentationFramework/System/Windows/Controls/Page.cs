@@ -1,36 +1,23 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 //
 // Description: Implements the Avalon Page class
 //
 
-using System;
 using System.Collections;
 using System.ComponentModel;
-using System.Diagnostics;
-
-using System.Windows.Controls.Primitives;
 using System.Windows.Navigation;
 using System.Windows.Media;
 using System.Windows.Markup;
 using System.Windows.Documents;
-
-using MS.Internal.AppModel;
 using MS.Internal.KnownBoxes;
 using MS.Internal;
-using MS.Utility;
 
-//In order to avoid generating warnings about unknown message numbers and 
-//unknown pragmas when compiling your C# source code with the actual C# compiler, 
-//you need to disable warnings 1634 and 1691. (Presharp Documentation)
-#pragma warning disable 1634, 1691
-
-namespace System.Windows.Controls 
-{  
+namespace System.Windows.Controls
+{
     #region Page Class
-  
+
     /// <summary>
     /// Public class Page
     /// </summary>
@@ -168,9 +155,7 @@ namespace System.Windows.Controls
                 VerifyAccess();
                 if (WindowService == null)
                 {
-#pragma warning disable 6503
                     throw new InvalidOperationException(SR.CannotQueryPropertiesWhenPageNotInTreeWithWindow);
-#pragma warning restore 6503
                 }
                 return WindowService.Title;
             }
@@ -183,7 +168,7 @@ namespace System.Windows.Controls
                     PageHelperObject._windowTitle = value;
                     PropertyIsSet(SetPropertyFlags.WindowTitle);
                 }
-                else if (_isTopLevel == true) // only top level page can set this property
+                else if (_isTopLevel) // only top level page can set this property
                 {
                     WindowService.Title = value;
                     PropertyIsSet(SetPropertyFlags.WindowTitle);
@@ -225,9 +210,7 @@ namespace System.Windows.Controls
                 VerifyAccess();
                 if (WindowService == null)
                 {
-#pragma warning disable 6503
                     throw new InvalidOperationException(SR.CannotQueryPropertiesWhenPageNotInTreeWithWindow);
-#pragma warning restore 6503
                 }                
                 return WindowService.Height;
             }
@@ -240,7 +223,7 @@ namespace System.Windows.Controls
                     PageHelperObject._windowHeight = value;
                     PropertyIsSet(SetPropertyFlags.WindowHeight);
                 }
-                else if (_isTopLevel == true)// only top level page can set this property
+                else if (_isTopLevel)// only top level page can set this property
                 {
                     if (!WindowService.UserResized)
                     {
@@ -279,9 +262,7 @@ namespace System.Windows.Controls
                 VerifyAccess();
                 if (WindowService == null)
                 {
-#pragma warning disable 6503
                     throw new InvalidOperationException(SR.CannotQueryPropertiesWhenPageNotInTreeWithWindow);
-#pragma warning restore 6503
                 }                
                 return WindowService.Width;
             }
@@ -294,7 +275,7 @@ namespace System.Windows.Controls
                     PageHelperObject._windowWidth = value;
                     PropertyIsSet(SetPropertyFlags.WindowWidth);
                 }
-                else if (_isTopLevel == true) // only top level page can set this property
+                else if (_isTopLevel) // only top level page can set this property
                 {
                     if (!WindowService.UserResized)
                     {
@@ -362,7 +343,7 @@ namespace System.Windows.Controls
         }
 
         // If the Title has changed we want to set the flag.
-        static private void OnTitleChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        private static void OnTitleChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             ((Page)d).PropertyIsSet(SetPropertyFlags.Title);
         }
@@ -377,9 +358,7 @@ namespace System.Windows.Controls
                 VerifyAccess();
                 if (WindowService == null)
                 {
-#pragma warning disable 6503
                     throw new InvalidOperationException(SR.CannotQueryPropertiesWhenPageNotInTreeWithWindow);
-#pragma warning restore 6503
                 }
 
                 // Return false if it is not NavigationWindow.
@@ -402,7 +381,7 @@ namespace System.Windows.Controls
                     PageHelperObject._showsNavigationUI = value;
                     PropertyIsSet(SetPropertyFlags.ShowsNavigationUI);
                 }
-                else if (_isTopLevel == true) // only top level page can set this property
+                else if (_isTopLevel) // only top level page can set this property
                 {
                     SetShowsNavigationUI(value);
                     PropertyIsSet(SetPropertyFlags.ShowsNavigationUI);
@@ -621,10 +600,7 @@ namespace System.Windows.Controls
             {
                 UIElement child = this.GetVisualChild(0) as UIElement;
 
-                if (child != null)
-                {
-                    child.Arrange(new Rect(new Point(), arrangeBounds));
-                }
+                child?.Arrange(new Rect(new Point(), arrangeBounds));
             }
             return arrangeBounds;
         }
@@ -665,7 +641,7 @@ namespace System.Windows.Controls
             }
 
             // NOTE (Huwang 03/09/2007): The code below walks up the TemplatedParent chain until it finds the first Frame or Window. It does not 
-            // check whether Window.Content or Frame.Content is Page. So it allows the scenario where Page can be in any element�s template and 
+            // check whether Window.Content or Frame.Content is Page. So it allows the scenario where Page can be in any element’s template and 
             // be parented by any element as long as the template is nested inside a Window or Frame, as demoed below
             //
             // <Window>
@@ -716,7 +692,7 @@ namespace System.Windows.Controls
                 }
             }
 
-            if (isParentValid == false)
+            if (!isParentValid)
             {
                 throw new InvalidOperationException(SR.ParentOfPageMustBeWindowOrFrame);
             }
@@ -768,7 +744,7 @@ namespace System.Windows.Controls
 
             if (_currentIws != null)
             {
-                if (_isTopLevel == true)
+                if (_isTopLevel)
                 {
                     PropagateProperties();
                 }
@@ -830,10 +806,7 @@ namespace System.Windows.Controls
         private void SetShowsNavigationUI(bool showsNavigationUI)
         {
             NavigationWindow navWin = _currentIws as NavigationWindow;
-            if (navWin != null)
-            {
-                navWin.ShowsNavigationUI = showsNavigationUI;
-            }
+            navWin?.ShowsNavigationUI = showsNavigationUI;
         }
 
         private bool IsPropertySet(SetPropertyFlags property)
@@ -970,7 +943,7 @@ namespace System.Windows.Controls
         #endregion Page Class
     }
 
-    class PageHelperObject
+    internal class PageHelperObject
     {
         //----------------------------------------------
         //

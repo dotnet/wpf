@@ -1,8 +1,7 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
-//  Description: Specifies that the whitespace surrounding an element should be trimmed.
+// Description: Specifies that the whitespace surrounding an element should be trimmed.
 
 using System;
 using System.Reflection;
@@ -49,9 +48,8 @@ namespace System.Windows.Markup
             {
                 MethodInfo methodInfo;
 #if !PBTCOMPILER
-                DependencyProperty dp = dpOrPiOrMi as DependencyProperty;
 
-                if (dp != null)
+                if (dpOrPiOrMi is DependencyProperty dp)
                 {
                     // While parsing styles or templates, we end up getting a DependencyProperty,
                     // even for non-attached cases. In this case, we try fetching the CLR
@@ -102,29 +100,18 @@ namespace System.Windows.Markup
         {
             Debug.Assert(null != memberInfo, "Null passed for memberInfo to GetConverterType");
 
-            Type converterType = null;
-
             // Try looking for the TypeConverter for the type using reflection.
-            string converterName = ReflectionHelper.GetTypeConverterAttributeData(memberInfo, out converterType);
-
-            if (converterType == null)
-            {
-                converterType = GetConverterTypeFromName(converterName);
-            }
-
-            return converterType;
+            string converterName = ReflectionHelper.GetTypeConverterAttributeData(memberInfo, out Type converterType);
+            return converterType ?? GetConverterTypeFromName(converterName);
         }
 #endif
         internal static Type? GetConverterType(Type type)
         {
-            Debug.Assert(null != type, "Null passed for type to GetConverterType");
+            Debug.Assert(type is not null, "Null passed for type to GetConverterType");
 
             // Try looking for the TypeConverter for the type using reflection.
             string? converterName = ReflectionHelper.GetTypeConverterAttributeData(type, out Type? converterType);
-
-            converterType ??= GetConverterTypeFromName(converterName);
-
-            return converterType;
+            return converterType ?? GetConverterTypeFromName(converterName);
         }
 
         private static Type? GetConverterTypeFromName(string? converterName)
@@ -135,7 +122,7 @@ namespace System.Windows.Markup
             {
                 converterType = ReflectionHelper.GetQualifiedType(converterName);
 
-                if (converterType != null)
+                if (converterType is not null)
                 {
                     // Validate that this is an accessible type converter.
                     if (!ReflectionHelper.IsPublicType(converterType))
@@ -456,10 +443,10 @@ namespace System.Windows.Markup
 
             TypeConverter? typeConverter = GetCoreConverterFromCoreType(type);
 
-            if (typeConverter == null)
+            if (typeConverter is null)
             {
                 Type? converterType = GetConverterType(type);
-                if (converterType != null)
+                if (converterType is not null)
                 {
                     typeConverter = Activator.CreateInstance(converterType,
                                                              BindingFlags.Instance | BindingFlags.CreateInstance | BindingFlags.Public,

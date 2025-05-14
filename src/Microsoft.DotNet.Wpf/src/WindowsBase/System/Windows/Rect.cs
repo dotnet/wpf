@@ -1,23 +1,8 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
-//
-
-using System;
-using System.Diagnostics;
-using System.ComponentModel;
-using System.ComponentModel.Design.Serialization;
-using System.Reflection;
-using System.Text;
-using System.Collections;
-using System.Globalization;
 using MS.Internal;
-using System.Windows;
 using System.Windows.Media;
-using System.Runtime.InteropServices;
-using System.Security;
-using MS.Internal.WindowsBase;
 
 namespace System.Windows
 {
@@ -785,15 +770,17 @@ namespace System.Windows
                     (y >= _y) && (y - _height <= _y));
         }
 
-        static private Rect CreateEmptyRect()
+        private static Rect CreateEmptyRect()
         {
-            Rect rect = new Rect();
-            // We can't set these via the property setters because negatives widths
-            // are rejected in those APIs.
-            rect._x = Double.PositiveInfinity;
-            rect._y = Double.PositiveInfinity;
-            rect._width = Double.NegativeInfinity;
-            rect._height = Double.NegativeInfinity;
+            Rect rect = new Rect
+            {
+                // We can't set these via the property setters because negatives widths
+                // are rejected in those APIs.
+                _x = Double.PositiveInfinity,
+                _y = Double.PositiveInfinity,
+                _width = Double.NegativeInfinity,
+                _height = Double.NegativeInfinity
+            };
             return rect;
         }
 
@@ -801,7 +788,7 @@ namespace System.Windows
 
         #region Private Fields
 
-        private readonly static Rect s_empty = CreateEmptyRect();
+        private static readonly Rect s_empty = CreateEmptyRect();
 
         #endregion Private Fields
     }

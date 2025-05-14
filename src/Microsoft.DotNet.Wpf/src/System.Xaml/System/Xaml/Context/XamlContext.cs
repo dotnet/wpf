@@ -1,12 +1,8 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 #nullable disable
 
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
 using System.Reflection;
 using System.Xaml;
 using System.Xaml.Schema;
@@ -49,6 +45,7 @@ namespace MS.Internal.Xaml
             {
                 return null;
             }
+
             XamlMember member = xamlType.GetMember(propertyName);
             return IsVisible(member, rootObjectType) ? member : null;
         }
@@ -59,6 +56,7 @@ namespace MS.Internal.Xaml
             {
                 return null;
             }
+
             XamlMember member = xamlType.GetAttachableMember(propertyName);
             return IsVisible(member, null) ? member : null;
         }
@@ -76,17 +74,19 @@ namespace MS.Internal.Xaml
         /// <returns></returns>
         public XamlMember GetDottedProperty(XamlType tagType, string tagNamespace, XamlPropertyName propName, bool tagIsRoot)
         {
-            if (tagType == null)
+            if (tagType is null)
             {
                 throw new XamlInternalException(SR.Format(SR.ParentlessPropertyElement, propName.ScopedName));
             }
+
             XamlMember property = null;
             XamlType ownerType = null;
             string ns = ResolveXamlNameNS(propName);
-            if (ns == null)
+            if (ns is null)
             {
                 throw new XamlParseException(SR.Format(SR.PrefixNotFound, propName.Prefix));
             }
+
             XamlType rootTagType = tagIsRoot ? tagType : null;
 
             // If we have <foo x:TA="" foo.bar=""/> we want foo in foo.bar to match the tag
@@ -99,7 +99,7 @@ namespace MS.Internal.Xaml
                 if (ownerTypeMatchesGenericTagType)
                 {
                     property = GetInstanceOrAttachableProperty(tagType, propName.Name, rootTagType);
-                    if (property != null)
+                    if (property is not null)
                     {
                         return property;
                     }
@@ -119,7 +119,8 @@ namespace MS.Internal.Xaml
             {
                 property = GetXamlAttachableProperty(ownerType, propName.Name);
             }
-            if (property == null)
+
+            if (property is null)
             {
                 // This is an unknown property.
                 // We don't know for sure whether or not it's attachable, so we go with our best guess.
@@ -135,6 +136,7 @@ namespace MS.Internal.Xaml
                     property = CreateUnknownAttachableMember(declaringType, propName.Name);
                 }
             }
+
             return property;
         }
 
@@ -146,7 +148,7 @@ namespace MS.Internal.Xaml
             // If prefix is "" then
             // Normal Properties resolve to the ownerType namespace
             // Attachable properties resolve to the actual "" namespace
-            if (String.IsNullOrEmpty(propName.Prefix) && !propName.IsDotted)
+            if (string.IsNullOrEmpty(propName.Prefix) && !propName.IsDotted)
             {
                 ns = tagNamespace;
             }
@@ -154,6 +156,7 @@ namespace MS.Internal.Xaml
             {
                 ns = ResolveXamlNameNS(propName);
             }
+
             return ns;
         }
 
@@ -165,7 +168,7 @@ namespace MS.Internal.Xaml
             // Second line of if just handles tagNamespace always being null from MEScanner
             // Correct fix is to fix MEScanner and remove second line
             if ((propUsageNamespace == tagNamespace)
-                || (tagNamespace == null && propUsageNamespace != null && tagType.GetXamlNamespaces().Contains(propUsageNamespace)))
+                || (tagNamespace is null && propUsageNamespace is not null && tagType.GetXamlNamespaces().Contains(propUsageNamespace)))
             {
                 XamlType rootTagType = tagIsRoot ? tagType : null;
                 property = GetXamlProperty(tagType, propName.Name, rootTagType);
@@ -173,28 +176,31 @@ namespace MS.Internal.Xaml
                 // Sometimes Attached properties look like normal properties.
                 // [Attribute case] The above lookup fails and fall into here.
                 // <Grid> <Grid Row="0"/> </Grid>
-                if (property == null)
+                if (property is null)
                 {
                     property = GetXamlAttachableProperty(tagType, propName.Name);
                 }
             }
+
             // Not Simple, not Attachable, look for Directives.
-            if (property == null && propUsageNamespace != null)
+            if (property is null && propUsageNamespace is not null)
             {
                 // A processing attribute like;  x:Key  x:Name
                 XamlDirective directive = SchemaContext.GetXamlDirective(propUsageNamespace, propName.Name);
-                if (directive != null)
+                if (directive is not null)
                 {
-                    if (AllowedMemberLocations.None == (directive.AllowedLocation & AllowedMemberLocations.Attribute))
+                    if ((directive.AllowedLocation & AllowedMemberLocations.Attribute) == AllowedMemberLocations.None)
                     {
                         // Need a way to surface up this usage error now that
                         // we don't have UnknownProperty.Exception
                         directive = new XamlDirective(propUsageNamespace, propName.Name);
                     }
+
                     property = directive;
                 }
             }
-            if (property == null)
+
+            if (property is null)
             {
                 if (tagNamespace == propUsageNamespace)
                 {
@@ -207,13 +213,13 @@ namespace MS.Internal.Xaml
                     property = new XamlDirective(propUsageNamespace, propName.Name);
                 }
             }
+
             return property;
         }
 
-        abstract public void AddNamespacePrefix(string prefix, string xamlNamespace);
-        abstract public string FindNamespaceByPrefix(string prefix);
-        abstract public IEnumerable<NamespaceDeclaration> GetNamespacePrefixes();
-
+        public abstract void AddNamespacePrefix(string prefix, string xamlNamespace);
+        public abstract string FindNamespaceByPrefix(string prefix);
+        public abstract IEnumerable<NamespaceDeclaration> GetNamespacePrefixes();
 
         // -------------------- internal ------------------------
 
@@ -236,10 +242,11 @@ namespace MS.Internal.Xaml
         internal XamlTypeName GetXamlTypeName(XamlName typeName)
         {
             string xamlNs = ResolveXamlNameNS(typeName);
-            if (xamlNs == null)
+            if (xamlNs is null)
             {
                 throw new XamlParseException(SR.Format(SR.PrefixNotFound, typeName.Prefix));
             }
+
             return new XamlTypeName(xamlNs, typeName.Name);
         }
 
@@ -256,16 +263,16 @@ namespace MS.Internal.Xaml
         internal XamlType GetXamlType(XamlTypeName typeName, bool returnUnknownTypesOnFailure,
             bool skipVisibilityCheck)
         {
-            Debug.Assert(typeName != null, "typeName cannot be null and should have been checked before now");
-            Debug.Assert(typeName.Name != null, "typeName.Name cannot be null and should have been checked before now");
-            Debug.Assert(typeName.Namespace != null);
+            Debug.Assert(typeName is not null, "typeName cannot be null and should have been checked before now");
+            Debug.Assert(typeName.Name is not null, "typeName.Name cannot be null and should have been checked before now");
+            Debug.Assert(typeName.Namespace is not null);
             XamlType xamlType = _schemaContext.GetXamlType(typeName);
-            if (xamlType != null && !skipVisibilityCheck && !xamlType.IsVisibleTo(LocalAssembly))
+            if (xamlType is not null && !skipVisibilityCheck && !xamlType.IsVisibleTo(LocalAssembly))
             {
                 xamlType = null;
             }
 
-            if (xamlType == null && returnUnknownTypesOnFailure)
+            if (xamlType is null && returnUnknownTypesOnFailure)
             {
                 XamlType[] typeArgs = null;
                 if (typeName.HasTypeArgs)
@@ -277,8 +284,10 @@ namespace MS.Internal.Xaml
                         typeArgs[i] = GetXamlTypeOrUnknown(typeNames[i]);
                     }
                 }
+
                 xamlType = new XamlType(typeName.Namespace, typeName.Name, typeArgs, SchemaContext);
             }
+
             return xamlType;
         }
 
@@ -286,10 +295,11 @@ namespace MS.Internal.Xaml
         {
             get
             {
-                if (_resolvePrefixCachedDelegate == null)
+                if (_resolvePrefixCachedDelegate is null)
                 {
                     _resolvePrefixCachedDelegate = new Func<string, string>(FindNamespaceByPrefix);
                 }
+
                 return _resolvePrefixCachedDelegate;
             }
         }
@@ -303,19 +313,21 @@ namespace MS.Internal.Xaml
         {
             string error;
             XamlTypeName typeName = XamlTypeName.ParseInternal(qName, ResolvePrefixCachedDelegate, out error);
-            if (typeName == null)
+            if (typeName is null)
             {
                 throw new XamlParseException(error);
             }
+
             return GetXamlType(typeName, false, skipVisibilityCheck);
         }
 
         internal XamlMember ResolveDirectiveProperty(string xamlNS, string name)
         {
-            if (xamlNS != null)
+            if (xamlNS is not null)
             {
                 return SchemaContext.GetXamlDirective(xamlNS, name);
             }
+
             return null;
         }
 
@@ -348,6 +360,7 @@ namespace MS.Internal.Xaml
             {
                 return false;
             }
+
             XamlType propertyType = GetXamlType(propNs, propTypeName, tagType.TypeArguments);
             return tagType == propertyType;
         }
@@ -355,7 +368,7 @@ namespace MS.Internal.Xaml
         private XamlMember GetInstanceOrAttachableProperty(XamlType tagType, string propName, XamlType rootTagType)
         {
             XamlMember property = GetXamlProperty(tagType, propName, rootTagType);
-            if (property == null)
+            if (property is null)
             {
                 // Sometimes Attached properties look like normal properties.
                 // The above lookup fails and fall into here.
@@ -363,6 +376,7 @@ namespace MS.Internal.Xaml
                 // or: <Grid> <Grid Grid.Row="0" /> </Grid>
                 property = GetXamlAttachableProperty(tagType, propName);
             }
+
             return property;
         }
 
@@ -371,10 +385,11 @@ namespace MS.Internal.Xaml
             XamlType[] typeArgArray = new XamlType[typeArguments.Count];
             typeArguments.CopyTo(typeArgArray, 0);
             XamlType xamlType = _schemaContext.GetXamlType(ns, name, typeArgArray);
-            if (xamlType != null && !xamlType.IsVisibleTo(LocalAssembly))
+            if (xamlType is not null && !xamlType.IsVisibleTo(LocalAssembly))
             {
                 xamlType = null;
             }
+
             return xamlType;
         }
     }

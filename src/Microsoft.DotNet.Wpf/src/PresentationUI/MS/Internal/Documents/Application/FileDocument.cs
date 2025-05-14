@@ -1,22 +1,19 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 // Description:
 //  Extends StreamDocument with CriticalFileTokens for use by FileController
 //  FilePresentation and DocumentStream.
 
-using System;
 using System.IO;
-using System.Security;
 
 namespace MS.Internal.Documents.Application
 {
-/// <summary>
-/// Extends StreamDocument with CriticalFileTokens for use by FileController
-/// FilePresentation and DocumentStream.
-/// </summary>
-internal class FileDocument : StreamDocument<DocumentStream>
+    /// <summary>
+    /// Extends StreamDocument with CriticalFileTokens for use by FileController
+    /// FilePresentation and DocumentStream.
+    /// </summary>
+    internal class FileDocument : StreamDocument<DocumentStream>
 {
     #region Constructors
     //--------------------------------------------------------------------------

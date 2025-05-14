@@ -1,6 +1,5 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 //
 //
@@ -12,16 +11,12 @@
 //     B.  Main assembly for non-localizable resource.
 // 
 
-using System;
-using System.IO.Packaging;
 using System.IO;
 using System.Collections;
-using System.Windows.Resources;
 using System.Resources;
 using System.Reflection;
 using System.Globalization;
 using MS.Internal.PresentationCore;                   // SafeSecurityHelper
-using System.Windows;
 
 namespace MS.Internal.Resources
 {
@@ -236,11 +231,10 @@ namespace MS.Internal.Resources
             {
                 if (_resourceSet == null)
                 {
-                    string manifestResourceName;
+                    //"$(AssemblyShortname).unlocalizable.g"
+                    string manifestResourceName = $"{ReflectionUtils.GetAssemblyPartialName(_assembly)}{UnLocalizableResourceNameSuffix}";
+                    ResourceManager manager = new(manifestResourceName, _assembly);
 
-                    manifestResourceName = SafeSecurityHelper.GetAssemblyPartialName(_assembly) + UnLocalizableResourceNameSuffix;
-
-                    ResourceManager manager = new ResourceManager(manifestResourceName, this._assembly);
                     _resourceSet = manager.GetResourceSet(CultureInfo.InvariantCulture, true, false);
                 }
 
@@ -258,11 +252,9 @@ namespace MS.Internal.Resources
             {
                 if (_resourceManager == null)
                 {
-                    string baseResourceName;  // Our build system always generate a resource base name "$(AssemblyShortname).g"
-
-                    baseResourceName = SafeSecurityHelper.GetAssemblyPartialName(_assembly) + LocalizableResourceNameSuffix;
-
-                    _resourceManager = new ResourceManager(baseResourceName, this._assembly);
+                    // Our build system always generate a resource base name "$(AssemblyShortname).g"
+                    string baseResourceName = $"{ReflectionUtils.GetAssemblyPartialName(_assembly)}{LocalizableResourceNameSuffix}";
+                    _resourceManager = new ResourceManager(baseResourceName, _assembly);
                 }
 
                 return _resourceManager;

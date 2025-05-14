@@ -1,6 +1,5 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 /*++
 
@@ -15,28 +14,19 @@ Abstract:
 
 --*/
 
-using System;
 using System.IO;
-using System.Security;
 using System.Globalization;
-using System.Collections.Specialized;
 using System.Runtime.InteropServices;
-using System.Runtime.CompilerServices;
-using System.Runtime.ConstrainedExecution;
 
 using System.Printing.Interop;
 using System.Printing;
-using Microsoft.Internal;
 
 using System.Windows.Xps;
 using System.Windows.Xps.Serialization;
 using MS.Utility;
 using System.Runtime.InteropServices.ComTypes;
-using System.Windows.Threading;
-using System.Collections.Generic;
 using System.Threading;
-using System.Diagnostics;
-using MS.Internal.PrintWin32Thunk; 
+using MS.Internal.PrintWin32Thunk;
 
 namespace MS.Internal.Printing.Configuration
 {
@@ -243,7 +233,7 @@ namespace MS.Internal.Printing.Configuration
                                       PrintSchemaTags.Framework.PrintTicketRoot,
                                       PTUtility.GetTextFromResource("FormatException.XMLNotWellFormed"),
                                       errorMsg),
-                                      "printTicket");
+                                      nameof(printTicket));
                     }
                     else
                     {
@@ -509,7 +499,7 @@ namespace MS.Internal.Printing.Configuration
                               PrintSchemaTags.Framework.PrintTicketRoot,
                               PTUtility.GetTextFromResource("FormatException.XMLNotWellFormed"),
                               errorMsg),
-                              "printTicket");
+                              nameof(printTicket));
             }
 
             throw new PrintQueueException((int)hResult,

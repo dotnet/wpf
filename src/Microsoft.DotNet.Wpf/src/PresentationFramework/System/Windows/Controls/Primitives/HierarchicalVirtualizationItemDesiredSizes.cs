@@ -1,6 +1,5 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 
 namespace System.Windows.Controls
@@ -173,11 +172,10 @@ namespace System.Windows.Controls
         /// <param name="oCompare">Reference to an object for comparison.</param>
         /// <returns><c>true</c>if this HierarchicalVirtualizationItemDesiredSizes instance has the same logical 
         /// and pixel sizes as oCompare.</returns>
-        override public bool Equals(object oCompare)
+        public override bool Equals(object oCompare)
         {
-            if (oCompare is HierarchicalVirtualizationItemDesiredSizes)
+            if (oCompare is HierarchicalVirtualizationItemDesiredSizes itemDesiredSizes)
             {
-                HierarchicalVirtualizationItemDesiredSizes itemDesiredSizes = (HierarchicalVirtualizationItemDesiredSizes)oCompare;
                 return (this == itemDesiredSizes);
             }
             else
@@ -215,14 +213,14 @@ namespace System.Windows.Controls
 
         #region Data
 
-        Size _logicalSize;
-        Size _logicalSizeInViewport;
-        Size _logicalSizeBeforeViewport;
-        Size _logicalSizeAfterViewport;
-        Size _pixelSize;
-        Size _pixelSizeInViewport;
-        Size _pixelSizeBeforeViewport;
-        Size _pixelSizeAfterViewport;
+        private Size _logicalSize;
+        private Size _logicalSizeInViewport;
+        private Size _logicalSizeBeforeViewport;
+        private Size _logicalSizeAfterViewport;
+        private Size _pixelSize;
+        private Size _pixelSizeInViewport;
+        private Size _pixelSizeBeforeViewport;
+        private Size _pixelSizeAfterViewport;
 
         #endregion
     }

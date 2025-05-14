@@ -1,6 +1,5 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 //
 //
@@ -10,15 +9,6 @@
 //              See spec at http://avalon/medialayer/Specifications/Avalon3D%20API%20Spec.mht
 //
 //
-
-using System;
-using System.ComponentModel;
-using System.Windows.Media;
-using System.Windows.Media.Animation;
-using System.Windows.Media.Composition;
-using MS.Internal;
-using System.ComponentModel.Design.Serialization;
-using System.Windows.Markup;
 
 namespace System.Windows.Media.Media3D
 {
@@ -121,7 +111,7 @@ namespace System.Windows.Media.Media3D
 
         internal override void Append(ref Matrix3D matrix)
         {
-            matrix = matrix * Value;
+            matrix *= Value;
         }
 }
 }

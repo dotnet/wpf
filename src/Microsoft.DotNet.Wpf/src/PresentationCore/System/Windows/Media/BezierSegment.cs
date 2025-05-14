@@ -1,27 +1,7 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 //
-
-using System;
-using MS.Internal;
-using MS.Internal.PresentationCore;
-using System.ComponentModel;
-using System.ComponentModel.Design.Serialization;
-using System.Reflection;
-using System.Collections;
-using System.Text;
-using System.Globalization;
-using System.Windows.Media;
-using System.Windows;
-using System.Text.RegularExpressions;
-using System.Windows.Media.Composition;
-using System.Windows.Media.Animation;
-using System.Diagnostics;
-using System.Security;
-
-using SR=MS.Internal.PresentationCore.SR;
 
 namespace System.Windows.Media
 {

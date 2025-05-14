@@ -1,24 +1,9 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
-//
-//
-//
 // Description: The MediaCommands class defines a standard set of commands that act on Media.
 //
 //              See spec at : http://avalon/CoreUI/Specs%20%20Eventing%20and%20Commanding/CommandLibrarySpec.mht
-//
-//
-//
-
-using System;
-using System.Windows;
-using System.Windows.Input;
-using System.Collections;
-using System.ComponentModel;
-
-using SR=MS.Internal.PresentationCore.SR;
 
 namespace System.Windows.Input
 {
@@ -455,8 +440,10 @@ namespace System.Windows.Input
                 {
                     if (_internalCommands[(int)idCommand] == null)
                     {
-                        RoutedUICommand newCommand = new RoutedUICommand(GetPropertyName(idCommand), typeof(MediaCommands), (byte)idCommand);
-                        newCommand.AreInputGesturesDelayLoaded = true;
+                        RoutedUICommand newCommand = new RoutedUICommand(GetPropertyName(idCommand), typeof(MediaCommands), (byte)idCommand)
+                        {
+                            AreInputGesturesDelayLoaded = true
+                        };
                         _internalCommands[(int)idCommand] = newCommand;
                     }
                 }

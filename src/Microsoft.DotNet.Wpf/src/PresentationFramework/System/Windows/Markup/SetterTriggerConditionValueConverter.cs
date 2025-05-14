@@ -1,25 +1,14 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 /***************************************************************************\
 *
 *  Class for converting a given value (for Setter/Trigger/Condition) to and from a string
 *
 \***************************************************************************/
-using System;
 using System.ComponentModel;        // for TypeConverter
 using System.Globalization;               // for CultureInfo
-using System.Reflection;
-using MS.Utility;
-using MS.Internal;
-using System.Windows;
-using System.ComponentModel.Design.Serialization;
-using System.Windows.Documents;
 using System.Xaml;
-using System.Xaml.Schema;
-using System.Collections.Generic;
-using System.Diagnostics;
 using System.IO;
 
 namespace System.Windows.Markup

@@ -1,6 +1,5 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 
 //
@@ -9,17 +8,11 @@
 //
 
 
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Diagnostics;
-using System.Security;
 using System.Windows;
 using System.Windows.Media;
 using System.Windows.Media.TextFormatting;
 using System.Windows.Documents;
-using MS.Internal;
 using MS.Internal.Documents;
 using MS.Internal.Text;
 
@@ -60,7 +53,7 @@ namespace MS.Internal.PtsHost
         {
             // Query paragraph details and render its content
             PTS.FSTEXTDETAILS textDetails;
-            PTS.Validate(PTS.FsQueryTextDetails(PtsContext.Context, _paraHandle.Value, out textDetails));
+            PTS.Validate(PTS.FsQueryTextDetails(PtsContext.Context, _paraHandle, out textDetails));
 
             VisualCollection visualChildren = _visual.Children;
             ContainerVisual lineContainerVisual = _visual;
@@ -135,7 +128,7 @@ namespace MS.Internal.PtsHost
             {
                 // (c) cached - when using ParaChache
                 Debug.Assert(textDetails.fsktd == PTS.FSKTEXTDETAILS.fsktdCached);
-                Debug.Assert(false, "Should not get here. ParaCache is not currently used.");
+                Debug.Fail("Should not get here. ParaCache is not currently used.");
             }
 
             // Mirror lines around the page.
@@ -153,7 +146,7 @@ namespace MS.Internal.PtsHost
         {
             // Here's where the magic happens.
             PTS.FSTEXTDETAILS textDetails;
-            PTS.Validate(PTS.FsQueryTextDetails(PtsContext.Context, _paraHandle.Value, out textDetails));
+            PTS.Validate(PTS.FsQueryTextDetails(PtsContext.Context, _paraHandle, out textDetails));
             Invariant.Assert(textDetails.fsktd == PTS.FSKTEXTDETAILS.fsktdFull, "Only 'full' text paragraph type is expected.");
 
             if (IsDeferredVisualCreationSupported(ref textDetails.u.full))
@@ -173,7 +166,7 @@ namespace MS.Internal.PtsHost
             {
                 // Get list of attached objects
                 PTS.FSATTACHEDOBJECTDESCRIPTION [] arrayAttachedObjectDesc;
-                PtsHelper.AttachedObjectListFromParagraph(PtsContext, _paraHandle.Value, attachedObjectCount, out arrayAttachedObjectDesc);
+                PtsHelper.AttachedObjectListFromParagraph(PtsContext, _paraHandle, attachedObjectCount, out arrayAttachedObjectDesc);
 
                 // Arrange attached objects
                 for (int index = 0; index < arrayAttachedObjectDesc.Length; index++)
@@ -198,7 +191,7 @@ namespace MS.Internal.PtsHost
 
             // Query paragraph details and hittest its content
             PTS.FSTEXTDETAILS textDetails;
-            PTS.Validate(PTS.FsQueryTextDetails(PtsContext.Context, _paraHandle.Value, out textDetails));
+            PTS.Validate(PTS.FsQueryTextDetails(PtsContext.Context, _paraHandle, out textDetails));
 
             // There are 3 different types of text paragraphs:
             // (a) full with simple lines
@@ -233,7 +226,7 @@ namespace MS.Internal.PtsHost
             {
                 // (c) cached - when using ParaChache
                 Debug.Assert(textDetails.fsktd == PTS.FSKTEXTDETAILS.fsktdCached);
-                Debug.Assert(false, "Should not get here. ParaCache is not currently used.");
+                Debug.Fail("Should not get here. ParaCache is not currently used.");
             }
 
             // If nothing is hit, return the owner of the paragraph.
@@ -257,7 +250,7 @@ namespace MS.Internal.PtsHost
             Debug.Assert(Paragraph.Element as ContentElement != e);
 
             PTS.FSTEXTDETAILS textDetails;
-            PTS.Validate(PTS.FsQueryTextDetails(PtsContext.Context, _paraHandle.Value, out textDetails));
+            PTS.Validate(PTS.FsQueryTextDetails(PtsContext.Context, _paraHandle, out textDetails));
 
             // There are 3 different types of text paragraphs:
             // (a) full with simple lines
@@ -269,7 +262,7 @@ namespace MS.Internal.PtsHost
                 if (textDetails.u.full.cAttachedObjects > 0)
                 {
                     PTS.FSATTACHEDOBJECTDESCRIPTION[] arrayAttachedObjectDesc;
-                    PtsHelper.AttachedObjectListFromParagraph(PtsContext, _paraHandle.Value, textDetails.u.full.cAttachedObjects, out arrayAttachedObjectDesc);
+                    PtsHelper.AttachedObjectListFromParagraph(PtsContext, _paraHandle, textDetails.u.full.cAttachedObjects, out arrayAttachedObjectDesc);
 
                     for (int index = 0; index < arrayAttachedObjectDesc.Length; index++)
                     {
@@ -322,7 +315,7 @@ namespace MS.Internal.PtsHost
             {
                 // (c) cached - when using ParaChache
                 Debug.Assert(textDetails.fsktd == PTS.FSKTEXTDETAILS.fsktdCached);
-                Debug.Assert(false, "Should not get here. ParaCache is not currently used.");
+                Debug.Fail("Should not get here. ParaCache is not currently used.");
             }
 
             Invariant.Assert(rectangles != null);
@@ -345,11 +338,11 @@ namespace MS.Internal.PtsHost
 #if TEXTPANELLAYOUTDEBUG
             TextPanelDebug.IncrementCounter("TextPara.GetLines", TextPanelDebug.Category.TextView);
 #endif
-            ReadOnlyCollection<LineResult> lines = new ReadOnlyCollection<LineResult>(new List<LineResult>(0));
+            ReadOnlyCollection<LineResult> lines = ReadOnlyCollection<LineResult>.Empty;
 
             // Query paragraph details
             PTS.FSTEXTDETAILS textDetails;
-            PTS.Validate(PTS.FsQueryTextDetails(PtsContext.Context, _paraHandle.Value, out textDetails));
+            PTS.Validate(PTS.FsQueryTextDetails(PtsContext.Context, _paraHandle, out textDetails));
 
             // There are 3 different types of text paragraphs:
             // (a) full with simple lines
@@ -375,7 +368,7 @@ namespace MS.Internal.PtsHost
             {
                 // (c) cached - when using ParaChache
                 Debug.Assert(textDetails.fsktd == PTS.FSKTEXTDETAILS.fsktdCached);
-                Debug.Assert(false, "Should not get here. ParaCache is not currently used.");
+                Debug.Fail("Should not get here. ParaCache is not currently used.");
             }
 
             return lines;
@@ -390,7 +383,7 @@ namespace MS.Internal.PtsHost
 
             // Query paragraph details
             PTS.FSTEXTDETAILS textDetails;
-            PTS.Validate(PTS.FsQueryTextDetails(PtsContext.Context, _paraHandle.Value, out textDetails));
+            PTS.Validate(PTS.FsQueryTextDetails(PtsContext.Context, _paraHandle, out textDetails));
 
             // Floaters are only supported by full paragraphs
             if (   textDetails.fsktd == PTS.FSKTEXTDETAILS.fsktdFull
@@ -398,7 +391,7 @@ namespace MS.Internal.PtsHost
             {
                 // Get list of floaters
                 PTS.FSATTACHEDOBJECTDESCRIPTION [] arrayAttachedObjectDesc;
-                PtsHelper.AttachedObjectListFromParagraph(PtsContext, _paraHandle.Value, textDetails.u.full.cAttachedObjects, out arrayAttachedObjectDesc);
+                PtsHelper.AttachedObjectListFromParagraph(PtsContext, _paraHandle, textDetails.u.full.cAttachedObjects, out arrayAttachedObjectDesc);
 
                 floaters = new List<ParagraphResult>(arrayAttachedObjectDesc.Length);
 
@@ -428,14 +421,14 @@ namespace MS.Internal.PtsHost
 
             // Query paragraph details
             PTS.FSTEXTDETAILS textDetails;
-            PTS.Validate(PTS.FsQueryTextDetails(PtsContext.Context, _paraHandle.Value, out textDetails));
+            PTS.Validate(PTS.FsQueryTextDetails(PtsContext.Context, _paraHandle, out textDetails));
 
             // Floaters are only supported by full paragraphs
             if (   textDetails.fsktd == PTS.FSKTEXTDETAILS.fsktdFull
                 && textDetails.u.full.cAttachedObjects > 0)
             {
                 PTS.FSATTACHEDOBJECTDESCRIPTION [] arrayAttachedObjectDesc;
-                PtsHelper.AttachedObjectListFromParagraph(PtsContext, _paraHandle.Value, textDetails.u.full.cAttachedObjects, out arrayAttachedObjectDesc);
+                PtsHelper.AttachedObjectListFromParagraph(PtsContext, _paraHandle, textDetails.u.full.cAttachedObjects, out arrayAttachedObjectDesc);
 
                 figures = new List<ParagraphResult>(arrayAttachedObjectDesc.Length);
 
@@ -465,7 +458,7 @@ namespace MS.Internal.PtsHost
             int dcpFirst = 0, dcpLast = 0;
 
             // Query paragraph details
-            PTS.Validate(PTS.FsQueryTextDetails(PtsContext.Context, _paraHandle.Value, out textDetails));
+            PTS.Validate(PTS.FsQueryTextDetails(PtsContext.Context, _paraHandle, out textDetails));
 
             Invariant.Assert(textDetails.fsktd == PTS.FSKTEXTDETAILS.fsktdFull, "Only 'full' text paragraph type is expected.");
 
@@ -496,7 +489,7 @@ namespace MS.Internal.PtsHost
                 if (attachedObjectCount > 0)
                 {
                     // Get list of attached objects
-                    PtsHelper.AttachedObjectListFromParagraph(PtsContext, _paraHandle.Value, attachedObjectCount, out arrayAttachedObjectDesc);
+                    PtsHelper.AttachedObjectListFromParagraph(PtsContext, _paraHandle, attachedObjectCount, out arrayAttachedObjectDesc);
                 }
 
                 // Figures and floaters cannot break
@@ -521,7 +514,7 @@ namespace MS.Internal.PtsHost
         {
             // Query paragraph details
             PTS.FSTEXTDETAILS textDetails;
-            PTS.Validate(PTS.FsQueryTextDetails(PtsContext.Context, _paraHandle.Value, out textDetails));
+            PTS.Validate(PTS.FsQueryTextDetails(PtsContext.Context, _paraHandle, out textDetails));
 
             int lineWidth = 0;
             bool firstLine = (dcpLine == 0);
@@ -540,7 +533,7 @@ namespace MS.Internal.PtsHost
                     {
                         // (a) full with simple lines
                         PTS.FSLINEDESCRIPTIONSINGLE[] arrayLineDesc;
-                        PtsHelper.LineListSimpleFromTextPara(PtsContext, _paraHandle.Value, ref textDetails.u.full, out arrayLineDesc);
+                        PtsHelper.LineListSimpleFromTextPara(PtsContext, _paraHandle, ref textDetails.u.full, out arrayLineDesc);
 
                         // Get lines information
                         int index;
@@ -564,7 +557,7 @@ namespace MS.Internal.PtsHost
                     {
                         // (b) full with composite lines - when figures/floaters are present
                         PTS.FSLINEDESCRIPTIONCOMPOSITE[] arrayLineDesc;
-                        PtsHelper.LineListCompositeFromTextPara(PtsContext, _paraHandle.Value, ref textDetails.u.full, out arrayLineDesc);
+                        PtsHelper.LineListCompositeFromTextPara(PtsContext, _paraHandle, ref textDetails.u.full, out arrayLineDesc);
 
                         // Get lines information
                         int index;
@@ -636,7 +629,7 @@ namespace MS.Internal.PtsHost
         {
             // Query paragraph details
             PTS.FSTEXTDETAILS textDetails;
-            PTS.Validate(PTS.FsQueryTextDetails(PtsContext.Context, _paraHandle.Value, out textDetails));
+            PTS.Validate(PTS.FsQueryTextDetails(PtsContext.Context, _paraHandle, out textDetails));
 
             Invariant.Assert(textDetails.fsktd == PTS.FSKTEXTDETAILS.fsktdFull, "Only 'full' text paragraph type is expected.");
 
@@ -689,7 +682,7 @@ namespace MS.Internal.PtsHost
 
             // Query paragraph details
             PTS.FSTEXTDETAILS textDetails;
-            PTS.Validate(PTS.FsQueryTextDetails(PtsContext.Context, _paraHandle.Value, out textDetails));
+            PTS.Validate(PTS.FsQueryTextDetails(PtsContext.Context, _paraHandle, out textDetails));
 
             // There are 3 different types of text paragraphs:
             // (a) full with simple lines
@@ -717,7 +710,7 @@ namespace MS.Internal.PtsHost
             {
                 // (c) cached - when using ParaChache
                 Debug.Assert(textDetails.fsktd == PTS.FSKTEXTDETAILS.fsktdCached);
-                Debug.Assert(false, "Should not get here. ParaCache is not currently used.");
+                Debug.Fail("Should not get here. ParaCache is not currently used.");
             }
 
             // Mirror back to page flow direction
@@ -767,7 +760,7 @@ namespace MS.Internal.PtsHost
 
             //  query paragraph details
             PTS.FSTEXTDETAILS textDetails;
-            PTS.Validate(PTS.FsQueryTextDetails(PtsContext.Context, _paraHandle.Value, out textDetails));
+            PTS.Validate(PTS.FsQueryTextDetails(PtsContext.Context, _paraHandle, out textDetails));
 
             // There are 3 different types of text paragraphs:
             // (a) full with simple lines
@@ -798,7 +791,7 @@ namespace MS.Internal.PtsHost
             {
                 // (c) cached - when using ParaCache
                 Debug.Assert(textDetails.fsktd == PTS.FSKTEXTDETAILS.fsktdCached);
-                Debug.Assert(false, "Should not get here. ParaCache is not currently used.");
+                Debug.Fail("Should not get here. ParaCache is not currently used.");
             }
 
             //  at this point geometry contains only the text content related geometry
@@ -835,7 +828,7 @@ namespace MS.Internal.PtsHost
 
             // Query paragraph details
             PTS.FSTEXTDETAILS textDetails;
-            PTS.Validate(PTS.FsQueryTextDetails(PtsContext.Context, _paraHandle.Value, out textDetails));
+            PTS.Validate(PTS.FsQueryTextDetails(PtsContext.Context, _paraHandle, out textDetails));
 
             // There are 3 different types of text paragraphs:
             // (a) full with simple lines
@@ -861,7 +854,7 @@ namespace MS.Internal.PtsHost
             {
                 // (c) cached - when using ParaChache
                 Debug.Assert(textDetails.fsktd == PTS.FSKTEXTDETAILS.fsktdCached);
-                Debug.Assert(false, "Should not get here. ParaCache is not currently used.");
+                Debug.Fail("Should not get here. ParaCache is not currently used.");
             }
 
             return isAtCaretUnitBoundary;
@@ -885,7 +878,7 @@ namespace MS.Internal.PtsHost
 
             // Query paragraph details
             PTS.FSTEXTDETAILS textDetails;
-            PTS.Validate(PTS.FsQueryTextDetails(PtsContext.Context, _paraHandle.Value, out textDetails));
+            PTS.Validate(PTS.FsQueryTextDetails(PtsContext.Context, _paraHandle, out textDetails));
 
             // There are 3 different types of text paragraphs:
             // (a) full with simple lines
@@ -911,7 +904,7 @@ namespace MS.Internal.PtsHost
             {
                 // (c) cached - when using ParaChache
                 Debug.Assert(textDetails.fsktd == PTS.FSKTEXTDETAILS.fsktdCached);
-                Debug.Assert(false, "Should not get here. ParaCache is not currently used.");
+                Debug.Fail("Should not get here. ParaCache is not currently used.");
             }
 
             return nextCaretPosition;
@@ -928,7 +921,7 @@ namespace MS.Internal.PtsHost
 
             // Query paragraph details
             PTS.FSTEXTDETAILS textDetails;
-            PTS.Validate(PTS.FsQueryTextDetails(PtsContext.Context, _paraHandle.Value, out textDetails));
+            PTS.Validate(PTS.FsQueryTextDetails(PtsContext.Context, _paraHandle, out textDetails));
 
             // There are 3 different types of text paragraphs:
             // (a) full with simple lines
@@ -975,7 +968,7 @@ namespace MS.Internal.PtsHost
             // Query paragraph details
             int urDistance = TextDpi.ToTextDpi(distance);
             PTS.FSTEXTDETAILS textDetails;
-            PTS.Validate(PTS.FsQueryTextDetails(PtsContext.Context, _paraHandle.Value, out textDetails));
+            PTS.Validate(PTS.FsQueryTextDetails(PtsContext.Context, _paraHandle, out textDetails));
 
             if(ThisFlowDirection != PageFlowDirection)
             {
@@ -999,7 +992,7 @@ namespace MS.Internal.PtsHost
                     {
                         // (a) full with simple lines
                         PTS.FSLINEDESCRIPTIONSINGLE [] arrayLineDesc;
-                        PtsHelper.LineListSimpleFromTextPara(PtsContext, _paraHandle.Value, ref textDetails.u.full, out arrayLineDesc);
+                        PtsHelper.LineListSimpleFromTextPara(PtsContext, _paraHandle, ref textDetails.u.full, out arrayLineDesc);
 
                         // Get lines information
                         int index;
@@ -1024,7 +1017,7 @@ namespace MS.Internal.PtsHost
                     {
                         // (b) full with composite lines - when figures/floaters are present
                         PTS.FSLINEDESCRIPTIONCOMPOSITE [] arrayLineDesc;
-                        PtsHelper.LineListCompositeFromTextPara(PtsContext, _paraHandle.Value, ref textDetails.u.full, out arrayLineDesc);
+                        PtsHelper.LineListCompositeFromTextPara(PtsContext, _paraHandle, ref textDetails.u.full, out arrayLineDesc);
 
                         // Get lines information
                         int index;
@@ -1068,7 +1061,7 @@ namespace MS.Internal.PtsHost
             {
                 // (c) cached - when using ParaChache
                 Debug.Assert(textDetails.fsktd == PTS.FSKTEXTDETAILS.fsktdCached);
-                Debug.Assert(false, "Should not get here. ParaCache is not currently used.");
+                Debug.Fail("Should not get here. ParaCache is not currently used.");
             }
 
             // Recreate text line
@@ -1112,7 +1105,7 @@ namespace MS.Internal.PtsHost
         {
             // Query paragraph details
             PTS.FSTEXTDETAILS textDetails;
-            PTS.Validate(PTS.FsQueryTextDetails(PtsContext.Context, _paraHandle.Value, out textDetails));
+            PTS.Validate(PTS.FsQueryTextDetails(PtsContext.Context, _paraHandle, out textDetails));
 
             // There are 3 different types of text paragraphs:
             // (a) full with simple lines
@@ -1178,7 +1171,7 @@ namespace MS.Internal.PtsHost
             {
                 // Query paragraph details
                 PTS.FSTEXTDETAILS textDetails;
-                PTS.Validate(PTS.FsQueryTextDetails(PtsContext.Context, _paraHandle.Value, out textDetails));
+                PTS.Validate(PTS.FsQueryTextDetails(PtsContext.Context, _paraHandle, out textDetails));
                 Invariant.Assert(textDetails.fsktd == PTS.FSKTEXTDETAILS.fsktdFull, "Only 'full' text paragraph type is expected.");
                 // The first chunk always starts with dcpFirst == 0.
                 return (textDetails.u.full.cLines > 0 && textDetails.u.full.dcpFirst == 0);
@@ -1196,7 +1189,7 @@ namespace MS.Internal.PtsHost
 
                 // Query paragraph details
                 PTS.FSTEXTDETAILS textDetails;
-                PTS.Validate(PTS.FsQueryTextDetails(PtsContext.Context, _paraHandle.Value, out textDetails));
+                PTS.Validate(PTS.FsQueryTextDetails(PtsContext.Context, _paraHandle, out textDetails));
                 Invariant.Assert(textDetails.fsktd == PTS.FSKTEXTDETAILS.fsktdFull, "Only 'full' text paragraph type is expected.");
 
                 if (textDetails.u.full.cLines > 0)
@@ -1242,7 +1235,7 @@ namespace MS.Internal.PtsHost
 
             // Query paragraph details
             PTS.FSTEXTDETAILS textDetails;
-            PTS.Validate(PTS.FsQueryTextDetails(PtsContext.Context, _paraHandle.Value, out textDetails));
+            PTS.Validate(PTS.FsQueryTextDetails(PtsContext.Context, _paraHandle, out textDetails));
 
             // There are 3 different types of text paragraphs:
             // (a) full with simple lines
@@ -1258,7 +1251,7 @@ namespace MS.Internal.PtsHost
                     {
                         // (a) full with simple lines
                         PTS.FSLINEDESCRIPTIONSINGLE[] arrayLineDesc;
-                        PtsHelper.LineListSimpleFromTextPara(PtsContext, _paraHandle.Value, ref textDetails.u.full, out arrayLineDesc);
+                        PtsHelper.LineListSimpleFromTextPara(PtsContext, _paraHandle, ref textDetails.u.full, out arrayLineDesc);
 
                         for (int index = 0; index < arrayLineDesc.Length; index++)
                         {
@@ -1284,7 +1277,7 @@ namespace MS.Internal.PtsHost
                     {
                         // (b) full with composite lines - when figures/floaters are present
                         PTS.FSLINEDESCRIPTIONCOMPOSITE[] arrayLineDesc;
-                        PtsHelper.LineListCompositeFromTextPara(PtsContext, _paraHandle.Value, ref textDetails.u.full, out arrayLineDesc);
+                        PtsHelper.LineListCompositeFromTextPara(PtsContext, _paraHandle, ref textDetails.u.full, out arrayLineDesc);
 
                         for (int index = 0; index < arrayLineDesc.Length; index++)
                         {
@@ -1320,7 +1313,7 @@ namespace MS.Internal.PtsHost
                 {
                     // Get list of floaters
                     PTS.FSATTACHEDOBJECTDESCRIPTION [] arrayAttachedObjectDesc;
-                    PtsHelper.AttachedObjectListFromParagraph(PtsContext, _paraHandle.Value, textDetails.u.full.cAttachedObjects, out arrayAttachedObjectDesc);
+                    PtsHelper.AttachedObjectListFromParagraph(PtsContext, _paraHandle, textDetails.u.full.cAttachedObjects, out arrayAttachedObjectDesc);
 
                     // Arrange floaters
 
@@ -1370,7 +1363,7 @@ namespace MS.Internal.PtsHost
             {
                 // (c) cached - when using ParaChache
                 Debug.Assert(textDetails.fsktd == PTS.FSKTEXTDETAILS.fsktdCached);
-                Debug.Assert(false, "Should not get here. ParaCache is not currently used.");
+                Debug.Fail("Should not get here. ParaCache is not currently used.");
             }
         }
 
@@ -1402,7 +1395,7 @@ namespace MS.Internal.PtsHost
                 else if (_lineIndexFirstVisual != -1)
                 {
                     PTS.FSLINEDESCRIPTIONSINGLE[] arrayLineDesc;
-                    PtsHelper.LineListSimpleFromTextPara(PtsContext, _paraHandle.Value, ref textDetails, out arrayLineDesc);
+                    PtsHelper.LineListSimpleFromTextPara(PtsContext, _paraHandle, ref textDetails, out arrayLineDesc);
 
                     int lineIndexToBeginRemoval = textDetails.cLinesBeforeChange;
                     int cLinesToRemove = textDetails.cLinesChanged - textDetails.dcLinesChanged;
@@ -1527,7 +1520,7 @@ namespace MS.Internal.PtsHost
 
             // Get list of complex lines.
             PTS.FSLINEDESCRIPTIONSINGLE [] arrayLineDesc;
-            PtsHelper.LineListSimpleFromTextPara(PtsContext, _paraHandle.Value, ref textDetails, out arrayLineDesc);
+            PtsHelper.LineListSimpleFromTextPara(PtsContext, _paraHandle, ref textDetails, out arrayLineDesc);
 
             List<LineResult> lines = new List<LineResult>(arrayLineDesc.Length);
 
@@ -1579,7 +1572,7 @@ namespace MS.Internal.PtsHost
 
             // Get list of complex composite lines.
             PTS.FSLINEDESCRIPTIONCOMPOSITE [] arrayLineDesc;
-            PtsHelper.LineListCompositeFromTextPara(PtsContext, _paraHandle.Value, ref textDetails, out arrayLineDesc);
+            PtsHelper.LineListCompositeFromTextPara(PtsContext, _paraHandle, ref textDetails, out arrayLineDesc);
 
             List<LineResult> lines = new List<LineResult>(arrayLineDesc.Length);
 
@@ -1648,7 +1641,7 @@ namespace MS.Internal.PtsHost
 
             // Get list of lines
             PTS.FSLINEDESCRIPTIONSINGLE [] arrayLineDesc;
-            PtsHelper.LineListSimpleFromTextPara(PtsContext, _paraHandle.Value, ref textDetails, out arrayLineDesc);
+            PtsHelper.LineListSimpleFromTextPara(PtsContext, _paraHandle, ref textDetails, out arrayLineDesc);
 
             // First iterate through lines
             for (int index = 0; index < arrayLineDesc.Length; index++)
@@ -1736,7 +1729,7 @@ namespace MS.Internal.PtsHost
 
             // Get list of lines
             PTS.FSLINEDESCRIPTIONCOMPOSITE [] arrayLineDesc;
-            PtsHelper.LineListCompositeFromTextPara(PtsContext, _paraHandle.Value, ref textDetails, out arrayLineDesc);
+            PtsHelper.LineListCompositeFromTextPara(PtsContext, _paraHandle, ref textDetails, out arrayLineDesc);
 
             // First iterate through lines
             for (int index = 0; index < arrayLineDesc.Length; index++)
@@ -1831,7 +1824,7 @@ namespace MS.Internal.PtsHost
 
             //  get list of lines
             PTS.FSLINEDESCRIPTIONSINGLE[] arrayLineDesc;
-            PtsHelper.LineListSimpleFromTextPara(PtsContext, _paraHandle.Value, ref textDetails, out arrayLineDesc);
+            PtsHelper.LineListSimpleFromTextPara(PtsContext, _paraHandle, ref textDetails, out arrayLineDesc);
 
             int lineStart = 0;
             int lineCount = arrayLineDesc.Length;
@@ -1938,7 +1931,7 @@ namespace MS.Internal.PtsHost
 
             //  get list of lines
             PTS.FSLINEDESCRIPTIONCOMPOSITE[] arrayLineDesc;
-            PtsHelper.LineListCompositeFromTextPara(PtsContext, _paraHandle.Value, ref textDetails, out arrayLineDesc);
+            PtsHelper.LineListCompositeFromTextPara(PtsContext, _paraHandle, ref textDetails, out arrayLineDesc);
 
             for (int lineIndex = 0; lineIndex < arrayLineDesc.Length; ++lineIndex)
             {
@@ -2084,9 +2077,9 @@ namespace MS.Internal.PtsHost
                 lineRect.Width = Math.Max(lineVisual.WidthIncludingTrailingWhitespace, 0);
             }
 
-            lineRect.Y = lineRect.Y - lineTopSpace;
-            lineRect.Height = lineRect.Height + lineTopSpace;
-            lineRect.Width = lineRect.Width + lineRightSpace;
+            lineRect.Y -= lineTopSpace;
+            lineRect.Height += lineTopSpace;
+            lineRect.Width += lineRightSpace;
 
             // Ignore horizontal offset because TextBox page width != extent width.
             // It's ok to include content that doesn't strictly intersect -- this
@@ -2125,8 +2118,8 @@ namespace MS.Internal.PtsHost
                         for (int i = 0, count = rectangles.Count; i < count; ++i)
                         {
                             Rect r = rectangles[i];
-                            r.Y = r.Y - lineTopSpace;
-                            r.Height = r.Height + lineTopSpace;
+                            r.Y -= lineTopSpace;
+                            r.Height += lineTopSpace;
                             rectangles[i] = r;
                         }
                     }
@@ -2195,9 +2188,9 @@ namespace MS.Internal.PtsHost
                 elementRect.Width = Math.Max(lineVisual.WidthIncludingTrailingWhitespace, 0);
             }
 
-            elementRect.Y = elementRect.Y - lineTopSpace;
-            elementRect.Height = elementRect.Height + lineTopSpace;
-            elementRect.Width = elementRect.Width + lineRightSpace;
+            elementRect.Y -= lineTopSpace;
+            elementRect.Height += lineTopSpace;
+            elementRect.Width += lineRightSpace;
 
             // Ignore horizontal offset because TextBox page width != extent width.
             // It's ok to include content that doesn't strictly intersect -- this
@@ -2235,8 +2228,8 @@ namespace MS.Internal.PtsHost
                         for (int i = 0, count = rectangles.Count; i < count; ++i)
                         {
                             Rect r = rectangles[i];
-                            r.Y = r.Y - lineTopSpace;
-                            r.Height = r.Height + lineTopSpace;
+                            r.Y -= lineTopSpace;
+                            r.Height += lineTopSpace;
                             rectangles[i] = r;
                         }
                     }
@@ -2335,7 +2328,7 @@ namespace MS.Internal.PtsHost
             {
                 //  get list of attached objects
                 PTS.FSATTACHEDOBJECTDESCRIPTION[] arrayAttachedObjectDesc;
-                PtsHelper.AttachedObjectListFromParagraph(PtsContext, _paraHandle.Value, textDetails.cAttachedObjects, out arrayAttachedObjectDesc);
+                PtsHelper.AttachedObjectListFromParagraph(PtsContext, _paraHandle, textDetails.cAttachedObjects, out arrayAttachedObjectDesc);
 
                 for (int index = 0; index < arrayAttachedObjectDesc.Length; ++index)
                 {
@@ -2378,7 +2371,7 @@ namespace MS.Internal.PtsHost
 
             // Get list of lines
             PTS.FSLINEDESCRIPTIONSINGLE[] arrayLineDesc;
-            PtsHelper.LineListSimpleFromTextPara(PtsContext, _paraHandle.Value, ref textDetails, out arrayLineDesc);
+            PtsHelper.LineListSimpleFromTextPara(PtsContext, _paraHandle, ref textDetails, out arrayLineDesc);
 
             bool isAtCaretUnitBoundary = false;
 
@@ -2470,7 +2463,7 @@ namespace MS.Internal.PtsHost
 
             // Get list of lines
             PTS.FSLINEDESCRIPTIONCOMPOSITE[] arrayLineDesc;
-            PtsHelper.LineListCompositeFromTextPara(PtsContext, _paraHandle.Value, ref textDetails, out arrayLineDesc);
+            PtsHelper.LineListCompositeFromTextPara(PtsContext, _paraHandle, ref textDetails, out arrayLineDesc);
 
             bool isAtCaretUnitBoundary = false;
 
@@ -2596,7 +2589,7 @@ namespace MS.Internal.PtsHost
 
             // Get list of lines
             PTS.FSLINEDESCRIPTIONSINGLE[] arrayLineDesc;
-            PtsHelper.LineListSimpleFromTextPara(PtsContext, _paraHandle.Value, ref textDetails, out arrayLineDesc);
+            PtsHelper.LineListSimpleFromTextPara(PtsContext, _paraHandle, ref textDetails, out arrayLineDesc);
 
             // Declare next position and set it to initial position
             ITextPointer nextCaretPosition = position;
@@ -2721,7 +2714,7 @@ namespace MS.Internal.PtsHost
 
             // Get list of lines
             PTS.FSLINEDESCRIPTIONCOMPOSITE [] arrayLineDesc;
-            PtsHelper.LineListCompositeFromTextPara(PtsContext, _paraHandle.Value, ref textDetails, out arrayLineDesc);
+            PtsHelper.LineListCompositeFromTextPara(PtsContext, _paraHandle, ref textDetails, out arrayLineDesc);
 
             // Declare next position and set it to initial position
             ITextPointer nextCaretPosition = position;
@@ -2886,7 +2879,7 @@ namespace MS.Internal.PtsHost
 
             // Get list of lines
             PTS.FSLINEDESCRIPTIONSINGLE[] arrayLineDesc;
-            PtsHelper.LineListSimpleFromTextPara(PtsContext, _paraHandle.Value, ref textDetails, out arrayLineDesc);
+            PtsHelper.LineListSimpleFromTextPara(PtsContext, _paraHandle, ref textDetails, out arrayLineDesc);
 
             // Declare backspace position and set it to initial position
             ITextPointer backspaceCaretPosition = position;
@@ -2978,7 +2971,7 @@ namespace MS.Internal.PtsHost
 
             // Get list of lines
             PTS.FSLINEDESCRIPTIONCOMPOSITE[] arrayLineDesc;
-            PtsHelper.LineListCompositeFromTextPara(PtsContext, _paraHandle.Value, ref textDetails, out arrayLineDesc);
+            PtsHelper.LineListCompositeFromTextPara(PtsContext, _paraHandle, ref textDetails, out arrayLineDesc);
 
             // Declare backspace position and set it to initial position
             ITextPointer backspaceCaretPosition = position;
@@ -3105,7 +3098,7 @@ namespace MS.Internal.PtsHost
 
             // Get list of lines
             PTS.FSLINEDESCRIPTIONSINGLE [] arrayLineDesc;
-            PtsHelper.LineListSimpleFromTextPara(PtsContext, _paraHandle.Value, ref textDetails, out arrayLineDesc);
+            PtsHelper.LineListSimpleFromTextPara(PtsContext, _paraHandle, ref textDetails, out arrayLineDesc);
 
             // Iterate through all lines
             for (int index = 0; index < arrayLineDesc.Length; index++)
@@ -3158,7 +3151,7 @@ namespace MS.Internal.PtsHost
 
             // Get list of lines
             PTS.FSLINEDESCRIPTIONCOMPOSITE[] arrayLineDesc;
-            PtsHelper.LineListCompositeFromTextPara(PtsContext, _paraHandle.Value, ref textDetails, out arrayLineDesc);
+            PtsHelper.LineListCompositeFromTextPara(PtsContext, _paraHandle, ref textDetails, out arrayLineDesc);
 
             // First iterate through lines
             for (int index = 0; index < arrayLineDesc.Length; index++)
@@ -3222,7 +3215,7 @@ namespace MS.Internal.PtsHost
 
             // Get list of simple lines.
             PTS.FSLINEDESCRIPTIONSINGLE [] arrayLineDesc;
-            PtsHelper.LineListSimpleFromTextPara(PtsContext, _paraHandle.Value, ref textDetails, out arrayLineDesc);
+            PtsHelper.LineListSimpleFromTextPara(PtsContext, _paraHandle, ref textDetails, out arrayLineDesc);
 
             // Create lines and render them
             if (!PTS.ToBoolean(textDetails.fUpdateInfoForLinesPresent) || ignoreUpdateInfo)
@@ -3393,7 +3386,7 @@ namespace MS.Internal.PtsHost
                     int cpTextParaStart = Paragraph.ParagraphStartCharacterPosition;
 
                     PTS.FSLINEDESCRIPTIONSINGLE[] arrayLineDesc;
-                    PtsHelper.LineListSimpleFromTextPara(PtsContext, _paraHandle.Value, ref textDetails, out arrayLineDesc);
+                    PtsHelper.LineListSimpleFromTextPara(PtsContext, _paraHandle, ref textDetails, out arrayLineDesc);
 
                     // If this para is totally contained in the viewport, valid range is all lines.
                     if (ContainedInRectOnV(ref viewport))
@@ -3560,7 +3553,7 @@ namespace MS.Internal.PtsHost
                 Debug.Assert(visualChildren.Count > 0 && textDetails.cLines > 0);
 
                 PTS.FSLINEDESCRIPTIONSINGLE [] arrayLineDesc;
-                PtsHelper.LineListSimpleFromTextPara(PtsContext, _paraHandle.Value, ref textDetails, out arrayLineDesc);
+                PtsHelper.LineListSimpleFromTextPara(PtsContext, _paraHandle, ref textDetails, out arrayLineDesc);
 
                 for(int index = _lineIndexFirstVisual; index < _lineIndexFirstVisual + visualChildren.Count; index++)
                 {
@@ -3593,7 +3586,7 @@ namespace MS.Internal.PtsHost
 
             // Get list of composite lines.
             PTS.FSLINEDESCRIPTIONCOMPOSITE [] arrayLineDesc;
-            PtsHelper.LineListCompositeFromTextPara(PtsContext, _paraHandle.Value, ref textDetails, out arrayLineDesc);
+            PtsHelper.LineListCompositeFromTextPara(PtsContext, _paraHandle, ref textDetails, out arrayLineDesc);
 
             // Create lines and render them
             if (!PTS.ToBoolean(textDetails.fUpdateInfoForLinesPresent) || ignoreUpdateInfo)
@@ -3749,7 +3742,7 @@ namespace MS.Internal.PtsHost
 
                 // Get list of floaters
                 PTS.FSATTACHEDOBJECTDESCRIPTION [] arrayAttachedObjectDesc;
-                PtsHelper.AttachedObjectListFromParagraph(PtsContext, _paraHandle.Value, cAttachedObjects,
+                PtsHelper.AttachedObjectListFromParagraph(PtsContext, _paraHandle, cAttachedObjects,
                                                           out arrayAttachedObjectDesc);
 
                 // Render floaters. For each floater do following:
@@ -3793,7 +3786,7 @@ namespace MS.Internal.PtsHost
 
             // Get list of complex lines.
             PTS.FSLINEDESCRIPTIONSINGLE [] arrayLineDesc;
-            PtsHelper.LineListSimpleFromTextPara(PtsContext, _paraHandle.Value, ref textDetails, out arrayLineDesc);
+            PtsHelper.LineListSimpleFromTextPara(PtsContext, _paraHandle, ref textDetails, out arrayLineDesc);
 
             // Find affected line by looking at vertical offset
             for (int index = 0; index < arrayLineDesc.Length; index++)
@@ -3881,7 +3874,7 @@ namespace MS.Internal.PtsHost
 
             // Get list of complex lines.
             PTS.FSLINEDESCRIPTIONSINGLE[] arrayLineDesc;
-            PtsHelper.LineListSimpleFromTextPara(PtsContext, _paraHandle.Value, ref textDetails, out arrayLineDesc);
+            PtsHelper.LineListSimpleFromTextPara(PtsContext, _paraHandle, ref textDetails, out arrayLineDesc);
 
             // Find affected line by looking at vertical offset
             for (int index = 0; index < arrayLineDesc.Length; index++)
@@ -3973,7 +3966,7 @@ namespace MS.Internal.PtsHost
 
             // Get list of complex lines.
             PTS.FSLINEDESCRIPTIONCOMPOSITE [] arrayLineDesc;
-            PtsHelper.LineListCompositeFromTextPara(PtsContext, _paraHandle.Value, ref textDetails, out arrayLineDesc);
+            PtsHelper.LineListCompositeFromTextPara(PtsContext, _paraHandle, ref textDetails, out arrayLineDesc);
 
             // Find affected composite line by looking at vertical offset
             for (int index = 0; index < arrayLineDesc.Length; index++)
@@ -4058,7 +4051,7 @@ namespace MS.Internal.PtsHost
 
             // Get list of complex lines.
             PTS.FSLINEDESCRIPTIONCOMPOSITE[] arrayLineDesc;
-            PtsHelper.LineListCompositeFromTextPara(PtsContext, _paraHandle.Value, ref textDetails, out arrayLineDesc);
+            PtsHelper.LineListCompositeFromTextPara(PtsContext, _paraHandle, ref textDetails, out arrayLineDesc);
 
             // Find affected composite line by looking at vertical offset
             for (int index = 0; index < arrayLineDesc.Length; index++)

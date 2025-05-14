@@ -1,7 +1,15 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
-        
+
+
+
+#region Using declarations
+
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Windows.Automation.Provider;
+#if RIBBON_IN_FRAMEWORK
+using System.Windows.Controls.Ribbon;
 
 #if RIBBON_IN_FRAMEWORK
 namespace System.Windows.Automation.Peers
@@ -9,18 +17,6 @@ namespace System.Windows.Automation.Peers
 namespace Microsoft.Windows.Automation.Peers
 #endif
 {
-
-    #region Using declarations
-
-    using System;
-    using System.Collections.Generic;
-    using System.Collections.ObjectModel;
-    using System.Windows;
-    using System.Windows.Automation.Peers;
-    using System.Windows.Automation.Provider;
-    using System.Windows.Controls;
-#if RIBBON_IN_FRAMEWORK
-    using System.Windows.Controls.Ribbon;
 #else
     using Microsoft.Windows.Controls.Ribbon;
 #endif
@@ -40,7 +36,7 @@ namespace Microsoft.Windows.Automation.Peers
         #region AutomationPeer overrides
 
         ///
-        override public object GetPattern(PatternInterface patternInterface)
+        public override object GetPattern(PatternInterface patternInterface)
         {
             if (patternInterface == PatternInterface.Selection)
             {
@@ -50,7 +46,7 @@ namespace Microsoft.Windows.Automation.Peers
         }
 
         ///
-        override protected string GetClassNameCore()
+        protected override string GetClassNameCore()
         {
             return "RibbonGallery";
         }
@@ -74,7 +70,7 @@ namespace Microsoft.Windows.Automation.Peers
         }
 
         ///
-        override protected AutomationControlType GetAutomationControlTypeCore()
+        protected override AutomationControlType GetAutomationControlTypeCore()
         {
             return AutomationControlType.List;
         }

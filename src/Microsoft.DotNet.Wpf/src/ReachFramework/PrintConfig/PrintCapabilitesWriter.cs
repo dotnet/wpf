@@ -1,20 +1,16 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 
+
+using System.Globalization;
+using System.IO;
+using System.Printing;
+using System.Text;
+using System.Xml;
 
 namespace MS.Internal.Printing.Configuration
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Globalization;
-    using System.IO;
-    using System.Printing;
-    using System.Security;
-    using System.Text;
-    using System.Xml;
-
     /// <summary>
     /// Xml Stream base API for writing print capability documents
     /// </summary>
@@ -29,13 +25,15 @@ namespace MS.Internal.Printing.Configuration
         {
             ArgumentNullException.ThrowIfNull(stream);
 
-            XmlWriterSettings settings = new XmlWriterSettings();
-            settings.CheckCharacters = false;
-            settings.Encoding = Encoding.UTF8;
-            settings.OmitXmlDeclaration = false;
-            settings.CloseOutput = false;
-            settings.ConformanceLevel = ConformanceLevel.Document;
-            settings.NamespaceHandling = NamespaceHandling.Default;
+            XmlWriterSettings settings = new XmlWriterSettings
+            {
+                CheckCharacters = false,
+                Encoding = Encoding.UTF8,
+                OmitXmlDeclaration = false,
+                CloseOutput = false,
+                ConformanceLevel = ConformanceLevel.Document,
+                NamespaceHandling = NamespaceHandling.Default
+            };
             this._writer = XmlWriter.Create(new StreamWriter(stream, Encoding.UTF8), settings);            
             this._privateNamespace = privateNamespace;
             this._privateQName = privateQname;

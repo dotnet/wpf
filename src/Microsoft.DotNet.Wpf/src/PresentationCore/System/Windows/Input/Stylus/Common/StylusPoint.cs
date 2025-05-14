@@ -1,18 +1,7 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
-
-using System;
-using System.Windows;
-using System.Diagnostics;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using MS.Utility;
-using MS.Internal;
-using SR = MS.Internal.PresentationCore.SR;
 
 namespace System.Windows.Input
 {
@@ -80,11 +69,11 @@ namespace System.Windows.Input
         {
             if (Double.IsNaN(x))
             {
-                throw new ArgumentOutOfRangeException("x", SR.InvalidStylusPointXYNaN);
+                throw new ArgumentOutOfRangeException(nameof(x), SR.InvalidStylusPointXYNaN);
             }
             if (Double.IsNaN(y))
             {
-                throw new ArgumentOutOfRangeException("y", SR.InvalidStylusPointXYNaN);
+                throw new ArgumentOutOfRangeException(nameof(y), SR.InvalidStylusPointXYNaN);
             }
 
 
@@ -92,7 +81,7 @@ namespace System.Windows.Input
             if (validatePressureFactor &&
                 (pressureFactor == Single.NaN || pressureFactor < 0.0f || pressureFactor > 1.0f))
             {
-                throw new ArgumentOutOfRangeException("pressureFactor", SR.InvalidPressureValue);
+                throw new ArgumentOutOfRangeException(nameof(pressureFactor), SR.InvalidPressureValue);
             }
             //
             // only accept values between MaxXY and MinXY
@@ -127,7 +116,7 @@ namespace System.Windows.Input
                     int expectedAdditionalValues = properties.Count - StylusPointDescription.RequiredCountOfProperties; //for x, y, pressure
                     if (additionalValues.Length != expectedAdditionalValues)
                     {
-                        throw new ArgumentException(SR.InvalidAdditionalDataForStylusPoint, "additionalValues");
+                        throw new ArgumentException(SR.InvalidAdditionalDataForStylusPoint, nameof(additionalValues));
                     }
 
                     //
@@ -144,7 +133,7 @@ namespace System.Windows.Input
                         // use SetPropertyValue, it validates buttons, but does not copy the 
                         // int[] on writes (since we pass the bool flag)
                         //
-                        SetPropertyValue(properties[i], additionalValues[j], false/*copy on write*/);
+                        SetPropertyValue(properties[i], additionalValues[j], copyBeforeWrite: false);
                     }
                 }
             } 
@@ -300,7 +289,7 @@ namespace System.Windows.Input
                 int propertyIndex = this.Description.GetPropertyIndex(stylusPointProperty.Id);
                 if (-1 == propertyIndex)
                 {
-                    throw new ArgumentException(SR.InvalidStylusPointProperty, "stylusPointProperty");
+                    throw new ArgumentException(SR.InvalidStylusPointProperty, nameof(stylusPointProperty));
                 }
                 if (stylusPointProperty.IsButton)
                 {
@@ -389,7 +378,7 @@ namespace System.Windows.Input
                 {
                     if (value < 0 || value > 1)
                     {
-                        throw new ArgumentOutOfRangeException("value", SR.InvalidMinMaxForButton);
+                        throw new ArgumentOutOfRangeException(nameof(value), SR.InvalidMinMaxForButton);
                     }
 
                     if (copyBeforeWrite)

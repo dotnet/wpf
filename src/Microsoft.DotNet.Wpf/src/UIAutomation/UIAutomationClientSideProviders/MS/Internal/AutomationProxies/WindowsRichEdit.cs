@@ -1,26 +1,21 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 // Description: HWND-based RichEdit Proxy
 
 using System;
-using System.Collections;
-using System.ComponentModel;
 using System.Diagnostics;
-using System.Runtime.InteropServices;
 using System.Text;
 using System.Windows;
 using System.Windows.Automation;
 using System.Windows.Automation.Provider;
-using System.Windows.Automation.Text;
 using Accessibility;
 using MS.Win32;
 using NativeMethodsSetLastError = MS.Internal.UIAutomationClientSideProviders.NativeMethodsSetLastError;
 
 namespace MS.Internal.AutomationProxies
 {
-    class WindowsRichEdit : ProxyHwnd, IValueProvider, ITextProvider
+    internal class WindowsRichEdit : ProxyHwnd, IValueProvider, ITextProvider
     {
         // ------------------------------------------------------
         //
@@ -30,7 +25,7 @@ namespace MS.Internal.AutomationProxies
 
         #region Constructors
 
-        WindowsRichEdit (IntPtr hwnd, ProxyFragment parent, int style)
+        private WindowsRichEdit (IntPtr hwnd, ProxyFragment parent, int style)
             : base( hwnd, parent, style )
         {
             _type = WindowsEditBox.GetEditboxtype(hwnd);
@@ -243,7 +238,7 @@ namespace MS.Internal.AutomationProxies
             }
 
             if (range == null)
-                return new ITextRangeProvider[] { };
+                return Array.Empty<ITextRangeProvider>();
             else
                 return new ITextRangeProvider[] { new WindowsRichEditRange(range, this) };
         }
@@ -253,7 +248,7 @@ namespace MS.Internal.AutomationProxies
             ITextRange range = GetVisibleRange();
 
             if (range == null)
-                return new ITextRangeProvider[] { };
+                return Array.Empty<ITextRangeProvider>();
             else
                 return new ITextRangeProvider[] { new WindowsRichEditRange(range, this) };
         }
@@ -534,7 +529,7 @@ namespace MS.Internal.AutomationProxies
                     object embeddedObject;
                     while (start < end && embeddedObjectOffset != -1)
                     {
-                        sbText.Append(text.Substring(start, embeddedObjectOffset - start));
+                        sbText.Append(text.AsSpan(start, embeddedObjectOffset - start));
                         range.SetRange(embeddedObjectOffset, end);
                         if (range.GetEmbeddedObject(out embeddedObject) == NativeMethods.S_OK && embeddedObject != null)
                         {
@@ -552,7 +547,7 @@ namespace MS.Internal.AutomationProxies
 
                     if (start < end)
                     {
-                        sbText.Append(text.Substring(start, end - start));
+                        sbText.Append(text.AsSpan(start, end - start));
                     }
 
                     text = sbText.ToString();
@@ -608,17 +603,21 @@ namespace MS.Internal.AutomationProxies
 
             bool fGotUnicode = true;
 
-            UnsafeNativeMethods.FORMATETC fetc = new UnsafeNativeMethods.FORMATETC();
-            fetc.cfFormat = DataObjectConstants.CF_UNICODETEXT;
-            fetc.ptd = IntPtr.Zero;
-            fetc.dwAspect = DataObjectConstants.DVASPECT_CONTENT;
-            fetc.lindex = -1;
-            fetc.tymed = DataObjectConstants.TYMED_HGLOBAL;
+            UnsafeNativeMethods.FORMATETC fetc = new UnsafeNativeMethods.FORMATETC
+            {
+                cfFormat = DataObjectConstants.CF_UNICODETEXT,
+                ptd = IntPtr.Zero,
+                dwAspect = DataObjectConstants.DVASPECT_CONTENT,
+                lindex = -1,
+                tymed = DataObjectConstants.TYMED_HGLOBAL
+            };
 
-            UnsafeNativeMethods.STGMEDIUM med = new UnsafeNativeMethods.STGMEDIUM();
-            med.tymed = DataObjectConstants.TYMED_HGLOBAL;
-            med.pUnkForRelease = IntPtr.Zero;
-            med.hGlobal = IntPtr.Zero;
+            UnsafeNativeMethods.STGMEDIUM med = new UnsafeNativeMethods.STGMEDIUM
+            {
+                tymed = DataObjectConstants.TYMED_HGLOBAL,
+                pUnkForRelease = IntPtr.Zero,
+                hGlobal = IntPtr.Zero
+            };
 
             hr = dataObject.GetData(ref fetc, ref med);
 
@@ -745,8 +744,8 @@ namespace MS.Internal.AutomationProxies
         private WindowsEditBox.EditboxType _type;
 
         // Used in RaiseEvents() to track changes in the selection endpoints.
-        static private int _raiseEventsOldSelectionStart;
-        static private int _raiseEventsOldSelectionEnd;
+        private static int _raiseEventsOldSelectionStart;
+        private static int _raiseEventsOldSelectionEnd;
         private const int _NO_ENDPOINT = -1;
 
         #endregion private Fields

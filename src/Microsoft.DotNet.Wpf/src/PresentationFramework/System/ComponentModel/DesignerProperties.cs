@@ -1,7 +1,9 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
+
+using System.Windows;
+using MS.Internal.KnownBoxes;
 
 //
 // Description: 
@@ -12,10 +14,6 @@
 
 namespace System.ComponentModel
 {
-    using System;
-    using System.Windows;
-    using MS.Internal.KnownBoxes;
-
     /// <summary>
     /// The DesignerProperties class provides attached properties that can be used to 
     /// query the state of a control when it is running in a designer.   Designer tools 

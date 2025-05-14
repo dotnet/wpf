@@ -1,15 +1,7 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
-
-using System;
-using System.Windows;
-using System.Windows.Input;
 using System.Globalization;
-using System.Windows.Media;
-using System.Collections.Generic;
-using SR = MS.Internal.PresentationCore.SR;
 
 namespace System.Windows.Input
 {
@@ -60,7 +52,7 @@ namespace System.Windows.Input
                 if (!isButton)
                 {
                     //error, this is a known button
-                    throw new ArgumentException(SR.InvalidIsButtonForId, "isButton");
+                    throw new ArgumentException(SR.InvalidIsButtonForId, nameof(isButton));
                 }
             }
             else
@@ -68,7 +60,7 @@ namespace System.Windows.Input
                 if (StylusPointPropertyIds.IsKnownId(identifier) && isButton)
                 {
                     //error, this is a known guid that is NOT a button
-                    throw new ArgumentException(SR.InvalidIsButtonForId2, "isButton");
+                    throw new ArgumentException(SR.InvalidIsButtonForId2, nameof(isButton));
                 }
             }
 

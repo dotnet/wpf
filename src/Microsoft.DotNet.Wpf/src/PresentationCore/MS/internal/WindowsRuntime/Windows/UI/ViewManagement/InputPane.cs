@@ -1,19 +1,12 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 //
 //
 
-using MS.Internal.PresentationCore.WindowsRuntime;
-using System;
 using System.IO;
-using System.Reflection;
 using System.Runtime.InteropServices;
-using System.Security;
-using System.Windows;
 using System.Windows.Interop;
-using System.Windows.Media;
 
 namespace MS.Internal.WindowsRuntime
 {
@@ -137,7 +130,7 @@ namespace MS.Internal.WindowsRuntime
             /// <exception cref="PlatformNotSupportedException"></exception>
             internal static InputPane GetForWindow(HwndSource source)
             {
-                return new InputPane(source?.CriticalHandle ?? null);
+                return new InputPane(source?.Handle ?? null);
             }
 
             /// <summary>
@@ -225,7 +218,7 @@ namespace MS.Internal.WindowsRuntime
 
             #region IDisposable
 
-            bool _disposed = false;
+            private bool _disposed = false;
 
             ~InputPane()
             {

@@ -1,6 +1,5 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 //
 // Description: DocumentGridPage displays a graphical representation of an
@@ -9,24 +8,11 @@
 //
 
 
-using MS.Internal.Annotations.Anchoring;
-using MS.Win32;
-using System.Threading;
 using System.Windows;
-using System.Windows.Annotations;
-using System.Windows.Annotations.Storage;
-using System.Windows.Automation;
-using System.Windows.Automation.Provider;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using System.Windows.Documents;
-using System.Windows.Shapes;
-
-using System.Windows.Input;
 using System.Windows.Media;
-using System;
-using System.Collections;
-using System.Diagnostics;
 
 namespace MS.Internal.Documents
 {
@@ -190,11 +176,11 @@ namespace MS.Internal.Documents
                     case 0:
                         return _documentContainer;
                     default:
-                        throw new ArgumentOutOfRangeException("index", index, SR.Visual_ArgumentOutOfRange);
+                        throw new ArgumentOutOfRangeException(nameof(index), index, SR.Visual_ArgumentOutOfRange);
                 }
             }
 
-            throw new ArgumentOutOfRangeException("index", index, SR.Visual_ArgumentOutOfRange);
+            throw new ArgumentOutOfRangeException(nameof(index), index, SR.Visual_ArgumentOutOfRange);
         }
 
         /// <summary>
@@ -223,7 +209,7 @@ namespace MS.Internal.Documents
         /// </summary>
         /// <param name="availableSize">Available size that parent can give to the child. This is soft constraint.</param>
         /// <returns>The DocumentGridPage's desired size.</returns>
-        protected override sealed Size MeasureOverride(Size availableSize)
+        protected sealed override Size MeasureOverride(Size availableSize)
         {
             CheckDisposed();
 
@@ -263,7 +249,7 @@ namespace MS.Internal.Documents
         /// Content arrangement.
         /// </summary>
         /// <param name="arrangeSize">The final size that element should use to arrange itself and its children.</param>
-        protected override sealed Size ArrangeOverride(Size arrangeSize)
+        protected sealed override Size ArrangeOverride(Size arrangeSize)
         {
             CheckDisposed();
 
@@ -291,14 +277,18 @@ namespace MS.Internal.Documents
         {
             //Create the DocumentPageView, which will display our
             //content.
-            _documentPageView = new DocumentPageView();
-            _documentPageView.ClipToBounds = true;
-            _documentPageView.StretchDirection = StretchDirection.Both;
-            _documentPageView.PageNumber = int.MaxValue;
+            _documentPageView = new DocumentPageView
+            {
+                ClipToBounds = true,
+                StretchDirection = StretchDirection.Both,
+                PageNumber = int.MaxValue
+            };
 
             //Create the content control that contains the page content.
-            _documentContainer = new ContentControl();
-            _documentContainer.Content = _documentPageView;
+            _documentContainer = new ContentControl
+            {
+                Content = _documentPageView
+            };
 
             _loaded = false;
         }
@@ -350,10 +340,7 @@ namespace MS.Internal.Documents
 
                 //Dispose our DocumentPageView.
                 IDisposable dpv = _documentPageView as IDisposable;
-                if (dpv != null)
-                {
-                    dpv.Dispose();
-                }
+                dpv?.Dispose();
             }
         }
 

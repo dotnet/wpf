@@ -1,12 +1,9 @@
-using Standard;
-using Microsoft.Win32;
-using System.Collections;
-using System.Collections.Generic;
-using System.Windows.Interop;
-using System.Windows.Media;
-using System.Windows.Appearance;
-using System.Diagnostics;
+// Licensed to the .NET Foundation under one or more agreements.
+// The .NET Foundation licenses this file to you under the MIT license.
 
+using Microsoft.Win32;
+using System.Windows.Appearance;
+using System.Windows.Navigation;
 
 namespace System.Windows;
 
@@ -24,17 +21,14 @@ internal static class ThemeManager
             {
 
                 bool useLightColors = GetUseLightColors(Application.Current.ThemeMode);
-                var fluentThemeResourceUri = GetFluentThemeResourceUri(useLightColors);
 
                 FluentThemeState newFluentThemeState = new FluentThemeState(Application.Current.ThemeMode.Value, useLightColors);
 
-                if (s_currentFluentThemeState == newFluentThemeState)
+                if (s_currentFluentThemeState != newFluentThemeState)
                 {
-                    return;
+                    AddOrUpdateThemeResources(Application.Current.Resources, GetThemeDictionary(Application.Current.ThemeMode));
                 }
-
-                AddOrUpdateThemeResources(Application.Current.Resources, fluentThemeResourceUri);
-
+                
                 foreach (Window window in Application.Current.Windows)
                 {
                     if (window.ThemeMode == ThemeMode.None)
@@ -91,8 +85,7 @@ internal static class ThemeManager
             }
 
             bool useLightColors = GetUseLightColors(newThemeMode);
-            var fluentThemeResourceUri = GetFluentThemeResourceUri(useLightColors);
-            AddOrUpdateThemeResources(Application.Current.Resources, fluentThemeResourceUri);
+            AddOrUpdateThemeResources(Application.Current.Resources, GetThemeDictionary(newThemeMode));
 
             foreach (Window window in Application.Current.Windows)
             {
@@ -125,55 +118,26 @@ internal static class ThemeManager
         ApplyFluentOnWindow(window);
     }
 
-    internal static bool SyncThemeMode()
+    internal static bool SyncApplicationThemeMode()
     {
-       ThemeMode themeMode = GetThemeModeFromResourceDictionary(Application.Current.Resources);
+        ThemeMode themeMode = GetThemeModeFromResourceDictionary(Application.Current.Resources);
 
         if (Application.Current.ThemeMode != themeMode)
         {
             Application.Current.ThemeMode = themeMode;
             return themeMode == ThemeMode.None ? false : true;
         }
+        
         return false;
     }
 
-    internal static void SyncThemeModeAndResources()
+    internal static void SyncWindowThemeMode(Window window)
     {
-        // Since, this is called from window there is a possiblity that the application
-        // instance is null. Hence, we need to check for null.
-        if(Application.Current == null) 
-            return;
+        ThemeMode themeMode = GetThemeModeFromResourceDictionary(window.Resources);
 
-        ThemeMode themeMode = Application.Current.ThemeMode;
-        var rd = Application.Current.Resources;
-
-        bool resyncThemeMode = false;
-        int index = LastIndexOfFluentThemeDictionary(rd);
-
-        if (index == -1)
+        if(window.ThemeMode != themeMode)
         {
-            // This means that ThemeMode was set but Resources were not set during initialization.
-            // Hence we need to resync.
-            if (themeMode != ThemeMode.None)
-            {
-                resyncThemeMode = true;
-            }
-        }
-        else
-        {
-            // If index > 0, then Fluent theme dictionary was added manually.
-            // If ThemeMode is None, and yet there is a Fluent theme dictionary, hence that was manually set.
-            // Hence we need to resync.
-            if (index > 0 || themeMode == ThemeMode.None)
-            {
-                themeMode = GetThemeModeFromSourceUri(rd.MergedDictionaries[index].Source);
-                resyncThemeMode = true;
-            }
-        }
-
-        if (resyncThemeMode)
-        {
-            Application.Current.ThemeMode = themeMode;
+            window.ThemeMode = themeMode;
         }
     }
 
@@ -204,10 +168,39 @@ internal static class ThemeManager
                     || themeMode == ThemeMode.System;
     }
 
-    internal static Uri GetThemeResource(ThemeMode themeMode)
+    internal static ResourceDictionary GetThemeDictionary(ThemeMode themeMode)
     {
+        if (themeMode == ThemeMode.None)
+            return null;
+
+        if ( SystemParameters.HighContrast)
+        {
+            return new ResourceDictionary() { Source = new Uri(FluentThemeResourceDictionaryUri + "Fluent.HC.xaml", UriKind.Absolute) };
+        }
+
+        ResourceDictionary rd = null;
         bool useLightColors = GetUseLightColors(themeMode);
-        return GetFluentThemeResourceUri(useLightColors);
+        
+        if (themeMode == ThemeMode.System)
+        {
+            rd = new ResourceDictionary() { Source = new Uri(FluentThemeResourceDictionaryUri + "Fluent.xaml", UriKind.Absolute) };
+
+            var colorFileName = useLightColors ? "Light.xaml" : "Dark.xaml";
+            Uri dictionaryUri = new Uri(FluentColorDictionaryUri + colorFileName, UriKind.Absolute);
+            rd.MergedDictionaries.Insert(0, new ResourceDictionary() { Source = dictionaryUri });            
+        }
+        else
+        {
+            var themeFileName = useLightColors ? "Fluent.Light.xaml" : "Fluent.Dark.xaml";
+            rd = new ResourceDictionary() { Source = new Uri(FluentThemeResourceDictionaryUri + themeFileName, UriKind.Absolute) };
+        }
+
+        return rd;
+    }
+
+    internal static bool IsFluentThemeDictionaryIncluded()
+    {
+        return Application.Current != null && LastIndexOfFluentThemeDictionary(Application.Current.Resources) != -1;
     }
 
     #endregion
@@ -258,8 +251,7 @@ internal static class ThemeManager
             return;
 
         bool useLightColors = GetUseLightColors(window.ThemeMode);
-        var fluentThemeResourceUri = GetFluentThemeResourceUri(useLightColors);
-        AddOrUpdateThemeResources(window.Resources, fluentThemeResourceUri);
+        AddOrUpdateThemeResources(window.Resources, GetThemeDictionary(window.ThemeMode));
         ApplyStyleOnWindow(window, useLightColors);
 
         if (!FluentEnabledWindows.HasItem(window))
@@ -296,7 +288,14 @@ internal static class ThemeManager
         // We only apply Style on window, if the Window.Style has not already been set to avoid overriding users setting. 
         if (window.Style == null)
         {
-            window.SetResourceReference(FrameworkElement.StyleProperty, typeof(Window));
+            if(window is NavigationWindow)
+            {
+                window.SetResourceReference(FrameworkElement.StyleProperty, typeof(NavigationWindow));
+            }
+            else
+            {
+                window.SetResourceReference(FrameworkElement.StyleProperty, typeof(Window));
+            }            
         }
 
         window.SetImmersiveDarkMode(!useLightColors);
@@ -316,8 +315,6 @@ internal static class ThemeManager
 
     #region Internal Properties
 
-    internal static bool IsAppThemeModeSyncEnabled { get; set; } = false;
-
     internal static bool IsFluentThemeEnabled
     {
         get
@@ -328,11 +325,11 @@ internal static class ThemeManager
         }
     }
 
-    internal static bool DeferredAppThemeLoading { get; set; } = false;
-
     internal static bool SkipAppThemeModeSyncing { get; set; } = false;
 
-    internal static double DefaultFluentThemeFontSize => 14;
+    internal static bool IgnoreWindowResourcesChange { get; set; } = false;
+
+    internal const double DefaultFluentFontSizeFactor = 14.0 / 12.0 ;
 
     internal static WindowCollection FluentEnabledWindows { get; set; } = new WindowCollection();
 
@@ -390,31 +387,16 @@ internal static class ThemeManager
         }
     }
 
-    private static Uri GetFluentThemeResourceUri(bool useLightMode)
-    {
-        string themeFileName;
-
-        if (SystemParameters.HighContrast)
-        {
-            themeFileName = "Fluent.HC.xaml";
-        }
-        else
-        {
-            themeFileName = useLightMode ? FluentLightDictionary : FluentDarkDictionary;
-        }
-
-        return new Uri(FluentThemeResourceDictionaryUri + themeFileName, UriKind.Absolute);
-    }
-
-    private static void AddOrUpdateThemeResources(ResourceDictionary rd, Uri dictionaryUri)
+    private static void AddOrUpdateThemeResources(ResourceDictionary rd, ResourceDictionary newDictionary)
     {
         if (rd == null)
             return;
 
-        ArgumentNullException.ThrowIfNull(dictionaryUri);
+        ArgumentNullException.ThrowIfNull(newDictionary);
 
-        var newDictionary = new ResourceDictionary() { Source = dictionaryUri };
         int index = LastIndexOfFluentThemeDictionary(rd);
+
+        IgnoreWindowResourcesChange = true;
 
         if (index >= 0)
         {
@@ -424,6 +406,8 @@ internal static class ThemeManager
         {
             rd.MergedDictionaries.Insert(0, newDictionary);
         }
+
+        IgnoreWindowResourcesChange = false;
     }
 
     private static int LastIndexOfFluentThemeDictionary(ResourceDictionary rd)
@@ -485,6 +469,7 @@ internal static class ThemeManager
 
 
     #region Private Fields
+    private const string FluentColorDictionaryUri = "pack://application:,,,/PresentationFramework.Fluent;component/Resources/Theme/";
     private const string FluentThemeResourceDictionaryUri = "pack://application:,,,/PresentationFramework.Fluent;component/Themes/";
     private const string RegPersonalizeKeyPath = "HKEY_CURRENT_USER\\Software\\Microsoft\\Windows\\CurrentVersion\\Themes\\Personalize";
     private const string FluentLightDictionary = "Fluent.Light.xaml";

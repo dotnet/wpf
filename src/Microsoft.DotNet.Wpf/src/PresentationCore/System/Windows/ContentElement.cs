@@ -1,27 +1,15 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 
 using MS.Internal;
 using MS.Internal.Interop;
 using MS.Internal.KnownBoxes;
 using MS.Internal.PresentationCore;
-using MS.Utility;
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Diagnostics;
-using System.Security;
 using System.Windows.Automation;
 using System.Windows.Automation.Peers;
 using System.Windows.Input;
-using System.Windows.Markup;
 using System.Windows.Media.Animation;
-using System.Windows.Threading;
-
-using SR=MS.Internal.PresentationCore.SR;
 
 namespace System.Windows
 {
@@ -91,7 +79,7 @@ namespace System.Windows
         ///     Returns a non-null value when some framework implementation
         ///     of this method has a non-visual parent connection,
         /// </returns>
-        protected virtual internal DependencyObject GetUIParentCore()
+        protected internal virtual DependencyObject GetUIParentCore()
         {
             return null;
         }
@@ -108,7 +96,6 @@ namespace System.Windows
         /// OnContentParentChanged is called when the parent of the content element is changed.
         /// </summary>
         /// <param name="oldParent">Old parent or null if the content element did not have a parent before.</param>
-        [FriendAccessAllowed] // Built into Core, also used by Framework.
         internal virtual void OnContentParentChanged(DependencyObject oldParent)
         {
             SynchronizeReverseInheritPropertyFlags(oldParent, true);
@@ -271,7 +258,6 @@ namespace System.Windows
         /// <summary>
         ///     Asynchronously re-evaluate the reverse-inherited properties.
         /// </summary>
-        [FriendAccessAllowed]
         internal void SynchronizeReverseInheritPropertyFlags(DependencyObject oldParent, bool isCoreParent)
         {
             if(IsKeyboardFocusWithin)
@@ -905,7 +891,7 @@ namespace System.Windows
         {
             get
             {
-                return TouchDevice.GetCapturedTouches(this, /* includeWithin = */ false);
+                return TouchDevice.GetCapturedTouches(this, includeWithin: false);
             }
         }
 
@@ -916,7 +902,7 @@ namespace System.Windows
         {
             get
             {
-                return TouchDevice.GetCapturedTouches(this, /* includeWithin = */ true);
+                return TouchDevice.GetCapturedTouches(this, includeWithin: true);
             }
         }
 
@@ -928,7 +914,7 @@ namespace System.Windows
         {
             get
             {
-                return TouchDevice.GetTouchesOver(this, /* includeWithin = */ true);
+                return TouchDevice.GetTouchesOver(this, includeWithin: true);
             }
         }
 
@@ -940,7 +926,7 @@ namespace System.Windows
         {
             get
             {
-                return TouchDevice.GetTouchesOver(this, /* includeWithin = */ false);
+                return TouchDevice.GetTouchesOver(this, includeWithin: false);
             }
         }
 

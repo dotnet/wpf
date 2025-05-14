@@ -1,30 +1,8 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
-//
-//
-
-using System;
 using System.IO;
-using System.Collections;
 using System.Collections.ObjectModel;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.ComponentModel.Design.Serialization;
-using System.Reflection;
-using MS.Internal;
-using System.Diagnostics;
-using System.Windows.Media;
-using System.Globalization;
-using System.Security;
-using System.Runtime.InteropServices;
-using System.Windows.Media.Animation;
-using System.Windows.Media.Composition;
-using System.Windows.Media.Imaging;
-using MS.Win32;
-using SR=MS.Internal.PresentationCore.SR;
-using UnsafeNativeMethods = MS.Win32.PresentationCore.UnsafeNativeMethods;
 using System.Windows.Markup;
 using System.Net.Cache;
 
@@ -82,7 +60,7 @@ namespace System.Windows.Media.Imaging
 
                 if (decoder.Frames.Count == 0)
                 {
-                    throw new System.ArgumentException(SR.Image_NoDecodeFrames, "uri");
+                    throw new System.ArgumentException(SR.Image_NoDecodeFrames, nameof(uri));
                 }
 
                 return decoder.Frames[0];
@@ -99,7 +77,7 @@ namespace System.Windows.Media.Imaging
 
                 if (decoder.Frames.Count == 0)
                 {
-                    throw new System.ArgumentException(SR.Image_NoDecodeFrames, "stream");
+                    throw new System.ArgumentException(SR.Image_NoDecodeFrames, nameof(stream));
                 }
 
                 return decoder.Frames[0];

@@ -1,6 +1,5 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 //
 // Description:
@@ -8,13 +7,9 @@
 //      a data error in the source item itself (e.g. as exposed by IDataErrorInfo).
 //
 
-using System;
 using System.Collections;
 using System.ComponentModel;
-using System.Diagnostics;
 using System.Globalization;
-using System.Windows;
-using System.Windows.Controls;
 using System.Windows.Data;
 using MS.Internal;
 
@@ -76,14 +71,6 @@ namespace System.Windows.Controls
                     // We do this in a paranoid way, even though indexers with
                     // string-valued arguments are not supposed to throw exceptions.
 
-                    // PreSharp uses message numbers that the C# compiler doesn't know about.
-                    // Disable the C# complaints, per the PreSharp documentation.
-                    #pragma warning disable 1634, 1691
-
-                    // PreSharp complains about catching NullReference (and other) exceptions.
-                    // It doesn't recognize that IsCritical[Application]Exception() handles these correctly.
-                    #pragma warning disable 56500
-
                     string error;
                     try
                     {
@@ -107,8 +94,6 @@ namespace System.Windows.Controls
                                             bindingExpr);
                         }
                     }
-                    #pragma warning restore 56500
-                    #pragma warning restore 1634, 1691
 
                     if (!String.IsNullOrEmpty(error))
                     {

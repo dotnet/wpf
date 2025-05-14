@@ -1,9 +1,6 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
-        
-using System;
-using System.Globalization;
+
 using System.IO;
 using System.Diagnostics;
 using System.Windows.Media;
@@ -11,10 +8,8 @@ using System.Windows.Media.Imaging;
 using System.Runtime.Versioning;
 
 using SD = System.Drawing;
-using SDI = System.Drawing.Imaging;
 using SW = System.Windows;
 using SWM = System.Windows.Media;
-using SWC = System.Windows.Controls;
 using MS.Win32;
 
 namespace System.Windows.Forms.Integration

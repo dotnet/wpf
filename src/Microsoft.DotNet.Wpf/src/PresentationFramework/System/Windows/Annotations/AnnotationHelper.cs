@@ -1,31 +1,16 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
-#pragma warning disable 1634, 1691
-
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.ComponentModel;
-using System.Windows.Threading;
-using System.IO;
-using System.Windows;
-using System.Windows.Annotations.Storage;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Markup;
 using System.Xml;
-using System.Diagnostics;
 using MS.Internal;
 using MS.Internal.Annotations;
 using MS.Internal.Annotations.Anchoring;
 using MS.Internal.Annotations.Component;
-using MS.Internal.Documents;
 using MS.Utility;
 
 namespace System.Windows.Annotations
@@ -674,7 +659,7 @@ namespace System.Windows.Annotations
             {
                 host = StyleHelper.FindNameInTemplateContent(fdr, "PART_ContentHost", fdr.TemplateInternal) as Decorator;
             }
-            return host != null ? host.Child : null;
+            return host?.Child;
         }
 
         private static IList<IAttachedAnnotation> GetSpannedAnnotationsForFlow(AnnotationService service, ITextSelection selection)
@@ -940,7 +925,7 @@ namespace System.Windows.Annotations
             {
                 SolidColorBrush brush = highlightBrush as SolidColorBrush;
                 if (brush == null)
-                    throw new ArgumentException(SR.InvalidHighlightColor, "highlightBrush");
+                    throw new ArgumentException(SR.InvalidHighlightColor, nameof(highlightBrush));
 
                 // Opacity less than 0 is treated as 0; greater than 1 is treated a 1.
                 byte alpha;
@@ -1096,7 +1081,7 @@ namespace System.Windows.Annotations
 
             if (!service.IsEnabled)
             {
-                throw new ArgumentException(SR.AnnotationServiceNotEnabled, "service");
+                throw new ArgumentException(SR.AnnotationServiceNotEnabled, nameof(service));
             }
 
             DocumentViewerBase viewer = service.Root as DocumentViewerBase;

@@ -1,20 +1,13 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
-
-// Description: A derived ComboBox with some extra functionality 
-// for the Zoom behaviours of DocumentApplicationUI.
-#pragma warning disable 1634, 1691
 
 using System;
-using System.ComponentModel;
 using System.Globalization;
 using System.Windows;
 using System.Windows.Automation;
 using System.Windows.Automation.Peers;
 using System.Windows.Automation.Provider;
 using System.Windows.Controls;
-using System.Windows.Data;
 using System.Windows.Input;         // For event args
 using System.Windows.TrustUI;       // For string resources
 
@@ -473,14 +466,8 @@ namespace MS.Internal.Documents.Application
                         SR.ZoomPercentageConverterStringFormat, zoomValue);
                     return true;
                 }
-                // Allow empty catch statements.
-#pragma warning disable 56502
-
                 catch (ArgumentNullException) { }
                 catch (FormatException) { }
-
-                // Disallow empty catch statements.
-#pragma warning restore 56502
             }
 
             // Invalid zoom value encountered.
@@ -529,7 +516,7 @@ namespace MS.Internal.Documents.Application
             /// <summary>
             /// <see cref="AutomationPeer.GetClassNameCore"/>
             /// </summary>
-            override protected string GetClassNameCore()
+            protected override string GetClassNameCore()
             {
                 return "ZoomComboBox";
             }
@@ -537,7 +524,7 @@ namespace MS.Internal.Documents.Application
             /// <summary>
             /// <see cref="AutomationPeer.GetPattern"/>
             /// </summary>
-            override public object GetPattern(PatternInterface patternInterface)
+            public override object GetPattern(PatternInterface patternInterface)
             {
                 if (patternInterface == PatternInterface.Value)
                 {

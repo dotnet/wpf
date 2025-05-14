@@ -1,24 +1,12 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
-using System;
 using System.Collections;
-using System.Diagnostics;
-using System.ComponentModel;
-using System.Runtime.InteropServices;
 using System.Windows.Threading;
-using System.Security;
 using System.Windows.Media;
-using System.Windows.Media.Media3D;
-using System.Windows.Markup;
 using System.Windows.Input;
-using MS.Win32;
 using MS.Utility;
 using MS.Internal;
-using MS.Internal.PresentationCore;                        // SecurityHelper
-
-using SR=MS.Internal.PresentationCore.SR;
 
 namespace System.Windows
 {
@@ -265,13 +253,12 @@ namespace System.Windows
         /// <param name="ce">
         ///     The element whose ancestory may have changed.
         /// </param>
-        [FriendAccessAllowed] // Built into Core, also used by Framework.
         internal static void OnAncestorChanged(ContentElement ce)
         {
             ArgumentNullException.ThrowIfNull(ce);
 
 
-            if (true == (bool)ce.GetValue(GetsSourceChangedEventProperty))
+            if ((bool)ce.GetValue(GetsSourceChangedEventProperty))
             {
                 UpdateSourceOfElement(ce, null, null);
             }
@@ -443,36 +430,21 @@ namespace System.Windows
             }
             
             // Always set the SourceProperty on the new root.
-            if (newRoot != null)
-            {
-                newRoot.SetValue(RootSourceProperty, this);
-            }
+            newRoot?.SetValue(RootSourceProperty, this);
 
             UIElement oldRootUIElement = oldRoot as UIElement;
             UIElement newRootUIElement = newRoot as UIElement;
 
             // The IsVisible property can only be true if root visual is connected to a presentation source.
             // For Read-Only force-inherited properties, use a private update method.
-            if(oldRootUIElement != null)
-            {
-                oldRootUIElement.UpdateIsVisibleCache();
-            }
-            if(newRootUIElement != null)
-            {
-                newRootUIElement.UpdateIsVisibleCache();
-            }
+            oldRootUIElement?.UpdateIsVisibleCache();
+            newRootUIElement?.UpdateIsVisibleCache();
 
             // Broadcast the Unloaded event starting at the old root visual
-            if (oldRootUIElement != null)
-            {
-                oldRootUIElement.OnPresentationSourceChanged(false);
-            }
+            oldRootUIElement?.OnPresentationSourceChanged(false);
 
             // Broadcast the Loaded event starting at the root visual
-            if (newRootUIElement != null)
-            {
-                newRootUIElement.OnPresentationSourceChanged(true);
-            }
+            newRootUIElement?.OnPresentationSourceChanged(true);
 
             // To fire PresentationSourceChanged when the RootVisual changes;
             // rather than simulate a "parent" pointer change, we just walk the
@@ -547,16 +519,15 @@ namespace System.Windows
         {
             Debug.Assert(uie is UIElement3D or UIElement);
             
-            if (true == (bool)uie.GetValue(GetsSourceChangedEventProperty))
+            if ((bool)uie.GetValue(GetsSourceChangedEventProperty))
             {
                 UpdateSourceOfElement(uie, e.Ancestor, e.OldParent);
             }
         }
 
-        [FriendAccessAllowed] // To allow internal code paths to access this function 
         internal static PresentationSource CriticalFromVisual(DependencyObject v)
         {
-            return CriticalFromVisual(v, true /* enable2DTo3DTransition */);
+            return CriticalFromVisual(v, enable2DTo3DTransition: true);
         }
 
         /// <param name="v">The dependency object to find the source for</param>
@@ -564,7 +535,6 @@ namespace System.Windows
         ///     Determines whether when walking the tree to enable transitioning from a 2D child
         ///     to a 3D parent or to stop once a 3D parent is encountered.
         /// </param>
-        [FriendAccessAllowed] // To allow internal code paths to access this function 
         internal static PresentationSource CriticalFromVisual(DependencyObject v, bool enable2DTo3DTransition)
         {
             ArgumentNullException.ThrowIfNull(v);
@@ -598,25 +568,20 @@ namespace System.Windows
         ///     Helper method which returns true when all the given visuals 
         ///     are in the same presentation source.
         /// </summary>
-        [FriendAccessAllowed] // To allow internal code paths to access this function 
-        internal static bool UnderSamePresentationSource(params DependencyObject[] visuals)
+        internal static bool IsUnderSamePresentationSource(params ReadOnlySpan<DependencyObject> visuals)
         {
-            if (visuals == null || visuals.Length == 0)
-            {
+            if (visuals.IsEmpty)
                 return true;
-            }
 
             PresentationSource baseSource = CriticalFromVisual(visuals[0]);
-
-            int count = visuals.Length;
-            for (int i = 1; i < count; i++)
+            for (int i = 1; i < visuals.Length; i++)
             {
-                PresentationSource currentSource = CriticalFromVisual(visuals[i]);
-                if (currentSource != baseSource)
+                if (baseSource != CriticalFromVisual(visuals[i]))
                 {
                     return false;
                 }
             }
+
             return true;
         }
 
@@ -677,7 +642,7 @@ namespace System.Windows
 
         private static PresentationSource FindSource(DependencyObject o)
         {
-            return FindSource(o, true /* enable2DTo3DTransition */);
+            return FindSource(o, enable2DTo3DTransition: true);
         }
 
         /// <param name="o">The dependency object to find the source for</param>
@@ -713,9 +678,10 @@ namespace System.Windows
             {
                 doTarget.SetValue(CachedSourceProperty, realSource);
 
-                SourceChangedEventArgs args = new SourceChangedEventArgs(cachedSource, realSource);
-
-                args.RoutedEvent=SourceChangedEvent;
+                SourceChangedEventArgs args = new SourceChangedEventArgs(cachedSource, realSource)
+                {
+                    RoutedEvent = SourceChangedEvent
+                };
                 if (doTarget is UIElement uiElement)
                 {
                     uiElement.RaiseEvent(args);

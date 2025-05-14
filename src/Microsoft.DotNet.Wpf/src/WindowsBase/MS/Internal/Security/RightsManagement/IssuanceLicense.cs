@@ -1,29 +1,11 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
-//
-//
 // Description:
-//   This class wraps the issuance license publishing serveces 
-//
-//
-//
-//
+//   This class wraps the issuance license publishing services
 
-
-using System;
 using System.Text;
-using System.Collections;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Diagnostics;
-using System.Security;
 using System.Security.RightsManagement;
-using SecurityHelper = MS.Internal.WindowsBase.SecurityHelper;
-using System.Globalization;             // For CultureInfo
-using MS.Internal;                      // for Invariant
-using System.Windows;
 
 namespace MS.Internal.Security.RightsManagement
 {
@@ -211,7 +193,7 @@ namespace MS.Internal.Security.RightsManagement
             }
         }
 
-        override public string ToString()
+        public override string ToString()
         {
             uint issuanceLicenseTemplateLength = 0;
             StringBuilder issuanceLicenseTemplate = null;
@@ -511,7 +493,7 @@ namespace MS.Internal.Security.RightsManagement
             return userHandle;
         }
 
-        static private Nullable<ContentRight> GetRightFromHandle(SafeRightsManagementPubHandle rightHandle,
+        private static Nullable<ContentRight> GetRightFromHandle(SafeRightsManagementPubHandle rightHandle,
                                                         out DateTime validFrom,
                                                         out DateTime validUntil)
         {
@@ -542,7 +524,7 @@ namespace MS.Internal.Security.RightsManagement
             return ClientSession.GetRightFromString(rightName.ToString());
         }
 
-        static private ContentUser GetUserFromHandle(SafeRightsManagementPubHandle userHandle)
+        private static ContentUser GetUserFromHandle(SafeRightsManagementPubHandle userHandle)
         {
             uint userNameLength = 0;
             StringBuilder userName = null;
@@ -711,8 +693,8 @@ namespace MS.Internal.Security.RightsManagement
             checked { localeId = (int)locId; }
 
             // now we can build a ContentUser
-            return new LocalizedNameDescriptionPair(name == null ? null : name.ToString(),
-                                                                          description == null ? null : description.ToString());
+            return new LocalizedNameDescriptionPair(name?.ToString(),
+                                                                          description?.ToString());
         }
 
         private Nullable<KeyValuePair<string, string>> GetApplicationSpecificData(int index)
@@ -769,8 +751,8 @@ namespace MS.Internal.Security.RightsManagement
             Errors.ThrowOnErrorCode(hr);
 
             // build strings from the StringBuilder  instances 
-            string name = (tempName == null) ? null : tempName.ToString();
-            string value = (tempValue == null) ? null : tempValue.ToString();
+            string name = tempName?.ToString();
+            string value = tempValue?.ToString();
 
             KeyValuePair<string, string> result = new KeyValuePair<string, string>(name, value);
 
@@ -1012,14 +994,15 @@ namespace MS.Internal.Security.RightsManagement
                                 publicKeyTemp);
             Errors.ThrowOnErrorCode(hr);
 
-            RevocationPoint resultRevocationPoint = new RevocationPoint();
-
-            resultRevocationPoint.Id = (idTemp == null) ? null : idTemp.ToString();
-            resultRevocationPoint.IdType = (idTypeTemp == null) ? null : idTypeTemp.ToString();
-            resultRevocationPoint.Url = (urlTemp == null) ? null : new Uri(urlTemp.ToString());
-            resultRevocationPoint.Name = (nameTemp == null) ? null : nameTemp.ToString();
-            resultRevocationPoint.PublicKey = (publicKeyTemp == null) ? null : publicKeyTemp.ToString();
-            resultRevocationPoint.Frequency = frequency;
+            RevocationPoint resultRevocationPoint = new RevocationPoint
+            {
+                Id = idTemp?.ToString(),
+                IdType = idTypeTemp?.ToString(),
+                Url = (urlTemp == null) ? null : new Uri(urlTemp.ToString()),
+                Name = nameTemp?.ToString(),
+                PublicKey = publicKeyTemp?.ToString(),
+                Frequency = frequency
+            };
 
             return resultRevocationPoint;
         }

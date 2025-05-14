@@ -1,6 +1,7 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
+
+using MS.Internal;
 
 //
 // Description:
@@ -8,15 +9,8 @@
 //      This is primarily used by internal code.
 //
 
-#pragma warning disable 1634, 1691 // To enable presharp warning disables (#pragma suppress) below.
-
 namespace System.Windows.Documents
 {
-    using System;
-    using System.Diagnostics;
-    using System.Windows;
-    using MS.Internal;
-
     /// <summary>
     /// NullTextPointer is an implementation of ITextPointer for NullTextContainer
     /// </summary>
@@ -271,7 +265,7 @@ namespace System.Windows.Documents
         {
             Debug.Assert(!_isFrozen, "Can't reposition a frozen pointer!");
 
-            Debug.Assert(false, "No scoping element!");
+            Debug.Fail("No scoping element!");
         }
 
         /// <summary>
@@ -279,7 +273,7 @@ namespace System.Windows.Documents
         /// </summary>
         int ITextPointer.MoveToLineBoundary(int count)
         {
-            Debug.Assert(false, "NullTextPointer does not expect layout dependent method calls!");
+            Debug.Fail("NullTextPointer does not expect layout dependent method calls!");
             return 0;
         }
 
@@ -288,7 +282,7 @@ namespace System.Windows.Documents
         /// </summary>
         Rect ITextPointer.GetCharacterRect(LogicalDirection direction)
         {
-            Debug.Assert(false, "NullTextPointer does not expect layout dependent method calls!");
+            Debug.Fail("NullTextPointer does not expect layout dependent method calls!");
             return new Rect();
         }
 
@@ -497,8 +491,7 @@ namespace System.Windows.Documents
         {
             get
             {
-                    #pragma warning suppress 56503
-                    throw new NotImplementedException();
+                throw new NotImplementedException();
             }
         }
 

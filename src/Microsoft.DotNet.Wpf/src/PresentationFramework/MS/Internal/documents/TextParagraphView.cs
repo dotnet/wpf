@@ -1,21 +1,14 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 // 
 // Description: TextView implementation for TextBlock. 
 //
 
-using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Diagnostics;
 using System.Windows;
-using System.Windows.Controls;
 using System.Windows.Documents;
 using System.Windows.Media;
-using MS.Internal.Text;
-using MS.Internal.PtsHost;
 
 namespace MS.Internal.Documents
 {
@@ -94,7 +87,7 @@ namespace MS.Internal.Documents
                 throw new InvalidOperationException(SR.TextViewInvalidLayout);
             }
             ArgumentNullException.ThrowIfNull(position);
-            ValidationHelper.VerifyPosition(_textContainer, position, "position");
+            ValidationHelper.VerifyPosition(_textContainer, position, nameof(position));
 
             return _owner.GetRectangleFromTextPosition(position);
         }
@@ -114,9 +107,9 @@ namespace MS.Internal.Documents
             }
             ArgumentNullException.ThrowIfNull(startPosition);
             ArgumentNullException.ThrowIfNull(endPosition);
-            ValidationHelper.VerifyPosition(_textContainer, startPosition, "startPosition");
+            ValidationHelper.VerifyPosition(_textContainer, startPosition, nameof(startPosition));
             ValidationHelper.VerifyDirection(startPosition.LogicalDirection, "startPosition.LogicalDirection");
-            ValidationHelper.VerifyPosition(_textContainer, endPosition, "endPosition");
+            ValidationHelper.VerifyPosition(_textContainer, endPosition, nameof(endPosition));
 
             Geometry geometry = _owner.GetTightBoundingGeometryFromTextPositions(startPosition, endPosition);
 #if TEXTPANELLAYOUTDEBUG
@@ -138,7 +131,7 @@ namespace MS.Internal.Documents
                 throw new InvalidOperationException(SR.TextViewInvalidLayout);
             }
             ArgumentNullException.ThrowIfNull(position);
-            ValidationHelper.VerifyPosition(_textContainer, position, "position");
+            ValidationHelper.VerifyPosition(_textContainer, position, nameof(position));
 
             // TextBlock element does not support columns, hence suggestedX does not change
             // with line movement.
@@ -159,7 +152,7 @@ namespace MS.Internal.Documents
             if (!(lineIndex >= 0 && lineIndex < lines.Count))
             {
                 Debug.Assert(false);
-                throw new ArgumentOutOfRangeException("position");
+                throw new ArgumentOutOfRangeException(nameof(position));
             }
 
             // Advance line index by count.
@@ -198,7 +191,7 @@ namespace MS.Internal.Documents
             {
                 throw new InvalidOperationException(SR.TextViewInvalidLayout);
             }
-            ValidationHelper.VerifyPosition(_textContainer, position, "position");
+            ValidationHelper.VerifyPosition(_textContainer, position, nameof(position));
 
             // No special cases for this, the only special case is handled in TextBlock
             int lineIndex = GetLineFromPosition(Lines, position);
@@ -217,7 +210,7 @@ namespace MS.Internal.Documents
             {
                 throw new InvalidOperationException(SR.TextViewInvalidLayout);
             }
-            ValidationHelper.VerifyPosition(_textContainer, position, "position");
+            ValidationHelper.VerifyPosition(_textContainer, position, nameof(position));
 
             // Get line index for position, and offset 
             int lineIndex = GetLineFromPosition(Lines, position);
@@ -240,7 +233,7 @@ namespace MS.Internal.Documents
             {
                 throw new InvalidOperationException(SR.TextViewInvalidLayout);
             }
-            ValidationHelper.VerifyPosition(_textContainer, position, "position");
+            ValidationHelper.VerifyPosition(_textContainer, position, nameof(position));
 
             // Get line index for position, and offset 
             int lineIndex = GetLineFromPosition(Lines, position);
@@ -267,7 +260,7 @@ namespace MS.Internal.Documents
                 throw new InvalidOperationException(SR.TextViewInvalidLayout);
             }
             ArgumentNullException.ThrowIfNull(position);
-            ValidationHelper.VerifyPosition(_textContainer, position, "position");
+            ValidationHelper.VerifyPosition(_textContainer, position, nameof(position));
 
             lines = Lines;
             Debug.Assert(lines != null && lines.Count > 0);
@@ -286,7 +279,7 @@ namespace MS.Internal.Documents
         {
             // Verify that layout information is valid. Cannot continue if not valid.
             ArgumentNullException.ThrowIfNull(position);
-            ValidationHelper.VerifyPosition(_textContainer, position, "position");
+            ValidationHelper.VerifyPosition(_textContainer, position, nameof(position));
             if (!IsValid)
             {
                 throw new InvalidOperationException(SR.TextViewInvalidLayout);

@@ -1,10 +1,8 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 #nullable disable
 
-using System.Diagnostics;
 using System.Windows.Markup;
 using System.Xaml;
 
@@ -16,10 +14,9 @@ namespace MS.Internal.Xaml.Context
         public static object GetTargetProperty(ObjectWriterContext xamlContext)
         {
             // If the XamlMember implements IProvideValueTarget, ask it for the TargetProperty first
-            Debug.Assert(xamlContext.ParentProperty != null);
+            Debug.Assert(xamlContext.ParentProperty is not null);
 
-            IProvideValueTarget ipvt = xamlContext.ParentProperty as IProvideValueTarget;
-            if (ipvt != null)
+            if (xamlContext.ParentProperty is IProvideValueTarget ipvt)
             {
                 return ipvt.TargetProperty;
             }
@@ -28,7 +25,7 @@ namespace MS.Internal.Xaml.Context
             //
             // We should never have a null ParentProperty here but
             // protect against null refs since we are going to dereference it
-            if (parentProperty == null)
+            if (parentProperty is null)
             {
                 return null;
             }

@@ -1,12 +1,8 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
-
-namespace System.Windows 
+namespace System.Windows
 {
-    using System;
-
     /// <summary>
     ///     This attribute declares that a property is visible when the 
     ///     property owner is a parent of another element.  For example, 

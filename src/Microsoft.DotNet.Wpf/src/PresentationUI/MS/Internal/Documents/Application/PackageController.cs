@@ -1,25 +1,21 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 // Description:
 //  Responsible for the lifecycle of the PackageDocument and the actions that can
 //  be performed on it.
 
 using System;
-using System.IO.Packaging;
-using System.Security;
 using System.Windows.TrustUI;
-using System.Windows.Xps.Packaging;
 
 namespace MS.Internal.Documents.Application
 {
-/// <summary>
-/// Responsible for the lifecycle of the PackageDocument and the actions that can
-/// be performed on it.
-/// <see cref="MS.Internal.Documents.Application.IDocumentController"/>
-/// </summary>
-internal class PackageController : IDocumentController
+    /// <summary>
+    /// Responsible for the lifecycle of the PackageDocument and the actions that can
+    /// be performed on it.
+    /// <see cref="MS.Internal.Documents.Application.IDocumentController"/>
+    /// </summary>
+    internal class PackageController : IDocumentController
 {
     #region IDocumentController Members
     //--------------------------------------------------------------------------

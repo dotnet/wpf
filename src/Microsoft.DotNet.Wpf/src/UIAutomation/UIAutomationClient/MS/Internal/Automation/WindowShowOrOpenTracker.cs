@@ -1,13 +1,10 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 // Description: Class used to track new UI appearing and make sure any events
 // are propogated to that new UI.
 
 using System;
-using System.Globalization;
-using System.Text;
 using System.Windows.Automation;
 using System.Diagnostics;
 using MS.Win32;
@@ -74,7 +71,7 @@ namespace MS.Internal.Automation
                 // Ignore WCP hwnd creates; we get eventId EventObjectUIFragmentCreate for those
                 // Are these all the WCP classnames?  Is there a better way to ignore WCP windows?
                 string str = ProxyManager.GetClassName(nativeHwnd);
-                if (String.Compare(str, 0, _wcpClassName, 0, _wcpClassName.Length, StringComparison.OrdinalIgnoreCase) == 0)
+                if (string.Compare(str, 0, _wcpClassName, 0, _wcpClassName.Length, StringComparison.OrdinalIgnoreCase) == 0)
                     return;
             }
 
@@ -98,10 +95,10 @@ namespace MS.Internal.Automation
         //  Private Fields
         //
         //------------------------------------------------------
- 
+
         #region Private Fields
 
-        static readonly string _wcpClassName = "HwndWrapper";
+        private static readonly string _wcpClassName = "HwndWrapper";
 
         #endregion Private Fields
     }

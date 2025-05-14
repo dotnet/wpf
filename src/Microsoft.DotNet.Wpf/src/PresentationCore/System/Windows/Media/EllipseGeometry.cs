@@ -1,28 +1,10 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
-//                                             
-
-using System;
 using MS.Internal;
-using System.ComponentModel;
-using System.ComponentModel.Design.Serialization;
-using System.Reflection;
-using System.Collections;
-using System.Text;
-using System.Globalization;
-using System.Windows.Media;
 using System.Windows.Media.Composition;
-using System.Windows;
-using System.Text.RegularExpressions;
-using System.Windows.Media.Animation;
-using System.Diagnostics;
-using System.Runtime.InteropServices;
-using System.Security;
-using SR=MS.Internal.PresentationCore.SR;
 
-namespace System.Windows.Media 
+namespace System.Windows.Media
 {
     /// <summary>
     /// This is the Geometry class for Circles and Ellipses 
@@ -119,7 +101,7 @@ namespace System.Windows.Media
                     Transform.GetTransformValue(transform, out geometryMatrix);
 
                     boundsRect = EllipseGeometry.GetBoundsHelper(
-                        null /* no pen */,
+                        pen: null,
                         Matrix.Identity,
                         Center,
                         RadiusX,
@@ -317,20 +299,22 @@ namespace System.Windows.Media
                 return Geometry.GetEmptyPathGeometryData();
             }
 
-            PathGeometryData data = new PathGeometryData();
-            data.FillRule = FillRule.EvenOdd;
-            data.Matrix = CompositionResourceManager.TransformToMilMatrix3x2D(Transform);
+            PathGeometryData data = new PathGeometryData
+            {
+                FillRule = FillRule.EvenOdd,
+                Matrix = CompositionResourceManager.TransformToMilMatrix3x2D(Transform)
+            };
 
             Point[] points = GetPointList();
 
             ByteStreamGeometryContext ctx = new ByteStreamGeometryContext();
 
-            ctx.BeginFigure(points[0], true /* is filled */, true /* is closed */);
+            ctx.BeginFigure(points[0], isFilled: true, isClosed: true);
 
             // i == 0, 3, 6, 9
             for (int i = 0; i < 12; i += 3)
             {
-                ctx.BezierTo(points[i + 1], points[i + 2], points[i + 3], true /* is stroked */, true /* is smooth join */);
+                ctx.BezierTo(points[i + 1], points[i + 2], points[i + 3], isStroked: true, isSmoothJoin: true);
             }
 
             ctx.Close();
@@ -357,7 +341,7 @@ namespace System.Windows.Media
             return points;
         }
 
-        private unsafe static void GetPointList(Point * points, uint pointsCount, Point center, double radiusX, double radiusY)
+        private static unsafe void GetPointList(Point * points, uint pointsCount, Point center, double radiusX, double radiusY)
         {
             Invariant.Assert(pointsCount >= c_pointCount);
 

@@ -1,27 +1,16 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 
 using MS.Internal;
 using MS.Internal.KnownBoxes;
-using MS.Internal.Media;
 using MS.Win32;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Diagnostics;
-using System.Threading;
-using System.Windows;
-using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using System.Windows.Data;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Media3D;
-using System.Windows.Markup;
 using System.Windows.Threading;
-using System.Security;
 
 namespace System.Windows.Controls
 {
@@ -394,8 +383,10 @@ namespace System.Windows.Controls
             }
             else
             {
-                PendingToolTipTimer = new DispatcherTimer(DispatcherPriority.Normal);
-                PendingToolTipTimer.Interval = TimeSpan.FromMilliseconds(showDelay);
+                PendingToolTipTimer = new DispatcherTimer(DispatcherPriority.Normal)
+                {
+                    Interval = TimeSpan.FromMilliseconds(showDelay)
+                };
                 PendingToolTipTimer.Tick += new EventHandler((s, e) => { PromotePendingToolTipToCurrent(triggerAction); });
                 PendingToolTipTimer.Tag = BooleanBoxes.Box(useShortDelay);
                 PendingToolTipTimer.Start();
@@ -453,10 +444,12 @@ namespace System.Windows.Controls
                     _currentToolTip.SetValue(ServiceOwnedProperty, BooleanBoxes.TrueBox);
 
                     // Bind the content of the tooltip to the ToolTip attached property
-                    Binding binding = new Binding();
-                    binding.Path = new PropertyPath(ToolTipService.ToolTipProperty);
-                    binding.Mode = BindingMode.OneWay;
-                    binding.Source = o;
+                    Binding binding = new Binding
+                    {
+                        Path = new PropertyPath(ToolTipService.ToolTipProperty),
+                        Mode = BindingMode.OneWay,
+                        Source = o
+                    };
                     _currentToolTip.SetBinding(ToolTip.ContentProperty, binding);
                 }
 
@@ -484,8 +477,10 @@ namespace System.Windows.Controls
                     SetSafeArea(_currentToolTip);
                 }
 
-                CurrentToolTipTimer = new DispatcherTimer(DispatcherPriority.Normal);
-                CurrentToolTipTimer.Interval = TimeSpan.FromMilliseconds(ToolTipService.GetShowDuration(o));
+                CurrentToolTipTimer = new DispatcherTimer(DispatcherPriority.Normal)
+                {
+                    Interval = TimeSpan.FromMilliseconds(ToolTipService.GetShowDuration(o))
+                };
                 CurrentToolTipTimer.Tick += new EventHandler(OnShowDurationTimerExpired);
                 CurrentToolTipTimer.Start();
             }
@@ -585,11 +580,8 @@ namespace System.Windows.Controls
                 if (tooltip.IsOpen)
                 {
                     IInputElement element = owner as IInputElement;
-                    if (element != null)
-                    {
-                        // ** Public callout - re-entrancy is possible **//
-                        element.RaiseEvent(new ToolTipEventArgs(opening:false));
-                    }
+                    // ** Public callout - re-entrancy is possible **//
+                    element?.RaiseEvent(new ToolTipEventArgs(opening: false));
                 }
             }
             finally
@@ -602,8 +594,10 @@ namespace System.Windows.Controls
                     tooltip.IsOpen = false;
 
                     // allow time for the popup's fade-out or slide animation
-                    _forceCloseTimer = new DispatcherTimer(DispatcherPriority.Normal);
-                    _forceCloseTimer.Interval = Popup.AnimationDelayTime;
+                    _forceCloseTimer = new DispatcherTimer(DispatcherPriority.Normal)
+                    {
+                        Interval = Popup.AnimationDelayTime
+                    };
                     _forceCloseTimer.Tick += new EventHandler(OnForceClose);
                     _forceCloseTimer.Tag = tooltip;
                     _forceCloseTimer.Start();
@@ -614,8 +608,10 @@ namespace System.Windows.Controls
                     _quickShow = (betweenShowDelay > 0);
                     if (_quickShow)
                     {
-                        CurrentToolTipTimer = new DispatcherTimer(DispatcherPriority.Normal);
-                        CurrentToolTipTimer.Interval = TimeSpan.FromMilliseconds(betweenShowDelay);
+                        CurrentToolTipTimer = new DispatcherTimer(DispatcherPriority.Normal)
+                        {
+                            Interval = TimeSpan.FromMilliseconds(betweenShowDelay)
+                        };
                         CurrentToolTipTimer.Tick += new EventHandler(OnBetweenShowDelay);
                         CurrentToolTipTimer.Start();
                     }
@@ -1294,7 +1290,7 @@ namespace System.Windows.Controls
 
         #region Private Types
 
-        struct WeakRefWrapper<T> where T : class
+        private struct WeakRefWrapper<T> where T : class
         {
             private WeakReference<T> _storage;
 
@@ -1356,7 +1352,7 @@ namespace System.Windows.Controls
         // the top-down scan is still efficient in practice (the rectangles usually arrive in
         // top-down order already), and the majority of edges in the resulting convex hull are
         // axis-aligned.
-        class ConvexHull
+        private class ConvexHull
         {
             internal ConvexHull(PresentationSource source, List<NativeMethods.RECT> rects)
             {
@@ -1703,10 +1699,10 @@ namespace System.Windows.Controls
                 return (b.X - a.X) * (c.Y - a.Y) - (b.Y - a.Y) * (c.X - a.X);
             }
 
-            enum Direction { Skew, Left, Right, Up, Down }
+            private enum Direction { Skew, Left, Right, Up, Down }
 
             [DebuggerDisplay("{X} {Y} {Direction}")]
-            struct Point
+            private struct Point
             {
                 public int X { get; set; }
                 public int Y { get; set; }
@@ -1720,11 +1716,11 @@ namespace System.Windows.Controls
                 }
             }
 
-            class PointList : List<Point>
+            private class PointList : List<Point>
             { }
 
-            Point[] _points;
-            PresentationSource _source;
+            private Point[] _points;
+            private PresentationSource _source;
         }
 
         #endregion
@@ -1736,7 +1732,7 @@ namespace System.Windows.Controls
         // tooltips instantly (where "continuous" and "instantly" are the
         // end-user's perception).   The value here is large enough to make the
         // "SafeAreaOnHyperlink" test pass.
-        static private int ShortDelay = 73;
+        private static int ShortDelay = 73;
 
         // pending ToolTip
         private ToolTip _pendingToolTip;

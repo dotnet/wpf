@@ -1,7 +1,30 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
-        
+
+
+#region Using declarations
+
+using System.Collections;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Collections.Specialized;
+using System.ComponentModel;
+using System.Diagnostics;
+using System.Runtime.InteropServices;
+using System.Windows.Automation.Peers;
+using System.Windows.Controls.Primitives;
+using System.Windows.Input;
+using System.Windows.Interop;
+using System.Windows.Media;
+using System.Windows.Threading;
+#if RIBBON_IN_FRAMEWORK
+using System.Windows.Controls.Ribbon.Primitives;
+using Microsoft.Windows.Controls;
+#else
+    using Microsoft.Windows.Automation.Peers;
+    using Microsoft.Windows.Controls.Ribbon.Primitives;
+#endif
+using MS.Internal;
 
 #if RIBBON_IN_FRAMEWORK
 namespace System.Windows.Controls.Ribbon
@@ -9,33 +32,6 @@ namespace System.Windows.Controls.Ribbon
 namespace Microsoft.Windows.Controls.Ribbon
 #endif
 {
-    #region Using declarations
-
-    using System;
-    using System.Collections;
-    using System.Collections.Generic;
-    using System.Collections.ObjectModel;
-    using System.Collections.Specialized;
-    using System.ComponentModel;
-    using System.Diagnostics;
-    using System.Runtime.InteropServices;
-    using System.Windows;
-    using System.Windows.Automation.Peers;
-    using System.Windows.Controls;
-    using System.Windows.Controls.Primitives;
-    using System.Windows.Input;
-    using System.Windows.Interop;
-    using System.Windows.Media;
-    using System.Windows.Threading;
-#if RIBBON_IN_FRAMEWORK
-    using System.Windows.Controls.Ribbon.Primitives;
-    using Microsoft.Windows.Controls;
-#else
-    using Microsoft.Windows.Automation.Peers;
-    using Microsoft.Windows.Controls.Ribbon.Primitives;
-#endif
-    using MS.Internal;
-
     #endregion Using declarations
 
     /// <summary>
@@ -67,14 +63,14 @@ namespace Microsoft.Windows.Controls.Ribbon
         private Dictionary<int, int> _tabDisplayIndexToIndexMap = new Dictionary<int, int>(); // A map from display index to collection index of tab items.
         private double _mouseWheelCumulativeDelta = 0; // The aggregate of mouse wheel delta since the last mouse wheel tab selection change.
         private const double MouseWheelSelectionChangeThreshold = 100; // The threshold of mouse wheel delta to change tab selection.
-        UIElement _qatTopHost = null;   // ContentPresenter hosting QuickAccessToolBar
-        UIElement _titleHost = null;    // ContentPresenter hosting the Title
-        UIElement _helpPaneHost = null; // ContentPresenter hosting the HelpPaneContent
-        ItemsPresenter _itemsPresenter = null;
+        private UIElement _qatTopHost = null;   // ContentPresenter hosting QuickAccessToolBar
+        private UIElement _titleHost = null;    // ContentPresenter hosting the Title
+        private UIElement _helpPaneHost = null; // ContentPresenter hosting the HelpPaneContent
+        private ItemsPresenter _itemsPresenter = null;
         private bool _inContextMenu = false;
         private bool _retainFocusOnEscape = false;
-        KeyTipService.KeyTipFocusEventHandler _keyTipEnterFocusHandler = null;
-        KeyTipService.KeyTipFocusEventHandler _keyTipExitRestoreFocusHandler = null;
+        private KeyTipService.KeyTipFocusEventHandler _keyTipEnterFocusHandler = null;
+        private KeyTipService.KeyTipFocusEventHandler _keyTipExitRestoreFocusHandler = null;
 
         private const string ContextualTabGroupItemsControlTemplateName = "PART_ContextualTabGroupItemsControl";
         private const string TitlePanelTemplateName = "PART_TitlePanel";
@@ -826,7 +822,7 @@ namespace Microsoft.Windows.Controls.Ribbon
                 // 1. If clicking a tab that is being clicked in its 'selected' state for
                 //    the second time, toggle its 'IsMinimized' behavior.
                 // 2. Otherwise do nothing.
-                if (_selectedTabClicked == true || this.IsMinimized)
+                if (_selectedTabClicked || this.IsMinimized)
                 {
                     IsMinimized = !IsMinimized;
                     IsDropDownOpen = false;
@@ -847,7 +843,7 @@ namespace Microsoft.Windows.Controls.Ribbon
                 //    * Minimize and display the pop-up.
                 // 3. If maximized and the tab was NOT initially selected.
                 //    * Minimize do not display any pop-ups.
-                if (_selectedTabClicked == true)
+                if (_selectedTabClicked)
                 {
                     IsMinimized = !IsMinimized;
                     IsDropDownOpen = false;
@@ -917,11 +913,8 @@ namespace Microsoft.Windows.Controls.Ribbon
 
         private void OnTabHeadersScrollChanged(object d, ScrollChangedEventArgs e)
         {
-            if (ContextualTabGroupItemsControl != null)
-            {
-                // When scrollbars appear for the TabHeaders, collapse the ContextualTabGroups. 
-                ContextualTabGroupItemsControl.ForceCollapse = !(DoubleUtil.GreaterThanOrClose(e.ViewportWidth, e.ExtentWidth));
-            }
+            // When scrollbars appear for the TabHeaders, collapse the ContextualTabGroups. 
+            ContextualTabGroupItemsControl?.ForceCollapse = !(DoubleUtil.GreaterThanOrClose(e.ViewportWidth, e.ExtentWidth));
         }
         
         #endregion
@@ -989,10 +982,7 @@ namespace Microsoft.Windows.Controls.Ribbon
                             if (newSelectedIndex >= 0)
                             {
                                 SelectedIndex = newSelectedIndex;
-                                if (_tabHeaderItemsControl != null)
-                                {
-                                    _tabHeaderItemsControl.ScrollIntoView(SelectedIndex);
-                                }
+                                _tabHeaderItemsControl?.ScrollIntoView(SelectedIndex);
                             }
                         }
                     }
@@ -1007,10 +997,7 @@ namespace Microsoft.Windows.Controls.Ribbon
                             if (newSelectedIndex >= 0)
                             {
                                 SelectedIndex = newSelectedIndex;
-                                if (_tabHeaderItemsControl != null)
-                                {
-                                    _tabHeaderItemsControl.ScrollIntoView(SelectedIndex);
-                                }
+                                _tabHeaderItemsControl?.ScrollIntoView(SelectedIndex);
                             }
                         }
                     }
@@ -1083,10 +1070,7 @@ namespace Microsoft.Windows.Controls.Ribbon
             }
 
             RibbonTab container = element as RibbonTab;
-            if (container != null)
-            {
-                container.PrepareRibbonTab();
-            }
+            container?.PrepareRibbonTab();
         }
         /// <summary>
         ///     Gets called when items change on this itemscontrol.
@@ -1282,10 +1266,7 @@ namespace Microsoft.Windows.Controls.Ribbon
             if (selectedTab != null)
             {
                 RibbonTabAutomationPeer peer = UIElementAutomationPeer.CreatePeerForElement(selectedTab) as RibbonTabAutomationPeer;
-                if (peer != null)
-                {
-                    peer.RaiseTabExpandCollapseAutomationEvent((bool)e.OldValue, (bool)e.NewValue);
-                }
+                peer?.RaiseTabExpandCollapseAutomationEvent((bool)e.OldValue, (bool)e.NewValue);
             }
         }
 
@@ -1341,10 +1322,7 @@ namespace Microsoft.Windows.Controls.Ribbon
 
             // Raise UI Automation Events
             RibbonAutomationPeer peer = UIElementAutomationPeer.FromElement(ribbon) as RibbonAutomationPeer;
-            if (peer != null)
-            {
-                peer.RaiseExpandCollapseAutomationEvent(!(bool)e.OldValue, !(bool)e.NewValue);
-            }
+            peer?.RaiseExpandCollapseAutomationEvent(!(bool)e.OldValue, !(bool)e.NewValue);
 
         }
 
@@ -1483,19 +1461,13 @@ namespace Microsoft.Windows.Controls.Ribbon
                 throw new InvalidOperationException(Microsoft.Windows.Controls.SR.Ribbon_ContextualTabHeadersSourceInvalid);
             }
 
-            if (ribbon.ContextualTabGroupItemsControl != null)
-            {
-                ribbon.ContextualTabGroupItemsControl.ItemsSource = (IEnumerable)args.NewValue;
-            }
+            ribbon.ContextualTabGroupItemsControl?.ItemsSource = (IEnumerable)args.NewValue;
         }
 
         private static void OnNotifyContextualTabGroupPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             Ribbon ribbon = (Ribbon)d;
-            if (ribbon.ContextualTabGroupItemsControl != null)
-            {
-                ribbon.ContextualTabGroupItemsControl.NotifyPropertyChanged(e);
-            }
+            ribbon.ContextualTabGroupItemsControl?.NotifyPropertyChanged(e);
         }
 
         private static void OnNotifyTabHeaderPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
@@ -1505,10 +1477,7 @@ namespace Microsoft.Windows.Controls.Ribbon
             for (int i = 0; i < itemCount; i++)
             {
                 RibbonTab ribbonTab = ribbon.ItemContainerGenerator.ContainerFromIndex(i) as RibbonTab;
-                if (ribbonTab != null)
-                {
-                    ribbonTab.NotifyPropertyChanged(e);
-                }
+                ribbonTab?.NotifyPropertyChanged(e);
             }
         }
 
@@ -1602,11 +1571,13 @@ namespace Microsoft.Windows.Controls.Ribbon
             Point startPoint = popupPlacementTarget.PointToScreen(new Point());
             Point endPoint = popupPlacementTarget.PointToScreen(new Point(popupPlacementTarget.ActualWidth, popupPlacementTarget.ActualHeight));
 
-            NativeMethods.RECT popupPlacementTargetRect = new NativeMethods.RECT();
-            popupPlacementTargetRect.left = (int)startPoint.X;
-            popupPlacementTargetRect.right = (int)endPoint.X;
-            popupPlacementTargetRect.top = (int)startPoint.Y;
-            popupPlacementTargetRect.bottom = (int)endPoint.Y;
+            NativeMethods.RECT popupPlacementTargetRect = new NativeMethods.RECT
+            {
+                left = (int)startPoint.X,
+                right = (int)endPoint.X,
+                top = (int)startPoint.Y,
+                bottom = (int)endPoint.Y
+            };
             IntPtr monitorPtr = NativeMethods.MonitorFromRect(ref popupPlacementTargetRect, NativeMethods.MONITOR_DEFAULTTONEAREST);
             if (monitorPtr != IntPtr.Zero)
             {
@@ -1716,19 +1687,13 @@ namespace Microsoft.Windows.Controls.Ribbon
             if (ribbon._tabHeaderItemsControl != null)
             {
                 RibbonTabHeadersPanel tabHeadersPanel = ribbon._tabHeaderItemsControl.InternalItemsHost as RibbonTabHeadersPanel;
-                if (tabHeadersPanel != null)
-                {
-                    tabHeadersPanel.OnNotifyRibbonBorderBrushChanged();
-                }
+                tabHeadersPanel?.OnNotifyRibbonBorderBrushChanged();
             }
             RibbonContextualTabGroupItemsControl contextualItemsControl = ribbon.ContextualTabGroupItemsControl;
             if (contextualItemsControl != null)
             {
                 RibbonContextualTabGroupsPanel contextualTabHeadersPanel = contextualItemsControl.InternalItemsHost as RibbonContextualTabGroupsPanel;
-                if (contextualTabHeadersPanel != null)
-                {
-                    contextualTabHeadersPanel.OnNotifyRibbonBorderBrushChanged();
-                }
+                contextualTabHeadersPanel?.OnNotifyRibbonBorderBrushChanged();
             }
         }
 

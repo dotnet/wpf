@@ -1,6 +1,12 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
+
+#region Using declarations
+
+using System.Windows.Controls.Primitives;
+using System.Windows.Data;
+using System.Windows.Input;
+using System.Windows.Media;
 
 #if RIBBON_IN_FRAMEWORK
 namespace System.Windows.Controls.Ribbon
@@ -8,18 +14,8 @@ namespace System.Windows.Controls.Ribbon
 namespace Microsoft.Windows.Controls.Ribbon
 #endif
 {
-    #region Using declarations
-
-    using System;
-    using System.Windows;
-    using System.Windows.Controls;
-    using System.Windows.Controls.Primitives;
-    using System.Windows.Data;
-    using System.Windows.Input;
-    using System.Windows.Media;
-
     #endregion
-    
+
     /// <summary>
     /// A variation of RibbonMenuItem which shows Checked state differently. 
     /// Its Submenu can be opened or closed independent of IsCheckable.
@@ -148,10 +144,7 @@ namespace Microsoft.Windows.Controls.Ribbon
         private static void OnDropDownToolTipPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             RibbonSplitMenuItem splitMenuItem = (RibbonSplitMenuItem)d;
-            if (splitMenuItem._partArrowButton != null)
-            {
-                splitMenuItem._partArrowButton.CoerceValue(FrameworkElement.ToolTipProperty);
-            }
+            splitMenuItem._partArrowButton?.CoerceValue(FrameworkElement.ToolTipProperty);
         }
 
         #endregion
@@ -204,10 +197,7 @@ namespace Microsoft.Windows.Controls.Ribbon
             RibbonSplitMenuItem splitMenuItem = (RibbonSplitMenuItem)d;
 
             RibbonToggleButton toggleButton = splitMenuItem._headerButton as RibbonToggleButton;
-            if (toggleButton != null)
-            {
-                toggleButton.IsChecked = splitMenuItem.IsChecked;
-            }
+            toggleButton?.IsChecked = splitMenuItem.IsChecked;
         }
 
         // UIElement.IsEnabledCore's getter simply returns true (e.g. RibbonSplitButton follows this path), but MenuItem
@@ -273,8 +263,10 @@ namespace Microsoft.Windows.Controls.Ribbon
             // Bind to Button.IsPressed and set MenuItem.IsPressed manually.
             if (_partHeaderButton != null)
             {
-                Binding binding = new Binding("IsPressed");
-                binding.Source = _partHeaderButton;
+                Binding binding = new Binding("IsPressed")
+                {
+                    Source = _partHeaderButton
+                };
                 this.SetBinding(IsPressedInternalProperty, binding);
             }
         }
@@ -293,16 +285,10 @@ namespace Microsoft.Windows.Controls.Ribbon
 
         private void SetBorderThickness()
         {
-            if (_highlightLeftBorder != null)
-            {
-                // Right = 0.0
-                _highlightLeftBorder.BorderThickness = new Thickness(BorderThickness.Left, BorderThickness.Top, 0.0, BorderThickness.Bottom);
-            }
-            if (_highlightRightBorder != null)
-            {
-                // Left = 0.0
-                _highlightRightBorder.BorderThickness = new Thickness(0.0, BorderThickness.Top, BorderThickness.Right, BorderThickness.Bottom);
-            }
+            // Right = 0.0
+            _highlightLeftBorder?.BorderThickness = new Thickness(BorderThickness.Left, BorderThickness.Top, 0.0, BorderThickness.Bottom);
+            // Left = 0.0
+            _highlightRightBorder?.BorderThickness = new Thickness(0.0, BorderThickness.Top, BorderThickness.Right, BorderThickness.Bottom);
         }
 
         #endregion
@@ -352,11 +338,10 @@ namespace Microsoft.Windows.Controls.Ribbon
         #region Private Data
         private const string HeaderButtonTemplatePart = "PART_HeaderButton";
         private const string ArrowButtonTemplatePart = "PART_ArrowToggleButton";
-
-        ButtonBase _headerButton;
-        RibbonToggleButton _partArrowButton;
-        ButtonBase _partHeaderButton;
-        Border _highlightLeftBorder, _highlightRightBorder;
+        private ButtonBase _headerButton;
+        private RibbonToggleButton _partArrowButton;
+        private ButtonBase _partHeaderButton;
+        private Border _highlightLeftBorder, _highlightRightBorder;
         #endregion
 
         #region KeyTips

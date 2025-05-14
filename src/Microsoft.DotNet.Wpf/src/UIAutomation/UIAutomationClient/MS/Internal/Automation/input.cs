@@ -1,11 +1,9 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 // Description: Provides mouse and keyboard input functionality
 
 using System.Windows.Input;
-using System.ComponentModel;
 using System.Runtime.InteropServices;
 using MS.Win32;
 
@@ -23,13 +21,11 @@ namespace MS.Internal.Automation
         //  Constructors
         //
         //------------------------------------------------------
- 
+
         #region Constructors
 
         // Static class - Private to prevent creation
-        Input()
-        {
-        }
+        private Input() { }
 
         #endregion Constructors
 
@@ -46,8 +42,10 @@ namespace MS.Internal.Automation
         // 
         internal static void SendKeyboardInput( Key key, bool press )
         {
-            UnsafeNativeMethods.INPUT ki = new UnsafeNativeMethods.INPUT();
-            ki.type = UnsafeNativeMethods.INPUT_KEYBOARD;
+            UnsafeNativeMethods.INPUT ki = new UnsafeNativeMethods.INPUT
+            {
+                type = UnsafeNativeMethods.INPUT_KEYBOARD
+            };
             ki.union.keyboardInput.wVk = (short) KeyInterop.VirtualKeyFromKey( key );
             ki.union.keyboardInput.wScan = (short) UnsafeNativeMethods.MapVirtualKey( ki.union.keyboardInput.wVk, 0 );
             int dwFlags = 0;
@@ -72,8 +70,10 @@ namespace MS.Internal.Automation
         // SendKeyboardInput does.
         internal static void SendKeyboardInputVK( byte vk, bool press )
         {
-            UnsafeNativeMethods.INPUT ki = new UnsafeNativeMethods.INPUT();
-            ki.type = UnsafeNativeMethods.INPUT_KEYBOARD;
+            UnsafeNativeMethods.INPUT ki = new UnsafeNativeMethods.INPUT
+            {
+                type = UnsafeNativeMethods.INPUT_KEYBOARD
+            };
             ki.union.keyboardInput.wVk = vk;
             ki.union.keyboardInput.wScan = 0;
             ki.union.keyboardInput.dwFlags = press ? 0 : UnsafeNativeMethods.KEYEVENTF_KEYUP;

@@ -1,7 +1,6 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
-using System;
+
 using System.Collections;
 using System.Runtime.ExceptionServices;
 using System.Runtime.InteropServices;
@@ -67,7 +66,7 @@ namespace WinRT
             {
                 ExceptionDispatchInfo.Capture(ex).Throw();
             }
-            else if (ex is object)
+            else if (ex is not null)
             {
                 throw ex;
             }
@@ -108,7 +107,7 @@ namespace WinRT
                     {
                         ILanguageExceptionErrorInfo languageErrorInfo = new ABI.WinRT.Interop.ILanguageExceptionErrorInfo(languageErrorInfoRef);
                         using IObjectReference languageException = languageErrorInfo.GetLanguageException();
-                        if (languageException is object)
+                        if (languageException is not null)
                         {
                             if (languageException.IsReferenceToManagedObject)
                             {

@@ -1,6 +1,5 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 #nullable disable
 
@@ -101,8 +100,8 @@ namespace System.Xaml
             IXamlLineInfo xamlLineInfo = xamlReader as IXamlLineInfo;
             IXamlLineInfoConsumer xamlLineInfoConsumer = xamlWriter as IXamlLineInfoConsumer;
             bool shouldPassLineNumberInfo = false;
-            if ((xamlLineInfo != null && xamlLineInfo.HasLineInfo)
-                && (xamlLineInfoConsumer != null && xamlLineInfoConsumer.ShouldProvideLineInfo))
+            if ((xamlLineInfo is not null && xamlLineInfo.HasLineInfo)
+                && (xamlLineInfoConsumer is not null && xamlLineInfoConsumer.ShouldProvideLineInfo))
             {
                 shouldPassLineNumberInfo = true;
             }
@@ -116,6 +115,7 @@ namespace System.Xaml
                         xamlLineInfoConsumer.SetLineInfo(xamlLineInfo.LineNumber, xamlLineInfo.LinePosition);
                     }
                 }
+
                 xamlWriter.WriteNode(xamlReader);
             }
 
@@ -136,7 +136,7 @@ namespace System.Xaml
             return sw.ToString();
         }
 
-        public static void Save(String fileName, object instance)
+        public static void Save(string fileName, object instance)
         {
             ArgumentNullException.ThrowIfNull(fileName);
             //
@@ -145,6 +145,7 @@ namespace System.Xaml
             {
                 throw new ArgumentException(SR.StringIsNullOrEmpty, nameof(fileName));
             }
+
             using (var writer = XmlWriter.Create(fileName, new XmlWriterSettings { Indent = true, OmitXmlDeclaration = true }))
             {
                 Save(writer, instance);

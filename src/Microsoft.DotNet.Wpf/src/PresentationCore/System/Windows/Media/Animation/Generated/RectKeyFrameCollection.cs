@@ -1,6 +1,5 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 //
 //
@@ -9,16 +8,8 @@
 // Please see MilCodeGen.html for more information.
 //
 
-using MS.Internal;
-
-using System;
 using System.Collections;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Diagnostics;
 using System.Globalization;
-using System.Windows.Media.Animation;
-using System.Windows.Media.Media3D;
 
 namespace System.Windows.Media.Animation
 {
@@ -59,9 +50,10 @@ namespace System.Windows.Media.Animation
             {
                 if (s_emptyCollection == null)
                 {
-                    RectKeyFrameCollection emptyCollection = new RectKeyFrameCollection();
-
-                    emptyCollection._keyFrames = new List< RectKeyFrame>(0);
+                    RectKeyFrameCollection emptyCollection = new RectKeyFrameCollection
+                    {
+                        _keyFrames = new List<RectKeyFrame>(0)
+                    };
                     emptyCollection.Freeze();
 
                     s_emptyCollection = emptyCollection;
@@ -98,7 +90,7 @@ namespace System.Windows.Media.Animation
         /// </summary>
         protected override void CloneCore(Freezable sourceFreezable)
         {
-            RectKeyFrameCollection sourceCollection = (RectKeyFrameCollection) sourceFreezable;
+            RectKeyFrameCollection sourceCollection = (RectKeyFrameCollection)sourceFreezable;
             base.CloneCore(sourceFreezable);
 
             int count = sourceCollection._keyFrames.Count;
@@ -119,7 +111,7 @@ namespace System.Windows.Media.Animation
         /// </summary>
         protected override void CloneCurrentValueCore(Freezable sourceFreezable)
         {
-            RectKeyFrameCollection sourceCollection = (RectKeyFrameCollection) sourceFreezable;
+            RectKeyFrameCollection sourceCollection = (RectKeyFrameCollection)sourceFreezable;
             base.CloneCurrentValueCore(sourceFreezable);
 
             int count = sourceCollection._keyFrames.Count;
@@ -140,7 +132,7 @@ namespace System.Windows.Media.Animation
         /// </summary>
         protected override void GetAsFrozenCore(Freezable sourceFreezable)
         {
-            RectKeyFrameCollection sourceCollection = (RectKeyFrameCollection) sourceFreezable;
+            RectKeyFrameCollection sourceCollection = (RectKeyFrameCollection)sourceFreezable;
             base.GetAsFrozenCore(sourceFreezable);
 
             int count = sourceCollection._keyFrames.Count;
@@ -161,7 +153,7 @@ namespace System.Windows.Media.Animation
         /// </summary>
         protected override void GetCurrentValueAsFrozenCore(Freezable sourceFreezable)
         {
-            RectKeyFrameCollection sourceCollection = (RectKeyFrameCollection) sourceFreezable;
+            RectKeyFrameCollection sourceCollection = (RectKeyFrameCollection)sourceFreezable;
             base.GetCurrentValueAsFrozenCore(sourceFreezable);
 
             int count = sourceCollection._keyFrames.Count;

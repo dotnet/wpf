@@ -1,39 +1,26 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 //
 // Description: TextBlock element displays text. It is meant for UI scenarios.
 //              Most text scenarios should use the FlowDocumentScrollViewer.
 //
 
-using System;
-using System.IO;
 using System.Collections;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Diagnostics;
-using System.Reflection;
-using System.Globalization;
-using System.Windows.Automation;
 using System.Windows.Threading;
 using System.Windows.Documents;
 using System.Windows.Media;
 using System.Windows.Media.TextFormatting;
 using System.Windows.Markup;
-
-using MS.Utility;
 using MS.Internal;                  // Invariant.Assert
-using MS.Internal.Automation;       // TextAdaptor
 using System.Windows.Automation.Peers;
 using MS.Internal.Text;
 using MS.Internal.Documents;
 using MS.Internal.Controls;
 using MS.Internal.PresentationFramework;
 using MS.Internal.Telemetry.PresentationFramework;
-
-#pragma warning disable 1634, 1691  // suppressing PreSharp warnings
 
 namespace System.Windows.Controls
 {
@@ -42,7 +29,7 @@ namespace System.Windows.Controls
     /// reused during Measure, Arrange and Render phase.
     /// </summary>
     ///
-    class TextBlockCache
+    internal class TextBlockCache
     {
         public LineProperties _lineProperties;
         public TextRunCache _textRunCache;
@@ -188,7 +175,7 @@ namespace System.Windows.Controls
 
             if (_complexContent == null)
             {
-                Text = Text + text;
+                Text += text;
             }
             else
             {
@@ -1161,7 +1148,7 @@ namespace System.Windows.Controls
         {
             if (_complexContent == null)
             {
-                throw new ArgumentOutOfRangeException("index");
+                throw new ArgumentOutOfRangeException(nameof(index));
             }
             return _complexContent.VisualChildren[index];
         }
@@ -1247,10 +1234,7 @@ namespace System.Windows.Controls
 
             ClearLineMetrics();
 
-            if (_complexContent != null)
-            {
-                _complexContent.TextView.Invalidate();
-            }
+            _complexContent?.TextView.Invalidate();
 
             // To determine natural size of the text TextAlignment has to be ignored.
             // Since for rendering/hittesting lines are recreated, it can be done without
@@ -1392,10 +1376,7 @@ namespace System.Windows.Controls
             MS.Internal.PtsHost.TextPanelDebug.StartTimer("TextBlock.ArrangeOverride", MS.Internal.PtsHost.TextPanelDebug.Category.MeasureArrange);
 #endif
             // Remove all existing visuals. If there are inline objects, they will be added below.
-            if (_complexContent != null)
-            {
-                _complexContent.VisualChildren.Clear();
-            }
+            _complexContent?.VisualChildren.Clear();
 
             ArrayList inlineObjects = InlineObjects;
             int lineCount = LineCount;
@@ -1727,7 +1708,7 @@ Debug.Assert(lineCount == LineCount);
             }
 
             // If nothing has been hit, assume that element itself has been hit.
-            return (ie != null) ? ie : this;
+            return ie ?? this;
         }
 
         /// <summary>
@@ -1861,7 +1842,7 @@ Debug.Assert(lineCount == LineCount);
             {
                 if(CheckFlags(Flags.ContentChangeInProgress))
                 {
-                    #pragma warning suppress 6503 // IEnumerator.Current is documented to throw this exception
+                    // IEnumerator.Current is documented to throw this exception
                     throw new InvalidOperationException(SR.TextContainerChangingReentrancyInvalid);
                 }
 
@@ -1917,10 +1898,7 @@ Debug.Assert(lineCount == LineCount);
         /// </summary>
         internal void RemoveChild(Visual child)
         {
-            if (_complexContent != null)
-            {
-                _complexContent.VisualChildren.Remove(child);
-            }
+            _complexContent?.VisualChildren.Remove(child);
         }
 
         /// <summary>
@@ -2349,7 +2327,7 @@ Debug.Assert(lineCount == LineCount);
                                        && TextPointerBase.IsNextToAnyBreak(endOfLineTextPointer, LogicalDirection.Backward))
                                     {
                                         double endOfParaGlyphWidth = FontSize * CaretElement.c_endOfParaMagicMultiplier;
-                                        rect.Width = rect.Width + endOfParaGlyphWidth;
+                                        rect.Width += endOfParaGlyphWidth;
                                     }
 
                                     RectangleGeometry rectGeometry = new RectangleGeometry(rect);
@@ -2783,8 +2761,8 @@ Debug.Assert(lineCount == LineCount);
         //-------------------------------------------------------------------
         private ArrayList InlineObjects
         {
-            get { return (_complexContent == null) ? null : _complexContent.InlineObjects; }
-            set { if (_complexContent != null) _complexContent.InlineObjects = value; }
+            get { return _complexContent?.InlineObjects; }
+            set { _complexContent?.InlineObjects = value; }
         }
 
         //-------------------------------------------------------------------
@@ -3032,9 +3010,11 @@ Debug.Assert(lineCount == LineCount);
         {
             if (null == _textBlockCache)
             {
-                _textBlockCache = new TextBlockCache();
-                _textBlockCache._lineProperties = GetLineProperties();
-                _textBlockCache._textRunCache = new TextRunCache();
+                _textBlockCache = new TextBlockCache
+                {
+                    _lineProperties = GetLineProperties(),
+                    _textRunCache = new TextRunCache()
+                };
             }
         }
 
@@ -4100,7 +4080,7 @@ Debug.Assert(lineCount == LineCount);
 
             if (text._complexContent == null)
             {
-                text._contentCache = (newText != null) ? newText : String.Empty;
+                text._contentCache = newText ?? string.Empty;
             }
             else
             {
@@ -4148,9 +4128,3 @@ Debug.Assert(lineCount == LineCount);
         #endregion Dependency Property Helpers
     }
 }
-
-
-// Disable pragma warnings to enable PREsharp pragmas
-#pragma warning restore 1634, 1691
-
-

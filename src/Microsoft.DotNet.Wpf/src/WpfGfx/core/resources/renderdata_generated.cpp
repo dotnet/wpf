@@ -1,6 +1,5 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 
 //---------------------------------------------------------------------------
@@ -397,7 +396,7 @@ CMilSlaveRenderData::GetHandles(CMilSlaveHandleTable *pHandleTable)
                     }
 
                     *(reinterpret_cast<UINT*>(&pData->coordinate)) = m_rgpGuidelineKits.GetCount() - 1;
-                }              
+                }
 
                 stackDepth++;
                 break;
@@ -489,6 +488,4 @@ Cleanup:
     Assert(SUCCEEDED(hr));
     RRETURN(hr);
 }
-
-
 

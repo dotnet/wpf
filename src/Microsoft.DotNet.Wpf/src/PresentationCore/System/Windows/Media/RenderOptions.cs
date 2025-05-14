@@ -1,6 +1,5 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 //
 //
@@ -10,10 +9,6 @@
 //
 
 using MS.Win32.PresentationCore;
-
-using System;
-using System.Diagnostics;
-using System.Security;
 using System.Windows.Interop;
 
 namespace System.Windows.Media
@@ -170,7 +165,7 @@ namespace System.Windows.Media
                                                 typeof(double), 
                                                 typeof(RenderOptions),
                                                 new UIPropertyMetadata(0.707),
-                                                /* ValidateValueCallback */ null);
+                                                validateValueCallback: null);
         
         /// <summary>
         /// Reads the attached property CacheInvalidationThresholdMinimum from the given object.
@@ -203,7 +198,7 @@ namespace System.Windows.Media
                                                 typeof(double), 
                                                 typeof(RenderOptions),
                                                 new UIPropertyMetadata(1.414),
-                                                /* ValidateValueCallback */ null);
+                                                validateValueCallback: null);
         
         /// <summary>
         /// Reads the attached property CacheInvalidationThresholdMaximum from the given object.

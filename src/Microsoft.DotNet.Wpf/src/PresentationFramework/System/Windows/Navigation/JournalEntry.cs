@@ -1,6 +1,5 @@
-// Licensed to the .NET Foundation under one or more agreements.
+ï»¿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 //
 //
@@ -11,27 +10,12 @@
 //
 //
 
-using System;
-using System.Collections;
-using System.Diagnostics;
-using System.IO;
 using System.IO.Packaging;
-using System.Globalization;
 using System.Runtime.Serialization;
-using System.Runtime.Serialization.Formatters.Binary;
-using System.Security ;
-using System.Windows.Markup;
 
 using MS.Internal.AppModel;
 using MS.Internal;
 using MS.Internal.Utility;
-
-using System.Windows.Controls.Primitives;
-
-//In order to avoid generating warnings about unknown message numbers and
-//unknown pragmas when compiling your C# source code with the actual C# compiler,
-//you need to disable warnings 1634 and 1691. (Presharp Documentation)
-#pragma warning disable 1634, 1691
 
 namespace System.Windows.Navigation
 {
@@ -98,11 +82,8 @@ namespace System.Windows.Navigation
         internal JournalEntry(JournalEntryGroupState jeGroupState, Uri uri)
         {
             _jeGroupState = jeGroupState;
-            if (jeGroupState != null)
-            {
-                // Seems convenient to always do this here.
-                jeGroupState.GroupExitEntry = this;
-            }
+            // Seems convenient to always do this here.
+            jeGroupState?.GroupExitEntry = this;
             Source = uri;
         }
 
@@ -146,7 +127,7 @@ namespace System.Windows.Navigation
 
         /// <summary>
         /// Reads the attached property JournalEntry.Name from the given element.
-        /// Setting it at the root element of a navigator will update NavWin’s dropdown menu when navigating inside of that navigator.
+        /// Setting it at the root element of a navigator will update NavWinâ€™s dropdown menu when navigating inside of that navigator.
         /// </summary>
         /// <param name="dependencyObject">The element from which to read the attached property.</param>
         /// <returns>The property's value.</returns>
@@ -235,7 +216,7 @@ namespace System.Windows.Navigation
 
         /// <summary>
         /// Attached DependencyProperty for Name property.
-        /// Setting it at the root element of a navigator will update NavWin’s dropdown menu when navigating inside of that navigator.
+        /// Setting it at the root element of a navigator will update NavWinâ€™s dropdown menu when navigating inside of that navigator.
         /// </summary>
         public static readonly DependencyProperty NameProperty =
             DependencyProperty.RegisterAttached("Name", typeof(string), typeof(JournalEntry), new PropertyMetadata(String.Empty));
@@ -340,13 +321,11 @@ namespace System.Windows.Navigation
                 return uri.ToString();
             }
 
-            bool isPack = String.Compare(uri.Scheme, PackUriHelper.UriSchemePack, StringComparison.OrdinalIgnoreCase) == 0;
             string displayName;
-
-            if (isPack)
+            if (string.Equals(uri.Scheme, PackUriHelper.UriSchemePack, StringComparison.OrdinalIgnoreCase))
             {
                 Uri relative = BaseUriHelper.MakeRelativeToSiteOfOriginIfPossible(uri);
-                if (! relative.IsAbsoluteUri)
+                if (!relative.IsAbsoluteUri)
                 {
                     displayName = (new Uri(siteOfOrigin, relative)).ToString();
                 }

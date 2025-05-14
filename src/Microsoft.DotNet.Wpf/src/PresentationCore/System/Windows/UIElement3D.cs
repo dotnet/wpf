@@ -1,6 +1,5 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 //
 //
@@ -8,27 +7,12 @@
 using MS.Internal;
 using MS.Internal.Interop;
 using MS.Internal.KnownBoxes;
-using MS.Internal.Media;
 using MS.Internal.PresentationCore;
-using MS.Utility;
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Diagnostics;
-using System.Security;
 using System.Windows.Automation;
 using System.Windows.Automation.Peers;
 using System.Windows.Input;
-using System.Windows.Input.StylusPlugIns;
-using System.Windows.Interop;
-using System.Windows.Markup;
 using System.Windows.Media;
-using System.Windows.Media.Animation;
-using System.Windows.Media.Composition;
-using System.Windows.Media.Effects;
 using System.Windows.Media.Media3D;
-using System.Windows.Threading;
 
 namespace System.Windows
 {
@@ -358,7 +342,6 @@ namespace System.Windows
         /// <summary>
         ///     Asynchronously re-evaluate the reverse-inherited properties.
         /// </summary>
-        [FriendAccessAllowed]
         internal void SynchronizeReverseInheritPropertyFlags(DependencyObject oldParent, bool isCoreParent)
         {
             if (IsKeyboardFocusWithin)
@@ -918,8 +901,7 @@ namespace System.Windows
 
             //Notify Automation in case it is interested.
             AutomationPeer peer = uie.GetAutomationPeer();
-            if (peer != null)
-                peer.InvalidatePeer();
+            peer?.InvalidatePeer();
 
         }
 
@@ -1510,7 +1492,7 @@ namespace System.Windows
         {
             get
             {
-                return TouchDevice.GetCapturedTouches(this, /* includeWithin = */ false);
+                return TouchDevice.GetCapturedTouches(this, includeWithin: false);
             }
         }
 
@@ -1521,7 +1503,7 @@ namespace System.Windows
         {
             get
             {
-                return TouchDevice.GetCapturedTouches(this, /* includeWithin = */ true);
+                return TouchDevice.GetCapturedTouches(this, includeWithin: true);
             }
         }
 
@@ -1533,7 +1515,7 @@ namespace System.Windows
         {
             get
             {
-                return TouchDevice.GetTouchesOver(this, /* includeWithin = */ true);
+                return TouchDevice.GetTouchesOver(this, includeWithin: true);
             }
         }
 
@@ -1545,7 +1527,7 @@ namespace System.Windows
         {
             get
             {
-                return TouchDevice.GetTouchesOver(this, /* includeWithin = */ false);
+                return TouchDevice.GetTouchesOver(this, includeWithin: false);
             }
         }
 

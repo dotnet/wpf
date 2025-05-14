@@ -1,6 +1,5 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 using System.Runtime.CompilerServices;
 
@@ -10,7 +9,7 @@ namespace System.Windows.Markup
     /// An attribute that specifies which property the xml:lang value should
     /// be directed to.
     /// Example:
-    //     [XmlLangProperty("Language")]
+    // [XmlLangProperty("Language")]
     //     public class ExampleFrameworkElement
     //
     //   Means that when the parser sees:

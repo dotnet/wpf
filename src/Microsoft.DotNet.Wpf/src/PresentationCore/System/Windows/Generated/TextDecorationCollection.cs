@@ -1,6 +1,5 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 //
 //
@@ -9,35 +8,16 @@
 // Please see MilCodeGen.html for more information.
 //
 
-using MS.Internal.PresentationCore;
-using System;
 using System.Collections;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.ComponentModel.Design.Serialization;
-using System.Diagnostics;
-using System.Globalization;
-using System.Reflection;
-using System.Runtime.InteropServices;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
-using System.Windows.Media.Imaging;
-using System.Windows.Markup;
-using System.Windows.Converters;
-using MS.Internal.Collections;
 using MS.Utility;
-using SR = MS.Internal.PresentationCore.SR;
-// These types are aliased to match the unamanaged names used in interop
-using BOOL = System.UInt32;
-using WORD = System.UInt16;
-using Float = System.Single;
 
 namespace System.Windows
 {
     /// <summary>
     /// A collection of TextDecoration objects.
     /// </summary>
-
 
     public sealed partial class TextDecorationCollection : Animatable, IList, IList<TextDecoration>
     {
@@ -214,7 +194,7 @@ namespace System.Windows
         {
             WritePreamble();
 
-            TextDecoration oldValue = _collection[index];
+            TextDecoration oldValue = _collection[ index ];
 
             OnFreezablePropertyChanged(oldValue, null);
 
@@ -249,12 +229,15 @@ namespace System.Windows
 
                 WritePreamble();
 
-                if (!Object.ReferenceEquals(_collection[index], value))
+                if (!Object.ReferenceEquals(_collection[ index ], value))
                 {
-                    TextDecoration oldValue = _collection[index];
+
+                    TextDecoration oldValue = _collection[ index ];
                     OnFreezablePropertyChanged(oldValue, value);
 
-                    _collection[index] = value;
+                    _collection[ index ] = value;
+
+
                 }
 
 
@@ -514,7 +497,7 @@ namespace System.Windows
                 throw new System.ArgumentException(SR.Format(SR.Collection_BadType, this.GetType().Name, value.GetType().Name, "TextDecoration"));
             }
 
-            return (TextDecoration)value;
+            return (TextDecoration) value;
         }
 
         // IList.Add returns int and IList<T>.Add does not. This
@@ -600,7 +583,9 @@ namespace System.Windows
                 TextDecoration newValue = (TextDecoration)sourceTextDecorationCollection._collection[i].Clone();
                 OnFreezablePropertyChanged(/* oldValue = */ null, newValue);
                 _collection.Add(newValue);
+
             }
+
         }
         /// <summary>
         /// Implementation of Freezable.CloneCurrentValueCore()
@@ -620,7 +605,9 @@ namespace System.Windows
                 TextDecoration newValue = (TextDecoration)sourceTextDecorationCollection._collection[i].CloneCurrentValue();
                 OnFreezablePropertyChanged(/* oldValue = */ null, newValue);
                 _collection.Add(newValue);
+
             }
+
         }
         /// <summary>
         /// Implementation of Freezable.GetAsFrozenCore()
@@ -640,7 +627,9 @@ namespace System.Windows
                 TextDecoration newValue = (TextDecoration)sourceTextDecorationCollection._collection[i].GetAsFrozen();
                 OnFreezablePropertyChanged(/* oldValue = */ null, newValue);
                 _collection.Add(newValue);
+
             }
+
         }
         /// <summary>
         /// Implementation of Freezable.GetCurrentValueAsFrozenCore()
@@ -660,7 +649,9 @@ namespace System.Windows
                 TextDecoration newValue = (TextDecoration)sourceTextDecorationCollection._collection[i].GetCurrentValueAsFrozen();
                 OnFreezablePropertyChanged(/* oldValue = */ null, newValue);
                 _collection.Add(newValue);
+
             }
+
         }
         /// <summary>
         /// Implementation of <see cref="System.Windows.Freezable.FreezeCore">Freezable.FreezeCore</see>.
@@ -765,6 +756,7 @@ namespace System.Windows
 
             void IDisposable.Dispose()
             {
+
             }
 
             /// <summary>
@@ -933,6 +925,7 @@ namespace System.Windows
                         TextDecoration newValue = item;
                         OnFreezablePropertyChanged(/* oldValue = */ null, newValue);
                         _collection.Add(newValue);
+
                     }
 
                     needsItemValidation = false;
@@ -948,6 +941,7 @@ namespace System.Windows
                         throw new System.ArgumentException(SR.Collection_NoNull);
                     }
                     OnFreezablePropertyChanged(/* oldValue = */ null, item);
+
                 }
             }
 

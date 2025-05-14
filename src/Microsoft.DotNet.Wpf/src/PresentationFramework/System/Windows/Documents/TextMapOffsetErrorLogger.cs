@@ -1,6 +1,5 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 //
 // Description: A trace logging manager for collecting debug information. 
@@ -10,7 +9,6 @@
 //              respect to user opt-in for CEIP. 
 //
 
-using MS.Internal.Telemetry;
 using System.Collections;
 using System.Diagnostics.Tracing;
 

@@ -1,6 +1,5 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 /*++
 
@@ -13,20 +12,11 @@ Abstract:
 
 --*/
 
-using System;
-using System.IO;
 using System.Xml;
-using System.Collections;
 using System.Collections.ObjectModel;
-using System.Collections.Generic;
-using System.Diagnostics;
 using System.Globalization;
-using System.Text;
 
 using System.Printing;
-using MS.Internal.Printing.Configuration;
-
-#pragma warning disable 1634, 1691 // Allows suppression of certain PreSharp messages
 
 namespace MS.Internal.Printing.Configuration
 {
@@ -174,13 +164,15 @@ namespace MS.Internal.Printing.Configuration
 
         internal static PrintCapabilityFeature NewFeatureCallback(InternalPrintCapabilities printCap)
         {
-            PageScalingCapability cap = new PageScalingCapability(printCap);
-            cap._scalingOptions = new Collection<ScalingOption>();
+            PageScalingCapability cap = new PageScalingCapability(printCap)
+            {
+                _scalingOptions = new Collection<ScalingOption>()
+            };
 
             return cap;
         }
 
-        internal override sealed bool AddOptionCallback(PrintCapabilityOption baseOption)
+        internal sealed override bool AddOptionCallback(PrintCapabilityOption baseOption)
         {
             bool complete = false;
 
@@ -256,33 +248,33 @@ namespace MS.Internal.Printing.Configuration
             return complete;
         }
 
-        internal override sealed void AddSubFeatureCallback(PrintCapabilityFeature subFeature)
+        internal sealed override void AddSubFeatureCallback(PrintCapabilityFeature subFeature)
         {
             // PageScaling has no sub features.
             return;
         }
 
-        internal override sealed bool FeaturePropCallback(PrintCapabilityFeature feature, XmlPrintCapReader reader)
+        internal sealed override bool FeaturePropCallback(PrintCapabilityFeature feature, XmlPrintCapReader reader)
         {
             // no feature property to handle
             return false;
         }
 
-        internal override sealed PrintCapabilityOption NewOptionCallback(PrintCapabilityFeature baseFeature)
+        internal sealed override PrintCapabilityOption NewOptionCallback(PrintCapabilityFeature baseFeature)
         {
             ScalingOption newOption = new ScalingOption(baseFeature);
 
             return newOption;
         }
 
-        internal override sealed void OptionAttrCallback(PrintCapabilityOption baseOption, XmlPrintCapReader reader)
+        internal sealed override void OptionAttrCallback(PrintCapabilityOption baseOption, XmlPrintCapReader reader)
         {
             // no option attribute to handle
             return;
         }
 
         /// <exception cref="XmlException">XML is not well-formed.</exception>
-        internal override sealed bool OptionPropCallback(PrintCapabilityOption baseOption, XmlPrintCapReader reader)
+        internal sealed override bool OptionPropCallback(PrintCapabilityOption baseOption, XmlPrintCapReader reader)
         {
             bool handled = false;
 
@@ -337,16 +329,15 @@ namespace MS.Internal.Printing.Configuration
                         }
                     }
                     // We want to catch internal FormatException to skip recoverable XML content syntax error
-                    #pragma warning suppress 56502
-                    #if _DEBUG
+#if _DEBUG
                     catch (FormatException e)
-                    #else
+#else
                     catch (FormatException)
-                    #endif
+#endif
                     {
-                        #if _DEBUG
+#if _DEBUG
                         Trace.WriteLine("-Error- " + e.Message);
-                        #endif
+#endif
                     }
                 }
                 else
@@ -369,7 +360,7 @@ namespace MS.Internal.Printing.Configuration
 
         #region Internal Properties
 
-        internal override sealed bool IsValid
+        internal sealed override bool IsValid
         {
             get
             {
@@ -377,7 +368,7 @@ namespace MS.Internal.Printing.Configuration
             }
         }
 
-        internal override sealed string FeatureName
+        internal sealed override string FeatureName
         {
             get
             {
@@ -385,7 +376,7 @@ namespace MS.Internal.Printing.Configuration
             }
         }
 
-        internal override sealed bool HasSubFeature
+        internal sealed override bool HasSubFeature
         {
             get
             {
@@ -529,7 +520,7 @@ namespace MS.Internal.Printing.Configuration
             // Scaling percentage value must be non-negative. We do allow negative scaling offset values.
             if (squareScale < 0)
             {
-                throw new ArgumentOutOfRangeException("squareScale",
+                throw new ArgumentOutOfRangeException(nameof(squareScale),
                                                       PTUtility.GetTextFromResource("ArgumentException.NonNegativeValue"));
             }
 

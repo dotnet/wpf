@@ -1,23 +1,13 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 
-using System;
-using System.Collections;
-using System.Collections.Specialized;
 using System.ComponentModel;
-using System.Diagnostics;
 
 using System.Windows.Threading;
-
-using System.Windows.Controls.Primitives;
 using System.Windows.Media;
-using System.Windows;
 using System.Windows.Input;
 using System.Windows.Documents;
-
-using MS.Internal;
 using MS.Internal.KnownBoxes;
 using MS.Internal.PresentationFramework;
 using MS.Utility;
@@ -192,7 +182,7 @@ namespace System.Windows.Controls
         public static readonly DependencyProperty FontSizeProperty =
                 TextElement.FontSizeProperty.AddOwner(
                         typeof(Control),
-                        new FrameworkPropertyMetadata(SystemFonts.MessageFontSize,
+                        new FrameworkPropertyMetadata(SystemFonts.ThemeMessageFontSize,
                             FrameworkPropertyMetadataOptions.Inherits));
 
         /// <summary>
@@ -683,10 +673,7 @@ namespace System.Windows.Controls
             // Due to inherited properties, its safer not to cast to control because this might get fired for
             // non-controls.
             var control = d as Control;
-            if (control != null)
-            {
-                control.UpdateVisualState();
-            }
+            control?.UpdateVisualState();
         }
 
         /// <summary>
@@ -727,10 +714,7 @@ namespace System.Windows.Controls
             if (count>0)
             {
                 UIElement child = (UIElement)(this.GetVisualChild(0));
-                if (child != null)
-                {
-                    child.Arrange(new Rect(arrangeBounds));
-                }
+                child?.Arrange(new Rect(arrangeBounds));
             }
             return arrangeBounds;
         }

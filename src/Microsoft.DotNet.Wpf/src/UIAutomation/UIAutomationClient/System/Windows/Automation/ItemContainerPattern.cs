@@ -1,13 +1,9 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 // Description: Client-side wrapper for ItemContainer Pattern
 
-using System;
-using System.Windows.Automation.Provider;
 using MS.Internal.Automation;
-using System.Runtime.InteropServices;
 using System.Globalization;
 
 namespace System.Windows.Automation
@@ -157,14 +153,12 @@ namespace System.Windows.Automation
                 // If this is a control type, use the ID, not the CLR object
                 value = ((ControlType)value).Id;
             }
-            else if (value is Rect)
+            else if (value is Rect rc)
             {
-                Rect rc = (Rect)value;
                 value = new double[] { rc.Left, rc.Top, rc.Width, rc.Height };
             }
-            else if (value is Point)
+            else if (value is Point pt)
             {
-                Point pt = (Point)value;
                 value = new double[] { pt.X, pt.Y };
             }
             else if (value is CultureInfo)
@@ -185,7 +179,7 @@ namespace System.Windows.Automation
 
         #region Internal Methods
 
-        static internal object Wrap(AutomationElement el, SafePatternHandle hPattern, bool cached)
+        internal static object Wrap(AutomationElement el, SafePatternHandle hPattern, bool cached)
         {
             return new ItemContainerPattern(el, hPattern);
         }

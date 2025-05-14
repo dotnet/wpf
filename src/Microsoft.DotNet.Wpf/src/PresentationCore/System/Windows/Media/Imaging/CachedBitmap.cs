@@ -1,30 +1,9 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
-//
-//
-
-
-using System;
-using System.IO;
-using System.Collections;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.ComponentModel.Design.Serialization;
-using System.Reflection;
-using MS.Internal;
-using MS.Win32.PresentationCore;
-using System.Security;
-using System.Diagnostics;
-using System.Windows.Media;
-using System.Globalization;
 using System.Runtime.InteropServices;
-using System.Windows;
-using System.Windows.Media.Animation;
-using System.Windows.Media.Composition;
-
-using SR=MS.Internal.PresentationCore.SR;
+using MS.Win32.PresentationCore;
+using MS.Internal;
 
 namespace System.Windows.Media.Imaging
 {
@@ -58,7 +37,7 @@ namespace System.Windows.Media.Imaging
 
         /// <summary>
         /// </summary>
-        unsafe internal CachedBitmap(
+        internal unsafe CachedBitmap(
                     int pixelWidth,
                     int pixelHeight,
                     double dpiX,
@@ -119,7 +98,7 @@ namespace System.Windows.Media.Imaging
 
         /// <summary>
         /// </summary>
-        unsafe internal CachedBitmap(
+        internal unsafe CachedBitmap(
             int pixelWidth,
             int pixelHeight,
             double dpiX,
@@ -134,7 +113,7 @@ namespace System.Windows.Media.Imaging
             ArgumentNullException.ThrowIfNull(pixels);
 
             if (pixels.Rank != 1)
-                throw new ArgumentException(SR.Collection_BadRank, "pixels");
+                throw new ArgumentException(SR.Collection_BadRank, nameof(pixels));
 
             int elementSize = -1;
 
@@ -152,55 +131,8 @@ namespace System.Windows.Media.Imaging
 
             int destBufferSize = elementSize * pixels.Length;
 
-            if (pixels is byte[])
-            {
-                fixed(void * pixelArray = (byte[])pixels)
-                    InitFromMemoryPtr(pixelWidth, pixelHeight, dpiX, dpiY,
-                                      pixelFormat, palette,
-                                      (IntPtr)pixelArray, destBufferSize, stride);
-            }
-            else if (pixels is short[])
-            {
-                fixed(void * pixelArray = (short[])pixels)
-                    InitFromMemoryPtr(pixelWidth, pixelHeight, dpiX, dpiY,
-                                      pixelFormat, palette,
-                                      (IntPtr)pixelArray, destBufferSize, stride);
-            }
-            else if (pixels is ushort[])
-            {
-                fixed(void * pixelArray = (ushort[])pixels)
-                    InitFromMemoryPtr(pixelWidth, pixelHeight, dpiX, dpiY,
-                                      pixelFormat, palette,
-                                      (IntPtr)pixelArray, destBufferSize, stride);
-            }
-            else if (pixels is int[])
-            {
-                fixed(void * pixelArray = (int[])pixels)
-                    InitFromMemoryPtr(pixelWidth, pixelHeight, dpiX, dpiY,
-                                      pixelFormat, palette,
-                                      (IntPtr)pixelArray, destBufferSize, stride);
-            }
-            else if (pixels is uint[])
-            {
-                fixed(void * pixelArray = (uint[])pixels)
-                    InitFromMemoryPtr(pixelWidth, pixelHeight, dpiX, dpiY,
-                                      pixelFormat, palette,
-                                      (IntPtr)pixelArray, destBufferSize, stride);
-            }
-            else if (pixels is float[])
-            {
-                fixed(void * pixelArray = (float[])pixels)
-                    InitFromMemoryPtr(pixelWidth, pixelHeight, dpiX, dpiY,
-                                      pixelFormat, palette,
-                                      (IntPtr)pixelArray, destBufferSize, stride);
-            }
-            else if (pixels is double[])
-            {
-                fixed(void * pixelArray = (double[])pixels)
-                    InitFromMemoryPtr(pixelWidth, pixelHeight, dpiX, dpiY,
-                                      pixelFormat, palette,
-                                      (IntPtr)pixelArray, destBufferSize, stride);
-            }
+            fixed (byte* pixelArray = &MemoryMarshal.GetArrayDataReference(pixels))
+                InitFromMemoryPtr(pixelWidth, pixelHeight, dpiX, dpiY, pixelFormat, palette, (nint)pixelArray, destBufferSize, stride);
         }
 
         /// <summary>
@@ -408,14 +340,14 @@ namespace System.Windows.Media.Imaging
                     int stride
                     )
         {
-            if (pixelFormat.Palettized == true && palette == null)
+            if (pixelFormat.Palettized && palette == null)
                 throw new InvalidOperationException(SR.Image_IndexedPixelFormatRequiresPalette);
 
             if (pixelFormat.Format == PixelFormatEnum.Default && pixelFormat.Guid == WICPixelFormatGUIDs.WICPixelFormatDontCare)
             {
                 throw new System.ArgumentException(
                         SR.Format(SR.Effect_PixelFormat, pixelFormat),
-                        "pixelFormat"
+                        nameof(pixelFormat)
                         );
             }
 
@@ -471,9 +403,9 @@ namespace System.Windows.Media.Imaging
             UpdateCachedSettings();
         }
 
-        BitmapSource        _source;
-        BitmapCreateOptions _createOptions = BitmapCreateOptions.None;
-        BitmapCacheOption   _cacheOption = BitmapCacheOption.Default;
+        private BitmapSource        _source;
+        private BitmapCreateOptions _createOptions = BitmapCreateOptions.None;
+        private BitmapCacheOption   _cacheOption = BitmapCacheOption.Default;
     }
     #endregion // CachedBitmap
 }

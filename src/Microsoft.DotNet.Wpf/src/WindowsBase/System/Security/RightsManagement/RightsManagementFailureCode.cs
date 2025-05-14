@@ -1,21 +1,10 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
-//
-//
-// Description: Error Code used by Rights Management RightsManagement exceptions
-//
-//
-//
-//
-
-using System;
-
-namespace System.Security.RightsManagement 
+namespace System.Security.RightsManagement
 {
     /// <summary>
-    /// This error code is used to communicate reasons for failure from the UseLicense.Bind call        
+    /// This error code is used to communicate reasons for failure from the UseLicense.Bind call
     /// </summary>
     public enum RightsManagementFailureCode : int
     {

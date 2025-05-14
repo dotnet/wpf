@@ -1,11 +1,7 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
-        
-using MS.Win32;
-using System;
+
 using System.Collections.Generic;
-using System.Diagnostics;
 
 using SD = System.Drawing;
 using SDI = System.Drawing.Imaging;
@@ -172,15 +168,16 @@ namespace System.Windows.Forms.Integration
         /// <returns></returns>
         internal static System.Windows.Interop.MSG ToSystemWindowsInteropMSG(SWF.Message msg)
         {
-            SW.Interop.MSG msg2 = new SW.Interop.MSG();
-
-            msg2.hwnd = msg.HWnd;
-            msg2.lParam = msg.LParam;
-            msg2.message = msg.Msg;
-            msg2.pt_x = 0;
-            msg2.pt_y = 0;
-            msg2.time = MS.Win32.SafeNativeMethods.GetMessageTime();
-            msg2.wParam = msg.WParam;
+            SW.Interop.MSG msg2 = new SW.Interop.MSG
+            {
+                hwnd = msg.HWnd,
+                lParam = msg.LParam,
+                message = msg.Msg,
+                pt_x = 0,
+                pt_y = 0,
+                time = MS.Win32.SafeNativeMethods.GetMessageTime(),
+                wParam = msg.WParam
+            };
             return msg2;
         }
 
@@ -333,12 +330,13 @@ namespace System.Windows.Forms.Integration
         /// <returns></returns>
         internal static SWF.Message ToSystemWindowsFormsMessage(System.Windows.Interop.MSG msg)
         {
-            SWF.Message msg2 = new SWF.Message();
-
-            msg2.HWnd = msg.hwnd;
-            msg2.LParam = msg.lParam;
-            msg2.Msg = msg.message;
-            msg2.WParam = msg.wParam;
+            SWF.Message msg2 = new SWF.Message
+            {
+                HWnd = msg.hwnd,
+                LParam = msg.lParam,
+                Msg = msg.message,
+                WParam = msg.wParam
+            };
 
             return msg2;
         }

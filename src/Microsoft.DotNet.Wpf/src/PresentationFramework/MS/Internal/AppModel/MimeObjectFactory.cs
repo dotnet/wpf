@@ -1,6 +1,5 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 //
 // Description:
@@ -8,13 +7,7 @@
 // mime type + stream into objects.
 //
 
-using System;
-using System.Windows;
 using System.IO;
-using System.Collections.Generic;
-using MS.Internal.Utility;
-using System.Diagnostics;
-using System.Globalization;
 using System.Windows.Markup;
 
 namespace MS.Internal.AppModel

@@ -1,6 +1,5 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 //
 //
@@ -8,18 +7,9 @@
 //              
 //
 
-using MS.Internal;
-using MS.Internal.Media;
-using MS.Internal.Media3D;
-using System;
-using System.Diagnostics;
-using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Windows.Automation.Peers;
-using System.Windows.Media.Composition;
 using System.Windows.Markup;
-    
-using SR=MS.Internal.PresentationCore.SR;
 
 namespace System.Windows.Media.Media3D
 {

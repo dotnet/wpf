@@ -1,6 +1,5 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 //
 //
@@ -12,40 +11,22 @@
 using MS.Internal;
 using MS.Internal.KnownBoxes;
 using MS.Internal.Collections;
-using MS.Internal.PresentationCore;
 using MS.Utility;
-using System;
 using System.Collections;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Diagnostics;
 using System.Globalization;
-using System.Reflection;
-using System.Runtime.InteropServices;
-using System.ComponentModel.Design.Serialization;
 using System.Text;
-using System.Windows;
-using System.Windows.Media;
 using System.Windows.Media.Effects;
-using System.Windows.Media.Media3D;
 using System.Windows.Media.Animation;
 using System.Windows.Media.Composition;
-using System.Windows.Media.Imaging;
 using System.Windows.Markup;
 using System.Windows.Media.Converters;
-using System.Security;
-using SR=MS.Internal.PresentationCore.SR;
-// These types are aliased to match the unamanaged names used in interop
-using BOOL = System.UInt32;
-using WORD = System.UInt16;
-using Float = System.Single;
 
 namespace System.Windows.Media
 {
     /// <summary>
     /// A collection of Vectors.
     /// </summary>
-
     [TypeConverter(typeof(VectorCollectionConverter))]
     [ValueSerializer(typeof(VectorCollectionValueSerializer))] // Used by MarkupWriter
     public sealed partial class VectorCollection : Freezable, IFormattable, IList, IList<Vector>
@@ -136,6 +117,8 @@ namespace System.Windows.Media
         /// </summary>
         public void Insert(int index, Vector value)
         {
+
+
             WritePreamble();
             _collection.Insert(index, value);
 
@@ -213,6 +196,8 @@ namespace System.Windows.Media
             }
             set
             {
+
+
                 WritePreamble();
                 _collection[ index ] = value;
 
@@ -537,7 +522,7 @@ namespace System.Windows.Media
         /// </summary>
         protected override void CloneCore(Freezable source)
         {
-            VectorCollection sourceVectorCollection = (VectorCollection) source;
+            VectorCollection sourceVectorCollection = (VectorCollection)source;
 
             base.CloneCore(source);
 
@@ -549,13 +534,14 @@ namespace System.Windows.Media
             {
                 _collection.Add(sourceVectorCollection._collection[i]);
             }
-}
+
+        }
         /// <summary>
         /// Implementation of Freezable.CloneCurrentValueCore()
         /// </summary>
         protected override void CloneCurrentValueCore(Freezable source)
         {
-            VectorCollection sourceVectorCollection = (VectorCollection) source;
+            VectorCollection sourceVectorCollection = (VectorCollection)source;
 
             base.CloneCurrentValueCore(source);
 
@@ -567,13 +553,14 @@ namespace System.Windows.Media
             {
                 _collection.Add(sourceVectorCollection._collection[i]);
             }
-}
+
+        }
         /// <summary>
         /// Implementation of Freezable.GetAsFrozenCore()
         /// </summary>
         protected override void GetAsFrozenCore(Freezable source)
         {
-            VectorCollection sourceVectorCollection = (VectorCollection) source;
+            VectorCollection sourceVectorCollection = (VectorCollection)source;
 
             base.GetAsFrozenCore(source);
 
@@ -585,13 +572,14 @@ namespace System.Windows.Media
             {
                 _collection.Add(sourceVectorCollection._collection[i]);
             }
-}
+
+        }
         /// <summary>
         /// Implementation of Freezable.GetCurrentValueAsFrozenCore()
         /// </summary>
         protected override void GetCurrentValueAsFrozenCore(Freezable source)
         {
-            VectorCollection sourceVectorCollection = (VectorCollection) source;
+            VectorCollection sourceVectorCollection = (VectorCollection)source;
 
             base.GetCurrentValueAsFrozenCore(source);
 
@@ -603,7 +591,8 @@ namespace System.Windows.Media
             {
                 _collection.Add(sourceVectorCollection._collection[i]);
             }
-}
+
+        }
 
 
         #endregion ProtectedMethods
@@ -700,7 +689,7 @@ namespace System.Windows.Media
             // Helper to get the numeric list separator for a given culture.
             // char separator = MS.Internal.TokenizerHelper.GetNumericListSeparator(provider);
 
-            for (int i=0; i<_collection.Count; i++)
+            for (int i = 0; i < _collection.Count; i++)
             {
                 str.AppendFormat(
                     provider,
@@ -796,6 +785,7 @@ namespace System.Windows.Media
 
             void IDisposable.Dispose()
             {
+
             }
 
             /// <summary>
@@ -936,6 +926,7 @@ namespace System.Windows.Media
 
             ArgumentNullException.ThrowIfNull(collection);
 
+
             ICollection<Vector> icollectionOfT = collection as ICollection<Vector>;
 
             if (icollectionOfT != null)
@@ -956,8 +947,11 @@ namespace System.Windows.Media
 
                     foreach (Vector item in collection)
                     {
+
                         _collection.Add(item);
                     }
+
+
                 }
             }
 

@@ -1,10 +1,7 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
-using System;
 using System.Collections;
-using System.Collections.Generic;
 using System.Windows.Automation.Provider;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
@@ -112,7 +109,7 @@ namespace System.Windows.Automation.Peers
                     }
 
                     // If the peer is null or dataItem.Header has changed, create a new peer.
-                    object dataItemHeader = dataItem == null ? null : dataItem.Header;
+                    object dataItemHeader = dataItem?.Header;
                     if (peer == null ||
                         !ItemsControl.EqualsEx(peer.Item, dataItemHeader))
                     {
@@ -123,10 +120,7 @@ namespace System.Windows.Automation.Peers
                     if (peer != null)
                     {
                         AutomationPeer wrapperPeer = peer.GetWrapperPeer();
-                        if (wrapperPeer != null)
-                        {
-                            wrapperPeer.EventsSource = peer;
-                        }
+                        wrapperPeer?.EventsSource = peer;
                     }
 
                     // protection from indistinguishable items - for example, 2 strings with same value

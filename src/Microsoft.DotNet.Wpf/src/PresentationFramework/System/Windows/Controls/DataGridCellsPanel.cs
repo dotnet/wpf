@@ -1,15 +1,10 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 
-using System;
 using System.Collections;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
-using System.Diagnostics;
-using System.Windows;
 using System.Windows.Controls.Primitives;
 using System.Windows.Input;
 using System.Windows.Media;
@@ -85,8 +80,7 @@ namespace System.Windows.Controls
                 // This makes sure that the ItemsPresenter and the DatagridCellsPresenter is invalidated even if this is an arrange pass.
                 this.ParentPresenter.InvalidateMeasure();
                 UIElement parent =  VisualTreeHelper.GetParent(this) as UIElement;
-                if (parent != null)
-                    parent.InvalidateMeasure();
+                parent?.InvalidateMeasure();
             }
 
             return measureSize;
@@ -778,7 +772,7 @@ namespace System.Windows.Controls
                         }
                     }
 
-                    Debug.Assert(false, "We should have found a child");
+                    Debug.Fail("We should have found a child");
                 }
             }
 
@@ -1307,23 +1301,14 @@ namespace System.Windows.Controls
             DataGrid parentDataGrid = ParentDataGrid;
 
             // Update the NonFrozenColumnsViewportHorizontalOffset property of datagrid
-            if (parentDataGrid != null)
-            {
-                parentDataGrid.NonFrozenColumnsViewportHorizontalOffset = arrangeState.DataGridHorizontalScrollStartX;
-            }
+            parentDataGrid?.NonFrozenColumnsViewportHorizontalOffset = arrangeState.DataGridHorizontalScrollStartX;
 
             // Remove the clip on previous clipped child
-            if (arrangeState.OldClippedChild != null)
-            {
-                arrangeState.OldClippedChild.CoerceValue(ClipProperty);
-            }
+            arrangeState.OldClippedChild?.CoerceValue(ClipProperty);
 
             // Add the clip on new child to be clipped for the sake of frozen columns.
             _clippedChildForFrozenBehaviour = arrangeState.NewClippedChild;
-            if (_clippedChildForFrozenBehaviour != null)
-            {
-                _clippedChildForFrozenBehaviour.CoerceValue(ClipProperty);
-            }
+            _clippedChildForFrozenBehaviour?.CoerceValue(ClipProperty);
         }
 
         private void SetDataGridCellPanelWidth(IList children, double newWidth)
@@ -1361,8 +1346,10 @@ namespace System.Windows.Controls
         {
             IList children = RealizedChildren;
 
-            ArrangeState arrangeState = new ArrangeState();
-            arrangeState.ChildHeight = arrangeSize.Height;
+            ArrangeState arrangeState = new ArrangeState
+            {
+                ChildHeight = arrangeSize.Height
+            };
             DataGrid parentDataGrid = ParentDataGrid;
 
             /*
@@ -1799,10 +1786,7 @@ namespace System.Windows.Controls
                         else
                         {
                             DataGridColumnHeadersPresenter headersPresenter = parentPresenter as DataGridColumnHeadersPresenter;
-                            if (headersPresenter != null)
-                            {
-                                headersPresenter.InternalItemsHost = this;
-                            }
+                            headersPresenter?.InternalItemsHost = this;
                         }
                     }
                 }

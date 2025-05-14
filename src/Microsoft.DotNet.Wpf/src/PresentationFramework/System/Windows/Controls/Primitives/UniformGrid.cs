@@ -1,6 +1,5 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 //
 // Description: Implementation of a UniformGrid that evenly distributes
@@ -14,14 +13,6 @@
 //              introduce this auto-indexing behavior, it seemed more
 //              straightforward to construct this straightforward panel.
 //
-
-
-using System;
-using System.ComponentModel;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Media;
-
 
 namespace System.Windows.Controls.Primitives
 {

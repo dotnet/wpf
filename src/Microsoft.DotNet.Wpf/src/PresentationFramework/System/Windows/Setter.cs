@@ -1,21 +1,10 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
-/***************************************************************************\
-*
-*
-*  TargetType property setting class.
-*
-*
-\***************************************************************************/
-using System;
 using System.ComponentModel;
 using System.Windows.Markup;
 using System.Windows.Data;
 using System.Globalization;
-
-#pragma warning disable 1634, 1691  // suppressing PreSharp warnings
 
 namespace System.Windows
 {
@@ -24,7 +13,6 @@ namespace System.Windows
     /// </summary>
     [XamlSetMarkupExtensionAttribute("ReceiveMarkupExtension")]
     [XamlSetTypeConverterAttribute("ReceiveTypeConverter")] 
-    [ContentProperty("Value")]
     public class Setter : SetterBase, ISupportInitialize
     {
         /// <summary>
@@ -161,7 +149,6 @@ namespace System.Windows
         /// </summary>
         [System.Windows.Markup.DependsOn("Property")]
         [System.Windows.Markup.DependsOn("TargetName")]
-        [DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
         [Localizability(LocalizationCategory.None, Readability = Readability.Unreadable)] // Not localizable by-default
         [TypeConverter(typeof(System.Windows.Markup.SetterTriggerConditionValueConverter))]
         public object Value
@@ -259,7 +246,7 @@ namespace System.Windows
             Setter setter = targetObject as Setter;
             if (setter == null)
             {
-                throw new ArgumentNullException("targetObject");
+                throw new ArgumentNullException(nameof(targetObject));
             }
             ArgumentNullException.ThrowIfNull(eventArgs);
 

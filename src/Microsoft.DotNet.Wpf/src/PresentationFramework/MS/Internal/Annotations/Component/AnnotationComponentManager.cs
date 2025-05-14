@@ -1,19 +1,14 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 //
 // Description:
 //      AnnotationComponentManager
 //
 
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
 using System.Windows;
 using System.Windows.Annotations;
 using System.Windows.Documents;
-using System.Windows.Media;
 
 namespace MS.Internal.Annotations.Component
 {
@@ -92,8 +87,7 @@ namespace MS.Internal.Annotations.Component
                 component.RemoveAttachedAnnotation(attachedAnnotation);  // let the annotation component know
                 if (component.AttachedAnnotations.Count == 0)
                 { // if it has no more attached annotations, remove it
-                    if (component.PresentationContext != null)
-                        component.PresentationContext.RemoveFromHost(component, reorder);
+                    component.PresentationContext?.RemoveFromHost(component, reorder);
                 }
             }
         }

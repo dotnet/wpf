@@ -1,13 +1,11 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 
 //
 // Description: Definition for embedded object inside a text paragraph.
 //
 
-using System;
 using System.Windows;
 using MS.Internal.Documents;
 using MS.Internal.PtsHost.UnsafeNativeMethods;

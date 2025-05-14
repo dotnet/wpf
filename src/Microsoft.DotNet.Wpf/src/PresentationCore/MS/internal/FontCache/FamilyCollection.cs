@@ -1,6 +1,5 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 //
 //
@@ -9,29 +8,16 @@
 //
 //
 
-using System;
 using System.Collections;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Diagnostics;
 using System.Globalization;
 using System.IO;
-using System.Reflection;
-using System.Runtime.InteropServices;
-using System.Security;
 using System.Windows;
 using System.Windows.Markup;    // for XmlLanguage
 using System.Windows.Media;
 
 using MS.Win32;
-using MS.Utility;
-using MS.Internal;
 using MS.Internal.FontFace;
-using MS.Internal.PresentationCore;
 using MS.Internal.Shaping;
-
-// Since we disable PreSharp warnings in this file, we first need to disable warnings about unknown message numbers and unknown pragmas.
-#pragma warning disable 1634, 1691
 
 namespace MS.Internal.FontCache
 {
@@ -39,7 +25,6 @@ namespace MS.Internal.FontCache
     /// FamilyCollection font cache element class is responsible for
     /// storing the mapping between a folder and font families in it
     /// </summary>
-    [FriendAccessAllowed]
     internal class FamilyCollection
     {
         //------------------------------------------------------
@@ -90,7 +75,7 @@ namespace MS.Internal.FontCache
             {
                 if (_userCompositeFonts == null)
                 {
-                    _userCompositeFonts = GetCompositeFontList(new FontSourceCollection(_folderUri, false, true));
+                    _userCompositeFonts = GetCompositeFontList(new FontSourceCollection(_folderUri, true));
                 }
                 return _userCompositeFonts;
             }
@@ -251,7 +236,6 @@ namespace MS.Internal.FontCache
                         if (_systemCompositeFonts[index] == null)
                         {
                             FontSource fontSource = new FontSource(new Uri(Path.Combine(FamilyCollection.SxSFontsResourcePrefix, _systemCompositeFontsFileNames[index] + Util.CompositeFontExtension), UriKind.RelativeOrAbsolute),
-                                                                   skipDemand:true,
                                                                    isComposite:true,
                                                                    isInternalCompositeFont:true);
 
@@ -503,11 +487,12 @@ namespace MS.Internal.FontCache
             // An exact match was not found and so we will start looking for the best match.
             Text.TextInterface.Font matchingFont = null;
             int indexOfSpace = faceName.LastIndexOf(' ');
+            Dictionary<string, Text.TextInterface.Font>.AlternateLookup<ReadOnlySpan<char>> alternateLookup = faces.GetAlternateLookup<ReadOnlySpan<char>>();
 
             while (indexOfSpace > 0)
             {
                 faceName = faceName.Slice(0, indexOfSpace);
-                if (faces.TryGetValue(faceName.ToString(), out matchingFont))
+                if (alternateLookup.TryGetValue(faceName, out matchingFont))
                 {
                     return matchingFont;
                 }

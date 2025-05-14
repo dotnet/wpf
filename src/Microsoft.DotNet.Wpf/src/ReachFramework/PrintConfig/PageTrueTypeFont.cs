@@ -1,6 +1,5 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 /*++
 
@@ -13,15 +12,9 @@ Abstract:
 
 --*/
 
-using System;
-using System.IO;
-using System.Collections;
 using System.Collections.ObjectModel;
-using System.Collections.Generic;
-using System.Diagnostics;
 
 using System.Printing;
-using MS.Internal.Printing.Configuration;
 
 namespace MS.Internal.Printing.Configuration
 {
@@ -108,13 +101,15 @@ namespace MS.Internal.Printing.Configuration
 
         internal static PrintCapabilityFeature NewFeatureCallback(InternalPrintCapabilities printCap)
         {
-            PageTrueTypeFontModeCapability cap = new PageTrueTypeFontModeCapability(printCap);
-            cap._trueTypeFontModes = new Collection<TrueTypeFontModeOption>();
+            PageTrueTypeFontModeCapability cap = new PageTrueTypeFontModeCapability(printCap)
+            {
+                _trueTypeFontModes = new Collection<TrueTypeFontModeOption>()
+            };
 
             return cap;
         }
 
-        internal override sealed bool AddOptionCallback(PrintCapabilityOption baseOption)
+        internal sealed override bool AddOptionCallback(PrintCapabilityOption baseOption)
         {
             bool added = false;
 
@@ -139,32 +134,32 @@ namespace MS.Internal.Printing.Configuration
             return added;
         }
 
-        internal override sealed void AddSubFeatureCallback(PrintCapabilityFeature subFeature)
+        internal sealed override void AddSubFeatureCallback(PrintCapabilityFeature subFeature)
         {
             // no sub-feature
             return;
         }
 
-        internal override sealed bool FeaturePropCallback(PrintCapabilityFeature feature, XmlPrintCapReader reader)
+        internal sealed override bool FeaturePropCallback(PrintCapabilityFeature feature, XmlPrintCapReader reader)
         {
             // no feature property to handle
             return false;
         }
 
-        internal override sealed PrintCapabilityOption NewOptionCallback(PrintCapabilityFeature baseFeature)
+        internal sealed override PrintCapabilityOption NewOptionCallback(PrintCapabilityFeature baseFeature)
         {
             TrueTypeFontModeOption option = new TrueTypeFontModeOption(baseFeature);
 
             return option;
         }
 
-        internal override sealed void OptionAttrCallback(PrintCapabilityOption baseOption, XmlPrintCapReader reader)
+        internal sealed override void OptionAttrCallback(PrintCapabilityOption baseOption, XmlPrintCapReader reader)
         {
             // no option attribute to handle
             return;
         }
 
-        internal override sealed bool OptionPropCallback(PrintCapabilityOption option, XmlPrintCapReader reader)
+        internal sealed override bool OptionPropCallback(PrintCapabilityOption option, XmlPrintCapReader reader)
         {
             // no option property to handle
             return false;
@@ -174,7 +169,7 @@ namespace MS.Internal.Printing.Configuration
 
         #region Internal Properties
 
-        internal override sealed bool IsValid
+        internal sealed override bool IsValid
         {
             get
             {
@@ -182,7 +177,7 @@ namespace MS.Internal.Printing.Configuration
             }
         }
 
-        internal override sealed string FeatureName
+        internal sealed override string FeatureName
         {
             get
             {
@@ -190,7 +185,7 @@ namespace MS.Internal.Printing.Configuration
             }
         }
 
-        internal override sealed bool HasSubFeature
+        internal sealed override bool HasSubFeature
         {
             get
             {
@@ -256,7 +251,7 @@ namespace MS.Internal.Printing.Configuration
                 if (value < PrintSchema.TrueTypeFontModeEnumMin ||
                     value > PrintSchema.TrueTypeFontModeEnumMax)
                 {
-                    throw new ArgumentOutOfRangeException("value");
+                    throw new ArgumentOutOfRangeException(nameof(value));
                 }
 
                 this[PrintSchemaTags.Framework.OptionNameProperty] = (int)value;

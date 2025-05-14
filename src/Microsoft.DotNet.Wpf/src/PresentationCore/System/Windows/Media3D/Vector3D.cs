@@ -1,6 +1,5 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 //
 // 
@@ -10,11 +9,7 @@
 //              See spec at http://avalon/medialayer/Specifications/Avalon3D%20API%20Spec.mht 
 //
 
-using MS.Internal;
 using MS.Internal.Media3D;
-using System;
-using System.Windows;
-using System.Windows.Media.Media3D;
 
 namespace System.Windows.Media.Media3D
 {

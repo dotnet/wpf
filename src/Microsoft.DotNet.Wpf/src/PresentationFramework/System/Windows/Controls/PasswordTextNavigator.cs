@@ -1,6 +1,7 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
+
+using System.Windows.Documents;
 
 //
 // Description: An override class representing a movable
@@ -9,12 +10,6 @@
 
 namespace System.Windows.Controls
 {
-    using System;
-    using System.Windows.Threading;
-    using System.Diagnostics;
-    using System.Windows.Documents;
-    using MS.Internal;
-
     // TextNavigator implementation for the PasswordTextContainer.
     internal sealed class PasswordTextPointer : ITextPointer
     {
@@ -471,7 +466,7 @@ namespace System.Windows.Controls
 
             if (offset < 0 || offset > this.Container.SymbolCount)
             {
-                Debug.Assert(false, "Bad distance!");
+                Debug.Fail("Bad distance!");
             }
 
             this.Container.RemovePosition(this);
@@ -510,7 +505,7 @@ namespace System.Windows.Controls
         void ITextPointer.MoveToElementEdge(ElementEdge edge)
         {
             Debug.Assert(!_isFrozen, "Can't reposition a frozen pointer!");
-            Debug.Assert(false, "No scoping element!");
+            Debug.Fail("No scoping element!");
         }
 
         // <see cref="TextPointer.MoveToLineBoundary"/>

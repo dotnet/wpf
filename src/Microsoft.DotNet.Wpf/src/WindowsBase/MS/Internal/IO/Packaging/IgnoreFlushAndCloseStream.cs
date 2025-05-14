@@ -1,22 +1,14 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
-//
-//
 //  Description:    The class is used to wrap a given stream in a way that the Flush
 //                  and Close calls to the stream are Ignored. This stream class has been
 //                  created specifically for perf improvements for the ZipPackage.
-//                  
-//
 
-using System;
 using System.IO;
-using System.Windows;                       // for ExceptionStringTable
-using MS.Internal.WindowsBase;
 
 namespace MS.Internal.IO.Packaging
-{    
+{
     /// <summary>
     /// This class ignores all calls to Flush() and Close() methods
     /// depending on whether the IgnoreFlushAndClose property is set to true

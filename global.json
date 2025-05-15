@@ -3,10 +3,10 @@
     "dotnet": "10.0.100-preview.3.25201.16",
     "runtimes": {
       "dotnet/x64": [
-        "$(VSRedistCommonNetCoreSharedFrameworkx64100PackageVersion)"
+        "$(MicrosoftNETCorePlatformsVersion)"
       ],
       "dotnet/x86": [
-        "$(VSRedistCommonNetCoreSharedFrameworkx64100PackageVersion)"
+        "$(MicrosoftNETCorePlatformsVersion)"
       ]
     },
     "vs": {

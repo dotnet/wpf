@@ -31,9 +31,7 @@
   </PropertyGroup>
   <!-- Packages that come from https://github.com/dotnet/runtime -->
   <PropertyGroup>
-    <VSRedistCommonNetCoreSharedFrameworkx64100PackageVersion>10.0.0-preview.5.25263.104</VSRedistCommonNetCoreSharedFrameworkx64100PackageVersion>
     <MicrosoftNETCoreAppRefVersion>10.0.0-preview.5.25263.104</MicrosoftNETCoreAppRefVersion>
-    <MicrosoftNETCoreAppRuntimewinx64Version>10.0.0-preview.5.25263.104</MicrosoftNETCoreAppRuntimewinx64Version>
     <MicrosoftNETCorePlatformsVersion>10.0.0-preview.5.25263.104</MicrosoftNETCorePlatformsVersion>
     <SystemCodeDomPackageVersion>10.0.0-preview.5.25263.104</SystemCodeDomPackageVersion>
     <SystemConfigurationConfigurationManagerPackageVersion>10.0.0-preview.5.25263.104</SystemConfigurationConfigurationManagerPackageVersion>

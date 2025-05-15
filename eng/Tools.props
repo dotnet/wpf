@@ -8,8 +8,8 @@
   <!-- Pre-download vcxproj dependencies as vcxprojs in this repo don't support NuGet package download. -->
   <ItemGroup>
     <PackageDownload Include="Microsoft.NETCore.App.Ref" Version="[$(MicrosoftNETCoreAppRefVersion)]" Condition="'$(MicrosoftNETCoreAppRefVersion)' != ''" />
-    <PackageDownload Include="Microsoft.NETCore.App.Runtime.$(_RuntimeIdentifier)" Version="[$(MicrosoftNETCoreAppRuntimewinx64Version)]" Condition="'$(MicrosoftNETCoreAppRuntimewinx64Version)' != ''" />
-    <PackageDownload Include="Microsoft.NETCore.App.Host.$(_RuntimeIdentifier)" Version="[$(MicrosoftNETCoreAppRuntimewinx64Version)]" Condition="'$(MicrosoftNETCoreAppRuntimewinx64Version)' != ''" />
+    <PackageDownload Include="Microsoft.NETCore.App.Runtime.$(_RuntimeIdentifier)" Version="[$(MicrosoftNETCoreAppRefVersion)]" Condition="'$(MicrosoftNETCoreAppRefVersion)' != ''" />
+    <PackageDownload Include="Microsoft.NETCore.App.Host.$(_RuntimeIdentifier)" Version="[$(MicrosoftNETCoreAppRefVersion)]" Condition="'$(MicrosoftNETCoreAppRefVersion)' != ''" />
   </ItemGroup>
 
 </Project>

@@ -6,7 +6,7 @@
 //
 
 using MS.Internal;
-using System.Collections;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 
 namespace System.Windows.Documents
@@ -319,7 +319,7 @@ namespace System.Windows.Documents
         #region Private Types
 
         // Argument for the Changed event, encapsulates a highlight change.
-        private class TextSelectionHighlightChangedEventArgs : HighlightChangedEventArgs
+        private sealed class TextSelectionHighlightChangedEventArgs : HighlightChangedEventArgs
         {
             // Constructor.
             internal TextSelectionHighlightChangedEventArgs(ITextPointer invalidRangeLeftStart, ITextPointer invalidRangeLeftEnd,
@@ -350,7 +350,7 @@ namespace System.Windows.Documents
             }
 
             // Collection of changed content ranges.
-            internal override IList Ranges
+            internal override IList<TextSegment> Ranges
             {
                 get
                 {

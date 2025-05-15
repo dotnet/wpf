@@ -692,7 +692,7 @@ namespace System.Windows.Documents
                 DocumentsTrace.FixedDocumentSequence.TextOM.Trace("===EndNewHighlightRange===");
             }
 #endif
-            Debug.Assert(args.Ranges.Count > 0 && ((TextSegment)args.Ranges[0]).Start.CompareTo(((TextSegment)args.Ranges[0]).End) < 0);
+            Debug.Assert(args.Ranges.Count > 0 && args.Ranges[0].Start.CompareTo(args.Ranges[0].End) < 0);
 
 
             // For each change range we received, we need to figure out
@@ -713,7 +713,7 @@ namespace System.Windows.Documents
             List<TextSegment>  rangeArray = new List<TextSegment>(4);
             while (idxScan < args.Ranges.Count)
             {
-                TextSegment ts = (TextSegment)args.Ranges[idxScan];
+                TextSegment ts = args.Ranges[idxScan];
                 DocumentSequenceTextPointer tsEnd   = (DocumentSequenceTextPointer)ts.End;
                 ITextPointer tpChildStart, tpChildEnd;
                 ChildDocumentBlock lastBlock;

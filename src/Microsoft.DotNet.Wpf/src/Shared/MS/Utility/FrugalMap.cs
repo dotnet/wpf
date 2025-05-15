@@ -1655,7 +1655,7 @@ namespace MS.Utility
         // Hashtable will return null from its indexer if the key is not
         // found OR if the value is null.  To distinguish between these
         // two cases we insert NullValue instead of null.
-        private static object NullValue = new object();
+        private static readonly object NullValue = new object();
 
         internal Dictionary<int, object> _entries;
     }

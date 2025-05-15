@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
 // Description:  Internal class replicating the functionality of the
@@ -48,8 +48,8 @@ namespace MS.Internal.Threading
             return result;
         }
 
-        private InternalRealCallDelegate _internalRealCall;
-        private FilterExceptionDelegate _filterException;
-        private CatchExceptionDelegate _catchException;
+        private readonly InternalRealCallDelegate _internalRealCall;
+        private readonly FilterExceptionDelegate _filterException;
+        private readonly CatchExceptionDelegate _catchException;
     }
 }

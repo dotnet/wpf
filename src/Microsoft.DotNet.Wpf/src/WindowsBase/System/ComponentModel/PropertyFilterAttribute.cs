@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
 namespace System.ComponentModel
@@ -136,7 +136,7 @@ namespace System.ComponentModel
 
         #region Private Fields
         
-        private PropertyFilterOptions _filter;
+        private readonly PropertyFilterOptions _filter;
 
         #endregion Private Fields
     }

@@ -358,15 +358,15 @@ namespace MS.Win32
         private IntPtr _handle;
         private UInt16 _classAtom;
         private WeakReferenceList _hooks;
-        private int _ownerThreadID;
+        private readonly int _ownerThreadID;
         
-        private HwndWrapperHook _wndProc;
+        private readonly HwndWrapperHook _wndProc;
         private bool _isDisposed;
 
-        private bool _isInCreateWindow = false;     // debugging variable (temporary)
+        private readonly bool _isInCreateWindow = false;     // debugging variable (temporary)
 
         // Message to cause a dispose.  We need this to ensure we destroy the window on the right thread.
-        private static WindowMessage s_msgGCMemory;
+        private static readonly WindowMessage s_msgGCMemory;
     } // class RawWindow
 }
 

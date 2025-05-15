@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
 namespace System.Windows
@@ -159,7 +159,7 @@ namespace System.Windows
         //
         //------------------------------------------------------
 
-        private Type _targetType;
+        private readonly Type _targetType;
         private DependencyObjectType _dTargetType;
         private bool _dTargetTypeChecked;
     }

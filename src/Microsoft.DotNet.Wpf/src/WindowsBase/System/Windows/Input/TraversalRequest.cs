@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
 namespace System.Windows.Input
@@ -45,7 +45,7 @@ namespace System.Windows.Input
         public FocusNavigationDirection FocusNavigationDirection { get { return _focusNavigationDirection; } }
 
         private bool _wrapped;
-        private FocusNavigationDirection _focusNavigationDirection;
+        private readonly FocusNavigationDirection _focusNavigationDirection;
 }
 
     /// <summary>

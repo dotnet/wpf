@@ -814,8 +814,8 @@ namespace MS.Internal.IO.Packaging
         /// Synchronize access to IsolatedStorage methods that can step on each-other
         /// </summary>
         /// <remarks>See PS 1468964 for details.</remarks>
-        private static Object _isoStoreSyncObject = new Object();
-        private static Object _isolatedStorageFileLock = new Object();
+        private static readonly Object _isoStoreSyncObject = new Object();
+        private static readonly Object _isolatedStorageFileLock = new Object();
         private static ReliableIsolatedStorageFileFolder _defaultFile;
         private const string XmlNamespace = "xmlns";
         private const string _encodingAttribute = "encoding";

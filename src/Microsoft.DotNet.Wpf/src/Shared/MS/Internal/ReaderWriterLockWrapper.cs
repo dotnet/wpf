@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
 // Description:
@@ -184,7 +184,7 @@ namespace MS.Internal
 
         #region Private Fields
 
-        private ReaderWriterLockSlim _rwLock;
+        private readonly ReaderWriterLockSlim _rwLock;
         private AutoReaderRelease _arr;
         private AutoWriterRelease _awr;
         private AutoReaderReleaseClass _arrc;
@@ -217,7 +217,7 @@ namespace MS.Internal
                 _wrapper.ReleaseWriterLock();
             }
 
-            private ReaderWriterLockWrapper _wrapper;
+            private readonly ReaderWriterLockWrapper _wrapper;
         }
 
         private struct AutoReaderRelease : IDisposable
@@ -232,7 +232,7 @@ namespace MS.Internal
                 _wrapper.ReleaseReaderLock();
             }
 
-            private ReaderWriterLockWrapper _wrapper;
+            private readonly ReaderWriterLockWrapper _wrapper;
         }
 
         private class AutoWriterReleaseClass : IDisposable
@@ -247,7 +247,7 @@ namespace MS.Internal
                 _wrapper.ReleaseWriterLock2();
             }
 
-            private ReaderWriterLockWrapper _wrapper;
+            private readonly ReaderWriterLockWrapper _wrapper;
         }
 
         private class AutoReaderReleaseClass : IDisposable
@@ -262,7 +262,7 @@ namespace MS.Internal
                 _wrapper.ReleaseReaderLock2();
             }
 
-            private ReaderWriterLockWrapper _wrapper;
+            private readonly ReaderWriterLockWrapper _wrapper;
         }
 
         // This SynchronizationContext waits without pumping messages, like

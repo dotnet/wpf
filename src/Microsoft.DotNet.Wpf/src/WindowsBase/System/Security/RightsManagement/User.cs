@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
 using MS.Internal;
@@ -257,8 +257,9 @@ namespace System.Security.RightsManagement
         private const string AnyoneUserName = "Anyone";
         private static ContentUser _anyoneUser;
 
-        private string _name;
-        private AuthenticationType _authenticationType;
+        private readonly string _name;
+        private readonly AuthenticationType _authenticationType;
+
         private int hashValue;
         private bool hashCalcIsDone;    // flag that indicates the value in hasValue is already calculated and usable
     }

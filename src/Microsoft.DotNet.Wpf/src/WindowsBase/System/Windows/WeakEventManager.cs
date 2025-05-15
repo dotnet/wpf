@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
 //
@@ -488,9 +488,9 @@ namespace System.Windows
         //  Private Fields
         //
 
-        private WeakEventTable  _table;
+        private readonly WeakEventTable _table;
         private static readonly object StaticSource = new NamedObject("StaticSource");
-        private static MethodInfo s_DeliverEventMethodInfo;
+        private static readonly MethodInfo s_DeliverEventMethodInfo;
 
         #endregion Private Fields
 
@@ -522,8 +522,8 @@ namespace System.Windows
             public Delegate Handler { get { return (_handler != null) ? (Delegate)_handler.Target : null; } }
             public bool HasHandler { get { return _handler != null; } }
 
-            private WeakReference _target;
-            private WeakReference _handler;
+            private readonly WeakReference _target;
+            private readonly WeakReference _handler;
         }
 
         /// <summary>
@@ -871,12 +871,12 @@ namespace System.Windows
                 Interlocked.Decrement(ref _users);
             }
 
-            private FrugalObjectList<Listener> _list;  // list of listeners
+            private readonly FrugalObjectList<Listener> _list;  // list of listeners
             private int _users;     // number of active users
-            private System.Runtime.CompilerServices.ConditionalWeakTable<object, object>
+            private readonly System.Runtime.CompilerServices.ConditionalWeakTable<object, object>
                 _cwt = new System.Runtime.CompilerServices.ConditionalWeakTable<object, object>();
 
-            private static ListenerList s_empty = new ListenerList();
+            private static readonly ListenerList s_empty = new ListenerList();
         }
 
         protected class ListenerList<TEventArgs> : ListenerList

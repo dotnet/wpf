@@ -1037,7 +1037,7 @@ namespace MS.Internal.Security.RightsManagement
         }
 
 
-        private List<SafeRightsManagementPubHandle> _pubHandlesList = new List<SafeRightsManagementPubHandle>(50); // initial capacity 
+        private readonly List<SafeRightsManagementPubHandle> _pubHandlesList = new List<SafeRightsManagementPubHandle>(50); // initial capacity 
         private SafeRightsManagementPubHandle _issuanceLicenseHandle = null; // if this is null, we are disposed
 
         private const string DefaultContentType = "MS-GUID";

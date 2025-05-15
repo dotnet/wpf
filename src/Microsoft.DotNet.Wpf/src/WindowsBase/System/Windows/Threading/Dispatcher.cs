@@ -2799,14 +2799,14 @@ namespace System.Windows.Threading
         private const int TIMERID_TIMERS = 2;
         private const int DELTA_BACKGROUND = 1;
 
-        private static List<WeakReference> _dispatchers;
+        private static readonly List<WeakReference> _dispatchers;
         private static WeakReference _possibleDispatcher;
         private static readonly object _globalLock;
 
         [ThreadStatic]
         private static Dispatcher _tlsDispatcher;      // use TLS for ownership only
 
-        private Thread _dispatcherThread;
+        private readonly Thread _dispatcherThread;
 
         private int _frameDepth;
         internal bool _exitAllFrames;       // used from DispatcherFrame
@@ -2822,21 +2822,21 @@ namespace System.Windows.Threading
 
         private MessageOnlyHwndWrapper _window;
 
-        private HwndWrapperHook _hook;
+        private readonly HwndWrapperHook _hook;
 
         private int _postedProcessingType;
-        private static WindowMessage _msgProcessQueue;
+        private static readonly WindowMessage _msgProcessQueue;
 
-        private static ExceptionWrapper _exceptionWrapper;
+        private static readonly ExceptionWrapper _exceptionWrapper;
         private static readonly object ExceptionDataKey = new object();
 
         // Preallocated arguments for exception handling.
         // This helps avoid allocations in the handler code, a potential
         // source of secondary exceptions (i.e. in Out-Of-Memory cases).
-        private DispatcherUnhandledExceptionEventArgs _unhandledExceptionEventArgs;
+        private readonly DispatcherUnhandledExceptionEventArgs _unhandledExceptionEventArgs;
 
         private DispatcherUnhandledExceptionFilterEventHandler _unhandledExceptionFilter;
-        private DispatcherUnhandledExceptionFilterEventArgs _exceptionFilterEventArgs;
+        private readonly DispatcherUnhandledExceptionFilterEventArgs _exceptionFilterEventArgs;
 
         private object _reserved0;
         private object _reserved1;

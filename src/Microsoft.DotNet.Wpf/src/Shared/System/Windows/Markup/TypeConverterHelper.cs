@@ -29,7 +29,7 @@ namespace System.Windows.Markup
     /// </summary>
     internal static class TypeConverterHelper
     {
-        private static CultureInfo invariantEnglishUS = CultureInfo.InvariantCulture;
+        private static readonly CultureInfo invariantEnglishUS = CultureInfo.InvariantCulture;
 
         internal static CultureInfo InvariantEnglishUS
         {

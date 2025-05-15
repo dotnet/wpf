@@ -110,9 +110,9 @@ namespace MS.Internal.Security.RightsManagement
         }
 
 
-        private CallbackDelegate _callbackDelegate;
+        private readonly CallbackDelegate _callbackDelegate;
 
-        private AutoResetEvent _resetEvent;
+        private readonly AutoResetEvent _resetEvent;
         private string _callbackData;
         private int _hr;
         private Exception _exception;

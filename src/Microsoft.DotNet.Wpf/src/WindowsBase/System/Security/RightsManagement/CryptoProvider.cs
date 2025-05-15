@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
 using System.Collections.ObjectModel;
@@ -521,10 +521,10 @@ namespace System.Security.RightsManagement
 
         // if this is Invalid, we are disposed
         private List<SafeRightsManagementHandle> _boundLicenseHandleList;
-        private List<RightNameExpirationInfoPair> _boundRightsInfoList;
+        private readonly List<RightNameExpirationInfoPair> _boundRightsInfoList;
                                                             
         private ReadOnlyCollection<ContentGrant> _boundGrantReadOnlyCollection;
-        private ContentUser _owner;
+        private readonly ContentUser _owner;
 
         private bool _disposed;
     }

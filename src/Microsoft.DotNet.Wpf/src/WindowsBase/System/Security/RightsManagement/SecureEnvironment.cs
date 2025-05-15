@@ -353,8 +353,8 @@ namespace System.Security.RightsManagement
             ObjectDisposedException.ThrowIf(_clientSession == null, typeof(SecureEnvironment));
         }
 
-        private ContentUser _user;
-        private string _applicationManifest;
+        private readonly ContentUser _user;
+        private readonly string _applicationManifest;
         private ClientSession _clientSession;       // if null we are disposed
     }
 }

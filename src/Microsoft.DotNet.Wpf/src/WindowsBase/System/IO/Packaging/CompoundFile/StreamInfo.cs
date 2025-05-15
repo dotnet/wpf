@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
 using System.Runtime.InteropServices;
@@ -80,7 +80,7 @@ namespace System.IO.Packaging
         /// <summary>
         /// CompoundFileStreamReference for this StreamInfo object
         /// </summary>
-        private CompoundFileStreamReference _streamReference;
+        private readonly CompoundFileStreamReference _streamReference;
 
         /// <summary>
         /// We need to rememeber the FileAccess that was used for openning 

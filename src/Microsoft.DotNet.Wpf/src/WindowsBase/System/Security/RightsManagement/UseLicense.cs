@@ -140,9 +140,9 @@ namespace System.Security.RightsManagement
         }
 
 
-        private string _serializedUseLicense;
-        private Guid _contentId;
-        private ContentUser _owner = null;
-        private IDictionary <string, string> _applicationSpecificDataDictionary = null;
+        private readonly string _serializedUseLicense;
+        private readonly Guid _contentId;
+        private readonly ContentUser _owner;
+        private readonly IDictionary<string, string> _applicationSpecificDataDictionary;
     }
 }

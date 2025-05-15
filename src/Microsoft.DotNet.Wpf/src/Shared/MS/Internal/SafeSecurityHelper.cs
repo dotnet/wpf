@@ -87,7 +87,7 @@ namespace System.Xaml
         // We use a callback on GC to purge out collected assemblies, so we don't grow indefinitely.
         //
         private static Dictionary<object, AssemblyName> _assemblies; // get key via GetKeyForAssembly
-        private static object syncObject = new object();
+        private static readonly object syncObject = new object();
         private static bool _isGCCallbackPending;
 
         // PERF: Cache delegate for CleanupCollectedAssemblies to avoid allocating it each time.
@@ -312,8 +312,8 @@ namespace System.Xaml
     // will kick off a thread-pool job that you can use to purge a weakref cache.
     internal class GCNotificationToken
     {
-        private WaitCallback callback;
-        private object state;
+        private readonly WaitCallback callback;
+        private readonly object state;
 
         private GCNotificationToken(WaitCallback callback, object state)
         {

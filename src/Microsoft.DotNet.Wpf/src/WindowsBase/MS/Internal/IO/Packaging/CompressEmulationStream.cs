@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
 // Description:
@@ -331,7 +331,7 @@ namespace MS.Internal.IO.Packaging
         private bool    _dirty;             // do we need to recompress?
         protected Stream  _baseStream;      // stream we ultimately decompress from and to in the container
         protected Stream _tempStream;       // temporary storage for the uncompressed stream
-        private IDeflateTransform _transformer;   // does the actual compress/decompress for us
+        private readonly IDeflateTransform _transformer;   // does the actual compress/decompress for us
         #endregion
     }
 }

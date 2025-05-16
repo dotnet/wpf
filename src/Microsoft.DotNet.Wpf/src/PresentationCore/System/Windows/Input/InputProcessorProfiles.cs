@@ -7,7 +7,6 @@
 
 using System.Runtime.InteropServices;
 using System.Globalization;
-using System.Diagnostics;
 using System.Threading;
 using MS.Win32;
 

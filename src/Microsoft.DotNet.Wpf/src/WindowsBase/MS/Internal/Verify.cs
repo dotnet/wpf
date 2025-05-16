@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
 using System.Threading;
@@ -50,55 +50,6 @@ namespace MS.Internal
             if (value == "")
             {
                 throw new ArgumentException(SR.Verify_NeitherNullNorEmpty, name);
-            }
-        }
-
-        /// <summary>Verifies that an argument is not null.</summary>
-        /// <typeparam name="T">Type of the object to validate.  Must be a class.</typeparam>
-        /// <param name="obj">The object to validate.</param>
-        /// <param name="name">The name of the parameter that will be presented if an exception is thrown.</param>
-        public static void IsNotNull<T>(T obj, string name) where T : class
-        {
-            if (obj == null)
-            {
-                throw new ArgumentNullException(name);
-            }
-        }
-
-        /// <summary>
-        /// Verifies the specified expression is true.  Throws an ArgumentException if it's not.
-        /// </summary>
-        /// <param name="expression">The expression to be verified as true.</param>
-        /// <param name="name">Name of the parameter to include in the ArgumentException.</param>
-        /// <param name="message">The message to include in the ArgumentException.</param>
-        public static void IsTrue(bool expression, string name, string message)
-        {
-            if (!expression)
-            {
-                throw new ArgumentException(message, name);
-            }
-        }
-
-        /// <summary>
-        /// Verifies two values are not equal to each other.  Throws an ArgumentException if they are.
-        /// </summary>
-        /// <param name="actual">The actual value.</param>
-        /// <param name="notExpected">The value that 'actual' should not be.</param>
-        /// <param name="parameterName">The name to display for 'actual' in the exception if this test fails.</param>
-        /// <param name="message">The message to include in the ArgumentException.</param>
-        public static void AreNotEqual<T>(T actual, T notExpected, string parameterName, string message)
-        {
-            if (notExpected == null)
-            {
-                // Two nulls are considered equal, regardless of type semantics.
-                if (actual == null || actual.Equals(notExpected))
-                {
-                    throw new ArgumentException(SR.Format(SR.Verify_AreNotEqual, notExpected), parameterName);
-                }
-            }
-            else if (notExpected.Equals(actual))
-            {
-                throw new ArgumentException(SR.Format(SR.Verify_AreNotEqual, notExpected), parameterName);
             }
         }
 

@@ -138,7 +138,8 @@ namespace System.Windows.Shell
         /// </remarks>
         public static void AddToRecentCategory(JumpPath jumpPath)
         {
-            Verify.IsNotNull(jumpPath, "jumpPath");
+            ArgumentNullException.ThrowIfNull(jumpPath, nameof(jumpPath));
+
             AddToRecentCategory(jumpPath.Path);
         }
 
@@ -150,7 +151,7 @@ namespace System.Windows.Shell
         /// </remarks>
         public static void AddToRecentCategory(JumpTask jumpTask)
         {
-            Verify.IsNotNull(jumpTask, "jumpTask");
+            ArgumentNullException.ThrowIfNull(jumpTask, nameof(jumpTask));
 
             // SHAddToRecentDocs only allows IShellLinks in Windows 7 and later.
             // Silently fail this if that's not the case.
@@ -212,7 +213,7 @@ namespace System.Windows.Shell
         /// </summary>
         public static void SetJumpList(Application application, JumpList value)
         {
-            Verify.IsNotNull(application, "application");
+            ArgumentNullException.ThrowIfNull(application, nameof(application));
 
             lock (s_lock)
             {
@@ -238,7 +239,7 @@ namespace System.Windows.Shell
         /// </summary>
         public static JumpList GetJumpList(Application application)
         {
-            Verify.IsNotNull(application, "application");
+            ArgumentNullException.ThrowIfNull(application, nameof(application));
 
             JumpList value;
             s_applicationMap.TryGetValue(application, out value);

@@ -2517,11 +2517,6 @@
         <target state="translated">'{0}' 沒有任何檔案。</target>
         <note />
       </trans-unit>
-      <trans-unit id="Verify_NeitherNullNorEmpty">
-        <source>The argument can neither be null nor empty.</source>
-        <target state="translated">引數不可為 null 或空的。</target>
-        <note />
-      </trans-unit>
       <trans-unit id="VersionNumberComponentNegative">
         <source>Major and minor version number components cannot be negative.</source>
         <target state="translated">主要與次要版本號碼元件不可為負數。</target>

@@ -2517,11 +2517,6 @@
         <target state="translated">'{0}' konumunda dosya yok.</target>
         <note />
       </trans-unit>
-      <trans-unit id="Verify_NeitherNullNorEmpty">
-        <source>The argument can neither be null nor empty.</source>
-        <target state="translated">Bağımsız değişken null veya boş olamaz.</target>
-        <note />
-      </trans-unit>
       <trans-unit id="VersionNumberComponentNegative">
         <source>Major and minor version number components cannot be negative.</source>
         <target state="translated">Birincil ve ikincil sürüm numarası bileşenleri negatif olamaz.</target>

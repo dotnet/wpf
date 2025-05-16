@@ -2517,11 +2517,6 @@
         <target state="translated">Żaden plik nie istnieje w „{0}”.</target>
         <note />
       </trans-unit>
-      <trans-unit id="Verify_NeitherNullNorEmpty">
-        <source>The argument can neither be null nor empty.</source>
-        <target state="translated">Argument nie może być zerowy ani pusty.</target>
-        <note />
-      </trans-unit>
       <trans-unit id="VersionNumberComponentNegative">
         <source>Major and minor version number components cannot be negative.</source>
         <target state="translated">Główne i pomocnicze składniki numeru wersji nie mogą być ujemne.</target>

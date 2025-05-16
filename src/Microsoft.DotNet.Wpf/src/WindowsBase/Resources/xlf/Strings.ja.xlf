@@ -2517,11 +2517,6 @@
         <target state="translated">'{0}' にファイルがありません。</target>
         <note />
       </trans-unit>
-      <trans-unit id="Verify_NeitherNullNorEmpty">
-        <source>The argument can neither be null nor empty.</source>
-        <target state="translated">この引数を null 値や空にすることはできません。</target>
-        <note />
-      </trans-unit>
       <trans-unit id="VersionNumberComponentNegative">
         <source>Major and minor version number components cannot be negative.</source>
         <target state="translated">メジャーおよびマイナー バージョン番号コンポーネントは、負の値にできません。</target>

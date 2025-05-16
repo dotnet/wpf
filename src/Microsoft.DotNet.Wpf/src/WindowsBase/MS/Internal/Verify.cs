@@ -33,27 +33,6 @@ namespace MS.Internal
         }
 
         /// <summary>
-        /// Ensure that an argument is neither null nor empty.
-        /// </summary>
-        /// <param name="value">The string to validate.</param>
-        /// <param name="name">The name of the parameter that will be presented if an exception is thrown.</param>
-        public static void IsNeitherNullNorEmpty(string value, string name)
-        {
-            // catch caller errors, mixing up the parameters.  Name should never be empty.
-            Debug.Assert(!string.IsNullOrEmpty(name));
-
-            // Notice that ArgumentNullException and ArgumentException take the parameters in opposite order :P
-            if (value == null)
-            {
-                throw new ArgumentNullException(name, SR.Verify_NeitherNullNorEmpty);
-            }
-            if (value == "")
-            {
-                throw new ArgumentException(SR.Verify_NeitherNullNorEmpty, name);
-            }
-        }
-
-        /// <summary>
         /// Verifies the specified file exists.  Throws an ArgumentException if it doesn't.
         /// </summary>
         /// <param name="filePath">The file path to check for existence.</param>
@@ -61,7 +40,7 @@ namespace MS.Internal
         /// <remarks>This method demands FileIOPermission(FileIOPermissionAccess.PathDiscovery)</remarks>
         public static void FileExists(string filePath, string parameterName)
         {
-            Verify.IsNeitherNullNorEmpty(filePath, parameterName);
+            ArgumentException.ThrowIfNullOrEmpty(filePath, parameterName);
 
             if (!File.Exists(filePath))
             {

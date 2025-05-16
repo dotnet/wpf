@@ -1707,9 +1707,6 @@
   <data name="Verify_ApartmentState" xml:space="preserve">
     <value>This operation requires the thread's apartment state to be '{0}'.</value>
   </data>
-  <data name="Verify_NeitherNullNorEmpty" xml:space="preserve">
-    <value>The argument can neither be null nor empty.</value>
-  </data>
   <data name="Verify_AreNotEqual" xml:space="preserve">
     <value>The argument can not be equal to '{0}'.</value>
   </data>

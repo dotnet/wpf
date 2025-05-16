@@ -2517,11 +2517,6 @@
         <target state="translated">Файл не существует в "{0}".</target>
         <note />
       </trans-unit>
-      <trans-unit id="Verify_NeitherNullNorEmpty">
-        <source>The argument can neither be null nor empty.</source>
-        <target state="translated">Аргумент не может иметь значение NULL или быть пустым.</target>
-        <note />
-      </trans-unit>
       <trans-unit id="VersionNumberComponentNegative">
         <source>Major and minor version number components cannot be negative.</source>
         <target state="translated">Компоненты основного и дополнительного номера версии не могут быть отрицательными.</target>

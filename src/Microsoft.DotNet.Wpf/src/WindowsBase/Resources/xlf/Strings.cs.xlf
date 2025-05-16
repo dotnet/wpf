@@ -2517,11 +2517,6 @@
         <target state="translated">V {0} neexistuje žádný soubor.</target>
         <note />
       </trans-unit>
-      <trans-unit id="Verify_NeitherNullNorEmpty">
-        <source>The argument can neither be null nor empty.</source>
-        <target state="translated">Argument nemůže být null ani prázdný.</target>
-        <note />
-      </trans-unit>
       <trans-unit id="VersionNumberComponentNegative">
         <source>Major and minor version number components cannot be negative.</source>
         <target state="translated">Součásti čísla hlavní verze a podverze nemůžou být záporné.</target>

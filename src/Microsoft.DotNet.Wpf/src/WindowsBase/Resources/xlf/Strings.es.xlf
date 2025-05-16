@@ -2517,10 +2517,6 @@
         <target state="translated">No hay ningún archivo en "{0}".</target>
         <note />
       </trans-unit>
-      <trans-unit id="Verify_NeitherNullNorEmpty">
-        <source>The argument can neither be null nor empty.</source>
-        <target state="translated">El argumento no puede ser nulo ni estar vacío.</target>
-        <note />
       </trans-unit>
       <trans-unit id="VersionNumberComponentNegative">
         <source>Major and minor version number components cannot be negative.</source>

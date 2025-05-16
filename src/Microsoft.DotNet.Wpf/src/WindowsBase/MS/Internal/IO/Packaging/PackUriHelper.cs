@@ -296,7 +296,7 @@ namespace MS.Internal.IO.Packaging
         private static readonly Uri _packageRootUri = new Uri("/", UriKind.Relative);
 
         //Rels segment and extension
-        private static readonly string _relationshipPartExtensionName = ".rels";
+        private const string _relationshipPartExtensionName = ".rels";
 
         #endregion Private Members
 
@@ -564,8 +564,8 @@ namespace MS.Internal.IO.Packaging
 
             //String Uppercase variants
 
-            private static readonly string _relationshipPartUpperCaseExtension   = ".RELS";
-            private static readonly string _relationshipPartUpperCaseSegmentName = "_RELS";
+            private const string _relationshipPartUpperCaseExtension = ".RELS";
+            private const string _relationshipPartUpperCaseSegmentName = "_RELS";
             private static readonly string _relsrelsUpperCaseExtension = String.Concat(_relationshipPartUpperCaseExtension, _relationshipPartUpperCaseExtension);
 
             //need to use the private constructor to initialize this particular partUri as we need this in the 

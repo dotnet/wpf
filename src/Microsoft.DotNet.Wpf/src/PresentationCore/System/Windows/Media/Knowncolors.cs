@@ -6,8 +6,9 @@ using System;
 #if PBTCOMPILER
 namespace MS.Internal.Markup
 #else
-using System.Collections.Generic;
 using MS.Internal;
+using System.Collections.Generic;
+using System.Globalization;
 
 namespace System.Windows.Media
 #endif
@@ -167,16 +168,6 @@ namespace System.Windows.Media
     internal static class KnownColors
     {
 #if !PBTCOMPILER
-
-        static KnownColors()
-        {
-            KnownColor[] knownColorValues = Enum.GetValues<KnownColor>();
-            foreach (KnownColor colorValue in knownColorValues)
-            {
-                string aRGBString = String.Format("#{0,8:X8}", (uint)colorValue);
-                s_knownArgbColors[aRGBString] = colorValue;
-            }
-        }
 
         /// Return the solid color brush from a color string.  If there's no match, null
         public static SolidColorBrush ColorStringToKnownBrush(string s)
@@ -818,20 +809,28 @@ namespace System.Windows.Media
 #if !PBTCOMPILER
         internal static KnownColor ArgbStringToKnownColor(string argbString)
         {
-            string argbUpper = argbString.Trim().ToUpper(System.Globalization.CultureInfo.InvariantCulture);
+            ArgumentNullException.ThrowIfNull(argbString);
 
-            KnownColor color;
-            if (s_knownArgbColors.TryGetValue(argbUpper, out color))
-                return color;
+            ReadOnlySpan<char> argbSpan = argbString.AsSpan().Trim();
 
-            return KnownColor.UnknownColor; 
+            // Use NumberStyles.AllowHexSpecifier instead of NumberStyles.HexNumber because NumberStyles.HexNumber
+            // trims the whitespaces when we already trim it in the code above and we don't consider values
+            // with whitespaces between the "#" and the hex value to be valid values.
+            if (argbSpan.StartsWith('#') && uint.TryParse(argbSpan[1..], NumberStyles.AllowHexSpecifier, CultureInfo.InvariantCulture, out uint uintValue))
+            {
+                KnownColor color = (KnownColor)uintValue;
+
+                if (Enum.IsDefined(color))
+                    return color;
+            }
+
+            return KnownColor.UnknownColor;
         }
 #if DEBUG
         private static int s_count = 0;
 #endif
 
         private static Dictionary<uint, SolidColorBrush> s_solidColorBrushCache = new Dictionary<uint, SolidColorBrush>();
-        private static Dictionary<string, KnownColor> s_knownArgbColors = new Dictionary<string, KnownColor>();
 #endif
     }
 

@@ -5,7 +5,7 @@
 // Description: HighlightLayer.Changed event argument.
 //
 
-using System.Collections;
+using System.Collections.Generic;
 
 namespace System.Windows.Documents
 {
@@ -18,7 +18,7 @@ namespace System.Windows.Documents
         /// Sorted, non-overlapping, readonly collection of TextSegments
         /// affected by a highlight change.
         /// </summary>
-        internal abstract IList Ranges { get; }
+        internal abstract IList<TextSegment> Ranges { get; }
 
         /// <summary>
         /// Type identifying the owner of the changed layer.

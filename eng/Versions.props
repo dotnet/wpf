@@ -42,6 +42,7 @@
     <SystemFormatsNrbfVersion>10.0.0-preview.5.25265.101</SystemFormatsNrbfVersion>
     <SystemIOPackagingVersion>10.0.0-preview.5.25265.101</SystemIOPackagingVersion>
     <SystemReflectionMetadataLoadContextVersion>10.0.0-preview.5.25265.101</SystemReflectionMetadataLoadContextVersion>
+
     <SystemReflectionTypeExtensionsPackageVersion>4.6.0-preview4.19176.11</SystemReflectionTypeExtensionsPackageVersion>
     <SystemResourcesExtensionsVersion>10.0.0-preview.5.25265.101</SystemResourcesExtensionsVersion>
     <SystemRuntimeSerializationFormattersPackageVersion>10.0.0-preview.5.25265.101</SystemRuntimeSerializationFormattersPackageVersion>

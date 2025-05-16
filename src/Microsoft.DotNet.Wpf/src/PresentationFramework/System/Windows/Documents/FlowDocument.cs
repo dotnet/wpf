@@ -1409,7 +1409,7 @@ namespace System.Windows.Documents
                 {
                     for (i = 0; i < args.Ranges.Count; i++)
                     {
-                        textSegment = (TextSegment)args.Ranges[i];
+                        textSegment = args.Ranges[i];
                         _formatter.OnContentInvalidated(false, textSegment.Start, textSegment.End);
 
                         if (_formatter is FlowDocumentFormatter)

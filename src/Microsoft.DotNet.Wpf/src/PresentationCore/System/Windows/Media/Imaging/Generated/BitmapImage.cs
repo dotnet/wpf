@@ -487,11 +487,10 @@ namespace System.Windows.Media.Imaging
 
 
             // Initializations
-            Type typeofThis = typeof(BitmapImage);
             UriCachePolicyProperty =
                   RegisterProperty("UriCachePolicy",
                                    typeof(RequestCachePolicy),
-                                   typeofThis,
+                                   typeof(BitmapImage),
                                    null,
                                    new PropertyChangedCallback(UriCachePolicyPropertyChanged),
                                    null,
@@ -500,7 +499,7 @@ namespace System.Windows.Media.Imaging
             UriSourceProperty =
                   RegisterProperty("UriSource",
                                    typeof(Uri),
-                                   typeofThis,
+                                   typeof(BitmapImage),
                                    null,
                                    new PropertyChangedCallback(UriSourcePropertyChanged),
                                    null,
@@ -509,7 +508,7 @@ namespace System.Windows.Media.Imaging
             StreamSourceProperty =
                   RegisterProperty("StreamSource",
                                    typeof(Stream),
-                                   typeofThis,
+                                   typeof(BitmapImage),
                                    null,
                                    new PropertyChangedCallback(StreamSourcePropertyChanged),
                                    null,
@@ -518,7 +517,7 @@ namespace System.Windows.Media.Imaging
             DecodePixelWidthProperty =
                   RegisterProperty("DecodePixelWidth",
                                    typeof(int),
-                                   typeofThis,
+                                   typeof(BitmapImage),
                                    0,
                                    new PropertyChangedCallback(DecodePixelWidthPropertyChanged),
                                    null,
@@ -527,7 +526,7 @@ namespace System.Windows.Media.Imaging
             DecodePixelHeightProperty =
                   RegisterProperty("DecodePixelHeight",
                                    typeof(int),
-                                   typeofThis,
+                                   typeof(BitmapImage),
                                    0,
                                    new PropertyChangedCallback(DecodePixelHeightPropertyChanged),
                                    null,
@@ -536,7 +535,7 @@ namespace System.Windows.Media.Imaging
             RotationProperty =
                   RegisterProperty("Rotation",
                                    typeof(Rotation),
-                                   typeofThis,
+                                   typeof(BitmapImage),
                                    Rotation.Rotate0,
                                    new PropertyChangedCallback(RotationPropertyChanged),
                                    new ValidateValueCallback(System.Windows.Media.Imaging.ValidateEnums.IsRotationValid),
@@ -545,7 +544,7 @@ namespace System.Windows.Media.Imaging
             SourceRectProperty =
                   RegisterProperty("SourceRect",
                                    typeof(Int32Rect),
-                                   typeofThis,
+                                   typeof(BitmapImage),
                                    Int32Rect.Empty,
                                    new PropertyChangedCallback(SourceRectPropertyChanged),
                                    null,
@@ -554,7 +553,7 @@ namespace System.Windows.Media.Imaging
             CreateOptionsProperty =
                   RegisterProperty("CreateOptions",
                                    typeof(BitmapCreateOptions),
-                                   typeofThis,
+                                   typeof(BitmapImage),
                                    BitmapCreateOptions.None,
                                    new PropertyChangedCallback(CreateOptionsPropertyChanged),
                                    null,
@@ -563,7 +562,7 @@ namespace System.Windows.Media.Imaging
             CacheOptionProperty =
                   RegisterProperty("CacheOption",
                                    typeof(BitmapCacheOption),
-                                   typeofThis,
+                                   typeof(BitmapImage),
                                    BitmapCacheOption.Default,
                                    new PropertyChangedCallback(CacheOptionPropertyChanged),
                                    null,

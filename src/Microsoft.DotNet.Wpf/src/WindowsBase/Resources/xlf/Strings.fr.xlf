@@ -2507,11 +2507,6 @@
         <target state="translated">Pour cette opération, l'état de cloisonnement du thread doit être '{0}'.</target>
         <note />
       </trans-unit>
-      <trans-unit id="Verify_AreNotEqual">
-        <source>The argument can not be equal to '{0}'.</source>
-        <target state="translated">L'argument ne peut pas être égal à '{0}'.</target>
-        <note />
-      </trans-unit>
       <trans-unit id="Verify_FileExists">
         <source>No file exists at '{0}'.</source>
         <target state="translated">Aucun fichier n'existe à l'emplacement '{0}'.</target>

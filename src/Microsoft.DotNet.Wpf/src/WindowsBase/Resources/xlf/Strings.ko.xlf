@@ -2507,11 +2507,6 @@
         <target state="translated">이 작업을 수행하려면 스레드의 아파트가 '{0}' 상태여야 합니다.</target>
         <note />
       </trans-unit>
-      <trans-unit id="Verify_AreNotEqual">
-        <source>The argument can not be equal to '{0}'.</source>
-        <target state="translated">인수는 '{0}'(과)와 같을 수 없습니다.</target>
-        <note />
-      </trans-unit>
       <trans-unit id="Verify_FileExists">
         <source>No file exists at '{0}'.</source>
         <target state="translated">'{0}'에 파일이 없습니다.</target>

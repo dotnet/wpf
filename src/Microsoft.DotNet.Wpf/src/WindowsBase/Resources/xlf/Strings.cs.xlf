@@ -2507,11 +2507,6 @@
         <target state="translated">Tato operace vyžaduje, aby stav vlákna modelu apartment byl {0}.</target>
         <note />
       </trans-unit>
-      <trans-unit id="Verify_AreNotEqual">
-        <source>The argument can not be equal to '{0}'.</source>
-        <target state="translated">Argument se nemůže rovnat {0}.</target>
-        <note />
-      </trans-unit>
       <trans-unit id="Verify_FileExists">
         <source>No file exists at '{0}'.</source>
         <target state="translated">V {0} neexistuje žádný soubor.</target>

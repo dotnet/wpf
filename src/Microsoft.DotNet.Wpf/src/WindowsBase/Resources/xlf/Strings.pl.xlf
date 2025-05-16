@@ -2507,11 +2507,6 @@
         <target state="translated">Ta operacja wymaga stanu apartamentu wątku „{0}”.</target>
         <note />
       </trans-unit>
-      <trans-unit id="Verify_AreNotEqual">
-        <source>The argument can not be equal to '{0}'.</source>
-        <target state="translated">Argument nie może być równy „{0}”.</target>
-        <note />
-      </trans-unit>
       <trans-unit id="Verify_FileExists">
         <source>No file exists at '{0}'.</source>
         <target state="translated">Żaden plik nie istnieje w „{0}”.</target>

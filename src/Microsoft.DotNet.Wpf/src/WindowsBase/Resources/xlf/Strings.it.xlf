@@ -2507,11 +2507,6 @@
         <target state="translated">Questa operazione richiede che lo stato dell'apartment del thread sia '{0}'.</target>
         <note />
       </trans-unit>
-      <trans-unit id="Verify_AreNotEqual">
-        <source>The argument can not be equal to '{0}'.</source>
-        <target state="translated">L'argomento non può essere uguale a '{0}'.</target>
-        <note />
-      </trans-unit>
       <trans-unit id="Verify_FileExists">
         <source>No file exists at '{0}'.</source>
         <target state="translated">Non esiste alcun file in '{0}'.</target>

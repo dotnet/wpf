@@ -2507,11 +2507,6 @@
         <target state="translated">Bu işlem iş parçacığı grup durumunun '{0}' olmasını gerektirir.</target>
         <note />
       </trans-unit>
-      <trans-unit id="Verify_AreNotEqual">
-        <source>The argument can not be equal to '{0}'.</source>
-        <target state="translated">Bağımsız değişken '{0}' ile eşit olamaz.</target>
-        <note />
-      </trans-unit>
       <trans-unit id="Verify_FileExists">
         <source>No file exists at '{0}'.</source>
         <target state="translated">'{0}' konumunda dosya yok.</target>

@@ -2507,16 +2507,10 @@
         <target state="translated">Esta operación requiere que el estado del apartamento del subproceso sea "{0}".</target>
         <note />
       </trans-unit>
-      <trans-unit id="Verify_AreNotEqual">
-        <source>The argument can not be equal to '{0}'.</source>
-        <target state="translated">El argumento no puede ser igual a "{0}".</target>
-        <note />
-      </trans-unit>
       <trans-unit id="Verify_FileExists">
         <source>No file exists at '{0}'.</source>
         <target state="translated">No hay ningún archivo en "{0}".</target>
         <note />
-      </trans-unit>
       </trans-unit>
       <trans-unit id="VersionNumberComponentNegative">
         <source>Major and minor version number components cannot be negative.</source>

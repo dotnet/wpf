@@ -2507,11 +2507,6 @@
         <target state="translated">此操作要求线程的单元状态为“{0}”。</target>
         <note />
       </trans-unit>
-      <trans-unit id="Verify_AreNotEqual">
-        <source>The argument can not be equal to '{0}'.</source>
-        <target state="translated">参数不能等于“{0}”。</target>
-        <note />
-      </trans-unit>
       <trans-unit id="Verify_FileExists">
         <source>No file exists at '{0}'.</source>
         <target state="translated">“{0}”处没有文件。</target>

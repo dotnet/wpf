@@ -2507,11 +2507,6 @@
         <target state="translated">此作業需要執行緒的 Apartment 狀態為 '{0}'。</target>
         <note />
       </trans-unit>
-      <trans-unit id="Verify_AreNotEqual">
-        <source>The argument can not be equal to '{0}'.</source>
-        <target state="translated">引數不可等於 '{0}'。</target>
-        <note />
-      </trans-unit>
       <trans-unit id="Verify_FileExists">
         <source>No file exists at '{0}'.</source>
         <target state="translated">'{0}' 沒有任何檔案。</target>

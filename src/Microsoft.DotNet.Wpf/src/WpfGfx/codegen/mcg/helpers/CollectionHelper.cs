@@ -210,11 +210,14 @@ namespace MS.Internal.MilCodeGen.Helpers
         // Helper used by Remove and RemoveAt for removing Freezables.
         private static string Collection_RemoveFreezableAt(McgResource resource, string oldValue, string index)
         {
-            string onRemove = String.Empty;
+            string onRemove = null;
 
             if (resource.IsCollectionOfHandles)
             {
-                onRemove = [[inline]]OnRemove([[oldValue]]);[[/inline]];
+                onRemove = [[inline]]
+
+                               OnRemove([[oldValue]]);
+                           [[/inline]];
             }
 
             return
@@ -222,7 +225,6 @@ namespace MS.Internal.MilCodeGen.Helpers
                     OnFreezablePropertyChanged([[oldValue]], null);
 
                     _collection.RemoveAt([[index]]);
-
                     [[onRemove]]
                 [[/inline]];
         }

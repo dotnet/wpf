@@ -155,7 +155,6 @@ namespace System.Windows.Media.Imaging
             base.CloneCore(source);
 
 
-
             // Set state once clone has finished
             ClonePostscript(sourceCroppedBitmap);
         }
@@ -170,7 +169,6 @@ namespace System.Windows.Media.Imaging
             ClonePrequel(sourceCroppedBitmap);
 
             base.CloneCurrentValueCore(source);
-
 
 
             // Set state once clone has finished
@@ -189,7 +187,6 @@ namespace System.Windows.Media.Imaging
             base.GetAsFrozenCore(source);
 
 
-
             // Set state once clone has finished
             ClonePostscript(sourceCroppedBitmap);
         }
@@ -204,7 +201,6 @@ namespace System.Windows.Media.Imaging
             ClonePrequel(sourceCroppedBitmap);
 
             base.GetCurrentValueAsFrozenCore(source);
-
 
 
             // Set state once clone has finished

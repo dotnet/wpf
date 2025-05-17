@@ -261,22 +261,25 @@ namespace MS.Internal.MilCodeGen.Helpers
         {
             if (index != String.Empty)
             {
-
                 index = [[inline]][[index]] = [[/inline]];
             }
 
             if (resource.CollectionType.IsFreezable)
             {
-                string onInsert = String.Empty;
+                string onInsert = null;
 
                 if (resource.IsCollectionOfHandles)
                 {
-                    onInsert = [[inline]]OnInsert(newValue);[[/inline]];
+                    onInsert = [[inline]]
+
+                                   OnInsert(newValue);
+                               [[/inline]];
                 }
 
                 return
                     [[inline]]
                         [[type]] newValue = [[value]];
+
                         OnFreezablePropertyChanged(/* oldValue = */ null, newValue);
                         [[index]]_collection.Add(newValue);
                         [[onInsert]]
@@ -301,6 +304,7 @@ namespace MS.Internal.MilCodeGen.Helpers
                         {
                             throw new System.ArgumentException(SR.Collection_NoNull);
                         }
+
                     [[/inline]];
             }
 
@@ -918,7 +922,6 @@ namespace MS.Internal.MilCodeGen.Helpers
                     public void Insert(int index, [[type]] value)
                     {
                         [[Collection_CheckNullInsert(resource, "value")]]
-
                         [[Collection_Insert(resource, type, "index", "value")]]
                         [[UpdateResource(resource)]]
 
@@ -983,7 +986,6 @@ namespace MS.Internal.MilCodeGen.Helpers
                         set
                         {
                             [[Collection_CheckNullInsert(resource, "value")]]
-
                             [[Collection_SetValue(resource, type, "index", "value")]]
                             [[UpdateResource(resource)]]
 

@@ -233,7 +233,7 @@ namespace MS.Internal.MilCodeGen.Helpers
         {
             if (resource.CollectionType.IsFreezable)
             {
-                string onInsert = String.Empty;
+                string onInsert = null;
 
                 if (resource.IsCollectionOfHandles)
                 {
@@ -248,6 +248,7 @@ namespace MS.Internal.MilCodeGen.Helpers
                             {
                                 throw new System.ArgumentException(SR.Collection_NoNull);
                             }
+
                             OnFreezablePropertyChanged(/* oldValue = */ null, item);
                             [[onInsert]]
                         }

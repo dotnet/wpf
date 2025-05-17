@@ -795,7 +795,8 @@ namespace MS.Internal.MilCodeGen.Helpers
 
         public static string WriteCollectionMethods(McgResource resource)
         {
-            if (!resource.IsCollection) return String.Empty;
+            if (!resource.IsCollection)
+				return null;
 
             String type = resource.CollectionType.ManagedName;
 

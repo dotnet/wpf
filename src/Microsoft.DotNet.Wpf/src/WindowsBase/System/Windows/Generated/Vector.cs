@@ -344,7 +344,6 @@ namespace System.Windows
         #endregion Internal Fields
 
 
-
         #region Constructors
 
         //------------------------------------------------------

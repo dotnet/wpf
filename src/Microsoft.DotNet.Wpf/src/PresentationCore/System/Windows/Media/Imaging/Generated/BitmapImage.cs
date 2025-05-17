@@ -465,7 +465,6 @@ namespace System.Windows.Media.Imaging
         #endregion Internal Fields
 
 
-
         #region Constructors
 
         //------------------------------------------------------

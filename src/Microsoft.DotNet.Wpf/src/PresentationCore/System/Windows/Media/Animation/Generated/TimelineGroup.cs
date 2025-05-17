@@ -153,7 +153,6 @@ namespace System.Windows.Media.Animation
         #endregion Internal Fields
 
 
-
         #region Constructors
 
         //------------------------------------------------------

@@ -271,7 +271,6 @@ namespace System.Windows.Media
         #endregion Internal Fields
 
 
-
         #region Constructors
 
         //------------------------------------------------------

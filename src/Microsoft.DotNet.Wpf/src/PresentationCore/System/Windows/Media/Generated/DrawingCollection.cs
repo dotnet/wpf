@@ -537,10 +537,13 @@ namespace System.Windows.Media
             {
                 throw new System.ArgumentException(SR.Collection_NoNull);
             }
+
             WritePreamble();
             Drawing newValue = value;
+
             OnFreezablePropertyChanged(/* oldValue = */ null, newValue);
             index = _collection.Add(newValue);
+
             OnInsert(newValue);
 
             ++_version;
@@ -617,8 +620,10 @@ namespace System.Windows.Media
             for (int i = 0; i < count; i++)
             {
                 Drawing newValue = (Drawing)sourceDrawingCollection._collection[i].Clone();
+
                 OnFreezablePropertyChanged(/* oldValue = */ null, newValue);
                 _collection.Add(newValue);
+
                 OnInsert(newValue);
             }
         }
@@ -638,8 +643,10 @@ namespace System.Windows.Media
             for (int i = 0; i < count; i++)
             {
                 Drawing newValue = (Drawing)sourceDrawingCollection._collection[i].CloneCurrentValue();
+
                 OnFreezablePropertyChanged(/* oldValue = */ null, newValue);
                 _collection.Add(newValue);
+
                 OnInsert(newValue);
             }
         }
@@ -659,8 +666,10 @@ namespace System.Windows.Media
             for (int i = 0; i < count; i++)
             {
                 Drawing newValue = (Drawing)sourceDrawingCollection._collection[i].GetAsFrozen();
+
                 OnFreezablePropertyChanged(/* oldValue = */ null, newValue);
                 _collection.Add(newValue);
+
                 OnInsert(newValue);
             }
         }
@@ -680,8 +689,10 @@ namespace System.Windows.Media
             for (int i = 0; i < count; i++)
             {
                 Drawing newValue = (Drawing)sourceDrawingCollection._collection[i].GetCurrentValueAsFrozen();
+
                 OnFreezablePropertyChanged(/* oldValue = */ null, newValue);
                 _collection.Add(newValue);
+
                 OnInsert(newValue);
             }
         }
@@ -939,9 +950,12 @@ namespace System.Windows.Media
                         {
                             throw new System.ArgumentException(SR.Collection_NoNull);
                         }
+
                         Drawing newValue = item;
+
                         OnFreezablePropertyChanged(/* oldValue = */ null, newValue);
                         _collection.Add(newValue);
+
                         OnInsert(newValue);
                     }
 

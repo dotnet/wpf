@@ -521,11 +521,12 @@ namespace System.Windows.Media
             {
                 throw new System.ArgumentException(SR.Collection_NoNull);
             }
+
             WritePreamble();
             PathFigure newValue = value;
+
             OnFreezablePropertyChanged(/* oldValue = */ null, newValue);
             index = _collection.Add(newValue);
-
 
             ++_version;
 
@@ -577,9 +578,9 @@ namespace System.Windows.Media
             for (int i = 0; i < count; i++)
             {
                 PathFigure newValue = (PathFigure)sourcePathFigureCollection._collection[i].Clone();
+
                 OnFreezablePropertyChanged(/* oldValue = */ null, newValue);
                 _collection.Add(newValue);
-
             }
         }
         /// <summary>
@@ -598,9 +599,9 @@ namespace System.Windows.Media
             for (int i = 0; i < count; i++)
             {
                 PathFigure newValue = (PathFigure)sourcePathFigureCollection._collection[i].CloneCurrentValue();
+
                 OnFreezablePropertyChanged(/* oldValue = */ null, newValue);
                 _collection.Add(newValue);
-
             }
         }
         /// <summary>
@@ -619,9 +620,9 @@ namespace System.Windows.Media
             for (int i = 0; i < count; i++)
             {
                 PathFigure newValue = (PathFigure)sourcePathFigureCollection._collection[i].GetAsFrozen();
+
                 OnFreezablePropertyChanged(/* oldValue = */ null, newValue);
                 _collection.Add(newValue);
-
             }
         }
         /// <summary>
@@ -640,9 +641,9 @@ namespace System.Windows.Media
             for (int i = 0; i < count; i++)
             {
                 PathFigure newValue = (PathFigure)sourcePathFigureCollection._collection[i].GetCurrentValueAsFrozen();
+
                 OnFreezablePropertyChanged(/* oldValue = */ null, newValue);
                 _collection.Add(newValue);
-
             }
         }
         /// <summary>
@@ -989,10 +990,11 @@ namespace System.Windows.Media
                         {
                             throw new System.ArgumentException(SR.Collection_NoNull);
                         }
+
                         PathFigure newValue = item;
+
                         OnFreezablePropertyChanged(/* oldValue = */ null, newValue);
                         _collection.Add(newValue);
-
                     }
 
                     needsItemValidation = false;

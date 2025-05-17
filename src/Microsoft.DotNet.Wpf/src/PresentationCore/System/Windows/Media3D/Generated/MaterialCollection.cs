@@ -535,10 +535,13 @@ namespace System.Windows.Media.Media3D
             {
                 throw new System.ArgumentException(SR.Collection_NoNull);
             }
+
             WritePreamble();
             Material newValue = value;
+
             OnFreezablePropertyChanged(/* oldValue = */ null, newValue);
             index = _collection.Add(newValue);
+
             OnInsert(newValue);
 
             ++_version;
@@ -615,8 +618,10 @@ namespace System.Windows.Media.Media3D
             for (int i = 0; i < count; i++)
             {
                 Material newValue = (Material)sourceMaterialCollection._collection[i].Clone();
+
                 OnFreezablePropertyChanged(/* oldValue = */ null, newValue);
                 _collection.Add(newValue);
+
                 OnInsert(newValue);
             }
         }
@@ -636,8 +641,10 @@ namespace System.Windows.Media.Media3D
             for (int i = 0; i < count; i++)
             {
                 Material newValue = (Material)sourceMaterialCollection._collection[i].CloneCurrentValue();
+
                 OnFreezablePropertyChanged(/* oldValue = */ null, newValue);
                 _collection.Add(newValue);
+
                 OnInsert(newValue);
             }
         }
@@ -657,8 +664,10 @@ namespace System.Windows.Media.Media3D
             for (int i = 0; i < count; i++)
             {
                 Material newValue = (Material)sourceMaterialCollection._collection[i].GetAsFrozen();
+
                 OnFreezablePropertyChanged(/* oldValue = */ null, newValue);
                 _collection.Add(newValue);
+
                 OnInsert(newValue);
             }
         }
@@ -678,8 +687,10 @@ namespace System.Windows.Media.Media3D
             for (int i = 0; i < count; i++)
             {
                 Material newValue = (Material)sourceMaterialCollection._collection[i].GetCurrentValueAsFrozen();
+
                 OnFreezablePropertyChanged(/* oldValue = */ null, newValue);
                 _collection.Add(newValue);
+
                 OnInsert(newValue);
             }
         }
@@ -937,9 +948,12 @@ namespace System.Windows.Media.Media3D
                         {
                             throw new System.ArgumentException(SR.Collection_NoNull);
                         }
+
                         Material newValue = item;
+
                         OnFreezablePropertyChanged(/* oldValue = */ null, newValue);
                         _collection.Add(newValue);
+
                         OnInsert(newValue);
                     }
 

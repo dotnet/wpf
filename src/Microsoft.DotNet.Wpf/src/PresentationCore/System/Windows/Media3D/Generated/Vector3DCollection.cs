@@ -114,7 +114,6 @@ namespace System.Windows.Media.Media3D
         /// </summary>
         public void Insert(int index, Vector3D value)
         {
-
             WritePreamble();
             _collection.Insert(index, value);
 
@@ -190,7 +189,6 @@ namespace System.Windows.Media.Media3D
             }
             set
             {
-
                 WritePreamble();
                 _collection[index] = value;
 

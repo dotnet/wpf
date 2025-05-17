@@ -116,7 +116,6 @@ namespace System.Windows.Media
         /// </summary>
         public void Insert(int index, double value)
         {
-
             WritePreamble();
             _collection.Insert(index, value);
 
@@ -192,7 +191,6 @@ namespace System.Windows.Media
             }
             set
             {
-
                 WritePreamble();
                 _collection[index] = value;
 

@@ -22,7 +22,6 @@ using System.Windows.Media.Composition;
 
 namespace System.Windows.Media.Media3D
 {
-
     [Serializable]
     [TypeConverter(typeof(Matrix3DConverter))]
     [ValueSerializer(typeof(Matrix3DValueSerializer))] // Used by MarkupWriter
@@ -431,7 +430,6 @@ namespace System.Windows.Media.Media3D
         //  Constructors
         //
         //------------------------------------------------------
-
 
 
 

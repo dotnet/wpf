@@ -16,7 +16,6 @@ using System.Windows.Media.Converters;
 
 namespace System.Windows.Media
 {
-
     [Serializable]
     [TypeConverter(typeof(MatrixConverter))]
     [ValueSerializer(typeof(MatrixValueSerializer))] // Used by MarkupWriter
@@ -375,7 +374,6 @@ namespace System.Windows.Media
         //  Constructors
         //
         //------------------------------------------------------
-
 
 
 

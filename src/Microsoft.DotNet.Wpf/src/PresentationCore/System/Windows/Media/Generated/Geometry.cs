@@ -24,7 +24,6 @@ using System.Windows.Media.Converters;
 
 namespace System.Windows.Media
 {
-
     [TypeConverter(typeof(GeometryConverter))]
     [ValueSerializer(typeof(GeometryValueSerializer))] // Used by MarkupWriter
     public abstract partial class Geometry : Animatable, IFormattable, DUCE.IResource
@@ -368,7 +367,6 @@ namespace System.Windows.Media
                                    /* isIndependentlyAnimated  = */ false,
                                    /* coerceValueCallback */ null);
         }
-
 
 
         #endregion Constructors

@@ -308,7 +308,6 @@ namespace System.Windows.Media.Effects
         }
 
 
-
         #endregion Constructors
     }
 }

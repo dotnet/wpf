@@ -401,7 +401,6 @@ namespace System.Windows.Media.Imaging
         }
 
 
-
         #endregion Constructors
     }
 }

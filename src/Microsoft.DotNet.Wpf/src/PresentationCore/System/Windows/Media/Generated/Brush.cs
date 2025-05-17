@@ -24,7 +24,6 @@ using System.Windows.Media.Converters;
 
 namespace System.Windows.Media
 {
-
     [TypeConverter(typeof(BrushConverter))]
     [ValueSerializer(typeof(BrushValueSerializer))] // Used by MarkupWriter
     public abstract partial class Brush : Animatable, IFormattable, DUCE.IResource
@@ -473,7 +472,6 @@ namespace System.Windows.Media
                                    /* isIndependentlyAnimated  = */ false,
                                    /* coerceValueCallback */ null);
         }
-
 
 
         #endregion Constructors

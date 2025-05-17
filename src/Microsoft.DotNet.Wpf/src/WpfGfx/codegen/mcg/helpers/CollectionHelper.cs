@@ -516,7 +516,8 @@ namespace MS.Internal.MilCodeGen.Helpers
 
         public static string WriteCollectionEvents(McgResource resource)
         {
-            if (!resource.CollectionType.IsFreezable) return String.Empty;
+            if (!resource.CollectionType.IsFreezable)
+				return null;
 
             if (resource.IsCollectionOfHandles)
             {

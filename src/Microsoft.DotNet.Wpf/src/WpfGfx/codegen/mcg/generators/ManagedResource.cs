@@ -2797,60 +2797,58 @@ namespace MS.Internal.MilCodeGen.Generators
             }
         }
 
-         private static string WriteParse(McgResource resource)
-         {
-             if (resource.SkipToString) return String.Empty;
+        private static string WriteParse(McgResource resource)
+        {
+            if (resource.SkipToString)
+				return null;
 
-             // Should we emit the parse code?
-             if (resource.IsCollection ||
-                 ((resource.ParseMethod != null) && (resource.ParseMethod.Length > 0)))
-             {
-                 string parseBody;
+            // Should we emit the parse code?
+            if (resource.IsCollection || ((resource.ParseMethod != null) && (resource.ParseMethod.Length > 0)))
+            {
+                string parseBody;
 
-                 // A ParseMethod trumps the automatic handling of a collection
-                 if ((resource.ParseMethod != null) && (resource.ParseMethod.Length > 0))
-                 {
-                     parseBody = "return " + resource.ParseMethod + "(source, formatProvider);\n";
-                 }
-                 else
-                 {
-                     parseBody =
-                         [[inline]]
-                             TokenizerHelper th = new TokenizerHelper(source, formatProvider);
-                             [[resource.ManagedName]] resource = new [[resource.ManagedName]]();
+                // A ParseMethod trumps the automatic handling of a collection
+                if ((resource.ParseMethod != null) && (resource.ParseMethod.Length > 0))
+                {
+                    parseBody = "return " + resource.ParseMethod + "(source, formatProvider);\n";
+                }
+                else
+                {
+                    parseBody =
+                        [[inline]]
+                            TokenizerHelper th = new TokenizerHelper(source, formatProvider);
+                            [[resource.ManagedName]] resource = new [[resource.ManagedName]]();
 
-                             [[resource.CollectionType.ManagedName]] value;
+                            [[resource.CollectionType.ManagedName]] value;
 
-                             while (th.NextToken())
-                             {
-                                 [[WriteParseBody(resource.CollectionType, "th.GetCurrentToken()")]]
+                            while (th.NextToken())
+                            {
+                                [[WriteParseBody(resource.CollectionType, "th.GetCurrentToken()")]]
 
-                                 resource.Add(value);
-                             }
+                                resource.Add(value);
+                            }
 
-                             return resource;
-                         [[/inline]];
-                 }
+                            return resource;
+                        [[/inline]];
+                }
 
-                 return
-                     [[inline]]
-                         /// <summary>
-                         /// Parse - returns an instance converted from the provided string
-                         /// using the current culture
-                         /// <param name="source"> string with [[resource.Name]] data </param>
-                         /// </summary>
-                         public static [[resource.Name]] Parse(string source)
-                         {
-                             IFormatProvider formatProvider = System.Windows.Markup.TypeConverterHelper.InvariantEnglishUS;
+                return
+                    [[inline]]
+                        /// <summary>
+                        /// Parse - returns an instance converted from the provided string
+                        /// using the current culture
+                        /// <param name="source"> string with [[resource.Name]] data </param>
+                        /// </summary>
+                        public static [[resource.Name]] Parse(string source)
+                        {
+                            IFormatProvider formatProvider = System.Windows.Markup.TypeConverterHelper.InvariantEnglishUS;
 
-                             [[parseBody]]
-                         }
-                     [[/inline]];
-             }
-             else
-             {
-                 return String.Empty;
-             }
+                            [[parseBody]]
+                        }
+                    [[/inline]];
+            }
+
+            return null;
         }
         #endregion Helper Methods
 

@@ -48,7 +48,6 @@ namespace System.Windows
 
 
 
-
         #endregion Public Methods
 
         //------------------------------------------------------

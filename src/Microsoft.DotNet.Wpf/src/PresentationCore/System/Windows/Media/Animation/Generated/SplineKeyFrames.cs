@@ -20,7 +20,6 @@ using MS.Internal.PresentationCore;
 namespace System.Windows.Media.Animation
 {
 
-
     /// <summary>
     /// This class is used as part of a ByteKeyFrameCollection in
     /// conjunction with a KeyFrameByteAnimation to animate a
@@ -83,7 +82,7 @@ namespace System.Windows.Media.Animation
         /// <returns>The new Freezable.</returns>
         protected override Freezable CreateInstanceCore()
         {
-            return new  SplineByteKeyFrame();
+            return new SplineByteKeyFrame();
         }
 
         #endregion
@@ -145,7 +144,6 @@ namespace System.Windows.Media.Animation
 
         #endregion
     }
-
 
 
     /// <summary>
@@ -210,7 +208,7 @@ namespace System.Windows.Media.Animation
         /// <returns>The new Freezable.</returns>
         protected override Freezable CreateInstanceCore()
         {
-            return new  SplineColorKeyFrame();
+            return new SplineColorKeyFrame();
         }
 
         #endregion
@@ -272,7 +270,6 @@ namespace System.Windows.Media.Animation
 
         #endregion
     }
-
 
 
     /// <summary>
@@ -337,7 +334,7 @@ namespace System.Windows.Media.Animation
         /// <returns>The new Freezable.</returns>
         protected override Freezable CreateInstanceCore()
         {
-            return new  SplineDecimalKeyFrame();
+            return new SplineDecimalKeyFrame();
         }
 
         #endregion
@@ -399,7 +396,6 @@ namespace System.Windows.Media.Animation
 
         #endregion
     }
-
 
 
     /// <summary>
@@ -464,7 +460,7 @@ namespace System.Windows.Media.Animation
         /// <returns>The new Freezable.</returns>
         protected override Freezable CreateInstanceCore()
         {
-            return new  SplineDoubleKeyFrame();
+            return new SplineDoubleKeyFrame();
         }
 
         #endregion
@@ -526,7 +522,6 @@ namespace System.Windows.Media.Animation
 
         #endregion
     }
-
 
 
     /// <summary>
@@ -591,7 +586,7 @@ namespace System.Windows.Media.Animation
         /// <returns>The new Freezable.</returns>
         protected override Freezable CreateInstanceCore()
         {
-            return new  SplineInt16KeyFrame();
+            return new SplineInt16KeyFrame();
         }
 
         #endregion
@@ -653,7 +648,6 @@ namespace System.Windows.Media.Animation
 
         #endregion
     }
-
 
 
     /// <summary>
@@ -718,7 +712,7 @@ namespace System.Windows.Media.Animation
         /// <returns>The new Freezable.</returns>
         protected override Freezable CreateInstanceCore()
         {
-            return new  SplineInt32KeyFrame();
+            return new SplineInt32KeyFrame();
         }
 
         #endregion
@@ -780,7 +774,6 @@ namespace System.Windows.Media.Animation
 
         #endregion
     }
-
 
 
     /// <summary>
@@ -845,7 +838,7 @@ namespace System.Windows.Media.Animation
         /// <returns>The new Freezable.</returns>
         protected override Freezable CreateInstanceCore()
         {
-            return new  SplineInt64KeyFrame();
+            return new SplineInt64KeyFrame();
         }
 
         #endregion
@@ -907,7 +900,6 @@ namespace System.Windows.Media.Animation
 
         #endregion
     }
-
 
 
     /// <summary>
@@ -972,7 +964,7 @@ namespace System.Windows.Media.Animation
         /// <returns>The new Freezable.</returns>
         protected override Freezable CreateInstanceCore()
         {
-            return new  SplinePointKeyFrame();
+            return new SplinePointKeyFrame();
         }
 
         #endregion
@@ -1034,7 +1026,6 @@ namespace System.Windows.Media.Animation
 
         #endregion
     }
-
 
 
     /// <summary>
@@ -1099,7 +1090,7 @@ namespace System.Windows.Media.Animation
         /// <returns>The new Freezable.</returns>
         protected override Freezable CreateInstanceCore()
         {
-            return new  SplinePoint3DKeyFrame();
+            return new SplinePoint3DKeyFrame();
         }
 
         #endregion
@@ -1161,7 +1152,6 @@ namespace System.Windows.Media.Animation
 
         #endregion
     }
-
 
 
     /// <summary>
@@ -1226,7 +1216,7 @@ namespace System.Windows.Media.Animation
         /// <returns>The new Freezable.</returns>
         protected override Freezable CreateInstanceCore()
         {
-            return new  SplineQuaternionKeyFrame();
+            return new SplineQuaternionKeyFrame();
         }
 
         #endregion
@@ -1288,7 +1278,6 @@ namespace System.Windows.Media.Animation
 
         #endregion
     }
-
 
 
     /// <summary>
@@ -1353,7 +1342,7 @@ namespace System.Windows.Media.Animation
         /// <returns>The new Freezable.</returns>
         protected override Freezable CreateInstanceCore()
         {
-            return new  SplineRotation3DKeyFrame();
+            return new SplineRotation3DKeyFrame();
         }
 
         #endregion
@@ -1415,7 +1404,6 @@ namespace System.Windows.Media.Animation
 
         #endregion
     }
-
 
 
     /// <summary>
@@ -1480,7 +1468,7 @@ namespace System.Windows.Media.Animation
         /// <returns>The new Freezable.</returns>
         protected override Freezable CreateInstanceCore()
         {
-            return new  SplineRectKeyFrame();
+            return new SplineRectKeyFrame();
         }
 
         #endregion
@@ -1542,7 +1530,6 @@ namespace System.Windows.Media.Animation
 
         #endregion
     }
-
 
 
     /// <summary>
@@ -1607,7 +1594,7 @@ namespace System.Windows.Media.Animation
         /// <returns>The new Freezable.</returns>
         protected override Freezable CreateInstanceCore()
         {
-            return new  SplineSingleKeyFrame();
+            return new SplineSingleKeyFrame();
         }
 
         #endregion
@@ -1669,7 +1656,6 @@ namespace System.Windows.Media.Animation
 
         #endregion
     }
-
 
 
     /// <summary>
@@ -1734,7 +1720,7 @@ namespace System.Windows.Media.Animation
         /// <returns>The new Freezable.</returns>
         protected override Freezable CreateInstanceCore()
         {
-            return new  SplineSizeKeyFrame();
+            return new SplineSizeKeyFrame();
         }
 
         #endregion
@@ -1796,7 +1782,6 @@ namespace System.Windows.Media.Animation
 
         #endregion
     }
-
 
 
     /// <summary>
@@ -1861,7 +1846,7 @@ namespace System.Windows.Media.Animation
         /// <returns>The new Freezable.</returns>
         protected override Freezable CreateInstanceCore()
         {
-            return new  SplineVectorKeyFrame();
+            return new SplineVectorKeyFrame();
         }
 
         #endregion
@@ -1923,7 +1908,6 @@ namespace System.Windows.Media.Animation
 
         #endregion
     }
-
 
 
     /// <summary>
@@ -1988,7 +1972,7 @@ namespace System.Windows.Media.Animation
         /// <returns>The new Freezable.</returns>
         protected override Freezable CreateInstanceCore()
         {
-            return new  SplineVector3DKeyFrame();
+            return new SplineVector3DKeyFrame();
         }
 
         #endregion

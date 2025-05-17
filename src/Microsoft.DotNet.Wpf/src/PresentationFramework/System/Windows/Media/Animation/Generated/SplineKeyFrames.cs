@@ -20,7 +20,6 @@ using MS.Internal.PresentationFramework;
 namespace System.Windows.Media.Animation
 {
 
-
     /// <summary>
     /// This class is used as part of a ThicknessKeyFrameCollection in
     /// conjunction with a KeyFrameThicknessAnimation to animate a
@@ -83,7 +82,7 @@ namespace System.Windows.Media.Animation
         /// <returns>The new Freezable.</returns>
         protected override Freezable CreateInstanceCore()
         {
-            return new  SplineThicknessKeyFrame();
+            return new SplineThicknessKeyFrame();
         }
 
         #endregion

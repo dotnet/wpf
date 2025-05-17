@@ -537,7 +537,6 @@ namespace System.Windows.Media.Effects
         #region Public Properties
 
 
-
         #endregion Public Properties
 
         //------------------------------------------------------

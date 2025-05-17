@@ -57,7 +57,6 @@ namespace System.Windows.Media.Animation
         #region Public Properties
 
 
-
         #endregion Public Properties
 
         //------------------------------------------------------

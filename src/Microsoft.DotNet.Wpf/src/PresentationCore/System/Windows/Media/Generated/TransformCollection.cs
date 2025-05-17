@@ -583,7 +583,6 @@ namespace System.Windows.Media
         #region Public Properties
 
 
-
         #endregion Public Properties
 
         //------------------------------------------------------

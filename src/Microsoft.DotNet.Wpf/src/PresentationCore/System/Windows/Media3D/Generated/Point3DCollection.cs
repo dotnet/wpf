@@ -487,7 +487,6 @@ namespace System.Windows.Media.Media3D
         }
 
 
-
         #endregion Private Helpers
 
         private static Point3DCollection s_empty;

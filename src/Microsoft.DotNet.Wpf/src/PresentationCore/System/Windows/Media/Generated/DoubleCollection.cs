@@ -489,7 +489,6 @@ namespace System.Windows.Media
         }
 
 
-
         #endregion Private Helpers
 
         private static DoubleCollection s_empty;

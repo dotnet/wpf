@@ -184,12 +184,10 @@ namespace System.Windows.Media.Media3D
             {
                 return _x;
             }
-
             set
             {
                 _x = value;
             }
-
         }
 
         /// <summary>
@@ -201,12 +199,10 @@ namespace System.Windows.Media.Media3D
             {
                 return _y;
             }
-
             set
             {
                 _y = value;
             }
-
         }
 
         /// <summary>
@@ -218,12 +214,10 @@ namespace System.Windows.Media.Media3D
             {
                 return _z;
             }
-
             set
             {
                 _z = value;
             }
-
         }
 
         #endregion Public Properties

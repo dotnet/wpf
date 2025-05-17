@@ -205,12 +205,10 @@ namespace System.Windows
             {
                 return _x;
             }
-
             set
             {
                 _x = value;
             }
-
         }
 
         /// <summary>
@@ -222,12 +220,10 @@ namespace System.Windows
             {
                 return _y;
             }
-
             set
             {
                 _y = value;
             }
-
         }
 
         /// <summary>
@@ -239,12 +235,10 @@ namespace System.Windows
             {
                 return _width;
             }
-
             set
             {
                 _width = value;
             }
-
         }
 
         /// <summary>
@@ -256,12 +250,10 @@ namespace System.Windows
             {
                 return _height;
             }
-
             set
             {
                 _height = value;
             }
-
         }
 
         #endregion Public Properties

@@ -174,12 +174,10 @@ namespace System.Windows
             {
                 return _x;
             }
-
             set
             {
                 _x = value;
             }
-
         }
 
         /// <summary>
@@ -191,12 +189,10 @@ namespace System.Windows
             {
                 return _y;
             }
-
             set
             {
                 _y = value;
             }
-
         }
 
         #endregion Public Properties

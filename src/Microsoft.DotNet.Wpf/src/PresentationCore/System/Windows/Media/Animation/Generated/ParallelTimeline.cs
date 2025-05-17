@@ -77,7 +77,6 @@ namespace System.Windows.Media.Animation
         }
 
 
-
         #endregion ProtectedMethods
 
         //------------------------------------------------------

@@ -279,7 +279,6 @@ namespace System.Windows
 
 
 
-
         #endregion ProtectedMethods
 
         //------------------------------------------------------

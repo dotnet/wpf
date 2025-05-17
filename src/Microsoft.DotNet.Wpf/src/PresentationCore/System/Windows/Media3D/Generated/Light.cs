@@ -164,7 +164,6 @@ namespace System.Windows.Media.Media3D
 
         #region Internal Fields
 
-
         internal static Color s_Color = Colors.White;
 
         #endregion Internal Fields

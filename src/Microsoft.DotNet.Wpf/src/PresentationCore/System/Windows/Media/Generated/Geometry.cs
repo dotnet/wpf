@@ -324,7 +324,6 @@ namespace System.Windows.Media
 
         #region Internal Fields
 
-
         internal static Transform s_Transform = Transform.Identity;
 
         #endregion Internal Fields

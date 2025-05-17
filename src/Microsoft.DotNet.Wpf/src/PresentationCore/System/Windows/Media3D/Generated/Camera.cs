@@ -308,7 +308,6 @@ namespace System.Windows.Media.Media3D
 
         #region Internal Fields
 
-
         internal static Transform3D s_Transform = Transform3D.Identity;
 
         #endregion Internal Fields

@@ -254,7 +254,6 @@ namespace System.Windows.Media.Media3D
 
         #region Internal Fields
 
-
         internal const double c_NearPlaneDistance = (double)0.125;
         internal const double c_FarPlaneDistance = (double)Double.PositiveInfinity;
         internal static Point3D s_Position = new Point3D();

@@ -183,7 +183,6 @@ namespace System.Windows.Media.Effects
         #region Internal Fields
 
 
-
         #endregion Internal Fields
 
 

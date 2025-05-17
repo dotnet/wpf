@@ -104,7 +104,7 @@ namespace MS.Internal.MilCodeGen.Helpers
         {
             if (resource.CollectionType.IsFreezable)
             {
-                string onInsert = String.Empty;
+                string onInsert = null;
 
                 if (resource.IsCollectionOfHandles)
                 {

@@ -403,7 +403,8 @@ namespace MS.Internal.MilCodeGen.Generators
 
         private string WriteCloneCurrentValue(McgResource resource)
         {
-            if (!resource.IsFreezable) return String.Empty;
+            if (!resource.IsFreezable)
+				return null;
 
             return WriteStronglyTypedShadow("CloneCurrentValue", resource.Name);
         }

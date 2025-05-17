@@ -56,7 +56,6 @@ namespace System.Windows.Media
         }
 
 
-
         #endregion Public Methods
 
         //------------------------------------------------------

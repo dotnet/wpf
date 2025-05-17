@@ -46,7 +46,6 @@ namespace System.Windows.Media.Animation
         }
 
 
-
         #endregion Public Methods
 
         //------------------------------------------------------

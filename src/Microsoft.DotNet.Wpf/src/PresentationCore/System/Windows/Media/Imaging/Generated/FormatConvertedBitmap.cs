@@ -43,7 +43,6 @@ namespace System.Windows.Media.Imaging
         }
 
 
-
         #endregion Public Methods
 
         //------------------------------------------------------

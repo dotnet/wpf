@@ -49,7 +49,6 @@ namespace System.Windows.Media.Effects
         }
 
 
-
         #endregion Public Methods
 
         //------------------------------------------------------

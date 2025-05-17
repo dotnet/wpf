@@ -29,7 +29,6 @@ namespace System.Windows
 
         #region Public Methods
 
-
         /// <summary>
         /// Compares two Int32Rect instances for exact equality.
         /// Note that double values can acquire error when operated upon, such that

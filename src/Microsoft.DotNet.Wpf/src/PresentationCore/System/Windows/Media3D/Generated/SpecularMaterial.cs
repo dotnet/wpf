@@ -346,7 +346,6 @@ namespace System.Windows.Media.Media3D
 
 
         internal System.Windows.Media.Composition.DUCE.MultiChannelResource _duceResource = new System.Windows.Media.Composition.DUCE.MultiChannelResource();
-
         internal static Color s_Color = Colors.White;
         internal static Brush s_Brush = null;
         internal const double c_SpecularPower = 40.0;

@@ -286,7 +286,6 @@ namespace System.Windows.Media.Media3D
 
 
         internal System.Windows.Media.Composition.DUCE.MultiChannelResource _duceResource = new System.Windows.Media.Composition.DUCE.MultiChannelResource();
-
         internal const double c_FieldOfView = (double)45.0;
 
         #endregion Internal Fields

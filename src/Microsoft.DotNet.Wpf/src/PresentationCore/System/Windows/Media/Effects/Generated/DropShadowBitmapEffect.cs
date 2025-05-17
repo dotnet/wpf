@@ -292,7 +292,6 @@ namespace System.Windows.Media.Effects
 
 
 
-
         internal const double c_ShadowDepth = 5.0;
         internal static Color s_Color = Colors.Black;
         internal const double c_Direction = 315.0;

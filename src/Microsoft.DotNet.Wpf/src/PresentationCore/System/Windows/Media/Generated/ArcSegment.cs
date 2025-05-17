@@ -239,7 +239,6 @@ namespace System.Windows.Media
 
 
 
-
         internal static Point s_Point = new Point();
         internal static Size s_Size = new Size();
         internal const double c_RotationAngle = 0.0;

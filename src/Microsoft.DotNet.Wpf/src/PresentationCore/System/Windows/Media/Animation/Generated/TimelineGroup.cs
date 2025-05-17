@@ -146,7 +146,6 @@ namespace System.Windows.Media.Animation
 
 
 
-
         internal static TimelineCollection s_Children = TimelineCollection.Empty;
 
         #endregion Internal Fields

@@ -310,7 +310,6 @@ namespace System.Windows.Media
 
 
         internal System.Windows.Media.Composition.DUCE.MultiChannelResource _duceResource = new System.Windows.Media.Composition.DUCE.MultiChannelResource();
-
         internal static Point s_Center = new Point(0.5,0.5);
         internal const double c_RadiusX = 0.5;
         internal const double c_RadiusY = 0.5;

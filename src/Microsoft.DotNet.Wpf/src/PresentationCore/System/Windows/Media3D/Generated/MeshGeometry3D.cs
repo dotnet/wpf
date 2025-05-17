@@ -402,7 +402,6 @@ namespace System.Windows.Media.Media3D
 
 
         internal System.Windows.Media.Composition.DUCE.MultiChannelResource _duceResource = new System.Windows.Media.Composition.DUCE.MultiChannelResource();
-
         internal static Point3DCollection s_Positions = Point3DCollection.Empty;
         internal static Vector3DCollection s_Normals = Vector3DCollection.Empty;
         internal static PointCollection s_TextureCoordinates = PointCollection.Empty;

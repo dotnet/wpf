@@ -276,7 +276,6 @@ namespace System.Windows.Media.Media3D
 
 
         internal System.Windows.Media.Composition.DUCE.MultiChannelResource _duceResource = new System.Windows.Media.Composition.DUCE.MultiChannelResource();
-
         internal static Matrix3D s_ViewMatrix = Matrix3D.Identity;
         internal static Matrix3D s_ProjectionMatrix = Matrix3D.Identity;
 

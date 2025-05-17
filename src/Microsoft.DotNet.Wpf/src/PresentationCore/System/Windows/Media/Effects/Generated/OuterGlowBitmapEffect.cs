@@ -240,7 +240,6 @@ namespace System.Windows.Media.Effects
 
 
 
-
         internal static Color s_GlowColor = Colors.Gold;
         internal const double c_GlowSize = 5.0;
         internal const double c_Noise = 0.0;

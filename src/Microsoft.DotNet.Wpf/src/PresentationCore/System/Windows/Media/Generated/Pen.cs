@@ -531,7 +531,6 @@ namespace System.Windows.Media
 
 
         internal System.Windows.Media.Composition.DUCE.MultiChannelResource _duceResource = new System.Windows.Media.Composition.DUCE.MultiChannelResource();
-
         internal const double c_Thickness = 1.0;
         internal const PenLineCap c_StartLineCap = PenLineCap.Flat;
         internal const PenLineCap c_EndLineCap = PenLineCap.Flat;

@@ -829,7 +829,6 @@ namespace System.Windows.Media
 
 
         internal System.Windows.Media.Composition.DUCE.MultiChannelResource _duceResource = new System.Windows.Media.Composition.DUCE.MultiChannelResource();
-
         internal static DrawingCollection s_Children = DrawingCollection.Empty;
         internal const double c_Opacity = 1.0;
         internal const EdgeMode c_EdgeMode = EdgeMode.Unspecified;

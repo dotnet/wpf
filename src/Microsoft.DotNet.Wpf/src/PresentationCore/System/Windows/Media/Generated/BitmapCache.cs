@@ -293,7 +293,6 @@ namespace System.Windows.Media
 
 
         internal System.Windows.Media.Composition.DUCE.MultiChannelResource _duceResource = new System.Windows.Media.Composition.DUCE.MultiChannelResource();
-
         internal const double c_RenderAtScale = 1.0;
         internal const bool c_SnapsToDevicePixels = false;
         internal const bool c_EnableClearType = false;

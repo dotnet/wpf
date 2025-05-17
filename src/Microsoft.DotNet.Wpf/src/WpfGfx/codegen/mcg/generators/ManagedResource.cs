@@ -952,9 +952,7 @@ namespace MS.Internal.MilCodeGen.Generators
                 }
            }
 
-			string result = cs.ToString();
-
-            return result == string.Empty ? null : result;
+            return cs.IsEmpty ? null : cs.ToString();
         }
 
         private string WriteRegisterDPProperty(McgResource resource)
@@ -1045,9 +1043,7 @@ namespace MS.Internal.MilCodeGen.Generators
                     );
             }
 
-			string result = cs.ToString();
-
-            return result == string.Empty ? null : result;
+            return cs.IsEmpty ? null : cs.ToString();
         }
 
         private string GetDefaultValue(McgField field)
@@ -1111,9 +1107,7 @@ namespace MS.Internal.MilCodeGen.Generators
                 }
             }
 
-			string result = cs.ToString();
-
-            return result == string.Empty ? null : result;
+            return cs.IsEmpty ? null : cs.ToString();
         }
 
         /// <summary>
@@ -1145,9 +1139,7 @@ namespace MS.Internal.MilCodeGen.Generators
                 }
             }
 
-			string result = cs.ToString();
-
-            return result == string.Empty ? null : result;
+            return cs.IsEmpty ? null : cs.ToString();
         }
 
         private string WriteDefaultValues(McgResource resource)
@@ -1182,10 +1174,8 @@ namespace MS.Internal.MilCodeGen.Generators
                     );
                 }
             }
-			
-			string result = cs.ToString();
 
-            return result == string.Empty ? null : result;
+            return cs.IsEmpty ? null : cs.ToString();
         }
 
         private string WriteStaticCtor(McgResource resource)
@@ -1335,7 +1325,7 @@ namespace MS.Internal.MilCodeGen.Generators
                 }
             }
 
-            return cs.ToString();
+            return cs.IsEmpty ? null : cs.ToString();
         }
 
         /// <summary>

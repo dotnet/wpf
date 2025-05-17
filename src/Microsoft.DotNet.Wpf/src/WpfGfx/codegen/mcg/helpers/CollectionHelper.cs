@@ -26,7 +26,8 @@ namespace MS.Internal.MilCodeGen.Helpers
     {
         public static string UpdateResource(McgResource resource)
         {
-            if (!resource.HasUnmanagedResource) return String.Empty;
+            if (!resource.HasUnmanagedResource)
+				return null;
 
             return
                 [[inline]]
@@ -66,6 +67,7 @@ namespace MS.Internal.MilCodeGen.Helpers
                                 // At this time, these call-outs are not public, so we do not handle exceptions.
                                 OnRemove( /* oldValue */ oldCollection[i]);
                             }
+
                         [[/inline]];
                 }
                 else
@@ -82,6 +84,7 @@ namespace MS.Internal.MilCodeGen.Helpers
                             _collection.Clear();
 
                             Debug.Assert(_collection.Count == 0);
+
                         [[/inline]];
                 }
             }
@@ -92,6 +95,7 @@ namespace MS.Internal.MilCodeGen.Helpers
                         WritePreamble();
 
                         _collection.Clear();
+
                     [[/inline]];
             }
         }

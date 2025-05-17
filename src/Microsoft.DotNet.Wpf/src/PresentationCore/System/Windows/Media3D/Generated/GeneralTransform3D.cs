@@ -92,7 +92,6 @@ namespace System.Windows.Media.Media3D
 
 
 
-
         #endregion Internal Methods
 
         //------------------------------------------------------

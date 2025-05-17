@@ -370,7 +370,6 @@ namespace System.Windows.Media
             return base.ToString();
         }
 
-
         #endregion Internal Properties
 
         //------------------------------------------------------

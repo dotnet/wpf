@@ -219,7 +219,6 @@ namespace System.Windows.Media.Media3D
             return base.ToString();
         }
 
-
         #endregion Internal Properties
 
         //------------------------------------------------------

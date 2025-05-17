@@ -254,7 +254,6 @@ namespace System.Windows.Media
 
 
 
-
         #endregion Internal Properties
 
         //------------------------------------------------------

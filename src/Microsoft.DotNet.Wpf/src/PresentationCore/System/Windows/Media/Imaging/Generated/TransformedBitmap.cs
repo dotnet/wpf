@@ -280,7 +280,6 @@ namespace System.Windows.Media.Imaging
 
         #region Internal Fields
 
-
         internal static BitmapSource s_Source = null;
         internal static Transform s_Transform = Transform.Identity;
 

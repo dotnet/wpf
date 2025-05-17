@@ -711,7 +711,6 @@ namespace System.Windows.Media
 
         #region Internal Fields
 
-
         internal FrugalStructList<PathSegment> _collection;
         internal uint _version = 0;
 

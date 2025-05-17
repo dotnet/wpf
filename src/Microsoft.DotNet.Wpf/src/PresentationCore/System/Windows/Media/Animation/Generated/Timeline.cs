@@ -120,7 +120,6 @@ namespace System.Windows.Media.Animation
         #region Internal Fields
 
 
-
         #endregion Internal Fields
 
 

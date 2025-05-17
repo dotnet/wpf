@@ -330,7 +330,6 @@ namespace System.Windows
 
         #region Internal Fields
 
-
         internal double _x;
         internal double _y;
         internal double _width;

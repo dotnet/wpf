@@ -249,7 +249,6 @@ namespace System.Windows.Media.Effects
 
         #region Internal Fields
 
-
         internal const double c_BevelWidth = 5.0;
         internal const double c_Relief = 0.3;
         internal const double c_LightAngle = 135.0;

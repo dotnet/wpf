@@ -164,7 +164,6 @@ namespace System.Windows.Media
 
         #region Internal Fields
 
-
         internal const bool c_IsStroked = true;
         internal const bool c_IsSmoothJoin = false;
 

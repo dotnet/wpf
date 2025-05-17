@@ -171,7 +171,6 @@ namespace System.Windows.Media.Effects
 
         #region Internal Fields
 
-
         internal const double c_Radius = 5.0;
         internal const KernelType c_KernelType = KernelType.Gaussian;
 

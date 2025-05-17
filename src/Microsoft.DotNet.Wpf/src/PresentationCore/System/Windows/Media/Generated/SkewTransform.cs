@@ -331,7 +331,6 @@ namespace System.Windows.Media
 
         #region Internal Fields
 
-
         internal System.Windows.Media.Composition.DUCE.MultiChannelResource _duceResource = new System.Windows.Media.Composition.DUCE.MultiChannelResource();
         internal const double c_AngleX = 0.0;
         internal const double c_AngleY = 0.0 ;

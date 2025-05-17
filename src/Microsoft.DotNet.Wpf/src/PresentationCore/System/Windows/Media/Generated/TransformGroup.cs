@@ -415,7 +415,6 @@ namespace System.Windows.Media
 
         #region Internal Fields
 
-
         internal System.Windows.Media.Composition.DUCE.MultiChannelResource _duceResource = new System.Windows.Media.Composition.DUCE.MultiChannelResource();
         internal static TransformCollection s_Children = TransformCollection.Empty;
 

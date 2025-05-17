@@ -711,7 +711,6 @@ namespace System.Windows.Media
 
         #region Internal Fields
 
-
         internal FrugalStructList<TextEffect> _collection;
         internal uint _version = 0;
 

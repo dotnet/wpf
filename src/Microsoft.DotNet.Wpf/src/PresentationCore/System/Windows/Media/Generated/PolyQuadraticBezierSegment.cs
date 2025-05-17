@@ -167,7 +167,6 @@ namespace System.Windows.Media
 
         #region Internal Fields
 
-
         internal static PointCollection s_Points = PointCollection.Empty;
 
         #endregion Internal Fields

@@ -225,7 +225,6 @@ namespace System.Windows
 
         #region Internal Fields
 
-
         internal const double c_PenOffset = 0.0;
         internal const TextDecorationUnit c_PenOffsetUnit = TextDecorationUnit.FontRecommended;
         internal const TextDecorationUnit c_PenThicknessUnit = TextDecorationUnit.FontRecommended;

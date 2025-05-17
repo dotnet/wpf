@@ -459,7 +459,6 @@ namespace System.Windows.Media
 
         #region Internal Fields
 
-
         internal System.Windows.Media.Composition.DUCE.MultiChannelResource _duceResource = new System.Windows.Media.Composition.DUCE.MultiChannelResource();
         internal const FillRule c_FillRule = FillRule.EvenOdd;
         internal static GeometryCollection s_Children = GeometryCollection.Empty;

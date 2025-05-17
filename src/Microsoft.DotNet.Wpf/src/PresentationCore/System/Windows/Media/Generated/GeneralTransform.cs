@@ -185,7 +185,6 @@ namespace System.Windows.Media
         #region Internal Fields
 
 
-
         #endregion Internal Fields
 
 

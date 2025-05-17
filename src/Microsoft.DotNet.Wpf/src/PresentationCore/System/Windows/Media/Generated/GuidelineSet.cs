@@ -330,7 +330,6 @@ namespace System.Windows.Media
 
         #region Internal Fields
 
-
         internal System.Windows.Media.Composition.DUCE.MultiChannelResource _duceResource = new System.Windows.Media.Composition.DUCE.MultiChannelResource();
         internal static DoubleCollection s_GuidelinesX = DoubleCollection.Empty;
         internal static DoubleCollection s_GuidelinesY = DoubleCollection.Empty;

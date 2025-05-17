@@ -709,7 +709,6 @@ namespace System.Windows.Media.Media3D
 
         #region Internal Fields
 
-
         internal FrugalStructList<GeneralTransform3D> _collection;
         internal uint _version = 0;
 

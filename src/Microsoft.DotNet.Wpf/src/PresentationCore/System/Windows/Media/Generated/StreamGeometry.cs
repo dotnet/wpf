@@ -159,7 +159,6 @@ namespace System.Windows.Media
 
         #region Internal Fields
 
-
         internal const FillRule c_FillRule = FillRule.EvenOdd;
 
         #endregion Internal Fields

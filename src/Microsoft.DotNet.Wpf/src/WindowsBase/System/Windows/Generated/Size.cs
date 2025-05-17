@@ -320,7 +320,6 @@ namespace System.Windows
 
         #region Internal Fields
 
-
         internal double _width;
         internal double _height;
 

@@ -736,7 +736,6 @@ namespace System.Windows.Media
 
         #region Internal Fields
 
-
         internal FrugalStructList<Vector> _collection;
         internal uint _version = 0;
 

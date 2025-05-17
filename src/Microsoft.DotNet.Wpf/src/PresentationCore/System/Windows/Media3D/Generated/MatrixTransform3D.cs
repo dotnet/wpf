@@ -240,7 +240,6 @@ namespace System.Windows.Media.Media3D
 
         #region Internal Fields
 
-
         internal System.Windows.Media.Composition.DUCE.MultiChannelResource _duceResource = new System.Windows.Media.Composition.DUCE.MultiChannelResource();
         internal static Matrix3D s_Matrix = Matrix3D.Identity;
 

@@ -411,7 +411,6 @@ namespace System.Windows.Media
 
         #region Internal Fields
 
-
         internal System.Windows.Media.Composition.DUCE.MultiChannelResource _duceResource = new System.Windows.Media.Composition.DUCE.MultiChannelResource();
         internal const GeometryCombineMode c_GeometryCombineMode = GeometryCombineMode.Union;
         internal static Geometry s_Geometry1 = Geometry.Empty;

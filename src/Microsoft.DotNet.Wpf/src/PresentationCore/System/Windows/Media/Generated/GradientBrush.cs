@@ -249,7 +249,6 @@ namespace System.Windows.Media
         #region Internal Fields
 
 
-
         internal const ColorInterpolationMode c_ColorInterpolationMode = ColorInterpolationMode.SRgbLinearInterpolation;
         internal const BrushMappingMode c_MappingMode = BrushMappingMode.RelativeToBoundingBox;
         internal const GradientSpreadMethod c_SpreadMethod = GradientSpreadMethod.Pad;

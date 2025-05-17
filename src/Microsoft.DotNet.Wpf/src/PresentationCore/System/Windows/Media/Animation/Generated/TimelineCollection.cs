@@ -122,7 +122,6 @@ namespace System.Windows.Media.Animation
 
             _collection.Insert(index, value);
 
-
             ++_version;
             WritePostscript();
         }

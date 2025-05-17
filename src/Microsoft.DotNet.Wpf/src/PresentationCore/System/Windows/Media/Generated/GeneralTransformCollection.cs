@@ -132,7 +132,6 @@ namespace System.Windows.Media
 
             _collection.Insert(index, value);
 
-
             ++_version;
             WritePostscript();
         }

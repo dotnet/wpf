@@ -125,7 +125,6 @@ namespace System.Windows.Media.Effects
 
             _collection.Insert(index, value);
 
-
             ++_version;
             WritePostscript();
         }

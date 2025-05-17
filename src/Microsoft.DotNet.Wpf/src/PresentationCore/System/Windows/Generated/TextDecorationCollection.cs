@@ -123,7 +123,6 @@ namespace System.Windows
 
             _collection.Insert(index, value);
 
-
             ++_version;
             WritePostscript();
         }

@@ -130,7 +130,6 @@ namespace System.Windows.Media.Media3D
 
             _collection.Insert(index, value);
 
-
             ++_version;
             WritePostscript();
         }

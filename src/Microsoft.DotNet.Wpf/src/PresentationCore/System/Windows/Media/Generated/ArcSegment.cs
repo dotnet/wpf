@@ -173,7 +173,6 @@ namespace System.Windows.Media
         #region Internal Methods
 
 
-
         #endregion Internal Methods
 
         //------------------------------------------------------

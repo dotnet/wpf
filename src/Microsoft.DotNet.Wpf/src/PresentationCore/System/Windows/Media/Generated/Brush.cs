@@ -303,7 +303,6 @@ namespace System.Windows.Media
             return GetChannelCore(index);
         }
 
-
         #endregion Internal Methods
 
         //------------------------------------------------------

@@ -152,7 +152,6 @@ namespace System.Windows.Media.Media3D
             return GetChannelCore(index);
         }
 
-
         #endregion Internal Methods
 
         //------------------------------------------------------

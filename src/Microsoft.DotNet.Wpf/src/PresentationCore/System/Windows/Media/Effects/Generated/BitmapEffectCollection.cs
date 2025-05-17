@@ -666,7 +666,6 @@ namespace System.Windows.Media.Effects
         #region Internal Methods
 
 
-
         #endregion Internal Methods
 
         //------------------------------------------------------

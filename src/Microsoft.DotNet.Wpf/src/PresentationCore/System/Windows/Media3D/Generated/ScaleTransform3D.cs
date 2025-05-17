@@ -352,7 +352,6 @@ namespace System.Windows.Media.Media3D
             return _duceResource.GetChannel(index);
         }
 
-
         #endregion Internal Methods
 
         //------------------------------------------------------

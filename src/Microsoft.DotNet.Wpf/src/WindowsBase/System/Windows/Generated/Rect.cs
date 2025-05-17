@@ -224,7 +224,6 @@ namespace System.Windows
         #region Internal Methods
 
 
-
         #endregion Internal Methods
 
         //------------------------------------------------------

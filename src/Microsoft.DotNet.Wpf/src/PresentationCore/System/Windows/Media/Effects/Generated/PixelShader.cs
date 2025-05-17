@@ -194,7 +194,6 @@ namespace System.Windows.Media.Effects
             return _duceResource.GetChannel(index);
         }
 
-
         #endregion Internal Methods
 
         //------------------------------------------------------

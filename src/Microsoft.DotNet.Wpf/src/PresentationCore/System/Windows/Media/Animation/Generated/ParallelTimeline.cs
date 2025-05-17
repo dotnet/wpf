@@ -89,7 +89,6 @@ namespace System.Windows.Media.Animation
         #region Internal Methods
 
 
-
         #endregion Internal Methods
 
         //------------------------------------------------------

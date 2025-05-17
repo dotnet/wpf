@@ -147,7 +147,6 @@ namespace System.Windows.Media.Effects
             return GetChannelCore(index);
         }
 
-
         #endregion Internal Methods
 
         //------------------------------------------------------

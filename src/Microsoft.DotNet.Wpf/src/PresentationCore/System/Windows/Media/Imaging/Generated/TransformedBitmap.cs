@@ -237,7 +237,6 @@ namespace System.Windows.Media.Imaging
         #region Internal Methods
 
 
-
         #endregion Internal Methods
 
         //------------------------------------------------------

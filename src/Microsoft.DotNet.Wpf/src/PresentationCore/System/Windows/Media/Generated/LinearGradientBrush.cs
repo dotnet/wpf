@@ -198,7 +198,6 @@ namespace System.Windows.Media
             return _duceResource.GetChannel(index);
         }
 
-
         #endregion Internal Methods
 
         //------------------------------------------------------

@@ -1179,15 +1179,12 @@ namespace MS.Internal.MilCodeGen.Generators
 
         private string WriteStaticCtor(McgResource resource)
         {
-            if (_staticCtorText.IsEmpty)
-            {
-                if (resource.SkipProperties) return String.Empty;
-                if (resource.IsValueType) return String.Empty;
-            }
+            if (_staticCtorText.IsEmpty && (resource.SkipProperties || resource.IsValueType))
+				return null;
 
             StringCodeSink cs = new StringCodeSink();
 
-            foreach(McgField field in resource.LocalFields)
+            foreach (McgField field in resource.LocalFields)
             {
                 if (field.IsUnmanagedOnly) continue;
 
@@ -1246,10 +1243,8 @@ namespace MS.Internal.MilCodeGen.Generators
 
                     [[/inline]];
             }
-            else
-            {
-                return String.Empty;
-            }
+
+            return null;
         }
 
         /// <summary>

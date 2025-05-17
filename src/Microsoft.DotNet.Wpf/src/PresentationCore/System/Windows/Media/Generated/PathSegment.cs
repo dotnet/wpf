@@ -127,7 +127,6 @@ namespace System.Windows.Media
 
 
 
-
         #endregion Internal Methods
 
         //------------------------------------------------------

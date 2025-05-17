@@ -251,7 +251,6 @@ namespace System.Windows.Media.Imaging
 
 
 
-
         #endregion Internal Properties
 
         //------------------------------------------------------

@@ -957,12 +957,12 @@ namespace MS.Internal.MilCodeGen.Generators
 
         private string WriteRegisterDPProperty(McgResource resource)
         {
-            if (resource.SkipProperties) return String.Empty;
-            if (resource.IsValueType) return String.Empty;
+            if (resource.SkipProperties || resource.IsValueType)
+				return null;
 
             StringCodeSink cs = new StringCodeSink();
 
-            foreach(McgField field in resource.LocalFields)
+            foreach (McgField field in resource.LocalFields)
             {
                 if (field.IsAliased || field.IsUnmanagedOnly) continue;
 
@@ -1043,7 +1043,9 @@ namespace MS.Internal.MilCodeGen.Generators
                     );
             }
 
-            return cs.ToString();
+			string result = cs.ToString();
+
+            return result == string.Empty ? null : result;
         }
 
         private string GetDefaultValue(McgField field)

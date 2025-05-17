@@ -303,8 +303,8 @@ namespace MS.Internal.MilCodeGen.Helpers
                         }
                     [[/inline]];
             }
-            else
-                return String.Empty;
+
+			return null;
         }
 
         public static string Collection_SetValue(McgResource resource, string type, string index, string typedValue)

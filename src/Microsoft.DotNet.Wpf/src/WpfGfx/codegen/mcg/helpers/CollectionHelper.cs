@@ -1218,7 +1218,8 @@ namespace MS.Internal.MilCodeGen.Helpers
 
         public static string WriteCollectionFields(McgResource resource)
         {
-            if (!resource.IsCollection) return String.Empty;
+            if (!resource.IsCollection)
+				return null;
 
             return
                 [[inline]]

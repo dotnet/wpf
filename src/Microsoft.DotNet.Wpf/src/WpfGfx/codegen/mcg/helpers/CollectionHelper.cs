@@ -557,10 +557,8 @@ namespace MS.Internal.MilCodeGen.Helpers
                         }
                     [[/inline]];
             }
-            else
-            {
-                return String.Empty;
-            }
+
+			return null;
         }
 
         public static string FreezeCore(McgResource resource)

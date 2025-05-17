@@ -2096,9 +2096,9 @@ namespace MS.Internal.MilCodeGen.Generators
             }
 
             string methodName = String.Empty;
-            string duceAddRef = String.Empty;
-            string duceAddRefAnimations = String.Empty;
-            string addRefCollection = String.Empty;
+            string duceAddRef = null;
+            string duceAddRefAnimations = null;
+            string addRefCollection = null;
             bool lockThis = false;
 
             if (!resource.DerivesFromTypeWhichHasUnmanagedResource)
@@ -2184,7 +2184,7 @@ namespace MS.Internal.MilCodeGen.Generators
                 [[inline]]
                     [[methodName]]
                     {
-                        [[(lockThis ? "using (CompositionEngineLock.Acquire()) \n{" : "")]]
+                        [[(lockThis ? "using (CompositionEngineLock.Acquire()) \n{" : null)]]
                             if (_duceResource.CreateOrAddRefOnChannel(this, channel, System.Windows.Media.Composition.DUCE.ResourceType.TYPE_[[resource.ManagedName.ToUpper()]]))
                             {
                                 [[duceAddRef]]
@@ -2195,7 +2195,7 @@ namespace MS.Internal.MilCodeGen.Generators
                             }
 
                             return _duceResource.GetHandle(channel);
-                        [[(lockThis ? "}" : "")]]
+                        [[(lockThis ? "}" : null)]]
                     }
                 [[/inline]]
             );

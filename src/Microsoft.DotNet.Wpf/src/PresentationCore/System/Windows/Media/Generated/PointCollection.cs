@@ -117,7 +117,6 @@ namespace System.Windows.Media
         public void Insert(int index, Point value)
         {
 
-
             WritePreamble();
             _collection.Insert(index, value);
 
@@ -193,7 +192,6 @@ namespace System.Windows.Media
             }
             set
             {
-
 
                 WritePreamble();
                 _collection[index] = value;
@@ -471,7 +469,6 @@ namespace System.Windows.Media
         internal int AddWithoutFiringPublicEvents(Point value)
         {
             int index = -1;
-
 
             WritePreamble();
             index = _collection.Add(value);
@@ -921,7 +918,6 @@ namespace System.Windows.Media
 
                     foreach (Point item in collection)
                     {
-
                         _collection.Add(item);
                     }
 

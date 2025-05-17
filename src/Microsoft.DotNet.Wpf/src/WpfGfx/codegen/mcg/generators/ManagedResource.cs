@@ -1310,11 +1310,12 @@ namespace MS.Internal.MilCodeGen.Generators
 
         private string WriteProperties(McgResource resource)
         {
-            if (resource.SkipProperties) return String.Empty;
+            if (resource.SkipProperties)
+				return null;
 
             StringCodeSink cs = new StringCodeSink();
 
-            foreach(McgField field in resource.LocalFields)
+            foreach (McgField field in resource.LocalFields)
             {
                 if (field.IsAliased || field.IsUnmanagedOnly) continue;
 

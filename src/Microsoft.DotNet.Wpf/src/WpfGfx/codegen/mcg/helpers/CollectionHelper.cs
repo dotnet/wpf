@@ -602,7 +602,8 @@ namespace MS.Internal.MilCodeGen.Helpers
 
         public static string CloneCollection(McgResource resource, string method, string argType, string source)
         {
-            if (!resource.IsCollection) return String.Empty;
+            if (!resource.IsCollection)
+				return null;
 
             String value;
 

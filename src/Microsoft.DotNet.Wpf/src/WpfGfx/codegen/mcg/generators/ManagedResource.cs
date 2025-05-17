@@ -1107,7 +1107,9 @@ namespace MS.Internal.MilCodeGen.Generators
                 }
             }
 
-            return cs.ToString();
+			string result = cs.ToString();
+
+            return result == string.Empty ? null : result;
         }
 
         /// <summary>

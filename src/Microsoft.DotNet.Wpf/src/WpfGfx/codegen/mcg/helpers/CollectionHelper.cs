@@ -565,8 +565,8 @@ namespace MS.Internal.MilCodeGen.Helpers
 
         public static string FreezeCore(McgResource resource)
         {
-            if (!resource.IsCollection) return String.Empty;
-            if (!resource.CollectionType.IsFreezable) return String.Empty;
+            if (!resource.IsCollection || !resource.CollectionType.IsFreezable)
+				return null;
 
             return
                 [[inline]]

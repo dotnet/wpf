@@ -429,7 +429,6 @@ namespace System.Windows.Media.Media3D
         }
 
 
-
         #endregion
 
         #region Private Helpers

@@ -431,7 +431,6 @@ namespace System.Windows.Media
         }
 
 
-
         #endregion
 
         #region Private Helpers

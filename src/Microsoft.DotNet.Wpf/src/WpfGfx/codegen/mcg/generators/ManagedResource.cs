@@ -173,7 +173,6 @@ namespace MS.Internal.MilCodeGen.Generators
 
                                     [[WriteClone(resource)]]
                                     [[WriteCloneCurrentValue(resource)]]
-
                                     [[WriteObjectMethods(resource)]]
 
                                     #endregion Public Methods

@@ -164,7 +164,6 @@ namespace System.Windows.Media
         }
         internal override void ReleaseOnChannelCore(DUCE.Channel channel)
         {
-
                 Debug.Assert(_duceResource.IsOnChannel(channel));
 
                 if (_duceResource.ReleaseOnChannel(channel))
@@ -173,9 +172,7 @@ namespace System.Windows.Media
                     if (vTransform != null) ((DUCE.IResource)vTransform).ReleaseOnChannel(channel);
 
                     ReleaseOnChannelAnimations(channel);
-
                 }
-
         }
         internal override DUCE.ResourceHandle GetHandleCore(DUCE.Channel channel)
         {

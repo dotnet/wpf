@@ -142,7 +142,6 @@ namespace System.Windows.Media.Media3D
                 if (_duceResource.CreateOrAddRefOnChannel(this, channel, System.Windows.Media.Composition.DUCE.ResourceType.TYPE_MATRIXTRANSFORM3D))
                 {
 
-
                     AddRefOnChannelAnimations(channel);
 
                     UpdateResource(channel, true /* skip "on channel" check - we already know that we're on channel */ );
@@ -152,17 +151,13 @@ namespace System.Windows.Media.Media3D
         }
         internal override void ReleaseOnChannelCore(DUCE.Channel channel)
         {
-
                 Debug.Assert(_duceResource.IsOnChannel(channel));
 
                 if (_duceResource.ReleaseOnChannel(channel))
                 {
 
-
                     ReleaseOnChannelAnimations(channel);
-
                 }
-
         }
         internal override DUCE.ResourceHandle GetHandleCore(DUCE.Channel channel)
         {

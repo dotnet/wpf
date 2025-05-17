@@ -283,6 +283,7 @@ namespace System.Windows.Media
                     if (vRelativeTransform != null) ((DUCE.IResource)vRelativeTransform).AddRefOnChannel(channel);
                     Visual vVisual = Visual;
                     vVisual?.AddRefOnChannelForCyclicBrush(this, channel);
+
                     AddRefOnChannelAnimations(channel);
 
                     UpdateResource(channel, true /* skip "on channel" check - we already know that we're on channel */ );
@@ -292,7 +293,6 @@ namespace System.Windows.Media
         }
         internal override void ReleaseOnChannelCore(DUCE.Channel channel)
         {
-
                 Debug.Assert(_duceResource.IsOnChannel(channel));
 
                 if (_duceResource.ReleaseOnChannel(channel))
@@ -303,10 +303,9 @@ namespace System.Windows.Media
                     if (vRelativeTransform != null) ((DUCE.IResource)vRelativeTransform).ReleaseOnChannel(channel);
                     Visual vVisual = Visual;
                     vVisual?.ReleaseOnChannelForCyclicBrush(this, channel);
+
                     ReleaseOnChannelAnimations(channel);
-
                 }
-
         }
         internal override DUCE.ResourceHandle GetHandleCore(DUCE.Channel channel)
         {

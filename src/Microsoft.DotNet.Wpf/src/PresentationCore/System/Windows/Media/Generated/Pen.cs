@@ -430,7 +430,6 @@ namespace System.Windows.Media
                     if (vDashStyle != null) ((DUCE.IResource)vDashStyle).ReleaseOnChannel(channel);
 
                     ReleaseOnChannelAnimations(channel);
-
                 }
             }
         }

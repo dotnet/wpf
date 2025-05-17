@@ -190,7 +190,6 @@ namespace System.Windows.Media.Effects
                 if (_duceResource.CreateOrAddRefOnChannel(this, channel, System.Windows.Media.Composition.DUCE.ResourceType.TYPE_BLUREFFECT))
                 {
 
-
                     AddRefOnChannelAnimations(channel);
 
                     UpdateResource(channel, true /* skip "on channel" check - we already know that we're on channel */ );
@@ -200,17 +199,13 @@ namespace System.Windows.Media.Effects
         }
         internal override void ReleaseOnChannelCore(DUCE.Channel channel)
         {
-
                 Debug.Assert(_duceResource.IsOnChannel(channel));
 
                 if (_duceResource.ReleaseOnChannel(channel))
                 {
 
-
                     ReleaseOnChannelAnimations(channel);
-
                 }
-
         }
         internal override DUCE.ResourceHandle GetHandleCore(DUCE.Channel channel)
         {

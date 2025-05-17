@@ -248,7 +248,6 @@ namespace System.Windows.Media
                 if (_duceResource.CreateOrAddRefOnChannel(this, channel, System.Windows.Media.Composition.DUCE.ResourceType.TYPE_TRANSFORMGROUP))
                 {
 
-
                     TransformCollection vChildren = Children;
 
                     if (vChildren != null)
@@ -259,6 +258,7 @@ namespace System.Windows.Media
                             ((DUCE.IResource) vChildren.Internal_GetItem(i)).AddRefOnChannel(channel);
                         }
                     }
+
                     AddRefOnChannelAnimations(channel);
 
                     UpdateResource(channel, true /* skip "on channel" check - we already know that we're on channel */ );
@@ -268,12 +268,10 @@ namespace System.Windows.Media
         }
         internal override void ReleaseOnChannelCore(DUCE.Channel channel)
         {
-
                 Debug.Assert(_duceResource.IsOnChannel(channel));
 
                 if (_duceResource.ReleaseOnChannel(channel))
                 {
-
 
                     TransformCollection vChildren = Children;
 
@@ -285,10 +283,9 @@ namespace System.Windows.Media
                             ((DUCE.IResource) vChildren.Internal_GetItem(i)).ReleaseOnChannel(channel);
                         }
                     }
+
                     ReleaseOnChannelAnimations(channel);
-
                 }
-
         }
         internal override DUCE.ResourceHandle GetHandleCore(DUCE.Channel channel)
         {

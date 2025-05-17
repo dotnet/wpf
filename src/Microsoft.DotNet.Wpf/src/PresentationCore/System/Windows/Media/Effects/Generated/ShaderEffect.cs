@@ -175,7 +175,6 @@ namespace System.Windows.Media.Effects
         }
         private void GeneratedReleaseOnChannelCore(DUCE.Channel channel)
         {
-
                 Debug.Assert(_duceResource.IsOnChannel(channel));
 
                 if (_duceResource.ReleaseOnChannel(channel))
@@ -184,9 +183,7 @@ namespace System.Windows.Media.Effects
                     if (vPixelShader != null) ((DUCE.IResource)vPixelShader).ReleaseOnChannel(channel);
 
                     ReleaseOnChannelAnimations(channel);
-
                 }
-
         }
         internal override DUCE.ResourceHandle GetHandleCore(DUCE.Channel channel)
         {

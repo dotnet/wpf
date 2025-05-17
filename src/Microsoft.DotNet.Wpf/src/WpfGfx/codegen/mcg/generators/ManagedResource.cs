@@ -1260,7 +1260,8 @@ namespace MS.Internal.MilCodeGen.Generators
         /// </summary>
         private string WriteEffectiveValuesInitialSize(McgResource resource)
         {
-            if (resource.IsValueType) return String.Empty;
+            if (resource.IsValueType)
+				return null;
 
             // The default value is 2, so we don't need to emit this if the count == 2.
             if ((resource.CommonlySetFieldCount > 0) &&
@@ -1302,10 +1303,8 @@ namespace MS.Internal.MilCodeGen.Generators
 
                 return cs.ToString();
             }
-            else
-            {
-                return String.Empty;
-            }
+
+			return null;
         }
 
         private string WriteProperties(McgResource resource)

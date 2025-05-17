@@ -1116,7 +1116,8 @@ namespace MS.Internal.MilCodeGen.Generators
         /// </summary>
         private string WriteCacheDecls(McgResource resource)
         {
-            if (resource.SkipFields) return String.Empty;
+            if (resource.SkipFields)
+				return null;
 
             StringCodeSink cs = new StringCodeSink();
 
@@ -1138,7 +1139,9 @@ namespace MS.Internal.MilCodeGen.Generators
                 }
             }
 
-            return cs.ToString();
+			string result = cs.ToString();
+
+            return result == string.Empty ? null : result;
         }
 
         private string WriteDefaultValues(McgResource resource)

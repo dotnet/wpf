@@ -1672,11 +1672,11 @@ namespace MS.Internal.MilCodeGen.Generators
 
         private string WriteUpdateResource(McgResource resource)
         {
+			if (resource.IsValueType || !resource.HasUnmanagedResource)
+				return null;
+			
             StringCodeSink cs = new StringCodeSink();
             StringCodeSink duceUpdate = new StringCodeSink();
-
-            if (resource.IsValueType) return String.Empty;
-            if (!resource.HasUnmanagedResource) return String.Empty;
 
             if (!resource.IsAbstract && (resource.IsCollection || resource.AllUceFields.Length > 0))
             {

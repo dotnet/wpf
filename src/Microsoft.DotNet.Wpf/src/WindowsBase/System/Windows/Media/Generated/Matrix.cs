@@ -30,7 +30,6 @@ namespace System.Windows.Media
         #region Public Methods
 
 
-
         /// <summary>
         /// Compares two Matrix instances for exact equality.
         /// Note that double values can acquire error when operated upon, such that

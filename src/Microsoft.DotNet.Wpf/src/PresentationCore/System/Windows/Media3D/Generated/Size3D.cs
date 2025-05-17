@@ -36,7 +36,6 @@ namespace System.Windows.Media.Media3D
         #region Public Methods
 
 
-
         /// <summary>
         /// Compares two Size3D instances for exact equality.
         /// Note that double values can acquire error when operated upon, such that

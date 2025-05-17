@@ -716,7 +716,6 @@ namespace System.Windows.Media
         internal FrugalStructList<GeneralTransform> _collection;
         internal uint _version = 0;
 
-
         #endregion Internal Fields
 
         #region Enumerator

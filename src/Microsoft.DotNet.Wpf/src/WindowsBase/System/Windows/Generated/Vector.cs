@@ -329,7 +329,6 @@ namespace System.Windows
         internal double _x;
         internal double _y;
 
-
         #endregion Internal Fields
 
 

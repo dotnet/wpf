@@ -350,7 +350,6 @@ namespace System.Windows.Media
 
 
 
-
         #endregion Internal Fields
 
 

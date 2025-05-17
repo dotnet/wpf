@@ -336,7 +336,6 @@ namespace System.Windows
         internal double _width;
         internal double _height;
 
-
         #endregion Internal Fields
 
 

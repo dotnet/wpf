@@ -740,7 +740,6 @@ namespace System.Windows.Media.Media3D
         internal FrugalStructList<Point3D> _collection;
         internal uint _version = 0;
 
-
         #endregion Internal Fields
 
         #region Enumerator

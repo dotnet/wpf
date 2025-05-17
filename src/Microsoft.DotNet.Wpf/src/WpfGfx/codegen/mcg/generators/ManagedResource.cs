@@ -2351,8 +2351,8 @@ namespace MS.Internal.MilCodeGen.Generators
 
         private string WriteGetDuceResource(McgResource resource)
         {
-            if (resource.IsValueType) return String.Empty;
-            if (!resource.HasUnmanagedResource) return String.Empty;
+            if (resource.IsValueType || !resource.HasUnmanagedResource)
+				return null;
 
             StringCodeSink cs = new StringCodeSink();
             StringCodeSink releaseString = new StringCodeSink();
@@ -2383,7 +2383,7 @@ namespace MS.Internal.MilCodeGen.Generators
                 }
                 else
                 {
-                    return String.Empty;
+                    return null;
                 }
             }
 

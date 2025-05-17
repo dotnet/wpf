@@ -1520,8 +1520,8 @@ namespace MS.Internal.MilCodeGen.Generators
 
         private string WriteResourceHandleField(McgResource resource)
         {
-            if (resource.IsValueType) return String.Empty;
-            if (!resource.HasUnmanagedResource) return String.Empty;
+            if (resource.IsValueType || !resource.HasUnmanagedResource)
+				return null;
 
             StringCodeSink cs = new StringCodeSink();
 

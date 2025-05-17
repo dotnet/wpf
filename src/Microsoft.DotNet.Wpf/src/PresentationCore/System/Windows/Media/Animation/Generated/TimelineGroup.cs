@@ -102,7 +102,6 @@ namespace System.Windows.Media.Animation
         #region Internal Properties
 
 
-
         #endregion Internal Properties
 
         //------------------------------------------------------

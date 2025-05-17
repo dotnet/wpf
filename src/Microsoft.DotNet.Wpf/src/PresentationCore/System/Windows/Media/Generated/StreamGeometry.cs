@@ -127,7 +127,6 @@ namespace System.Windows.Media
         #region Internal Properties
 
 
-
         #endregion Internal Properties
 
         //------------------------------------------------------

@@ -91,7 +91,6 @@ namespace System.Windows.Media.Effects
         #region Internal Properties
 
 
-
         #endregion Internal Properties
 
         //------------------------------------------------------

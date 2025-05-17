@@ -245,7 +245,6 @@ namespace System.Windows.Media.Imaging
         #region Internal Properties
 
 
-
         #endregion Internal Properties
 
         //------------------------------------------------------

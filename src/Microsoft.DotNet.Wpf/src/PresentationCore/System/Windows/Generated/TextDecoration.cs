@@ -176,7 +176,6 @@ namespace System.Windows
         #region Internal Properties
 
 
-
         #endregion Internal Properties
 
         //------------------------------------------------------

@@ -162,7 +162,6 @@ namespace System.Windows.Media
 
         #region Internal Properties
 
-
         /// <summary>
         /// Parse - returns an instance converted from the provided string
         /// using the current culture

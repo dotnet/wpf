@@ -730,7 +730,6 @@ namespace System.Windows.Media.Media3D
         #region Internal Properties
 
 
-
         #endregion Internal Properties
 
         //------------------------------------------------------

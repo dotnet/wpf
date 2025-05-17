@@ -914,8 +914,8 @@ namespace System.Windows.Media.Media3D
                     {
                         throw new System.ArgumentException(SR.Collection_NoNull);
                     }
-                    OnFreezablePropertyChanged(/* oldValue = */ null, item);
 
+                    OnFreezablePropertyChanged(/* oldValue = */ null, item);
                 }
             }
 

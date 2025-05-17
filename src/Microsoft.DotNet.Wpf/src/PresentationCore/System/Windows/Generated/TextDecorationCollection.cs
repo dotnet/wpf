@@ -907,8 +907,8 @@ namespace System.Windows
                     {
                         throw new System.ArgumentException(SR.Collection_NoNull);
                     }
-                    OnFreezablePropertyChanged(/* oldValue = */ null, item);
 
+                    OnFreezablePropertyChanged(/* oldValue = */ null, item);
                 }
             }
 

@@ -906,8 +906,8 @@ namespace System.Windows.Media.Animation
                     {
                         throw new System.ArgumentException(SR.Collection_NoNull);
                     }
-                    OnFreezablePropertyChanged(/* oldValue = */ null, item);
 
+                    OnFreezablePropertyChanged(/* oldValue = */ null, item);
                 }
             }
 

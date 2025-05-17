@@ -1020,8 +1020,8 @@ namespace System.Windows.Media
                     {
                         throw new System.ArgumentException(SR.Collection_NoNull);
                     }
-                    OnFreezablePropertyChanged(/* oldValue = */ null, item);
 
+                    OnFreezablePropertyChanged(/* oldValue = */ null, item);
                 }
             }
 

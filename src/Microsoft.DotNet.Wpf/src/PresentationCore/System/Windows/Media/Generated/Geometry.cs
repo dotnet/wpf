@@ -144,7 +144,6 @@ namespace System.Windows.Media
         #region Protected Methods
 
 
-
         #endregion ProtectedMethods
 
         //------------------------------------------------------

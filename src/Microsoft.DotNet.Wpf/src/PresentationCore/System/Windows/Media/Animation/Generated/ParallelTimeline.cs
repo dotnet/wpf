@@ -76,7 +76,6 @@ namespace System.Windows.Media.Animation
             return new ParallelTimeline();
         }
 
-
         #endregion ProtectedMethods
 
         //------------------------------------------------------

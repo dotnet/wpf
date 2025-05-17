@@ -135,7 +135,6 @@ namespace System.Windows.Media
             return new PathGeometry();
         }
 
-
         #endregion ProtectedMethods
 
         //------------------------------------------------------

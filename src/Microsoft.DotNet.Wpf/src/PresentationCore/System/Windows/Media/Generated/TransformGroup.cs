@@ -191,7 +191,6 @@ namespace System.Windows.Media
             return new TransformGroup();
         }
 
-
         #endregion ProtectedMethods
 
         //------------------------------------------------------

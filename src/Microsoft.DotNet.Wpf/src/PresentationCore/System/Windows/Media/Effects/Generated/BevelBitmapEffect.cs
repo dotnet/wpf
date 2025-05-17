@@ -181,7 +181,6 @@ namespace System.Windows.Media.Effects
             return new BevelBitmapEffect();
         }
 
-
         #endregion ProtectedMethods
 
         //------------------------------------------------------

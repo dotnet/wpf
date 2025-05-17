@@ -124,7 +124,6 @@ namespace System.Windows.Media.Effects
             return new PixelShader();
         }
 
-
         #endregion ProtectedMethods
 
         //------------------------------------------------------

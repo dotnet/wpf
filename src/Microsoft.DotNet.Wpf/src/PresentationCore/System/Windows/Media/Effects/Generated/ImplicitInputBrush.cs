@@ -79,7 +79,6 @@ namespace System.Windows.Media.Effects
             return new ImplicitInputBrush();
         }
 
-
         #endregion ProtectedMethods
 
         //------------------------------------------------------

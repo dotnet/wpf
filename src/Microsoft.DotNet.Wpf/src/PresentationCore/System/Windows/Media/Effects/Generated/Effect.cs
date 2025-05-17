@@ -71,7 +71,6 @@ namespace System.Windows.Media.Effects
         #region Protected Methods
 
 
-
         #endregion ProtectedMethods
 
         //------------------------------------------------------

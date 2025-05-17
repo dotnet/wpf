@@ -115,7 +115,6 @@ namespace System.Windows.Media
             return new QuadraticBezierSegment();
         }
 
-
         #endregion ProtectedMethods
 
         //------------------------------------------------------

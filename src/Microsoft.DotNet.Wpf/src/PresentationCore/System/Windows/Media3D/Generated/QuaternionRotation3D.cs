@@ -108,7 +108,6 @@ namespace System.Windows.Media.Media3D
             return new QuaternionRotation3D();
         }
 
-
         #endregion ProtectedMethods
 
         //------------------------------------------------------

@@ -233,7 +233,6 @@ namespace System.Windows.Media
             return new CombinedGeometry();
         }
 
-
         #endregion ProtectedMethods
 
         //------------------------------------------------------

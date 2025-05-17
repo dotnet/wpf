@@ -145,7 +145,6 @@ namespace System.Windows.Media
             return new PathFigure();
         }
 
-
         #endregion ProtectedMethods
 
         //------------------------------------------------------

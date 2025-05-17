@@ -224,7 +224,6 @@ namespace System.Windows.Media.Media3D
             return new RotateTransform3D();
         }
 
-
         #endregion ProtectedMethods
 
         //------------------------------------------------------

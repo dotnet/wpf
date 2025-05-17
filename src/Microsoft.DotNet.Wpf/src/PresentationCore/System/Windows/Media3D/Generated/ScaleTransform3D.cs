@@ -233,7 +233,6 @@ namespace System.Windows.Media.Media3D
             return new ScaleTransform3D();
         }
 
-
         #endregion ProtectedMethods
 
         //------------------------------------------------------

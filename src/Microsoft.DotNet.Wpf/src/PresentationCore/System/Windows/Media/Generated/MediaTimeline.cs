@@ -100,7 +100,6 @@ namespace System.Windows.Media
             return new MediaTimeline();
         }
 
-
         #endregion ProtectedMethods
 
         //------------------------------------------------------

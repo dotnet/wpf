@@ -158,7 +158,6 @@ namespace System.Windows.Media.Media3D
             return new TranslateTransform3D();
         }
 
-
         #endregion ProtectedMethods
 
         //------------------------------------------------------

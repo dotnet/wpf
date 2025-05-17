@@ -129,7 +129,6 @@ namespace System.Windows.Media
             return new LinearGradientBrush();
         }
 
-
         #endregion ProtectedMethods
 
         //------------------------------------------------------

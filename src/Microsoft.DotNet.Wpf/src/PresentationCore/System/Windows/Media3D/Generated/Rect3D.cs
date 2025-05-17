@@ -225,7 +225,6 @@ namespace System.Windows.Media.Media3D
         #region Protected Methods
 
 
-
         #endregion ProtectedMethods
 
         //------------------------------------------------------

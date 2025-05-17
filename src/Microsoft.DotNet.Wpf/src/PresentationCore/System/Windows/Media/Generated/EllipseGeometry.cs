@@ -151,7 +151,6 @@ namespace System.Windows.Media
             return new EllipseGeometry();
         }
 
-
         #endregion ProtectedMethods
 
         //------------------------------------------------------

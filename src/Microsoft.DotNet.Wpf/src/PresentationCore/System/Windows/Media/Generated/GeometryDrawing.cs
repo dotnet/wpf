@@ -274,7 +274,6 @@ namespace System.Windows.Media
             return new GeometryDrawing();
         }
 
-
         #endregion ProtectedMethods
 
         //------------------------------------------------------

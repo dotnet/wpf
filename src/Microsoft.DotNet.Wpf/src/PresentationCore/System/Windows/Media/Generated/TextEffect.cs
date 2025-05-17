@@ -185,7 +185,6 @@ namespace System.Windows.Media
             return new TextEffect();
         }
 
-
         #endregion ProtectedMethods
 
         //------------------------------------------------------

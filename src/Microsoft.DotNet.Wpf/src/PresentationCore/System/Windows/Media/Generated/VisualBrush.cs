@@ -178,7 +178,6 @@ namespace System.Windows.Media
             return new VisualBrush();
         }
 
-
         #endregion ProtectedMethods
 
         //------------------------------------------------------

@@ -538,7 +538,6 @@ namespace System.Windows.Media
             return new DrawingGroup();
         }
 
-
         #endregion ProtectedMethods
 
         //------------------------------------------------------

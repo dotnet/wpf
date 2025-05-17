@@ -98,7 +98,6 @@ namespace System.Windows.Media.Media3D
             return new GeneralTransform3DGroup();
         }
 
-
         #endregion ProtectedMethods
 
         //------------------------------------------------------

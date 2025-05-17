@@ -187,7 +187,6 @@ namespace System.Windows.Media.Media3D
             return new MeshGeometry3D();
         }
 
-
         #endregion ProtectedMethods
 
         //------------------------------------------------------

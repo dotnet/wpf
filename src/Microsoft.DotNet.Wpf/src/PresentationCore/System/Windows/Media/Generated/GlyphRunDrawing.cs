@@ -192,7 +192,6 @@ namespace System.Windows.Media
             return new GlyphRunDrawing();
         }
 
-
         #endregion ProtectedMethods
 
         //------------------------------------------------------

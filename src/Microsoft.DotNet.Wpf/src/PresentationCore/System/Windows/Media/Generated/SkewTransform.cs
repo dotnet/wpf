@@ -173,7 +173,6 @@ namespace System.Windows.Media
             return new SkewTransform();
         }
 
-
         #endregion ProtectedMethods
 
         //------------------------------------------------------

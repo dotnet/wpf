@@ -131,7 +131,6 @@ namespace System.Windows.Media.Media3D
             return new AxisAngleRotation3D();
         }
 
-
         #endregion ProtectedMethods
 
         //------------------------------------------------------

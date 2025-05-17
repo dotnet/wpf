@@ -84,7 +84,6 @@ namespace System.Windows.Media.Media3D
             return new PointLight();
         }
 
-
         #endregion ProtectedMethods
 
         //------------------------------------------------------

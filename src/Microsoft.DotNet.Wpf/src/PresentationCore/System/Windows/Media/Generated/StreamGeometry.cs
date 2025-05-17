@@ -107,7 +107,6 @@ namespace System.Windows.Media
             return new StreamGeometry();
         }
 
-
         #endregion ProtectedMethods
 
         //------------------------------------------------------

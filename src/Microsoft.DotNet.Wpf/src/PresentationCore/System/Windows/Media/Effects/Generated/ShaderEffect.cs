@@ -146,7 +146,6 @@ namespace System.Windows.Media.Effects
             return (Freezable)Activator.CreateInstance(this.GetType());
         }
 
-
         #endregion ProtectedMethods
 
         //------------------------------------------------------

@@ -159,7 +159,6 @@ namespace System.Windows.Media
             return new GuidelineSet();
         }
 
-
         #endregion ProtectedMethods
 
         //------------------------------------------------------

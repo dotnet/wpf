@@ -189,7 +189,6 @@ namespace System.Windows.Media.Media3D
             return new Model3DGroup();
         }
 
-
         #endregion ProtectedMethods
 
         //------------------------------------------------------

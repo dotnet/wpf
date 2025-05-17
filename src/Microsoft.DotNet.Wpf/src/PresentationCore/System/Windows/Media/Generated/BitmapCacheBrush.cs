@@ -288,7 +288,6 @@ namespace System.Windows.Media
             return new BitmapCacheBrush();
         }
 
-
         #endregion ProtectedMethods
 
         //------------------------------------------------------

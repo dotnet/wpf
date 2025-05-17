@@ -173,7 +173,6 @@ namespace System.Windows.Media
             return new ScaleTransform();
         }
 
-
         #endregion ProtectedMethods
 
         //------------------------------------------------------

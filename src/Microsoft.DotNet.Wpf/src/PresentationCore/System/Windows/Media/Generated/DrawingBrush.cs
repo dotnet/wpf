@@ -148,7 +148,6 @@ namespace System.Windows.Media
             return new DrawingBrush();
         }
 
-
         #endregion ProtectedMethods
 
         //------------------------------------------------------

@@ -107,7 +107,6 @@ namespace System.Windows.Media
             return new SolidColorBrush();
         }
 
-
         #endregion ProtectedMethods
 
         //------------------------------------------------------

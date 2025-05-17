@@ -122,7 +122,6 @@ namespace System.Windows.Media.Effects
             return new EmbossBitmapEffect();
         }
 
-
         #endregion ProtectedMethods
 
         //------------------------------------------------------

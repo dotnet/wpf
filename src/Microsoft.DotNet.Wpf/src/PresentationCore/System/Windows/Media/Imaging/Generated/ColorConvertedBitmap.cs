@@ -254,7 +254,6 @@ namespace System.Windows.Media.Imaging
             ClonePostscript(sourceColorConvertedBitmap);
         }
 
-
         #endregion ProtectedMethods
 
         //------------------------------------------------------

@@ -130,7 +130,6 @@ namespace System.Windows.Media.Effects
             return new BitmapEffectInput();
         }
 
-
         #endregion ProtectedMethods
 
         //------------------------------------------------------

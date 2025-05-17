@@ -100,7 +100,6 @@ namespace System.Windows.Media
             return new PolyLineSegment();
         }
 
-
         #endregion ProtectedMethods
 
         //------------------------------------------------------

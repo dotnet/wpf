@@ -210,7 +210,6 @@ namespace System.Windows.Media.Effects
             return new DropShadowEffect();
         }
 
-
         #endregion ProtectedMethods
 
         //------------------------------------------------------

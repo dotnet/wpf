@@ -213,7 +213,6 @@ namespace System.Windows.Media
             return new GeometryGroup();
         }
 
-
         #endregion ProtectedMethods
 
         //------------------------------------------------------

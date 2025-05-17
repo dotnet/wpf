@@ -105,7 +105,6 @@ namespace System.Windows.Media.Media3D
             return new OrthographicCamera();
         }
 
-
         #endregion ProtectedMethods
 
         //------------------------------------------------------

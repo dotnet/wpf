@@ -156,7 +156,6 @@ namespace System.Windows
             return new TextDecoration();
         }
 
-
         #endregion ProtectedMethods
 
         //------------------------------------------------------

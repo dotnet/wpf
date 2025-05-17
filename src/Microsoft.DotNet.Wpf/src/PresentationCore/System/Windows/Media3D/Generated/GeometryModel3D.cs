@@ -276,7 +276,6 @@ namespace System.Windows.Media.Media3D
             return new GeometryModel3D();
         }
 
-
         #endregion ProtectedMethods
 
         //------------------------------------------------------

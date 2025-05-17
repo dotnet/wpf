@@ -343,7 +343,6 @@ namespace System.Windows.Media
             return new Pen();
         }
 
-
         #endregion ProtectedMethods
 
         //------------------------------------------------------

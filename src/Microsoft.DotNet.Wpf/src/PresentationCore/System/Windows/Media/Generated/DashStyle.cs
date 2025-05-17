@@ -133,7 +133,6 @@ namespace System.Windows.Media
             return new DashStyle();
         }
 
-
         #endregion ProtectedMethods
 
         //------------------------------------------------------

@@ -190,7 +190,6 @@ namespace System.Windows.Media.Media3D
             return new DiffuseMaterial();
         }
 
-
         #endregion ProtectedMethods
 
         //------------------------------------------------------

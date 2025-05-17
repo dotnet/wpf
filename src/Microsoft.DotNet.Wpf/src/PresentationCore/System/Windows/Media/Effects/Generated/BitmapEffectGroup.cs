@@ -93,7 +93,6 @@ namespace System.Windows.Media.Effects
             return new BitmapEffectGroup();
         }
 
-
         #endregion ProtectedMethods
 
         //------------------------------------------------------

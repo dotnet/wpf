@@ -148,7 +148,6 @@ namespace System.Windows.Media
             return new DrawingImage();
         }
 
-
         #endregion ProtectedMethods
 
         //------------------------------------------------------

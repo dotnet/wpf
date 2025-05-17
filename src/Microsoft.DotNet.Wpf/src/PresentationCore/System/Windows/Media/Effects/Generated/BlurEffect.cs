@@ -144,7 +144,6 @@ namespace System.Windows.Media.Effects
             return new BlurEffect();
         }
 
-
         #endregion ProtectedMethods
 
         //------------------------------------------------------

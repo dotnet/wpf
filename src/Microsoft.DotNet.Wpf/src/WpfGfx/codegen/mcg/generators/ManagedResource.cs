@@ -327,9 +327,7 @@ namespace MS.Internal.MilCodeGen.Generators
         private string WriteCloneCoreMethods(McgResource resource)
         {
             if (resource.IsValueType || (!resource.AddCloneHooks && !resource.IsCollection))
-            {
-                return String.Empty;
-            }
+				return null;
 
             string cloneCoreMethods = String.Empty;
 

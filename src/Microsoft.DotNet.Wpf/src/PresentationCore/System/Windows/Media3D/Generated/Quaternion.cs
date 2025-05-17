@@ -37,7 +37,6 @@ namespace System.Windows.Media.Media3D
 
 
 
-
         /// <summary>
         /// Compares two Quaternion instances for exact equality.
         /// Note that double values can acquire error when operated upon, such that

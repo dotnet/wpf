@@ -31,7 +31,6 @@ namespace System.Windows
 
 
 
-
         /// <summary>
         /// Compares two Rect instances for exact equality.
         /// Note that double values can acquire error when operated upon, such that

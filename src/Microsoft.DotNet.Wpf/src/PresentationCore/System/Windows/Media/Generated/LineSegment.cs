@@ -168,7 +168,6 @@ namespace System.Windows.Media
         #region Internal Fields
 
 
-
         internal static Point s_Point = new Point();
 
         #endregion Internal Fields

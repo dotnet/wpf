@@ -318,7 +318,6 @@ namespace System.Windows.Media.Imaging
         #region Internal Fields
 
 
-
         internal static BitmapSource s_Source = null;
         internal static ColorContext s_SourceColorContext = null;
         internal static ColorContext s_DestinationColorContext = null;

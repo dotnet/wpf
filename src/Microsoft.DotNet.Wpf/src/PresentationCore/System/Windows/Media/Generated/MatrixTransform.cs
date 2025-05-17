@@ -250,7 +250,6 @@ namespace System.Windows.Media
         #region Internal Fields
 
 
-
         internal System.Windows.Media.Composition.DUCE.MultiChannelResource _duceResource = new System.Windows.Media.Composition.DUCE.MultiChannelResource();
         internal static Matrix s_Matrix = new Matrix();
 

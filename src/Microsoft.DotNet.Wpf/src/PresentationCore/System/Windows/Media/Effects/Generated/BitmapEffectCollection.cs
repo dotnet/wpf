@@ -705,7 +705,6 @@ namespace System.Windows.Media.Effects
         #region Internal Fields
 
 
-
         internal FrugalStructList<BitmapEffect> _collection;
         internal uint _version = 0;
 

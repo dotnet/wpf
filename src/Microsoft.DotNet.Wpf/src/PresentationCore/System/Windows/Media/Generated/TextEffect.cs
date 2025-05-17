@@ -254,7 +254,6 @@ namespace System.Windows.Media
         #region Internal Fields
 
 
-
         internal const int c_PositionStart = 0;
         internal const int c_PositionCount = 0;
 

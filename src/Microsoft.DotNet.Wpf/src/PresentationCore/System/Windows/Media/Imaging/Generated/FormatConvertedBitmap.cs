@@ -318,7 +318,6 @@ namespace System.Windows.Media.Imaging
         #region Internal Fields
 
 
-
         internal static BitmapSource s_Source = null;
         internal static PixelFormat s_DestinationFormat = PixelFormats.Pbgra32;
         internal static BitmapPalette s_DestinationPalette = null;

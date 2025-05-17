@@ -702,7 +702,6 @@ namespace System.Windows.Media.Animation
         #region Internal Fields
 
 
-
         internal FrugalStructList<Timeline> _collection;
         internal uint _version = 0;
 

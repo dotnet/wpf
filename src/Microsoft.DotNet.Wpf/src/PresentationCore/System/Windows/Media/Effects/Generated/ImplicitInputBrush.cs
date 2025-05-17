@@ -243,7 +243,6 @@ namespace System.Windows.Media.Effects
         #region Internal Fields
 
 
-
         internal System.Windows.Media.Composition.DUCE.MultiChannelResource _duceResource = new System.Windows.Media.Composition.DUCE.MultiChannelResource();
 
         #endregion Internal Fields

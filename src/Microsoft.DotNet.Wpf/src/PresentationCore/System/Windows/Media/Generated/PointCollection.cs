@@ -737,7 +737,6 @@ namespace System.Windows.Media
         #region Internal Fields
 
 
-
         internal FrugalStructList<Point> _collection;
         internal uint _version = 0;
 

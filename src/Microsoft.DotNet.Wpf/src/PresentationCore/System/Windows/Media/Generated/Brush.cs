@@ -407,7 +407,6 @@ namespace System.Windows.Media
 
 
 
-
         internal const double c_Opacity = 1.0;
         internal static Transform s_Transform = Transform.Identity;
         internal static Transform s_RelativeTransform = Transform.Identity;

@@ -703,7 +703,6 @@ namespace System.Windows
         #region Internal Fields
 
 
-
         internal FrugalStructList<TextDecoration> _collection;
         internal uint _version = 0;
 

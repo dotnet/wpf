@@ -357,7 +357,6 @@ namespace System.Windows.Media
 
 
 
-
         internal const BrushMappingMode c_ViewportUnits = BrushMappingMode.RelativeToBoundingBox;
         internal const BrushMappingMode c_ViewboxUnits = BrushMappingMode.RelativeToBoundingBox;
         internal static Rect s_Viewport = new Rect(0,0,1,1);

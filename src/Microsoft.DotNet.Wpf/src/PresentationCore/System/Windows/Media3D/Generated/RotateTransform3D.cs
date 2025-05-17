@@ -389,7 +389,6 @@ namespace System.Windows.Media.Media3D
         private double _cachedCenterYValue = 0.0;
         private double _cachedCenterZValue = 0.0;
         private Rotation3D _cachedRotationValue = Rotation3D.Identity;
-
         internal System.Windows.Media.Composition.DUCE.MultiChannelResource _duceResource = new System.Windows.Media.Composition.DUCE.MultiChannelResource();
         internal const double c_CenterX = 0.0;
         internal const double c_CenterY = 0.0;

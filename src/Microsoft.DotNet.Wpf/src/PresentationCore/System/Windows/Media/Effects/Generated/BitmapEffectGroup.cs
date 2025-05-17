@@ -161,7 +161,6 @@ namespace System.Windows.Media.Effects
         #region Internal Fields
 
 
-
         internal static BitmapEffectCollection s_Children = BitmapEffectCollection.Empty;
 
         #endregion Internal Fields

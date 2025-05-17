@@ -152,7 +152,6 @@ namespace System.Windows.Media.Media3D
         #region Internal Fields
 
 
-
         internal static GeneralTransform3DCollection s_Children = GeneralTransform3DCollection.Empty;
 
         #endregion Internal Fields

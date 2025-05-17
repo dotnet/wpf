@@ -191,7 +191,6 @@ namespace System.Windows.Media.Effects
         #region Internal Fields
 
 
-
         internal static BitmapSource s_Input = BitmapEffectInput.ContextInputSource;
         internal const BrushMappingMode c_AreaToApplyEffectUnits = BrushMappingMode.RelativeToBoundingBox;
         internal static Rect s_AreaToApplyEffect = Rect.Empty;

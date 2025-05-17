@@ -441,7 +441,6 @@ namespace System.Windows.Media.Imaging
         #region Internal Fields
 
 
-
         internal static RequestCachePolicy s_UriCachePolicy = null;
         internal static Uri s_UriSource = null;
         internal static Stream s_StreamSource = null;

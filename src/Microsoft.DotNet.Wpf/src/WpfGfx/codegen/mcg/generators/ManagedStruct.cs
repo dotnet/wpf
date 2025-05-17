@@ -583,7 +583,7 @@ namespace MS.Internal.MilCodeGen.Generators
             WriteGetHashCode(resource, cs);
             WriteParse(resource, cs);
 
-            return cs.ToString();
+            return cs.IsEmpty ? null : cs.ToString();
         }
 
         private void WriteValueMethods(McgResource resource, StringCodeSink cs)

@@ -849,7 +849,7 @@ namespace MS.Internal.MilCodeGen.Helpers
                     [[/inline]];
             }
 
-            String onInheritanceContextChangedCoreMethod = String.Empty;
+            String onInheritanceContextChangedCoreMethod = null;
             if (resource.CollectionType.IsFreezable)
             {
                 onInheritanceContextChangedCoreMethod =

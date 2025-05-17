@@ -120,7 +120,6 @@ namespace System.Windows.Media.Media3D
             WritePreamble();
             _collection.Insert(index, value);
 
-
             ++_version;
             WritePostscript();
         }
@@ -174,7 +173,6 @@ namespace System.Windows.Media.Media3D
             WritePreamble();
             _collection.RemoveAt(index);
 
-
             ++_version;
 
             // No WritePostScript to avoid firing the Changed event.
@@ -198,7 +196,6 @@ namespace System.Windows.Media.Media3D
 
                 WritePreamble();
                 _collection[ index ] = value;
-
 
                 ++_version;
                 WritePostscript();
@@ -478,7 +475,6 @@ namespace System.Windows.Media.Media3D
             WritePreamble();
             index = _collection.Add(value);
 
-
             ++_version;
 
             // No WritePostScript to avoid firing the Changed event.
@@ -531,7 +527,6 @@ namespace System.Windows.Media.Media3D
             {
                 _collection.Add(sourceVector3DCollection._collection[i]);
             }
-
         }
         /// <summary>
         /// Implementation of Freezable.CloneCurrentValueCore()
@@ -550,7 +545,6 @@ namespace System.Windows.Media.Media3D
             {
                 _collection.Add(sourceVector3DCollection._collection[i]);
             }
-
         }
         /// <summary>
         /// Implementation of Freezable.GetAsFrozenCore()
@@ -569,7 +563,6 @@ namespace System.Windows.Media.Media3D
             {
                 _collection.Add(sourceVector3DCollection._collection[i]);
             }
-
         }
         /// <summary>
         /// Implementation of Freezable.GetCurrentValueAsFrozenCore()
@@ -588,7 +581,6 @@ namespace System.Windows.Media.Media3D
             {
                 _collection.Add(sourceVector3DCollection._collection[i]);
             }
-
         }
 
 
@@ -952,7 +944,6 @@ namespace System.Windows.Media.Media3D
 
                 }
             }
-
 
 
 

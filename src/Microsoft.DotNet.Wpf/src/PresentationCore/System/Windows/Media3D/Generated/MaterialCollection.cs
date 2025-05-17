@@ -144,7 +144,6 @@ namespace System.Windows.Media.Media3D
             _collection.Insert(index, value);
             OnInsert(value);
 
-
             ++_version;
             WritePostscript();
         }
@@ -175,7 +174,6 @@ namespace System.Windows.Media.Media3D
                 _collection.RemoveAt(index);
 
                 OnRemove(oldValue);
-
 
                 ++_version;
                 WritePostscript();
@@ -220,7 +218,6 @@ namespace System.Windows.Media.Media3D
 
             OnRemove(oldValue);
 
-
             ++_version;
 
             // No WritePostScript to avoid firing the Changed event.
@@ -257,7 +254,6 @@ namespace System.Windows.Media.Media3D
 
                     OnSet(oldValue, value);
                 }
-
 
                 ++_version;
                 WritePostscript();
@@ -546,7 +542,6 @@ namespace System.Windows.Media.Media3D
             index = _collection.Add(newValue);
             OnInsert(newValue);
 
-
             ++_version;
 
             // No WritePostScript to avoid firing the Changed event.
@@ -626,7 +621,6 @@ namespace System.Windows.Media.Media3D
                 _collection.Add(newValue);
                 OnInsert(newValue);
             }
-
         }
         /// <summary>
         /// Implementation of Freezable.CloneCurrentValueCore()
@@ -648,7 +642,6 @@ namespace System.Windows.Media.Media3D
                 _collection.Add(newValue);
                 OnInsert(newValue);
             }
-
         }
         /// <summary>
         /// Implementation of Freezable.GetAsFrozenCore()
@@ -670,7 +663,6 @@ namespace System.Windows.Media.Media3D
                 _collection.Add(newValue);
                 OnInsert(newValue);
             }
-
         }
         /// <summary>
         /// Implementation of Freezable.GetCurrentValueAsFrozenCore()
@@ -692,7 +684,6 @@ namespace System.Windows.Media.Media3D
                 _collection.Add(newValue);
                 OnInsert(newValue);
             }
-
         }
         /// <summary>
         /// Implementation of <see cref="System.Windows.Freezable.FreezeCore">Freezable.FreezeCore</see>.
@@ -985,7 +976,6 @@ namespace System.Windows.Media.Media3D
                     OnInsert(item);
                 }
             }
-
 
             WritePostscript();
         }

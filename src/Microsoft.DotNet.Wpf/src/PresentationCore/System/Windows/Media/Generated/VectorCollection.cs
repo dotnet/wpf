@@ -122,7 +122,6 @@ namespace System.Windows.Media
             WritePreamble();
             _collection.Insert(index, value);
 
-
             ++_version;
             WritePostscript();
         }
@@ -176,7 +175,6 @@ namespace System.Windows.Media
             WritePreamble();
             _collection.RemoveAt(index);
 
-
             ++_version;
 
             // No WritePostScript to avoid firing the Changed event.
@@ -200,7 +198,6 @@ namespace System.Windows.Media
 
                 WritePreamble();
                 _collection[ index ] = value;
-
 
                 ++_version;
                 WritePostscript();
@@ -480,7 +477,6 @@ namespace System.Windows.Media
             WritePreamble();
             index = _collection.Add(value);
 
-
             ++_version;
 
             // No WritePostScript to avoid firing the Changed event.
@@ -533,7 +529,6 @@ namespace System.Windows.Media
             {
                 _collection.Add(sourceVectorCollection._collection[i]);
             }
-
         }
         /// <summary>
         /// Implementation of Freezable.CloneCurrentValueCore()
@@ -552,7 +547,6 @@ namespace System.Windows.Media
             {
                 _collection.Add(sourceVectorCollection._collection[i]);
             }
-
         }
         /// <summary>
         /// Implementation of Freezable.GetAsFrozenCore()
@@ -571,7 +565,6 @@ namespace System.Windows.Media
             {
                 _collection.Add(sourceVectorCollection._collection[i]);
             }
-
         }
         /// <summary>
         /// Implementation of Freezable.GetCurrentValueAsFrozenCore()
@@ -590,7 +583,6 @@ namespace System.Windows.Media
             {
                 _collection.Add(sourceVectorCollection._collection[i]);
             }
-
         }
 
 
@@ -953,7 +945,6 @@ namespace System.Windows.Media
 
                 }
             }
-
 
 
 

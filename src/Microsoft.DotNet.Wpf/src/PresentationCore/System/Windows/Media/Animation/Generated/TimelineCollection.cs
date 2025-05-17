@@ -124,7 +124,6 @@ namespace System.Windows.Media.Animation
             _collection.Insert(index, value);
 
 
-
             ++_version;
             WritePostscript();
         }
@@ -153,7 +152,6 @@ namespace System.Windows.Media.Animation
                 OnFreezablePropertyChanged(oldValue, null);
 
                 _collection.RemoveAt(index);
-
 
 
 
@@ -200,7 +198,6 @@ namespace System.Windows.Media.Animation
 
 
 
-
             ++_version;
 
             // No WritePostScript to avoid firing the Changed event.
@@ -237,7 +234,6 @@ namespace System.Windows.Media.Animation
 
 
                 }
-
 
                 ++_version;
                 WritePostscript();
@@ -526,7 +522,6 @@ namespace System.Windows.Media.Animation
             index = _collection.Add(newValue);
 
 
-
             ++_version;
 
             // No WritePostScript to avoid firing the Changed event.
@@ -583,7 +578,6 @@ namespace System.Windows.Media.Animation
                 _collection.Add(newValue);
 
             }
-
         }
         /// <summary>
         /// Implementation of Freezable.CloneCurrentValueCore()
@@ -605,7 +599,6 @@ namespace System.Windows.Media.Animation
                 _collection.Add(newValue);
 
             }
-
         }
         /// <summary>
         /// Implementation of Freezable.GetAsFrozenCore()
@@ -627,7 +620,6 @@ namespace System.Windows.Media.Animation
                 _collection.Add(newValue);
 
             }
-
         }
         /// <summary>
         /// Implementation of Freezable.GetCurrentValueAsFrozenCore()
@@ -649,7 +641,6 @@ namespace System.Windows.Media.Animation
                 _collection.Add(newValue);
 
             }
-
         }
         /// <summary>
         /// Implementation of <see cref="System.Windows.Freezable.FreezeCore">Freezable.FreezeCore</see>.
@@ -942,7 +933,6 @@ namespace System.Windows.Media.Animation
 
                 }
             }
-
 
             WritePostscript();
         }

@@ -146,7 +146,6 @@ namespace System.Windows.Media
             _collection.Insert(index, value);
             OnInsert(value);
 
-
             ++_version;
             WritePostscript();
         }
@@ -177,7 +176,6 @@ namespace System.Windows.Media
                 _collection.RemoveAt(index);
 
                 OnRemove(oldValue);
-
 
                 ++_version;
                 WritePostscript();
@@ -222,7 +220,6 @@ namespace System.Windows.Media
 
             OnRemove(oldValue);
 
-
             ++_version;
 
             // No WritePostScript to avoid firing the Changed event.
@@ -259,7 +256,6 @@ namespace System.Windows.Media
 
                     OnSet(oldValue, value);
                 }
-
 
                 ++_version;
                 WritePostscript();
@@ -548,7 +544,6 @@ namespace System.Windows.Media
             index = _collection.Add(newValue);
             OnInsert(newValue);
 
-
             ++_version;
 
             // No WritePostScript to avoid firing the Changed event.
@@ -628,7 +623,6 @@ namespace System.Windows.Media
                 _collection.Add(newValue);
                 OnInsert(newValue);
             }
-
         }
         /// <summary>
         /// Implementation of Freezable.CloneCurrentValueCore()
@@ -650,7 +644,6 @@ namespace System.Windows.Media
                 _collection.Add(newValue);
                 OnInsert(newValue);
             }
-
         }
         /// <summary>
         /// Implementation of Freezable.GetAsFrozenCore()
@@ -672,7 +665,6 @@ namespace System.Windows.Media
                 _collection.Add(newValue);
                 OnInsert(newValue);
             }
-
         }
         /// <summary>
         /// Implementation of Freezable.GetCurrentValueAsFrozenCore()
@@ -694,7 +686,6 @@ namespace System.Windows.Media
                 _collection.Add(newValue);
                 OnInsert(newValue);
             }
-
         }
         /// <summary>
         /// Implementation of <see cref="System.Windows.Freezable.FreezeCore">Freezable.FreezeCore</see>.
@@ -987,7 +978,6 @@ namespace System.Windows.Media
                     OnInsert(item);
                 }
             }
-
 
             WritePostscript();
         }

@@ -132,7 +132,6 @@ namespace System.Windows.Media.Media3D
             _collection.Insert(index, value);
 
 
-
             ++_version;
             WritePostscript();
         }
@@ -161,7 +160,6 @@ namespace System.Windows.Media.Media3D
                 OnFreezablePropertyChanged(oldValue, null);
 
                 _collection.RemoveAt(index);
-
 
 
 
@@ -208,7 +206,6 @@ namespace System.Windows.Media.Media3D
 
 
 
-
             ++_version;
 
             // No WritePostScript to avoid firing the Changed event.
@@ -245,7 +242,6 @@ namespace System.Windows.Media.Media3D
 
 
                 }
-
 
                 ++_version;
                 WritePostscript();
@@ -534,7 +530,6 @@ namespace System.Windows.Media.Media3D
             index = _collection.Add(newValue);
 
 
-
             ++_version;
 
             // No WritePostScript to avoid firing the Changed event.
@@ -591,7 +586,6 @@ namespace System.Windows.Media.Media3D
                 _collection.Add(newValue);
 
             }
-
         }
         /// <summary>
         /// Implementation of Freezable.CloneCurrentValueCore()
@@ -613,7 +607,6 @@ namespace System.Windows.Media.Media3D
                 _collection.Add(newValue);
 
             }
-
         }
         /// <summary>
         /// Implementation of Freezable.GetAsFrozenCore()
@@ -635,7 +628,6 @@ namespace System.Windows.Media.Media3D
                 _collection.Add(newValue);
 
             }
-
         }
         /// <summary>
         /// Implementation of Freezable.GetCurrentValueAsFrozenCore()
@@ -657,7 +649,6 @@ namespace System.Windows.Media.Media3D
                 _collection.Add(newValue);
 
             }
-
         }
         /// <summary>
         /// Implementation of <see cref="System.Windows.Freezable.FreezeCore">Freezable.FreezeCore</see>.
@@ -950,7 +941,6 @@ namespace System.Windows.Media.Media3D
 
                 }
             }
-
 
             WritePostscript();
         }

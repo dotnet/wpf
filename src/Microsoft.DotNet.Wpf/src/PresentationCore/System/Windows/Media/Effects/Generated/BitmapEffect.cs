@@ -111,7 +111,6 @@ namespace System.Windows.Media.Effects
         #region Dependency Properties
 
 
-
         #endregion Dependency Properties
 
         //------------------------------------------------------

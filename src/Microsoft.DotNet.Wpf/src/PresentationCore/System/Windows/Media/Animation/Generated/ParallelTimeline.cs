@@ -116,7 +116,6 @@ namespace System.Windows.Media.Animation
         #region Dependency Properties
 
 
-
         #endregion Dependency Properties
 
         //------------------------------------------------------

@@ -335,7 +335,6 @@ namespace System.Windows.Media.Media3D
         #region Dependency Properties
 
 
-
         #endregion Dependency Properties
 
         //------------------------------------------------------

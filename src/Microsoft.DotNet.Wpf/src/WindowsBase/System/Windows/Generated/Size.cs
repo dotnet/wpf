@@ -309,7 +309,6 @@ namespace System.Windows
         #region Dependency Properties
 
 
-
         #endregion Dependency Properties
 
         //------------------------------------------------------

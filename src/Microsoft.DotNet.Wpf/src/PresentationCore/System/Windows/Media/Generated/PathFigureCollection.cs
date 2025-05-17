@@ -791,7 +791,6 @@ namespace System.Windows.Media
         #region Dependency Properties
 
 
-
         #endregion Dependency Properties
 
         //------------------------------------------------------

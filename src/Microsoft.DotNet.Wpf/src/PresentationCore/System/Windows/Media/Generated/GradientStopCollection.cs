@@ -817,7 +817,6 @@ namespace System.Windows.Media
 
 
 
-
         internal FrugalStructList<GradientStop> _collection;
         internal uint _version = 0;
 

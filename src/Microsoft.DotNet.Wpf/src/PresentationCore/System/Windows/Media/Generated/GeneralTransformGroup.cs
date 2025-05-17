@@ -156,7 +156,6 @@ namespace System.Windows.Media
 
 
 
-
         internal static GeneralTransformCollection s_Children = GeneralTransformCollection.Empty;
 
         #endregion Internal Fields

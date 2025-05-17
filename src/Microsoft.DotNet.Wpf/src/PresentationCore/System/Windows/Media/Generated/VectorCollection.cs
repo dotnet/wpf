@@ -739,7 +739,6 @@ namespace System.Windows.Media
 
 
 
-
         internal FrugalStructList<Vector> _collection;
         internal uint _version = 0;
 

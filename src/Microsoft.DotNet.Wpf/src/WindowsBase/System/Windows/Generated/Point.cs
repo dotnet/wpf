@@ -331,7 +331,6 @@ namespace System.Windows
         internal double _y;
 
 
-
         #endregion Internal Fields
 
 

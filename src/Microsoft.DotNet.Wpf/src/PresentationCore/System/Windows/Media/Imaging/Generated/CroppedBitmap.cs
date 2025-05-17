@@ -264,7 +264,6 @@ namespace System.Windows.Media.Imaging
 
 
 
-
         internal static BitmapSource s_Source = null;
         internal static Int32Rect s_SourceRect = Int32Rect.Empty;
 

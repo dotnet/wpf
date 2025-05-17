@@ -167,7 +167,6 @@ namespace System.Windows.Media
 
 
 
-
         internal const bool c_IsStroked = true;
         internal const bool c_IsSmoothJoin = false;
 

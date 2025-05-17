@@ -751,7 +751,6 @@ namespace System.Windows.Media.Media3D
 
 
 
-
         internal FrugalStructList<Transform3D> _collection;
         internal uint _version = 0;
 

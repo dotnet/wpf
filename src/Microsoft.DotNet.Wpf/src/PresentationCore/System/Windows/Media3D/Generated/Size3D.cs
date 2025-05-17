@@ -339,7 +339,6 @@ namespace System.Windows.Media.Media3D
         internal double _z;
 
 
-
         #endregion Internal Fields
 
 

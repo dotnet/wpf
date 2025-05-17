@@ -357,7 +357,6 @@ namespace System.Windows.Media.Media3D
         internal double _sizeZ;
 
 
-
         #endregion Internal Fields
 
 

@@ -739,7 +739,6 @@ namespace System.Windows.Media
 
 
 
-
         internal FrugalStructList<Point> _collection;
         internal uint _version = 0;
 

@@ -256,7 +256,6 @@ namespace System.Windows.Media
 
 
 
-
         internal const int c_PositionStart = 0;
         internal const int c_PositionCount = 0;
 

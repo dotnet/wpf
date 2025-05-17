@@ -1436,7 +1436,7 @@ namespace MS.Internal.MilCodeGen.Generators
                                                                   "///     " + field.PropertyName + " - " + field.Type.ManagedName + ".  Default value is 0.",
                                                                   true);
 
-            cs.WriteBlock(
+            cs.Write(
                 [[inline]]
                     /// <summary>
                     [[comment]]
@@ -1452,7 +1452,7 @@ namespace MS.Internal.MilCodeGen.Generators
 
             if (!field.IsReadOnly)
             {
-                cs.WriteBlock(
+                cs.Write(
                 [[inline]]
                         set
                         {

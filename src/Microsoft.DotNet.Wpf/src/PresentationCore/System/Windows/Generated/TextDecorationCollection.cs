@@ -57,7 +57,6 @@ namespace System.Windows
         //
         //------------------------------------------------------
 
-
         #region IList<T>
 
         /// <summary>

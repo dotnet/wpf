@@ -66,7 +66,6 @@ namespace System.Windows.Media.Media3D
         //
         //------------------------------------------------------
 
-
         #region IList<T>
 
         /// <summary>

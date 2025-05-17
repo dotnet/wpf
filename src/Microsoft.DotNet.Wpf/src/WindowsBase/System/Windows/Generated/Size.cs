@@ -189,7 +189,6 @@ namespace System.Windows
         //------------------------------------------------------
 
 
-
         #region Public Properties
 
 

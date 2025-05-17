@@ -57,7 +57,6 @@ namespace System.Windows.Media.Effects
         //------------------------------------------------------
 
 
-
         #region Public Properties
 
         /// <summary>

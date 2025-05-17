@@ -59,7 +59,6 @@ namespace System.Windows.Media.Effects
         //
         //------------------------------------------------------
 
-
         #region IList<T>
 
         /// <summary>

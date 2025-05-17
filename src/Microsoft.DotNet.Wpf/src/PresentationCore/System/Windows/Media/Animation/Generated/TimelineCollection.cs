@@ -56,7 +56,6 @@ namespace System.Windows.Media.Animation
         //
         //------------------------------------------------------
 
-
         #region IList<T>
 
         /// <summary>

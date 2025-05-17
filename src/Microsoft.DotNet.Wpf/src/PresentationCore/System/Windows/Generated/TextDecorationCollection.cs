@@ -526,7 +526,6 @@ namespace System.Windows
         }
 
 
-
         #endregion Private Helpers
 
         private static TextDecorationCollection s_empty;

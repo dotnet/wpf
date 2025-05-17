@@ -525,7 +525,6 @@ namespace System.Windows.Media.Animation
         }
 
 
-
         #endregion Private Helpers
 
         private static TimelineCollection s_empty;

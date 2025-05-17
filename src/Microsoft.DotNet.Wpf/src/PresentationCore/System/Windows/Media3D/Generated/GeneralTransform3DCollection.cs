@@ -533,7 +533,6 @@ namespace System.Windows.Media.Media3D
         }
 
 
-
         #endregion Private Helpers
 
         private static GeneralTransform3DCollection s_empty;

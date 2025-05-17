@@ -535,7 +535,6 @@ namespace System.Windows.Media
         }
 
 
-
         #endregion Private Helpers
 
         private static GradientStopCollection s_empty;

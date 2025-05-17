@@ -535,7 +535,6 @@ namespace System.Windows.Media
         }
 
 
-
         #endregion Private Helpers
 
         private static PathSegmentCollection s_empty;

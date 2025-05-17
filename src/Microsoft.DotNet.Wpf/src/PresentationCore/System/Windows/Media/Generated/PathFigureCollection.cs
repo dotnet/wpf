@@ -537,7 +537,6 @@ namespace System.Windows.Media
         }
 
 
-
         #endregion Private Helpers
 
         private static PathFigureCollection s_empty;

@@ -528,7 +528,6 @@ namespace System.Windows.Media.Effects
         }
 
 
-
         #endregion Private Helpers
 
         private static BitmapEffectCollection s_empty;

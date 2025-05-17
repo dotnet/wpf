@@ -2560,7 +2560,7 @@ namespace MS.Internal.MilCodeGen.Generators
         {
             StringCodeSink cs = new StringCodeSink();
 
-            foreach(McgField field in resource.LocalFields)
+            foreach (McgField field in resource.LocalFields)
             {
                 McgResource fieldResource = field.Type as McgResource;
 
@@ -2625,7 +2625,7 @@ namespace MS.Internal.MilCodeGen.Generators
                 }
             }
 
-            return cs.ToString();
+            return cs.IsEmpty ? null : cs.ToString();
         }
 
         //------------------------------------------------------

@@ -154,8 +154,6 @@ namespace System.Windows
 
                 _collection.RemoveAt(index);
 
-
-
                 ++_version;
                 WritePostscript();
 
@@ -196,8 +194,6 @@ namespace System.Windows
             OnFreezablePropertyChanged(oldValue, null);
 
             _collection.RemoveAt(index);
-
-
 
             ++_version;
 

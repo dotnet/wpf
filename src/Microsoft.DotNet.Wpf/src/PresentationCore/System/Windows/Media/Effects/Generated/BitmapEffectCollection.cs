@@ -156,8 +156,6 @@ namespace System.Windows.Media.Effects
 
                 _collection.RemoveAt(index);
 
-
-
                 ++_version;
                 WritePostscript();
 
@@ -198,8 +196,6 @@ namespace System.Windows.Media.Effects
             OnFreezablePropertyChanged(oldValue, null);
 
             _collection.RemoveAt(index);
-
-
 
             ++_version;
 

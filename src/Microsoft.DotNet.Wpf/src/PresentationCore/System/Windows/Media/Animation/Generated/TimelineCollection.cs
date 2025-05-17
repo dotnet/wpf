@@ -153,8 +153,6 @@ namespace System.Windows.Media.Animation
 
                 _collection.RemoveAt(index);
 
-
-
                 ++_version;
                 WritePostscript();
 
@@ -195,8 +193,6 @@ namespace System.Windows.Media.Animation
             OnFreezablePropertyChanged(oldValue, null);
 
             _collection.RemoveAt(index);
-
-
 
             ++_version;
 

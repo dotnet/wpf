@@ -161,8 +161,6 @@ namespace System.Windows.Media.Media3D
 
                 _collection.RemoveAt(index);
 
-
-
                 ++_version;
                 WritePostscript();
 
@@ -203,8 +201,6 @@ namespace System.Windows.Media.Media3D
             OnFreezablePropertyChanged(oldValue, null);
 
             _collection.RemoveAt(index);
-
-
 
             ++_version;
 

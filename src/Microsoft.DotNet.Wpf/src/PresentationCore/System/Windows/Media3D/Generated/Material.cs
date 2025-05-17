@@ -262,7 +262,6 @@ namespace System.Windows.Media.Media3D
         //------------------------------------------------------
 
 
-
         #endregion Constructors
     }
 }

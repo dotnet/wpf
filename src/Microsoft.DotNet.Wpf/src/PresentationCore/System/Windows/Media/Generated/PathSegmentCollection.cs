@@ -853,7 +853,6 @@ namespace System.Windows.Media
         //
         //------------------------------------------------------
 
-
         /// <summary>
         /// Initializes a new instance that is empty.
         /// </summary>

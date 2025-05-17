@@ -846,7 +846,6 @@ namespace System.Windows.Media.Effects
         //
         //------------------------------------------------------
 
-
         /// <summary>
         /// Initializes a new instance that is empty.
         /// </summary>

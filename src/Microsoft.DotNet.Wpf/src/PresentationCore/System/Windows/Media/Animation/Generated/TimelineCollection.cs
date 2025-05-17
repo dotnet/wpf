@@ -843,7 +843,6 @@ namespace System.Windows.Media.Animation
         //
         //------------------------------------------------------
 
-
         /// <summary>
         /// Initializes a new instance that is empty.
         /// </summary>

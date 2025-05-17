@@ -844,7 +844,6 @@ namespace System.Windows
         //
         //------------------------------------------------------
 
-
         /// <summary>
         /// Initializes a new instance that is empty.
         /// </summary>

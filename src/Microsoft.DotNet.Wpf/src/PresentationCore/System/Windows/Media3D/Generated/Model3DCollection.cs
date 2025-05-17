@@ -890,7 +890,6 @@ namespace System.Windows.Media.Media3D
         //
         //------------------------------------------------------
 
-
         /// <summary>
         /// Initializes a new instance that is empty.
         /// </summary>

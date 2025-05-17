@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
 
@@ -2148,15 +2148,20 @@ namespace MS.Internal.MilCodeGen.Generators
             string visualAddRef = Helpers.CodeGenHelpers.WriteFieldStatements(visualFields,
                                                           "{managedType} v{propertyName} = {propertyName};\n" +
                                                           "v{propertyName}?.AddRefOnChannelForCyclicBrush(this, channel);");
-            if (visualAddRef != String.Empty)
+            if (visualAddRef != null)
             {
                 duceAddRef = duceAddRef + visualAddRef;
             }
 
-            duceAddRef = duceAddRef +
-                [[inline]]
-                    [[Helpers.CodeGenHelpers.WriteFieldStatements(collectionFields, addrefCollectionTemplate)]]
+            duceAddRef = duceAddRef + Helpers.CodeGenHelpers.WriteFieldStatements(collectionFields, addrefCollectionTemplate);
+
+			if (duceAddRef != null)
+			{
+				duceAddRef = [[inline]]
+                    [[duceAddRef]]
+
                 [[/inline]];
+			}
 
             if (resource.IsAnimatable)
             {
@@ -2209,7 +2214,7 @@ namespace MS.Internal.MilCodeGen.Generators
 				return null;
 
             StringCodeSink cs = new StringCodeSink();
-            string duceRelease = String.Empty;
+            string duceRelease = null;
 
             if (resource.IsAbstract)
             {
@@ -2239,8 +2244,8 @@ namespace MS.Internal.MilCodeGen.Generators
             }
 
             string methodName = String.Empty;
-            string duceReleaseAnimations = String.Empty;
-            string releaseCollection = String.Empty;
+            string duceReleaseAnimations = null;
+            string releaseCollection = null;
             bool lockThis = false;
 
             if (!resource.DerivesFromTypeWhichHasUnmanagedResource)
@@ -2292,15 +2297,20 @@ namespace MS.Internal.MilCodeGen.Generators
                                                           "{managedType} v{propertyName} = {propertyName};\n" +
                                                           "v{propertyName}?.ReleaseOnChannelForCyclicBrush(this, channel);");
 
-            if (visualRelease != String.Empty)
+            if (visualRelease != null)
             {
                 duceRelease = duceRelease + visualRelease;
             }
 
-            duceRelease = duceRelease +
-                [[inline]]
-                    [[Helpers.CodeGenHelpers.WriteFieldStatements(collectionFields, releaseCollectionTemplate)]]
+            duceRelease = duceRelease + Helpers.CodeGenHelpers.WriteFieldStatements(collectionFields, releaseCollectionTemplate);
+				
+			if (duceRelease != null)
+			{
+				duceRelease = [[inline]]
+                    [[duceRelease]]
+
                 [[/inline]];
+			}
 
             if (resource.IsAnimatable)
             {
@@ -2327,7 +2337,7 @@ namespace MS.Internal.MilCodeGen.Generators
                 [[inline]]
                     [[methodName]]
                     {
-                        [[(lockThis ? "using (CompositionEngineLock.Acquire()) \n{" : "")]]
+                        [[(lockThis ? "using (CompositionEngineLock.Acquire()) \n{" : null)]]
                             Debug.Assert(_duceResource.IsOnChannel(channel));
 
                             if (_duceResource.ReleaseOnChannel(channel))
@@ -2336,7 +2346,7 @@ namespace MS.Internal.MilCodeGen.Generators
                                 [[duceReleaseAnimations]]
                                 [[releaseCollection]]
                             }
-                        [[(lockThis ? "}" : "")]]
+                        [[(lockThis ? "}" : null)]]
                     }
                 [[/inline]]
                 );

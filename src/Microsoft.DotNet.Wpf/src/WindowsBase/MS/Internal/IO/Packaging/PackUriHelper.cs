@@ -489,7 +489,7 @@ namespace MS.Internal.IO.Packaging
                 Debug.Assert(segments.Length > 0 && segments[0] == String.Empty);
 
                 //If the extension was not equal to .rels, we would have exited early.
-                Debug.Assert(String.CompareOrdinal((Path.GetExtension(segments[segments.Length - 1])), _relationshipPartUpperCaseExtension) == 0);
+                Debug.Assert(string.Equals((Path.GetExtension(segments[segments.Length - 1])), _relationshipPartUpperCaseExtension, StringComparison.Ordinal));
 
                 // must be at least two segments and the last one must end with .RELs
                 // and the length of the segment should be greater than just the extension.
@@ -507,7 +507,7 @@ namespace MS.Internal.IO.Packaging
                     if ((segments[segments.Length - 1]).EndsWith(_relsrelsUpperCaseExtension, StringComparison.Ordinal))
                     {
                         // look for "_rels" segment in the third last segment
-                        if(String.CompareOrdinal(segments[segments.Length - 3], _relationshipPartUpperCaseSegmentName) == 0)
+                        if(string.Equals(segments[segments.Length - 3], _relationshipPartUpperCaseSegmentName, StringComparison.Ordinal))
                             throw new ArgumentException(SR.NotAValidRelationshipPartUri);
                     }
                 }

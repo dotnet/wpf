@@ -139,7 +139,6 @@ namespace System.Windows.Media.Media3D
             target.PropertyChanged(RotationProperty);
         }
 
-
         #region Public Properties
 
         /// <summary>

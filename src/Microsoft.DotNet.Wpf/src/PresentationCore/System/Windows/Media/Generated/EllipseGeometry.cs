@@ -85,7 +85,6 @@ namespace System.Windows.Media
             target.PropertyChanged(CenterProperty);
         }
 
-
         #region Public Properties
 
         /// <summary>

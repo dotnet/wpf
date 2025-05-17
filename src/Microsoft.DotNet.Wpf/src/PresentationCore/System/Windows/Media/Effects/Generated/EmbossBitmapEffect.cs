@@ -71,7 +71,6 @@ namespace System.Windows.Media.Effects
             target.PropertyChanged(ReliefProperty);
         }
 
-
         #region Public Properties
 
         /// <summary>

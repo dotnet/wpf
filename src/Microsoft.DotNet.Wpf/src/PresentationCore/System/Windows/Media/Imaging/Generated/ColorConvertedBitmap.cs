@@ -109,7 +109,6 @@ namespace System.Windows.Media.Imaging
             target.PropertyChanged(DestinationFormatProperty);
         }
 
-
         #region Public Properties
 
         /// <summary>

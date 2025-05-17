@@ -208,7 +208,6 @@ namespace System.Windows.Media
             target.PropertyChanged(GeometryProperty);
         }
 
-
         #region Public Properties
 
         /// <summary>

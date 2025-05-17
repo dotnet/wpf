@@ -99,7 +99,6 @@ namespace System.Windows.Media.Effects
             target.PropertyChanged(SoftnessProperty);
         }
 
-
         #region Public Properties
 
         /// <summary>

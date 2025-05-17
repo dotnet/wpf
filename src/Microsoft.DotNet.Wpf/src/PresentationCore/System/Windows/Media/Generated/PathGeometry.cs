@@ -84,7 +84,6 @@ namespace System.Windows.Media
             target.PropertyChanged(FiguresProperty);
         }
 
-
         #region Public Properties
 
         /// <summary>

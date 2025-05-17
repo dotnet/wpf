@@ -80,7 +80,6 @@ namespace System.Windows.Media.Media3D
             target.PropertyChanged(AngleProperty);
         }
 
-
         #region Public Properties
 
         /// <summary>

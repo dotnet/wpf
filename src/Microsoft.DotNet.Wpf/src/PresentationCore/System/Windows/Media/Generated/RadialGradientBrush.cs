@@ -92,7 +92,6 @@ namespace System.Windows.Media
             target.PropertyChanged(GradientOriginProperty);
         }
 
-
         #region Public Properties
 
         /// <summary>

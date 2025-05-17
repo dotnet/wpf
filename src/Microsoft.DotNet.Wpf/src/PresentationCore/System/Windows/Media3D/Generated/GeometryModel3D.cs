@@ -210,7 +210,6 @@ namespace System.Windows.Media.Media3D
             target.PropertyChanged(BackMaterialProperty);
         }
 
-
         #region Public Properties
 
         /// <summary>

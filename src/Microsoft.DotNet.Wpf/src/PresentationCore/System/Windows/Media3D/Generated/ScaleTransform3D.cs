@@ -116,7 +116,6 @@ namespace System.Windows.Media.Media3D
             target.PropertyChanged(CenterZProperty);
         }
 
-
         #region Public Properties
 
         /// <summary>

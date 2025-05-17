@@ -93,7 +93,6 @@ namespace System.Windows.Media
             target.PropertyChanged(IsDynamicProperty);
         }
 
-
         #region Public Properties
 
         /// <summary>

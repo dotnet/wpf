@@ -69,7 +69,6 @@ namespace System.Windows.Media.Media3D
             target.PropertyChanged(WidthProperty);
         }
 
-
         #region Public Properties
 
         /// <summary>

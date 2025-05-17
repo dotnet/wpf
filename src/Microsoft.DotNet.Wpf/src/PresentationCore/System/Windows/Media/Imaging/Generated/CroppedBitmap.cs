@@ -91,7 +91,6 @@ namespace System.Windows.Media.Imaging
             target.PropertyChanged(SourceRectProperty);
         }
 
-
         #region Public Properties
 
         /// <summary>

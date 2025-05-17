@@ -76,7 +76,6 @@ namespace System.Windows.Media.Media3D
             target.PropertyChanged(ProjectionMatrixProperty);
         }
 
-
         #region Public Properties
 
         /// <summary>

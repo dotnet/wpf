@@ -71,7 +71,6 @@ namespace System.Windows.Media
             target.PropertyChanged(ColorProperty);
         }
 
-
         #region Public Properties
 
         /// <summary>

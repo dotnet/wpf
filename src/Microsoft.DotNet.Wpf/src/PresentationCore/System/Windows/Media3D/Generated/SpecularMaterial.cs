@@ -124,7 +124,6 @@ namespace System.Windows.Media.Media3D
             target.PropertyChanged(SpecularPowerProperty);
         }
 
-
         #region Public Properties
 
         /// <summary>

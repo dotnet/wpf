@@ -397,7 +397,6 @@ namespace System.Windows.Media
             target.PropertyChanged(RenderOptions.ClearTypeHintProperty);
         }
 
-
         #region Public Properties
 
         /// <summary>

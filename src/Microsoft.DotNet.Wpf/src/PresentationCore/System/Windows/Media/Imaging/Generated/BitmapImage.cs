@@ -135,7 +135,6 @@ namespace System.Windows.Media.Imaging
             target.PropertyChanged(CacheOptionProperty);
         }
 
-
         #region Public Properties
 
         /// <summary>

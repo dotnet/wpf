@@ -97,7 +97,6 @@ namespace System.Windows.Media.Media3D
             target.PropertyChanged(QuadraticAttenuationProperty);
         }
 
-
         #region Public Properties
 
         /// <summary>

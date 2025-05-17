@@ -162,7 +162,6 @@ namespace System.Windows.Media
             target.PropertyChanged(ChildrenProperty);
         }
 
-
         #region Public Properties
 
         /// <summary>

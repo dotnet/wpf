@@ -141,7 +141,6 @@ namespace System.Windows.Media
             target.PropertyChanged(RenderOptions.CacheInvalidationThresholdMaximumProperty);
         }
 
-
         #region Public Properties
 
         /// <summary>

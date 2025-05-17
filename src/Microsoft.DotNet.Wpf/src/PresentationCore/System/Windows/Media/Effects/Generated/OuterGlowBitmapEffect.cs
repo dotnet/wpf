@@ -85,7 +85,6 @@ namespace System.Windows.Media.Effects
             target.PropertyChanged(OpacityProperty);
         }
 
-
         #region Public Properties
 
         /// <summary>

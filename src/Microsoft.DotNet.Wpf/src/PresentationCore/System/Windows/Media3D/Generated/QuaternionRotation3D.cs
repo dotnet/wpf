@@ -71,7 +71,6 @@ namespace System.Windows.Media.Media3D
             target.PropertyChanged(QuaternionProperty);
         }
 
-
         #region Public Properties
 
         /// <summary>

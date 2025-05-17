@@ -89,7 +89,6 @@ namespace System.Windows.Media.Media3D
             target.PropertyChanged(OffsetZProperty);
         }
 
-
         #region Public Properties
 
         /// <summary>

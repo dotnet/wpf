@@ -64,7 +64,6 @@ namespace System.Windows.Media.Effects
             target.PropertyChanged(RadiusProperty);
         }
 
-
         #region Public Properties
 
         /// <summary>

@@ -71,7 +71,6 @@ namespace System.Windows.Media
             target.PropertyChanged(MatrixProperty);
         }
 
-
         #region Public Properties
 
         /// <summary>

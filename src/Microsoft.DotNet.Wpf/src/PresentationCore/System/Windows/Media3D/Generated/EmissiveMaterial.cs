@@ -117,7 +117,6 @@ namespace System.Windows.Media.Media3D
             target.PropertyChanged(BrushProperty);
         }
 
-
         #region Public Properties
 
         /// <summary>

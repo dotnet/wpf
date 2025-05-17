@@ -141,7 +141,6 @@ namespace System.Windows.Media
             target.PropertyChanged(ForegroundBrushProperty);
         }
 
-
         #region Public Properties
 
         /// <summary>

@@ -169,7 +169,6 @@ namespace System.Windows.Media
             target.PropertyChanged(RelativeTransformProperty);
         }
 
-
         #region Public Properties
 
         /// <summary>

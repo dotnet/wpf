@@ -106,7 +106,6 @@ namespace System.Windows.Media.Media3D
             target.PropertyChanged(TriangleIndicesProperty);
         }
 
-
         #region Public Properties
 
         /// <summary>

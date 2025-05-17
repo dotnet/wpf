@@ -202,7 +202,6 @@ namespace System.Windows.Media
             target.PropertyChanged(DashStyleProperty);
         }
 
-
         #region Public Properties
 
         /// <summary>

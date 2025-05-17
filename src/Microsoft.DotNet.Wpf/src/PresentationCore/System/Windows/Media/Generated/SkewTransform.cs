@@ -92,7 +92,6 @@ namespace System.Windows.Media
             target.PropertyChanged(CenterYProperty);
         }
 
-
         #region Public Properties
 
         /// <summary>

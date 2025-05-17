@@ -84,7 +84,6 @@ namespace System.Windows.Media
             return true;
         }
 
-
         #region Public Properties
 
         /// <summary>

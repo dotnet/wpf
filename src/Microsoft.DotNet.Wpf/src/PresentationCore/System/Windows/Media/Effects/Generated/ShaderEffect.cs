@@ -107,7 +107,6 @@ namespace System.Windows.Media.Effects
             target.PropertyChanged(PixelShaderProperty);
         }
 
-
         #region Public Properties
 
         /// <summary>

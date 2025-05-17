@@ -110,7 +110,6 @@ namespace System.Windows.Media.Media3D
             target.PropertyChanged(TransformProperty);
         }
 
-
         #region Public Properties
 
         /// <summary>

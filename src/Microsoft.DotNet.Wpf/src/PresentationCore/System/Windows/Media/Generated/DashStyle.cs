@@ -82,7 +82,6 @@ namespace System.Windows.Media
             target.PropertyChanged(DashesProperty);
         }
 
-
         #region Public Properties
 
         /// <summary>

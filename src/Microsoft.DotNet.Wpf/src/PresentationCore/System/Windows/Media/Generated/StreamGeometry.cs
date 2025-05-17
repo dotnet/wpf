@@ -71,7 +71,6 @@ namespace System.Windows.Media
             target.PropertyChanged(FillRuleProperty);
         }
 
-
         #region Public Properties
 
         /// <summary>

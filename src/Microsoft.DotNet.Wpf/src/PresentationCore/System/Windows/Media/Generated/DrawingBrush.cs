@@ -112,7 +112,6 @@ namespace System.Windows.Media
             target.PropertyChanged(DrawingProperty);
         }
 
-
         #region Public Properties
 
         /// <summary>

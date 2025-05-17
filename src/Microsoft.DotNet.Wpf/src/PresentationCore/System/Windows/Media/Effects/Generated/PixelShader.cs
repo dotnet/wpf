@@ -73,7 +73,6 @@ namespace System.Windows.Media.Effects
             target.PropertyChanged(ShaderRenderModeProperty);
         }
 
-
         #region Public Properties
 
         /// <summary>

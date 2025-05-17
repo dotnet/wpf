@@ -119,7 +119,6 @@ namespace System.Windows.Media
             target.PropertyChanged(RectProperty);
         }
 
-
         #region Public Properties
 
         /// <summary>

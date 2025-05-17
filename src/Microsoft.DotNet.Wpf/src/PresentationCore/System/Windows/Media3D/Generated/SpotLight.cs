@@ -83,7 +83,6 @@ namespace System.Windows.Media.Media3D
             target.PropertyChanged(InnerConeAngleProperty);
         }
 
-
         #region Public Properties
 
         /// <summary>

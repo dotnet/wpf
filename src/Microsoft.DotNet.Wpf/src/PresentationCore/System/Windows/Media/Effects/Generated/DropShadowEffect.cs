@@ -99,7 +99,6 @@ namespace System.Windows.Media.Effects
             target.PropertyChanged(RenderingBiasProperty);
         }
 
-
         #region Public Properties
 
         /// <summary>

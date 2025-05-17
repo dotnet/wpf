@@ -109,7 +109,6 @@ namespace System.Windows.Media.Imaging
             target.PropertyChanged(AlphaThresholdProperty);
         }
 
-
         #region Public Properties
 
         /// <summary>

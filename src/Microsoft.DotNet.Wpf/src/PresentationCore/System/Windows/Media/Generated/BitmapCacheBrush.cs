@@ -187,7 +187,6 @@ namespace System.Windows.Media
             target.PropertyChanged(AutoWrapTargetProperty);
         }
 
-
         #region Public Properties
 
         /// <summary>

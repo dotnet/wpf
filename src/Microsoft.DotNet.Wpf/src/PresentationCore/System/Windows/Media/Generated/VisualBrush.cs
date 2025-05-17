@@ -125,7 +125,6 @@ namespace System.Windows.Media
             target.PropertyChanged(AutoLayoutContentProperty);
         }
 
-
         #region Public Properties
 
         /// <summary>

@@ -96,7 +96,6 @@ namespace System.Windows.Media
             target.PropertyChanged(GradientStopsProperty);
         }
 
-
         #region Public Properties
 
         /// <summary>

@@ -153,7 +153,6 @@ namespace System.Windows.Media.Media3D
             target.PropertyChanged(ChildrenProperty);
         }
 
-
         #region Public Properties
 
         /// <summary>

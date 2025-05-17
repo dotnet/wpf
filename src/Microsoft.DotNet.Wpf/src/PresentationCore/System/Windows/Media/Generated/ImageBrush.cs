@@ -112,7 +112,6 @@ namespace System.Windows.Media
             target.PropertyChanged(ImageSourceProperty);
         }
 
-
         #region Public Properties
 
         /// <summary>

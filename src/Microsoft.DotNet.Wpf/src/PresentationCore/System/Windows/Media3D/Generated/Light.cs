@@ -69,7 +69,6 @@ namespace System.Windows.Media.Media3D
             target.PropertyChanged(ColorProperty);
         }
 
-
         #region Public Properties
 
         /// <summary>

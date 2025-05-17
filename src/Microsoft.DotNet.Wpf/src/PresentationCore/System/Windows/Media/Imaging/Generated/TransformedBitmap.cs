@@ -110,7 +110,6 @@ namespace System.Windows.Media.Imaging
             target.PropertyChanged(TransformProperty);
         }
 
-
         #region Public Properties
 
         /// <summary>

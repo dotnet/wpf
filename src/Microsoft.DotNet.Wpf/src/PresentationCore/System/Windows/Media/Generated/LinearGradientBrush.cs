@@ -78,7 +78,6 @@ namespace System.Windows.Media
             target.PropertyChanged(EndPointProperty);
         }
 
-
         #region Public Properties
 
         /// <summary>

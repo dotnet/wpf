@@ -85,7 +85,6 @@ namespace System.Windows.Media
             target.PropertyChanged(EnableClearTypeProperty);
         }
 
-
         #region Public Properties
 
         /// <summary>

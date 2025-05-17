@@ -236,7 +236,8 @@ namespace MS.Internal.MilCodeGen.Generators
 
         private static string WriteToString(McgResource resource)
         {
-            if (resource.SkipToString) return String.Empty;
+            if (resource.SkipToString)
+				return null;
 
             StringCodeSink cs = new StringCodeSink();
 
@@ -468,7 +469,7 @@ namespace MS.Internal.MilCodeGen.Generators
                 }
             }
 
-            return cs.ToString();
+            return cs.IsEmpty ? null : cs.ToString();
         }
 
         /// <summary>

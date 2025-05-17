@@ -311,25 +311,27 @@ namespace MS.Internal.MilCodeGen.Helpers
         {
             if (resource.CollectionType.IsFreezable)
             {
-                string onSet = String.Empty;
+                string onSet = null;
 
                 if (resource.IsCollectionOfHandles)
                 {
-                    onSet = [[inline]]OnSet(oldValue, [[typedValue]]);[[/inline]];
+                    onSet = [[inline]]
+
+                                OnSet(oldValue, [[typedValue]]);
+                            [[/inline]];
                 }
 
                 return
                     [[inline]]
                         WritePreamble();
 
-                        if (!Object.ReferenceEquals(_collection[ [[index]] ], [[typedValue]]))
+                        if (!Object.ReferenceEquals(_collection[index], [[typedValue]]))
                         {
+                            [[type]] oldValue = _collection[index];
 
-                            [[type]] oldValue = _collection[ [[index]] ];
                             OnFreezablePropertyChanged(oldValue, [[typedValue]]);
 
-                            _collection[ [[index]] ] = [[typedValue]];
-
+                            _collection[index] = [[typedValue]];
                             [[onSet]]
                         }
                     [[/inline]];
@@ -339,7 +341,7 @@ namespace MS.Internal.MilCodeGen.Helpers
                 return
                     [[inline]]
                         WritePreamble();
-                        _collection[ [[index]] ] = [[typedValue]];
+                        _collection[index] = [[typedValue]];
                     [[/inline]];
             }
         }

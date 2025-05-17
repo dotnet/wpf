@@ -229,15 +229,13 @@ namespace System.Windows.Media
 
                 WritePreamble();
 
-                if (!Object.ReferenceEquals(_collection[ index ], value))
+                if (!Object.ReferenceEquals(_collection[index], value))
                 {
+                    GeneralTransform oldValue = _collection[index];
 
-                    GeneralTransform oldValue = _collection[ index ];
                     OnFreezablePropertyChanged(oldValue, value);
 
-                    _collection[ index ] = value;
-
-
+                    _collection[index] = value;
                 }
 
                 ++_version;

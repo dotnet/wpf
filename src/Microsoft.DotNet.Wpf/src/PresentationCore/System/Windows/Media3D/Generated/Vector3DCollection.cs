@@ -194,7 +194,7 @@ namespace System.Windows.Media.Media3D
 
 
                 WritePreamble();
-                _collection[ index ] = value;
+                _collection[index] = value;
 
                 ++_version;
                 WritePostscript();

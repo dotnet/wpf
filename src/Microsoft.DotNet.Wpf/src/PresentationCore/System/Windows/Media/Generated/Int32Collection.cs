@@ -196,7 +196,7 @@ namespace System.Windows.Media
 
 
                 WritePreamble();
-                _collection[ index ] = value;
+                _collection[index] = value;
 
                 ++_version;
                 WritePostscript();

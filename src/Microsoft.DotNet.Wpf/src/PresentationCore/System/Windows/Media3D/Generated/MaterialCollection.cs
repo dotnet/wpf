@@ -243,13 +243,13 @@ namespace System.Windows.Media.Media3D
 
                 WritePreamble();
 
-                if (!Object.ReferenceEquals(_collection[ index ], value))
+                if (!Object.ReferenceEquals(_collection[index], value))
                 {
+                    Material oldValue = _collection[index];
 
-                    Material oldValue = _collection[ index ];
                     OnFreezablePropertyChanged(oldValue, value);
 
-                    _collection[ index ] = value;
+                    _collection[index] = value;
 
                     OnSet(oldValue, value);
                 }

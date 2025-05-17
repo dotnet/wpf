@@ -220,15 +220,13 @@ namespace System.Windows
 
                 WritePreamble();
 
-                if (!Object.ReferenceEquals(_collection[ index ], value))
+                if (!Object.ReferenceEquals(_collection[index], value))
                 {
+                    TextDecoration oldValue = _collection[index];
 
-                    TextDecoration oldValue = _collection[ index ];
                     OnFreezablePropertyChanged(oldValue, value);
 
-                    _collection[ index ] = value;
-
-
+                    _collection[index] = value;
                 }
 
                 ++_version;

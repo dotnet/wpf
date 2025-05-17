@@ -229,15 +229,13 @@ namespace System.Windows.Media
 
                 WritePreamble();
 
-                if (!Object.ReferenceEquals(_collection[ index ], value))
+                if (!Object.ReferenceEquals(_collection[index], value))
                 {
+                    PathSegment oldValue = _collection[index];
 
-                    PathSegment oldValue = _collection[ index ];
                     OnFreezablePropertyChanged(oldValue, value);
 
-                    _collection[ index ] = value;
-
-
+                    _collection[index] = value;
                 }
 
                 ++_version;

@@ -243,13 +243,13 @@ namespace System.Windows.Media.Media3D
 
                 WritePreamble();
 
-                if (!Object.ReferenceEquals(_collection[ index ], value))
+                if (!Object.ReferenceEquals(_collection[index], value))
                 {
+                    Transform3D oldValue = _collection[index];
 
-                    Transform3D oldValue = _collection[ index ];
                     OnFreezablePropertyChanged(oldValue, value);
 
-                    _collection[ index ] = value;
+                    _collection[index] = value;
 
                     OnSet(oldValue, value);
                 }

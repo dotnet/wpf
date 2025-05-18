@@ -105,7 +105,6 @@ namespace System.Windows.Media.Animation
             }
         }
 
-
         /// <summary>
         /// Implementation of <see cref="System.Windows.Freezable.CloneCurrentValueCore(System.Windows.Freezable)">Freezable.CloneCurrentValueCore</see>.
         /// </summary>
@@ -126,7 +125,6 @@ namespace System.Windows.Media.Animation
             }
         }
 
-
         /// <summary>
         /// Implementation of <see cref="System.Windows.Freezable.GetAsFrozenCore(System.Windows.Freezable)">Freezable.GetAsFrozenCore</see>.
         /// </summary>
@@ -146,7 +144,6 @@ namespace System.Windows.Media.Animation
                 OnFreezablePropertyChanged(null, keyFrame);
             }
         }
-
 
         /// <summary>
         /// Implementation of <see cref="System.Windows.Freezable.GetCurrentValueAsFrozenCore(System.Windows.Freezable)">Freezable.GetCurrentValueAsFrozenCore</see>.

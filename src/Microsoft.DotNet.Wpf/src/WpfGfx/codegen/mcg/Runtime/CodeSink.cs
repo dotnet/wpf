@@ -201,9 +201,9 @@ namespace MS.Internal.MilCodeGen.Runtime
                 }
 
 				string currentLine = output.Substring(startIndex, endIndex - startIndex);
-				if (!currentLine.Contains("<scratch-line>"))
+				if (currentLine.Trim() != "<scratch-line>")
 				{
-					InternalWrite(currentLine);
+                    InternalWrite(currentLine.Replace("<scratch-line>", string.Empty));
 
 					if (endIndex != output.Length)
 					{

@@ -165,7 +165,6 @@ namespace MS.Internal.MilCodeGen.ResourceModel
                                         }
                                     }
         
-        
                                     /// <summary>
                                     /// Implementation of <see cref="System.Windows.Freezable.CloneCurrentValueCore(System.Windows.Freezable)">Freezable.CloneCurrentValueCore</see>.
                                     /// </summary>
@@ -186,7 +185,6 @@ namespace MS.Internal.MilCodeGen.ResourceModel
                                         }
                                     }
                                     
-                                    
                                     /// <summary>
                                     /// Implementation of <see cref="System.Windows.Freezable.GetAsFrozenCore(System.Windows.Freezable)">Freezable.GetAsFrozenCore</see>.
                                     /// </summary>
@@ -206,7 +204,6 @@ namespace MS.Internal.MilCodeGen.ResourceModel
                                             OnFreezablePropertyChanged(null, keyFrame);
                                         }
                                     }
-                                    
                                     
                                     /// <summary>
                                     /// Implementation of <see cref="System.Windows.Freezable.GetCurrentValueAsFrozenCore(System.Windows.Freezable)">Freezable.GetCurrentValueAsFrozenCore</see>.

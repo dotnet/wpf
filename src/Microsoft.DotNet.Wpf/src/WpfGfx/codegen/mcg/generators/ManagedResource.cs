@@ -2058,7 +2058,7 @@ namespace MS.Internal.MilCodeGen.Generators
                 );
              }
 
-            return cs.ToString();
+            return cs.IsEmpty ? null : cs.ToString();
         }
 
         private string WriteAddRefOnChannel(McgResource resource)

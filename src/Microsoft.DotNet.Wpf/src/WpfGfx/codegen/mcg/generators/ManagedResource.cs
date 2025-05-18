@@ -1986,7 +1986,6 @@ namespace MS.Internal.MilCodeGen.Generators
                                     sizeof([[milcmdStruct]]),
                                     (int)([[additionalDataCalculation.ToString()]])
                                     );
-
                         [[/inline]]
                         );
 

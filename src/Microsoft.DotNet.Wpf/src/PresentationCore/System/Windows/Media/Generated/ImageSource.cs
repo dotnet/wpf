@@ -86,7 +86,6 @@ namespace System.Windows.Media
 
         #region Internal Methods
 
-
         internal abstract DUCE.ResourceHandle AddRefOnChannelCore(DUCE.Channel channel);
 
         /// <summary>

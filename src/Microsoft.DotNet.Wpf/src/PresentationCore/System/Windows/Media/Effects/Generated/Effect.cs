@@ -79,7 +79,6 @@ namespace System.Windows.Media.Effects
 
         #region Internal Methods
 
-
         internal abstract DUCE.ResourceHandle AddRefOnChannelCore(DUCE.Channel channel);
 
         /// <summary>

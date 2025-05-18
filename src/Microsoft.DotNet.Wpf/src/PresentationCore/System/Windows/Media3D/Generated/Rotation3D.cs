@@ -84,7 +84,6 @@ namespace System.Windows.Media.Media3D
 
         #region Internal Methods
 
-
         internal abstract DUCE.ResourceHandle AddRefOnChannelCore(DUCE.Channel channel);
 
         /// <summary>

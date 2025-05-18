@@ -65,13 +65,11 @@ namespace System.Windows.Media
         {
             GradientBrush target = ((GradientBrush) d);
 
-
             target.PropertyChanged(ColorInterpolationModeProperty);
         }
         private static void MappingModePropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             GradientBrush target = ((GradientBrush) d);
-
 
             target.PropertyChanged(MappingModeProperty);
         }
@@ -79,17 +77,12 @@ namespace System.Windows.Media
         {
             GradientBrush target = ((GradientBrush) d);
 
-
             target.PropertyChanged(SpreadMethodProperty);
         }
         private static void GradientStopsPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
 
-
-
-
             GradientBrush target = ((GradientBrush) d);
-
 
             target.PropertyChanged(GradientStopsProperty);
         }

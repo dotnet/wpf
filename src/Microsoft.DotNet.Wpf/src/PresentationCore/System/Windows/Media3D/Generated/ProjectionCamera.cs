@@ -63,13 +63,11 @@ namespace System.Windows.Media.Media3D
         {
             ProjectionCamera target = ((ProjectionCamera) d);
 
-
             target.PropertyChanged(NearPlaneDistanceProperty);
         }
         private static void FarPlaneDistancePropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             ProjectionCamera target = ((ProjectionCamera) d);
-
 
             target.PropertyChanged(FarPlaneDistanceProperty);
         }
@@ -77,20 +75,17 @@ namespace System.Windows.Media.Media3D
         {
             ProjectionCamera target = ((ProjectionCamera) d);
 
-
             target.PropertyChanged(PositionProperty);
         }
         private static void LookDirectionPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             ProjectionCamera target = ((ProjectionCamera) d);
 
-
             target.PropertyChanged(LookDirectionProperty);
         }
         private static void UpDirectionPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             ProjectionCamera target = ((ProjectionCamera) d);
-
 
             target.PropertyChanged(UpDirectionProperty);
         }

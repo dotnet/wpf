@@ -58,13 +58,11 @@ namespace System.Windows.Media.Effects
         {
             OuterGlowBitmapEffect target = ((OuterGlowBitmapEffect) d);
 
-
             target.PropertyChanged(GlowColorProperty);
         }
         private static void GlowSizePropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             OuterGlowBitmapEffect target = ((OuterGlowBitmapEffect) d);
-
 
             target.PropertyChanged(GlowSizeProperty);
         }
@@ -72,13 +70,11 @@ namespace System.Windows.Media.Effects
         {
             OuterGlowBitmapEffect target = ((OuterGlowBitmapEffect) d);
 
-
             target.PropertyChanged(NoiseProperty);
         }
         private static void OpacityPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             OuterGlowBitmapEffect target = ((OuterGlowBitmapEffect) d);
-
 
             target.PropertyChanged(OpacityProperty);
         }

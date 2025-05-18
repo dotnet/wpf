@@ -65,20 +65,17 @@ namespace System.Windows.Media
         {
             BitmapCache target = ((BitmapCache) d);
 
-
             target.PropertyChanged(RenderAtScaleProperty);
         }
         private static void SnapsToDevicePixelsPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             BitmapCache target = ((BitmapCache) d);
 
-
             target.PropertyChanged(SnapsToDevicePixelsProperty);
         }
         private static void EnableClearTypePropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             BitmapCache target = ((BitmapCache) d);
-
 
             target.PropertyChanged(EnableClearTypeProperty);
         }

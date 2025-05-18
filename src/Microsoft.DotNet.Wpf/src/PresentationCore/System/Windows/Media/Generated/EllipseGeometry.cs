@@ -65,20 +65,17 @@ namespace System.Windows.Media
         {
             EllipseGeometry target = ((EllipseGeometry) d);
 
-
             target.PropertyChanged(RadiusXProperty);
         }
         private static void RadiusYPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             EllipseGeometry target = ((EllipseGeometry) d);
 
-
             target.PropertyChanged(RadiusYProperty);
         }
         private static void CenterPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             EllipseGeometry target = ((EllipseGeometry) d);
-
 
             target.PropertyChanged(CenterProperty);
         }

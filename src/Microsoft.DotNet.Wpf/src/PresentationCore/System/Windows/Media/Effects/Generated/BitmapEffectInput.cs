@@ -58,7 +58,6 @@ namespace System.Windows.Media.Effects
         {
             BitmapEffectInput target = ((BitmapEffectInput) d);
 
-
             target.PropertyChanged(AreaToApplyEffectProperty);
         }
 

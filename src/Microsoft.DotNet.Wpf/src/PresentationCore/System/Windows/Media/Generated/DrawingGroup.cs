@@ -64,9 +64,6 @@ namespace System.Windows.Media
         private static void ChildrenPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
 
-
-
-
             // The first change to the default value of a mutable collection property (e.g. GeometryGroup.Children) 
             // will promote the property value from a default value to a local value. This is technically a sub-property 
             // change because the collection was changed and not a new collection set (GeometryGroup.Children.
@@ -83,7 +80,6 @@ namespace System.Windows.Media
 
 
             DrawingGroup target = ((DrawingGroup) d);
-
 
             // If this is both non-null and mutable, we need to unhook the Changed event.
             DrawingCollection oldCollection = null;
@@ -155,9 +151,6 @@ namespace System.Windows.Media
         private static void ClipGeometryPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
 
-
-
-
             // The first change to the default value of a mutable collection property (e.g. GeometryGroup.Children) 
             // will promote the property value from a default value to a local value. This is technically a sub-property 
             // change because the collection was changed and not a new collection set (GeometryGroup.Children.
@@ -174,7 +167,6 @@ namespace System.Windows.Media
 
 
             DrawingGroup target = ((DrawingGroup) d);
-
 
             Geometry oldV = (Geometry) e.OldValue;
             Geometry newV = (Geometry) e.NewValue;
@@ -204,14 +196,10 @@ namespace System.Windows.Media
         {
             DrawingGroup target = ((DrawingGroup) d);
 
-
             target.PropertyChanged(OpacityProperty);
         }
         private static void OpacityMaskPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-
-
-
 
             // The first change to the default value of a mutable collection property (e.g. GeometryGroup.Children) 
             // will promote the property value from a default value to a local value. This is technically a sub-property 
@@ -229,7 +217,6 @@ namespace System.Windows.Media
 
 
             DrawingGroup target = ((DrawingGroup) d);
-
 
             Brush oldV = (Brush) e.OldValue;
             Brush newV = (Brush) e.NewValue;
@@ -258,9 +245,6 @@ namespace System.Windows.Media
         private static void TransformPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
 
-
-
-
             // The first change to the default value of a mutable collection property (e.g. GeometryGroup.Children) 
             // will promote the property value from a default value to a local value. This is technically a sub-property 
             // change because the collection was changed and not a new collection set (GeometryGroup.Children.
@@ -277,7 +261,6 @@ namespace System.Windows.Media
 
 
             DrawingGroup target = ((DrawingGroup) d);
-
 
             Transform oldV = (Transform) e.OldValue;
             Transform newV = (Transform) e.NewValue;
@@ -306,9 +289,6 @@ namespace System.Windows.Media
         private static void GuidelineSetPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
 
-
-
-
             // The first change to the default value of a mutable collection property (e.g. GeometryGroup.Children) 
             // will promote the property value from a default value to a local value. This is technically a sub-property 
             // change because the collection was changed and not a new collection set (GeometryGroup.Children.
@@ -325,7 +305,6 @@ namespace System.Windows.Media
 
 
             DrawingGroup target = ((DrawingGroup) d);
-
 
             GuidelineSet oldV = (GuidelineSet) e.OldValue;
             GuidelineSet newV = (GuidelineSet) e.NewValue;
@@ -355,28 +334,19 @@ namespace System.Windows.Media
         {
             DrawingGroup target = ((DrawingGroup) d);
 
-
             target.PropertyChanged(RenderOptions.EdgeModeProperty);
         }
         private static void BitmapEffectPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
 
-
-
-
             DrawingGroup target = ((DrawingGroup) d);
-
 
             target.PropertyChanged(BitmapEffectProperty);
         }
         private static void BitmapEffectInputPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
 
-
-
-
             DrawingGroup target = ((DrawingGroup) d);
-
 
             target.PropertyChanged(BitmapEffectInputProperty);
         }
@@ -384,13 +354,11 @@ namespace System.Windows.Media
         {
             DrawingGroup target = ((DrawingGroup) d);
 
-
             target.PropertyChanged(RenderOptions.BitmapScalingModeProperty);
         }
         private static void ClearTypeHintPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             DrawingGroup target = ((DrawingGroup) d);
-
 
             target.PropertyChanged(RenderOptions.ClearTypeHintProperty);
         }

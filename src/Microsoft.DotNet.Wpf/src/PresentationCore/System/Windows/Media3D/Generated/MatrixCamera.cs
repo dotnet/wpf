@@ -63,13 +63,11 @@ namespace System.Windows.Media.Media3D
         {
             MatrixCamera target = ((MatrixCamera) d);
 
-
             target.PropertyChanged(ViewMatrixProperty);
         }
         private static void ProjectionMatrixPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             MatrixCamera target = ((MatrixCamera) d);
-
 
             target.PropertyChanged(ProjectionMatrixProperty);
         }

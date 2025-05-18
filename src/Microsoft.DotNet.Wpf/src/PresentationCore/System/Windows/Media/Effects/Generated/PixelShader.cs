@@ -58,15 +58,14 @@ namespace System.Windows.Media.Effects
         {
             PixelShader target = ((PixelShader) d);
 
-
             target.UriSourcePropertyChangedHook(e);
+
 
             target.PropertyChanged(UriSourceProperty);
         }
         private static void ShaderRenderModePropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             PixelShader target = ((PixelShader) d);
-
 
             target.PropertyChanged(ShaderRenderModeProperty);
         }

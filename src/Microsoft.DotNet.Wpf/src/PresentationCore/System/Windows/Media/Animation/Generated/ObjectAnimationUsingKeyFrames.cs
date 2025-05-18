@@ -411,7 +411,6 @@ namespace System.Windows.Media.Animation
             }
 
 
-
             return currentIterationValue;
         }
 
@@ -515,7 +514,6 @@ namespace System.Windows.Media.Animation
         }
 
         #endregion
-
 
 
         #region Private Methods

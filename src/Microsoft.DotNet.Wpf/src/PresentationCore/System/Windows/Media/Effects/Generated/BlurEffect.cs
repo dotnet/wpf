@@ -58,20 +58,17 @@ namespace System.Windows.Media.Effects
         {
             BlurEffect target = ((BlurEffect) d);
 
-
             target.PropertyChanged(RadiusProperty);
         }
         private static void KernelTypePropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             BlurEffect target = ((BlurEffect) d);
 
-
             target.PropertyChanged(KernelTypeProperty);
         }
         private static void RenderingBiasPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             BlurEffect target = ((BlurEffect) d);
-
 
             target.PropertyChanged(RenderingBiasProperty);
         }

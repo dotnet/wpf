@@ -65,7 +65,6 @@ namespace System.Windows.Media
         {
             VisualBrush target = ((VisualBrush) d);
 
-
             Visual oldV = (Visual) e.OldValue;
 
             //
@@ -118,7 +117,6 @@ namespace System.Windows.Media
         private static void AutoLayoutContentPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             VisualBrush target = ((VisualBrush) d);
-
 
             target.PropertyChanged(AutoLayoutContentProperty);
         }

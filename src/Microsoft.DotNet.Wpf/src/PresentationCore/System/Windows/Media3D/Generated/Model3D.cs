@@ -62,9 +62,6 @@ namespace System.Windows.Media.Media3D
         private static void TransformPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
 
-
-
-
             // The first change to the default value of a mutable collection property (e.g. GeometryGroup.Children) 
             // will promote the property value from a default value to a local value. This is technically a sub-property 
             // change because the collection was changed and not a new collection set (GeometryGroup.Children.
@@ -81,7 +78,6 @@ namespace System.Windows.Media.Media3D
 
 
             Model3D target = ((Model3D) d);
-
 
             Transform3D oldV = (Transform3D) e.OldValue;
             Transform3D newV = (Transform3D) e.NewValue;

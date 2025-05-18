@@ -63,7 +63,6 @@ namespace System.Windows.Media.Media3D
         {
             OrthographicCamera target = ((OrthographicCamera) d);
 
-
             target.PropertyChanged(WidthProperty);
         }
 

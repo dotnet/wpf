@@ -63,7 +63,6 @@ namespace System.Windows.Media.Media3D
         {
             MatrixTransform3D target = ((MatrixTransform3D) d);
 
-
             target.PropertyChanged(MatrixProperty);
         }
 

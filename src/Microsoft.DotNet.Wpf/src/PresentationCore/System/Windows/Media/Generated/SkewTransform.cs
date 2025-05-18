@@ -65,13 +65,11 @@ namespace System.Windows.Media
         {
             SkewTransform target = ((SkewTransform) d);
 
-
             target.PropertyChanged(AngleXProperty);
         }
         private static void AngleYPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             SkewTransform target = ((SkewTransform) d);
-
 
             target.PropertyChanged(AngleYProperty);
         }
@@ -79,13 +77,11 @@ namespace System.Windows.Media
         {
             SkewTransform target = ((SkewTransform) d);
 
-
             target.PropertyChanged(CenterXProperty);
         }
         private static void CenterYPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             SkewTransform target = ((SkewTransform) d);
-
 
             target.PropertyChanged(CenterYProperty);
         }

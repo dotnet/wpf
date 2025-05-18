@@ -65,13 +65,11 @@ namespace System.Windows.Media
         {
             RadialGradientBrush target = ((RadialGradientBrush) d);
 
-
             target.PropertyChanged(CenterProperty);
         }
         private static void RadiusXPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             RadialGradientBrush target = ((RadialGradientBrush) d);
-
 
             target.PropertyChanged(RadiusXProperty);
         }
@@ -79,13 +77,11 @@ namespace System.Windows.Media
         {
             RadialGradientBrush target = ((RadialGradientBrush) d);
 
-
             target.PropertyChanged(RadiusYProperty);
         }
         private static void GradientOriginPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             RadialGradientBrush target = ((RadialGradientBrush) d);
-
 
             target.PropertyChanged(GradientOriginProperty);
         }

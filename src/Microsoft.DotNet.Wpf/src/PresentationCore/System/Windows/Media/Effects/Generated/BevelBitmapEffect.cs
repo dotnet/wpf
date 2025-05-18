@@ -58,13 +58,11 @@ namespace System.Windows.Media.Effects
         {
             BevelBitmapEffect target = ((BevelBitmapEffect) d);
 
-
             target.PropertyChanged(BevelWidthProperty);
         }
         private static void ReliefPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             BevelBitmapEffect target = ((BevelBitmapEffect) d);
-
 
             target.PropertyChanged(ReliefProperty);
         }
@@ -72,13 +70,11 @@ namespace System.Windows.Media.Effects
         {
             BevelBitmapEffect target = ((BevelBitmapEffect) d);
 
-
             target.PropertyChanged(LightAngleProperty);
         }
         private static void SmoothnessPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             BevelBitmapEffect target = ((BevelBitmapEffect) d);
-
 
             target.PropertyChanged(SmoothnessProperty);
         }

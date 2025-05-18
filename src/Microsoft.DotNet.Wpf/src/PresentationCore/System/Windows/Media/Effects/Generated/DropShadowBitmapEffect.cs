@@ -58,13 +58,11 @@ namespace System.Windows.Media.Effects
         {
             DropShadowBitmapEffect target = ((DropShadowBitmapEffect) d);
 
-
             target.PropertyChanged(ShadowDepthProperty);
         }
         private static void ColorPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             DropShadowBitmapEffect target = ((DropShadowBitmapEffect) d);
-
 
             target.PropertyChanged(ColorProperty);
         }
@@ -72,13 +70,11 @@ namespace System.Windows.Media.Effects
         {
             DropShadowBitmapEffect target = ((DropShadowBitmapEffect) d);
 
-
             target.PropertyChanged(DirectionProperty);
         }
         private static void NoisePropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             DropShadowBitmapEffect target = ((DropShadowBitmapEffect) d);
-
 
             target.PropertyChanged(NoiseProperty);
         }
@@ -86,13 +82,11 @@ namespace System.Windows.Media.Effects
         {
             DropShadowBitmapEffect target = ((DropShadowBitmapEffect) d);
 
-
             target.PropertyChanged(OpacityProperty);
         }
         private static void SoftnessPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             DropShadowBitmapEffect target = ((DropShadowBitmapEffect) d);
-
 
             target.PropertyChanged(SoftnessProperty);
         }

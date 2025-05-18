@@ -64,29 +64,20 @@ namespace System.Windows.Media
         private static void GuidelinesXPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
 
-
-
-
             GuidelineSet target = ((GuidelineSet) d);
-
 
             target.PropertyChanged(GuidelinesXProperty);
         }
         private static void GuidelinesYPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
 
-
-
-
             GuidelineSet target = ((GuidelineSet) d);
-
 
             target.PropertyChanged(GuidelinesYProperty);
         }
         private static void IsDynamicPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             GuidelineSet target = ((GuidelineSet) d);
-
 
             target.PropertyChanged(IsDynamicProperty);
         }

@@ -65,13 +65,11 @@ namespace System.Windows.Media
         {
             TileBrush target = ((TileBrush) d);
 
-
             target.PropertyChanged(ViewportUnitsProperty);
         }
         private static void ViewboxUnitsPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             TileBrush target = ((TileBrush) d);
-
 
             target.PropertyChanged(ViewboxUnitsProperty);
         }
@@ -79,13 +77,11 @@ namespace System.Windows.Media
         {
             TileBrush target = ((TileBrush) d);
 
-
             target.PropertyChanged(ViewportProperty);
         }
         private static void ViewboxPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             TileBrush target = ((TileBrush) d);
-
 
             target.PropertyChanged(ViewboxProperty);
         }
@@ -93,13 +89,11 @@ namespace System.Windows.Media
         {
             TileBrush target = ((TileBrush) d);
 
-
             target.PropertyChanged(StretchProperty);
         }
         private static void TileModePropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             TileBrush target = ((TileBrush) d);
-
 
             target.PropertyChanged(TileModeProperty);
         }
@@ -107,13 +101,11 @@ namespace System.Windows.Media
         {
             TileBrush target = ((TileBrush) d);
 
-
             target.PropertyChanged(AlignmentXProperty);
         }
         private static void AlignmentYPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             TileBrush target = ((TileBrush) d);
-
 
             target.PropertyChanged(AlignmentYProperty);
         }
@@ -121,20 +113,17 @@ namespace System.Windows.Media
         {
             TileBrush target = ((TileBrush) d);
 
-
             target.PropertyChanged(RenderOptions.CachingHintProperty);
         }
         private static void CacheInvalidationThresholdMinimumPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             TileBrush target = ((TileBrush) d);
 
-
             target.PropertyChanged(RenderOptions.CacheInvalidationThresholdMinimumProperty);
         }
         private static void CacheInvalidationThresholdMaximumPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             TileBrush target = ((TileBrush) d);
-
 
             target.PropertyChanged(RenderOptions.CacheInvalidationThresholdMaximumProperty);
         }

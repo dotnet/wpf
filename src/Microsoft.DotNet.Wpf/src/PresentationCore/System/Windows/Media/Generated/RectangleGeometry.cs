@@ -65,20 +65,17 @@ namespace System.Windows.Media
         {
             RectangleGeometry target = ((RectangleGeometry) d);
 
-
             target.PropertyChanged(RadiusXProperty);
         }
         private static void RadiusYPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             RectangleGeometry target = ((RectangleGeometry) d);
 
-
             target.PropertyChanged(RadiusYProperty);
         }
         private static void RectPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             RectangleGeometry target = ((RectangleGeometry) d);
-
 
             target.PropertyChanged(RectProperty);
         }

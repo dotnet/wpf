@@ -64,9 +64,6 @@ namespace System.Windows.Media
         private static void DrawingPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
 
-
-
-
             // The first change to the default value of a mutable collection property (e.g. GeometryGroup.Children) 
             // will promote the property value from a default value to a local value. This is technically a sub-property 
             // change because the collection was changed and not a new collection set (GeometryGroup.Children.
@@ -83,7 +80,6 @@ namespace System.Windows.Media
 
 
             DrawingBrush target = ((DrawingBrush) d);
-
 
             Drawing oldV = (Drawing) e.OldValue;
             Drawing newV = (Drawing) e.NewValue;

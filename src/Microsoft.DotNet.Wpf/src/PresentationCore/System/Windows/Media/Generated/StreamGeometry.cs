@@ -65,7 +65,6 @@ namespace System.Windows.Media
         {
             StreamGeometry target = ((StreamGeometry) d);
 
-
             target.PropertyChanged(FillRuleProperty);
         }
 

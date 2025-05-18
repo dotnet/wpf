@@ -65,20 +65,17 @@ namespace System.Windows.Media
         {
             RotateTransform target = ((RotateTransform) d);
 
-
             target.PropertyChanged(AngleProperty);
         }
         private static void CenterXPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             RotateTransform target = ((RotateTransform) d);
 
-
             target.PropertyChanged(CenterXProperty);
         }
         private static void CenterYPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             RotateTransform target = ((RotateTransform) d);
-
 
             target.PropertyChanged(CenterYProperty);
         }

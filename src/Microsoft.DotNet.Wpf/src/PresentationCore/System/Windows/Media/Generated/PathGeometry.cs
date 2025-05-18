@@ -65,7 +65,6 @@ namespace System.Windows.Media
         {
             PathGeometry target = ((PathGeometry) d);
 
-
             target.PropertyChanged(FillRuleProperty);
         }
         private static void FiguresPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
@@ -75,9 +74,6 @@ namespace System.Windows.Media
 
 
             target.FiguresPropertyChangedHook(e);
-
-
-
 
             target.PropertyChanged(FiguresProperty);
         }

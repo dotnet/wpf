@@ -62,44 +62,28 @@ namespace System.Windows.Media.Media3D
         private static void PositionsPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
 
-
-
-
             MeshGeometry3D target = ((MeshGeometry3D) d);
-
 
             target.PropertyChanged(PositionsProperty);
         }
         private static void NormalsPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
 
-
-
-
             MeshGeometry3D target = ((MeshGeometry3D) d);
-
 
             target.PropertyChanged(NormalsProperty);
         }
         private static void TextureCoordinatesPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
 
-
-
-
             MeshGeometry3D target = ((MeshGeometry3D) d);
-
 
             target.PropertyChanged(TextureCoordinatesProperty);
         }
         private static void TriangleIndicesPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
 
-
-
-
             MeshGeometry3D target = ((MeshGeometry3D) d);
-
 
             target.PropertyChanged(TriangleIndicesProperty);
         }

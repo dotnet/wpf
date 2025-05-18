@@ -65,13 +65,11 @@ namespace System.Windows.Media
         {
             LinearGradientBrush target = ((LinearGradientBrush) d);
 
-
             target.PropertyChanged(StartPointProperty);
         }
         private static void EndPointPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             LinearGradientBrush target = ((LinearGradientBrush) d);
-
 
             target.PropertyChanged(EndPointProperty);
         }

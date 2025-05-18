@@ -65,13 +65,11 @@ namespace System.Windows.Media
         {
             LineGeometry target = ((LineGeometry) d);
 
-
             target.PropertyChanged(StartPointProperty);
         }
         private static void EndPointPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             LineGeometry target = ((LineGeometry) d);
-
 
             target.PropertyChanged(EndPointProperty);
         }

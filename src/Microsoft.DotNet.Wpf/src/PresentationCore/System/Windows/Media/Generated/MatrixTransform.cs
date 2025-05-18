@@ -65,7 +65,6 @@ namespace System.Windows.Media
         {
             MatrixTransform target = ((MatrixTransform) d);
 
-
             target.PropertyChanged(MatrixProperty);
         }
 

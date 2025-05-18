@@ -64,9 +64,6 @@ namespace System.Windows.Media
         private static void BrushPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
 
-
-
-
             // The first change to the default value of a mutable collection property (e.g. GeometryGroup.Children) 
             // will promote the property value from a default value to a local value. This is technically a sub-property 
             // change because the collection was changed and not a new collection set (GeometryGroup.Children.
@@ -83,7 +80,6 @@ namespace System.Windows.Media
 
 
             Pen target = ((Pen) d);
-
 
             Brush oldV = (Brush) e.OldValue;
             Brush newV = (Brush) e.NewValue;
@@ -113,13 +109,11 @@ namespace System.Windows.Media
         {
             Pen target = ((Pen) d);
 
-
             target.PropertyChanged(ThicknessProperty);
         }
         private static void StartLineCapPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             Pen target = ((Pen) d);
-
 
             target.PropertyChanged(StartLineCapProperty);
         }
@@ -127,13 +121,11 @@ namespace System.Windows.Media
         {
             Pen target = ((Pen) d);
 
-
             target.PropertyChanged(EndLineCapProperty);
         }
         private static void DashCapPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             Pen target = ((Pen) d);
-
 
             target.PropertyChanged(DashCapProperty);
         }
@@ -141,21 +133,16 @@ namespace System.Windows.Media
         {
             Pen target = ((Pen) d);
 
-
             target.PropertyChanged(LineJoinProperty);
         }
         private static void MiterLimitPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             Pen target = ((Pen) d);
 
-
             target.PropertyChanged(MiterLimitProperty);
         }
         private static void DashStylePropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-
-
-
 
             // The first change to the default value of a mutable collection property (e.g. GeometryGroup.Children) 
             // will promote the property value from a default value to a local value. This is technically a sub-property 
@@ -173,7 +160,6 @@ namespace System.Windows.Media
 
 
             Pen target = ((Pen) d);
-
 
             DashStyle oldV = (DashStyle) e.OldValue;
             DashStyle newV = (DashStyle) e.NewValue;

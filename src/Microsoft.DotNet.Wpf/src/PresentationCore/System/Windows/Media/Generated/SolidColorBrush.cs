@@ -65,7 +65,6 @@ namespace System.Windows.Media
         {
             SolidColorBrush target = ((SolidColorBrush) d);
 
-
             target.PropertyChanged(ColorProperty);
         }
 

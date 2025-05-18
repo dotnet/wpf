@@ -55,8 +55,8 @@ namespace System.Windows.Media.Imaging
         {
             BitmapImage target = ((BitmapImage) d);
 
-
             target.UriCachePolicyPropertyChangedHook(e);
+
 
             target.PropertyChanged(UriCachePolicyProperty);
         }
@@ -64,8 +64,8 @@ namespace System.Windows.Media.Imaging
         {
             BitmapImage target = ((BitmapImage) d);
 
-
             target.UriSourcePropertyChangedHook(e);
+
 
             target.PropertyChanged(UriSourceProperty);
         }
@@ -73,8 +73,8 @@ namespace System.Windows.Media.Imaging
         {
             BitmapImage target = ((BitmapImage) d);
 
-
             target.StreamSourcePropertyChangedHook(e);
+
 
             target.PropertyChanged(StreamSourceProperty);
         }
@@ -82,8 +82,8 @@ namespace System.Windows.Media.Imaging
         {
             BitmapImage target = ((BitmapImage) d);
 
-
             target.DecodePixelWidthPropertyChangedHook(e);
+
 
             target.PropertyChanged(DecodePixelWidthProperty);
         }
@@ -91,8 +91,8 @@ namespace System.Windows.Media.Imaging
         {
             BitmapImage target = ((BitmapImage) d);
 
-
             target.DecodePixelHeightPropertyChangedHook(e);
+
 
             target.PropertyChanged(DecodePixelHeightProperty);
         }
@@ -100,8 +100,8 @@ namespace System.Windows.Media.Imaging
         {
             BitmapImage target = ((BitmapImage) d);
 
-
             target.RotationPropertyChangedHook(e);
+
 
             target.PropertyChanged(RotationProperty);
         }
@@ -109,8 +109,8 @@ namespace System.Windows.Media.Imaging
         {
             BitmapImage target = ((BitmapImage) d);
 
-
             target.SourceRectPropertyChangedHook(e);
+
 
             target.PropertyChanged(SourceRectProperty);
         }
@@ -118,8 +118,8 @@ namespace System.Windows.Media.Imaging
         {
             BitmapImage target = ((BitmapImage) d);
 
-
             target.CreateOptionsPropertyChangedHook(e);
+
 
             target.PropertyChanged(CreateOptionsProperty);
         }
@@ -127,8 +127,8 @@ namespace System.Windows.Media.Imaging
         {
             BitmapImage target = ((BitmapImage) d);
 
-
             target.CacheOptionPropertyChangedHook(e);
+
 
             target.PropertyChanged(CacheOptionProperty);
         }

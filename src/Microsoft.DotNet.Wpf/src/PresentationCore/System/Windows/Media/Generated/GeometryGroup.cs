@@ -65,14 +65,10 @@ namespace System.Windows.Media
         {
             GeometryGroup target = ((GeometryGroup) d);
 
-
             target.PropertyChanged(FillRuleProperty);
         }
         private static void ChildrenPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-
-
-
 
             // The first change to the default value of a mutable collection property (e.g. GeometryGroup.Children) 
             // will promote the property value from a default value to a local value. This is technically a sub-property 
@@ -90,7 +86,6 @@ namespace System.Windows.Media
 
 
             GeometryGroup target = ((GeometryGroup) d);
-
 
             // If this is both non-null and mutable, we need to unhook the Changed event.
             GeometryCollection oldCollection = null;

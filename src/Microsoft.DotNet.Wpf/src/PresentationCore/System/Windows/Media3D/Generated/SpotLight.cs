@@ -63,20 +63,17 @@ namespace System.Windows.Media.Media3D
         {
             SpotLight target = ((SpotLight) d);
 
-
             target.PropertyChanged(DirectionProperty);
         }
         private static void OuterConeAnglePropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             SpotLight target = ((SpotLight) d);
 
-
             target.PropertyChanged(OuterConeAngleProperty);
         }
         private static void InnerConeAnglePropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             SpotLight target = ((SpotLight) d);
-
 
             target.PropertyChanged(InnerConeAngleProperty);
         }

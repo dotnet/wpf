@@ -65,7 +65,6 @@ namespace System.Windows.Media
         {
             GlyphRunDrawing target = ((GlyphRunDrawing) d);
 
-
             GlyphRun oldV = (GlyphRun) e.OldValue;
             GlyphRun newV = (GlyphRun) e.NewValue;
             System.Windows.Threading.Dispatcher dispatcher = target.Dispatcher;
@@ -93,9 +92,6 @@ namespace System.Windows.Media
         private static void ForegroundBrushPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
 
-
-
-
             // The first change to the default value of a mutable collection property (e.g. GeometryGroup.Children) 
             // will promote the property value from a default value to a local value. This is technically a sub-property 
             // change because the collection was changed and not a new collection set (GeometryGroup.Children.
@@ -112,7 +108,6 @@ namespace System.Windows.Media
 
 
             GlyphRunDrawing target = ((GlyphRunDrawing) d);
-
 
             Brush oldV = (Brush) e.OldValue;
             Brush newV = (Brush) e.NewValue;

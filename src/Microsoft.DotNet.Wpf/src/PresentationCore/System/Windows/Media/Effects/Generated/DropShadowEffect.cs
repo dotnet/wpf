@@ -58,13 +58,11 @@ namespace System.Windows.Media.Effects
         {
             DropShadowEffect target = ((DropShadowEffect) d);
 
-
             target.PropertyChanged(ShadowDepthProperty);
         }
         private static void ColorPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             DropShadowEffect target = ((DropShadowEffect) d);
-
 
             target.PropertyChanged(ColorProperty);
         }
@@ -72,13 +70,11 @@ namespace System.Windows.Media.Effects
         {
             DropShadowEffect target = ((DropShadowEffect) d);
 
-
             target.PropertyChanged(DirectionProperty);
         }
         private static void OpacityPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             DropShadowEffect target = ((DropShadowEffect) d);
-
 
             target.PropertyChanged(OpacityProperty);
         }
@@ -86,13 +82,11 @@ namespace System.Windows.Media.Effects
         {
             DropShadowEffect target = ((DropShadowEffect) d);
 
-
             target.PropertyChanged(BlurRadiusProperty);
         }
         private static void RenderingBiasPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             DropShadowEffect target = ((DropShadowEffect) d);
-
 
             target.PropertyChanged(RenderingBiasProperty);
         }

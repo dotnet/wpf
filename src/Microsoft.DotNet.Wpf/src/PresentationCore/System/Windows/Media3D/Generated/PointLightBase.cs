@@ -63,13 +63,11 @@ namespace System.Windows.Media.Media3D
         {
             PointLightBase target = ((PointLightBase) d);
 
-
             target.PropertyChanged(PositionProperty);
         }
         private static void RangePropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             PointLightBase target = ((PointLightBase) d);
-
 
             target.PropertyChanged(RangeProperty);
         }
@@ -77,20 +75,17 @@ namespace System.Windows.Media.Media3D
         {
             PointLightBase target = ((PointLightBase) d);
 
-
             target.PropertyChanged(ConstantAttenuationProperty);
         }
         private static void LinearAttenuationPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             PointLightBase target = ((PointLightBase) d);
 
-
             target.PropertyChanged(LinearAttenuationProperty);
         }
         private static void QuadraticAttenuationPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             PointLightBase target = ((PointLightBase) d);
-
 
             target.PropertyChanged(QuadraticAttenuationProperty);
         }

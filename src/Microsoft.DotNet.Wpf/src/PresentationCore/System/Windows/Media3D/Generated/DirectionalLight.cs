@@ -63,7 +63,6 @@ namespace System.Windows.Media.Media3D
         {
             DirectionalLight target = ((DirectionalLight) d);
 
-
             target.PropertyChanged(DirectionProperty);
         }
 

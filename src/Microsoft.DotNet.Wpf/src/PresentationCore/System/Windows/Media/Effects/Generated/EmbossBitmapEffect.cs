@@ -58,13 +58,11 @@ namespace System.Windows.Media.Effects
         {
             EmbossBitmapEffect target = ((EmbossBitmapEffect) d);
 
-
             target.PropertyChanged(LightAngleProperty);
         }
         private static void ReliefPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             EmbossBitmapEffect target = ((EmbossBitmapEffect) d);
-
 
             target.PropertyChanged(ReliefProperty);
         }

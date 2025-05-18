@@ -65,13 +65,11 @@ namespace System.Windows.Media
         {
             ScaleTransform target = ((ScaleTransform) d);
 
-
             target.PropertyChanged(ScaleXProperty);
         }
         private static void ScaleYPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             ScaleTransform target = ((ScaleTransform) d);
-
 
             target.PropertyChanged(ScaleYProperty);
         }
@@ -79,13 +77,11 @@ namespace System.Windows.Media
         {
             ScaleTransform target = ((ScaleTransform) d);
 
-
             target.PropertyChanged(CenterXProperty);
         }
         private static void CenterYPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             ScaleTransform target = ((ScaleTransform) d);
-
 
             target.PropertyChanged(CenterYProperty);
         }

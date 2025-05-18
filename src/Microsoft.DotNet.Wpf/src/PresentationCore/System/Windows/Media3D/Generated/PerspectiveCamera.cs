@@ -63,7 +63,6 @@ namespace System.Windows.Media.Media3D
         {
             PerspectiveCamera target = ((PerspectiveCamera) d);
 
-
             target.PropertyChanged(FieldOfViewProperty);
         }
 

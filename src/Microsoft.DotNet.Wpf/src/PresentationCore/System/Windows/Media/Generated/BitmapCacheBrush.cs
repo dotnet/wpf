@@ -65,14 +65,10 @@ namespace System.Windows.Media
         {
             BitmapCacheBrush target = ((BitmapCacheBrush) d);
 
-
             target.PropertyChanged(TargetProperty);
         }
         private static void BitmapCachePropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-
-
-
 
             // The first change to the default value of a mutable collection property (e.g. GeometryGroup.Children) 
             // will promote the property value from a default value to a local value. This is technically a sub-property 
@@ -90,7 +86,6 @@ namespace System.Windows.Media
 
 
             BitmapCacheBrush target = ((BitmapCacheBrush) d);
-
 
             BitmapCache oldV = (BitmapCache) e.OldValue;
             BitmapCache newV = (BitmapCache) e.NewValue;
@@ -120,13 +115,11 @@ namespace System.Windows.Media
         {
             BitmapCacheBrush target = ((BitmapCacheBrush) d);
 
-
             target.PropertyChanged(AutoLayoutContentProperty);
         }
         private static void InternalTargetPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             BitmapCacheBrush target = ((BitmapCacheBrush) d);
-
 
             Visual oldV = (Visual) e.OldValue;
 
@@ -180,7 +173,6 @@ namespace System.Windows.Media
         private static void AutoWrapTargetPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             BitmapCacheBrush target = ((BitmapCacheBrush) d);
-
 
             target.PropertyChanged(AutoWrapTargetProperty);
         }

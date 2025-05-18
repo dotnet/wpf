@@ -65,13 +65,11 @@ namespace System.Windows.Media
         {
             TranslateTransform target = ((TranslateTransform) d);
 
-
             target.PropertyChanged(XProperty);
         }
         private static void YPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             TranslateTransform target = ((TranslateTransform) d);
-
 
             target.PropertyChanged(YProperty);
         }

@@ -65,7 +65,6 @@ namespace System.Windows.Media
         {
             VideoDrawing target = ((VideoDrawing) d);
 
-
             MediaPlayer oldV = (MediaPlayer) e.OldValue;
             MediaPlayer newV = (MediaPlayer) e.NewValue;
             System.Windows.Threading.Dispatcher dispatcher = target.Dispatcher;
@@ -93,7 +92,6 @@ namespace System.Windows.Media
         private static void RectPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             VideoDrawing target = ((VideoDrawing) d);
-
 
             target.PropertyChanged(RectProperty);
         }

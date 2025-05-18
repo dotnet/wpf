@@ -63,8 +63,8 @@ namespace System.Windows.Media.Media3D
         {
             AxisAngleRotation3D target = ((AxisAngleRotation3D) d);
 
-
             target.AxisPropertyChangedHook(e);
+
 
             target.PropertyChanged(AxisProperty);
         }
@@ -72,8 +72,8 @@ namespace System.Windows.Media.Media3D
         {
             AxisAngleRotation3D target = ((AxisAngleRotation3D) d);
 
-
             target.AnglePropertyChangedHook(e);
+
 
             target.PropertyChanged(AngleProperty);
         }

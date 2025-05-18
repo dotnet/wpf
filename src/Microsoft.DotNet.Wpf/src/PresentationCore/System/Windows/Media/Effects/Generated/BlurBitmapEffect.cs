@@ -58,7 +58,6 @@ namespace System.Windows.Media.Effects
         {
             BlurBitmapEffect target = ((BlurBitmapEffect) d);
 
-
             target.PropertyChanged(RadiusProperty);
         }
 

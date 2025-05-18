@@ -63,7 +63,6 @@ namespace System.Windows.Media.Media3D
         {
             Light target = ((Light) d);
 
-
             target.PropertyChanged(ColorProperty);
         }
 

@@ -67,14 +67,10 @@ namespace System.Windows.Media
         {
             Brush target = ((Brush) d);
 
-
             target.PropertyChanged(OpacityProperty);
         }
         private static void TransformPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-
-
-
 
             // The first change to the default value of a mutable collection property (e.g. GeometryGroup.Children) 
             // will promote the property value from a default value to a local value. This is technically a sub-property 
@@ -92,7 +88,6 @@ namespace System.Windows.Media
 
 
             Brush target = ((Brush) d);
-
 
             Transform oldV = (Transform) e.OldValue;
             Transform newV = (Transform) e.NewValue;
@@ -121,9 +116,6 @@ namespace System.Windows.Media
         private static void RelativeTransformPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
 
-
-
-
             // The first change to the default value of a mutable collection property (e.g. GeometryGroup.Children) 
             // will promote the property value from a default value to a local value. This is technically a sub-property 
             // change because the collection was changed and not a new collection set (GeometryGroup.Children.
@@ -140,7 +132,6 @@ namespace System.Windows.Media
 
 
             Brush target = ((Brush) d);
-
 
             Transform oldV = (Transform) e.OldValue;
             Transform newV = (Transform) e.NewValue;

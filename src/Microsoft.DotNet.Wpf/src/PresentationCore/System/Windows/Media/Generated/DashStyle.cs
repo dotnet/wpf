@@ -65,17 +65,12 @@ namespace System.Windows.Media
         {
             DashStyle target = ((DashStyle) d);
 
-
             target.PropertyChanged(OffsetProperty);
         }
         private static void DashesPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
 
-
-
-
             DashStyle target = ((DashStyle) d);
-
 
             target.PropertyChanged(DashesProperty);
         }

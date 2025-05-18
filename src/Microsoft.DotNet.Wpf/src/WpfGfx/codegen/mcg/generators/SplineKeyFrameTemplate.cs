@@ -215,7 +215,6 @@ namespace MS.Internal.MilCodeGen.ResourceModel
                                
                                 #endregion
                             }
-
                     [[/inline]]
                     );
                 

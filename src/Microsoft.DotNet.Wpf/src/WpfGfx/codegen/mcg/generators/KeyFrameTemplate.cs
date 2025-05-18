@@ -82,7 +82,6 @@ namespace MS.Internal.MilCodeGen.ResourceModel
 
                 csFile.WriteBlock(
                     [[inline]]
-                        
                             /// <summary>
                             /// This class is used as part of a [[instance.TypeName]]KeyFrameCollection in
                             /// conjunction with a KeyFrame[[instance.TypeName]]Animation to animate a

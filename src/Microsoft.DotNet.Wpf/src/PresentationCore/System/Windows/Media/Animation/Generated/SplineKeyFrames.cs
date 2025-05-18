@@ -145,7 +145,6 @@ namespace System.Windows.Media.Animation
         #endregion
     }
 
-
     /// <summary>
     /// This class is used as part of a ColorKeyFrameCollection in
     /// conjunction with a KeyFrameColorAnimation to animate a
@@ -270,7 +269,6 @@ namespace System.Windows.Media.Animation
 
         #endregion
     }
-
 
     /// <summary>
     /// This class is used as part of a DecimalKeyFrameCollection in
@@ -397,7 +395,6 @@ namespace System.Windows.Media.Animation
         #endregion
     }
 
-
     /// <summary>
     /// This class is used as part of a DoubleKeyFrameCollection in
     /// conjunction with a KeyFrameDoubleAnimation to animate a
@@ -522,7 +519,6 @@ namespace System.Windows.Media.Animation
 
         #endregion
     }
-
 
     /// <summary>
     /// This class is used as part of a Int16KeyFrameCollection in
@@ -649,7 +645,6 @@ namespace System.Windows.Media.Animation
         #endregion
     }
 
-
     /// <summary>
     /// This class is used as part of a Int32KeyFrameCollection in
     /// conjunction with a KeyFrameInt32Animation to animate a
@@ -774,7 +769,6 @@ namespace System.Windows.Media.Animation
 
         #endregion
     }
-
 
     /// <summary>
     /// This class is used as part of a Int64KeyFrameCollection in
@@ -901,7 +895,6 @@ namespace System.Windows.Media.Animation
         #endregion
     }
 
-
     /// <summary>
     /// This class is used as part of a PointKeyFrameCollection in
     /// conjunction with a KeyFramePointAnimation to animate a
@@ -1026,7 +1019,6 @@ namespace System.Windows.Media.Animation
 
         #endregion
     }
-
 
     /// <summary>
     /// This class is used as part of a Point3DKeyFrameCollection in
@@ -1153,7 +1145,6 @@ namespace System.Windows.Media.Animation
         #endregion
     }
 
-
     /// <summary>
     /// This class is used as part of a QuaternionKeyFrameCollection in
     /// conjunction with a KeyFrameQuaternionAnimation to animate a
@@ -1278,7 +1269,6 @@ namespace System.Windows.Media.Animation
 
         #endregion
     }
-
 
     /// <summary>
     /// This class is used as part of a Rotation3DKeyFrameCollection in
@@ -1405,7 +1395,6 @@ namespace System.Windows.Media.Animation
         #endregion
     }
 
-
     /// <summary>
     /// This class is used as part of a RectKeyFrameCollection in
     /// conjunction with a KeyFrameRectAnimation to animate a
@@ -1530,7 +1519,6 @@ namespace System.Windows.Media.Animation
 
         #endregion
     }
-
 
     /// <summary>
     /// This class is used as part of a SingleKeyFrameCollection in
@@ -1657,7 +1645,6 @@ namespace System.Windows.Media.Animation
         #endregion
     }
 
-
     /// <summary>
     /// This class is used as part of a SizeKeyFrameCollection in
     /// conjunction with a KeyFrameSizeAnimation to animate a
@@ -1782,7 +1769,6 @@ namespace System.Windows.Media.Animation
 
         #endregion
     }
-
 
     /// <summary>
     /// This class is used as part of a VectorKeyFrameCollection in
@@ -1909,7 +1895,6 @@ namespace System.Windows.Media.Animation
         #endregion
     }
 
-
     /// <summary>
     /// This class is used as part of a Vector3DKeyFrameCollection in
     /// conjunction with a KeyFrameVector3DAnimation to animate a
@@ -2034,6 +2019,5 @@ namespace System.Windows.Media.Animation
 
         #endregion
     }
-
 
 }

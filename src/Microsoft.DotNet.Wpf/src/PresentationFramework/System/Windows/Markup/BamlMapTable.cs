@@ -348,52 +348,6 @@ namespace System.Windows.Markup
         #region Methods
 
 #if !PBTCOMPILER
-        // This is called when a parse is begun when the very first baml record is
-        // processed.  If the BamlMapTable already contains data, then this means
-        // it is being re-used for multiple parses.  In this case set the _reusingMapTable
-        // flag and make certain that the ObjectHashTable is populated before clearing
-        // the existing assembly, type and property lists for the next parse.
-        internal void Initialize()
-        {
-            if (AttributeIdMap.Count > 0 || TypeIdMap.Count > 0)
-            {
-                // Populate the ObjectHashTable here only after the first parse has
-                // completed and the second is about to begin.  This is done so that
-                // a single parse does not pay the price of having the hash table, and
-                // the second through 'n' parses are added as they are read in.
-                if (ObjectHashTable.Count == 0)
-                {
-                    // Loop through attributes. We only care about having CLR properties in
-                    // the hash table.  DependencyProperties are already cached by the framework.
-                    for (int i = 0; i < AttributeIdMap.Count; i++)
-                    {
-                        BamlAttributeInfoRecord info = AttributeIdMap[i];
-                        if (info.PropInfo != null)
-                        {
-                            object key = GetAttributeInfoKey(info.OwnerType.FullName, info.Name);
-                            ObjectHashTable.Add(key, info);
-                        }
-                    }
-
-                    // Loop through types and cache them.
-                    for (int j = 0; j < TypeIdMap.Count; j++)
-                    {
-                        BamlTypeInfoRecord info = TypeIdMap[j];
-                        if (info.Type != null)
-                        {
-                            BamlAssemblyInfoRecord assyInfo = GetAssemblyInfoFromId(info.AssemblyId);
-                            TypeInfoKey key = GetTypeInfoKey(assyInfo.AssemblyFullName, info.TypeFullName);
-                            ObjectHashTable.Add(key, info);
-                        }
-                    }
-                }
-            }
-            AssemblyIdMap.Clear();
-            TypeIdMap.Clear();
-            AttributeIdMap.Clear();
-            StringIdMap.Clear();
-        }
-
         // Given an Id looks up the Type in the MapTable.  This works for known types
         // and types that are a part of BamlTypeInfoRecords in the baml file.
         internal Type GetTypeFromId(short id)

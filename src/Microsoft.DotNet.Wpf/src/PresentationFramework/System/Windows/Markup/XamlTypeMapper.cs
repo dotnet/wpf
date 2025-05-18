@@ -414,59 +414,6 @@ namespace System.Windows.Markup
 
 #endregion AssemblyLoading
 
-        #region Events
-
-#if !PBTCOMPILER
-
-        /// <summary>
-        /// Helper to map an Attribute to a RoutedEvent
-        /// </summary>
-        /// <remarks>
-        ///    Example: <para/>
-        ///     If the xaml contained the tag <base:Button base:Click="MyClick" xmlns:base="BaseXmlNs"/>
-        ///     you would call <para/>
-        ///
-        ///         Type owner = XamlTypeMapper.GetType("BaseXmlNs","Button"); <para/>
-        ///         RoutedEvent = XamlTypeMapper.GetRoutedEvent(owner,"MyClick","BaseXmlNs");
-        /// </remarks>
-        /// <param name="owner">Type of the owner</param>
-        /// <param name="xmlNamespace">Xml NamespaceURI of the attribute</param>
-        /// <param name="localName">Local name of the attribute</param>
-        /// <returns>The RoutedEvent ID or null if no match was found</returns>
-        /// <ExternalAPI/>
-        internal RoutedEvent GetRoutedEvent(
-            Type   owner,
-            string xmlNamespace,
-            string localName)
-        {
-            Type baseType = null;
-            string dynamicObjectName = null;
-
-            if(null == localName)
-            {
-                throw new ArgumentNullException( nameof(localName));
-            }
-            if(null == xmlNamespace)
-            {
-                throw new ArgumentNullException( nameof(xmlNamespace));
-            }
-            if (owner != null && !ReflectionHelper.IsPublicType(owner))
-            {
-                _lineNumber = 0;  // Public API, so we don't know the line number.
-                ThrowException(nameof(SR.ParserOwnerEventMustBePublic), owner.FullName );
-            }
-
-            RoutedEvent Event = GetDependencyObject(true,owner,xmlNamespace,
-                localName,ref baseType,ref dynamicObjectName)
-                as RoutedEvent;
-
-            return Event;
-        }
-
-#endif
-
-#endregion Events
-
 #region Properties
 
 #if !PBTCOMPILER
@@ -1078,22 +1025,6 @@ namespace System.Windows.Markup
             return allowed;
         }
 #else
-        // Checks to see if a given property's set method is public.
-        // Used only in Xaml Load sceanrios.
-        internal bool IsAllowedPropertySet(PropertyInfo pi)
-        {
-            MethodInfo mi = pi.GetSetMethod(true);
-            return (mi != null && mi.IsPublic);
-        }
-
-        // Checks to see if a given property's get method is public.
-        // Used only in Xaml Load sceanrios.
-        internal bool IsAllowedPropertyGet(PropertyInfo pi)
-        {
-            MethodInfo mi = pi.GetGetMethod(true);
-            return (mi != null && mi.IsPublic);
-        }
-
         // Checks to see if a given property's set method is accessible.
         // Used only in compiled Baml Load sceanrios.
         internal static bool IsAllowedPropertySet(PropertyInfo pi, bool allowProtected, out bool isPublic)
@@ -1586,141 +1517,6 @@ namespace System.Windows.Markup
 
             return eventInfo;
         }
-
-        /// <summary>
-        /// Helper method to resolve an xml namespace and localName to
-        /// either a RoutedEvent or a DependencyProperty.  If they are not present,
-        /// still resolve using a guess at the valid setter name to look for.
-        /// </summary>
-        /// <remarks>
-        ///  Note that this will not resolve clr properties.  Call GetClrInfo to do that.
-        /// </remarks>
-        /// <param name="isEvent">True if Event, False look for Property</param>
-        /// <param name="owner">Type we should look for attribute on, can be null</param>
-        /// <param name="xmlNamespace">XmlNamespace or the Attribute</param>
-        /// <param name="localName">local Name of the Attribute</param>
-        /// <param name="baseType">Base type the object was found on</param>
-        /// <param name="dynamicObjectName">registered name of the Object on the type.</param>
-        /// <returns>resolved object, which can be a RoutedEvent, a DependencyProperty
-        ///          or the MethodInfo for the event or property setter</returns>
-        internal object GetDependencyObject(
-                bool       isEvent,
-                Type       owner,
-                string     xmlNamespace,
-                string     localName,
-            ref Type       baseType,
-            ref string     dynamicObjectName)
-        {
-            Debug.Assert(null != localName, "null localName");
-            Debug.Assert(null != xmlNamespace, "null xmlNamespace");
-
-            object memInfo = null;
-            string globalClassName = null;
-
-            dynamicObjectName = null;
-
-            // Extract the class name if there are any periods in the localName.
-            int lastIndex = localName.LastIndexOf('.');
-            if (-1 != lastIndex)
-            {
-                // if using .net then match against the class.
-                globalClassName = localName.Substring(0,lastIndex);
-                localName = localName.Substring(lastIndex+1);
-            }
-
-            // If this is a globalClassName then resolve the type and then call
-            // DependencyProperty.FromName.
-            if (null != globalClassName)
-            {
-                TypeAndSerializer typeAndSerializer =
-                    GetTypeOnly(xmlNamespace,globalClassName);
-
-                if (typeAndSerializer != null && typeAndSerializer.ObjectType != null)
-                {
-                    baseType = typeAndSerializer.ObjectType;
-                    if (isEvent)
-                    {
-                        memInfo = RoutedEventFromName(localName,baseType);
-                    }
-                    else
-                    {
-                        memInfo = DependencyProperty.FromName(localName, baseType);
-                    }
-
-                    if (null != memInfo)
-                    {
-                        Debug.Assert(null != baseType, "baseType not set");
-                        dynamicObjectName = localName;
-                    }
-                }
-            }
-            else
-            {
-                NamespaceMapEntry[] namespaceMaps = GetNamespaceMapEntries(xmlNamespace);
-
-                if (null == namespaceMaps)
-                {
-                    return null;
-                }
-
-                baseType = owner;
-
-                // See if the owner knows about this class.
-                // Look for a parent type with any namespace matching the property
-                while (null != baseType)
-                {
-                    bool foundNamespaceMatch = false;
-
-                    // Look at each namespace for a match with this baseType
-                    for (int count = 0;
-                         count < namespaceMaps.Length && !foundNamespaceMatch;
-                         count ++)
-                    {
-                        NamespaceMapEntry namespaceMap = namespaceMaps[count];
-
-                        // see if the urtNamespace in the namespace map is valid
-                        // for the type we are trying to apply
-                        if (namespaceMap.ClrNamespace == GetCachedNamespace(baseType))
-                        {
-                            foundNamespaceMatch = true;
-                        }
-                    }
-
-                    if (foundNamespaceMatch)
-                    {
-                        // For 'normal' properties and events that are not prefixed by
-                        // a class name, only attempt to get dependency IDs and Events.
-                        // The caller should use GetClrInfo to get CLR properties for
-                        // 'normal' properties and events if this attempt fails.
-                        if (isEvent)
-                        {
-                            memInfo = RoutedEventFromName(localName,baseType);
-                        }
-                        else
-                        {
-                            memInfo = DependencyProperty.FromName(localName, baseType);
-                        }
-                    }
-
-                    // Only do one loop for events, since all base classes are checked in
-                    // a single operation.  For properties, loop through the base classes here.
-                    if (null != memInfo || isEvent)
-                    {
-                        // for assembly and typeName use the original, not the base
-                        // type we found it on.
-                        dynamicObjectName = localName;
-                        break;
-                    }
-                    else
-                    {
-                        baseType = GetCachedBaseType(baseType);
-                    }
-                }
-            }
-
-            return memInfo;
-        }
-
 
          ///<summary>
         /// Returns a DependencyProperty given a local name and an xml namespace
@@ -2722,17 +2518,6 @@ namespace System.Windows.Markup
             return ithType;
         }
 
-        private static InternalTypeHelper GetInternalTypeHelperFromAssembly(ParserContext pc)
-        {
-            InternalTypeHelper ith = null;
-            Type ithType = GetInternalTypeHelperTypeFromAssembly(pc);
-            if (ithType != null)
-            {
-                ith = (InternalTypeHelper)Activator.CreateInstance(ithType);
-            }
-            return ith;
-        }
-
         internal static object CreateInternalInstance(ParserContext pc, Type type)
         {
             object instance = Activator.CreateInstance(type,
@@ -3048,27 +2833,6 @@ namespace System.Windows.Markup
                                             ref ownerType);
 
             return dp;
-        }
-
-        /***************************************************************************\
-        *
-        * XamlTypeMapper.ParseEventName
-        *
-        * Given an event name, find the associated RoutedEvent and return it.
-        *
-        \***************************************************************************/
-
-        internal static RoutedEvent ParseEventName(
-            ParserContext   parserContext,
-            string          eventName,
-            Type            ownerType)
-        {
-            string namespaceURI = ProcessNameString(parserContext, ref eventName);
-
-            RoutedEvent Event = parserContext.XamlTypeMapper.GetRoutedEvent(
-                ownerType, namespaceURI, eventName);
-
-            return Event;
         }
 
 #endif

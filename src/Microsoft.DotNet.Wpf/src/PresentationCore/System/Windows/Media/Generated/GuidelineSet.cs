@@ -192,7 +192,6 @@ namespace System.Windows.Media
                               data.GuidelinesYSize)
                         );
 
-
                     // Copy this collection's elements (or their handles) to reserved data
                     for (int i = 0; i < GuidelinesXCount; i++)
                     {

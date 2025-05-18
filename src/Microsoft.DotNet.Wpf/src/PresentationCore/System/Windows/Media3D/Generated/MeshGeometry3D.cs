@@ -220,7 +220,6 @@ namespace System.Windows.Media.Media3D
                               data.TriangleIndicesSize)
                         );
 
-
                     // Copy this collection's elements (or their handles) to reserved data
                     for (int i = 0; i < PositionsCount; i++)
                     {

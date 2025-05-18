@@ -173,7 +173,6 @@ namespace System.Windows.Media
                         (int)(data.DashesSize)
                         );
 
-
                     // Copy this collection's elements (or their handles) to reserved data
                     for (int i = 0; i < DashesCount; i++)
                     {

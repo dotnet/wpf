@@ -222,7 +222,6 @@ namespace System.Windows.Media.Media3D
                         (int)(data.ChildrenSize)
                         );
 
-
                     // Copy this collection's elements (or their handles) to reserved data
                     for (int i = 0; i < ChildrenCount; i++)
                     {

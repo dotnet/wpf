@@ -173,7 +173,6 @@ namespace System.Windows.Media.Animation
             WritePostscript();
         }
 
-
         /// <summary>
         ///     Removes the element at the specified index without firing
         ///     the public Changed event.
@@ -194,7 +193,6 @@ namespace System.Windows.Media.Animation
 
             // No WritePostScript to avoid firing the Changed event.
         }
-
 
         /// <summary>
         ///     Indexer for the collection
@@ -519,7 +517,6 @@ namespace System.Windows.Media.Animation
 
             return index;
         }
-
 
         #endregion Private Helpers
 

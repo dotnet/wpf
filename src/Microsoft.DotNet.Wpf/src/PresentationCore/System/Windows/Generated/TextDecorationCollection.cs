@@ -174,7 +174,6 @@ namespace System.Windows
             WritePostscript();
         }
 
-
         /// <summary>
         ///     Removes the element at the specified index without firing
         ///     the public Changed event.
@@ -195,7 +194,6 @@ namespace System.Windows
 
             // No WritePostScript to avoid firing the Changed event.
         }
-
 
         /// <summary>
         ///     Indexer for the collection
@@ -520,7 +518,6 @@ namespace System.Windows
 
             return index;
         }
-
 
         #endregion Private Helpers
 

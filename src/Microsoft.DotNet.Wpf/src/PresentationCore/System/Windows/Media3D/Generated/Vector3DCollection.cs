@@ -156,7 +156,6 @@ namespace System.Windows.Media.Media3D
             WritePostscript();
         }
 
-
         /// <summary>
         ///     Removes the element at the specified index without firing
         ///     the public Changed event.
@@ -172,7 +171,6 @@ namespace System.Windows.Media.Media3D
 
             // No WritePostScript to avoid firing the Changed event.
         }
-
 
         /// <summary>
         ///     Indexer for the collection
@@ -472,7 +470,6 @@ namespace System.Windows.Media.Media3D
 
             return index;
         }
-
 
         #endregion Private Helpers
 

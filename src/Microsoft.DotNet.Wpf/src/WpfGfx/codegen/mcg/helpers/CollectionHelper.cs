@@ -538,6 +538,7 @@ namespace MS.Internal.MilCodeGen.Helpers
                 // owner can addref/release the items on its channel.
                 return
                     [[inline]]
+
                         internal event ItemInsertedHandler ItemInserted;
                         internal event ItemRemovedHandler ItemRemoved;
 
@@ -955,7 +956,6 @@ namespace MS.Internal.MilCodeGen.Helpers
                         WritePostscript();
                     }
 
-
                     /// <summary>
                     ///     Removes the element at the specified index without firing
                     ///     the public Changed event.
@@ -971,7 +971,6 @@ namespace MS.Internal.MilCodeGen.Helpers
 
                         // No WritePostScript to avoid firing the Changed event.
                     }
-
 
                     /// <summary>
                     ///     Indexer for the collection
@@ -1215,7 +1214,6 @@ namespace MS.Internal.MilCodeGen.Helpers
 
                         return index;
                     }
-
                     [[WriteCollectionEvents(resource)]]
 
                     #endregion Private Helpers

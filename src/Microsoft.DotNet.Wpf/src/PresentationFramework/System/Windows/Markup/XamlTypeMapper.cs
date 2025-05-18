@@ -786,20 +786,6 @@ namespace System.Windows.Markup
 
 #if !PBTCOMPILER
         /// <summary>
-        /// Add cached member info for the property name.
-        /// </summary>
-        private void AddCachedAttributeInfo(
-               Type                    ownerType,
-               BamlAttributeInfoRecord infoRecord)
-        {
-            if (MapTable != null)
-            {
-                object key = MapTable.GetAttributeInfoKey(ownerType.FullName, infoRecord.Name);
-                MapTable.AddHashTableData(key, infoRecord);
-            }
-        }
-
-        /// <summary>
         /// Helper function for getting Clr PropertyInfo on a type and updating the
         /// passed attribute info record.  Also update the property cache with this
         /// attribute information if it was not already present.
@@ -836,10 +822,6 @@ namespace System.Windows.Markup
                     {
                         cachedInfoRecord.SetPropertyMember(attribInfo.PropInfo);
                         cachedInfoRecord.IsInternal = attribInfo.IsInternal;
-                    }
-                    else
-                    {
-                        AddCachedAttributeInfo(currentParentType, attribInfo);
                     }
                 }
             }

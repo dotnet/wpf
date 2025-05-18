@@ -357,7 +357,6 @@ namespace System.Windows.Markup
         {
             if (AttributeIdMap.Count > 0 || TypeIdMap.Count > 0)
             {
-                _reusingMapTable = true;
                 // Populate the ObjectHashTable here only after the first parse has
                 // completed and the second is about to begin.  This is done so that
                 // a single parse does not pay the price of having the hash table, and
@@ -767,7 +766,6 @@ namespace System.Windows.Markup
                         {
                             Type type = assembly.GetType(typeInfo.TypeFullName);
                             typeInfo.Type = type;
-                            AddHashTableData(key, typeInfo);
                         }
                     }
                 }
@@ -1663,19 +1661,6 @@ namespace System.Windows.Markup
         }
 
 #if !PBTCOMPILER
-        // Add item to the hash table.  Only do this if the map table
-        // is being re-used for multiple parses.  Otherwise the hash table
-        // data is of no use for a single parse.
-        internal void AddHashTableData(object key, object data)
-        {
-            if (_reusingMapTable)
-            {
-                ObjectHashTable[key] = data;
-            }
-        }
-#endif
-
-#if !PBTCOMPILER
         internal BamlMapTable Clone() => new BamlMapTable(_xamlTypeMapper)
         {
             ObjectHashTable = (Hashtable)_objectHashTable.Clone(),
@@ -1840,13 +1825,6 @@ namespace System.Windows.Markup
 #if !PBTCOMPILER
         // Temporary cache of Known Type Converters for each baml reading session.
         private Hashtable _converterCache = null;
-#endif
-
-#if !PBTCOMPILER
-        // True if this instance of the BamlMapTable is being reused between
-        // different parses.  This is done to maintain the ObjectHashTable so that
-        // less reflection is done for types and properties.
-        private bool   _reusingMapTable = false;
 #endif
 
         #endregion Data

@@ -1,10 +1,7 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
-using System.ComponentModel;
-using System.Runtime.CompilerServices;
 using System.Threading;
-using System.Threading.Tasks;
 using MS.Internal;
 
 namespace System.Windows.Threading;
@@ -12,53 +9,26 @@ namespace System.Windows.Threading;
 /// <summary>
 /// DispatcherOperation represents a delegate that has been posted to the <see cref="Dispatcher"/> queue.
 /// </summary>
-public class DispatcherOperation<TResult> : DispatcherOperation
+internal class DispatcherOperationAction : DispatcherOperation
 {
-    private TResult _result;
-
-    internal DispatcherOperation(Dispatcher dispatcher, DispatcherPriority priority, Delegate func) : base(
-            dispatcher: dispatcher,
-            method: func,
-            priority: priority,
-            taskSource: new DispatcherOperationTaskSource<TResult>(),
-            useAsyncSemantics: true)
+    internal DispatcherOperationAction(Dispatcher dispatcher, DispatcherPriority priority, Delegate method) : base(
+        dispatcher: dispatcher,
+        method: method,
+        priority: priority,
+        taskSource: new DispatcherOperationTaskSource<object>(),
+        useAsyncSemantics: true)
     {
     }
 
-    /// <summary>
-    ///     Returns a Task representing the operation.
-    /// </summary>
-    public new Task<TResult> Task
+    public sealed override object Result
     {
         get
         {
-            // Just upcast the base Task to what it really is.
-            return (Task<TResult>)((DispatcherOperation)this).Task;
-        }
-    }
-
-    /// <summary>
-    ///     Returns an awaiter for awaiting the completion of the operation.
-    /// </summary>
-    /// <remarks>
-    ///     This method is intended to be used by compilers.
-    /// </remarks>
-    [Browsable(false), EditorBrowsable(EditorBrowsableState.Never)]
-    public new TaskAwaiter<TResult> GetAwaiter()
-    {
-        return Task.GetAwaiter();
-    }
-
-    /// <summary>
-    ///     Returns the result of the operation if it has completed.
-    /// </summary>
-    public new TResult Result
-    {
-        get
-        {
-            // New semantics require waiting for the operation to complete.
+            // New semantics require waiting for the operation to
+            // complete.
             //
-            // Use DispatcherOperation.Wait instead of Task.Wait to handle waiting on the same thread.
+            // Use DispatcherOperation.Wait instead of Task.Wait to handle
+            // waiting on the same thread.
             Wait();
 
             if (_status is DispatcherOperationStatus.Completed or DispatcherOperationStatus.Aborted)
@@ -71,11 +41,11 @@ public class DispatcherOperation<TResult> : DispatcherOperation
                 Task.GetAwaiter().GetResult();
             }
 
-            return _result;
+            return null;
         }
     }
 
-    internal override void InvokeCompletions()
+    internal sealed override void InvokeCompletions()
     {
         switch (_status)
         {
@@ -89,8 +59,7 @@ public class DispatcherOperation<TResult> : DispatcherOperation
                 }
                 else
                 {
-                    // Make sure we don't box at this stage
-                    ((DispatcherOperationTaskSource<TResult>)_taskSource).SetResult(_result);
+                    _taskSource.SetResult(null);
                 }
                 break;
 
@@ -100,7 +69,7 @@ public class DispatcherOperation<TResult> : DispatcherOperation
         }
     }
 
-    protected override void InvokeImpl()
+    protected sealed override void InvokeImpl()
     {
         SynchronizationContext oldSynchronizationContext = SynchronizationContext.Current;
 
@@ -118,7 +87,7 @@ public class DispatcherOperation<TResult> : DispatcherOperation
 
             try
             {
-                _result = InvokeDelegateCore();
+                InvokeDelegateCore();
             }
             catch (Exception e)
             {
@@ -132,9 +101,9 @@ public class DispatcherOperation<TResult> : DispatcherOperation
         }
     }
 
-    protected virtual TResult InvokeDelegateCore()
+    protected virtual void InvokeDelegateCore()
     {
-        Func<TResult> func = (Func<TResult>)_method;
-        return func();
+        Action action = (Action)_method;
+        action();
     }
 }

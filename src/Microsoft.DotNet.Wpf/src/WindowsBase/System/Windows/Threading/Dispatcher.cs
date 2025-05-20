@@ -561,6 +561,67 @@ namespace System.Windows.Threading
         ///     Once the operation has started, it will complete before this method
         ///     returns.
         /// </param>
+        public void Invoke<TArg>(Action<TArg> callback, DispatcherPriority priority, CancellationToken cancellationToken, TimeSpan timeout, TArg arg)
+        {
+            ArgumentNullException.ThrowIfNull(callback);
+            ValidatePriority(priority, "priority");
+
+            if (timeout.TotalMilliseconds < 0 &&
+                timeout != TimeSpan.FromMilliseconds(-1))
+            {
+                throw new ArgumentOutOfRangeException(nameof(timeout));
+            }
+
+            // Fast-Path: if on the same thread, and invoking at Send priority,
+            // and the cancellation token is not already canceled, then just
+            // call the callback directly.
+            if (!cancellationToken.IsCancellationRequested && priority == DispatcherPriority.Send && CheckAccess())
+            {
+                SynchronizationContext oldSynchronizationContext = SynchronizationContext.Current;
+
+                try
+                {
+                    DispatcherSynchronizationContext newSynchronizationContext = DispatcherUtils.GetOrCreateContext(this, priority);
+
+                    SynchronizationContext.SetSynchronizationContext(newSynchronizationContext);
+
+                    callback(arg);
+                    return;
+                }
+                finally
+                {
+                    SynchronizationContext.SetSynchronizationContext(oldSynchronizationContext);
+                }
+            }
+
+            // Slow-Path: go through the queue.
+            DispatcherOperation operation = new DispatcherOperationAction<TArg>(this, priority, callback, arg);
+            InvokeImpl(operation, cancellationToken, timeout);
+        }
+
+        /// <summary>
+        ///     Executes the specified Action synchronously on the thread that
+        ///     the Dispatcher was created on.
+        /// </summary>
+        /// <param name="callback">
+        ///     An Action delegate to invoke through the dispatcher.
+        /// </param>
+        /// <param name="priority">
+        ///     The priority that determines in what order the specified
+        ///     callback is invoked relative to the other pending operations
+        ///     in the Dispatcher.
+        /// </param>
+        /// <param name="cancellationToken">
+        ///     A cancellation token that can be used to cancel the operation.
+        ///     If the operation has not started, it will be aborted when the
+        ///     cancellation token is canceled.  If the operation has started,
+        ///     the operation can cooperate with the cancellation request.
+        /// </param>
+        /// <param name="timeout">
+        ///     The minimum amount of time to wait for the operation to start.
+        ///     Once the operation has started, it will complete before this method
+        ///     returns.
+        /// </param>
         public void Invoke(Action callback, DispatcherPriority priority, CancellationToken cancellationToken, TimeSpan timeout)
         {
             ArgumentNullException.ThrowIfNull(callback);

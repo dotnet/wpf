@@ -245,6 +245,7 @@
     <Compile Include="System\Windows\Rect.cs " />
     <Compile Include="System\Windows\Size.cs " />
     <Compile Include="System\Windows\SplashScreen.cs" />
+    <Compile Include="System\Windows\Threading\DispatcherOperation.Action.1.cs" />
     <Compile Include="System\Windows\UncommonField.cs" />
     <Compile Include="System\Windows\ValidateValueCallback.cs" />
     <Compile Include="System\Windows\Vector.cs " />
@@ -286,13 +287,13 @@
     <Compile Include="System\Windows\Threading\PriorityRange.cs" />
     <Compile Include="System\Windows\Threading\DispatcherPriority.cs" />
     <Compile Include="System\Windows\Threading\Dispatcher.cs" />
-    <Compile Include="System\Windows\Threading\DispatcherOperation.1Arg.cs" />
-    <Compile Include="System\Windows\Threading\DispatcherOperation.2Arg.cs" />
-    <Compile Include="System\Windows\Threading\DispatcherOperation.3Arg.cs" />
-    <Compile Include="System\Windows\Threading\DispatcherOperation.Action.cs" />
+    <Compile Include="System\Windows\Threading\DispatcherOperation.TResult.1.cs" />
+    <Compile Include="System\Windows\Threading\DispatcherOperation.TResult.2.cs" />
+    <Compile Include="System\Windows\Threading\DispatcherOperation.TResult.3.cs" />
+    <Compile Include="System\Windows\Threading\DispatcherOperation.Action.0.cs" />
     <Compile Include="System\Windows\Threading\DispatcherOperation.Event.cs" />
     <Compile Include="System\Windows\Threading\DispatcherOperation.Frame.cs" />
-    <Compile Include="System\Windows\Threading\DispatcherOperation.TResult.cs" />
+    <Compile Include="System\Windows\Threading\DispatcherOperation.TResult.0.cs" />
     <Compile Include="System\Windows\Threading\DispatcherOperationCallback.cs" />
     <Compile Include="System\Windows\Threading\DispatcherOperationLegacy.cs" />
     <Compile Include="System\Windows\Threading\DispatcherUtils.cs" />

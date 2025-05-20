@@ -661,9 +661,13 @@
     <SolidColorBrush x:Key="ToggleSwitchKnobFillOnDisabled" Color="{StaticResource SystemColorGrayTextColor}" />
 
     <!--  ToolTip  -->
-    <SolidColorBrush x:Key="ToolTipBackground" Color="{StaticResource SystemColorWindowColor}" />
+    <SolidColorBrush x:Key="ToolTipBackgroundBrush" Color="{StaticResource SystemColorWindowColor}" />
     <SolidColorBrush x:Key="ToolTipBorderBrush" Color="{StaticResource SystemColorWindowTextColor}" />
-    <SolidColorBrush x:Key="ToolTipForeground" Color="{StaticResource SystemColorWindowTextColor}" />
+    <SolidColorBrush x:Key="ToolTipForegroundBrush" Color="{StaticResource SystemColorWindowTextColor}" />
+    
+    <!-- Deprecated TextControl Brushes -->
+        <SolidColorBrush x:Key="ToolTipForeground" Color="{StaticResource SystemColorWindowTextColor}" />
+        <SolidColorBrush x:Key="ToolTipBackground" Color="{StaticResource SystemColorWindowColor}" />
 
     <!--  ToolBar  -->
     <!--  TODO  -->

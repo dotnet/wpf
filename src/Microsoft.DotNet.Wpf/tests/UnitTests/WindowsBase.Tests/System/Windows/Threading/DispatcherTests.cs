@@ -134,6 +134,66 @@ public class DispatcherTests
         Assert.NotNull(operation.Task);
     }
 
+    [WpfFact]
+    public void Invoke_SameThread_TReturn_Success()
+    {
+        Dispatcher dispatcher = Dispatcher.CurrentDispatcher;
+
+        static int action() => 5;
+        // Send + current thread forces direct callback invocation
+        int result = dispatcher.Invoke(action);
+
+        Assert.Equal(5, result);
+    }
+
+    [WpfFact]
+    public void Invoke_SameThread_TReturn_TArg_Success()
+    {
+        Dispatcher dispatcher = Dispatcher.CurrentDispatcher;
+
+        static int action(int parameter) => parameter + 5;
+        // Send + current thread forces direct callback invocation
+        int result = dispatcher.Invoke(action, DispatcherPriority.Send, TimeSpan.FromSeconds(3), 4);
+
+        Assert.Equal(9, result);
+    }
+
+    [WpfFact]
+    public void Invoke_SameThread_DispatcherOperation_TReturn_TArg_Success()
+    {
+        Dispatcher dispatcher = Dispatcher.CurrentDispatcher;
+
+        static int action(int parameter) => parameter + 5;
+        // Anything different than Send + current thread is DispatcherOperation allocation and queue pass
+        int result = dispatcher.Invoke(action, DispatcherPriority.Background, TimeSpan.FromSeconds(3), 4);
+
+        Assert.Equal(9, result);
+    }
+
+    [WpfFact]
+    public void Invoke_SameThread_TReturn_TArg1_TArg2_Success()
+    {
+        Dispatcher dispatcher = Dispatcher.CurrentDispatcher;
+
+        static double action(int parameter, double doubleParameter) => parameter + doubleParameter + 5.5;
+        // Send + current thread forces direct callback invocation
+        double result = dispatcher.Invoke(action, DispatcherPriority.Send, TimeSpan.FromSeconds(3), 4, 14.5);
+
+        Assert.Equal(24.0, result);
+    }
+
+    [WpfFact]
+    public void Invoke_SameThread_DispatcherOperation_TReturn_TArg1_TArg2_Success()
+    {
+        Dispatcher dispatcher = Dispatcher.CurrentDispatcher;
+
+        static double action(int parameter, double doubleParameter) => parameter + doubleParameter + 5.5;
+        // Anything different than Send + current thread is DispatcherOperation allocation and queue pass
+        double result = dispatcher.Invoke(action, DispatcherPriority.Background, TimeSpan.FromSeconds(3), 4, 14.5);
+
+        Assert.Equal(24.0, result);
+    }
+
     [WpfTheory]
     [InlineData(DispatcherPriority.Invalid)]
     [InlineData(DispatcherPriority.Invalid - 1)]

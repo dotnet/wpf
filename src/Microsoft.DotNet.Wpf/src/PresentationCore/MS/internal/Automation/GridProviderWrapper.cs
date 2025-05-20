@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
 //
@@ -56,23 +56,17 @@ namespace MS.Internal.Automation
 
         public IRawElementProviderSimple GetItem(int row, int column)
         {
-            return (IRawElementProviderSimple) ElementUtil.Invoke( _peer, new DispatcherOperationCallback( GetItem ), new int [ ] { row, column } );
-        } 
+            return ElementUtil.Invoke(_peer, static (state, rowColumn) => state.GetItem(rowColumn[0], rowColumn[1]), this, new int[] { row, column });
+        }
 
         public int RowCount
         {
-            get
-            {
-                return (int) ElementUtil.Invoke( _peer, new DispatcherOperationCallback( GetRowCount ), null );
-            }
+            get => ElementUtil.Invoke(_peer, static (state) => state.RowCount, this);
         }
 
         public int ColumnCount
         {
-            get
-            {
-                return (int) ElementUtil.Invoke( _peer, new DispatcherOperationCallback( GetColumnCount ), null );
-            }
+            get => ElementUtil.Invoke(_peer, static (state) => state.ColumnCount, this);
         }
 
         #endregion Interface IGridProvider
@@ -92,33 +86,6 @@ namespace MS.Internal.Automation
         }
 
         #endregion Internal Methods
-
-        //------------------------------------------------------
-        //
-        //  Private Methods
-        //
-        //------------------------------------------------------
- 
-        #region Private Methods
-
-        private object GetItem( object arg )
-        {
-            int [ ] coords = (int [ ]) arg;
-            return _iface.GetItem( coords[ 0 ], coords[ 1 ] );
-        } 
-
-        private object GetRowCount( object unused )
-        {
-            return _iface.RowCount;
-        }
-
-        private object GetColumnCount( object unused )
-        {
-            return _iface.ColumnCount;
-        }
-
-        #endregion Private Methods
-
 
         //------------------------------------------------------
         //

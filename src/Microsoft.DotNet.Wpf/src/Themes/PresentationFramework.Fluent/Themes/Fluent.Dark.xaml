@@ -4712,7 +4712,7 @@
       <Setter.Value>
         <ControlTemplate TargetType="{x:Type TabItem}">
           <Grid x:Name="Root">
-            <Border x:Name="Border" MinWidth="180" MinHeight="36" Margin="0" Padding="6" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="1,1,1,0" CornerRadius="8,8,0,0">
+            <Border x:Name="Border" MinHeight="32" Padding="6" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="1,1,1,0" CornerRadius="8,8,0,0">
               <ContentPresenter x:Name="ContentSite" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}" ContentSource="Header" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" Margin="{TemplateBinding Padding}" RecognizesAccessKey="True" />
             </Border>
             <VisualStateManager.VisualStateGroups>
